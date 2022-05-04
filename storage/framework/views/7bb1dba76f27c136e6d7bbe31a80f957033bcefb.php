@@ -35,7 +35,8 @@
     </div>
     <!-- END layout-wrapper -->
 
-    <!-- <?php echo $__env->make('layouts.customizer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?> -->
+    <!-- Shows Theme Customizer menu on right side -->
+    
 
     <!-- JAVASCRIPT -->
     <?php echo $__env->make('layouts.vendor-scripts', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
