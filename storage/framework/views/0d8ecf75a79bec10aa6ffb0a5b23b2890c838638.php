@@ -56,10 +56,12 @@
                             </li>
                         </ul>
                     </div>
-                </li> <!-- end Dashboard Menu -->
+                </li> 
+                
+                <!-- end Dashboard Menu -->
 
 
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse"
                         role="button" aria-expanded="false" aria-controls="sidebarApps">
                         <i class="ri-apps-2-line"></i> <span ><?php echo app('translator')->get('translation.apps'); ?></span>
@@ -233,9 +235,9 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> -->
 
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarLayouts" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarLayouts">
                         <i class="ri-layout-3-line"></i> <span ><?php echo app('translator')->get('translation.layouts'); ?></span>
@@ -256,10 +258,12 @@
                             </li>
                         </ul>
                     </div>
-                </li> <!-- end Dashboard Menu -->
+                </li>  -->
+                
+                <!-- end Dashboard Menu -->
 
 
-                <li class="menu-title"><i class="ri-more-fill"></i> <span ><?php echo app('translator')->get('translation.pages'); ?></span></li>
+                <!-- <li class="menu-title"><i class="ri-more-fill"></i> <span ><?php echo app('translator')->get('translation.pages'); ?></span></li>
 
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarAuth" data-bs-toggle="collapse" role="button"
@@ -455,18 +459,18 @@
                             </li>
                         </ul>
                     </div>
-                </li>
-                <li class="nav-item">
+                </li> -->
+                <!-- <li class="nav-item">
                     <a class="nav-link menu-link" target="_blank" href="landing">
                         <i class="ri-rocket-line"></i> <span data-key="t-landing">Landing</span>
                         <span class="badge badge-pill bg-danger" ><?php echo app('translator')->get('translation.new'); ?></span>
 
                     </a>
-                </li>
+                </li> -->
 
-                <li class="menu-title"><i class="ri-more-fill"></i> <span ><?php echo app('translator')->get('translation.components'); ?></span></li>
+                <!-- <li class="menu-title"><i class="ri-more-fill"></i> <span ><?php echo app('translator')->get('translation.components'); ?></span></li> -->
 
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarUI" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarUI">
                         <i class="ri-pencil-ruler-2-line"></i> <span ><?php echo app('translator')->get('translation.base-ui'); ?></span>
@@ -556,9 +560,9 @@
                             </div>
                         </div>
                     </div>
-                </li>
+                </li> -->
 
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarAdvanceUI" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarAdvanceUI">
                         <i class="ri-stack-line"></i> <span ><?php echo app('translator')->get('translation.advance-ui'); ?></span>
@@ -594,9 +598,9 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> -->
 
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link menu-link" href="widgets">
                         <i class="ri-honour-line"></i> <span ><?php echo app('translator')->get('translation.widgets'); ?></span>
                     </a>
@@ -741,9 +745,9 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> -->
 
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarIcons" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarIcons">
                         <i class="ri-compasses-2-line"></i> <span ><?php echo app('translator')->get('translation.icons'); ?></span>
@@ -767,9 +771,9 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> -->
 
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarMaps" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarMaps">
                         <i class="ri-map-pin-line"></i> <span ><?php echo app('translator')->get('translation.maps'); ?></span>
@@ -793,9 +797,9 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> -->
 
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarMultilevel" data-bs-toggle="collapse"
                         role="button" aria-expanded="false" aria-controls="sidebarMultilevel">
                         <i class="ri-share-line"></i> <span ><?php echo app('translator')->get('translation.multi-level'); ?></span>
@@ -834,7 +838,7 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> -->
 
             </ul>
         </div>
