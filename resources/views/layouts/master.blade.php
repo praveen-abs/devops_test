@@ -3,10 +3,9 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>@yield('title')| Velzon - Admin & Dashboard Template</title>
+    <title>PMS Portal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
-    <meta content="Themesbrand" name="author" />
+
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ URL::asset('assets/images/favicon.ico')}}">
     @include('layouts.head-css')
@@ -36,7 +35,8 @@
     </div>
     <!-- END layout-wrapper -->
 
-    @include('layouts.customizer')
+    <!-- Shows Theme Customizer menu on right side -->
+    {{-- @include('layouts.customizer') --}}
 
     <!-- JAVASCRIPT -->
     @include('layouts.vendor-scripts')
