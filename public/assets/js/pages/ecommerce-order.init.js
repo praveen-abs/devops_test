@@ -1,1 +1,535 @@
-var str_dt=function(e){var t=new Date(e),a=(t.getHours()+":"+t.getMinutes()).split(":"),n=a[0],l=a[1],d=n>=12?"PM":"AM";return n=(n%=12)||12,l=l<10?"0"+l:l,month=""+["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][t.getMonth()],day=""+t.getDate(),year=t.getFullYear(),month.length<2&&(month="0"+month),day.length<2&&(day="0"+day),[day+" "+month+","+year+" <small class='text-muted'>"+n+":"+l+" "+d+"</small>"]},isChoiceEl=document.getElementById("idStatus"),choices=new Choices(isChoiceEl,{searchEnabled:!1}),isPaymentEl=document.getElementById("idPayment"),checkAll=(choices=new Choices(isPaymentEl,{searchEnabled:!1}),document.getElementById("checkAll"));checkAll&&(checkAll.onclick=function(){var e=document.querySelectorAll('.form-check-all input[type="checkbox"]');1==checkAll.checked?e.forEach((function(e){e.checked=!0,e.closest("tr").classList.add("table-active")})):e.forEach((function(e){e.checked=!1,e.closest("tr").classList.remove("table-active")}))});var perPage=8,options={valueNames:["id","customer_name","product_name","date","amount","payment","status"],page:perPage,pagination:!0,plugins:[ListPagination({left:2,right:2})]},orderList=new List("orderList",options).on("updated",(function(e){0==e.matchingItems.length?document.getElementsByClassName("noresult")[0].style.display="block":document.getElementsByClassName("noresult")[0].style.display="none";var t=1==e.i,a=e.i>e.matchingItems.length-e.page;document.querySelector(".pagination-prev.disabled")&&document.querySelector(".pagination-prev.disabled").classList.remove("disabled"),document.querySelector(".pagination-next.disabled")&&document.querySelector(".pagination-next.disabled").classList.remove("disabled"),t&&document.querySelector(".pagination-prev").classList.add("disabled"),a&&document.querySelector(".pagination-next").classList.add("disabled"),e.matchingItems.length<=perPage?document.querySelector(".pagination-wrap").style.display="none":document.querySelector(".pagination-wrap").style.display="flex",e.matchingItems.length==perPage&&document.querySelector(".pagination.listjs-pagination").firstElementChild.children[0].click(),e.matchingItems.length>0?document.getElementsByClassName("noresult")[0].style.display="none":document.getElementsByClassName("noresult")[0].style.display="block"}));const xhttp=new XMLHttpRequest;xhttp.onload=function(){JSON.parse(this.responseText).forEach((function(e){orderList.add({id:'<a href="apps-ecommerce-order-details" class="fw-medium link-primary">#VZ'+e.id+"</a>",customer_name:e.customer_name,product_name:e.product_name,date:str_dt(e.date),amount:e.amount,payment:e.payment,status:isStatus(e.status)}),orderList.sort("id",{order:"desc"}),refreshCallbacks()})),orderList.remove("id",'<a href="apps-ecommerce-order-details" class="fw-medium link-primary">#VZ2101</a>')},xhttp.open("GET","assets/json/orders-list.init.json"),xhttp.send(),isCount=(new DOMParser).parseFromString(orderList.items.slice(-1)[0]._values.id,"text/html");var isValue=isCount.body.firstElementChild.innerHTML,idField=document.getElementById("orderId"),customerNameField=document.getElementById("customername-field"),productNameField=document.getElementById("productname-field"),dateField=document.getElementById("date-field"),amountField=document.getElementById("amount-field"),paymentField=document.getElementById("payment-field"),statusField=document.getElementById("delivered-status"),addBtn=document.getElementById("add-btn"),editBtn=document.getElementById("edit-btn"),removeBtns=document.getElementsByClassName("remove-item-btn"),editBtns=document.getElementsByClassName("edit-item-btn");refreshCallbacks();var tabEl=document.querySelectorAll('a[data-bs-toggle="tab"]');function filterOrder(e){var t=e;orderList.filter((function(e){matchData=(new DOMParser).parseFromString(e.values().status,"text/html");var a=matchData.body.firstElementChild.innerHTML;return"All"==a||"All"==t||a==t})),orderList.update()}function updateList(){var e=document.querySelector("input[name=status]:checked").value;data=userList.filter((function(t){return"All"==e||t.values().sts==e})),userList.update()}tabEl.forEach((function(e){e.addEventListener("shown.bs.tab",(function(e){filterOrder(e.target.id)}))})),document.getElementById("showModal").addEventListener("show.bs.modal",(function(e){e.relatedTarget.classList.contains("edit-item-btn")?(document.getElementById("exampleModalLabel").innerHTML="Edit Order",document.getElementById("showModal").querySelector(".modal-footer").style.display="block",document.getElementById("add-btn").style.display="none",document.getElementById("edit-btn").style.display="block"):e.relatedTarget.classList.contains("add-btn")?(document.getElementById("modal-id").style.display="none",document.getElementById("exampleModalLabel").innerHTML="Add Order",document.getElementById("showModal").querySelector(".modal-footer").style.display="block",document.getElementById("edit-btn").style.display="none",document.getElementById("add-btn").style.display="block"):(document.getElementById("exampleModalLabel").innerHTML="List Order",document.getElementById("showModal").querySelector(".modal-footer").style.display="none")})),ischeckboxcheck(),document.getElementById("showModal").addEventListener("hidden.bs.modal",(function(){clearFields()})),document.querySelector("#orderList").addEventListener("click",(function(){refreshCallbacks(),ischeckboxcheck()}));var table=document.getElementById("orderTable"),tr=table.getElementsByTagName("tr"),trlist=table.querySelectorAll(".list tr");function SearchData(){var e=document.getElementById("idStatus").value,t=document.getElementById("idPayment").value,a=document.getElementById("demo-datepicker").value,n=a.split(" to ")[0],l=a.split(" to ")[1];orderList.filter((function(d){matchData=(new DOMParser).parseFromString(d.values().status,"text/html");var s=matchData.body.firstElementChild.innerHTML,i=!1,r=!1,o=!1;return i="all"==s||"all"==e||s==e,r="all"==d.values().payment||"all"==t||d.values().payment==t,o=new Date(d.values().date.slice(0,12))>=new Date(n)&&new Date(d.values().date.slice(0,12))<=new Date(l),i&&r&&o?i&&r&&o:i&&r&&""==a?i&&r:r&&o&&""==a?r&&o:void 0})),orderList.update()}var count=13;addBtn.addEventListener("click",(function(e){""!==customerNameField.value&&""!==productNameField.value&&""!==dateField.value&&""!==amountField.value&&""!==paymentField.value&&(orderList.add({id:'<a href="apps-ecommerce-order-details" class="fw-medium link-primary">#VZ'+count+"</a>",customer_name:customerNameField.value,product_name:productNameField.value,date:dateField.value,amount:"$"+amountField.value,payment:paymentField.value,status:isStatus(statusField.value)}),orderList.sort("id",{order:"desc"}),document.getElementById("close-modal").click(),clearFields(),refreshCallbacks(),filterOrder("All"),count++,Swal.fire({position:"center",icon:"success",title:"Order inserted successfully!",showConfirmButton:!1,timer:2e3,showCloseButton:!0}))})),editBtn.addEventListener("click",(function(e){document.getElementById("exampleModalLabel").innerHTML="Edit Order",orderList.get({id:idField.value}).forEach((function(e){isid=(new DOMParser).parseFromString(e._values.id,"text/html"),isid.body.firstElementChild.innerHTML==itemId&&e.values({id:'<a href="javascript:void(0);" class="fw-medium link-primary">'+idField.value+"</a>",customer_name:customerNameField.value,product_name:productNameField.value,date:dateField.value.slice(0,14)+'<small class="text-muted">'+dateField.value.slice(14,22),amount:amountField.value,payment:paymentField.value,status:isStatus(statusField.value)})})),document.getElementById("close-modal").click(),clearFields(),Swal.fire({position:"center",icon:"success",title:"Order updated Successfully!",showConfirmButton:!1,timer:2e3,showCloseButton:!0})}));var example=new Choices(paymentField),statusVal=new Choices(statusField),productnameVal=new Choices(productNameField);function isStatus(e){switch(e){case"Delivered":return'<span class="badge badge-soft-success text-uppercase">'+e+"</span>";case"Cancelled":return'<span class="badge badge-soft-danger text-uppercase">'+e+"</span>";case"Inprogress":return'<span class="badge badge-soft-secondary text-uppercase">'+e+"</span>";case"Pickups":return'<span class="badge badge-soft-info text-uppercase">'+e+"</span>";case"Returns":return'<span class="badge badge-soft-primary text-uppercase">'+e+"</span>";case"Pending":return'<span class="badge badge-soft-warning text-uppercase">'+e+"</span>"}}function ischeckboxcheck(){document.getElementsByName("checkAll").forEach((function(e){e.addEventListener("click",(function(e){e.target.checked?e.target.closest("tr").classList.add("table-active"):e.target.closest("tr").classList.remove("table-active")}))}))}function refreshCallbacks(){removeBtns.forEach((function(e){e.addEventListener("click",(function(e){e.target.closest("tr").children[1].innerText,itemId=e.target.closest("tr").children[1].innerText,orderList.get({id:itemId}).forEach((function(e){deleteid=(new DOMParser).parseFromString(e._values.id,"text/html");var t=deleteid.body.firstElementChild;deleteid.body.firstElementChild.innerHTML==itemId&&document.getElementById("delete-record").addEventListener("click",(function(){orderList.remove("id",t.outerHTML),document.getElementById("deleteOrder").click()}))}))}))})),editBtns.forEach((function(e){e.addEventListener("click",(function(e){e.target.closest("tr").children[1].innerText,itemId=e.target.closest("tr").children[1].innerText,orderList.get({id:itemId}).forEach((function(e){isid=(new DOMParser).parseFromString(e._values.id,"text/html");var t=isid.body.firstElementChild.innerHTML;if(t==itemId){idField.value=t,customerNameField.value=e._values.customer_name,productNameField.value=e._values.product_name,dateField.value=e._values.date,amountField.value=e._values.amount,example&&example.destroy(),example=new Choices(paymentField,{searchEnabled:!1});var a=e._values.payment;example.setChoiceByValue(a),productnameVal&&productnameVal.destroy(),productnameVal=new Choices(productNameField,{searchEnabled:!1});var n=e._values.product_name;productnameVal.setChoiceByValue(n),statusVal&&statusVal.destroy(),statusVal=new Choices(statusField,{searchEnabled:!1}),val=(new DOMParser).parseFromString(e._values.status,"text/html");var l=val.body.firstElementChild.innerHTML;statusVal.setChoiceByValue(l),flatpickr("#date-field",{enableTime:!0,dateFormat:"d M, Y, h:i K",defaultDate:e._values.date})}}))}))}))}function clearFields(){customerNameField.value="",productNameField.value="",dateField.value="",amountField.value="",paymentField.value="",example&&example.destroy(),example=new Choices(paymentField),productnameVal&&productnameVal.destroy(),productnameVal=new Choices(productNameField),statusVal&&statusVal.destroy(),statusVal=new Choices(statusField)}function deleteMultiple(){if(ids_array=[],document.querySelectorAll(".form-check [value=option1]").forEach((function(e){if(1==e.checked){var t=e.parentNode.parentNode.parentNode.querySelector("td a").innerHTML;ids_array.push(t)}})),"undefined"!=typeof ids_array&&ids_array.length>0){if(!confirm("Are you sure you want to delete this?"))return!1;ids_array.forEach((function(e){orderList.remove("id",'<a href="apps-ecommerce-order-details" class="fw-medium link-primary">'+e+"</a>")})),document.getElementById("checkAll").checked=!1}else Swal.fire({title:"Please select at least one checkbox",confirmButtonClass:"btn btn-info",buttonsStyling:!1,showCloseButton:!0})}document.querySelector(".pagination-next").addEventListener("click",(function(){document.querySelector(".pagination.listjs-pagination")&&(document.querySelector(".pagination.listjs-pagination").querySelector(".active")&&document.querySelector(".pagination.listjs-pagination").querySelector(".active").nextElementSibling.children[0].click())})),document.querySelector(".pagination-prev").addEventListener("click",(function(){document.querySelector(".pagination.listjs-pagination")&&(document.querySelector(".pagination.listjs-pagination").querySelector(".active")&&document.querySelector(".pagination.listjs-pagination").querySelector(".active").previousSibling.children[0].click())}));
+/*
+Template Name: Velzon - Admin & Dashboard Template
+Author: Themesbrand
+Website: https://Themesbrand.com/
+Contact: Themesbrand@gmail.com
+File: Ecommerce-order Init Js File
+*/
+
+var str_dt = function formatDate(date) {
+    var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    var d = new Date(date),
+        time_s = (d.getHours() + ':' + d.getMinutes());
+    var t = time_s.split(":");
+    var hours = t[0];
+    var minutes = t[1];
+    var newformat = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    month = '' + monthNames[(d.getMonth())],
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+    return [day + " " + month + "," + year + " <small class='text-muted'>" + hours + ':' + minutes + ' ' + newformat + "</small>"];
+};
+
+var isChoiceEl = document.getElementById("idStatus");
+var choices = new Choices(isChoiceEl, {
+    searchEnabled: false,
+});
+
+var isPaymentEl = document.getElementById("idPayment");
+var choices = new Choices(isPaymentEl, {
+    searchEnabled: false,
+});
+
+var checkAll = document.getElementById("checkAll");
+if (checkAll) {
+    checkAll.onclick = function() {
+        var checkboxes = document.querySelectorAll('.form-check-all input[type="checkbox"]');
+        if (checkAll.checked == true) {
+            checkboxes.forEach(function(checkbox) {
+                checkbox.checked = true;
+                checkbox.closest("tr").classList.add("table-active");
+            });
+        } else {
+            checkboxes.forEach(function(checkbox) {
+                checkbox.checked = false;
+                checkbox.closest("tr").classList.remove("table-active");
+            });
+        }
+    };
+}
+var perPage = 8;
+
+//Table
+var options = {
+    valueNames: [
+        "id",
+        "customer_name",
+        "product_name",
+        "date",
+        "amount",
+        "payment",
+        "status",
+    ],
+    page: perPage,
+    pagination: true,
+    plugins: [
+        ListPagination({
+            left: 2,
+            right: 2,
+        }),
+    ],
+};
+// Init list
+var orderList = new List("orderList", options).on("updated", function(list) {
+    list.matchingItems.length == 0 ?
+        (document.getElementsByClassName("noresult")[0].style.display = "block") :
+        (document.getElementsByClassName("noresult")[0].style.display = "none");
+    var isFirst = list.i == 1;
+    var isLast = list.i > list.matchingItems.length - list.page;
+    // make the Prev and Nex buttons disabled on first and last pages accordingly
+    document.querySelector(".pagination-prev.disabled") ?
+        document.querySelector(".pagination-prev.disabled").classList.remove("disabled") : "";
+    document.querySelector(".pagination-next.disabled") ?
+        document.querySelector(".pagination-next.disabled").classList.remove("disabled") : "";
+    if (isFirst) {
+        document.querySelector(".pagination-prev").classList.add("disabled");
+    }
+    if (isLast) {
+        document.querySelector(".pagination-next").classList.add("disabled");
+    }
+    if (list.matchingItems.length <= perPage) {
+        document.querySelector(".pagination-wrap").style.display = "none";
+    } else {
+        document.querySelector(".pagination-wrap").style.display = "flex";
+    }
+
+    if (list.matchingItems.length == perPage) {
+        document.querySelector(".pagination.listjs-pagination").firstElementChild.children[0].click()
+    }
+
+    if (list.matchingItems.length > 0) {
+        document.getElementsByClassName("noresult")[0].style.display = "none";
+    } else {
+        document.getElementsByClassName("noresult")[0].style.display = "block";
+    }
+});
+
+const xhttp = new XMLHttpRequest();
+xhttp.onload = function() {
+    var json_records = JSON.parse(this.responseText);
+    json_records.forEach(function(element) {
+        orderList.add({
+            id: '<a href="apps-ecommerce-order-details" class="fw-medium link-primary">#VZ' + element.id + '</a>',
+            customer_name: element.customer_name,
+            product_name: element.product_name,
+            date: str_dt(element.date),
+            amount: element.amount,
+            payment: element.payment,
+            status: isStatus(element.status)
+        });
+        orderList.sort('id', { order: "desc" });
+        refreshCallbacks();
+    });
+    orderList.remove("id", `<a href="apps-ecommerce-order-details" class="fw-medium link-primary">#VZ2101</a>`);
+}
+xhttp.open("GET", "assets/json/orders-list.init.json");
+xhttp.send();
+
+isCount = new DOMParser().parseFromString(
+    orderList.items.slice(-1)[0]._values.id,
+    "text/html"
+);
+
+var isValue = isCount.body.firstElementChild.innerHTML;
+
+var idField = document.getElementById("orderId"),
+    customerNameField = document.getElementById("customername-field"),
+    productNameField = document.getElementById("productname-field"),
+    dateField = document.getElementById("date-field"),
+    amountField = document.getElementById("amount-field"),
+    paymentField = document.getElementById("payment-field"),
+    statusField = document.getElementById("delivered-status"),
+    addBtn = document.getElementById("add-btn"),
+    editBtn = document.getElementById("edit-btn"),
+    removeBtns = document.getElementsByClassName("remove-item-btn"),
+    editBtns = document.getElementsByClassName("edit-item-btn");
+refreshCallbacks();
+//filterOrder("All");
+
+var tabEl = document.querySelectorAll('a[data-bs-toggle="tab"]');
+tabEl.forEach(function(item) {
+    item.addEventListener("shown.bs.tab", function(event) {
+        filterOrder(event.target.id);
+    });
+});
+
+function filterOrder(isValue) {
+    var values_status = isValue;
+    orderList.filter(function(data) {
+        var statusFilter = false;
+        matchData = new DOMParser().parseFromString(
+            data.values().status,
+            "text/html"
+        );
+        var status = matchData.body.firstElementChild.innerHTML;
+        if (status == "All" || values_status == "All") {
+            statusFilter = true;
+        } else {
+            statusFilter = status == values_status;
+        }
+        return statusFilter;
+    });
+
+    orderList.update();
+}
+
+function updateList() {
+    var values_status = document.querySelector("input[name=status]:checked").value;
+
+    data = userList.filter(function(item) {
+        var statusFilter = false;
+
+        if (values_status == "All") {
+            statusFilter = true;
+        } else {
+            statusFilter = item.values().sts == values_status;
+        }
+        return statusFilter;
+    });
+    userList.update();
+}
+
+document.getElementById("showModal").addEventListener("show.bs.modal", function(e) {
+    if (e.relatedTarget.classList.contains("edit-item-btn")) {
+        document.getElementById("exampleModalLabel").innerHTML = "Edit Order";
+        document.getElementById("showModal").querySelector(".modal-footer").style.display = "block";
+        document.getElementById("add-btn").style.display = "none";
+        document.getElementById("edit-btn").style.display = "block";
+    } else if (e.relatedTarget.classList.contains("add-btn")) {
+        document.getElementById("modal-id").style.display = "none";
+        document.getElementById("exampleModalLabel").innerHTML = "Add Order";
+        document.getElementById("showModal").querySelector(".modal-footer").style.display = "block";
+        document.getElementById("edit-btn").style.display = "none";
+        document.getElementById("add-btn").style.display = "block";
+    } else {
+        document.getElementById("exampleModalLabel").innerHTML = "List Order";
+        document.getElementById("showModal").querySelector(".modal-footer").style.display = "none";
+    }
+});
+ischeckboxcheck();
+
+document.getElementById("showModal").addEventListener("hidden.bs.modal", function() {
+    clearFields();
+});
+
+document.querySelector("#orderList").addEventListener("click", function() {
+    refreshCallbacks();
+    ischeckboxcheck();
+});
+
+var table = document.getElementById("orderTable");
+// save all tr
+var tr = table.getElementsByTagName("tr");
+var trlist = table.querySelectorAll(".list tr");
+
+function SearchData() {
+    var isstatus = document.getElementById("idStatus").value;
+    var payment = document.getElementById("idPayment").value;
+    var pickerVal = document.getElementById("demo-datepicker").value;
+
+    var date1 = pickerVal.split(" to ")[0];
+    var date2 = pickerVal.split(" to ")[1];
+
+    orderList.filter(function(data) {
+        matchData = new DOMParser().parseFromString(
+            data.values().status,
+            "text/html"
+        );
+        var status = matchData.body.firstElementChild.innerHTML;
+        var statusFilter = false;
+        var paymentFilter = false;
+        var dateFilter = false;
+
+        if (status == "all" || isstatus == "all") {
+            statusFilter = true;
+        } else {
+            statusFilter = status == isstatus;
+        }
+
+        if (data.values().payment == "all" || payment == "all") {
+            paymentFilter = true;
+        } else {
+            paymentFilter = data.values().payment == payment;
+        }
+
+        if (
+            new Date(data.values().date.slice(0, 12)) >= new Date(date1) &&
+            new Date(data.values().date.slice(0, 12)) <= new Date(date2)
+        ) {
+            dateFilter = true;
+        } else {
+            dateFilter = false;
+        }
+
+        if (statusFilter && paymentFilter && dateFilter) {
+            return statusFilter && paymentFilter && dateFilter;
+        } else if (statusFilter && paymentFilter && pickerVal == "") {
+            return statusFilter && paymentFilter;
+        } else if (paymentFilter && dateFilter && pickerVal == "") {
+            return paymentFilter && dateFilter;
+        }
+    });
+    orderList.update();
+}
+
+var count = 13;
+addBtn.addEventListener("click", function(e) {
+    if (
+        customerNameField.value !== "" &&
+        productNameField.value !== "" &&
+        dateField.value !== "" &&
+        amountField.value !== "" &&
+        paymentField.value !== ""
+    ) {
+        orderList.add({
+            id: '<a href="apps-ecommerce-order-details" class="fw-medium link-primary">#VZ' + count + "</a>",
+            customer_name: customerNameField.value,
+            product_name: productNameField.value,
+            date: dateField.value,
+            amount: "$" + amountField.value,
+            payment: paymentField.value,
+            status: isStatus(statusField.value),
+        });
+        orderList.sort('id', { order: "desc" });
+        document.getElementById("close-modal").click();
+        clearFields();
+        refreshCallbacks();
+        filterOrder("All");
+        count++;
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Order inserted successfully!',
+            showConfirmButton: false,
+            timer: 2000,
+            showCloseButton: true
+        });
+    }
+});
+
+editBtn.addEventListener("click", function(e) {
+    document.getElementById("exampleModalLabel").innerHTML = "Edit Order";
+    var editValues = orderList.get({
+        id: idField.value,
+    });
+    editValues.forEach(function(x) {
+        isid = new DOMParser().parseFromString(x._values.id, "text/html");
+        var selectedid = isid.body.firstElementChild.innerHTML;
+        if (selectedid == itemId) {
+            x.values({
+                id: '<a href="javascript:void(0);" class="fw-medium link-primary">' + idField.value + "</a>",
+                customer_name: customerNameField.value,
+                product_name: productNameField.value,
+                date: dateField.value.slice(0, 14) + '<small class="text-muted">' + dateField.value.slice(14, 22),
+                amount: amountField.value,
+                payment: paymentField.value,
+                status: isStatus(statusField.value),
+            });
+        }
+    });
+    document.getElementById("close-modal").click();
+    clearFields();
+    Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Order updated Successfully!',
+        showConfirmButton: false,
+        timer: 2000,
+        showCloseButton: true
+    });
+});
+var example = new Choices(paymentField);
+var statusVal = new Choices(statusField);
+var productnameVal = new Choices(productNameField);
+
+function isStatus(val) {
+    switch (val) {
+        case "Delivered":
+            return (
+                '<span class="badge badge-soft-success text-uppercase">' +
+                val +
+                "</span>"
+            );
+        case "Cancelled":
+            return (
+                '<span class="badge badge-soft-danger text-uppercase">' +
+                val +
+                "</span>"
+            );
+        case "Inprogress":
+            return (
+                '<span class="badge badge-soft-secondary text-uppercase">' +
+                val +
+                "</span>"
+            );
+        case "Pickups":
+            return (
+                '<span class="badge badge-soft-info text-uppercase">' + val + "</span>"
+            );
+        case "Returns":
+            return (
+                '<span class="badge badge-soft-primary text-uppercase">' +
+                val +
+                "</span>"
+            );
+        case "Pending":
+            return (
+                '<span class="badge badge-soft-warning text-uppercase">' +
+                val +
+                "</span>"
+            );
+    }
+}
+
+function ischeckboxcheck() {
+    document.getElementsByName("checkAll").forEach(function(x) {
+        x.addEventListener("click", function(e) {
+            if (e.target.checked) {
+                e.target.closest("tr").classList.add("table-active");
+            } else {
+                e.target.closest("tr").classList.remove("table-active");
+            }
+        });
+    });
+}
+
+function refreshCallbacks() {
+    removeBtns.forEach(function(btn) {
+        btn.addEventListener("click", function(e) {
+            e.target.closest("tr").children[1].innerText;
+            itemId = e.target.closest("tr").children[1].innerText;
+            var itemValues = orderList.get({
+                id: itemId,
+            });
+
+            itemValues.forEach(function(x) {
+                deleteid = new DOMParser().parseFromString(x._values.id, "text/html");
+
+                var isElem = deleteid.body.firstElementChild;
+                var isdeleteid = deleteid.body.firstElementChild.innerHTML;
+
+                if (isdeleteid == itemId) {
+                    document.getElementById("delete-record").addEventListener("click", function() {
+                        orderList.remove("id", isElem.outerHTML);
+                        document.getElementById("deleteOrder").click();
+                    });
+                }
+            });
+        });
+    });
+
+    editBtns.forEach(function(btn) {
+        btn.addEventListener("click", function(e) {
+            e.target.closest("tr").children[1].innerText;
+            itemId = e.target.closest("tr").children[1].innerText;
+            var itemValues = orderList.get({
+                id: itemId,
+            });
+
+            itemValues.forEach(function(x) {
+                isid = new DOMParser().parseFromString(x._values.id, "text/html");
+                var selectedid = isid.body.firstElementChild.innerHTML;
+                if (selectedid == itemId) {
+                    idField.value = selectedid;
+                    customerNameField.value = x._values.customer_name;
+                    productNameField.value = x._values.product_name;
+                    dateField.value = x._values.date;
+                    amountField.value = x._values.amount;
+
+                    if (example) example.destroy();
+                    example = new Choices(paymentField, {
+                        searchEnabled: false
+                    });
+                    var selected = x._values.payment;
+                    example.setChoiceByValue(selected);
+
+                    if (productnameVal) productnameVal.destroy();
+                    productnameVal = new Choices(productNameField, {
+                        searchEnabled: false,
+                    });
+                    var selectedproduct = x._values.product_name;
+                    productnameVal.setChoiceByValue(selectedproduct);
+
+                    if (statusVal) statusVal.destroy();
+                    statusVal = new Choices(statusField, {
+                        searchEnabled: false
+                    });
+                    val = new DOMParser().parseFromString(x._values.status, "text/html");
+                    var statusSelec = val.body.firstElementChild.innerHTML;
+                    statusVal.setChoiceByValue(statusSelec);
+
+                    flatpickr("#date-field", {
+                        enableTime: true,
+                        dateFormat: "d M, Y, h:i K",
+                        defaultDate: x._values.date,
+                    });
+                }
+            });
+        });
+    });
+}
+
+function clearFields() {
+    customerNameField.value = "";
+    productNameField.value = "";
+    dateField.value = "";
+    amountField.value = "";
+    paymentField.value = "";
+
+    if (example) example.destroy();
+    example = new Choices(paymentField);
+
+    if (productnameVal) productnameVal.destroy();
+    productnameVal = new Choices(productNameField);
+
+    if (statusVal) statusVal.destroy();
+    statusVal = new Choices(statusField);
+}
+
+document.querySelector(".pagination-next").addEventListener("click", function() {
+    document.querySelector(".pagination.listjs-pagination") ?
+        document.querySelector(".pagination.listjs-pagination").querySelector(".active") ?
+        document.querySelector(".pagination.listjs-pagination").querySelector(".active").nextElementSibling.children[0].click() : "" : "";
+});
+document.querySelector(".pagination-prev").addEventListener("click", function() {
+    document.querySelector(".pagination.listjs-pagination") ?
+        document.querySelector(".pagination.listjs-pagination").querySelector(".active") ?
+        document.querySelector(".pagination.listjs-pagination").querySelector(".active").previousSibling.children[0].click() : "" : "";
+});
+
+// Delete Multiple Records
+function deleteMultiple() {
+    ids_array = [];
+    var items = document.querySelectorAll('.form-check [value=option1]');
+    items.forEach(function(ele) {
+        if (ele.checked == true) {
+            var id_value = ele.parentNode.parentNode.parentNode;
+            var id_get = id_value.querySelector("td a").innerHTML;
+            ids_array.push(id_get);
+        }
+    });
+    if (typeof ids_array !== 'undefined' && ids_array.length > 0) {
+        if (confirm('Are you sure you want to delete this?')) {
+            ids_array.forEach(function(id) {
+                orderList.remove("id", `<a href="apps-ecommerce-order-details" class="fw-medium link-primary">` + id + `</a>`);
+            });
+            document.getElementById("checkAll").checked = false;
+        } else {
+            return false;
+        }
+    } else {
+        Swal.fire({
+            title: 'Please select at least one checkbox',
+            confirmButtonClass: 'btn btn-info',
+            buttonsStyling: false,
+            showCloseButton: true
+        });
+    }
+}

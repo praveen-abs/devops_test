@@ -1,1 +1,254 @@
-(()=>{function e(e){if(null!==document.getElementById(e)){var t=document.getElementById(e).getAttribute("data-colors");if(t)return(t=JSON.parse(t)).map((function(e){var t=e.replace(" ","");if(-1===t.indexOf(",")){var r=getComputedStyle(document.documentElement).getPropertyValue(t);return r||t}var a=e.split(",");if(2==a.length){var o=getComputedStyle(document.documentElement).getPropertyValue(a[0]);return o="rgba("+o+","+a[1]+")"}return t}));console.warn("data-colors Attribute not found on:",e)}}var t=e("projects-overview-chart");if(t){var r={series:[{name:"Number of Projects",type:"bar",data:[34,65,46,68,49,61,42,44,78,52,63,67]},{name:"Revenue",type:"area",data:[89.25,98.58,68.74,108.87,77.54,84.03,51.24,28.57,92.57,42.36,88.51,36.57]},{name:"Active Projects",type:"bar",data:[8,12,7,17,21,11,5,9,7,29,12,35]}],chart:{height:374,type:"line",toolbar:{show:!1}},stroke:{curve:"smooth",dashArray:[0,3,0],width:[0,1,0]},fill:{opacity:[1,.1,1]},markers:{size:[0,4,0],strokeWidth:2,hover:{size:4}},xaxis:{categories:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],axisTicks:{show:!1},axisBorder:{show:!1}},grid:{show:!0,xaxis:{lines:{show:!0}},yaxis:{lines:{show:!1}},padding:{top:0,right:-2,bottom:15,left:10}},legend:{show:!0,horizontalAlign:"center",offsetX:0,offsetY:-5,markers:{width:9,height:9,radius:6},itemMargin:{horizontal:10,vertical:0}},plotOptions:{bar:{columnWidth:"30%",barHeight:"70%"}},colors:t,tooltip:{shared:!0,y:[{formatter:function(e){return void 0!==e?e.toFixed(0):e}},{formatter:function(e){return void 0!==e?"$"+e.toFixed(2)+"k":e}},{formatter:function(e){return void 0!==e?e.toFixed(0):e}}]}};new ApexCharts(document.querySelector("#projects-overview-chart"),r).render()}var a={},o=document.querySelectorAll("[data-chart-series]");o&&o.forEach((function(t){var r=t.attributes;if(r["data-chart-series"]){a.series=r["data-chart-series"].value.toString();var o=e(r.id.value.toString()),i={series:[a.series],chart:{type:"radialBar",width:36,height:36,sparkline:{enabled:!0}},dataLabels:{enabled:!1},plotOptions:{radialBar:{hollow:{margin:0,size:"50%"},track:{margin:1},dataLabels:{show:!1}}},colors:o};new ApexCharts(document.querySelector("#"+r.id.value.toString()),i).render()}}));var i=e("prjects-status");if(i){r={series:[125,42,58,89],labels:["Completed","In Progress","Yet to Start","Cancelled"],chart:{type:"donut",height:230},plotOptions:{pie:{size:100,offsetX:0,offsetY:0,donut:{size:"90%",labels:{show:!1}}}},dataLabels:{enabled:!1},legend:{show:!1},stroke:{lineCap:"round",width:0},colors:i};new ApexCharts(document.querySelector("#prjects-status"),r).render()}})();
+/******/ (() => { // webpackBootstrap
+var __webpack_exports__ = {};
+/*!*******************************************************!*\
+  !*** ./resources/js/pages/dashboard-projects.init.js ***!
+  \*******************************************************/
+/*
+Template Name: Velzon - Admin & Dashboard Template
+Author: Themesbrand
+Website: https://Themesbrand.com/
+Contact: Themesbrand@gmail.com
+File: Project Dashboard init js
+*/
+// get colors array from the string
+function getChartColorsArray(chartId) {
+  if (document.getElementById(chartId) !== null) {
+    var colors = document.getElementById(chartId).getAttribute("data-colors");
+
+    if (colors) {
+      colors = JSON.parse(colors);
+      return colors.map(function (value) {
+        var newValue = value.replace(" ", "");
+
+        if (newValue.indexOf(",") === -1) {
+          var color = getComputedStyle(document.documentElement).getPropertyValue(newValue);
+          if (color) return color;else return newValue;
+          ;
+        } else {
+          var val = value.split(',');
+
+          if (val.length == 2) {
+            var rgbaColor = getComputedStyle(document.documentElement).getPropertyValue(val[0]);
+            rgbaColor = "rgba(" + rgbaColor + "," + val[1] + ")";
+            return rgbaColor;
+          } else {
+            return newValue;
+          }
+        }
+      });
+    } else {
+      console.warn('data-colors Attribute not found on:', chartId);
+    }
+  }
+} // Projects Overview
+
+
+var linechartcustomerColors = getChartColorsArray("projects-overview-chart");
+
+if (linechartcustomerColors) {
+  var options = {
+    series: [{
+      name: 'Number of Projects',
+      type: 'bar',
+      data: [34, 65, 46, 68, 49, 61, 42, 44, 78, 52, 63, 67]
+    }, {
+      name: 'Revenue',
+      type: 'area',
+      data: [89.25, 98.58, 68.74, 108.87, 77.54, 84.03, 51.24, 28.57, 92.57, 42.36, 88.51, 36.57]
+    }, {
+      name: 'Active Projects',
+      type: 'bar',
+      data: [8, 12, 7, 17, 21, 11, 5, 9, 7, 29, 12, 35]
+    }],
+    chart: {
+      height: 374,
+      type: 'line',
+      toolbar: {
+        show: false
+      }
+    },
+    stroke: {
+      curve: 'smooth',
+      dashArray: [0, 3, 0],
+      width: [0, 1, 0]
+    },
+    fill: {
+      opacity: [1, 0.1, 1]
+    },
+    markers: {
+      size: [0, 4, 0],
+      strokeWidth: 2,
+      hover: {
+        size: 4
+      }
+    },
+    xaxis: {
+      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      axisTicks: {
+        show: false
+      },
+      axisBorder: {
+        show: false
+      }
+    },
+    grid: {
+      show: true,
+      xaxis: {
+        lines: {
+          show: true
+        }
+      },
+      yaxis: {
+        lines: {
+          show: false
+        }
+      },
+      padding: {
+        top: 0,
+        right: -2,
+        bottom: 15,
+        left: 10
+      }
+    },
+    legend: {
+      show: true,
+      horizontalAlign: 'center',
+      offsetX: 0,
+      offsetY: -5,
+      markers: {
+        width: 9,
+        height: 9,
+        radius: 6
+      },
+      itemMargin: {
+        horizontal: 10,
+        vertical: 0
+      }
+    },
+    plotOptions: {
+      bar: {
+        columnWidth: '30%',
+        barHeight: '70%'
+      }
+    },
+    colors: linechartcustomerColors,
+    tooltip: {
+      shared: true,
+      y: [{
+        formatter: function formatter(y) {
+          if (typeof y !== "undefined") {
+            return y.toFixed(0);
+          }
+
+          return y;
+        }
+      }, {
+        formatter: function formatter(y) {
+          if (typeof y !== "undefined") {
+            return "$" + y.toFixed(2) + "k";
+          }
+
+          return y;
+        }
+      }, {
+        formatter: function formatter(y) {
+          if (typeof y !== "undefined") {
+            return y.toFixed(0);
+          }
+
+          return y;
+        }
+      }]
+    }
+  };
+  var chart = new ApexCharts(document.querySelector("#projects-overview-chart"), options);
+  chart.render();
+} //Radial chart data
+
+
+var isApexSeriesData = {};
+var isApexSeries = document.querySelectorAll("[data-chart-series]");
+
+if (isApexSeries) {
+  isApexSeries.forEach(function (element) {
+    var isApexSeriesVal = element.attributes;
+
+    if (isApexSeriesVal["data-chart-series"]) {
+      isApexSeriesData.series = isApexSeriesVal["data-chart-series"].value.toString();
+      var radialbarhartoneColors = getChartColorsArray(isApexSeriesVal["id"].value.toString());
+      var options = {
+        series: [isApexSeriesData.series],
+        chart: {
+          type: 'radialBar',
+          width: 36,
+          height: 36,
+          sparkline: {
+            enabled: true
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        plotOptions: {
+          radialBar: {
+            hollow: {
+              margin: 0,
+              size: '50%'
+            },
+            track: {
+              margin: 1
+            },
+            dataLabels: {
+              show: false
+            }
+          }
+        },
+        colors: radialbarhartoneColors
+      };
+      var chart = new ApexCharts(document.querySelector("#" + isApexSeriesVal["id"].value.toString()), options);
+      chart.render();
+    }
+  });
+} // Project Status charts
+
+
+var donutchartProjectsStatusColors = getChartColorsArray("prjects-status");
+
+if (donutchartProjectsStatusColors) {
+  var options = {
+    series: [125, 42, 58, 89],
+    labels: ["Completed", "In Progress", "Yet to Start", "Cancelled"],
+    chart: {
+      type: "donut",
+      height: 230
+    },
+    plotOptions: {
+      pie: {
+        size: 100,
+        offsetX: 0,
+        offsetY: 0,
+        donut: {
+          size: "90%",
+          labels: {
+            show: false
+          }
+        }
+      }
+    },
+    dataLabels: {
+      enabled: false
+    },
+    legend: {
+      show: false
+    },
+    stroke: {
+      lineCap: "round",
+      width: 0
+    },
+    colors: donutchartProjectsStatusColors
+  };
+  var chart = new ApexCharts(document.querySelector("#prjects-status"), options);
+  chart.render();
+}
+/******/ })()
+;
