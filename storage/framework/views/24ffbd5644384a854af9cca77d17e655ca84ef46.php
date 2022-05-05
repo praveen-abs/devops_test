@@ -32,7 +32,7 @@
                 </button>
 
                 <!-- App Search-->
-                <form class="app-search d-none d-md-block">
+               <!-- <form class="app-search d-none d-md-block">
                     <div class="position-relative">
                         <input type="text" class="form-control" placeholder="Search..." autocomplete="off"
                             id="search-options" value="">
@@ -42,8 +42,8 @@
                     </div>
                     <div class="dropdown-menu dropdown-menu-lg" id="search-dropdown">
                         <div data-simplebar style="max-height: 320px;">
-                            <!-- item-->
-                            <div class="dropdown-header">
+
+                        <div class="dropdown-header">
                                 <h6 class="text-overflow text-muted mb-0 text-uppercase">Recent Searches</h6>
                             </div>
 
@@ -53,37 +53,37 @@
                                 <a href="index" class="btn btn-soft-secondary btn-sm btn-rounded">buttons <i
                                         class="mdi mdi-magnify ms-1"></i></a>
                             </div>
-                            <!-- item-->
+
                             <div class="dropdown-header mt-2">
                                 <h6 class="text-overflow text-muted mb-1 text-uppercase">Pages</h6>
                             </div>
 
-                            <!-- item-->
+
                             <a href="javascript:void(0);" class="dropdown-item notify-item">
                                 <i class="ri-bubble-chart-line align-middle fs-18 text-muted me-2"></i>
                                 <span>Analytics Dashboard</span>
                             </a>
 
-                            <!-- item-->
+
                             <a href="javascript:void(0);" class="dropdown-item notify-item">
                                 <i class="ri-lifebuoy-line align-middle fs-18 text-muted me-2"></i>
                                 <span>Help Center</span>
                             </a>
 
-                            <!-- item-->
+
                             <a href="javascript:void(0);" class="dropdown-item notify-item">
                                 <i class="ri-user-settings-line align-middle fs-18 text-muted me-2"></i>
                                 <span>My account settings</span>
                             </a>
 
-                            <!-- item-->
+
                             <div class="dropdown-header mt-2">
                                 <h6 class="text-overflow text-muted mb-2 text-uppercase">Members</h6>
                             </div>
 
                             <div class="notification-list">
-                                <!-- item -->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item py-2">
+
+                            <a href="javascript:void(0);" class="dropdown-item notify-item py-2">
                                     <div class="d-flex">
                                         <img src="<?php echo e(URL::asset('assets/images/users/avatar-2.jpg')); ?>"
                                             class="me-3 rounded-circle avatar-xs" alt="user-pic">
@@ -93,7 +93,7 @@
                                         </div>
                                     </div>
                                 </a>
-                                <!-- item -->
+
                                 <a href="javascript:void(0);" class="dropdown-item notify-item py-2">
                                     <div class="d-flex">
                                         <img src="<?php echo e(URL::asset('assets/images/users/avatar-3.jpg')); ?>"
@@ -104,7 +104,7 @@
                                         </div>
                                     </div>
                                 </a>
-                                <!-- item -->
+
                                 <a href="javascript:void(0);" class="dropdown-item notify-item py-2">
                                     <div class="d-flex">
                                         <img src="<?php echo e(URL::asset('assets/images/users/avatar-5.jpg')); ?>"
@@ -123,12 +123,12 @@
                                     class="ri-arrow-right-line ms-1"></i></a>
                         </div>
                     </div>
-                </form>
+                </form>  -->
             </div>
 
             <div class="d-flex align-items-center">
 
-                <div class="dropdown d-md-none topbar-head-dropdown header-item">
+                <!-- <div class="dropdown d-md-none topbar-head-dropdown header-item">
                     <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
                         id="page-header-search-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false">
@@ -147,9 +147,9 @@
                             </div>
                         </form>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="dropdown ms-1 topbar-head-dropdown header-item">
+                <!-- <div class="dropdown ms-1 topbar-head-dropdown header-item">
                     <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <?php switch(Session::get('lang')):
@@ -183,58 +183,52 @@
                     </button>
                     <div class="dropdown-menu dropdown-menu-end">
 
-                        <!-- item-->
                         <a href="<?php echo e(url('index/en')); ?>" class="dropdown-item notify-item language py-2" data-lang="en"
                             title="English">
                             <img src="<?php echo e(URL::asset('assets/images/flags/us.svg')); ?>" alt="user-image" class="me-2 rounded" height="20">
                             <span class="align-middle">English</span>
                         </a>
 
-                        <!-- item-->
                         <a href="<?php echo e(url('index/sp')); ?>" class="dropdown-item notify-item language" data-lang="sp"
                             title="Spanish">
                             <img src="<?php echo e(URL::asset('assets/images/flags/spain.svg')); ?>" alt="user-image" class="me-2 rounded" height="20">
                             <span class="align-middle">Española</span>
                         </a>
 
-                        <!-- item-->
                         <a href="<?php echo e(url('index/gr')); ?>" class="dropdown-item notify-item language" data-lang="gr"
                             title="German">
                             <img src="<?php echo e(URL::asset('assets/images/flags/germany.svg')); ?>" alt="user-image" class="me-2 rounded"
                                 height="20"> <span class="align-middle">Deutsche</span>
                         </a>
 
-                        <!-- item-->
                         <a href="<?php echo e(url('index/it')); ?>" class="dropdown-item notify-item language" data-lang="it"
                             title="Italian">
                             <img src="<?php echo e(URL::asset('assets/images/flags/italy.svg')); ?>" alt="user-image" class="me-2 rounded" height="20">
                             <span class="align-middle">Italiana</span>
                         </a>
 
-                        <!-- item-->
                         <a href="<?php echo e(url('index/ru')); ?>" class="dropdown-item notify-item language" data-lang="ru"
                             title="Russian">
                             <img src="<?php echo e(URL::asset('assets/images/flags/russia.svg')); ?>" alt="user-image" class="me-2 rounded" height="20">
                             <span class="align-middle">русский</span>
                         </a>
 
-                        <!-- item-->
                         <a href="<?php echo e(url('index/ch')); ?>" class="dropdown-item notify-item language" data-lang="ch"
                             title="Chinese">
                             <img src="<?php echo e(URL::asset('assets/images/flags/china.svg')); ?>" alt="user-image" class="me-2 rounded" height="20">
                             <span class="align-middle">中国人</span>
                         </a>
 
-                        <!-- item-->
                         <a href="<?php echo e(url('index/fr')); ?>" class="dropdown-item notify-item language" data-lang="fr"
                             title="French">
                             <img src="<?php echo e(URL::asset('assets/images/flags/french.svg')); ?>" alt="user-image" class="me-2 rounded" height="20">
                             <span class="align-middle">français</span>
                         </a>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="dropdown topbar-head-dropdown ms-1 header-item">
+                <!-- View all apps button -->
+                <!-- <div class="dropdown topbar-head-dropdown ms-1 header-item">
                     <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class='bx bx-category-alt fs-22'></i>
@@ -296,9 +290,10 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="dropdown topbar-head-dropdown ms-1 header-item">
+                <!-- View Cart button -->
+                <!-- <div class="dropdown topbar-head-dropdown ms-1 header-item">
                     <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
                         id="page-header-cart-dropdown" data-bs-toggle="dropdown" data-bs-auto-close="outside"
                         aria-haspopup="true" aria-expanded="false">
@@ -465,9 +460,10 @@
                             </a>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="ms-1 header-item d-none d-sm-flex">
+                <!-- other buttons -->
+                <!-- <div class="ms-1 header-item d-none d-sm-flex">
                     <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
                         data-toggle="fullscreen">
                         <i class='bx bx-fullscreen fs-22'></i>
@@ -720,7 +716,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="dropdown ms-sm-3 header-item topbar-user">
                     <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown"

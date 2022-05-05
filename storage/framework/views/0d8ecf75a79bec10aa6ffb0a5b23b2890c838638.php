@@ -8,7 +8,7 @@
                 <img src="<?php echo e(URL::asset('assets/images/logo-sm.png')); ?>" alt="" height="22">
             </span>
             <span class="logo-lg">
-                <img src="<?php echo e(URL::asset('assets/images/logo-dark.png')); ?>" alt="" height="17">
+                <img src="<?php echo e(URL::asset('assets/images/logo-dark.png')); ?>" alt="" height="40">
             </span>
         </a>
         <!-- Light Logo-->
@@ -17,7 +17,7 @@
                 <img src="<?php echo e(URL::asset('assets/images/logo-sm.png')); ?>" alt="" height="22">
             </span>
             <span class="logo-lg">
-                <img src="<?php echo e(URL::asset('assets/images/logo-light.png')); ?>" alt="" height="17">
+                <img src="<?php echo e(URL::asset('assets/images/logo-light.png')); ?>" alt="" height="40">
             </span>
         </a>
         <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover" id="vertical-hover">
@@ -32,7 +32,7 @@
             </div>
             <ul class="navbar-nav" id="navbar-nav">
                 <li class="menu-title"><span ><?php echo app('translator')->get('translation.menu'); ?></span></li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarDashboards" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarDashboards">
                         <i class="ri-dashboard-2-line"></i> <span ><?php echo app('translator')->get('translation.dashboards'); ?></span>
@@ -56,9 +56,34 @@
                             </li>
                         </ul>
                     </div>
-                </li> 
+                </li>  -->
                 
                 <!-- end Dashboard Menu -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="index">
+                        <i class="ri-layout-3-line"></i> <span data-key="t-landing">Dashboard</span>
+                        <!-- <span class="badge badge-pill bg-danger" ><?php echo app('translator')->get('translation.new'); ?></span> -->
+
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarReview" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarReview">
+                        <i class="ri-dashboard-2-line"></i> <span >Review </span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarReview">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="dashboard-analytics" class="nav-link" >Appraisal Review</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="dashboard-crm" class="nav-link" >360 Degree Review</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li> 
+
 
 
                 <!-- <li class="nav-item">
