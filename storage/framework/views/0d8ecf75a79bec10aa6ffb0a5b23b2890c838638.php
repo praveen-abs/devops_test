@@ -75,10 +75,10 @@
                     <div class="collapse menu-dropdown" id="sidebarReview">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="dashboard-analytics" class="nav-link" >Appraisal Review</a>
+                                <a href="vmt_appraisalreview" class="nav-link" >Appraisal Review</a>
                             </li>
                             <li class="nav-item">
-                                <a href="dashboard-crm" class="nav-link" >360 Degree Review</a>
+                                <a href="vmt_360review" class="nav-link" >360 Degree Review</a>
                             </li>
                         </ul>
                     </div>
