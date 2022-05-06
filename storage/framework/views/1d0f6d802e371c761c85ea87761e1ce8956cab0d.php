@@ -104,12 +104,12 @@
                 </div><!-- end card body -->
             </div><!-- end card -->
 
-            <div class="card">
-                <h4 class="card-title mb-0 flex-grow-1"> ANNUAL GOAL SETTING & REVIEW</h4>    
+            <div class="card" style=" background-color: #405189;">
+                <h4 class="card-title mb-0 flex-grow-1" style="color:white;"> ANNUAL GOAL SETTING & REVIEW</h4>    
             </div>
 
-            <div class="card">
-                <h4 class="card-title mb-0 flex-grow-1"> Objectives and Activities (What)</h4>    
+            <div class="card" style="background-color: #405189;">
+                <h4 class="card-title mb-0 flex-grow-1" style="color:white;"> Objectives and Activities (What)</h4>    
             </div>
 
             <div class="card">
@@ -117,36 +117,36 @@
                     <table class="table table-bordered align-middle mb-0">
                         <thead>
                             <tr>
-                                <th width="60%" class="">To be filled at the beginning of the review year
-                                    <br/>(Appraiser to prepare and obtain agreement of employee)
+                                <th width="60%" class="" style=" background-color: #405189;"><h6 style="color:white;">To be filled at the beginning of the review year
+                                    <br/>(Appraiser to prepare and obtain agreement of employee)</h6>
                                 </th>
-                                <th width="20%" class="">To be filled during annual appraisal
-                                    <br/>(Appraiser to prepare and discuss with Reviewer)
+                                <th width="20%" class=""  style=" background-color: #405189;"><h6 style="color:white;">To be filled during annual appraisal
+                                    <br/>(Appraiser to prepare and discuss with Reviewer)</h6>
                                 </th>
-                                <th width="20%" class="">To be filled during annual appraisal<br/>
-                                    (Appraiser to prepare and discuss with Reviewer)
+                                <th width="20%" class=""  style=" background-color: #405189;"><h6 style="color:white;">To be filled during annual appraisal<br/>
+                                    (Appraiser to prepare and discuss with Reviewer)</h6>
                                 </th>
                             </tr>
                             <tr>
-                                <th class="" width="60%">
-                                    <table class="table-bordered p-0" width="100%">
+                                <th class="" width="60%" style=" background-color: #405189;">
+                                    <table class="" width="100%">
                                         <tbody>
                                             <tr>
-                                                <td width="40%" class="">
-                                                    START OF THE YEAR   
+                                                <td width="40%" class="" style=" background-color: #405189;">
+                                                    <h6 style="color:white;">  START OF THE YEAR   </h6>
                                                 </td>
-                                                <td width="30%" class="r">
-                                                    WEIGHTAGE
+                                                <td width="30%" class="r" style=" background-color: #405189;">
+                                                    <h6 style="color:white;">     WEIGHTAGE   </h6>
                                                 </td>
-                                                <td width="30%" class="">
-                                                    Self Appraisal
+                                                <td width="30%" class="" style=" background-color: #405189;">
+                                                    <h6 style="color:white;">      Self Appraisal </h6>
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </th>
-                                <th class=""  width="20%">L1 Review</th>
-                                <th class=""  width="20%">L2 Review</th>
+                                <th class=""  width="20%" style=" background-color: #405189;"><h6 style="color:white;">     L1 Review </h6></th>
+                                <th class=""  width="20%" style=" background-color: #405189;"><h6 style="color:white;">     L2 Review </h6></th>
                             </tr>
                             <tr>
                                 <td class="" width="60%">
@@ -210,7 +210,7 @@
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
                                             <tr>
-                                                <td width="40%" class=" p-0">
+                                                <td width="40%" class=" table-bordered p-0">
                                                     <table class="table-bordered p-0" width="100%">
                                                         <tbody>
                                                             <tr>
@@ -272,7 +272,7 @@
                                     <table class="table-bordered  p-0" width="100%">
                                         <tbody>
                                             <tr>
-                                                <td width="40%" class="">
+                                                <td width="40%" class=" table-bordered p-0">
                                                     <table class="table-bordered  p-0" width="100%">
                                                         <tbody>
                                                             <tr>
@@ -334,7 +334,7 @@
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
                                             <tr>
-                                                <td width="40%" class="">
+                                                <td width="40%" class=" table-bordered p-0">
                                                     <table class="table-bordered p-0" width="100%">
                                                         <tbody>
                                                             <tr>
@@ -396,7 +396,7 @@
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
                                             <tr>
-                                                <td width="40%" class="">
+                                                <td width="40%" class=" table-bordered p-0">
                                                     <table class="table-bordered p-0" width="100%">
                                                         <tbody>
                                                             <tr>
@@ -459,7 +459,7 @@
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
                                             <tr>
-                                                <td width="40%" class="">
+                                                <td width="40%" class=" table-bordered p-0">
                                                     <table class="table-bordered p-0" width="100%">
                                                         <tbody>
                                                             <tr>
@@ -522,7 +522,7 @@
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
                                             <tr>
-                                                <td width="40%" class="">
+                                                <td width="40%" class=" table-bordered p-0">
                                                     <table class="table-bordered p-0" width="100%">
                                                         <tbody>
                                                             <tr>

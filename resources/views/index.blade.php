@@ -17,7 +17,7 @@
                 <div class="col-12">
                     <div class="d-flex align-items-lg-center flex-lg-row flex-column">
                         <div class="flex-grow-1">
-                            <h4 class="fs-16 mb-1">Good Morning,</h4>
+                            <h4 class="fs-16 mb-1">Good Morning</h4>
                         </div>
                         <!-- <div class="mt-3 mt-lg-0">
                             <form action="javascript:void(0);">
