@@ -21,7 +21,7 @@
 
     @component('components.breadcrumb')
         @slot('li_1') Dashboards @endslot
-        @slot('title') Appraisal Review @endslot
+        @slot('title') Self Appraisal Review @endslot
     @endcomponent
 
 
@@ -29,7 +29,7 @@
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-header border-0 align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">PERFORMANCE & DEVELOPMENT REVIEW (PDR)</h4>
+                    <h4 class="card-title mb-0 flex-grow-1">PERFORMANCE MANAGEMENT SYSTEMS (PMS) </h4>
                     
                 </div><!-- end card header -->
 
@@ -39,11 +39,8 @@
                         
                         <tbody>
                             <tr style="border: none;">
-                                <th colspan="12"><b>Designation</b></th>
-                            </tr>
-                            <tr style="border: none;">
                                 <td class=" text-left">
-                                    Employee Name: 
+                                    <b>Employee Name: </b>
                                 </td>
                                 <td class="text-left">
                                     {{Auth::user()->name}}
@@ -51,7 +48,7 @@
                             </tr>
                             <tr  style="border: none;">
                                 <td class="text-left">
-                                   Employee ID:
+                                <b>Employee ID:
                                 </td>
                                 <td class="text-left">
                                     AST0072
@@ -59,7 +56,7 @@
                             </tr>
                             <tr style="border: none;">
                                 <td class="col-xl-6 text-left">
-                                   Job Title / Designation:
+                                <b>Job Title / Designation:</b>
                                 </td>
                                 <td class="col-xl-6 text-left">
                                     AGM – Operations 
@@ -67,7 +64,7 @@
                             </tr>
                             <tr style="border: none;">
                                 <td class="col-xl-6 text-left">
-                                   Business Unit/Process/Function:
+                                <b>Business Unit/Process/Function:</b>
                                 </td>
                                 <td class="col-xl-6 text-left">
                                    Call Centre
@@ -75,7 +72,7 @@
                             </tr>
                             <tr style="border: none;">
                                 <td class="col-xl-6 text-left">
-                                   L1 Name
+                                <b>Reporting Manager :</b>
                                 </td>
                                 <td class="col-xl-6 text-left">
                                    Ajeesh Kumar R -Head Service Delivery  
@@ -83,7 +80,7 @@
                             </tr>
                             <tr style="border: none;">
                                 <td class="col-xl-6 text-left">
-                                  L2 Name
+                                <b>Managers Manager :</b>
                                 </td>
                                 <td class="col-xl-6 text-left">
                                    Kumar
@@ -91,10 +88,10 @@
                             </tr>
                             <tr style="border: none;">
                                 <td class="col-xl-6 text-left">
-                                 Review Period:  
+                                <b>Review Period:  </b>
                                 </td>
                                 <td class="col-xl-6 text-left">
-                                   Jul’20 To Mar’21
+                                   Jul’21 To Mar’22
                                 </td>
                             </tr>
                         </tbody>
@@ -103,103 +100,93 @@
                 </div><!-- end card body -->
             </div><!-- end card -->
 
-            <div class="card" style=" background-color: #405189;">
-                <h4 class="card-title mb-0 flex-grow-1" style="color:white;"> ANNUAL GOAL SETTING & REVIEW</h4>    
-            </div>
+            <div class="card">
 
-            <div class="card" style="background-color: #405189;">
-                <h4 class="card-title mb-0 flex-grow-1" style="color:white;"> Objectives and Activities (What)</h4>    
-            </div>
+                <div class="card-body  pb-2">
+
+                    <table class="table e-table align-middle table-nowrap mb-0 " style="border: none;">
+                        
+                        <tbody>
+                            <tr style="border: none;" >
+                                <td class=" text-left">
+                                <b>Overall Annual Score: </b>
+                                </td>
+                                <td class="text-left">
+                                    80
+                                </td>
+                            </tr>
+                            <tr  style="border: none;">
+                                <td class="text-left">
+                                <b>Corresponding ANNUAL PERFORMANCE Rating:</b>
+                                </td>
+                                <td class="text-left">
+                                Exceeds Expectations
+                                </td>
+                            </tr>
+                            <tr style="border: none;">
+                                <td class="col-xl-6 text-left">
+                                <b>Ranking:</b>
+                                </td>
+                                <td class="col-xl-6 text-left">
+                                    4
+                                </td>
+                            </tr>
+                            <tr style="border: none;">
+                                <td class="col-xl-6 text-left">
+                                <b> Action:</b>
+                                </td>
+                                <td class="col-xl-6 text-left">
+                                15%
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                         
+                </div><!-- end card body -->
+            </div><!-- end card -->            
 
             <div class="card">
                 <div class="card-body pb-2">
                     <table class="table table-bordered align-middle mb-0">
                         <thead>
                             <tr>
-                                <th width="60%" class="" style=" background-color: #405189;"><h6 style="color:white;">To be filled at the beginning of the review year
-                                    <br/>(Appraiser to prepare and obtain agreement of employee)</h6>
-                                </th>
-                                <th width="20%" class=""  style=" background-color: #405189;"><h6 style="color:white;">To be filled during annual appraisal
-                                    <br/>(Appraiser to prepare and discuss with Reviewer)</h6>
-                                </th>
-                                <th width="20%" class=""  style=" background-color: #405189;"><h6 style="color:white;">To be filled during annual appraisal<br/>
-                                    (Appraiser to prepare and discuss with Reviewer)</h6>
-                                </th>
-                            </tr>
-                            <tr>
-                                <th class="" width="60%" style=" background-color: #405189;">
-                                    <table class="" width="100%">
+                                <th class="" style=" background-color: #405189;" >
+                                    <table class="" width="100%" >
                                         <tbody>
                                             <tr>
-                                                <td width="40%" class="" style=" background-color: #405189;">
-                                                    <h6 style="color:white;">  START OF THE YEAR   </h6>
-                                                </td>
-                                                <td width="30%" class="r" style=" background-color: #405189;">
-                                                    <h6 style="color:white;">     WEIGHTAGE   </h6>
-                                                </td>
                                                 <td width="30%" class="" style=" background-color: #405189;">
-                                                    <h6 style="color:white;">      Self Appraisal </h6>
+                                                    <h6 style="color:white;">Objectives </h6>
                                                 </td>
+                                                <td width="25%" class="" style=" background-color: #405189;">
+                                                    <h6 style="color:white;">Activities </h6>
+                                                </td>                                                
+                                                <td width="15%" class="r" style=" background-color: #405189;">
+                                                    <h6 style="color:white;">Weightage  % </h6>
+                                                </td>
+                                                <td width="16%" class="" style=" background-color: #405189;">
+                                                    <h6 style="color:white;">Self<br/> Appraisal </h6>
+                                                </td>
+                                                <td width="4%" class="r" style=" background-color: #405189;">
+                                                    <h6 style="color:white;">Achieved  % </h6>
+                                                </td>              
                                             </tr>
                                         </tbody>
                                     </table>
                                 </th>
-                                <th class=""  width="20%" style=" background-color: #405189;"><h6 style="color:white;">     L1 Review </h6></th>
-                                <th class=""  width="20%" style=" background-color: #405189;"><h6 style="color:white;">     L2 Review </h6></th>
+                                <th   style=" background-color: #405189;" >
+                                    <h6 style="color:white;">Reporting Manger Review's (L1)<br/><br/>  Comments &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Score</h6>
+                                </th>                                                        
+                                <th  class="r" style=" background-color: #405189;">
+                                    <h6 style="color:white;"> Managers Manager (L2)<br/><br/>  Comments &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Score</h6>
+                                </th>               
+                                <th class="r" style=" background-color: #405189;">
+                                    <h6 style="color:white;"> Final Review <br/>( HR or Head Of the Department)</h6>
+                                </th>         
+                                                                                             
                             </tr>
-                            <tr>
-                                <td class="" width="60%">
-                                    <table class="p-0 table-bordered" width="100%">
-                                        <tbody>
-                                            <tr>
-                                                <td width="40%" class="">
-                                                    What have you agreed to do this year?
-                                                    <br/>
-                                                    (Employee & Appraiser to agree) 
-                                                </td>
-                                                <td width="30%" class="">
-                                                    Total must add to 100%   
-                                                </td>
-                                                <td width="15%" class="">
-                                                    Self Appraised Remarks
-                                                </td>
-                                                <td width="15%" class="">
-                                                    Achieved %
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                                <td class=""  width="20%">
-                                    <table class="table-bordered p-0" width="100%">
-                                        <tbody>
-                                            <tr>
-                                                <td width="50%" class="">
-                                                   L1 Manager - Comments
-                                                </td>
-                                                <td width="50%" class="">
-                                                    Score as per the  L1 Weightage   
-                                                </td>
-                                               
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                                <td class=""  width="20%">
-                                    <table class="table-bordered p-0" width="100%">
-                                        <tbody>
-                                            <tr>
-                                                <td width="50%" class="">
-                                                    L1 Manager - Comments
-                                                </td>
-                                                <td width="50%" class="">
-                                                    Score as per the  L1 Weightage   
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
+
+
+
                         </thead>
                         <tbody>
                             
@@ -216,27 +203,27 @@
                                                                 <td width="50%" class="">
                                                                    Revenue as per AOP for the FY 2022-23
                                                                 </td>
-                                                                <td width="50%" class="">
+                                                                <td  class="">
                                                                     Total Revenue to be decided by Manager and HOD   
                                                                 </td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
                                                 </td>
-                                                <td width="30%" class="">
+                                                <td width="10%" class="">
                                                     25%  
                                                 </td>
                                                 <td width="15%" class="">
                                                     <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
-                                                <td width="15%" class="">
+                                                <td width="5%" class="">
                                                    <input type="number" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="%" />
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </td>
-                                <td class=""  width="20%">
+                                <td class="" >
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
                                             <tr>
@@ -250,7 +237,7 @@
                                         </tbody>
                                     </table>
                                 </td>
-                                <td class=""  width="20%">
+                                <td class="">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
                                             <tr>
@@ -264,6 +251,20 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                <td class="" width="100%">
+                                    <table class="table-bordered p-0" width="100%">
+                                        <tbody>
+                                            <tr>
+                                                <td width="50%" class="">
+                                                    <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
+                                                </td>
+                                                <td width="50%" class="">
+                                                    <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>                                
                             </tr>
 
                             <tr>
@@ -285,13 +286,13 @@
                                                         </tbody>
                                                     </table>
                                                 </td>
-                                                <td width="30%" class="">
+                                                <td width="10%" class="">
                                                     20%  
                                                 </td>
                                                 <td width="15%" class="">
                                                    <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
-                                                <td width="15%" class="">
+                                                <td width="5%" class="">
                                                    <input type="number" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="%" />
                                                 </td>
                                             </tr>
@@ -326,6 +327,20 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                <td class=""  width="20%">
+                                    <table class="table-bordered p-0" width="100%">
+                                        <tbody>
+                                            <tr>
+                                                <td width="50%" class="">
+                                                    <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
+                                                </td>
+                                                <td width="50%" class="">
+                                                    <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>                                
                             </tr>
     
                             <tr>
@@ -347,13 +362,13 @@
                                                         </tbody>
                                                     </table>
                                                 </td>
-                                                <td width="30%" class="">
+                                                <td width="10%" class="">
                                                     20% 
                                                 </td>
                                                 <td width="15%" class="">
                                                    <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
-                                                <td width="15%" class="">
+                                                <td width="5%" class="">
                                                    <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                             </tr>
@@ -388,6 +403,20 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                <td class=""  width="20%">
+                                    <table class="table-bordered p-0" width="100%">
+                                        <tbody>
+                                            <tr>
+                                                <td width="50%" class="">
+                                                    <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
+                                                </td>
+                                                <td width="50%" class="">
+                                                    <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>                                
                             </tr>
                             
                             <tr>
@@ -409,13 +438,13 @@
                                                         </tbody>
                                                     </table>
                                                 </td>
-                                                <td width="30%" class="">
+                                                <td width="10%" class="">
                                                     15%  
                                                 </td>
                                                 <td width="15%" class="">
                                                    <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
-                                                <td width="15%" class="">
+                                                <td width="5%" class="">
                                                    <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                             </tr>
@@ -450,6 +479,20 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                <td class=""  width="20%">
+                                    <table class="table-bordered p-0" width="100%">
+                                        <tbody>
+                                            <tr>
+                                                <td width="50%" class="">
+                                                    <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
+                                                </td>
+                                                <td width="50%" class="">
+                                                    <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>                                
                             </tr>
 
     
@@ -472,13 +515,13 @@
                                                         </tbody>
                                                     </table>
                                                 </td>
-                                                <td width="30%" class="">
+                                                <td width="10%" class="">
                                                     15%  
                                                 </td>
                                                 <td width="15%" class="">
                                                    <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
-                                                <td width="15%" class="">
+                                                <td width="5%" class="">
                                                    <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                             </tr>
@@ -513,6 +556,20 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                <td class=""  width="20%">
+                                    <table class="table-bordered p-0" width="100%">
+                                        <tbody>
+                                            <tr>
+                                                <td width="50%" class="">
+                                                    <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
+                                                </td>
+                                                <td width="50%" class="">
+                                                    <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>                                
                             </tr>
 
 
@@ -535,13 +592,13 @@
                                                         </tbody>
                                                     </table>
                                                 </td>
-                                                <td width="30%" class="">
+                                                <td width="10%" class="">
                                                     5%  
                                                 </td>
                                                 <td width="15%" class="">
                                                    <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
-                                                <td width="15%" class="">
+                                                <td width="5%" class="">
                                                    <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                             </tr>
@@ -576,6 +633,20 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                <td class=""  width="20%">
+                                    <table class="table-bordered p-0" width="100%">
+                                        <tbody>
+                                            <tr>
+                                                <td width="50%" class="">
+                                                    <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
+                                                </td>
+                                                <td width="50%" class="">
+                                                    <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>                                
                             </tr>
 
                              <tr>
@@ -586,7 +657,7 @@
                                                 <td width="40%" class="">
                                                    &nbsp;
                                                 </td>
-                                                <td width="30%" class="">
+                                                <td width="10%" class="">
                                                     <b>100%</b>
                                                 </td>
                                                 <td width="15%" class="">
@@ -595,6 +666,9 @@
                                                 <td width="15%" class="">
                                                    <b>TOTAL SCORE</b>
                                                 </td>
+                                                <td width="15%" class="">
+                                                   <b>&nbsp;</b>
+                                                </td>                                                
                                             </tr>
                                         </tbody>
                                     </table>
@@ -627,22 +701,48 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                <td class=""  width="20%">
+                                    <table class="table-bordered p-0" width="100%">
+                                        <tbody>
+                                            <tr>
+                                                <td width="50%" class="">
+                                                    <b>0</b>
+                                                </td>
+                                                <td width="50%" class="">
+                                                    &nbsp;
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
                             </tr>
                             <tr>
                                 <td>
                                     <div class="row mt-2">
                                         <div class="text-end col-xl-12">
+                                            <button type="submit" class="btn btn-primary">Save</button>
                                             <button type="submit" class="btn btn-primary">Submit</button>
+
                                         </div>
                                     </div>
                                 </td>
                             </tr>
+                         
                         </tbody>
                     </table>
                 </div>
             </div>
         </div><!-- end col -->
-
+        <div class="row mt-3">
+                                <div class="col-lg-12">
+                                    <label class="form-label">
+                                    Appraiser Feedback:
+                                    </label>
+                                    <div class="my-2">
+                                        <textarea class="form-control" placeholder="" id="gen-info-description-input" name="performance" rows="4"></textarea>
+                                    </div>
+                                </div>
+                            </div>
     </div><!-- end row -->
 
 @endsection
