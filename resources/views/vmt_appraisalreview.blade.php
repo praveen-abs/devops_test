@@ -227,10 +227,10 @@
                                                     25%  
                                                 </td>
                                                 <td width="15%" class="">
-                                                   
+                                                    <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                                 <td width="15%" class="">
-                                                   
+                                                   <input type="number" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="%" />
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -241,10 +241,10 @@
                                         <tbody>
                                             <tr>
                                                 <td width="50%" class="">
-                                                   
+                                                   <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                                 <td width="50%" class="">
-                                                      
+                                                    <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />  
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -255,10 +255,10 @@
                                         <tbody>
                                             <tr>
                                                 <td width="50%" class="">
-
+                                                    <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                                 <td width="50%" class="">
-                                                       
+                                                    <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -289,10 +289,10 @@
                                                     20%  
                                                 </td>
                                                 <td width="15%" class="">
-                                                   
+                                                   <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                                 <td width="15%" class="">
-                                                   
+                                                   <input type="number" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="%" />
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -303,10 +303,10 @@
                                         <tbody>
                                             <tr>
                                                 <td width="50%" class="">
-                                                   
+                                                   <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                                 <td width="50%" class="">
-                                                      
+                                                    <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -317,10 +317,10 @@
                                         <tbody>
                                             <tr>
                                                 <td width="50%" class="">
-
+                                                    <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                                 <td width="50%" class="">
-                                                       
+                                                    <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -351,10 +351,10 @@
                                                     20% 
                                                 </td>
                                                 <td width="15%" class="">
-                                                   
+                                                   <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                                 <td width="15%" class="">
-                                                   
+                                                   <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -365,10 +365,10 @@
                                         <tbody>
                                             <tr>
                                                 <td width="50%" class="">
-                                                   
+                                                   <input type="text" class="form-control"  id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                                 <td width="50%" class="">
-                                                      
+                                                    <input type="text" class="form-control"  id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -379,10 +379,10 @@
                                         <tbody>
                                             <tr>
                                                 <td width="50%" class="">
-
+                                                    <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                                 <td width="50%" class="">
-                                                       
+                                                    <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -413,10 +413,10 @@
                                                     15%  
                                                 </td>
                                                 <td width="15%" class="">
-                                                   
+                                                   <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                                 <td width="15%" class="">
-                                                   
+                                                   <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -427,10 +427,10 @@
                                         <tbody>
                                             <tr>
                                                 <td width="50%" class="">
-                                                   
+                                                   <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                                 <td width="50%" class="">
-                                                      
+                                                    <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -441,10 +441,10 @@
                                         <tbody>
                                             <tr>
                                                 <td width="50%" class="">
-
+                                                    <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                                 <td width="50%" class="">
-                                                       
+                                                    <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -476,10 +476,10 @@
                                                     15%  
                                                 </td>
                                                 <td width="15%" class="">
-                                                   
+                                                   <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                                 <td width="15%" class="">
-                                                   
+                                                   <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -490,10 +490,10 @@
                                         <tbody>
                                             <tr>
                                                 <td width="50%" class="">
-                                                   
+                                                   <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                                 <td width="50%" class="">
-                                                      
+                                                  <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -504,10 +504,10 @@
                                         <tbody>
                                             <tr>
                                                 <td width="50%" class="">
-
+                                                    <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                                 <td width="50%" class="">
-                                                       
+                                                    <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -539,10 +539,10 @@
                                                     5%  
                                                 </td>
                                                 <td width="15%" class="">
-                                                   
+                                                   <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                                 <td width="15%" class="">
-                                                   
+                                                   <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -553,10 +553,10 @@
                                         <tbody>
                                             <tr>
                                                 <td width="50%" class="">
-                                                   
+                                                   <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                                 <td width="50%" class="">
-                                                      
+                                                      <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -567,10 +567,10 @@
                                         <tbody>
                                             <tr>
                                                 <td width="50%" class="">
-
+                                                    <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                                 <td width="50%" class="">
-                                                       
+                                                       <input type="text" class="form-control" placeholder="" id="gen-info-description-input" name="performance" placeholder="remark" />
                                                 </td>
                                             </tr>
                                         </tbody>
