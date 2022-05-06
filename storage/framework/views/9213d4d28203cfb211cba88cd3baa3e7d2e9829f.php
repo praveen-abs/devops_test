@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="p-2 mt-4">
                                     <form class="needs-validation" novalidate method="POST"
-                                        action="<?php echo e(route('registerNewAccount')); ?>" enctype="multipart/form-data">
+                                        action="<?php echo e(route('register')); ?>" enctype="multipart/form-data">
                                         <?php echo csrf_field(); ?>
                                         <div class="mb-3">
                                             <label for="useremail" class="form-label">Email <span
