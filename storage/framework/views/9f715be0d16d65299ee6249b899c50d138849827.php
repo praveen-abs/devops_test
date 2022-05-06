@@ -12,8 +12,10 @@
                 <path d="M 0,36 C 144,53.6 432,123.2 720,124 C 1008,124.8 1296,56.8 1440,40L1440 140L0 140z"></path>
             </svg>
         </div>
+        <div style=" position:absolute;bottom:-200px;width:100%;height:50px;">
+            <img src="<?php echo e(URL::asset('assets/images/whitetexture.jpg')); ?>" alt="" height="1000">
+        </div>
     </div>
-
     <!-- auth page content -->
     <div class="auth-page-content">
         <div class="container">
@@ -25,7 +27,7 @@
                                 <img src="<?php echo e(URL::asset('assets/images/logo-light.png')); ?>" alt="" height="60">
                             </a>
                         </div>
-                        <p class="mt-3 fs-15 fw-medium"></p>
+                        <p class="mt-3 fs-15 fw-medium">Performance Management System</p>
                     </div>
                 </div>
             </div>
@@ -109,14 +111,15 @@ unset($__errorArgs, $__bag); ?>
                                 </form>
                             </div>
                         </div>
+                        
                         <!-- end card body -->
                     </div>
+                    
                     <!-- end card -->
 
                     <div class="mt-4 text-center">
                         <p class="mb-0">Don't have an account ? <a href="register" class="fw-semibold text-primary text-decoration-underline"> Signup </a> </p>
                     </div>
-
                 </div>
             </div>
             <!-- end row -->

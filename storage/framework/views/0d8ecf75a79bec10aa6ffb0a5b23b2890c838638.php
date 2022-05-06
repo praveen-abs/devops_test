@@ -5,19 +5,19 @@
         <!-- Dark Logo-->
         <a href="index" class="logo logo-dark">
             <span class="logo-sm">
-                <img src="<?php echo e(URL::asset('assets/images/logo-sm.png')); ?>" alt="" height="22">
+                <img src="<?php echo e(URL::asset('assets/images/vasa.jpg')); ?>" alt="" height="22">
             </span>
             <span class="logo-lg">
-                <img src="<?php echo e(URL::asset('assets/images/logo-dark.png')); ?>" alt="" height="40">
+                <img src="<?php echo e(URL::asset('assets/images/vasa.jpg')); ?>" alt="" height="80">
             </span>
         </a>
         <!-- Light Logo-->
         <a href="index" class="logo logo-light">
             <span class="logo-sm">
-                <img src="<?php echo e(URL::asset('assets/images/logo-sm.png')); ?>" alt="" height="22">
+                <img src="<?php echo e(URL::asset('assets/images/vasa.jpg')); ?>" alt="" height="22">
             </span>
             <span class="logo-lg">
-                <img src="<?php echo e(URL::asset('assets/images/logo-light.png')); ?>" alt="" height="40">
+                <img src="<?php echo e(URL::asset('assets/images/vasa.jpg')); ?>" alt="" height="80">
             </span>
         </a>
         <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover" id="vertical-hover">
@@ -26,9 +26,9 @@
     </div>
 
     <div id="scrollbar">
-        <div class="container-fluid">
+        <div class="container-fluid" >
 
-            <div id="two-column-menu">
+            <div id="two-column-menu" >
             </div>
             <ul class="navbar-nav" id="navbar-nav">
                 <li class="menu-title"><span ><?php echo app('translator')->get('translation.menu'); ?></span></li>
@@ -70,13 +70,19 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarReview" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarReview">
-                        <i class="ri-dashboard-2-line"></i> <span >Review </span>
+                        <i class="ri-dashboard-2-line"></i> <span >Performance Appraisal</span>
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarReview">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="vmt_appraisalreview" class="nav-link" >Appraisal Review</a>
+                                <a href="vmt_appraisalreview" class="nav-link" >Self Appraisal Review</a>
                             </li>
+                            <li class="nav-item">
+                                <a href="vmt_appraisalreview" class="nav-link" >Team Appraisal Review</a>
+                            </li>           
+                            <li class="nav-item">
+                                <a href="vmt_appraisalreview" class="nav-link" >Org Appraisal Review</a>
+                            </li>                                                  
                             <li class="nav-item">
                                 <a href="vmt_360review" class="nav-link" >360 Degree Review</a>
                             </li>
@@ -868,8 +874,35 @@
             </ul>
         </div>
         <!-- Sidebar -->
+        
     </div>
+
+    <div class="navbar-brand-box" style=" position:absolute;bottom:20px;width:100%;height:50px;">
+        <!-- Dark Logo-->
+        <a href="index" class="logo logo-dark">
+            <span class="logo-sm">
+                <img src="<?php echo e(URL::asset('assets/images/vasa.jpg')); ?>" alt="" height="22">
+            </span>
+            <span class="logo-lg">
+                <img src="<?php echo e(URL::asset('assets/images/logo-dark.png')); ?>" alt="" height="40">
+            </span>
+        </a>
+        <!-- Light Logo-->
+        <a href="index" class="logo logo-light">
+            <span class="logo-sm">
+                <img src="<?php echo e(URL::asset('assets/images/vasa.jpg')); ?>" alt="" height="22">
+            </span>
+            <span class="logo-lg">
+                <img src="<?php echo e(URL::asset('assets/images/logo-light.png')); ?>" alt="" height="40">
+            </span>
+        </a>
+        <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover" id="vertical-hover">
+            <i class="ri-record-circle-line"></i>
+        </button>
+    </div>
+
 </div>
+
 <!-- Left Sidebar End -->
 <!-- Vertical Overlay-->
 <div class="vertical-overlay"></div>
