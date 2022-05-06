@@ -604,8 +604,7 @@
                                         <tbody>
                                             <tr>
                                                 <td width="50%" class="">
-                                                   <b>0
-</b>
+                                                   <b>0</b>
                                                 </td>
                                                 <td width="50%" class="">
                                                     <b></b>  
@@ -629,7 +628,15 @@
                                     </table>
                                 </td>
                             </tr>
-
+                            <tr>
+                                <td>
+                                    <div class="row mt-2">
+                                        <div class="text-end col-xl-12">
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

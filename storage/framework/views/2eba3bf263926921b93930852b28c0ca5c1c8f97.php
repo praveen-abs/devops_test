@@ -164,13 +164,7 @@
                 </div><!-- end card body -->
             </div><!-- end card -->
         </div><!-- end col -->
-
-
-
     </div><!-- end row -->
-
-   
-
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('script'); ?>
     <!-- apexcharts -->
