@@ -45,7 +45,7 @@
                                 </div>
                                 <div class="p-2 mt-4">
                                     <form class="needs-validation" novalidate method="POST"
-                                        action="{{ route('registerNewAccount') }}" enctype="multipart/form-data">
+                                        action="{{ route('register') }}" enctype="multipart/form-data">
                                         @csrf
                                         <div class="mb-3">
                                             <label for="useremail" class="form-label">Email <span
