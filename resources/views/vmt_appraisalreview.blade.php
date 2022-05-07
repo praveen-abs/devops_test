@@ -173,15 +173,21 @@
                                         </tbody>
                                     </table>
                                 </th>
+                                @if(Auth::user()->name == "Manager 1" || Auth::user()->name == "Manager 2" || Auth::user()->name == "admin" || Auth::user()->name == "Head" )
                                 <th   style=" background-color: #405189;" >
                                     <h6 style="color:white;">Reporting Manger Review's (L1)<br/><br/>  Comments &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Score</h6>
-                                </th>                                                        
+                                </th> 
+                                @endif
+                                @if( Auth::user()->name == "Manager 2" || Auth::user()->name == "admin" || Auth::user()->name == "Head" )                                                    
                                 <th  class="r" style=" background-color: #405189;">
                                     <h6 style="color:white;"> Managers Manager (L2)<br/><br/>  Comments &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Score</h6>
-                                </th>               
+                                </th>   
+                                @endif
+                                @if(Auth::user()->name == "admin" || Auth::user()->name == "Head" )            
                                 <th class="r" style=" background-color: #405189;">
                                     <h6 style="color:white;"> Final Review <br/>( HR or Head Of the Department)</h6>
-                                </th>         
+                                </th> 
+                                @endif        
                                                                                              
                             </tr>
 
@@ -189,8 +195,7 @@
 
                         </thead>
                         <tbody>
-                            
-
+                
                             <tr>
                                 <td class="" width="60%">
                                     <table class="table-bordered p-0" width="100%">
@@ -223,6 +228,8 @@
                                         </tbody>
                                     </table>
                                 </td>
+
+                                @if(Auth::user()->name == "Manager 1" || Auth::user()->name == "Manager 2" || Auth::user()->name == "admin" || Auth::user()->name == "Head" )
                                 <td class="" >
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -237,6 +244,8 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                @endif
+                                @if( Auth::user()->name == "Manager 2" || Auth::user()->name == "admin" || Auth::user()->name == "Head" )
                                 <td class="">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -251,6 +260,8 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                @endif
+                                @if( Auth::user()->name == "admin" || Auth::user()->name == "Head" )
                                 <td class="" width="100%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -264,7 +275,8 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                </td>                                
+                                </td>
+                                @endif                                
                             </tr>
 
                             <tr>
@@ -299,6 +311,8 @@
                                         </tbody>
                                     </table>
                                 </td>
+
+                                @if(Auth::user()->name == "Manager 1" || Auth::user()->name == "Manager 2" || Auth::user()->name == "admin" || Auth::user()->name == "Head" )
                                 <td class=""  width="20%">
                                     <table class="table-bordered  p-0" width="100%">
                                         <tbody>
@@ -313,6 +327,9 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                @endif
+
+                                @if(Auth::user()->name == "Manager 2" || Auth::user()->name == "admin" || Auth::user()->name == "Head" )
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -327,6 +344,9 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                @endif
+
+                                @if(Auth::user()->name == "admin" || Auth::user()->name == "Head" )
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -340,7 +360,8 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                </td>                                
+                                </td>
+                                @endif                                
                             </tr>
     
                             <tr>
@@ -375,6 +396,7 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                @if(Auth::user()->name == "Manager 1" || Auth::user()->name == "Manager 2" || Auth::user()->name == "admin" || Auth::user()->name == "Head" )
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -389,6 +411,9 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                @endif
+
+                                @if( Auth::user()->name == "Manager 2" || Auth::user()->name == "admin" || Auth::user()->name == "Head" )
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -403,6 +428,9 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                @endif
+
+                                @if(Auth::user()->name == "admin" || Auth::user()->name == "Head" )
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -416,7 +444,8 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                </td>                                
+                                </td> 
+                                @endif                               
                             </tr>
                             
                             <tr>
@@ -451,6 +480,7 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                @if(Auth::user()->name == "Manager 1" || Auth::user()->name == "Manager 2" || Auth::user()->name == "admin" || Auth::user()->name == "Head" )
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -465,6 +495,9 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                @endif
+
+                                @if(Auth::user()->name == "Manager 2" || Auth::user()->name == "admin" || Auth::user()->name == "Head" )
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -479,6 +512,9 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                @endif
+
+                                @if( Auth::user()->name == "admin" || Auth::user()->name == "Head" )
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -492,7 +528,8 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                </td>                                
+                                </td> 
+                                @endif                               
                             </tr>
 
     
@@ -528,6 +565,7 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                @if(Auth::user()->name == "Manager 1" || Auth::user()->name == "Manager 2" || Auth::user()->name == "admin" || Auth::user()->name == "Head" )
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -542,6 +580,9 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                @endif
+
+                                @if( Auth::user()->name == "Manager 2" || Auth::user()->name == "admin" || Auth::user()->name == "Head" )
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -556,6 +597,9 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                @endif
+
+                                @if( Auth::user()->name == "admin" || Auth::user()->name == "Head" )
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -569,7 +613,8 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                </td>                                
+                                </td>   
+                                @endif                             
                             </tr>
 
 
@@ -605,6 +650,8 @@
                                         </tbody>
                                     </table>
                                 </td>
+
+                                @if(Auth::user()->name == "Manager 1" || Auth::user()->name == "Manager 2" || Auth::user()->name == "admin" || Auth::user()->name == "Head" )
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -619,6 +666,9 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                @endif
+
+                                @if( Auth::user()->name == "Manager 2" || Auth::user()->name == "admin" || Auth::user()->name == "Head" )
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -633,6 +683,9 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                @endif
+
+                                @if(Auth::user()->name == "admin" || Auth::user()->name == "Head" )
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -646,7 +699,9 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                </td>                                
+                                </td>   
+                                @endif
+
                             </tr>
 
                              <tr>
@@ -673,6 +728,8 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                
+                                @if(Auth::user()->name == "Manager 1" || Auth::user()->name == "Manager 2" || Auth::user()->name == "admin" || Auth::user()->name == "Head" )
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -687,6 +744,9 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                @endif
+
+                                @if( Auth::user()->name == "Manager 2" || Auth::user()->name == "admin" || Auth::user()->name == "Head" )
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -701,6 +761,9 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                @endif
+
+                                @if(Auth::user()->name == "admin" || Auth::user()->name == "Head" )
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -715,6 +778,7 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                @endif
                             </tr>
                             <tr>
                                 <td>
