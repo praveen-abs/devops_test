@@ -30,5 +30,8 @@ Route::get('/registerNewAccount', function(){
 })->name('registerNewAccount');
 
 
+Route::get('vmt-roles', 'App\Http\Controllers\RolesController@create');
+Route::post('vmt-roles', 'App\Http\Controllers\RolesController@store');
+Route::get('vmt-assign-roles', 'App\Http\Controllers\RolesController@assignRoles');
 
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');

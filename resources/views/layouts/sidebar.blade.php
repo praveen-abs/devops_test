@@ -90,6 +90,25 @@
                     </div>
                 </li> 
 
+                <!-- Navigation Menu for managing roles --> 
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarRoles" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarRoles">
+                        <i class="ri-dashboard-2-line"></i> <span >Roles Management</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarRoles">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="vmt-roles" class="nav-link" >Create/Modify Roles</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="vmt-assign-roles" class="nav-link" >Assign Roles To User</a>
+                            </li>           
+                            
+                        </ul>
+                    </div>
+                </li> 
+
 
 
                 <!-- <li class="nav-item">
