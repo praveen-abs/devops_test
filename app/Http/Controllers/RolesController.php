@@ -39,7 +39,7 @@ class RolesController extends Controller
     public function create()
     {
         //
-        return view('vmt_create_roles');
+        return view('vmt_createEditRoles');
     }
 
 
@@ -49,7 +49,7 @@ class RolesController extends Controller
         //
         $users = User::all();
         $roles = Role::all();
-        return view('vmt_assign_roles', compact('users', 'roles'));
+        return view('vmt_assignRoles', compact('users', 'roles'));
     }
 
     /**
@@ -65,6 +65,14 @@ class RolesController extends Controller
         $role = Role::create(['name' => $request->name]);
         return "Role saved";
         //$permission = Permission::create(['name' => 'edit articles']);
+    }
+
+
+    public function assignRolesToUser(Request $request){
+        $role = Role::find($request->roles);
+        $user = User::find($request->user);
+        $user->assignRole($role->name);
+        return "Assigned";
     }
 
     /**

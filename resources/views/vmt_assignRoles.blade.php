@@ -21,14 +21,13 @@
 
                 <div class="card-body  pb-2">
                     <div>
-                        <form action="javascript:void(0);" onsubmit="alert('Details submited')">
+                        <form method="POST" >
                             
-                            
-                            
+                            @csrf
                             <div class="mb-3 row">
                                 <label class="col-md-2 col-form-label">Select User</label>
                                 <div class="col-md-10">
-                                    <select class="form-select">
+                                    <select class="form-select" name="user" required>
                                         <option>Select User</option>
                                         @foreach($users as $user)
                                             <option value="{{$user->id}}">{{$user->name}}</option>
@@ -40,7 +39,7 @@
                             <div class="mb-3 row">
                                 <label class="col-md-2 col-form-label">Select Roles</label>
                                 <div class="col-md-10">
-                                    <select class="form-select">
+                                    <select class="form-select" name="roles" required>
                                         <option>Select</option>
                                         @foreach($roles as $role)
                                             <option value="{{$role->id}}">{{$role->name}}</option>

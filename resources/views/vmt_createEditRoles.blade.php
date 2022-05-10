@@ -8,7 +8,7 @@
 
     @component('components.breadcrumb')
         @slot('li_1') Dashboards @endslot
-        @slot('title') 360 Degree Review @endslot
+        @slot('title') Create/Edit Roles @endslot
     @endcomponent
 
 
