@@ -39,7 +39,36 @@
                     </div>
                     
                     <div class="mb-1  row"><hr/></div>
-                    
+                    <div>
+                        <form method="POST" action="/vmt-delete-roles" id="delete-roles">
+                            @csrf
+                            <div class="mb-3 row">
+                                <label for="example-text-input" class="col-md-3 col-form-label">Delete Roles</label>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="example-text-input" class="col-md-3 col-form-label">Select Role</label>
+                                <div class="col-md-9">
+                                   <select class="form-select" name="roles" required id="delete-select">
+                                        <option>Select</option>
+                                        @foreach($roles as $pRole)
+                                            <option value="{{$pRole->id}}">{{$pRole->name}}</option>
+                                        @endforeach
+                                        
+                                    </select>
+                                </div>
+                            </div>
+                           
+                           
+
+                            
+                            <div class="row mt-2">
+                                <div class="text-end col-xl-12">
+                                    <button type="submit" class="btn btn-primary">Delete</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="mb-1 mt-1 row"><hr/></div>
                     <div>
                         <form method="POST" action="/vmt-permissions" id="permission-form">
                             @csrf
@@ -49,7 +78,7 @@
                             <div class="mb-3 row">
                                 <label for="example-text-input" class="col-md-3 col-form-label">Select Role</label>
                                 <div class="col-md-9">
-                                   <select class="form-select" name="roles" required>
+                                   <select class="form-select" name="roles" required id="permission-select">
                                         <option>Select</option>
                                         @foreach($roles as $pRole)
                                             <option value="{{$pRole->id}}">{{$pRole->name}}</option>
@@ -81,10 +110,16 @@
                                                 Team
                                             </label>
                                         </div>
-                                         <div class="form-check">
+                                        <div class="form-check">
                                             <input class="form-check-input" type="checkbox" id="formCheck4" name="page_level[]"  value="ORG">
                                             <label class="form-check-label" for="formCheck4">
                                                 ORG
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="formCheck5" name="page_level[]"  value="360_Degree_Review">
+                                            <label class="form-check-label" for="formCheck5">
+                                                360 Degree Review
                                             </label>
                                         </div>
                                     </div>
@@ -129,28 +164,160 @@
             </div><!-- end card -->
         </div><!-- end col -->
     </div><!-- end row -->
+    <!-- Display Toast Notification Bordered With Icon Toast -->
+<!-- <div class="hstack flex-wrap gap-2">
+    <button type="button" class="btn btn-success" id="borderedToast2Btn">Success toast</button>
+</div>
+ -->
+
+
+<div style="z-index: 11">
+    <div id="borderedToast2" class="toast toast-border-success overflow-hidden mt-3" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-body">
+            <div class="d-flex align-items-center">
+                <div class="flex-shrink-0 me-2">
+                    <i class="ri-checkbox-circle-fill align-middle"></i>
+                </div>
+                <div class="flex-grow-1">
+                    <h6 class="mb-0" id="alert-msg">Yey! Everything worked!</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
 @section('script')
-    <!-- apexcharts -->
+    <!-- ui notifications -->
 
+    <script src="{{ URL::asset('/assets/libs/prismjs/prismjs.min.js') }}"></script>
+    <script src="{{ URL::asset('/assets/js/pages/notifications.init.js') }}"></script>
     <!-- dashboard init -->
     <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
     <script type="text/javascript">
+
+        function getRoleList(){
+             $.ajax({
+                type: "GET",
+                url: '/vmt-role-list', // serializes the form's elements.
+                success: function(data)
+                {
+                    //console.log(data); // show response from the php script.
+                    $('#permission-form')[0].reset();
+                    $('#permission-select')
+                        .find('option')
+                        .remove()
+                        .end()
+                        .append('<option >Select</option>')
+                        .val('');
+
+                    $('#delete-select')
+                        .find('option')
+                        .remove()
+                        .end()
+                        .append('<option >Select</option>')
+                        .val('');
+
+                    for (var i = data.length - 1; i >= 0; i--) {
+                      //console.log(data[i]);
+                        var optionText = data[i].name;
+                        var optionValue = data[i].id;
+  
+                        $('#permission-select').append(new Option(optionText, optionValue));
+                        $('#delete-select').append(new Option(optionText, optionValue));
+                    }
+
+                    // permission-select
+                    // delete-select
+
+
+                }
+            })
+        }
+
+        $('#permission-select').on('change', function(){
+            //console.log($(this).val());
+            getPermissions($(this).val())
+        });
+
+        function getPermissions(roleId){
+             $.ajax({
+                type: "GET",
+                url: '/vmt-role-permissions/'+roleId, // serializes the form's elements.
+                success: function(data)
+                {
+                    console.log(data); 
+
+                    if(data.length == 0){
+                        console.log('nodata')
+                        $('input[type=checkbox]').each(function () {
+                            //console.log($(this).val());
+                            
+                                $(this).prop("checked", false);
+                            //$(this).removeAttribute("checked");
+                            
+                        });
+                        return false; 
+                    }else{
+                        $('input[type=checkbox]').each(function () {
+                            //console.log($(this).val());
+                            var dValue =  $(this).val(); 
+                            console.log($.inArray(dValue, data));
+                            if($.inArray(dValue, data) != -1 ) {
+                                $(this).prop("checked", true);
+                                console.log("is in array" + dValue  );
+                            } else {
+                                //$("#captureAudio").prop('checked', false); 
+                                $(this).removeAttr("checked");
+                                console.log("is NOT in array"+ dValue);
+                            }
+                            //var sThisVal = (this.checked ? $(this).val() : "");
+                        });
+                    }
+                  
+                }
+            })
+        }
         
         $('#permission-form').on('submit', function(e){
             e.preventDefault();
             var roleUri = $('#permission-form').attr('action');
-            console.log(roleUri);
-
             $.ajax({
                 type: "POST",
                 url: roleUri,
                 data: $('#permission-form').serialize(), // serializes the form's elements.
                 success: function(data)
                 {
-                  alert(data); // show response from the php script.
+                  $('#alert-msg').html(data);
+                  var toastLiveExample3 = document.getElementById("borderedToast2");
+                    var toast = new bootstrap.Toast(toastLiveExample3);
+                    toast.show();
+                  //alert(data); // show response from the php script.
+                }
+            })
+        });
+
+        $('#delete-roles').on('submit', function(e){
+            e.preventDefault();
+            var roleUri = $('#delete-roles').attr('action');
+            console.log(roleUri);
+
+            $.ajax({
+                type: "POST",
+                url: roleUri,
+                data: $('#delete-roles').serialize(), // serializes the form's elements.
+                success: function(data)
+                {
+                    $('#alert-msg').html(data);
+
+                    var toastLiveExample3 = document.getElementById("borderedToast2");
+                    var toast = new bootstrap.Toast(toastLiveExample3);
+                    toast.show();
+                    getRoleList();
+                    //alert(data); // show response from the php script.
                 }
             })
         });
@@ -166,7 +333,12 @@
                 data: $('#role-form').serialize(), // serializes the form's elements.
                 success: function(data)
                 {
-                  alert(data); // show response from the php script.
+                    $('#alert-msg').html(data);
+                    var toastLiveExample3 = document.getElementById("borderedToast2");
+                    var toast = new bootstrap.Toast(toastLiveExample3);
+                    toast.show();
+                    getRoleList();
+                    //alert(data); // show response from the php script.
                 }
             })
             //console.log($('#role-form').serialize());

@@ -29,8 +29,20 @@ class RolesController extends Controller
     public function index()
     {
         //
+        $roles = Role::all();
+        return $roles;
     }
 
+    public function permissionListForRoles($id){
+        $role = Role::find($id);
+        $pList =  $role->getAllPermissions();
+        $pArry = []; 
+        foreach ($pList as $key => $value) {
+            // code...
+            $pArry[] = $value->name;
+        }
+        return $pArry;
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -79,14 +91,14 @@ class RolesController extends Controller
 
     // assignPermissionToRoles
     public function assignPermissionToRoles(Request $request){
-       /* $role = Role::find($request->roles);
-        $user = User::find($request->user);
-        $user->assignRole($role->name);
-        return "Assigned";*/
         $role = Role::find($request->roles);
+        $allP = $role->getAllPermissions();
+        foreach($allP as $rolePermit){
+            $role->revokePermissionTo($rolePermit);
+        }
+
         if($request->has('page_level')){
             if(count($request->get('page_level')) > 0){
-
                 foreach ($request->get('page_level') as $key => $value) {
                     // code...
                     $permission = Permission::where('name' , $value)->first();
@@ -160,8 +172,11 @@ class RolesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id = null, Request $request)
     {
         //
+        Role::find($request->roles)->delete();
+        return 'Role Deleted';
+        dd($request->all());
     }
 }

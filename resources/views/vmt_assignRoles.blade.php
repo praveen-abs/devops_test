@@ -59,8 +59,27 @@
             </div><!-- end card -->
         </div><!-- end col -->
     </div><!-- end row -->
+<div style="z-index: 11">
+    <div id="borderedToast2" class="toast toast-border-success overflow-hidden mt-3" role="alert" aria-live="assertive" aria-atomic="true" >
+        <div class="toast-body">
+            <div class="d-flex align-items-center">
+                <div class="flex-shrink-0 me-2">
+                    <i class="ri-checkbox-circle-fill align-middle"></i>
+                </div>
+                <div class="flex-grow-1">
+                    <h6 class="mb-0" id="alert-msg">Yey! Everything worked!</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @section('script')
+    
+    <!-- ui notifications -->
+
+    <script src="{{ URL::asset('/assets/libs/prismjs/prismjs.min.js') }}"></script>
+    <script src="{{ URL::asset('/assets/js/pages/notifications.init.js') }}"></script>
     <!-- apexcharts -->
 
     <!-- dashboard init -->
@@ -82,7 +101,11 @@
                 data: $('#role-form').serialize(), // serializes the form's elements.
                 success: function(data)
                 {
-                  alert(data); // show response from the php script.
+                  $('#alert-msg').html(data);
+                  var toastLiveExample3 = document.getElementById("borderedToast2");
+                    var toast = new bootstrap.Toast(toastLiveExample3);
+                    toast.show();
+                  //alert(data); // show response from the php script.
                 }
             })
             //console.log($('#role-form').serialize());

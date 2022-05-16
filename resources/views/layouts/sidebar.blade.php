@@ -74,18 +74,28 @@
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarReview">
                         <ul class="nav nav-sm flex-column">
+                            @can('Self_Appraisal')
                             <li class="nav-item">
                                 <a href="vmt_appraisalreview" class="nav-link" >Self Appraisal Review</a>
                             </li>
+                            @endcan
+                            @can('Team')
                             <li class="nav-item">
                                 <a href="vmt_appraisalreview" class="nav-link" >Team Appraisal Review</a>
-                            </li>           
+                            </li>   
+                            @endcan 
+
+                            @can('ORG')       
                             <li class="nav-item">
                                 <a href="vmt_appraisalreview" class="nav-link" >Org Appraisal Review</a>
-                            </li>                                                  
+                            </li>    
+                            @endcan   
+
+                            @can('360_Degree_Review')                                           
                             <li class="nav-item">
                                 <a href="vmt_360review" class="nav-link" >360 Degree Review</a>
                             </li>
+                            @endcan
                         </ul>
                     </div>
                 </li> 

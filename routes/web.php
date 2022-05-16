@@ -32,10 +32,15 @@ Route::get('/registerNewAccount', function(){
 
 // Permission Roles Routing
 Route::get('vmt-roles', 'App\Http\Controllers\RolesController@create');
+
+Route::get('vmt-role-list', 'App\Http\Controllers\RolesController@index');
 Route::post('vmt-roles', 'App\Http\Controllers\RolesController@store');
+Route::get('vmt-role-permissions/{id}', 'App\Http\Controllers\RolesController@permissionListForRoles');
 
 Route::post('vmt-permissions', 'App\Http\Controllers\RolesController@assignPermissionToRoles');
 Route::get('vmt-assign-roles', 'App\Http\Controllers\RolesController@assignRoles');
 Route::post('vmt-assign-roles', 'App\Http\Controllers\RolesController@assignRolesToUser');
+
+Route::post('vmt-delete-roles', 'App\Http\Controllers\RolesController@destroy');
 
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
