@@ -173,21 +173,25 @@
                                         </tbody>
                                     </table>
                                 </th>
-                                @if(Auth::user()->name == "Manager 1" || Auth::user()->name == "Manager 2" || Auth::user()->name == "admin" || Auth::user()->name == "Head" )
+                               
+
+                                @can('L1 Review')
                                 <th   style=" background-color: #405189;" >
                                     <h6 style="color:white;">Reporting Manger Review's (L1)<br/><br/>  Comments &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Score</h6>
                                 </th> 
-                                @endif
-                                @if( Auth::user()->name == "Manager 2" || Auth::user()->name == "admin" || Auth::user()->name == "Head" )                                                    
+                                @endcan
+                               
+                                @can('L2 Review')                                                   
                                 <th  class="r" style=" background-color: #405189;">
                                     <h6 style="color:white;"> Managers Manager (L2)<br/><br/>  Comments &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Score</h6>
                                 </th>   
-                                @endif
-                                @if(Auth::user()->name == "admin" || Auth::user()->name == "Head" )            
+                                @endcan
+
+                                @can('Final Review')            
                                 <th class="r" style=" background-color: #405189;">
                                     <h6 style="color:white;"> Final Review <br/>( HR or Head Of the Department)</h6>
                                 </th> 
-                                @endif        
+                                @endcan        
                                                                                              
                             </tr>
 
@@ -229,7 +233,7 @@
                                     </table>
                                 </td>
 
-                                @if(Auth::user()->name == "Manager 1" || Auth::user()->name == "Manager 2" || Auth::user()->name == "admin" || Auth::user()->name == "Head" )
+                                @can('L1 Review')
                                 <td class="" >
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -244,8 +248,8 @@
                                         </tbody>
                                     </table>
                                 </td>
-                                @endif
-                                @if( Auth::user()->name == "Manager 2" || Auth::user()->name == "admin" || Auth::user()->name == "Head" )
+                                @endcan
+                                @can('L2 Review')
                                 <td class="">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -260,8 +264,8 @@
                                         </tbody>
                                     </table>
                                 </td>
-                                @endif
-                                @if( Auth::user()->name == "admin" || Auth::user()->name == "Head" )
+                                @endcan
+                                @can('Final Review')
                                 <td class="" width="100%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -276,7 +280,7 @@
                                         </tbody>
                                     </table>
                                 </td>
-                                @endif                                
+                                @endcan                              
                             </tr>
 
                             <tr>
@@ -312,7 +316,7 @@
                                     </table>
                                 </td>
 
-                                @if(Auth::user()->name == "Manager 1" || Auth::user()->name == "Manager 2" || Auth::user()->name == "admin" || Auth::user()->name == "Head" )
+                                @can('L1 Review')
                                 <td class=""  width="20%">
                                     <table class="table-bordered  p-0" width="100%">
                                         <tbody>
@@ -327,9 +331,8 @@
                                         </tbody>
                                     </table>
                                 </td>
-                                @endif
-
-                                @if(Auth::user()->name == "Manager 2" || Auth::user()->name == "admin" || Auth::user()->name == "Head" )
+                                @endcan
+                                @can('L2 Review')
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -396,7 +399,7 @@
                                         </tbody>
                                     </table>
                                 </td>
-                                @if(Auth::user()->name == "Manager 1" || Auth::user()->name == "Manager 2" || Auth::user()->name == "admin" || Auth::user()->name == "Head" )
+                                @can('L1 Review')
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -413,7 +416,7 @@
                                 </td>
                                 @endif
 
-                                @if( Auth::user()->name == "Manager 2" || Auth::user()->name == "admin" || Auth::user()->name == "Head" )
+                                @can('L2 Review')
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -428,9 +431,9 @@
                                         </tbody>
                                     </table>
                                 </td>
-                                @endif
-
-                                @if(Auth::user()->name == "admin" || Auth::user()->name == "Head" )
+                                @endcan
+                                
+                                @can('Final Review')
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -445,7 +448,7 @@
                                         </tbody>
                                     </table>
                                 </td> 
-                                @endif                               
+                                @endcan                               
                             </tr>
                             
                             <tr>
@@ -480,7 +483,7 @@
                                         </tbody>
                                     </table>
                                 </td>
-                                @if(Auth::user()->name == "Manager 1" || Auth::user()->name == "Manager 2" || Auth::user()->name == "admin" || Auth::user()->name == "Head" )
+                                @can('L1 Review')
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -495,9 +498,9 @@
                                         </tbody>
                                     </table>
                                 </td>
-                                @endif
+                                @endcan
 
-                                @if(Auth::user()->name == "Manager 2" || Auth::user()->name == "admin" || Auth::user()->name == "Head" )
+                                @can('L2 Review')
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -512,9 +515,9 @@
                                         </tbody>
                                     </table>
                                 </td>
-                                @endif
+                                @endcan
 
-                                @if( Auth::user()->name == "admin" || Auth::user()->name == "Head" )
+                                @can('Final Review')
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -529,7 +532,7 @@
                                         </tbody>
                                     </table>
                                 </td> 
-                                @endif                               
+                                @endcan                              
                             </tr>
 
     
@@ -565,7 +568,7 @@
                                         </tbody>
                                     </table>
                                 </td>
-                                @if(Auth::user()->name == "Manager 1" || Auth::user()->name == "Manager 2" || Auth::user()->name == "admin" || Auth::user()->name == "Head" )
+                                @can('L1 Review')
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -580,9 +583,9 @@
                                         </tbody>
                                     </table>
                                 </td>
-                                @endif
+                                @endcan
 
-                                @if( Auth::user()->name == "Manager 2" || Auth::user()->name == "admin" || Auth::user()->name == "Head" )
+                                @can('L2 Review')
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -597,9 +600,9 @@
                                         </tbody>
                                     </table>
                                 </td>
-                                @endif
+                                @endcan
 
-                                @if( Auth::user()->name == "admin" || Auth::user()->name == "Head" )
+                                @can('Final Review')
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -614,7 +617,7 @@
                                         </tbody>
                                     </table>
                                 </td>   
-                                @endif                             
+                                @endcan                            
                             </tr>
 
 
@@ -651,7 +654,7 @@
                                     </table>
                                 </td>
 
-                                @if(Auth::user()->name == "Manager 1" || Auth::user()->name == "Manager 2" || Auth::user()->name == "admin" || Auth::user()->name == "Head" )
+                                @can('L1 Review')
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -666,9 +669,9 @@
                                         </tbody>
                                     </table>
                                 </td>
-                                @endif
+                                @endcan
 
-                                @if( Auth::user()->name == "Manager 2" || Auth::user()->name == "admin" || Auth::user()->name == "Head" )
+                                @can('L2 Review')
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -683,9 +686,9 @@
                                         </tbody>
                                     </table>
                                 </td>
-                                @endif
+                                @endcan
 
-                                @if(Auth::user()->name == "admin" || Auth::user()->name == "Head" )
+                                @can('Final Review')
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -700,11 +703,11 @@
                                         </tbody>
                                     </table>
                                 </td>   
-                                @endif
+                                @endcan
 
                             </tr>
 
-                             <tr>
+                            <tr>
                                 <td class="" width="60%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -729,7 +732,7 @@
                                     </table>
                                 </td>
                                 
-                                @if(Auth::user()->name == "Manager 1" || Auth::user()->name == "Manager 2" || Auth::user()->name == "admin" || Auth::user()->name == "Head" )
+                                @can('L1 Review')
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -744,9 +747,9 @@
                                         </tbody>
                                     </table>
                                 </td>
-                                @endif
+                                @endcan
 
-                                @if( Auth::user()->name == "Manager 2" || Auth::user()->name == "admin" || Auth::user()->name == "Head" )
+                                @can('L2 Review')
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -761,9 +764,9 @@
                                         </tbody>
                                     </table>
                                 </td>
-                                @endif
+                                @endcan
 
-                                @if(Auth::user()->name == "admin" || Auth::user()->name == "Head" )
+                                @can('Final Review')
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -778,7 +781,7 @@
                                         </tbody>
                                     </table>
                                 </td>
-                                @endif
+                                @endcan
                             </tr>
                             <tr>
                                 <td>

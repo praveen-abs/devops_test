@@ -39,7 +39,9 @@ class RolesController extends Controller
     public function create()
     {
         //
-        return view('vmt_createEditRoles');
+
+        $roles = Role::all();
+        return view('vmt_createEditRoles', compact('roles'));
     }
 
 
@@ -73,6 +75,49 @@ class RolesController extends Controller
         $user = User::find($request->user);
         $user->assignRole($role->name);
         return "Assigned";
+    }
+
+    // assignPermissionToRoles
+    public function assignPermissionToRoles(Request $request){
+       /* $role = Role::find($request->roles);
+        $user = User::find($request->user);
+        $user->assignRole($role->name);
+        return "Assigned";*/
+        $role = Role::find($request->roles);
+        if($request->has('page_level')){
+            if(count($request->get('page_level')) > 0){
+
+                foreach ($request->get('page_level') as $key => $value) {
+                    // code...
+                    $permission = Permission::where('name' , $value)->first();
+                    if($permission){
+                        $role->givePermissionTo($permission);
+                    }else{
+                        $permission = Permission::create(['name' => $value]);
+                        $role->givePermissionTo($permission);
+                    }
+                }
+                
+
+            }
+        }
+        if($request->has('section_level')){
+            if(count($request->get('section_level')) > 0){
+
+                foreach ($request->get('section_level') as $key => $value) {
+                    // code...
+                    $permission = Permission::where('name' , $value)->first();
+                    if($permission){
+                        $role->givePermissionTo($permission);
+                    }else{
+                        $permission = Permission::create(['name' => $value]);
+                        $role->givePermissionTo($permission);
+                    }
+                }
+                
+            }
+        }
+        return "Permission Saved";
     }
 
     /**

@@ -33,6 +33,8 @@ Route::get('/registerNewAccount', function(){
 // Permission Roles Routing
 Route::get('vmt-roles', 'App\Http\Controllers\RolesController@create');
 Route::post('vmt-roles', 'App\Http\Controllers\RolesController@store');
+
+Route::post('vmt-permissions', 'App\Http\Controllers\RolesController@assignPermissionToRoles');
 Route::get('vmt-assign-roles', 'App\Http\Controllers\RolesController@assignRoles');
 Route::post('vmt-assign-roles', 'App\Http\Controllers\RolesController@assignRolesToUser');
 
