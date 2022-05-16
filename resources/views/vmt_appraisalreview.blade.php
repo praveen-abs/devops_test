@@ -175,19 +175,19 @@
                                 </th>
                                
 
-                                @can('L1 Review')
+                                @can('L1_Review')
                                 <th   style=" background-color: #405189;" >
                                     <h6 style="color:white;">Reporting Manger Review's (L1)<br/><br/>  Comments &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Score</h6>
                                 </th> 
                                 @endcan
                                
-                                @can('L2 Review')                                                   
+                                @can('L2_Review')                                                   
                                 <th  class="r" style=" background-color: #405189;">
                                     <h6 style="color:white;"> Managers Manager (L2)<br/><br/>  Comments &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Score</h6>
                                 </th>   
                                 @endcan
 
-                                @can('Final Review')            
+                                @can('Final_Review')            
                                 <th class="r" style=" background-color: #405189;">
                                     <h6 style="color:white;"> Final Review <br/>( HR or Head Of the Department)</h6>
                                 </th> 
@@ -233,7 +233,7 @@
                                     </table>
                                 </td>
 
-                                @can('L1 Review')
+                                @can('L1_Review')
                                 <td class="" >
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -249,7 +249,7 @@
                                     </table>
                                 </td>
                                 @endcan
-                                @can('L2 Review')
+                                @can('L2_Review')
                                 <td class="">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -265,7 +265,7 @@
                                     </table>
                                 </td>
                                 @endcan
-                                @can('Final Review')
+                                @can('Final_Review')
                                 <td class="" width="100%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -316,7 +316,7 @@
                                     </table>
                                 </td>
 
-                                @can('L1 Review')
+                                @can('L1_Review')
                                 <td class=""  width="20%">
                                     <table class="table-bordered  p-0" width="100%">
                                         <tbody>
@@ -332,7 +332,7 @@
                                     </table>
                                 </td>
                                 @endcan
-                                @can('L2 Review')
+                                @can('L2_Review')
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -347,9 +347,9 @@
                                         </tbody>
                                     </table>
                                 </td>
-                                @endif
+                                @endcan
 
-                                @if(Auth::user()->name == "admin" || Auth::user()->name == "Head" )
+                                @can('Final_Review')
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -364,7 +364,7 @@
                                         </tbody>
                                     </table>
                                 </td>
-                                @endif                                
+                                @endcan                                
                             </tr>
     
                             <tr>
@@ -399,7 +399,7 @@
                                         </tbody>
                                     </table>
                                 </td>
-                                @can('L1 Review')
+                                @can('L1_Review')
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -416,7 +416,7 @@
                                 </td>
                                 @endif
 
-                                @can('L2 Review')
+                                @can('L2_Review')
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -433,7 +433,7 @@
                                 </td>
                                 @endcan
                                 
-                                @can('Final Review')
+                                @can('Final_Review')
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -483,7 +483,7 @@
                                         </tbody>
                                     </table>
                                 </td>
-                                @can('L1 Review')
+                                @can('L1_Review')
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -500,7 +500,7 @@
                                 </td>
                                 @endcan
 
-                                @can('L2 Review')
+                                @can('L2_Review')
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -517,7 +517,7 @@
                                 </td>
                                 @endcan
 
-                                @can('Final Review')
+                                @can('Final_Review')
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -568,7 +568,7 @@
                                         </tbody>
                                     </table>
                                 </td>
-                                @can('L1 Review')
+                                @can('L1_Review')
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -585,7 +585,7 @@
                                 </td>
                                 @endcan
 
-                                @can('L2 Review')
+                                @can('L2_Review')
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -602,7 +602,7 @@
                                 </td>
                                 @endcan
 
-                                @can('Final Review')
+                                @can('Final_Review')
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -654,7 +654,7 @@
                                     </table>
                                 </td>
 
-                                @can('L1 Review')
+                                @can('L1_Review')
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -671,7 +671,7 @@
                                 </td>
                                 @endcan
 
-                                @can('L2 Review')
+                                @can('L2_Review')
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -688,7 +688,7 @@
                                 </td>
                                 @endcan
 
-                                @can('Final Review')
+                                @can('Final_Review')
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -732,7 +732,7 @@
                                     </table>
                                 </td>
                                 
-                                @can('L1 Review')
+                                @can('L1_Review')
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -749,7 +749,7 @@
                                 </td>
                                 @endcan
 
-                                @can('L2 Review')
+                                @can('L2_Review')
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -766,7 +766,7 @@
                                 </td>
                                 @endcan
 
-                                @can('Final Review')
+                                @can('Final_Review')
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>

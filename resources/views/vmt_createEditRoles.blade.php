@@ -16,10 +16,8 @@
         <div class="col-xl-8">
             <div class="card">
 
-
                 <div class="card-header border-0 align-items-center d-flex">
                     <h4 class="card-title mb-0 flex-grow-1">Please Fill Form</h4>
-                    
                 </div><!-- end card header -->
 
                 <div class="card-body  pb-2">
@@ -66,13 +64,13 @@
                                 <div class="col-lg-9 col-md-9">
                                     <div>
                                         <div class="form-check ">
-                                            <input class="form-check-input" type="checkbox" id="formCheck1"  name="page_level[]"  value="Performance Appraisal">
+                                            <input class="form-check-input" type="checkbox" id="formCheck1"  name="page_level[]"  value="Performance_Appraisal">
                                             <label class="form-check-label" for="formCheck1">
                                                 Performance Appraisal
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="formCheck2"  name="page_level[]"  value="Self Appraisal">
+                                            <input class="form-check-input" type="checkbox" id="formCheck2"  name="page_level[]"  value="Self_Appraisal">
                                             <label class="form-check-label" for="formCheck2">
                                                 Self Appraisal
                                             </label>
@@ -99,19 +97,19 @@
                                 <div class="col-lg-9 col-md-9">
                                     <div>
                                         <div class="form-check ">
-                                            <input class="form-check-input" type="checkbox" id="formCheck11" name="section_level[]" value="L1 Review">
+                                            <input class="form-check-input" type="checkbox" id="formCheck11" name="section_level[]" value="L1_Review">
                                             <label class="form-check-label" for="formCheck11">
                                                 Can see L1 manager review
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="formCheck12" name="section_level[]" value="L2 Review">
+                                            <input class="form-check-input" type="checkbox" id="formCheck12" name="section_level[]" value="L2_Review">
                                             <label class="form-check-label" for="formCheck12">
                                                 Can see L2 manager review
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="formCheck13" name="section_level[]" value="Final Review">
+                                            <input class="form-check-input" type="checkbox" id="formCheck13" name="section_level[]" value="Final_Review">
                                             <label class="form-check-label" for="formCheck13">
                                                 Can see Final review
                                             </label>
