@@ -43,4 +43,9 @@ Route::post('vmt-assign-roles', 'App\Http\Controllers\RolesController@assignRole
 
 Route::post('vmt-delete-roles', 'App\Http\Controllers\RolesController@deleteRoles');
 
+//360 Review Module Routing
+Route::get('vmt-360-questions', 'App\Http\Controllers\Review360ModuleController@showQuestionsPage');
+Route::get('vmt-360-forms', 'App\Http\Controllers\Review360ModuleController@showFormsPage');
+
+
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');

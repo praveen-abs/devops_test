@@ -128,10 +128,10 @@
                     <div class="collapse menu-dropdown" id="sidebar360questions">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="vmt-roles" class="nav-link" >Questions</a>
+                                <a href="vmt-360-questions" class="nav-link" >Questions</a>
                             </li>
                             <li class="nav-item">
-                                <a href="vmt-assign-roles" class="nav-link" >Forms</a>
+                                <a href="vmt-360-forms" class="nav-link" >Forms</a>
                             </li>           
                             
                         </ul>
