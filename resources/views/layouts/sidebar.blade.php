@@ -119,6 +119,24 @@
                     </div>
                 </li> 
 
+                <!-- Navigation Menu for managing 360 Review Questions --> 
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebar360questions" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebar360questions">
+                        <i class="ri-dashboard-2-line"></i> <span >360 Review Module</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebar360questions">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="vmt-roles" class="nav-link" >Questions</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="vmt-assign-roles" class="nav-link" >Forms</a>
+                            </li>           
+                            
+                        </ul>
+                    </div>
+                </li> 
 
 
                 <!-- <li class="nav-item">
