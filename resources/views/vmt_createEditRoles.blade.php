@@ -164,27 +164,47 @@
             </div><!-- end card -->
         </div><!-- end col -->
     </div><!-- end row -->
+
     <!-- Display Toast Notification Bordered With Icon Toast -->
-<!-- <div class="hstack flex-wrap gap-2">
-    <button type="button" class="btn btn-success" id="borderedToast2Btn">Success toast</button>
-</div>
- -->
-
-
-<div style="z-index: 11">
-    <div id="borderedToast2" class="toast toast-border-success overflow-hidden mt-3" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-body">
-            <div class="d-flex align-items-center">
-                <div class="flex-shrink-0 me-2">
-                    <i class="ri-checkbox-circle-fill align-middle"></i>
-                </div>
-                <div class="flex-grow-1">
-                    <h6 class="mb-0" id="alert-msg">Yey! Everything worked!</h6>
+    <div style="z-index: 11">
+        <div id="borderedToast2" class="toast toast-border-success overflow-hidden mt-3" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0 me-2">
+                        <i class="ri-checkbox-circle-fill align-middle"></i>
+                    </div>
+                    <div class="flex-grow-1">
+                        <h6 class="mb-0" id="alert-msg">Yey! Everything worked!</h6>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+
+<!-- Modal To Confirm Delete -->
+<!-- Default Modals -->
+
+<div id="myModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Delete Roles</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+            </div>
+            <div class="modal-body">
+                <h5 class="fs-15">
+                    Are you sure ?
+                </h5>
+                <p class="text-muted"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="confirmDelete()">Delete</button>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 @endsection
 @section('script')
@@ -198,7 +218,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
     <script type="text/javascript">
-
+        // get updated roles list
         function getRoleList(){
              $.ajax({
                 type: "GET",
@@ -238,11 +258,12 @@
             })
         }
 
+        // select roles to assign permission 
         $('#permission-select').on('change', function(){
-            //console.log($(this).val());
             getPermissions($(this).val())
         });
 
+        // get default permission for selected roles.
         function getPermissions(roleId){
              $.ajax({
                 type: "GET",
@@ -282,6 +303,7 @@
             })
         }
         
+        // Save Permissions
         $('#permission-form').on('submit', function(e){
             e.preventDefault();
             var roleUri = $('#permission-form').attr('action');
@@ -300,11 +322,16 @@
             })
         });
 
+        // show alert box to cofirm delete.
         $('#delete-roles').on('submit', function(e){
             e.preventDefault();
-            var roleUri = $('#delete-roles').attr('action');
-            console.log(roleUri);
+            $("#myModal").modal("show");
+        });
 
+        // deleting role after confirmation
+        function confirmDelete(e){
+            //e.preventDefault();
+            var roleUri = $('#delete-roles').attr('action');
             $.ajax({
                 type: "POST",
                 url: roleUri,
@@ -312,21 +339,19 @@
                 success: function(data)
                 {
                     $('#alert-msg').html(data);
-
                     var toastLiveExample3 = document.getElementById("borderedToast2");
                     var toast = new bootstrap.Toast(toastLiveExample3);
+                    $("#myModal").modal("hide");
                     toast.show();
                     getRoleList();
-                    //alert(data); // show response from the php script.
                 }
             })
-        });
+        }
 
+        // Save new roles
         $('#role-form').on('submit', function(e){
             e.preventDefault();
             var roleUri = $('#role-form').attr('action');
-            console.log(roleUri);
-
             $.ajax({
                 type: "POST",
                 url: roleUri,
@@ -338,15 +363,8 @@
                     var toast = new bootstrap.Toast(toastLiveExample3);
                     toast.show();
                     getRoleList();
-                    //alert(data); // show response from the php script.
                 }
             })
-            //console.log($('#role-form').serialize());
         });
-/*
-        document.getElementById('permission-form').on('submit', function(e){
-            e.preventDefault();
-            console.log(document.getElementById('permission-form').serialize());
-        });*/
     </script>
 @endsection
