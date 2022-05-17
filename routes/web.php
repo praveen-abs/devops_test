@@ -41,6 +41,6 @@ Route::post('vmt-permissions', 'App\Http\Controllers\RolesController@assignPermi
 Route::get('vmt-assign-roles', 'App\Http\Controllers\RolesController@assignRoles');
 Route::post('vmt-assign-roles', 'App\Http\Controllers\RolesController@assignRolesToUser');
 
-Route::post('vmt-delete-roles', 'App\Http\Controllers\RolesController@destroy');
+Route::post('vmt-delete-roles', 'App\Http\Controllers\RolesController@deleteRoles');
 
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');

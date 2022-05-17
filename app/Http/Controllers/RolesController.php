@@ -179,4 +179,14 @@ class RolesController extends Controller
         return 'Role Deleted';
         dd($request->all());
     }
+
+
+    // Delete Roles
+    public function deleteRoles(Request $request)
+    {
+        //
+        Role::find($request->roles)->delete();
+        return 'Role Deleted';
+        dd($request->all());
+    }
 }
