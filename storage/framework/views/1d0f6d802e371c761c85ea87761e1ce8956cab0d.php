@@ -174,15 +174,25 @@
                                         </tbody>
                                     </table>
                                 </th>
+                               
+
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('L1_Review')): ?>
                                 <th   style=" background-color: #405189;" >
                                     <h6 style="color:white;">Reporting Manger Review's (L1)<br/><br/>  Comments &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Score</h6>
-                                </th>                                                        
+                                </th> 
+                                <?php endif; ?>
+                               
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('L2_Review')): ?>                                                   
                                 <th  class="r" style=" background-color: #405189;">
                                     <h6 style="color:white;"> Managers Manager (L2)<br/><br/>  Comments &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Score</h6>
-                                </th>               
+                                </th>   
+                                <?php endif; ?>
+
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Final_Review')): ?>            
                                 <th class="r" style=" background-color: #405189;">
                                     <h6 style="color:white;"> Final Review <br/>( HR or Head Of the Department)</h6>
-                                </th>         
+                                </th> 
+                                <?php endif; ?>        
                                                                                              
                             </tr>
 
@@ -190,8 +200,7 @@
 
                         </thead>
                         <tbody>
-                            
-
+                
                             <tr>
                                 <td class="" width="60%">
                                     <table class="table-bordered p-0" width="100%">
@@ -224,6 +233,8 @@
                                         </tbody>
                                     </table>
                                 </td>
+
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('L1_Review')): ?>
                                 <td class="" >
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -238,6 +249,8 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                <?php endif; ?>
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('L2_Review')): ?>
                                 <td class="">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -252,6 +265,8 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                <?php endif; ?>
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Final_Review')): ?>
                                 <td class="" width="100%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -265,7 +280,8 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                </td>                                
+                                </td>
+                                <?php endif; ?>                              
                             </tr>
 
                             <tr>
@@ -300,6 +316,8 @@
                                         </tbody>
                                     </table>
                                 </td>
+
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('L1_Review')): ?>
                                 <td class=""  width="20%">
                                     <table class="table-bordered  p-0" width="100%">
                                         <tbody>
@@ -314,6 +332,8 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                <?php endif; ?>
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('L2_Review')): ?>
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -328,6 +348,9 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                <?php endif; ?>
+
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Final_Review')): ?>
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -341,7 +364,8 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                </td>                                
+                                </td>
+                                <?php endif; ?>                                
                             </tr>
     
                             <tr>
@@ -376,6 +400,7 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('L1_Review')): ?>
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -390,6 +415,9 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                <?php endif; ?>
+
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('L2_Review')): ?>
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -404,6 +432,9 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                <?php endif; ?>
+                                
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Final_Review')): ?>
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -417,7 +448,8 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                </td>                                
+                                </td> 
+                                <?php endif; ?>                               
                             </tr>
                             
                             <tr>
@@ -452,6 +484,7 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('L1_Review')): ?>
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -466,6 +499,9 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                <?php endif; ?>
+
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('L2_Review')): ?>
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -480,6 +516,9 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                <?php endif; ?>
+
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Final_Review')): ?>
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -493,7 +532,8 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                </td>                                
+                                </td> 
+                                <?php endif; ?>                              
                             </tr>
 
     
@@ -529,6 +569,7 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('L1_Review')): ?>
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -543,6 +584,9 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                <?php endif; ?>
+
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('L2_Review')): ?>
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -557,6 +601,9 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                <?php endif; ?>
+
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Final_Review')): ?>
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -570,7 +617,8 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                </td>                                
+                                </td>   
+                                <?php endif; ?>                            
                             </tr>
 
 
@@ -606,6 +654,8 @@
                                         </tbody>
                                     </table>
                                 </td>
+
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('L1_Review')): ?>
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -620,6 +670,9 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                <?php endif; ?>
+
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('L2_Review')): ?>
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -634,6 +687,9 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                <?php endif; ?>
+
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Final_Review')): ?>
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -647,10 +703,12 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                </td>                                
+                                </td>   
+                                <?php endif; ?>
+
                             </tr>
 
-                             <tr>
+                            <tr>
                                 <td class="" width="60%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -674,6 +732,8 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('L1_Review')): ?>
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -688,6 +748,9 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                <?php endif; ?>
+
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('L2_Review')): ?>
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -702,6 +765,9 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                <?php endif; ?>
+
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Final_Review')): ?>
                                 <td class=""  width="20%">
                                     <table class="table-bordered p-0" width="100%">
                                         <tbody>
@@ -716,6 +782,7 @@
                                         </tbody>
                                     </table>
                                 </td>
+                                <?php endif; ?>
                             </tr>
                             <tr>
                                 <td>
@@ -744,6 +811,82 @@
                                     </div>
                                 </div>
                             </div>
+
+        <div class="row mt-3">
+            <div class="col-lg-12">
+                <table class="table-bordered p-0" width="100%">
+                    <thead>
+                        <tr>
+                            <th width="28%" class="">
+                               Rating Grid
+                            </th>
+                            <th width="10%" class=""></th>
+                            <th width="8%" class=""></th>
+                            <th width="8%" class=""> </th>
+                            <th width="8%" class=""></th>
+                            <th width="8%" class=""></th>
+                            <th width="30%" class="">
+                               Appraisee's Annual Score & Rating
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                                    
+
+                        <tr>
+                            <td class="">
+                               Overall Annual Score
+                            </td>
+                            <td class="">Less than 60 </td>
+                            <td class="">60-70</td>
+                            <td class="">70-80</td>
+                            <td class="">80-90</td>
+                            <td class="">90-100</td>
+                            <td class="">100</td>
+                        </tr>
+
+                        <tr>
+                                         
+                            <td  class="">
+                              Corresponding ANNUAL PERFORMANCE Rating
+
+                            </td>
+                            <td class="">Needs Action</td>
+                            <td class="">Below Expectations</td>
+                            <td class="">Meet Expectations</td>
+                            <td class="">Exceeds Expectations </td>
+                            <td class="">Exceptionally Exceeds Expectations</td>
+                            <td class="">Exceptional </td>
+                        </tr>
+
+                        <tr> 
+                            <td  class="">
+                               Ranking
+                            </td>
+                            <td  class="">1</td>
+                            <td  class="">2</td>
+                            <td class="">3</td>
+                            <td class="">4</td>
+                            <td  class="">5</td>
+                            <td  class="">5</td>
+                        </tr>
+                        <tr>
+                                
+                            <td  class="">
+                               Action
+                            </td>
+                            <td class="">Exit</td>
+                            <td  class="">PIP</td>
+                            <td  class="">10% </td>
+                            <td  class=""> 15% </td>
+                            <td  class="">20%</td>
+                            <td  class=""></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div><!-- end row -->
 
 <?php $__env->stopSection(); ?>

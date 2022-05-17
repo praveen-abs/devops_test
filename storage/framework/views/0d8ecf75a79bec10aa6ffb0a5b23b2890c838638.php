@@ -74,22 +74,69 @@
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarReview">
                         <ul class="nav nav-sm flex-column">
+                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Self_Appraisal')): ?>
                             <li class="nav-item">
                                 <a href="vmt_appraisalreview" class="nav-link" >Self Appraisal Review</a>
                             </li>
+                            <?php endif; ?>
+                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Team')): ?>
                             <li class="nav-item">
                                 <a href="vmt_appraisalreview" class="nav-link" >Team Appraisal Review</a>
-                            </li>           
+                            </li>   
+                            <?php endif; ?> 
+
+                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('ORG')): ?>       
                             <li class="nav-item">
                                 <a href="vmt_appraisalreview" class="nav-link" >Org Appraisal Review</a>
-                            </li>                                                  
+                            </li>    
+                            <?php endif; ?>   
+
+                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('360_Degree_Review')): ?>                                           
                             <li class="nav-item">
                                 <a href="vmt_360review" class="nav-link" >360 Degree Review</a>
                             </li>
+                            <?php endif; ?>
                         </ul>
                     </div>
                 </li> 
 
+                <!-- Navigation Menu for managing roles --> 
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarRoles" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarRoles">
+                        <i class="ri-dashboard-2-line"></i> <span >Roles Management</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarRoles">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="vmt-roles" class="nav-link" >Create/Modify Roles</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="vmt-assign-roles" class="nav-link" >Assign Roles To User</a>
+                            </li>           
+                            
+                        </ul>
+                    </div>
+                </li> 
+
+                <!-- Navigation Menu for managing 360 Review Questions --> 
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebar360questions" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebar360questions">
+                        <i class="ri-dashboard-2-line"></i> <span >360 Review Module</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebar360questions">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="vmt-roles" class="nav-link" >Questions</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="vmt-assign-roles" class="nav-link" >Forms</a>
+                            </li>           
+                            
+                        </ul>
+                    </div>
+                </li> 
 
 
                 <!-- <li class="nav-item">
