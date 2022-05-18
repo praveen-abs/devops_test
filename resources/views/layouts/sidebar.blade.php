@@ -60,7 +60,7 @@
                 
                 <!-- end Dashboard Menu -->
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="index">
+                    <a class="nav-link menu-link" href="{{url('index')}}">
                         <i class="ri-layout-3-line"></i> <span data-key="t-landing">Dashboard</span>
                         <!-- <span class="badge badge-pill bg-danger" >@lang('translation.new')</span> -->
 
@@ -76,24 +76,24 @@
                         <ul class="nav nav-sm flex-column">
                             @can('Self_Appraisal')
                             <li class="nav-item">
-                                <a href="vmt_appraisalreview" class="nav-link" >Self Appraisal Review</a>
+                                <a href="{{url('vmt_appraisalreview')}}" class="nav-link" >Self Appraisal Review</a>
                             </li>
                             @endcan
                             @can('Team')
                             <li class="nav-item">
-                                <a href="vmt_appraisalreview" class="nav-link" >Team Appraisal Review</a>
+                                <a href="{{url('vmt_appraisalreview')}}" class="nav-link" >Team Appraisal Review</a>
                             </li>   
                             @endcan 
 
                             @can('ORG')       
                             <li class="nav-item">
-                                <a href="vmt_appraisalreview" class="nav-link" >Org Appraisal Review</a>
+                                <a href="{{url('vmt_appraisalreview')}}" class="nav-link" >Org Appraisal Review</a>
                             </li>    
                             @endcan   
 
                             @can('360_Degree_Review')                                           
                             <li class="nav-item">
-                                <a href="vmt_360review" class="nav-link" >360 Degree Review</a>
+                                <a href="{{url('vmt_360review')}}" class="nav-link" >360 Degree Review</a>
                             </li>
                             @endcan
                         </ul>
@@ -109,10 +109,10 @@
                     <div class="collapse menu-dropdown" id="sidebarRoles">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="vmt-roles" class="nav-link" >Create/Modify Roles</a>
+                                <a href="{{url('vmt-roles')}}" class="nav-link" >Create/Modify Roles</a>
                             </li>
                             <li class="nav-item">
-                                <a href="vmt-assign-roles" class="nav-link" >Assign Roles To User</a>
+                                <a href="{{url('vmt-assign-roles')}}" class="nav-link" >Assign Roles To User</a>
                             </li>           
                             
                         </ul>
@@ -128,10 +128,10 @@
                     <div class="collapse menu-dropdown" id="sidebar360questions">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="vmt-360-questions" class="nav-link" >Questions</a>
+                                <a href="{{url('vmt-360-questions')}}" class="nav-link" >Questions</a>
                             </li>
                             <li class="nav-item">
-                                <a href="vmt-360-forms" class="nav-link" >Forms</a>
+                                <a href="{{url('vmt-360-forms')}}" class="nav-link" >Forms</a>
                             </li>           
                             
                         </ul>
