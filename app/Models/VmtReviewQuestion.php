@@ -9,5 +9,5 @@ class VmtReviewQuestion extends Model
 {
     use HasFactory;
 
-    protected $table = 'vmt_360_questions';
+    protected $table = 'vmt_reviewquestions';
 }

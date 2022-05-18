@@ -15,7 +15,7 @@ class CreateVmt360QuestionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('vmt_360_questions', function (Blueprint $table) {
+        Schema::create('vmt_reviewquestions', function (Blueprint $table) {
             $table->id();
             $table->text('question');
             $table->string('option_1');
@@ -36,6 +36,6 @@ class CreateVmt360QuestionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vmt_360_questions');
+        Schema::dropIfExists('vmt_reviewquestions');
     }
 }
