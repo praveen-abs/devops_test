@@ -48,4 +48,9 @@ Route::get('vmt-360-questions', 'App\Http\Controllers\Review360ModuleController@
 Route::get('vmt-360-forms', 'App\Http\Controllers\Review360ModuleController@showFormsPage');
 
 
+Route::get('vmt-360-forms/{id}', 'App\Http\Controllers\Review360ModuleController@showFormsEdit');
+
+Route::post('vmt-360-forms', 'App\Http\Controllers\Review360ModuleController@saveReviewQuestios');
+
+
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
