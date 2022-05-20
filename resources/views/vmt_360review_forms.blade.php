@@ -18,67 +18,48 @@
 
                 <div class="card-header border-0 align-items-center d-flex">
                     <h4 class="card-title mb-0 flex-grow-1">
-                    @if(isset($question)) Edit Question @else Create Questions @endif</h4>
+                    @if(isset($formObj)) Edit Form @else Create Form @endif</h4>
                 </div><!-- end card header -->
                 <div class="card-body  pb-2">
                     <div>
-                        <form method="POST" action="/vmt-360-forms" id="question-form">
+                        <form method="POST" action="{{url('/vmt-360-forms')}}" id="question-form">
                             @csrf
-                            @if(isset($question)) 
-                            <input  type="hidden"  name="id" value="{{$question->id}}" >
+                            @if(isset($formObj)) 
+                            <input  type="hidden"  name="id" value="{{$formObj->id}}" >
                             @endif
                             <div class="mb-3 row">
-                                <label for="example-text-input" class="col-md-3 col-form-label"> Question</label>
+                                <label for="example-text-input" class="col-md-3 col-form-label"> Title</label>
                                 <div class="col-md-9">
+                                    <input class="form-control" type="text"  id="example-text-input" placeholder="Enter Option 1" name="name" required @if(isset($formObj)) value="{{$formObj->name}}"  @endif>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row" style="align-items: baseline;">
+
+                                <label for="example-text-input" class="col-md-3 col-form-label">Select Question</label>
+
+                                <div class="col-lg-9 col-md-9">
+                                    @foreach($questionList as $index => $question)
+                                        <div class="form-check ">
+                                            <input class="form-check-input" type="checkbox" id="{{'formCheck-'.$index}}"  name="question[]"  value="{{$question->id}}" 
+                                            @if(isset($formObj)) 
+                                                @if(in_array($question->id, $formObj->questions)) 
+                                                    checked="" 
+                                                @endif 
+                                            @endif>
+                                            <label class="form-check-label" for="{{'formCheck-'.$index}}">
+                                                {{$question->question}}
+                                            </label>
+                                        </div>
+
+                                    @endforeach
+
                                     
-                                    <textarea class="form-control" placeholder="Enter Questions" id="gen-info-description-input" name="question" rows="2" required>@if(isset($question)) {{$question->question}}  @endif</textarea>
-                                </div>
-                            </div>
-
-                            <div class="mb-3 row">
-                                <label for="example-text-input" class="col-md-3 col-form-label"> Option 1</label>
-                                <div class="col-md-9">
-                                    <input class="form-control" type="text"  id="example-text-input" placeholder="Enter Option 1" name="option_1" required @if(isset($question)) value="{{$question->option_1}}"  @endif>
-                                </div>
-                            </div>
-
-                            <div class="mb-3 row">
-                                <label for="example-text-input" class="col-md-3 col-form-label"> Option 2</label>
-                                <div class="col-md-9">
-                                    <input class="form-control" type="text"  id="example-text-input" placeholder="Enter Option 2" name="option_2" @if(isset($question)) value="{{$question->option_2}}"  @endif required>
-                                </div>
-                            </div>
-
-                            <div class="mb-3 row">
-                                <label for="example-text-input" class="col-md-3 col-form-label"> Option 3</label>
-                                <div class="col-md-9">
-                                    <input class="form-control" type="text"  id="example-text-input" placeholder="Enter Option 3" name="option_3" @if(isset($question)) value="{{$question->option_3}}"  @endif required>
-                                </div>
-                            </div>
-
-                            <div class="mb-3 row">
-                                <label for="example-text-input" class="col-md-3 col-form-label"> Option 4</label>
-                                <div class="col-md-9">
-                                    <input class="form-control" type="text"  id="example-text-input" placeholder="Enter Option 4" name="option_4" @if(isset($question)) value="{{$question->option_4}}"  @endif required>
-                                </div>
-                            </div>
-
-                            <div class="mb-3 row">
-                                <label for="example-text-input" class="col-md-3 col-form-label">Option 5</label>
-                                <div class="col-md-9">
-                                    <input class="form-control" type="text" id="example-text-input" placeholder="Enter Option 5" name="option_5" @if(isset($question)) value="{{$question->option_5}}"  @endif required>
-                                </div>
-                            </div>
-
-                            <div class="mb-3 row">
-                                <label for="example-text-input" class="col-md-3 col-form-label">Answer</label>
-                                <div class="col-md-9">
-                                    <input class="form-control" type="text" id="example-text-input" placeholder="Enter Answer" name="answer" @if(isset($question)) value="{{$question->answer}}"  @endif required>
                                 </div>
                             </div>
                             <div class="row mt-2 mb-2">
                                 <div class="text-end col-xl-12">
-                                    <button type="submit" class="btn btn-primary">@if(isset($question)) Update @else Save @endif </button>
+                                    <button type="submit" class="btn btn-primary">@if(isset($formObj)) Update @else Save @endif </button>
                                 </div>
                             </div>
                         </form>

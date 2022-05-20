@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\VmtReviewQuestion;
+
+use App\Models\VmtReviewForm;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -28,10 +30,11 @@ class Review360ModuleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function showFormIndex()
     {
         //
-        $roles = Role::all();
+        $formList = VmtReviewForm::all();
+        return view('vmt_360review_forms_index', compact('formList'));
         return $roles;
     }
 
@@ -53,14 +56,28 @@ class Review360ModuleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function showFormsPage()
-    {
-        return view('vmt_360review_forms');
+    {   
+        $questionList  = VmtReviewQuestion::all();
+        return view('vmt_360review_forms', compact('questionList'));
+    }
+
+    public function showQuestionForm(){
+        return view('vmt_360review_create_edit_question');
     }
 
     // show edit question form
     public function showFormsEdit($id){
         $question = VmtReviewQuestion::find($id);
-        return view('vmt_360review_forms', compact('question'));
+        return view('vmt_360review_create_edit_question', compact('question'));
+    }
+
+    // edit form
+    public function editReviewForm($id){
+        $formObj       = VmtReviewForm::find($id);
+        $formObj->questions = explode(',', $formObj->questions);
+        $questionList  = VmtReviewQuestion::all();
+        //dd($formObj);
+        return view('vmt_360review_forms', compact('questionList', 'formObj'));
     }
 
     // Store Review Questions in DB
@@ -86,6 +103,24 @@ class Review360ModuleController extends Controller
         $newQuestion->save();
 
         return $msg; //"Question Saved";
+    }
+
+
+    // Store Forms
+    public function storeOrUpdateForms(Request $request){
+       
+        if($request->has('id')){
+            $vmtForm  =  VmtReviewForm::find($request->id); 
+        }else{
+            $vmtForm = new VmtReviewForm; 
+        }
+        $vmtForm->name = $request->name;
+        $vmtForm->questions =   implode(',', $request->question);
+        $vmtForm->author_id =   auth::user()->id;
+        $vmtForm->author_name = auth::user()->name;
+        $vmtForm->save();
+        return "Form Saved";
+        dd($request->all());
     }
 
   
@@ -129,8 +164,17 @@ class Review360ModuleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id = null, Request $request)
+    public function deleteQuestion(Request $request)
     {
+        VmtReviewQuestion::find($request->id)->delete(); 
+        return 'Question Deleted';
+    }
+
+    // delete form from DB
+    public function deleteReviewForm(Request $request)
+    {
+        VmtReviewForm::find($request->id)->delete(); 
+        return 'Form Deleted';
     }
 
 }

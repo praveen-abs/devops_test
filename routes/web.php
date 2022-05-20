@@ -45,12 +45,17 @@ Route::post('vmt-delete-roles', 'App\Http\Controllers\RolesController@deleteRole
 
 //360 Review Module Routing
 Route::get('vmt-360-questions', 'App\Http\Controllers\Review360ModuleController@showQuestionsPage');
-Route::get('vmt-360-forms', 'App\Http\Controllers\Review360ModuleController@showFormsPage');
+Route::get('vmt-360-questions/create', 'App\Http\Controllers\Review360ModuleController@showQuestionForm');
+Route::get('vmt-360-questions/{id}', 'App\Http\Controllers\Review360ModuleController@showFormsEdit');
+Route::post('vmt-360-questions/delete', 'App\Http\Controllers\Review360ModuleController@deleteQuestion');
+Route::post('vmt-360-questions/store', 'App\Http\Controllers\Review360ModuleController@saveReviewQuestios');
 
-
-Route::get('vmt-360-forms/{id}', 'App\Http\Controllers\Review360ModuleController@showFormsEdit');
-
-Route::post('vmt-360-forms', 'App\Http\Controllers\Review360ModuleController@saveReviewQuestios');
+// 360 Module Form : CRUD
+Route::get('vmt-360-forms', 'App\Http\Controllers\Review360ModuleController@showFormIndex');
+Route::get('vmt-360-forms/create', 'App\Http\Controllers\Review360ModuleController@showFormsPage');
+Route::post('vmt-360-forms', 'App\Http\Controllers\Review360ModuleController@storeOrUpdateForms');
+Route::get('vmt-360-forms/{id}', 'App\Http\Controllers\Review360ModuleController@editReviewForm');
+Route::post('vmt-360-forms/delete', 'App\Http\Controllers\Review360ModuleController@deleteReviewForm');
 
 
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');

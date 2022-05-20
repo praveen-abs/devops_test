@@ -26,13 +26,13 @@
             <div class="card" id="orderList">
             <div class="card-header  border-0">
                 <div class="d-flex align-items-center">
-                    <h5 class="card-title mb-0 flex-grow-1">Questions</h5>
+                    <h5 class="card-title mb-0 flex-grow-1">Forms</h5>
                     <div class="flex-shrink-0">
                         <button type="button" class="btn btn-success add-btn" 
                             id="create-btn" >
-                            <a href="{{url('vmt-360-questions/create')}}"><i
+                            <a href="{{url('vmt-360-forms/create')}}"><i
                                 class="ri-add-line align-bottom me-1"></i> Create
-                            Question</a></button>
+                            Form</a></button>
                         <!-- <button type="button" class="btn btn-info"><i
                                 class="ri-file-download-line align-bottom me-1"></i> Import</button> -->
                         <!-- <button class="btn btn-soft-danger" onClick="deleteMultiple()"><i
@@ -78,7 +78,7 @@
                     </ul> -->
 
                     <div class="table-responsive table-card mb-1 mt-3">
-                        @if(count($questionList ) > 0)
+                        @if(count($formList ) > 0)
                         <table class="table table-nowrap align-middle" id="orderTable">
                             <thead class="text-muted table-light">
                                 <tr class="text-uppercase">
@@ -89,20 +89,13 @@
                                         </div>
                                     </th> -->
                                     <th class="sort" data-sort="id">#</th>
-                                    <th class="sort" data-sort="customer_name">Question</th>
-                                    <th class="sort" data-sort="product_name">Option 1</th>
-                                    <th class="sort" data-sort="date">Option 2</th>
-                                    <th class="sort" data-sort="amount">Option 3</th>
-                                    <th class="sort" data-sort="payment">Option 4</th>
-                                    <th class="sort" data-sort="status">Option 5</th>
-                                    <th class="sort" data-sort="status">Answer</th>
-
+                                    <th class="sort" data-sort="customer_name">Name</th>
                                     <th class="sort" data-sort="status">Auhtor</th>
                                     <th class="sort" data-sort="city">Action</th>
                                 </tr>
                             </thead>
                             <tbody class="list form-check-all">
-                                @foreach($questionList as $question)
+                                @foreach($formList as $question)
                                 <tr>
                                    <!--  <th scope="row">
                                         <div class="form-check">
@@ -112,15 +105,7 @@
                                     </th> -->
                                     <td class="id"><a href="apps-ecommerce-order-details"
                                             class="fw-medium link-primary">{{$question->id}}</a></td>
-                                    <td class="customer_name">{{$question->question}}</td>
-                                    <td class="product_name">{{$question->option_1}}</td>
-                                    <td class="date">{{$question->option_2}}</td>
-                                    <td class="amount">{{$question->option_3}}</td>
-                                    <td class="payment">{{$question->option_4}}</td>
-                                    <td class="status">{{$question->option_5}}
-                                    </td>
-                                    <td class="status">{{$question->answer}}
-                                    </td>
+                                    <td class="customer_name">{{$question->name}}</td>
                                     <td class="status">{{$question->author_name}}
                                     </td>
                                     <td>
@@ -129,7 +114,7 @@
                                             <li class="list-inline-item edit"
                                                 data-bs-toggle="tooltip" data-bs-trigger="hover"
                                                 data-bs-placement="top" title="Edit">
-                                                <a href="{{url('vmt-360-questions/'.$question->id)}}"
+                                                <a href="{{url('vmt-360-forms/'.$question->id)}}"
                                                     class="text-primary d-inline-block edit-item-btn">
                                                     <i class="ri-pencil-fill fs-16"></i>
                                                 </a>
@@ -254,7 +239,7 @@
         $.ajax({
             type: "POST", 
             data: $('#delete-form').serialize(), 
-            url: "{{url('vmt-360-questions/delete')}}", 
+            url: "{{url('vmt-360-forms/delete')}}", 
             success: function(data)
             {
                 $('#alert-msg').html(data);
@@ -263,7 +248,7 @@
                 toast.show();
                 $('#deleteOrder').modal('hide');
                 $('#delete-form')[0].reset();
-                window.location.href ="{{url('vmt-360-questions')}}"
+                window.location.href ="{{url('vmt-360-forms')}}"
             }
         })
     });
