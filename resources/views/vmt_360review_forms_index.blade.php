@@ -119,11 +119,30 @@
                                                     <i class="ri-pencil-fill fs-16"></i>
                                                 </a>
                                             </li>
+
                                             <li class="list-inline-item" data-bs-toggle="tooltip"
                                                 data-bs-trigger="hover" data-bs-placement="top"
                                                 title="Remove">
                                                 <a class="text-danger d-inline-block remove-item-btn" onclick="deleteQuestion({{$question->id}})" style="cursor:pointer;">
                                                     <i class="ri-delete-bin-5-fill fs-16"></i>
+                                                </a>
+                                            </li>
+
+                                            <li class="list-inline-item edit"
+                                                data-bs-toggle="tooltip" data-bs-trigger="hover"
+                                                data-bs-placement="top" title="View Form">
+                                                <a href="{{url('vmt-360-forms/'.$question->id.'/view-form')}}"
+                                                    class="text-primary d-inline-block edit-item-btn">
+                                                    <i class="ri-eye-fill fs-16"></i>
+                                                </a>
+                                            </li>
+
+                                            <li class="list-inline-item edit"
+                                                data-bs-toggle="tooltip" data-bs-trigger="hover"
+                                                data-bs-placement="top" title="Assign User">
+                                                <a href="{{url('vmt-360-forms/'.$question->id.'/assign-to-user')}}"
+                                                    class="text-primary d-inline-block edit-item-btn">
+                                                    <i class="ri-user-fill fs-16"></i>
                                                 </a>
                                             </li>
                                         </ul>

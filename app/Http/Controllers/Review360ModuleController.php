@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\VmtReviewQuestion;
-
+use App\Models\VmtUserForm;
 use App\Models\VmtReviewForm;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
@@ -121,6 +121,55 @@ class Review360ModuleController extends Controller
         $vmtForm->save();
         return "Form Saved";
         dd($request->all());
+    }
+
+    // viewForm
+    public function viewForm($id, Request $request){
+        $formObj = VmtReviewForm::find($id);
+
+        $queArray =  explode(',', $formObj->questions);
+
+        $formQuestions  = VmtReviewQuestion::whereIn('id', $queArray)->select('id', 'question', 'option_1','option_2', 'option_3', 'option_4', 'option_5')->get();
+        return view('vmt_360review_forms_view', compact('formObj', 'formQuestions'));
+    }
+
+    // view 360 assigned form
+    public function viewAssignUserForm(Request $request){
+        $userForm = VmtUserForm::where('user_id', auth::user()->id)->first();
+        
+        if($userForm){
+            $formObj  =     VmtReviewForm::find($userForm->form_id);
+            $queArray =     explode(',', $formObj->questions);
+            $formQuestions  = VmtReviewQuestion::whereIn('id', $queArray)->select('id', 'question', 'option_1','option_2', 'option_3', 'option_4', 'option_5')->get();
+            return view('vmt_360review_forms_view', compact('formObj', 'formQuestions')); 
+        }else{
+            return "No forms found";
+        }
+         
+    }
+
+    // assign forms to user form view
+    public function assignToUser($id, Request $request){
+        $formObj = VmtReviewForm::find($id);
+        $users   = User::all(); 
+        return view('vmt_360review_assignFormToUser', compact('formObj', 'users'));   
+    }
+
+    // assign forms To user : store
+    public function assignForm($id, Request $request)
+    {
+        // code...
+        $isAssigned = VmtUserForm::where('user_id', $request->user_id)->where('form_id', $id)->first(); 
+
+        if($isAssigned){
+            return "Form Assigned"; 
+        }else{
+            $userForm = new VmtUserForm; 
+            $userForm->form_id = $id;
+            $userForm->user_id = $request->user_id; 
+            $userForm->save();
+            return "Form Assigned"; 
+        }
     }
 
   

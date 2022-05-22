@@ -55,7 +55,17 @@ Route::get('vmt-360-forms', 'App\Http\Controllers\Review360ModuleController@show
 Route::get('vmt-360-forms/create', 'App\Http\Controllers\Review360ModuleController@showFormsPage');
 Route::post('vmt-360-forms', 'App\Http\Controllers\Review360ModuleController@storeOrUpdateForms');
 Route::get('vmt-360-forms/{id}', 'App\Http\Controllers\Review360ModuleController@editReviewForm');
+
+Route::get('vmt-360-forms/{id}/view-form', 'App\Http\Controllers\Review360ModuleController@viewForm');
+
+Route::get('vmt-360-forms/{id}/assign-to-user', 'App\Http\Controllers\Review360ModuleController@assignToUser');
+
+Route::post('vmt-360-forms/{id}/assign-to-user', 'App\Http\Controllers\Review360ModuleController@assignForm');
+
 Route::post('vmt-360-forms/delete', 'App\Http\Controllers\Review360ModuleController@deleteReviewForm');
+
+
+Route::get('vmt_360review', 'App\Http\Controllers\Review360ModuleController@viewAssignUserForm' );
 
 
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
