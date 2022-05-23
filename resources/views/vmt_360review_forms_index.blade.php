@@ -145,6 +145,15 @@
                                                     <i class="ri-user-fill fs-16"></i>
                                                 </a>
                                             </li>
+
+                                            <li class="list-inline-item edit"
+                                                data-bs-toggle="tooltip" data-bs-trigger="hover"
+                                                data-bs-placement="top" title="Unassign User">
+                                                <a href="{{url('vmt-360-forms/'.$question->id.'/remove-assigned-user')}}"
+                                                    class="text-primary d-inline-block edit-item-btn">
+                                                    <i class="ri-user-fill fs-16"></i>
+                                                </a>
+                                            </li>
                                         </ul>
                                     </td>
                                 </tr>

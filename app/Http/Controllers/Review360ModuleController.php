@@ -143,6 +143,10 @@ class Review360ModuleController extends Controller
             $formQuestions  = VmtReviewQuestion::whereIn('id', $queArray)->select('id', 'question', 'option_1','option_2', 'option_3', 'option_4', 'option_5')->get();
             return view('vmt_360review_forms_view', compact('formObj', 'formQuestions')); 
         }else{
+            $formObj  =     null;//VmtReviewForm::find($userForm->form_id);
+            $queArray =    null; //explode(',', $formObj->questions);
+            $formQuestions  = null;//VmtReviewQuestion::whereIn('id', $queArray)->select('id', 'question', 'option_1','option_2', 'option_3', 'option_4', 'option_5')->get();
+            return view('vmt_360review_forms_view', compact('formObj', 'formQuestions')); 
             return "No forms found";
         }
          
@@ -153,6 +157,22 @@ class Review360ModuleController extends Controller
         $formObj = VmtReviewForm::find($id);
         $users   = User::all(); 
         return view('vmt_360review_assignFormToUser', compact('formObj', 'users'));   
+    }
+
+    // unassign user form 
+    public function unassignView($id, Request $request){
+        $formObj        =   VmtReviewForm::find($id);
+        $assignedUsers  =   VmtUserForm::where('form_id', $id)
+                                ->select(
+                                    'vmt_reviewuserforms.id as review_form_id', 
+                                    'vmt_reviewuserforms.form_id', 
+                                    'vmt_reviewuserforms.user_id', 
+                                    'users.name as username'
+                                )
+                                ->leftJoin('users', 'users.id', '=', 'vmt_reviewuserforms.user_id')
+                                ->get();
+        //dd($assignedUsers);
+        return view('vmt_360review_unassignUserForm', compact('formObj', 'assignedUsers'));   
     }
 
     // assign forms To user : store
@@ -172,6 +192,32 @@ class Review360ModuleController extends Controller
         }
     }
 
+
+    // unassignUserStore
+    public function unassignUserStore($id, Request $request)
+    {
+        // code...
+        //dd($request->all());
+
+        $assignedForms = VmtUserForm::where('form_id', $id)->get(); 
+
+        foreach($assignedForms as $index => $assignForm){
+            $assignForm->delete();
+        }
+
+        if($request->has('assign_users')){
+            foreach($request->assign_users as $aUser){
+                $userForm = new VmtUserForm; 
+                $userForm->form_id = $id;
+                $userForm->user_id = $aUser; 
+                $userForm->save();
+            }
+        }
+
+        return 'Form Unassigned';
+
+        
+    }    
   
     /**
      * Display the specified resource.
