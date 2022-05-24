@@ -179,17 +179,25 @@ class Review360ModuleController extends Controller
     public function assignForm($id, Request $request)
     {
         // code...
-        $isAssigned = VmtUserForm::where('user_id', $request->user_id)->where('form_id', $id)->first(); 
+
+        $assignedForms = VmtUserForm::where('user_id', $request->user_id)->get(); 
+
+        foreach($assignedForms as $index => $assignForm){
+            $assignForm->delete();
+        }
+
+
+        /*$isAssigned = VmtUserForm::where('user_id', $request->user_id)->where('form_id', $id)->first(); 
 
         if($isAssigned){
             return "Form Assigned"; 
-        }else{
+        }else{*/
             $userForm = new VmtUserForm; 
             $userForm->form_id = $id;
             $userForm->user_id = $request->user_id; 
             $userForm->save();
             return "Form Assigned"; 
-        }
+        //}
     }
 
 
