@@ -27,7 +27,7 @@ class VmtEmployeeController extends Controller
     //
     public function create(){
         $users  = User::all();
-        $edit   = false;
+        $edit   = true;
         return view('vmt_create_modify_employee_hierarchy', compact('users', 'edit'));
     }
 
@@ -66,21 +66,25 @@ class VmtEmployeeController extends Controller
         }else{
             $parentId  = null;
         }
-
-        $childrenList   = $request->childs;
-        $totalChild     = count($childrenList);
-        if($totalChild > 0){
-            foreach ($childrenList as $key => $childVal) {
-                // code...
-                $newHierarchy              = new VmtEmployeeHierarchy; 
-                $newHierarchy->user_id     = $request->parent;
-                $newHierarchy->child_nodes = $childVal;
-                $newHierarchy->child_count = $totalChild;
-                $newHierarchy->parent_id    = $parentId;
-                $newHierarchy->save();
+        if($request->has('childs')){
+            $childrenList   = $request->childs;
+            $totalChild     = count($childrenList);
+            if($totalChild > 0){
+                foreach ($childrenList as $key => $childVal) {
+                    // code...
+                    $newHierarchy              = new VmtEmployeeHierarchy; 
+                    $newHierarchy->user_id     = $request->parent;
+                    $newHierarchy->child_nodes = $childVal;
+                    $newHierarchy->child_count = $totalChild;
+                    $newHierarchy->parent_id    = $parentId;
+                    $newHierarchy->save();
+                }
             }
+            return "Saved";
+        }else{
+            return "Please select node";
         }
-        return "Saved";
+       
     }
 
     //

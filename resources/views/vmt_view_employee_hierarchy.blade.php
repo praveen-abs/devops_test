@@ -3,14 +3,16 @@
 
     <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
     <style type="text/css">
-        .self-box{padding: 12px;
-    border: 1px Solid #000;
-    display: inline-block;
-    margin-bottom: 8px;}
+        .self-box{
+            padding: 10px;
+            /*border: 1px Solid #000;*/
+            /*display: inline-block;*/
+            display: block;
+        }
     #self-node{
-        justify-content: center;
+        justify-content: flex-start;
     align-items: center;
-    display: flex;
+    display: block;
     margin-bottom: 12px;
     }
     /*.parent-vertical {
@@ -22,19 +24,17 @@
     }*/
 
     #parent-node{
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
-        display: flex;
+        display: block;
         margin-bottom: 12px;
     }
 
     #child-node{
-        display: flex;
-        justify-content: center;
+        display: block;
+        justify-content: flex-start;
     }
-    #child-node .self-box:nth-child(2) {
-  margin-left: 12px;
-}
+   
 
 #child-node .self-box:before{
      border-left: 2px solid black;
@@ -57,8 +57,6 @@
     <div class="row">
         <div class="col-xl-8">
             <div class="card">
-
-               
                 <div class="card-body  pb-2">
                     <div>
                         <form method="POST" action="{{url('vmt-employee-hierarchy/store')}}" id="role-form">
@@ -165,7 +163,6 @@
                             $('#parent-node').html('');
                             $('#parent-node').html("<span class='self-box'>"+data.parent[0].name+"</span>");    
                         }else{
-
                             $('#parent-node').html('');
                             $('.parent-vertical').css('display', 'none');
                         }
@@ -176,12 +173,11 @@
                         $('#child-node').html('');
                         var childList = data.child; 
                         for (var i = childList.length - 1; i >= 0; i--) {
-                            $('#child-node').append("<span class='self-box'>"+childList[i].name+"</span>");
+                            $('#child-node').append("<span class='self-box'>&emsp;&emsp;"+childList[i].name+"</span>");
                         }
-                        
                     }
 
-                    $('#self-node').html("<span class='self-box'>"+data.self.name+"</span>");
+                    $('#self-node').html("<span class='self-box'>&emsp;"+data.self.name+"</span>");
 
                     console.log(data.self);
                 }

@@ -149,9 +149,7 @@
                             <li class="nav-item">
                                 <a href="{{url('vmt-employee-hierarchy/create')}}" class="nav-link" >Create</a>
                             </li>
-                            <li class="nav-item">
-                                <a href="{{url('vmt-employee-hierarchy/modify')}}" class="nav-link" >Modify</a>
-                            </li>
+                           
                             <li class="nav-item">
                                 <a href="{{url('vmt-employee-hierarchy')}}" class="nav-link" >View</a>
                             </li>
