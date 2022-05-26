@@ -71,5 +71,18 @@ Route::post('vmt-360-forms/delete', 'App\Http\Controllers\Review360ModuleControl
 
 Route::get('vmt_360review', 'App\Http\Controllers\Review360ModuleController@viewAssignUserForm' );
 
+//
+Route::get('vmt-employee-hierarchy', 'App\Http\Controllers\VmtEmployeeController@index');
+Route::get('vmt-employee-hierarchy/get-all', 'App\Http\Controllers\VmtEmployeeController@getChildrenList');
+
+Route::get('vmt-employee-hierarchy/create', 'App\Http\Controllers\VmtEmployeeController@create');
+
+Route::get('vmt-employee-hierarchy/{id}/view', 'App\Http\Controllers\VmtEmployeeController@viewHierarchy');
+
+Route::get('vmt-employee-hierarchy/{id}/childrens', 'App\Http\Controllers\VmtEmployeeController@getChildForUser');
+
+
+Route::post('vmt-employee-hierarchy/store', 'App\Http\Controllers\VmtEmployeeController@store');
+Route::get('vmt-employee-hierarchy/modify', 'App\Http\Controllers\VmtEmployeeController@edit');
 
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');

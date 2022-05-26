@@ -138,6 +138,26 @@
                     </div>
                 </li> 
 
+                <!-- Navigation Menu for managing Employee Hierarchy --> 
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebaremphierarchy" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebaremphierarchy">
+                        <i class="ri-dashboard-2-line"></i> <span >Employee Hierarchy</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebaremphierarchy">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{url('vmt-employee-hierarchy/create')}}" class="nav-link" >Create</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{url('vmt-employee-hierarchy/modify')}}" class="nav-link" >Modify</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{url('vmt-employee-hierarchy')}}" class="nav-link" >View</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li> 
 
                 <!-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse"
