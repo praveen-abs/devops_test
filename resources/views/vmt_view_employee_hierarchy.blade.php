@@ -2,6 +2,7 @@
 @section('css')
 
     <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
+    <link href="{{ ('assets/css/super-simple.css')}}" rel="stylesheet">
     <link href="{{ URL::asset('assets/css/Treant.css') }}" rel="stylesheet">
     <style type="text/css">
         .self-box{
