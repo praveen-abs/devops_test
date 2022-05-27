@@ -2,6 +2,7 @@
 @section('css')
 
     <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
+    <link href="{{ URL::asset('assets/css/Treant.css') }}" rel="stylesheet">
     <style type="text/css">
         .self-box{
             padding: 10px;
@@ -9,12 +10,12 @@
             /*display: inline-block;*/
             display: block;
         }
-    #self-node{
-        justify-content: flex-start;
-    align-items: center;
-    display: block;
-    margin-bottom: 12px;
-    }
+
+        #self-node{
+            justify-content: flex-start;
+            align-items: center;
+            display: block;
+        }
     /*.parent-vertical {
         border-left: 2px solid black;
         height: 20px;
@@ -23,12 +24,11 @@
         top: 45px;
     }*/
 
-    #parent-node{
-        justify-content: flex-start;
-        align-items: center;
-        display: block;
-        margin-bottom: 12px;
-    }
+        #parent-node{
+            justify-content: flex-start;
+            align-items: center;
+            display: block;
+        }
 
     #child-node{
         display: block;
@@ -84,6 +84,9 @@
                                 <div id="child-node" >
                                 </div>
                                 </div>
+
+                                <div class="chart" id="OrganiseChart-simple"></div>
+    
                                 
                             </div>
                         </form>
@@ -145,9 +148,33 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
+    <script type="text/javascript" src="{{URL::asset('assets/js/raphael.js')}}"></script>
+    <script src="{{ URL::asset('assets/js/Treant.js') }}" ></script>
+
     <script type="text/javascript">
         
 
+
+
+// // // // // // // // // // // // // // // // // // // // // // // // 
+
+var config = {
+    container: "#OrganiseChart-simple"
+};
+
+/*var parent_node = {
+    text: { name: "Parent node" }
+};*/
+
+
+
+
+    </script>
+
+    <script type="text/javascript">
+        
+        var initiateTreantChart  = false;
+        //var parent_node = { text: { name: "Parent node" } };
         // select roles to assign permission 
         $('#select-parent').on('change', function(){
             //var userList  = {!!json_encode($users) !!};
@@ -157,11 +184,14 @@
                 url: "{{url('vmt-employee-hierarchy/')}}"+"/"+parentVal+"/view",
                 type: "GET",
                 success: function(data){
+                    /*initiateTreantChart = true;
+                    var parent_node = { text: { name: ''} }
                     if(data.parent){
                         if(data.parent.length > 0){
                             $('.parent-vertical').css('display', 'block');
                             $('#parent-node').html('');
-                            $('#parent-node').html("<span class='self-box'>"+data.parent[0].name+"</span>");    
+                            $('#parent-node').html("<span class='self-box'>"+data.parent[0].name+"</span>");  
+                            parent_node = { text: { name: data.parent[0].name} }  
                         }else{
                             $('#parent-node').html('');
                             $('.parent-vertical').css('display', 'none');
@@ -179,14 +209,55 @@
 
                     $('#self-node').html("<span class='self-box'>&emsp;"+data.self.name+"</span>");
 
-                    console.log(data.self);
+                    console.log(data.self);*/
+
+                    enableOrgChart(data);
                 }
             })
 
+                 
+        
             
         });
+
+
+      
 
         
         
     </script>
+    
+        <script>
+            function enableOrgChart(parent_node ){
+                console.log('org', parent_node);
+                var simple_chart_config = [
+    {
+        "container": "#OrganiseChart-simple"
+    },
+    parent_node];
+
+
+
+               /* {
+                    chart: {
+                        container: "#OrganiseChart-simple"
+                    },
+                    //parent_node,
+                    nodeStructure: parent_node*/
+                    /* {
+                        parent_node,
+                        children: [
+                            {
+                                text: { name: "First child" }
+                            },
+                            {
+                                text: { name: "Second child" }
+                            }
+                        ]
+                    }*/
+               /* };    */ 
+                console.log(simple_chart_config);
+                new Treant( simple_chart_config );   
+            }
+        </script>
 @endsection
