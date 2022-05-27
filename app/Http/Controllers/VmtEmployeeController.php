@@ -38,46 +38,33 @@ class VmtEmployeeController extends Controller
     }
 
     public function viewHierarchy($id){
-        //dd($id);
-        $selfData      =   User::select('id', 'name')->where('id', $id)->first();
+        $selfData        =   User::select('id', 'name')->where('id', $id)->first();
         $userHierarchy   =   VmtEmployeeHierarchy::where('user_id', $id)->get();
         if($userHierarchy->count() > 0){
             $childIds    =   $userHierarchy->pluck('child_nodes');
             $parentIds   =   $userHierarchy->pluck('parent_id');
-            //$parentArray =   [];
-            \Log::error('parent');
-            \Log::error($parentIds);
+
             if($parentIds[0] != null){
                $parentData =   User::select('id', 'name')->where('id', $parentIds[0])->first();
             }
-            //$selfData    =   User::select('id', 'name')->where('id')->first(); 
+
             $childArray  = [];  
             $childData   =   User::select('id', 'name')->whereIn('id', $childIds)->get();
             
             foreach ($childData as $key => $value) {
-                // code...
-                $childArray[] = array(
-                                    "text" => array( "name" => $value->name ),
-                                    "_json_id" => $value->id
-                                );
+                $childArray[] = array( "text" => array( "name" => $value->name ), "_json_id" => $value->id);
             }
-
            
             if(isset($parentData)){
-                $reponseArray =  array(
-                    "text"     => array( "name" => $parentData->name ),
-                    "_json_id" => $parentData->id,
-                    "children" => array(
+                $reponseArray   =  array(
+                    "text"      => array( "name" => $parentData->name ),"_json_id" => $parentData->id,
+                    "children"  => array(
                         array(
-                            "text" => array("name" => $selfData->name),
-                            "_json_id" => $selfData->id,
-                            "children" => $childArray,
+                            "text"      => array("name" => $selfData->name),
+                            "_json_id"  => $selfData->id, "children" => $childArray,
                         )
                     )
-                );    
-                \Log::error('----------------');
-                \Log::error($reponseArray);
-                \Log::error('---------------');
+                );
                 return $reponseArray;
             }else{
                 return array(
@@ -86,7 +73,6 @@ class VmtEmployeeController extends Controller
                     "children" => $childArray
                 );  
             }
-            
             return array('child' => $childIds, 'parent' => $parentIds, "self_id" => $id);
         }else{
             return array(
@@ -95,32 +81,6 @@ class VmtEmployeeController extends Controller
                 "children" => []
             ); 
         }
-        
-
-
-        if($parentId->count() == 0){
-            $parentId           =   VmtEmployeeHierarchy::where('child_nodes', $id)->pluck('user_id');
-        }
-
-        $nodeArray          =   [];
-        $parentData    =   User::select('id', 'name')->whereIn('id', $parentId)->get();
-        $childrenData     =   User::select('id', 'name')->whereIn('id', $childrenIds)->get();
-
-
-        $childrenArray = [];
-        foreach ($childrenData as $key => $value) {
-            // code...
-            $childrenArray[] = array("text" => array("name" => $value->name));
-        }
-
-        $selfArray = array("text" =>array("name" => $selfData->name), "children" => $childrenArray);
-
-        $structuredData  = array(
-            "text" => array("name" => $parentData[0]->name), 
-            "children" => $selfArray,
-        );
-
-        return $structuredData; 
     }
 
     // 
