@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
+use App\Models\VmtEmployeeHierarchy;
+
 
 class Review360ModuleController extends Controller
 {
@@ -143,6 +145,18 @@ class Review360ModuleController extends Controller
             $formQuestions  = VmtReviewQuestion::whereIn('id', $queArray)->select('id', 'question', 'option_1','option_2', 'option_3', 'option_4', 'option_5')->get();
             return view('vmt_360review_forms_view', compact('formObj', 'formQuestions')); 
         }else{
+            $userid  = auth::user()->id;
+            $userHierarchy = VmtEmployeeHierarchy::whereIn('child_nodes', [$userid])->first();
+            if($userHierarchy){
+                $userForm = VmtUserForm::where('user_id', $userHierarchy->user_id)->first();
+                if($userForm){
+                    $formObj  =     VmtReviewForm::find($userForm->form_id);
+                    $queArray =     explode(',', $formObj->questions);
+                    $formQuestions  = VmtReviewQuestion::whereIn('id', $queArray)->select('id', 'question', 'option_1','option_2', 'option_3', 'option_4', 'option_5')->get();
+                    return view('vmt_360review_forms_view', compact('formObj', 'formQuestions')); 
+                }
+                //$formObj  =     VmtReviewForm::find($userForm->form_id);
+            }
             $formObj  =     null;//VmtReviewForm::find($userForm->form_id);
             $queArray =    null; //explode(',', $formObj->questions);
             $formQuestions  = null;//VmtReviewQuestion::whereIn('id', $queArray)->select('id', 'question', 'option_1','option_2', 'option_3', 'option_4', 'option_5')->get();
