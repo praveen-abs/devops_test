@@ -29,6 +29,10 @@ Route::get('/registerNewAccount', function(){
     return view('/auth/register');
 })->name('registerNewAccount');
 
+// General Settings
+Route::get('vmt-general-settings', [App\Http\Controllers\HomeController::class, 'generalSettings']);
+Route::post('vmt-general-settings', [App\Http\Controllers\HomeController::class, 'storeGeneralSettings']);
+
 
 // Permission Roles Routing
 Route::get('vmt-roles', 'App\Http\Controllers\RolesController@create');

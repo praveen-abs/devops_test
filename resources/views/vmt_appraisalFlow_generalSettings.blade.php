@@ -8,7 +8,7 @@
 
 @component('components.breadcrumb')
 @slot('li_1') Dashboards @endslot
-@slot('title') Assign Roles @endslot
+@slot('title') General Settings @endslot
 @endcomponent
 
 
@@ -23,32 +23,10 @@
 
             <div class="card-body  pb-2  mx-5">
                 <div>
-                    <form method="POST" id='role-form' action="/vmt-assign-roles">
+                    <form method="POST" id='role-form' action="{{url('/vmt-general-settings')}}">
 
-                        <!-- @csrf
-                            <div class="mb-3 row">
-                                <label class="col-md-2 col-form-label">Select User123</label>
-                                <div class="col-md-10">
-                                    <select class="form-select" name="user" required>
-                                        <option>Select User</option>
-                                        @foreach($users as $user)
-                                            <option value="{{$user->id}}">{{$user->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="mb-3 row">
-                                <label class="col-md-2 col-form-label">Select Roles</label>
-                                <div class="col-md-10">
-                                    <select class="form-select" name="roles" required>
-                                        <option>Select</option>
-                                        @foreach($roles as $role)
-                                            <option value="{{$role->id}}">{{$role->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div> -->
+                        @csrf
+                            
 
                         <!-- by george -->
 
@@ -59,7 +37,7 @@
 
 
                             <div class="col-md-6">
-                                <select class="form-select">
+                                <select class="form-select" name="workflow_component">
                                     <option>Option-1</option>
                                     <option>Option-2</option>
                                     <option>Option-3</option>
@@ -75,13 +53,13 @@
                             <div class="col-md-6 d-flex align-items-center justify-content-start">
                                 <div class="form-check form-check-inline">
 
-                                    <input class="form-check-input" type="radio" name="formRadios" id="formRadios2">
+                                    <input class="form-check-input" type="radio" name="associate_wise_template" id="formRadios2">
                                     <label class="form-check-label" for="formRadios2">
                                         Yes
                                     </label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="formRadios" id="formRadios2">
+                                    <input class="form-check-input" type="radio" name="associate_wise_template" id="formRadios2">
                                     <label class="form-check-label" for="formRadios2">
                                         No
                                     </label>
@@ -94,7 +72,7 @@
 
 
                             <div class="col-md-6">
-                                <select class="form-select">
+                                <select class="form-select" name="kra_competency">
                                     <option>Option-1</option>
                                     <option>Option-2</option>
                                     <option>Option-3</option>
@@ -105,7 +83,7 @@
 
                             <div class="col-md-6"><label class="form-label">Increment Percentage Based On</label></div>
                             <div class="col-md-6">
-                                <select class="form-select">
+                                <select class="form-select" name="increment_percentage">
                                     <option>Option-1</option>
                                     <option>Option-2</option>
                                     <option>Option-3</option>
@@ -118,7 +96,7 @@
                             <div class="col-md-6"><label class="form-label">Report Component<span
                                         class="text-danger">*</span></label></div>
                             <div class="col-md-6">
-                                <select class="form-select">
+                                <select class="form-select" name="report_component">
                                     <option>Option-1</option>
                                     <option>Option-2</option>
                                     <option>Option-3</option>
@@ -129,7 +107,7 @@
 
                             <div class="col-md-6"><label class="form-label">Rating Preference</label></div>
                             <div class="col-md-6">
-                                <select class="form-select">
+                                <select class="form-select" name="rating_preference">
                                     <option>Option-1</option>
                                     <option>Option-2</option>
                                     <option>Option-3</option>
@@ -140,7 +118,7 @@
 
                             <div class="col-md-6"><label class="form-label">Annual Score Calculation</label></div>
                             <div class="col-md-6">
-                                <select class="form-select">
+                                <select class="form-select" name="annual_score_calculation">
                                     <option>Option-1</option>
                                     <option>Option-2</option>
                                     <option>Option-3</option>
@@ -156,13 +134,13 @@
                             <div class="col-md-6 d-flex align-items-center justify-content-start">
                                 <div class="form-check form-check-inline">
 
-                                    <input class="form-check-input" type="radio" name="formRadios" id="formRadios2">
+                                    <input class="form-check-input" type="radio" name="show_employee_review_rating" id="formRadios2">
                                     <label class="form-check-label" for="formRadios2">
                                         Yes
                                     </label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="formRadios" id="formRadios2">
+                                    <input class="form-check-input" type="radio" name="show_employee_review_rating" id="formRadios2">
                                     <label class="form-check-label" for="formRadios2">
                                         No
                                     </label>
@@ -173,7 +151,7 @@
 
                             <div class="col-md-6"><label class="form-label">Employee Review Components</label></div>
                             <div class="col-md-6">
-                                <select class="form-select">
+                                <select class="form-select" name="employee_review_components">
                                     <option>Option-1</option>
                                     <option>Option-2</option>
                                     <option>Option-3</option>
@@ -184,7 +162,7 @@
 
                             <div class="col-md-6"><label class="form-label">Percentage Component</label></div>
                             <div class="col-md-6">
-                                <select class="form-select">
+                                <select class="form-select" name="percentage_components">
                                     <option>Option-1</option>
                                     <option>Option-2</option>
                                     <option>Option-3</option>
@@ -200,14 +178,14 @@
                             <div class="col-md-6 d-flex align-items-center justify-content-start">
                                 <div class="form-check form-check-inline">
 
-                                    <input class="form-check-input" type="radio" name="formRadios" id="formRadios2">
-                                    <label class="form-check-label" for="formRadios2">
+                                    <input class="form-check-input" type="radio" name="percentage_groupwise" id="formRadios2">
+                                    <label class="form-check-label" for="formRadios-groupwise">
                                         Yes
                                     </label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="formRadios" id="formRadios2">
-                                    <label class="form-check-label" for="formRadios2">
+                                    <input class="form-check-input" type="radio" name="percentage_groupwise" id="formRadios2">
+                                    <label class="form-check-label" for="formRadios-groupwise">
                                         No
                                     </label>
                                 </div>
@@ -217,7 +195,7 @@
 
                             <div class="col-md-6"><label class="form-label">FinalScore Calculation Method</label></div>
                             <div class="col-md-6">
-                                <select class="form-select">
+                                <select class="form-select" name="finalscore_calculation_method">
                                     <option>Option-1</option>
                                     <option>Option-2</option>
                                     <option>Option-3</option>
@@ -234,14 +212,14 @@
                             <div class="col-md-6 d-flex align-items-center justify-content-start">
                                 <div class="form-check form-check-inline">
 
-                                    <input class="form-check-input" type="radio" name="formRadios" id="formRadios2">
-                                    <label class="form-check-label" for="formRadios2">
+                                    <input class="form-check-input" type="radio" name="achievement_based_rating" id="formRadios2">
+                                    <label class="form-check-label" for="formRadios-achievement_based_rating">
                                         Yes
                                     </label>
                                 </div>
                                 <div class="form-check form-check-inline ">
-                                    <input class="form-check-input" type="radio" name="formRadios" id="formRadios2">
-                                    <label class="form-check-label" for="formRadios2">
+                                    <input class="form-check-input" type="radio" name="achievement_based_rating" id="formRadios2">
+                                    <label class="form-check-label" for="formRadios-achievement_based_rating">
                                         No
                                     </label>
                                 </div>
@@ -257,14 +235,14 @@
                             <div class="col-md-6 d-flex align-items-center justify-content-start">
                                 <div class="form-check form-check-inline">
 
-                                    <input class="form-check-input" type="radio" name="formRadios" id="formRadios2">
-                                    <label class="form-check-label" for="formRadios2">
+                                    <input class="form-check-input" type="radio" name="show_all_managers_to_employee" id="formRadios20">
+                                    <label class="form-check-label" for="formRadios20">
                                         Yes
                                     </label>
                                 </div>
                                 <div class="form-check form-check-inline ">
-                                    <input class="form-check-input" type="radio" name="formRadios" id="formRadios2">
-                                    <label class="form-check-label" for="formRadios2">
+                                    <input class="form-check-input" type="radio" name="show_all_managers_to_employee" id="formRadios20">
+                                    <label class="form-check-label" for="formRadios20">
                                         No
                                     </label>
                                 </div>
@@ -280,15 +258,15 @@
                             <div class="col-md-6 d-flex align-items-center">
                                 <div class="form-check form-check-inline">
 
-                                    <input class="form-check-input" type="radio" name="formRadios" id="formRadios2">
-                                    <label class="form-check-label" for="formRadios2">
+                                    <input class="form-check-input" type="radio" name="show_rated_managers" id="v">
+                                    <label class="form-check-label" for="formRadios21">
                                         Yes
                                     </label>
                                 </div>
                                 <div class="form-check form-check-inline ">
-                                    <input class="form-check-input ml-3" type="radio" name="formRadios"
+                                    <input class="form-check-input ml-3" type="radio" name="show_rated_managers"
                                         id="formRadios2">
-                                    <label class="form-check-label" for="formRadios2">
+                                    <label class="form-check-label" for="formRadios21">
                                         No
                                     </label>
                                 </div>
@@ -306,15 +284,14 @@
 
                                 <div class="col-md-6"><label class="form-label">Period Based On</label></div>
                                 <div class="col-md-6">
-                                    <input class="form-control" type="text" id="example-text-input">
+                                    <input class="form-control" name="rating_period_based" type="text" id="example-text-input">
                                 </div>
                             </div>
 
                             <div class="mb-5 row">
-
                                 <div class="col-md-6"><label class="form-label">Component</label></div>
                                 <div class="col-md-6">
-                                    <select class="form-select">
+                                    <select class="form-select" name="rating_component">
                                         <option>Option-1</option>
                                         <option>Option-2</option>
                                         <option>Option-3</option>

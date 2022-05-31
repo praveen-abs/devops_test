@@ -157,6 +157,15 @@
                     </div>
                 </li> 
 
+               
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{url('vmt-general-settings')}}">
+                        <i class="ri-layout-3-line"></i> <span data-key="t-landing">General Settings</span>
+                        <!-- <span class="badge badge-pill bg-danger" >@lang('translation.new')</span> -->
+
+                    </a>
+                </li>
+
                 <!-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse"
                         role="button" aria-expanded="false" aria-controls="sidebarApps">
