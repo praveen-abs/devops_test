@@ -157,7 +157,36 @@
                     </div>
                 </li> 
 
-               
+                
+                 <!-- Navigation Menu for managing Employee Hierarchy --> 
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarsettings" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarsettings">
+                        <i class="ri-dashboard-2-line"></i> <span >Settings</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarsettings">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{url('vmt_mailSettings')}}" class="nav-link" >Mail Settings</a>
+                            </li>
+                           
+                            <li class="nav-item">
+                                <a href="{{url('vmt_ratingConventions')}}" class="nav-link" >Rating Conventions</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{url('vmt_ratingIncrement')}}" class="nav-link" >Rating Increment</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{url('vmt_ratingIncrementTwo')}}" class="nav-link" >Rating Increment Two</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </li> 
+
+
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{url('vmt-general-settings')}}">
                         <i class="ri-layout-3-line"></i> <span data-key="t-landing">General Settings</span>
