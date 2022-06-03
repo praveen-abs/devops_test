@@ -58,97 +58,93 @@
             <!--end row-->
 
             <div class="row">
-                <div class="col-xl-3 col-md-6">
+                <div class="col-xl-4 col-md-6 ">
                     <!-- card -->
-                    <div class="card card-animate">
+                    <div class="card">
                         <div class="card-body">
                             <div class="d-flex align-items-center">
-                                <div class="flex-grow-1 overflow-hidden">
-                                    <p
-                                        class="text-uppercase fw-medium text-muted text-truncate mb-0">
-                                        Pending Tasks</p>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-end justify-content-between mt-4">
-                                <div>
-                                    <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span
-                                            class="counter-value" data-target="6">0</span>
-                                    </h4>
-                                    <a href="" class="text-decoration-underline">More Details</a>
-                                </div>
-
-                            </div>
-                        </div><!-- end card body -->
-                    </div><!-- end card -->
-                </div><!-- end col -->
-
-                <div class="col-xl-3 col-md-6">
-                    <!-- card -->
-                    <div class="card card-animate">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <div class="flex-grow-1 overflow-hidden">
-                                    <p
-                                        class="text-uppercase fw-medium text-muted text-truncate mb-0">
-                                        New Orders</p>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-end justify-content-between mt-4">
-                                <div>
-                                    <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span
-                                            class="counter-value" data-target="20">0</span></h4>
-                                    <a href="" class="text-decoration-underline">View all orders</a>
-                                </div>
                                 <div class="avatar-sm flex-shrink-0">
-                                    <span class="avatar-title bg-soft-info rounded fs-3">
-                                        <i class="bx bx-shopping-bag text-info"></i>
-                                    </span>
+                                    <div class="vertical-line">
+
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <p class="text-uppercase fw-semibold fs-12 text-muted mb-1"> Total Invested</p>
+
+                                    <h4 class="fs-22 fw-semibold ff-secondary mb-0"><span class="counter-value"
+                                            data-target="45">0</span></h4>
+                                </div>
+                                <div class="flex-shrink-0 align-self-end">
+                                    <span class="badge badge-soft-success">Learn more<span> </span><i
+                                            class="ri-arrow-right-s-fill align-middle me-1"></i></span>
                                 </div>
                             </div>
                         </div><!-- end card body -->
-                    </div><!-- end card -->
+                    </div>
                 </div><!-- end col -->
 
-                <div class="col-xl-3 col-md-6">
+                <div class="col-xl-4 col-md-6 ">
                     <!-- card -->
-                    <div class="card card-animate">
+                    <div class="card">
                         <div class="card-body">
                             <div class="d-flex align-items-center">
-                                <div class="flex-grow-1 overflow-hidden">
-                                    <p
-                                        class="text-uppercase fw-medium text-muted text-truncate mb-0">
-                                        New Customers</p>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-end justify-content-between mt-4">
-                                <div>
-                                    <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span
-                                            class="counter-value" data-target="15">0</span>
-                                    </h4>
-                                    <a href="" class="text-decoration-underline">See details</a>
-                                </div>
                                 <div class="avatar-sm flex-shrink-0">
-                                    <span class="avatar-title bg-soft-warning rounded fs-3">
-                                        <i class="bx bx-user-circle text-warning"></i>
-                                    </span>
+                                    <div class="vertical-line">
+
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <p class="text-uppercase fw-semibold fs-12 text-muted mb-1"> Total Invested</p>
+
+                                    <h4 class="fs-22 fw-semibold ff-secondary mb-0"><span class="counter-value"
+                                            data-target="60">0</span></h4>
+                                </div>
+                                <div class="flex-shrink-0 align-self-end">
+                                    <span class="badge badge-soft-success">Learn more<span> </span><i
+                                            class="ri-arrow-right-s-fill align-middle me-1"></i></span>
                                 </div>
                             </div>
                         </div><!-- end card body -->
-                    </div><!-- end card -->
+                    </div>
+                </div><!-- end col -->
+
+                <div class="col-xl-4 col-md-6">
+                    <!-- card -->
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="avatar-sm flex-shrink-0">
+                                    <div class="vertical-line">
+
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <p class="text-uppercase fw-semibold fs-12 text-muted mb-1"> Total Invested</p>
+
+                                    <h4 class="fs-22 fw-semibold ff-secondary mb-0"><span class="counter-value"
+                                            data-target="80">0</span></h4>
+                                </div>
+                                <div class="flex-shrink-0 align-self-end">
+                                    <span class="badge badge-soft-success">Learn more<span> </span><i
+                                            class="ri-arrow-right-s-fill align-middle me-1"></i></span>
+                                </div>
+                            </div>
+                        </div><!-- end card body -->
+                    </div>
                 </div><!-- end col -->
 
 
 
 
 
-    </div> <!-- end col -->
+            </div> <!-- end col -->
 
-    </div> <!-- end .rightbar-->
- 
- 
+        </div> <!-- end .rightbar-->
+
+
     </div> <!-- end col -->
 </div>
- 
+
 @endsection
 
 @section('script')
