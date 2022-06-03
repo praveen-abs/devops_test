@@ -135,10 +135,10 @@
                     <div class="collapse menu-dropdown" id="ModuleDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{url('vmt-roles')}}" class="nav-link">Questions</a>
+                                <a href="{{url('vmt-360-questions')}}" class="nav-link">Questions</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt-assign-roles')}}" class="nav-link">Forms</a>
+                                <a href="{{url('vmt-360-forms')}}" class="nav-link">Forms</a>
                             </li>
 
 
@@ -172,28 +172,68 @@
 
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#hierachyDrop-Down" data-bs-toggle="collapse" role="button"
+                    <a class="nav-link menu-link" href="#appraisalDrop-Down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarRoles">
-                        <i class="ri-dashboard-2-line"></i> <span>Settings</span>
+                        <i class="ri-dashboard-2-line"></i> <span>Configuration</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="hierachyDrop-Down">
+                    <div class="collapse menu-dropdown" id="appraisalDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{url('vmt-roles')}}" class="nav-link">Mail Settings</a>
+                                <a class="nav-link" href="#masterDrop-Down" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="false" aria-controls="sidebarRoles">
+                                    Appraisal
+                                </a>
+                                <div class="collapse menu-dropdown" id="masterDrop-Down">
+                                    <ul class="nav nav-sm flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#settingsDrop-Down" data-bs-toggle="collapse" role="button"
+                                                aria-expanded="false" aria-controls="sidebarRoles">
+                                                Master
+                                            </a>
+                                            <div class="collapse menu-dropdown" id="settingsDrop-Down">
+                                                <ul class="nav nav-sm flex-column">
+                                                    <li class="nav-item">
+                                                        <a href="{{url('vmt-general-settings')}}" class="nav-link">
+                                                            General Settings</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a href="#" class="nav-link">
+                                                            Settings</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a href="{{url('vmt_ratingConventions')}}" class="nav-link">Rating Conventions</a>
+                                                    </li>
+                                                    
+                                                    <li class="nav-item">
+                                                        <a href="{{url('vmt_ratingIncrement')}}" class="nav-link">Rating Increment</a>
+                                                    </li>
+                                                    
+                                                    <li class="nav-item">
+                                                        <a href="{{url('vmt_mailSettings')}}" class="nav-link">Reminder
+                                                            Mail Settings</a>
+                                                    </li>
+                                                    
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
-
+                            <li class="nav-item">
+                                </li>
                         </ul>
                     </div>
+
                 </li>
 
 
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarRoles" data-bs-toggle="collapse" role="button"
+                    <a class="nav-link menu-link" href="#reportDrop-Down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarRoles">
                         <i class="ri-dashboard-2-line"></i> <span>My Report</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="sidebarRoles">
+                    <div class="collapse menu-dropdown" id="reportDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a href="{{url('vmt-roles')}}" class="nav-link">In/ Out Punch Reports</a>
