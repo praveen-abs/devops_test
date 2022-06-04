@@ -174,7 +174,7 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#appraisalDrop-Down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarRoles">
-                        <i class="ri-dashboard-2-line"></i> <span>Configuration</span>
+                        <i class="ri-folder-settings-line"></i> <span>Configuration</span>
                     </a>
                     <div class="collapse menu-dropdown" id="appraisalDrop-Down">
                         <ul class="nav nav-sm flex-column">
@@ -226,6 +226,22 @@
 
                 </li>
 
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#attendanceDrop-Down" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarRoles">
+                        <i class="ri-calendar-event-line "></i> <span>Attendance</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="attendanceDrop-Down">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{url('vmt-roles')}}" class="nav-link">Leave / Attendance <br/> Regularization Request</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{url('vmt-assign-roles')}}" class="nav-link">Web punch</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>                
 
 
                 <li class="nav-item">
