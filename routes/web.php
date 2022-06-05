@@ -87,6 +87,16 @@ Route::get('vmt-employee-hierarchy/{id}/childrens', 'App\Http\Controllers\VmtEmp
 
 
 Route::post('vmt-employee-hierarchy/store', 'App\Http\Controllers\VmtEmployeeController@store');
+
+
 Route::get('vmt-employee-hierarchy/modify', 'App\Http\Controllers\VmtEmployeeController@edit');
+
+
+// pay slip
+
+Route::get('vmt-payslip', 'App\Http\Controllers\VmtPaySlipController@uploadPaySlipView');
+Route::post('vmt-payslip', 'App\Http\Controllers\VmtPaySlipController@uploadPaySlip');
+Route::get('vmt-employee-payslip', 'App\Http\Controllers\VmtPaySlipController@payslipView');
+Route::get('vmt-payslip-pdf', 'App\Http\Controllers\VmtPaySlipController@payslipPdf');
 
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
