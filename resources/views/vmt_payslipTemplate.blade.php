@@ -425,14 +425,7 @@
 			<td class="c62" colspan="7" rowspan="1"><p class="c3"><span class="c1">{{$employee->Rupees}}</span></p></td></tr><tr class="c49"><td class="c47" colspan="9" rowspan="1"><p class="c3"><span class="c16">&nbsp;</span></p></td></tr><tr class="c10"><td class="c22 c24" colspan="3" rowspan="1"><p class="c3"><span class="c2">TRANSACTION ID</span></p></td><td class="c22" colspan="2" rowspan="1"><p class="c3 c23"><span class="c16"></span></p></td><td class="c22 c24" colspan="2" rowspan="1"><p class="c3"><span class="c1">Paid Date</span></p></td><td class="c22" colspan="2" rowspan="1"><p class="c3"><span class="c9">11-MAY-2022</span></p></td></tr><tr class="c49"><td class="c47" colspan="9" rowspan="1"><p class="c3"><span class="c16">&nbsp;</span></p></td></tr><tr class="c58"><td class="c50" colspan="9" rowspan="1"><p class="c3"><span class="c31">This is a computer-generated slip does not require signature</span></p></td></tr>
 		</table>
 
-					<p class="c14 c56">
-						<span style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 830.67px; height: 82.67px;">
-							<img alt="" src="data:image/png;base64,{{base64_encode(file_get_contents(public_path('assets/images/images/image4.png')))}}" style="width: 830.67px; height: 82.67px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);" title="" />
-						</span>
-						<span style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 830.67px; height: 80.67px;">
-							<img alt="" src="data:image/png;base64,{{base64_encode(file_get_contents(public_path('assets/images/images/image3.png')))}}" width="830" style="width: 830px; height: 80px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);" title="" />
-						</span>
-					</p>
+					
 
 					<div>
 						<p class="c0">
