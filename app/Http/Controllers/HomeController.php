@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use App\Models\VmtGeneralSettings;
+use App\Models\VmtGeneralInfo;
 
 class HomeController extends Controller
 {
@@ -161,5 +162,31 @@ class HomeController extends Controller
         $vmtSettings->rating_component  =  $request->has('rating_component')  ? $request->rating_component : null ; // => "Option-2"
         $vmtSettings->save();
         return "Settings Saved";
+    }
+
+    //
+    public function storeGeneralInfo(Request $request){
+        $vmtGeneralInfo  = new VmtGeneralInfo;
+        //$vmtGeneralInfo->short_name  = ;
+        if ($request->file('logo')) {
+            $avatar = $request->file('logo');
+            $avatarName = time() . '-logo.' . $avatar->getClientOriginalExtension();
+            $avatarPath = public_path('/generalinfo/');
+            $avatar->move($avatarPath, $avatarName);
+            $vmtGeneralInfo->logo_img =  '/generalinfo/'.$avatarName;
+        }
+
+        if($request->file('background-img')) {
+            $avatar = $request->file('background-img');
+            $avatarName = time() . '-bg.' . $avatar->getClientOriginalExtension();
+            $avatarPath = public_path('/generalinfo/');
+            $avatar->move($avatarPath, $avatarName);
+            $vmtGeneralInfo->background_img =  '/generalinfo/'.$avatarName;
+        }
+        $vmtGeneralInfo->short_name  = $request->short_name;
+        $vmtGeneralInfo->login_instruction = $request->login_instructions;
+
+        $vmtGeneralInfo->save();
+        return "General Info Saved";
     }
 }

@@ -99,4 +99,7 @@ Route::post('vmt-payslip', 'App\Http\Controllers\VmtPaySlipController@uploadPayS
 Route::get('vmt-employee-payslip', 'App\Http\Controllers\VmtPaySlipController@payslipView');
 Route::get('vmt-payslip-pdf', 'App\Http\Controllers\VmtPaySlipController@payslipPdf');
 
+
+// General Info
+Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 'storeGeneralInfo']);
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
