@@ -37,10 +37,13 @@ class VmtPaySlipController extends Controller
     //
     public function payslipPdf(Request $request){
         $data['employee'] = VmtEmployeePaySlip::where('EMP_NO', $request->id)->first();
+        //dd(public_path("storage/images/"));
+        //$data['logoSrc']  = public_path('/assets/images/images/image2.png');
+        //dd($data['logoSrc']);
         //$employee = VmtEmployeePaySlip::where('EMP_NO', $request->id)->first();
         //view()->share('employee', $data['employee']);
         //$pdf = PDF::loadView('vmt_uploadPaySlip', $data);
-        //return view('vmt_payslipTemplate', $data);
+        return view('vmt_payslipTemplate', $data);
         // download PDF file with download method
         $pdf = new Dompdf();
         $html =  view('vmt_payslipTemplate', $data);       
