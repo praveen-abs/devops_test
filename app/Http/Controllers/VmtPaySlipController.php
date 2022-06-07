@@ -7,6 +7,8 @@ use App\Models\VmtEmployeePaySlip;
 use App\Imports\VmtPaySlip;
 use Dompdf\Options;
 use Dompdf\Dompdf;
+use PDF;
+
 
 class VmtPaySlipController extends Controller
 {
@@ -35,13 +37,26 @@ class VmtPaySlipController extends Controller
     //
     public function payslipPdf(Request $request){
         $data['employee'] = VmtEmployeePaySlip::where('EMP_NO', $request->id)->first();
+        //$employee = VmtEmployeePaySlip::where('EMP_NO', $request->id)->first();
+        //view()->share('employee', $data['employee']);
+        //$pdf = PDF::loadView('vmt_uploadPaySlip', $data);
+        //return view('vmt_payslipTemplate', $data);
+        // download PDF file with download method
+        $pdf = new Dompdf();
+        $html =  view('vmt_payslipTemplate', $data);       
+        $pdf->loadHtml($html, 'UTF-8');
+        $pdf->setPaper('A4', 'portrait');
+        $pdf->render();
+        $filename = $data['employee']->Rename;
+        return $pdf->stream($filename, ["Attachment" => false]);
 
-        $options = new Options();
+
+        return $pdf->download($data['employee']->Rename.'.pdf');
+        /*$options = new Options();
         $options->set('isRemoteEnabled', true);
         $options->set('debugPng', false);
         $dompdf = new Dompdf($options);
         $dompdf->set_option("isPhpEnabled", true);
-
         $context = stream_context_create(array(
             'ssl' => array(
                 'verify_peer'             => FALSE, 
@@ -52,14 +67,14 @@ class VmtPaySlipController extends Controller
                 'isHtml5ParserEnabled'    => TRUE,
                 'isFontSubsettingEnabled' => TRUE,
             )
-        ));
+        ));*/
         // DOMPDF_FONT_HEIGHT_RATIO
-        $html =  view('vmt_payslipTemplate', $data); 
+        //$html =  view('vmt_payslipTemplate', $data); 
         //return $html;
-        $dompdf->setHttpContext($context);
-        $dompdf->load_html($html);
-        $dompdf->render();
-        $dompdf->stream();
+        //$dompdf->setHttpContext($context);
+        //$dompdf->load_html($html);
+        //return $dompdf->download("1.pdf");
+        //$dompdf->stream();
     }
     //vmt_payslipTemplate.blade.php
 

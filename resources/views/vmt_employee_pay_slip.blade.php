@@ -21,7 +21,7 @@
 
                 <div class="card-body  pb-2">
                     <div>
-                        <form method="POST" id='role-form' action="{{url('vmt-payslip-pdf')}}">
+                        <form method="GET" id='role-form' action="{{url('vmt-payslip-pdf')}}">
                             
                             @csrf
                             <div class="mb-3 row">
@@ -78,7 +78,7 @@
         
        
 
-        $('#role-form').on('submit', function(e){
+       /* $('#role-form').on('submit', function(e){
             e.preventDefault();
             var roleUri = $('#role-form').attr('action');
             console.log(roleUri);
@@ -97,7 +97,7 @@
                 }
             })
             //console.log($('#role-form').serialize());
-        });
+        });*/
 
     </script>
 @endsection
