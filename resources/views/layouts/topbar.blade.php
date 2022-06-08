@@ -23,16 +23,36 @@
                     </a>
                 </div>
 
-                <button type="button" class="btn btn-sm px-3 fs-16 header-item vertical-menu-btn topnav-hamburger" id="topnav-hamburger-icon">
+                <!-- by george -->
+                <!-- <button type="button" class="btn btn-sm px-3 fs-16 header-item vertical-menu-btn topnav-hamburger" id="topnav-hamburger-icon">
                     <span class="hamburger-icon">
                         <span></span>
                         <span></span>
                         <span></span>
                     </span>
-                </button>
+                </button> -->
+
+
+                <!-- by george -->
+
+
+                <div class="settings-content mx-5">
+                    <button class="settings-icon border-0 bg-transparent">
+                        <i class="ri-settings-3-line "></i>
+                    </button>
+                </div>
+
+            <div class="search-content w-100 d-flex  ">
+                    <i class=" ri-search-line "></i>
+                    <input type="text" class="search-bar border-none rounded-pill outline-none" placeholder="Search">
+                </div>
+
+
+
+
 
                 <!-- App Search-->
-               <!-- <form class="app-search d-none d-md-block">
+                <!-- <form class="app-search d-none d-md-block">
                     <div class="position-relative">
                         <input type="text" class="form-control" placeholder="Search..." autocomplete="off"
                             id="search-options" value="">
@@ -722,10 +742,12 @@
                     <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         <span class="d-flex align-items-center">
-                            <img class="rounded-circle header-profile-user" src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"
+                            <img class="rounded-circle header-profile-user"
+                                src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"
                                 alt="Header Avatar">
                             <span class="text-start ms-xl-2">
-                                <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">{{Auth::user()->name}}</span>
+                                <span
+                                    class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">{{Auth::user()->name}}</span>
                                 <span class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text"></span>
                             </span>
                         </span>
