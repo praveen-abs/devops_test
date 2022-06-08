@@ -996,6 +996,14 @@
       height: fit-content;
   }
 
+  .assest .list-group-item{
+      flex-direction: unset !important;
+  }
+
+  .section-content ul{
+  display: contents;
+
+  }
 /* end */
 .hamburger-icon {
     width: 20px;
