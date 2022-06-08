@@ -57,7 +57,7 @@
     --vz-vertical-menu-title-color-dark: #838fb9;
     --vz-header-bg: #fff;
     --vz-header-item-color: #e9ecef;
-    --vz-header-bg-dark:#002f56;
+    --vz-header-bg-dark: #002f56;
     --vz-header-item-color-dark: #b0c4d9;
     --vz-topbar-search-bg: #f3f3f9;
     --vz-topbar-user-bg: #f3f3f9;
@@ -318,7 +318,7 @@
 .header-profile-user {
     height: 35px;
     width: 35px;
-    
+
     border: 1px solid var(--vz-vertical-menu-item-color);
 }
 
@@ -796,32 +796,34 @@
 
 /* top bar search bar */
 
-.search-content{
+.search-content {
     position: relative;
 }
 
-.ri-search-line{
+.ri-search-line {
     font-size: 15px;
-    color:var(--vz-vertical-menu-item-color);
+    color: var(--vz-vertical-menu-item-color);
     position: absolute;
     right: 20px;
     top: 3px;
 }
-.search-bar{
+
+.search-bar {
     border: none;
     border: 1px solid var(--vz-vertical-menu-item-color) !important;
     width: 300px;
     height: 30px;
     outline: none;
-    
+
     text-indent: 10px;
 }
+
 .settings-icon {
-    color:var(--vz-vertical-menu-item-color);
+    color: var(--vz-vertical-menu-item-color);
     font-size: 20px;
     font-weight: 600;
     padding: 0px 10px;
-    
+
 }
 
 
@@ -830,7 +832,7 @@
 .navbar-menu .navbar-nav .nav-sm .nav-link {
     /* padding: .55rem 1.5rem !important; */
     color: var(--vz-vertical-menu-sub-item-color);
-    
+
     white-space: none;
     position: relative;
     font-size: .813rem;
@@ -960,17 +962,19 @@
 .buttons-container .btn-default {
     background-color: transparent;
     border: 1px solid #5da1fa;
-    
-}
-.buttons-container .btn-default:hover{
-    background-color:#e6f1ff47;
+
 }
 
-.header-content{
+.buttons-container .btn-default:hover {
+    background-color: #e6f1ff47;
+}
+
+.header-content {
     position: relative;
     height: 40px;
-    
+
 }
+
 .header-content .heading::after {
     content: " ";
     position: absolute;
@@ -979,24 +983,26 @@
     border-width: 8px;
     border-style: solid;
     border-color: transparent transparent #405189 transparent;
-  }
-.chip-wrapper{
+}
+
+.chip-wrapper {
     display: flex;
-    flex-wrap:wrap;
+    flex-wrap: wrap;
 
 }
 
-  .chips{
-        /* height: 33px; */
-        background: #ebeef2;
-        border-radius: 50px;
-        /* width: 150px; */
-        display: flex;
-        /* padding: 2px 5px; */
-        align-items: center;
-        padding: 2px 6px 2px 2px;
-  }
-  .img-initials{
+.chips {
+    /* height: 33px; */
+    background: #ebeef2;
+    border-radius: 50px;
+    /* width: 150px; */
+    display: flex;
+    /* padding: 2px 5px; */
+    align-items: center;
+    padding: 2px 6px 2px 2px;
+}
+
+.img-initials {
     background-color: #64c3d1;
     height: 32px;
     width: 33px;
@@ -1005,31 +1011,33 @@
     align-items: center;
     justify-content: center;
     color: #fff;
-  }
+}
 
-  .welcome-container textarea{
+.welcome-container textarea {
     resize: none;
     overflow-y: scroll;
-  }
-  .Search-Employee{
-      border: none;
-      outline: none;
-      border-bottom: 1.1px solid #ced4da;
-      width: 600px;
-  }
+}
 
-  .left-content {
-      height: fit-content;
-  }
+.Search-Employee {
+    border: none;
+    outline: none;
+    border-bottom: 1.1px solid #ced4da;
+    width: 600px;
+}
 
-  .assest .list-group-item{
-      flex-direction: unset !important;
-  }
+.left-content {
+    height: fit-content;
+}
 
-  .section-content ul{
-  display: contents;
+.assest .list-group-item {
+    flex-direction: unset !important;
+}
 
-  }
+.section-content ul {
+    display: contents;
+
+}
+
 /* end */
 .hamburger-icon {
     width: 20px;
@@ -1422,7 +1430,7 @@
 }
 
 [data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .nav-item:hover>a.menu-link:after {
-    
+
     /* george block to none */
     display: none;
     transform: rotate(90deg);
@@ -12601,10 +12609,16 @@ span.flatpickr-weekday {
     }
 }
 
+/* commant all by george */
 .auth-one-bg {
-    background-image: url(../images/auth-one-bg.jpg);
-    background-position: 50%;
-    background-size: cover
+background-image: url(../images/login_bg.svg);
+    /* background-position: 50%;
+    background-size: cover  */
+}
+
+.signIn-btn {
+    background-color: var(--vz-header-bg-dark);
+    color: #fff;
 }
 
 .auth-one-bg .bg-overlay {
