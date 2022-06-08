@@ -33,33 +33,6 @@
             </div>
             <ul class="navbar-nav" id="navbar-nav">
                 <li class="menu-title"><span>@lang('translation.menu')</span></li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarDashboards" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarDashboards">
-                        <i class="ri-dashboard-2-line"></i> <span >@lang('translation.dashboards')</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="sidebarDashboards">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="dashboard-analytics" class="nav-link" >@lang('translation.analytics')</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="dashboard-crm" class="nav-link" >@lang('translation.crm')</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="index" class="nav-link" >@lang('translation.ecommerce')</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="dashboard-crypto" class="nav-link" >@lang('translation.crypto')</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="dashboard-projects" class="nav-link" >@lang('translation.projects')</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>  -->
-
-                <!-- end Dashboard Menu -->
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{url('index')}}">
                         <i class="ri-layout-3-line"></i> <span data-key="t-landing">Dashboard</span>
@@ -68,7 +41,7 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#performanceDrop-Down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarReview">
                         <i class="ri-dashboard-2-line"></i> <span>Performance Appraisal</span>
@@ -78,18 +51,21 @@
                         <ul class="nav nav-sm flex-column">
                             @can('Self_Appraisal')
                             <li class="nav-item">
-                                <a href="{{url('vmt_appraisalreview')}}" class="nav-link"><span>  Self Appraisal Review </span></a>
+                                <a href="{{url('vmt_appraisalreview')}}" class="nav-link"><span> Self Appraisal Review
+                                    </span></a>
                             </li>
                             @endcan
                             @can('Team')
                             <li class="nav-item">
-                                <a href="{{url('vmt_appraisalreview')}}" class="nav-link"><span> Team Appraisal Review</a></span>
+                                <a href="{{url('vmt_appraisalreview')}}" class="nav-link"><span> Team Appraisal
+                                        Review</a></span>
                             </li>
                             @endcan
 
                             @can('ORG')
                             <li class="nav-item">
-                                <a href="{{url('vmt_appraisalreview')}}" class="nav-link"><span> Org Appraisal Review</a></span>
+                                <a href="{{url('vmt_appraisalreview')}}" class="nav-link"><span> Org Appraisal
+                                        Review</a></span>
                             </li>
                             @endcan
 
@@ -100,11 +76,11 @@
                             @endcan
                         </ul>
                     </div>
-                </li>
+                </li> -->
 
                 <!-- Navigation Menu for managing roles -->
 
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#roleDrop-Down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarRoles">
                         <i class="ri-dashboard-2-line"></i> <span>Role Management</span>
@@ -115,19 +91,20 @@
                                 <a href="{{url('vmt-roles')}}" class="nav-link"><span> Create/Modify Roles</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt-assign-roles')}}" class="nav-link"><span> Assign Roles To User</span></a>
+                                <a href="{{url('vmt-assign-roles')}}" class="nav-link"><span> Assign Roles To
+                                        User</span></a>
                             </li>
 
 
                         </ul>
                     </div>
-                </li>
+                </li> -->
 
 
 
                 <!-- 360 Review Module-->
 
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#ModuleDrop-Down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarRoles">
                         <i class="ri-dashboard-2-line"></i> <span>360 Review Module</span>
@@ -144,11 +121,11 @@
 
                         </ul>
                     </div>
-                </li>
+                </li> -->
 
                 <!-- Employee Hierarchy -->
 
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#hierachyDrop-Down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarRoles">
                         <i class="ri-dashboard-2-line"></i> <span>Employee Hierarchy</span>
@@ -165,12 +142,12 @@
 
                         </ul>
                     </div>
-                </li>
+                </li> -->
 
                 <!-- mail settings -->
 
 
-
+                <!-- 
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#appraisalDrop-Down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarRoles">
@@ -186,33 +163,36 @@
                                 <div class="collapse menu-dropdown" id="masterDrop-Down">
                                     <ul class="nav nav-sm flex-column">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#settingsDrop-Down" data-bs-toggle="collapse" role="button"
-                                                aria-expanded="false" aria-controls="sidebarRoles">
-                                               <span> Master</span> 
+                                            <a class="nav-link" href="#settingsDrop-Down" data-bs-toggle="collapse"
+                                                role="button" aria-expanded="false" aria-controls="sidebarRoles">
+                                                <span> Master</span>
                                             </a>
                                             <div class="collapse menu-dropdown" id="settingsDrop-Down">
                                                 <ul class="nav nav-sm flex-column">
                                                     <li class="nav-item">
                                                         <a href="{{url('vmt-general-settings')}}" class="nav-link">
-                                                          <span>   General Settings</span></a>
+                                                            <span> General Settings</span></a>
                                                     </li>
                                                     <li class="nav-item">
                                                         <a href="#" class="nav-link">
-                                                          <span>   Settings</span></a>
+                                                            <span> Settings</span></a>
                                                     </li>
                                                     <li class="nav-item">
-                                                        <a href="{{url('vmt_ratingConventions')}}" class="nav-link"><span> Rating Conventions</span></a>
+                                                        <a href="{{url('vmt_ratingConventions')}}"
+                                                            class="nav-link"><span> Rating Conventions</span></a>
                                                     </li>
-                                                    
+
                                                     <li class="nav-item">
-                                                        <a href="{{url('vmt_ratingIncrement')}}" class="nav-link"><span> Rating Increment</span></a>
+                                                        <a href="{{url('vmt_ratingIncrement')}}" class="nav-link"><span>
+                                                                Rating Increment</span></a>
                                                     </li>
-                                                    
+
                                                     <li class="nav-item">
-                                                        <a href="{{url('vmt_mailSettings')}}" class="nav-link"> <span> Reminder
-                                                            Mail Settings</span> </a>
+                                                        <a href="{{url('vmt_mailSettings')}}" class="nav-link"> <span>
+                                                                Reminder
+                                                                Mail Settings</span> </a>
                                                     </li>
-                                                    
+
                                                 </ul>
                                             </div>
                                         </li>
@@ -220,11 +200,11 @@
                                 </div>
                             </li>
                             <li class="nav-item">
-                                </li>
+                            </li>
                         </ul>
                     </div>
 
-                </li>
+                </li> -->
 
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#attendanceDrop-Down" data-bs-toggle="collapse" role="button"
@@ -234,14 +214,78 @@
                     <div class="collapse menu-dropdown" id="attendanceDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{url('vmt-roles')}}" class="nav-link"><span>Leave / Attendance <br/> Regularization Request</span> </a>
+                                <a href="{{url('vmt-roles')}}" class="nav-link"  data-bs-toggle="collapse" role="button"><span>Leave / Attendance <br />
+                                        Regularization Request</span> </a>
+
+
+                                <div class="collapse menu-dropdown" id="settingsDrop-Down">
+                                    <ul class="nav nav-sm flex-column">
+                                        <li class="nav-item">
+                                            <a href="{{url('vmt-general-settings')}}" class="nav-link">
+
+                                                <div class="">
+
+                                                    <input type="date" class="form-control" id="displayName">
+
+
+                                                </div>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </div>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt-assign-roles')}}" class="nav-link"><span> Web punch </span> </a>
+                                <a href="{{url('vmt-assign-roles')}}" class="nav-link"  data-bs-toggle="collapse" role="button"><span> Web punch </span> </a>
+
+
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{url('vmt-assign-roles')}}" class="nav-link"><span>My Report</span> </a>
+                                <div class="collapse menu-dropdown" id="settingsDrop-Down">
+                                    <ul class="nav nav-sm flex-column">
+                                        <li class="nav-item">
+
+                                            <a href="{{url('vmt-general-settings')}}" class="nav-link">
+                                                <span>In/ Out Punch Reports</span>
+                                            </a>
+
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{{url('vmt-general-settings')}}" class="nav-link">
+
+                                                <span>Leave Balance</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+
+                                            <a href="{{url('vmt-general-settings')}}" class="nav-link">
+                                                <span>Holiday List</span>
+                                            </a>
+                                            <div class="collapse menu-dropdown" id="settingsDrop-Down">
+                                                <ul class="nav nav-sm flex-column">
+                                                    <li class="nav-item">
+                                                        <a href="{{url('vmt-general-settings')}}" class="nav-link">
+
+                                                            <div class="">
+
+                                                                <input type="date" class="form-control"
+                                                                    id="displayName">
+
+
+                                                            </div>
+                                                        </a>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
                         </ul>
                     </div>
-                </li>                
+                </li>
 
 
                 <li class="nav-item">
@@ -265,8 +309,91 @@
                     </div>
                 </li>
 
-                <!-- Navigation Menu for managing 360 Review Questions -->
+                <!-- performance -->
+
                 <li class="nav-item">
+                    <a class="nav-link menu-link" href="#reportDrop-Down" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarRoles">
+                        <i class="ri-dashboard-2-line"></i> <span>performance</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="reportDrop-Down">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{url('vmt-roles')}}" class="nav-link"><span>Dashboard</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{url('vmt-assign-roles')}}" class="nav-link"  data-bs-toggle="collapse" role="button"><span>Reviews</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{url('vmt-assign-roles')}}" class="nav-link"  data-bs-toggle="collapse" role="button"><span>KRAs</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{url('vmt-assign-roles')}}" class="nav-link"  data-bs-toggle="collapse" role="button"><span>Continuous Feedback</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{url('vmt-assign-roles')}}" class="nav-link"  data-bs-toggle="collapse" role="button"><span>Competencies & Core values</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{url('vmt-assign-roles')}}" class="nav-link"  data-bs-toggle="collapse" role="button"><span>Job Functions</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{url('vmt-assign-roles')}}" class="nav-link"><span>Meetings</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{url('vmt-assign-roles')}}" class="nav-link"  data-bs-toggle="collapse" role="button"><span>Skills</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{url('vmt-assign-roles')}}" class="nav-link"><span>Reports</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{url('vmt-assign-roles')}}" class="nav-link"  data-bs-toggle="collapse" role="button"><span>360 Review Module</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+<!-- payroll -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#reportDrop-Down" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarRoles">
+                        <i class=" ri-mac-fill"></i> <span>Payroll</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="reportDrop-Down">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{url('vmt-roles')}}" class="nav-link"data-bs-toggle="collapse" role="button" ><span>Payroll Analytics</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{url('vmt-assign-roles')}}" class="nav-link"><span>Run Payroll</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{url('vmt-assign-roles')}}" class="nav-link"data-bs-toggle="collapse" role="button" ><span>Payroll Admin</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{url('vmt-assign-roles')}}" class="nav-link" data-bs-toggle="collapse" role="button"><span>Component Claims</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{url('vmt-assign-roles')}}" class="nav-link" data-bs-toggle="collapse" role="button"><span>Loans</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{url('vmt-assign-roles')}}" class="nav-link" data-bs-toggle="collapse" role="button"><span>Perks</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{url('vmt-assign-roles')}}" class="nav-link" data-bs-toggle="collapse" role="button"><span>Reports</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{url('vmt-assign-roles')}}" class="nav-link" data-bs-toggle="collapse" role="button"><span>Form 16</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{url('vmt-assign-roles')}}" class="nav-link"  data-bs-toggle="collapse" role="button"
+                                    ><span>Employee Information</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <!-- Navigation Menu for managing 360 Review Questions -->
+                <!-- <li class="nav-item">
                     <a class="nav-link menu-link" id="employeeInfo" href="#employeeDrop-Down" data-bs-toggle="collapse"
                         role="button" aria-expanded="false" aria-controls="sidebar360questions">
                         <i class="ri-dashboard-2-line"></i> <span>Employee Information</span>
@@ -282,21 +409,25 @@
                                     <ul class="nav nav-sm flex-column">
                                         <li class="nav-item">
                                             <a href="{{url('vmt-assign-roles')}}" class="nav-link"><span> Pay slip & Tax
-                                                Sheet </span></a>
+                                                    Sheet </span></a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="{{url('vmt-assign-roles')}}" class="nav-link"><span> PF Details</span></a>
+                                            <a href="{{url('vmt-assign-roles')}}" class="nav-link"><span> PF
+                                                    Details</span></a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="{{url('vmt-assign-roles')}}" class="nav-link"><span> Form 16</span></a>
+                                            <a href="{{url('vmt-assign-roles')}}" class="nav-link"><span> Form
+                                                    16</span></a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="{{url('vmt-assign-roles')}}" class="nav-link"><span> Salary Advances and
-                                                Loans</span></a>
+                                            <a href="{{url('vmt-assign-roles')}}" class="nav-link"><span> Salary
+                                                    Advances and
+                                                    Loans</span></a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="{{url('vmt-assign-roles')}}" class="nav-link"><span> Salary Advances and
-                                                Loans</span></a>
+                                            <a href="{{url('vmt-assign-roles')}}" class="nav-link"><span> Salary
+                                                    Advances and
+                                                    Loans</span></a>
                                         </li>
                                     </ul>
                                 </div>
@@ -307,14 +438,17 @@
                                 <div class="collapse  menu-dropdown" id="tdsDrop-Down">
                                     <ul class="nav nav-sm flex-column">
                                         <li class="nav-item">
-                                            <a href="{{url('vmt-assign-roles')}}" class="nav-link"><span> TDS Calculator</span></a>
+                                            <a href="{{url('vmt-assign-roles')}}" class="nav-link"><span> TDS
+                                                    Calculator</span></a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="{{url('vmt-assign-roles')}}" class="nav-link"><span> Previous Employer
-                                                Declaration</span></a>
+                                            <a href="{{url('vmt-assign-roles')}}" class="nav-link"><span> Previous
+                                                    Employer
+                                                    Declaration</span></a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="{{url('vmt-assign-roles')}}" class="nav-link"><span> Tax Declaration</span></a>
+                                            <a href="{{url('vmt-assign-roles')}}" class="nav-link"><span> Tax
+                                                    Declaration</span></a>
                                         </li>
 
                                     </ul>
@@ -326,12 +460,13 @@
 
 
 
-                </li>
+                </li> -->
 
                 <!-- Navigation Menu for managing Employee Hierarchy -->
-                <li class="nav-item">
-                    <a class="nav-link menu-link" id="employeeInfo" href="#appraisalDrop2-Down" data-bs-toggle="collapse"
-                        role="button" aria-expanded="false" aria-controls="sidebar360questions">
+                <!-- <li class="nav-item">
+                    <a class="nav-link menu-link" id="employeeInfo" href="#appraisalDrop2-Down"
+                        data-bs-toggle="collapse" role="button" aria-expanded="false"
+                        aria-controls="sidebar360questions">
                         <i class="ri-dashboard-2-line"></i> <span>Appraisal</span>
 
                     </a>
@@ -344,8 +479,9 @@
                                 <div class="collapse menu-dropdown" id="transitionDrop-Down">
                                     <ul class="nav nav-sm flex-column">
                                         <li class="nav-item">
-                                            <a href="{{url('vmt-assign-roles')}}" class="menu-link nav-link"><span>Employee
-                                                Entry </span></a>
+                                            <a href="{{url('vmt-assign-roles')}}"
+                                                class="menu-link nav-link"><span>Employee
+                                                    Entry </span></a>
                                         </li>
 
                                     </ul>
@@ -357,11 +493,13 @@
                                 <div class="collapse  menu-dropdown" id="reportsDrop-Down">
                                     <ul class="nav nav-sm flex-column">
                                         <li class="nav-item">
-                                            <a href="{{url('vmt-assign-roles')}}" class="nav-link"><span> Appraisal Reports </span> </a>
+                                            <a href="{{url('vmt-assign-roles')}}" class="nav-link"><span> Appraisal
+                                                    Reports </span> </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="{{url('vmt-assign-roles')}}" class="nav-link"><span> Appraisal Review
-                                                Reports </span></a>
+                                            <a href="{{url('vmt-assign-roles')}}" class="nav-link"><span> Appraisal
+                                                    Review
+                                                    Reports </span></a>
                                         </li>
 
 
@@ -374,7 +512,7 @@
 
 
 
-                </li>
+                </li> -->
 
 
                 <!-- Navigation Menu for Ticketting-->
@@ -404,6 +542,61 @@
 
 
                 </li>
+
+                <!-- Exit -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" id="employeeInfo" href="#ticketingDrop-Down" data-bs-toggle="collapse"
+                        role="button" aria-expanded="false" aria-controls="sidebar360questions">
+                        <i class=" ri-logout-box-fill"></i> <span>Exit</span>
+
+                    </a>
+                    <div class="collapse menu-dropdown" id="ticketingDrop-Down">
+                        <ul class="nav nav-sm flex-column">
+
+                            <li class="nav-item ">
+                                <a href="" id="" class="nav-link" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="false"><span> Resignation Entry </span> </a>
+
+                            </li>
+                            <li class="nav-item ">
+                                <a href="" id="tds" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                                    class="nav-link"><span>Resignation Status </span></a>
+
+                            </li>
+                        </ul>
+                    </div>
+
+
+
+
+                </li>
+
+                <!-- org -->
+<!-- 
+                <li class="nav-item">
+                    <a class="nav-link menu-link" id="employeeInfo" href="#ticketingDrop-Down" data-bs-toggle="collapse"
+                        role="button" aria-expanded="false" aria-controls="sidebar360questions">
+                        <i class="ri-dashboard-2-line"></i> <span>Org</span>
+
+                    </a>
+
+                    <div class="collapse menu-dropdown" id="ticketingDrop-Down">
+                        <ul class="nav nav-sm flex-column">
+
+                            <li class="nav-item ">
+                                <a href="" id="" class="nav-link" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="false"><span>Roles and Permissions</span> </a>
+
+                            </li>
+
+                        </ul>
+                    </div>
+
+
+
+
+                </li> -->
+
 
 
                 <!-- <li class="nav-item">
