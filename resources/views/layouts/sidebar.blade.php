@@ -1,23 +1,33 @@
 <!-- ========== App Menu ========== -->
+<?php
+    $logoObj = \DB::table('vmt_general_info')->first();
+
+    if($logoObj){
+        $logoSrc = $logoObj->logo_img;
+    }else{
+        $logoSrc = 'assets/images/vasa.jpg';
+    }
+    //dd($logoSrc);
+?>
 <div class="app-menu navbar-menu">
     <!-- LOGO -->
     <div class="navbar-brand-box">
         <!-- Dark Logo-->
         <a href="index" class="logo logo-dark">
             <span class="logo-sm">
-                <img src="{{ URL::asset('assets/images/vasa.jpg') }}" alt="" height="22">
+                <img src="{{ URL::asset($logoSrc) }}" alt="" height="22">
             </span>
             <span class="logo-lg">
-                <img src="{{ URL::asset('assets/images/vasa.jpg') }}" alt="" height="80">
+                <img src="{{ URL::asset($logoSrc) }}" alt="" height="80">
             </span>
         </a>
         <!-- Light Logo-->
         <a href="index" class="logo logo-light">
             <span class="logo-sm">
-                <img src="{{ URL::asset('assets/images/vasa.jpg') }}" alt="" height="22">
+                <img src="{{ URL::asset($logoSrc) }}" alt="" height="22">
             </span>
             <span class="logo-lg">
-                <img src="{{ URL::asset('assets/images/vasa.jpg') }}" alt="" height="80">
+                <img src="{{ URL::asset($logoSrc) }}" alt="" height="80">
             </span>
         </a>
         <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
@@ -314,13 +324,33 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#reportDrop-Down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarRoles">
-                        <i class="ri-dashboard-2-line"></i> <span>performance</span>
+                        <i class="ri-dashboard-2-line"></i> <span>Performance</span>
                     </a>
                     <div class="collapse menu-dropdown" id="reportDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a href="{{url('vmt-roles')}}" class="nav-link"><span>Dashboard</span></a>
                             </li>
+                            @can('Self_Appraisal')
+                            <li class="nav-item">
+                                <a href="{{url('vmt_appraisalreview')}}" class="nav-link"  role="button"><span>Self Appraisal Review</span></a>
+                            </li>
+                            @endcan
+                            @can('Team')
+                            <li class="nav-item">
+                                <a href="{{url('vmt_appraisalreview')}}" class="nav-link"  role="button"><span>Team Appraisal Review</span></a>
+                            </li>
+                            @endcan
+                            @can('ORG')
+                            <li class="nav-item">
+                                <a href="{{url('vmt_appraisalreview')}}" class="nav-link"  role="button"><span>Org Appraisal Review</span></a>
+                            </li>    
+                            @endcan
+                            @can('360_Degree_Review')
+                            <li class="nav-item">
+                                <a href="{{url('vmt_360review')}}" class="nav-link"  role="button"><span>360 Degree Review</span></a>
+                            </li>       
+                            @endcan
                             <li class="nav-item">
                                 <a href="{{url('vmt-assign-roles')}}" class="nav-link"  data-bs-toggle="collapse" role="button"><span>Reviews</span></a>
                             </li>
@@ -554,12 +584,12 @@
                         <ul class="nav nav-sm flex-column">
 
                             <li class="nav-item ">
-                                <a href="" id="" class="nav-link" data-bs-toggle="collapse" role="button"
+                                <a href="" id="" class="nav-link" 
                                     aria-expanded="false"><span> Resignation Entry </span> </a>
 
                             </li>
                             <li class="nav-item ">
-                                <a href="" id="tds" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                                <a href="" id="tds"  aria-expanded="false"
                                     class="nav-link"><span>Resignation Status </span></a>
 
                             </li>
@@ -1388,19 +1418,19 @@
         <!-- Dark Logo-->
         <a href="index" class="logo logo-dark">
             <span class="logo-sm">
-                <img src="{{ URL::asset('assets/images/vasa.jpg') }}" alt="" height="22">
+                <img src="{{ URL::asset($logoSrc) }}" alt="" height="22">
             </span>
             <span class="logo-lg">
-                <img src="{{ URL::asset('assets/images/logo-dark.png') }}" alt="" height="40">
+                <img src="{{ URL::asset($logoSrc) }}" alt="" height="40">
             </span>
         </a>
         <!-- Light Logo-->
         <a href="index" class="logo logo-light">
             <span class="logo-sm">
-                <img src="{{ URL::asset('assets/images/vasa.jpg') }}" alt="" height="22">
+                <img src="{{ URL::asset($logoSrc) }}" alt="" height="22">
             </span>
             <span class="logo-lg">
-                <img src="{{ URL::asset('assets/images/logo-light.png') }}" alt="" height="40">
+                <img src="{{ URL::asset($logoSrc) }}" alt="" height="40">
             </span>
         </a>
         <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"

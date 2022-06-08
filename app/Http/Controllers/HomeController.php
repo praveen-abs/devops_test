@@ -166,7 +166,14 @@ class HomeController extends Controller
 
     //
     public function storeGeneralInfo(Request $request){
-        $vmtGeneralInfo  = new VmtGeneralInfo;
+
+        $vmtGeneralInfo = VmtGeneralInfo::first();
+        if($vmtGeneralInfo){
+
+        }else{
+            $vmtGeneralInfo  = new VmtGeneralInfo;
+            //$vmtGeneralInfo = vmtGeneralInfo::first();
+        }
         //$vmtGeneralInfo->short_name  = ;
         if ($request->file('logo')) {
             $avatar = $request->file('logo');
