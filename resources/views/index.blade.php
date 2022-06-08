@@ -36,18 +36,18 @@
 
                         <!-- modal for create employee -->
 
-                        <div class="modal w-100" id="createEmployee">
-                            <div class="modal-dialog  modal-fullscreen-xxl-down" id="" aria-hidden="true"
+                        <div class="modal fade" id="createEmployee">
+                            <div class="modal-dialog modal-xl" id="" aria-hidden="true"
                                 aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
 
                                 <div class="modal-content">
                                     <div class="modal-header py-2 bg-primary">
 
                                         <div class="w-100 modal-header-content d-flex align-items-center py-2">
-                                            <h5 class="modal-title" id="exampleModalToggleLabel2">Create New
+                                            <h5 class="modal-title text-white" id="exampleModalToggleLabel2">Create New
                                                 Employee
                                             </h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                         </div>
                                     </div>
@@ -57,7 +57,7 @@
                                             <ul class="nav nav-pills w-100 mb-4" id="pills-tab" role="tablist">
                                                 <li class="nav-item d-flex w-100 align-items-center justify-content-center  "
                                                     role="presentation">
-                                                    <button class="nav-link active rounded-circle" id="pills-basic-btn"
+                                                    <button class="nav-link active rounded-circle  mx-2 " id="pills-basic-btn"
                                                         data-bs-toggle="pill" data-bs-target="#pills-basic-details"
                                                         type="button" role="tab" aria-controls="pills-home"
                                                         aria-selected="true">1
@@ -65,14 +65,14 @@
                                                 </li>
                                                 <li class="nav-item d-flex w-100 align-items-center justify-content-center  "
                                                     role="presentation">
-                                                    <button class="nav-link rounded-circle" id="pills-job-btn"
+                                                    <button class="nav-link rounded-circle mx-2 " id="pills-job-btn"
                                                         data-bs-toggle="pill" data-bs-target="#pills-job-details"
                                                         type="button" role="tab" aria-controls="pills-profile"
                                                         aria-selected="false">2</button> <span>JOB DETAILS</span>
                                                 </li>
                                                 <li class="nav-item d-flex w-100 align-items-center justify-content-center "
                                                     role="presentation">
-                                                    <button class="nav-link rounded-circle" id="pills-work-btn"
+                                                    <button class="nav-link rounded-circle mx-2 " id="pills-work-btn"
                                                         data-bs-toggle="pill" data-bs-target="#pills-work-details"
                                                         type="button" role="tab" aria-controls="pills-contact"
                                                         aria-selected="false">3</button>
@@ -80,7 +80,7 @@
                                                 </li>
                                                 <li class="nav-item d-flex w-100 align-items-center justify-content-center "
                                                     role="presentation">
-                                                    <button class="nav-link rounded-circle" id="pills-compension-btn"
+                                                    <button class="nav-link rounded-circle mx-2 " id="pills-compension-btn"
                                                         data-bs-toggle="pill" data-bs-target="#pills-compension"
                                                         type="button" role="tab" aria-controls="pills-contact"
                                                         aria-selected="false">4
@@ -241,9 +241,9 @@
                                                                     role="tablist">
                                                                     <li class="nav-item d-flex w-100 align-items-center justify-content-end "
                                                                         role="presentation">
-                                                                        <button
+                                                                        <button  data-bs-dismiss="modal"
                                                                             class="btn btn-primary mx-2 p-2">Cancel</button>
-                                                                        <button class="nav-link p-2 mx-2"
+                                                                        <button class="btn btn-primary waves-effect waves-light"
                                                                             id="pills-profile-tab" data-bs-toggle="pill"
                                                                             data-bs-target="#pills-job-details"
                                                                             type="button" role="tab"
@@ -442,21 +442,19 @@
                                                                     role="tablist">
                                                                     <li class="nav-item d-flex w-100 align-items-center justify-content-end "
                                                                         role="presentation">
-                                                                        <button class="nav-link p-2 mx-2"
+                                                                        <button class="btn btn-primary mx-2 p-6"
                                                                             id="pills-profile-tab" data-bs-toggle="pill"
                                                                             data-bs-target="#pills-basic-details"
                                                                             type="button" role="tab"
                                                                             aria-controls="pills-profile"
                                                                             aria-selected="false">
-                                                                            <a href="#pills-basic-details"></a>
                                                                             Back</button>
-                                                                        <button class="nav-link p-2 mx-2"
+                                                                        <button class="btn btn-primary waves-effect waves-light"
                                                                             id="pills-profile-tab" data-bs-toggle="pill"
                                                                             data-bs-target="#pills-work-details"
                                                                             type="button" role="tab"
                                                                             aria-controls="pills-profile"
                                                                             aria-selected="false">
-                                                                            <a href="#pills-work-details"></a>
                                                                             Continue</button>
 
                                                                     </li>
@@ -661,7 +659,7 @@
                                                                     role="tablist">
                                                                     <li class="nav-item d-flex w-100 align-items-center justify-content-end "
                                                                         role="presentation">
-                                                                        <button class="nav-link p-2 mx-2"
+                                                                        <button class="btn btn-primary mx-2 p-6"
                                                                             id="pills-profile-tab" data-bs-toggle="pill"
                                                                             data-bs-target="#pills-job-details"
                                                                             type="button" role="tab"
@@ -669,7 +667,7 @@
                                                                             aria-selected="false">
 
                                                                             Back</button>
-                                                                        <button class="nav-link p-2 mx-2"
+                                                                        <button class="btn btn-primary waves-effect waves-light"
                                                                             id="pills-profile-tab" data-bs-toggle="pill"
                                                                             data-bs-target="#pills-compension"
                                                                             type="button" role="tab"
@@ -796,7 +794,7 @@
                                                                     role="tablist">
                                                                     <li class="nav-item d-flex w-100 align-items-center justify-content-end "
                                                                         role="presentation">
-                                                                        <button class="nav-link p-2 mx-2"
+                                                                        <button class="btn btn-primary mx-2 p-6"
                                                                             id="pills-profile-tab" data-bs-toggle="pill"
                                                                             data-bs-target="#pills-work-details"
                                                                             type="button" role="tab"
@@ -804,7 +802,7 @@
                                                                             aria-selected="false">
 
                                                                             Back</button>
-                                                                        <button class="nav-link p-2 mx-2" type="button"
+                                                                        <button class="btn btn-primary waves-effect waves-light" type="button"
                                                                             role="tab" aria-controls="pills-profile"
                                                                             aria-selected="false">
 
