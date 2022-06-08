@@ -314,13 +314,33 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#reportDrop-Down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarRoles">
-                        <i class="ri-dashboard-2-line"></i> <span>performance</span>
+                        <i class="ri-dashboard-2-line"></i> <span>Performance</span>
                     </a>
                     <div class="collapse menu-dropdown" id="reportDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a href="{{url('vmt-roles')}}" class="nav-link"><span>Dashboard</span></a>
                             </li>
+                            @can('Self_Appraisal')
+                            <li class="nav-item">
+                                <a href="{{url('vmt_appraisalreview')}}" class="nav-link"  role="button"><span>Self Appraisal Review</span></a>
+                            </li>
+                            @endcan
+                            @can('Team')
+                            <li class="nav-item">
+                                <a href="{{url('vmt_appraisalreview')}}" class="nav-link"  role="button"><span>Team Appraisal Review</span></a>
+                            </li>
+                            @endcan
+                            @can('ORG')
+                            <li class="nav-item">
+                                <a href="{{url('vmt_appraisalreview')}}" class="nav-link"  role="button"><span>Org Appraisal Review</span></a>
+                            </li>    
+                            @endcan
+                            @can('360_Degree_Review')
+                            <li class="nav-item">
+                                <a href="{{url('vmt_360review')}}" class="nav-link"  role="button"><span>360 Degree Review</span></a>
+                            </li>       
+                            @endcan
                             <li class="nav-item">
                                 <a href="{{url('vmt-assign-roles')}}" class="nav-link"  data-bs-toggle="collapse" role="button"><span>Reviews</span></a>
                             </li>
@@ -554,12 +574,12 @@
                         <ul class="nav nav-sm flex-column">
 
                             <li class="nav-item ">
-                                <a href="" id="" class="nav-link" data-bs-toggle="collapse" role="button"
+                                <a href="" id="" class="nav-link" 
                                     aria-expanded="false"><span> Resignation Entry </span> </a>
 
                             </li>
                             <li class="nav-item ">
-                                <a href="" id="tds" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                                <a href="" id="tds"  aria-expanded="false"
                                     class="nav-link"><span>Resignation Status </span></a>
 
                             </li>
