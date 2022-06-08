@@ -30,7 +30,7 @@
 
                         <div class="col-md-9 col-lg-6 col-xl-5">
                             <div class="right-content-logo w-100 h-100">
-                                <img src="{{ URL::asset('assets/images/coming-soon-img.png')}}" alt="brand-logo"
+                                <img src="{{ URL::asset($generalInfo->background_img)}}" alt="brand-logo"
                                     class="h-100 w-100">
                             </div>
                         </div>
@@ -41,7 +41,7 @@
 
                             <div class="text-center mt-2">
                                 <a href="index" class="d-inline-block auth-logo">
-                                    <img src="{{ URL::asset('assets/images/logo-light.png')}}" alt="brand-logo"
+                                    <img src="{{ URL::asset($generalInfo->logo_img)}}" alt="brand-logo"
                                         class="h-50 w-50">
                                 </a>
                             </div>

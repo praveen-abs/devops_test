@@ -49,6 +49,6 @@ class LoginController extends Controller
     {
         $generalInfo = VmtGeneralInfo::first();
         //dd($generalInfo);
-        return view('auth.login_2', compact('generalInfo'));
+        return view('auth.login', compact('generalInfo'));
     }
 }
