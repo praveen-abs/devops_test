@@ -319,7 +319,7 @@
                     <div class="collapse menu-dropdown" id="reportDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{url('vmt-roles')}}" class="nav-link"><span>Dashboard</span></a>
+                                <a href="{{url('indexPerformanceDashboard')}}" class="nav-link"><span>Dashboard</span></a>
                             </li>
                             @can('Self_Appraisal')
                             <li class="nav-item">
