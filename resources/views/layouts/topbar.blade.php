@@ -41,7 +41,11 @@
                 @else
                 <div class="settings-content mx-5">
                     <button class="settings-icon border-0 bg-transparent">
-                        <i class="ri-settings-3-line "></i>
+                            
+                            <a href="vmt_topbar_settings">
+                                <i class="ri-settings-3-line ">
+                            </i>
+                        </a>
                     </button>
                 </div>
                 @endhasrole
