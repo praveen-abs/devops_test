@@ -11,7 +11,7 @@
             <div class="row mb-3">
                 <div class="card card-animate">
                         <div class="card-body">
-                            <h5>Employee Dorectory</h5>
+                            <h5>Employee Directory</h5>
                         </div><!-- end card body -->
             </div>
             <div class="row">
