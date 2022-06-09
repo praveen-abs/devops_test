@@ -604,8 +604,8 @@
 
 .footer {
     bottom: 0;
-    padding: 20px .75rem;
-    position: absolute;
+    padding: 10px .75rem;
+    position: fixed;
     right: 0;
     color: var(--vz-footer-color);
     left: 250px;

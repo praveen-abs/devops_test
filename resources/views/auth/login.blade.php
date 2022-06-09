@@ -20,7 +20,7 @@
     </div>
     <!-- auth page content -->
     <div class="auth-page-content my-5">
-        <div class="container-fluid  my-5 w-75 h-75 auth-container">
+        <div class="container-fluid  my-5 w-100 h-100 auth-container">
 
 
 
@@ -37,13 +37,10 @@
 
 
 
-                        <div class="col-md-8 col-lg-6 col-xl-5">
+                        <div class="col-md-8 col-lg-6 col-xl-4">
 
                             <div class="text-center mt-2">
-                                <a href="index" class="d-inline-block auth-logo">
-                                    <img src="{{ URL::asset($generalInfo->logo_img)}}" alt="brand-logo"
-                                        class="h-50 w-50">
-                                </a>
+                                    <img src="{{ URL::asset('assets/images/logo-sm.png') }}" alt="brand-logo" class="h-50 w-50">
                             </div>
                             <div class="p-2 mt-4">
                                 <form action="{{ route('login') }}" method="POST">
