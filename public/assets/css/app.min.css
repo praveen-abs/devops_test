@@ -3415,15 +3415,14 @@ cursor: pointer;
 }
 
 .bg-overlay {
-    position: absolute;
+    position: fixed;
     height: 100%;
     width: 100%;
     right: 0;
     bottom: 0;
     left: 0;
     top: 0;
-    opacity: .7;
-    background-color: #000
+    opacity: 1;
 }
 
 .customizer-setting {
@@ -12662,7 +12661,7 @@ span.flatpickr-weekday {
 
 .particles-js-canvas-el,
 .signin-other-title {
-    position: relative
+    position: fixed
 }
 
 .signin-other-title:after {
