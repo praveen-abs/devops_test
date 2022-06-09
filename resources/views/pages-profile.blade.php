@@ -71,19 +71,57 @@
                                    <img src="{{URL::asset('assets/images/vmt_user_icon.jpeg')}}">
                                 </div>
                                 <div class="flex-grow-1 overflow-hidden ms-3" style="padding-left:36px;">
-                                    <p class="text-uppercase fw-medium text-muted text-truncate mb-3">{{$employee->emp_name}}</p>
+
+                                    <table class="table table-borderless mb-0">
+                                        <tbody>
+                                            <tr>
+                                                <th class="ps-0" scope="row">Full Name </th>
+                                                <td class="text-muted">{{$employee->emp_name}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="ps-0" scope="row">Designation </th>
+                                                <td class="text-muted">{{$employee->designation}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="ps-0" scope="row">Department</th>
+                                                <td class="text-muted">{{$employee->department}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="ps-0" scope="row">Mobile</th>
+                                                <td class="text-muted">{{$employee->mobile_number}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="ps-0" scope="row">E-mail</th>
+                                                <td class="text-muted">{{$employee->email_id}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="ps-0" scope="row">Location</th>
+                                                <td class="text-muted">{{$employee->location}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="ps-0" scope="row">Joining Date</th>
+                                                <td class="text-muted">{{$employee->doj}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="ps-0" scope="row">Date Of Birth:</th>
+                                                <td class="text-muted">{{$employee->dob}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <!-- <p class="text-uppercase fw-medium text-muted text-truncate mb-3"></p>
                                     {{$employee->designation}}<br>
                                     <p class="text-muted mb-2">
                                     Department: <span style="color: #000; padding-left: 8px;">{{$employee->department}}</span></p>
-                                    <p class="text-muted mb-2">Location: <span style="color: #000; padding-left: 8px;">{{$employee->location}}</span>
+                                    <p class="text-muted mb-2">Location: <span style="color: #000; padding-left: 8px;"></span>
                                         <br>
                                     </p>
 
                                     <p class="text-muted mb-1">Mobile: <span style="color: #000; padding-left: 8px;">{{$employee->mobile_number}}</span></p>
                                     <p class="text-muted mb-1">Email: <span style="color: #000; padding-left: 8px;">{{$employee->email_id}}</span></p>
 
-                                    <p class="text-muted mb-1">Date Of Birth: <span style="color: #000; padding-left: 8px;">{{$employee->dob}}</span></p>
-                                    <p class="text-muted mb-1">Joining Date: <span style="color: #000; padding-left: 8px;">{{$employee->doj}}</span></p>
+                                    <p class="text-muted mb-1"> <span style="color: #000; padding-left: 8px;">{{$employee->dob}}</span></p>
+                                    <p class="text-muted mb-1">Joining Date: <span style="color: #000; padding-left: 8px;">{{$employee->doj}}</span></p> -->
                                 </div>
                             </div>
                         </div><!-- end card body -->
