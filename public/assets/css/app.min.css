@@ -921,21 +921,36 @@
     background-color: #b9bfc4;
 }
 
+/* by george */
 .logo-image img {
     height: 60px;
     width: 100px;
 }
 
-.logo-image label,
-.background-image-pin label {
+.logo-image label,.background-image-pin label {
     background-color: transparent;
     display: flex;
     color: #063fb9;
     justify-content: center;
     align-items: center;
     border-radius: 50px;
-
     margin: 0px 20px;
+    cursor: pointer;
+    position: relative;
+}
+.logo-image input,.background-image-pin input {
+    opacity: 0;
+    position: absolute;
+    left: 4px;
+    cursor: pointer;
+    
+}
+.background-image-pin input 
+{
+    
+}
+.logo-image span,.background-image-pin span {
+cursor: pointer;
 }
 
 .background-img {
@@ -12611,9 +12626,9 @@ span.flatpickr-weekday {
 
 /* commant all by george */
 .auth-one-bg {
-background-image: url(../images/login_bg.svg);
-    /* background-position: 50%;
-    background-size: cover  */
+/* background-image: url(../images/login_bg.svg); */
+    background-position: 50%;
+    background-size: cover 
 }
 
 .signIn-btn {
