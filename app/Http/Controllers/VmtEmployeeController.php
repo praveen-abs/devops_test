@@ -6,16 +6,21 @@ use Illuminate\Http\Request;
 
 use App\Models\User;
 use App\Models\VmtEmployeeHierarchy;
+use App\Models\VmtEmployee;
+use App\Imports\VmtEmployee as VmtEmployeeImport;
 
 class VmtEmployeeController extends Controller
 {
     //
     public function index(Request $request){
-        //$allNodes = VmtEmployeeHierarchy::all();
-
         $users  = User::all();
         return view('vmt_view_employee_hierarchy', compact('users'));
-        dd($allNodes);
+    }
+
+    //
+    public function showEmployeeDirectory(Request $request){
+        $vmtEmployees = VmtEmployee::all();
+        return view('vmt_employeeDirectory', compact('vmtEmployees'));
     }
 
     //
@@ -125,4 +130,20 @@ class VmtEmployeeController extends Controller
         return VmtEmployeeHierarchy::where('user_id', $id)->get();
     }
 
+    // store employee details in DB
+    public function storeEmployeeData(Request $request){
+        dd($request->all());
+    }
+
+
+    // show bulk upload form
+    public function bulkUploadEmployee(Request $request){
+        return view('vmt_uploadEmployees');
+    }
+
+    // store employeess from excel sheet to database
+    public function storeBulkEmployee(Request $request){
+        $importDataArry = \Excel::import(new VmtEmployeeImport, request()->file('file'));
+        return "Processed";
+    }
 }
