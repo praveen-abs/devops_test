@@ -137,7 +137,7 @@ input[type=file] {
                                             <i class="ri-attachment-line px-1"></i>
                                             <span>
                                                 Pick different background</span>
-                                                <input type="file" id="logo" name="logo" accept=".png,.jpg,.jpeg,.bmp">
+                                                <input type="file" id="background-img" name="background-img"  accept=".png,.jpg,.jpeg,.bmp">
                                         </label>
 
                                     </div>
@@ -176,6 +176,24 @@ input[type=file] {
 
 
                             </div>
+
+                             <!-- for success message -->
+
+    <div style="z-index: 11">
+    <div id="borderedToast2" class="toast toast-border-success overflow-hidden mt-3" role="alert" aria-live="assertive" aria-atomic="true" >
+        <div class="toast-body">
+            <div class="d-flex align-items-center">
+                <div class="flex-shrink-0 me-2">
+                    <i class="ri-checkbox-circle-fill align-middle"></i>
+                </div>
+                <div class="flex-grow-1">
+                    <h6 class="mb-0" id="alert-msg">Yey! Everything worked!</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
                         </form>
                     </div>
                 </div>
@@ -1469,23 +1487,7 @@ input[type=file] {
     </div>
 
 
-    <!-- for success message -->
-
-    <div style="z-index: 11">
-    <div id="borderedToast2" class="toast toast-border-success overflow-hidden mt-3" role="alert" aria-live="assertive" aria-atomic="true" >
-        <div class="toast-body">
-            <div class="d-flex align-items-center">
-                <div class="flex-shrink-0 me-2">
-                    <i class="ri-checkbox-circle-fill align-middle"></i>
-                </div>
-                <div class="flex-grow-1">
-                    <h6 class="mb-0" id="alert-msg">Yey! Everything worked!</h6>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
+   
     <!--end row-->
 
 
