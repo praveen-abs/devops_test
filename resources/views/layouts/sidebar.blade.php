@@ -297,7 +297,9 @@
                     </div>
                 </li>
 
+                @hasrole("Employee")
 
+                @else
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#reportDrop-Down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarRoles">
@@ -318,6 +320,7 @@
                         </ul>
                     </div>
                 </li>
+                @endif
 
                 <!-- performance -->
 
@@ -572,6 +575,16 @@
 
 
                 </li>
+
+                @hasrole("Employee")
+                     <li class="nav-item">
+                    <a class="nav-link menu-link" 
+                        role="button" >
+                        <i class=" ri-logout-box-fill"></i> <span>Documents</span>
+
+                    </a>
+                </li>
+                @endhasrole
 
                 <!-- Exit -->
                 <li class="nav-item">

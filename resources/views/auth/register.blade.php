@@ -104,6 +104,16 @@
                                                 <i data-feather="lock"></i>
                                             </div>
                                         </div>
+
+                                        <div class=" mb-4">
+                                            <label for="input-password">User Type</label>
+                                            <select name="user_type" required class="form-control">
+                                                <option  disabled selected >Select Type</option>
+                                                <option value="Employee" >Employee</option>
+                                                <option value="HR">HR</option>
+                                                <option value="Manager">Manager</option>
+                                            </select>
+                                        </div>
                                         <div class=" mb-4">
                                             <input type="file" class="form-control @error('avatar') is-invalid @enderror"
                                                 name="avatar" id="input-avatar" required>

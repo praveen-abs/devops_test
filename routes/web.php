@@ -29,6 +29,8 @@ Route::get('/registerNewAccount', function(){
     return view('/auth/register');
 })->name('registerNewAccount');
 
+Route::get('pages-profile', [App\Http\Controllers\HomeController::class, 'showProfile']);
+
 // General Settings
 Route::get('vmt-general-settings', [App\Http\Controllers\HomeController::class, 'generalSettings']);
 Route::post('vmt-general-settings', [App\Http\Controllers\HomeController::class, 'storeGeneralSettings']);

@@ -35,12 +35,16 @@
 
                 <!-- by george -->
 
+                <!-- disable setting icon for employee -->
+                @hasrole("Employee")
 
+                @else
                 <div class="settings-content mx-5">
                     <button class="settings-icon border-0 bg-transparent">
                         <i class="ri-settings-3-line "></i>
                     </button>
                 </div>
+                @endhasrole
 
             <div class="search-content w-100 d-flex  ">
                     <i class=" ri-search-line "></i>
@@ -758,10 +762,18 @@
                         <a class="dropdown-item" href="pages-profile"><i
                                 class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i> <span
                                 class="align-middle">Profile</span></a>
-                        <a class="dropdown-item" href=""><span
+
+                        @hasrole("Employee")
+
+                        @else
+                            <a class="dropdown-item" href=""><span
                                 class="badge bg-soft-success text-success mt-1 float-end">New</span><i
                                 class="mdi mdi-cog-outline text-muted fs-16 align-middle me-1"></i> <span
                                 class="align-middle">Settings</span></a>
+                        @endhasrole
+
+
+                        
                         <a class="dropdown-item " href="javascript:void();"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
                                 class="bx bx-power-off font-size-16 align-middle me-1"></i> <span

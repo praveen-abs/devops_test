@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use App\Models\VmtGeneralSettings;
 use App\Models\VmtGeneralInfo;
+use App\Models\VmtEmployee;
 
 class HomeController extends Controller
 {
@@ -195,5 +196,15 @@ class HomeController extends Controller
 
         $vmtGeneralInfo->save();
         return "General Info Saved";
+    }
+
+    // Show Profile info
+    public function showProfile(Request $request){
+        $user = Auth::user();
+        if($user->hasrole('Employee'))
+            $employee = VmtEmployee::first();
+        else
+            $employee = null;
+        return view('pages-profile', compact( 'employee'));
     }
 }
