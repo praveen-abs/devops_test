@@ -51,7 +51,7 @@
                                     <div class="mb-3">
                                         <label for="username" class="form-label">Username</label>
                                         <input type="text" class="form-control @error('email') is-invalid @enderror"
-                                            value="{{ old('email', 'admin@themesbrand.com') }}" id="username"
+                                            value="{{ old('email', 'admin@gmail.com') }}" id="username"
                                             name="email" placeholder="Enter username">
                                         @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -93,9 +93,9 @@
                                     <div class="mt-4">
                                         <button class="btn signIn-btn w-100" type="submit">Sign-In</button>
                                     </div>
-                                    <div class="mt-4 text-center">
+                                    <!-- <div class="mt-4 text-center">
                                         <p class="mb-0">Don't have an account ?</p>
-                                    </div>
+                                    </div> -->
 
                                 </form>
                             </div>

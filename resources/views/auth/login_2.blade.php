@@ -13,15 +13,8 @@
 
                     <!-- auth page bg -->
                     <div class=""  id="auth-particles">
-                        <div class="bg-overlay"></div>
-
-                        <!-- <div class="shape">
-                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1440 120">
-                                <path d="M 0,36 C 144,53.6 432,123.2 720,124 C 1008,124.8 1296,56.8 1440,40L1440 140L0 140z"></path>
-                            </svg>
-                        </div> -->
-                        <div style=" width:100%;">
-                            <img src="{{ URL::asset($generalInfo->background_img)}}" alt="" style="width: 100%;">
+                        <div style="">
+                            <img src="{{ URL::asset($generalInfo->background_img)}}" alt="" style="width: 100%; height: auto;">
                         </div>
                     </div>
                 </div>
@@ -29,7 +22,7 @@
                     <div class="mt-sm-5 mb-2 p-4">
                         <div class="text-center ">
                             <a href="index" class="d-inline-block auth-logo">
-                                <img src="{{ URL::asset($generalInfo->logo_img)}}" alt="" height="60">
+                                <img src="{{ URL::asset($generalInfo->logo_img)}}" alt="" style="width:100%;height: auto;">
                             </a>
                         </div>
                         <p class="mt-3 fs-15 fw-medium text-left">{{$generalInfo->short_name}}<!-- Performance Management System --></p>

@@ -297,7 +297,9 @@
                     </div>
                 </li>
 
+                @hasrole("Employee")
 
+                @else
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#reportDrop-Down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarRoles">
@@ -318,6 +320,37 @@
                         </ul>
                     </div>
                 </li>
+                @endif
+
+
+                @hasrole("Admin")
+                <li class="nav-item">
+                    <a class="nav-link menu-link" 
+                        role="button" >
+                        <i class="  ri-building-4-line "></i> <span>Org</span>
+
+                    </a>
+                    <div class="collapse menu-dropdown" id="ticketingDrop-Down">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item ">
+                                <a href="{{url('vmt-employess/directory')}}"  id="" class="nav-link" 
+                                    aria-expanded="false"><span>Employees Directory</span> </a>
+
+                            </li>
+                            <li class="nav-item ">
+                                <a href="" id="tds"  aria-expanded="false"
+                                    class="nav-link"><span>Org Structure</span></a>
+
+                            </li>
+                            <li class="nav-item ">
+                                <a href="{{url('vmt-employess/bulk-upload')}}"  id="" class="nav-link" 
+                                    aria-expanded="false"><span>Upload Employees Details</span> </a>
+
+                            </li>
+                        </ul>
+                    </div>                    
+                </li>
+                @endif
 
                 <!-- performance -->
 
@@ -572,6 +605,31 @@
 
 
                 </li>
+
+                @hasrole("Employee")
+                     <li class="nav-item">
+                    <a class="nav-link menu-link" 
+                        role="button" >
+                        <i class=" ri-logout-box-fill"></i> <span>Documents</span>
+
+                    </a>
+                    <div class="collapse menu-dropdown" id="ticketingDrop-Down">
+                        <ul class="nav nav-sm flex-column">
+
+                            <li class="nav-item ">
+                                <a href="" id="" class="nav-link" 
+                                    aria-expanded="false"><span> Form 16 </span> </a>
+
+                            </li>
+                            <li class="nav-item ">
+                                <a href="" id="tds"  aria-expanded="false"
+                                    class="nav-link"><span>Employment documents </span></a>
+
+                            </li>
+                        </ul>
+                    </div>                    
+                </li>
+                @endhasrole
 
                 <!-- Exit -->
                 <li class="nav-item">

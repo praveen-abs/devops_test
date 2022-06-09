@@ -29,6 +29,8 @@ Route::get('/registerNewAccount', function(){
     return view('/auth/register');
 })->name('registerNewAccount');
 
+Route::get('pages-profile', [App\Http\Controllers\HomeController::class, 'showProfile']);
+
 // General Settings
 Route::get('vmt-general-settings', [App\Http\Controllers\HomeController::class, 'generalSettings']);
 Route::post('vmt-general-settings', [App\Http\Controllers\HomeController::class, 'storeGeneralSettings']);
@@ -90,6 +92,14 @@ Route::post('vmt-employee-hierarchy/store', 'App\Http\Controllers\VmtEmployeeCon
 
 
 Route::get('vmt-employee-hierarchy/modify', 'App\Http\Controllers\VmtEmployeeController@edit');
+
+// store employee
+Route::post('vmt-employee-store', 'App\Http\Controllers\VmtEmployeeController@storeEmployeeData');
+
+Route::get('vmt-employess/bulk-upload', 'App\Http\Controllers\VmtEmployeeController@bulkUploadEmployee');
+Route::post('vmt-employess/bulk-upload', 'App\Http\Controllers\VmtEmployeeController@storeBulkEmployee');
+
+Route::get('vmt-employess/directory', 'App\Http\Controllers\VmtEmployeeController@showEmployeeDirectory');
 
 
 // pay slip

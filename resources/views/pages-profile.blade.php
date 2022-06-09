@@ -22,7 +22,7 @@
             <!--end col-->
             <div class="col">
                 <div class="p-2">
-                    <h3 class="text-white mb-1">Ram</h3>
+                    <h3 class="text-white mb-1">{{Auth::user()->name}}</h3>
                     <p class="text-white-75">User</p>
                     <div class="hstack text-white-50 gap-1">
 
@@ -63,6 +63,28 @@
                             <div class="col-xxl-3">
 
 
+                                @hasrole("Employee")
+                                     <div class="card card-animate">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="avatar-sm ">
+                                   <img src="{{URL::asset('assets/images/vmt_user_icon.jpeg')}}">
+                                </div>
+                                <div class="flex-grow-1 overflow-hidden ms-3" style="padding-left:36px;">
+                                    <p class="text-uppercase fw-medium text-muted text-truncate mb-3">{{$employee->emp_name}}</p>
+                                    {{$employee->designation}}<br>
+                                    <p class="text-muted mb-2">
+                                    Department: <span style="color: #000; padding-left: 8px;">{{$employee->department}}</span></p>
+                                    <p class="text-muted mb-2">Location: <span style="color: #000; padding-left: 8px;">{{$employee->location}}</span>
+                                        <br>
+                                    </p>
+                                    <p class="text-muted mb-1">Email: <span style="color: #000; padding-left: 8px;">{{$employee->email_id}}</span></p>
+                                </div>
+                            </div>
+                        </div><!-- end card body -->
+                    </div>
+                                @else
+
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="card-title mb-3">Info</h5>
@@ -95,7 +117,7 @@
                                         </div>
                                     </div><!-- end card body -->
                                 </div><!-- end card -->
-
+                                @endhasrole
  
                                 <div class="card">
                                     <div class="card-body">

@@ -9,6 +9,9 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+
 class RegisterController extends Controller
 {
     /*
@@ -65,6 +68,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        //dd($data);
         // return request()->file('avatar');
         if (request()->has('avatar')) {
             $avatar = request()->file('avatar');
@@ -73,11 +77,25 @@ class RegisterController extends Controller
             $avatar->move($avatarPath, $avatarName);
         }
 
-        return User::create([
+        $user =  User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'avatar' =>  $avatarName,
         ]);
+
+        if(request()->has('user_type')){
+
+            $roleName = request()->user_type;
+            //dd($roleName);
+            $role = Role::where('name', $roleName)->first();
+            if($role){
+                $user->assignRole($roleName);
+            }else{
+                $role  = $role = Role::create(['name' => $roleName]);
+                $user->assignRole($roleName);
+            }
+        }
+        return $user;
     }
 }
