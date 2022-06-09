@@ -22,5 +22,5 @@ Homestead.yaml
 Homestead.json
 /.vagrant
 .phpunit.result.cache
-/storage/framework/views
+/storage/framework/views/
 /public/generalinfo/
