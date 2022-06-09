@@ -87,7 +87,8 @@
                                     </div>
 
                                     <div class="mt-4">
-                                        <button class="btn signIn-btn w-100" type="submit">Sign-In</button>
+                                        <button class="btn btn-primary waves-effect waves-light w-100" type="submit">Sign-In</button>
+                                    
                                     </div>
                                     <!-- <div class="mt-4 text-center">
                                         <p class="mb-0">Don't have an account ?</p>
