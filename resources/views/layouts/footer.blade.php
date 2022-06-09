@@ -5,6 +5,8 @@
             </div>
             <div class="col-sm-6">
                 <div class="text-sm-end d-none d-sm-block">
+                    Powered By 
+                            <img src="{{ URL::asset('assets/images/logo.png') }}" alt="" >
                 </div>
             </div>
         </div>

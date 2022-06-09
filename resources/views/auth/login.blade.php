@@ -6,21 +6,20 @@
 <div class="auth-page-wrapper pt-5">
     <!-- auth page bg -->
     <div class="auth-one-bg-position auth-one-bg" id="auth-particles">
-        <!-- <div class="bg-overlay"></div> -->
+        <div class="bg-overlay"></div>
 
-        <!-- <div class="shape">
+        <!-- <div class="shape"> -->
             <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"
-                viewBox="0 0 1440 120">
-                <path d="M 0,36 C 144,53.6 432,123.2 720,124 C 1008,124.8 1296,56.8 1440,40L1440 140L0 140z"></path>
-            </svg>
-        </div> -->
+                 x="0px" y="0px" width="100%" height="100%" preserveAspectRatio="none">
+                <path class="path" width="100%" height="100%" fill="none" />            </svg>
+        <!-- </div> -->
         <!-- <div style=" position:absolute;bottom:-200px;width:100%;height:50px;">
             <img src="{{ URL::asset('assets/images/whitetexture.jpg')}}" alt="" height="1000">
         </div> -->
     </div>
     <!-- auth page content -->
-    <div class="auth-page-content my-5">
-        <div class="container-fluid  my-5 w-75 h-75 auth-container">
+    <div class="auth-page-content">
+        <div class="container-fluid auth-container">
 
 
 
@@ -37,13 +36,10 @@
 
 
 
-                        <div class="col-md-8 col-lg-6 col-xl-5">
+                        <div class="col-md-8 col-lg-6 col-xl-4">
 
                             <div class="text-center mt-2">
-                                <a href="index" class="d-inline-block auth-logo">
-                                    <img src="{{ URL::asset($generalInfo->logo_img)}}" alt="brand-logo"
-                                        class="h-50 w-50">
-                                </a>
+                                    <img src="{{ URL::asset('assets/images/logo-sm.png') }}" alt="brand-logo" class="h-50 w-50">
                             </div>
                             <div class="p-2 mt-4">
                                 <form action="{{ route('login') }}" method="POST">
