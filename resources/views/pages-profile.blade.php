@@ -78,7 +78,12 @@
                                     <p class="text-muted mb-2">Location: <span style="color: #000; padding-left: 8px;">{{$employee->location}}</span>
                                         <br>
                                     </p>
+
+                                    <p class="text-muted mb-1">Mobile: <span style="color: #000; padding-left: 8px;">{{$employee->mobile_number}}</span></p>
                                     <p class="text-muted mb-1">Email: <span style="color: #000; padding-left: 8px;">{{$employee->email_id}}</span></p>
+
+                                    <p class="text-muted mb-1">Date Of Birth: <span style="color: #000; padding-left: 8px;">{{$employee->dob}}</span></p>
+                                    <p class="text-muted mb-1">Joining Date: <span style="color: #000; padding-left: 8px;">{{$employee->doj}}</span></p>
                                 </div>
                             </div>
                         </div><!-- end card body -->
