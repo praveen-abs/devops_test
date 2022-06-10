@@ -6000,11 +6000,14 @@ button {
 .card-animate {
     transition: all .4s
 }
+.card-animate:hover,.card-content:hover  {
+    box-shadow: 10px 10px 21px -14px rgba(0,0,0,0.75);
+}
 /* george */
 .roundedCircle{
     margin: 0px 5px;
-    width: 60px;
-    height: 60px;
+    width: 40px;
+    height: 40px;
     background: transparent;
     border: 4px solid #fff;
 }
