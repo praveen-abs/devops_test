@@ -389,7 +389,7 @@
 [data-topbar=dark] #pageTopbar {
     /* background-color: var(--vz-header-bg-dark);
     border-color: var(--vz-header-bg-dark);| */
-    background:url(../images/profile-bg.jpg);
+    background: url(../images/profile-bg.jpg);
 }
 
 [data-topbar=dark] .navbar-header .btn-topbar {
@@ -819,7 +819,7 @@
     text-indent: 10px;
 }
 
-.settings-icon  a {
+.settings-icon a {
     color: var(--vz-vertical-menu-item-color);
     font-size: 20px;
     font-weight: 600;
@@ -917,10 +917,11 @@
 
 }
 
-.settings-layout .list-group-item:hover {
+/* comment by george */
+/* .settings-layout .list-group-item:hover {
+    background-color: #f3f4f7;
 
-    background-color: #b9bfc4;
-}
+} */
 
 /* by george */
 .logo-image img {
@@ -928,7 +929,8 @@
     width: 100px;
 }
 
-.logo-image label,.background-image-pin label {
+.logo-image label,
+.background-image-pin label {
     background-color: transparent;
     display: flex;
     color: #063fb9;
@@ -939,20 +941,24 @@
     cursor: pointer;
     position: relative;
 }
-.logo-image input,.background-image-pin input {
+
+.logo-image input,
+.background-image-pin input {
     opacity: 0;
     position: absolute;
     left: 4px;
     cursor: pointer;
-    
+
 }
 
-.logo-image span,.background-image-pin span {
-cursor: pointer;
+.logo-image span,
+.background-image-pin span {
+    cursor: pointer;
 }
 
 .background-img {
-    background-color: #b9bfc4;
+
+    background-image: url(../images/profile-bg.jpg);
     height: 250px;
     width: 400px;
     display: flex;
@@ -1001,7 +1007,10 @@ cursor: pointer;
 .chip-wrapper {
     display: flex;
     flex-wrap: wrap;
-
+    max-width: 400px;
+    width: max-content;
+                                                                        
+                                                                        
 }
 
 .chips {
@@ -1026,9 +1035,75 @@ cursor: pointer;
     color: #fff;
 }
 
-.welcome-container textarea {
+/* george added scroll bar */
+.scrollBar textarea {
     resize: none;
-    overflow-y: scroll;
+
+}
+
+.apraisalTable {
+    overflow: hidden;
+    overflow-x: auto;
+}
+
+.apraisalTable table th {
+    background: var(--vz-header-bg-dark);
+    width: auto;
+    color: #fff;
+    max-width: auto;
+}
+
+.apraisalTable table td div {
+    max-height: 300px;
+    min-height: 150px;
+    max-width: 600px;
+    min-width: 400px;
+
+}
+.settings-contents{
+     height: 500px;
+     overflow: hidden;
+}
+.left-content-settings,.right-content-settings{
+    height: 400px;
+    width: 500px;    
+    overflow-y: scroll; 
+}
+
+/* .left-content-settings:hover,.right-content-settings:hover{
+       
+       
+} */
+
+.scrollBar textarea::-webkit-scrollbar,
+.scrollBar .assest::-webkit-scrollbar,.left-content-settings::-webkit-scrollbar,.right-content-settings::-webkit-scrollbar{
+    width: 5px;
+    
+}
+.bottom-dash{
+    height: 3px !important;
+    width: 60px;
+    border-radius: 20px;
+    position: absolute;
+    top: 22px;
+    background-color: var(--vz-link-hover-color);
+}
+
+
+
+.scrollBar textarea::-webkit-scrollbar-track,
+.scrollBar .assest::-webkit-scrollbar-track,.left-content-settings::-webkit-scrollbar-track ,.right-content-settings::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px #cacaca;
+}
+
+.scrollBar textarea::-webkit-scrollbar-thumb,
+.scrollBar .assest::-webkit-scrollbar-thumb,.left-content-settings::-webkit-scrollbar-thumb ,
+.right-content-settings::-webkit-scrollbar-thumb{
+    background-color: #405189;
+    /* color of the scroll thumb */
+    border-radius: 5px;
+    cursor: pointer;
+    height: 30px !important;
 }
 
 .Search-Employee {
@@ -1040,6 +1115,7 @@ cursor: pointer;
 
 .left-content {
     height: fit-content;
+    
 }
 
 .assest .list-group-item {
@@ -5968,6 +6044,10 @@ button {
     box-shadow: 0 1px 2px rgba(56, 65, 74, .15)
 }
 
+
+
+
+
 .card-header {
     border-bottom: 1px solid var(--vz-border-color)
 }
@@ -6000,11 +6080,14 @@ button {
 .card-animate {
     transition: all .4s
 }
-.card-animate:hover,.card-content:hover  {
-    box-shadow: 10px 10px 21px -14px rgba(0,0,0,0.75);
+
+.card-animate:hover,
+.card-content:hover {
+    box-shadow: 10px 10px 21px -14px rgba(0, 0, 0, 0.75);
 }
+
 /* george */
-.roundedCircle{
+.roundedCircle {
     margin: 0px 5px;
     width: 40px;
     height: 40px;
@@ -10413,7 +10496,7 @@ button.gridjs-sort-desc {
     appearance: none;
     -webkit-print-color-adjust: exact;
     /* color-adjust: exact; */
-    
+
 }
 
 .gridjs-td .gridjs-checkbox[type=checkbox] {
@@ -12635,30 +12718,32 @@ span.flatpickr-weekday {
 
 /* commant all by george */
 .auth-one-bg {
-/* background-image: url(../images/login_bg.svg); */
+    /* background-image: url(../images/login_bg.svg); */
     background-position: 50%;
-    background-size: cover 
+    background-size: cover
 }
 
 .signIn-btn {
     /* background-color: var(--vz-header-bg-dark); */
     background: #ff4d00;
-       
+
 }
-.signIn-btn:hover { 
+
+.signIn-btn:hover {
     color: #fff;
 }
 
 /* george */
-.card-content{
-    
+.card-content {
+
     background: linear-gradient(90deg, #002f56, #405189);
     height: 120px;
     width: 420px;
     color: #fff;
 }
- .icon-click  span{
-font-size: 40px;
+
+.icon-click span {
+    font-size: 15px;
 }
 
 .auth-one-bg .bg-overlay {
