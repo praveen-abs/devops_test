@@ -19,14 +19,14 @@ particlesJS.load('particles-js', 'particles.json', function() {
 particlesJS('auth-particles', {
   "particles": {
     "number": {
-      "value": 90,
+      "value": 200,
       "density": {
         "enable": true,
         "value_area": 800
       }
     },
     "color": {
-      "value": "#ffffff"
+      "value": "#aaaaaa"
     },
     "shape": {
       "type": "circle",

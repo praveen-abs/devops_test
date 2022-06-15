@@ -1,4 +1,4 @@
-<header id="page-topbar">
+<header id="pageTopbar">
     <div class="layout-width">
         <div class="navbar-header">
             <div class="d-flex">
@@ -23,17 +23,6 @@
                     </a>
                 </div>
 
-                <!-- by george -->
-                <!-- <button type="button" class="btn btn-sm px-3 fs-16 header-item vertical-menu-btn topnav-hamburger" id="topnav-hamburger-icon">
-                    <span class="hamburger-icon">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </span>
-                </button> -->
-
-
-                <!-- by george -->
 
                 <!-- disable setting icon for employee -->
                 @hasrole("Employee")
@@ -41,117 +30,21 @@
                 @else
                 <div class="settings-content mx-5">
                     <button class="settings-icon border-0 bg-transparent">
-                            
-                            <a href="vmt_topbar_settings">
-                                <i class="ri-settings-3-line ">
+
+                        <a href="vmt_topbar_settings">
+                            <i class="ri-settings-3-line ">
                             </i>
                         </a>
                     </button>
                 </div>
                 @endhasrole
 
-            <div class="search-content w-100 d-flex  ">
+                <div class="search-content w-100 d-flex  ">
                     <i class=" ri-search-line "></i>
                     <input type="text" class="search-bar border-none rounded-pill outline-none" placeholder="Search">
                 </div>
 
 
-
-
-
-                <!-- App Search-->
-                <!-- <form class="app-search d-none d-md-block">
-                    <div class="position-relative">
-                        <input type="text" class="form-control" placeholder="Search..." autocomplete="off"
-                            id="search-options" value="">
-                        <span class="mdi mdi-magnify search-widget-icon"></span>
-                        <span class="mdi mdi-close-circle search-widget-icon search-widget-icon-close d-none"
-                            id="search-close-options"></span>
-                    </div>
-                    <div class="dropdown-menu dropdown-menu-lg" id="search-dropdown">
-                        <div data-simplebar style="max-height: 320px;">
-
-                        <div class="dropdown-header">
-                                <h6 class="text-overflow text-muted mb-0 text-uppercase">Recent Searches</h6>
-                            </div>
-
-                            <div class="dropdown-item bg-transparent text-wrap">
-                                <a href="index" class="btn btn-soft-secondary btn-sm btn-rounded">how to setup <i
-                                        class="mdi mdi-magnify ms-1"></i></a>
-                                <a href="index" class="btn btn-soft-secondary btn-sm btn-rounded">buttons <i
-                                        class="mdi mdi-magnify ms-1"></i></a>
-                            </div>
-
-                            <div class="dropdown-header mt-2">
-                                <h6 class="text-overflow text-muted mb-1 text-uppercase">Pages</h6>
-                            </div>
-
-
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <i class="ri-bubble-chart-line align-middle fs-18 text-muted me-2"></i>
-                                <span>Analytics Dashboard</span>
-                            </a>
-
-
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <i class="ri-lifebuoy-line align-middle fs-18 text-muted me-2"></i>
-                                <span>Help Center</span>
-                            </a>
-
-
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <i class="ri-user-settings-line align-middle fs-18 text-muted me-2"></i>
-                                <span>My account settings</span>
-                            </a>
-
-
-                            <div class="dropdown-header mt-2">
-                                <h6 class="text-overflow text-muted mb-2 text-uppercase">Members</h6>
-                            </div>
-
-                            <div class="notification-list">
-
-                            <a href="javascript:void(0);" class="dropdown-item notify-item py-2">
-                                    <div class="d-flex">
-                                        <img src="{{ URL::asset('assets/images/users/avatar-2.jpg') }}"
-                                            class="me-3 rounded-circle avatar-xs" alt="user-pic">
-                                        <div class="flex-1">
-                                            <h6 class="m-0">Angela Bernier</h6>
-                                            <span class="fs-11 mb-0 text-muted">Manager</span>
-                                        </div>
-                                    </div>
-                                </a>
-
-                                <a href="javascript:void(0);" class="dropdown-item notify-item py-2">
-                                    <div class="d-flex">
-                                        <img src="{{ URL::asset('assets/images/users/avatar-3.jpg') }}"
-                                            class="me-3 rounded-circle avatar-xs" alt="user-pic">
-                                        <div class="flex-1">
-                                            <h6 class="m-0">David Grasso</h6>
-                                            <span class="fs-11 mb-0 text-muted">Web Designer</span>
-                                        </div>
-                                    </div>
-                                </a>
-
-                                <a href="javascript:void(0);" class="dropdown-item notify-item py-2">
-                                    <div class="d-flex">
-                                        <img src="{{ URL::asset('assets/images/users/avatar-5.jpg') }}"
-                                            class="me-3 rounded-circle avatar-xs" alt="user-pic">
-                                        <div class="flex-1">
-                                            <h6 class="m-0">Mike Bunch</h6>
-                                            <span class="fs-11 mb-0 text-muted">React Developer</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="text-center pt-3 pb-1">
-                            <a href="pages-search-results" class="btn btn-primary btn-sm">View All Results <i
-                                    class="ri-arrow-right-line ms-1"></i></a>
-                        </div>
-                    </div>
-                </form>  -->
             </div>
 
             <div class="d-flex align-items-center">
@@ -770,14 +663,20 @@
                         @hasrole("Employee")
 
                         @else
-                            <a class="dropdown-item" href=""><span
+                        <a class="dropdown-item" href=""><span
                                 class="badge bg-soft-success text-success mt-1 float-end">New</span><i
                                 class="mdi mdi-cog-outline text-muted fs-16 align-middle me-1"></i> <span
                                 class="align-middle">Settings</span></a>
                         @endhasrole
 
+                        <div class="colors-content">
+                            <button class="selectColor" id="colorOne" value="red">one</button>
+                            <!-- 
+                            <button class="selectColor" id="colorTwo" onclick="color()">two</button>
+                            <button class="selectColor" id="colorThree" onclick="color()">three</button> -->
+                        </div>
 
-                        
+
                         <a class="dropdown-item " href="javascript:void();"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
                                 class="bx bx-power-off font-size-16 align-middle me-1"></i> <span
@@ -791,3 +690,33 @@
         </div>
     </div>
 </header>
+
+
+
+
+@section('script')
+<!-- apexcharts -->
+<!-- <script src="{{ URL::asset('/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
+<script src="{{ URL::asset('/assets/libs/jsvectormap/jsvectormap.min.js') }}"></script>
+<script src="{{ URL::asset('assets/libs/swiper/swiper.min.js')}}"></script> -->
+
+<script>
+// function color() {
+//     document.getElementById("pageTopbar").style.backgroundColor = 'red';
+//     // document.getElementById("pageTopbar").style.backgroundColor = col;
+//     // document.getElementById("pageTopbar").style.backgroundColor = col;
+
+// }
+const btn = document.getElementById('colorOne');
+
+btn.addEventListener('click', function onClick(event) {
+    // 👇️ change background color
+    console.log("hiee");
+    event.target.style.backgroundColor = 'red';
+
+    // 👇️ optionally change text color
+    // event.target.style.color = 'white';
+});
+</script>
+
+@endsection
