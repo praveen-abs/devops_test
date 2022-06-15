@@ -669,12 +669,10 @@
                                 class="align-middle">Settings</span></a>
                         @endhasrole
 
-                        <div class="colors-content">
+                        <!-- <div class="colors-content">
                             <button class="selectColor" id="colorOne" value="red">one</button>
-                            <!-- 
-                            <button class="selectColor" id="colorTwo" onclick="color()">two</button>
-                            <button class="selectColor" id="colorThree" onclick="color()">three</button> -->
-                        </div>
+                            
+                        </div> -->
 
 
                         <a class="dropdown-item " href="javascript:void();"
@@ -700,23 +698,6 @@
 <script src="{{ URL::asset('/assets/libs/jsvectormap/jsvectormap.min.js') }}"></script>
 <script src="{{ URL::asset('assets/libs/swiper/swiper.min.js')}}"></script> -->
 
-<script>
-// function color() {
-//     document.getElementById("pageTopbar").style.backgroundColor = 'red';
-//     // document.getElementById("pageTopbar").style.backgroundColor = col;
-//     // document.getElementById("pageTopbar").style.backgroundColor = col;
 
-// }
-const btn = document.getElementById('colorOne');
-
-btn.addEventListener('click', function onClick(event) {
-    // 👇️ change background color
-    console.log("hiee");
-    event.target.style.backgroundColor = 'red';
-
-    // 👇️ optionally change text color
-    // event.target.style.color = 'white';
-});
-</script>
 
 @endsection

@@ -173,10 +173,10 @@
                             @endcan -->
 
 
-        <!-- apraisal table -->
+        <!-- appraisal table -->
         <div class="card">
             <div class="card-body pb-2">
-                <div class="apraisalTable mb-4">
+                <div class="table-content mb-4">
                     <table class="table align-middle mb-0  responsive" id="table">
 
                         <thead class="thead" id="tHead">
@@ -193,6 +193,10 @@
                                 <th scope="col">KPI - Achievement (Self Review)</th>
                                 <th scope="col">Self KPI Achievement %</th>
                                 <th scope="col">Comments</th>
+                                <th scope="col">KPI - Achievement (Manager Review)</th>
+                                <th scope="col">Manager KPI Achievement %
+
+                                </th>
 
 
 
@@ -254,6 +258,15 @@
                                         timely payout and understanding where the support required to my team</div>
                                 </td>
 
+
+                                <td>
+                                    "Great outcome of Reimbursement delivery for GS and SS also maintain the consitency
+                                    delivery deviation sheet ontime and everytime
+                                    Most importantly need to focus on STM centralisation in 2019 Q2"
+                                </td>
+                                <td>
+                                    104%
+                                </td>
 
                             </tr>
                             <tr>
@@ -327,6 +340,10 @@
                                         and
                                         payout on time </div>
                                 </td>
+                                <td>Yes, agreed with you most of the time your delivery has been exceeded the
+                                    expectation leavel and keep focus on quality delivery and TAT reduction in 2019 - Q3
+                                </td>
+                                <td>105%</td>
 
                             </tr>
 
@@ -401,92 +418,182 @@
                                         team
                                         to deliver the Paysheets on time"</div>
                                 </td>
+                                <td>"I have seen lot more cross functional from your side like form 16 issuance and F n
+                                    F UAT
+                                    FTR has been increased based on the QC and more focus on the error free
+                                    Reimbursement
+                                    Very good movement on the CI where most of the member certified the CI and including
+                                    yourselvs
+                                    Reimbursement automation in process and phase I has been released and more focus on
+                                    the WEB development -2019 Q2"</td>
+                                <td>100%</td>
 
                             </tr>
                             <tr>
                                 <th scope="row" rowspan="2">Best People
                                 </th>
-                                <td><div> "(Shared Goal) Lead system enhancement in Paybill ensuring 100% compliance
-                                    Monitor &amp; adhere to 100% Accurate, On time statutory remittance and issual of
-                                    Form 16"</div></td>
-                                <td><div>"Ensure to dig deep &amp; arrest the deviations.Remove unwanted reports from Paybill
-                                    which will help in friction free process.
-                                    Form 16 &amp; 24Q from Paybill, Investment portal enhancement should be carried
-                                    out.On time generation, validation &amp; reconcilation of Statutory reports to
-                                    ensure NIL deviation from Statutory guidelines
-                                    Ensuring the KCF guidelines are adhered on day to day basis with a strignent
-                                    control.
-                                    "</div></td>
-                                <td><div>"(Shared Goal) Ensure to dig deep &amp; arrest the deviations.Remove unwanted
-                                    reports from Paybill which will help in friction free process.
-                                    Form 16 &amp; 24Q from Paybill, Investment portal enhancement should be carried
-                                    out.On time generation, validation &amp; reconcilation of Statutory reports to
-                                    ensure NIL deviation from Statutory guidelines
-                                    Ensuring the KCF guidelines are adhered on day to day basis with a strignent
-                                    control.
-                                    Better Team Control which will in turn help in overall development
-                                    Encourging the Team members for all Cross functional activites &amp; drive it for
-                                    their improvement
-                                    Ascertain the Time study of the process &amp; have optimal resources required. "
+                                <td>
+                                    <div> "(Shared Goal) Lead system enhancement in Paybill ensuring 100% compliance
+                                        Monitor &amp; adhere to 100% Accurate, On time statutory remittance and issual
+                                        of
+                                        Form 16"</div>
+                                </td>
+                                <td>
+                                    <div>"Ensure to dig deep &amp; arrest the deviations.Remove unwanted reports from
+                                        Paybill
+                                        which will help in friction free process.
+                                        Form 16 &amp; 24Q from Paybill, Investment portal enhancement should be carried
+                                        out.On time generation, validation &amp; reconcilation of Statutory reports to
+                                        ensure NIL deviation from Statutory guidelines
+                                        Ensuring the KCF guidelines are adhered on day to day basis with a strignent
+                                        control.
+                                        "</div>
+                                </td>
+                                <td>
+                                    <div>"(Shared Goal) Ensure to dig deep &amp; arrest the deviations.Remove unwanted
+                                        reports from Paybill which will help in friction free process.
+                                        Form 16 &amp; 24Q from Paybill, Investment portal enhancement should be carried
+                                        out.On time generation, validation &amp; reconcilation of Statutory reports to
+                                        ensure NIL deviation from Statutory guidelines
+                                        Ensuring the KCF guidelines are adhered on day to day basis with a strignent
+                                        control.
+                                        Better Team Control which will in turn help in overall development
+                                        Encourging the Team members for all Cross functional activites &amp; drive it
+                                        for
+                                        their improvement
+                                        Ascertain the Time study of the process &amp; have optimal resources required. "
                                     </div>
                                 </td>
-                                <td><div>Monthly</div></td>
-                                <td><div>"Reduction in &gt; 45 days onboarding - by 25% by Q2 , progressively to reach 90% by
-                                    Q4
-                                    Reduction in rework
-                                    F&amp;F end to end completion and payout within 30 days from LWD / Date of
-                                    intimation"</div></td>
-                                <td><div>90% </div></td>
-                                <td><div>System / Manual</div></td>
-                                <td><div>20%</div></td>
-                                <td><div>Need to ensure the system our Paybill and RD to support our process to complete our
-                                    shared goals</div></td>
+                                <td>
+                                    <div>Monthly</div>
+                                </td>
+                                <td>
+                                    <div>"Reduction in &gt; 45 days onboarding - by 25% by Q2 , progressively to reach
+                                        90% by
+                                        Q4
+                                        Reduction in rework
+                                        F&amp;F end to end completion and payout within 30 days from LWD / Date of
+                                        intimation"</div>
+                                </td>
+                                <td>
+                                    <div>90% </div>
+                                </td>
+                                <td>
+                                    <div>System / Manual</div>
+                                </td>
+                                <td>
+                                    <div>20%</div>
+                                </td>
+                                <td>
+                                    <div>Need to ensure the system our Paybill and RD to support our process to complete
+                                        our
+                                        shared goals</div>
+                                </td>
 
-                                <td><div>100%</div></td>
-                                <td><div>trying to give the ideas and requirements to make our system to helpful, we are
-                                    planning to develop the knowledge th beyond the process with cross functional
-                                    activities</div></td>
+                                <td>
+                                    <div>100%</div>
+                                </td>
+                                <td>
+                                    <div>trying to give the ideas and requirements to make our system to helpful, we are
+                                        planning to develop the knowledge th beyond the process with cross functional
+                                        activities</div>
+                                </td>
+                                <td>
+                                    <div> Agreed and you have shown your fullest support towards develop the system and
+                                        UAT
+                                        process and keep doing the same</div>
+                                </td>
+                                <td>
+                                    <div>100%</div>
+                                </td>
+
                             </tr>
                             <tr>
-                                <td><div>Retention, Succession Plan for the Leader and his directs, and Improvement in GPS
-                                    score</div></td>
-                                <td><div>"Appropriate back up plan should be documented / training provided.
-                                    Regularly conduct team meetings understand their grievances &amp; take corrective
-                                    action.
-                                    Be a Mentor. Encourage Buddy Processing &amp; train the New / Low perfomers to
-                                    acheive higher standards.
-                                    Train the Leaders to become better Leaders &amp; ensure Team members are growing.
-                                    Encourging the Team members for all Cross functional activites &amp; drive it for
-                                    their improvement"</div></td>
-                                <td><div>"Applicable for all:
-                                    Improved knowledge on processes, to back-up in case of absence of POC.
-                                    Improves motivation and encourages a spirit of healthy competition in the group
-                                    Helps is Business Continuity. Reduced impact on service deliverable and escalations
-                                    Improves Work-Life Balance and engagement levels within the Organization
-                                    Better Team &amp; Self Control which will in turn help in overall development
-                                    L4-G4 &amp; above
-                                    Appropriate back up plan should be documented / training provided.
-                                    Regularly conduct team meetings understand their grievances &amp; take corrective
-                                    action.
-                                    Be a Mentor. Encourage Buddy Processing &amp; train the New / Low perfomers to
-                                    acheive higher standards.
-                                    Train the Leaders to become better Leaders &amp; ensure Team members are growing.
-                                    Encourging the Team members for all Cross functional activites &amp; drive it for
-                                    their improvement"</div></td>
-                                <td><div>Weekly</div></td>
-                                <td><div>Adhere to Company Policies ; regulations</div></td>
-                                <td><div>Adhere to Company Policies ; regulations</div></td>
-                                <td><div>"Manual
-                                    "<div></td>
-                                <td><div>20%</div></td>
-                                <td><div>Retention of the people is the most important , we will try to do the best for our
-                                    people getting the valuable feedback from the people and place the right things in
-                                    place</div></td>
+                                <td>
+                                    <div>Retention, Succession Plan for the Leader and his directs, and Improvement in
+                                        GPS
+                                        score</div>
+                                </td>
+                                <td>
+                                    <div>"Appropriate back up plan should be documented / training provided.
+                                        Regularly conduct team meetings understand their grievances &amp; take
+                                        corrective
+                                        action.
+                                        Be a Mentor. Encourage Buddy Processing &amp; train the New / Low perfomers to
+                                        acheive higher standards.
+                                        Train the Leaders to become better Leaders &amp; ensure Team members are
+                                        growing.
+                                        Encourging the Team members for all Cross functional activites &amp; drive it
+                                        for
+                                        their improvement"</div>
+                                </td>
+                                <td>
+                                    <div>"Applicable for all:
+                                        Improved knowledge on processes, to back-up in case of absence of POC.
+                                        Improves motivation and encourages a spirit of healthy competition in the group
+                                        Helps is Business Continuity. Reduced impact on service deliverable and
+                                        escalations
+                                        Improves Work-Life Balance and engagement levels within the Organization
+                                        Better Team &amp; Self Control which will in turn help in overall development
+                                        L4-G4 &amp; above
+                                        Appropriate back up plan should be documented / training provided.
+                                        Regularly conduct team meetings understand their grievances &amp; take
+                                        corrective
+                                        action.
+                                        Be a Mentor. Encourage Buddy Processing &amp; train the New / Low perfomers to
+                                        acheive higher standards.
+                                        Train the Leaders to become better Leaders &amp; ensure Team members are
+                                        growing.
+                                        Encourging the Team members for all Cross functional activites &amp; drive it
+                                        for
+                                        their improvement"</div>
+                                </td>
+                                <td>
+                                    <div>Weekly</div>
+                                </td>
+                                <td>
+                                    <div>Adhere to Company Policies ; regulations</div>
+                                </td>
+                                <td>
+                                    <div>Adhere to Company Policies ; regulations</div>
+                                </td>
+                                <td>
+                                    <div>"Manual
+                                        "<div>
+                                </td>
+                                <td>
+                                    <div>20%</div>
+                                </td>
+                                <td>
+                                    <div>Retention of the people is the most important , we will try to do the best for
+                                        our
+                                        people getting the valuable feedback from the people and place the right things
+                                        in
+                                        place</div>
+                                </td>
 
-                                <td><div>100%</div></td>
-                                <td><div>Understanding the grievances to take the correct action and encouraging the team
-                                    members to develop, we are trying to make a appropriate backup plan to make the
-                                    process more efficiency without creating the dependency</div></td>
+                                <td>
+                                    <div>100%</div>
+                                </td>
+                                <td>
+                                    <div>Understanding the grievances to take the correct action and encouraging the
+                                        team
+                                        members to develop, we are trying to make a appropriate backup plan to make the
+                                        process more efficiency without creating the dependency</div>
+                                </td>
+                                <td>
+                                    <div> "Positive feedback allover the team and need to develop Arokya on your
+                                        successor
+                                        plan and he should be able to take over your postion in end of 2019
+                                        I have seen more task assigned to your team member which is makes more retention
+                                        and
+                                        this should be continue and keep encourage the team members on the cross
+                                        functional
+                                        activity"</div>
+                                </td>
+                                <td>
+                                    <div> 100%</div>
+                                </td>
                             </tr>
 
                         </tbody>
@@ -496,7 +603,7 @@
                 <div class="buttons d-flex align-items-center justify-content-end">
                     <button class="btn btn-primary" id="add">Add<i class="fa fa-plus"></i></button>
 
-                    <button class="btn btn-primary mx-3" >Remove<i class="fa fa-remove"></i></button>
+                    <button class="btn btn-primary mx-3">Remove<i class="fa fa-remove"></i></button>
                 </div>
 
             </div>
@@ -514,81 +621,87 @@
         </div>
     </div>
 
-    <div class="row mt-3">
-        <div class="col-lg-12">
-            <table class="table table-bordered p-0" width="100%">
-                <thead>
-                    <tr>
-                        <th width="28%" class="">
-                            Rating Grid
-                        </th>
-                        <th width="10%" class=""></th>
-                        <th width="8%" class=""></th>
-                        <th width="8%" class=""> </th>
-                        <th width="8%" class=""></th>
-                        <th width="8%" class=""></th>
-                        <th width="30%" class="">
-                            Appraisee's Annual Score & Rating
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
 
 
-                    <tr>
-                        <td class="">
-                            Overall Annual Score
-                        </td>
-                        <td class="">Less than 60 </td>
-                        <td class="">60-70</td>
-                        <td class="">70-80</td>
-                        <td class="">80-90</td>
-                        <td class="">90-100</td>
-                        <td class="">100</td>
-                    </tr>
+    <div class="card">
+        <div class="card-header">
+            <p>Appraisee's Annual Score & Rating</p>
+        </div>
+        <div class="card-body pb-2">
+            <h5>Best People Rating Grid</h5>
+            <div class="table-content mb-4">
+                <table class="table align-middle mb-0  responsive" id="table">
 
-                    <tr>
+                    <thead class="thead" id="tHead">
+                        <tr>
+                            <th scope="col" colspan="6">Best People
+                                Rating Grid</th>
+                            <th scope="col"> Appraisee's Annual Score & Rating</th>
 
-                        <td class="">
-                            Corresponding ANNUAL PERFORMANCE Rating
+                        </tr>
+                    </thead>
+                    <tbody class="tbody" id="tbody">
 
-                        </td>
-                        <td class="">Needs Action</td>
-                        <td class="">Below Expectations</td>
-                        <td class="">Meet Expectations</td>
-                        <td class="">Exceeds Expectations </td>
-                        <td class="">Exceptionally Exceeds Expectations</td>
-                        <td class="">Exceptional </td>
-                    </tr>
 
-                    <tr>
-                        <td class="">
-                            Ranking
-                        </td>
-                        <td class="">1</td>
-                        <td class="">2</td>
-                        <td class="">3</td>
-                        <td class="">4</td>
-                        <td class="">5</td>
-                        <td class="">5</td>
-                    </tr>
-                    <tr>
+                        <tr>
+                            <td class="">
+                                Overall Annual Score
+                            </td>
+                            <td class="">Less than 60 </td>
+                            <td class="">60-70</td>
+                            <td class="">70-80</td>
+                            <td class="">80-90</td>
+                            <td class="">90-100</td>
+                            <td class="">100</td>
+                        </tr>
 
-                        <td class="">
-                            Action
-                        </td>
-                        <td class="">Exit</td>
-                        <td class="">PIP</td>
-                        <td class="">10% </td>
-                        <td class=""> 15% </td>
-                        <td class="">20%</td>
-                        <td class=""></td>
-                    </tr>
+                        <tr>
 
-                </tbody>
-            </table>
+                            <td class="">
+                                Corresponding ANNUAL PERFORMANCE Rating
+
+                            </td>
+                            <td class="">Needs Action</td>
+                            <td class="">Below Expectations</td>
+                            <td class="">Meet Expectations</td>
+                            <td class="">Exceeds Expectations </td>
+                            <td class="">Exceptionally Exceeds Expectations</td>
+                            <td class="">Exceptional </td>
+                        </tr>
+
+                        <tr>
+                            <td class="">
+                                Ranking
+                            </td>
+                            <td class="">1</td>
+                            <td class="">2</td>
+                            <td class="">3</td>
+                            <td class="">4</td>
+                            <td class="">5</td>
+                            <td class="">5</td>
+                        </tr>
+                        <tr>
+
+                            <td class="">
+                                Action
+                            </td>
+                            <td class="">Exit</td>
+                            <td class="">PIP</td>
+                            <td class="">10% </td>
+                            <td class=""> 15% </td>
+                            <td class="">20%</td>
+                            <td class="">5%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+
+
+
+
+    
 </div><!-- end row -->
 
 @endsection

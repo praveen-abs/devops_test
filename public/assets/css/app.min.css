@@ -1041,19 +1041,19 @@
 
 }
 
-.apraisalTable {
-    overflow: hidden;
-    overflow-x: auto;
+.table-content {
+    overflow:auto hidden;
+    
 }
 
-.apraisalTable table th {
+.table-content table th {
     background: var(--vz-header-bg-dark);
-    width: auto;
+    width: 250px;
     color: #fff;
-    max-width: auto;
+    
 }
 
-.apraisalTable table td div {
+.table-content table td div {
     max-height: 300px;
     min-height: 150px;
     max-width: 600px;
