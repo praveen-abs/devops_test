@@ -31,6 +31,8 @@ Route::get('/registerNewAccount', function(){
 
 Route::get('pages-profile', [App\Http\Controllers\HomeController::class, 'showProfile']);
 
+Route::get('test-email', 'App\Http\Controllers\HomeController@testEmail');
+
 // General Settings
 Route::get('vmt-general-settings', [App\Http\Controllers\HomeController::class, 'generalSettings']);
 Route::post('vmt-general-settings', [App\Http\Controllers\HomeController::class, 'storeGeneralSettings']);
@@ -55,6 +57,11 @@ Route::get('vmt-360-questions/create', 'App\Http\Controllers\Review360ModuleCont
 Route::get('vmt-360-questions/{id}', 'App\Http\Controllers\Review360ModuleController@showFormsEdit');
 Route::post('vmt-360-questions/delete', 'App\Http\Controllers\Review360ModuleController@deleteQuestion');
 Route::post('vmt-360-questions/store', 'App\Http\Controllers\Review360ModuleController@saveReviewQuestios');
+
+// Performanse Appraisal Question
+Route::post('vmt-apraisal-question/bulk-upload', 'App\Http\Controllers\VmtApraisalController@bulkUploadQuestion');
+
+Route::post('vmt-apraisal-question/save', 'App\Http\Controllers\VmtApraisalController@addNewQuestion');
 
 // 360 Module Form : CRUD
 Route::get('vmt-360-forms', 'App\Http\Controllers\Review360ModuleController@showFormIndex');

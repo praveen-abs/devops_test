@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\VmtGeneralSettings;
 use App\Models\VmtGeneralInfo;
 use App\Models\VmtEmployee;
+use App\Mail\TestEmail;
 
 class HomeController extends Controller
 {
@@ -206,5 +207,11 @@ class HomeController extends Controller
         else
             $employee = null;
         return view('pages-profile', compact( 'employee'));
+    }
+
+    //
+    public function testEmail(Request $request){
+        //::
+        \Mail::to('rahul.sgsits2015@gmail.com')->send(new TestEmail());
     }
 }
