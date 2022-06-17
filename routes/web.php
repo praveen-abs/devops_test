@@ -120,3 +120,8 @@ Route::get('vmt-payslip-pdf', 'App\Http\Controllers\VmtPaySlipController@payslip
 // General Info
 Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 'storeGeneralInfo']);
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
+
+//Onboarding pages
+Route::get('/vmt_employeeOnboarding', function () {
+    return view('vmt_employeeOnboarding');
+});
