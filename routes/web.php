@@ -125,3 +125,7 @@ Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/vmt_employeeOnboarding', function () {
     return view('vmt_employeeOnboarding');
 });
+
+Route::get('/vmt_clientOnboarding', function () {
+    return view('vmt_clientOnboarding');
+});
