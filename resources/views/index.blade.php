@@ -11,471 +11,437 @@
 @endcomponent
 
 
-<section class="widget-wrapper">
 
-    <div class="widget-container  container-fluid">
+<div class="container-fluid">
 
-        <div class="row">
-            <div class="col-6">
-                <!-- for add -->
-                <div class="widget-item">
+    <div class="card employee-card">
+        <div class="card-body ">
 
-                    <div class="card card-content card-animate">
-                        <div class="card-body p-2 card-body-content d-flex flex-column">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <p class="text-large text-white">Holidays</p><a class="text-white">View All</a>
-
-                            </div>
-                            <div class="d-flex align-items-center my-auto">
-                                <div class="icon-click"><span class=" ri-arrow-drop-left-line text-white"></span>
-
-                                </div>
-                                <div class="flex-grow-1 mx-10 text-white">
-                                    <h1 class="text-truncate-1 text-white" title="Rakshabandhan">Rakshabandhan</h1>
-                                    <p class="d-flex align-items-center mt-1"><span>Thu, 11 August, 2022</span>
-
-                                    </p>
-                                </div>
-                                <div class="icon-click">
-                                    <!---->
-                                </div>
-                            </div>
-                            <!---->
-                            <!---->
-                        </div>
-                        <div class="action-buttons">
-                            <div tooltip="Settings" class="button"><span class="icon ic-settings"></span></div>
-                            <!---->
-                            <div tooltip="Drag" class="cursor-grab"><span class="icon ic-move transform-90"></span>
-                            </div>
-                            <!---->
-                            <div tooltip="Remove" class="button"><span class="icon ic-close"></span></div>
-                            <!---->
-                        </div>
+            <div class="row ">
+                <div class="col-md-4 col-sm-6 col-lg-4 ">
+                    <div class="mb-3">
+                        <label for="client-code" class="form-label">Client Code</label>
+                        <input type="text" class="form-control" id="client-code">
                     </div>
-                    <!---->
-
-                    <!---->
                 </div>
-            </div>
-            <!-- for date and time -->
-            <div class="col-6">
-                <div class="widget-item ">
-
-                    <div class="card card-content card-animate">
-                        <div class="card-body p-2 card-body-content d-flex flex-column">
-                            <div class="d-flex align-items-center justify-content-between">
-
-                                <div class="date-time d-flex align-items-center justify-content-between ">
-                                    <p class="text-large text-white">
-                                        Today Date
-                                        <span>-</span>
-                                    </p>
-                                    <p id="displayDay"></p>
-                                </div>
-
-                                <p class="text-white">View All</p>
-
-                            </div>
-
-
-                            <div class="d-flex">
-                                <div class="d-flex align-items-center my-auto">
-                                    <div class="show-time d-flex flex-column">
-                                        <p>Current Time</p>
-                                        <div class="displayTime  d-flex">
-                                            <h4 id="time" class="text-white"> </h4><s id="seconds" class="px-1"></s>
-                                            <p id="session" class="px-1"></p>
-                                        </div>
-                                    </div>
-                                    <div class="flex-grow-1 mx-10 text-white">
-
-                                    </div>
-                                    <div class="icon-click">
-                                        <!---->
-                                    </div>
-                                </div>
-                            </div>
-                            <!---->
-                            <!---->
-                        </div>
-                        <div class="action-buttons">
-                            <div tooltip="Settings" class="button"><span class="icon ic-settings"></span></div>
-                            <!---->
-                            <div tooltip="Drag" class="cursor-grab"><span class="icon ic-move transform-90"></span>
-                            </div>
-                            <!---->
-                            <div tooltip="Remove" class="button"><span class="icon ic-close"></span></div>
-                            <!---->
-                        </div>
-                    </div>
-                    <!---->
-
-                    <!---->
-                </div>
-            </div>
-
-        </div>
-
-        <div class="row">
-            <div class="col-6">
-                <!-- for employee info -->
-                <div class="widget-item">
-                    <div class="card card-content card-animate">
-                        <div class="card-body p-2 card-body-content d-flex flex-column">
-                            <div>
-                                <h6 class="text-white">On Leave Today</h6>
-                            </div>
-                            <div class="d-flex mt-3">
-                                <div class="">
-                                    <h5 class="text-white">Everyone Working Today</h5>
-                                    <span class="text-white">No one is on leave today</span>
-                                </div>
-                                <div>
-                                    <div class="info-img">
-
-                                    </div>
-                                </div>
-                            </div>
-
-
-                        </div>
+                <div class="col-md-4 col-sm-6 col-lg-4 ">
+                    <div class="mb-3">
+                        <label for="client-name" class="form-label">Client Name</label>
+                        <input type="text" class="form-control" id="client-name">
 
                     </div>
                 </div>
-            </div>
-            <div class="col-6">
-
-                <div class="widget-item">
-
-                    <div class="card card-content card-animate">
-                        <div class="card-body p-2 card-body-content d-flex flex-column">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <p>Quick Links</p>
-
-
-                            </div>
-
-
-                            <div class="d-flex mt-4">
-                                <div class="d-flex align-items-center my-auto">
-                                    <h4 class="text-white">No Quick Links Are Added</h4>
-                                </div>
-                            </div>
-
-                        </div>
+                <div class="col-md-4 col-sm-6 col-lg-4 ">
+                    <div class="mb-3">
+                        <label for="cin" class="form-label">CIN Number</label>
+                        <input type="text" class="form-control" id="cin">
 
                     </div>
-                    <!---->
-
-                    <!---->
                 </div>
+
             </div>
-        </div>
-        <!-- for circle  -->
-        <div class="row">
-            <div class="col-6">
-                <div class="widget-item">
-
-                    <div class="card card-content card-animate ">
-                        <div class="card-body p-2 card-body-content  d-flex flex-column">
-
-                            <div>
-                                <span>Leave Balances</span>
-                            </div>
-
-                            <div class="d-flex mt-2">
-                                <div class="d-flex flex-column align-items-center text-center ">
-                                    <div
-                                        class=" align-items-center d-flex justify-content-around rounded-circle roundedCircle">
-                                        0</div>
-                                    <p>Sick Leave</p>
-                                </div>
-                                <div class="d-flex flex-column align-items-center  text-center  ">
-                                    <div
-                                        class="animate-circle align-items-center d-flex justify-content-around   rounded-circle roundedCircle">
-                                        0</div>
-                                    <p>Privilege Leave</p>
-                                </div>
-                                <div class="d-flex flex-column align-items-center  text-center ">
-                                    <div
-                                        class="animate-circle align-items-center d-flex justify-content-around   rounded-circle roundedCircle">
-                                        0</div>
-                                    <p>Casual Leave</p>
-                                </div>
-
-                                <div>
-                                    <p class="text-center">Apply Leave View All Balances</p>
-                                </div>
-                            </div>
-
-
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- rigth content -->
-
-
-
-
-
-</section>
-
-
-
-
-<div class="row">
-    <div class="col">
-        <div class="h-100">
-            <div class="row mb-3 pb-1">
-                <div class="col-12">
-                    <div class="d-flex align-items-lg-center flex-lg-row flex-column">
-                        <div class="flex-grow-1">
-                            <div class="row ">
-                                <div class="col-6">
-                                    <h4 class="fs-16 mb-1">Good Morning !</h4>
-                                </div>
-                                <div class="col-6 text-end">
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div><!-- end card header -->
-                </div>
-                <!--end col-->
-            </div>
-            <!--end row-->
 
             <div class="row">
-                <div class="col-xl-4 col-md-6 ">
+                <div class="col-md-4 col-sm-6 col-lg-4 ">
+                    <div class="mb-3">
+                        <label for="tan" class="form-label">Company TAN</label>
+                        <input type="text" class="form-control" id="tan">
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-lg-4 ">
+                    <div class="mb-3">
+                        <label for="pan" class="form-label">Company PAN</label>
+                        <input type="text" class="form-control" id="pan">
+
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-lg-4 ">
+                    <div class="mb-3">
+                        <label for="gst" class="form-label">GST Number</label>
+                        <input type="text" class="form-control" id="gst">
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 col-sm-6 col-lg-4 ">
+                    <div class="mb-3">
+                        <label for="epf" class="form-label">EPF Registration Number</label>
+                        <input type="text" class="form-control" id="epf">
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-lg-4 ">
+                    <div class="mb-3">
+                        <label for="esic" class="form-label">ESIC Registration Number</label>
+                        <input type="text" class="form-control" id="esic">
+
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-lg-4 ">
+                    <div class="mb-3">
+                        <label for="tax" class="form-label">Professional Tax Registration Number</label>
+                        <input type="text" class="form-control" id="tax">
+
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-4 col-sm-6 col-lg-4 ">
+                    <div class="mb-3">
+                        <label for="authEmail" class="form-label">Authorized Person Contact Email</label>
+                        <input type="text" class="form-control" id="authEmail">
+
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-lg-4 ">
+
+                    <label class="form-label">Documents Upload</label>
+                    <div class="input-group mb-3">
+
+                        <input type="file" class="form-control" id="doc" accept="pdf">
+                        <label for="doc" class="input-group-text">Upload</label>
+
+
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-lg-4 ">
+                    <div class="mb-3">
+                        <label for="lwf" class="form-label">LWF Registration Number</label>
+                        <input type="text" class="form-control" id="lwf">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 col-sm-6 col-lg-4 ">
+                    <div class="mb-3  scrollBar">
+                        <label for="address" class="form-label">Address</label>
+
+                        <textarea class="form-control" id="address" cols="10" rows="2"></textarea>
+
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-lg-4 ">
+                    <div class="mb-3 scrollBar">
+                        <label for="billing" class="form-label">Billing Address</label>
+
+                        <textarea class="form-control" id="billing" cols="10" rows="2"></textarea>
+
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-lg-4 ">
+                    <div class="mb-3 scrollBar">
+                        <label for="ship" class="form-label">Shipping Address</label>
+
+                        <textarea class="form-control" id="ship" cols="10" rows="2"></textarea>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 col-sm-6 col-lg-4 ">
+                    <div class="mb-3">
+                        <label for="start" class="form-label">Contract Start Date</label>
+
+                        <input type="date" class="form-control" id="start">
+
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-lg-4 ">
+                    <div class="mb-3">
+                        <label for="end" class="form-label">Contract End Date</label>
+                        <input type="date" class="form-control" id="end">
+
+
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-lg-4 ">
+                    <div class="mb-3">
+                        <label for="product" class="form-label">Product</label>
+
+
+                        <select name="" id="product" class="form-control">
+                            <option value="-">Option-1</option>
+                            <option value="-">Option-2</option>
+                            <option value="-">Option-3</option>
+                        </select>
+
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-md-4 col-sm-6 col-lg-4 ">
+                    <div class="mb-3">
+                        <label for="subcription" class="form-label">Subcription Type</label>
+
+
+                        <select name="" id="subcription" class="form-control">
+                            <option value="-">Option-1</option>
+                            <option value="-">Option-2</option>
+                            <option value="-">Option-3</option>
+                        </select>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <!--  cards- container-->
+    <div class="notify-content container w-100 h-75 my-2">
+        <div class="row w-100">
+            <div class="col-md-12 col-sm-12 col-lg-12">
+                <div class="d-flex  align-items-center my-2">
+
+                    <div class="img-container">
+                        <img src="blob:https://www.pngwing.com/4e51f4d3-29bc-42b3-a043-bd35dd7d77e0" alt="">
+                    </div>
+
                     <!-- card -->
-                    <div class="card card-animate">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <div class="avatar-sm flex-shrink-0">
-                                    <div class="vertical-line">
+                    <div class="notify-container mx-2 d-flex align-items-center">
+                        <div class="card notify-card mx-2 my-2 ">
+                            <div class="card-body d-flex align-items-center p-0">
+
+                                <div class="d-flex  align-items-center py-1">
+                                    <div class="notify-img mx-1">
+                                        <img src="" alt="">
+                                    </div>
+                                    <div class="notify-content mx-1">
+                                        <p>250/300</p>
+                                        <span>Employee with goals</span>
 
                                     </div>
                                 </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <p class="text-uppercase fw-semibold fs-12 text-muted mb-1"> Active Review Cycles
-                                    </p>
-
-                                    <h4 class="fs-22 fw-semibold ff-secondary mb-0"><span class="counter-value"
-                                            data-target="105">0</span></h4>
-                                </div>
-                                <div class="flex-shrink-0 align-self-end">
-                                    <span class="badge badge-soft-success">Go to Review Groups<span> </span><i
-                                            class="ri-arrow-right-s-fill align-middle me-1"></i></span>
-                                </div>
                             </div>
-                        </div><!-- end card body -->
-                    </div>
-                </div><!-- end col -->
+                        </div>
 
-                <div class="col-xl-4 col-md-6 ">
-                    <!-- card -->
-                    <div class="card card-animate">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <div class="avatar-sm flex-shrink-0">
-                                    <div class="vertical-line">
+
+                        <div class="card notify-card mx-2 my-2 ">
+                            <div class="card-body d-flex align-items-center p-0">
+
+                                <div class="d-flex  align-items-center py-1">
+                                    <div class="notify-img mx-1">
+                                        <img src="" alt="">
+                                    </div>
+                                    <div class="notify-content mx-1">
+                                        <p>200/120</p>
+                                        <span>Employee /rated</span>
 
                                     </div>
                                 </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <p class="text-uppercase fw-semibold fs-12 text-muted mb-1">Reviews to be Initiated
-                                    </p>
-
-                                    <h4 class="fs-22 fw-semibold ff-secondary mb-0"><span class="counter-value"
-                                            data-target="233">0</span></h4>
-                                </div>
-                                <div class="flex-shrink-0 align-self-end">
-                                    <span class="badge badge-soft-success">Go to Review Groups<span> </span><i
-                                            class="ri-arrow-right-s-fill align-middle me-1"></i></span>
-                                </div>
                             </div>
-                        </div><!-- end card body -->
-                    </div>
-                </div><!-- end col -->
+                        </div>
 
-                <div class="col-xl-4 col-md-6 ">
-                    <!-- card -->
-                    <div class="card card-animate">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <div class="avatar-sm flex-shrink-0">
-                                    <div class="vertical-line">
+
+                        <div class="card notify-card mx-2 my-2 ">
+                            <div class="card-body d-flex align-items-center p-0">
+
+                                <div class="d-flex  align-items-center py-1">
+                                    <div class="notify-img mx-1">
+                                        <img src="" alt="">
+                                    </div>
+                                    <div class="notify-content mx-1">
+                                        <p>16-06-2022</p>
+                                        <span>Goals assignment reminder notifications</span>
 
                                     </div>
                                 </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <p class="text-uppercase fw-semibold fs-12 text-muted mb-1">Reviews In Progress</p>
-
-                                    <h4 class="fs-22 fw-semibold ff-secondary mb-0"><span class="counter-value"
-                                            data-target="120">0</span></h4>
-                                </div>
-
                             </div>
-                        </div><!-- end card body -->
-                    </div>
-                </div><!-- end col -->
+                        </div>
 
-                <div class="col-xl-4 col-md-6">
-                    <!-- card -->
-                    <div class="card  card-animate">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <div class="avatar-sm flex-shrink-0">
-                                    <div class="vertical-line">
+
+                        <div class="card notify-card mx-2 my-2 ">
+                            <div class="card-body d-flex align-items-center p-0">
+
+                                <div class="d-flex  align-items-center py-1">
+                                    <div class="notify-img mx-1">
+                                        <img src="" alt="">
+                                    </div>
+                                    <div class="notify-content mx-1">
+                                        <p>16-06-2022</p>
+                                        <span>Goals assignment reminder notifications</span>
 
                                     </div>
                                 </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <p class="text-uppercase fw-semibold fs-12 text-muted mb-1">Reviews Finalised</p>
-
-                                    <h4 class="fs-22 fw-semibold ff-secondary mb-0"><span class="counter-value"
-                                            data-target="23">0</span></h4>
-                                </div>
-
                             </div>
-                        </div><!-- end card body -->
+                        </div>
                     </div>
-                </div><!-- end col -->
-
-
-                <div class="col-xl-4 col-md-6 ">
-                    <!-- card -->
-                    <div class="card card-animate">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <div class="avatar-sm flex-shrink-0">
-                                    <div class="vertical-line">
-
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <p class="text-uppercase fw-semibold fs-12 text-muted mb-1">Pending Feedback
-                                        Requests</p>
-
-                                    <h4 class="fs-22 fw-semibold ff-secondary mb-0"><span class="counter-value"
-                                            data-target="43">0</span></h4>
-                                </div>
-
-                            </div>
-                        </div><!-- end card body -->
-                    </div>
-                </div><!-- end col -->
-
-            </div> <!-- end col -->
-
-
-
+                </div>
+            </div>
         </div>
     </div>
-    <!--end row-->
 
 
-    @endsection
+    <!-- tables assign goals -->
 
-    @section('script')
-    <!-- apexcharts -->
-    <script src="{{ URL::asset('/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/libs/jsvectormap/jsvectormap.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/libs/swiper/swiper.min.js')}}"></script>
-    <!-- dashboard init -->
-    <script src="{{ URL::asset('/assets/js/pages/dashboard-ecommerce.init.js') }}"></script>
-    <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
+    <div class="employee-wrpper mt-5 d-flex justify-content-between">
+        <div class="row w-100">
+            <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6">
 
-    <!-- for date and time -->
+                <div class="employee-content-left ">
+                    <table class="table   responsive" id="table">
+                        <thead class="thead" id="tHead">
+                            <tr>
 
-    <script>
-    // var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    // var d = new Date(dateString);
-    // var dayName = days[d.getDay()];
-    var dayIndex = new Date().getDay();
-    const getDayName = (dayIndex) => {
-        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-        return days[dayIndex];
+                                <th scope="col">Employee Name</th>
+                                <th scope="col">Employee Id</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbody" id="tbody">
+                            <tr>
+
+                                <td>joseph</td>
+                                <td>CB123</td>
+                            </tr>
+                            <tr>
+
+                                <td>joseph</td>
+                                <td>CB123</td>
+                            </tr>
+                            <tr>
+
+                                <td>joseph</td>
+                                <td>CB123</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6">
+                <div class="employee-content-right mt-3 ">
+                    <div class="card rounded-border">
+                        <div class="card-header">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="left-content d-flex">
+                                    <span>New</span>
+                                    <h6>Assign Goals</h6>
+                                </div>
+                                <div class="right-content d-flex">
+                                    <span>publish</span>
+                                    <span>X</span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="card-body">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--  -->
+@endsection
+
+@section('script')
+<!-- apexcharts -->
+<script src="{{ URL::asset('/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
+<script src="{{ URL::asset('/assets/libs/jsvectormap/jsvectormap.min.js') }}"></script>
+<script src="{{ URL::asset('assets/libs/swiper/swiper.min.js')}}"></script>
+<!-- dashboard init -->
+<script src="{{ URL::asset('/assets/js/pages/dashboard-ecommerce.init.js') }}"></script>
+<script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
+
+<!-- for date and time -->
+
+<script>
+// var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+// var d = new Date(dateString);
+// var dayName = days[d.getDay()];
+var dayIndex = new Date().getDay();
+const getDayName = (dayIndex) => {
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    return days[dayIndex];
+}
+const dayName = getDayName(dayIndex)
+const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+];
+
+const d = new Date();
+
+document.getElementById("displayDay").innerHTML = monthNames[d.getMonth()] + " " + d.getDate() + "," + d
+    .getFullYear() + " " + dayName;
+
+
+function displayTimes() {
+
+    var date = new Date();
+    var hrs = date.getHours();
+    var mins = date.getMinutes();
+    var secs = date.getSeconds();
+
+    var sessions = document.getElementById("session");
+
+    if (hrs > 12) {
+        session.innerHTML = "PM";
+
+    } else {
+        session.innerHTML = "PM";
     }
-    const dayName = getDayName(dayIndex)
-    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-    ];
 
-    const d = new Date();
+    if (hrs > 12) {
+        hrs = hrs - 12;
+    }
 
-    document.getElementById("displayDay").innerHTML = monthNames[d.getMonth()] + " " + d.getDate() + "," + d
-        .getFullYear() + " " + dayName;
+    if (mins <= 9) {
+        mins = "0" + mins;
+    }
+    if (secs <= 9) {
+        secs = "0" + secs;
+    }
+
+    document.getElementById("time").innerHTML = hrs + ":" + mins + ":" + secs;
+}
+setInterval(displayTimes, 10);
 
 
-    function displayTimes() {
+// for counter number
 
-        var date = new Date();
-        var hrs = date.getHours();
-        var mins = date.getMinutes();
-        var secs = date.getSeconds();
-
-        var sessions = document.getElementById("session");
-
-        if (hrs > 12) {
-            session.innerHTML = "PM";
-
+const counters = document.querySelectorAll('.count');
+// Main function
+for (let n of counters) {
+    const updateCount = () => {
+        const target = +n.getAttribute('data-target');
+        const count = +n.innerText;
+        const speed = 1000; // change animation speed here
+        const inc = target / speed;
+        if (count < target) {
+            n.innerText = Math.ceil(count + inc);
+            setTimeout(updateCount, 1);
         } else {
-            session.innerHTML = "PM";
+            n.innerText = target;
         }
-
-        if (hrs > 12) {
-            hrs = hrs - 12;
-        }
-
-        if (mins <= 9) {
-            mins = "0" + mins;
-        }
-        if (secs <= 9) {
-            secs = "0" + secs;
-        }
-
-        document.getElementById("time").innerHTML = hrs + ":" + mins + ":" + secs;
     }
-    setInterval(displayTimes, 10);
-
-
-    // for counter number
-
-    const counters = document.querySelectorAll('.count');
-    // Main function
-    for (let n of counters) {
-        const updateCount = () => {
-            const target = +n.getAttribute('data-target');
-            const count = +n.innerText;
-            const speed = 1000; // change animation speed here
-            const inc = target / speed;
-            if (count < target) {
-                n.innerText = Math.ceil(count + inc);
-                setTimeout(updateCount, 1);
-            } else {
-                n.innerText = target;
-            }
-        }
-        updateCount();
-    }
+    updateCount();
+}
 
 
 
-    // circle prograss bar
-    </script>
+// circle prograss bar
+</script>
 
 
 
 
 
-    @endsection
+@endsection

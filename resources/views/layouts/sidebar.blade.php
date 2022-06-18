@@ -44,8 +44,19 @@
             <ul class="navbar-nav" id="navbar-nav">
                 <li class="menu-title"><span>@lang('translation.menu')</span></li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{url('index')}}">
-                        <i class="ri-dashboard-2-line"></i> <span data-key="t-landing">Dashboard</span>
+                    <a class="nav-link menu-link d-flex" href="{{url('index')}}">
+
+
+                        <div class="d-flex flex-column align-items-center justify-content-center">
+                            <i class="ri-dashboard-2-line"></i> <span data-key="t-landing">Dashboard</span>
+                        </div>
+                        <div class="left-line">
+                            <hr class="">
+                        </div>
+
+
+
+
 
                     </a>
                 </li>
@@ -53,12 +64,21 @@
 
 
 
-                
+
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#attendanceDrop-Down" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarRoles">
-                        <i class="ri-calendar-todo-fill "></i> <span>Attendance</span>
+                    <a class="nav-link menu-link d-flex" href="#attendanceDrop-Down" data-bs-toggle="collapse"
+                        role="button" aria-expanded="false" aria-controls="sidebarRoles">
+
+                        <div class="d-flex flex-column align-items-center justify-content-center">
+                            <i class="ri-calendar-todo-fill "></i> <span>Attendance</span>
+                        </div>
+                        <div class="left-line">
+                            <hr class="">
+
+                        </div>
+
                     </a>
+
                     <div class="collapse menu-dropdown" id="attendanceDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
@@ -70,18 +90,43 @@
                                 <div class="collapse menu-dropdown" id="settingsDrop-Down">
                                     <ul class="nav nav-sm flex-column">
                                         <li class="nav-item">
-                                            <a href="{{url('vmt-general-settings')}}" class="nav-link">
+                                            <!-- <a href="{{url('vmt-general-settings')}}" class="nav-link">
 
-                                                <div class="">
+                                            
 
-                                                    <input type="date" class="form-control" id="displayName">
+                                            </a>\ -->
+                                            <div class="calender-content d-flex">
+                                                <input type="text" class="form-control" id="calender-input" readOnly>
+                                                <span class="ri-calendar-todo-fill h4" onclick="showCalendar()"></span>
 
+
+
+                                                <div class="calendar" id="calendar">
+                                                    <div class="month">
+                                                        <i class="fas fa-angle-left prev"></i>
+                                                        <div class="date">
+                                                            <h1></h1>
+                                                            <p></p>
+                                                        </div>
+                                                        <i class="fas fa-angle-right next"></i>
+                                                    </div>
+                                                    <div class="weekdays">
+                                                        <div>Sun</div>
+                                                        <div>Mon</div>
+                                                        <div>Tue</div>
+                                                        <div>Wed</div>
+                                                        <div>Thu</div>
+                                                        <div>Fri</div>
+                                                        <div>Sat</div>
+                                                    </div>
+                                                    <div class="days"></div>
 
                                                 </div>
-                                            </a>
+                                            </div>
                                         </li>
 
                                     </ul>
+
                                 </div>
                             </li>
                             <li class="nav-item">
@@ -91,7 +136,10 @@
 
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt-assign-roles')}}" class="nav-link"><span>My Report</span> </a>
+                                <a href="{{url('vmt-assign-roles')}}" class="nav-link"
+                                    data-bs-toggle="collapse"><span>My Report</span>
+
+                                </a>
                                 <div class="collapse menu-dropdown" id="settingsDrop-Down">
                                     <ul class="nav nav-sm flex-column">
                                         <li class="nav-item">
@@ -141,9 +189,17 @@
 
                 @else
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#reportDrop-Down" data-bs-toggle="collapse" role="button"
+                    <a class="nav-link menu-link d-flex" href="#reportDrop-Down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarRoles">
-                        <i class="ri-file-list-2-fill"></i> <span>My Report</span>
+                        <div class="d-flex flex-column align-items-center justify-content-center ">
+                            <i class="ri-file-list-2-fill"></i> <span>My Report</span>
+                        </div>
+                        <div class="left-line">
+                            <hr class="">
+                        </div>
+
+
+
                     </a>
                     <div class="collapse menu-dropdown" id="reportDrop-Down">
                         <ul class="nav nav-sm flex-column">
@@ -165,8 +221,17 @@
 
                 @hasrole("Admin")
                 <li class="nav-item">
-                    <a class="nav-link menu-link" role="button">
-                        <i class="  ri-bar-chart-fill "></i> <span>Org</span>
+                    <a class="nav-link menu-link d-flex" role="button">
+
+
+
+                        <div class="d-flex flex-column align-items-center justify-content-center ">
+                            <i class="  ri-bar-chart-fill "></i> <span>Org</span>
+                        </div>
+                        <div class="left-line">
+                            <hr class="">
+                        </div>
+
 
                     </a>
                     <div class="collapse menu-dropdown" id="ticketingDrop-Down">
@@ -194,15 +259,25 @@
                 <!-- performance -->
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#reportDrop-Down" data-bs-toggle="collapse" role="button"
+                    <a class="nav-link menu-link d-flex" href="#reportDrop-Down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarRoles">
-                        <i class=" ri-line-chart-fill"></i> <span>Performance</span>
+
+                        
+                            <div class="d-flex flex-column align-items-center justify-content-center ">
+                                <i class=" ri-line-chart-fill"></i> <span>Performance</span>
+                            </div>
+                            <div class="left-line">
+                                <hr class="">
+                            </div>
+                        
+
                     </a>
                     <div class="collapse menu-dropdown" id="reportDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a href="{{url('indexPerformanceDashboard')}}"
                                     class="nav-link"><span>Dashboard</span></a>
+                                <hr>
                             </li>
                             @can('Self_Appraisal')
                             <li class="nav-item">
@@ -268,9 +343,17 @@
 
                 <!-- payroll -->
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#reportDrop-Down" data-bs-toggle="collapse" role="button"
+                    <a class="nav-link menu-link d-flex" href="#reportDrop-Down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarRoles">
-                        <i class=" ri-mac-fill"></i> <span>Payroll</span>
+
+                        <div class="d-flex flex-column align-items-center justify-content-center ">
+                            <i class=" ri-mac-fill"></i> <span>Payroll</span>
+                        </div>
+                        <div class="left-line">
+                            <hr class="">
+                        </div>
+
+
                     </a>
                     <div class="collapse menu-dropdown" id="reportDrop-Down">
                         <ul class="nav nav-sm flex-column">
@@ -316,9 +399,18 @@
 
                 <!-- Navigation Menu for Ticketting-->
                 <li class="nav-item">
-                    <a class="nav-link menu-link" id="employeeInfo" href="#ticketingDrop-Down" data-bs-toggle="collapse"
-                        role="button" aria-expanded="false" aria-controls="sidebar360questions">
-                        <i class=" ri-chat-check-fill"></i> <span>Ticketing</span>
+                    <a class="nav-link menu-link d-flex" id="employeeInfo" href="#ticketingDrop-Down"
+                        data-bs-toggle="collapse" role="button" aria-expanded="false"
+                        aria-controls="sidebar360questions">
+
+
+                        <div class="d-flex flex-column align-items-center justify-content-center ">
+                            <i class=" ri-chat-check-fill"></i> <span>Ticketing</span>
+                        </div>
+                        <div class="left-line">
+                            <hr class="">
+
+                        </div>
 
                     </a>
                     <div class="collapse menu-dropdown" id="ticketingDrop-Down">
@@ -367,9 +459,19 @@
 
                 <!-- Exit -->
                 <li class="nav-item">
-                    <a class="nav-link menu-link" id="employeeInfo" href="#ticketingDrop-Down" data-bs-toggle="collapse"
-                        role="button" aria-expanded="false" aria-controls="sidebar360questions">
-                        <i class=" ri-logout-box-fill"></i> <span>Exit</span>
+                    <a class="nav-link menu-link d-flex" id="employeeInfo" href="#ticketingDrop-Down"
+                        data-bs-toggle="collapse" role="button" aria-expanded="false"
+                        aria-controls="sidebar360questions">
+
+
+                        <div class="d-flex flex-column align-items-center justify-content-center px-2">
+                            <i class=" ri-logout-box-fill"></i> <span>Exit</span>
+                        </div>
+                        <div class="left-line">
+                            <hr class="">
+
+                        </div>
+
 
                     </a>
                     <div class="collapse menu-dropdown" id="ticketingDrop-Down">
