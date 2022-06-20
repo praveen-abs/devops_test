@@ -247,10 +247,15 @@
 
                             </li>
                             <li class="nav-item ">
-                                <a href="{{url('vmt-employess/bulk-upload')}}" id="" class="nav-link"
-                                    aria-expanded="false"><span>Upload Employees Details</span> </a>
+                                <a href="{{url('vmt_clientOnboarding')}}" id="" class="nav-link"
+                                    aria-expanded="false"><span>Client On-Boarding</span> </a>
 
                             </li>
+                            <li class="nav-item ">
+                                <a href="{{url('vmt_employeeOnboarding')}}" id="" class="nav-link"
+                                    aria-expanded="false"><span>Employee On-Boarding</span> </a>
+
+                            </li>                            
                         </ul>
                     </div>
                 </li>
