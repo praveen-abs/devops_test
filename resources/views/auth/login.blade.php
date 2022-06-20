@@ -32,7 +32,6 @@
                             <div class="right-content-logo w-100 h-100">
                                 <img src="{{ URL::asset($generalInfo->background_img)}}" alt="brand-logo"
                                     class="h-100 w-100">
-                                <img src="" alt="">
                             </div>
                         </div>
 
