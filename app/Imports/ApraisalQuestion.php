@@ -18,7 +18,7 @@ class ApraisalQuestion implements ToModel,  WithHeadingRow
     public function model(array $row)
     {
         //
-        if($row['dimension'] != null){
+        if($row['dimension'] != null || $row['dimension'] != 'END'){
             $vmtApQuestion = new VmtAppraisalQuestion; 
             $vmtApQuestion->dimension   =    $row["dimension"]; 
             $vmtApQuestion->kpi   =    $row["kpi"]; 
