@@ -59,6 +59,13 @@ Route::post('vmt-360-questions/delete', 'App\Http\Controllers\Review360ModuleCon
 Route::post('vmt-360-questions/store', 'App\Http\Controllers\Review360ModuleController@saveReviewQuestios');
 
 // Performanse Appraisal Question
+Route::get('vmt-apraisal-questions', 'App\Http\Controllers\VmtApraisalController@index');
+Route::get('vmt-apraisal-question/edit/{id}', 'App\Http\Controllers\VmtApraisalController@edit');
+
+Route::post('vmt-apraisal-question/update/{id}', 'App\Http\Controllers\VmtApraisalController@update');
+
+Route::post('vmt-apraisal-question/delete', 'App\Http\Controllers\VmtApraisalController@delete');
+
 Route::post('vmt-apraisal-question/bulk-upload', 'App\Http\Controllers\VmtApraisalController@bulkUploadQuestion');
 
 Route::post('vmt-apraisal-question/save', 'App\Http\Controllers\VmtApraisalController@addNewQuestion');
