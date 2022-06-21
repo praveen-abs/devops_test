@@ -84,7 +84,8 @@ input {
     font-family: montserrat;
     color: #2C3E50;
     font-size: 16px;
-    letter-spacing: 1px
+    letter-spacing: 1px;
+    outline: none;
 }
 
 #msform input:focus,
