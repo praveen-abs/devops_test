@@ -3,7 +3,7 @@
 @lang('translation.signin')
 @endsection
 @section('content')
-<div class="auth-page-wrapper pt-5">
+<div class="auth-page-wrapper p-2 ">
     <!-- auth page bg -->
     <div class="auth-one-bg-position auth-one-bg" id="auth-particles">
         <div class="bg-overlay"></div>
@@ -19,9 +19,8 @@
         </div> -->
     </div>
     <!-- auth page content -->
-    <div class="auth-page-content">
-        <div class="container-fluid auth-container">
-
+    <div class="auth-page-content ">
+        <div class="container-fluid auth-container mt-4">
 
 
             <div class="card m-2 p-2">
