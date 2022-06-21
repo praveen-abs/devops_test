@@ -1313,7 +1313,7 @@
 
     </div>
 
-    <div class="navbar-brand-box" style=" position:absolute;bottom:20px;width:100%;height:50px;">
+    <div class="navbar-brand-box" style=" position:absolute;bottom:20px;height:50px;">
         <!-- Dark Logo-->
         <a href="index" class="logo logo-dark">
             <span class="logo-sm">
