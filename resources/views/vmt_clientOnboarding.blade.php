@@ -4,204 +4,382 @@
 <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+p {
+    color: grey
 }
 
-body {
-    font-family: 'Poppins', sans-serif;
-    font-size: 16px;
-    color: #2c2c2c;
+#heading {
+    text-transform: uppercase;
+    color: #673AB7;
+    font-weight: normal
 }
 
-body a {
-    color: inherit;
-    text-decoration: none;
-}
-
-.header {
-    max-width: 600px;
-    margin: 50px auto;
+#msform {
     text-align: center;
-}
-
-.header__title {
-    margin-bottom: 30px;
-    font-size: 2.1rem;
-}
-
-.content {
-    width: 95%;
-    margin: 0 auto 50px;
-}
-
-.content__title {
-    margin-bottom: 40px;
-    font-size: 20px;
-    text-align: center;
-}
-
-.content__title--m-sm {
-    margin-bottom: 10px;
-}
-
-.multisteps-form__progress {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
-}
-
-.multisteps-form__progress-btn {
-    transition-property: all;
-    transition-duration: 0.15s;
-    transition-timing-function: linear;
-    transition-delay: 0s;
     position: relative;
-    padding-top: 20px;
-    color: rgba(108, 117, 125, 0.7);
-    text-indent: -9999px;
-    border: none;
-    background-color: transparent;
-    outline: none !important;
-    cursor: pointer;
+    margin-top: 20px
 }
 
-@media (min-width: 500px) {
-    .multisteps-form__progress-btn {
-        text-indent: 0;
+#msform fieldset {
+    background: white;
+    border: 0 none;
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    padding-bottom: 20px;
+    position: relative
+}
+
+.form-card {
+    text-align: left
+}
+
+#msform fieldset:not(:first-of-type) {
+    display: none
+}
+
+.onboard-form {
+    border-bottom: 1px solid !important;
+}
+
+input {
+    border: none !important;
+}
+
+.error {
+    color: red;
+    font-size: 15px;
+}
+
+.error::before {
+    content: '* ';
+}
+
+#msform input,
+#msform textarea,
+select {
+    outline: none;
+    padding: 8px 15px 8px 15px;
+    border: none;
+    border-radius: 0px;
+    margin-top: 2px;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: montserrat;
+    color: #2C3E50;
+    font-size: 16px;
+    letter-spacing: 1px
+}
+
+#msform input:focus,
+#msform textarea:focus {
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    box-shadow: 0 1px 0 0 #673AB7 !important;
+    outline-width: 0;
+}
+
+#msform input:focus~.fieldlabels {
+    top: -9px !important;
+    font-size: 12px;
+}
+
+#msform input:not(:focus):valid~.fieldlabels {
+    top: -9px !important;
+    font-size: 12px;
+}
+
+#msform input:not(:focus)~.empty {
+    top: -9px !important;
+    font-size: 12px;
+}
+
+.patternErr {
+    display: inline-block !important;
+    font-size: 15px !important;
+}
+
+.patternErr::after {
+    content: 'Invalid data';
+}
+
+/* #msform input:not(:focus) ~ .notvalid {
+    color: red;
+} */
+
+.fieldlabels {
+    position: absolute;
+    pointer-events: none;
+    left: 15px;
+    top: -7px;
+    transition: 0.2s ease all;
+    font-size: 18px;
+}
+
+#msform .action-button {
+    /* width: 30%; */
+    background: orangered;
+    font-weight: bold;
+    color: white;
+    border: 0 none;
+    border-radius: 0px;
+    cursor: pointer;
+    /* padding: 8px 6px; */
+    padding: 10px 24px;
+    margin: 10px 0px 10px 0px;
+    float: right;
+    border-radius: 20px;
+}
+
+#msform .previous {
+    float: left !important;
+}
+
+#msform .action-button:hover,
+#msform .action-button:focus {
+    background-color: orangered
+}
+
+#msform .action-button-previous {
+    /* width: 100px; */
+    background: #616161;
+    font-weight: bold;
+    color: white;
+    border: 0 none;
+    border-radius: 0px;
+    cursor: pointer;
+    padding: 10px 24px;
+    margin: 10px 5px 10px 0px;
+    float: right
+}
+
+#msform .action-button-previous:hover,
+#msform .action-button-previous:focus {
+    background-color: #000000
+}
+
+.card {
+    z-index: 0;
+    border: none;
+    position: relative
+}
+
+.fs-title {
+    font-size: 25px;
+    color: #673AB7;
+    margin-bottom: 15px;
+    font-weight: normal;
+    text-align: left
+}
+
+.purple-text {
+    color: #673AB7;
+    font-weight: normal
+}
+
+.steps {
+    font-size: 25px;
+    color: gray;
+    margin-bottom: 10px;
+    font-weight: normal;
+    text-align: right;
+}
+
+#progressbar {
+    margin-bottom: 30px;
+    overflow: hidden;
+    color: lightgrey;
+    padding: 0px 100px 0px 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media only screen and (max-width: 906px) {
+    .content.pl-0 {
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+    }
+
+    .main-content {
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+    }
+
+    .header {
+        margin-right: 0px !important;
     }
 }
 
-.multisteps-form__progress-btn:before {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    display: block;
-    width: 13px;
-    height: 13px;
-    content: '';
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
-    transition: all 0.15s linear 0s, -webkit-transform 0.15s cubic-bezier(0.05, 1.09, 0.16, 1.4) 0s;
-    transition: all 0.15s linear 0s, transform 0.15s cubic-bezier(0.05, 1.09, 0.16, 1.4) 0s;
-    transition: all 0.15s linear 0s, transform 0.15s cubic-bezier(0.05, 1.09, 0.16, 1.4) 0s, -webkit-transform 0.15s cubic-bezier(0.05, 1.09, 0.16, 1.4) 0s;
-    border: 2px solid currentColor;
-    border-radius: 50%;
-    background-color: #fff;
-    box-sizing: border-box;
-    z-index: 3;
+@media only screen and (max-width: 433px) {
+    #progressbar li {
+        width: 20% !important;
+    }
+
+    #progressbar li:before {
+        width: 60% !important;
+        height: 30% !important;
+        line-height: 109% !important;
+    }
+
+    #progressbar li:after {
+        top: 14% !important;
+    }
+
+    .f-9 {
+        font-size: 6px;
+    }
+
+    .fieldlabels {
+        font-size: 15px !important;
+    }
 }
 
-.multisteps-form__progress-btn:after {
-    position: absolute;
-    top: 5px;
-    left: calc(-50% - 13px / 2);
-    transition-property: all;
-    transition-duration: 0.15s;
-    transition-timing-function: linear;
-    transition-delay: 0s;
+@media only screen and (max-width: 580px) {
+    #progressbar {
+        margin-bottom: 0px;
+        padding: 0;
+    }
+}
+
+#end:after {
+    width: 45% !important;
+}
+
+#account:after {
+    left: 45% !important;
+}
+
+#progressbar .active {
+    color: black;
+    font-weight: bold;
+}
+
+#progressbar li {
+    list-style-type: none;
+    font-size: 15px;
+    width: 25%;
+    float: left;
+    position: relative;
+    font-weight: 400
+}
+
+#progressbar #account:before {
+    font-family: FontAwesome;
+    color: orange;
+    content: "1"
+}
+
+#progressbar #end:before {
+    font-family: FontAwesome;
+    color: orange;
+    content: "2"
+}
+
+
+
+/* #progressbar #payment:before {
+    font-family: FontAwesome;
+    color: orange;
+    content: "3"
+}
+
+#progressbar #confirm:before {
+    font-family: FontAwesome;
+    color: orange;
+    content: "4"
+} */
+
+#progressbar li:before {
+    width: 40px;
+    height: 40px;
+    line-height: 35px;
     display: block;
+    font-size: 18px;
+    color: white;
+    background: white;
+    border: 1px solid orange;
+    border-radius: 50%;
+    margin: 0 auto 10px auto;
+    padding: 2px
+}
+
+#progressbar li:after {
+    content: '';
     width: 100%;
     height: 2px;
-    content: '';
-    background-color: currentColor;
-    z-index: 1;
-}
-
-.multisteps-form__progress-btn:first-child:after {
-    display: none;
-}
-
-.multisteps-form__progress-btn.js-active {
-    color: #007bff;
-}
-
-.multisteps-form__progress-btn.js-active:before {
-    -webkit-transform: translateX(-50%) scale(1.2);
-    transform: translateX(-50%) scale(1.2);
-    background-color: currentColor;
-}
-
-.multisteps-form__form {
-    position: relative;
-}
-
-.multisteps-form__panel {
+    background: orange;
     position: absolute;
-    top: 0;
     left: 0;
+    top: 20px;
+    z-index: -1
+}
+
+#progressbar li.active:before,
+#progressbar li.active:after {
+    background: orangered;
+    color: white !important;
+}
+
+.fit-image {
     width: 100%;
-    height: 0;
-    opacity: 0;
-    visibility: hidden;
+    object-fit: cover
 }
 
-.multisteps-form__panel.js-active {
-    height: auto;
-    opacity: 1;
-    visibility: visible;
+.rounded-corner-add {
+    border-radius: 30px;
+    border: 1px solid;
+    padding: 10px;
+    width: 100px;
 }
 
-.multisteps-form__panel[data-animation="scaleOut"] {
-    -webkit-transform: scale(1.1);
-    transform: scale(1.1);
+@media only screen and (max-width: 906px) {
+    .header {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .row {
+        margin-right: 0 !important;
+    }
+
+    .content.pl-0 {
+        padding-right: 0 !important;
+    }
 }
 
-.multisteps-form__panel[data-animation="scaleOut"].js-active {
-    transition-property: all;
-    transition-duration: 0.2s;
-    transition-timing-function: linear;
-    transition-delay: 0s;
-    -webkit-transform: scale(1);
-    transform: scale(1);
+@media only screen and (width:768px) and (orientation : portrait) {
+    .header {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
 }
 
-.multisteps-form__panel[data-animation="slideHorz"] {
-    left: 50px;
+@media only screen and (max-width: 441px) {
+    #msform .action-button {
+        width: 100% !important;
+        font-size: 12px !important;
+        padding: 8px 6px !important;
+    }
 }
 
-.multisteps-form__panel[data-animation="slideHorz"].js-active {
-    transition-property: all;
-    transition-duration: 0.25s;
-    transition-timing-function: cubic-bezier(0.2, 1.13, 0.38, 1.43);
-    transition-delay: 0s;
-    left: 0;
+@media only screen and (width:280px) and (orientation : portrait) {
+    body {
+        width: 168%;
+    }
 }
 
-.multisteps-form__panel[data-animation="slideVert"] {
-    top: 30px;
-}
-
-.multisteps-form__panel[data-animation="slideVert"].js-active {
-    transition-property: all;
-    transition-duration: 0.2s;
-    transition-timing-function: linear;
-    transition-delay: 0s;
-    top: 0;
-}
-
-.multisteps-form__panel[data-animation="fadeIn"].js-active {
-    transition-property: all;
-    transition-duration: 0.3s;
-    transition-timing-function: linear;
-    transition-delay: 0s;
-}
-
-.multisteps-form__panel[data-animation="scaleIn"] {
-    -webkit-transform: scale(0.9);
-    transform: scale(0.9);
-}
-
-.multisteps-form__panel[data-animation="scaleIn"].js-active {
-    transition-property: all;
-    transition-duration: 0.2s;
-    transition-timing-function: linear;
-    transition-delay: 0s;
-    -webkit-transform: scale(1);
-    transform: scale(1);
+@media only screen and (width:360px) and (orientation : portrait) {
+    body {
+        width: 104%;
+    }
 }
 </style>
+
+
+
 
 
 @endsection
@@ -212,204 +390,204 @@ body a {
 @slot('title') Client Onboarding @endslot
 @endcomponent
 
+<div class="main">
 
-<div class="multisteps-form">
-    <!--progress bar-->
-    <div class="row">
-        <div class="col-12 col-lg-12  mb-4">
-            <div class="multisteps-form__progress">
-                <button class="multisteps-form__progress-btn js-active  px-2" type="button" title="User Info">Personal
-                    Details</button>
-                <button class="multisteps-form__progress-btn px-2" type="button" title="Address">Location
-                    Details</button>
-                <button class="multisteps-form__progress-btn px-2" type="button" title="Order Info">Official
-                    Details</button>
-                <button class="multisteps-form__progress-btn px-2" type="button" title="Comments">Family
-                    Details</button>
-                <button class="multisteps-form__progress-btn px-2" type="button" title="Comments">Statutory
-                    Details</button>
+    <div class="container-fluid">
+        <div class="card mt-4 p-5">
+
+            <div class="row ">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+                    <div class="card p-3">
+                        <div id="msform">
+                            <!-- progressbar -->
+                            <ul id="progressbar">
+                                <li class="active" id="account"><strong class="f-9">Client Details</strong></li>
+                                <li id="end"><strong class="f-9">Authorized Details</strong></li>
+                            </ul>
+                            <fieldset id="row-1">
+                                <form id="form-1">
+                                    <div class="form-card">
+                                        <div class="row mt-5">
+                                            <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
+                                            <input type="text" name="client_code" class="onboard-form" required />
+                                                <label class="fieldlabels" for="client_code ">Client Code</label>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
+                                                <input type="text" name="client_name" class="onboard-form" required />
+                                                <label class="fieldlabels" for="client_name">Client Name</label>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
+                                                <input type="date" name="csd" class="onboard-form" required />
+                                                <label class="fieldlabels" for="csd">Contract Start Date</label>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
+                                                <input type="date" name="ced" class="onboard-form" required />
+                                                <label class="fieldlabels" for="ced">Contract End Date</label>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
+                                                <input type="text" name="cin_no" class="onboard-form" required />
+                                                <label class="fieldlabels" for="cin_no">CIN Number</label>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
+                                                <input type="text" name="com_tan" class="onboard-form" required />
+                                                <label class="fieldlabels" for="com_tan">Company TAN</label>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
+                                                <input type="text" name="com_pan" class="onboard-form" required />
+                                                <label class="fieldlabels" for="com_pan">Company PAN</label>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
+                                                <input type="text" name="gst_no" class="onboard-form" required />
+                                                <label class="fieldlabels" for="gst_no">GST No</label>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
+                                                <input type="text" name="epf" class="onboard-form" required />
+                                                <label class="fieldlabels" for="epf">EPF Registration Number</label>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
+                                                <input type="text" name="esic" class="onboard-form pan" pattern="pan"
+                                                    required />
+                                                <label class="fieldlabels" for="esic">ESIC Registration Number</label>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
+                                                <input type="text" name="professional_tax" class="onboard-form"
+                                                    required />
+                                                <label class="fieldlabels" for="professional_tax">Professional Tax
+                                                    Registration Number</label>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
+                                                <input type="text" name="lwf" class="onboard-form" required />
+                                                <label class="fieldlabels" for="lwf">
+                                                    LWF Registration Number</label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 text-right p-0"><button type="button" data="row-1"
+                                                next="row-2" name="next" class="next bg-pink action-button text-center"
+                                                value="Next">Next<i
+                                                    class="text-white fa fa-arrow-right ml-2"></i></button></div>
+                                    </div>
+                                </form>
+                            </fieldset>
+
+                            <fieldset id="row-2">
+                                <form id="form-2">
+                                    <div class="form-card">
+                                        <div class="row mt-5">
+                                            <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
+                                                <input type="text" name="auth_person_name" class="onboard-form"
+                                                    required />
+                                                <label class="fieldlabels" for="auth_person_name">
+                                                    Authorized Person Name</label>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
+                                                <input type="text" name="auth_person_desig" class="onboard-form"
+                                                    required />
+                                                <label class="fieldlabels" for="auth_person_desig">
+                                                    Authorized Person Designation</label>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
+                                                <input type="text" name="auth_person_contact" class="onboard-form"
+                                                    required />
+                                                <label class="fieldlabels" for="auth_person_contact">
+                                                    Authorized Person Contact Number</label>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
+                                                <input type="text" name="auth_person_email" class="onboard-form"
+                                                    required />
+                                                <label class="fieldlabels" for="auth_person_email">
+                                                    Authorized Person Contact Email</label>
+                                            </div>
+                                            <div
+                                                class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3 dashBoard">
+
+                                                <input type="text" name="billing_add" class="onboard-form" required />
+                                                <label class="fieldlabels" for="billing_add">
+                                                    Billing Address</label>
+                                            </div>
+                                            <div
+                                                class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3 dashBoard">
+
+                                                <input type="text" name="shipping_add" class="onboard-form" required />
+                                                <label class="fieldlabels" for="shipping_add">
+                                                    Shipping Address</label>
+                                            </div>
+
+                                            <div
+                                                class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3 dashBoard">
+
+                                                <input type="file" name="documents_upload" class="onboard-form" required
+                                                    accept="pdf" />
+                                                <label class="fieldlabels" for="documents_upload">
+                                                    Documents Upload</label>
+                                            </div>
+                                            <div
+                                                class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3 dashBoard">
+
+                                                <select class="onboard-form  drop_down" required>
+
+
+                                                    <option value="">Recruitment</option>
+                                                    <option value="">Payroll</option>
+                                                    <option value="">Statutory Complainces</option>
+                                                    <option value="">PMS</option>
+                                                    <option value="">Staffing</option>
+                                                    <option value="">Accounting</option>
+                                                    <option value="">ROC Complainces</option>
+                                                    <option value="">Trade Mark</option>
+                                                    <option value="">Patent Right</option>
+                                                </select>
+                                                <label class="fieldlabels" for="documents_upload">
+                                                    Product</label>
+                                            </div>
+                                            <div
+                                                class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3 dashBoard">
+
+                                                <select class="onboard-form drop_down" required>
+
+
+                                                    <option value="">Monthly</option>
+                                                    <option value="">Quarterly</option>
+                                                    <option value="">BiAnnually</option>
+                                                    <option value="">Annually</option>
+
+                                                </select>
+                                                <label class="fieldlabels" for="subscription_type">
+                                                    Subscription Type</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6 text-left p-0"><a type="button" data="row-5" prev="row-4"
+                                                name="previous" class="previous bg-pink action-button text-center"
+                                                value="Previous"><i
+                                                    class="text-white fa fa-arrow-left mr-2"></i>Previous</a></div>
+                                        <div class="col-6 text-right p-0"><button type="button"
+                                                url="employee-onboarding-end.html" data="row-5" next="row-3" name="next"
+                                                class="bg-pink action-button text-center" value="Submit">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
+
+
     </div>
-    <!--form panels-->
-    <div class="row">
-        <div class="col-12 col-lg-12 m-auto">
-            <form class="multisteps-form__form">
-                <!--single form panel-->
-                <div class="multisteps-form__panel shadow p-4 rounded bg-white js-active" data-animation="scaleIn">
-                    <h5 class="multisteps-form__title ">User Info</h5>
-                    <!-- <hr class="bottom-dash "> -->
-                    <div class="multisteps-form__content">
-                        <div class="form-row row mt-4">
-                            <div class="col-12 col-sm-6">
-                                <input class="multisteps-form__input form-control" type="text"
-                                    placeholder="First Name" />
-                            </div>
-                            <div class="col-12 col-sm-6 mt-4 mt-sm-0">
-                                <input class="multisteps-form__input form-control" type="text"
-                                    placeholder="Last Name" />
-                            </div>
-                        </div>
-                        <div class="form-row row  mt-4">
-                            <div class="col-12 col-sm-6">
-                                <input class="multisteps-form__input form-control" type="text" placeholder="Login" />
-                            </div>
-                            <div class="col-12 col-sm-6 mt-4 mt-sm-0">
-                                <input class="multisteps-form__input form-control" type="text" placeholder="Email" />
-                            </div>
-                        </div>
-                        <div class="form-row row mt-4">
-                            <div class="col-12 col-sm-6">
-                                <input class="multisteps-form__input form-control" type="password"
-                                    placeholder="Password" />
-                            </div>
-                            <div class="col-12 col-sm-6 mt-4 mt-sm-0">
-                                <input class="multisteps-form__input form-control" type="password"
-                                    placeholder="Repeat Password" />
-                            </div>
-                        </div>
-                        <div class="button-row d-flex justify-content-end mt-4">
-                            <button class="btn btn-primary ml-auto js-btn-next" type="button" title="Next">Next</button>
-                        </div>
-                    </div>
-                </div>
 
-                <!--single form panel-->
-                <div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn">
-                    <h4 class="multisteps-form__title">Address</h4>
-                    <div class="multisteps-form__content">
-                        <div class="form-row row mt-4">
-                            <div class="col-12 col-md-6 col-xl-6 col-lg-6 scrollBar">
-                                <textarea class="form-control" id="addressone" placeholder="Address 1" cols="10"
-                                    rows="2"></textarea>
-                            </div>
-                            <div class="col-12 col-md-6 col-xl-6 col-lg-6 scrollBar">
-                                <textarea class="form-control" id="addresstwo" placeholder="Address 2" cols="10"
-                                    rows="2"></textarea>
-                            </div>
-                        </div>
-                    </div>
+    <!--Main Content-->
 
-
-                    <div class="form-row row mt-4">
-                        <div class="col-12 col-md-6 col-xl-6 col-lg-6">
-                            <input class="multisteps-form__input form-control" type="text" placeholder="City" />
-                        </div>
-                        <div class="col-12 col-md-6 col-xl-6 col-lg-6">
-                            <select class="multisteps-form__select form-control">
-                                <option selected="selected">State...</option>
-                                <option>...</option>
-                                <option>...</option>
-                            </select>
-                        </div>
-
-                    </div>
-                    <div class="form-row row mt-4">
-                        <div class="col-12 col-md-6 col-xl-6 col-lg-6">
-                            <input class="multisteps-form__input form-control" type="text" placeholder="Country" />
-                        </div>
-                        <div class="col-12 col-md-6 col-xl-6 col-lg-6">
-                        <input class="multisteps-form__input form-control" type="text" placeholder="Pin Code" />
-                        </div>
-
-                    </div>
-                    <div class="button-row d-flex mt-4 justify-content-end">
-                        <button class="btn btn-primary mx-2 js-btn-prev" type="button" title="Prev">Prev</button>
-                        <button class="btn btn-primary ml-auto js-btn-next" type="button" title="Next">Next</button>
-                    </div>
-                </div>
-
-
-                <!--single form panel-->
-                <div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn">
-                    <h4 class="multisteps-form__title">Your Order Info</h4>
-                    <div class="multisteps-form__content">
-                        <div class="row">
-                            <div class="col-12 col-md-6 mt-4">
-                                <div class="card shadow-sm">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Item Title</h5>
-                                        <p class="card-text">Small and nice item description</p><a
-                                            class="btn btn-primary" href="#" title="Item Link">Item Link</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 mt-4">
-                                <div class="card shadow-sm">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Item Title</h5>
-                                        <p class="card-text">Small and nice item description</p><a
-                                            class="btn btn-primary" href="#" title="Item Link">Item Link</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="button-row d-flex mt-4 col-12 justify-content-end">
-                                <button class="btn btn-primary js-btn-prev mx-2" type="button"
-                                    title="Prev">Prev</button>
-                                <button class="btn btn-primary ml-auto js-btn-next" type="button"
-                                    title="Next">Next</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!--single form panel-->
-                <div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn">
-                    <h4 class="multisteps-form__title">Your Order Info</h4>
-                    <div class="multisteps-form__content">
-                        <div class="row">
-                            <div class="col-12 col-md-6 mt-4">
-                                <div class="card shadow-sm">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Item Title</h5>
-                                        <p class="card-text">Small and nice item description</p><a
-                                            class="btn btn-primary" href="#" title="Item Link">Item Link</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 mt-4">
-                                <div class="card shadow-sm">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Item Title</h5>
-                                        <p class="card-text">Small and nice item description</p><a
-                                            class="btn btn-primary" href="#" title="Item Link">Item Link</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="button-row d-flex mt-4 col-12 justify-content-end">
-                                <button class="btn btn-primary js-btn-prev mx-2" type="button"
-                                    title="Prev">Prev</button>
-                                <button class="btn btn-primary ml-auto js-btn-next" type="button"
-                                    title="Next">Next</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!--single form panel-->
-                <div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn">
-                    <h4 class="multisteps-form__title">Additional Comments</h4>
-                    <div class="multisteps-form__content">
-                        <div class="form-row row mt-4">
-                            <div class="col-12 col-md-6 col-xl-6 col-lg-6 scrollBar">
-                                <textarea class="form-control" id="addressone" placeholder="Address 1" cols="10"
-                                    rows="2"></textarea>
-                            </div>
-                        </div>
-                        <div class="button-row d-flex mt-4 justify-content-end">
-                            <button class="btn btn-primary js-btn-prev mx-2" type="button" title="Prev">Prev</button>
-                            <button class="btn btn-success ml-auto" type="button" title="Send">Send</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
 </div>
+
+
+
+
 
 
 
@@ -432,167 +610,127 @@ body a {
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 
-<script type="text/javascript">
-const DOMstrings = {
-    stepsBtnClass: 'multisteps-form__progress-btn',
-    stepsBtns: document.querySelectorAll(`.multisteps-form__progress-btn`),
-    stepsBar: document.querySelector('.multisteps-form__progress'),
-    stepsForm: document.querySelector('.multisteps-form__form'),
-    stepsFormTextareas: document.querySelectorAll('.multisteps-form__textarea'),
-    stepFormPanelClass: 'multisteps-form__panel',
-    stepFormPanels: document.querySelectorAll('.multisteps-form__panel'),
-    stepPrevBtnClass: 'js-btn-prev',
-    stepNextBtnClass: 'js-btn-next'
-};
+<!-- for validating -->
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
 
 
-const removeClasses = (elemSet, className) => {
+<script>
+$(document).ready(function() {
 
-    elemSet.forEach(elem => {
-
-        elem.classList.remove(className);
-
-    });
-
-};
-
-const findParent = (elem, parentClass) => {
-
-    let currentNode = elem;
-
-    while (!currentNode.classList.contains(parentClass)) {
-        currentNode = currentNode.parentNode;
-    }
-
-    return currentNode;
-
-};
-
-const getActiveStep = elem => {
-    return Array.from(DOMstrings.stepsBtns).indexOf(elem);
-};
-
-const setActiveStep = activeStepNum => {
-
-    removeClasses(DOMstrings.stepsBtns, 'js-active');
-
-    DOMstrings.stepsBtns.forEach((elem, index) => {
-
-        if (index <= activeStepNum) {
-            elem.classList.add('js-active');
-        }
-
-    });
-};
-
-const getActivePanel = () => {
-
-    let activePanel;
-
-    DOMstrings.stepFormPanels.forEach(elem => {
-
-        if (elem.classList.contains('js-active')) {
-
-            activePanel = elem;
-
-        }
-
-    });
-
-    return activePanel;
-
-};
-
-const setActivePanel = activePanelNum => {
-
-    removeClasses(DOMstrings.stepFormPanels, 'js-active');
-
-    DOMstrings.stepFormPanels.forEach((elem, index) => {
-        if (index === activePanelNum) {
-
-            elem.classList.add('js-active');
-
-            setFormHeight(elem);
-
+    $('body').on('keyup', ".onboard-form", function() {
+        var inputvalues = $(this).val();
+        var data = $(this).attr('name');
+        if ($(this).attr('pattern') != undefined && $(this).attr('pattern') != '' && inputvalues !=
+            '') {
+            var pattern = {
+                'pan': /^([A-Z]){5}([0-9]){4}([A-Z]){1}?$/
+            };
+            var regex = $(this).attr('pattern');
+            if (!pattern[regex].test(inputvalues)) {
+                $('.' + data + '_label').addClass('patternErr');
+            } else {
+                $('.' + data + '_label').removeClass('patternErr');
+            }
         }
     });
 
-};
-
-const formHeight = activePanel => {
-
-    const activePanelHeight = activePanel.offsetHeight;
-
-    DOMstrings.stepsForm.style.height = `${activePanelHeight}px`;
-
-};
-
-const setFormHeight = () => {
-    const activePanel = getActivePanel();
-
-    formHeight(activePanel);
-};
-
-DOMstrings.stepsBar.addEventListener('click', e => {
-
-    const eventTarget = e.target;
-
-    if (!eventTarget.classList.contains(`${DOMstrings.stepsBtnClass}`)) {
-        return;
-    }
-
-    const activeStep = getActiveStep(eventTarget);
-
-    setActiveStep(activeStep);
-
-    setActivePanel(activeStep);
-});
-
-DOMstrings.stepsForm.addEventListener('click', e => {
-
-    const eventTarget = e.target;
-
-    if (!(eventTarget.classList.contains(`${DOMstrings.stepPrevBtnClass}`) || eventTarget.classList.contains(
-            `${DOMstrings.stepNextBtnClass}`))) {
-        return;
-    }
-
-    const activePanel = findParent(eventTarget, `${DOMstrings.stepFormPanelClass}`);
-
-    let activePanelNum = Array.from(DOMstrings.stepFormPanels).indexOf(activePanel);
-
-    if (eventTarget.classList.contains(`${DOMstrings.stepPrevBtnClass}`)) {
-        activePanelNum--;
-
-    } else {
-
-        activePanelNum++;
-
-    }
-
-    setActiveStep(activePanelNum);
-    setActivePanel(activePanelNum);
-
-});
-
-window.addEventListener('load', setFormHeight, false);
-
-window.addEventListener('resize', setFormHeight, false);
-
-
-const setAnimationType = newType => {
-    DOMstrings.stepFormPanels.forEach(elem => {
-        elem.dataset.animation = newType;
+    $('body').on('blur', '.onboard-form', function() {
+        var id = $(this).attr('name');
+        if ($(this).val() == '') {
+            $("label[for='" + id + "']").removeClass('empty');
+        } else {
+            $("label[for='" + id + "']").addClass('empty');
+        }
+        if ($("input[name='" + id + "']").valid()) {
+            $("label[for='" + id + "']").removeClass('notvalid');
+            $("input[name='" + id + "']").removeClass('notvalid');
+        } else {
+            $("label[for='" + id + "']").addClass('notvalid');
+            $("input[name='" + id + "']").addClass('notvalid');
+        }
     });
-};
 
-//changing animation
-const animationSelect = document.querySelector('.pick-animation__select');
+    var current_fs, next_fs, previous_fs; //fieldsets
+    var opacity;
+    var current = 1;
+    var steps = $("fieldset").length;
+    setProgressBar(current);
 
-animationSelect.addEventListener('change', () => {
-    const newAnimationType = animationSelect.value;
+    $(".next").click(function() {
+        current_fs = $('#' + $(this).attr('data'));
+        var data = $(this).attr('data');
+        const myArray = data.split("-");
+        if ($('#form-' + myArray[1]).valid()) {
+            next_fs = $('#' + $(this).attr('next'));
+            //Add Class Active
+            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+            //show the next fieldset
+            next_fs.show();
+            //hide the current fieldset with style
+            current_fs.animate({
+                opacity: 0
+            }, {
+                step: function(now) {
+                    // for making fielset appear animation
+                    opacity = 1 - now;
+                    current_fs.css({
+                        'display': 'none',
+                        'position': 'relative'
+                    });
+                    next_fs.css({
+                        'opacity': opacity
+                    });
+                },
+                duration: 500
+            });
+            // if ($(this).attr('url') != '') {
+            //     window.location.href = $(this).attr('url');
+            // }
+            setProgressBar(++current);
+            console.log(current);
+        }
+    });
 
-    setAnimationType(newAnimationType);
+    $(".previous").click(function() {
+        current_fs = $('#' + $(this).attr('data'));
+        previous_fs = $('#' + $(this).attr('prev'));
+        //Remove class active
+        $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+        //show the previous fieldset
+        previous_fs.show();
+        //hide the current fieldset with style
+        current_fs.animate({
+            opacity: 0
+        }, {
+            step: function(now) {
+                // for making fielset appear animation
+                opacity = 1 - now;
+                current_fs.css({
+                    'display': 'none',
+                    'position': 'relative'
+                });
+                previous_fs.css({
+                    'opacity': opacity
+                });
+            },
+            duration: 500
+        });
+        setProgressBar(--current);
+    });
+
+    function setProgressBar(curStep) {
+        var percent = parseFloat(100 / steps) * curStep;
+        percent = percent.toFixed();
+    }
+
+    $(".submit").click(function() {
+        return false;
+    });
 });
 </script>
+
+
+
+
+
 @endsection
