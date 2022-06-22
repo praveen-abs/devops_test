@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\VmtEmployeeHierarchy;
 use App\Models\VmtEmployee;
 use App\Imports\VmtEmployee as VmtEmployeeImport;
+use App\Models\VmtEmployeeOfficeDetails;
 
 class VmtEmployeeController extends Controller
 {
@@ -19,7 +20,7 @@ class VmtEmployeeController extends Controller
 
     //
     public function showEmployeeDirectory(Request $request){
-        $vmtEmployees = VmtEmployee::all();
+        $vmtEmployees = VmtEmployee::orderBy('created_at', 'DESC')->get();
         return view('vmt_employeeDirectory', compact('vmtEmployees'));
     }
 
@@ -121,6 +122,79 @@ class VmtEmployeeController extends Controller
             return "Please select node";
         }
        
+    }
+
+    //
+    public function employeeOnboard(Request $request)
+    {
+        // code...
+
+       
+        $row = $request->all();
+        $newEmployee = new VmtEmployee; 
+        $newEmployee->emp_no   =    $row["employee_code"]; 
+        $newEmployee->emp_name   =    $row["employee_name"]; 
+        $newEmployee->gender   =    $row["gender"];  
+        $newEmployee->designation   =    $row["designation"];  
+        $newEmployee->department   =    $row["department"];  
+        //$newEmployee->status   =    $row["status"];  
+        $newEmployee->doj   =    $row["doj"];   
+        $newEmployee->dol   =    $row["doj"];  
+        $newEmployee->location   =    $row["work_location"];  
+        $newEmployee->dob   =    $row["dob"]; 
+        $newEmployee->father_name   =    $row["father_name"];  
+        $newEmployee->pan_number   =    $row["pan_no"]; 
+        $newEmployee->aadhar_number = $row["aadhar"];  
+        //$newEmployee->uan = $row["uan"]; 
+        //$newEmployee->epf_number = $row["epf_number"];
+        //$newEmployee->esic_number = $row["esic_number"];
+        //$newEmployee->marrital_status = $row["marrital_status"];
+      
+        $newEmployee->mobile_number  = $row["mobile_no"]; 
+        $newEmployee->email_id   = $row["email"];
+        $newEmployee->bank_name   = $row["bank_name"];
+        $newEmployee->bank_ifsc_code  = $row["bank_ifsc"]; 
+        $newEmployee->bank_account_number  = $row["account_no"]; 
+        $newEmployee->present_address   = $row["current_address"];
+        $newEmployee->permanent_address   = $row["permanent_address"];
+        //$newEmployee->father_age   = $row["father_age"];
+        $newEmployee->mother_name   = $row["mother_name"];
+        //$newEmployee->mother_age  = $row["mother_age"];
+        $newEmployee->spouse_name   = $row["spouse_name"];
+        $newEmployee->spouse_age   = $row["spouse_dob"];
+        $newEmployee->kid_name   = $row["child_name"];
+        $newEmployee->kid_age  = $row["child_dob"];
+
+        $newEmployee->save();
+
+        if($newEmployee){
+            $empOffice  = new VmtEmployeeOfficeDetails; 
+            $empOffice->emp_id = $newEmployee->id;
+            $empOffice->department = $row["department"];// => "lk"
+            $empOffice->process = $row["process"];// => "k"
+            $empOffice->designation = $row["designation"];// => "k"
+            $empOffice->cost_center = $row["cost_center"];// => "k"
+            $empOffice->confirmation_period  = $row["confirmation_period"];// => "k"
+            $empOffice->holiday_location  = $row["holiday_location"];// => "k"
+            $empOffice->l1_manager_code  = $row["l1_manager_code"];// => "k"
+            $empOffice->l1_manager_designation  = $row["l1_manager_designation"];// => "k"
+            $empOffice->l1_manager_name  = $row["l1_manager_name"];// => "k"
+            $empOffice->l2_manager_code  = $row["l2_manager_code"];// => "kk"
+            $empOffice->l2_manager_designation  = $row["l2_manager_designation"];// => "k"
+            $empOffice->l2_manager_name  = $row["l2_manager_name"]; // => "k"
+            $empOffice->l3_manager_code  = $row["l3_manager_code"]; // => "kk"
+            $empOffice->l3_manager_designation  = $row["l3_manager_designation"]; // => "k"
+            $empOffice->l3_manager_name  = $row["l3_manager_name"]; // => "kk"
+            $empOffice->l4_manager_code  = $row["l4_manager_code"]; // => "kk"
+            $empOffice->l4_manager_designation  = $row["l4_manager_designation"]; // => "kk"
+            $empOffice->l4_manager_name  = $row["l4_manager_name"]; // => "kk"
+            $empOffice->work_location  = $row["work_location"]; // => "k"
+            $empOffice->officical_mail  = $row["officical_mail"]; // => "k@k.in"
+            $empOffice->official_mobile  = $row["official_mobile"]; // => "1234567890"
+            $empOffice->emp_notice  = $row["emp_notice"]; // => "0"
+            $empOffice->save();
+        }
+        return "Saved";
     }
 
     //

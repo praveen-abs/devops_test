@@ -779,6 +779,7 @@ input {
                             </fieldset>
                             <fieldset id="row-5">
                                 <form id="form-5">
+                                    @csrf
                                     <div class="form-card">
                                         <div class="row mt-5">
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
@@ -828,9 +829,9 @@ input {
                                                 name="previous" class="previous bg-pink action-button text-center"
                                                 value="Previous"><i
                                                     class="text-white fa fa-arrow-left mr-2"></i>Previous</a></div>
-                                        <div class="col-6 text-right p-0"><button type="button"
-                                                url="employee-onboarding-end.html" data="row-5" next="row-3" name="next"
-                                                class="bg-pink action-button text-center" value="Submit">Submit</button>
+                                        <div class="col-6 text-right p-0"><button type="submit"
+                                                data="row-5" next="row-3" name="next"
+                                                class="bg-pink action-button  text-center" value="Submit">Submit</button>
                                         </div>
                                     </div>
                                 </form>
@@ -1013,6 +1014,29 @@ $(document).ready(function() {
         var percent = parseFloat(100 / steps) * curStep;
         percent = percent.toFixed();
     }
+
+
+    $('#form-5').on('submit', function(e){
+        e.preventDefault();
+        
+        var locationData = $('#form-1, #form-2, #form-3, #form-4, #form-5').serialize();
+        $.ajax({
+            url: "{{url('vmt-employee-onboard')}}", 
+            type: "POST", 
+            data: locationData, 
+            success: function(data)
+            {
+                alert(data);
+            }
+        })
+
+
+        console.log(personalData);
+        console.log(locationData);
+        console.log(officeData);
+        console.log(familyData);
+        console.log(statutoryData);
+    })
 
     $(".submit").click(function() {
         return false;
