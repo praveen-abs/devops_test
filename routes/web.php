@@ -110,6 +110,8 @@ Route::get('vmt-employee-hierarchy/modify', 'App\Http\Controllers\VmtEmployeeCon
 // store employee
 Route::post('vmt-employee-store', 'App\Http\Controllers\VmtEmployeeController@storeEmployeeData');
 
+Route::post('vmt-employee-onboard', 'App\Http\Controllers\VmtEmployeeController@employeeOnboard');
+
 Route::get('vmt-employess/bulk-upload', 'App\Http\Controllers\VmtEmployeeController@bulkUploadEmployee');
 Route::post('vmt-employess/bulk-upload', 'App\Http\Controllers\VmtEmployeeController@storeBulkEmployee');
 
