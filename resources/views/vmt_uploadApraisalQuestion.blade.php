@@ -8,7 +8,7 @@
 
     @component('components.breadcrumb')
         @slot('li_1') Dashboards @endslot
-        @slot('title') Upload Appraisal Question @endslot
+        @slot('title')Create KPI table @endslot
     @endcomponent
 
     <div class="row">

@@ -284,10 +284,41 @@
                                     class="nav-link"><span>Dashboard</span></a>
                                 <hr>
                             </li>
+
+
+                            <li class="nav-item">
+                                <a href="{{url('vmt-assign-roles')}}" class="nav-link"
+                                    data-bs-toggle="collapse"><span>KPI Table</span>
+
+                                </a>
+                                <div class="collapse menu-dropdown" id="settingsDrop-Down">
+                                    <ul class="nav nav-sm flex-column">
+                                        <li class="nav-item">
+                                            <a href="{{url('vmt_uploadApraisalQuestion')}}" class="nav-link">
+                                                <span>Create KPI Table</span>
+                                            </a>
+
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{{url('vmt-apraisal-questions')}}" class="nav-link">
+
+                                                <span>View KPI Table</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{{url('#')}}" class="nav-link">
+
+                                                <span>Assign KPI Table</span>
+                                            </a>
+                                        </li>                                        
+                                    </ul>
+                                </div>
+                            </li>
+
+
                             @can('Self_Appraisal')
                             <li class="nav-item">
-                                <a href="{{url('vmt_appraisalreview')}}" class="nav-link" role="button"><span>Self
-                                        Appraisal Review</span></a>
+                                <a href="{{url('vmt_appraisalreview')}}" class="nav-link" role="button"><span>Self Appraisal Review</span></a>
                             </li>
                             @endcan
                             @can('Team')

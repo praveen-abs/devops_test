@@ -8,7 +8,7 @@
 
     @component('components.breadcrumb')
         @slot('li_1') Dashboards @endslot
-        @slot('title') Appraisal Questions @endslot
+        @slot('title')View KPI Table @endslot
     @endcomponent
 
 
