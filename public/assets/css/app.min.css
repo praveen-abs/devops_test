@@ -532,7 +532,7 @@
 
     [data-layout=vertical][data-sidebar-size=sm-hover] #pageTopbar,
     [data-layout=vertical][data-sidebar-size=sm] #pageTopbar {
-        left:80px;
+        left:100px;
     }
 }
 
@@ -705,15 +705,15 @@
 .navbar-menu .navbar-nav .nav-link {
     display: flex;
     /* align-items: center; */
-    font-weight: 500;
-    padding: 5px;
+    font-weight: 100;
+    padding: 10px;
     flex-direction: column;
     justify-content: center;
     text-align: center;
     /* color: var(--vz-vertical-menu-bg); */
     color: #FFFFFF;
     font-size: 12px;
-    font-family: hkgrotesk, sans-serif;
+    font-family: Poppins, sans-serif;
 }
 
 .navbar-menu .navbar-nav .nav-link .left-line hr {
@@ -847,6 +847,7 @@
 .navbar-menu .navbar-nav .nav-sm .nav-link {
     /* padding: .55rem 1.5rem !important; */
     /* color: var(--vz-vertical-menu-sub-item-color); */
+    font-weight: 500;
     white-space: none;
     position: relative;
     font-size: 12px;
@@ -1861,7 +1862,7 @@
     }
 
     [data-layout=vertical][data-sidebar-size=sm] .main-content {
-        margin-left: 60px;
+        margin-left: 100px;
     }
 }
 
@@ -1878,7 +1879,7 @@
 [data-layout=vertical][data-sidebar-size=sm] .navbar-brand-box {
     position: fixed;
     padding: 0;
-    width: 60px;
+    width: 90px;
     z-index: 1;
     top: 0;
     /* background: var(--vz-sidebar-bg); */
@@ -1895,8 +1896,8 @@
 
 /* padding 70 t0 50 */
 [data-layout=vertical][data-sidebar-size=sm] .navbar-menu {
-    position: absolute;
-    width: 80px !important;
+    position: fixed;
+    width: 100px !important;
     
     padding: 55px 5px 5px;
 }
@@ -2002,12 +2003,12 @@
 [data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .nav-item:hover>.menu-dropdown {
     display: block;
     top: 0px;
-    left: 70px;
+    left: 95px;
     position: absolute;
-    width: 150px;
+    width: 220px;
     /* background: var(--vz-sidebar-bg); */
-    background-color:#002F56;
-        height: auto !important;
+    background-color:#034377;
+    height: auto !important;
     color: #fff;
     padding: 0.5rem 0;
     /* border-radius: 0 0 3px 3px; */
