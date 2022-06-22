@@ -8,7 +8,7 @@
 
     @component('components.breadcrumb')
         @slot('li_1') Dashboards @endslot
-        @slot('title') Apraisal Questions @endslot
+        @slot('title') Appraisal Questions @endslot
     @endcomponent
 
 
@@ -79,19 +79,19 @@
 
                     <div class="table-responsive table-card mb-1 mt-3">
                         @if(count($questionList ) > 0)
-                        <table class="table table-nowrap align-middle" id="orderTable">
+                        <table class="table table-nowrap align-middle" id="orderTable" style="">
                             <thead class="text-muted table-light">
                                 <tr class="text-uppercase">
                                   
-                                    <th class="sort" data-sort="id" style="width: 5%;">#</th>
-                                    <th class="sort" data-sort="customer_name" style="width: 10%;">Dimension</th>
-                                    <th class="sort" data-sort="product_name" style="width: 15%;" width="15%">KPI</th>
-                                    <th class="sort" data-sort="date" style="width: 10%;" width="10%">Operational Definition</th>
-                                    <th class="sort" data-sort="amount" style="width: 10%;" width="10%">Measure</th>
-                                    <th class="sort" data-sort="payment" style="width: 10%;" width="10%">Frequency</th>
-                                    <th class="sort" data-sort="status" style="width: 10%;" width="10%">Target</th>
-                                    <th class="sort" data-sort="status" style="width: 10%;" width="10%">Stretch Target</th>
-                                    <th class="sort" data-sort="status" style="width: 10%;" width="10%">Source</th>
+                                    <th class="sort" data-sort="id" style="width: 2%;">#</th>
+                                    <th class="sort" data-sort="customer_name" style="width: 8%;">Dimension</th>
+                                    <th class="sort" data-sort="product_name" style="width: 25%;">KPI</th>
+                                    <th class="sort" data-sort="date" style="width: 25%;">Operational Definition</th>
+                                    <th class="sort" data-sort="amount" style="width: 25%;" >Measure</th>
+                                    <th class="sort" data-sort="payment" style="width: 10%;" >Frequency</th>
+                                    <th class="sort" data-sort="status" style="width: 20%;" >Target</th>
+                                    <th class="sort" data-sort="status" style="width: 20%;" >Stretch Target</th>
+                                    <th class="sort" data-sort="status" style="" >Source</th>
 
                                     <th class="sort" data-sort="status" style="width: 10%;" width="10%">KPI Weightage</th>
 
@@ -104,18 +104,18 @@
                                   
                                     <td class="id"><a href="apps-ecommerce-order-details"
                                         class="fw-medium link-primary">{{$question->id}}</a></td>
-                                    <td class="customer_name">{{$question->dimension}}</td>
-                                    <td class="product_name">{{$question->kpi}}</td>
-                                    <td class="date">{{$question->operational_definition}}</td>
-                                    <td class="amount">{{$question->measure}}</td>
-                                    <td class="payment">{{$question->frequency}}</td>
-                                    <td class="status">{{$question->target}}
+                                    <td class="customer_name" style="text-align:center">{{$question->dimension}}</td>
+                                    <td class="product_name"><textarea readonly rows="6" >{{$question->kpi}}</textarea></td>
+                                    <td class="date"><textarea readonly rows="6" >{{$question->operational_definition}}</textarea></td>
+                                    <td class="amount"><textarea readonly rows="6" >{{$question->measure}}</textarea></td>
+                                    <td class="payment" style="text-align:center">{{$question->frequency}}</td>
+                                    <td class="status"><textarea readonly rows="6" >{{$question->target}}</textarea>
                                     </td>
-                                    <td class="status">{{$question->stretch_target}}
+                                    <td class="status"><textarea readonly rows="6" >{{$question->stretch_target}}</textarea>
                                     </td>
-                                    <td class="status">{{$question->source}}
+                                    <td class="status"><textarea readonly rows="6" >{{$question->source}}</textarea>
                                     </td>
-                                    <td class="status">{{$question->kpi_weightage}}
+                                    <td class="status" style="text-align:center">{{$question->kpi_weightage}}
                                     </td>
                                     <td>
                                         <ul class="list-inline hstack gap-2 mb-0">

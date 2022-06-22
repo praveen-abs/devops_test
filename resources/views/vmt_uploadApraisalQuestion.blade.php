@@ -8,7 +8,7 @@
 
     @component('components.breadcrumb')
         @slot('li_1') Dashboards @endslot
-        @slot('title') Upload Apraisal Question @endslot
+        @slot('title') Upload Appraisal Question @endslot
     @endcomponent
 
     <div class="row">
