@@ -227,7 +227,7 @@
     justify-content: space-between;
     align-items: center;
     margin: 0 auto;
-    height: 40px;
+    height: 50px;
     /* padding: 0 1.5rem 0 0.75rem;*/
 }
 
@@ -559,7 +559,7 @@
     box-shadow: 0 1px 2px rgb(56 65 74 / 15%);
     border-bottom: 1px;
     border-top: 1px;
-    margin: -23px -1.5rem 1.5rem;
+    margin: -15px -1.5rem 1.5rem;
 }
 
 .page-title-box .breadcrumb {
@@ -1669,7 +1669,7 @@
 
 .logo-light,
 .logo .logo-sm {
-    display: none
+    display: none;
 }
 
 [data-layout=vertical] .app-menu .row {
@@ -1877,9 +1877,15 @@
 }
 
 [data-layout=vertical][data-sidebar-size=sm] .navbar-brand-box {
-    position: fixed;
-    padding: 0;
-    width: 90px;
+
+
+    bottom: 20px;
+    height: 50px;
+    left: 0;
+    margin-top: -1px;
+    position: absolute;
+    padding: 0px;
+    width: 80px;
     z-index: 1;
     top: 0;
     /* background: var(--vz-sidebar-bg); */
