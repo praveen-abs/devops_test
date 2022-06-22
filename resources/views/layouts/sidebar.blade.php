@@ -14,22 +14,9 @@
     <div class="navbar-brand-box">
         <!-- Dark Logo-->
         <a href="index" class="logo logo-dark">
-            <span class="logo-sm">
-                <img src="{{ URL::asset($logoSrc) }}" alt="" height="22">
-            </span>
-            <span class="logo-lg">
-                <img src="{{ URL::asset($logoSrc) }}" alt="" height="80">
-            </span>
+                <img src="{{ URL::asset($logoSrc) }}" alt="">
         </a>
-        <!-- Light Logo-->
-        <a href="index" class="logo logo-light">
-            <span class="logo-sm">
-                <img src="{{ URL::asset($logoSrc) }}" alt="" height="22">
-            </span>
-            <span class="logo-lg">
-                <img src="{{ URL::asset($logoSrc) }}" alt="" height="80">
-            </span>
-        </a>
+
         <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
             id="vertical-hover">
             <i class="ri-record-circle-line"></i>
@@ -1344,31 +1331,7 @@
 
     </div>
 
-    <div class="navbar-brand-box" style=" position:absolute;bottom:20px;height:50px;">
-        <!-- Dark Logo-->
-        <a href="index" class="logo logo-dark">
-            <span class="logo-sm">
-                <img src="{{ URL::asset($logoSrc) }}" alt="" height="22">
-            </span>
-            <span class="logo-lg">
-                <img src="{{ URL::asset($logoSrc) }}" alt="" height="40">
-            </span>
-        </a>
-        <!-- Light Logo-->
-        <a href="index" class="logo logo-light">
-            <span class="logo-sm">
-                <img src="{{ URL::asset($logoSrc) }}" alt="" height="22">
-            </span>
-            <span class="logo-lg">
-                <img src="{{ URL::asset($logoSrc) }}" alt="" height="40">
-            </span>
-        </a>
-        <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
-            id="vertical-hover">
-            <i class="ri-record-circle-line"></i>
-        </button>
-    </div>
-
+   
 </div>
 
 <!-- Left Sidebar End -->
