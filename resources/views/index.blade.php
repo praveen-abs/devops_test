@@ -652,8 +652,7 @@ const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
 
 const d = new Date();
 
-document.getElementById("displayDay").innerHTML = monthNames[d.getMonth()] + " " + d.getDate() + "," + d
-    .getFullYear() + " " + dayName;
+document.getElementById("displayDay").innerHTML = monthNames[d.getMonth()] + " " + d.getDate() + "," + d.getFullYear() + " " + dayName;
 
 
 function displayTimes() {
