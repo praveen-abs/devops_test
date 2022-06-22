@@ -44,9 +44,9 @@
                         <div class="row pl-2 pr-2 media-query">
                             <div class="col-sm-6 col-md-6">
                                 <div class="row mt-2">
-                                    <p class="pl-3 mr-3"><img src="{{ URL::asset('/assets/premassets/img/frontend.jpg') }}" class="img-round"></p>
+                                    <p class="pl-3 mr-3"><img src="{{ URL::asset('/assets/premassets/img/client-img5.png') }}" class="img-round"></p>
                                     <div class="pt-2">
-                                        <h6><b>Forrest gump</b></h6>
+                                        <h6><b>Admin</b></h6>
                                         <p class="text-muted f-13">CRT234</p>
                                         <p class="text-muted f-13">Software engineer</p>
                                     </div>
@@ -641,8 +641,7 @@ const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
 
 const d = new Date();
 
-document.getElementById("displayDay").innerHTML = monthNames[d.getMonth()] + " " + d.getDate() + "," + d
-    .getFullYear() + " " + dayName;
+document.getElementById("displayDay").innerHTML = monthNames[d.getMonth()] + " " + d.getDate() + "," + d.getFullYear() + " " + dayName;
 
 
 function displayTimes() {
