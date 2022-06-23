@@ -118,6 +118,7 @@ Route::post('vmt-employess/bulk-upload', 'App\Http\Controllers\VmtEmployeeContro
 Route::get('vmt-employess/directory', 'App\Http\Controllers\VmtEmployeeController@showEmployeeDirectory');
 
 
+
 // pay slip
 
 Route::get('vmt-payslip', 'App\Http\Controllers\VmtPaySlipController@uploadPaySlipView');
@@ -138,3 +139,6 @@ Route::get('/vmt_employeeOnboarding', function () {
 Route::get('/vmt_clientOnboarding', function () {
     return view('vmt_clientOnboarding');
 });
+
+//
+Route::post('vmt_clientOnboarding', 'App\Http\Controllers\VmtClientController@store');

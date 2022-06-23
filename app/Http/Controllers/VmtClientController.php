@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\VmtClientMaster;
 
 class VmtClientController extends Controller
 {
@@ -35,6 +36,29 @@ class VmtClientController extends Controller
     public function store(Request $request)
     {
         //
+       
+
+        $vmtClient  =  new VmtClientMaster; 
+        $vmtClient->client_code  = $request->client_code;
+        $vmtClient->client_name  = $request->client_name;
+        $vmtClient->contract_start_date  = $request->csd;
+        $vmtClient->contract_end_date  = $request->ced;
+        $vmtClient->cin_number  = $request->cin_no;
+        $vmtClient->company_tan  = $request->com_tan;
+        $vmtClient->company_pan  = $request->com_pan;
+        $vmtClient->gst_no  = $request->gst_no;
+        $vmtClient->epf_reg_number  = $request->epf;
+        $vmtClient->esic_reg_number  = $request->esic.
+        $vmtClient->prof_tax_reg_number  = $request->professional_tax;
+        $vmtClient->lwf_reg_number  = $request->lwf;
+        $vmtClient->authorised_person_name  = $request->auth_person_name;
+        $vmtClient->authorised_person_designation  = $request->auth_person_desig;
+        $vmtClient->authorised_person_contact_number  = $request->auth_person_contact;
+        $vmtClient->authorised_person_contact_email  = $request->auth_person_email;
+        $vmtClient->billing_address  = $request->billing_add;
+        $vmtClient->shipping_address  = $request->shipping_add;
+        $vmtClient->save();
+        return "Saved";
     }
 
     /**

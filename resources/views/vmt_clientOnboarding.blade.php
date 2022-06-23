@@ -474,6 +474,7 @@ select {
 
                             <fieldset id="row-2">
                                 <form id="form-2">
+                                    @csrf
                                     <div class="form-card">
                                         <div class="row mt-5">
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
@@ -564,8 +565,8 @@ select {
                                                 name="previous" class="previous bg-pink action-button text-center"
                                                 value="Previous"><i
                                                     class="text-white fa fa-arrow-left mr-2"></i>Previous</a></div>
-                                        <div class="col-6 text-right p-0"><button type="button"
-                                                url="employee-onboarding-end.html" data="row-5" next="row-3" name="next"
+                                        <div class="col-6 text-right p-0"><button type="submit"
+                                                
                                                 class="bg-pink action-button text-center" value="Submit">Submit</button>
                                         </div>
                                     </div>
@@ -726,6 +727,31 @@ $(document).ready(function() {
     $(".submit").click(function() {
         return false;
     });
+
+
+    $('#form-2').on('submit', function(e){
+        e.preventDefault();
+        
+        var locationData = $('#form-1, #form-2').serialize();
+        $.ajax({
+            url: "{{url('vmt_clientOnboarding')}}", 
+            type: "POST", 
+            data: locationData, 
+            success: function(data)
+            {
+                alert(data);
+            }
+        })
+
+
+        console.log(personalData);
+        console.log(locationData);
+        console.log(officeData);
+        console.log(familyData);
+        console.log(statutoryData);
+    })
+
+
 });
 </script>
 
