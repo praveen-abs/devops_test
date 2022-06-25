@@ -29,8 +29,10 @@
 
                         <div class="col-md-9 col-lg-6 col-xl-5">
                             <div class="right-content-logo w-100 h-100">
+                                @if($generalInfo && $generalInfo->background_img <> '')
                                 <img src="{{ URL::asset($generalInfo->background_img)}}" alt="brand-logo"
                                     class="h-100 w-100">
+                                @endif
                             </div>
                         </div>
 
