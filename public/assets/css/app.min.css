@@ -532,7 +532,7 @@
 
     [data-layout=vertical][data-sidebar-size=sm-hover] #pageTopbar,
     [data-layout=vertical][data-sidebar-size=sm] #pageTopbar {
-        left:100px;
+        left: 100px;
     }
 }
 
@@ -691,7 +691,7 @@
     /* background: var(--vz-sidebar-bg); */
     background-color: #002F56;
     /* border-right: 1px solid #fff; */
-    
+
     bottom: 0;
     margin-top: 0;
     position: fixed;
@@ -870,7 +870,7 @@
 .navbar-menu .navbar-nav .nav-sm .nav-link:hover {
     color: var(--vz-vertical-menu-sub-item-hover-color);
     /* background-color: var(--vz-hover-bg); */
-    background-color:#DD571D;
+    background-color: #DD571D;
     /* border-radius: 5px; */
 }
 
@@ -1253,13 +1253,6 @@
     -webkit-transform: scale(1);
     transform: scale(1);
 }
-
-
-
-
-
-
-
 
 
 
@@ -1904,7 +1897,7 @@
 [data-layout=vertical][data-sidebar-size=sm] .navbar-menu {
     position: fixed;
     width: 100px !important;
-    
+
     padding: 55px 5px 5px;
 }
 
@@ -2009,11 +2002,11 @@
 [data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .nav-item:hover>.menu-dropdown {
     display: block;
     top: 0px;
-    left: 95px;
+    left: 90px;
     position: absolute;
     width: 220px;
     /* background: var(--vz-sidebar-bg); */
-    background-color:#034377;
+    background-color: #034377;
     height: auto !important;
     color: #fff;
     padding: 0.5rem 0;
@@ -3973,8 +3966,6 @@
 
 .bg-overlay {
     position: fixed;
-    height: 100%;
-    width: 100%;
     right: 0;
     bottom: 0;
     left: 0;
@@ -13184,13 +13175,14 @@ span.flatpickr-weekday {
     color: #212529
 }
 
+/* comment by george */
 .auth-one-bg-position {
-    position: absolute;
+    /* position: absolute;
     top: 0;
     left: 0;
     right: 0;
     width: 100%;
-    height: 380px
+    height: 380px */
 }
 
 @media (max-width:575.98px) {
@@ -13202,8 +13194,8 @@ span.flatpickr-weekday {
 /* commant all by george */
 .auth-one-bg {
     /* background-image: url(../images/login_bg.svg); */
-    background-position: 50%;
-    background-size: cover
+    /* background-position: 50%;
+    background-size: cover */
 }
 
 .signIn-btn {
@@ -13255,7 +13247,13 @@ span.flatpickr-weekday {
 
 .particles-js-canvas-el,
 .signin-other-title {
-    position: fixed
+    right: 0;
+    height: 100% !important;
+    width: 100% !important;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
 }
 
 .signin-other-title:after {
@@ -16376,4 +16374,66 @@ span.flatpickr-weekday {
 .vertical-line {
     border-left: thick solid var(--vz-header-bg-dark);
     height: 100%;
+}
+
+
+/* by george  */
+
+.employee-cards {
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 10px;
+}
+
+.assign-cards-wrapper .left,
+.right {
+    background-color: #002f56;
+}
+
+.assign-cards-wrapper .left {
+    border-radius: 0px 0px 25px 0px;
+}
+
+.assign-cards-wrapper label {
+    color: #49505c;
+}
+
+.assign-cards-wrapper input,
+select {
+    border: none;
+    border-bottom: 1px solid #49505c;
+    outline: none;
+    color: #002f56;
+    font-weight: 500;
+    padding-bottom: 10px;
+}
+
+/* .avatar-group .avatar-group-item {
+    margin-left: -12px;
+    border: 2px solid var(--vz-card-bg);
+    border-radius: 50%;
+    -webkit-transition: all .2s;
+    transition: all .2s;
+} */
+
+.reviwer-cards {
+    position: relative;
+    height: 40px;
+    width: 150px;
+    font-size: 10px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset !important;
+}
+
+.reviwer-cards a {
+    position: absolute;
+    top: 6px;
+    left: 2px;
+}
+
+.reviwer-cards .message-content {
+    position: absolute;
+    top: 0px;
+    left: 30px;
+}
+.table-wrapper #kpiTable textarea,.tableInp{
+        border-bottom:none  ;
 }
