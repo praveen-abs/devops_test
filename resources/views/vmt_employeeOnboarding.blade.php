@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('css')
 <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
-
+<link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/onboarding.css') }}">
 @endsection
 @section('content')
 
@@ -9,397 +9,6 @@
 @slot('li_1') Dashboards @endslot
 @slot('title') Employee Onboarding @endslot
 @endcomponent
-
-
-<style>
-* {
-    margin: 0;
-    padding: 0
-}
-
-html {
-    height: 100%
-}
-
-p {
-    color: grey
-}
-
-#heading {
-    text-transform: uppercase;
-    color: #673AB7;
-    font-weight: normal
-}
-
-#msform {
-    text-align: center;
-    position: relative;
-    margin-top: 20px
-}
-
-#msform fieldset {
-    background: white;
-    border: 0 none;
-    border-radius: 0.5rem;
-    box-sizing: border-box;
-    width: 100%;
-    margin: 0;
-    padding-bottom: 20px;
-    position: relative
-}
-
-.form-card {
-    text-align: left
-}
-
-#msform fieldset:not(:first-of-type) {
-    display: none
-}
-
-.onboard-form {
-    border-bottom: 1px solid !important;
-}
-
-input {
-    border: none !important;
-}
-
-.error {
-    color: red;
-    font-size: 15px;
-}
-
-.error::before {
-    content: '* ';
-}
-
-#msform input,
-#msform textarea {
-    padding: 8px 15px 8px 15px;
-    border: none;
-    border-radius: 0px;
-    margin-top: 2px;
-    width: 100%;
-    box-sizing: border-box;
-    font-family: montserrat;
-    color: #2C3E50;
-    font-size: 16px;
-    letter-spacing: 1px;
-    outline: none;
-}
-
-#msform input:focus,
-#msform textarea:focus {
-    -moz-box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
-    box-shadow: 0 1px 0 0 #673AB7 !important;
-    outline-width: 0;
-}
-
-#msform input:focus~.fieldlabels {
-    top: -9px !important;
-    font-size: 12px;
-}
-
-#msform input:not(:focus):valid~.fieldlabels {
-    top: -9px !important;
-    font-size: 12px;
-}
-
-#msform input:not(:focus)~.empty {
-    top: -9px !important;
-    font-size: 12px;
-}
-
-.patternErr {
-    display: inline-block !important;
-    font-size: 15px !important;
-}
-
-.patternErr::after {
-    content: 'Invalid data';
-}
-
-/* #msform input:not(:focus) ~ .notvalid {
-    color: red;
-} */
-
-.fieldlabels {
-    position: absolute;
-    pointer-events: none;
-    left: 15px;
-    top: -7px;
-    transition: 0.2s ease all;
-    font-size: 18px;
-}
-
-#msform .action-button {
-    /* width: 30%; */
-    background: orangered;
-    font-weight: bold;
-    color: white;
-    border: 0 none;
-    border-radius: 0px;
-    cursor: pointer;
-    /* padding: 8px 6px; */
-    padding: 10px 24px;
-    margin: 10px 0px 10px 0px;
-    float: right;
-    border-radius: 20px;
-}
-
-#msform .previous {
-    float: left !important;
-}
-
-#msform .action-button:hover,
-#msform .action-button:focus {
-    background-color: orangered
-}
-
-#msform .action-button-previous {
-    /* width: 100px; */
-    background: #616161;
-    font-weight: bold;
-    color: white;
-    border: 0 none;
-    border-radius: 0px;
-    cursor: pointer;
-    padding: 10px 24px;
-    margin: 10px 5px 10px 0px;
-    float: right
-}
-
-#msform .action-button-previous:hover,
-#msform .action-button-previous:focus {
-    background-color: #000000
-}
-
-.card {
-    z-index: 0;
-    border: none;
-    position: relative
-}
-
-.fs-title {
-    font-size: 25px;
-    color: #673AB7;
-    margin-bottom: 15px;
-    font-weight: normal;
-    text-align: left
-}
-
-.purple-text {
-    color: #673AB7;
-    font-weight: normal
-}
-
-.steps {
-    font-size: 25px;
-    color: gray;
-    margin-bottom: 10px;
-    font-weight: normal;
-    text-align: right
-}
-
-#progressbar {
-    margin-bottom: 30px;
-    overflow: hidden;
-    color: lightgrey;
-    padding: 0px 100px 0px 100px;
-    display: flex;
-}
-
-@media only screen and (max-width: 906px) {
-    .content.pl-0 {
-        padding-right: 0 !important;
-        padding-left: 0 !important;
-    }
-
-    .main-content {
-        margin-left: 0px !important;
-        margin-right: 0px !important;
-    }
-
-    .header {
-        margin-right: 0px !important;
-    }
-}
-
-@media only screen and (max-width: 433px) {
-    #progressbar li {
-        width: 20% !important;
-    }
-
-    #progressbar li:before {
-        width: 60% !important;
-        height: 30% !important;
-        line-height: 109% !important;
-    }
-
-    #progressbar li:after {
-        top: 14% !important;
-    }
-
-    .f-9 {
-        font-size: 6px;
-    }
-
-    .fieldlabels {
-        font-size: 15px !important;
-    }
-}
-
-@media only screen and (max-width: 580px) {
-    #progressbar {
-        margin-bottom: 0px;
-        padding: 0;
-    }
-}
-
-#end:after {
-    width: 45% !important;
-}
-
-#account:after {
-    left: 45% !important;
-}
-
-#progressbar .active {
-    color: black;
-    font-weight: bold;
-}
-
-#progressbar li {
-    list-style-type: none;
-    font-size: 15px;
-    width: 25%;
-    float: left;
-    position: relative;
-    font-weight: 400
-}
-
-#progressbar #account:before {
-    font-family: FontAwesome;
-    color: orange;
-    content: "1"
-}
-
-#progressbar #end:before {
-    font-family: FontAwesome;
-    color: orange;
-    content: "5"
-}
-
-#progressbar #personal:before {
-    font-family: FontAwesome;
-    color: orange;
-    content: "2"
-}
-
-#progressbar #payment:before {
-    font-family: FontAwesome;
-    color: orange;
-    content: "3"
-}
-
-#progressbar #confirm:before {
-    font-family: FontAwesome;
-    color: orange;
-    content: "4"
-}
-
-#progressbar li:before {
-    width: 40px;
-    height: 40px;
-    line-height: 35px;
-    display: block;
-    font-size: 18px;
-    color: white;
-    background: white;
-    border: 1px solid orange;
-    border-radius: 50%;
-    margin: 0 auto 10px auto;
-    padding: 2px
-}
-
-#progressbar li:after {
-    content: '';
-    width: 100%;
-    height: 2px;
-    background: orange;
-    position: absolute;
-    left: 0;
-    top: 20px;
-    z-index: -1
-}
-
-#progressbar li.active:before,
-#progressbar li.active:after {
-    background: orangered;
-    color: white !important;
-}
-
-.fit-image {
-    width: 100%;
-    object-fit: cover
-}
-
-.rounded-corner-add {
-    border-radius: 30px;
-    border: 1px solid;
-    padding: 10px;
-    width: 100px;
-}
-
-@media only screen and (max-width: 906px) {
-    .header {
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-    }
-
-    .row {
-        margin-right: 0 !important;
-    }
-
-    .content.pl-0 {
-        padding-right: 0 !important;
-    }
-}
-
-@media only screen and (width:768px) and (orientation : portrait) {
-    .header {
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-    }
-}
-
-@media only screen and (max-width: 441px) {
-    #msform .action-button {
-        width: 100% !important;
-        font-size: 12px !important;
-        padding: 8px 6px !important;
-    }
-}
-
-@media only screen and (width:280px) and (orientation : portrait) {
-    body {
-        width: 168%;
-    }
-}
-
-@media only screen and (width:360px) and (orientation : portrait) {
-    body {
-        width: 104%;
-    }
-}
-</style>
-
-
-
-
-
 
 
 <div class="main">
@@ -413,17 +22,21 @@ input {
                         <div id="msform">
                             <!-- progressbar -->
                             <ul id="progressbar">
-                                <li class="active" id="account"><strong class="f-9 onboard-detail">Personal
-                                        Details</strong></li>
+                                <li class="active" id="account"><strong class="f-9 onboard-detail">Personal Details</strong></li>
                                 <li id="personal"><strong class="f-9 onboard-detail">Location Details</strong></li>
                                 <li id="payment"><strong class="f-9 onboard-detail">Official Details</strong></li>
                                 <li id="confirm"><strong class="f-9 onboard-detail">Family Details</strong></li>
-                                <li id="end"><strong class="f-9 onboard-detail">Statutory Details</strong></li>
+                                <li id="end"><strong class="f-9 onboard-detail">Personal Documents</strong></li>
                             </ul>
                             <fieldset id="row-1">
                                 <form id="form-1">
                                     <div class="form-card">
                                         <div class="row mt-5">
+                                            <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-3 mb-3">
+                                                <input type="file" accept=".doc,.docx,.pdf,image/*" name="aadhar_card" class="onboard-form files" required />
+                                                <label class="fieldlabels" for="aadhar_card">Aadhar Card</label>
+                                            </div>
+
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <input type="text" name="employee_code" class="onboard-form" required />
                                                 <label class="fieldlabels" for="employee_code">Employee Code</label>
@@ -438,8 +51,13 @@ input {
                                                 <label class="fieldlabels" for="dob">Date of Birth</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="marital_status" class="onboard-form"
-                                                    required />
+                                                <select name="marital_status" class="onboard-form mt-2" required >
+                                                    <option value="married">Married</option>
+                                                    <option value="widowed">Widowed</option>
+                                                    <option value="separated">Separated</option>
+                                                    <option value="divorced">Divorced</option>
+                                                    <option value="single">Single</option>
+                                                </select>
                                                 <label class="fieldlabels" for="marital_status">Marital Status</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
@@ -447,7 +65,11 @@ input {
                                                 <label class="fieldlabels" for="doj">Date of Joining</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="gender" class="onboard-form" required />
+                                                <select name="gender" class="onboard-form mt-2" required >
+                                                    <option value="male">Male</option>
+                                                    <option value="female">Female</option>
+                                                    <option value="other">Other</option>
+                                                </select>
                                                 <label class="fieldlabels" for="gender">Gender</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
@@ -460,8 +82,10 @@ input {
                                                 <label class="fieldlabels" for="email">Email ID</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="aadhar" minLength="19" maxLength="19"
+                                                <input type="text" name="aadhar" pattern="aadhar"
                                                     class="onboard-form" required />
+                                                <label class="error aadhar_label" for="aadhar"
+                                                    style="display: none;"></label>
                                                 <label class="fieldlabels" for="aadhar">Aadhaar Number</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
@@ -472,15 +96,19 @@ input {
                                                 <label class="fieldlabels" for="pan_no">Pan Card Number</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="dl_no" class="onboard-form" required />
+                                                <input type="text" name="dl_no" class="onboard-form" pattern="dl" required />
+                                                <label class="error dl_no_label" for="dl_no"
+                                                    style="display: none;"></label>
                                                 <label class="fieldlabels" for="dl_no">DL Number</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="passport_no" class="onboard-form" required />
+                                                <input type="text" name="passport_no" pattern="passport" class="onboard-form not-required validate" />
+                                                <label class="error passport_no_label" for="passport_no"
+                                                    style="display: none;"></label>
                                                 <label class="fieldlabels" for="passport_no">Passport Number</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="date" name="passport_exp" class="onboard-form" required />
+                                                <input type="date" name="passport_exp" class="onboard-form not-required validate" />
                                                 <label class="fieldlabels" for="passport_exp">Passport Exp Date</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
@@ -488,7 +116,21 @@ input {
                                                 <label class="fieldlabels" for="nationality">Nationality</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="blood_group" class="onboard-form" required />
+                                                <select name="blood_group" class="onboard-form mt-2" required >
+                                                    <option value="a-positive">A Positive</option>
+                                                    <option value="a-negative">A Negative</option>
+                                                    <option value="a-unknown">A Unknown</option>
+                                                    <option value="b-positive">B Positive</option>
+                                                    <option value="b-negative">B Negative</option>
+                                                    <option value="b-unknown">B Unknown</option>
+                                                    <option value="ab-positive">AB Positive</option>
+                                                    <option value="ab-negative">AB Negative</option>
+                                                    <option value="ab-unknown">AB Unknown</option>
+                                                    <option value="o-positive">O Positive</option>
+                                                    <option value="o-negative">O Negative</option>
+                                                    <option value="o-unknown">O Unknown</option>
+                                                    <option value="unknown">Unknown</option>
+                                                </select>
                                                 <label class="fieldlabels" for="blood_group">Blood Group</label>
                                             </div>
                                         </div>
@@ -521,7 +163,7 @@ input {
                                                     District</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="current_pincode" class="onboard-form"
+                                                <input type="number" name="current_pincode" class="onboard-form"
                                                     required />
                                                 <label class="fieldlabels" for="current_pincode">Current Pincode</label>
                                             </div>
@@ -547,7 +189,7 @@ input {
                                                     District</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="permanent_pincode" class="onboard-form"
+                                                <input type="number" name="permanent_pincode" class="onboard-form"
                                                     required />
                                                 <label class="fieldlabels" for="permanent_pincode">Permanent
                                                     Pincode</label>
@@ -558,13 +200,17 @@ input {
                                                 <label class="fieldlabels" for="permanent_state">Permanent State</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="physically_challenged" class="onboard-form"
-                                                    required />
+                                                <select name="physically_challenged" class="onboard-form mt-2" required >
+                                                    <option value="yes">Yes</option>
+                                                    <option value="no">No</option>
+                                                </select>
                                                 <label class="fieldlabels" for="physically_challenged">Physically
                                                     Challenged</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="account_no" class="onboard-form" required />
+                                                <input type="number" name="account_no" class="onboard-form" pattern="account" required />
+                                                <label class="error account_no_label" for="account_no"
+                                                    style="display: none;"></label>
                                                 <label class="fieldlabels" for="account_no">Account Number</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
@@ -578,14 +224,16 @@ input {
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-6 text-left p-0"><a type="button" data="row-2" prev="row-1"
-                                                name="previous" class="previous bg-pink action-button text-center"
-                                                value="Previous"><i
-                                                    class="text-white fa fa-arrow-left mr-2"></i>Previous</a></div>
-                                        <div class="col-6 text-right p-0"><button type="button" data="row-2"
-                                                next="row-3" name="next" class="next bg-pink action-button text-center"
-                                                value="Next">Next<i
-                                                    class="text-white fa fa-arrow-right ml-2"></i></button></div>
+                                        <div class="col-6 text-left p-0">
+                                            <a type="button" data="row-2" prev="row-1" name="previous" class="previous bg-pink  action-button text-center" value="Previous">
+                                                <i class="text-white fa fa-arrow-left mr-2"></i>Previous
+                                            </a>
+                                        </div>
+                                        <div class="col-6 text-right p-0">
+                                            <button type="button" data="row-2" next="row-3" name="next" class="next bg-pink action-button text-center" value="Next">Next
+                                                <i class="text-white fa fa-arrow-right ml-2"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </form>
                             </fieldset>
@@ -732,7 +380,7 @@ input {
                                                 <label class="fieldlabels" for="mother_name">Mother Name</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="dow" class="onboard-form" required />
+                                                <input type="date" name="dow" class="onboard-form" required />
                                                 <label class="fieldlabels" for="dow">Date of Wedding</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
@@ -740,7 +388,11 @@ input {
                                                 <label class="fieldlabels" for="spouse_name">Spouse Name</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="spouse_gender" class="onboard-form" required />
+                                                <select name="spouse_gender" class="onboard-form mt-2" required >
+                                                    <option value="male">Male</option>
+                                                    <option value="female">Female</option>
+                                                    <option value="other">Other</option>
+                                                </select>
                                                 <label class="fieldlabels" for="spouse_gender">Spouse Gender</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
@@ -760,7 +412,11 @@ input {
                                                 <label class="fieldlabels" for="child_dob">Children DOB</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="child_gender" class="onboard-form" required />
+                                                <select name="child_gender" class="onboard-form mt-2" required >
+                                                    <option value="male">Male</option>
+                                                    <option value="female">Female</option>
+                                                    <option value="other">Other</option>
+                                                </select>
                                                 <label class="fieldlabels" for="child_gender">Children Gender</label>
                                             </div>
                                         </div>
@@ -783,44 +439,32 @@ input {
                                     <div class="form-card">
                                         <div class="row mt-5">
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="father_name" class="onboard-form" required />
-                                                <label class="fieldlabels" for="father_name">Father Name</label>
+                                                <input type="file" name="aadhar_card" class="onboard-form" required />
+                                                <label class="fieldlabels" for="aadhar_card">Aadhar Card</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="mother_name" class="onboard-form" required />
-                                                <label class="fieldlabels" for="mother_name">Mother Name</label>
+                                                <input type="file" name="pan_card" class="onboard-form" required />
+                                                <label class="fieldlabels" for="pan_card">Pan Card</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="date" name="dow" class="onboard-form" required />
-                                                <label class="fieldlabels" for="dow">Date of Wedding</label>
+                                                <input type="file" name="passport" class="onboard-form" required />
+                                                <label class="fieldlabels" for="passport">Passport</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="spouse_name" class="onboard-form" required />
-                                                <label class="fieldlabels" for="spouse_name">Spouse Name</label>
+                                                <input type="file" name="voters_id" class="onboard-form" required />
+                                                <label class="fieldlabels" for="voters_id">Voters ID</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="spouse_gender" class="onboard-form" required />
-                                                <label class="fieldlabels" for="spouse_gender">Spouse Gender</label>
+                                                <input type="file" name="dl_file" class="onboard-form" required />
+                                                <label class="fieldlabels" for="dl_file">Driving License</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="date" name="spouse_dob" class="onboard-form" required />
-                                                <label class="fieldlabels" for="spouse_dob">Spouse DOB</label>
+                                                <input type="file" name="education_certificate" class="onboard-form" required />
+                                                <label class="fieldlabels" for="education_certificate">Educations Certificate</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="number" name="no_child" class="onboard-form" required />
-                                                <label class="fieldlabels" for="no_child">Number of Children</label>
-                                            </div>
-                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="child_name" class="onboard-form" required />
-                                                <label class="fieldlabels" for="child_name">Children Name</label>
-                                            </div>
-                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="date" name="child_dob" class="onboard-form" required />
-                                                <label class="fieldlabels" for="child_dob">Children DOB</label>
-                                            </div>
-                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="child_gender" class="onboard-form" required />
-                                                <label class="fieldlabels" for="child_gender">Children Gender</label>
+                                                <input type="file" name="reliving_letter" class="onboard-form" required />
+                                                <label class="fieldlabels" for="reliving_letter">Reliving Letter</label>
                                             </div>
                                         </div>
                                     </div>
@@ -894,9 +538,9 @@ input {
     <!--Charts-->
     <!--Canvas JS-->
     <!--Custom Js Script-->
-    <script src="assets/js/custom.js"></script>
-    <script src="assets/js/onboarding.js"></script>
     <!--Custom Js Script-->
+    <script src="{{ URL::asset('/assets/premassets/js/custom.js') }}"></script>
+    <!-- <script src="{{ URL::asset('/assets/premassets/js/onboarding.js') }}"></script> -->
 
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
     
@@ -915,7 +559,11 @@ $(document).ready(function() {
         if ($(this).attr('pattern') != undefined && $(this).attr('pattern') != '' && inputvalues !=
             '') {
             var pattern = {
-                'pan': /^([A-Z]){5}([0-9]){4}([A-Z]){1}?$/
+                'pan': /^([A-Z]){5}([0-9]){4}([A-Z]){1}?$/,
+                'aadhar': /^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$/,
+                'passport': /^[a-zA-Z]{2}[0-9]{7}$/,
+                'account': /^[0-9]{9,18}$/,
+                'dl': /^(([A-Z]{2}[0-9]{2})( )|([A-Z]{2}-[0-9]{2}))((19|20)[0-9][0-9])[0-9]{7}$/
             };
             var regex = $(this).attr('pattern');
             if (!pattern[regex].test(inputvalues)) {
@@ -923,6 +571,25 @@ $(document).ready(function() {
             } else {
                 $('.' + data + '_label').removeClass('patternErr');
             }
+        }
+    });
+
+    $('body').on('click', '.validate', function() {
+        $(this).removeClass('not-required');
+    });
+
+    $('body').on('keyup', '.validate', function() {
+        var data = $(this).attr('name');
+        if ($(this).val() == '') {
+            $('.' + data + '_label').removeClass('patternErr');
+        }
+    });
+
+    $('body').on('blur', '.validate', function() {
+        if ($(this).val() == '') {
+            $(this).addClass('not-required');
+        } else {
+            $(this).removeClass('not-required');
         }
     });
 
