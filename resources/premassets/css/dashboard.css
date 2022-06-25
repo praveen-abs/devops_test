@@ -327,10 +327,6 @@ input:checked + .slider:before {
   .container-fluid {
     padding: 0 !important;
   }
-  /* body {
-    width: 96%;
-    overflow: hidden;
-  } */
 }
 
 @media only screen and (width:280px) and (orientation : portrait) {
@@ -372,34 +368,7 @@ input:checked + .slider:before {
   }
 }
 
-
-
-
-/* calender code */
-
-#calendar .header {
-  position: absolute;
-  flex: 0 0 50%;
-  max-width: 50%;
-  top: -3%;
-  right: 0;
-}
-
-.fa-arrow-left:before{
-  color: orangered;
-}
-
-.fa-arrow-right:before{
-  color: orangered;
-}
-
-.visualmonthyear {
-  padding-top: 0 !important;
-}
-
-
 /* tooltip */
-
 .tool-title {
   position:relative;
 }

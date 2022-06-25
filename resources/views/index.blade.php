@@ -44,7 +44,7 @@
         <div class="">
             <div class="row ml-1 mt-1">
                 <div class="col-sm-6 col-md-6 ipad-query">
-                    <div class="mt-1 mb-3 p-3 button-container bg-white shadow-sm border">
+                    <div class="mt-1 mb-3 p-3 button-container bg-white shadow-sm border" style="height:95%;">
                         <div class="row pl-2 pr-2 media-query">
                             <div class="col-sm-6 col-md-6">
                                 <div class="row mt-2">
@@ -171,7 +171,7 @@
             </div>
             <div class="row ml-1 mt-1">
                 <div class="col-sm-6 col-md-6 ipad-query">
-                    <div class="mt-1 mb-3 p-3 button-container bg-white shadow-sm border">
+                    <div class="mt-1 mb-3 p-3 button-container bg-white shadow-sm border" style="height:95%;">
                         <div class="row pl-2 pr-2 media-query">
                             <div class="col-sm-5 col-md-5">
                                 <div class="bg-muted">
@@ -258,7 +258,7 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-6 ipad-query">
-                    <div class="mt-1 mb-3 p-3 button-container bg-white shadow-sm border">
+                    <div class="mt-1 mb-3 p-3 button-container bg-white shadow-sm border" style="height:95%;">
                         <div class="row pl-2 pr-2 media-query">
                             <div class="col-sm-12 col-md-12">
                                 <div class="mt-2 pt-1 pl-1">
@@ -323,7 +323,7 @@
             </div>
             <div class="row ml-1 mt-1">
                 <div class="col-sm-6 col-md-6 ipad-query">
-                    <div class="mt-1 mb-3 p-3 button-container bg-white shadow-sm border" style="height: 300px; overflow: auto;">
+                    <div class="mt-1 mb-3 p-3 button-container bg-white shadow-sm border" style="height:95%;" style="height: 300px; overflow: auto;">
                         <div class="row pl-2 pr-2 media-query">
                             <div class="col-sm-12 col-md-12">
                                 <div style="position: absolute;right: 7px;top: -14px;"><span class="rounded-circle text-danger f-13" style="background: pink;"><i class="fa fa-refresh text-danger"></i></span></div>
