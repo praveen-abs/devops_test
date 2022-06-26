@@ -40,14 +40,14 @@
                     <div class="notify-content d-flex">
                         <button class="settings-icon border-0 bg-transparent">
 
-                            <a href="vmt_topbar_settings">
+                            <a href="vmt_topbar_settings" class="p-0">
                                 <i class="ri-settings-3-line ">
                                 </i>
                             </a>
                         </button>
                         <button class="settings-icon border-0 bg-transparent">
 
-                            <a href="vmt_topbar_settings">
+                            <a href="vmt_topbar_settings" class="p-0">
                                 <i class=" ri-notification-3-line">
                                 </i>
                             </a>
@@ -55,14 +55,14 @@
 
                         <button class="settings-icon border-0 bg-transparent">
 
-                            <a href="vmt_topbar_settings">
+                            <a href="vmt_topbar_settings" class="p-0">
                                 <i class="ri-volume-up-line">
                                 </i>
                             </a>
                         </button>
 
 
-                        <div class="dropdown ms-sm-3 header-item topbar-user">
+                        <div class="dropdown header-item topbar-user">
                             <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
                                 <span class="d-flex align-items-center">

@@ -153,9 +153,6 @@
                         <div class="left-line">
                             <hr class="">
                         </div>
-
-
-
                     </a>
                     <div class="collapse menu-dropdown" id="reportDrop-Down">
                         <ul class="nav nav-sm flex-column">
@@ -181,13 +178,9 @@
                 @hasrole("Admin")
                 <li class="nav-item">
                     <a class="nav-link menu-link d-flex" role="button">
-
-
-
                         <div class="d-flex flex-column align-items-center justify-content-center ">
                             <i class="  ri-bar-chart-fill "></i> <span>Org</span>
                         </div>
-
                     </a>
                     <div class="collapse menu-dropdown" id="ticketingDrop-Down">
                         <ul class="nav nav-sm flex-column">
