@@ -220,7 +220,7 @@
                         </div>
                         <div class="col-12">
                             <div class="container-fluid mb-1 mt-3 ">
-                                <table class="table align-middle mb-0 table-nowrap responsive" id="kpiTable">
+                                <table class="table align-middle mb-0 table-nowrap responsive table-responsive" id="kpiTable">
                                     <thead class="text-white bg-primary thead" id="tHead">
 
                                         <tr class="text-uppercase">

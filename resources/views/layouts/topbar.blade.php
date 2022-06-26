@@ -40,7 +40,7 @@
                     <div class="notify-content d-flex">
                         <button class="settings-icon border-0 bg-transparent">
 
-                            <a href="vmt_topbar_settings" class="p-0">
+                            <a href="vmt_topbar_settings" class="p-0 pr-1">
                                 <i class="ri-settings-3-line ">
                                 </i>
                             </a>
