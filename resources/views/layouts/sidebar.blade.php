@@ -35,7 +35,8 @@
 
 
                         <div class="d-flex flex-column align-items-center justify-content-center">
-                            <i class="ri-dashboard-2-line"></i> <span data-key="t-landing">Dashboard</span>
+                        <img src="{{ URL::asset('assets/images/dashboard.png') }}" alt="" class="m-2">
+                            <span data-key="t-landing">Dashboard</span>
                         </div>
                         <div class="left-line">
                             <hr class="">
@@ -57,7 +58,7 @@
                         role="button" aria-expanded="false" aria-controls="sidebarRoles">
 
                         <div class="d-flex flex-column align-items-center justify-content-center">
-                            <i class="ri-calendar-todo-fill "></i> <span>Attendance</span>
+                        <img src="{{ URL::asset('assets/images/attendace.png') }}" alt="" class="m-2"> <span>Attendance</span>
                         </div>
                         <div class="left-line">
                             <hr class="">
@@ -148,7 +149,7 @@
                     <a class="nav-link menu-link d-flex" href="#reportDrop-Down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarRoles">
                         <div class="d-flex flex-column align-items-center justify-content-center ">
-                            <i class="ri-file-list-2-fill"></i> <span>My Report</span>
+                        <img src="{{ URL::asset('assets/images/report.png') }}" alt="" class="m-2"> <span>My Report</span>
                         </div>
                         <div class="left-line">
                             <hr class="">
@@ -179,7 +180,7 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link d-flex" role="button">
                         <div class="d-flex flex-column align-items-center justify-content-center ">
-                            <i class="  ri-bar-chart-fill "></i> <span>Org</span>
+                        <img src="{{ URL::asset('assets/images/organisation.png') }}" alt="" class="m-2">  <span>Org</span>
                         </div>
                     </a>
                     <div class="collapse menu-dropdown" id="ticketingDrop-Down">
@@ -217,7 +218,7 @@
 
 
                         <div class="d-flex flex-column align-items-center justify-content-center ">
-                            <i class=" ri-line-chart-fill"></i> <span>Performance</span>
+                        <img src="{{ URL::asset('assets/images/performance.png') }}" alt="" class="m-2"><span>Performance</span>
                         </div>
 
 
@@ -329,7 +330,7 @@
                         aria-expanded="false" aria-controls="sidebarRoles">
 
                         <div class="d-flex flex-column align-items-center justify-content-center ">
-                            <i class=" ri-mac-fill"></i> <span>Payroll</span>
+                        <img src="{{ URL::asset('assets/images/payroll.png') }}" alt="" class="m-2"><span>Payroll</span>
                         </div>
 
 
@@ -385,7 +386,7 @@
 
 
                         <div class="d-flex flex-column align-items-center justify-content-center ">
-                            <i class=" ri-chat-check-fill"></i> <span>Ticketing</span>
+                        <img src="{{ URL::asset('assets/images/ticketing.png') }}" alt="" class="m-2"> <span>Ticketing</span>
                         </div>
                     </a>
                     <div class="collapse menu-dropdown" id="ticketingDrop-Down">
@@ -440,7 +441,7 @@
 
 
                         <div class="d-flex flex-column align-items-center justify-content-center px-2">
-                            <i class=" ri-logout-box-fill"></i> <span>Exit</span>
+                        <img src="{{ URL::asset('assets/images/logout 1.png') }}" alt="" class="m-2"><span>Exit</span>
                         </div>
                         
 
