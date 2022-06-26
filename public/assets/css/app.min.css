@@ -1958,7 +1958,7 @@
 } */
 
 [data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .nav-link img {
-    height: 14px;
+    height: 30px;
     width: 14px;
     color: var(--vz-vertical-menu-bg) !important;
 }

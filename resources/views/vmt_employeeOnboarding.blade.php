@@ -18,7 +18,7 @@
 
             <div class="row ">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-                    <div class="card p-3">
+                    <div class="p-3">
                         <div id="msform">
                             <!-- progressbar -->
                             <ul id="progressbar">
@@ -32,11 +32,6 @@
                                 <form id="form-1">
                                     <div class="form-card">
                                         <div class="row mt-5">
-                                            <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-3 mb-3">
-                                                <input type="file" accept=".doc,.docx,.pdf,image/*" name="aadhar_card" class="onboard-form files" required />
-                                                <label class="fieldlabels" for="aadhar_card">Aadhar Card</label>
-                                            </div>
-
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <input type="text" name="employee_code" class="onboard-form" required />
                                                 <label class="fieldlabels" for="employee_code">Employee Code</label>
@@ -438,32 +433,32 @@
                                     @csrf
                                     <div class="form-card">
                                         <div class="row mt-5">
-                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="file" name="aadhar_card" class="onboard-form" required />
+                                            <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-3 mb-3">
+                                                <input type="file" accept=".doc,.docx,.pdf,image/*" name="aadhar_card" class="onboard-form files" required />
                                                 <label class="fieldlabels" for="aadhar_card">Aadhar Card</label>
                                             </div>
-                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="file" name="pan_card" class="onboard-form" required />
+                                            <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-3 mb-3">
+                                                <input type="file" accept=".doc,.docx,.pdf,image/*" name="pan_card" class="onboard-form files" required />
                                                 <label class="fieldlabels" for="pan_card">Pan Card</label>
                                             </div>
-                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="file" name="passport" class="onboard-form" required />
+                                            <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-3 mb-3">
+                                                <input type="file" accept=".doc,.docx,.pdf,image/*" name="passport" class="onboard-form files" required />
                                                 <label class="fieldlabels" for="passport">Passport</label>
                                             </div>
-                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="file" name="voters_id" class="onboard-form" required />
+                                            <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-3 mb-3">
+                                                <input type="file" accept=".doc,.docx,.pdf,image/*" name="voters_id" class="onboard-form files" required />
                                                 <label class="fieldlabels" for="voters_id">Voters ID</label>
                                             </div>
-                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="file" name="dl_file" class="onboard-form" required />
+                                            <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-3 mb-3">
+                                                <input type="file" accept=".doc,.docx,.pdf,image/*" name="dl_file" class="onboard-form files" required />
                                                 <label class="fieldlabels" for="dl_file">Driving License</label>
                                             </div>
-                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="file" name="education_certificate" class="onboard-form" required />
+                                            <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-3 mb-3">
+                                                <input type="file" accept=".doc,.docx,.pdf,image/*" name="education_certificate" class="onboard-form files" required />
                                                 <label class="fieldlabels" for="education_certificate">Educations Certificate</label>
                                             </div>
-                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="file" name="reliving_letter" class="onboard-form" required />
+                                            <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-3 mb-3">
+                                                <input type="file" accept=".doc,.docx,.pdf,image/*" name="reliving_letter" class="onboard-form files" required />
                                                 <label class="fieldlabels" for="reliving_letter">Reliving Letter</label>
                                             </div>
                                         </div>
@@ -521,200 +516,28 @@
 
 
 <script src="http://thecodeplayer.com/uploads/js/jquery-1.9.1.min.js" type="text/javascript"></script><!-- -->
-    <!-- jQuery easing plugin -->
-    <script src="http://thecodeplayer.com/uploads/js/jquery.easing.min.js" type="text/javascript"></script>
+<!-- jQuery easing plugin -->
+<script src="http://thecodeplayer.com/uploads/js/jquery.easing.min.js" type="text/javascript"></script>
 
-    <!-- Page JavaScript Files-->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/jquery-1.12.4.min.js"></script>
-    <!--Popper JS-->
-    <script src="assets/js/popper.min.js"></script>
-    <!--Bootstrap-->
-    <script src="assets/js/bootstrap.min.js"></script>
-    <!--Sweet alert JS-->
-    <script src="assets/js/sweetalert.js"></script>
-    <!--Progressbar JS-->
-    <script src="assets/js/progressbar.min.js"></script>
-    <!--Charts-->
-    <!--Canvas JS-->
-    <!--Custom Js Script-->
-    <!--Custom Js Script-->
-    <script src="{{ URL::asset('/assets/premassets/js/custom.js') }}"></script>
-    <!-- <script src="{{ URL::asset('/assets/premassets/js/onboarding.js') }}"></script> -->
+<!-- Page JavaScript Files-->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery-1.12.4.min.js"></script>
+<!--Popper JS-->
+<script src="assets/js/popper.min.js"></script>
+<!--Bootstrap-->
+<script src="assets/js/bootstrap.min.js"></script>
+<!--Sweet alert JS-->
+<script src="assets/js/sweetalert.js"></script>
+<!--Progressbar JS-->
+<script src="assets/js/progressbar.min.js"></script>
+<!--Charts-->
+<!--Canvas JS-->
+<!--Custom Js Script-->
+<!--Custom Js Script-->
+<script src="{{ URL::asset('/assets/premassets/js/custom.js') }}"></script>
+<script src="{{ URL::asset('/assets/premassets/js/onboarding.js') }}"></script>
+<!-- <script src="{{ URL::asset('/assets/premassets/js/onboarding.js') }}"></script> -->
 
-    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
-    
-    
-    
-
-
-
-
-<script>
-$(document).ready(function() {
-
-    $('body').on('keyup', ".onboard-form", function() {
-        var inputvalues = $(this).val();
-        var data = $(this).attr('name');
-        if ($(this).attr('pattern') != undefined && $(this).attr('pattern') != '' && inputvalues !=
-            '') {
-            var pattern = {
-                'pan': /^([A-Z]){5}([0-9]){4}([A-Z]){1}?$/,
-                'aadhar': /^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$/,
-                'passport': /^[a-zA-Z]{2}[0-9]{7}$/,
-                'account': /^[0-9]{9,18}$/,
-                'dl': /^(([A-Z]{2}[0-9]{2})( )|([A-Z]{2}-[0-9]{2}))((19|20)[0-9][0-9])[0-9]{7}$/
-            };
-            var regex = $(this).attr('pattern');
-            if (!pattern[regex].test(inputvalues)) {
-                $('.' + data + '_label').addClass('patternErr');
-            } else {
-                $('.' + data + '_label').removeClass('patternErr');
-            }
-        }
-    });
-
-    $('body').on('click', '.validate', function() {
-        $(this).removeClass('not-required');
-    });
-
-    $('body').on('keyup', '.validate', function() {
-        var data = $(this).attr('name');
-        if ($(this).val() == '') {
-            $('.' + data + '_label').removeClass('patternErr');
-        }
-    });
-
-    $('body').on('blur', '.validate', function() {
-        if ($(this).val() == '') {
-            $(this).addClass('not-required');
-        } else {
-            $(this).removeClass('not-required');
-        }
-    });
-
-    $('body').on('blur', '.onboard-form', function() {
-        var id = $(this).attr('name');
-        if ($(this).val() == '') {
-            $("label[for='" + id + "']").removeClass('empty');
-        } else {
-            $("label[for='" + id + "']").addClass('empty');
-        }
-        if ($("input[name='" + id + "']").valid()) {
-            $("label[for='" + id + "']").removeClass('notvalid');
-            $("input[name='" + id + "']").removeClass('notvalid');
-        } else {
-            $("label[for='" + id + "']").addClass('notvalid');
-            $("input[name='" + id + "']").addClass('notvalid');
-        }
-    });
-
-    var current_fs, next_fs, previous_fs; //fieldsets
-    var opacity;
-    var current = 1;
-    var steps = $("fieldset").length;
-    setProgressBar(current);
-
-    $(".next").click(function() {
-        current_fs = $('#' + $(this).attr('data'));
-        var data = $(this).attr('data');
-        const myArray = data.split("-");
-        if ($('#form-' + myArray[1]).valid()) {
-            next_fs = $('#' + $(this).attr('next'));
-            //Add Class Active
-            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-            //show the next fieldset
-            next_fs.show();
-            //hide the current fieldset with style
-            current_fs.animate({
-                opacity: 0
-            }, {
-                step: function(now) {
-                    // for making fielset appear animation
-                    opacity = 1 - now;
-                    current_fs.css({
-                        'display': 'none',
-                        'position': 'relative'
-                    });
-                    next_fs.css({
-                        'opacity': opacity
-                    });
-                },
-                duration: 500
-            });
-            // if ($(this).attr('url') != '') {
-            //     window.location.href = $(this).attr('url');
-            // }
-            setProgressBar(++current);
-            console.log(current);
-        }
-    });
-
-    $(".previous").click(function() {
-        current_fs = $('#' + $(this).attr('data'));
-        previous_fs = $('#' + $(this).attr('prev'));
-        //Remove class active
-        $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
-        //show the previous fieldset
-        previous_fs.show();
-        //hide the current fieldset with style
-        current_fs.animate({
-            opacity: 0
-        }, {
-            step: function(now) {
-                // for making fielset appear animation
-                opacity = 1 - now;
-                current_fs.css({
-                    'display': 'none',
-                    'position': 'relative'
-                });
-                previous_fs.css({
-                    'opacity': opacity
-                });
-            },
-            duration: 500
-        });
-        setProgressBar(--current);
-    });
-
-    function setProgressBar(curStep) {
-        var percent = parseFloat(100 / steps) * curStep;
-        percent = percent.toFixed();
-    }
-
-
-    $('#form-5').on('submit', function(e){
-        e.preventDefault();
-        
-        var locationData = $('#form-1, #form-2, #form-3, #form-4, #form-5').serialize();
-        $.ajax({
-            url: "{{url('vmt-employee-onboard')}}", 
-            type: "POST", 
-            data: locationData, 
-            success: function(data)
-            {
-                alert(data);
-            }
-        })
-
-
-        console.log(personalData);
-        console.log(locationData);
-        console.log(officeData);
-        console.log(familyData);
-        console.log(statutoryData);
-    })
-
-    $(".submit").click(function() {
-        return false;
-    });
-});
-</script>
-
-
-
-
-
-
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
 
 @endsection
