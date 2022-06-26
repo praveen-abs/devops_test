@@ -5562,7 +5562,7 @@ fieldset:disabled .btn {
 .progress {
     height: .625rem;
     font-size: .609375rem;
-    background-color: var(--vz-progress-bg);
+    /* background-color: var(--vz-progress-bg); */
     border-radius: .25rem
 }
 

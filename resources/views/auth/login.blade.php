@@ -23,7 +23,7 @@
         <div class="container-fluid auth-container mt-4">
 
 
-            <div class="card m-2 p-2">
+            <div class="card m-2 p-2" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
                 <div class="card-body ">
                     <div class="row d-flex justify-content-center  align-items-center h-100">
 
@@ -129,6 +129,12 @@
                                     </div>
                                 </form>
                             </div>
+                            <div style="display:flex; justify-content:space-evenly;">
+                                <p>Powered By</p>
+                                <img src="{{ URL::asset('assets/images/logo-sm.png') }}" alt="brand-logo" style="width:20%;height:30%;">
+                                <img src="{{ URL::asset('assets/images/google-play.jpg') }}" alt="brand-logo" style="width:20%;height:30%;">
+                                <img src="{{ URL::asset('assets/images/app-store.png') }}" alt="brand-logo" style="width:24%;height:30%;border-radius:10px;">
+                            </div>
                         </div>
 
                         <!-- end card body -->
@@ -138,7 +144,6 @@
 
 
                 </div>
-
                 <!-- end row -->
 
 

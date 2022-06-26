@@ -154,9 +154,6 @@
                         <div class="left-line">
                             <hr class="">
                         </div>
-
-
-
                     </a>
                     <div class="collapse menu-dropdown" id="reportDrop-Down">
                         <ul class="nav nav-sm flex-column">
@@ -182,13 +179,9 @@
                 @hasrole("Admin")
                 <li class="nav-item">
                     <a class="nav-link menu-link d-flex" role="button">
-
-
-
                         <div class="d-flex flex-column align-items-center justify-content-center ">
                         <img src="{{ URL::asset('assets/images/organisation.png') }}" alt="" class="m-2">  <span>Org</span>
                         </div>
-
                     </a>
                     <div class="collapse menu-dropdown" id="ticketingDrop-Down">
                         <ul class="nav nav-sm flex-column">
