@@ -25,9 +25,7 @@
 
 
                 <!-- disable setting icon for employee -->
-                @hasrole("Employee")
 
-                @else
 
                 <div class="d-flex justify-content-between align-items-center w-100">
 
@@ -38,6 +36,9 @@
                     </div>
 
                     <div class="notify-content d-flex">
+                        @hasrole("Employee")
+
+                        @else
                         <button class="settings-icon border-0 bg-transparent">
 
                             <a href="vmt_topbar_settings" class="p-0 pr-1">
@@ -45,6 +46,8 @@
                                 </i>
                             </a>
                         </button>
+                        @endhasrole
+
                         <button class="settings-icon border-0 bg-transparent">
 
                             <a href="vmt_topbar_settings" class="p-0">
@@ -110,7 +113,6 @@
                         </div>
                     </div>
                 </div>
-                @endhasrole
 
 
 

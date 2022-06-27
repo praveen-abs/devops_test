@@ -5,7 +5,9 @@ namespace App\Imports;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use App\Mail\WelcomeMail;
 use App\Models\VmtEmployee as EmployeeModel;
 
 class VmtEmployee implements ToModel,  WithHeadingRow
@@ -66,6 +68,19 @@ $newEmployee->kid_name   = $row["kid_name"];
 $newEmployee->kid_age  = $row["kid_age"];
 
 $newEmployee->save();
+
+        $user =  User::create([
+            'name' => $row['emp_name'],
+            'email' => $row["email_id"],
+            'password' => Hash::make('abcd@1234'),
+            'avatar' =>  $row["emp_no"],
+        ]);
+        $user->assignRole("Employee");
+        $newEmployee->userid = $user->id; 
+        $newEmployee->save();
+
+        \Mail::to($row["email_id"])->send(new WelcomeMail($row["email_id"], 'abcd@1234', url('login')  ));
+
 return $newEmployee;
            
         }

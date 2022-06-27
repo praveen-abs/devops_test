@@ -9,6 +9,9 @@ use App\Models\VmtEmployeeHierarchy;
 use App\Models\VmtEmployee;
 use App\Imports\VmtEmployee as VmtEmployeeImport;
 use App\Models\VmtEmployeeOfficeDetails;
+use Illuminate\Support\Facades\Hash;
+
+use App\Mail\WelcomeMail; 
 
 class VmtEmployeeController extends Controller
 {
@@ -128,8 +131,6 @@ class VmtEmployeeController extends Controller
     public function employeeOnboard(Request $request)
     {
         // code...
-
-       
         $row = $request->all();
         $newEmployee = new VmtEmployee; 
         $newEmployee->emp_no   =    $row["employee_code"]; 
@@ -167,6 +168,17 @@ class VmtEmployeeController extends Controller
 
         $newEmployee->save();
 
+        $user =  User::create([
+            'name' => $row['employee_name'],
+            'email' => $row["email"],
+            'password' => Hash::make('abcd@1234'),
+            'avatar' =>  $row["employee_code"],
+        ]);
+        $user->assignRole("Employee");
+
+        $newEmployee->userid = $user->id; 
+        $newEmployee->save();
+
         if($newEmployee){
             $empOffice  = new VmtEmployeeOfficeDetails; 
             $empOffice->emp_id = $newEmployee->id;
@@ -194,6 +206,8 @@ class VmtEmployeeController extends Controller
             $empOffice->emp_notice  = $row["emp_notice"]; // => "0"
             $empOffice->save();
         }
+
+        \Mail::to($row["email"])->send(new WelcomeMail($row["email"], 'abcd@1234', url('login')  ));
         return "Saved";
     }
 
