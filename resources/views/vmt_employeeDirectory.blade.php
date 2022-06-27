@@ -46,20 +46,6 @@
                                         <label for="departmentNameSelectAll">Select All</label>
                                     </label>
                                     <label class="dropdown-item">
-                                        <input type="checkbox" class="checkbox-sm ng-untouched ng-pristine ng-valid" id="departmentNameUnassigned">
-                                        <label class="d-flex align-items-center" for="departmentNameUnassigned">
-                                            <span class="mt-4 mr-4 text-large invisible ic-arrow-down"></span>
-                                            <span class="text-truncate-1" title="Unassigned">Unassigned</span>
-                                        </label>
-                                    </label>
-                                    <label class="dropdown-item">
-                                        <input type="checkbox" class="checkbox-sm ng-untouched ng-pristine ng-valid" id="departmentName19159Hyderabad HQ_Operations">
-                                        <label class="d-flex align-items-center" for="departmentName19159Hyderabad HQ_Operations">
-                                            <span class="mt-4 mr-4 text-large ic-arrow-down"></span>
-                                            <span class="text-truncate-1" title="Hyderabad HQ_Operations">Hyderabad HQ_Operations</span>
-                                        </label>
-                                    </label>
-                                    <label class="dropdown-item">
                                         <span class="pl-24">
                                             <input type="checkbox" class="checkbox-sm ng-untouched ng-pristine ng-valid" id="departmentName26546Hyderabad HQ_Customer Success">
                                             <label class="text-truncate-1" for="departmentName26546Hyderabad HQ_Customer Success" title="Hyderabad HQ_Customer Success">Hyderabad HQ_Customer Success</label>
@@ -72,13 +58,6 @@
                                         </span>
                                     </label>
                                     <label class="dropdown-item">
-                                        <input type="checkbox" class="checkbox-sm ng-untouched ng-pristine ng-valid" id="departmentName19160Hyderabad">
-                                        <label class="d-flex align-items-center" for="departmentName19160Hyderabad">
-                                            <span class="mt-4 mr-4 text-large ic-arrow-down"></span>
-                                            <span class="text-truncate-1" title="Hyderabad">Hyderabad</span>
-                                        </label>
-                                    </label>
-                                    <label class="dropdown-item">
                                         <span class="pl-24">
                                             <input type="checkbox" class="checkbox-sm ng-untouched ng-pristine ng-valid" id="departmentName31801Hyderabad HQ_Inside Sales">
                                             <label class="text-truncate-1" for="departmentName31801Hyderabad HQ_Inside Sales" title="Hyderabad HQ_Inside Sales">Hyderabad HQ_Inside Sales</label>
@@ -89,20 +68,6 @@
                                             <input type="checkbox" class="checkbox-sm ng-untouched ng-pristine ng-valid" id="departmentName159730Solutions">
                                             <label class="text-truncate-1" for="departmentName159730Solutions" title="Solutions">Solutions</label>
                                         </span>
-                                    </label>
-                                    <label class="dropdown-item">
-                                        <input type="checkbox" class="checkbox-sm ng-untouched ng-pristine ng-valid" id="departmentName19161Hyderabad HQ_Marketing">
-                                        <label class="d-flex align-items-center" for="departmentName19161Hyderabad HQ_Marketing">
-                                            <span class="mt-4 mr-4 text-large invisible ic-arrow-down"></span>
-                                            <span class="text-truncate-1" title="Hyderabad HQ_Marketing">Hyderabad HQ_Marketing</span>
-                                        </label>
-                                    </label>
-                                    <label class="dropdown-item">
-                                        <input type="checkbox" class="checkbox-sm ng-untouched ng-pristine ng-valid" id="departmentName19162Management">
-                                        <label class="d-flex align-items-center" for="departmentName19162Management">
-                                            <span class="mt-4 mr-4 text-large invisible ic-arrow-down"></span>
-                                            <span class="text-truncate-1" title="Management">Management</span>
-                                        </label>
                                     </label>
                                 </div>
                             </div>
@@ -127,20 +92,6 @@
                                         <label for="locationSelectAll">Select All</label>
                                     </label>
                                     <label class="dropdown-item">
-                                        <input type="checkbox" class="checkbox-sm ng-untouched ng-pristine ng-valid" id="locationNameUnassigned">
-                                        <label class="d-flex align-items-center" for="locationNameUnassigned">
-                                            <span class="mt-4 mr-4 text-large invisible ic-arrow-down"></span>
-                                            <span class="text-truncate-1" title="Unassigned">Unassigned</span>
-                                        </label>
-                                    </label>
-                                    <label class="dropdown-item">
-                                        <input type="checkbox" class="checkbox-sm ng-untouched ng-pristine ng-valid" id="locationName19159Hyderabad HQ_Operations">
-                                        <label class="d-flex align-items-center" for="locationName19159Hyderabad HQ_Operations">
-                                            <span class="mt-4 mr-4 text-large ic-arrow-down"></span>
-                                            <span class="text-truncate-1" title="Hyderabad HQ_Operations">Hyderabad HQ_Operations</span>
-                                        </label>
-                                    </label>
-                                    <label class="dropdown-item">
                                         <span class="pl-24">
                                             <input type="checkbox" class="checkbox-sm ng-untouched ng-pristine ng-valid" id="locationName26546Hyderabad HQ_Customer Success">
                                             <label class="text-truncate-1" for="locationName26546Hyderabad HQ_Customer Success" title="Hyderabad HQ_Customer Success">Hyderabad HQ_Customer Success</label>
@@ -151,13 +102,6 @@
                                             <input type="checkbox" class="checkbox-sm ng-untouched ng-pristine ng-valid" id="locationName115611% Management %">
                                             <label class="text-truncate-1" for="locationName115611% Management %" title="% Management %">% Management %</label>
                                         </span>
-                                    </label>
-                                    <label class="dropdown-item">
-                                        <input type="checkbox" class="checkbox-sm ng-untouched ng-pristine ng-valid" id="locationName19160Hyderabad">
-                                        <label class="d-flex align-items-center" for="locationName19160Hyderabad">
-                                            <span class="mt-4 mr-4 text-large ic-arrow-down"></span>
-                                            <span class="text-truncate-1" title="Hyderabad">Hyderabad</span>
-                                        </label>
                                     </label>
                                     <label class="dropdown-item">
                                         <span class="pl-24">
