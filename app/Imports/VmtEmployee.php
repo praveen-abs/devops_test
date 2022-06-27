@@ -7,6 +7,7 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Mail\WelcomeMail;
 use App\Models\VmtEmployee as EmployeeModel;
 
 class VmtEmployee implements ToModel,  WithHeadingRow
@@ -77,6 +78,8 @@ $newEmployee->save();
         $user->assignRole("Employee");
         $newEmployee->userid = $user->id; 
         $newEmployee->save();
+
+        \Mail::to($row["email_id"])->send(new WelcomeMail($row["email_id"], 'abcd@1234', url('login')  ));
 
 return $newEmployee;
            

@@ -56,7 +56,7 @@ class VmtApraisalController extends Controller
                 $empPmsGoal->save();
             }
 
-            \Mail::to($mailingEmpList)->bcc('rahul.sgsits2015@gmail.com')->send(new VmtAssignGoals(url('vmt_appraisalreview')));
+            \Mail::to($mailingEmpList)->send(new VmtAssignGoals(url('vmt-pmsappraisal-review')));
 
             return "Goal Published";
         }
