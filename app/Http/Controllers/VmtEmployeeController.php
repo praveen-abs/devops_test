@@ -9,6 +9,7 @@ use App\Models\VmtEmployeeHierarchy;
 use App\Models\VmtEmployee;
 use App\Imports\VmtEmployee as VmtEmployeeImport;
 use App\Models\VmtEmployeeOfficeDetails;
+use Illuminate\Support\Facades\Hash;
 
 class VmtEmployeeController extends Controller
 {
@@ -128,8 +129,6 @@ class VmtEmployeeController extends Controller
     public function employeeOnboard(Request $request)
     {
         // code...
-
-       
         $row = $request->all();
         $newEmployee = new VmtEmployee; 
         $newEmployee->emp_no   =    $row["employee_code"]; 
@@ -165,6 +164,17 @@ class VmtEmployeeController extends Controller
         $newEmployee->kid_name   = $row["child_name"];
         $newEmployee->kid_age  = $row["child_dob"];
 
+        $newEmployee->save();
+
+        $user =  User::create([
+            'name' => $row['employee_name'],
+            'email' => $row["email"],
+            'password' => Hash::make('abcd@1234'),
+            'avatar' =>  $row["employee_code"],
+        ]);
+        $user->assignRole("Employee");
+
+        $newEmployee->userid = $user->id; 
         $newEmployee->save();
 
         if($newEmployee){

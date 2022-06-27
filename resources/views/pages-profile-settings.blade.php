@@ -1,675 +1,1410 @@
 @extends('layouts.master')
 @section('title')
-    @lang('translation.settings')
+@lang('translation.settings')
 @endsection
 @section('content')
-    <div class="position-relative mx-n4 mt-n4">
-        <div class="profile-wid-bg profile-setting-img">
-            <img src="{{ URL::asset('assets/images/profile-bg.jpg') }}" class="profile-wid-img" alt="">
-            <div class="overlay-content">
-                <div class="text-end p-3">
-                    <div class="p-0 ms-auto rounded-circle profile-photo-edit">
-                        <input id="profile-foreground-img-file-input" type="file" class="profile-foreground-img-file-input">
-                        <label for="profile-foreground-img-file-input" class="profile-photo-edit btn btn-light">
-                            <i class="ri-image-edit-line align-bottom me-1"></i> Change Cover
-                        </label>
+
+<div class="container-fluid">
+
+
+
+    <div class="card mb-0">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="profile-view">
+                        <div class="profile-img-wrap">
+                            <div class="profile-img">
+                                <a href="#"><img src="assets/images/users/avatar-5.jpg" alt=""
+                                        class="rounded-circle"></a>
+                            </div>
+                        </div>
+                        <div class="profile-basic justify-content-center d-flex">
+                            <div class="row w-100">
+                                <div class="col-md-5">
+                                    <div class="profile-info-left h-100">
+                                        <h3 class="user-name m-t-0  mb-0">John Doe</h3>
+                                        <h6 class="text-muted">UI/UX Design Team</h6>
+                                        <h5 class="text-muted">Web Designer</h5>
+                                        <div class="staff-id">Employee ID : FT-0001</div>
+                                        <div class="small doj text-muted">Date of Join : 1st Jan 2013</div>
+                                        <div class="staff-msg mt-4 "><a class="btn btn-custom" href="chat.html">
+                                                <button class="btn btn-primary">Send Message</button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    <ul class="personal-info">
+                                        <li>
+                                            <div class="title">Phone:</div>
+                                            <div class="text"><a href="">9876543210</a></div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Email:</div>
+                                            <div class="text"><a href="">johndoe@example.com</a></div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Birthday:</div>
+                                            <div class="text">24th July</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Address:</div>
+                                            <div class="text">1861 Bayonne Ave, Manchester Township, NJ, 08759</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Gender:</div>
+                                            <div class="text">Male</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Reports to:</div>
+                                            <div class="text">
+                                                <div class="avatar-box">
+                                                    <div class="avatar avatar-xs">
+                                                        <img src="assets/images/users/avatar-5.jpg" alt=""
+                                                            class="rounded-circle">
+                                                    </div>
+                                                </div>
+                                                <a href="profile.html">
+                                                    Jeffery Lalor
+                                                </a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pro-edit"><a data-bs-target="#profile_info" data-bs-toggle="modal" class="edit-icon"
+                                href="#"><i class=" ri-pencil-fill"></i></a></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="card tab-box">
+        <div class="row user-tabs">
+            <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
+                <ul class="nav nav-tabs nav-tabs-bottom">
+                    <li class="nav-item"><a href="#emp_profile" data-bs-toggle="tab" class="nav-link active">Profile</a>
+                    </li>
 
-    <div class="row">
-        <div class="col-xxl-3">
-            <div class="card mt-n5">
-                <div class="card-body p-4">
-                    <div class="text-center">
-                        <div class="profile-user position-relative d-inline-block mx-auto  mb-4">
-                            <img src="@if (Auth::user()->avatar != '') {{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }} @endif"
-                                class="  rounded-circle avatar-xl img-thumbnail user-profile-image"
-                                alt="user-profile-image">
-                            <div class="avatar-xs p-0 rounded-circle profile-photo-edit">
-                                <input id="profile-img-file-input" type="file" class="profile-img-file-input">
-                                <label for="profile-img-file-input" class="profile-photo-edit avatar-xs">
-                                    <span class="avatar-title rounded-circle bg-light text-body">
-                                        <i class="ri-camera-fill"></i>
-                                    </span>
-                                </label>
-                            </div>
-                        </div>
-                        <h5 class="fs-16 mb-1">Anna Adame</h5>
-                        <p class="text-muted mb-0">Lead Designer / Developer</p>
-                    </div>
-                </div>
+                    <li class="nav-item"><a href="#bank_statutory" data-bs-toggle="tab" class="nav-link">Bank &amp;
+                            Statutory <small class="text-danger">(Admin Only)</small></a></li>
+                </ul>
             </div>
-            <!--end card-->
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex align-items-center mb-5">
-                        <div class="flex-grow-1">
-                            <h5 class="card-title mb-0">Complete Your Profile</h5>
-                        </div>
-                        <div class="flex-shrink-0">
-                            <a href="javascript:void(0);" class="badge bg-light text-primary fs-12"><i
-                                    class="ri-edit-box-line align-bottom me-1"></i> Edit</a>
-                        </div>
-                    </div>
-                    <div class="progress animated-progress custom-progress progress-label">
-                        <div class="progress-bar bg-danger" role="progressbar" style="width: 30%" aria-valuenow="30"
-                            aria-valuemin="0" aria-valuemax="100">
-                            <div class="label">30%</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex align-items-center mb-4">
-                        <div class="flex-grow-1">
-                            <h5 class="card-title mb-0">Portfolio</h5>
-                        </div>
-                        <div class="flex-shrink-0">
-                            <a href="javascript:void(0);" class="badge bg-light text-primary fs-12"><i
-                                    class="ri-add-fill align-bottom me-1"></i> Add</a>
-                        </div>
-                    </div>
-                    <div class="mb-3 d-flex">
-                        <div class="avatar-xs d-block flex-shrink-0 me-3">
-                            <span class="avatar-title rounded-circle fs-16 bg-dark text-light">
-                                <i class="ri-github-fill"></i>
-                            </span>
-                        </div>
-                        <input type="email" class="form-control" id="gitUsername" placeholder="Username"
-                            value="@daveadame">
-                    </div>
-                    <div class="mb-3 d-flex">
-                        <div class="avatar-xs d-block flex-shrink-0 me-3">
-                            <span class="avatar-title rounded-circle fs-16 bg-primary">
-                                <i class="ri-global-fill"></i>
-                            </span>
-                        </div>
-                        <input type="text" class="form-control" id="websiteInput" placeholder="www.example.com"
-                            value="www.velzon.com">
-                    </div>
-                    <div class="mb-3 d-flex">
-                        <div class="avatar-xs d-block flex-shrink-0 me-3">
-                            <span class="avatar-title rounded-circle fs-16 bg-success">
-                                <i class="ri-dribbble-fill"></i>
-                            </span>
-                        </div>
-                        <input type="text" class="form-control" id="dribbleName" placeholder="Username"
-                            value="@dave_adame">
-                    </div>
-                    <div class="d-flex">
-                        <div class="avatar-xs d-block flex-shrink-0 me-3">
-                            <span class="avatar-title rounded-circle fs-16 bg-danger">
-                                <i class="ri-pinterest-fill"></i>
-                            </span>
-                        </div>
-                        <input type="text" class="form-control" id="pinterestName" placeholder="Username"
-                            value="Advance Dave">
-                    </div>
-                </div>
-            </div>
-            <!--end card-->
         </div>
-        <!--end col-->
-        <div class="col-xxl-9">
-            <div class="card mt-xxl-n5">
-                <div class="card-header">
-                    <ul class="nav nav-tabs-custom rounded card-header-tabs border-bottom-0" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" data-bs-toggle="tab" href="#personalDetails" role="tab">
-                                <i class="fas fa-home"></i>
-                                Personal Details
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#changePassword" role="tab">
-                                <i class="far fa-user"></i>
-                                Change Password
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#experience" role="tab">
-                                <i class="far fa-envelope"></i>
-                                Experience
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#privacy" role="tab">
-                                <i class="far fa-envelope"></i>
-                                Privacy Policy
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="card-body p-4">
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="personalDetails" role="tabpanel">
-                            <form action="javascript:void(0);">
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label for="firstnameInput" class="form-label">First
-                                                Name</label>
-                                            <input type="text" class="form-control" id="firstnameInput"
-                                                placeholder="Enter your firstname" value="Dave">
-                                        </div>
-                                    </div>
-                                    <!--end col-->
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label for="lastnameInput" class="form-label">Last
-                                                Name</label>
-                                            <input type="text" class="form-control" id="lastnameInput"
-                                                placeholder="Enter your lastname" value="Adame">
-                                        </div>
-                                    </div>
-                                    <!--end col-->
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label for="phonenumberInput" class="form-label">Phone
-                                                Number</label>
-                                            <input type="text" class="form-control" id="phonenumberInput"
-                                                placeholder="Enter your phone number" value="+(1) 987 6543">
-                                        </div>
-                                    </div>
-                                    <!--end col-->
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label for="emailInput" class="form-label">Email
-                                                Address</label>
-                                            <input type="email" class="form-control" id="emailInput"
-                                                placeholder="Enter your email" value="daveadame@velzon.com">
-                                        </div>
-                                    </div>
-                                    <!--end col-->
-                                    <div class="col-lg-12">
-                                        <div class="mb-3">
-                                            <label for="JoiningdatInput" class="form-label">Joining
-                                                Date</label>
-                                            <input type="text" class="form-control" data-provider="flatpickr"
-                                                id="JoiningdatInput" data-date-format="d M, Y"
-                                                data-deafult-date="24 Nov, 2021" placeholder="Select date" />
-                                        </div>
-                                    </div>
-                                    <!--end col-->
-                                    <div class="col-lg-12">
-                                        <div class="mb-3">
-                                            <label for="skillsInput" class="form-label">Skills</label>
-                                            <select class="form-control" name="skillsInput" data-choices
-                                                data-choices-text-unique-true multiple id="skillsInput">
-                                                <option value="illustrator">Illustrator</option>
-                                                <option value="photoshop">Photoshop</option>
-                                                <option value="css">CSS</option>
-                                                <option value="html">HTML</option>
-                                                <option value="javascript" selected>Javascript</option>
-                                                <option value="python">Python</option>
-                                                <option value="php">PHP</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <!--end col-->
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label for="designationInput" class="form-label">Designation</label>
-                                            <input type="text" class="form-control" id="designationInput"
-                                                placeholder="Designation" value="Lead Designer / Developer">
-                                        </div>
-                                    </div>
-                                    <!--end col-->
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label for="websiteInput1" class="form-label">Website</label>
-                                            <input type="text" class="form-control" id="websiteInput1"
-                                                placeholder="www.example.com" value="www.velzon.com" />
-                                        </div>
-                                    </div>
-                                    <!--end col-->
-                                    <div class="col-lg-4">
-                                        <div class="mb-3">
-                                            <label for="cityInput" class="form-label">City</label>
-                                            <input type="text" class="form-control" id="cityInput" placeholder="City"
-                                                value="California" />
-                                        </div>
-                                    </div>
-                                    <!--end col-->
-                                    <div class="col-lg-4">
-                                        <div class="mb-3">
-                                            <label for="countryInput" class="form-label">Country</label>
-                                            <input type="text" class="form-control" id="countryInput"
-                                                placeholder="Country" value="United States" />
-                                        </div>
-                                    </div>
-                                    <!--end col-->
-                                    <div class="col-lg-4">
-                                        <div class="mb-3">
-                                            <label for="zipcodeInput" class="form-label">Zip
-                                                Code</label>
-                                            <input type="text" class="form-control" minlength="5" maxlength="6"
-                                                id="zipcodeInput" placeholder="Enter zipcode" value="90011">
-                                        </div>
-                                    </div>
-                                    <!--end col-->
-                                    <div class="col-lg-12">
-                                        <div class="mb-3 pb-2">
-                                            <label for="exampleFormControlTextarea"
-                                                class="form-label">Description</label>
-                                            <textarea class="form-control" id="exampleFormControlTextarea" placeholder="Enter your description"
-                                                rows="3">Hi I'm Anna Adame,It will be as simple as Occidental; in fact, it will be Occidental. To an English person, it will seem like simplified English, as a skeptical Cambridge friend of mine told me what Occidental is European languages are members of the same family.</textarea>
-                                        </div>
-                                    </div>
-                                    <!--end col-->
-                                    <div class="col-lg-12">
-                                        <div class="hstack gap-2 justify-content-end">
-                                            <button type="submit" class="btn btn-primary">Updates</button>
-                                            <button type="button" class="btn btn-soft-success">Cancel</button>
-                                        </div>
-                                    </div>
-                                    <!--end col-->
-                                </div>
-                                <!--end row-->
-                            </form>
-                        </div>
-                        <!--end tab-pane-->
-                        <div class="tab-pane" id="changePassword" role="tabpanel">
-                            <form action="javascript:void(0);">
-                                <div class="row g-2">
-                                    <div class="col-lg-4">
-                                        <div>
-                                            <label for="oldpasswordInput" class="form-label">Old
-                                                Password*</label>
-                                            <input type="password" class="form-control" id="oldpasswordInput"
-                                                placeholder="Enter current password">
-                                        </div>
-                                    </div>
-                                    <!--end col-->
-                                    <div class="col-lg-4">
-                                        <div>
-                                            <label for="newpasswordInput" class="form-label">New
-                                                Password*</label>
-                                            <input type="password" class="form-control" id="newpasswordInput"
-                                                placeholder="Enter new password">
-                                        </div>
-                                    </div>
-                                    <!--end col-->
-                                    <div class="col-lg-4">
-                                        <div>
-                                            <label for="confirmpasswordInput" class="form-label">Confirm
-                                                Password*</label>
-                                            <input type="password" class="form-control" id="confirmpasswordInput"
-                                                placeholder="Confirm password">
-                                        </div>
-                                    </div>
-                                    <!--end col-->
-                                    <div class="col-lg-12">
-                                        <div class="mb-3">
-                                            <a href="javascript:void(0);"
-                                                class="link-primary text-decoration-underline">Forgot
-                                                Password ?</a>
-                                        </div>
-                                    </div>
-                                    <!--end col-->
-                                    <div class="col-lg-12">
-                                        <div class="text-end">
-                                            <button type="submit" class="btn btn-success">Change
-                                                Password</button>
-                                        </div>
-                                    </div>
-                                    <!--end col-->
-                                </div>
-                                <!--end row-->
-                            </form>
-                            <div class="mt-4 mb-3 border-bottom pb-2">
-                                <div class="float-end">
-                                    <a href="javascript:void(0);" class="link-primary">All Logout</a>
-                                </div>
-                                <h5 class="card-title">Login History</h5>
-                            </div>
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="flex-shrink-0 avatar-sm">
-                                    <div class="avatar-title bg-light text-primary rounded-3 fs-18">
-                                        <i class="ri-smartphone-line"></i>
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <h6>iPhone 12 Pro</h6>
-                                    <p class="text-muted mb-0">Los Angeles, United States - March 16 at
-                                        2:47PM</p>
-                                </div>
-                                <div>
-                                    <a href="javascript:void(0);">Logout</a>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="flex-shrink-0 avatar-sm">
-                                    <div class="avatar-title bg-light text-primary rounded-3 fs-18">
-                                        <i class="ri-tablet-line"></i>
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <h6>Apple iPad Pro</h6>
-                                    <p class="text-muted mb-0">Washington, United States - November 06
-                                        at 10:43AM</p>
-                                </div>
-                                <div>
-                                    <a href="javascript:void(0);">Logout</a>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="flex-shrink-0 avatar-sm">
-                                    <div class="avatar-title bg-light text-primary rounded-3 fs-18">
-                                        <i class="ri-smartphone-line"></i>
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <h6>Galaxy S21 Ultra 5G</h6>
-                                    <p class="text-muted mb-0">Conneticut, United States - June 12 at
-                                        3:24PM</p>
-                                </div>
-                                <div>
-                                    <a href="javascript:void(0);">Logout</a>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <div class="flex-shrink-0 avatar-sm">
-                                    <div class="avatar-title bg-light text-primary rounded-3 fs-18">
-                                        <i class="ri-macbook-line"></i>
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <h6>Dell Inspiron 14</h6>
-                                    <p class="text-muted mb-0">Phoenix, United States - July 26 at
-                                        8:10AM</p>
-                                </div>
-                                <div>
-                                    <a href="javascript:void(0);">Logout</a>
-                                </div>
-                            </div>
-                        </div>
-                        <!--end tab-pane-->
-                        <div class="tab-pane" id="experience" role="tabpanel">
-                            <form>
-                                <div id="newlink">
-                                    <div id="1">
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <div class="mb-3">
-                                                    <label for="jobTitle" class="form-label">Job
-                                                        Title</label>
-                                                    <input type="text" class="form-control" id="jobTitle"
-                                                        placeholder="Job title" value="Lead Designer / Developer">
-                                                </div>
-                                            </div>
-                                            <!--end col-->
-                                            <div class="col-lg-6">
-                                                <div class="mb-3">
-                                                    <label for="companyName" class="form-label">Company
-                                                        Name</label>
-                                                    <input type="text" class="form-control" id="companyName"
-                                                        placeholder="Company name" value="Themesbrand">
-                                                </div>
-                                            </div>
-                                            <!--end col-->
-                                            <div class="col-lg-6">
-                                                <div class="mb-3">
-                                                    <label for="experienceYear" class="form-label">Experience
-                                                        Years</label>
-                                                    <div class="row">
-                                                        <div class="col-lg-5">
-                                                            <select class="form-control" data-choices
-                                                                data-choices-search-false name="experienceYear"
-                                                                id="experienceYear">
-                                                                <option value="">Select years</option>
-                                                                <option value="Choice 1">2001</option>
-                                                                <option value="Choice 2">2002</option>
-                                                                <option value="Choice 3">2003</option>
-                                                                <option value="Choice 4">2004</option>
-                                                                <option value="Choice 5">2005</option>
-                                                                <option value="Choice 6">2006</option>
-                                                                <option value="Choice 7">2007</option>
-                                                                <option value="Choice 8">2008</option>
-                                                                <option value="Choice 9">2009</option>
-                                                                <option value="Choice 10">2010</option>
-                                                                <option value="Choice 11">2011</option>
-                                                                <option value="Choice 12">2012</option>
-                                                                <option value="Choice 13">2013</option>
-                                                                <option value="Choice 14">2014</option>
-                                                                <option value="Choice 15">2015</option>
-                                                                <option value="Choice 16">2016</option>
-                                                                <option value="Choice 17" selected>2017
-                                                                </option>
-                                                                <option value="Choice 18">2018</option>
-                                                                <option value="Choice 19">2019</option>
-                                                                <option value="Choice 20">2020</option>
-                                                                <option value="Choice 21">2021</option>
-                                                                <option value="Choice 22">2022</option>
-                                                            </select>
-                                                        </div>
-                                                        <!--end col-->
-                                                        <div class="col-auto align-self-center">
-                                                            to
-                                                        </div>
-                                                        <!--end col-->
-                                                        <div class="col-lg-5">
-                                                            <select class="form-control" data-choices
-                                                                data-choices-search-false name="choices-single-default2">
-                                                                <option value="">Select years</option>
-                                                                <option value="Choice 1">2001</option>
-                                                                <option value="Choice 2">2002</option>
-                                                                <option value="Choice 3">2003</option>
-                                                                <option value="Choice 4">2004</option>
-                                                                <option value="Choice 5">2005</option>
-                                                                <option value="Choice 6">2006</option>
-                                                                <option value="Choice 7">2007</option>
-                                                                <option value="Choice 8">2008</option>
-                                                                <option value="Choice 9">2009</option>
-                                                                <option value="Choice 10">2010</option>
-                                                                <option value="Choice 11">2011</option>
-                                                                <option value="Choice 12">2012</option>
-                                                                <option value="Choice 13">2013</option>
-                                                                <option value="Choice 14">2014</option>
-                                                                <option value="Choice 15">2015</option>
-                                                                <option value="Choice 16">2016</option>
-                                                                <option value="Choice 17">2017</option>
-                                                                <option value="Choice 18">2018</option>
-                                                                <option value="Choice 19">2019</option>
-                                                                <option value="Choice 20" selected>2020
-                                                                </option>
-                                                                <option value="Choice 21">2021</option>
-                                                                <option value="Choice 22">2022</option>
-                                                            </select>
-                                                        </div>
-                                                        <!--end col-->
-                                                    </div>
-                                                    <!--end row-->
-                                                </div>
-                                            </div>
-                                            <!--end col-->
-                                            <div class="col-lg-12">
-                                                <div class="mb-3">
-                                                    <label for="jobDescription" class="form-label">Job
-                                                        Description</label>
-                                                    <textarea class="form-control" id="jobDescription" rows="3"
-                                                        placeholder="Enter description">You always want to make sure that your fonts work well together and try to limit the number of fonts you use to three or less. Experiment and play around with the fonts that you already have in the software you're working with reputable font websites. </textarea>
-                                                </div>
-                                            </div>
-                                            <!--end col-->
-                                            <div class="hstack gap-2 justify-content-end">
-                                                <a class="btn btn-success" href="javascript:deleteEl(1)">Delete</a>
-                                            </div>
-                                        </div>
-                                        <!--end row-->
-                                    </div>
-                                </div>
-                                <div id="newForm" style="display: none;">
+    </div>
 
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="hstack gap-2">
-                                        <button type="submit" class="btn btn-success">Update</button>
-                                        <a href="javascript:new_link()" class="btn btn-primary">Add
-                                            New</a>
-                                    </div>
-                                </div>
-                                <!--end col-->
-                            </form>
+    <div class="tab-content">
+
+        <div id="emp_profile" class="pro-overview tab-pane fade active show">
+            <div class="row">
+                <div class="col-md-6 d-flex">
+                    <div class="card profile-box flex-fill">
+                        <div class="card-body">
+                            <h3 class="card-title">Personal Informations <a href="#" class="edit-icon"
+                                    data-bs-toggle="modal" data-bs-target="#personal_info_modal"><i
+                                        class="ri-pencil-fill"></i></a></h3>
+                            <ul class="personal-info">
+                                <li>
+                                    <div class="title">Passport No.</div>
+                                    <div class="text">9876543210</div>
+                                </li>
+                                <li>
+                                    <div class="title">Passport Exp Date.</div>
+                                    <div class="text">9876543210</div>
+                                </li>
+                                <li>
+                                    <div class="title">Tel</div>
+                                    <div class="text"><a href="">9876543210</a></div>
+                                </li>
+                                <li>
+                                    <div class="title">Nationality</div>
+                                    <div class="text">Indian</div>
+                                </li>
+                                <li>
+                                    <div class="title">Religion</div>
+                                    <div class="text">Christian</div>
+                                </li>
+                                <li>
+                                    <div class="title">Marital status</div>
+                                    <div class="text">Married</div>
+                                </li>
+                                <li>
+                                    <div class="title">Employment of spouse</div>
+                                    <div class="text">No</div>
+                                </li>
+                                <li>
+                                    <div class="title">No. of children</div>
+                                    <div class="text">2</div>
+                                </li>
+                            </ul>
                         </div>
-                        <!--end tab-pane-->
-                        <div class="tab-pane" id="privacy" role="tabpanel">
-                            <div class="mb-4 pb-2">
-                                <h5 class="card-title text-decoration-underline mb-3">Security:</h5>
-                                <div class="d-flex flex-column flex-sm-row mb-4 mb-sm-0">
-                                    <div class="flex-grow-1">
-                                        <h6 class="fs-14 mb-1">Two-factor Authentication</h6>
-                                        <p class="text-muted">Two-factor authentication is an enhanced
-                                            security meansur. Once enabled, you'll be required to give
-                                            two types of identification when you log into Google
-                                            Authentication and SMS are Supported.</p>
-                                    </div>
-                                    <div class="flex-shrink-0 ms-sm-3">
-                                        <a href="javascript:void(0);" class="btn btn-sm btn-primary">Enable Two-facor
-                                            Authentication</a>
-                                    </div>
-                                </div>
-                                <div class="d-flex flex-column flex-sm-row mb-4 mb-sm-0 mt-2">
-                                    <div class="flex-grow-1">
-                                        <h6 class="fs-14 mb-1">Secondary Verification</h6>
-                                        <p class="text-muted">The first factor is a password and the
-                                            second commonly includes a text with a code sent to your
-                                            smartphone, or biometrics using your fingerprint, face, or
-                                            retina.</p>
-                                    </div>
-                                    <div class="flex-shrink-0 ms-sm-3">
-                                        <a href="javascript:void(0);" class="btn btn-sm btn-primary">Set
-                                            up secondary method</a>
-                                    </div>
-                                </div>
-                                <div class="d-flex flex-column flex-sm-row mb-4 mb-sm-0 mt-2">
-                                    <div class="flex-grow-1">
-                                        <h6 class="fs-14 mb-1">Backup Codes</h6>
-                                        <p class="text-muted mb-sm-0">A backup code is automatically
-                                            generated for you when you turn on two-factor authentication
-                                            through your iOS or Android Twitter app. You can also
-                                            generate a backup code on twitter.com.</p>
-                                    </div>
-                                    <div class="flex-shrink-0 ms-sm-3">
-                                        <a href="javascript:void(0);" class="btn btn-sm btn-primary">Generate backup
-                                            codes</a>
-                                    </div>
-                                </div>
+                    </div>
+                </div>
+                <div class="col-md-6 d-flex">
+                    <div class="card profile-box flex-fill">
+                        <div class="card-body">
+                            <h3 class="card-title">Emergency Contact <a href="#" class="edit-icon"
+                                    data-bs-toggle="modal" data-bs-target="#emergency_contact_modal"><i
+                                        class=" ri-pencil-fill"></i></a></h3>
+                            <h5 class="section-title">Primary</h5>
+                            <ul class="personal-info">
+                                <li>
+                                    <div class="title">Name</div>
+                                    <div class="text">John Doe</div>
+                                </li>
+                                <li>
+                                    <div class="title">Relationship</div>
+                                    <div class="text">Father</div>
+                                </li>
+                                <li>
+                                    <div class="title">Phone </div>
+                                    <div class="text">9876543210, 9876543210</div>
+                                </li>
+                            </ul>
+                            <hr>
+                            <h5 class="section-title">Secondary</h5>
+                            <ul class="personal-info">
+                                <li>
+                                    <div class="title">Name</div>
+                                    <div class="text">Karen Wills</div>
+                                </li>
+                                <li>
+                                    <div class="title">Relationship</div>
+                                    <div class="text">Brother</div>
+                                </li>
+                                <li>
+                                    <div class="title">Phone </div>
+                                    <div class="text">9876543210, 9876543210</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 d-flex">
+                    <div class="card profile-box flex-fill">
+                        <div class="card-body">
+                            <h3 class="card-title">Bank information</h3>
+                            <ul class="personal-info">
+                                <li>
+                                    <div class="title">Bank name</div>
+                                    <div class="text">ICICI Bank</div>
+                                </li>
+                                <li>
+                                    <div class="title">Bank account No.</div>
+                                    <div class="text">159843014641</div>
+                                </li>
+                                <li>
+                                    <div class="title">IFSC Code</div>
+                                    <div class="text">ICI24504</div>
+                                </li>
+                                <li>
+                                    <div class="title">PAN No</div>
+                                    <div class="text">TC000Y56</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 d-flex">
+                    <div class="card profile-box flex-fill">
+                        <div class="card-body">
+                            <h3 class="card-title">Family Informations <a href="#" class="edit-icon"
+                                    data-bs-toggle="modal" data-bs-target="#family_info_modal"><i
+                                        class=" ri-pencil-fill"></i></a></h3>
+                            <div class="table-responsive">
+                                <table class="table table-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Relationship</th>
+                                            <th>Date of Birth</th>
+                                            <th>Phone</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Leo</td>
+                                            <td>Brother</td>
+                                            <td>Feb 16th, 2019</td>
+                                            <td>9876543210</td>
+                                            <td class="text-end">
+                                                <div class="dropdown dropdown-action">
+                                                    <a aria-expanded="false" data-bs-toggle="dropdown"
+                                                        class="action-icon dropdown-toggle" href="#"><i
+                                                            class="ri-more-2-fill material-icons"></i></a>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a href="#" class="dropdown-item"><i
+                                                                class=" ri-pencil-fill m-r-5"></i> Edit</a>
+                                                        <a href="#" class="dropdown-item"><i
+                                                                class="  ri-delete-bin-5-fill-o m-r-5"></i> Delete</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                            <div class="mb-3">
-                                <h5 class="card-title text-decoration-underline mb-3">Application
-                                    Notifications:</h5>
-                                <ul class="list-unstyled mb-0">
-                                    <li class="d-flex">
-                                        <div class="flex-grow-1">
-                                            <label for="directMessage" class="form-check-label fs-14">Direct
-                                                messages</label>
-                                            <p class="text-muted">Messages from people you follow</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 d-flex">
+                    <div class="card profile-box flex-fill">
+                        <div class="card-body">
+                            <h3 class="card-title">Education Informations <a href="#" class="edit-icon"
+                                    data-bs-toggle="modal" data-bs-target="#education_info"><i
+                                        class=" ri-pencil-fill"></i></a></h3>
+                            <div class="experience-box">
+                                <ul class="experience-list">
+                                    <li>
+                                        <div class="experience-user">
+                                            <div class="before-circle"></div>
                                         </div>
-                                        <div class="flex-shrink-0">
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" role="switch"
-                                                    id="directMessage" checked />
+                                        <div class="experience-content">
+                                            <div class="timeline-content">
+                                                <a href="#/" class="name">International College of Arts and Science
+                                                    (UG)</a>
+                                                <div>Bsc Computer Science</div>
+                                                <span class="time">2000 - 2003</span>
                                             </div>
                                         </div>
                                     </li>
-                                    <li class="d-flex mt-2">
-                                        <div class="flex-grow-1">
-                                            <label class="form-check-label fs-14" for="desktopNotification">
-                                                Show desktop notifications
-                                            </label>
-                                            <p class="text-muted">Choose the option you want as your
-                                                default setting. Block a site: Next to "Not allowed to
-                                                send notifications," click Add.</p>
+                                    <li>
+                                        <div class="experience-user">
+                                            <div class="before-circle"></div>
                                         </div>
-                                        <div class="flex-shrink-0">
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" role="switch"
-                                                    id="desktopNotification" checked />
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="d-flex mt-2">
-                                        <div class="flex-grow-1">
-                                            <label class="form-check-label fs-14" for="emailNotification">
-                                                Show email notifications
-                                            </label>
-                                            <p class="text-muted"> Under Settings, choose Notifications.
-                                                Under Select an account, choose the account to enable
-                                                notifications for. </p>
-                                        </div>
-                                        <div class="flex-shrink-0">
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" role="switch"
-                                                    id="emailNotification" />
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="d-flex mt-2">
-                                        <div class="flex-grow-1">
-                                            <label class="form-check-label fs-14" for="chatNotification">
-                                                Show chat notifications
-                                            </label>
-                                            <p class="text-muted">To prevent duplicate mobile
-                                                notifications from the Gmail and Chat apps, in settings,
-                                                turn off Chat notifications.</p>
-                                        </div>
-                                        <div class="flex-shrink-0">
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" role="switch"
-                                                    id="chatNotification" />
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="d-flex mt-2">
-                                        <div class="flex-grow-1">
-                                            <label class="form-check-label fs-14" for="purchaesNotification">
-                                                Show purchase notifications
-                                            </label>
-                                            <p class="text-muted">Get real-time purchase alerts to
-                                                protect yourself from fraudulent charges.</p>
-                                        </div>
-                                        <div class="flex-shrink-0">
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" role="switch"
-                                                    id="purchaesNotification" />
+                                        <div class="experience-content">
+                                            <div class="timeline-content">
+                                                <a href="#/" class="name">International College of Arts and Science
+                                                    (PG)</a>
+                                                <div>Msc Computer Science</div>
+                                                <span class="time">2000 - 2003</span>
                                             </div>
                                         </div>
                                     </li>
                                 </ul>
                             </div>
-                            <div>
-                                <h5 class="card-title text-decoration-underline mb-3">Delete This
-                                    Account:</h5>
-                                <p class="text-muted">Go to the Data & Privacy section of your profile
-                                    Account. Scroll to "Your data & privacy options." Delete your
-                                    Profile Account. Follow the instructions to delete your account :
-                                </p>
-                                <div>
-                                    <input type="password" class="form-control" id="passwordInput"
-                                        placeholder="Enter your password" value="make@321654987" style="max-width: 265px;">
-                                </div>
-                                <div class="hstack gap-2 mt-3">
-                                    <a href="javascript:void(0);" class="btn btn-soft-danger">Close &
-                                        Delete This Account</a>
-                                    <a href="javascript:void(0);" class="btn btn-light">Cancel</a>
-                                </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 d-flex">
+                    <div class="card profile-box flex-fill">
+                        <div class="card-body">
+                            <h3 class="card-title">Experience <a href="#" class="edit-icon" data-bs-toggle="modal"
+                                    data-bs-target="#experience_info"><i class=" ri-pencil-fill"></i></a></h3>
+                            <div class="experience-box">
+                                <ul class="experience-list">
+                                    <li>
+                                        <div class="experience-user">
+                                            <div class="before-circle"></div>
+                                        </div>
+                                        <div class="experience-content">
+                                            <div class="timeline-content">
+                                                <a href="#/" class="name">Web Designer at Zen Corporation</a>
+                                                <span class="time">Jan 2013 - Present (5 years 2 months)</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="experience-user">
+                                            <div class="before-circle"></div>
+                                        </div>
+                                        <div class="experience-content">
+                                            <div class="timeline-content">
+                                                <a href="#/" class="name">Web Designer at Ron-tech</a>
+                                                <span class="time">Jan 2013 - Present (5 years 2 months)</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="experience-user">
+                                            <div class="before-circle"></div>
+                                        </div>
+                                        <div class="experience-content">
+                                            <div class="timeline-content">
+                                                <a href="#/" class="name">Web Designer at Dalt Technology</a>
+                                                <span class="time">Jan 2013 - Present (5 years 2 months)</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
-                        <!--end tab-pane-->
                     </div>
                 </div>
             </div>
         </div>
-        <!--end col-->
+
+
+        <div class="tab-pane fade" id="bank_statutory">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title"> Basic Salary Information</h3>
+                    <form>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="col-form-label">Salary basis <span
+                                            class="text-danger">*</span></label>
+                                    <select class="select select2-hidden-accessible"
+                                        data-select2-id="select2-data-1-ecvr" tabindex="-1" aria-hidden="true">
+                                        <option data-select2-id="select2-data-3-iget">Select salary basis type</option>
+                                        <option>Hourly</option>
+                                        <option>Daily</option>
+                                        <option>Weekly</option>
+                                        <option>Monthly</option>
+                                    </select><span class="select2 select2-container select2-container--default"
+                                        dir="ltr" data-select2-id="select2-data-2-xiji" style="width: 100%;"><span
+                                            class="selection"><span class="select2-selection select2-selection--single"
+                                                role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0"
+                                                aria-disabled="false" aria-labelledby="select2-hgdl-container"
+                                                aria-controls="select2-hgdl-container"><span
+                                                    class="select2-selection__rendered" id="select2-hgdl-container"
+                                                    role="textbox" aria-readonly="true"
+                                                    title="Select salary basis type">Select salary basis
+                                                    type</span><span class="select2-selection__arrow"
+                                                    role="presentation"><b
+                                                        role="presentation"></b></span></span></span><span
+                                            class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="col-form-label">Salary amount <small class="text-muted">per
+                                            month</small></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">$</span>
+                                        <input type="text" class="form-control" placeholder="Type your salary amount"
+                                            value="0.00">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="col-form-label">Payment type</label>
+                                    <select class="select select2-hidden-accessible"
+                                        data-select2-id="select2-data-4-dj2y" tabindex="-1" aria-hidden="true">
+                                        <option data-select2-id="select2-data-6-iwpp">Select payment type</option>
+                                        <option>Bank transfer</option>
+                                        <option>Check</option>
+                                        <option>Cash</option>
+                                    </select><span class="select2 select2-container select2-container--default"
+                                        dir="ltr" data-select2-id="select2-data-5-s3wp" style="width: 100%;"><span
+                                            class="selection"><span class="select2-selection select2-selection--single"
+                                                role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0"
+                                                aria-disabled="false" aria-labelledby="select2-37e7-container"
+                                                aria-controls="select2-37e7-container"><span
+                                                    class="select2-selection__rendered" id="select2-37e7-container"
+                                                    role="textbox" aria-readonly="true"
+                                                    title="Select payment type">Select payment type</span><span
+                                                    class="select2-selection__arrow" role="presentation"><b
+                                                        role="presentation"></b></span></span></span><span
+                                            class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <h3 class="card-title"> PF Information</h3>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="col-form-label">PF contribution</label>
+                                    <select class="select select2-hidden-accessible"
+                                        data-select2-id="select2-data-7-w8sh" tabindex="-1" aria-hidden="true">
+                                        <option data-select2-id="select2-data-9-r0ka">Select PF contribution</option>
+                                        <option>Yes</option>
+                                        <option>No</option>
+                                    </select><span class="select2 select2-container select2-container--default"
+                                        dir="ltr" data-select2-id="select2-data-8-lbfb" style="width: 100%;"><span
+                                            class="selection"><span class="select2-selection select2-selection--single"
+                                                role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0"
+                                                aria-disabled="false" aria-labelledby="select2-k79s-container"
+                                                aria-controls="select2-k79s-container"><span
+                                                    class="select2-selection__rendered" id="select2-k79s-container"
+                                                    role="textbox" aria-readonly="true"
+                                                    title="Select PF contribution">Select PF contribution</span><span
+                                                    class="select2-selection__arrow" role="presentation"><b
+                                                        role="presentation"></b></span></span></span><span
+                                            class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="col-form-label">PF No. <span class="text-danger">*</span></label>
+                                    <select class="select select2-hidden-accessible"
+                                        data-select2-id="select2-data-10-v11n" tabindex="-1" aria-hidden="true">
+                                        <option data-select2-id="select2-data-12-3a7c">Select PF contribution</option>
+                                        <option>Yes</option>
+                                        <option>No</option>
+                                    </select><span class="select2 select2-container select2-container--default"
+                                        dir="ltr" data-select2-id="select2-data-11-0xtt" style="width: 100%;"><span
+                                            class="selection"><span class="select2-selection select2-selection--single"
+                                                role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0"
+                                                aria-disabled="false" aria-labelledby="select2-ku2h-container"
+                                                aria-controls="select2-ku2h-container"><span
+                                                    class="select2-selection__rendered" id="select2-ku2h-container"
+                                                    role="textbox" aria-readonly="true"
+                                                    title="Select PF contribution">Select PF contribution</span><span
+                                                    class="select2-selection__arrow" role="presentation"><b
+                                                        role="presentation"></b></span></span></span><span
+                                            class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="col-form-label">Employee PF rate</label>
+                                    <select class="select select2-hidden-accessible"
+                                        data-select2-id="select2-data-13-sglc" tabindex="-1" aria-hidden="true">
+                                        <option data-select2-id="select2-data-15-o5s2">Select PF contribution</option>
+                                        <option>Yes</option>
+                                        <option>No</option>
+                                    </select><span class="select2 select2-container select2-container--default"
+                                        dir="ltr" data-select2-id="select2-data-14-t7xx" style="width: 100%;"><span
+                                            class="selection"><span class="select2-selection select2-selection--single"
+                                                role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0"
+                                                aria-disabled="false" aria-labelledby="select2-zo26-container"
+                                                aria-controls="select2-zo26-container"><span
+                                                    class="select2-selection__rendered" id="select2-zo26-container"
+                                                    role="textbox" aria-readonly="true"
+                                                    title="Select PF contribution">Select PF contribution</span><span
+                                                    class="select2-selection__arrow" role="presentation"><b
+                                                        role="presentation"></b></span></span></span><span
+                                            class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="col-form-label">Additional rate <span
+                                            class="text-danger">*</span></label>
+                                    <select class="select select2-hidden-accessible"
+                                        data-select2-id="select2-data-16-y0rb" tabindex="-1" aria-hidden="true">
+                                        <option data-select2-id="select2-data-18-nnwh">Select additional rate</option>
+                                        <option>0%</option>
+                                        <option>1%</option>
+                                        <option>2%</option>
+                                        <option>3%</option>
+                                        <option>4%</option>
+                                        <option>5%</option>
+                                        <option>6%</option>
+                                        <option>7%</option>
+                                        <option>8%</option>
+                                        <option>9%</option>
+                                        <option>10%</option>
+                                    </select><span class="select2 select2-container select2-container--default"
+                                        dir="ltr" data-select2-id="select2-data-17-ouwe" style="width: 100%;"><span
+                                            class="selection"><span class="select2-selection select2-selection--single"
+                                                role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0"
+                                                aria-disabled="false" aria-labelledby="select2-cc48-container"
+                                                aria-controls="select2-cc48-container"><span
+                                                    class="select2-selection__rendered" id="select2-cc48-container"
+                                                    role="textbox" aria-readonly="true"
+                                                    title="Select additional rate">Select additional rate</span><span
+                                                    class="select2-selection__arrow" role="presentation"><b
+                                                        role="presentation"></b></span></span></span><span
+                                            class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="col-form-label">Total rate</label>
+                                    <input type="text" class="form-control" placeholder="N/A" value="11%">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="col-form-label">Employee PF rate</label>
+                                    <select class="select select2-hidden-accessible"
+                                        data-select2-id="select2-data-19-dbno" tabindex="-1" aria-hidden="true">
+                                        <option data-select2-id="select2-data-21-ajce">Select PF contribution</option>
+                                        <option>Yes</option>
+                                        <option>No</option>
+                                    </select><span class="select2 select2-container select2-container--default"
+                                        dir="ltr" data-select2-id="select2-data-20-rwtr" style="width: 100%;"><span
+                                            class="selection"><span class="select2-selection select2-selection--single"
+                                                role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0"
+                                                aria-disabled="false" aria-labelledby="select2-qvdw-container"
+                                                aria-controls="select2-qvdw-container"><span
+                                                    class="select2-selection__rendered" id="select2-qvdw-container"
+                                                    role="textbox" aria-readonly="true"
+                                                    title="Select PF contribution">Select PF contribution</span><span
+                                                    class="select2-selection__arrow" role="presentation"><b
+                                                        role="presentation"></b></span></span></span><span
+                                            class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="col-form-label">Additional rate <span
+                                            class="text-danger">*</span></label>
+                                    <select class="select select2-hidden-accessible"
+                                        data-select2-id="select2-data-22-ah6g" tabindex="-1" aria-hidden="true">
+                                        <option data-select2-id="select2-data-24-ngjq">Select additional rate</option>
+                                        <option>0%</option>
+                                        <option>1%</option>
+                                        <option>2%</option>
+                                        <option>3%</option>
+                                        <option>4%</option>
+                                        <option>5%</option>
+                                        <option>6%</option>
+                                        <option>7%</option>
+                                        <option>8%</option>
+                                        <option>9%</option>
+                                        <option>10%</option>
+                                    </select><span class="select2 select2-container select2-container--default"
+                                        dir="ltr" data-select2-id="select2-data-23-46iu" style="width: 100%;"><span
+                                            class="selection"><span class="select2-selection select2-selection--single"
+                                                role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0"
+                                                aria-disabled="false" aria-labelledby="select2-ij1t-container"
+                                                aria-controls="select2-ij1t-container"><span
+                                                    class="select2-selection__rendered" id="select2-ij1t-container"
+                                                    role="textbox" aria-readonly="true"
+                                                    title="Select additional rate">Select additional rate</span><span
+                                                    class="select2-selection__arrow" role="presentation"><b
+                                                        role="presentation"></b></span></span></span><span
+                                            class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="col-form-label">Total rate</label>
+                                    <input type="text" class="form-control" placeholder="N/A" value="11%">
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <h3 class="card-title"> ESI Information</h3>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="col-form-label">ESI contribution</label>
+                                    <select class="select select2-hidden-accessible"
+                                        data-select2-id="select2-data-25-9ci2" tabindex="-1" aria-hidden="true">
+                                        <option data-select2-id="select2-data-27-u74r">Select ESI contribution</option>
+                                        <option>Yes</option>
+                                        <option>No</option>
+                                    </select><span class="select2 select2-container select2-container--default"
+                                        dir="ltr" data-select2-id="select2-data-26-tskv" style="width: 100%;"><span
+                                            class="selection"><span class="select2-selection select2-selection--single"
+                                                role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0"
+                                                aria-disabled="false" aria-labelledby="select2-r6du-container"
+                                                aria-controls="select2-r6du-container"><span
+                                                    class="select2-selection__rendered" id="select2-r6du-container"
+                                                    role="textbox" aria-readonly="true"
+                                                    title="Select ESI contribution">Select ESI contribution</span><span
+                                                    class="select2-selection__arrow" role="presentation"><b
+                                                        role="presentation"></b></span></span></span><span
+                                            class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="col-form-label">ESI No. <span class="text-danger">*</span></label>
+                                    <select class="select select2-hidden-accessible"
+                                        data-select2-id="select2-data-28-mjdh" tabindex="-1" aria-hidden="true">
+                                        <option data-select2-id="select2-data-30-7ur7">Select ESI contribution</option>
+                                        <option>Yes</option>
+                                        <option>No</option>
+                                    </select><span class="select2 select2-container select2-container--default"
+                                        dir="ltr" data-select2-id="select2-data-29-nbip" style="width: 100%;"><span
+                                            class="selection"><span class="select2-selection select2-selection--single"
+                                                role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0"
+                                                aria-disabled="false" aria-labelledby="select2-un38-container"
+                                                aria-controls="select2-un38-container"><span
+                                                    class="select2-selection__rendered" id="select2-un38-container"
+                                                    role="textbox" aria-readonly="true"
+                                                    title="Select ESI contribution">Select ESI contribution</span><span
+                                                    class="select2-selection__arrow" role="presentation"><b
+                                                        role="presentation"></b></span></span></span><span
+                                            class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="col-form-label">Employee ESI rate</label>
+                                    <select class="select select2-hidden-accessible"
+                                        data-select2-id="select2-data-31-k78f" tabindex="-1" aria-hidden="true">
+                                        <option data-select2-id="select2-data-33-6bk0">Select ESI contribution</option>
+                                        <option>Yes</option>
+                                        <option>No</option>
+                                    </select><span class="select2 select2-container select2-container--default"
+                                        dir="ltr" data-select2-id="select2-data-32-7jw0" style="width: 100%;"><span
+                                            class="selection"><span class="select2-selection select2-selection--single"
+                                                role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0"
+                                                aria-disabled="false" aria-labelledby="select2-5oth-container"
+                                                aria-controls="select2-5oth-container"><span
+                                                    class="select2-selection__rendered" id="select2-5oth-container"
+                                                    role="textbox" aria-readonly="true"
+                                                    title="Select ESI contribution">Select ESI contribution</span><span
+                                                    class="select2-selection__arrow" role="presentation"><b
+                                                        role="presentation"></b></span></span></span><span
+                                            class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="col-form-label">Additional rate <span
+                                            class="text-danger">*</span></label>
+                                    <select class="select select2-hidden-accessible"
+                                        data-select2-id="select2-data-34-23ui" tabindex="-1" aria-hidden="true">
+                                        <option data-select2-id="select2-data-36-9t77">Select additional rate</option>
+                                        <option>0%</option>
+                                        <option>1%</option>
+                                        <option>2%</option>
+                                        <option>3%</option>
+                                        <option>4%</option>
+                                        <option>5%</option>
+                                        <option>6%</option>
+                                        <option>7%</option>
+                                        <option>8%</option>
+                                        <option>9%</option>
+                                        <option>10%</option>
+                                    </select><span class="select2 select2-container select2-container--default"
+                                        dir="ltr" data-select2-id="select2-data-35-uyht" style="width: 100%;"><span
+                                            class="selection"><span class="select2-selection select2-selection--single"
+                                                role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0"
+                                                aria-disabled="false" aria-labelledby="select2-vkjw-container"
+                                                aria-controls="select2-vkjw-container"><span
+                                                    class="select2-selection__rendered" id="select2-vkjw-container"
+                                                    role="textbox" aria-readonly="true"
+                                                    title="Select additional rate">Select additional rate</span><span
+                                                    class="select2-selection__arrow" role="presentation"><b
+                                                        role="presentation"></b></span></span></span><span
+                                            class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="col-form-label">Total rate</label>
+                                    <input type="text" class="form-control" placeholder="N/A" value="11%">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="submit-section">
+                            <button class="btn btn-primary submit-btn" type="submit">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
     </div>
-    <!--end row-->
+
+    <!-- profile info modal -->
+
+    <div id="profile_info" class="modal custom-modal fade" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Profile Information</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="profile-img-wrap edit-img">
+                                    <img class="inline-block" src="assets/img/profiles/avatar-02.jpg" alt="user">
+                                    <div class="fileupload btn">
+                                        <span class="btn-text">edit</span>
+                                        <input class="upload" type="file">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>First Name</label>
+                                            <input type="text" class="form-control" value="John">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Last Name</label>
+                                            <input type="text" class="form-control" value="Doe">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Birth Date</label>
+                                            <div class="cal-icon">
+                                                <input class="form-control datetimepicker" type="text"
+                                                    value="05/06/1985">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Gender</label>
+                                            <select class="select form-control select2-hidden-accessible"
+                                                data-select2-id="select2-data-37-98co" tabindex="-1" aria-hidden="true">
+                                                <option value="male selected" data-select2-id="select2-data-39-gziz">
+                                                    Male</option>
+                                                <option value="female">Female</option>
+                                            </select><span class="select2 select2-container select2-container--default"
+                                                dir="ltr" data-select2-id="select2-data-38-f4ze"
+                                                style="width: 100%;"><span class="selection"><span
+                                                        class="select2-selection select2-selection--single"
+                                                        role="combobox" aria-haspopup="true" aria-expanded="false"
+                                                        tabindex="0" aria-disabled="false"
+                                                        aria-labelledby="select2-k8yt-container"
+                                                        aria-controls="select2-k8yt-container"><span
+                                                            class="select2-selection__rendered"
+                                                            id="select2-k8yt-container" role="textbox"
+                                                            aria-readonly="true" title="Male">Male</span><span
+                                                            class="select2-selection__arrow" role="presentation"><b
+                                                                role="presentation"></b></span></span></span><span
+                                                    class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Address</label>
+                                    <input type="text" class="form-control" value="4487 Snowbird Lane">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>State</label>
+                                    <input type="text" class="form-control" value="New York">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Country</label>
+                                    <input type="text" class="form-control" value="United States">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Pin Code</label>
+                                    <input type="text" class="form-control" value="10523">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Phone Number</label>
+                                    <input type="text" class="form-control" value="631-889-3206">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Department <span class="text-danger">*</span></label>
+                                    <select class="select select2-hidden-accessible"
+                                        data-select2-id="select2-data-40-ctri" tabindex="-1" aria-hidden="true">
+                                        <option data-select2-id="select2-data-42-b3j2">Select Department</option>
+                                        <option>Web Development</option>
+                                        <option>IT Management</option>
+                                        <option>Marketing</option>
+                                    </select><span class="select2 select2-container select2-container--default"
+                                        dir="ltr" data-select2-id="select2-data-41-52qq" style="width: 100%;"><span
+                                            class="selection"><span class="select2-selection select2-selection--single"
+                                                role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0"
+                                                aria-disabled="false" aria-labelledby="select2-jb4a-container"
+                                                aria-controls="select2-jb4a-container"><span
+                                                    class="select2-selection__rendered" id="select2-jb4a-container"
+                                                    role="textbox" aria-readonly="true" title="Select Department">Select
+                                                    Department</span><span class="select2-selection__arrow"
+                                                    role="presentation"><b
+                                                        role="presentation"></b></span></span></span><span
+                                            class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Designation <span class="text-danger">*</span></label>
+                                    <select class="select select2-hidden-accessible"
+                                        data-select2-id="select2-data-43-omy5" tabindex="-1" aria-hidden="true">
+                                        <option data-select2-id="select2-data-45-amhv">Select Designation</option>
+                                        <option>Web Designer</option>
+                                        <option>Web Developer</option>
+                                        <option>Android Developer</option>
+                                    </select><span class="select2 select2-container select2-container--default"
+                                        dir="ltr" data-select2-id="select2-data-44-3wrh" style="width: 100%;"><span
+                                            class="selection"><span class="select2-selection select2-selection--single"
+                                                role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0"
+                                                aria-disabled="false" aria-labelledby="select2-u1je-container"
+                                                aria-controls="select2-u1je-container"><span
+                                                    class="select2-selection__rendered" id="select2-u1je-container"
+                                                    role="textbox" aria-readonly="true"
+                                                    title="Select Designation">Select Designation</span><span
+                                                    class="select2-selection__arrow" role="presentation"><b
+                                                        role="presentation"></b></span></span></span><span
+                                            class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Reports To <span class="text-danger">*</span></label>
+                                    <select class="select select2-hidden-accessible"
+                                        data-select2-id="select2-data-46-mnpp" tabindex="-1" aria-hidden="true">
+                                        <option data-select2-id="select2-data-48-u3m6">-</option>
+                                        <option>Wilmer Deluna</option>
+                                        <option>Lesley Grauer</option>
+                                        <option>Jeffery Lalor</option>
+                                    </select><span class="select2 select2-container select2-container--default"
+                                        dir="ltr" data-select2-id="select2-data-47-2xsw" style="width: 100%;"><span
+                                            class="selection"><span class="select2-selection select2-selection--single"
+                                                role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0"
+                                                aria-disabled="false" aria-labelledby="select2-cedl-container"
+                                                aria-controls="select2-cedl-container"><span
+                                                    class="select2-selection__rendered" id="select2-cedl-container"
+                                                    role="textbox" aria-readonly="true" title="-">-</span><span
+                                                    class="select2-selection__arrow" role="presentation"><b
+                                                        role="presentation"></b></span></span></span><span
+                                            class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="submit-section">
+                            <button class="btn btn-primary submit-btn">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- modal -->
+
+    <div id="personal_info_modal" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Personal Information</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Passport No</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Passport Expiry Date</label>
+                                    <div class="cal-icon">
+                                        <input class="form-control datetimepicker" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Tel</label>
+                                    <input class="form-control" type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Nationality <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Religion</label>
+                                    <div class="cal-icon">
+                                        <input class="form-control" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Marital status <span class="text-danger">*</span></label>
+                                    <select class="select form-control select2-hidden-accessible"
+                                        data-select2-id="select2-data-49-p0wk" tabindex="-1" aria-hidden="true">
+                                        <option data-select2-id="select2-data-51-s1yq">-</option>
+                                        <option>Single</option>
+                                        <option>Married</option>
+                                    </select><span class="select2 select2-container select2-container--default"
+                                        dir="ltr" data-select2-id="select2-data-50-5xxf" style="width: 100%;"><span
+                                            class="selection"><span class="select2-selection select2-selection--single"
+                                                role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0"
+                                                aria-disabled="false" aria-labelledby="select2-you7-container"
+                                                aria-controls="select2-you7-container"><span
+                                                    class="select2-selection__rendered" id="select2-you7-container"
+                                                    role="textbox" aria-readonly="true" title="-">-</span><span
+                                                    class="select2-selection__arrow" role="presentation"><b
+                                                        role="presentation"></b></span></span></span><span
+                                            class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Employment of spouse</label>
+                                    <input class="form-control" type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>No. of children </label>
+                                    <input class="form-control" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="submit-section">
+                            <button class="btn btn-primary submit-btn">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- emergency modal-->
+    <div id="emergency_contact_modal" class="modal custom-modal fade show" aria-modal="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Personal Information</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="card-title">Primary Contact</h3>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Name <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Relationship <span class="text-danger">*</span></label>
+                                            <input class="form-control" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Phone <span class="text-danger">*</span></label>
+                                            <input class="form-control" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Phone 2</label>
+                                            <input class="form-control" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="card-title">Primary Contact</h3>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Name <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Relationship <span class="text-danger">*</span></label>
+                                            <input class="form-control" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Phone <span class="text-danger">*</span></label>
+                                            <input class="form-control" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Phone 2</label>
+                                            <input class="form-control" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="submit-section">
+                            <button class="btn btn-primary submit-btn">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- family modal-->
+
+    <div id="family_info_modal" class="modal custom-modal fade show" role="dialog" aria-modal="true"
+        >
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"> Family Informations</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-scroll">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h3 class="card-title">Family Member <a href="javascript:void(0);"
+                                            class="delete-icon"><i class="  ri-delete-bin-5-fill-o"></i></a></h3>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Name <span class="text-danger">*</span></label>
+                                                <input class="form-control" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Relationship <span class="text-danger">*</span></label>
+                                                <input class="form-control" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Date of birth <span class="text-danger">*</span></label>
+                                                <input class="form-control" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Phone <span class="text-danger">*</span></label>
+                                                <input class="form-control" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <h3 class="card-title">Education Informations <a href="javascript:void(0);"
+                                            class="delete-icon"><i class="  ri-delete-bin-5-fill-o"></i></a></h3>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Name <span class="text-danger">*</span></label>
+                                                <input class="form-control" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Relationship <span class="text-danger">*</span></label>
+                                                <input class="form-control" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Date of birth <span class="text-danger">*</span></label>
+                                                <input class="form-control" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Phone <span class="text-danger">*</span></label>
+                                                <input class="form-control" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="add-more">
+                                        <a href="javascript:void(0);"><i class="fa fa-plus-circle"></i> Add More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="submit-section">
+                            <button class="btn btn-primary submit-btn">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- education modal-->
+    <div id="education_info" class="modal custom-modal fade show" role="dialog" aria-modal="true"
+        >
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"> Education Informations</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-scroll">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h3 class="card-title">Education Informations <a href="javascript:void(0);"
+                                            class="delete-icon"><i class="  ri-delete-bin-5-fill-o"></i></a></h3>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group form-focus focused">
+                                                <input type="text" value="Oxford University"
+                                                    class="form-control floating">
+                                                <label class="focus-label">Institution</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-focus focused">
+                                                <input type="text" value="Computer Science"
+                                                    class="form-control floating">
+                                                <label class="focus-label">Subject</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-focus focused">
+                                                <div class="cal-icon">
+                                                    <input type="text" value="01/06/2002"
+                                                        class="form-control floating datetimepicker">
+                                                </div>
+                                                <label class="focus-label">Starting Date</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-focus focused">
+                                                <div class="cal-icon">
+                                                    <input type="text" value="31/05/2006"
+                                                        class="form-control floating datetimepicker">
+                                                </div>
+                                                <label class="focus-label">Complete Date</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-focus focused">
+                                                <input type="text" value="BE Computer Science"
+                                                    class="form-control floating">
+                                                <label class="focus-label">Degree</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-focus focused">
+                                                <input type="text" value="Grade A" class="form-control floating">
+                                                <label class="focus-label">Grade</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <h3 class="card-title">Education Informations <a href="javascript:void(0);"
+                                            class="delete-icon"><i class="  ri-delete-bin-5-fill-o"></i></a></h3>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group form-focus focused">
+                                                <input type="text" value="Oxford University"
+                                                    class="form-control floating">
+                                                <label class="focus-label">Institution</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-focus focused">
+                                                <input type="text" value="Computer Science"
+                                                    class="form-control floating">
+                                                <label class="focus-label">Subject</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-focus focused">
+                                                <div class="cal-icon">
+                                                    <input type="text" value="01/06/2002"
+                                                        class="form-control floating datetimepicker">
+                                                </div>
+                                                <label class="focus-label">Starting Date</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-focus focused">
+                                                <div class="cal-icon">
+                                                    <input type="text" value="31/05/2006"
+                                                        class="form-control floating datetimepicker">
+                                                </div>
+                                                <label class="focus-label">Complete Date</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-focus focused">
+                                                <input type="text" value="BE Computer Science"
+                                                    class="form-control floating">
+                                                <label class="focus-label">Degree</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-focus focused">
+                                                <input type="text" value="Grade A" class="form-control floating">
+                                                <label class="focus-label">Grade</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="add-more">
+                                        <a href="javascript:void(0);"><i class="fa fa-plus-circle"></i> Add More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="submit-section">
+                            <button class="btn btn-primary submit-btn">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- experience modal-->
+
+    <div id="experience_info" class="modal custom-modal fade show" role="dialog" aria-modal="true"
+        >
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Experience Informations</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-scroll">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h3 class="card-title">Experience Informations <a href="javascript:void(0);"
+                                            class="delete-icon"><i class="  ri-delete-bin-5-fill-o"></i></a></h3>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group form-focus focused">
+                                                <input type="text" class="form-control floating"
+                                                    value="Digital Devlopment Inc">
+                                                <label class="focus-label">Company Name</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-focus focused">
+                                                <input type="text" class="form-control floating" value="United States">
+                                                <label class="focus-label">Location</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-focus focused">
+                                                <input type="text" class="form-control floating" value="Web Developer">
+                                                <label class="focus-label">Job Position</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-focus focused">
+                                                <div class="cal-icon">
+                                                    <input type="text" class="form-control floating datetimepicker"
+                                                        value="01/07/2007">
+                                                </div>
+                                                <label class="focus-label">Period From</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-focus focused">
+                                                <div class="cal-icon">
+                                                    <input type="text" class="form-control floating datetimepicker"
+                                                        value="08/06/2018">
+                                                </div>
+                                                <label class="focus-label">Period To</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <h3 class="card-title">Experience Informations <a href="javascript:void(0);"
+                                            class="delete-icon"><i class="  ri-delete-bin-5-fill-o"></i></a></h3>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group form-focus focused">
+                                                <input type="text" class="form-control floating"
+                                                    value="Digital Devlopment Inc">
+                                                <label class="focus-label">Company Name</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-focus focused">
+                                                <input type="text" class="form-control floating" value="United States">
+                                                <label class="focus-label">Location</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-focus focused">
+                                                <input type="text" class="form-control floating" value="Web Developer">
+                                                <label class="focus-label">Job Position</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-focus focused">
+                                                <div class="cal-icon">
+                                                    <input type="text" class="form-control floating datetimepicker"
+                                                        value="01/07/2007">
+                                                </div>
+                                                <label class="focus-label">Period From</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-focus focused">
+                                                <div class="cal-icon">
+                                                    <input type="text" class="form-control floating datetimepicker"
+                                                        value="08/06/2018">
+                                                </div>
+                                                <label class="focus-label">Period To</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="add-more">
+                                        <a href="javascript:void(0);"><i class="fa fa-plus-circle"></i> Add More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="submit-section">
+                            <button class="btn btn-primary submit-btn">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<!--end row-->
 @endsection
 @section('script')
-    <script src="{{ URL::asset('assets/js/pages/profile-setting.init.js') }}"></script>
-    <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
+<script src="{{ URL::asset('assets/js/pages/profile-setting.init.js') }}"></script>
+<script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 @endsection

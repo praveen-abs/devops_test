@@ -138,76 +138,94 @@
                     </div>
                     <div class="d-flex align-items-center">
 
-                        <span class="right  rounded-pill py-1 px-2 mx-2 text-white">Publish</span>
+                        <span class="right rounded-pill py-1 px-2 mx-2 text-white" id="publish-goal" style="cursor: pointer;">Publish</span>
                         <i class="ri-close-fill fw-bold mx-1 mt-0"></i>
 
                     </div>
                 </div>
             </div>
             <div class="card-body">
-                <div class="row mt-3">
-                    <div class="col-3  mt-3 mb-3">
-                        <div class="d-flex flex-column">
-                            <label class="" for="Assignment">
-                                Assignment Period</label>
-                            <input type="text" name="Assignment" class="" required />
+                <form id="goalForm">
+                    @csrf
+                    <input type="hidden" name="kpitable_id" id="kpitable_id">
+                    <input type="hidden" name="employees[]" id="sel_employees">
+                    <input type="hidden" name="reviewer" id="sel_reviewer">
+                    <div class="row mt-3">
+                        <div class="col-4  mt-3 mb-3">
+                            <div class="d-flex flex-column">
+                                <label class="" for="Assignment">
+                                    Assignment Period</label>
+                                <input type="text" name="assignment_period" class="" required />
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-3 mt-3 mb-3">
-                        <div class="d-flex flex-column">
-                            <label class="" for="Assignment">
-                                Coverage</label>
-                            <select name="dropDown" id="">
-                                <option value="">Employee</option>
-                                <option value="">Manager</option>
-                                <option value="">Project Manager</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-3  mt-3 mb-3">
-                        <div class="d-flex flex-column">
-                            <label class="" for="Assignment">
-                                Employees-02</label>
-                            <div class="avatar-group-item">
-                                <a >
-                                    <img src="assets/images/users/avatar-5.jpg" alt="" class="rounded-circle">
-                                </a>
+                        <div class="col-4 mt-3 mb-3">
+                            <div class="d-flex flex-column">
+                                <label class="" for="Assignment">
+                                    Coverage</label>
+                                <select name="coverage" id="">
+                                    <option value="Employee">Employee</option>
+                                    <option value="Manager">Manager</option>
+                                    <option value="Project Manager">Project Manager</option>
+                                </select>
                             </div>
                         </div>
                     </div>
-                    <div class="col-3 mt-3 mb-3 d-flex">
-
-                        <div class="d-flex flex-column">
-                            <label class="" for="Assignment">
-                                Reviwer</label>
-
-                            <div class="card reviwer-cards  m-0 rounded-pill">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center">
-
-                                        <a>
-                                            <img src="assets/images/users/avatar-5.jpg" alt="" class="rounded-circle">
-                                        </a>
-
-                                        <div class=" mt-1 message-content align-items-start d-flex flex-column   mx-2">
-                                            <h6 class="fw-bold m-0">Steve Jobs</h6>
-                                            <span>Steve@gmail.com</span>
-                                        </div>
+                    <div class="row mt-3">
+                        <div class="col-4  mt-3 mb-3">
+                            <div class="d-flex flex-column">
+                                <label class="" for="Assignment">
+                                    Employees-02</label>
+                                <div class="avatar-group-item">
+                                    <a >
+                                        <img src="assets/images/users/avatar-5.jpg" alt="" class="rounded-circle">
+                                    </a>
+                                    <div class="mt-1 message-content align-items-start d-flex flex-column  mx-2">
+                                        <span id="group-employee"></span>
                                     </div>
-
-
                                 </div>
                             </div>
-
+                            <div class="d-flex align-items-center">
+                                <button type="button" data-bs-toggle="modal"
+                                        data-bs-target="#changeEmployee"
+                                    class="right btn btn-primary py-1 px-3 rounded-pill mt-4 mx-3 text-white">Change</button>
+                            </div>
                         </div>
-                        <div class="d-flex align-items-center">
-                            <button
-                                class="right btn btn-primary py-1 px-3 rounded-pill mt-4 mx-3 text-white">Change</button>
+
+                        <div class="col-4 mt-3 mb-3 d-flex">
+
+                            <div class="d-flex flex-column">
+                                <label class="" for="Assignment">
+                                    Reviwer</label>
+
+                                <div class="card reviwer-cards  m-0 rounded-pill">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center">
+                                            <a>
+                                                <img src="assets/images/users/avatar-5.jpg" alt="" class="rounded-circle">
+                                            </a>
+
+                                            <div class=" mt-1 message-content align-items-start d-flex flex-column  mx-2">
+                                                <h6 class="fw-bold m-0" id="reviewer-name">Steve Jobs</h6>
+                                                <span id="reviewer-email">Steve@gmail.com</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <button 
+                                    type="button" 
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#createEmployee"
+                                    class="right btn btn-primary py-1 px-3 rounded-pill mt-4 mx-3 text-white"
+                                >
+                                    Change
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
 
 
                 <div class="table-wrapper">
@@ -220,10 +238,12 @@
                         </div>
                         <div class="col-12">
                             <div class="container-fluid mb-1 mt-3 ">
+                                <form id="kpiTableForm">
                                 <table class="table align-middle mb-0 table-nowrap responsive table-responsive" id="kpiTable">
+                                    @csrf
                                     <thead class="text-white bg-primary thead" id="tHead">
 
-                                        <tr class="text-uppercase">
+                                            <tr class="text-uppercase">
 
                                             <th class="sort" data-sort="id" style="width: 2%;">#</th>
                                             <th class="sort" data-sort="customer_name" style="width: 8%;">Dimension</th>
@@ -236,67 +256,63 @@
                                             <th class="sort" data-sort="status" style="width: 20%;">Stretch Target</th>
                                             <th class="sort" data-sort="status" style="">Source</th>
 
-                                            <th class="sort" data-sort="status" style="width: 10%;" width="10%">KPI
-                                                Weightage</th>
+                                                <th class="sort" data-sort="status" style="width: 10%;" width="10%">KPI
+                                                    Weightage</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="tbody" id="tbody">
+                                           
+                                            <tr>
+                                                <td class="">
+                                                    <span  name="numbers" id="" class="tableInp" >1</span>
+                                                </td>
 
+                                                <td class="">
+                                                    <textarea name="dimension[]" id="" cols="20" rows="2"
+                                                        placeholder="type here"></textarea>
+                                                </td>
 
-                                        </tr>
-                                    </thead>
-                                    <tbody class="tbody" id="tbody">
-                                        <tr>
-                                        <tr>
+                                                <td class="">
+                                                    <textarea name="kpi[]" id="" cols="20" rows="2"
+                                                        placeholder="type here"></textarea>
+                                                </td>
+                                                <td class="">
+                                                    <textarea name="operational[]" id="" cols="20" rows="2"
+                                                        placeholder="type here"></textarea>
+                                                </td>
+                                                <td class="">
+                                                    <textarea name="measure[]" id="" cols="20" rows="2"
+                                                        placeholder="type here"></textarea>
+                                                </td>
+                                                <td class="">
+                                                    <textarea name="frequency[]" id="" cols="20" rows="2"
+                                                        placeholder="type here"></textarea>
+                                                </td>
+                                                <td class="">
+                                                    <textarea name="target[]" id="" cols="20" rows="2"
+                                                        placeholder="type here"></textarea>
+                                                </td>
+                                                <td class="">
+                                                    <textarea name="stretchTarget[]" id="" cols="10" rows="2"
+                                                        placeholder="type here"></textarea>
+                                                </td>
+                                                <td class="">
+                                                    <textarea name="source[]" id="" cols="10" rows="2"
+                                                        placeholder="type here"></textarea>
+                                                </td>
+                                                <td class="">
+                                                    <textarea name="kpiWeightage[]" id="" cols="10" rows="2"
+                                                        placeholder="type here"></textarea>
+                                                </td>
+                                            </tr>
 
-                                            <td class="">
-                                                <span  name="numbers" id="" class="tableInp" >1</span>
-                                            </td>
-
-                                            <td class="">
-                                                <textarea name="dimension" id="" cols="25" rows="2"
-                                                    placeholder="type here"></textarea>
-                                            </td>
-
-                                            <td class="">
-                                                <textarea name="kpi" id="" cols="25" rows="2"
-                                                    placeholder="type here"></textarea>
-                                            </td>
-                                            <td class="">
-                                                <textarea name="operational" id="" cols="25" rows="2"
-                                                    placeholder="type here"></textarea>
-                                            </td>
-                                            <td class="">
-                                                <textarea name="measure " id="" cols="25" rows="2"
-                                                    placeholder="type here"></textarea>
-                                            </td>
-                                            <td class="">
-                                                <textarea name="frequency" id="" cols="25" rows="2"
-                                                    placeholder="type here"></textarea>
-                                            </td>
-                                            <td class="">
-                                                <textarea name="target" id="" cols="25" rows="2"
-                                                    placeholder="type here"></textarea>
-                                            </td>
-                                            <td class="">
-                                                <textarea name="stretchTarget" id="" cols="25" rows="2"
-                                                    placeholder="type here"></textarea>
-                                            </td>
-                                            <td class="">
-                                                <textarea name="source" id="" cols="25" rows="2"
-                                                    placeholder="type here"></textarea>
-                                            </td>
-                                            <td class="">
-                                                <textarea name="kpiWeightage" id="" cols="25" rows="2"
-                                                    placeholder="type here"></textarea>
-                                            </td>
-                                        </tr>
-
-                                        </tr>
-
-                                    </tbody>
-                                </table>
-
-                                <div class="buttons d-flex justify-content-end align-items-center mt-4">
-                                    <button class="btn btn-primary mx-2" onclick="insRow()">Add</button>
-                                    <button class="btn btn-primary mx-2" onclick="deleteRow(this)">Remove</button>
+                                        </tbody>
+                                    </table>
+                                </form>
+                                <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
+                                    <button class="btn btn-primary table-btn mx-2" onclick="insRow()">Add</button>
+                                    <button class="btn btn-primary table-btn mx-2" onclick="deleteRow(this)">Remove</button>
+                                    <button class="btn btn-primary table-btn mx-2" id="save-table">Save Table</button>
                                 </div>
 
                             </div>
@@ -311,6 +327,119 @@
 
 
 
+<!-- Change Reviewr window -->
+
+<div class="modal fade" id="createEmployee">
+    <div class="modal-dialog modal-md" id="" aria-hidden="true"
+        aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+        <div class="modal-content">
+            <div class="modal-header py-2 bg-primary">
+
+                <div class="w-100 modal-header-content d-flex align-items-center py-2">
+                    <h5 class="modal-title text-white" id="exampleModalToggleLabel2">Change Reviewer
+                    </h5>
+                    <button 
+                        type="button" 
+                        class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"
+                    >
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <form id="newQuestion" method="POST" >
+                    @csrf
+                    <label for="FormSelectDefault" class="form-label text-muted">Reviewer</label>
+                    <select class="form-select mb-3" aria-label="Default select example" name="reviewer" id="select-reviewer" >
+                        @foreach($users as $index => $user)
+                            <option value="{{$user->id}}">{{$user->name}}</option>
+                        @endforeach
+                    </select>
+                    <div class="content-footer">
+                        <div class="row">
+                            <div class="col-12 ">
+                                <div class="d-flex">
+                                    <ul class="nav nav-pills w-100 mb-4" id="pills-tab"
+                                        role="tablist">
+                                        <li class="nav-item d-flex w-100 align-items-center justify-content-end "
+                                            role="presentation">
+                                           
+                                            <button class="btn btn-primary waves-effect waves-light"
+                                                type="submit">
+                                                Save
+                                            </button>
+
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+    <!-- add employee  Modal-->
+</div>
+
+<!-- Select Employees window -->
+<div class="modal fade" id="changeEmployee">
+    <div class="modal-dialog modal-md" id="" aria-hidden="true"
+        aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+
+        <div class="modal-content">
+            <div class="modal-header py-2 bg-primary">
+
+                <div class="w-100 modal-header-content d-flex align-items-center py-2">
+                    <h5 class="modal-title text-white" id="exampleModalToggleLabel2">Select Employees
+                    </h5>
+                    <button 
+                        type="button" 
+                        class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"
+                    >
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body">
+
+                <form id="changeEmployeeForm" method="POST" >
+                    @csrf
+                    <label for="FormSelectDefault" class="form-label text-muted">Employees</label>
+                    <select class="form-select mb-3" aria-label="Default select example" name="employees[]" id="select-employees" multiple>
+                        @foreach($employees as $index => $employee)
+                            <option value="{{$employee->id}}">{{$employee->emp_name}}</option>
+                        @endforeach
+                    </select>
+                
+                    <div class="content-footer">
+                        <div class="row">
+                            <div class="col-12 ">
+                                <div class="d-flex">
+                                    <ul class="nav nav-pills w-100 mb-4" id="pills-tab"
+                                        role="tablist">
+                                        <li class="nav-item d-flex w-100 align-items-center justify-content-end "
+                                            role="presentation">
+                                           
+                                            <button class="btn btn-primary waves-effect waves-light"
+                                                type="submit">
+                                                Save
+                                            </button>
+
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+    <!-- add employee  Modal-->
+</div>
 
 
 <!--Main Content-->
@@ -370,65 +499,63 @@ function insRow(argument) {
     var currentIndex = myTable.rows.length;
     var currentRow = myTable.insertRow(-1);
 
-
     var numbersBox = document.createElement("span");
     numbersBox.setAttribute("name", "numbers" + currentIndex);
-
+    numbersBox.innerHTML = (currentIndex);
     var dimensionBox = document.createElement("textarea");
-    dimensionBox.setAttribute("name", "dimension" + currentIndex);
+    dimensionBox.setAttribute("name", "dimension[]");
     dimensionBox.setAttribute("placeholder", "type here");
-    dimensionBox.setAttribute("cols", "25");
+    dimensionBox.setAttribute("cols", "20");
     dimensionBox.setAttribute("rows", "2");
 
 
-
     var kpiBox = document.createElement("textarea");
-    kpiBox.setAttribute("name", "kpi" + currentIndex);
+    kpiBox.setAttribute("name", "kpi[]");
     kpiBox.setAttribute("placeholder", "type here");
-    kpiBox.setAttribute("cols", "25");
+    kpiBox.setAttribute("cols", "20");
     kpiBox.setAttribute("rows", "2");
 
 
     var operationalBox = document.createElement("textarea");
-    operationalBox.setAttribute("name", "operational" + currentIndex);
+    operationalBox.setAttribute("name", "operational[]");
     operationalBox.setAttribute("placeholder", "type here");
-    operationalBox.setAttribute("cols", "25");
+    operationalBox.setAttribute("cols", "20");
     operationalBox.setAttribute("rows", "2");
 
     var measureBox = document.createElement("textarea");
-    measureBox.setAttribute("name", "measure" + currentIndex);
+    measureBox.setAttribute("name", "measure[]");
     measureBox.setAttribute("placeholder", "type here");
-    measureBox.setAttribute("cols", "25");
+    measureBox.setAttribute("cols", "20");
     measureBox.setAttribute("rows", "2");
 
     var frequencyBox = document.createElement("textarea");
-    frequencyBox.setAttribute("name", "frequency" + currentIndex);
+    frequencyBox.setAttribute("name", "frequency[]");
     frequencyBox.setAttribute("placeholder", "type here");
-    frequencyBox.setAttribute("cols", "25");
+    frequencyBox.setAttribute("cols", "20");
     frequencyBox.setAttribute("rows", "2");
 
     var targetBox = document.createElement("textarea");
-    targetBox.setAttribute("name", "target" + currentIndex);
+    targetBox.setAttribute("name", "target[]");
     targetBox.setAttribute("placeholder", "type here");
-    targetBox.setAttribute("cols", "25");
+    targetBox.setAttribute("cols", "20");
     targetBox.setAttribute("rows", "2");
 
     var stretchTargetBox = document.createElement("textarea");
-    stretchTargetBox.setAttribute("name", "stretchTarget" + currentIndex);
+    stretchTargetBox.setAttribute("name", "stretchTarget[]");
     stretchTargetBox.setAttribute("placeholder", "type here");
-    stretchTargetBox.setAttribute("cols", "25");
+    stretchTargetBox.setAttribute("cols", "10");
     stretchTargetBox.setAttribute("rows", "2");
 
     var sourceBox = document.createElement("textarea");
-    sourceBox.setAttribute("name", "source" + currentIndex);
+    sourceBox.setAttribute("name", "source[]");
     sourceBox.setAttribute("placeholder", "type here");
-    sourceBox.setAttribute("cols", "25");
+    sourceBox.setAttribute("cols", "10");
     sourceBox.setAttribute("rows", "2");
 
     var kpiWeightageBox = document.createElement("textarea");
-    kpiWeightageBox.setAttribute("name", "kpiWeightage" + currentIndex);
+    kpiWeightageBox.setAttribute("name", "kpiWeightage[]");
     kpiWeightageBox.setAttribute("placeholder", "type here");
-    kpiWeightageBox.setAttribute("cols", "25");
+    kpiWeightageBox.setAttribute("cols", "10");
     kpiWeightageBox.setAttribute("rows", "2");
 
     var currentCell = currentRow.insertCell(-1);
@@ -464,15 +591,88 @@ function insRow(argument) {
 
     currentCell = currentRow.insertCell(-1);
     currentCell.appendChild(kpiWeightageBox);
-
-
-
-
 }
+
+$('#changeEmployeeForm').on('submit', function(e){
+    e.preventDefault();
+    var employeeSelected = $('#select-employees').val();
+    var employees = {!!json_encode($employees)!!};
+    var employeeArray = [];
+
+    $("#sel_employees").val(employeeSelected);
+
+    $.each(employees, function(i, data){
+        if($.inArray(data.id.toString(), employeeSelected) > -1){
+            employeeArray.push(data.emp_name);
+        }
+    });
+    $('#group-employee').html(employeeArray.join());
+    $('#changeEmployee').modal('hide');
+});
+
+// select reviewer
+$('#newQuestion').on('submit', function(e){
+    e.preventDefault();
+    var userList = {!!json_encode($users)!!};
+    var selReviewer = $('#select-reviewer').val();
+    $("#sel_reviewer").val(selReviewer);
+
+    $.each(userList, function(i, data){
+        if(data.id == $('#select-reviewer').val()){
+            $('#reviewer-name').html(data.name);
+            $('#reviewer-email').html(data.email);
+        }
+    });
+
+    $('#createEmployee').modal('hide');
+});
+
+// publishing tables
+$('#save-table').click(function(e){
+    e.preventDefault();
+    console.log('assigning Goals');
+    console.log($('#kpiTableForm').serialize());
+
+    $.ajax({
+        type: "POST", 
+        url: "{{url('vmt-pms-kpi-table/save')}}", 
+        data: $('#kpiTableForm').serialize(), 
+        success: function(data){
+
+            $("#kpiTableForm :input").prop("disabled", true);
+            $(".table-btn").prop('disabled', true);
+
+            alert("Table Saved, Please publish goals");
+            $("#kpitable_id").val(data.table_id);
+        }
+    })
+})
+
+//
+$("#publish-goal").click(function(e){
+    e.preventDefault();
+
+    if($('#kpitable_id').val()){  
+        $.ajax({
+            type: "POST", 
+            url: "{{url('vmt-pms-assign-goals/publish')}}", 
+            data: $('#goalForm').serialize(), 
+            success: function(data){
+
+                $("#kpiTableForm :input").prop("disabled", true);
+                $(".table-btn").prop('disabled', true);
+
+                alert("Goal Assigned, Email Sent to the employees");
+                $("kpitable_id").val(data.table_id);
+            }
+        })
+    }else{
+        alert("please publish table first");
+    }
+   
+});
+
+
 </script>
-
-
-
-
 
 @endsection
