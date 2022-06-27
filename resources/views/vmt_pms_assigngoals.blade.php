@@ -239,22 +239,22 @@
                         <div class="col-12">
                             <div class="container-fluid mb-1 mt-3 ">
                                 <form id="kpiTableForm">
+                                <table class="table align-middle mb-0 table-nowrap responsive table-responsive" id="kpiTable">
                                     @csrf
-                                    <table class="table align-middle mb-0 table-nowrap responsive" id="kpiTable">
-                                        <thead class="text-white bg-primary thead" id="tHead">
+                                    <thead class="text-white bg-primary thead" id="tHead">
 
                                             <tr class="text-uppercase">
 
-                                                <th class="sort" data-sort="id" style="width: 2%;">#</th>
-                                                <th class="sort" data-sort="customer_name" style="width: 8%;">Dimension</th>
-                                                <th class="sort" data-sort="product_name" style="width: 25%;">KPI</th>
-                                                <th class="sort" data-sort="date" style="width: 25%;">Operational Definition
-                                                </th>
-                                                <th class="sort" data-sort="amount" style="width: 25%;">Measure</th>
-                                                <th class="sort" data-sort="payment" style="width: 10%;">Frequency</th>
-                                                <th class="sort" data-sort="status" style="width: 20%;">Target</th>
-                                                <th class="sort" data-sort="status" style="width: 20%;">Stretch Target</th>
-                                                <th class="sort" data-sort="status" style="">Source</th>
+                                            <th class="sort" data-sort="id" style="width: 2%;">#</th>
+                                            <th class="sort" data-sort="customer_name" style="width: 8%;">Dimension</th>
+                                            <th class="sort" data-sort="product_name" style="width: 25%;">KPI</th>
+                                            <th class="sort" data-sort="date" style="width: 25%;">Operational Definition
+                                            </th>
+                                            <th class="sort" data-sort="amount" style="width: 25%;">Measure</th>
+                                            <th class="sort" data-sort="payment" style="width: 10%;">Frequency</th>
+                                            <th class="sort" data-sort="status" style="width: 20%;">Target</th>
+                                            <th class="sort" data-sort="status" style="width: 20%;">Stretch Target</th>
+                                            <th class="sort" data-sort="status" style="">Source</th>
 
                                                 <th class="sort" data-sort="status" style="width: 10%;" width="10%">KPI
                                                     Weightage</th>

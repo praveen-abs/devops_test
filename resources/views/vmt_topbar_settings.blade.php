@@ -72,10 +72,8 @@ input[type=file] {
 
 
         <div class=" tab-content right-content p-0 mx-3 container-fluid" id="v-pills-tabContent">
-
-
             <!-- general info -->
-            <div class="container p-0   tab-pane fade show active" id="v-general" role="tabpanel"
+            <div class=" p-0  tab-pane fade show active" id="v-general" role="tabpanel"
                 aria-labelledby="v-pills-home-tab">
 
 
@@ -84,7 +82,7 @@ input[type=file] {
                 </div>
 
 
-                <div class="container p-0 content-body bg-white my-3" id="general-Info">
+                <div class="container-fluid p-0 content-body bg-white my-3" id="general-Info">
                     <div class="card ">
                         <div class="card-body">
                             <div>
@@ -218,13 +216,13 @@ input[type=file] {
 
             <!--user  rolls -->
 
-            <div class="container p-0   tab-pane fade show " id="v-roll" role="tabpanel"
+            <div class="p-0   tab-pane fade show " id="v-roll" role="tabpanel"
                 aria-labelledby="v-pills-home-tab">
 
                 <div class="header-content d-flex align-items-center bg-white  px-3">
                     <label class="heading">User Roll</label>
                 </div>
-                <div class="container p-0  bg-white my-3 ">
+                <div class="container-fluid p-0  bg-white my-3 ">
                     <div class="card m-0">
                         <div class="card-body">
                             <div class="d-flex align-items-center  justify-content-between">
@@ -342,13 +340,13 @@ input[type=file] {
 
             <!-- welcome -->
 
-            <div class="container p-0   tab-pane fade show " id="v-welcome" role="tabpanel"
+            <div class="p-0   tab-pane fade show " id="v-welcome" role="tabpanel"
                 aria-labelledby="v-pills-home-tab">
 
                 <div class="header-content d-flex align-items-center bg-white  px-3">
                     <label class="heading">Welcome Screen</label>
                 </div>
-                <div class="container p-0  bg-white my-3 ">
+                <div class="container-fluid p-0  bg-white my-3 ">
                     <div class="card">
                         <div class="card-body">
                             <div class="mb-4">
@@ -615,8 +613,7 @@ input[type=file] {
                                                 </div>
                                             </div>
                                             <!-- attendance -->
-                                            <div class="tab-pane fade " id="v-pills-attendance" role="tabpanel"
-                                                >
+                                            <div class="tab-pane fade " id="v-pills-attendance" role="tabpanel">
                                                 <div class="list-group assest ">
                                                     <label class="list-group-item fw-bold">
                                                         <input class="form-check-input me-1 fw-bold" type="checkbox"
