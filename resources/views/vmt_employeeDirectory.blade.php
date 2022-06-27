@@ -31,7 +31,7 @@
                                 <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                     <span class="d-flex align-items-center">
                                         <span class="text-start ms-xl-2">
-                                            <span class="">Department <span><i class="fa fa-angle-down"></i></span></span>
+                                            <span class="wrap-text w-100"><span class="text-media">Department</span> <span><i class="fa fa-angle-down"></i></span></span>
                                             <span class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text"></span>
                                         </span>
                                     </span>
@@ -77,7 +77,7 @@
                                 <button type="button" class="btn" id="page-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                     <span class="d-flex align-items-center">
                                         <span class="text-start ms-xl-2">
-                                            <span class="">Location <span><i class="fa fa-angle-down"></i></span></span>
+                                            <span class="wrap-text w-100"><span class="text-media">Location </span><span><i class="fa fa-angle-down"></i></span></span>
                                             <span class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text"></span>
                                         </span>
                                     </span>
@@ -397,7 +397,7 @@
                     <div class="card employee-profile-card">
                         <div class="card-body employee-profile-header">
                             <div class="row mt-2">
-                                <p class="col-auto pl-3" style="width:30%;"><span class="img-initials" style="background-color: rgb(134, 192, 106);width: 72px;height: 72px;font-size:25px;"> HM </span></p>
+                                <p class="col-auto pl-3 col-img-circle" style="width:95px;"><span class="img-initials" style="background-color: rgb(134, 192, 106);width: 72px;height: 72px;font-size:25px;"> HM </span></p>
                                 <div class="pt-2 col">
                                     <div class="d-flex align-items-center">
                                         <h4 title="Dheeraj" class="m-0"><b>Dheeraj</b></h4>
@@ -658,7 +658,7 @@
                     <div class="card employee-profile-card">
                         <div class="card-body employee-profile-header">
                             <div class="row mt-2">
-                                <p class="col-auto pl-3" style="width:30%;"><span class="img-initials" style="background-color: rgb(134, 192, 106);width: 72px;height: 72px;font-size:25px;"> HM </span></p>
+                                <p class="col-auto pl-3 col-img-circle" style="width:95px;"><span class="img-initials" style="background-color: rgb(134, 192, 106);width: 72px;height: 72px;font-size:25px;"> HM </span></p>
                                 <div class="pt-2 col">
                                     <div class="d-flex align-items-center">
                                         <h4 title="Dheeraj" class="m-0"><b>Dheeraj</b></h4>
@@ -919,7 +919,7 @@
                     <div class="card employee-profile-card">
                         <div class="card-body employee-profile-header">
                             <div class="row mt-2">
-                                <p class="col-auto pl-3" style="width:30%;"><span class="img-initials" style="background-color: rgb(134, 192, 106);width: 72px;height: 72px;font-size:25px;"> HM </span></p>
+                                <p class="col-auto pl-3 col-img-circle" style="width:95px;"><span class="img-initials" style="background-color: rgb(134, 192, 106);width: 72px;height: 72px;font-size:25px;"> HM </span></p>
                                 <div class="pt-2 col">
                                     <div class="d-flex align-items-center">
                                         <h4 title="Dheeraj" class="m-0"><b>Dheeraj</b></h4>
@@ -1180,7 +1180,7 @@
                     <div class="card employee-profile-card">
                         <div class="card-body employee-profile-header">
                             <div class="row mt-2">
-                                <p class="col-auto pl-3" style="width:30%;"><span class="img-initials" style="background-color: rgb(134, 192, 106);width: 72px;height: 72px;font-size:25px;"> HM </span></p>
+                                <p class="col-auto pl-3 col-img-circle" style="width:95px;"><span class="img-initials" style="background-color: rgb(134, 192, 106);width: 72px;height: 72px;font-size:25px;"> HM </span></p>
                                 <div class="pt-2 col">
                                     <div class="d-flex align-items-center">
                                         <h4 title="Dheeraj" class="m-0"><b>Dheeraj</b></h4>
@@ -1441,7 +1441,7 @@
                     <div class="card employee-profile-card">
                         <div class="card-body employee-profile-header">
                             <div class="row mt-2">
-                                <p class="col-auto pl-3" style="width:30%;"><span class="img-initials" style="background-color: rgb(134, 192, 106);width: 72px;height: 72px;font-size:25px;"> HM </span></p>
+                                <p class="col-auto pl-3 col-img-circle" style="width:95px;"><span class="img-initials" style="background-color: rgb(134, 192, 106);width: 72px;height: 72px;font-size:25px;"> HM </span></p>
                                 <div class="pt-2 col">
                                     <div class="d-flex align-items-center">
                                         <h4 title="Dheeraj" class="m-0"><b>Dheeraj</b></h4>
@@ -1702,7 +1702,7 @@
                     <div class="card employee-profile-card">
                         <div class="card-body employee-profile-header">
                             <div class="row mt-2">
-                                <p class="col-auto pl-3" style="width:30%;"><span class="img-initials" style="background-color: rgb(134, 192, 106);width: 72px;height: 72px;font-size:25px;"> HM </span></p>
+                                <p class="col-auto pl-3 col-img-circle" style="width:95px;"><span class="img-initials" style="background-color: rgb(134, 192, 106);width: 72px;height: 72px;font-size:25px;"> HM </span></p>
                                 <div class="pt-2 col">
                                     <div class="d-flex align-items-center">
                                         <h4 title="Dheeraj" class="m-0"><b>Dheeraj</b></h4>
@@ -1963,7 +1963,7 @@
                     <div class="card employee-profile-card">
                         <div class="card-body employee-profile-header">
                             <div class="row mt-2">
-                                <p class="col-auto pl-3" style="width:30%;"><span class="img-initials" style="background-color: rgb(134, 192, 106);width: 72px;height: 72px;font-size:25px;"> HM </span></p>
+                                <p class="col-auto pl-3 col-img-circle" style="width:95px;"><span class="img-initials" style="background-color: rgb(134, 192, 106);width: 72px;height: 72px;font-size:25px;"> HM </span></p>
                                 <div class="pt-2 col">
                                     <div class="d-flex align-items-center">
                                         <h4 title="Dheeraj" class="m-0"><b>Dheeraj</b></h4>
