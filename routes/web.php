@@ -70,6 +70,13 @@ Route::post('vmt-apraisal-question/bulk-upload', 'App\Http\Controllers\VmtAprais
 
 Route::post('vmt-apraisal-question/save', 'App\Http\Controllers\VmtApraisalController@addNewQuestion');
 
+// assign pms goals
+Route::get('vmt-pms-assigngoals', 'App\Http\Controllers\VmtApraisalController@vmtAssignGoals');
+
+Route::post('vmt-pms-kpi-table/save', 'App\Http\Controllers\VmtApraisalController@vmtStoreKpiTable');
+
+Route::post('vmt-pms-assign-goals/publish', 'App\Http\Controllers\VmtApraisalController@vmtPublishGoals');
+
 // 360 Module Form : CRUD
 Route::get('vmt-360-forms', 'App\Http\Controllers\Review360ModuleController@showFormIndex');
 Route::get('vmt-360-forms/create', 'App\Http\Controllers\Review360ModuleController@showFormsPage');
@@ -129,6 +136,10 @@ Route::get('vmt-payslip-pdf', 'App\Http\Controllers\VmtPaySlipController@payslip
 
 // General Info
 Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 'storeGeneralInfo']);
+
+// self appraisal review for employees
+Route::get('vmt-pmsappraisal-review', 'App\Http\Controllers\VmtApraisalController@showEmployeeApraisalReview');
+
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
 
 //Onboarding pages

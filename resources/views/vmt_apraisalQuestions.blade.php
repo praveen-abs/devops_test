@@ -108,14 +108,14 @@
                                     <td class="product_name"><textarea readonly rows="6" >{{$question->kpi}}</textarea></td>
                                     <td class="date"><textarea readonly rows="6" >{{$question->operational_definition}}</textarea></td>
                                     <td class="amount"><textarea readonly rows="6" >{{$question->measure}}</textarea></td>
-                                    <td class="payment" style="text-align:center">{{$question->frequency}}</td>
+                                    <td class="payment" style="text-align:center"><textarea readonly rows="2" >{{$question->frequency}}</textarea></td>
                                     <td class="status"><textarea readonly rows="6" >{{$question->target}}</textarea>
                                     </td>
                                     <td class="status"><textarea readonly rows="6" >{{$question->stretch_target}}</textarea>
                                     </td>
                                     <td class="status"><textarea readonly rows="6" >{{$question->source}}</textarea>
                                     </td>
-                                    <td class="status" style="text-align:center">{{$question->kpi_weightage}}
+                                    <td class="status" style="text-align:center"><textarea readonly rows="2" >{{$question->kpi_weightage}}</textarea>
                                     </td>
                                     <td>
                                         <ul class="list-inline hstack gap-2 mb-0">
