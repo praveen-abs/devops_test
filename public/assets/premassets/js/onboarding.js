@@ -146,11 +146,11 @@ $(document).ready(function() {
         })
 
 
-        console.log(personalData);
-        console.log(locationData);
-        console.log(officeData);
-        console.log(familyData);
-        console.log(statutoryData);
+        //console.log(personalData);
+        //console.log(locationData);
+        //console.log(officeData);
+        //console.log(familyData);
+        //console.log(statutoryData);
     })
 
     $(".submit").click(function() {
