@@ -16,9 +16,33 @@
         <div class="col-12">
             <div class="row mb-3">
                 <div class="card card-animate">
-                        <div class="card-body">
-                            <h5>Employee Directory</h5>
-                        </div><!-- end card body -->
+                    <div class="card-body p-0">
+                        <!-- <h5>Employee Directory</h5> -->
+                        <ul class="nav sub-topnav">
+                            <li routerlinkactive="active" class="active">
+                                <a routerlink="directory" href="{{url('vmt-employess/directory')}}">Employee Directory</a>
+                            </li>
+                            <li routerlinkactive="active">
+                                <a routerlink="tree" href="{{url('vmt-employee-hierarchy')}}">Organization Tree</a>
+                            </li>
+                            <li routerlinkactive="active">
+                                <a routerlink="logins" href="#/org/employees/logins">Logins</a>
+                            </li>
+                            <li routerlinkactive="active">
+                                <a routerlink="profile-changes" href="#/org/employees/profile-changes">Profile Changes</a><!---->
+                            </li>
+                            <li routerlinkactive="active">
+                                <a routerlink="privateprofiles" href="#/org/employees/privateprofiles">Private Profiles</a>
+                            </li>
+                            <li routerlinkactive="active">
+                                <a href="/#/org/employees/probation/in-probation">Probation</a>
+                            </li>
+                            <li routerlinkactive="active">
+                                <a routerlink="settings" href="#/org/employees/settings">Settings</a>
+                            </li>
+                        </ul>
+                    </div><!-- end card body -->
+                </div><!-- end card body -->
             </div>
             <div class="page-title">
                 <h1>Employee Directory</h1>
@@ -26,7 +50,7 @@
             <div class="card clear-margin-x clear-margin-b">
                 <div class="card-body p-0">
                     <div class="row" style="border: 1px solid #f8f8f9;">
-                        <div class="pt-1 pb-1 col-2 dropdown-hover" style="border-right:1px solid #f8f8f9;">
+                        <div class="pt-1 col-2 dropdown-hover" style="border-right:1px solid #f8f8f9;">
                             <div class="dropdown">
                                 <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                     <span class="d-flex align-items-center">
@@ -72,7 +96,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="pt-1 pb-1 col-2 dropdown-hover" style="border-right:1px solid #f8f8f9;">
+                        <div class="pt-1 col-2 dropdown-hover" style="border-right:1px solid #f8f8f9;">
                             <div class="dropdown">
                                 <button type="button" class="btn" id="page-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                     <span class="d-flex align-items-center">
@@ -112,10 +136,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="pt-1 pb-1 col-8">
+                        <div class="pt-1 col-8">
                             <div class="input-search mr-40 d-flex">
                                 <span class="mt-2"><i class="fa fa-search"></i></span>
-                                <input type="text" placeholder="Search" name="filter" autocomplete="off" class="form-control border-0 h-100 w-100 ng-untouched ng-pristine ng-valid">
+                                <input type="text" placeholder="Search" name="filter" style="padding:6px;" autocomplete="off" class="mt-1 border-0 h-100 w-100 ng-untouched ng-pristine ng-valid">
                             </div>
                             <div class="reset-filter bg-white">
                                 <a class="icon-click">
@@ -124,7 +148,7 @@
                             </div>
                         </div>
                     </div>
-                    <div style="float:right;" class="pt-2">
+                    <div style="float:right;" class="p-3">
                         <div>
                             <p class="text-x-small text-muted">Showing 8 of 8</p>
                         </div>
