@@ -14,8 +14,7 @@
                             <div class="profile-view">
                                 <div class="profile-img-wrap">
                                     <div class="profile-img">
-                                        <a href="#"><img src="assets/images/users/avatar-5.jpg" alt=""
-                                                class="rounded-circle"></a>
+                                        <a href="#"><img src="assets/images/users/avatar-5.jpg" alt="" class="rounded-circle"></a>
                                     </div>
                                 </div>
                                 <div class="profile-basic justify-content-center d-flex">
@@ -74,8 +73,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="pro-edit"><a data-bs-target="#profile_info" data-bs-toggle="modal"
-                                        class="edit-icon" href="#"><i class=" ri-pencil-fill"></i></a></div>
+                                <div class="pro-edit">
+                                    <a data-bs-target="#profile_info" data-bs-toggle="modal" class="edit-icon" href="#">
+                                        <i class=" ri-pencil-fill"></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -89,9 +91,12 @@
                                     class="nav-link active">Profile</a>
                             </li>
 
-                            <li class="nav-item"><a href="#bank_statutory" data-bs-toggle="tab" class="nav-link">Bank
+                            <li class="nav-item">
+                                <a href="#bank_statutory" data-bs-toggle="tab" class="nav-link">Bank
                                     &amp;
-                                    Statutory <small class="text-danger">(Admin Only)</small></a></li>
+                                    Statutory <small class="text-danger">(Admin Only)</small>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -104,9 +109,8 @@
                         <div class="col-md-6 d-flex">
                             <div class="card profile-box flex-fill">
                                 <div class="card-body">
-                                    <h3 class="card-title">Personal Informations <a href="#" class="edit-icon"
-                                            data-bs-toggle="modal" data-bs-target="#personal_info_modal"><i
-                                                class="ri-pencil-fill"></i></a></h3>
+                                    <h3 class="card-title">Personal Informations 
+                                        <span class="personal-edit"><a href="#" class="edit-icon" data-bs-toggle="modal" data-bs-target="#personal_info_modal"><i class="ri-pencil-fill"></i></a></span></h3>
                                     <ul class="personal-info">
                                         <li>
                                             <div class="title">Passport No.</div>
@@ -1498,6 +1502,13 @@
 <!--end row-->
 @endsection
 @section('script')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="{{ URL::asset('assets/js/pages/profile-setting.init.js') }}"></script>
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
+<script>
+    $('.edit-icon').click(function(){
+        var id = $(this).attr('data-bs-target');
+        $(id).modal('show');
+    });
+</script>
 @endsection
