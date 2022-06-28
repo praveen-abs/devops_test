@@ -11,6 +11,7 @@ use App\Models\VmtEmployee;
 use App\Models\VmtKPITable;
 use App\Models\VmtEmployeePMSGoals; 
 use App\Mail\VmtAssignGoals;
+use App\Mail\NotifyPMSManager;
 
 class VmtApraisalController extends Controller
 {
@@ -182,5 +183,21 @@ class VmtApraisalController extends Controller
             }
         }
         return view('vmt_appraisalreview');
+    }
+
+    // 
+    public function storeEmployeeApraisalReview(Request $request){
+        $kpiData  = VmtEmployeePMSGoals::find($request->goal_id);
+        if($kpiData){
+            $kpiData->self_kpi_review      = $request->selfreview; //null
+            $kpiData->self_kpi_percentage  = $request->selfkpiachievement; //null
+            $kpiData->self_kpi_comments    = $request->selfcomments;//null
+            $kpiData->save();
+
+            $reviewManager = User::find($kpiData->reviewer_id);
+            //dd($reviewManager->email);
+            \Mail::to($reviewManager->email)->send(new NotifyPMSManager(auth::user()->name));
+        }
+        return "Saved";
     }
 }

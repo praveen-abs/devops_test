@@ -177,95 +177,97 @@
         <div class="card">
             <div class="card-body pb-2">
                 @if(count($kpiRows) > 0)
-                <div class="table-content mb-4">
-                    
-                    <table class="table align-middle mb-0  responsive" id="table">
+                <form id="employee_self_review" method="POST">
+                    @csrf
+                    <input type="hidden" name="goal_id" value="{{$assignedGoals->id}}">
+                    <div class="table-content mb-4">
+                        
+                        <table class="table align-middle mb-0  responsive" id="table">
 
-                        <thead class="thead" id="tHead">
-                            <tr>
-                                <th scope="col">Dimension</th>
-                                <th scope="col">KPI</th>
-                                <th scope="col">Operational Definition</th>
-                                <th scope="col">Measure</th>
-                                <th scope="col">Frequency</th>
-                                <th scope="col">Target</th>
-                                <th scope="col">Stretch Target</th>
-                                <th scope="col">Source</th>
-                                <th scope="col">KPI Weightage</th>
-                                <th scope="col">KPI - Achievement (Self Review)</th>
-                                <th scope="col">Self KPI Achievement %</th>
-                                <th scope="col">Comments</th>
-                                <th scope="col">KPI - Achievement (Manager Review)</th>
-                                <th scope="col">Manager KPI Achievement %
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="tbody" id="tbody">
-                            @foreach($kpiRows as $index => $kpiRow)
-                            <tr>
-                                <th scope="row">{{$kpiRow->dimension}}</th>
-                                <td>
-                                    <div>{{$kpiRow->dimension}}</div>
-                                </td>
-                                <td>
-                                    <div> {{$kpiRow->operational_definition}} </div>
-                                </td>
-                                <td>
-                                    <div>{{$kpiRow->measure}} </div>
-                                </td>
-                                <td>
-                                    <div> {{$kpiRow->frequency}}</div>
-                                </td>
-                                <td>
-                                    <div>{{$kpiRow->target}}</div>
-                                </td>
-                                <td>
-                                    <div>{{$kpiRow->stretch_target}}</div>
-                                </td>
-                                <td>
-                                    <div>{{$kpiRow->source}}</div>
-                                </td>
-                                <td>
-                                    <div>{{$kpiRow->kpi_weightage}}</div>
-                                </td>
-                                <td>
-                                    <div> Regular followup done with the CST Team and Brain stroming with the team
-                                        members to
-                                        deliver the on time payout, Starts working with the team, to get full support
-                                        from
-                                        team to Achieve the 100% timely payout and understanding where the support
-                                        required
-                                        to my teamr̥</div>
-                                </td>
-                                <td>
-                                    <div>100%</div>
-                                </td>
-                                <td>
-                                    <div>Starts working with the team, to get full support from team to Achieve the 100%
-                                        timely payout and understanding where the support required to my team</div>
-                                </td>
+                            <thead class="thead" id="tHead">
+                                <tr>
+                                    <th scope="col">Dimension</th>
+                                    <th scope="col">KPI</th>
+                                    <th scope="col">Operational Definition</th>
+                                    <th scope="col">Measure</th>
+                                    <th scope="col">Frequency</th>
+                                    <th scope="col">Target</th>
+                                    <th scope="col">Stretch Target</th>
+                                    <th scope="col">Source</th>
+                                    <th scope="col">KPI Weightage</th>
+                                    <th scope="col">KPI - Achievement (Self Review)</th>
+                                    <th scope="col">Self KPI Achievement %</th>
+                                    <th scope="col">Comments</th>
+                                    <th scope="col">KPI - Achievement (Manager Review)</th>
+                                    <th scope="col">Manager KPI Achievement %
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbody" id="tbody">
+                                @foreach($kpiRows as $index => $kpiRow)
+                                <tr>
+                                    <th scope="row">{{$kpiRow->dimension}}</th>
+                                    <td>
+                                        <div>{{$kpiRow->dimension}}</div>
+                                    </td>
+                                    <td>
+                                        <div> {{$kpiRow->operational_definition}} </div>
+                                    </td>
+                                    <td>
+                                        <div>{{$kpiRow->measure}} </div>
+                                    </td>
+                                    <td>
+                                        <div> {{$kpiRow->frequency}}</div>
+                                    </td>
+                                    <td>
+                                        <div>{{$kpiRow->target}}</div>
+                                    </td>
+                                    <td>
+                                        <div>{{$kpiRow->stretch_target}}</div>
+                                    </td>
+                                    <td>
+                                        <div>{{$kpiRow->source}}</div>
+                                    </td>
+                                    <td>
+                                        <div>{{$kpiRow->kpi_weightage}}</div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <textarea name="selfreview[{{$kpiRow->id}}]" id="" cols="20" rows="2"
+                                            placeholder="type here"></textarea>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div> <textarea name="selfkpiachievement[{{$kpiRow->id}}]" id="" cols="20" rows="2"
+                                            placeholder="type here"></textarea></div>
+                                    </td>
+                                    <td>
+                                        <div><textarea name="selfcomments[{{$kpiRow->id}}]" id="" cols="20" rows="2"
+                                            placeholder="type here"></textarea></div>
+                                    </td>
 
 
-                                <td>
-                                    "Great outcome of Reimbursement delivery for GS and SS also maintain the consitency
-                                    delivery deviation sheet ontime and everytime
-                                    Most importantly need to focus on STM centralisation in 2019 Q2"
-                                </td>
-                                <td>
-                                    104%
-                                </td>
+                                    <td>
+                                        "Great outcome of Reimbursement delivery for GS and SS also maintain the consitency
+                                        delivery deviation sheet ontime and everytime
+                                        Most importantly need to focus on STM centralisation in 2019 Q2"
+                                    </td>
+                                    <td>
+                                        104%
+                                    </td>
 
-                            </tr>
-                            @endforeach
-                        </tbody>
+                                </tr>
+                                @endforeach
+                            </tbody>
 
-                    </table>
-                   
-                </div>
-                <div class="buttons d-flex align-items-center justify-content-end">
-                    <button class="btn btn-primary" id="add">Add<i class="fa fa-plus"></i></button>
+                        </table>
+                       
+                    </div>
+                </form>
+                <div class="buttons d-flex align-items-center justify-content-end ">
+                    <button class="btn btn-primary save-review" id="add">Save<i class="fa fa-save"></i></button>
 
-                    <button class="btn btn-primary mx-3">Remove<i class="fa fa-remove"></i></button>
+                    <!-- <button class="btn btn-primary mx-3">Remove<i class="fa fa-remove"></i></button> -->
                 </div>
                 @else
 
@@ -412,12 +414,29 @@
 <script type="text/javascript">
     
     //$('#prizePopup').modal('show');
-    var showPopup = "{{$showModal}}";
+   /* var showPopup = "{{$showModal}}";
     if(showPopup){
         console.log('accept-goals');
 
         $('#acceptPMS').modal('show');
-    }
+    }*/
     
+
+    $('.save-review').click(function(e){
+        e.preventDefault();
+        console.log("save trigger");
+        console.log($('#employee_self_review').serialize());
+
+        $.ajax({
+            type: "POST", 
+            url:"{{url('vmt-pmsappraisal-review')}}",
+            data:$('#employee_self_review').serialize(), 
+            success: function(data){
+                alert(data);
+            }
+        })
+    });
+
+
 </script>
 @endsection

@@ -239,6 +239,7 @@
                         <div class="col-12">
                             <div class="container-fluid mb-1 mt-3 ">
                                 <form id="kpiTableForm">
+                                    
                                 <table class="table align-middle mb-0 table-nowrap responsive table-responsive" id="kpiTable">
                                     @csrf
                                     <thead class="text-white bg-primary thead" id="tHead">
