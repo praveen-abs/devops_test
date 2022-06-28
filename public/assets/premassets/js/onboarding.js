@@ -11,7 +11,9 @@ $(document).ready(function() {
                 'passport': /^[a-zA-Z]{2}[0-9]{7}$/,
                 'account': /^[0-9]{9,18}$/,
                 'dl': /^(([A-Z]{2}[0-9]{2})( )|([A-Z]{2}-[0-9]{2}))((19|20)[0-9][0-9])[0-9]{7}$/,
-                'gst': /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/
+                'gst': /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/,
+                'alp-num': /^[a-zA-Z0-9]+$/,
+                'alpha': /^[a-zA-Z]+$/,
             };
             var regex = $(this).attr('pattern');
             if (!pattern[regex].test(inputvalues)) {
@@ -143,14 +145,7 @@ $(document).ready(function() {
             {
                 alert(data);
             }
-        })
-
-
-        console.log(personalData);
-        console.log(locationData);
-        console.log(officeData);
-        console.log(familyData);
-        console.log(statutoryData);
+        });
     })
 
     $(".submit").click(function() {

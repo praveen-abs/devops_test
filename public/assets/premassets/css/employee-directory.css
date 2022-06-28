@@ -22,6 +22,19 @@
     }
 }
 
+@media screen and (max-width: 850px){
+    .col-default-3 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 500px){
+    .text-media {
+        display: none;
+    }
+}
+
 .no-gutters {
     margin-right: 0;
     margin-left: 0;
@@ -257,4 +270,12 @@
 
 .ml-2 {
     margin-left: 2px !important;
+}
+
+.wrap-text {
+    display: inline-block;
+    /* width: 180px; */
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
 }
