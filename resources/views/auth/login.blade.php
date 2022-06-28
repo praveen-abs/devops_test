@@ -12,10 +12,10 @@
         </div>
     </div>
     <div class="side-right">
-        <div class="text-center mt-2">
+        <div class="text-center mt-5">
             <img src="{{ URL::asset('assets/images/logo-sm.png') }}" alt="brand-logo" class="h-50 w-50">
         </div>
-        <div class="p-2 mt-4">
+        <div class="p-2 mt-2">
             <form action="{{ route('login') }}" method="POST">
                 @csrf
                 <div class="mb-2">
@@ -78,7 +78,7 @@
                         <div>
                             <p class="text-center mb-2 text-muted">Connect with</p>
                         </div>
-                        <div class="d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center justify-content-between mb-4">
                             <button class="btn  mx-2 google-btn text-white rounded-circle">
                                 <span class="ri-google-fill"></span>
                                 <!-- Google -->
@@ -102,7 +102,7 @@
             <p class="mx-2">Powered By</p>
         </div> -->
         <div class="d-flex justify-content-center align-items-center mt-5">
-            <img src="{{ URL::asset('assets/images/powerby.png') }}" alt="brand-logo" class="mx-2 w-75 h-75">
+            <img src="{{ URL::asset('assets/images/powerby.png') }}" alt="brand-logo" class="mx-2 w-100 h-75">
         </div>
     </div>
 
