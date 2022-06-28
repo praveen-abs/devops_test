@@ -11,10 +11,11 @@
 ?>
 <div class="app-menu navbar-menu">
     <!-- LOGO -->
-    <div class="navbar-brand-box">
+    <div class="navbar-brand-box ">
         <!-- Dark Logo-->
         <a href="index" class="logo logo-dark">
-            <img src="{{ URL::asset($logoSrc) }}" alt="">
+            <!-- <img src="{{ URL::asset($logoSrc) }}" alt=""> -->
+            <img src="{{ URL::asset('assets/images/vasa.jpg') }}" alt="" class="">
         </a>
 
         <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
@@ -33,7 +34,7 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link d-flex" href="{{url('index')}}">
                         <div class="d-flex flex-column align-items-center justify-content-center">
-                        <img src="{{ URL::asset('assets/images/dashboard.png') }}" alt="" class="m-2">
+                            <img src="{{ URL::asset('assets/images/dashboard.png') }}" alt="" class="m-2">
                             <span data-key="t-landing">Dashboard</span>
                         </div>
                         <div class="left-line">
@@ -47,7 +48,8 @@
                     <a class="nav-link menu-link d-flex" href="#attendanceDrop-Down" data-bs-toggle="collapse"
                         role="button" aria-expanded="false" aria-controls="sidebarRoles">
                         <div class="d-flex flex-column align-items-center justify-content-center">
-                        <img src="{{ URL::asset('assets/images/attendace.png') }}" alt="" class="m-2"> <span>Attendance</span>
+                            <img src="{{ URL::asset('assets/images/attendace.png') }}" alt="" class="m-2">
+                            <span>Attendance</span>
                         </div>
                         <div class="left-line">
                             <hr class="">
@@ -56,7 +58,8 @@
                     <div class="collapse menu-dropdown" id="attendanceDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{url('vmt-roles')}}" class="nav-link py-1" data-bs-toggle="collapse" role="button"><span>Leave </a>
+                                <a href="{{url('vmt-roles')}}" class="nav-link py-1" data-bs-toggle="collapse"
+                                    role="button"><span>Leave </a>
                                 <div class="collapse menu-dropdown" id="settingsDrop-Down">
                                     <ul class="nav nav-sm flex-column">
                                         <li class="nav-item">
@@ -66,16 +69,20 @@
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt-assign-roles')}}" class="nav-link py-1" role="button"><span> Attendance </span> </a>
+                                <a href="{{url('vmt-assign-roles')}}" class="nav-link py-1" role="button"><span>
+                                        Attendance </span> </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt-assign-roles')}}" class="nav-link py-1" role="button"><span> Timesheet </span> </a>
+                                <a href="{{url('vmt-assign-roles')}}" class="nav-link py-1" role="button"><span>
+                                        Timesheet </span> </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt-assign-roles')}}" class="nav-link py-1" role="button"><span> Performance </span> </a>
+                                <a href="{{url('vmt-assign-roles')}}" class="nav-link py-1" role="button"><span>
+                                        Performance </span> </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt-assign-roles')}}" class="nav-link py-1" role="button"><span> Expenses & Travel </span> </a>
+                                <a href="{{url('vmt-assign-roles')}}" class="nav-link py-1" role="button"><span>
+                                        Expenses & Travel </span> </a>
                             </li>
                             <!-- <li class="nav-item">
                                 <a href="{{url('vmt-assign-roles')}}" class="nav-link py-1"
@@ -132,7 +139,8 @@
                     <a class="nav-link menu-link d-flex" href="#reportDrop-Down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarRoles">
                         <div class="d-flex flex-column align-items-center justify-content-center ">
-                        <img src="{{ URL::asset('assets/images/report.png') }}" alt="" class="m-2"> <span>My Report</span>
+                            <img src="{{ URL::asset('assets/images/report.png') }}" alt="" class="m-2"> <span>My
+                                Report</span>
                         </div>
                         <div class="left-line">
                             <hr class="">
@@ -158,16 +166,19 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link d-flex" role="button">
                         <div class="d-flex flex-column align-items-center justify-content-center ">
-                        <img src="{{ URL::asset('assets/images/organisation.png') }}" alt="" class="m-2">  <span>Org</span>
+                            <img src="{{ URL::asset('assets/images/organisation.png') }}" alt="" class="m-2">
+                            <span>Org</span>
                         </div>
                     </a>
                     <div class="collapse menu-dropdown" id="ticketingDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item ">
-                                <a href="{{url('vmt-employess/directory')}}" id="" class="nav-link py-1" aria-expanded="false"><span>Dashboard</span> </a>
+                                <a href="{{url('vmt-employess/directory')}}" id="" class="nav-link py-1"
+                                    aria-expanded="false"><span>Dashboard</span> </a>
                             </li>
                             <li class="nav-item ">
-                                <a href="{{url('vmt-employess/directory')}}" id="tds" class="nav-link py-1"><span>Employees - (Employee Directory page)</span></a>
+                                <a href="{{url('vmt-employess/directory')}}" id="tds"
+                                    class="nav-link py-1"><span>Employees - (Employee Directory page)</span></a>
                             </li>
                             <li class="nav-item ">
                                 <a href="" id="tds" class="nav-link py-1"><span>ORG structure</span></a>
@@ -176,7 +187,8 @@
                                 <a href="{{url('vmt_clientOnboarding')}}" id="" class="nav-link py-1" aria-expanded="false"><span>Client On-Boarding</span> </a>
                             </li> -->
                             <li class="nav-item ">
-                                <a href="{{url('vmt_employeeOnboarding')}}" id="" class="nav-link py-1" aria-expanded="false"><span>Onboarding - (Employee onboarding page)</span> </a>
+                                <a href="{{url('vmt_employeeOnboarding')}}" id="" class="nav-link py-1"
+                                    aria-expanded="false"><span>Onboarding - (Employee onboarding page)</span> </a>
                             </li>
                             <li class="nav-item ">
                                 <a href="" id="tds" class="nav-link py-1"><span>Exit</span></a>
@@ -199,13 +211,15 @@
                     <a class="nav-link menu-link d-flex" href="#reportDrop-Down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarRoles">
                         <div class="d-flex flex-column align-items-center justify-content-center ">
-                        <img src="{{ URL::asset('assets/images/performance.png') }}" alt="" class="m-2"><span>Performance</span>
+                            <img src="{{ URL::asset('assets/images/performance.png') }}" alt=""
+                                class="m-2"><span>Performance</span>
                         </div>
                     </a>
                     <div class="collapse menu-dropdown" id="reportDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{url('indexPerformanceDashboard')}}" class="nav-link py-1"><span>Dashboard</span></a>
+                                <a href="{{url('indexPerformanceDashboard')}}"
+                                    class="nav-link py-1"><span>Dashboard</span></a>
                             </li>
                             <!-- <li class="nav-item">
                                 <a href="{{url('vmt-assign-roles')}}" class="nav-link py-1" data-bs-toggle="collapse"><span>KPI Table</span>
@@ -267,34 +281,43 @@
                     <a class="nav-link menu-link d-flex" href="#reportDrop-Down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarRoles">
                         <div class="d-flex flex-column align-items-center justify-content-center ">
-                        <img src="{{ URL::asset('assets/images/performance.png') }}" alt="" class="m-2"><span>Team</span>
+                            <img src="{{ URL::asset('assets/images/performance.png') }}" alt=""
+                                class="m-2"><span>Team</span>
                         </div>
                     </a>
                     <div class="collapse menu-dropdown" id="reportDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{url('indexPerformanceDashboard')}}" class="nav-link py-1"><span>Summary</span></a>
+                                <a href="{{url('indexPerformanceDashboard')}}"
+                                    class="nav-link py-1"><span>Summary</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt_appraisalreview')}}" class="nav-link py-1" role="button"><span>Leave</span></a>
+                                <a href="{{url('vmt_appraisalreview')}}" class="nav-link py-1"
+                                    role="button"><span>Leave</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt_appraisalreview')}}" class="nav-link py-1" role="button"><span>Attendance</span></a>
+                                <a href="{{url('vmt_appraisalreview')}}" class="nav-link py-1"
+                                    role="button"><span>Attendance</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt_appraisalreview')}}" class="nav-link py-1" role="button"><span>Expenses & Trevel</span></a>
+                                <a href="{{url('vmt_appraisalreview')}}" class="nav-link py-1"
+                                    role="button"><span>Expenses & Trevel</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt_360review')}}" class="nav-link py-1" role="button"><span>Timesheet</span></a>
+                                <a href="{{url('vmt_360review')}}" class="nav-link py-1"
+                                    role="button"><span>Timesheet</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt_360review')}}" class="nav-link py-1" role="button"><span>Profile change</span></a>
+                                <a href="{{url('vmt_360review')}}" class="nav-link py-1" role="button"><span>Profile
+                                        change</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt_360review')}}" class="nav-link py-1" role="button"><span>Salary on hold</span></a>
+                                <a href="{{url('vmt_360review')}}" class="nav-link py-1" role="button"><span>Salary on
+                                        hold</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt_360review')}}" class="nav-link py-1" role="button"><span>Performance</span></a>
+                                <a href="{{url('vmt_360review')}}" class="nav-link py-1"
+                                    role="button"><span>Performance</span></a>
                             </li>
                         </ul>
                     </div>
@@ -354,7 +377,7 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link d-flex" href="{{url('index')}}">
                         <div class="d-flex flex-column align-items-center justify-content-center">
-                        <img src="{{ URL::asset('assets/images/payroll.png') }}" alt="" class="m-2">
+                            <img src="{{ URL::asset('assets/images/payroll.png') }}" alt="" class="m-2">
                             <span>Pay cheque</span>
                         </div>
                         <div class="left-line">
@@ -371,17 +394,20 @@
                         data-bs-toggle="collapse" role="button" aria-expanded="false"
                         aria-controls="sidebar360questions">
                         <div class="d-flex flex-column align-items-center justify-content-center ">
-                        <img src="{{ URL::asset('assets/images/ticketing.png') }}" alt="" class="m-2"> <span>Ticketing</span>
+                            <img src="{{ URL::asset('assets/images/ticketing.png') }}" alt="" class="m-2">
+                            <span>Ticketing</span>
                         </div>
                     </a>
                     <div class="collapse menu-dropdown" id="ticketingDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item ">
-                                <a href="" id="" class="nav-link py-1" role="button" aria-expanded="false"><span> Raise Ticket </span> </a>
+                                <a href="" id="" class="nav-link py-1" role="button" aria-expanded="false"><span> Raise
+                                        Ticket </span> </a>
 
                             </li>
                             <li class="nav-item ">
-                                <a href="" id="tds" role="button" aria-expanded="false" class="nav-link py-1"><span>Ticket Status </span></a>
+                                <a href="" id="tds" role="button" aria-expanded="false"
+                                    class="nav-link py-1"><span>Ticket Status </span></a>
                             </li>
                         </ul>
                     </div>
@@ -396,10 +422,12 @@
                     <div class="collapse menu-dropdown" id="ticketingDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item ">
-                                <a href="" id="" class="nav-link py-1" aria-expanded="false"><span> Personal Documents </span> </a>
+                                <a href="" id="" class="nav-link py-1" aria-expanded="false"><span> Personal Documents
+                                    </span> </a>
                             </li>
                             <li class="nav-item ">
-                                <a href="" id="tds" aria-expanded="false" class="nav-link py-1"><span>Official Documents </span></a>
+                                <a href="" id="tds" aria-expanded="false" class="nav-link py-1"><span>Official Documents
+                                    </span></a>
                             </li>
                         </ul>
                     </div>
@@ -412,7 +440,8 @@
                         data-bs-toggle="collapse" role="button" aria-expanded="false"
                         aria-controls="sidebar360questions">
                         <div class="d-flex flex-column align-items-center justify-content-center px-2">
-                        <img src="{{ URL::asset('assets/images/logout 1.png') }}" alt="" class="m-2"><span>Exit</span>
+                            <img src="{{ URL::asset('assets/images/logout 1.png') }}" alt=""
+                                class="m-2"><span>Exit</span>
                         </div>
                     </a>
                     <div class="collapse menu-dropdown" id="ticketingDrop-Down">
@@ -421,7 +450,7 @@
                                 <a href="" id="" class="nav-link py-1"><span> Resignation Entry </span> </a>
                             </li>
                             <li class="nav-item ">
-                                <a href="" id="tds"  class="nav-link py-1"><span>Resignation Status </span></a>
+                                <a href="" id="tds" class="nav-link py-1"><span>Resignation Status </span></a>
                             </li>
                         </ul>
                     </div>

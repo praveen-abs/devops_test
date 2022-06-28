@@ -926,7 +926,7 @@
 }
 
 .navbar-brand-box {
-    padding: 0 1.3rem;
+    /* padding: 0 1.3rem; */
     text-align: center;
     transition: all .1s ease-out
 }
@@ -1669,14 +1669,9 @@
 }
 
 
-.employee-content-right .card .left-content {}
-
-.employee-content-right .card .right-content {}
-
-
 /*by george: 70 t0 50 */
 .logo {
-    line-height: 50px
+    /* line-height: 50px */
 }
 
 .logo-light,
@@ -1891,16 +1886,16 @@
 [data-layout=vertical][data-sidebar-size=sm] .navbar-brand-box {
 
 
-    bottom: 20px;
-    height: 50px;
+    /* bottom: 20px;
+    height: 50px; */
     left: 0;
-    margin-top: -1px;
+    /* margin-top: -1px; */
     position: absolute;
-    padding: 0px;
-    width: 80px;
+    /* padding: 0px; */
+    /* width: 80px; */
     z-index: 1;
     top: 0;
-    /* background: var(--vz-sidebar-bg); */
+
     background-color: #002F56;
 }
 
@@ -2247,7 +2242,7 @@
 
 [data-layout=vertical][data-sidebar=dark] .logo-light,
 [data-layout=vertical][data-sidebar=light] .logo-dark {
-    display: inline-block
+    display: block;
 }
 
 [data-layout=vertical][data-sidebar=light] .logo-light {
