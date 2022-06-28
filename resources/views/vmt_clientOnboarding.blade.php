@@ -37,7 +37,7 @@
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
                                                 <input type="text" name="client_name" class="onboard-form" required />
-                                                <label class="fieldlabels" for="client_name">Client Name</label>
+                                                <label class="fieldlabels" for="client_name">Legal Name of the Company</label>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
                                                 <input type="date" name="csd" class="onboard-form" required />
@@ -48,15 +48,18 @@
                                                 <label class="fieldlabels" for="ced">Contract End Date</label>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="cin_no" class="onboard-form" required />
-                                                <label class="fieldlabels" for="cin_no">CIN Number</label>
+                                                <input type="text" name="cin_no" class="onboard-form" pattern="alp-num" required />
+                                                <label class="error cin_no_label" for="cin_no" style="display: none;"></label>
+                                                <label class="fieldlabels" for="cin_no">Company Identification Number</label>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="com_tan" class="onboard-form" required />
+                                                <input type="text" name="com_tan" class="onboard-form" pattern="alp-num" required />
+                                                <label class="error com_tan_label" for="com_tan" style="display: none;"></label>
                                                 <label class="fieldlabels" for="com_tan">Company TAN</label>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="com_pan" class="onboard-form" required />
+                                                <input type="text" name="com_pan" class="onboard-form" pattern="alp-num" required />
+                                                <label class="error com_pan_label" for="com_pan" style="display: none;"></label>
                                                 <label class="fieldlabels" for="com_pan">Company PAN</label>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
@@ -65,24 +68,24 @@
                                                 <label class="fieldlabels" for="gst_no">GST No</label>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="epf" class="onboard-form" required />
+                                                <input type="text" name="epf" class="onboard-form" pattern="alp-num" required />
+                                                <label class="error epf_label" for="epf" style="display: none;"></label>
                                                 <label class="fieldlabels" for="epf">EPF Registration Number</label>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="esic" class="onboard-form pan" pattern="pan"
-                                                    required />
+                                                <input type="text" name="esic" class="onboard-form" pattern="alp-num" required />
+                                                <label class="error esic_label" for="esic" style="display: none;"></label>
                                                 <label class="fieldlabels" for="esic">ESIC Registration Number</label>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="professional_tax" class="onboard-form"
-                                                    required />
-                                                <label class="fieldlabels" for="professional_tax">Professional Tax
-                                                    Registration Number</label>
+                                                <input type="text" name="professional_tax" class="onboard-form" pattern="alp-num" required />
+                                                <label class="error professional_tax_label" for="professional_tax" style="display: none;"></label>
+                                                <label class="fieldlabels" for="professional_tax">Professional Tax Registration Number</label>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="lwf" class="onboard-form" required />
-                                                <label class="fieldlabels" for="lwf">
-                                                    LWF Registration Number</label>
+                                                <input type="text" name="lwf" class="onboard-form" pattern="alp-num" required />
+                                                <label class="error lwf_label" for="lwf" style="display: none;"></label>
+                                                <label class="fieldlabels" for="lwf">LWF Registration Number</label>
                                             </div>
 
                                         </div>
@@ -103,62 +106,48 @@
                                     <div class="form-card">
                                         <div class="row mt-5">
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="auth_person_name" class="onboard-form"
-                                                    required />
-                                                <label class="fieldlabels" for="auth_person_name">
-                                                    Authorized Person Name</label>
+                                                <input type="text" name="auth_person_name" class="onboard-form" pattern="alpha" required />
+                                                <label class="error auth_person_name_label" for="auth_person_name" style="display: none;"></label>
+                                                <label class="fieldlabels" for="auth_person_name">Authorized Person Name</label>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="auth_person_desig" class="onboard-form"
-                                                    required />
-                                                <label class="fieldlabels" for="auth_person_desig">
-                                                    Authorized Person Designation</label>
+                                                <input type="text" name="auth_person_desig" class="onboard-form" pattern="alpha" required />
+                                                <label class="error auth_person_desig_label" for="auth_person_desig" style="display: none;"></label>
+                                                <label class="fieldlabels" for="auth_person_desig">Authorized Person Designation</label>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
-                                                <input type="number" minlength="10" maxlength="10" name="auth_person_contact" class="onboard-form"
-                                                    required />
-                                                <label class="fieldlabels" for="auth_person_contact">
-                                                    Authorized Person Contact Number</label>
+                                                <input type="number" minlength="10" maxlength="10" name="auth_person_contact" class="onboard-form" required />
+                                                <label class="fieldlabels" for="auth_person_contact">Authorized Person Contact Number</label>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
-                                                <input type="email" name="auth_person_email" class="onboard-form"
-                                                    required />
-                                                <label class="fieldlabels" for="auth_person_email">
-                                                    Authorized Person Contact Email</label>
+                                                <input type="email" name="auth_person_email" class="onboard-form" required />
+                                                <label class="fieldlabels" for="auth_person_email">Authorized Person Contact Email</label>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3 dashBoard">
-
                                                 <input type="text" name="billing_add" class="onboard-form" required />
-                                                <label class="fieldlabels" for="billing_add">
-                                                    Billing Address</label>
+                                                <label class="fieldlabels" for="billing_add">Billing Address</label>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3 dashBoard">
-
                                                 <input type="text" name="shipping_add" class="onboard-form" required />
-                                                <label class="fieldlabels" for="shipping_add">
-                                                    Shipping Address</label>
+                                                <label class="fieldlabels" for="shipping_add">Shipping Address</label>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3 dashBoard">
-
-                                                <input type="file" name="documents_upload" class="onboard-form" required
-                                                    accept="pdf" />
-                                                <label class="fieldlabels" for="documents_upload">
-                                                    Documents Upload</label>
+                                                <input type="file" name="documents_upload" class="onboard-form" required accept="pdf" />
+                                                <label class="fieldlabels" for="documents_upload">Documents Upload</label>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3 dashBoard">
                                                 <select class="onboard-form  drop_down mt-2" required>
                                                     <option value="">Recruitment</option>
                                                     <option value="">Payroll</option>
                                                     <option value="">Statutory Complainces</option>
-                                                    <option value="">PMS</option>
                                                     <option value="">Staffing</option>
+                                                    <option value="">PMS</option>
                                                     <option value="">Accounting</option>
                                                     <option value="">ROC Complainces</option>
                                                     <option value="">Trade Mark</option>
                                                     <option value="">Patent Right</option>
                                                 </select>
-                                                <label class="fieldlabels" for="documents_upload">
-                                                    Product</label>
+                                                <label class="fieldlabels" for="documents_upload">Product</label>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3 dashBoard">
                                                 <select class="onboard-form drop_down mt-2" required>
@@ -167,19 +156,18 @@
                                                     <option value="">BiAnnually</option>
                                                     <option value="">Annually</option>
                                                 </select>
-                                                <label class="fieldlabels" for="subscription_type">
-                                                    Subscription Type</label>
+                                                <label class="fieldlabels" for="subscription_type">Subscription Type</label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-6 text-left p-0"><a type="button" data="row-5" prev="row-4"
-                                                name="previous" class="previous bg-pink action-button text-center"
-                                                value="Previous"><i
-                                                    class="text-white fa fa-arrow-left mr-2"></i>Previous</a></div>
-                                        <div class="col-6 text-right p-0"><button type="submit"
-                                                
-                                                class="bg-pink action-button text-center" value="Submit">Submit</button>
+                                        <div class="col-6 text-left p-0">
+                                            <a type="button" data="row-5" prev="row-4" name="previous" class="previous bg-pink action-button text-center" value="Previous">
+                                                <i class="text-white fa fa-arrow-left mr-2"></i>Previous
+                                            </a>
+                                        </div>
+                                        <div class="col-6 text-right p-0">
+                                            <button type="submit" class="bg-pink action-button text-center" value="Submit">Submit</button>
                                         </div>
                                     </div>
                                 </form>
