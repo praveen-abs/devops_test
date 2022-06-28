@@ -180,9 +180,9 @@
                                                 <div class="popover-body p-0">
                                                     <div class="d-flex pl-20 pr-8 py-8 bg-muted justify-content-between border-bottom">
                                                         <div class="employee-profile-header align-items-center d-flex">
-                                                            <img class="rounded-circle header-profile-user" src="{{ URL::asset('images/1656140741.png') }}" alt="Header Avatar">
+                                                            <img class="rounded-circle header-profile-user" src="{{ URL::asset('assets/images/vmt_user_icon.jpeg') }}" alt="Header Avatar">
                                                             <div class="employee-details max-w-124 pl-4">
-                                                                <h5 class="title text-truncate m-0" title="Dheeraj">Dheeraj</h5>
+                                                                <h5 class="title text-truncate m-0" title="Dheeraj">{{$employee->emp_name}}</h5>
                                                             </div>
                                                             <div class="badge badge-custom bg-accent-violet ml-10">Leave</div>
                                                         </div>
@@ -702,16 +702,12 @@
                 $("[data-toggle=popover]").popover({
                     html : true,
                     content: function() {
-                    var content = $(this).attr("data-popover-content");
-                    return $(content).children(".popover-body").html();
+                        var content = $(this).attr("data-popover-content");
+                        return $(content).children(".popover-body").html();
                     },
-                    // title: function() {
-                    // var title = $(this).attr("data-popover-content");
-                    // return $(title).children(".popover-heading").html();
-                    // }
                 });
-                
             });
+
             $('body').on('click', '.popover-close', function() {
                 $("[data-toggle=popover]").popover('hide');
             });
@@ -725,24 +721,19 @@
             });
             var options = [];
             $( '.dropdown-menu a' ).on( 'click', function( event ) {
-
-            var $target = $( event.currentTarget ),
+                var $target = $( event.currentTarget ),
                 val = $target.attr( 'data-value' ),
                 $inp = $target.find( 'input' ),
                 idx;
-
-            if ( ( idx = options.indexOf( val ) ) > -1 ) {
-                options.splice( idx, 1 );
-                setTimeout( function() { $inp.prop( 'checked', false ) }, 0);
-            } else {
-                options.push( val );
-                setTimeout( function() { $inp.prop( 'checked', true ) }, 0);
-            }
-
-            $( event.target ).blur();
-                
-            console.log( options );
-            return false;
+                if ( ( idx = options.indexOf( val ) ) > -1 ) {
+                    options.splice( idx, 1 );
+                    setTimeout( function() { $inp.prop( 'checked', false ) }, 0);
+                } else {
+                    options.push( val );
+                    setTimeout( function() { $inp.prop( 'checked', true ) }, 0);
+                }
+                $( event.target ).blur();
+                return false;
             });
         });
     </script>
