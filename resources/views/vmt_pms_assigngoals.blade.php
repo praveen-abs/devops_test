@@ -740,7 +740,7 @@
 
 <div class="modal fade" id="createEmployee">
     <div class="modal-dialog modal-md" id="" aria-hidden="true"
-        aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+        aria-labelledby="exampleModalToggleLabel2" tabindex="-1" data-backdrop="static">
         <div class="modal-content">
             <div class="modal-header py-2 bg-primary">
 
@@ -795,7 +795,7 @@
 <!-- Select Employees window -->
 <div class="modal fade" id="changeEmployee">
     <div class="modal-dialog modal-md" id="" aria-hidden="true"
-        aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+        aria-labelledby="exampleModalToggleLabel2" tabindex="-1" data-backdrop="static">
 
         <div class="modal-content">
             <div class="modal-header py-2 bg-primary">
@@ -912,15 +912,18 @@ $(function () {
         stop: function (e, ui) {
             ui.item.removeClass("selected");
             $(this).find("tr").each(function (index) {
-                if (index > 0) {
-                    $(this).find("td").eq(2).html(index);
-                }
+                // if (index > 0) {
+                //     $(this).find("td").eq(1).html(index);
+                // }
             });
         }
     });
 });
 </script>
 <script>
+    // $("#select-reviewer").select2({
+    //     dropdownParent: $("#createEmployee")
+    // });
     $('.reviewerButton').click(function() {
         $('#createEmployee').show();
         $('#createEmployee').removeClass('fade');
@@ -989,8 +992,8 @@ $('#newQuestion').on('submit', function(e){
 });
 
 // publishing tables
-$('#save-table').click(function(e){
-    e.preventDefault();
+$('body').on('click', '#save-table', function(e){
+    // e.preventDefault();
     console.log('assigning Goals');
     console.log($('#kpiTableForm').serialize());
 
