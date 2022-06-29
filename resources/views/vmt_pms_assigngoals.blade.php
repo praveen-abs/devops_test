@@ -604,7 +604,7 @@
                                                     <span id="group-employee"></span>
                                                 </div>
                                             </div>
-                                            <button type="button" data-bs-toggle="modal" data-bs-target="#changeEmployee" class="right btn btn-primary py-1 px-3 rounded-pill mx-3 text-white">Change</button>
+                                            <button type="button" target="#changeEmployee" class="right btn btn-primary py-1 px-3 rounded-pill mx-3 text-white chnageButton">Edit</button>
                                         </div>
                                     </div>
                                 </div>
@@ -630,9 +630,8 @@
                                             </div>
                                             <button 
                                                 type="button" 
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#createEmployee"
-                                                class="right btn btn-primary py-1 px-3 rounded-pill mx-3 text-white"
+                                                target="#createEmployee"
+                                                class="right btn btn-primary py-1 px-3 rounded-pill mx-3 text-white reviewerButton"
                                             >
                                                 Change
                                             </button>
@@ -750,7 +749,7 @@
                     </h5>
                     <button 
                         type="button" 
-                        class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        class="btn-close btn-close-white close-reviewerButton" data-bs-dismiss="modal"
                         aria-label="Close"
                     >
                     </button>
@@ -806,7 +805,7 @@
                     </h5>
                     <button 
                         type="button" 
-                        class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        class="btn-close btn-close-white close-changeEmployee" data-bs-dismiss="modal"
                         aria-label="Close"
                     >
                     </button>
@@ -922,9 +921,25 @@ $(function () {
 });
 </script>
 <script>
-$('#add-goals').click(function() {
-    $('#add-goals-modal').modal('show');
-});
+    $('.reviewerButton').click(function() {
+        $('#createEmployee').show();
+        $('#createEmployee').removeClass('fade');
+    });
+    $('.close-reviewerButton').click(function() {
+        $('#createEmployee').hide();
+        $('#createEmployee').addClass('fade');
+    });
+    $('.chnageButton').click(function() {
+        $('#changeEmployee').show();
+        $('#changeEmployee').removeClass('fade');
+    });
+    $('.close-changeEmployee').click(function() {
+        $('#changeEmployee').hide();
+        $('#changeEmployee').addClass('fade');
+    });
+    $('#add-goals').click(function() {
+        $('#add-goals-modal').modal('show');
+    });
 
 $('body').on('click', '.plus-sign', function() {
     var id = $('.addition-content:last').attr('id');
