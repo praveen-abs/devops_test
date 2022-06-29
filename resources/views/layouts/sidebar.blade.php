@@ -14,8 +14,8 @@
     <div class="navbar-brand-box ">
         <!-- Dark Logo-->
         <a href="index" class="logo logo-dark">
-            <!-- <img src="{{ URL::asset($logoSrc) }}" alt=""> -->
-            <img src="{{ URL::asset('assets/images/vasa.jpg') }}" alt="" class="">
+            <img src="{{ URL::asset($logoSrc) }}" alt=""> 
+            <!-- <img src="{{ URL::asset('assets/images/vasa.jpg') }}" alt="" class=""> -->
         </a>
 
         <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
