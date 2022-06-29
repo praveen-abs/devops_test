@@ -186,7 +186,7 @@
                                     class="nav-link py-1"><span>Directory </span></a>
                             </li>
                             <li class="nav-item ">
-                                <a href="" id="tds" class="nav-link py-1"><span>ORG structure</span></a>
+                                <a href="{{url('vmt-employee-hierarchy')}}" id="tds" class="nav-link py-1"><span>ORG structure</span></a>
                             </li>
                             <!-- <li class="nav-item ">
                                 <a href="{{url('vmt_clientOnboarding')}}" id="" class="nav-link py-1" aria-expanded="false"><span>Client On-Boarding</span> </a>
