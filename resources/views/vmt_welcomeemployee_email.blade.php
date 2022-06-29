@@ -7,11 +7,12 @@
 </head>
 <body>
 	<h2>Greetings, </h2>
+	<h2>We have processed your details.</h2>
 	<h5>Please use following credentials for login</h5>
 	<p>
 		<b>Email:</b>&nbsp;&nbsp;&nbsp;{{$uEmail}}<br/>
 		<b>Password:</b>&nbsp;&nbsp;&nbsp;{{$uPassowrd}}<br/>
-		<b>Password:</b>&nbsp;&nbsp;&nbsp;{{$loginLink}}
+		<b>URL:</b>&nbsp;&nbsp;&nbsp;{{$loginLink}}
 	</p>
 </body>
 </html>

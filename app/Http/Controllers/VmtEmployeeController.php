@@ -219,7 +219,7 @@ class VmtEmployeeController extends Controller
             $empOffice->save();
         }
 
-        \Mail::to($row["email"])->send(new WelcomeMail($row["email"], 'abcd@1234', url('login')  ));
+        \Mail::to($row["email"])->send(new WelcomeMail($row["email"], '123123123', 'http://vasagroup.abshrms.com'  ));
         return "Saved";
     }
 
