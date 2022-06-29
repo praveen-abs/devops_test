@@ -23,8 +23,14 @@ class VmtEmployeeController extends Controller
     }
 
     public function employeeOnboarding(Request $request) {
-        $clientData  = VmtEmployee::select('emp_no')->get();
-        return view('vmt_employeeOnboarding', compact('clientData'));
+        $clientData  = VmtClientMaster::first();
+        $maxId  = VmtEmployee::max('id')+1;
+        if ($clientData) {
+            $empNo = $clientData->client_code.$maxId;
+        } else {
+            $empNo = $maxId;
+        }
+        return view('vmt_employeeOnboarding', compact('empNo'));
     }
 
     //
