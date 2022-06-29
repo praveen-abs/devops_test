@@ -30,7 +30,91 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 <!-- prem content end -->
+<style>
+.f-20 {
+    font-size: 20px;
+}
 
+.rounded-corner-add {
+    border-radius: 30px !important;
+    padding: 10px !important;
+    width: 100px !important;
+}
+
+.br-card {
+    border-radius: 10px !important;
+}
+
+.round {
+  position: relative;
+}
+
+.round label {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  height: 20px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 20px;
+}
+
+.round label:after {
+  border: 2px solid #fff;
+  border-top: none;
+  border-right: none;
+  content: "";
+  height: 6px;
+  left: 4px;
+  opacity: 0;
+  position: absolute;
+  top: 5px;
+  transform: rotate(-45deg);
+  width: 12px;
+}
+
+.round input[type="checkbox"] {
+  visibility: hidden;
+}
+
+.round input[type="checkbox"]:checked + label {
+  background-color: #e9284a;
+  border-color: #e9284a;
+}
+
+.round input[type="checkbox"]:checked + label:after {
+  opacity: 1;
+}
+
+.number-top {
+    border-radius: 0px 0px 30px 0px;
+    padding: 2px 18px 12px 17px;
+}
+
+.plus-sign {
+    --vz-bg-opacity: 1;
+    background-color: rgba(var(--vz-light-rgb), var(--vz-bg-opacity)) !important;
+    border-radius: 20px;
+}
+
+.avatar {
+  display: inline-block;
+}
+
+.avatar:not(:first-child) {
+  margin-left: -13px;
+}
+
+.img-addition {
+    border-radius: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+}
+</style>
 
 @endsection
 @section('content')
@@ -50,7 +134,7 @@
                 <div class="card ">
                     <div class="card-body">
 
-                        <div class="d-flex justify-content-between align-items-center">
+                        <!-- <div class="d-flex justify-content-between align-items-center">
 
                             <div class="row align-items-center">
                                 <div class="col-6 col-lg-3 col-md-6 col-xl-3">
@@ -118,27 +202,156 @@
                                     </div>
                                 </div>
                             </div>
+                        </div> -->
+
+                        <div class="align-items-center" style="justify-content:center;">
+                            <div class="row align-items-center">
+                                <div class="col-6 col-lg-2 col-md-6 col-xl-2 pr-0"></div>
+                                <div class="col-6 col-lg-2 col-md-6 col-xl-2 pr-0">
+                                    <div class="card employee-cards m-0">
+                                        <div class="card-body p-0">
+                                            <div class="row mt-2">
+                                                <p class="pl-3 col-auto pb-2">
+                                                    <img src="{{ URL::asset('/assets/premassets/img/client-img5.png') }}" class="img-round">
+                                                </p>
+                                                <div class="pt-2 col pb-2 pl-0">
+                                                    <h5 class="fw-bold">-</h5>
+                                                    <span>Employees with Goals</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-2 col-md-6 col-xl-2 pr-0">
+                                    <div class="card employee-cards m-0">
+                                        <div class="card-body p-0">
+                                            <div class="row mt-2">
+                                                <p class="pl-3 col-auto pb-2">
+                                                    <img src="{{ URL::asset('/assets/premassets/img/client-img5.png') }}" class="img-round">
+                                                </p>
+                                                <div class="pt-2 col pb-2 pl-0">
+                                                    <h5 class="fw-bold">-</h5>
+                                                    <span>Employees assessed/ rated</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-2 col-md-6 col-xl-2 pr-0">
+                                    <div class="card employee-cards m-0">
+                                        <div class="card-body p-0">
+                                            <div class="row mt-2">
+                                                <p class="pl-3 col-auto pb-2">
+                                                    <img src="{{ URL::asset('/assets/premassets/img/client-img5.png') }}" class="img-round">
+                                                </p>
+                                                <div class="pt-2 col pb-2 pl-0">
+                                                    <h5 class="fw-bold">-</h5>
+                                                    <span>Goals assignment reminder notification</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-2 col-md-6 col-xl-2 pr-0">
+                                    <div class="card employee-cards m-0">
+                                        <div class="card-body p-0">
+                                            <div class="row mt-2">
+                                                <p class="pl-3 col-auto pb-2">
+                                                    <img src="{{ URL::asset('/assets/premassets/img/client-img5.png') }}" class="img-round">
+                                                </p>
+                                                <div class="pt-2 col pb-2 pl-0">
+                                                    <h5 class="fw-bold">-</h5>
+                                                    <span>Rating assessment reminder notification</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-2 col-md-6 col-xl-2 pr-0"></div>
+                            </div>
+                        </div>
+                        <div class="align-items-center mt-3" style="justify-content:center;">
+
+                            <div class="row align-items-center">
+                                <div class="col-6 col-lg-3 col-md-6 col-xl-3"></div>
+                                <div class="col-6 col-lg-2 col-md-6 col-xl-2 pr-0">
+                                    <div class="card employee-cards m-0">
+                                        <div class="card-body p-0">
+                                            <div class="row mt-2">
+                                                <p class="pl-3 col-auto pb-2">
+                                                    <img src="{{ URL::asset('/assets/premassets/img/client-img5.png') }}" class="img-round">
+                                                </p>
+                                                <div class="pt-2 col pb-2 pl-0">
+                                                    <h5 class="fw-bold">-</h5>
+                                                    <span>Self Review</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-2 col-md-6 col-xl-2 pr-0">
+                                    <div class="card employee-cards m-0">
+                                        <div class="card-body p-0">
+                                            <div class="row mt-2">
+                                                <p class="pl-3 col-auto pb-2">
+                                                    <img src="{{ URL::asset('/assets/premassets/img/client-img5.png') }}" class="img-round">
+                                                </p>
+                                                <div class="pt-2 col pb-2 pl-0">
+                                                    <h5 class="fw-bold">-</h5>
+                                                    <span>Manger Review</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-2 col-md-6 col-xl-2 pr-0">
+                                    <div class="card employee-cards m-0">
+                                        <div class="card-body p-0">
+                                            <div class="row mt-2">
+                                                <p class="pl-3 col-auto pb-2">
+                                                    <img src="{{ URL::asset('/assets/premassets/img/client-img5.png') }}" class="img-round">
+                                                </p>
+                                                <div class="pt-2 col pb-2 pl-0">
+                                                    <h5 class="fw-bold">-</h5>
+                                                    <span>Org review</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-3 col-md-6 col-xl-3"></div>
+                            </div>
                         </div>
 
                     </div>
                 </div>
             </div>
         </div>
-
+        <div class="mt-4 p-5" id="initial-section">
+            <div class="row justify-content-center">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center p-0 mt-3 mb-2 p-5">
+                    <div class="p-3"><img src="{{ URL::asset('assets/images/vmt_user_icon.jpeg') }}" style="width: 37%;height: 74%;"></div>
+                    <h4><b>Assign Goals for your employees</b></h4>
+                    <div class="mt-4">
+                        <button id="add-goals" class="rounded-pill py-1 px-2 mx-2 text-white btn btn-primary"><h6 class="m-0 text-white p-2"><i class="text-white fa fa-plus mr-2"></i><b>Add</b></h6></button>
+                    </div>
+                </div>
+            </div>
+        </div> 
 
     </div>
 
-    <div class="assign-cards-wrapper">
+    <!-- <div class="assign-cards-wrapper">
         <div class="card mt-5 assignCards">
             <div class="card-header p-0 m-0">
                 <div class="d-flex   justify-content-between align-items-center ">
                     <div class="d-flex  align-items-center">
-                        <span class="left fw-bold text-white py-2 px-4">New</span>
+                        <span class="left fw-bold text-white pt-3 px-4 pb-4">New</span>
                         <h5 class="m-0 mx-3">Assign Goals</h5>
                     </div>
                     <div class="d-flex align-items-center">
 
-                        <span class="right rounded-pill py-1 px-2 mx-2 text-white" id="publish-goal" style="cursor: pointer;">Publish</span>
+                        <span class="right rounded-pill py-1 px-2 mx-2 text-white btn btn-lg" id="publish-goal" style="cursor: pointer;">Publish</span>
                         <i class="ri-close-fill fw-bold mx-1 mt-0"></i>
 
                     </div>
@@ -158,7 +371,7 @@
                                 <input type="text" name="assignment_period" class="" required />
                             </div>
                         </div>
-                        <div class="col-4 mt-3 mb-3">
+                        <div class="col-4 mt-3 mb-3 ml-5">
                             <div class="d-flex flex-column">
                                 <label class="" for="Assignment">
                                     Coverage</label>
@@ -173,55 +386,49 @@
                     <div class="row mt-3">
                         <div class="col-4  mt-3 mb-3">
                             <div class="d-flex flex-column">
-                                <label class="" for="Assignment">
-                                    Employees-02</label>
-                                <div class="avatar-group-item">
-                                    <a >
-                                        <img src="assets/images/users/avatar-5.jpg" alt="" class="rounded-circle">
-                                    </a>
-                                    <div class="mt-1 message-content align-items-start d-flex flex-column  mx-2">
-                                        <span id="group-employee"></span>
+                                <label class="" for="Assignment">Employees-02</label>
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar-group-item">
+                                        <a >
+                                            <img src="assets/images/users/avatar-5.jpg" alt="" class="rounded-circle">
+                                        </a>
+                                        <div class="mt-1 message-content align-items-start d-flex flex-column  mx-2">
+                                            <span id="group-employee"></span>
+                                        </div>
                                     </div>
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#changeEmployee" class="right btn btn-primary py-1 px-3 rounded-pill mx-3 text-white">Change</button>
                                 </div>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <button type="button" data-bs-toggle="modal"
-                                        data-bs-target="#changeEmployee"
-                                    class="right btn btn-primary py-1 px-3 rounded-pill mt-4 mx-3 text-white">Change</button>
                             </div>
                         </div>
 
-                        <div class="col-4 mt-3 mb-3 d-flex">
+                        <div class="col-4 mt-3 mb-3 d-flex ml-5">
 
                             <div class="d-flex flex-column">
-                                <label class="" for="Assignment">
-                                    Reviwer</label>
+                                <label class="" for="Assignment">Reviwer</label>
+                                <div class="d-flex align-items-center">
+                                    <div class="card reviwer-cards  m-0 rounded-pill">
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-center">
+                                                <a>
+                                                    <img src="assets/images/users/avatar-5.jpg" alt="" class="rounded-circle">
+                                                </a>
 
-                                <div class="card reviwer-cards  m-0 rounded-pill">
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-center">
-                                            <a>
-                                                <img src="assets/images/users/avatar-5.jpg" alt="" class="rounded-circle">
-                                            </a>
-
-                                            <div class=" mt-1 message-content align-items-start d-flex flex-column  mx-2">
-                                                <h6 class="fw-bold m-0" id="reviewer-name">Steve Jobs</h6>
-                                                <span id="reviewer-email">Steve@gmail.com</span>
+                                                <div class=" mt-1 message-content align-items-start d-flex flex-column  mx-2">
+                                                    <h6 class="fw-bold m-0" id="reviewer-name">Steve Jobs</h6>
+                                                    <span id="reviewer-email">Steve@gmail.com</span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <button 
+                                        type="button" 
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#createEmployee"
+                                        class="right btn btn-primary py-1 px-3 rounded-pill mx-3 text-white"
+                                    >
+                                        Change
+                                    </button>
                                 </div>
-
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <button 
-                                    type="button" 
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#createEmployee"
-                                    class="right btn btn-primary py-1 px-3 rounded-pill mt-4 mx-3 text-white"
-                                >
-                                    Change
-                                </button>
                             </div>
                         </div>
                     </div>
@@ -239,32 +446,27 @@
                         <div class="col-12">
                             <div class="container-fluid mb-1 mt-3 ">
                                 <form id="kpiTableForm">
-                                <table class="table align-middle mb-0 table-nowrap responsive table-responsive" id="kpiTable">
-                                    @csrf
-                                    <thead class="text-white bg-primary thead" id="tHead">
-
+                                    <table class="table align-middle mb-0 table-nowrap responsive table-responsive" id="kpiTable">
+                                        @csrf
+                                        <thead class="text-white bg-primary thead" id="tHead">
                                             <tr class="text-uppercase">
-
-                                            <th class="sort" data-sort="id" style="width: 2%;">#</th>
-                                            <th class="sort" data-sort="customer_name" style="width: 8%;">Dimension</th>
-                                            <th class="sort" data-sort="product_name" style="width: 25%;">KPI</th>
-                                            <th class="sort" data-sort="date" style="width: 25%;">Operational Definition
-                                            </th>
-                                            <th class="sort" data-sort="amount" style="width: 25%;">Measure</th>
-                                            <th class="sort" data-sort="payment" style="width: 10%;">Frequency</th>
-                                            <th class="sort" data-sort="status" style="width: 20%;">Target</th>
-                                            <th class="sort" data-sort="status" style="width: 20%;">Stretch Target</th>
-                                            <th class="sort" data-sort="status" style="">Source</th>
-
-                                                <th class="sort" data-sort="status" style="width: 10%;" width="10%">KPI
-                                                    Weightage</th>
+                                                <th class="sort" data-sort="id" style="width: 2%;">#</th>
+                                                <th class="sort" data-sort="customer_name" style="width: 8%;">Dimension</th>
+                                                <th class="sort" data-sort="product_name" style="width: 25%;">KPI</th>
+                                                <th class="sort" data-sort="date" style="width: 25%;">Operational Definition</th>
+                                                <th class="sort" data-sort="amount" style="width: 25%;">Measure</th>
+                                                <th class="sort" data-sort="payment" style="width: 10%;">Frequency</th>
+                                                <th class="sort" data-sort="status" style="width: 20%;">Target</th>
+                                                <th class="sort" data-sort="status" style="width: 20%;">Stretch Target</th>
+                                                <th class="sort" data-sort="status" style="">Source</th>
+                                                <th class="sort" data-sort="status" style="width: 10%;" width="10%">KPI Weightage</th>
                                             </tr>
                                         </thead>
-                                        <tbody class="tbody" id="tbody">
-                                           
-                                            <tr>
+                                        <tbody class="tbody content-container" id="tbody">
+                                            <tr class="addition-content cursor-pointer" id="content1">
                                                 <td class="">
                                                     <span  name="numbers" id="" class="tableInp" >1</span>
+                                                    <div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div>
                                                 </td>
 
                                                 <td class="">
@@ -309,9 +511,10 @@
                                         </tbody>
                                     </table>
                                 </form>
+                                <div class="align-items-center justify-content-center d-flex mt-4 cursor-pointer">
+                                    <span class="plus-sign p-4"><i class="fa fa-plus f-20"></i></span>
+                                </div>
                                 <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
-                                    <button class="btn btn-primary table-btn mx-2" onclick="insRow()">Add</button>
-                                    <button class="btn btn-primary table-btn mx-2" onclick="deleteRow(this)">Remove</button>
                                     <button class="btn btn-primary table-btn mx-2" id="save-table">Save Table</button>
                                 </div>
 
@@ -322,10 +525,215 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
 
+<div id="add-goals-modal" class="modal custom-modal fade show" role="dialog" aria-modal="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header p-0">
+                <div class="assign-cards-wrapper col-12 p-0">
+                    <div class="assignCards">
+                        <div class="card-header p-0 m-0">
+                            <div class="d-flex   justify-content-between align-items-center ">
+                                <div class="d-flex  align-items-center">
+                                    <span class="left fw-bold text-white pt-3 px-4 pb-4">New</span>
+                                    <h5 class="m-0 mx-3">Assign Goals</h5>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <span class="right rounded-pill py-1 px-2 mx-2 text-white btn btn-lg" id="publish-goal" style="cursor: pointer;">Publish</span>
+                                    <button type="button" class="close pl-0 pr-0 pt-0 mx-2" data-bs-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="assign-cards-wrapper">
+                    <div class="assignCards">
+                        <form id="goalForm">
+                            @csrf
+                            <input type="hidden" name="kpitable_id" id="kpitable_id">
+                            <input type="hidden" name="employees[]" id="sel_employees">
+                            <input type="hidden" name="reviewer" id="sel_reviewer">
+                            <div class="row mt-3">
+                                <div class="col-4  mt-3 mb-3">
+                                    <div class="d-flex flex-column">
+                                        <label class="" for="Assignment">
+                                            Assignment Period</label>
+                                        <input type="text" name="assignment_period" class="" required />
+                                    </div>
+                                </div>
+                                <div class="col-4 mt-3 mb-3 ml-5">
+                                    <div class="d-flex flex-column">
+                                        <label class="" for="Assignment">
+                                            Coverage</label>
+                                        <select name="coverage" id="">
+                                            <option value="Employee">Employee</option>
+                                            <option value="Manager">Manager</option>
+                                            <option value="Project Manager">Project Manager</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-4  mt-3 mb-3">
+                                    <div class="d-flex flex-column">
+                                        <label class="" for="Assignment">Employees-02</label>
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar-group-item">
+                                                <a class="avatar">
+                                                    <img src="assets/images/users/avatar-5.jpg" alt="" class="rounded-circle p-0">
+                                                </a>
+                                                <a class="avatar">
+                                                    <img src="assets/images/users/avatar-5.jpg" alt="" class="rounded-circle p-0">
+                                                </a>
+                                                <a class="avatar">
+                                                    <img src="assets/images/users/avatar-5.jpg" alt="" class="rounded-circle p-0">
+                                                </a>
+                                                <a class="avatar">
+                                                    <img src="assets/images/users/avatar-5.jpg" alt="" class="rounded-circle p-0">
+                                                </a>
+                                                <span class="img-addition" style="background-color: rgb(134, 192, 106);width: 30px;height: 30px;font-size:12px;"> +12 </span>
+                                                <div class="mt-1 message-content align-items-start d-flex flex-column  mx-2">
+                                                    <span id="group-employee"></span>
+                                                </div>
+                                            </div>
+                                            <button type="button" data-bs-toggle="modal" data-bs-target="#changeEmployee" class="right btn btn-primary py-1 px-3 rounded-pill mx-3 text-white">Change</button>
+                                        </div>
+                                    </div>
+                                </div>
 
+                                <div class="col-4 mt-3 mb-3 d-flex ml-5">
+
+                                    <div class="d-flex flex-column">
+                                        <label class="" for="Assignment">Reviwer</label>
+                                        <div class="d-flex align-items-center">
+                                            <div class="card reviwer-cards  m-0 rounded-pill">
+                                                <div class="card-body">
+                                                    <div class="d-flex align-items-center">
+                                                        <a>
+                                                            <img src="assets/images/users/avatar-5.jpg" alt="" class="rounded-circle">
+                                                        </a>
+
+                                                        <div class=" mt-1 message-content align-items-start d-flex flex-column  mx-2">
+                                                            <h6 class="fw-bold m-0" id="reviewer-name">Steve Jobs</h6>
+                                                            <span id="reviewer-email">Steve@gmail.com</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button 
+                                                type="button" 
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#createEmployee"
+                                                class="right btn btn-primary py-1 px-3 rounded-pill mx-3 text-white"
+                                            >
+                                                Change
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="table-wrapper">
+                            <h5>Key focus areas</h5>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="container-fluid bg-light mt-3 py-2 rounded-border d-felx align-items-center">
+                                        <h6 class="m-0">Goals / Areas of development</h6>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="container-fluid mb-1 mt-3 ">
+                                        <form id="kpiTableForm">
+                                            <table class="table align-middle mb-0 table-nowrap responsive table-responsive" id="kpiTable">
+                                                @csrf
+                                                <thead class="text-white bg-primary thead" id="tHead">
+                                                    <tr class="text-uppercase">
+                                                        <th class="sort" data-sort="id" style="width: 2%;">#</th>
+                                                        <th class="sort" data-sort="customer_name" style="width: 8%;">Dimension</th>
+                                                        <th class="sort" data-sort="product_name" style="width: 25%;">KPI</th>
+                                                        <th class="sort" data-sort="date" style="width: 25%;">Operational Definition</th>
+                                                        <th class="sort" data-sort="amount" style="width: 25%;">Measure</th>
+                                                        <th class="sort" data-sort="payment" style="width: 10%;">Frequency</th>
+                                                        <th class="sort" data-sort="status" style="width: 20%;">Target</th>
+                                                        <th class="sort" data-sort="status" style="width: 20%;">Stretch Target</th>
+                                                        <th class="sort" data-sort="status" style="">Source</th>
+                                                        <th class="sort" data-sort="status" style="width: 10%;" width="10%">KPI Weightage</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="tbody content-container" id="tbody">
+                                                    <tr class="addition-content cursor-pointer" id="content1">
+                                                        <td class="">
+                                                            <span  name="numbers" id="" class="tableInp" >1</span>
+                                                            <div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div>
+                                                        </td>
+
+                                                        <td class="">
+                                                            <textarea name="dimension[]" id="" cols="20" rows="2"
+                                                                placeholder="type here"></textarea>
+                                                        </td>
+
+                                                        <td class="">
+                                                            <textarea name="kpi[]" id="" cols="20" rows="2"
+                                                                placeholder="type here"></textarea>
+                                                        </td>
+                                                        <td class="">
+                                                            <textarea name="operational[]" id="" cols="20" rows="2"
+                                                                placeholder="type here"></textarea>
+                                                        </td>
+                                                        <td class="">
+                                                            <textarea name="measure[]" id="" cols="20" rows="2"
+                                                                placeholder="type here"></textarea>
+                                                        </td>
+                                                        <td class="">
+                                                            <textarea name="frequency[]" id="" cols="20" rows="2"
+                                                                placeholder="type here"></textarea>
+                                                        </td>
+                                                        <td class="">
+                                                            <textarea name="target[]" id="" cols="20" rows="2"
+                                                                placeholder="type here"></textarea>
+                                                        </td>
+                                                        <td class="">
+                                                            <textarea name="stretchTarget[]" id="" cols="10" rows="2"
+                                                                placeholder="type here"></textarea>
+                                                        </td>
+                                                        <td class="">
+                                                            <textarea name="source[]" id="" cols="10" rows="2"
+                                                                placeholder="type here"></textarea>
+                                                        </td>
+                                                        <td class="">
+                                                            <textarea name="kpiWeightage[]" id="" cols="10" rows="2"
+                                                                placeholder="type here"></textarea>
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </form>
+                                        <div class="align-items-center justify-content-center d-flex mt-4 cursor-pointer">
+                                            <span class="plus-sign p-4"><i class="fa fa-plus f-20"></i></span>
+                                        </div>
+                                        <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
+                                            <button class="btn btn-primary table-btn mx-2" id="save-table">Save Table</button>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Change Reviewr window -->
 
@@ -454,7 +862,6 @@
 <!-- OWL CAROUSEL -->
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
 
-
 <!--Charts JS-->
 <script src="{{ URL::asset('/assets/premassets/js/charts/chart.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/premassets/js/charts/demo.js') }}"></script>
@@ -487,111 +894,48 @@
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 
 <!-- for date and time -->
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
 
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/themes/smoothness/jquery-ui.css" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"></script>
+<script type="text/javascript">
+$(function () {
+    $("#kpiTable").sortable({
+        items: 'tr',
+        cursor: 'pointer',
+        axis: 'y',
+        dropOnEmpty: false,
+        start: function (e, ui) {
+            ui.item.addClass("selected");
+        },
+        stop: function (e, ui) {
+            ui.item.removeClass("selected");
+            $(this).find("tr").each(function (index) {
+                if (index > 0) {
+                    $(this).find("td").eq(2).html(index);
+                }
+            });
+        }
+    });
+});
+</script>
 <script>
-function deleteRow(row) {
-    document.getElementById('kpiTable').deleteRow(-1);
-}
+$('#add-goals').click(function() {
+    $('#add-goals-modal').modal('show');
+});
 
+$('body').on('click', '.plus-sign', function() {
+    var id = $('.addition-content:last').attr('id');
+    var length = 1;
+    if (id) {
+        length = parseInt(id.replace('content', '')) + 1;
+    }
+    $('.content-container').append('<tr class="addition-content cursor-pointer" id="content'+length+'"><td class=""><span  name="numbers" id="" class="tableInp" >'+length+'</span><div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div></td><td class=""><textarea name="dimension[]" id="" cols="20" rows="2" placeholder="type here"></textarea></td><td class=""><textarea name="kpi[]" id="" cols="20" rows="2" placeholder="type here"></textarea></td><td class=""><textarea name="operational[]" id="" cols="20" rows="2" placeholder="type here"></textarea></td><td class=""><textarea name="measure[]" id="" cols="20" rows="2" placeholder="type here"></textarea></td><td class=""><textarea name="frequency[]" id="" cols="20" rows="2" placeholder="type here"></textarea></td><td class=""> <textarea name="target[]" id="" cols="20" rows="2" placeholder="type here"></textarea></td><td class=""><textarea name="stretchTarget[]" id="" cols="10" rows="2" placeholder="type here"></textarea></td><td class=""><textarea name="source[]" id="" cols="10" rows="2" placeholder="type here"></textarea></td><td class=""><textarea name="kpiWeightage[]" id="" cols="10" rows="2" placeholder="type here"></textarea></td></tr>');
+});
 
-function insRow(argument) {
-    var myTable = document.getElementById("kpiTable");
-    var currentIndex = myTable.rows.length;
-    var currentRow = myTable.insertRow(-1);
-
-    var numbersBox = document.createElement("span");
-    numbersBox.setAttribute("name", "numbers" + currentIndex);
-    numbersBox.innerHTML = (currentIndex);
-    var dimensionBox = document.createElement("textarea");
-    dimensionBox.setAttribute("name", "dimension[]");
-    dimensionBox.setAttribute("placeholder", "type here");
-    dimensionBox.setAttribute("cols", "20");
-    dimensionBox.setAttribute("rows", "2");
-
-
-    var kpiBox = document.createElement("textarea");
-    kpiBox.setAttribute("name", "kpi[]");
-    kpiBox.setAttribute("placeholder", "type here");
-    kpiBox.setAttribute("cols", "20");
-    kpiBox.setAttribute("rows", "2");
-
-
-    var operationalBox = document.createElement("textarea");
-    operationalBox.setAttribute("name", "operational[]");
-    operationalBox.setAttribute("placeholder", "type here");
-    operationalBox.setAttribute("cols", "20");
-    operationalBox.setAttribute("rows", "2");
-
-    var measureBox = document.createElement("textarea");
-    measureBox.setAttribute("name", "measure[]");
-    measureBox.setAttribute("placeholder", "type here");
-    measureBox.setAttribute("cols", "20");
-    measureBox.setAttribute("rows", "2");
-
-    var frequencyBox = document.createElement("textarea");
-    frequencyBox.setAttribute("name", "frequency[]");
-    frequencyBox.setAttribute("placeholder", "type here");
-    frequencyBox.setAttribute("cols", "20");
-    frequencyBox.setAttribute("rows", "2");
-
-    var targetBox = document.createElement("textarea");
-    targetBox.setAttribute("name", "target[]");
-    targetBox.setAttribute("placeholder", "type here");
-    targetBox.setAttribute("cols", "20");
-    targetBox.setAttribute("rows", "2");
-
-    var stretchTargetBox = document.createElement("textarea");
-    stretchTargetBox.setAttribute("name", "stretchTarget[]");
-    stretchTargetBox.setAttribute("placeholder", "type here");
-    stretchTargetBox.setAttribute("cols", "10");
-    stretchTargetBox.setAttribute("rows", "2");
-
-    var sourceBox = document.createElement("textarea");
-    sourceBox.setAttribute("name", "source[]");
-    sourceBox.setAttribute("placeholder", "type here");
-    sourceBox.setAttribute("cols", "10");
-    sourceBox.setAttribute("rows", "2");
-
-    var kpiWeightageBox = document.createElement("textarea");
-    kpiWeightageBox.setAttribute("name", "kpiWeightage[]");
-    kpiWeightageBox.setAttribute("placeholder", "type here");
-    kpiWeightageBox.setAttribute("cols", "10");
-    kpiWeightageBox.setAttribute("rows", "2");
-
-    var currentCell = currentRow.insertCell(-1);
-    currentCell.appendChild(numbersBox);
-
-    currentCell = currentRow.insertCell(-1);
-    currentCell.appendChild(dimensionBox);
-
-    currentCell = currentRow.insertCell(-1);
-    currentCell.appendChild(kpiBox);
-
-
-    currentCell = currentRow.insertCell(-1);
-    currentCell.appendChild(operationalBox);
-
-    currentCell = currentRow.insertCell(-1);
-    currentCell.appendChild(measureBox);
-
-    currentCell = currentRow.insertCell(-1);
-    currentCell.appendChild(frequencyBox);
-
-
-    currentCell = currentRow.insertCell(-1);
-    currentCell.appendChild(targetBox);
-
-    currentCell = currentRow.insertCell(-1);
-    currentCell.appendChild(stretchTargetBox);
-
-
-    currentCell = currentRow.insertCell(-1);
-    currentCell.appendChild(sourceBox);
-
-
-    currentCell = currentRow.insertCell(-1);
-    currentCell.appendChild(kpiWeightageBox);
-}
+$('body').on('click', '.delete-row', function() {
+    $(this).parent().parent().remove();
+});
 
 $('#changeEmployeeForm').on('submit', function(e){
     e.preventDefault();
