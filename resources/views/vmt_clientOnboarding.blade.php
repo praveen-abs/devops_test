@@ -32,11 +32,11 @@
                                     <div class="form-card">
                                         <div class="row mt-5">
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
-                                            <input type="text" name="client_code" class="onboard-form" required />
+                                            <input type="text" name="client_code" id="client_code" placeholder="Autogenerate from Company Legal Name" class="onboard-form" required disabled/>
                                                 <label class="fieldlabels" for="client_code ">Client Code</label>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="client_name" class="onboard-form" required />
+                                                <input type="text" name="client_name" id="client_name" class="onboard-form" required />
                                                 <label class="fieldlabels" for="client_name">Legal Name of the Company</label>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
@@ -200,6 +200,13 @@
 <!-- for validating -->
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
 <script src="{{ URL::asset('/assets/premassets/js/onboarding.js') }}"></script>
-
+<script>
+    $('#client_name').keyup(function() {
+        var val = $(this).val();
+        if (val.length <= 4) {
+            $('#client_code').val(val);
+        }
+    })
+</script>
 
 @endsection
