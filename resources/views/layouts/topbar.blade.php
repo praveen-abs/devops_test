@@ -51,7 +51,7 @@
 
 
                         <a href="vmt_topbar_settings" class="p-0 mx-3 settings-icon">
-                            <i class=" ri-notification-3-line">
+                            <i class=" bx bx-bell fs-22">
                             </i>
                         </a>
 
