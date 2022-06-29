@@ -446,9 +446,11 @@
                         <div class="col-12">
                             <div class="container-fluid mb-1 mt-3 ">
                                 <form id="kpiTableForm">
-                                    <table class="table align-middle mb-0 table-nowrap responsive table-responsive" id="kpiTable">
-                                        @csrf
-                                        <thead class="text-white bg-primary thead" id="tHead">
+                                    
+                                <table class="table align-middle mb-0 table-nowrap responsive table-responsive" id="kpiTable">
+                                    @csrf
+                                    <thead class="text-white bg-primary thead" id="tHead">
+
                                             <tr class="text-uppercase">
                                                 <th class="sort" data-sort="id" style="width: 2%;">#</th>
                                                 <th class="sort" data-sort="customer_name" style="width: 8%;">Dimension</th>

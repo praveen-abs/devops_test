@@ -41,7 +41,28 @@
 
             <div class="card-body  pb-2">
 
-                <table class="table e-table align-middle table-nowrap mb-0 " style="border: none;">
+                 <form method="GET" id='role-form' action="{{url('pms-employee-reviews')}}">
+                  
+                    <div class="mb-3 row">
+                        <label class="col-md-2 col-form-label">Select PMS</label>
+                        <div class="col-md-10">
+                            <select class="form-select" name="goal_id" required>
+                                <option>Select PMS</option>
+                                @foreach($pmsGoalList as $user)
+                                    <option value="{{$user->id}}">{{$user->assignment_period .' | '.$user->emp_name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                     <div class="row mt-2">
+                        <div class="text-end col-xl-12">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </div>
+                </form>
+                <br/>
+                @if($empSelected)
+                    <table class="table e-table align-middle table-nowrap mb-0 " style="border: none;">
 
                     <tbody>
                         <tr style="border: none;">
@@ -102,6 +123,7 @@
                         </tr>
                     </tbody>
                 </table>
+                @endif
 
             </div><!-- end card body -->
         </div><!-- end card -->
@@ -233,27 +255,24 @@
                                     </td>
                                     <td>
                                         <div>
-                                            <textarea name="selfreview[{{$kpiRow->id}}]" id="" cols="20" rows="2"
-                                            placeholder="type here"></textarea>
+                                            {{$kpiRow->self_kpi_review}}
                                         </div>
                                     </td>
                                     <td>
-                                        <div> <textarea name="selfkpiachievement[{{$kpiRow->id}}]" id="" cols="20" rows="2"
-                                            placeholder="type here"></textarea></div>
+                                        <div> {{$kpiRow->self_kpi_percentage}}</div>
                                     </td>
                                     <td>
-                                        <div><textarea name="selfcomments[{{$kpiRow->id}}]" id="" cols="20" rows="2"
-                                            placeholder="type here"></textarea></div>
+                                        <div>{{$kpiRow->self_kpi_comments}}</div>
                                     </td>
 
 
                                     <td>
-                                        "Great outcome of Reimbursement delivery for GS and SS also maintain the consitency
-                                        delivery deviation sheet ontime and everytime
-                                        Most importantly need to focus on STM centralisation in 2019 Q2"
+                                        <textarea name="managereview[{{$kpiRow->id}}]" id="" cols="20" rows="2"
+                                            placeholder="type here"></textarea>
                                     </td>
                                     <td>
-                                        104%
+                                        <textarea name="managerpercetage[{{$kpiRow->id}}]" id="" cols="20" rows="2"
+                                            placeholder="type here"></textarea>
                                     </td>
 
                                 </tr>
@@ -413,13 +432,7 @@
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 <script type="text/javascript">
     
-    //$('#prizePopup').modal('show');
-   /* var showPopup = "{{$showModal}}";
-    if(showPopup){
-        console.log('accept-goals');
-
-        $('#acceptPMS').modal('show');
-    }*/
+ 
     
 
     $('.save-review').click(function(e){
@@ -429,7 +442,7 @@
 
         $.ajax({
             type: "POST", 
-            url:"{{url('vmt-pmsappraisal-review')}}",
+            url:"{{url('vmt-pmsappraisal-managerreview')}}",
             data:$('#employee_self_review').serialize(), 
             success: function(data){
                 alert(data);

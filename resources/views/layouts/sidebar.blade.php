@@ -81,9 +81,14 @@
                                         Performance </span> </a>
                             </li>
                             <li class="nav-item">
+                                <a href="{{url('vmt_noData')}}" class="nav-link py-1" role="button"><span>Expenses &
+                                        Trevel</span></a>
+                            </li>
+                            
+                            <!-- <li class="nav-item">
                                 <a href="{{url('vmt-assign-roles')}}" class="nav-link py-1" role="button"><span>
                                         Expenses & Travel </span> </a>
-                            </li>
+                            </li> -->
                             <!-- <li class="nav-item">
                                 <a href="{{url('vmt-assign-roles')}}" class="nav-link py-1"
                                     data-bs-toggle="collapse"><span>My Report</span>
@@ -178,7 +183,7 @@
                             </li>
                             <li class="nav-item ">
                                 <a href="{{url('vmt-employess/directory')}}" id="tds"
-                                    class="nav-link py-1"><span>Employees - (Employee Directory page)</span></a>
+                                    class="nav-link py-1"><span>Directory </span></a>
                             </li>
                             <li class="nav-item ">
                                 <a href="" id="tds" class="nav-link py-1"><span>ORG structure</span></a>
@@ -188,7 +193,7 @@
                             </li> -->
                             <li class="nav-item ">
                                 <a href="{{url('vmt_employeeOnboarding')}}" id="" class="nav-link py-1"
-                                    aria-expanded="false"><span>Onboarding - (Employee onboarding page)</span> </a>
+                                    aria-expanded="false"><span>Onboarding</span> </a>
                             </li>
                             <li class="nav-item ">
                                 <a href="" id="tds" class="nav-link py-1"><span>Exit</span></a>
@@ -401,12 +406,12 @@
                     <div class="collapse menu-dropdown" id="ticketingDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item ">
-                                <a href="" id="" class="nav-link py-1" role="button" aria-expanded="false"><span> Raise
+                                <a href="{{url('vmt_noData')}}" id="" class="nav-link py-1" role="button" aria-expanded="false"><span> Raise
                                         Ticket </span> </a>
 
                             </li>
                             <li class="nav-item ">
-                                <a href="" id="tds" role="button" aria-expanded="false"
+                                <a href="{{url('vmt_noData')}}" id="tds" role="button" aria-expanded="false"
                                     class="nav-link py-1"><span>Ticket Status </span></a>
                             </li>
                         </ul>
@@ -447,10 +452,10 @@
                     <div class="collapse menu-dropdown" id="ticketingDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item ">
-                                <a href="" id="" class="nav-link py-1"><span> Resignation Entry </span> </a>
+                                <a href="{{url('vmt_noData')}}" id="" class="nav-link py-1"><span> Resignation Entry </span> </a>
                             </li>
                             <li class="nav-item ">
-                                <a href="" id="tds" class="nav-link py-1"><span>Resignation Status </span></a>
+                                <a href="{{url('vmt_noData')}}" id="tds" class="nav-link py-1"><span>Resignation Status </span></a>
                             </li>
                         </ul>
                     </div>

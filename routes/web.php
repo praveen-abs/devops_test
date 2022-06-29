@@ -140,6 +140,13 @@ Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 's
 // self appraisal review for employees
 Route::get('vmt-pmsappraisal-review', 'App\Http\Controllers\VmtApraisalController@showEmployeeApraisalReview');
 
+Route::post('vmt-pmsappraisal-review', 'App\Http\Controllers\VmtApraisalController@storeEmployeeApraisalReview');
+
+// to view employees reviews for manager
+Route::get('pms-employee-reviews', 'App\Http\Controllers\VmtApraisalController@showManagerApraisalReview');
+// store review given by manager
+Route::post('vmt-pmsappraisal-managerreview', 'App\Http\Controllers\VmtApraisalController@storeManagerApraisalReview');
+
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
 
 //Onboarding pages
