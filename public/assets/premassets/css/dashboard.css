@@ -512,7 +512,6 @@ input:checked + .slider:before {
   padding: 3px 5px 3px 5px;
 }
 
-
 .wrap-text {
   display: inline-block;
   /* width: 180px; */
@@ -521,96 +520,25 @@ input:checked + .slider:before {
   text-overflow: ellipsis;
 }
 
-
 .wrap-text:hover {
   overflow: visible;
   white-space: normal;
 }
 
-/* .wrap-text:hover {
-  margin-top: 20px;
-} */
-
-
 /* calendar */
-
-
 .fc-today-button {
   display: none !important;
 }
 
-/* .fc-button-group {
-  position: absolute;
-  display: flex;
-  top: 0;
-  right: 0;
-}
-
-.fc-prev-button {
-  right: 145%;
-  border: none !important;
-  color: orange !important;
-}
-
-.fc-next-button {
-  border: none !important;
-  color: orange !important;
-}
-
-.fc-left {
-  position: absolute;
-  right: 15%;
-  width: 31%;
-  top: 0;
-  margin: 0 !important;
-}
-
-.fc-left h2 {
-  font-size: 12px !important;
-}
-
-.fc-toolbar {
-  margin: 0 !important;
-} */
-
-.fc-prev-button {
-  /* right: -414%; */
-  /* right: -305px; */
-}
-
-.fc-next-button {
-  /* right: 84px; */
-  /* right: 113%; */
-}
-
-/* .fc-button-group {
-  position: absolute;
-  display: inline-flex;
-} */
-
-/* .fc-header-toolbar {
-  position: absolute;
-  display: inline-flex;
-}
-
-.fc-left {
-  justify-content: center;
-  align-items: center;
-  min-width: 100%;
-  display: inline-flex;
-} */
-
 .fc-day-grid-container {
   overflow: auto !important;
-  height: auto !important;
+  /* height: auto !important; */
 }
 
 .fc-prev-button {
-  /* border: none !important; */
   color: orange !important;
 }
 
 .fc-next-button {
-  /* border: none !important; */
   color: orange !important;
 }
