@@ -17125,11 +17125,11 @@ body {
 }
 
 .side-left {
-    background-color: red;
+    background-color: white;
     height: 100%;
     width: calc(100% - 400px);
     float: left;
-    background-image: url("../images/coming-soon-img.png");
+    /*background-image: url("../images/coming-soon-img.png"); */
     background-size: 100%;
     background-repeat: no-repeat;
 

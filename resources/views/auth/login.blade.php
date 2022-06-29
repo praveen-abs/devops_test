@@ -5,11 +5,7 @@
 @section('content')
 <div class="container-fluid conya">
     <div class="side-left">
-        <div class="sid-layy">
-            <div class="row slid-roo">
-
-            </div>
-        </div>
+        <img src="{{ URL::asset($generalInfo->background_img) }}" alt="brand-logo" class="mx-2 w-100 h-100">
     </div>
     <div class="side-right">
         <div class="text-center mt-5">
