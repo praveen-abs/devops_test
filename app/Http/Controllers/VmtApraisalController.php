@@ -11,6 +11,7 @@ use App\Models\VmtEmployee;
 use App\Models\VmtKPITable;
 use App\Models\VmtEmployeePMSGoals; 
 use App\Mail\VmtAssignGoals;
+use App\Mail\NotifyPMSManager;
 
 class VmtApraisalController extends Controller
 {
@@ -182,5 +183,68 @@ class VmtApraisalController extends Controller
             }
         }
         return view('vmt_appraisalreview');
+    }
+
+    // 
+    public function storeEmployeeApraisalReview(Request $request){
+        $kpiData  = VmtEmployeePMSGoals::find($request->goal_id);
+        if($kpiData){
+            $kpiData->self_kpi_review      = $request->selfreview; //null
+            $kpiData->self_kpi_percentage  = $request->selfkpiachievement; //null
+            $kpiData->self_kpi_comments    = $request->selfcomments;//null
+            $kpiData->save();
+
+            $reviewManager = User::find($kpiData->reviewer_id);
+            //dd($reviewManager->email);
+            \Mail::to($reviewManager->email)->send(new NotifyPMSManager(auth::user()->name));
+        }
+        return "Saved";
+    }
+
+    // Manger review : to see kpi table filled by employees
+    public function showManagerApraisalReview(Request $request){
+        $pmsGoalList  = VmtEmployeePMSGoals::select('vmt_employee_details.emp_name', 'vmt_employee_pms_goals_table.*' )->where('reviewer_id', auth::user()->id)->rightJoin('vmt_employee_details', 'vmt_employee_details.id', '=', 'vmt_employee_pms_goals_table.employee_id')->orderBy('updated_at', 'DESC')->get();
+
+        if($request->has('goal_id')){
+            $assignedGoals  = VmtEmployeePMSGoals::find($request->goal_id);
+            $employeeData = VmtEmployee::where('id', $assignedGoals->employee_id)->first();
+            $kpiData      = VmtKPITable::find($assignedGoals->kpi_table_id);
+            $kpiRowArray  = explode(',', $kpiData->kpi_rows);
+            $kpiRows      = VmtAppraisalQuestion::whereIn('id', $kpiRowArray)->get();
+            if($assignedGoals->self_kpi_review != null){
+                $reviewArray = (json_decode($assignedGoals->self_kpi_review, true));
+                $percentArray = (json_decode($assignedGoals->self_kpi_percentage, true));
+                $commentArray = (json_decode($assignedGoals->self_kpi_comments, true));
+                foreach ($kpiRows as $index => $value) {
+                    // code...
+                    $kpiRows[$index]['self_kpi_review'] = $reviewArray[$value->id];
+                    $kpiRows[$index]['self_kpi_percentage'] = $percentArray[$value->id];
+                    $kpiRows[$index]['self_kpi_comments'] = $commentArray[$value->id];
+                }
+            }
+            $empSelected = true;
+
+            return view('vmt_appraisalreview_manager', compact('pmsGoalList', 'employeeData', 'assignedGoals', 'kpiRows', 'empSelected'));
+        }
+        
+        $kpiRows = [];
+        $empSelected = false;
+        return view('vmt_appraisalreview_manager', compact('pmsGoalList', 'kpiRows', 'empSelected'));
+    }
+
+    // Storing Manager Review given to the employees
+    public function storeManagerApraisalReview(Request $request){
+        $kpiData  = VmtEmployeePMSGoals::find($request->goal_id);
+        if($kpiData){
+            $kpiData->manager_kpi_review      = $request->managereview; //null
+            $kpiData->manager_kpi_percentage  = $request->managerpercetage; //null
+            //$kpiData->self_kpi_comments    = $request->selfcomments;//null
+            $kpiData->save();
+
+            //$reviewManager = User::find($kpiData->reviewer_id);
+            //dd($reviewManager->email);
+            //\Mail::to($reviewManager->email)->send(new NotifyPMSManager(auth::user()->name));
+        }
+        return "Saved";
     }
 }
