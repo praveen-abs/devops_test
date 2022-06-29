@@ -244,7 +244,7 @@
                                 <div class="mt-2 pl-0" style="float: right;">
                                     <h6>
                                         <a class="" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <p class="dropdown-apply"><i class="fa fa-plus f-15 rounded-plus bg-primary text-white"></i>Apply<i class="fa fa-arrow-down f-15 text-primary pt-1"></i></p>
+                                            <p class="dropdown-apply"><i class="fa fa-plus f-15 rounded-plus bg-primary text-white"></i><span class="mt-1">Apply</span><i class="fa fa-chevron-down f-15 text-primary pt-1"></i></p>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right m-0" id="apply-dropdown" aria-labelledby="dropdownMenuLink">
                                             <a class="dropdown-item f-11" href="#"> Time off</a>
