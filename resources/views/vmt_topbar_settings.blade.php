@@ -86,8 +86,8 @@ input[type=file] {
                     <div class="card ">
                         <div class="card-body">
                             <div>
-                                <h2>General Info</h2>
-                                <p></p>
+                                <h4 class="fw-bold text-primary">General Info</h>
+                                    <p></p>
                             </div>
 
                             <form method="POST" id='role-form' action="{{url('/vmt-general-info')}}"
@@ -216,8 +216,7 @@ input[type=file] {
 
             <!--user  rolls -->
 
-            <div class="p-0   tab-pane fade show " id="v-roll" role="tabpanel"
-                aria-labelledby="v-pills-home-tab">
+            <div class="p-0   tab-pane fade show " id="v-roll" role="tabpanel" aria-labelledby="v-pills-home-tab">
 
                 <div class="header-content d-flex align-items-center bg-white  px-3">
                     <label class="heading">User Roll</label>
@@ -225,16 +224,18 @@ input[type=file] {
                 <div class="container-fluid p-0  bg-white my-3 ">
                     <div class="card m-0">
                         <div class="card-body">
-                            <div class="d-flex align-items-center  justify-content-between">
+                            <div class="d-flex align-items-center mb-4 justify-content-between">
                                 <div>
-                                    <h3>User Roles</h3>
+                                    <h4 class="fw-bold text-primary">User Roles</h4>
                                     <p class=" text-secondary"> User Roles can be assigned to the
                                     </p>
                                 </div>
                                 <div class="d-flex w-50 align-items-center w-75  justify-content-end ">
-                                    <div class="input-search align-self-center w-50"><input type="text"
-                                            placeholder="Search Roles" autocomplete="off"
-                                            class="form-control w-100 "><span class="ic-search icon"></span>
+                                    <div class="input-search align-self-center w-50">
+                                        <i class=" ri-search-line "></i>
+                                        <input type="text" placeholder="Search Roles" autocomplete="off"
+                                            class="search-bar border-none rounded-pill outline-none "><span
+                                            class="ic-search icon"></span>
 
                                     </div>
                                     <button class="btn btn-primary mx-2" data-bs-toggle="modal"
@@ -340,8 +341,7 @@ input[type=file] {
 
             <!-- welcome -->
 
-            <div class="p-0   tab-pane fade show " id="v-welcome" role="tabpanel"
-                aria-labelledby="v-pills-home-tab">
+            <div class="p-0   tab-pane fade show " id="v-welcome" role="tabpanel" aria-labelledby="v-pills-home-tab">
 
                 <div class="header-content d-flex align-items-center bg-white  px-3">
                     <label class="heading">Welcome Screen</label>
@@ -351,7 +351,7 @@ input[type=file] {
                         <div class="card-body">
                             <div class="mb-4">
                                 <div class="intructions-container ">
-                                    <h5>Welcome Screen</h5>
+                                    <h4 class="fw-bold text-primary">Welcome Screen</h4>
                                     <p class="">This screen is visible </p>
 
 
@@ -417,9 +417,9 @@ input[type=file] {
                     <div class="modal-header py-3 new-role-header d-flex align-items-center">
 
 
-                        <h5 class="modal-title">Create New
+                        <h4 class="modal-title">Create New
                             Role
-                        </h5>
+                        </h4>
                         <hr class="bottom-dash">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
@@ -447,7 +447,7 @@ input[type=file] {
 
                                 <div class="row ">
                                     <div class="col-6">
-                                        <h5>Permissions</h5>
+                                        <h4>Permissions</h4>
                                     </div>
                                     <div class="col-6">
                                         <div class="input-search align-self-center"><input type="text"

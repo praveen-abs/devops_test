@@ -13,7 +13,7 @@
     </div>
     <div class="side-right">
         <div class="text-center mt-5">
-            <img src="{{ URL::asset('assets/images/logo-sm.png') }}" alt="brand-logo" class="h-50 w-50">
+            <img src="{{ URL::asset('assets/images/logo-sm.png') }}" alt="brand-logo" class="h-50 w-50 mt-3">
         </div>
         <div class="p-2 mt-2">
             <form action="{{ route('login') }}" method="POST">
