@@ -33,7 +33,11 @@
                                     <div class="form-card">
                                         <div class="row mt-5">
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="employee_code" class="onboard-form" required />
+                                                <select name="employee_code" class="onboard-form mt-2" required>
+                                                    @foreach($clientData as $data)
+                                                    <option value="{{$data['emp_no']}}">{{$data['emp_no']}}</option>
+                                                    @endforeach
+                                                </select>
                                                 <label class="fieldlabels" for="employee_code">Employee Code</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">

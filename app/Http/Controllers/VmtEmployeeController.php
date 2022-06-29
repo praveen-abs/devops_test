@@ -9,6 +9,7 @@ use App\Models\VmtEmployeeHierarchy;
 use App\Models\VmtEmployee;
 use App\Imports\VmtEmployee as VmtEmployeeImport;
 use App\Models\VmtEmployeeOfficeDetails;
+use App\Models\VmtClientMaster;
 use Illuminate\Support\Facades\Hash;
 
 use App\Mail\WelcomeMail; 
@@ -19,6 +20,11 @@ class VmtEmployeeController extends Controller
     public function index(Request $request){
         $users  = User::all();
         return view('vmt_view_employee_hierarchy', compact('users'));
+    }
+
+    public function employeeOnboarding(Request $request) {
+        $clientData  = VmtEmployee::select('emp_no')->get();
+        return view('vmt_employeeOnboarding', compact('clientData'));
     }
 
     //
