@@ -1,0 +1,455 @@
+@extends('layouts.master')
+@section('css')
+
+<link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
+<style type="text/css">
+.e-table>:not(caption)>*>* {
+    border-bottom-width: 0px !important;
+    padding: .45rem .6rem !important;
+}
+
+.e-table .e-table,
+.e-table>thead {
+    border: 0px !important;
+}
+
+.table-bordered .table-bordered>:not(caption)>*>* {
+    border-top-width: 0px !important;
+    border-bottom-width: 0px !important;
+}
+</style>
+@endsection
+@section('content')
+
+@component('components.breadcrumb')
+@slot('li_1') Dashboards @endslot
+@slot('title') Self Appraisal Review @endslot
+@endcomponent
+
+
+
+
+
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-header border-0 align-items-center d-flex">
+                <h4 class="card-title mb-0 flex-grow-1">PERFORMANCE MANAGEMENT SYSTEMS (PMS) </h4>
+
+            </div><!-- end card header -->
+
+            <div class="card-body  pb-2">
+
+                 <form method="GET" id='role-form' action="{{url('pms-employee-reviews')}}">
+                  
+                    <div class="mb-3 row">
+                        <label class="col-md-2 col-form-label">Select PMS</label>
+                        <div class="col-md-10">
+                            <select class="form-select" name="goal_id" required>
+                                <option>Select PMS</option>
+                                @foreach($pmsGoalList as $user)
+                                    <option value="{{$user->id}}">{{$user->assignment_period .' | '.$user->emp_name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                     <div class="row mt-2">
+                        <div class="text-end col-xl-12">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </div>
+                </form>
+                <br/>
+                @if($empSelected)
+                    <table class="table e-table align-middle table-nowrap mb-0 " style="border: none;">
+
+                    <tbody>
+                        <tr style="border: none;">
+                            <td class=" text-left">
+                                <b>Employee Name: </b>
+                            </td>
+                            <td class="text-left">
+                                {{Auth::user()->name}}
+                            </td>
+                        </tr>
+                        <tr style="border: none;">
+                            <td class="text-left">
+                                <b>Employee ID:
+                            </td>
+                            <td class="text-left">
+                                {{$employeeData->emp_no}}
+                            </td>
+                        </tr>
+                        <tr style="border: none;">
+                            <td class="col-xl-6 text-left">
+                                <b>Job Title / Designation:</b>
+                            </td>
+                            <td class="col-xl-6 text-left">
+                                {{$employeeData->designation}}
+                            </td>
+                        </tr>
+                        <tr style="border: none;">
+                            <td class="col-xl-6 text-left">
+                                <b>Business Unit/Process/Function:</b>
+                            </td>
+                            <td class="col-xl-6 text-left">
+                                Call Centre
+                            </td>
+                        </tr>
+                        <tr style="border: none;">
+                            <td class="col-xl-6 text-left">
+                                <b>Reporting Manager :</b>
+                            </td>
+                            <td class="col-xl-6 text-left">
+                                Ajeesh Kumar R -Head Service Delivery
+                            </td>
+                        </tr>
+                        <tr style="border: none;">
+                            <td class="col-xl-6 text-left">
+                                <b>Managers Manager :</b>
+                            </td>
+                            <td class="col-xl-6 text-left">
+                                Kumar
+                            </td>
+                        </tr>
+                        <tr style="border: none;">
+                            <td class="col-xl-6 text-left">
+                                <b>Review Period: </b>
+                            </td>
+                            <td class="col-xl-6 text-left">
+                                Jul’21 To Mar’22
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                @endif
+
+            </div><!-- end card body -->
+        </div><!-- end card -->
+
+        <div class="card">
+
+            <div class="card-body  pb-2">
+
+                <table class="table e-table align-middle table-nowrap mb-0 " style="border: none;">
+
+                    <tbody>
+                        <tr style="border: none;">
+                            <td class=" text-left">
+                                <b>Overall Annual Score: </b>
+                            </td>
+                            <td class="text-left">
+                                80
+                            </td>
+                        </tr>
+                        <tr style="border: none;">
+                            <td class="text-left">
+                                <b>Corresponding ANNUAL PERFORMANCE Rating:</b>
+                            </td>
+                            <td class="text-left">
+                                Exceeds Expectations
+                            </td>
+                        </tr>
+                        <tr style="border: none;">
+                            <td class="col-xl-6 text-left">
+                                <b>Ranking:</b>
+                            </td>
+                            <td class="col-xl-6 text-left">
+                                4
+                            </td>
+                        </tr>
+                        <tr style="border: none;">
+                            <td class="col-xl-6 text-left">
+                                <b> Action:</b>
+                            </td>
+                            <td class="col-xl-6 text-left">
+                                15%
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div><!-- end card body -->
+        </div><!-- end card -->
+
+        <!-- @can('L1_Review')
+                            <th style=" background-color: #405189;">
+                                <h6 style="color:white;">Reporting Manger Review's (L1)<br /><br /> Comments
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Score
+                                </h6>
+                            </th>
+                            @endcan
+
+                            @can('L2_Review')
+                            <th class="r" style=" background-color: #405189;">
+                                <h6 style="color:white;"> Managers Manager (L2)<br /><br /> Comments
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Score</h6>
+                            </th>
+                            @endcan
+
+                            @can('Final_Review')
+                            <th class="r" style=" background-color: #405189;">
+                                <h6 style="color:white;"> Final Review <br />( HR or Head Of the Department)</h6>
+                            </th>
+                            @endcan -->
+
+
+        <!-- appraisal table -->
+        <div class="card">
+            <div class="card-body pb-2">
+                @if(count($kpiRows) > 0)
+                <form id="employee_self_review" method="POST">
+                    @csrf
+                    <input type="hidden" name="goal_id" value="{{$assignedGoals->id}}">
+                    <div class="table-content mb-4">
+                        
+                        <table class="table align-middle mb-0  responsive" id="table">
+
+                            <thead class="thead" id="tHead">
+                                <tr>
+                                    <th scope="col">Dimension</th>
+                                    <th scope="col">KPI</th>
+                                    <th scope="col">Operational Definition</th>
+                                    <th scope="col">Measure</th>
+                                    <th scope="col">Frequency</th>
+                                    <th scope="col">Target</th>
+                                    <th scope="col">Stretch Target</th>
+                                    <th scope="col">Source</th>
+                                    <th scope="col">KPI Weightage</th>
+                                    <th scope="col">KPI - Achievement (Self Review)</th>
+                                    <th scope="col">Self KPI Achievement %</th>
+                                    <th scope="col">Comments</th>
+                                    <th scope="col">KPI - Achievement (Manager Review)</th>
+                                    <th scope="col">Manager KPI Achievement %
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbody" id="tbody">
+                                @foreach($kpiRows as $index => $kpiRow)
+                                <tr>
+                                    <th scope="row">{{$kpiRow->dimension}}</th>
+                                    <td>
+                                        <div>{{$kpiRow->dimension}}</div>
+                                    </td>
+                                    <td>
+                                        <div> {{$kpiRow->operational_definition}} </div>
+                                    </td>
+                                    <td>
+                                        <div>{{$kpiRow->measure}} </div>
+                                    </td>
+                                    <td>
+                                        <div> {{$kpiRow->frequency}}</div>
+                                    </td>
+                                    <td>
+                                        <div>{{$kpiRow->target}}</div>
+                                    </td>
+                                    <td>
+                                        <div>{{$kpiRow->stretch_target}}</div>
+                                    </td>
+                                    <td>
+                                        <div>{{$kpiRow->source}}</div>
+                                    </td>
+                                    <td>
+                                        <div>{{$kpiRow->kpi_weightage}}</div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            {{$kpiRow->self_kpi_review}}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div> {{$kpiRow->self_kpi_percentage}}</div>
+                                    </td>
+                                    <td>
+                                        <div>{{$kpiRow->self_kpi_comments}}</div>
+                                    </td>
+
+
+                                    <td>
+                                        <textarea name="managereview[{{$kpiRow->id}}]" id="" cols="20" rows="2"
+                                            placeholder="type here"></textarea>
+                                    </td>
+                                    <td>
+                                        <textarea name="managerpercetage[{{$kpiRow->id}}]" id="" cols="20" rows="2"
+                                            placeholder="type here"></textarea>
+                                    </td>
+
+                                </tr>
+                                @endforeach
+                            </tbody>
+
+                        </table>
+                       
+                    </div>
+                </form>
+                <div class="buttons d-flex align-items-center justify-content-end ">
+                    <button class="btn btn-primary save-review" id="add">Save<i class="fa fa-save"></i></button>
+
+                    <!-- <button class="btn btn-primary mx-3">Remove<i class="fa fa-remove"></i></button> -->
+                </div>
+                @else
+
+                <h4>Goals Not Assigned</h4>
+
+                @endif
+
+            </div>
+        </div>
+    </div><!-- end col -->
+    <div class="row mt-3">
+        <div class="col-lg-12">
+            <label class="form-label">
+                Appraiser Feedback:
+            </label>
+            <div class="my-2">
+                <textarea class="form-control" placeholder="" id="gen-info-description-input" name="performance"
+                    rows="4"></textarea>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="card">
+        <div class="card-header">
+            <p>Appraisee's Annual Score & Rating</p>
+        </div>
+        <div class="card-body pb-2">
+            <h5>Best People Rating Grid</h5>
+            <div class="table-content mb-4">
+                <table class="table align-middle mb-0  responsive" id="table">
+
+                    <thead class="thead" id="tHead">
+                        <tr>
+                            <th scope="col" colspan="6">Best People
+                                Rating Grid</th>
+                            <th scope="col"> Appraisee's Annual Score & Rating</th>
+
+                        </tr>
+                    </thead>
+                    <tbody class="tbody" id="tbody">
+
+
+                        <tr>
+                            <td class="">
+                                Overall Annual Score
+                            </td>
+                            <td class="">Less than 60 </td>
+                            <td class="">60-70</td>
+                            <td class="">70-80</td>
+                            <td class="">80-90</td>
+                            <td class="">90-100</td>
+                            <td class="">100</td>
+                        </tr>
+
+                        <tr>
+
+                            <td class="">
+                                Corresponding ANNUAL PERFORMANCE Rating
+
+                            </td>
+                            <td class="">Needs Action</td>
+                            <td class="">Below Expectations</td>
+                            <td class="">Meet Expectations</td>
+                            <td class="">Exceeds Expectations </td>
+                            <td class="">Exceptionally Exceeds Expectations</td>
+                            <td class="">Exceptional </td>
+                        </tr>
+
+                        <tr>
+                            <td class="">
+                                Ranking
+                            </td>
+                            <td class="">1</td>
+                            <td class="">2</td>
+                            <td class="">3</td>
+                            <td class="">4</td>
+                            <td class="">5</td>
+                            <td class="">5</td>
+                        </tr>
+                        <tr>
+
+                            <td class="">
+                                Action
+                            </td>
+                            <td class="">Exit</td>
+                            <td class="">PIP</td>
+                            <td class="">10% </td>
+                            <td class=""> 15% </td>
+                            <td class="">20%</td>
+                            <td class="">5%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+<!-- Modal -->
+                <div class="modal fade flip" id="acceptPMS" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-body p-5 text-center">
+                                <lord-icon src="https://cdn.lordicon.com/gsqxdxog.json"
+                                    trigger="loop" colors="primary:#405189,secondary:#f06548"
+                                    style="width:90px;height:90px"></lord-icon>
+                                <div class="mt-4 text-center">
+                                    <h4>You are about to delete a order ?</h4>
+                                    
+                                    <p class="text-muted fs-15 mb-4">Deleting your order will remove
+                                        all of
+                                        your information from our database.</p>
+                                    <div class="hstack gap-2 justify-content-center remove">
+                                        <button
+                                            class="btn btn-link link-success fw-medium text-decoration-none"
+                                            data-bs-dismiss="modal"><i
+                                                class="ri-close-line me-1 align-middle"></i>
+                                            Close</button>
+                                        <button class="btn btn-danger" id="delete-record">Yes,
+                                            Delete It</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end modal -->
+
+
+    
+</div><!-- end row -->
+
+ 
+@endsection
+@section('script')
+<!-- apexcharts -->
+
+ 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
+<script type="text/javascript">
+    
+ 
+    
+
+    $('.save-review').click(function(e){
+        e.preventDefault();
+        console.log("save trigger");
+        console.log($('#employee_self_review').serialize());
+
+        $.ajax({
+            type: "POST", 
+            url:"{{url('vmt-pmsappraisal-managerreview')}}",
+            data:$('#employee_self_review').serialize(), 
+            success: function(data){
+                alert(data);
+            }
+        })
+    });
+
+
+</script>
+@endsection
