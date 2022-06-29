@@ -84,7 +84,7 @@
                                 <a href="{{url('vmt_noData')}}" class="nav-link py-1" role="button"><span>Expenses &
                                         Trevel</span></a>
                             </li>
-                            
+
                             <!-- <li class="nav-item">
                                 <a href="{{url('vmt-assign-roles')}}" class="nav-link py-1" role="button"><span>
                                         Expenses & Travel </span> </a>
@@ -406,7 +406,8 @@
                     <div class="collapse menu-dropdown" id="ticketingDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item ">
-                                <a href="{{url('vmt_noData')}}" id="" class="nav-link py-1" role="button" aria-expanded="false"><span> Raise
+                                <a href="{{url('vmt_noData')}}" id="" class="nav-link py-1" role="button"
+                                    aria-expanded="false"><span> Raise
                                         Ticket </span> </a>
 
                             </li>
@@ -420,9 +421,12 @@
 
                 @hasrole("Admin")
                 @else
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link menu-link" role="button">
-                        <i class=" ri-logout-box-fill"></i> <span>Documents</span>
+                        <div class="d-flex flex-column align-items-center justify-content-center ">
+                            <img src="{{ URL::asset('assets/images/ticketing.png') }}" alt="" class="m-2">
+                            <span>Documents</span>
+                        </div>
                     </a>
                     <div class="collapse menu-dropdown" id="ticketingDrop-Down">
                         <ul class="nav nav-sm flex-column">
@@ -436,7 +440,7 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> -->
                 @endhasrole
 
                 <!-- Exit -->
@@ -452,10 +456,12 @@
                     <div class="collapse menu-dropdown" id="ticketingDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item ">
-                                <a href="{{url('vmt_noData')}}" id="" class="nav-link py-1"><span> Resignation Entry </span> </a>
+                                <a href="{{url('vmt_noData')}}" id="" class="nav-link py-1"><span> Resignation Entry
+                                    </span> </a>
                             </li>
                             <li class="nav-item ">
-                                <a href="{{url('vmt_noData')}}" id="tds" class="nav-link py-1"><span>Resignation Status </span></a>
+                                <a href="{{url('vmt_noData')}}" id="tds" class="nav-link py-1"><span>Resignation Status
+                                    </span></a>
                             </li>
                         </ul>
                     </div>

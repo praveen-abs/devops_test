@@ -16497,18 +16497,22 @@ select {
     margin-bottom: 10px;
 }
 
-.personal-info li .title {
-    color: #333333;
-    float: left;
-    font-weight: 500;
-    margin-right: 30px;
-    width: 25%;
-}
+
 
 .personal-info li .text {
     color: #888888;
     display: block;
+font-weight: 600;
     overflow: hidden;
+}
+
+.personal-info li .text a{
+    color: #3577f1;
+}
+.delete-icon {
+    color: #f83f37;
+    float: right;
+    font-size: 18px;
 }
 
 .personal-info li .text .avatar-box {
@@ -16661,7 +16665,7 @@ select {
 .personal-info li .title {
     color: #333333;
     float: left;
-    font-weight: 500;
+    font-weight: 800;
     margin-right: 30px;
     width: 25%;
 }
@@ -16798,6 +16802,8 @@ select {
 .profile-view .profile-basic .profile-info-left {
     border-right: 2px dashed #cccccc;
 }
+
+
 
 .nav-tabs {
     border-bottom: 1px solid #dedfe0;
@@ -17406,15 +17412,17 @@ body {
 }
 
 .profile-img-wrap img {
- 
+
     height: 120px;
     width: 120px;
 }
+
 .profile-img-wrap.edit-img {
     border-radius: 50%;
     margin: 0 auto 30px;
     position: relative;
 }
+
 .profile-img-wrap .fileupload {
     background: rgba(33, 33, 33, 0.5);
     border: none;
@@ -17425,6 +17433,7 @@ body {
     bottom: 0;
     left: 0;
 }
+
 .profile-img-wrap .fileupload .upload {
     cursor: pointer;
     filter: alpha(opacity=0);
