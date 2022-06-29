@@ -542,12 +542,12 @@
                                     <span class="left fw-bold text-white pt-3 px-4 pb-4">New</span>
                                     <h5 class="m-0 mx-3">Assign Goals</h5>
                                 </div>
-                                <div class="d-flex align-items-center">
+                                <div class="d-flex align-items-center mx-5">
                                     <span class="right rounded-pill py-1 px-2 mx-2 text-white btn btn-lg" id="publish-goal" style="cursor: pointer;">Publish</span>
-                                    <button type="button" class="close pl-0 pr-0 pt-0 mx-2" data-bs-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">×</span>
-                                    </button>
                                 </div>
+                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
                             </div>
                         </div>
                     </div>
