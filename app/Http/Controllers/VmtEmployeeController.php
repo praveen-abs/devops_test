@@ -183,8 +183,8 @@ class VmtEmployeeController extends Controller
         $user =  User::create([
             'name' => $row['employee_name'],
             'email' => $row["email"],
-            'password' => Hash::make('abcd@1234'),
-            'avatar' =>  $row["employee_code"],
+            'password' => Hash::make('123123123'),
+            'avatar' =>  'avatar-1.jpg',
         ]);
         $user->assignRole("Employee");
 

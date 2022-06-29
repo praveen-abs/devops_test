@@ -12,7 +12,6 @@
 @slot('li_1') Dashboards @endslot
 @slot('title') Client Onboarding @endslot
 @endcomponent
-
 <div class="main">
 
     <div class="container-fluid">
@@ -28,11 +27,11 @@
                                 <li id="end"><strong class="f-9">Authorized Details</strong></li>
                             </ul>
                             <fieldset id="row-1">
-                                <form id="form-1">
+                                <form id="form-1" >
                                     <div class="form-card">
                                         <div class="row mt-5">
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
-                                            <input type="text" name="client_code" id="client_code" placeholder="Autogenerate from Company Legal Name" class="onboard-form" required disabled/>
+                                            <input type="text" name="client_code" id="client_code" placeholder="Autogenerate from Company Legal Name" class="onboard-form" required readonly/>
                                                 <label class="fieldlabels" for="client_code ">Client Code</label>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
@@ -101,8 +100,8 @@
                             </fieldset>
 
                             <fieldset id="row-2">
-                                <form id="form-2">
-                                    @csrf
+                                <form id="form-2" >
+                                @csrf
                                     <div class="form-card">
                                         <div class="row mt-5">
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
@@ -132,29 +131,29 @@
                                                 <label class="fieldlabels" for="shipping_add">Shipping Address</label>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3 dashBoard">
-                                                <input type="file" name="documents_upload" class="onboard-form" required accept="pdf" />
-                                                <label class="fieldlabels" for="documents_upload">Documents Upload</label>
+                                                <input type="file" name="doc_uploads" class="onboard-form" required accept="image/*" />
+                                                <label class="fieldlabels" for="doc_uploads">Documents Upload</label>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3 dashBoard">
-                                                <select class="onboard-form  drop_down mt-2" required>
-                                                    <option value="">Recruitment</option>
-                                                    <option value="">Payroll</option>
-                                                    <option value="">Statutory Complainces</option>
-                                                    <option value="">Staffing</option>
-                                                    <option value="">PMS</option>
-                                                    <option value="">Accounting</option>
-                                                    <option value="">ROC Complainces</option>
-                                                    <option value="">Trade Mark</option>
-                                                    <option value="">Patent Right</option>
+                                                <select name="product" class="onboard-form  drop_down mt-2" required>
+                                                    <option value="Recruitment">Recruitment</option>
+                                                    <option value="Payroll">Payroll</option>
+                                                    <option value="Statutory Complainces">Statutory Complainces</option>
+                                                    <option value="Staffing">Staffing</option>
+                                                    <option value="PMS">PMS</option>
+                                                    <option value="Accounting">Accounting</option>
+                                                    <option value="ROC Complainces">ROC Complainces</option>
+                                                    <option value="Trade Mark">Trade Mark</option>
+                                                    <option value="Patent Right">Patent Right</option>
                                                 </select>
-                                                <label class="fieldlabels" for="documents_upload">Product</label>
+                                                <label class="fieldlabels" for="product">Product</label>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3 dashBoard">
-                                                <select class="onboard-form drop_down mt-2" required>
-                                                    <option value="">Monthly</option>
-                                                    <option value="">Quarterly</option>
-                                                    <option value="">BiAnnually</option>
-                                                    <option value="">Annually</option>
+                                                <select name="subscription_type" class="onboard-form drop_down mt-2" required>
+                                                    <option value="Monthly">Monthly</option>
+                                                    <option value="Quarterly">Quarterly</option>
+                                                    <option value="BiAnnually">BiAnnually</option>
+                                                    <option value="Annually">Annually</option>
                                                 </select>
                                                 <label class="fieldlabels" for="subscription_type">Subscription Type</label>
                                             </div>
@@ -162,7 +161,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-6 text-left p-0">
-                                            <a type="button" data="row-5" prev="row-4" name="previous" class="previous bg-pink action-button text-center" value="Previous">
+                                            <a type="button" data="row-2" prev="row-1" name="previous" class="previous bg-pink action-button text-center" value="Previous">
                                                 <i class="text-white fa fa-arrow-left mr-2"></i>Previous
                                             </a>
                                         </div>
@@ -201,12 +200,39 @@
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
 <script src="{{ URL::asset('/assets/premassets/js/onboarding.js') }}"></script>
 <script>
+
+
     $('#client_name').keyup(function() {
         var val = $(this).val();
         if (val.length <= 4) {
             $('#client_code').val(val);
         }
-    })
+    });
+
+
+    $('#form-2').on('submit', function(e){
+        e.preventDefault();
+        
+        var locationData = $('#form-1, #form-2').serialize();
+
+        $.ajax({
+            url: "{{url('vmt_clientOnboarding')}}", 
+            type: "POST", 
+            data: locationData,
+            success: function(data)
+            {
+                alert(data);
+            }
+        });
+
+
+        //console.log(personalData);
+        //console.log(locationData);
+        //console.log(officeData);
+        //console.log(familyData);
+        //console.log(statutoryData);
+    });
+
 </script>
 
 @endsection

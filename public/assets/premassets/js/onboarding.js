@@ -133,22 +133,12 @@ $(document).ready(function() {
     }
 
 
-    $('#form-5').on('submit', function(e){
-        e.preventDefault();
-        
-        var locationData = $('#form-1, #form-2, #form-3, #form-4, #form-5').serialize();
-        $.ajax({
-            url: "{{url('vmt-employee-onboard')}}", 
-            type: "POST", 
-            data: locationData, 
-            success: function(data)
-            {
-                alert(data);
-            }
-        });
-    })
 
     $(".submit").click(function() {
         return false;
     });
+
+   
+
+
 });

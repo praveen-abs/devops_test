@@ -33,7 +33,7 @@
                                     <div class="form-card">
                                         <div class="row mt-5">
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="employee_code" class="onboard-form" value="{{$empNo}}" required disabled/>
+                                                <input type="text" name="employee_code" class="onboard-form" value="{{$empNo}}" required readonly/>
                                                 <label class="fieldlabels" for="employee_code">Employee Code</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
@@ -733,5 +733,30 @@
 <!-- <script src="{{ URL::asset('/assets/premassets/js/onboarding.js') }}"></script> -->
 
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
+
+
+
+
+
+
+<script>
+
+$('#form-5').on('submit', function(e){
+        e.preventDefault();
+        
+        var locationData = $('#form-1, #form-2, #form-3, #form-4, #form-5').serialize();
+        $.ajax({
+            url: "{{url('vmt-employee-onboard')}}", 
+            type: "POST", 
+            data: locationData, 
+            success: function(data)
+            {
+                alert(data);
+            }
+        });
+    });
+
+</script>
+
 
 @endsection

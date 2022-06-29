@@ -316,7 +316,7 @@ option:hover {
 #progressbar #end:before {
     font-family: FontAwesome;
     color: orange;
-    content: "5"
+    content: "2"
 }
 
 #progressbar #personal:before {
