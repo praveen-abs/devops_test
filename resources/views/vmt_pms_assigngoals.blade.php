@@ -559,7 +559,12 @@
                         <form id="goalForm">
                             @csrf
                             <input type="hidden" name="kpitable_id" id="kpitable_id">
+                            @elseif(auth()->user()->hasrole('Employee'))
+                            <input type="hidden" name="employees[]" value="{{auth()->user()->id}}" id="sel_employees">
+                            @else
                             <input type="hidden" name="employees[]" id="sel_employees">
+                            @endif
+
                             @if(auth()->user()->hasrole('Manager'))
                             <input type="hidden" name="reviewer" value="{{auth()->user()->id}}" id="sel_reviewer">
                             @elseif(auth()->user()->hasrole('Employee'))
