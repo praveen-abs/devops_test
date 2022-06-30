@@ -56,7 +56,7 @@
                         </a>
 
                         <a href="vmt_topbar_settings" class="p-0 settings-icon mx-3">
-                            <i class="ri-volume-up-line">
+                            <i class=" bx bx-rss fs-22">
                             </i>
                         </a>
 
