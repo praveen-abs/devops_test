@@ -29,7 +29,7 @@
                                 <li id="end"><strong class="f-9 onboard-detail">Personal Documents</strong></li>
                             </ul>
                             <fieldset id="row-1">
-                                <form id="form-1">
+                                <form id="form-1" enctype="multipart/form-data">
                                     <div class="form-card">
                                         <div class="row mt-5">
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
@@ -333,7 +333,7 @@
                                 </form>
                             </fieldset>
                             <fieldset id="row-2">
-                                <form id="form-2">
+                                <form id="form-2" enctype="multipart/form-data">
                                     <div class="form-card">
                                         <div class="row mt-5">
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
@@ -427,7 +427,7 @@
                                 </form>
                             </fieldset>
                             <fieldset id="row-3">
-                                <form id="form-3">
+                                <form id="form-3" enctype="multipart/form-data">
                                     <div class="form-card">
                                         <div class="row mt-5">
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
@@ -557,7 +557,7 @@
                                 </form>
                             </fieldset>
                             <fieldset id="row-4">
-                                <form id="form-4">
+                                <form id="form-4" enctype="multipart/form-data">
                                     <div class="form-card">
                                         <div class="row mt-5">
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
@@ -623,7 +623,7 @@
                                 </form>
                             </fieldset>
                             <fieldset id="row-5">
-                                <form id="form-5">
+                                <form id="form-5" enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-card">
                                         <div class="row mt-5">
@@ -744,11 +744,30 @@
 $('#form-5').on('submit', function(e){
         e.preventDefault();
         
-        var locationData = $('#form-1, #form-2, #form-3, #form-4, #form-5').serialize();
+        var form_data1 = new FormData(document.getElementById("form-1"));
+        var form_data2 = new FormData(document.getElementById("form-2"));
+        var form_data3 = new FormData(document.getElementById("form-3"));
+        var form_data4 = new FormData(document.getElementById("form-4"));
+        var form_data5 = new FormData(document.getElementById("form-5"));
+        for (var pair of form_data2.entries()) {    
+            form_data1.append(pair[0], pair[1]);
+        }
+        for (var pair of form_data3.entries()) {    
+            form_data1.append(pair[0], pair[1]);
+        }
+        for (var pair of form_data4.entries()) {    
+            form_data1.append(pair[0], pair[1]);
+        }
+        for (var pair of form_data5.entries()) {    
+            form_data1.append(pair[0], pair[1]);
+        }
         $.ajax({
             url: "{{url('vmt-employee-onboard')}}", 
             type: "POST", 
-            data: locationData, 
+            dataType : "json",
+            data: form_data1,
+            contentType: false,
+            processData: false,
             success: function(data)
             {
                 alert(data);
