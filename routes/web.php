@@ -146,6 +146,12 @@ Route::post('vmt-pmsappraisal-review', 'App\Http\Controllers\VmtApraisalControll
 Route::get('pms-employee-reviews', 'App\Http\Controllers\VmtApraisalController@showManagerApraisalReview');
 // store review given by manager
 Route::post('vmt-pmsappraisal-managerreview', 'App\Http\Controllers\VmtApraisalController@storeManagerApraisalReview');
+
+// Store Review Given by HR
+Route::post('vmt-pmsappraisal-hrreview', 'App\Http\Controllers\VmtApraisalController@storeHRApraisalReview');
+
+
+
 Route::get('/vmt_employeeOnboarding',  [App\Http\Controllers\VmtEmployeeController::class, 'employeeOnboarding']);
 
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');

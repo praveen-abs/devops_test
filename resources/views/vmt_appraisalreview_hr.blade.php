@@ -49,13 +49,17 @@
                             <select class="form-select" name="goal_id" required>
                                 <option>Select PMS</option>
                                 @foreach($pmsGoalList as $user)
-                                    <option value="{{$user->id}}">{{$user->assignment_period .' | '.$user->emp_name}}</option>
+
+                                    @if($user->assignment_period != null)
+                                        <option value="{{$user->id}}">{{$user->assignment_period .' | '.$user->emp_name}}</option>
+                                    @endif
                                 @endforeach
                             </select>
                         </div>
                     </div>
-                     <div class="row mt-2">
+                    <div class="row mt-2">
                         <div class="text-end col-xl-12">
+                            
                             <button type="submit" class="btn btn-primary">Save</button>
                         </div>
                     </div>
@@ -223,11 +227,9 @@
                                     <th scope="col">KPI - Achievement (Manager Review)</th>
                                     <th scope="col">Manager KPI Achievement %
                                     </th>
-                                    @if($reviewCompleted)
                                     <th scope="col">KPI - Achievement (HR Review)</th>
                                     <th scope="col">HR KPI Achievement %
                                     </th>
-                                    @endif
                                 </tr>
                             </thead>
                             <tbody class="tbody" id="tbody">
@@ -269,37 +271,29 @@
                                     <td>
                                         <div>{{$kpiRow->self_kpi_comments}}</div>
                                     </td>
-
+                                    <td>
+                                        <div>{{$kpiRow->manager_kpi_review}}</div>
+                                    </td>
+                                    <td>
+                                        <div>{{$kpiRow->manager_kpi_percentage}}</div>
+                                    </td>
 
                                     <td>
                                         @if($reviewCompleted)
-                                            <div>{{$kpiRow->manager_kpi_review}}</div>
+                                            <div>{{$kpiRow->hr_kpi_review}}</div>
                                         @else
-                                        <textarea name="managereview[{{$kpiRow->id}}]" id="" cols="20" rows="2"
+                                        <textarea name="hreview[{{$kpiRow->id}}]" id="" cols="20" rows="2"
                                             placeholder="type here"></textarea>
                                         @endif
                                     </td>
                                     <td>
                                         @if($reviewCompleted)
-                                            <div>{{$kpiRow->manager_kpi_review}}</div>
+                                            <div>{{$kpiRow->hr_kpi_percentage}}</div>
                                         @else
-                                        <textarea name="managerpercetage[{{$kpiRow->id}}]" id="" cols="20" rows="2"
+                                        <textarea name="hrpercetage[{{$kpiRow->id}}]" id="" cols="20" rows="2"
                                             placeholder="type here"></textarea>
                                         @endif
                                     </td>
-                                    @if($reviewCompleted)
-                                    <td>
-                                        
-                                            <div>{{$kpiRow->hr_kpi_review}}</div>
-                                     </td>
-                                    <td>
-                                        
-                                            <div>{{$kpiRow->hr_kpi_review}}</div>
-                                        
-                                    </td>
-                                        @endif
-                                   
-                                    
 
                                 </tr>
                                 @endforeach
@@ -310,10 +304,10 @@
                     </div>
                 </form>
                 <div class="buttons d-flex align-items-center justify-content-end ">
-                    @if(!$reviewCompleted)
-                    <button class="btn btn-primary save-review" id="add">Save<i class="fa fa-save"></i></button>
-
+                    @if(! $reviewCompleted)
+                        <button class="btn btn-primary save-review" id="add">Save<i class="fa fa-save"></i></button>
                     @endif
+
                     <!-- <button class="btn btn-primary mx-3">Remove<i class="fa fa-remove"></i></button> -->
                 </div>
                 @else
@@ -470,7 +464,7 @@
 
         $.ajax({
             type: "POST", 
-            url:"{{url('vmt-pmsappraisal-managerreview')}}",
+            url:"{{url('vmt-pmsappraisal-hrreview')}}",
             data:$('#employee_self_review').serialize(), 
             success: function(data){
                 alert(data);

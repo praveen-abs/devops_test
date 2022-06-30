@@ -201,6 +201,11 @@
                                     <th scope="col">KPI - Achievement (Manager Review)</th>
                                     <th scope="col">Manager KPI Achievement %
                                     </th>
+                                    @if($reviewCompleted)
+                                        <th scope="col">KPI - Achievement (HR Review)</th>
+                                    <th scope="col">HR KPI Achievement %
+                                    </th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody class="tbody" id="tbody">
@@ -232,29 +237,61 @@
                                         <div>{{$kpiRow->kpi_weightage}}</div>
                                     </td>
                                     <td>
+                                        @if($reviewCompleted)
+                                            {{$kpiRow->self_kpi_review}}
+                                        @else
                                         <div>
                                             <textarea name="selfreview[{{$kpiRow->id}}]" id="" cols="20" rows="2"
                                             placeholder="type here"></textarea>
                                         </div>
+                                        @endif
                                     </td>
                                     <td>
+                                        @if($reviewCompleted)
+                                            {{$kpiRow->self_kpi_percentage}}
+                                        @else
                                         <div> <textarea name="selfkpiachievement[{{$kpiRow->id}}]" id="" cols="20" rows="2"
                                             placeholder="type here"></textarea></div>
+                                        @endif
                                     </td>
                                     <td>
+                                        @if($reviewCompleted)
+                                            {{$kpiRow->self_kpi_comments}}
+                                        @else
                                         <div><textarea name="selfcomments[{{$kpiRow->id}}]" id="" cols="20" rows="2"
                                             placeholder="type here"></textarea></div>
+                                        @endif
                                     </td>
 
 
                                     <td>
-                                        "Great outcome of Reimbursement delivery for GS and SS also maintain the consitency
-                                        delivery deviation sheet ontime and everytime
-                                        Most importantly need to focus on STM centralisation in 2019 Q2"
+                                        @if($reviewCompleted)
+                                            {{$kpiRow->manager_kpi_review}}
+                                        @else
+                                            "Great outcome of Reimbursement delivery for GS and SS also maintain the consitency
+                                            delivery deviation sheet ontime and everytime
+                                            Most importantly need to focus on STM centralisation in 2019 Q2"
+                                        @endif
                                     </td>
                                     <td>
-                                        104%
+                                        @if($reviewCompleted)
+                                            {{$kpiRow->manager_kpi_percentage}}
+                                        @else
+                                            104%
+                                        @endif
                                     </td>
+                                    @if($reviewCompleted)
+                                    <td>
+                                       
+                                            {{$kpiRow->hr_kpi_review}}
+                                        
+                                    </td>
+                                        <td>
+                                       
+                                            {{$kpiRow->hr_kpi_percentage}}
+                                        
+                                    </td>
+                                    @endif
 
                                 </tr>
                                 @endforeach
@@ -265,8 +302,9 @@
                     </div>
                 </form>
                 <div class="buttons d-flex align-items-center justify-content-end ">
+                    @if(! $reviewCompleted)
                     <button class="btn btn-primary save-review" id="add">Save<i class="fa fa-save"></i></button>
-
+                    @endif
                     <!-- <button class="btn btn-primary mx-3">Remove<i class="fa fa-remove"></i></button> -->
                 </div>
                 @else
