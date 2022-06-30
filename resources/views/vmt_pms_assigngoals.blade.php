@@ -560,7 +560,13 @@
                             @csrf
                             <input type="hidden" name="kpitable_id" id="kpitable_id">
                             <input type="hidden" name="employees[]" id="sel_employees">
+                            @if(auth()->user()->hasrole('Manager'))
+                            <input type="hidden" name="reviewer" value="{{auth()->user()->id}}" id="sel_reviewer">
+                            @elseif(auth()->user()->hasrole('Employee'))
+                            <input type="hidden" name="reviewer" value="{{$users->id}}" id="sel_reviewer">
+                            @else
                             <input type="hidden" name="reviewer" id="sel_reviewer">
+                            @endif
                             <div class="row mt-3">
                                 <div class="col-4  mt-3 mb-3">
                                     <div class="d-flex flex-column">

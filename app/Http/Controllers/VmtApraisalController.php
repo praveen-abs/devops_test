@@ -32,7 +32,13 @@ class VmtApraisalController extends Controller
 
     // assign goals forms
     public function vmtAssignGoals(Request $request){
-        $users = User::all();
+        if (auth()->user()->hasrole('Employee')) {
+            $emp = VmtEmployee::join('vmt_employee_office_details',  'emp_id', '=', 'vmt_employee_details.id')->where('userid', auth()->user()->id)->first();
+            $rev = VmtEmployee::where('emp_no', $emp->l1_manager_code)->first();
+            $users = User::where('id', $rev->userid)->get();
+        } else {
+            $users = User::all();
+        }
         if (auth()->user()->hasrole('Manager')) {
             $getId = VmtEmployee::where('userid', auth()->user()->id)->first();
             $employees = VmtEmployee::join('vmt_employee_office_details',  'emp_id', '=', 'vmt_employee_details.id')->where('l1_manager_code', $getId->emp_no)->get();
