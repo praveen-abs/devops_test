@@ -27,7 +27,8 @@
                                 <li id="end"><strong class="f-9">Authorized Details</strong></li>
                             </ul>
                             <fieldset id="row-1">
-                                <form id="form-1" >
+                                <form id="form-1" enctype="multipart/form-data">
+                                    @csrf
                                     <div class="form-card">
                                         <div class="row mt-5">
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
@@ -100,7 +101,7 @@
                             </fieldset>
 
                             <fieldset id="row-2">
-                                <form id="form-2" >
+                                <form id="form-2" enctype="multipart/form-data">
                                 @csrf
                                     <div class="form-card">
                                         <div class="row mt-5">
@@ -213,12 +214,18 @@
     $('#form-2').on('submit', function(e){
         e.preventDefault();
         
-        var locationData = $('#form-1, #form-2').serialize();
-
+        var form_data1 = new FormData(document.getElementById("form-1"));
+        var form_data2 = new FormData(document.getElementById("form-2"));
+        for (var pair of form_data2.entries()) {    
+            form_data1.append(pair[0], pair[1]);
+        }
         $.ajax({
             url: "{{url('vmt_clientOnboarding')}}", 
             type: "POST", 
-            data: locationData,
+            dataType : "json",
+            data: form_data1,
+            contentType: false,
+            processData: false,
             success: function(data)
             {
                 alert(data);

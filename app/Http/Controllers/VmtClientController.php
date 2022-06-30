@@ -37,7 +37,6 @@ class VmtClientController extends Controller
     {
         //
        
-
         $vmtClient  =  new VmtClientMaster; 
         $vmtClient->client_code  = $request->client_code;
         $vmtClient->client_name  = $request->client_name;
