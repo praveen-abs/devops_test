@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\VmtEmployee;
 use App\Models\VmtKPITable;
-use App\Models\VmtEmployeePMSGoals; 
+use App\Models\VmtEmployeePMSGoals;
+use App\Models\VmtEmployeeOfficeDetails;
 use App\Mail\VmtAssignGoals;
 use App\Mail\NotifyPMSManager;
 use App\Mail\PMSReviewCompleted;
@@ -32,17 +33,23 @@ class VmtApraisalController extends Controller
     // assign goals forms
     public function vmtAssignGoals(Request $request){
         $users = User::all();
-        $employees = VmtEmployee::all();
+        if (auth()->user()->hasrole('Manager')) {
+            $getId = VmtEmployee::where('userid', auth()->user()->id)->first();
+            $employees = VmtEmployee::join('vmt_employee_office_details',  'emp_id', '=', 'vmt_employee_details.id')->where('l1_manager_code', $getId->emp_no)->get();
+        } else {
+            $employees = VmtEmployee::all();
+        }
         return view('vmt_pms_assigngoals', compact('users', 'employees'));
     }
 
     // publish goals
     public function vmtPublishGoals(Request $request){
         //dd($request->all());
-
         if($request->has("employees")){
             $employeeList  = explode(',', $request->employees[0]); 
             $mailingEmpList  = VmtEmployee::whereIn('id', $employeeList)->pluck('email_id'); 
+            $mailingRevList  = VmtEmployee::whereIn('id', $request->reviewer)->pluck('email_id'); 
+            
             //dd($employeeList);
             foreach ($employeeList as $index => $value) {
                 // code...
@@ -57,9 +64,11 @@ class VmtApraisalController extends Controller
                 $empPmsGoal->self_approved  = false;
                 $empPmsGoal->save();
             }
-
-            \Mail::to($mailingEmpList)->send(new VmtAssignGoals(url('vmt-pmsappraisal-review')));
-
+            if (auth()->user()->hasrole('Employee')) {
+                \Mail::to($mailingEmpList)->send(new VmtAssignGoals(url('vmt-pmsappraisal-review')));
+            } else {
+                \Mail::to($mailingEmpList)->send(new VmtAssignGoals(url('vmt-pmsappraisal-review')));
+            }
             return "Goal Published";
         }
     }

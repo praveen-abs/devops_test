@@ -583,6 +583,7 @@
                             </div>
                             <div class="row mt-3">
                                 <div class="col-4  mt-3 mb-3">
+                                    @if (auth()->user()->hasrole('Manager') || auth()->user()->hasrole('Admin'))
                                     <div class="d-flex flex-column">
                                         <label class="" for="Assignment">Employees-02</label>
                                         <div class="d-flex align-items-center">
@@ -607,6 +608,7 @@
                                             <button type="button" target="#changeEmployee" class="right btn btn-primary py-1 px-3 rounded-pill mx-3 text-white chnageButton">Edit</button>
                                         </div>
                                     </div>
+                                    @endif
                                 </div>
 
                                 <div class="col-4 mt-3 mb-3 d-flex ml-5">
@@ -623,11 +625,16 @@
 
                                                         <div class=" mt-1 message-content align-items-start d-flex flex-column  mx-2">
                                                             <h6 class="fw-bold m-0" id="reviewer-name">Steve Jobs</h6>
+                                                            @hasrole('Manager')
+                                                            <span id="reviewer-email">{{auth()->user()->email}}</span>
+                                                            @else
                                                             <span id="reviewer-email">Steve@gmail.com</span>
+                                                            @endif
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            @hasrole('Admin')
                                             <button 
                                                 type="button" 
                                                 target="#createEmployee"
@@ -635,6 +642,7 @@
                                             >
                                                 Change
                                             </button>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
