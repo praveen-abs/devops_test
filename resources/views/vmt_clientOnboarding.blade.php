@@ -24,7 +24,7 @@
                             <!-- progressbar -->
                             <ul id="progressbar">
                                 <li class="active" id="account"><strong class="f-9">Client Details</strong></li>
-                                <li id="end"><strong class="f-9">Authorized Details</strong></li>
+                                <li id="endClientForm"><strong class="f-9 onboard-detail" >Authorized Details</strong></li>
                             </ul>
                             <fieldset id="row-1">
                                 <form id="form-1" enctype="multipart/form-data">
