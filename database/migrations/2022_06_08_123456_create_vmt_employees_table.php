@@ -63,6 +63,14 @@ class CreateVmtEmployeesTable extends Migration
             $table->text("spouse_age")->nullable();
             $table->text("kid_name")->nullable();
             $table->text("kid_age")->nullable();
+            $table->string('aadhar_card')->nullable();
+            $table->string('pan_card')->nullable();
+            $table->string('passport')->nullable();
+            $table->string('voters_id')->nullable();
+            $table->string('dl_file')->nullable();
+            $table->string('education_certificate')->nullable();
+            $table->string('reliving_letter')->nullable();
+
             $table->timestamps();
         });
     }
