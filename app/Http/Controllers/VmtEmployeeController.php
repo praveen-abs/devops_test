@@ -139,6 +139,18 @@ class VmtEmployeeController extends Controller
        
     }
 
+
+    public function fileUpload($file) {
+        if (request()->has($file)) {
+            $docUploads = request()->file($file);
+            $docUploadsName = 'doc_'.time() . '.' . $docUploads->getClientOriginalExtension();
+            $docUploadsPath = public_path('/images/');
+            $docUploads->move($docUploadsPath, $docUploadsName);
+            return $docUploadsName;
+        }
+        return null;
+    }
+
     //
     public function employeeOnboard(Request $request)
     {
@@ -177,6 +189,14 @@ class VmtEmployeeController extends Controller
         $newEmployee->spouse_age   = $row["spouse_dob"];
         $newEmployee->kid_name   = $row["child_name"];
         $newEmployee->kid_age  = $row["child_dob"];
+
+        $newEmployee->aadhar_card = $this->fileUpload('aadhar_card');
+        $newEmployee->pan_card = $this->fileUpload('pan_card');
+        $newEmployee->passport = $this->fileUpload('passport');
+        $newEmployee->voters_id = $this->fileUpload('voters_id');
+        $newEmployee->dl_file = $this->fileUpload('dl_file');
+        $newEmployee->education_certificate = $this->fileUpload('education_certificate');
+        $newEmployee->reliving_letter = $this->fileUpload('reliving_letter');
 
         $newEmployee->save();
 

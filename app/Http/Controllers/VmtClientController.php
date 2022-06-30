@@ -56,7 +56,13 @@ class VmtClientController extends Controller
         $vmtClient->authorised_person_contact_email  = $request->auth_person_email;
         $vmtClient->billing_address  = $request->billing_add;
         $vmtClient->shipping_address  = $request->shipping_add;
-        $vmtClient->doc_uploads  = $request->doc_uploads;
+        if (request()->has('doc_uploads')) {
+            $docUploads = request()->file('doc_uploads');
+            $docUploadsName = 'doc_'.time() . '.' . $docUploads->getClientOriginalExtension();
+            $docUploadsPath = public_path('/images/');
+            $docUploads->move($docUploadsPath, $docUploadsName);
+        }
+        $vmtClient->doc_uploads  = $docUploadsName;
         $vmtClient->product  = $request->product;
         $vmtClient->subscription_type   = $request->subscription_type;
         $vmtClient->save();
