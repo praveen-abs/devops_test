@@ -223,7 +223,7 @@
                     <div class="collapse menu-dropdown" id="reportDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{url('indexPerformanceDashboard')}}"
+                                <a href="{{url('vmt-pms-assigngoals')}}"
                                     class="nav-link py-1"><span>Dashboard</span></a>
                             </li>
                             <!-- <li class="nav-item">
