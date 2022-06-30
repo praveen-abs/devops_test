@@ -41,7 +41,7 @@ class VmtApraisalController extends Controller
         }
         if (auth()->user()->hasrole('Manager')) {
             $getId = VmtEmployee::where('userid', auth()->user()->id)->first();
-            $employees = VmtEmployee::join('vmt_employee_office_details',  'emp_id', '=', 'vmt_employee_details.id')->where('l1_manager_code', $getId->emp_no)->get();
+            $employees = VmtEmployee::select('vmt_employee_details.id', 'emp_name')->join('vmt_employee_office_details',  'emp_id', '=', 'vmt_employee_details.id')->where('l1_manager_code', $getId->emp_no)->get();
         } else {
             $employees = VmtEmployee::all();
         }
@@ -54,7 +54,7 @@ class VmtApraisalController extends Controller
         if($request->has("employees")){
             $employeeList  = explode(',', $request->employees[0]); 
             $mailingEmpList  = VmtEmployee::whereIn('id', $employeeList)->pluck('email_id'); 
-            $mailingRevList  = VmtEmployee::whereIn('id', $request->reviewer)->pluck('email_id'); 
+            $mailingRevList  = User::whereIn('id', array($request->reviewer))->pluck('email'); 
             
             //dd($employeeList);
             foreach ($employeeList as $index => $value) {
@@ -71,7 +71,7 @@ class VmtApraisalController extends Controller
                 $empPmsGoal->save();
             }
             if (auth()->user()->hasrole('Employee')) {
-                \Mail::to($mailingEmpList)->send(new VmtAssignGoals(url('vmt-pmsappraisal-review')));
+                \Mail::to($mailingRevList)->send(new VmtAssignGoals(url('vmt-pmsappraisal-review')));
             } else {
                 \Mail::to($mailingEmpList)->send(new VmtAssignGoals(url('vmt-pmsappraisal-review')));
             }

@@ -559,7 +559,7 @@
                         <form id="goalForm">
                             @csrf
                             <input type="hidden" name="kpitable_id" id="kpitable_id">
-                            @elseif(auth()->user()->hasrole('Employee'))
+                            @if(auth()->user()->hasrole('Employee'))
                             <input type="hidden" name="employees[]" value="{{auth()->user()->id}}" id="sel_employees">
                             @else
                             <input type="hidden" name="employees[]" id="sel_employees">
@@ -568,11 +568,11 @@
                             @if(auth()->user()->hasrole('Manager'))
                             <input type="hidden" name="reviewer" value="{{auth()->user()->id}}" id="sel_reviewer">
                             @elseif(auth()->user()->hasrole('Employee'))
-                            <input type="hidden" name="reviewer" value="{{$users->id}}" id="sel_reviewer">
+                            <input type="hidden" name="reviewer" value="{{$users[0]['id']}}" id="sel_reviewer">
                             @else
                             <input type="hidden" name="reviewer" id="sel_reviewer">
                             @endif
-                            <div class="row mt-3">
+                            <!-- <div class="row mt-3">
                                 <div class="col-4  mt-3 mb-3">
                                     <div class="d-flex flex-column">
                                         <label class="" for="Assignment">
@@ -591,7 +591,7 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="row mt-3">
                                 <div class="col-4  mt-3 mb-3">
                                     @if (auth()->user()->hasrole('Manager') || auth()->user()->hasrole('Admin'))
@@ -635,9 +635,18 @@
                                                         </a>
 
                                                         <div class=" mt-1 message-content align-items-start d-flex flex-column  mx-2">
+                                                            @if(auth()->user()->hasrole('Manager'))
+                                                            <h6 class="fw-bold m-0" id="reviewer-name">{{auth()->user()->name}}</h6>
+                                                            @elseif(auth()->user()->hasrole('Employee'))
+                                                            <h6 class="fw-bold m-0" id="reviewer-name">{{$users[0]['name']}}</h6>
+                                                            @else
                                                             <h6 class="fw-bold m-0" id="reviewer-name">Steve Jobs</h6>
-                                                            @hasrole('Manager')
+                                                            @endif
+
+                                                            @if(auth()->user()->hasrole('Manager'))
                                                             <span id="reviewer-email">{{auth()->user()->email}}</span>
+                                                            @elseif(auth()->user()->hasrole('Employee'))
+                                                            <span id="reviewer-email">{{$users[0]['email']}}</span>
                                                             @else
                                                             <span id="reviewer-email">Steve@gmail.com</span>
                                                             @endif
