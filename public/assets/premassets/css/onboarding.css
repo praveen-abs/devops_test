@@ -289,6 +289,10 @@ option:hover {
     width: 45% !important;
 }
 
+#endClientForm:after {
+    width: 45% !important;
+}
+
 #account:after {
     left: 45% !important;
 }
