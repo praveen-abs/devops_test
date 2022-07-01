@@ -36,6 +36,12 @@ class VmtEmployeeController extends Controller
     //
     public function showEmployeeDirectory(Request $request){
         $vmtEmployees = VmtEmployee::orderBy('created_at', 'DESC')->get();
+        foreach ($vmtEmployees as $row => $value) {
+            // code...
+            if($value->manager_emp_id != null){
+                $vmtEmployees[$row]['manager_data'] = VmtEmployee::where('emp_no', $value->manager_emp_id)->select('emp_no', 'emp_name', 'designation', 'department')->first();
+            }
+        }
         return view('vmt_employeeDirectory', compact('vmtEmployees'));
     }
 

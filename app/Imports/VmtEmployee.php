@@ -17,14 +17,15 @@ class VmtEmployee implements ToModel,  WithHeadingRow
     */
     public function model(array $row)
     {
-
+        //dd($row);
         if($row['emp_no'] != null){
 
             $newEmployee = new EmployeeModel; 
-
+//dd($row['reporting_manager']);
 $newEmployee->emp_no   =    $row["emp_no"]; 
 $newEmployee->emp_name   =    $row["emp_name"]; 
 $newEmployee->gender   =    $row["gender"];  
+$newEmployee->manager_emp_id = $row['reporting_manager'];
 $newEmployee->designation   =    $row["designation"];  
 $newEmployee->department   =    $row["department"];  
 $newEmployee->status   =    $row["status"];  
