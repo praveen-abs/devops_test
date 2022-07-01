@@ -182,7 +182,7 @@
                     <input type="hidden" name="goal_id" value="{{$assignedGoals->id}}">
                     <div class="table-content mb-4">
                         
-                        <table class="table align-middle mb-0  responsive" id="table">
+                        <table class="table align-middle mb-0 " id="table">
 
                             <thead class="thead" id="tHead">
                                 <tr>
@@ -198,10 +198,10 @@
                                     <th scope="col">KPI - Achievement (Self Review)</th>
                                     <th scope="col">Self KPI Achievement %</th>
                                     <th scope="col">Comments</th>
+                                    @if($reviewCompleted)
                                     <th scope="col">KPI - Achievement (Manager Review)</th>
                                     <th scope="col">Manager KPI Achievement %
                                     </th>
-                                    @if($reviewCompleted)
                                         <th scope="col">KPI - Achievement (HR Review)</th>
                                     <th scope="col">HR KPI Achievement %
                                     </th>
@@ -212,8 +212,8 @@
                                 @foreach($kpiRows as $index => $kpiRow)
                                 <tr>
                                     <th scope="row">{{$kpiRow->dimension}}</th>
-                                    <td>
-                                        <div>{{$kpiRow->dimension}}</div>
+                                    <td  width="10%">
+                                        <div>{{$kpiRow->kpi}}</div>
                                     </td>
                                     <td>
                                         <div> {{$kpiRow->operational_definition}} </div>
@@ -241,7 +241,7 @@
                                             {{$kpiRow->self_kpi_review}}
                                         @else
                                         <div>
-                                            <textarea name="selfreview[{{$kpiRow->id}}]" id="" cols="20" rows="2"
+                                            <textarea name="selfreview[{{$kpiRow->id}}]" id="" cols="40" rows="5"
                                             placeholder="type here"></textarea>
                                         </div>
                                         @endif
@@ -250,7 +250,7 @@
                                         @if($reviewCompleted)
                                             {{$kpiRow->self_kpi_percentage}}
                                         @else
-                                        <div> <textarea name="selfkpiachievement[{{$kpiRow->id}}]" id="" cols="20" rows="2"
+                                        <div> <textarea name="selfkpiachievement[{{$kpiRow->id}}]" id="" cols="40" rows="5"
                                             placeholder="type here"></textarea></div>
                                         @endif
                                     </td>
@@ -258,7 +258,7 @@
                                         @if($reviewCompleted)
                                             {{$kpiRow->self_kpi_comments}}
                                         @else
-                                        <div><textarea name="selfcomments[{{$kpiRow->id}}]" id="" cols="20" rows="2"
+                                        <div><textarea name="selfcomments[{{$kpiRow->id}}]" id="" cols="40" rows="5"
                                             placeholder="type here"></textarea></div>
                                         @endif
                                     </td>
@@ -267,17 +267,11 @@
                                     <td>
                                         @if($reviewCompleted)
                                             {{$kpiRow->manager_kpi_review}}
-                                        @else
-                                            "Great outcome of Reimbursement delivery for GS and SS also maintain the consitency
-                                            delivery deviation sheet ontime and everytime
-                                            Most importantly need to focus on STM centralisation in 2019 Q2"
                                         @endif
                                     </td>
                                     <td>
                                         @if($reviewCompleted)
                                             {{$kpiRow->manager_kpi_percentage}}
-                                        @else
-                                            104%
                                         @endif
                                     </td>
                                     @if($reviewCompleted)
