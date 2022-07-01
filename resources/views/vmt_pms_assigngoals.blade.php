@@ -408,6 +408,7 @@ th:last-child {
                 </div>
             </div>
         </div>
+        @if(count($empGoals) == 0)
         <div class="mt-4 p-5" id="initial-section">
             <div class="row justify-content-center">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center p-0 mt-3 mb-2 p-5">
@@ -419,6 +420,8 @@ th:last-child {
                 </div>
             </div>
         </div>
+        @else
+        <button id="add-goals" class="rounded-pill py-1 px-2 mx-2 text-white btn btn-primary mb-2" style="float:right;"><h6 class="m-0 text-white p-2"><i class="text-white fa fa-plus mr-2"></i><b>Add</b></h6></button>
         <div style="width:100%; overflow:auto;">
             <table id='empTable' class='table dt-responsive nowrap'>
                 <thead>
@@ -453,6 +456,7 @@ th:last-child {
                 </tbody>
             </table>
         </div>
+        @endif
 
     </div>
 
