@@ -883,9 +883,8 @@ th:last-child {
 
 <!-- Change Reviewr window -->
 
-<div class="modal fade" id="createEmployee">
-    <div class="modal-dialog modal-md" id="" aria-hidden="true"
-        aria-labelledby="exampleModalToggleLabel2" tabindex="-1" data-backdrop="static">
+<div class="modal fade" id="createEmployee" role="dialog" aria-hidden="true" style="opacity:1; display:none;">
+    <div class="modal-dialog modal-md" id="" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2">
         <div class="modal-content">
             <div class="modal-header py-2 bg-primary">
 
@@ -909,7 +908,7 @@ th:last-child {
                             <option value="{{$user->id}}">{{$user->name}}</option>
                         @endforeach
                     </select>
-                    <div class="content-footer">
+                    <div class="content-footer mt-3">
                         <div class="row">
                             <div class="col-12 ">
                                 <div class="d-flex">
@@ -940,7 +939,7 @@ th:last-child {
 <!-- Select Employees window -->
 <div class="modal fade" id="changeEmployee">
     <div class="modal-dialog modal-md" id="" aria-hidden="true"
-        aria-labelledby="exampleModalToggleLabel2" tabindex="-1" data-backdrop="static">
+        aria-labelledby="exampleModalToggleLabel2">
 
         <div class="modal-content">
             <div class="modal-header py-2 bg-primary">
@@ -1042,13 +1041,24 @@ th:last-child {
 <!-- for date and time -->
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
 
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/themes/smoothness/jquery-ui.css" />
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"></script>
 
 <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-    $('input[type="search"]').addClass('form-control');
+    $('#select-reviewer').select2({
+        dropdownParent: '#createEmployee',
+        minimumResultsForSearch: Infinity,
+		width: '100%'
+    });
+
+    $(document).on('#select-reviewer:open', () => {
+        $('.select2-search__field').focus();
+    });
    $('#empTable').DataTable({
     //   'processing': true,
     //   'serverSide': true,
