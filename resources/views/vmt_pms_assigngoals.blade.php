@@ -29,6 +29,9 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+
+<link href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css' rel='stylesheet' type='text/css'>
+
 <!-- prem content end -->
 <style>
 .f-20 {
@@ -113,6 +116,84 @@
     align-items: center;
     justify-content: center;
     color: #fff;
+}
+
+.gridjs-footer {
+    float: right !important;
+}
+
+.previous, .next {
+    background: white !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  color: white !important;
+}
+
+.dataTables_wrapper .dataTables_paginate span .paginate_button {
+    color: white !important;
+}
+
+.dataTables_wrapper .dataTables_paginate span .current {
+    color: white !important;
+}
+
+span .current {
+    color: white !important;
+}
+
+span .paginate_button {
+    background: #405189 !important;
+}
+
+
+#empTable td:before {
+    content: attr(data-label);
+    display: inline;
+    position: relative;
+    font-size: 85%;
+    top: -0.5rem;
+    float: left;
+    color: #808080;
+    min-width: 4rem;
+    margin-left: 0;
+    margin-right: 1rem;
+    text-align: left;
+}
+
+#empTable {
+    border-collapse: separate;
+    border-spacing: 0 2em;
+}
+#empTable tr{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+tr.selected td:before {
+    color: #404040;
+}
+
+.table>:not(:last-child)>:last-child>* {
+    border-bottom: none !important;
+}
+
+.table>:not(caption)>*>* {
+    border-bottom: none !important;
+}
+
+.table td, .table th {
+    border-top: none !important;
+}
+
+
+td:first-child,
+th:first-child {
+  border-radius: 10px 0 0 10px;
+}
+
+td:last-child,
+th:last-child {
+  border-radius: 0 10px 10px 0;
 }
 </style>
 
@@ -337,7 +418,41 @@
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
+        <div style="width:100%; overflow:auto;">
+            <table id='empTable' class='table dt-responsive nowrap'>
+                <thead>
+                    <tr style="background:#f6f8fb;">
+                        <th class="p-3"></th>
+                        <th class="p-3">Employee ID</th>
+                        <th class="p-3">Employee name</th>
+                        <th class="p-3">Email</th>
+                        <th class="p-3">Designation</th>
+                        <th class="p-3">Manager</th>
+                        <th class="p-3">Jan 2020 Rating</th>
+                        <th class="p-3">Status</th>
+                        <th class="p-3">Average Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($empGoals as $emp)
+                    <tr>
+                        <td>
+                            <img class="rounded-circle header-profile-user" src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif" alt="Header Avatar">
+                        </td>
+                        <td class="p-3">{{$emp->emp_no}}</td>
+                        <td class="p-3">{{$emp->emp_name}}</td>
+                        <td class="p-3">{{$emp->email_id}}</td>
+                        <td class="p-3">{{$emp->designation}}</td>
+                        <td class="p-3">{{$emp->l1_manager_name}}</td>
+                        <td class="p-3">5</td>
+                        <td class="p-3">{{$emp->status}}</td>
+                        <td class="p-3">5</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
 
     </div>
 
@@ -927,7 +1042,29 @@
 
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/themes/smoothness/jquery-ui.css" />
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
+$(document).ready(function(){
+    $('input[type="search"]').addClass('form-control');
+   $('#empTable').DataTable({
+    //   'processing': true,
+    //   'serverSide': true,
+    //   'serverMethod': 'post',
+    //   'ajax': {
+    //       'url':'ajaxfile.php'
+    //   },
+    //   'columns': [
+    //      { data: 'emp_name' },
+    //      { data: 'email' },
+    //      { data: 'gender' },
+    //      { data: 'salary' },
+    //      { data: 'city' },
+    //   ]
+   });
+});
+
 $(function () {
     $("#kpiTable").sortable({
         items: 'tr',
