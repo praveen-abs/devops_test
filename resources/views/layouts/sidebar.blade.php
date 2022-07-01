@@ -14,7 +14,7 @@
     <div class="navbar-brand-box ">
         <!-- Dark Logo-->
         <a href="index" class="logo logo-dark">
-            <img src="{{ URL::asset($logoSrc) }}" alt=""> 
+            <img src="{{ URL::asset($logoSrc) }}" alt="">
             <!-- <img src="{{ URL::asset('assets/images/vasa.jpg') }}" alt="" class=""> -->
         </a>
 
@@ -186,7 +186,8 @@
                                     class="nav-link py-1"><span>Directory </span></a>
                             </li>
                             <li class="nav-item ">
-                                <a href="{{url('vmt-employee-hierarchy')}}" id="tds" class="nav-link py-1"><span>ORG structure</span></a>
+                                <a href="{{url('vmt-employee-hierarchy')}}" id="tds" class="nav-link py-1"><span>ORG
+                                        structure</span></a>
                             </li>
                             <!-- <li class="nav-item ">
                                 <a href="{{url('vmt_clientOnboarding')}}" id="" class="nav-link py-1" aria-expanded="false"><span>Client On-Boarding</span> </a>
@@ -385,10 +386,36 @@
                             <img src="{{ URL::asset('assets/images/payroll.png') }}" alt="" class="m-2">
                             <span>Pay cheque</span>
                         </div>
-                        <div class="left-line">
-                            <hr class="">
-                        </div>
+
                     </a>
+                    <div class="collapse menu-dropdown" id="reportDrop-Down">
+                            <ul class="nav nav-sm flex-column">
+                                
+                                
+                                <li class="nav-item">
+                                    <a href="{{url('vmt_home')}}" class="nav-link py-1"
+                                        role="button"><span>Home</span></a>
+                                </li>
+                                @can('Team')
+                                <li class="nav-item">
+                                    <a href="{{url('vmt_salary_details')}}" class="nav-link py-1"
+                                        role="button"><span>Salary Details</span></a>
+                                </li>
+                                @endcan
+                                @can('ORG')
+                                <li class="nav-item">
+                                    <a href="{{url('vmt_investments')}}" class="nav-link py-1"
+                                        role="button"><span>Investments</span></a>
+                                </li>
+                                @endcan
+                                @can('360_Degree_Review')
+                                <li class="nav-item">
+                                    <a href="{{url('vmt_form16')}}" class="nav-link py-1" role="button"><span>
+                                            Form 16</span></a>
+                                </li>
+                                @endcan
+                            </ul>
+                        </div>
                 </li>
                 @endif
 
