@@ -54,7 +54,7 @@ class VmtApraisalController extends Controller
         //dd($request->all());
         if($request->has("employees")){
             $employeeList  = explode(',', $request->employees[0]); 
-            $mailingEmpList  = VmtEmployee::join('vmt_employee_office_details',  'emp_id', '=', 'vmt_employee_details.id')->whereIn('id', $employeeList)->pluck('officical_mail'); 
+            $mailingEmpList  = VmtEmployee::join('vmt_employee_office_details',  'user_id', '=', 'vmt_employee_details.userid')->whereIn('userid', $employeeList)->pluck('officical_mail'); 
             $mailingRevList  = User::whereIn('id', array($request->reviewer))->pluck('email'); 
             
             //dd($employeeList);
@@ -249,9 +249,12 @@ class VmtApraisalController extends Controller
 
             $reviewManager = User::find($kpiData->reviewer_id);
             //dd($reviewManager->email);
+
+            $currentUser_empDetails = VmtEmployeeOfficeDetails::where('user_id', auth::user()->id)->first();
+
             \Mail::to($reviewManager->email)->send(new NotifyPMSManager(auth::user()->name, $currentUser_empDetails->designation, $reviewManager->name ));
         }
-        return "Saved";
+        return "Saved.Sent mail to manager ".$reviewManager->email;
     }
 
     // Manger review : to see kpi table filled by employees
