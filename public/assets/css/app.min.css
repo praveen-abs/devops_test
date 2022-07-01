@@ -59,7 +59,7 @@
     --vz-header-bg: #fff;
     --vz-header-item-color: #e9ecef;
     --vz-header-bg-dark: #002f56;
-    --vz-header-item-color-dark: #b0c4d9;
+    --vz-header-item-color-dark: #002f56;
     --vz-topbar-search-bg: #f3f3f9;
     --vz-topbar-user-bg: #f3f3f9;
     --vz-topbar-user-bg-dark: #52639c;
@@ -392,13 +392,14 @@
 }
 
 [data-topbar=dark] .navbar-header .btn-topbar {
+    
     color: var(--vz-header-item-color-dark)
 }
 
-[data-topbar=dark] .navbar-header .btn-topbar:focus,
-[data-topbar=dark] .navbar-header .btn-topbar:hover {
-    background-color: hsla(0, 0%, 100%, .07);
-    color: #fff
+[data-topbar=dark] .navbar-header .btn-topbar:focus
+{
+    background-color: hsl(207.2, 100%, 16.9%);
+    color: hsla(0, 0%, 100%, .85)     
 }
 
 @media (min-width:767.99px) {
