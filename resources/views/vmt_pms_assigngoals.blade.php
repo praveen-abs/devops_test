@@ -445,7 +445,7 @@ th:last-child {
                         </td>
                         <td class="p-3">{{$emp->emp_no}}</td>
                         <td class="p-3">{{$emp->emp_name}}</td>
-                        <td class="p-3">{{$emp->email_id}}</td>
+                        <td class="p-3">{{$emp->officical_mail}}</td>
                         <td class="p-3">{{$emp->designation}}</td>
                         <td class="p-3">{{$emp->l1_manager_name}}</td>
                         <td class="p-3">5</td>
@@ -457,9 +457,7 @@ th:last-child {
             </table>
         </div>
         @endif
-
     </div>
-
     <!-- <div class="assign-cards-wrapper">
         <div class="card mt-5 assignCards">
             <div class="card-header p-0 m-0">
