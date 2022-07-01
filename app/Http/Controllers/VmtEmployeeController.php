@@ -219,7 +219,8 @@ class VmtEmployeeController extends Controller
 
         if($newEmployee){
             $empOffice  = new VmtEmployeeOfficeDetails; 
-            $empOffice->emp_id = $newEmployee->id;
+            $empOffice->emp_id = $newEmployee->id; // Need to remove this in future
+            $empOffice->user_id = $newEmployee->userid; //Link between USERS and VmtEmployeeOfficeDetails table
             $empOffice->department = $row["department"];// => "lk"
             $empOffice->process = $row["process"];// => "k"
             $empOffice->designation = $row["designation"];// => "k"

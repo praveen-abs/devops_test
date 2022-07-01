@@ -19,6 +19,7 @@ class CreateVmtEmployeeOfficeDetailsTable extends Migration
         Schema::create('vmt_employee_office_details', function (Blueprint $table) {
             $table->id();
             $table->integer("emp_id");
+            $table->integer("user_id");//Link between USERS and VmtEmployeeOfficeDetails table
             $table->text("department")->nullable();
             $table->text("process")->nullable();
             $table->text("designation")->nullable();
