@@ -20,7 +20,9 @@ class CreateVmtEmployeePmsGoalsTable extends Migration
         Schema::create('vmt_employee_pms_goals_table', function (Blueprint $table) {
             $table->id();
             $table->text("kpi_table_id")->nullable();
-            $table->text("assignment_period")->nullable();
+            $table->text("assignment_period_start")->nullable();
+            $table->text("assignment_period_end")->nullable();
+            $table->text("assignment_period_year")->nullable();
             $table->text("coverage")->nullable();
             $table->text("reviewer_id")->nullable();
             $table->text("employee_id")->nullable();

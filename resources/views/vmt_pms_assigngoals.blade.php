@@ -432,7 +432,7 @@ th:last-child {
                         <th class="p-3">Email</th>
                         <th class="p-3">Designation</th>
                         <th class="p-3">Manager</th>
-                        <th class="p-3">Jan 2020 Rating</th>
+                        <th class="p-3">Assignment Period</th>
                         <th class="p-3">Status</th>
                         <th class="p-3">Average Rating</th>
                     </tr>
@@ -689,26 +689,58 @@ th:last-child {
                             @else
                             <input type="hidden" name="reviewer" id="sel_reviewer">
                             @endif
-                            <!-- <div class="row mt-3">
-                                <div class="col-4  mt-3 mb-3">
+                            <input type="hidden" name="assignment_period_year" id="assignment_period_year" value="<?php echo date("Y"); ?>">
+
+                            <div class="row mt-3">
+                                <div class="col-2  mt-3 mb-3">
                                     <div class="d-flex flex-column">
-                                        <label class="" for="Assignment">
-                                            Assignment Period</label>
-                                        <input type="text" name="assignment_period" class="" required />
-                                    </div>
-                                </div>
-                                <div class="col-4 mt-3 mb-3 ml-5">
-                                    <div class="d-flex flex-column">
-                                        <label class="" for="Assignment">
-                                            Coverage</label>
-                                        <select name="coverage" id="">
-                                            <option value="Employee">Employee</option>
-                                            <option value="Manager">Manager</option>
-                                            <option value="Project Manager">Project Manager</option>
+                                        <label class="" for="assignment_period_start">Assignment Period Start</label>
+                                        <select name="assignment_period_start" id="">
+                                            <option name="January" value="Jan">January - <?php echo date("Y"); ?> </option>
+                                            <option name="February" value="Feb">February - <?php echo date("Y"); ?></option>
+                                            <option name="March" value="Mar">March - <?php echo date("Y"); ?></option>
+                                            <option name="April" value="Apr">April - <?php echo date("Y"); ?></option>
+                                            <option name="May" value="May">May - <?php echo date("Y"); ?></option>
+                                            <option name="June" value="Jun">June - <?php echo date("Y"); ?></option>
+                                            <option name="July" value="Jul">July - <?php echo date("Y"); ?></option>
+                                            <option name="August" value="Aug">August - <?php echo date("Y"); ?></option>
+                                            <option name="September" value="Sep">September - <?php echo date("Y"); ?></option>
+                                            <option name="October" value="Oct">October - <?php echo date("Y"); ?></option>
+                                            <option name="November" value="Nov">November - <?php echo date("Y"); ?></option>
+                                            <option name="December" value="Dec">December - <?php echo date("Y"); ?></option>
                                         </select>
                                     </div>
                                 </div>
-                            </div> -->
+                                <div class="col-2  mt-3 mb-3">
+                                    <div class="d-flex flex-column">
+                                        <label class="" for="assignment_period_end">Assignment Period End</label>
+                                        <select name="assignment_period_end" id="">
+                                            <option name="January" value="Jan">January - <?php echo date("Y"); ?></option>
+                                            <option name="February" value="Feb">February - <?php echo date("Y"); ?></option>
+                                            <option name="March" value="Mar">March - <?php echo date("Y"); ?></option>
+                                            <option name="April" value="Apr">April - <?php echo date("Y"); ?></option>
+                                            <option name="May" value="May">May - <?php echo date("Y"); ?></option>
+                                            <option name="June" value="Jun">June - <?php echo date("Y"); ?></option>
+                                            <option name="July" value="Jul">July - <?php echo date("Y"); ?></option>
+                                            <option name="August" value="Aug">August - <?php echo date("Y"); ?></option>
+                                            <option name="September" value="Sep">September - <?php echo date("Y"); ?></option>
+                                            <option name="October" value="Oct">October - <?php echo date("Y"); ?></option>
+                                            <option name="November" value="Nov">November - <?php echo date("Y"); ?></option>
+                                            <option name="December" value="Dec">December - <?php echo date("Y"); ?></option>
+                                        </select>
+                                    </div>
+                                </div>                                
+                                <div class="col-2 mt-3 mb-3">
+                                    <div class="d-flex flex-column">
+                                        <label class="" for="department">Department</label>
+                                        <select name="department" id="">
+                                            <option value="Technology">Technology</option>
+                                            <option value="Sales">Sales</option>
+                                            <option value="Auditing">Auditing</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row mt-3">
                                 <div class="col-4  mt-3 mb-3">
                                     @if (auth()->user()->hasrole('Manager') || auth()->user()->hasrole('Admin'))
@@ -742,7 +774,7 @@ th:last-child {
                                 <div class="col-4 mt-3 mb-3 d-flex ml-5">
 
                                     <div class="d-flex flex-column">
-                                        <label class="" for="Assignment">Reviwer</label>
+                                        <label class="" for="Assignment">Reviewer</label>
                                         <div class="d-flex align-items-center">
                                             <div class="card reviwer-cards  m-0 rounded-pill">
                                                 <div class="card-body">
@@ -757,7 +789,7 @@ th:last-child {
                                                             @elseif(auth()->user()->hasrole('Employee'))
                                                             <h6 class="fw-bold m-0" id="reviewer-name">{{$users[0]['name']}}</h6>
                                                             @else
-                                                            <h6 class="fw-bold m-0" id="reviewer-name">Steve Jobs</h6>
+                                                            <h6 class="fw-bold m-0" id="reviewer-name">---</h6>
                                                             @endif
 
                                                             @if(auth()->user()->hasrole('Manager'))
@@ -765,7 +797,7 @@ th:last-child {
                                                             @elseif(auth()->user()->hasrole('Employee'))
                                                             <span id="reviewer-email">{{$users[0]['email']}}</span>
                                                             @else
-                                                            <span id="reviewer-email">Steve@gmail.com</span>
+                                                            <span id="reviewer-email">---</span>
                                                             @endif
                                                         </div>
                                                     </div>

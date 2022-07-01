@@ -32,9 +32,9 @@ class VmtApraisalController extends Controller
 
     // assign goals forms
     public function vmtAssignGoals(Request $request){
-        $empGoals = VmtEmployee::select('emp_no', 'emp_name', 'email_id', 'vmt_employee_details.designation', 'l1_manager_name', 'status', 'officical_mail')->join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.employee_id', '=', 'vmt_employee_details.id')->join('vmt_employee_office_details',  'vmt_employee_office_details.emp_id', '=', 'vmt_employee_details.id')->where('author_id', auth()->user()->id)->where('assignment_period', 'oct 2022 to nov 2022')->get();
+        $empGoals = VmtEmployee::select('emp_no', 'emp_name', 'email_id', 'vmt_employee_details.designation', 'l1_manager_name', 'status', 'officical_mail')->join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.employee_id', '=', 'vmt_employee_details.userid')->join('vmt_employee_office_details',  'vmt_employee_office_details.user_id', '=', 'vmt_employee_details.userid')->where('author_id', auth()->user()->id)->get();
         if (auth()->user()->hasrole('Employee')) {
-            $emp = VmtEmployee::join('vmt_employee_office_details',  'emp_id', '=', 'vmt_employee_details.id')->where('userid', auth()->user()->id)->first();
+            $emp = VmtEmployee::join('vmt_employee_office_details',  'user_id', '=', 'vmt_employee_details.userid')->where('userid', auth()->user()->id)->first();
             $rev = VmtEmployee::where('emp_no', $emp->l1_manager_code)->first();
             $users = User::where('id', $rev->userid)->get();
         } else {
@@ -62,7 +62,9 @@ class VmtApraisalController extends Controller
                 // code...
                 $empPmsGoal = new VmtEmployeePMSGoals; 
                 $empPmsGoal->kpi_table_id   = $request->kpitable_id;
-                $empPmsGoal->assignment_period = $request->assignment_period;
+                $empPmsGoal->assignment_period_start = $request->assignment_period_start;
+                $empPmsGoal->assignment_period_end = $request->assignment_period_end;
+                $empPmsGoal->assignment_period_year = $request->assignment_period_year;
                 $empPmsGoal->coverage     = $request->coverage;
                 $empPmsGoal->reviewer_id  = $request->reviewer;
                 $empPmsGoal->employee_id  = $value; 
