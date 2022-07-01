@@ -46,7 +46,7 @@ class VmtApraisalController extends Controller
         } else {
             $employees = VmtEmployee::all();
         }
-        return view('vmt_pms_assigngoals', compact('users', 'employees', 'empGoals'));
+        return view('vmt_pms_assigngoals', compact('users', 'employees','empGoals'));
     }
 
     // publish goals
@@ -249,7 +249,7 @@ class VmtApraisalController extends Controller
 
             $reviewManager = User::find($kpiData->reviewer_id);
             //dd($reviewManager->email);
-            \Mail::to($reviewManager->email)->send(new NotifyPMSManager(auth::user()->name));
+            \Mail::to($reviewManager->email)->send(new NotifyPMSManager(auth::user()->name, $currentUser_empDetails->designation, $reviewManager->name ));
         }
         return "Saved";
     }
@@ -258,8 +258,9 @@ class VmtApraisalController extends Controller
     public function showManagerApraisalReview(Request $request){
 
         // show review for HR
-        if(auth::user()->hasRole('HR')){
-            $pmsGoalList  = VmtEmployeePMSGoals::select('vmt_employee_details.emp_name', 'vmt_employee_pms_goals_table.*' )->rightJoin('vmt_employee_details', 'vmt_employee_details.id', '=', 'vmt_employee_pms_goals_table.employee_id')->orderBy('updated_at', 'DESC')->get();
+        if(auth::user()->hasRole(['HR','Admin']) ){
+            //dd("INside HR login");
+            $pmsGoalList  = VmtEmployeePMSGoals::select('vmt_employee_details.emp_name', 'vmt_employee_pms_goals_table.*' )->rightJoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'vmt_employee_pms_goals_table.author_id')->orderBy('updated_at', 'DESC')->get();
 
             if($request->has('goal_id')){
                 $assignedGoals  = VmtEmployeePMSGoals::find($request->goal_id);
@@ -379,9 +380,14 @@ class VmtApraisalController extends Controller
             //$kpiData->self_kpi_comments    = $request->selfcomments;//null
             $kpiData->save();
 
-            //$reviewManager = User::find($kpiData->reviewer_id);
+            $hrReview = User::find($kpiData->author_id);
+
+            $currentUser_empDetails = VmtEmployeeOfficeDetails::where('user_id', auth::user()->id)->first();
+            //$currentUserModel =   VmtEmployeeOfficeDetails::where('id', auth::user()->id)->first();
+
+
             //dd($reviewManager->email);
-            //\Mail::to($reviewManager->email)->send(new NotifyPMSManager(auth::user()->name));
+            \Mail::to($hrReview->email)->send(new NotifyPMSManager(auth::user()->name,  $currentUser_empDetails->designation,$hrReview->name));
         }
         return "Saved";
     }

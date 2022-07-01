@@ -6,8 +6,8 @@
 	<title></title>
 </head>
 <body>
-	<h5>Dear Manager, </h5>
-	<p>Employee <b>{{$employeeName}}</b> has submitted KPI Assessment.
+	<h5>Dear {{$recipientName}}, </h5>
+	<p>Employee <b>{{$employeeName}} &#40; {{ $empDesignation }} &#41;</b>  has submitted KPI Assessment.
 	<br/> Please login to view.</p>
 </body>
 </html>
