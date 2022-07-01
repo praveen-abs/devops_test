@@ -32,7 +32,7 @@ class VmtApraisalController extends Controller
 
     // assign goals forms
     public function vmtAssignGoals(Request $request){
-        $empGoals = VmtEmployee::select('emp_no', 'emp_name', 'email_id', 'vmt_employee_details.designation', 'l1_manager_name', 'status', 'officical_mail')->join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.employee_id', '=', 'vmt_employee_details.id')->join('vmt_employee_office_details',  'vmt_employee_office_details.emp_id', '=', 'vmt_employee_details.id')->where('author_id', auth()->user()->id)->get();
+        $empGoals = VmtEmployee::select('emp_no', 'emp_name', 'email_id', 'vmt_employee_details.designation', 'l1_manager_name', 'status', 'officical_mail')->join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.employee_id', '=', 'vmt_employee_details.id')->join('vmt_employee_office_details',  'vmt_employee_office_details.emp_id', '=', 'vmt_employee_details.id')->where('author_id', auth()->user()->id)->where('assignment_period', 'oct 2022 to nov 2022')->get();
         if (auth()->user()->hasrole('Employee')) {
             $emp = VmtEmployee::join('vmt_employee_office_details',  'emp_id', '=', 'vmt_employee_details.id')->where('userid', auth()->user()->id)->first();
             $rev = VmtEmployee::where('emp_no', $emp->l1_manager_code)->first();
