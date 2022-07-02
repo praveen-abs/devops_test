@@ -32,7 +32,27 @@ class VmtApraisalController extends Controller
 
     // assign goals forms
     public function vmtAssignGoals(Request $request){
-        $empGoals = VmtEmployee::select('emp_no', 'emp_name', 'email_id', 'vmt_employee_details.designation', 'l1_manager_name', 'status', 'officical_mail')->join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.employee_id', '=', 'vmt_employee_details.id')->join('vmt_employee_office_details',  'vmt_employee_office_details.emp_id', '=', 'vmt_employee_details.id')->where('author_id', auth()->user()->id)->get();
+
+        $empGoals = VmtEmployee::leftJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
+                            ->leftJoin('vmt_employee_office_details', 'vmt_employee_details.id','=', 'vmt_employee_office_details.emp_id' )
+                            ->join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.employee_id', '=', 'vmt_employee_details.id')
+                            ->select(
+                                'vmt_employee_details.*', 
+                                'users.name as emp_name', 
+                                'users.email as email_id',
+                                'vmt_employee_office_details.department',
+                                'vmt_employee_office_details.designation', 
+                                'vmt_employee_office_details.l1_manager_code',
+                                'vmt_employee_office_details.l1_manager_name',
+                                'vmt_employee_office_details.l1_manager_designation'
+                            )
+                            ->orderBy('created_at', 'DESC')
+                            ->whereNotNull('emp_no')
+                            ->get();
+
+
+
+       // $empGoals = VmtEmployee::select('emp_no', 'emp_name', 'email_id', 'vmt_employee_details.designation', 'l1_manager_name', 'status', 'officical_mail')->join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.employee_id', '=', 'vmt_employee_details.id')->join('vmt_employee_office_details',  'vmt_employee_office_details.emp_id', '=', 'vmt_employee_details.id')->where('author_id', auth()->user()->id)->get();
         if (auth()->user()->hasrole('Employee')) {
             $emp = VmtEmployee::join('vmt_employee_office_details',  'user_id', '=', 'vmt_employee_details.userid')->where('userid', auth()->user()->id)->first();
             $rev = VmtEmployee::where('emp_no', $emp->l1_manager_code)->first();
@@ -42,11 +62,55 @@ class VmtApraisalController extends Controller
             $employees = VmtEmployee::select('vmt_employee_details.id', 'emp_name')->join('vmt_employee_office_details',  'emp_id', '=', 'vmt_employee_details.id')->where('l1_manager_code', $getId->emp_no)->get();
             $users = User::join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.reviewer_id', '=', 'users.id')->get();
         } else {
-            $employees = VmtEmployee::all();
-            // $users = User::all();
-            $users = User::join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.reviewer_id', '=', 'users.id')->get();
+            $employees = VmtEmployee::leftJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
+            ->select(
+                'vmt_employee_details.*', 
+                'users.name as emp_name', 
+            )
+            ->orderBy('created_at', 'ASC')
+            ->whereNotNull('emp_no')
+            ->get();
+
+           // $users = User::all();
+            //reviewer's list
+            $currentEmpCode = VmtEmployee::where('userid', auth::user()->id)->pluck('emp_no');
+            $users = VmtEmployeeOfficeDetails::leftJoin('users', 'users.id', '=', 'vmt_employee_office_details.user_id')
+            ->select(
+                'users.name', 
+                'users.id as id',
+                'vmt_employee_office_details.officical_mail as email',
+            )
+            ->orderBy('users.name', 'ASC')
+            ->where('l1_manager_code', $currentEmpCode)
+            ->get();
+            
+            
+            // ->select('users.id' ,'users.name')
+            // ->
+            // ->get();
         }
         return view('vmt_pms_assigngoals', compact('users', 'employees','empGoals'));
+    }
+
+    public function vmtGetAllChildEmployees(Request $request)
+    {
+        if($request->has("emp_id")){
+
+            $currentEmpCode = VmtEmployee::where('userid',$request->emp_id)->pluck('emp_no');
+            $users = VmtEmployeeOfficeDetails::leftJoin('users', 'users.id', '=', 'vmt_employee_office_details.user_id')
+            ->select(
+                'users.name', 
+                'vmt_employee_office_details.emp_id as id',
+            )
+            ->orderBy('users.name', 'ASC')
+            ->where('l1_manager_code', $currentEmpCode)
+            ->get();
+
+            return $users;
+
+        }
+
+        return array();
     }
 
     // publish goals

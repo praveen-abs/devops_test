@@ -694,7 +694,7 @@ th:last-child {
                             <div class="row mt-3">
                                 <div class="col-2  mt-3 mb-3">
                                     <div class="d-flex flex-column">
-                                        <label class="" for="assignment_period_start">Assignment Period Start</label>
+                                        <label class="" for="assignment_period_start">Assignment Period</label>
                                         <select name="assignment_period_start" id="">
                                             <option name="January" value="Jan">January - <?php echo date("Y"); ?> </option>
                                             <option name="February" value="Feb">February - <?php echo date("Y"); ?></option>
@@ -711,25 +711,6 @@ th:last-child {
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-2  mt-3 mb-3">
-                                    <div class="d-flex flex-column">
-                                        <label class="" for="assignment_period_end">Assignment Period End</label>
-                                        <select name="assignment_period_end" id="">
-                                            <option name="January" value="Jan">January - <?php echo date("Y"); ?></option>
-                                            <option name="February" value="Feb">February - <?php echo date("Y"); ?></option>
-                                            <option name="March" value="Mar">March - <?php echo date("Y"); ?></option>
-                                            <option name="April" value="Apr">April - <?php echo date("Y"); ?></option>
-                                            <option name="May" value="May">May - <?php echo date("Y"); ?></option>
-                                            <option name="June" value="Jun">June - <?php echo date("Y"); ?></option>
-                                            <option name="July" value="Jul">July - <?php echo date("Y"); ?></option>
-                                            <option name="August" value="Aug">August - <?php echo date("Y"); ?></option>
-                                            <option name="September" value="Sep">September - <?php echo date("Y"); ?></option>
-                                            <option name="October" value="Oct">October - <?php echo date("Y"); ?></option>
-                                            <option name="November" value="Nov">November - <?php echo date("Y"); ?></option>
-                                            <option name="December" value="Dec">December - <?php echo date("Y"); ?></option>
-                                        </select>
-                                    </div>
-                                </div>                                
                                 <div class="col-2 mt-3 mb-3">
                                     <div class="d-flex flex-column">
                                         <label class="" for="department">Department</label>
@@ -993,9 +974,7 @@ th:last-child {
                     @csrf
                     <label for="FormSelectDefault" class="form-label text-muted">Employees</label>
                     <select class="form-select mb-3" aria-label="Default select example" name="employees[]" id="select-employees" multiple>
-                        @foreach($employees as $index => $employee)
-                            <option value="{{$employee->id}}">{{$employee->emp_name}}</option>
-                        @endforeach
+                      
                     </select>
                 
                     <div class="content-footer">
@@ -1174,12 +1153,14 @@ $('#changeEmployeeForm').on('submit', function(e){
     $("#sel_employees").val(employeeSelected);
 
     $.each(employees, function(i, data){
+        console.log(data);
+        console.log('employee selected', employeeSelected);
         if($.inArray(data.id.toString(), employeeSelected) > -1){
             employeeArray.push(data.emp_name);
         }
     });
     $('#group-employee').html(employeeArray.join());
-    $('#changeEmployee').modal('hide');
+    $('#changeEmployee').css('display', 'none');
 });
 
 // select reviewer
@@ -1196,7 +1177,31 @@ $('#newQuestion').on('submit', function(e){
         }
     });
 
-    $('#createEmployee').modal('hide');
+    $.ajax({
+        type: "GET", 
+        url: "{{url('vmt-getAllChildEmployees')}}"+'?emp_id='+selReviewer, 
+        //data: $('#kpiTableForm').serialize(), 
+        success: function(data){
+        var optionHtml ="";
+        $.each(data, function(i, tempdata){
+            optionHtml = optionHtml+"<option value="+tempdata.id+">"+tempdata.name+"</option>";
+            //if(tempdata.id == $('#select-employees').val()){
+            //        $('#reviewer-name').html(tempdata.name);
+            //        $('#reviewer-email').html(tempdata.email);
+            //    }
+          });
+            
+          $('#select-employees').html(optionHtml);
+                     // $("#kpiTableForm :input").prop("disabled", true);
+           // $(".table-btn").prop('disabled', true);
+            console.log(data);
+            //alert("Table Saved, Please publish goals");
+           // $("#kpitable_id").val(data.table_id);
+        }
+    })
+
+
+    $('#createEmployee').css('display','none');
 });
 
 // publishing tables

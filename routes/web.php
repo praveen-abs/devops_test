@@ -77,6 +77,10 @@ Route::post('vmt-pms-kpi-table/save', 'App\Http\Controllers\VmtApraisalControlle
 
 Route::post('vmt-pms-assign-goals/publish', 'App\Http\Controllers\VmtApraisalController@vmtPublishGoals');
 
+Route::get('vmt-getAllChildEmployees', 'App\Http\Controllers\VmtApraisalController@vmtGetAllChildEmployees');
+
+
+
 // 360 Module Form : CRUD
 Route::get('vmt-360-forms', 'App\Http\Controllers\Review360ModuleController@showFormIndex');
 Route::get('vmt-360-forms/create', 'App\Http\Controllers\Review360ModuleController@showFormsPage');
