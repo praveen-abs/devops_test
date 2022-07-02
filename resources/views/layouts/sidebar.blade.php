@@ -211,8 +211,7 @@
                 @endif
 
                 <!-- performance -->
-                @hasrole("Manager")
-                @else
+
                 <li class="nav-item">
                     <a class="nav-link menu-link d-flex" href="#reportDrop-Down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarRoles">
@@ -280,7 +279,6 @@
                         </ul>
                     </div>
                 </li>
-                @endif
 
                 @hasrole("Manager")
                 <li class="nav-item">

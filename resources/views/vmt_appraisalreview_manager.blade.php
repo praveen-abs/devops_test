@@ -41,25 +41,6 @@
 
             <div class="card-body  pb-2">
 
-                 <form method="GET" id='role-form' action="{{url('pms-employee-reviews')}}">
-                  
-                    <div class="mb-3 row">
-                        <label class="col-md-2 col-form-label">Select PMS</label>
-                        <div class="col-md-10">
-                            <select class="form-select" name="goal_id" required>
-                                <option>Select PMS</option>
-                                @foreach($pmsGoalList as $user)
-                                    <option value="{{$user->id}}">{{$user->assignment_period .' | '.$user->emp_name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                     <div class="row mt-2">
-                        <div class="text-end col-xl-12">
-                            <button type="submit" class="btn btn-primary">Save</button>
-                        </div>
-                    </div>
-                </form>
                 <br/>
                 @if($empSelected)
                     <table class="table e-table align-middle table-nowrap mb-0 " style="border: none;">
