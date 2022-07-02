@@ -126,9 +126,10 @@ class VmtApraisalController extends Controller
                 // code...
                 $empPmsGoal = new VmtEmployeePMSGoals; 
                 $empPmsGoal->kpi_table_id   = $request->kpitable_id;
-                $empPmsGoal->assignment_period_start = $request->assignment_period_start;
-                $empPmsGoal->assignment_period_end = $request->assignment_period_end;
-                $empPmsGoal->assignment_period_year = $request->assignment_period_year;
+                $empPmsGoal->assignment_period = $request->assignment_period_start;
+                //$empPmsGoal->assignment_period_start = $request->assignment_period_start;
+                //$empPmsGoal->assignment_period_end = $request->assignment_period_end;
+                //$empPmsGoal->assignment_period_year = $request->assignment_period_year;
                 $empPmsGoal->coverage     = $request->coverage;
                 $empPmsGoal->reviewer_id  = $request->reviewer;
                 $empPmsGoal->employee_id  = $value; 
@@ -140,7 +141,8 @@ class VmtApraisalController extends Controller
             if (auth()->user()->hasrole('Employee')) {
                 \Mail::to($mailingRevList)->send(new VmtAssignGoals(url('vmt-pmsappraisal-review')));
             } else {
-                \Mail::to($mailingEmpList)->send(new VmtAssignGoals(url('vmt-pmsappraisal-review')));
+               $finalMailList = $mailingEmpList->merge($mailingRevList);
+                \Mail::to($finalMailList)->send(new VmtAssignGoals(url('vmt-pmsappraisal-review')));
             }
             return "Goal Published";
         }
