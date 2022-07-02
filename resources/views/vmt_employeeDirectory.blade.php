@@ -413,9 +413,8 @@
                                     <p class="m-0"><span><span class="text-muted" title="Accounting -1 > CEO Dept">Department : </span>{{$employee->department}}</span></p>
                                     <p class="m-0"><span><span class="text-muted">Location : </span>{{$employee->location}}</span></p>
                                     
-                                    @if($employee->manager_emp_id != null)
-                                    <p class="m-0"><span><span class="text-muted">Reporting Manager : </span>{{$employee->manager_data->emp_name }}</span></p>
-                                    @endif
+                                    
+                                    <p class="m-0"><span><span class="text-muted">Reporting Manager : </span>{{$employee->l1_manager_name }}</span></p>
 
                                     <p class="m-0"><span><span class="text-muted">Email : </span>{{$employee->email_id}}</span></p>
                                     <p class="m-0"><span><span class="text-muted">Work : </span>(206) 2964654</span></p>

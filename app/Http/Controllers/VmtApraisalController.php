@@ -388,11 +388,14 @@ class VmtApraisalController extends Controller
             $hrReview = User::find($kpiData->author_id);
 
             $currentUser_empDetails = VmtEmployeeOfficeDetails::where('user_id', auth::user()->id)->first();
+
+            $hrList =  User::role('HR')->get(); 
+            $hrEmails = $hrList->pluck('email'); 
             //$currentUserModel =   VmtEmployeeOfficeDetails::where('id', auth::user()->id)->first();
 
 
             //dd($reviewManager->email);
-            \Mail::to($hrReview->email)->send(new NotifyPMSManager(auth::user()->name,  $currentUser_empDetails->designation,$hrReview->name));
+            \Mail::to($hrEmails)->send(new NotifyPMSManager(auth::user()->name,  $currentUser_empDetails->designation,$hrReview->name));
         }
         return "Saved";
     }
