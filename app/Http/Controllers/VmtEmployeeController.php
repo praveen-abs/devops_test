@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\VmtEmployeeHierarchy;
 use App\Models\VmtEmployee;
+use App\Imports\VmtEmployeeManagerImport;
 use App\Imports\VmtEmployee as VmtEmployeeImport;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtClientMaster;
@@ -35,13 +36,23 @@ class VmtEmployeeController extends Controller
 
     //
     public function showEmployeeDirectory(Request $request){
-        $vmtEmployees = VmtEmployee::orderBy('created_at', 'DESC')->get();
-        foreach ($vmtEmployees as $row => $value) {
-            // code...
-            if($value->manager_emp_id != null){
-                $vmtEmployees[$row]['manager_data'] = VmtEmployee::where('emp_no', $value->manager_emp_id)->select('emp_no', 'emp_name', 'designation', 'department')->first();
-            }
-        }
+        $vmtEmployees = VmtEmployee::leftJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
+                            ->leftJoin('vmt_employee_office_details', 'vmt_employee_details.id','=', 'vmt_employee_office_details.emp_id' )
+                            ->select(
+                                'vmt_employee_details.*', 
+                                'users.name as emp_name', 
+                                'users.email as email_id',
+                                'vmt_employee_office_details.department',
+                                'vmt_employee_office_details.designation', 
+                                'vmt_employee_office_details.l1_manager_code',
+                                'vmt_employee_office_details.l1_manager_name',
+                                'vmt_employee_office_details.l1_manager_designation'
+                            )
+                            ->orderBy('created_at', 'DESC')
+                            ->whereNotNull('emp_no')
+                            ->get();
+
+        
         return view('vmt_employeeDirectory', compact('vmtEmployees'));
     }
 
@@ -164,7 +175,7 @@ class VmtEmployeeController extends Controller
         $row = $request->all();
         $newEmployee = new VmtEmployee; 
         $newEmployee->emp_no   =    $row["employee_code"]; 
-        $newEmployee->emp_name   =    $row["employee_name"]; 
+        //$newEmployee->emp_name   =    $row["employee_name"]; 
         $newEmployee->gender   =    $row["gender"];  
         $newEmployee->designation   =    $row["designation"];  
         $newEmployee->department   =    $row["department"];  
@@ -219,7 +230,7 @@ class VmtEmployeeController extends Controller
 
         if($newEmployee){
             $empOffice  = new VmtEmployeeOfficeDetails; 
-            $empOffice->emp_id = $newEmployee->id; // Need to remove this in future
+            //$empOffice->emp_id = $newEmployee->id; // Need to remove this in future
             $empOffice->user_id = $newEmployee->userid; //Link between USERS and VmtEmployeeOfficeDetails table
             $empOffice->department = $row["department"];// => "lk"
             $empOffice->process = $row["process"];// => "k"
@@ -271,6 +282,11 @@ class VmtEmployeeController extends Controller
     // store employeess from excel sheet to database
     public function storeBulkEmployee(Request $request){
         $importDataArry = \Excel::import(new VmtEmployeeImport, request()->file('file'));
+
+        // linking Manager To the employees; 
+        $linkToManager  = \Excel::import(new VmtEmployeeManagerImport, request()->file('file'));
+
+
         return "Processed";
     }
 }
