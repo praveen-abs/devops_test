@@ -32,19 +32,19 @@ class VmtApraisalController extends Controller
 
     // assign goals forms
     public function vmtAssignGoals(Request $request){
-        $empGoals = VmtEmployee::select('emp_no', 'emp_name', 'email_id', 'vmt_employee_details.designation', 'l1_manager_name', 'status', 'officical_mail')->join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.employee_id', '=', 'vmt_employee_details.userid')->join('vmt_employee_office_details',  'vmt_employee_office_details.user_id', '=', 'vmt_employee_details.userid')->where('author_id', auth()->user()->id)->get();
+        $empGoals = VmtEmployee::select('emp_no', 'emp_name', 'email_id', 'vmt_employee_details.designation', 'l1_manager_name', 'status', 'officical_mail')->join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.employee_id', '=', 'vmt_employee_details.id')->join('vmt_employee_office_details',  'vmt_employee_office_details.emp_id', '=', 'vmt_employee_details.id')->where('author_id', auth()->user()->id)->get();
         if (auth()->user()->hasrole('Employee')) {
             $emp = VmtEmployee::join('vmt_employee_office_details',  'user_id', '=', 'vmt_employee_details.userid')->where('userid', auth()->user()->id)->first();
             $rev = VmtEmployee::where('emp_no', $emp->l1_manager_code)->first();
             $users = User::where('id', $rev->userid)->get();
-        } else {
-            $users = User::all();
-        }
-        if (auth()->user()->hasrole('Manager')) {
+        } elseif (auth()->user()->hasrole('Manager')) {
             $getId = VmtEmployee::where('userid', auth()->user()->id)->first();
             $employees = VmtEmployee::select('vmt_employee_details.id', 'emp_name')->join('vmt_employee_office_details',  'emp_id', '=', 'vmt_employee_details.id')->where('l1_manager_code', $getId->emp_no)->get();
+            $users = User::join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.reviewer_id', '=', 'users.id')->get();
         } else {
             $employees = VmtEmployee::all();
+            // $users = User::all();
+            $users = User::join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.reviewer_id', '=', 'users.id')->get();
         }
         return view('vmt_pms_assigngoals', compact('users', 'employees','empGoals'));
     }
