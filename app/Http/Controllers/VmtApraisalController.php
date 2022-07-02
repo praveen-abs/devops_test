@@ -14,6 +14,7 @@ use App\Models\VmtEmployeeOfficeDetails;
 use App\Mail\VmtAssignGoals;
 use App\Mail\NotifyPMSManager;
 use App\Mail\PMSReviewCompleted;
+use Session;
 
 class VmtApraisalController extends Controller
 {
@@ -27,7 +28,11 @@ class VmtApraisalController extends Controller
     //
     public function bulkUploadQuestion(){
         $importDataArry = \Excel::import(new ApraisalQuestion, request()->file('file'));
-        return "Questions Added";
+        
+        Session::put('result', 'Question Created Successfully');
+        Session::put('alert', 'success');
+        return redirect()->back();
+
     }
 
     // assign goals forms
@@ -144,8 +149,13 @@ class VmtApraisalController extends Controller
                $finalMailList = $mailingEmpList->merge($mailingRevList);
                 \Mail::to($finalMailList)->send(new VmtAssignGoals(url('vmt-pmsappraisal-review')));
             }
-            return "Goal Published";
+            Session::put('result', 'Question Created Successfully');
+            Session::put('alert', 'success');
+            return redirect()->back();
         }
+        Session::put('result', 'Permission Denied');
+        Session::put('alert', 'error');
+        return redirect()->back();
     }
 
     // Store Assigned Goals
