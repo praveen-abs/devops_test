@@ -33,6 +33,38 @@
         </div>
         <!-- end main content-->
     </div>
+    
+    <div style="position:fixed;top:80px;right: 40px">
+        <div class="toast hide common-toast-success common-toast bg-success" role="alert" aria-live="assertive" data-delay="3000"
+            aria-atomic="true">
+            <div class="toast-header">
+                <strong class="mr-auto">Success</strong>
+                <button type="button" class="ml-2 mb-1 close common-toast-close" data-dismiss="toast" aria-label="Close">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="toast-body">
+                <p class="text-white" id="result-toast-success"></p>
+            </div>
+        </div>
+    </div>
+
+    <div style="position:fixed;top:80px;right: 40px">
+        <div class="toast hide common-toast-error common-toast bg-danger" role="alert" aria-live="assertive" data-delay="3000"
+            aria-atomic="true">
+            <div class="toast-header">
+                <strong class="mr-auto">Error</strong>
+                <button type="button" class="ml-2 mb-1 close common-toast-close" data-dismiss="toast" aria-label="Close">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="toast-body">
+                <p class="text-white" id="result-toast-error"></p>
+            </div>
+        </div>
+    </div>
+
+
     <!-- END layout-wrapper -->
 
     <!-- Shows Theme Customizer menu on right side -->
