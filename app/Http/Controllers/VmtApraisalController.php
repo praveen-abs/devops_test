@@ -95,9 +95,7 @@ class VmtApraisalController extends Controller
             ->whereNotNull('emp_no')
             ->get();
 
-           // $users = User::all();
-            //reviewer's list
-            $currentEmpCode = VmtEmployee::where('userid', auth::user()->id)->pluck('emp_no');
+            $currentEmpCode = VmtEmployee::where('userid', auth::user()->id)->first()->value('emp_no');
             //$mgr_assignee = User::join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.employee_id', '=', 'users.id')->pluck('name');
 
             $users = VmtEmployeeOfficeDetails::leftJoin('users', 'users.id', '=', 'vmt_employee_office_details.user_id')
@@ -110,7 +108,7 @@ class VmtApraisalController extends Controller
             ->where('l1_manager_code', strval($currentEmpCode))
             ->get();
             
-            
+            //dd($users);
             // ->select('users.id' ,'users.name')
             // ->
             // ->get();
