@@ -938,6 +938,7 @@ th:last-child {
                                         <div class="align-items-center justify-content-center d-flex mt-4 cursor-pointer">
                                             <span class="plus-sign p-4"><i class="fa fa-plus f-20"></i></span>
                                         </div>
+
                                         <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
                                             <button class="btn btn-primary table-btn mx-2" id="save-table">Save Table</button>
                                         </div>
@@ -1007,6 +1008,36 @@ th:last-child {
         </div>
     </div>
     <!-- add employee  Modal-->
+</div>
+
+<!-- Vertically Centered -->
+<div class="modal fade" id="notificationModal" role="dialog" aria-hidden="true" style="opacity:1; display:none;">
+    <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2">
+        <div class="modal-content">
+            <div class="modal-header py-2 bg-primary">
+
+                <div class="w-100 modal-header-content d-flex align-items-center py-2">
+                    <h5 class="modal-title text-white" id="modalHeader">Success
+                    </h5>
+                    <button 
+                        type="button" 
+                        class="btn-close btn-close-white close-modal" data-bs-dismiss="modal"
+                        aria-label="Close"
+                    >
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="mt-4">
+                    <h4 class="mb-3" id="modalNot">Data Saved Successfully!</h4>
+                    <p class="text-muted mb-4" id="modalBody"> Table Saved, Please publish goals.</p>
+                    <div class="hstack gap-2 justify-content-center">
+                        <button type="button" class="btn btn-light close-modal" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Select Employees window -->
@@ -1297,6 +1328,12 @@ $('#newQuestion').on('submit', function(e){
     $('#createEmployee').css('display','none');
 });
 
+$('body').on('click', '.close-modal', function() {
+    $('#notificationModal').hide();
+    $('#notificationModal').addClass('fade');
+})
+
+
 // publishing tables
 $('body').on('click', '#save-table', function(e){
     // e.preventDefault();
@@ -1311,8 +1348,12 @@ $('body').on('click', '#save-table', function(e){
 
             $("#kpiTableForm :input").prop("disabled", true);
             $(".table-btn").prop('disabled', true);
+            $('#notificationModal').show();
 
-            alert("Table Saved, Please publish goals");
+            // alert("Table Saved, Please publish goals");
+            $('#modalBody').html("Table Saved, Please publish goals.");
+            $('#notificationModal').show();
+            $('#notificationModal').removeClass('fade');
             $("#kpitable_id").val(data.table_id);
         }
     })
@@ -1333,16 +1374,24 @@ $("#publish-goal").click(function(e){
                 $(".table-btn").prop('disabled', true);
 
                 @if(auth()->user()->hasrole('Employee'))
-                    alert("Goals published. Email Sent to your Manager");
+                    $('#modalBody').html("Goals published. Email Sent to your Manager");
+                    $('#notificationModal').show();
+                    $('#notificationModal').removeClass('fade');
                 @else
-                    alert("Goals published. Email Sent to your Employees");
+                    $('#modalBody').html("Goals published. Email Sent to your Employees");
+                    $('#notificationModal').show();
+                    $('#notificationModal').removeClass('fade');
                 @endif
 
                 $("kpitable_id").val(data.table_id);
             }
         })
     }else{
-        alert("Please publish table first");
+        $('#modalBody').html("Please publish table first");
+        $('#modalHeader').html("Failed");
+        $('#modalNot').html("Failed to save Data");
+        $('#notificationModal').show();
+        $('#notificationModal').removeClass('fade');
     }
    
 });

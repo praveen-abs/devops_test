@@ -28,11 +28,7 @@ class VmtApraisalController extends Controller
     //
     public function bulkUploadQuestion(){
         $importDataArry = \Excel::import(new ApraisalQuestion, request()->file('file'));
-        
-        //Session::put('result', 'Question Created Successfully');
-        //Session::put('alert', 'success');
-        return redirect()->back();
-
+        return 'Question Created Successfully';
     }
 
     // assign goals forms
@@ -108,7 +104,7 @@ class VmtApraisalController extends Controller
                 'vmt_employee_office_details.officical_mail as email',
             )
             ->orderBy('users.name', 'ASC')
-            ->where('l1_manager_code', $currentEmpCode)
+            ->where('l1_manager_code', strval($currentEmpCode))
             ->get();
             
             
@@ -199,13 +195,10 @@ class VmtApraisalController extends Controller
                $finalMailList = $mailingEmpList->merge($mailingRevList);
                 \Mail::to($finalMailList)->send(new VmtAssignGoals(url('vmt-pms-assigngoals')));
             }
-            //Session::put('result', 'Question Created Successfully');
-            //Session::put('alert', 'success');
-            return redirect()->back();
+            return "Question Created Successfully";
         }
-        //Session::put('result', 'Permission Denied');
-        //Session::put('alert', 'error');
-        return redirect()->back();
+        return "Permission Denied";
+
     }
 
     // Store Assigned Goals
