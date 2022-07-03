@@ -50,7 +50,7 @@
                                 <div class="row mt-2">
                                     <p class="pl-3 col-auto"><img src="{{ URL::asset('/assets/premassets/img/client-img5.png') }}" class="img-round"></p>
                                     <div class="pt-2 col">
-                                        <h6><b>Admin</b></h6>
+                                        <h6><b>{{Admin}}</b></h6>
                                         <p class="text-muted f-13 m-0">CRT234</p>
                                         <p class="text-muted f-13">Software engineer</p>
                                     </div>

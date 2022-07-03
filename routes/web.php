@@ -15,9 +15,12 @@ use Illuminate\Support\Facades\Auth;
 
 Auth::routes();
 //Language Translation
-Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
+//Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
+//Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
+
+Route::get('/',  [App\Http\Controllers\VmtMainDashboardController::class, 'index'])->name('index');
+Route::get('/index',  [App\Http\Controllers\VmtMainDashboardController::class, 'index'])->name('index');
 
 //Update User Details
 Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');
@@ -165,10 +168,9 @@ Route::post('vmt-pmsappraisal-hrreview', 'App\Http\Controllers\VmtApraisalContro
 
 Route::get('/vmt_employeeOnboarding',  [App\Http\Controllers\VmtEmployeeController::class, 'employeeOnboarding']);
 
-Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
+Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index']);
 
 //Onboarding pages
-
 
 Route::get('/vmt_clientOnboarding', function () {
     return view('vmt_clientOnboarding');
