@@ -57,7 +57,7 @@
                         <i class="ri-checkbox-circle-fill align-middle"></i>
                     </div>
                     <div class="flex-grow-1">
-                        <h6 id="result-toast-success"></h6>
+                        <h6 id="result-toast-success" class="m-0"></h6>
                     </div>
                 </div>
                 
@@ -73,7 +73,7 @@
                         <i class="ri-checkbox-circle-fill align-middle"></i>
                     </div>
                     <div class="flex-grow-1">
-                        <h6 id="result-toast-error"></h6>
+                        <h6 id="result-toast-error" class="m-0"></h6>
                     </div>
                 </div>
             </div>
