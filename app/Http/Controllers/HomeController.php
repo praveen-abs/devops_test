@@ -34,8 +34,6 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         if (view()->exists($request->path())) {
-            Ses::put('result', 'Question Created Successfully');
-            Ses::put('alert', 'success');
             return view($request->path());
         }
         return abort(404);
