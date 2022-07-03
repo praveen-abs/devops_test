@@ -33,33 +33,49 @@
         </div>
         <!-- end main content-->
     </div>
+
+    <div style="z-index: 11">
+        <div id="borderedToast2" class="toast toast-border-success overflow-hidden mt-3" role="alert" aria-live="assertive" aria-atomic="true" >
+            <div class="toast-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0 me-2">
+                        <i class="ri-checkbox-circle-fill align-middle"></i>
+                    </div>
+                    <div class="flex-grow-1">
+                        <h6 class="mb-0" id="alert-msg">Yey! Everything worked!</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <div style="position:fixed;top:80px;right: 40px">
-        <div class="toast hide common-toast-success common-toast bg-success" role="alert" aria-live="assertive" data-delay="3000"
-            aria-atomic="true">
-            <div class="toast-header">
-                <strong class="mr-auto">Success</strong>
-                <button type="button" class="ml-2 mb-1 close common-toast-close" data-dismiss="toast" aria-label="Close">
-                    <span>&times;</span>
-                </button>
-            </div>
+        <div class="toast hide common-toast-success common-toast toast-border-success" role="alert" aria-live="assertive" data-delay="3000" aria-atomic="true">
             <div class="toast-body">
-                <p class="text-white" id="result-toast-success"></p>
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0 me-2">
+                        <i class="ri-checkbox-circle-fill align-middle"></i>
+                    </div>
+                    <div class="flex-grow-1">
+                        <h6 id="result-toast-success"></h6>
+                    </div>
+                </div>
+                
             </div>
         </div>
     </div>
 
     <div style="position:fixed;top:80px;right: 40px">
-        <div class="toast hide common-toast-error common-toast bg-danger" role="alert" aria-live="assertive" data-delay="3000"
-            aria-atomic="true">
-            <div class="toast-header">
-                <strong class="mr-auto">Error</strong>
-                <button type="button" class="ml-2 mb-1 close common-toast-close" data-dismiss="toast" aria-label="Close">
-                    <span>&times;</span>
-                </button>
-            </div>
+        <div class="toast hide common-toast-error common-toast toast-border-danger" role="alert" aria-live="assertive" data-delay="3000" aria-atomic="true">
             <div class="toast-body">
-                <p class="text-white" id="result-toast-error"></p>
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0 me-2">
+                        <i class="ri-checkbox-circle-fill align-middle"></i>
+                    </div>
+                    <div class="flex-grow-1">
+                        <h6 id="result-toast-error"></h6>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

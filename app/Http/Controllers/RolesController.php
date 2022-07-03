@@ -51,7 +51,6 @@ class RolesController extends Controller
     public function create()
     {
         //
-
         $roles = Role::all();
         return view('vmt_createEditRoles', compact('roles'));
     }
