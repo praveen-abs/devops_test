@@ -73,22 +73,11 @@
                                     <div class="px-2 pt-2">
                                         <ul class="nav nav-tabs dropdown-tabs nav-tabs-custom" data-dropdown-tabs="true"
                                         id="notificationItemsTab" role="tablist">
-                                        <li class="nav-item waves-effect waves-light">
-                                            <a class="nav-link active" data-bs-toggle="tab" href="#all-noti-tab" role="tab"
-                                                aria-selected="true">
-                                            All (4)
-                                            </a>
-                                        </li>
+                                        
                                         <li class="nav-item waves-effect waves-light">
                                             <a class="nav-link" data-bs-toggle="tab" href="#messages-tab" role="tab"
                                                 aria-selected="false">
                                             Messages
-                                            </a>
-                                        </li>
-                                        <li class="nav-item waves-effect waves-light">
-                                            <a class="nav-link" data-bs-toggle="tab" href="#alerts-tab" role="tab"
-                                                aria-selected="false">
-                                            Alerts
                                             </a>
                                         </li>
                                         </ul>
