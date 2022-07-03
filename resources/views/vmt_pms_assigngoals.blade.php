@@ -971,7 +971,7 @@ th:last-child {
 
                                                         <td class="">
                                                             <textarea name="dimension[]" id="" cols="20" rows="2"
-                                                                placeholder="type here"></textarea>
+                                                                placeholder="type here" ></textarea>
                                                         </td>
 
                                                         <td class="">
@@ -1416,23 +1416,44 @@ $('body').on('click', '#save-table', function(e){
     console.log('assigning Goals');
     console.log($('#kpiTableForm').serialize());
 
-    $.ajax({
-        type: "POST", 
-        url: "{{url('vmt-pms-kpi-table/save')}}", 
-        data: $('#kpiTableForm').serialize(), 
-        success: function(data){
+    var canSaveForm = true;
 
-            $("#kpiTableForm :input").prop("disabled", true);
-            $(".table-btn").prop('disabled', true);
-            $('#notificationModal').show();
+    //Validate the input fields
+    $("#kpiTableForm :input").each(function(){
+        var input = $(this);
+        //console.log("length : ");
 
-            // alert("Table Saved, Please publish goals");
-            $('#modalBody').html("Table Saved, Please publish goals.");
-            $('#notificationModal').show();
-            $('#notificationModal').removeClass('fade');
-            $("#kpitable_id").val(data.table_id);
-        }
-    })
+       // console.log(input.val().length+" , "+input.val());
+       if(input.val().length < 1)
+       {
+         canSaveForm = false;
+       }
+    });
+
+    if(canSaveForm)
+    {
+        $.ajax({
+            type: "POST", 
+            url: "{{url('vmt-pms-kpi-table/save')}}", 
+            data: $('#kpiTableForm').serialize(), 
+            success: function(data){
+
+                $("#kpiTableForm :input").prop("disabled", true);
+                $(".table-btn").prop('disabled', true);
+                $('#notificationModal').show();
+
+                // alert("Table Saved, Please publish goals");
+                $('#modalBody').html("Table Saved, Please publish goals.");
+                $('#notificationModal').show();
+                $('#notificationModal').removeClass('fade');
+                $("#kpitable_id").val(data.table_id);
+            }
+        });
+    }
+    else
+    {
+        alert("Please fill all the fields");
+    }
 })
 
 //
