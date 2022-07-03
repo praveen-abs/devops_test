@@ -434,7 +434,8 @@ th:last-child {
                         <th class="p-3">Designation</th>
                         <th class="p-3">Manager</th>
                         <th class="p-3">Assignment Period</th>
-                        <th class="p-3">Status</th>
+                        <th class="p-3">Employee Status</th>
+                        <th class="p-3">Manager Status</th>
                         <th class="p-3">Average Rating</th>
                     </tr>
                 </thead>
@@ -464,7 +465,51 @@ th:last-child {
                         @endif
                         </td>
                         <td class="p-3">{{$emp->assignment_period}}</td>
-                        <td class="p-3">{{$emp->status}}</td>
+                        <td class="p-3">
+
+
+                               @if(auth()->user()->hasrole('Employee'))
+                                    
+                                    @if(auth::user()->id == $emp->author_id)
+
+                                        @if($emp->is_manager_approved)
+                                            {{$emp->is_employee_submitted  ? 'Submitted' :  'Accepted, Not yet submitted'  }}
+                                        @else
+                                        {{ 'Not yet approved'}}
+                                        @endif
+
+
+                                    @endif
+                                @endif
+                                @if(auth()->user()->hasrole('Manager'))
+
+                                    @if($emp->is_employee_accepted ) 
+                                        {{$emp->is_employee_submitted  ? 'Submitted' :  'Accepted, Not yet submitted'  }}
+                                    @else 
+                                    {{ 'Not yet accepted'}}
+                                    @endif
+
+                                @endif
+
+
+                        </td>   
+                        <td class="p-3">
+                            @if(auth()->user()->hasrole('Employee'))
+
+                            {{$emp->is_manager_submitted  ? 'Submitted' :  'Not yet submitted'  }}
+
+                            @endif
+                            @if(auth()->user()->hasrole('Manager'))
+
+                                @if($emp->is_manager_submitted ) 
+                                    Submitted
+                                @else 
+                                    Not yet submitted
+                                @endif
+
+                            @endif
+                        </td>                       
+                        <td class="p-3"></td>
                         <td class="p-3">5</td>
                     </tr>
                     @endforeach
@@ -1182,6 +1227,34 @@ $('#changeEmployeeForm').on('submit', function(e){
     $('#group-employee').html(employeeArray.join());
     $('#changeEmployee').css('display', 'none');
 });
+
+@if(auth()->user()->hasrole('Manager'))
+
+    var userid = {{auth::user()->id}} 
+    $.ajax({
+        type: "GET", 
+        url: "{{url('vmt-getAllChildEmployees')}}"+'?emp_id='+userid, 
+        //data: $('#kpiTableForm').serialize(), 
+        success: function(data){
+        var optionHtml ="";
+        $.each(data, function(i, tempdata){
+            optionHtml = optionHtml+"<option value="+tempdata.id+">"+tempdata.name+"</option>";
+            //if(tempdata.id == $('#select-employees').val()){
+            //        $('#reviewer-name').html(tempdata.name);
+            //        $('#reviewer-email').html(tempdata.email);
+            //    }
+          });
+            
+          $('#select-employees').html(optionHtml);
+                     // $("#kpiTableForm :input").prop("disabled", true);
+           // $(".table-btn").prop('disabled', true);
+            console.log(data);
+            //alert("Table Saved, Please publish goals");
+           // $("#kpitable_id").val(data.table_id);
+        }
+    })
+
+@endif
 
 // select reviewer
 $('#newQuestion').on('submit', function(e){
