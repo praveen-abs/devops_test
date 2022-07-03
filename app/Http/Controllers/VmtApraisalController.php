@@ -38,7 +38,7 @@ class VmtApraisalController extends Controller
     // assign goals forms
     public function vmtAssignGoals(Request $request){
 
-        $empGoals = VmtEmployee::leftJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
+        $empGoalQuery = VmtEmployee::leftJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
                             ->leftJoin('vmt_employee_office_details', 'vmt_employee_details.id','=', 'vmt_employee_office_details.emp_id' )
                             ->join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.employee_id', '=', 'vmt_employee_details.id')
                             ->select(
@@ -49,11 +49,14 @@ class VmtApraisalController extends Controller
                                 'vmt_employee_office_details.designation', 
                                 'vmt_employee_office_details.l1_manager_code',
                                 'vmt_employee_office_details.l1_manager_name',
-                                'vmt_employee_office_details.l1_manager_designation'
+                                'vmt_employee_office_details.l1_manager_designation',
+                                'vmt_employee_pms_goals_table.assignment_period',
+                                'vmt_employee_pms_goals_table.kpi_table_id',
+
                             )
                             ->orderBy('created_at', 'DESC')
-                            ->whereNotNull('emp_no')
-                            ->get();
+                            ->whereNotNull('emp_no');
+                            //->get();
 
 
 
@@ -62,11 +65,25 @@ class VmtApraisalController extends Controller
             $emp = VmtEmployee::join('vmt_employee_office_details',  'user_id', '=', 'vmt_employee_details.userid')->where('userid', auth()->user()->id)->first();
             $rev = VmtEmployee::where('emp_no', $emp->l1_manager_code)->first();
             $users = User::where('id', $rev->userid)->get();
+            $empGoals = $empGoalQuery->where('users.id', auth::user()->id)->get();
+            return view('vmt_pms_assigngoals', compact('users','empGoals'));
+
         } elseif (auth()->user()->hasrole('Manager')) {
+            $empGoals = $empGoalQuery->get();
+
             $getId = VmtEmployee::where('userid', auth()->user()->id)->first();
-            $employees = VmtEmployee::select('vmt_employee_details.id', 'emp_name')->join('vmt_employee_office_details',  'emp_id', '=', 'vmt_employee_details.id')->where('l1_manager_code', $getId->emp_no)->get();
-            $users = User::join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.reviewer_id', '=', 'users.id')->get();
+            $employees = VmtEmployee::leftJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
+            ->select(
+                'vmt_employee_details.*', 
+                'users.name as emp_name', 
+            )
+            ->orderBy('created_at', 'ASC')
+            ->whereNotNull('emp_no')
+            ->get();
+             $users = User::join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.reviewer_id', '=', 'users.id')->get();
         } else {
+            $empGoals = $empGoalQuery->get();
+
             $employees = VmtEmployee::leftJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
             ->select(
                 'vmt_employee_details.*', 
@@ -263,13 +280,18 @@ class VmtApraisalController extends Controller
         $employeeData    = VmtEmployee::where('userid', auth::user()->id)->first();
         $kpiRows  = [];
         if($employeeData){
-            $assignedGoals  = VmtEmployeePMSGoals::where('employee_id', $employeeData->id)->orderBy('updated_at', 'DESC')->first();
-            $showModal = false; 
+            $assignedGoals  = VmtEmployeePMSGoals::where('employee_id', auth::user()->id)->orderBy('updated_at', 'DESC')->first();
+            //dd($assignedGoals);
+            $showModal = false;
+            $reviewCompleted = false; 
+
             if($assignedGoals){
                 $showModal = $assignedGoals->self_approved ? false : true;
                 $kpiData  = VmtKPITable::find($assignedGoals->kpi_table_id);
+                //dd($kpiData);
                 if($kpiData){
                     $kpiRowArray  =  explode(',', $kpiData->kpi_rows);
+                    //dd($kpiRowArray);
                     $kpiRows      = VmtAppraisalQuestion::whereIn('id', $kpiRowArray)->get();
 
                     $reviewCompleted = false;
@@ -327,12 +349,12 @@ class VmtApraisalController extends Controller
 
             $reviewManager = User::find($kpiData->reviewer_id);
             //dd($reviewManager->email);
-
+            $managerOfficeDetails =  VmtEmployeeOfficeDetails::where('user_id', $kpiData->reviewer_id)->first();
             $currentUser_empDetails = VmtEmployeeOfficeDetails::where('user_id', auth::user()->id)->first();
 
-            \Mail::to($reviewManager->email)->send(new NotifyPMSManager(auth::user()->name, $currentUser_empDetails->designation, $reviewManager->name ));
+            \Mail::to($managerOfficeDetails->officical_mail)->send(new NotifyPMSManager(auth::user()->name, $currentUser_empDetails->designation, $reviewManager->name ));
         }
-        return "Saved.Sent mail to manager ".$reviewManager->email;
+        return "Saved.Sent mail to manager ".$managerOfficeDetails->officical_mail;
     }
 
     // Manger review : to see kpi table filled by employees
@@ -341,11 +363,12 @@ class VmtApraisalController extends Controller
         // show review for HR
         if(auth::user()->hasRole(['HR','Admin']) ){
             //dd("INside HR login");
-            $pmsGoalList  = VmtEmployeePMSGoals::select('vmt_employee_details.emp_name', 'vmt_employee_pms_goals_table.*' )->rightJoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'vmt_employee_pms_goals_table.author_id')->orderBy('updated_at', 'DESC')->get();
+            //$pmsGoalList  = VmtEmployeePMSGoals::select('vmt_employee_details.emp_name', 'vmt_employee_pms_goals_table.*' )->rightJoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'vmt_employee_pms_goals_table.author_id')->orderBy('updated_at', 'DESC')->get();
 
             if($request->has('goal_id')){
-                $assignedGoals  = VmtEmployeePMSGoals::find($request->goal_id);
-                $employeeData = VmtEmployee::where('id', $assignedGoals->employee_id)->first();
+                
+                $assignedGoals  = VmtEmployeePMSGoals::where('kpi_table_id',$request->goal_id)->where('employee_id', $request->user_id)->first();
+                $employeeData = VmtEmployee::where('userid', $assignedGoals->employee_id)->first();
                 $kpiData      = VmtKPITable::find($assignedGoals->kpi_table_id);
                 $kpiRowArray  = explode(',', $kpiData->kpi_rows);
                 $kpiRows      = VmtAppraisalQuestion::whereIn('id', $kpiRowArray)->get();
@@ -387,7 +410,7 @@ class VmtApraisalController extends Controller
                 }
                 $empSelected = true;
                 //dd($kpiRows);
-                return view('vmt_appraisalreview_hr', compact('pmsGoalList', 'employeeData', 'assignedGoals', 'kpiRows', 'empSelected', 'reviewCompleted'));
+                return view('vmt_appraisalreview_hr', compact( 'employeeData', 'assignedGoals', 'kpiRows', 'empSelected', 'reviewCompleted'));
             }
 
             $kpiRows = [];
@@ -398,12 +421,12 @@ class VmtApraisalController extends Controller
 
 
 
-        $pmsGoalList  = VmtEmployeePMSGoals::select('vmt_employee_details.emp_name', 'vmt_employee_pms_goals_table.*' )->where('reviewer_id', auth::user()->id)->rightJoin('vmt_employee_details', 'vmt_employee_details.id', '=', 'vmt_employee_pms_goals_table.employee_id')->orderBy('updated_at', 'DESC')->get();
+        //$pmsGoalList  = VmtEmployeePMSGoals::select('vmt_employee_details.emp_name', 'vmt_employee_pms_goals_table.*' )->where('reviewer_id', auth::user()->id)->rightJoin('vmt_employee_details', 'vmt_employee_details.id', '=', 'vmt_employee_pms_goals_table.employee_id')->orderBy('updated_at', 'DESC')->get();
 
         if($request->has('goal_id')){
             $reviewCompled  = false;
-            $assignedGoals  = VmtEmployeePMSGoals::find($request->goal_id);
-            $employeeData = VmtEmployee::where('id', $assignedGoals->employee_id)->first();
+            $assignedGoals  = VmtEmployeePMSGoals::where('kpi_table_id',$request->goal_id)->where('employee_id', $request->user_id)->first();
+            $employeeData = VmtEmployee::where('userid', $assignedGoals->employee_id)->first();
             $kpiData      = VmtKPITable::find($assignedGoals->kpi_table_id);
             $kpiRowArray  = explode(',', $kpiData->kpi_rows);
             $kpiRows      = VmtAppraisalQuestion::whereIn('id', $kpiRowArray)->get();
@@ -443,13 +466,13 @@ class VmtApraisalController extends Controller
             }
             $empSelected = true;
 
-            return view('vmt_appraisalreview_manager', compact('pmsGoalList', 'employeeData', 'assignedGoals', 'kpiRows', 'empSelected', 'reviewCompleted'));
+            return view('vmt_appraisalreview_manager', compact( 'employeeData', 'assignedGoals', 'kpiRows', 'empSelected', 'reviewCompleted'));
         }
         
         $kpiRows = [];
         $empSelected = false;
         $reviewCompleted = false; 
-        return view('vmt_appraisalreview_manager', compact('pmsGoalList', 'kpiRows', 'empSelected', 'reviewCompleted'));
+        return view('vmt_appraisalreview_manager', compact( 'kpiRows', 'empSelected', 'reviewCompleted'));
     }
 
     // Storing Manager Review given to the employees
@@ -465,13 +488,13 @@ class VmtApraisalController extends Controller
 
             $currentUser_empDetails = VmtEmployeeOfficeDetails::where('user_id', auth::user()->id)->first();
 
-            $hrList =  User::role('HR')->get(); 
-            $hrEmails = $hrList->pluck('email'); 
-            //$currentUserModel =   VmtEmployeeOfficeDetails::where('id', auth::user()->id)->first();
+            $hrList =  User::role(['HR', 'admin', 'Admin'])->get(); 
+            $hrUsers = $hrList->pluck('id'); 
+            $officialMailList =   VmtEmployeeOfficeDetails::whereIn('user_id', $hrUsers)->pluck('officical_mail');
 
 
-            //dd($reviewManager->email);
-            \Mail::to($hrEmails)->send(new NotifyPMSManager(auth::user()->name,  $currentUser_empDetails->designation,$hrReview->name));
+            //dd($officialMailList);
+            \Mail::to($officialMailList)->send(new NotifyPMSManager(auth::user()->name,  $currentUser_empDetails->designation,$hrReview->name));
         }
         return "Saved";
     }

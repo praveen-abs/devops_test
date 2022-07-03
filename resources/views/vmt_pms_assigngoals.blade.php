@@ -427,6 +427,7 @@ th:last-child {
                 <thead>
                     <tr style="background:#f6f8fb;">
                         <th class="p-3"></th>
+                        <th class=""  style="width : 30px"> </th>
                         <th class="p-3">Employee ID</th>
                         <th class="p-3">Employee name</th>
                         <th class="p-3">Email</th>
@@ -443,12 +444,26 @@ th:last-child {
                         <td>
                             <img class="rounded-circle header-profile-user" src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif" alt="Header Avatar">
                         </td>
+                        <td style="vertical-align : middle">
+                        @if(auth()->user()->hasrole('Employee'))
+                            <a target="_blank" href="{{url('vmt-pmsappraisal-review?id='.$emp->kpi_table_id)}}"><span class="mr-10 icon"><i class="fa fa-external-link"></i></span></a>
+                        @else
+                            <a target="_blank" href="{{url('pms-employee-reviews?goal_id='.$emp->kpi_table_id.'&user_id='.$emp->userid)}}"><span class="mr-10 icon"><i class="fa fa-external-link"></i></span></a>
+                        @endif
+                        </td>
+
                         <td class="p-3">{{$emp->emp_no}}</td>
                         <td class="p-3">{{$emp->emp_name}}</td>
                         <td class="p-3">{{$emp->officical_mail}}</td>
                         <td class="p-3">{{$emp->designation}}</td>
-                        <td class="p-3">{{$emp->l1_manager_name}}</td>
-                        <td class="p-3">5</td>
+                        <td class="p-3">
+                        @if(auth()->user()->hasrole('Employee'))
+                            {{$users[0]->name}}
+                        @else
+                            {{$emp->l1_manager_name}}
+                        @endif
+                        </td>
+                        <td class="p-3">{{$emp->assignment_period}}</td>
                         <td class="p-3">{{$emp->status}}</td>
                         <td class="p-3">5</td>
                     </tr>
@@ -1147,7 +1162,12 @@ $('body').on('click', '.delete-row', function() {
 $('#changeEmployeeForm').on('submit', function(e){
     e.preventDefault();
     var employeeSelected = $('#select-employees').val();
+    @if(auth()->user()->hasrole('Employee'))
+
+    @else
     var employees = {!!json_encode($employees)!!};
+
+    @endif
     var employeeArray = [];
 
     $("#sel_employees").val(employeeSelected);
