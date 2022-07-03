@@ -12,6 +12,7 @@ use App\Models\VmtGeneralSettings;
 use App\Models\VmtGeneralInfo;
 use App\Models\VmtEmployee;
 use App\Mail\TestEmail;
+use Session as Ses;
 
 class HomeController extends Controller
 {
@@ -33,6 +34,8 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         if (view()->exists($request->path())) {
+            Ses::put('result', 'Question Created Successfully');
+            Ses::put('alert', 'success');
             return view($request->path());
         }
         return abort(404);
@@ -48,8 +51,8 @@ class HomeController extends Controller
     {
         if ($locale) {
             App::setLocale($locale);
-            Session::put('lang', $locale);
-            Session::save();
+            Ses::put('lang', $locale);
+            Ses::save();
             return redirect()->back()->with('locale', $locale);
         } else {
             return redirect()->back();
@@ -78,16 +81,16 @@ class HomeController extends Controller
 
         $user->update();
         if ($user) {
-            Session::flash('message', 'User Details Updated successfully!');
-            Session::flash('alert-class', 'alert-success');
+            Ses::flash('message', 'User Details Updated successfully!');
+            Ses::flash('alert-class', 'alert-success');
             // return response()->json([
             //     'isSuccess' => true,
             //     'Message' => "User Details Updated successfully!"
             // ], 200); // Status code here
             return redirect()->back();
         } else {
-            Session::flash('message', 'Something went wrong!');
-            Session::flash('alert-class', 'alert-danger');
+            Ses::flash('message', 'Something went wrong!');
+            Ses::flash('alert-class', 'alert-danger');
             // return response()->json([
             //     'isSuccess' => true,
             //     'Message' => "Something went wrong!"
@@ -114,15 +117,15 @@ class HomeController extends Controller
             $user->password = Hash::make($request->get('password'));
             $user->update();
             if ($user) {
-                Session::flash('message', 'Password updated successfully!');
-                Session::flash('alert-class', 'alert-success');
+                Ses::flash('message', 'Password updated successfully!');
+                Ses::flash('alert-class', 'alert-success');
                 return response()->json([
                     'isSuccess' => true,
                     'Message' => "Password updated successfully!"
                 ], 200); // Status code here
             } else {
-                Session::flash('message', 'Something went wrong!');
-                Session::flash('alert-class', 'alert-danger');
+                Ses::flash('message', 'Something went wrong!');
+                Ses::flash('alert-class', 'alert-danger');
                 return response()->json([
                     'isSuccess' => true,
                     'Message' => "Something went wrong!"
