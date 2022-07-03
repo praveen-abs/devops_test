@@ -242,7 +242,7 @@
                                         @else
                                         <div>
                                             <textarea name="selfreview[{{$kpiRow->id}}]" id="" cols="40" rows="5"
-                                            placeholder="type here"></textarea>
+                                            placeholder="type here">@if(isset($kpiRow->self_kpi_review)) {{$kpiRow->self_kpi_review}} @endif</textarea>
                                         </div>
                                         @endif
                                     </td>
@@ -251,7 +251,7 @@
                                             {{$kpiRow->self_kpi_percentage}}
                                         @else
                                         <div> <textarea name="selfkpiachievement[{{$kpiRow->id}}]" id="" cols="40" rows="5"
-                                            placeholder="type here"></textarea></div>
+                                            placeholder="type here">@if(isset($kpiRow->self_kpi_percentage)) {{$kpiRow->self_kpi_percentage}} @endif</textarea></div>
                                         @endif
                                     </td>
                                     <td>
@@ -259,7 +259,7 @@
                                             {{$kpiRow->self_kpi_comments}}
                                         @else
                                         <div><textarea name="selfcomments[{{$kpiRow->id}}]" id="" cols="40" rows="5"
-                                            placeholder="type here"></textarea></div>
+                                            placeholder="type here"> @if(isset($kpiRow->self_kpi_comments)) {{$kpiRow->self_kpi_comments}} @endif</textarea></div>
                                         @endif
                                     </td>
 

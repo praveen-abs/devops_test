@@ -28,7 +28,11 @@ class CreateVmtEmployeePmsGoalsTable extends Migration
             $table->text("employee_id")->nullable();
             $table->text("mail_link")->nullable();
             $table->text("author_id")->nullable();
-            $table->boolean("self_approved")->nullable();
+            $table->boolean("is_employee_accepted")->nullable();
+            $table->boolean("is_employee_submitted")->nullable();
+            $table->boolean("is_manager_approved")->nullable();
+            $table->boolean("is_manager_submitted")->nullable();
+            $table->boolean("is_hr_submitted")->nullable();
             $table->timestamps();
         });
     }
