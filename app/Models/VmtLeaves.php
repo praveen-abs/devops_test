@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class VmtLeaves extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'leave_type',
+        'leave_max_limit',
+        'created_at',
+        'updated_at',
+    ];
 }
