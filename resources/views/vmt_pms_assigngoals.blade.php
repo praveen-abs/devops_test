@@ -1259,12 +1259,17 @@ $("#publish-goal").click(function(e){
                 $("#kpiTableForm :input").prop("disabled", true);
                 $(".table-btn").prop('disabled', true);
 
-                alert("Goal Assigned, Email Sent to the employees");
+                @if(auth()->user()->hasrole('Employee'))
+                    alert("Goals published. Email Sent to your Manager");
+                @else
+                    alert("Goals published. Email Sent to your Employees");
+                @endif
+
                 $("kpitable_id").val(data.table_id);
             }
         })
     }else{
-        alert("please publish table first");
+        alert("Please publish table first");
     }
    
 });
