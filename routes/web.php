@@ -81,6 +81,8 @@ Route::get('vmt-getAllChildEmployees', 'App\Http\Controllers\VmtApraisalControll
 
 Route::get('vmt-approvereject-kpitable', 'App\Http\Controllers\VmtApraisalController@approveRejectKPITable');
 
+Route::post('vmt-pms-saveKPItableDraft_HR', 'App\Http\Controllers\VmtApraisalController@saveKPItableDraft_HR');
+
 Route::post('vmt-pms-saveKPItableDraft_Manager', 'App\Http\Controllers\VmtApraisalController@saveKPItableDraft_Manager');
 
 Route::post('vmt-pms-saveKPItableDraft_Employee', 'App\Http\Controllers\VmtApraisalController@saveKPItableDraft_Employee');

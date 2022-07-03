@@ -67,6 +67,7 @@ class VmtApraisalController extends Controller
             $rev = VmtEmployee::where('emp_no', $emp->l1_manager_code)->first();
             $users = User::where('id', $rev->userid)->get();
             $empGoals = $empGoalQuery->where('users.id', auth::user()->id)->get();
+
             return view('vmt_pms_assigngoals', compact('users','empGoals'));
 
         } elseif (auth()->user()->hasrole('Manager')) {
@@ -97,6 +98,8 @@ class VmtApraisalController extends Controller
            // $users = User::all();
             //reviewer's list
             $currentEmpCode = VmtEmployee::where('userid', auth::user()->id)->pluck('emp_no');
+            //$mgr_assignee = User::join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.employee_id', '=', 'users.id')->pluck('name');
+
             $users = VmtEmployeeOfficeDetails::leftJoin('users', 'users.id', '=', 'vmt_employee_office_details.user_id')
             ->select(
                 'users.name', 
@@ -113,6 +116,11 @@ class VmtApraisalController extends Controller
             // ->get();
         }
         return view('vmt_pms_assigngoals', compact('users', 'employees','empGoals'));
+    }
+
+    public function getL1_ManagerName()
+    {
+
     }
 
     public function vmtGetAllChildEmployees(Request $request)
@@ -530,11 +538,31 @@ class VmtApraisalController extends Controller
         return view('vmt_appraisalreview_manager', compact( 'kpiRows', 'empSelected', 'reviewCompleted'));
     }
 
+    public function saveKPItableDraft_HR(Request $request){
+
+        $kpiData  = VmtEmployeePMSGoals::find($request->goal_id);
+
+        if($kpiData){
+
+            $kpiData->hr_kpi_review      = $request->hreview; //null
+            $kpiData->hr_kpi_percentage  = $request->hrpercetage; //null
+            $kpiData->save();
+
+            $kpiData->is_hr_submitted = 0;//false.
+
+            $kpiData->save();
+
+            //dd($officialMailList);
+        }
+
+        return "Saved as draft";
+    }
 
     // Storing Manager Review given to the employees as Draft
     public function saveKPItableDraft_Manager(Request $request){
 
         $kpiData  = VmtEmployeePMSGoals::find($request->goal_id);
+
         if($kpiData){
             $kpiData->manager_kpi_review      = $request->managereview; //null
             $kpiData->manager_kpi_percentage  = $request->managerpercetage; //null
