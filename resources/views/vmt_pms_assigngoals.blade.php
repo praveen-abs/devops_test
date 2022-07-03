@@ -213,7 +213,71 @@ th:last-child {
         <div class="row">
             <div class="col-12 col-lg-12 col-md-12 ">
                 <div class="card ">
-                    <div class="card-body">
+
+                <div class="first">
+                    <div class="container-fluid shadow-lg p-3 mb-5 bg-body rounded">
+                    <div>
+                        <div>
+                            <img src="{{ URL::asset('/assets/images/img_kpi_widget_bg.jpg')}}" class="rounded float-start" alt="..." width="250px">
+                        </div>
+                        <div class="card-group">
+                            <div class="card mb-2 shadow-lg p-3 mb-5 bg-body rounded flex-row" style="width:10rem; ">
+                                <div class="row g-0">
+                                <div class="col-md-3">
+                                    <img src="{{ URL::asset('/assets/images/img_kpi_widget_cardimg_1.jpg')}}" class="img-fluid rounded-start" alt="...">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">250/300</h5>
+                                    <p class="card-text">Employee with goals.</p>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="card mb-2 shadow-lg p-3 mb-5 bg-body rounded flex-row" style="width: 10rem;">
+                                <div class="row g-0">
+                                <div class="col-md-3">
+                                    <img src="{{ URL::asset('/assets/images/img_kpi_widget_cardimg_2.jpg')}}" class="img-fluid rounded-start" alt="...">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">230/120</h5>
+                                    <p class="card-text">Employee Assessed/Rated.</p>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="card mb-2 shadow-lg p-3 mb-5 bg-body rounded" style="width: 10rem;">
+                                <div class="row g-0">
+                                <div class="col-md-3">
+                                    <img src="{{ URL::asset('/assets/images/img_kpi_widget_cardimg_3.jpg')}}" class="img-fluid rounded-start" alt="...">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">24-7-2022</h5>
+                                    <p class="card-text">Goal Assainment reminder notification</p>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="card mb-2 shadow-lg p-3 mb-5 bg-body rounded" style="width: 10rem;">
+                                <div class="row g-0">
+                                <div class="col-md-3 image">
+                                    <img src="{{ URL::asset('/assets/images/img_kpi_widget_cardimg_4.jpg')}}" class="img-fluid rounded-start" alt="...">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">24-10-2020</h5>
+                                    <p class="card-text">Rating assessment reminder notification.</p>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+                    <!-- <div class="card-body"> -->
 
                         <!-- <div class="d-flex justify-content-between align-items-center">
 
@@ -285,7 +349,7 @@ th:last-child {
                             </div>
                         </div> -->
 
-                        <div class="align-items-center" style="justify-content:center;">
+                        <!-- <div class="align-items-center" style="justify-content:center;">
                             <div class="row align-items-center">
                                 <div class="col-6 col-lg-2 col-md-6 col-xl-2 pr-0"></div>
                                 <div class="col-6 col-lg-2 col-md-6 col-xl-2 pr-0">
@@ -399,12 +463,12 @@ th:last-child {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="col-6 col-lg-3 col-md-6 col-xl-3"></div>
                             </div>
                         </div>
 
-                    </div>
+                    <!-- </div> -->
                 </div>
             </div>
         </div>
