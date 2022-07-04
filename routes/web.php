@@ -33,6 +33,7 @@ Route::get('/registerNewAccount', function(){
 })->name('registerNewAccount');
 
 Route::get('pages-profile', [App\Http\Controllers\HomeController::class, 'showProfile']);
+Route::get('pages-profile-settings', [App\Http\Controllers\HomeController::class, 'showProfilePage']);
 
 Route::get('test-email', 'App\Http\Controllers\HomeController@testEmail');
 
@@ -167,6 +168,7 @@ Route::post('vmt-pmsappraisal-hrreview', 'App\Http\Controllers\VmtApraisalContro
 
 
 Route::get('/vmt_employeeOnboarding',  [App\Http\Controllers\VmtEmployeeController::class, 'employeeOnboarding']);
+Route::get('/vmt_salary_details',  [App\Http\Controllers\VmtPaySlipController::class, 'paySlipIndex']);
 Route::get('/vmt_employee_payslip',  [App\Http\Controllers\VmtPaySlipController::class, 'payslipPdfView'])->name('vmt_employee_payslip');
 
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index']);

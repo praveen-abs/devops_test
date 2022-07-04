@@ -71,7 +71,7 @@
                     </div>
                     <hr>
                     <div class="text-center home-view-details">
-                        <a href="#/salary-details/payslips/335214000000934324/details" id="ember68"
+                        <a href="{{url('vmt_salary_details')}}" id="ember68"
                             class="ember-view fw-bold text-secondary">
                             View Payslip
                             <i class=" ri-arrow-right-line mx-1 text-secondary"></i>
