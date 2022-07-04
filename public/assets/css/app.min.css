@@ -199,6 +199,10 @@
 }
 
 
+body{
+    /* overflow:hidden; */
+    max-width: 100%;
+}
 
 
 #pageTopbar {
@@ -245,9 +249,12 @@
     height: 42px;
     width: 42px
 }
-.navbar-header .btn-topbar  svg,.settings-icon svg{
-width: 18px;
+
+.navbar-header .btn-topbar svg,
+.settings-icon svg {
+    width: 18px;
 }
+
 @media (max-width:360px) {
     .navbar-header .btn-topbar {
         height: 36px;
@@ -678,6 +685,9 @@ width: 18px;
     transition: all .1s ease-out
 }
 
+
+
+
 @media (min-width:768px) {
     .main-content {
         margin-left: 250px
@@ -892,10 +902,9 @@ width: 18px;
 
 /* by george  background change*/
 .navbar-menu .navbar-nav .nav-sm .nav-link:hover {
-    color: var(--vz-vertical-menu-sub-item-hover-color);
-    /* background-color: var(--vz-hover-bg); */
-    background-color: #DD571D;
-    /* border-radius: 5px; */
+    
+    background-color: #e8f3fa;
+    color: #313030;
 }
 
 .navbar-menu .navbar-nav .nav-sm .nav-link:hover:before {
@@ -2046,7 +2055,7 @@ width: 18px;
 
 [data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .nav-sm .nav-item:hover>.nav-link {
     /* color: var(--vz-vertical-menu-item-hover-color) */
-    color: #fff;
+    /* color: #313030; */
 }
 
 [data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .nav-sm .nav-item:hover>.nav-link:after {
@@ -5268,7 +5277,7 @@ code {
 .scrollspy-example-2 {
     position: relative;
     height: 370px;
-    overflow: auto
+    overflow: auto;
 }
 
 html {
