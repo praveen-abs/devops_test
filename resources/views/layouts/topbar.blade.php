@@ -52,233 +52,263 @@
                             <button type="button" class="btn btn-icon btn-topbar rounded-circle"
                                 id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
-                            <i class='bx bx-bell fs-22'></i>
-                            <span
-                                class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger">3<span
-                                class="visually-hidden">unread messages</span></span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18.798" height="22.911"
+                                    viewBox="0 0 18.798 22.911">
+                                    <path id="ic_notifications_none_24px"
+                                        d="M13.4,25.411a2.357,2.357,0,0,0,2.35-2.35h-4.7A2.357,2.357,0,0,0,13.4,25.411Zm7.049-7.049V12.487c0-3.607-1.915-6.626-5.287-7.425v-.8a1.762,1.762,0,0,0-3.525,0v.8c-3.36.8-5.287,3.807-5.287,7.425v5.875L4,20.711v1.175H22.8V20.711ZM18.1,19.536H8.7V12.487C8.7,9.573,10.474,7.2,13.4,7.2s4.7,2.373,4.7,5.287Z"
+                                        transform="translate(-4 -2.5)" fill="#361338" opacity="0.4" />
+                                </svg>
+
+                                <span
+                                    class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger">3<span
+                                        class="visually-hidden">unread messages</span></span>
                             </button>
                             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
                                 aria-labelledby="page-header-notifications-dropdown">
                                 <div class="dropdown-head bg-primary bg-pattern rounded-top">
                                     <div class="p-3">
                                         <div class="row align-items-center">
-                                        <div class="col">
-                                            <h6 class="m-0 fs-16 fw-semibold text-white"> Notifications </h6>
-                                        </div>
-                                        <div class="col-auto dropdown-tabs">
-                                            <span class="badge badge-soft-light fs-13"> 4 New</span>
-                                        </div>
+                                            <div class="col">
+                                                <h6 class="m-0 fs-16 fw-semibold text-white"> Notifications </h6>
+                                            </div>
+                                            <div class="col-auto dropdown-tabs">
+                                                <span class="badge badge-soft-light fs-13"> 4 New</span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="px-2 pt-2">
                                         <ul class="nav nav-tabs dropdown-tabs nav-tabs-custom" data-dropdown-tabs="true"
-                                        id="notificationItemsTab" role="tablist">
-                                        
-                                        <li class="nav-item waves-effect waves-light">
-                                            <a class="nav-link" data-bs-toggle="tab" href="#messages-tab" role="tab"
-                                                aria-selected="false">
-                                            Messages
-                                            </a>
-                                        </li>
+                                            id="notificationItemsTab" role="tablist">
+
+                                            <li class="nav-item waves-effect waves-light">
+                                                <a class="nav-link" data-bs-toggle="tab" href="#messages-tab" role="tab"
+                                                    aria-selected="false">
+                                                    Messages
+                                                </a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="tab-content" id="notificationItemsTabContent">
                                     <div class="tab-pane fade show active py-2 ps-2" id="all-noti-tab" role="tabpanel">
                                         <div data-simplebar style="max-height: 300px;" class="pe-2">
-                                        <div class="text-reset notification-item d-block dropdown-item position-relative">
-                                            <div class="d-flex">
-                                                <div class="avatar-xs me-3">
-                                                    <span class="avatar-title bg-soft-info text-info rounded-circle fs-16">
-                                                    <i class="bx bx-badge-check"></i>
-                                                    </span>
-                                                </div>
-                                                <div class="flex-1">
-                                                    <a href="#!" class="stretched-link">
-                                                    <h6 class="mt-0 mb-2 lh-base">Your <b>Elite</b> author Graphic
-                                                        Optimization <span class="text-secondary">reward</span> is ready!
-                                                    </h6>
-                                                    </a>
-                                                    <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
-                                                    <span><i class="mdi mdi-clock-outline"></i> Just 30 sec ago</span>
-                                                    </p>
-                                                </div>
-                                                <div class="px-2 fs-15">
-                                                    <input class="form-check-input" type="checkbox">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="text-reset notification-item d-block dropdown-item position-relative">
-                                            <div class="d-flex">
-                                                <img src="{{ URL::asset('assets/images/users/avatar-2.jpg') }}"
-                                                    class="me-3 rounded-circle avatar-xs" alt="user-pic">
-                                                <div class="flex-1">
-                                                    <a href="#!" class="stretched-link">
-                                                    <h6 class="mt-0 mb-1 fs-13 fw-semibold">Angela Bernier</h6>
-                                                    </a>
-                                                    <div class="fs-13 text-muted">
-                                                    <p class="mb-1">Answered to your comment on the cash flow forecast's
-                                                        graph 🔔.
-                                                    </p>
+                                            <div
+                                                class="text-reset notification-item d-block dropdown-item position-relative">
+                                                <div class="d-flex">
+                                                    <div class="avatar-xs me-3">
+                                                        <span
+                                                            class="avatar-title bg-soft-info text-info rounded-circle fs-16">
+                                                            <i class="bx bx-badge-check"></i>
+                                                        </span>
                                                     </div>
-                                                    <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
-                                                    <span><i class="mdi mdi-clock-outline"></i> 48 min ago</span>
-                                                    </p>
-                                                </div>
-                                                <div class="px-2 fs-15">
-                                                    <input class="form-check-input" type="checkbox">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="text-reset notification-item d-block dropdown-item position-relative">
-                                            <div class="d-flex">
-                                                <div class="avatar-xs me-3">
-                                                    <span
-                                                    class="avatar-title bg-soft-danger text-danger rounded-circle fs-16">
-                                                    <i class='bx bx-message-square-dots'></i>
-                                                    </span>
-                                                </div>
-                                                <div class="flex-1">
-                                                    <a href="#!" class="stretched-link">
-                                                    <h6 class="mt-0 mb-2 fs-13 lh-base">You have received <b class="text-success">20</b> new messages in the conversation</h6>
-                                                    </a>
-                                                    <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
-                                                    <span><i class="mdi mdi-clock-outline"></i> 2 hrs ago</span>
-                                                    </p>
-                                                </div>
-                                                <div class="px-2 fs-15">
-                                                    <input class="form-check-input" type="checkbox">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="text-reset notification-item d-block dropdown-item position-relative">
-                                            <div class="d-flex">
-                                                <img src="{{ URL::asset('assets/images/users/avatar-8.jpg') }}" class="me-3 rounded-circle avatar-xs" alt="user-pic">
-                                                <div class="flex-1">
-                                                    <a href="#!" class="stretched-link">
-                                                    <h6 class="mt-0 mb-1 fs-13 fw-semibold">Maureen Gibson</h6>
-                                                    </a>
-                                                    <div class="fs-13 text-muted">
-                                                    <p class="mb-1">We talked about a project on linkedin.</p>
+                                                    <div class="flex-1">
+                                                        <a href="#!" class="stretched-link">
+                                                            <h6 class="mt-0 mb-2 lh-base">Your <b>Elite</b> author
+                                                                Graphic
+                                                                Optimization <span class="text-secondary">reward</span>
+                                                                is ready!
+                                                            </h6>
+                                                        </a>
+                                                        <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
+                                                            <span><i class="mdi mdi-clock-outline"></i> Just 30 sec
+                                                                ago</span>
+                                                        </p>
                                                     </div>
-                                                    <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
-                                                    <span><i class="mdi mdi-clock-outline"></i> 4 hrs ago</span>
-                                                    </p>
-                                                </div>
-                                                <div class="px-2 fs-15">
-                                                    <input class="form-check-input" type="checkbox">
+                                                    <div class="px-2 fs-15">
+                                                        <input class="form-check-input" type="checkbox">
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="my-3 text-center">
-                                            <button type="button" class="btn btn-soft-success waves-effect waves-light">View
-                                            All Notifications <i class="ri-arrow-right-line align-middle"></i></button>
-                                        </div>
+                                            <div
+                                                class="text-reset notification-item d-block dropdown-item position-relative">
+                                                <div class="d-flex">
+                                                    <img src="{{ URL::asset('assets/images/users/avatar-2.jpg') }}"
+                                                        class="me-3 rounded-circle avatar-xs" alt="user-pic">
+                                                    <div class="flex-1">
+                                                        <a href="#!" class="stretched-link">
+                                                            <h6 class="mt-0 mb-1 fs-13 fw-semibold">Angela Bernier</h6>
+                                                        </a>
+                                                        <div class="fs-13 text-muted">
+                                                            <p class="mb-1">Answered to your comment on the cash flow
+                                                                forecast's
+                                                                graph 🔔.
+                                                            </p>
+                                                        </div>
+                                                        <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
+                                                            <span><i class="mdi mdi-clock-outline"></i> 48 min
+                                                                ago</span>
+                                                        </p>
+                                                    </div>
+                                                    <div class="px-2 fs-15">
+                                                        <input class="form-check-input" type="checkbox">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="text-reset notification-item d-block dropdown-item position-relative">
+                                                <div class="d-flex">
+                                                    <div class="avatar-xs me-3">
+                                                        <span
+                                                            class="avatar-title bg-soft-danger text-danger rounded-circle fs-16">
+                                                            <i class='bx bx-message-square-dots'></i>
+                                                        </span>
+                                                    </div>
+                                                    <div class="flex-1">
+                                                        <a href="#!" class="stretched-link">
+                                                            <h6 class="mt-0 mb-2 fs-13 lh-base">You have received <b
+                                                                    class="text-success">20</b> new messages in the
+                                                                conversation</h6>
+                                                        </a>
+                                                        <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
+                                                            <span><i class="mdi mdi-clock-outline"></i> 2 hrs ago</span>
+                                                        </p>
+                                                    </div>
+                                                    <div class="px-2 fs-15">
+                                                        <input class="form-check-input" type="checkbox">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="text-reset notification-item d-block dropdown-item position-relative">
+                                                <div class="d-flex">
+                                                    <img src="{{ URL::asset('assets/images/users/avatar-8.jpg') }}"
+                                                        class="me-3 rounded-circle avatar-xs" alt="user-pic">
+                                                    <div class="flex-1">
+                                                        <a href="#!" class="stretched-link">
+                                                            <h6 class="mt-0 mb-1 fs-13 fw-semibold">Maureen Gibson</h6>
+                                                        </a>
+                                                        <div class="fs-13 text-muted">
+                                                            <p class="mb-1">We talked about a project on linkedin.</p>
+                                                        </div>
+                                                        <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
+                                                            <span><i class="mdi mdi-clock-outline"></i> 4 hrs ago</span>
+                                                        </p>
+                                                    </div>
+                                                    <div class="px-2 fs-15">
+                                                        <input class="form-check-input" type="checkbox">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="my-3 text-center">
+                                                <button type="button"
+                                                    class="btn btn-soft-success waves-effect waves-light">View
+                                                    All Notifications <i
+                                                        class="ri-arrow-right-line align-middle"></i></button>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="tab-pane fade py-2 ps-2" id="messages-tab" role="tabpanel"
                                         aria-labelledby="messages-tab">
                                         <div data-simplebar style="max-height: 300px;" class="pe-2">
-                                        <div class="text-reset notification-item d-block dropdown-item">
-                                            <div class="d-flex">
-                                                <img src="{{ URL::asset('assets/images/users/avatar-3.jpg') }}"
-                                                    class="me-3 rounded-circle avatar-xs" alt="user-pic">
-                                                <div class="flex-1">
-                                                    <a href="#!" class="stretched-link">
-                                                    <h6 class="mt-0 mb-1 fs-13 fw-semibold">James Lemire</h6>
-                                                    </a>
-                                                    <div class="fs-13 text-muted">
-                                                    <p class="mb-1">We talked about a project on linkedin.</p>
+                                            <div class="text-reset notification-item d-block dropdown-item">
+                                                <div class="d-flex">
+                                                    <img src="{{ URL::asset('assets/images/users/avatar-3.jpg') }}"
+                                                        class="me-3 rounded-circle avatar-xs" alt="user-pic">
+                                                    <div class="flex-1">
+                                                        <a href="#!" class="stretched-link">
+                                                            <h6 class="mt-0 mb-1 fs-13 fw-semibold">James Lemire</h6>
+                                                        </a>
+                                                        <div class="fs-13 text-muted">
+                                                            <p class="mb-1">We talked about a project on linkedin.</p>
+                                                        </div>
+                                                        <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
+                                                            <span><i class="mdi mdi-clock-outline"></i> 30 min
+                                                                ago</span>
+                                                        </p>
                                                     </div>
-                                                    <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
-                                                    <span><i class="mdi mdi-clock-outline"></i> 30 min ago</span>
-                                                    </p>
-                                                </div>
-                                                <div class="px-2 fs-15">
-                                                    <input class="form-check-input" type="checkbox">
+                                                    <div class="px-2 fs-15">
+                                                        <input class="form-check-input" type="checkbox">
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="text-reset notification-item d-block dropdown-item">
-                                            <div class="d-flex">
-                                                <img src="{{ URL::asset('assets/images/users/avatar-2.jpg') }}"
-                                                    class="me-3 rounded-circle avatar-xs" alt="user-pic">
-                                                <div class="flex-1">
-                                                    <a href="#!" class="stretched-link">
-                                                    <h6 class="mt-0 mb-1 fs-13 fw-semibold">Angela Bernier</h6>
-                                                    </a>
-                                                    <div class="fs-13 text-muted">
-                                                    <p class="mb-1">Answered to your comment on the cash flow forecast's
-                                                        graph 🔔.
-                                                    </p>
+                                            <div class="text-reset notification-item d-block dropdown-item">
+                                                <div class="d-flex">
+                                                    <img src="{{ URL::asset('assets/images/users/avatar-2.jpg') }}"
+                                                        class="me-3 rounded-circle avatar-xs" alt="user-pic">
+                                                    <div class="flex-1">
+                                                        <a href="#!" class="stretched-link">
+                                                            <h6 class="mt-0 mb-1 fs-13 fw-semibold">Angela Bernier</h6>
+                                                        </a>
+                                                        <div class="fs-13 text-muted">
+                                                            <p class="mb-1">Answered to your comment on the cash flow
+                                                                forecast's
+                                                                graph 🔔.
+                                                            </p>
+                                                        </div>
+                                                        <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
+                                                            <span><i class="mdi mdi-clock-outline"></i> 2 hrs ago</span>
+                                                        </p>
                                                     </div>
-                                                    <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
-                                                    <span><i class="mdi mdi-clock-outline"></i> 2 hrs ago</span>
-                                                    </p>
-                                                </div>
-                                                <div class="px-2 fs-15">
-                                                    <input class="form-check-input" type="checkbox">
+                                                    <div class="px-2 fs-15">
+                                                        <input class="form-check-input" type="checkbox">
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="text-reset notification-item d-block dropdown-item">
-                                            <div class="d-flex">
-                                                <img src="{{ URL::asset('assets/images/users/avatar-6.jpg') }}"
-                                                    class="me-3 rounded-circle avatar-xs" alt="user-pic">
-                                                <div class="flex-1">
-                                                    <a href="#!" class="stretched-link">
-                                                    <h6 class="mt-0 mb-1 fs-13 fw-semibold">Kenneth Brown</h6>
-                                                    </a>
-                                                    <div class="fs-13 text-muted">
-                                                    <p class="mb-1">Mentionned you in his comment on 📃 invoice #12501. </p>
+                                            <div class="text-reset notification-item d-block dropdown-item">
+                                                <div class="d-flex">
+                                                    <img src="{{ URL::asset('assets/images/users/avatar-6.jpg') }}"
+                                                        class="me-3 rounded-circle avatar-xs" alt="user-pic">
+                                                    <div class="flex-1">
+                                                        <a href="#!" class="stretched-link">
+                                                            <h6 class="mt-0 mb-1 fs-13 fw-semibold">Kenneth Brown</h6>
+                                                        </a>
+                                                        <div class="fs-13 text-muted">
+                                                            <p class="mb-1">Mentionned you in his comment on 📃 invoice
+                                                                #12501. </p>
+                                                        </div>
+                                                        <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
+                                                            <span><i class="mdi mdi-clock-outline"></i> 10 hrs
+                                                                ago</span>
+                                                        </p>
                                                     </div>
-                                                    <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
-                                                    <span><i class="mdi mdi-clock-outline"></i> 10 hrs ago</span>
-                                                    </p>
-                                                </div>
-                                                <div class="px-2 fs-15">
-                                                    <input class="form-check-input" type="checkbox">
+                                                    <div class="px-2 fs-15">
+                                                        <input class="form-check-input" type="checkbox">
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="text-reset notification-item d-block dropdown-item">
-                                            <div class="d-flex">
-                                                <img src="{{ URL::asset('assets/images/users/avatar-8.jpg') }}"
-                                                    class="me-3 rounded-circle avatar-xs" alt="user-pic">
-                                                <div class="flex-1">
-                                                    <a href="#!" class="stretched-link">
-                                                    <h6 class="mt-0 mb-1 fs-13 fw-semibold">Maureen Gibson</h6>
-                                                    </a>
-                                                    <div class="fs-13 text-muted">
-                                                    <p class="mb-1">We talked about a project on linkedin.</p>
+                                            <div class="text-reset notification-item d-block dropdown-item">
+                                                <div class="d-flex">
+                                                    <img src="{{ URL::asset('assets/images/users/avatar-8.jpg') }}"
+                                                        class="me-3 rounded-circle avatar-xs" alt="user-pic">
+                                                    <div class="flex-1">
+                                                        <a href="#!" class="stretched-link">
+                                                            <h6 class="mt-0 mb-1 fs-13 fw-semibold">Maureen Gibson</h6>
+                                                        </a>
+                                                        <div class="fs-13 text-muted">
+                                                            <p class="mb-1">We talked about a project on linkedin.</p>
+                                                        </div>
+                                                        <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
+                                                            <span><i class="mdi mdi-clock-outline"></i> 3 days
+                                                                ago</span>
+                                                        </p>
                                                     </div>
-                                                    <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
-                                                    <span><i class="mdi mdi-clock-outline"></i> 3 days ago</span>
-                                                    </p>
-                                                </div>
-                                                <div class="px-2 fs-15">
-                                                    <input class="form-check-input" type="checkbox">
+                                                    <div class="px-2 fs-15">
+                                                        <input class="form-check-input" type="checkbox">
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="my-3 text-center">
-                                            <button type="button" class="btn btn-soft-success waves-effect waves-light">View
-                                            All Messages <i class="ri-arrow-right-line align-middle"></i></button>
-                                        </div>
+                                            <div class="my-3 text-center">
+                                                <button type="button"
+                                                    class="btn btn-soft-success waves-effect waves-light">View
+                                                    All Messages <i
+                                                        class="ri-arrow-right-line align-middle"></i></button>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade p-4" id="alerts-tab" role="tabpanel" aria-labelledby="alerts-tab">
+                                    <div class="tab-pane fade p-4" id="alerts-tab" role="tabpanel"
+                                        aria-labelledby="alerts-tab">
                                         <div class="w-25 w-sm-50 pt-3 mx-auto">
-                                        <img src="{{ URL::asset('assets/images/svg/bell.svg') }}" class="img-fluid" alt="user-pic">
+                                            <img src="{{ URL::asset('assets/images/svg/bell.svg') }}" class="img-fluid"
+                                                alt="user-pic">
                                         </div>
                                         <div class="text-center pb-5 mt-2">
-                                        <h6 class="fs-18 fw-semibold lh-base">Hey! You have no any notifications </h6>
+                                            <h6 class="fs-18 fw-semibold lh-base">Hey! You have no any notifications
+                                            </h6>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                   
 
 
 
@@ -300,9 +330,24 @@
 
 
 
-                        
+
+
                         <a href="vmt_topbar_settings" class="p-0 settings-icon mx-3">
-                            <i class=" bx bx-rss fs-22">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="23.494" height="23.353"
+                                viewBox="0 0 23.494 23.353">
+                                <g id="megaphone" transform="translate(0 -1.529)">
+                                    <g id="Group_3534" data-name="Group 3534" transform="translate(0 1.529)">
+                                        <g id="Group_3533" data-name="Group 3533" transform="translate(0 0)">
+                                            <circle id="Ellipse_256" data-name="Ellipse 256" cx="0.7" cy="0.7" r="0.7"
+                                                transform="translate(2.962 7.04)" fill="#aea0af" />
+                                            <path id="Path_2943" data-name="Path 2943"
+                                                d="M20.054,7.188V3.86a2.317,2.317,0,0,0-3.422-2.034l-6.116,3.78h-8.2A2.32,2.32,0,0,0,0,7.923V14.9a2.32,2.32,0,0,0,2.317,2.317H3.369v6.809a.854.854,0,0,0,.854.854H8.063a.854.854,0,0,0,.854-.854V17.219h1.6c6.486,4.009,6.129,3.79,6.182,3.817a2.317,2.317,0,0,0,3.356-2.071V15.637A4.314,4.314,0,0,0,20.054,7.188ZM7.21,23.174H5.076V17.219H7.21Zm7.2-5.556-3.2-1.979a.854.854,0,0,0-.449-.128H2.317a.61.61,0,0,1-.609-.609V7.923a.61.61,0,0,1,.609-.609h8.441a.854.854,0,0,0,.449-.128l3.2-1.979Zm3.081,1.9-1.373-.849V4.152L17.491,3.3a.609.609,0,0,1,.855.557c0,.642,0,14.47,0,15.1A.609.609,0,0,1,17.491,19.522Zm2.563-5.651V8.954A2.605,2.605,0,0,1,20.054,13.871Z"
+                                                transform="translate(0 -1.529)" fill="#aea0af" />
+                                        </g>
+                                    </g>
+                                </g>
+                            </svg>
+
                             </i>
                         </a>
 
@@ -654,44 +699,7 @@
                                     </div>
                                 </div>
 
-                                <div class="d-block dropdown-item dropdown-item-cart text-wrap px-3 py-2">
-                                    <div class="d-flex align-items-center">
-                                        <img src="{{ URL::asset('assets/images/products/img-5.png') }}"
-                                            class="me-3 rounded-circle avatar-sm p-2 bg-light" alt="user-pic">
-                                        <div class="flex-1">
-                                            <h6 class="mt-0 mb-1 fs-14">
-                                                <a href="apps-ecommerce-product-details"
-                                                    class="text-reset">Stillbird Helmet</a>
-                                            </h6>
-                                            <p class="mb-0 fs-12 text-muted">
-                                                Quantity: <span>2 x $495</span>
-                                            </p>
-                                        </div>
-                                        <div class="px-2">
-                                            <h5 class="m-0 fw-normal">$<span class="cart-item-price">990</span></h5>
-                                        </div>
-                                        <div class="ps-2">
-                                            <button type="button"
-                                                class="btn btn-icon btn-sm btn-ghost-secondary remove-item-btn"><i
-                                                    class="ri-close-fill fs-16"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="p-3 border-bottom-0 border-start-0 border-end-0 border-dashed border"
-                            id="checkout-elem">
-                            <div class="d-flex justify-content-between align-items-center pb-3">
-                                <h5 class="m-0 text-muted">Total:</h5>
-                                <div class="px-2">
-                                    <h5 class="m-0" id="cart-item-total">$1258.58</h5>
-                                </div>
-                            </div>
-
-                            <a href="apps-ecommerce-checkout" class="btn btn-success text-center w-100">
-                                Checkout
-                            </a>
-                        </div>
+                                
                     </div>
                 </div> -->
 
