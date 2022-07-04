@@ -781,6 +781,7 @@
                         </div>
                         <div class="modal-body">
                             <form action="{{route('updatePersonalInfo', $user->id)}}" Method="POST" enctype="multipart/form-data">
+                                @csrf
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="profile-img-wrap edit-img">
@@ -790,7 +791,7 @@
                                                 alt="Header Avatar">
                                             <div class="fileupload btn">
                                                 <span class="btn-text">edit</span>
-                                                <input class="upload" type="file">
+                                                <input class="upload" name="profilePic" type="file">
                                             </div>
                                         </div>
                                         <div class="row">

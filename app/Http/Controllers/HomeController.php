@@ -139,8 +139,15 @@ class HomeController extends Controller
 
     // 
     public function storePersonalInfo(Request $request) {
+        $file = $request->file('profilePic');
         $user = User::find($request->id);
         $user->name = $request->input('name');
+        if ($file) { 
+            $filename = 'avatar-'.$request->id.'.'. $file->getClientOriginalExtension();
+            $destination = public_path('/images');
+            $file->move($destination, $filename);
+            $user->avatar = $filename;
+        }
         $user->save();
         $reDetails = VmtEmployee::where('userid', $request->id)->first();
         $details = VmtEmployee::find($reDetails->id);
