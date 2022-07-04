@@ -256,10 +256,8 @@
                                         @if($reviewCompleted)
                                             <div>{{$kpiRow->manager_kpi_review}}</div>
                                         @endif
-                                        @if($assignedGoals->is_employee_submitted)
-                                            <textarea name="managereview[{{$kpiRow->id}}]" id="" cols="20" rows="2"
-                                                placeholder="type here"></textarea>
-                                                                                
+                                        @if($assignedGoals->is_employee_submitted && !$reviewCompleted)
+                                            <textarea name="managereview[{{$kpiRow->id}}]" id="" cols="20" rows="2" placeholder="type here">@if(isset( $kpiRow->manager_kpi_review)){{$kpiRow->manager_kpi_review}}@endif</textarea>
                                         @else
 
                                         @endif
@@ -268,9 +266,9 @@
                                         @if($reviewCompleted)
                                             <div>{{$kpiRow->manager_kpi_review}}</div>
                                         @endif
-                                        @if($assignedGoals->is_employee_submitted)      
-                                        <textarea name="managerpercetage[{{$kpiRow->id}}]" id="" cols="20" rows="2"
-                                            placeholder="type here"></textarea>
+                                        @if($assignedGoals->is_employee_submitted  && !$reviewCompleted)      
+                                        <textarea name="managerpercetage[{{$kpiRow->id}}]" id="" cols="20" rows="2" 
+                                            placeholder="type here">@if(isset( $kpiRow->manager_kpi_percentage)) {{$kpiRow->manager_kpi_percentage}}@endif</textarea>
                                         @else
 
                                         @endif
@@ -323,17 +321,21 @@
             </div>
         </div>
     </div><!-- end col -->
-    <div class="row mt-3">
-        <div class="col-lg-12">
-            <label class="form-label">
-                Appraiser Feedback:
-            </label>
-            <div class="my-2">
-                <textarea class="form-control" placeholder="" id="gen-info-description-input" name="performance"
-                    rows="4"></textarea>
+
+    @if($reviewCompleted)
+
+        <div class="row mt-3">
+            <div class="col-lg-12">
+                <label class="form-label">
+                    Appraiser Feedback:
+                </label>
+                <div class="my-2">
+                    <textarea class="form-control" placeholder="" id="gen-info-description-input" name="performance"
+                        rows="4"></textarea>
+                </div>
             </div>
         </div>
-    </div>
+    @endif
 
 
 
@@ -366,7 +368,6 @@
                             <td class="">70-80</td>
                             <td class="">80-90</td>
                             <td class="">90-100</td>
-                            <td class="">100</td>
                         </tr>
 
                         <tr>
@@ -380,7 +381,6 @@
                             <td class="">Meet Expectations</td>
                             <td class="">Exceeds Expectations </td>
                             <td class="">Exceptionally Exceeds Expectations</td>
-                            <td class="">Exceptional </td>
                         </tr>
 
                         <tr>
@@ -392,7 +392,6 @@
                             <td class="">3</td>
                             <td class="">4</td>
                             <td class="">5</td>
-                            <td class="">5</td>
                         </tr>
                         <tr>
 
@@ -401,10 +400,9 @@
                             </td>
                             <td class="">Exit</td>
                             <td class="">PIP</td>
-                            <td class="">10% </td>
-                            <td class=""> 15% </td>
+                            <td class="">10%</td>
+                            <td class="">15%</td>
                             <td class="">20%</td>
-                            <td class="">5%</td>
                         </tr>
                     </tbody>
                 </table>
@@ -494,7 +492,7 @@
         //goal_id=26&user_id=4
         var goal_id = "{{\Request::get('goal_id')}}";
         var user_id = "{{\Request::get('user_id')}}";
-        var approve_flag = true;
+        var approve_flag = "approved";
        
         $.ajax({
             type: "GET", 
@@ -510,7 +508,7 @@
         //goal_id=26&user_id=4
         var goal_id = "{{\Request::get('goal_id')}}";
         var user_id = "{{\Request::get('user_id')}}";
-        var approve_flag = false;
+        var approve_flag = "rejected";
        
         $.ajax({
             type: "GET", 

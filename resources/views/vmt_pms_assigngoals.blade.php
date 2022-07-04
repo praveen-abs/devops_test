@@ -530,26 +530,40 @@ th:last-child {
 
                                @if(auth()->user()->hasrole('Employee'))
                                     
+                                    <!-- If employee sets the KPI -->
                                     @if(auth::user()->id == $emp->author_id)
 
-                                        @if($emp->is_manager_approved)
-                                            {{$emp->is_employee_submitted  ? 'Submitted' :  'Accepted, Not yet submitted'  }}
-                                        @else
-                                        {{ 'Not yet approved'}}
-                                        @endif
+                                        {{$emp->is_employee_submitted  ? 'Submitted' :  'Not yet submitted'  }}
 
-                                    @else
-                                        {{$emp->is_employee_submitted  ? 'Submitted' :  'Accepted, Not yet submitted'  }}
-                                @endif
+
+                                            {{--
+                                                 @if($emp->is_manager_approved) 
+                                                    @if($emp->is_employee_accepted) 
+                                                        @if($emp->is_employee_submitted) 
+                                                            {{ 'Submitted'}}
+                                                        @else
+                                                            {{'Accepted, Not yet submitted'}}
+                                                        @endif
+                                                    @else
+                                                        {{ 'Not yet accepted'}}
+                                                    @else
+                                                        {{ 'Not yet approved'}}
+                                                    @endif 
+                                            --}}
+                                    @else 
+                                            {{$emp->is_employee_submitted  ? 'Submitted' :  'Not yet submitted'  }}
+                                    @endif
                                 @endif
                                 @if(auth()->user()->hasrole('Manager'))
 
-                                    @if($emp->is_employee_accepted ) 
-                                        {{$emp->is_employee_submitted  ? 'Submitted' :  'Accepted, Not yet submitted'  }}
-                                    @else 
-                                    {{ 'Not yet accepted'}}
-                                    @endif
+                                    {{$emp->is_employee_submitted  ? 'Submitted' :  'Not yet submitted'  }}
 
+                                    {{--    @if($emp->is_employee_accepted ) 
+                                            {{$emp->is_employee_submitted  ? 'Submitted' :  'Accepted, Not yet submitted'  }}
+                                        @else 
+                                        {{ 'Not yet accepted'}}
+                                        @endif
+                                    --}}
                                 @endif
 
                                 @if(auth()->user()->hasrole(['Admin','HR']))
@@ -959,7 +973,7 @@ th:last-child {
                                                         <th class="sort" data-sort="status" style="width: 20%;">Target</th>
                                                         <th class="sort" data-sort="status" style="width: 20%;">Stretch Target</th>
                                                         <th class="sort" data-sort="status" style="">Source</th>
-                                                        <th class="sort" data-sort="status" style="width: 10%;" width="10%">KPI Weightage</th>
+                                                        <th class="sort" data-sort="status" style="width: 10%;" width="10%">KPI Weightage ( % )</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="tbody content-container" id="tbody">
@@ -1413,22 +1427,38 @@ $('body').on('click', '.close-modal', function() {
 // publishing tables
 $('body').on('click', '#save-table', function(e){
     // e.preventDefault();
-    console.log('assigning Goals');
-    console.log($('#kpiTableForm').serialize());
+    //console.log('assigning Goals');
+    //console.log($('#kpiTableForm').serialize());
 
     var canSaveForm = true;
+    var kpiWeightageTotal = 0;
 
     //Validate the input fields
     $("#kpiTableForm :input").each(function(){
         var input = $(this);
         //console.log("length : ");
+        if(input.attr('name') == "kpiWeightage[]")
+        {
+            kpiWeightageTotal =kpiWeightageTotal+parseInt(input.val());
+            //console.log(input.attr('name')+" , "+input.val());
+        }
 
-       // console.log(input.val().length+" , "+input.val());
        if(input.val().length < 1)
        {
          canSaveForm = false;
        }
     });
+
+
+    //Validate KPI Weightage
+    if(kpiWeightageTotal != 100 )
+    {
+        canSaveForm = false;
+        alert("KPI Weightage should be exactly 100%. Please fix it");
+    }
+
+    //for testing
+   // canSaveForm = false;
 
     if(canSaveForm)
     {

@@ -17,10 +17,11 @@ class VmtAssignGoals extends Mailable
      * @return void
      */
     protected $linkUri;
-    public function __construct($linkUri)
+    public function __construct($linkUri, $approvalStatus)
     {
         //
         $this->linkUri = $linkUri; 
+        $this->approvalStatus = $approvalStatus;
     }
 
     /**
@@ -31,6 +32,7 @@ class VmtAssignGoals extends Mailable
     public function build()
     {
         return $this->view('vmt_asigngoal_email')
-                ->with('linkUri', $this->linkUri);
+                ->with('linkUri', $this->linkUri)
+                ->with('approvalStatus', $this->approvalStatus);
     }
 }

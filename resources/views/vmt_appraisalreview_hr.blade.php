@@ -256,19 +256,17 @@
                                     </td>
 
                                     <td>
-                                        @if($reviewCompleted)
-                                            <div>{{$kpiRow->hr_kpi_review}}</div>
+                                        @if(!$assignedGoals->is_hr_submitted)
+                                            <textarea name="hreview[{{$kpiRow->id}}]" id="" cols="20" rows="2" placeholder="type here">@if(isset( $kpiRow->hr_kpi_review)){{$kpiRow->hr_kpi_review}}@endif</textarea>
                                         @else
-                                        <textarea name="hreview[{{$kpiRow->id}}]" id="" cols="20" rows="2"
-                                            placeholder="type here"></textarea>
+                                            <div>{{$kpiRow->hr_kpi_review}}</div>
                                         @endif
                                     </td>
                                     <td>
-                                        @if($reviewCompleted)
-                                            <div>{{$kpiRow->hr_kpi_percentage}}</div>
+                                        @if(!$assignedGoals->is_hr_submitted)
+                                            <textarea name="hrpercetage[{{$kpiRow->id}}]" id="" cols="20" rows="2" placeholder="type here">@if(isset( $kpiRow->hr_kpi_percentage)){{$kpiRow->hr_kpi_percentage}}@endif</textarea>                                        
                                         @else
-                                        <textarea name="hrpercetage[{{$kpiRow->id}}]" id="" cols="20" rows="2"
-                                            placeholder="type here"></textarea>
+                                            <div>{{$kpiRow->hr_kpi_percentage}}</div>
                                         @endif
                                     </td>
 
@@ -281,7 +279,7 @@
                     </div>
                 </form>
                 <div class="buttons d-flex align-items-center justify-content-end ">
-                    @if(!$reviewCompleted && $assignedGoals->is_manager_submitted)
+                    @if($assignedGoals->is_manager_submitted && !$assignedGoals->is_hr_submitted )
                         <button class="btn btn-primary" id="save_table">Save<i class="fa fa-save"></i></button>
                         &nbsp;&nbsp;
                         <button class="btn btn-primary" id="publish_table">Publish<i class="fa fa-save"></i></button>
@@ -293,18 +291,21 @@
             </div>
         </div>
     </div><!-- end col -->
-    <div class="row mt-3">
-        <div class="col-lg-12">
-            <label class="form-label">
-                Appraiser Feedback:
-            </label>
-            <div class="my-2">
-                <textarea class="form-control" placeholder="" id="gen-info-description-input" name="performance"
-                    rows="4"></textarea>
+
+    @if($reviewCompleted)
+
+        <div class="row mt-3">
+            <div class="col-lg-12">
+                <label class="form-label">
+                    Appraiser Feedback:
+                </label>
+                <div class="my-2">
+                    <textarea class="form-control" placeholder="" id="gen-info-description-input" name="performance"
+                        rows="4"></textarea>
+                </div>
             </div>
         </div>
-    </div>
-
+    @endif
 
 
     <div class="card">
@@ -336,7 +337,6 @@
                             <td class="">70-80</td>
                             <td class="">80-90</td>
                             <td class="">90-100</td>
-                            <td class="">100</td>
                         </tr>
 
                         <tr>
@@ -350,7 +350,6 @@
                             <td class="">Meet Expectations</td>
                             <td class="">Exceeds Expectations </td>
                             <td class="">Exceptionally Exceeds Expectations</td>
-                            <td class="">Exceptional </td>
                         </tr>
 
                         <tr>
@@ -362,7 +361,6 @@
                             <td class="">3</td>
                             <td class="">4</td>
                             <td class="">5</td>
-                            <td class="">5</td>
                         </tr>
                         <tr>
 
@@ -372,9 +370,8 @@
                             <td class="">Exit</td>
                             <td class="">PIP</td>
                             <td class="">10% </td>
-                            <td class=""> 15% </td>
+                            <td class="">15%</td>
                             <td class="">20%</td>
-                            <td class="">5%</td>
                         </tr>
                     </tbody>
                 </table>
