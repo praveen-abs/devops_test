@@ -213,8 +213,7 @@
                 @endif
 
                 <!-- performance -->
-                @hasrole("Manager")
-                @else
+
                 <li class="nav-item">
                     <a class="nav-link menu-link d-flex" href="#reportDrop-Down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarRoles">
@@ -255,7 +254,7 @@
                                     </ul>
                                 </div>
                             </li> -->
-                            @can('Self_Appraisal')
+                            <!-- @can('Self_Appraisal')
                             <li class="nav-item">
                                 <a href="{{url('vmt_appraisalreview')}}" class="nav-link py-1" role="button"><span>Self
                                         Appraisal Review</span></a>
@@ -272,7 +271,7 @@
                                 <a href="{{url('vmt_appraisalreview')}}" class="nav-link py-1" role="button"><span>Org
                                         Appraisal Review</span></a>
                             </li>
-                            @endcan
+                            @endcan -->
                             @can('360_Degree_Review')
                             <li class="nav-item">
                                 <a href="{{url('vmt_360review')}}" class="nav-link py-1" role="button"><span>360 Degree
@@ -282,7 +281,6 @@
                         </ul>
                     </div>
                 </li>
-                @endif
 
                 @hasrole("Manager")
                 <li class="nav-item">

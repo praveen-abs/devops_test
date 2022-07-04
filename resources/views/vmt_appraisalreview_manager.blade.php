@@ -41,25 +41,6 @@
 
             <div class="card-body  pb-2">
 
-                 <form method="GET" id='role-form' action="{{url('pms-employee-reviews')}}">
-                  
-                    <div class="mb-3 row">
-                        <label class="col-md-2 col-form-label">Select PMS</label>
-                        <div class="col-md-10">
-                            <select class="form-select" name="goal_id" required>
-                                <option>Select PMS</option>
-                                @foreach($pmsGoalList as $user)
-                                    <option value="{{$user->id}}">{{$user->assignment_period .' | '.$user->emp_name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                     <div class="row mt-2">
-                        <div class="text-end col-xl-12">
-                            <button type="submit" class="btn btn-primary">Save</button>
-                        </div>
-                    </div>
-                </form>
                 <br/>
                 @if($empSelected)
                     <table class="table e-table align-middle table-nowrap mb-0 " style="border: none;">
@@ -274,17 +255,24 @@
                                     <td>
                                         @if($reviewCompleted)
                                             <div>{{$kpiRow->manager_kpi_review}}</div>
+                                        @endif
+                                        @if($assignedGoals->is_employee_submitted)
+                                            <textarea name="managereview[{{$kpiRow->id}}]" id="" cols="20" rows="2"
+                                                placeholder="type here"></textarea>
+                                                                                
                                         @else
-                                        <textarea name="managereview[{{$kpiRow->id}}]" id="" cols="20" rows="2"
-                                            placeholder="type here"></textarea>
+
                                         @endif
                                     </td>
                                     <td>
                                         @if($reviewCompleted)
                                             <div>{{$kpiRow->manager_kpi_review}}</div>
-                                        @else
+                                        @endif
+                                        @if($assignedGoals->is_employee_submitted)      
                                         <textarea name="managerpercetage[{{$kpiRow->id}}]" id="" cols="20" rows="2"
                                             placeholder="type here"></textarea>
+                                        @else
+
                                         @endif
                                     </td>
                                     @if($reviewCompleted)
@@ -310,11 +298,21 @@
                     </div>
                 </form>
                 <div class="buttons d-flex align-items-center justify-content-end ">
-                    @if(!$reviewCompleted)
-                    <button class="btn btn-primary save-review" id="add">Save<i class="fa fa-save"></i></button>
-
+                    @if(!$assignedGoals->is_manager_approved)
+                        <button class="btn btn-primary" id="approve">Approve<i class="fa fa-save"></i></button>
+                        &nbsp;&nbsp;
+                        <button class="btn btn-primary" id="reject">Reject<i class="fa fa-save"></i></button>
+                        &nbsp;&nbsp;
+                    @else
+                        @if(!$reviewCompleted && $assignedGoals->is_employee_submitted)
+                            <button class="btn btn-primary" id="save_table">Save<i class="fa fa-save"></i></button>
+                            &nbsp;&nbsp;
+                            <button class="btn btn-primary" id="publish_table">Publish<i class="fa fa-save"></i></button>
+                        @endif
+                        @if(!$assignedGoals->is_employee_submitted)
+                            <h4>Employee has not yet submitted this review.</h4>
+                        @endif
                     @endif
-                    <!-- <button class="btn btn-primary mx-3">Remove<i class="fa fa-remove"></i></button> -->
                 </div>
                 @else
 
@@ -461,9 +459,22 @@
 <script type="text/javascript">
     
  
-    
+    $('#save_table').click(function(e){
+        e.preventDefault();
+        console.log("save trigger");
+        console.log($('#employee_self_review').serialize());
 
-    $('.save-review').click(function(e){
+        $.ajax({
+            type: "POST", 
+            url:"{{url('vmt-pms-saveKPItableDraft_Manager')}}",
+            data:$('#employee_self_review').serialize(), 
+            success: function(data){
+                alert(data);
+            }
+        })
+    });
+
+    $('#publish_table').click(function(e){
         e.preventDefault();
         console.log("save trigger");
         console.log($('#employee_self_review').serialize());
@@ -478,6 +489,37 @@
         })
     });
 
+    $('#approve').click(function(e){
+        e.preventDefault();
+        //goal_id=26&user_id=4
+        var goal_id = "{{\Request::get('goal_id')}}";
+        var user_id = "{{\Request::get('user_id')}}";
+        var approve_flag = true;
+       
+        $.ajax({
+            type: "GET", 
+            url:"{{url('vmt-approvereject-kpitable')}}?goal_id="+goal_id+"&user_id="+user_id+"&approve_flag="+approve_flag,
+            success: function(data){
+                alert(data);
+            }
+        })
+    });
+
+    $('#reject').click(function(e){
+        e.preventDefault();
+        //goal_id=26&user_id=4
+        var goal_id = "{{\Request::get('goal_id')}}";
+        var user_id = "{{\Request::get('user_id')}}";
+        var approve_flag = false;
+       
+        $.ajax({
+            type: "GET", 
+            url:"{{url('vmt-approvereject-kpitable')}}?goal_id="+goal_id+"&user_id="+user_id+"&approve_flag="+approve_flag,
+            success: function(data){
+                alert(data);
+            }
+        })
+    });
 
 </script>
 @endsection

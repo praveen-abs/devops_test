@@ -475,54 +475,6 @@
                                                 <label class="fieldlabels" for="l1_manager_name">L1 Manager Name</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="l2_manager_code" class="onboard-form"
-                                                    required />
-                                                <label class="fieldlabels" for="l2_manager_code">L2 Manager Code</label>
-                                            </div>
-                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="l2_manager_designation" class="onboard-form"
-                                                    required />
-                                                <label class="fieldlabels" for="l2_manager_designation">L2 Manager
-                                                    Designation</label>
-                                            </div>
-                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="l2_manager_name" class="onboard-form"
-                                                    required />
-                                                <label class="fieldlabels" for="l2_manager_name">L2 Manager Name</label>
-                                            </div>
-                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="l3_manager_code" class="onboard-form"
-                                                    required />
-                                                <label class="fieldlabels" for="l3_manager_code">L3 Manager Code</label>
-                                            </div>
-                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="l3_manager_designation" class="onboard-form"
-                                                    required />
-                                                <label class="fieldlabels" for="l3_manager_designation">L3 Manager
-                                                    Designation</label>
-                                            </div>
-                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="l3_manager_name" class="onboard-form"
-                                                    required />
-                                                <label class="fieldlabels" for="l3_manager_name">L3 Manager Name</label>
-                                            </div>
-                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="l4_manager_code" class="onboard-form"
-                                                    required />
-                                                <label class="fieldlabels" for="l4_manager_code">L4 Manager Code</label>
-                                            </div>
-                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="l4_manager_designation" class="onboard-form"
-                                                    required />
-                                                <label class="fieldlabels" for="l4_manager_designation">L4 Manager
-                                                    Designation</label>
-                                            </div>
-                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="l4_manager_name" class="onboard-form"
-                                                    required />
-                                                <label class="fieldlabels" for="l4_manager_name">L4 Manager Name</label>
-                                            </div>
-                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <input type="text" name="work_location" class="onboard-form" required />
                                                 <label class="fieldlabels" for="work_location">Work Location</label>
                                             </div>

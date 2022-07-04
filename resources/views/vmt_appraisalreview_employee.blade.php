@@ -242,7 +242,7 @@
                                         @else
                                         <div>
                                             <textarea name="selfreview[{{$kpiRow->id}}]" id="" cols="40" rows="5"
-                                            placeholder="type here"></textarea>
+                                            placeholder="type here">@if(isset($kpiRow->self_kpi_review)) {{$kpiRow->self_kpi_review}} @endif</textarea>
                                         </div>
                                         @endif
                                     </td>
@@ -251,7 +251,7 @@
                                             {{$kpiRow->self_kpi_percentage}}
                                         @else
                                         <div> <textarea name="selfkpiachievement[{{$kpiRow->id}}]" id="" cols="40" rows="5"
-                                            placeholder="type here"></textarea></div>
+                                            placeholder="type here">@if(isset($kpiRow->self_kpi_percentage)) {{$kpiRow->self_kpi_percentage}} @endif</textarea></div>
                                         @endif
                                     </td>
                                     <td>
@@ -259,7 +259,7 @@
                                             {{$kpiRow->self_kpi_comments}}
                                         @else
                                         <div><textarea name="selfcomments[{{$kpiRow->id}}]" id="" cols="40" rows="5"
-                                            placeholder="type here"></textarea></div>
+                                            placeholder="type here"> @if(isset($kpiRow->self_kpi_comments)) {{$kpiRow->self_kpi_comments}} @endif</textarea></div>
                                         @endif
                                     </td>
 
@@ -296,13 +296,20 @@
                     </div>
                 </form>
                 <div class="buttons d-flex align-items-center justify-content-end ">
-                    @if(! $reviewCompleted)
-                    <button class="btn btn-primary save-review" id="add">Save<i class="fa fa-save"></i></button>
+                    @if(!$assignedGoals->is_employee_accepted)
+                        <button class="btn btn-primary" id="approve">Accept<i class="fa fa-save"></i></button>
+                        &nbsp;&nbsp;
+                        <button class="btn btn-primary" id="reject">Reject<i class="fa fa-save"></i></button>
+                        &nbsp;&nbsp;
+                    @else
+                        @if(!$reviewCompleted)
+                            <button class="btn btn-primary" id="save_table">Save<i class="fa fa-save"></i></button>
+                            &nbsp;&nbsp;
+                            <button class="btn btn-primary" id="publish_table">Publish<i class="fa fa-save"></i></button>
+                        @endif
+                       
                     @endif
-                    <!-- <button class="btn btn-primary mx-3">Remove<i class="fa fa-remove"></i></button> -->
                 </div>
-                @else
-
                 <h4>Goals Not Assigned</h4>
 
                 @endif
@@ -453,8 +460,22 @@
         $('#acceptPMS').modal('show');
     }*/
     
+    $('#save_table').click(function(e){
+        e.preventDefault();
+        console.log("save trigger");
+        console.log($('#employee_self_review').serialize());
 
-    $('.save-review').click(function(e){
+        $.ajax({
+            type: "POST", 
+            url:"{{url('vmt-pms-saveKPItableDraft_Employee')}}",
+            data:$('#employee_self_review').serialize(), 
+            success: function(data){
+                alert(data);
+            }
+        })
+    });
+
+    $('#publish_table').click(function(e){
         e.preventDefault();
         console.log("save trigger");
         console.log($('#employee_self_review').serialize());
@@ -468,6 +489,40 @@
             }
         })
     });
+
+    $('#approve').click(function(e){
+        e.preventDefault();
+        //goal_id=26&user_id=4
+        var goal_id = "{{\Request::get('id')}}";
+        var user_id = "{{auth::user()->id}}";
+        var approve_flag = true;
+       
+        $.ajax({
+            type: "GET", 
+            url:"{{url('vmt-approvereject-kpitable')}}?goal_id="+goal_id+"&user_id="+user_id+"&approve_flag="+approve_flag,
+            success: function(data){
+                alert(data);
+                location.reload();
+            }
+        })
+    });
+
+    $('#reject').click(function(e){
+        e.preventDefault();
+        //goal_id=26&user_id=4
+        var goal_id = "{{\Request::get('id')}}";
+        var user_id = "{{auth::user()->id}}";
+        var approve_flag = false;
+       
+        $.ajax({
+            type: "GET", 
+            url:"{{url('vmt-approvereject-kpitable')}}?goal_id="+goal_id+"&user_id="+user_id+"&approve_flag="+approve_flag,
+            success: function(data){
+                alert(data);
+            }
+        })
+    });
+
 
 
 </script>

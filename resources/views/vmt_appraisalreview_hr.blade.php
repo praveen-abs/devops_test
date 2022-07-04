@@ -41,30 +41,7 @@
 
             <div class="card-body  pb-2">
 
-                 <form method="GET" id='role-form' action="{{url('pms-employee-reviews')}}">
-                  
-                    <div class="mb-3 row">
-                        <label class="col-md-2 col-form-label">Select PMS</label>
-                        <div class="col-md-10">
-                            <select class="form-select" name="goal_id" required>
-                                <option>Select PMS</option>
-                                @foreach($pmsGoalList as $user)
-
-                                    @if($user->assignment_period != null)
-                                        <option value="{{$user->id}}">{{$user->assignment_period .' | '.$user->emp_name}}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="text-end col-xl-12">
-                            
-                            <button type="submit" class="btn btn-primary">Save</button>
-                        </div>
-                    </div>
-                </form>
-                <br/>
+               
                 @if($empSelected)
                     <table class="table e-table align-middle table-nowrap mb-0 " style="border: none;">
 
@@ -237,7 +214,7 @@
                                 <tr>
                                     <th scope="row">{{$kpiRow->dimension}}</th>
                                     <td>
-                                        <div>{{$kpiRow->dimension}}</div>
+                                        <div>{{$kpiRow->kpi}}</div>
                                     </td>
                                     <td>
                                         <div> {{$kpiRow->operational_definition}} </div>
@@ -304,18 +281,15 @@
                     </div>
                 </form>
                 <div class="buttons d-flex align-items-center justify-content-end ">
-                    @if(! $reviewCompleted)
-                        <button class="btn btn-primary save-review" id="add">Save<i class="fa fa-save"></i></button>
+                    @if(!$reviewCompleted && $assignedGoals->is_manager_submitted)
+                        <button class="btn btn-primary" id="save_table">Save<i class="fa fa-save"></i></button>
+                        &nbsp;&nbsp;
+                        <button class="btn btn-primary" id="publish_table">Publish<i class="fa fa-save"></i></button>
                     @endif
-
-                    <!-- <button class="btn btn-primary mx-3">Remove<i class="fa fa-remove"></i></button> -->
-                </div>
-                @else
-
-                <h4>Goals Not Assigned</h4>
-
-                @endif
-
+                    @else
+                        <h4>Goals Not Assigned</h4>
+                    @endif                    
+                </div>      
             </div>
         </div>
     </div><!-- end col -->
@@ -454,10 +428,23 @@
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 <script type="text/javascript">
     
- 
+    $('#save_table').click(function(e){
+        e.preventDefault();
+       // console.log("save trigger");
+       // console.log($('#employee_self_review').serialize());
+
+        $.ajax({
+            type: "POST", 
+            url:"{{url('vmt-pms-saveKPItableDraft_HR')}}",
+            data:$('#employee_self_review').serialize(), 
+            success: function(data){
+                alert(data);
+            }
+        })
+    });
     
 
-    $('.save-review').click(function(e){
+    $('#publish_table').click(function(e){
         e.preventDefault();
         console.log("save trigger");
         console.log($('#employee_self_review').serialize());

@@ -213,7 +213,71 @@ th:last-child {
         <div class="row">
             <div class="col-12 col-lg-12 col-md-12 ">
                 <div class="card ">
-                    <div class="card-body">
+
+                <div class="first">
+                    <div class="container-fluid shadow-lg p-3 mb-5 bg-body rounded">
+                    <div>
+                        <div>
+                            <img src="{{ URL::asset('/assets/images/img_kpi_widget_bg.jpg')}}" class="rounded float-start" alt="..." width="250px">
+                        </div>
+                        <div class="card-group">
+                            <div class="card mb-2 shadow-lg p-3 mb-5 bg-body rounded flex-row" style="width:10rem; ">
+                                <div class="row g-0">
+                                <div class="col-md-3">
+                                    <img src="{{ URL::asset('/assets/images/img_kpi_widget_cardimg_1.jpg')}}" class="img-fluid rounded-start" alt="...">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">250/300</h5>
+                                    <p class="card-text">Employee with goals.</p>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="card mb-2 shadow-lg p-3 mb-5 bg-body rounded flex-row" style="width: 10rem;">
+                                <div class="row g-0">
+                                <div class="col-md-3">
+                                    <img src="{{ URL::asset('/assets/images/img_kpi_widget_cardimg_2.jpg')}}" class="img-fluid rounded-start" alt="...">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">230/120</h5>
+                                    <p class="card-text">Employee Assessed/Rated.</p>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="card mb-2 shadow-lg p-3 mb-5 bg-body rounded" style="width: 10rem;">
+                                <div class="row g-0">
+                                <div class="col-md-3">
+                                    <img src="{{ URL::asset('/assets/images/img_kpi_widget_cardimg_3.jpg')}}" class="img-fluid rounded-start" alt="...">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">24-7-2022</h5>
+                                    <p class="card-text">Goal Assainment reminder notification</p>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="card mb-2 shadow-lg p-3 mb-5 bg-body rounded" style="width: 10rem;">
+                                <div class="row g-0">
+                                <div class="col-md-3 image">
+                                    <img src="{{ URL::asset('/assets/images/img_kpi_widget_cardimg_4.jpg')}}" class="img-fluid rounded-start" alt="...">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">24-10-2020</h5>
+                                    <p class="card-text">Rating assessment reminder notification.</p>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+                    <!-- <div class="card-body"> -->
 
                         <!-- <div class="d-flex justify-content-between align-items-center">
 
@@ -285,7 +349,7 @@ th:last-child {
                             </div>
                         </div> -->
 
-                        <div class="align-items-center" style="justify-content:center;">
+                        <!-- <div class="align-items-center" style="justify-content:center;">
                             <div class="row align-items-center">
                                 <div class="col-6 col-lg-2 col-md-6 col-xl-2 pr-0"></div>
                                 <div class="col-6 col-lg-2 col-md-6 col-xl-2 pr-0">
@@ -399,12 +463,12 @@ th:last-child {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="col-6 col-lg-3 col-md-6 col-xl-3"></div>
                             </div>
                         </div>
 
-                    </div>
+                    <!-- </div> -->
                 </div>
             </div>
         </div>
@@ -427,13 +491,13 @@ th:last-child {
                 <thead>
                     <tr style="background:#f6f8fb;">
                         <th class="p-3"></th>
+                        <th class=""  style="width : 30px"> </th>
                         <th class="p-3">Employee ID</th>
                         <th class="p-3">Employee name</th>
-                        <th class="p-3">Email</th>
-                        <th class="p-3">Designation</th>
                         <th class="p-3">Manager</th>
                         <th class="p-3">Assignment Period</th>
-                        <th class="p-3">Status</th>
+                        <th class="p-3">Employee Status</th>
+                        <th class="p-3">Manager Status</th>
                         <th class="p-3">Average Rating</th>
                     </tr>
                 </thead>
@@ -443,13 +507,85 @@ th:last-child {
                         <td>
                             <img class="rounded-circle header-profile-user" src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif" alt="Header Avatar">
                         </td>
+                        <td style="vertical-align : middle">
+                            @if(auth()->user()->hasrole('Employee'))
+                                <a target="_blank" href="{{url('vmt-pmsappraisal-review?id='.$emp->kpi_table_id)}}"><span class="mr-10 icon"><i class="fa fa-external-link"></i></span></a>
+                            @else
+                                <a target="_blank" href="{{url('pms-employee-reviews?goal_id='.$emp->kpi_table_id.'&user_id='.$emp->userid)}}"><span class="mr-10 icon"><i class="fa fa-external-link"></i></span></a>
+                            @endif
+                        </td>
+
                         <td class="p-3">{{$emp->emp_no}}</td>
                         <td class="p-3">{{$emp->emp_name}}</td>
-                        <td class="p-3">{{$emp->officical_mail}}</td>
-                        <td class="p-3">{{$emp->designation}}</td>
-                        <td class="p-3">{{$emp->l1_manager_name}}</td>
-                        <td class="p-3">5</td>
-                        <td class="p-3">{{$emp->status}}</td>
+                        <td class="p-3">
+                            @if(auth()->user()->hasrole('Employee') || auth()->user()->hasrole('Manager') )
+                                {{$users[0]->name}}
+                            @else
+                                 
+                            @endif
+                        </td>
+                        <td class="p-3">{{$emp->assignment_period}}</td>
+                        <td class="p-3"><!-- Employee status -->
+
+
+                               @if(auth()->user()->hasrole('Employee'))
+                                    
+                                    @if(auth::user()->id == $emp->author_id)
+
+                                        @if($emp->is_manager_approved)
+                                            {{$emp->is_employee_submitted  ? 'Submitted' :  'Accepted, Not yet submitted'  }}
+                                        @else
+                                        {{ 'Not yet approved'}}
+                                        @endif
+
+                                    @else
+                                        {{$emp->is_employee_submitted  ? 'Submitted' :  'Accepted, Not yet submitted'  }}
+                                @endif
+                                @endif
+                                @if(auth()->user()->hasrole('Manager'))
+
+                                    @if($emp->is_employee_accepted ) 
+                                        {{$emp->is_employee_submitted  ? 'Submitted' :  'Accepted, Not yet submitted'  }}
+                                    @else 
+                                    {{ 'Not yet accepted'}}
+                                    @endif
+
+                                @endif
+
+                                @if(auth()->user()->hasrole(['Admin','HR']))
+
+                                    @if($emp->is_employee_accepted ) 
+                                        {{$emp->is_employee_submitted  ? 'Submitted' :  'Accepted, Not yet submitted'  }}
+                                    @else 
+                                    {{ 'Not yet accepted'}}
+                                    @endif
+
+                                @endif                                
+
+
+                        </td>   
+                        <td class="p-3"><!-- Manager status -->
+                            @if(auth()->user()->hasrole('Employee'))
+
+                                {{$emp->is_manager_submitted  ? 'Submitted' :  'Not yet submitted'  }}
+
+                            @endif
+                            @if(auth()->user()->hasrole('Manager'))
+
+                                @if($emp->is_manager_submitted ) 
+                                    Submitted
+                                @else 
+                                    Not yet submitted
+                                @endif
+
+                            @endif
+
+                            @if(auth()->user()->hasrole(['Admin','HR']))
+
+                                {{$emp->is_manager_submitted  ? 'Submitted' :  'Not yet submitted'  }}
+
+                            @endif
+                        </td>                       
                         <td class="p-3">5</td>
                     </tr>
                     @endforeach
@@ -694,7 +830,7 @@ th:last-child {
                             <div class="row mt-3">
                                 <div class="col-2  mt-3 mb-3">
                                     <div class="d-flex flex-column">
-                                        <label class="" for="assignment_period_start">Assignment Period Start</label>
+                                        <label class="" for="assignment_period_start">Assignment Period</label>
                                         <select name="assignment_period_start" id="">
                                             <option name="January" value="Jan">January - <?php echo date("Y"); ?> </option>
                                             <option name="February" value="Feb">February - <?php echo date("Y"); ?></option>
@@ -711,25 +847,6 @@ th:last-child {
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-2  mt-3 mb-3">
-                                    <div class="d-flex flex-column">
-                                        <label class="" for="assignment_period_end">Assignment Period End</label>
-                                        <select name="assignment_period_end" id="">
-                                            <option name="January" value="Jan">January - <?php echo date("Y"); ?></option>
-                                            <option name="February" value="Feb">February - <?php echo date("Y"); ?></option>
-                                            <option name="March" value="Mar">March - <?php echo date("Y"); ?></option>
-                                            <option name="April" value="Apr">April - <?php echo date("Y"); ?></option>
-                                            <option name="May" value="May">May - <?php echo date("Y"); ?></option>
-                                            <option name="June" value="Jun">June - <?php echo date("Y"); ?></option>
-                                            <option name="July" value="Jul">July - <?php echo date("Y"); ?></option>
-                                            <option name="August" value="Aug">August - <?php echo date("Y"); ?></option>
-                                            <option name="September" value="Sep">September - <?php echo date("Y"); ?></option>
-                                            <option name="October" value="Oct">October - <?php echo date("Y"); ?></option>
-                                            <option name="November" value="Nov">November - <?php echo date("Y"); ?></option>
-                                            <option name="December" value="Dec">December - <?php echo date("Y"); ?></option>
-                                        </select>
-                                    </div>
-                                </div>                                
                                 <div class="col-2 mt-3 mb-3">
                                     <div class="d-flex flex-column">
                                         <label class="" for="department">Department</label>
@@ -854,7 +971,7 @@ th:last-child {
 
                                                         <td class="">
                                                             <textarea name="dimension[]" id="" cols="20" rows="2"
-                                                                placeholder="type here"></textarea>
+                                                                placeholder="type here" ></textarea>
                                                         </td>
 
                                                         <td class="">
@@ -897,6 +1014,7 @@ th:last-child {
                                         <div class="align-items-center justify-content-center d-flex mt-4 cursor-pointer">
                                             <span class="plus-sign p-4"><i class="fa fa-plus f-20"></i></span>
                                         </div>
+
                                         <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
                                             <button class="btn btn-primary table-btn mx-2" id="save-table">Save Table</button>
                                         </div>
@@ -968,6 +1086,36 @@ th:last-child {
     <!-- add employee  Modal-->
 </div>
 
+<!-- Vertically Centered -->
+<div class="modal fade" id="notificationModal" role="dialog" aria-hidden="true" style="opacity:1; display:none;">
+    <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2">
+        <div class="modal-content">
+            <div class="modal-header py-2 bg-primary">
+
+                <div class="w-100 modal-header-content d-flex align-items-center py-2">
+                    <h5 class="modal-title text-white" id="modalHeader">Success
+                    </h5>
+                    <button 
+                        type="button" 
+                        class="btn-close btn-close-white close-modal" data-bs-dismiss="modal"
+                        aria-label="Close"
+                    >
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="mt-4">
+                    <h4 class="mb-3" id="modalNot">Data Saved Successfully!</h4>
+                    <p class="text-muted mb-4" id="modalBody"> Table Saved, Please publish goals.</p>
+                    <div class="hstack gap-2 justify-content-center">
+                        <button type="button" class="btn btn-light close-modal" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Select Employees window -->
 <div class="modal fade" id="changeEmployee">
     <div class="modal-dialog modal-md" id="" aria-hidden="true"
@@ -993,9 +1141,7 @@ th:last-child {
                     @csrf
                     <label for="FormSelectDefault" class="form-label text-muted">Employees</label>
                     <select class="form-select mb-3" aria-label="Default select example" name="employees[]" id="select-employees" multiple>
-                        @foreach($employees as $index => $employee)
-                            <option value="{{$employee->id}}">{{$employee->emp_name}}</option>
-                        @endforeach
+                      
                     </select>
                 
                     <div class="content-footer">
@@ -1168,19 +1314,54 @@ $('body').on('click', '.delete-row', function() {
 $('#changeEmployeeForm').on('submit', function(e){
     e.preventDefault();
     var employeeSelected = $('#select-employees').val();
+    @if(auth()->user()->hasrole('Employee'))
+
+    @else
     var employees = {!!json_encode($employees)!!};
+
+    @endif
     var employeeArray = [];
 
     $("#sel_employees").val(employeeSelected);
 
     $.each(employees, function(i, data){
+        console.log(data);
+        console.log('employee selected', employeeSelected);
         if($.inArray(data.id.toString(), employeeSelected) > -1){
             employeeArray.push(data.emp_name);
         }
     });
     $('#group-employee').html(employeeArray.join());
-    $('#changeEmployee').modal('hide');
+    $('#changeEmployee').css('display', 'none');
 });
+
+@if(auth()->user()->hasrole('Manager'))
+
+    var userid = {{auth::user()->id}} 
+    $.ajax({
+        type: "GET", 
+        url: "{{url('vmt-getAllChildEmployees')}}"+'?emp_id='+userid, 
+        //data: $('#kpiTableForm').serialize(), 
+        success: function(data){
+        var optionHtml ="";
+        $.each(data, function(i, tempdata){
+            optionHtml = optionHtml+"<option value="+tempdata.id+">"+tempdata.name+"</option>";
+            //if(tempdata.id == $('#select-employees').val()){
+            //        $('#reviewer-name').html(tempdata.name);
+            //        $('#reviewer-email').html(tempdata.email);
+            //    }
+          });
+            
+          $('#select-employees').html(optionHtml);
+                     // $("#kpiTableForm :input").prop("disabled", true);
+           // $(".table-btn").prop('disabled', true);
+            console.log(data);
+            //alert("Table Saved, Please publish goals");
+           // $("#kpitable_id").val(data.table_id);
+        }
+    })
+
+@endif
 
 // select reviewer
 $('#newQuestion').on('submit', function(e){
@@ -1196,8 +1377,38 @@ $('#newQuestion').on('submit', function(e){
         }
     });
 
-    $('#createEmployee').modal('hide');
+    $.ajax({
+        type: "GET", 
+        url: "{{url('vmt-getAllChildEmployees')}}"+'?emp_id='+selReviewer, 
+        //data: $('#kpiTableForm').serialize(), 
+        success: function(data){
+        var optionHtml ="";
+        $.each(data, function(i, tempdata){
+            optionHtml = optionHtml+"<option value="+tempdata.id+">"+tempdata.name+"</option>";
+            //if(tempdata.id == $('#select-employees').val()){
+            //        $('#reviewer-name').html(tempdata.name);
+            //        $('#reviewer-email').html(tempdata.email);
+            //    }
+          });
+            
+          $('#select-employees').html(optionHtml);
+                     // $("#kpiTableForm :input").prop("disabled", true);
+           // $(".table-btn").prop('disabled', true);
+            console.log(data);
+            //alert("Table Saved, Please publish goals");
+           // $("#kpitable_id").val(data.table_id);
+        }
+    })
+
+
+    $('#createEmployee').css('display','none');
 });
+
+$('body').on('click', '.close-modal', function() {
+    $('#notificationModal').hide();
+    $('#notificationModal').addClass('fade');
+})
+
 
 // publishing tables
 $('body').on('click', '#save-table', function(e){
@@ -1205,19 +1416,44 @@ $('body').on('click', '#save-table', function(e){
     console.log('assigning Goals');
     console.log($('#kpiTableForm').serialize());
 
-    $.ajax({
-        type: "POST", 
-        url: "{{url('vmt-pms-kpi-table/save')}}", 
-        data: $('#kpiTableForm').serialize(), 
-        success: function(data){
+    var canSaveForm = true;
 
-            $("#kpiTableForm :input").prop("disabled", true);
-            $(".table-btn").prop('disabled', true);
+    //Validate the input fields
+    $("#kpiTableForm :input").each(function(){
+        var input = $(this);
+        //console.log("length : ");
 
-            alert("Table Saved, Please publish goals");
-            $("#kpitable_id").val(data.table_id);
-        }
-    })
+       // console.log(input.val().length+" , "+input.val());
+       if(input.val().length < 1)
+       {
+         canSaveForm = false;
+       }
+    });
+
+    if(canSaveForm)
+    {
+        $.ajax({
+            type: "POST", 
+            url: "{{url('vmt-pms-kpi-table/save')}}", 
+            data: $('#kpiTableForm').serialize(), 
+            success: function(data){
+
+                $("#kpiTableForm :input").prop("disabled", true);
+                $(".table-btn").prop('disabled', true);
+                $('#notificationModal').show();
+
+                // alert("Table Saved, Please publish goals");
+                $('#modalBody').html("Table Saved, Please publish goals.");
+                $('#notificationModal').show();
+                $('#notificationModal').removeClass('fade');
+                $("#kpitable_id").val(data.table_id);
+            }
+        });
+    }
+    else
+    {
+        alert("Please fill all the fields");
+    }
 })
 
 //
@@ -1234,12 +1470,25 @@ $("#publish-goal").click(function(e){
                 $("#kpiTableForm :input").prop("disabled", true);
                 $(".table-btn").prop('disabled', true);
 
-                alert("Goal Assigned, Email Sent to the employees");
+                @if(auth()->user()->hasrole('Employee'))
+                    $('#modalBody').html("Goals published. Email Sent to your Manager");
+                    $('#notificationModal').show();
+                    $('#notificationModal').removeClass('fade');
+                @else
+                    $('#modalBody').html("Goals published. Email Sent to your Employees");
+                    $('#notificationModal').show();
+                    $('#notificationModal').removeClass('fade');
+                @endif
+
                 $("kpitable_id").val(data.table_id);
             }
         })
     }else{
-        alert("please publish table first");
+        $('#modalBody').html("Please publish table first");
+        $('#modalHeader').html("Failed");
+        $('#modalNot').html("Failed to save Data");
+        $('#notificationModal').show();
+        $('#notificationModal').removeClass('fade');
     }
    
 });

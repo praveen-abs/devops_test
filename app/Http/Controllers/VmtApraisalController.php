@@ -14,6 +14,7 @@ use App\Models\VmtEmployeeOfficeDetails;
 use App\Mail\VmtAssignGoals;
 use App\Mail\NotifyPMSManager;
 use App\Mail\PMSReviewCompleted;
+use Session;
 
 class VmtApraisalController extends Controller
 {
@@ -27,26 +28,118 @@ class VmtApraisalController extends Controller
     //
     public function bulkUploadQuestion(){
         $importDataArry = \Excel::import(new ApraisalQuestion, request()->file('file'));
-        return "Questions Added";
+        return 'Question Created Successfully';
     }
 
     // assign goals forms
     public function vmtAssignGoals(Request $request){
-        $empGoals = VmtEmployee::select('emp_no', 'emp_name', 'email_id', 'vmt_employee_details.designation', 'l1_manager_name', 'status', 'officical_mail')->join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.employee_id', '=', 'vmt_employee_details.id')->join('vmt_employee_office_details',  'vmt_employee_office_details.emp_id', '=', 'vmt_employee_details.id')->where('author_id', auth()->user()->id)->get();
+
+        $empGoalQuery = VmtEmployee::leftJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
+                            ->leftJoin('vmt_employee_office_details', 'vmt_employee_details.id','=', 'vmt_employee_office_details.emp_id' )
+                            ->join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.employee_id', '=', 'vmt_employee_details.id')
+                            ->select(
+                                'vmt_employee_details.*', 
+                                'users.name as emp_name', 
+                                'users.email as email_id',
+                                'vmt_employee_office_details.department',
+                                'vmt_employee_office_details.designation', 
+                                'vmt_employee_office_details.l1_manager_code',
+                                'vmt_employee_office_details.l1_manager_name',
+                                'vmt_employee_office_details.l1_manager_designation',
+                                'vmt_employee_pms_goals_table.assignment_period',
+                                'vmt_employee_pms_goals_table.kpi_table_id',
+                                'vmt_employee_pms_goals_table.is_manager_approved',
+                                'vmt_employee_pms_goals_table.is_manager_submitted',
+                                'vmt_employee_pms_goals_table.is_employee_submitted',
+                                'vmt_employee_pms_goals_table.is_employee_accepted',
+                                'vmt_employee_pms_goals_table.author_id',
+
+                            )
+                            ->orderBy('created_at', 'DESC')
+                            ->whereNotNull('emp_no');
+                            //->get();
+
+
+
+       // $empGoals = VmtEmployee::select('emp_no', 'emp_name', 'email_id', 'vmt_employee_details.designation', 'l1_manager_name', 'status', 'officical_mail')->join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.employee_id', '=', 'vmt_employee_details.id')->join('vmt_employee_office_details',  'vmt_employee_office_details.emp_id', '=', 'vmt_employee_details.id')->where('author_id', auth()->user()->id)->get();
         if (auth()->user()->hasrole('Employee')) {
             $emp = VmtEmployee::join('vmt_employee_office_details',  'user_id', '=', 'vmt_employee_details.userid')->where('userid', auth()->user()->id)->first();
             $rev = VmtEmployee::where('emp_no', $emp->l1_manager_code)->first();
             $users = User::where('id', $rev->userid)->get();
+            $empGoals = $empGoalQuery->where('users.id', auth::user()->id)->get();
+
+            return view('vmt_pms_assigngoals', compact('users','empGoals'));
+
         } elseif (auth()->user()->hasrole('Manager')) {
+            $empGoals = $empGoalQuery->get();
+
             $getId = VmtEmployee::where('userid', auth()->user()->id)->first();
-            $employees = VmtEmployee::select('vmt_employee_details.id', 'emp_name')->join('vmt_employee_office_details',  'emp_id', '=', 'vmt_employee_details.id')->where('l1_manager_code', $getId->emp_no)->get();
-            $users = User::join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.reviewer_id', '=', 'users.id')->get();
+            $employees = VmtEmployee::leftJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
+            ->select(
+                'vmt_employee_details.*', 
+                'users.name as emp_name', 
+            )
+            ->orderBy('created_at', 'ASC')
+            ->whereNotNull('emp_no')
+            ->get();
+             $users = User::join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.reviewer_id', '=', 'users.id')->get();
         } else {
-            $employees = VmtEmployee::all();
-            // $users = User::all();
-            $users = User::join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.reviewer_id', '=', 'users.id')->get();
+            $empGoals = $empGoalQuery->get();
+
+            $employees = VmtEmployee::leftJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
+            ->select(
+                'vmt_employee_details.*', 
+                'users.name as emp_name', 
+            )
+            ->orderBy('created_at', 'ASC')
+            ->whereNotNull('emp_no')
+            ->get();
+
+            $currentEmpCode = VmtEmployee::where('userid', auth::user()->id)->first()->value('emp_no');
+            //$mgr_assignee = User::join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.employee_id', '=', 'users.id')->pluck('name');
+
+            $users = VmtEmployeeOfficeDetails::leftJoin('users', 'users.id', '=', 'vmt_employee_office_details.user_id')
+            ->select(
+                'users.name', 
+                'users.id as id',
+                'vmt_employee_office_details.officical_mail as email',
+            )
+            ->orderBy('users.name', 'ASC')
+            ->where('l1_manager_code', strval($currentEmpCode))
+            ->get();
+            
+            //dd($users);
+            // ->select('users.id' ,'users.name')
+            // ->
+            // ->get();
         }
         return view('vmt_pms_assigngoals', compact('users', 'employees','empGoals'));
+    }
+
+    public function getL1_ManagerName()
+    {
+
+    }
+
+    public function vmtGetAllChildEmployees(Request $request)
+    {
+        if($request->has("emp_id")){
+
+            $currentEmpCode = VmtEmployee::where('userid',$request->emp_id)->pluck('emp_no');
+            $users = VmtEmployeeOfficeDetails::leftJoin('users', 'users.id', '=', 'vmt_employee_office_details.user_id')
+            ->select(
+                'users.name', 
+                'vmt_employee_office_details.emp_id as id',
+            )
+            ->orderBy('users.name', 'ASC')
+            ->where('l1_manager_code', $currentEmpCode)
+            ->get();
+
+            return $users;
+
+        }
+
+        return array();
     }
 
     // publish goals
@@ -55,31 +148,63 @@ class VmtApraisalController extends Controller
         if($request->has("employees")){
             $employeeList  = explode(',', $request->employees[0]); 
             $mailingEmpList  = VmtEmployee::join('vmt_employee_office_details',  'user_id', '=', 'vmt_employee_details.userid')->whereIn('userid', $employeeList)->pluck('officical_mail'); 
-            $mailingRevList  = User::whereIn('id', array($request->reviewer))->pluck('email'); 
+            $mailingRevList  = VmtEmployeeOfficeDetails::whereIn('id', array($request->reviewer))->pluck('officical_mail'); 
             
             //dd($employeeList);
             foreach ($employeeList as $index => $value) {
                 // code...
                 $empPmsGoal = new VmtEmployeePMSGoals; 
                 $empPmsGoal->kpi_table_id   = $request->kpitable_id;
-                $empPmsGoal->assignment_period_start = $request->assignment_period_start;
-                $empPmsGoal->assignment_period_end = $request->assignment_period_end;
-                $empPmsGoal->assignment_period_year = $request->assignment_period_year;
+                $empPmsGoal->assignment_period = $request->assignment_period_start;
+                //$empPmsGoal->assignment_period_start = $request->assignment_period_start;
+                //$empPmsGoal->assignment_period_end = $request->assignment_period_end;
+                //$empPmsGoal->assignment_period_year = $request->assignment_period_year;
                 $empPmsGoal->coverage     = $request->coverage;
                 $empPmsGoal->reviewer_id  = $request->reviewer;
                 $empPmsGoal->employee_id  = $value; 
                 $empPmsGoal->mail_link    = url('vmt-pmsappraisal-review'); 
                 $empPmsGoal->author_id    = auth::user()->id; 
-                $empPmsGoal->self_approved  = false;
+
+                if(auth::user()->hasRole(['HR','Admin']) ){
+
+                    $empPmsGoal->is_employee_accepted  = true;
+                    $empPmsGoal->is_employee_submitted  = false;
+                    $empPmsGoal->is_manager_approved  = true;
+                    $empPmsGoal->is_manager_submitted  = false;
+                    $empPmsGoal->is_hr_submitted  = false;
+
+                }
+                // else
+                if(auth::user()->hasRole(['Employee','Manager']) ){
+                    
+                    // if employeee is creating kpi table
+                    if($value == auth::user()->id){
+                        $empPmsGoal->is_employee_accepted  = true;//When Mgr sets KPI
+                        $empPmsGoal->is_manager_approved  = false;//When Mgr sets KPI
+                    }else{
+                        $empPmsGoal->is_employee_accepted  = false;//When manager sets KPI
+                        $empPmsGoal->is_manager_approved  = true;//When Mgr sets KPI
+
+                    }
+
+                   
+                    $empPmsGoal->is_employee_submitted  = false;
+                    $empPmsGoal->is_manager_submitted  = false;
+                    $empPmsGoal->is_hr_submitted  = false;
+                }
+
                 $empPmsGoal->save();
             }
             if (auth()->user()->hasrole('Employee')) {
-                \Mail::to($mailingRevList)->send(new VmtAssignGoals(url('vmt-pmsappraisal-review')));
+                \Mail::to($mailingRevList)->send(new VmtAssignGoals(url('pms-employee-reviews?goal_id='.$request->kpitable_id.'&user_id='.auth::user()->id)));
             } else {
-                \Mail::to($mailingEmpList)->send(new VmtAssignGoals(url('vmt-pmsappraisal-review')));
+               $finalMailList = $mailingEmpList->merge($mailingRevList);
+                \Mail::to($finalMailList)->send(new VmtAssignGoals(url('vmt-pms-assigngoals')));
             }
-            return "Goal Published";
+            return "Question Created Successfully";
         }
+        return "Permission Denied";
+
     }
 
     // Store Assigned Goals
@@ -180,6 +305,34 @@ class VmtApraisalController extends Controller
         return 'Question Deleted';
     }
 
+    //Used by both Employee and Manager KPI approval.
+    public function approveRejectKPITable(Request $request){
+    
+        if(auth::user()->hasRole('Employee') ){
+
+           $vmtEmployeeGoal =   VmtEmployeePMSGoals::where('kpi_table_id', $request->goal_id)->where('employee_id', $request->user_id)->first(); 
+           $vmtEmployeeGoal->is_employee_accepted = $request->approve_flag ? 1 : 0;
+           $vmtEmployeeGoal->save();
+
+           // is_manager_approved
+
+            
+           $returnMsg = $request->approve_flag ? 'KPI has been accepted. Mail notification sent' : 'KPI has been rejected. Mail notification sent';
+           return $returnMsg;
+        }
+        
+        if(auth::user()->hasRole('Manager') ){
+            $vmtEmployeeGoal =   VmtEmployeePMSGoals::where('kpi_table_id', $request->goal_id)->where('employee_id', $request->user_id)->first(); 
+            $vmtEmployeeGoal->is_manager_approved = $request->approve_flag ? 1 : 0;
+            $vmtEmployeeGoal->save();
+
+            $returnMsg = $request->approve_flag ? 'KPI has been approved. Mail notification sent' : 'KPI has been rejected. Mail notification sent';
+            return $returnMsg;
+        }
+
+        return "Error !";
+    }
+
     // show kpi table assigned for employees
     public function showEmployeeApraisalReview(Request $request)
     {
@@ -187,13 +340,18 @@ class VmtApraisalController extends Controller
         $employeeData    = VmtEmployee::where('userid', auth::user()->id)->first();
         $kpiRows  = [];
         if($employeeData){
-            $assignedGoals  = VmtEmployeePMSGoals::where('employee_id', $employeeData->id)->orderBy('updated_at', 'DESC')->first();
-            $showModal = false; 
+            $assignedGoals  = VmtEmployeePMSGoals::where('kpi_table_id', $request->id)->where('employee_id', auth::user()->id)->orderBy('updated_at', 'DESC')->first();
+            //dd($assignedGoals);
+            $showModal = false;
+            $reviewCompleted = false; 
+
             if($assignedGoals){
-                $showModal = $assignedGoals->self_approved ? false : true;
+                $showModal = $assignedGoals->is_employee_accepted ? false : true;
                 $kpiData  = VmtKPITable::find($assignedGoals->kpi_table_id);
+                //dd($kpiData);
                 if($kpiData){
                     $kpiRowArray  =  explode(',', $kpiData->kpi_rows);
+                    //dd($kpiRowArray);
                     $kpiRows      = VmtAppraisalQuestion::whereIn('id', $kpiRowArray)->get();
 
                     $reviewCompleted = false;
@@ -247,16 +405,17 @@ class VmtApraisalController extends Controller
             $kpiData->self_kpi_review      = $request->selfreview; //null
             $kpiData->self_kpi_percentage  = $request->selfkpiachievement; //null
             $kpiData->self_kpi_comments    = $request->selfcomments;//null
+            $kpiData->is_employee_submitted = 1;//true
             $kpiData->save();
 
             $reviewManager = User::find($kpiData->reviewer_id);
             //dd($reviewManager->email);
-
+            $managerOfficeDetails =  VmtEmployeeOfficeDetails::where('user_id', $kpiData->reviewer_id)->first();
             $currentUser_empDetails = VmtEmployeeOfficeDetails::where('user_id', auth::user()->id)->first();
 
-            \Mail::to($reviewManager->email)->send(new NotifyPMSManager(auth::user()->name, $currentUser_empDetails->designation, $reviewManager->name ));
+            \Mail::to($managerOfficeDetails->officical_mail)->send(new NotifyPMSManager(auth::user()->name, $currentUser_empDetails->designation, $reviewManager->name ));
         }
-        return "Saved.Sent mail to manager ".$reviewManager->email;
+        return "Published Review successfully.Sent mail to manager ".$managerOfficeDetails->officical_mail;
     }
 
     // Manger review : to see kpi table filled by employees
@@ -265,11 +424,12 @@ class VmtApraisalController extends Controller
         // show review for HR
         if(auth::user()->hasRole(['HR','Admin']) ){
             //dd("INside HR login");
-            $pmsGoalList  = VmtEmployeePMSGoals::select('vmt_employee_details.emp_name', 'vmt_employee_pms_goals_table.*' )->rightJoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'vmt_employee_pms_goals_table.author_id')->orderBy('updated_at', 'DESC')->get();
+            //$pmsGoalList  = VmtEmployeePMSGoals::select('vmt_employee_details.emp_name', 'vmt_employee_pms_goals_table.*' )->rightJoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'vmt_employee_pms_goals_table.author_id')->orderBy('updated_at', 'DESC')->get();
 
             if($request->has('goal_id')){
-                $assignedGoals  = VmtEmployeePMSGoals::find($request->goal_id);
-                $employeeData = VmtEmployee::where('id', $assignedGoals->employee_id)->first();
+                
+                $assignedGoals  = VmtEmployeePMSGoals::where('kpi_table_id',$request->goal_id)->where('employee_id', $request->user_id)->first();
+                $employeeData = VmtEmployee::where('userid', $assignedGoals->employee_id)->first();
                 $kpiData      = VmtKPITable::find($assignedGoals->kpi_table_id);
                 $kpiRowArray  = explode(',', $kpiData->kpi_rows);
                 $kpiRows      = VmtAppraisalQuestion::whereIn('id', $kpiRowArray)->get();
@@ -311,7 +471,7 @@ class VmtApraisalController extends Controller
                 }
                 $empSelected = true;
                 //dd($kpiRows);
-                return view('vmt_appraisalreview_hr', compact('pmsGoalList', 'employeeData', 'assignedGoals', 'kpiRows', 'empSelected', 'reviewCompleted'));
+                return view('vmt_appraisalreview_hr', compact( 'employeeData', 'assignedGoals', 'kpiRows', 'empSelected', 'reviewCompleted'));
             }
 
             $kpiRows = [];
@@ -322,12 +482,12 @@ class VmtApraisalController extends Controller
 
 
 
-        $pmsGoalList  = VmtEmployeePMSGoals::select('vmt_employee_details.emp_name', 'vmt_employee_pms_goals_table.*' )->where('reviewer_id', auth::user()->id)->rightJoin('vmt_employee_details', 'vmt_employee_details.id', '=', 'vmt_employee_pms_goals_table.employee_id')->orderBy('updated_at', 'DESC')->get();
+        //$pmsGoalList  = VmtEmployeePMSGoals::select('vmt_employee_details.emp_name', 'vmt_employee_pms_goals_table.*' )->where('reviewer_id', auth::user()->id)->rightJoin('vmt_employee_details', 'vmt_employee_details.id', '=', 'vmt_employee_pms_goals_table.employee_id')->orderBy('updated_at', 'DESC')->get();
 
         if($request->has('goal_id')){
             $reviewCompled  = false;
-            $assignedGoals  = VmtEmployeePMSGoals::find($request->goal_id);
-            $employeeData = VmtEmployee::where('id', $assignedGoals->employee_id)->first();
+            $assignedGoals  = VmtEmployeePMSGoals::where('kpi_table_id',$request->goal_id)->where('employee_id', $request->user_id)->first();
+            $employeeData = VmtEmployee::where('userid', $assignedGoals->employee_id)->first();
             $kpiData      = VmtKPITable::find($assignedGoals->kpi_table_id);
             $kpiRowArray  = explode(',', $kpiData->kpi_rows);
             $kpiRows      = VmtAppraisalQuestion::whereIn('id', $kpiRowArray)->get();
@@ -367,13 +527,66 @@ class VmtApraisalController extends Controller
             }
             $empSelected = true;
 
-            return view('vmt_appraisalreview_manager', compact('pmsGoalList', 'employeeData', 'assignedGoals', 'kpiRows', 'empSelected', 'reviewCompleted'));
+            return view('vmt_appraisalreview_manager', compact( 'employeeData', 'assignedGoals', 'kpiRows', 'empSelected', 'reviewCompleted'));
         }
         
         $kpiRows = [];
         $empSelected = false;
         $reviewCompleted = false; 
-        return view('vmt_appraisalreview_manager', compact('pmsGoalList', 'kpiRows', 'empSelected', 'reviewCompleted'));
+        return view('vmt_appraisalreview_manager', compact( 'kpiRows', 'empSelected', 'reviewCompleted'));
+    }
+
+    public function saveKPItableDraft_HR(Request $request){
+
+        $kpiData  = VmtEmployeePMSGoals::find($request->goal_id);
+
+        if($kpiData){
+
+            $kpiData->hr_kpi_review      = $request->hreview; //null
+            $kpiData->hr_kpi_percentage  = $request->hrpercetage; //null
+            $kpiData->save();
+
+            $kpiData->is_hr_submitted = 0;//false.
+
+            $kpiData->save();
+
+            //dd($officialMailList);
+        }
+
+        return "Saved as draft";
+    }
+
+    // Storing Manager Review given to the employees as Draft
+    public function saveKPItableDraft_Manager(Request $request){
+
+        $kpiData  = VmtEmployeePMSGoals::find($request->goal_id);
+
+        if($kpiData){
+            $kpiData->manager_kpi_review      = $request->managereview; //null
+            $kpiData->manager_kpi_percentage  = $request->managerpercetage; //null
+            //$kpiData->self_kpi_comments    = $request->selfcomments;//null
+
+            $kpiData->is_manager_submitted = 0;//false.
+
+            $kpiData->save();
+
+            //dd($officialMailList);
+        }
+        return "Saved as draft";
+    }
+
+    // Storing  employees kpitable as Draft
+    public function saveKPItableDraft_Employee(Request $request){
+        $kpiData  = VmtEmployeePMSGoals::find($request->goal_id);
+        if($kpiData){
+            $kpiData->self_kpi_review      = $request->selfreview; //null
+            $kpiData->self_kpi_percentage  = $request->selfkpiachievement; //null
+            $kpiData->self_kpi_comments    = $request->selfcomments;//null
+            $kpiData->is_employee_submitted = 0;//false
+            $kpiData->save();
+
+        }
+        return "Saved as draft";
     }
 
     // Storing Manager Review given to the employees
@@ -383,21 +596,23 @@ class VmtApraisalController extends Controller
             $kpiData->manager_kpi_review      = $request->managereview; //null
             $kpiData->manager_kpi_percentage  = $request->managerpercetage; //null
             //$kpiData->self_kpi_comments    = $request->selfcomments;//null
+            $kpiData->is_manager_submitted = 1;//true
+
             $kpiData->save();
 
             $hrReview = User::find($kpiData->author_id);
 
             $currentUser_empDetails = VmtEmployeeOfficeDetails::where('user_id', auth::user()->id)->first();
 
-            $hrList =  User::role('HR')->get(); 
-            $hrEmails = $hrList->pluck('email'); 
-            //$currentUserModel =   VmtEmployeeOfficeDetails::where('id', auth::user()->id)->first();
+            $hrList =  User::role(['HR', 'admin', 'Admin'])->get(); 
+            $hrUsers = $hrList->pluck('id'); 
+            $officialMailList =   VmtEmployeeOfficeDetails::whereIn('user_id', $hrUsers)->pluck('officical_mail');
 
 
-            //dd($reviewManager->email);
-            \Mail::to($hrEmails)->send(new NotifyPMSManager(auth::user()->name,  $currentUser_empDetails->designation,$hrReview->name));
+            //dd($officialMailList);
+            \Mail::to($officialMailList)->send(new NotifyPMSManager(auth::user()->name,  $currentUser_empDetails->designation,$hrReview->name));
         }
-        return "Saved";
+        return "Published Review successfully. Sent mail to HR ".$officialMailList;
     }
 
     // Storing Review Given by HR
@@ -411,14 +626,14 @@ class VmtApraisalController extends Controller
             $kpiData->hr_kpi_percentage  = $request->hrpercetage; //null
             $kpiData->save();
 
-            $managerData   = User::find($kpiData->reviewer_id);
-            $employeeData = VmtEmployee::where('id', $kpiData->employee_id)->first();
+            //$managerData   = User::find($kpiData->reviewer_id);
+            //$employeeData = VmtEmployee::where('id', $kpiData->employee_id)->first();
+            $mailingList = VmtEmployeeOfficeDetails::whereIn('user_id', [$kpiData->employee_id, $kpiData->reviewer_id] )->pluck('officical_mail');
+
             //$reviewManager = User::find($kpiData->reviewer_id);
             //dd($reviewManager->email);
-            \Mail::to([$managerData->email, $employeeData->email_id])
-                ->bcc(auth::user()->email)
-                ->send(new PMSReviewCompleted());
+            \Mail::to($mailingList)->send(new PMSReviewCompleted());
         }
-        return "Saved";   
+        return "Saved.Sent mail to manager and employee ". implode(',', $mailingList->toArray()); // $managerOfficeDetails->officical_mail;
     }
 }
