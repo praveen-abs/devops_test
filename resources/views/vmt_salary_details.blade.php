@@ -2,7 +2,11 @@
 @section('css')
 
 <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
-
+<style>
+    .cursor-pointer {
+        cursor: pointer;
+    }
+</style>
 @endsection
 @section('content')
 
@@ -182,100 +186,103 @@
         </div>
         <div class="tab-pane " id="payslips" role="tabpanel" aria-labelledby="payslips-tab">
             <div class="zp-container bg-white nav-tab-body-top">
-                <div class="fill body payslip-filter-container ">
-                    <i class="icon icon-blue icon-xlg vertical-align-text-bottom text-secondary ri-filter-2-fill"> </i>
-                    <div class="dropdown cursor-pointer payslip-dropdown">
-                        <div id="ember127" class="ember-view">
-                            <div class="dropdown-toggle" data-toggle="dropdown">
-                                <span>Financial Year : </span>
-                                <span class="font-semibold fw-bold text-dark h5">2022 - 23</span>
-                                <span class="caret "></span>
-                            </div>
-                            <ul class="dropdown-menu dropdown-menu-right">
-                                <li data-ember-action="" data-ember-action-129="129"><a>2022 - 23</a></li>
+                <div>
+                    <div class="fill body payslip-filter-container ">
+                        <i class="icon icon-blue icon-xlg vertical-align-text-bottom text-secondary ri-filter-2-fill"> </i>
+                        <div class="dropdown cursor-pointer payslip-dropdown">
+                            <div id="ember127" class="ember-view">
+                                <div class="dropdown-toggle" data-toggle="dropdown">
+                                    <span>Financial Year : </span>
+                                    <span class="font-semibold fw-bold text-dark h5">2022 - 23</span>
+                                    <span class="caret "></span>
+                                </div>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li data-ember-action="" data-ember-action-129="129"><a>2022 - 23</a></li>
 
-                            </ul>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div id="ember130" class="ember-view">
-                    <div class="fill body payslip-list-body scroll scroll-x scroll-y scrollbox ">
-                        <table class="table zp-table paystub-table">
-                            <thead class="fw-bold text-muted h5">
-                                <tr>
-                                    <th width="20%">Month</th>
-                                    <th width="15%">Gross Pay</th>
-                                    <th width="15%">Reimbursements</th>
-                                    <th width="12%">Deductions</th>
-                                    <th width="15%">Take Home</th>
-                                    <th width="10%" class="text-capitalize">payslip</th>
-                                    <th width="13%">Tax Worksheet</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr data-ember-action="" data-ember-action-131="131">
-                                    <td>
-                                        <a href="#/salary-details/payslips/335214000001040001/details" id="ember132"
-                                            class="ember-view text-secondary">
-                                            June 2022
-                                        </a>
-                                        <span class="status-label">
-                                            <!---->
-                                        </span>
-                                    </td>
-                                    <td>
-                                        ₹23,200.00
-                                    </td>
-                                    <td>₹0.00</td>
-                                    <td>₹1,800.00</td>
-                                    <td>₹21,400.00</td>
-                                    <td>
-                                        <a href="#/salary-details/payslips/335214000001040001/details" id="ember133"
-                                            class="ember-view">
-                                            View
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="#/salary-details/payslips/335214000001040001/details?isPayslip=false"
-                                            id="ember134" class="ember-view">
-                                            View
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr data-ember-action="" data-ember-action-135="135">
-                                    <td>
-                                        <a href="#/salary-details/payslips/335214000000934324/details" id="ember136"
-                                            class="ember-view">
-                                            May 2022
-                                        </a>
-                                        <span class="status-label">
-                                            <!---->
-                                        </span>
-                                    </td>
-                                    <td>
-                                        ₹23,200.00
-                                    </td>
-                                    <td>₹0.00</td>
-                                    <td>₹1,800.00</td>
-                                    <td>₹21,400.00</td>
-                                    <td>
-                                        <a href="#/salary-details/payslips/335214000000934324/details" id="ember137"
-                                            class="ember-view">
-                                            View
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="#/salary-details/payslips/335214000000934324/details?isPayslip=false"
-                                            id="ember138" class="ember-view">
-                                            View
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <div id="ember130" class="ember-view">
+                        <div class="fill body payslip-list-body scroll scroll-x scroll-y scrollbox ">
+                            <table class="table zp-table paystub-table">
+                                <thead class="fw-bold text-muted h5">
+                                    <tr>
+                                        <th width="20%">Month</th>
+                                        <th width="15%">Gross Pay</th>
+                                        <th width="15%">Reimbursements</th>
+                                        <th width="12%">Deductions</th>
+                                        <th width="15%">Take Home</th>
+                                        <th width="10%" class="text-capitalize">payslip</th>
+                                        <th width="13%">Tax Worksheet</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr data-ember-action="" data-ember-action-131="131">
+                                        <td>
+                                            <a href="#/salary-details/payslips/335214000001040001/details" id="ember132"
+                                                class="ember-view text-secondary">
+                                                June 2022
+                                            </a>
+                                            <span class="status-label">
+                                                <!---->
+                                            </span>
+                                        </td>
+                                        <td>
+                                            ₹23,200.00
+                                        </td>
+                                        <td>₹0.00</td>
+                                        <td>₹1,800.00</td>
+                                        <td>₹21,400.00</td>
+                                        <td>
+                                            <div id="ember133" data-url="{{route('vmt_employee_payslip')}}"
+                                                class="ember-view cursor-pointer paySlipView text-primary">
+                                                View
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a href="#/salary-details/payslips/335214000001040001/details?isPayslip=false"
+                                                id="ember134" class="ember-view">
+                                                View
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr data-ember-action="" data-ember-action-135="135">
+                                        <td>
+                                            <a href="#/salary-details/payslips/335214000000934324/details" id="ember136"
+                                                class="ember-view">
+                                                May 2022
+                                            </a>
+                                            <span class="status-label">
+                                                <!---->
+                                            </span>
+                                        </td>
+                                        <td>
+                                            ₹23,200.00
+                                        </td>
+                                        <td>₹0.00</td>
+                                        <td>₹1,800.00</td>
+                                        <td>₹21,400.00</td>
+                                        <td>
+                                            <a href="#/salary-details/payslips/335214000000934324/details" id="ember137"
+                                                class="ember-view">
+                                                View
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="#/salary-details/payslips/335214000000934324/details?isPayslip=false"
+                                                id="ember138" class="ember-view">
+                                                View
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
+                    </div>
                 </div>
+                <div id="slipAfterView"></div>
                 <!---->
 
             </div>
@@ -844,5 +851,21 @@
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
+<script>
+    $('body').on('click', '.paySlipView', function(){
+        var url = $(this).attr('data-url');
+        var id = ($(this).attr('id')).replace('ember','');
+        id = 'DM001';
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: {id: id},
+            success: function(data)
+            {
+                var content = '<div class="row"><div class="col-3"><div class="fill body payslip-filter-container "> <i class="icon icon-blue icon-xlg vertical-align-text-bottom text-secondary ri-filter-2-fill"> </i> <div class="dropdown cursor-pointer payslip-dropdown"><div id="ember127" class="ember-view"><div class="dropdown-toggle" data-toggle="dropdown"><span>Financial Year : </span><span class="font-semibold fw-bold text-dark h5">2022 - 23</span><span class="caret "></span></div><ul class="dropdown-menu dropdown-menu-right"><li data-ember-action="" data-ember-action-129="129"><a>2022 - 23</a></li> </ul></div></div></div></div><div class="col-9">'+data+'</div></div>'
+                $("#slipAfterView").html(content);
+            }
+        });
+    });
+</script>
 @endsection
