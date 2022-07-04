@@ -23,11 +23,11 @@
                                     <div class="row w-100">
                                         <div class="col-md-5">
                                             <div class="profile-info-left h-100">
-                                                <h4 class="user-name fw-bold">John Doe</h4>
-                                                <h6 class="departmnet fw-bold text-muted">UI/UX Design Team</h6>
-                                                <h5 class="role text-muted fw-bold">Web Designer</h5>
-                                                <div class="staff-id fw-bold text-dark">Employee ID : FT-0001</div>
-                                                <div class="small fw-bold text-muted">Date of Join : 1st Jan 2013</div>
+                                                <h4 class="user-name fw-bold">{{$user->name}}</h4>
+                                                <h6 class="departmnet fw-bold text-muted">{{$details->department}}</h6>
+                                                <h5 class="role text-muted fw-bold">{{$details->designation}}</h5>
+                                                <div class="staff-id fw-bold text-dark">Employee ID : {{$details->emp_no}}</div>
+                                                <div class="small fw-bold text-muted">Date of Join : {{date('d-m-Y', strtotime($details->doj))}}</div>
                                                 <div class="staff-msg mt-4 "><a class="btn btn-custom" href="chat.html">
                                                         <button class="btn btn-primary">Send Message</button>
                                                     </a>
@@ -38,24 +38,24 @@
                                             <ul class="personal-info">
                                                 <li>
                                                     <div class="title">Phone:</div>
-                                                    <div class="text"><a href="">9876543210</a></div>
+                                                    <div class="text"><a href="">{{$details->mobile_number}}</a></div>
                                                 </li>
                                                 <li>
                                                     <div class="title">Email:</div>
-                                                    <div class="text"><a href="">johndoe@example.com</a></div>
+                                                    <div class="text"><a href="">{{$user->email}}</a></div>
                                                 </li>
                                                 <li>
                                                     <div class="title">Birthday:</div>
-                                                    <div class="text">24th July</div>
+                                                    <div class="text">{{date('d F', strtotime($details->dob))}}</div>
                                                 </li>
                                                 <li>
                                                     <div class="title">Address:</div>
-                                                    <div class="text">1861 Bayonne Ave, Manchester Township, NJ, 08759
+                                                    <div class="text">{{$details->present_address}}
                                                     </div>
                                                 </li>
                                                 <li>
                                                     <div class="title">Gender:</div>
-                                                    <div class="text">Male</div>
+                                                    <div class="text">{{$details->gender}}</div>
                                                 </li>
                                                 <li>
                                                     <div class="title">Reports to:</div>
@@ -68,7 +68,7 @@
                                                             </div>
                                                         </div>
                                                         <a href="profile.html">
-                                                            Jeffery Lalor
+                                                            {{$details->l1_manager_name}}
                                                         </a>
                                                     </div>
                                                 </li>
@@ -120,15 +120,15 @@
                                     <ul class="personal-info">
                                         <li>
                                             <div class="title">Passport No.</div>
-                                            <div class="text">9876543210</div>
+                                            <div class="text">{{$details->passport}}</div>
                                         </li>
                                         <li>
                                             <div class="title">Passport Exp Date.</div>
-                                            <div class="text">9876543210</div>
+                                            <div class="text">{{$details->passport}}</div>
                                         </li>
                                         <li>
                                             <div class="title">Tel</div>
-                                            <div class="text"><a href="">9876543210</a></div>
+                                            <div class="text"><a href="">{{$details->mobile_number}}</a></div>
                                         </li>
                                         <li>
                                             <div class="title">Nationality</div>
@@ -140,7 +140,7 @@
                                         </li>
                                         <li>
                                             <div class="title">Marital status</div>
-                                            <div class="text">Married</div>
+                                            <div class="text">{{$details->marrital_status}}</div>
                                         </li>
                                         <li>
                                             <div class="title">Employment of spouse</div>
@@ -164,7 +164,7 @@
                                     <ul class="personal-info">
                                         <li>
                                             <div class="title">Name</div>
-                                            <div class="text">John Doe</div>
+                                            <div class="text">{{$details->father_name}}</div>
                                         </li>
                                         <li>
                                             <div class="title">Relationship</div>
@@ -172,7 +172,7 @@
                                         </li>
                                         <li>
                                             <div class="title">Phone </div>
-                                            <div class="text">9876543210, 9876543210</div>
+                                            <div class="text">{{$details->mobile_number}}, {{$details->official_mobile}}</div>
                                         </li>
                                     </ul>
                                     <hr>
@@ -203,19 +203,19 @@
                                     <ul class="personal-info">
                                         <li>
                                             <div class="title">Bank name</div>
-                                            <div class="text">ICICI Bank</div>
+                                            <div class="text">{{$details->bank_name}}</div>
                                         </li>
                                         <li>
                                             <div class="title">Bank account No.</div>
-                                            <div class="text">159843014641</div>
+                                            <div class="text">{{$details->bank_account_number}}</div>
                                         </li>
                                         <li>
                                             <div class="title">IFSC Code</div>
-                                            <div class="text">ICI24504</div>
+                                            <div class="text">{{$details->bank_ifsc_code}}</div>
                                         </li>
                                         <li>
                                             <div class="title">PAN No</div>
-                                            <div class="text">TC000Y56</div>
+                                            <div class="text">{{$details->pan_card}}</div>
                                         </li>
                                     </ul>
                                 </div>

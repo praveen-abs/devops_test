@@ -33,6 +33,7 @@ Route::get('/registerNewAccount', function(){
 })->name('registerNewAccount');
 
 Route::get('pages-profile', [App\Http\Controllers\HomeController::class, 'showProfile']);
+Route::get('pages-profile-settings', [App\Http\Controllers\HomeController::class, 'showProfilePage']);
 
 Route::get('test-email', 'App\Http\Controllers\HomeController@testEmail');
 
