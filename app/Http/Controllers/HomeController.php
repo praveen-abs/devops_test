@@ -138,6 +138,22 @@ class HomeController extends Controller
     }
 
     // 
+    public function storePersonalInfo(Request $request) {
+        $user = User::find($request->id);
+        $user->name = $request->input('name');
+        $user->save();
+        $reDetails = VmtEmployee::where('userid', $request->id)->first();
+        $details = VmtEmployee::find($reDetails->id);
+        $details->dob = $request->input('dob');
+        $details->gender = $request->input('gender');
+        $details->present_address = $request->input('present_address');
+        $details->mobile_number = $request->input('mobile_number');
+        $details->save();
+        Ses::flash('message', 'User Details Updated successfully!');
+        Ses::flash('alert-class', 'alert-success');
+        return redirect()->back();
+    }
+
     public function storeGeneralSettings(Request $request){
         //dd($request->all());
         $vmtSettings = VmtGeneralSettings::orderBy('id', 'desc')->first();
