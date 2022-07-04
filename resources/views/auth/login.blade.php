@@ -3,16 +3,26 @@
 @lang('translation.signin')
 @endsection
 @section('content')
+<?php
+    $logoObj = \DB::table('vmt_general_info')->first();
+
+    if($logoObj){
+        $logoSrc = $logoObj->logo_img;
+    }else{
+        $logoSrc = 'assets/images/vasa.jpg';
+    }
+    //dd($logoSrc);
+?>
 <div class="container-fluid conya">
 
     <div class="side-left d-flex align-items-center justify-content-center">
         <!-- <img src="{{ URL::asset($generalInfo->background_img) }}" alt="brand-logo" class="mx-2 w-100 h-100"> -->
 
-        <img src="{{ URL::asset('assets/images/small/img-9.jpg') }}" alt="brand-logo" class="h-75 w-75 ">
+        <img src="{{ URL::asset($generalInfo->background_img) }}" alt="brand-logo" class="h-75 w-75 ">
 
         <div class="side-right">
             <div class="text-center mt-5">
-                <img src="{{ URL::asset('assets/images/logo-sm.png') }}" alt="brand-logo" class="h-50 w-50 mt-3">
+                <img src="{{ URL::asset($logoSrc) }}" alt="brand-logo" class="h-50 w-50 mt-3">
             </div>
             <div class="p-2 mt-2">
                 <form action="{{ route('login') }}" method="POST">
@@ -20,7 +30,7 @@
                     <div class="mb-2">
                         <label for="username" class="form-label">Username</label>
                         <input type="text" class="form-control @error('email') is-invalid @enderror"
-                            value="{{ old('email', 'admin@gmail.com') }}" id="username" name="email"
+                            value="{{ old('email', 'hr_augustin@vasagroup.abshrms.com') }}" id="username" name="email"
                             placeholder="Enter username">
                         @error('email')
                         <span class="invalid-feedback" role="alert">
@@ -34,7 +44,7 @@
                         <label class="form-label" for="password-input">Password</label>
                         <div class="position-relative auth-pass-inputgroup mb-2">
                             <input type="password" class="form-control pe-5 @error('password') is-invalid @enderror"
-                                name="password" placeholder="Enter password" id="password-input" value="123123123">
+                                name="password" placeholder="Enter password" id="password-input" value="Abs@123123">
                             <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted"
                                 type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
                             @error('password')
