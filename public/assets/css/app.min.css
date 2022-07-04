@@ -245,7 +245,9 @@
     height: 42px;
     width: 42px
 }
-
+.navbar-header .btn-topbar  svg,.settings-icon svg{
+width: 18px;
+}
 @media (max-width:360px) {
     .navbar-header .btn-topbar {
         height: 36px;
@@ -1983,9 +1985,7 @@
     z-index: 1;
 
 }
-.navbar-menu .navbar-nav .nav-link::after {
-    
-}
+
 
 .navbar-menu .navbar-nav .nav-item .menu-link hr {
     position: absolute;
