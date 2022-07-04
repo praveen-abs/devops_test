@@ -811,7 +811,7 @@
                                                     <label>Birth Date</label>
                                                     <div class="cal-icon">
                                                         <input class="form-control datetimepicker" type="date" name="dob" 
-                                                            value="{{date('Y-m-d', strtoime($details->dob))}}">
+                                                            value="{{date('Y-m-d', strtotime($details->dob))}}">
                                                     </div>
                                                 </div>
                                             </div>
