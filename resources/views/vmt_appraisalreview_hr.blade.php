@@ -214,7 +214,7 @@
                                 <tr>
                                     <th scope="row">{{$kpiRow->dimension}}</th>
                                     <td>
-                                        <div>{{$kpiRow->dimension}}</div>
+                                        <div>{{$kpiRow->kpi}}</div>
                                     </td>
                                     <td>
                                         <div> {{$kpiRow->operational_definition}} </div>

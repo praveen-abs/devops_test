@@ -34,7 +34,8 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link d-flex" href="{{url('index')}}">
                         <div class="d-flex flex-column align-items-center justify-content-center">
-                            <img src="{{ URL::asset('assets/images/dashboard.png') }}" alt="" class="m-2">
+                            <!-- <img src="{{ URL::asset('assets/images/dashboard.png') }}" alt="" class="m-2"> -->
+                            <img src="{{ URL::asset('assets/images/svg_icon/home.svg') }}" alt="" class="m-2">
                             <span data-key="t-landing">Dashboard</span>
                         </div>
                         <div class="left-line">
@@ -169,13 +170,14 @@
 
                 @hasrole("Admin")
                 <li class="nav-item">
-                    <a class="nav-link menu-link d-flex" role="button">
+                
+                    <a class="nav-link menu-link d-flex" href="#ORG-Drop-Down" data-bs-toggle="collapse" role="button">
                         <div class="d-flex flex-column align-items-center justify-content-center ">
                             <img src="{{ URL::asset('assets/images/organisation.png') }}" alt="" class="m-2">
                             <span>Org</span>
                         </div>
                     </a>
-                    <div class="collapse menu-dropdown" id="ticketingDrop-Down">
+                    <div class="collapse menu-dropdown" id="ORG-Drop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item ">
                                 <a href="{{url('vmt-employess/directory')}}" id="" class="nav-link py-1"

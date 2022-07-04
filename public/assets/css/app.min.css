@@ -392,14 +392,14 @@
 }
 
 [data-topbar=dark] .navbar-header .btn-topbar {
-    
+
     color: var(--vz-header-item-color-dark)
 }
 
-[data-topbar=dark] .navbar-header .btn-topbar:focus
-{
+
+[data-topbar=dark] .navbar-header .btn-topbar:focus {
     background-color: hsl(207.2, 100%, 16.9%);
-    color: hsla(0, 0%, 100%, .85)     
+    color: hsla(0, 0%, 100%, .85)
 }
 
 @media (min-width:767.99px) {
@@ -17124,17 +17124,18 @@ body {
 
 .conya {
     height: 100%;
+    background-color: #3a3a3a;
+    position: relative;
 }
 
 .side-left {
-    background-color: white;
+    background-color: #ebcca2;
     height: 100%;
-    width: calc(100% - 400px);
+    width: calc(100% - 300px);
     float: left;
-    /*background-image: url("../images/coming-soon-img.png"); */
-    background-size: 100%;
-    background-repeat: no-repeat;
-
+    position: relative;
+    /* border-radius: 25px ; */
+    border-radius: 0px 130px 130px 0px;
 }
 
 @media screen and (max-width: 660px) {
@@ -17143,21 +17144,22 @@ body {
     }
 }
 
-.side-left .sid-layy {
+/* .side-left .sid-layy {
     background-color: rgba(135, 63, 217, 0.73);
     position: absolute;
     width: 100%;
     height: 100%;
     width: calc(100% - 400px);
-}
+} */
 
 .side-right {
     background-color: #FFF;
-    height: 100%;
-    width: 400px;
-    float: left;
+    height: 600px;
+    width: 450px;
+    right: -200px;
     padding: 20px;
-    /* text-align: center; */
+    position: absolute;
+    border-radius: 10px;
 }
 
 @media screen and (max-width: 660px) {
@@ -17457,6 +17459,20 @@ body {
     min-height: 430px;
 }
 
+.font-semibold {
+    font-size: 17px;
+    font-weight: 600;
+    color: #3B3944;
+}
+
+.mbottom-small {
+    margin-bottom: 5px !important;
+}
+
+.no-pad-left {
+    padding-left: 0 !important;
+}
+
 .dashboard-card {
     background-color: #fff;
     padding: 20px 25px;
@@ -17484,7 +17500,7 @@ body {
 .payslip-details-card .nav-pills.nav-tabs-dashed li a.active {
     color: #3B3944;
     border-bottom-color: #002f56;
-    
+
 }
 
 .payslip-details-card .nav-pills.nav-tabs-dashed li a {
@@ -17567,7 +17583,7 @@ body {
 .salary-summary-chart .default-label {
     font-size: 14px;
     fill: #3B3944;
-    
+
     text-transform: uppercase;
 }
 
@@ -17624,11 +17640,16 @@ a.ember-view {
 .ember-view i {
     font-size: 15px;
     position: absolute;
+    top: -2px;
 }
 
 .deduction-summary-card {
     margin: 0 0 30px;
     min-height: 150px;
+}
+
+.text-light-black {
+    color: #454351;
 }
 
 .dashboard-card-header {
@@ -17699,9 +17720,7 @@ a.ember-view {
     height: 68px;
 }
 
-.salary-header.nav-tab-header .nav-pills.nav-tabs-dashed {
-    margin-top: 15px;
-}
+
 
 .nav-pills>li {
     float: left;
@@ -17719,7 +17738,7 @@ a.ember-view {
 }
 
 .salary-header.nav-tab-header .nav-pills.nav-tabs-dashed li a.active {
-    
+
     border-bottom-color: #002f56;
 }
 
@@ -17797,8 +17816,16 @@ a.ember-view {
 }
 
 .salary-summary-chart svg {
-    height: 130px;
-    width: 130px;
+    height: 160px;
+    width: 160px;
+}
+
+.pay-chart-column .default-text,
+.payslip-summary-chart .default-text,
+.salary-summary-chart .default-text {
+    font-size: 12px;
+    fill: #3B3944;
+
 }
 
 .pull-right {
@@ -18302,12 +18329,12 @@ svg.icon.icon-xxlg {
 .table.zp-table.ytd-summary-column-table tbody>tr td.ytd-components-header,
 .table.zp-table.ytd-summary-column-table tfoot>tr td.ytd-components-header,
 .table.zp-table.ytd-summary-column-table thead>tr td.ytd-components-header {
-    
+
     font-size: 15px;
 }
 
 .table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column tbody td {
-    
+
     border-right: 1px solid #eee;
 }
 
@@ -18319,65 +18346,99 @@ svg.icon.icon-xxlg {
 .table.zp-table.ytd-summary-table tbody>tr td.label-column .ytd-summary-column-table thead th.component-name {
     color: #7C7889;
 }
-.table.zp-table.ytd-summary-column-table tbody>tr td .period-header, .table.zp-table.ytd-summary-column-table tfoot>tr td .period-header, .table.zp-table.ytd-summary-column-table thead>tr td .period-header {
+
+.table.zp-table.ytd-summary-column-table tbody>tr td .period-header,
+.table.zp-table.ytd-summary-column-table tfoot>tr td .period-header,
+.table.zp-table.ytd-summary-column-table thead>tr td .period-header {
     font-size: 15px;
 }
-.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+
+.table>tbody>tr>td,
+.table>tbody>tr>th,
+.table>tfoot>tr>td,
+.table>tfoot>tr>th,
+.table>thead>tr>td,
+.table>thead>tr>th {
     padding: 8px;
     line-height: 1.6;
     vertical-align: top;
     border-top: 1px solid #eee;
 }
-.table.zp-table.ytd-summary-table tbody>tr .ytd-summary-column-table tbody tr td.total-header, .table.zp-table.ytd-summary-table tbody>tr table.ytd-summary-column-table.month-table tbody tr td.month-header {
+
+.table.zp-table.ytd-summary-table tbody>tr .ytd-summary-column-table tbody tr td.total-header,
+.table.zp-table.ytd-summary-table tbody>tr table.ytd-summary-column-table.month-table tbody tr td.month-header {
     border-bottom: 1px solid #eee;
 }
+
 .table.zp-table.monthly-summary-table tbody tr td.amount-column:last-child tbody tr td:last-child {
     padding-right: 50px;
 }
-.table.zp-table.ytd-summary-column-table tbody>tr td.empty-cell, .table.zp-table.ytd-summary-column-table tfoot>tr td.empty-cell, .table.zp-table.ytd-summary-column-table thead>tr td.empty-cell {
+
+.table.zp-table.ytd-summary-column-table tbody>tr td.empty-cell,
+.table.zp-table.ytd-summary-column-table tfoot>tr td.empty-cell,
+.table.zp-table.ytd-summary-column-table thead>tr td.empty-cell {
     height: 55px;
 }
-.table.zp-table.ytd-summary-column-table tbody>tr td .period-header, .table.zp-table.ytd-summary-column-table tfoot>tr td .period-header, .table.zp-table.ytd-summary-column-table thead>tr td .period-header {
+
+.table.zp-table.ytd-summary-column-table tbody>tr td .period-header,
+.table.zp-table.ytd-summary-column-table tfoot>tr td .period-header,
+.table.zp-table.ytd-summary-column-table thead>tr td .period-header {
     font-size: 15px;
 }
+
 table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
     max-width: 250px;
 }
+
 .table.zp-table.ytd-summary-table tbody>tr td.amount-column {
     min-width: 140px;
     max-width: 180px;
 }
+
 .table.zp-table.ytd-summary-table tbody>tr td {
     padding: 0;
     border: 0;
     font-size: 14px;
     height: 55px;
 }
-.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+
+.table>tbody>tr>td,
+.table>tbody>tr>th,
+.table>tfoot>tr>td,
+.table>tfoot>tr>th,
+.table>thead>tr>td,
+.table>thead>tr>th {
     padding: 8px;
     line-height: 1.6;
     vertical-align: top;
     border-top: 1px solid #eee;
 }
+
 .amount-column:first-of-type .ytd-summary-column-table tbody tr td {
-    border-left: none!important;
+    border-left: none !important;
 }
-.table.zp-table.ytd-summary-table tbody>tr .ytd-summary-column-table tbody tr td.total-header, .table.zp-table.ytd-summary-table tbody>tr table.ytd-summary-column-table.month-table tbody tr td.month-header {
+
+.table.zp-table.ytd-summary-table tbody>tr .ytd-summary-column-table tbody tr td.total-header,
+.table.zp-table.ytd-summary-table tbody>tr table.ytd-summary-column-table.month-table tbody tr td.month-header {
     border-bottom: 1px solid #eee;
 }
+
 .table.zp-table.monthly-summary-table tbody tr td.amount-column:last-child tbody tr td:last-child {
     padding-right: 50px;
 }
-.scrollable-table-section .table.zp-table, .table.zp-table.ytd-summary-column-table {
+
+.scrollable-table-section .table.zp-table,
+.table.zp-table.ytd-summary-column-table {
     margin: 0;
     border: 0;
 }
+
 .text-right {
     text-align: right;
 }
 
 /* form 16 */
-.fill-header{
+.fill-header {
     padding: 0 15px;
     margin-left: 25px;
     overflow: visible;
@@ -18387,9 +18448,10 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
     right: 0;
     height: 68px;
 }
-.fill-header h3{
+
+.fill-header h3 {
     color: #454351;
     font-size: 25px;
-    
+
     margin-top: 20px;
 }

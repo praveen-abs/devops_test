@@ -14,103 +14,96 @@
     //dd($logoSrc);
 ?>
 <div class="container-fluid conya">
-    <div class="side-left">
-        <img src="{{ URL::asset($generalInfo->background_img) }}" alt="brand-logo" class="mx-2 w-100 h-100">
-    </div>
-    <div class="side-right">
-        <div class="text-center mt-5">
-            <img src="{{ URL::asset($logoSrc) }}" alt="brand-logo" class="h-50 w-50 mt-3">
-        </div>
-        <div class="p-2 mt-2">
-            <form action="{{ route('login') }}" method="POST">
-                @csrf
-                <div class="mb-2">
-                    <label for="username" class="form-label">Username</label>
-                    <input type="text" class="form-control @error('email') is-invalid @enderror"
-                        value="{{ old('email', 'hr_augustin@vasagroup.abshrms.com') }}" id="username" name="email"
-                        placeholder="Enter username">
-                    @error('email')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                </div>
 
-                <div class="mb-2">
+    <div class="side-left d-flex align-items-center justify-content-center">
+        <!-- <img src="{{ URL::asset($generalInfo->background_img) }}" alt="brand-logo" class="mx-2 w-100 h-100"> -->
 
-                    <label class="form-label" for="password-input">Password</label>
-                    <div class="position-relative auth-pass-inputgroup mb-2">
-                        <input type="password" class="form-control pe-5 @error('password') is-invalid @enderror"
-                            name="password" placeholder="Enter password" id="password-input" value="Abs@123123">
-                        <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted"
-                            type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
-                        @error('password')
+        <img src="{{ URL::asset($generalInfo->background_img) }}" alt="brand-logo" class="h-75 w-75 ">
+
+        <div class="side-right">
+            <div class="text-center mt-5">
+                <img src="{{ URL::asset($logoSrc) }}" alt="brand-logo" class="h-50 w-50 mt-3">
+            </div>
+            <div class="p-2 mt-2">
+                <form action="{{ route('login') }}" method="POST">
+                    @csrf
+                    <div class="mb-2">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control @error('email') is-invalid @enderror"
+                            value="{{ old('email', 'hr_augustin@vasagroup.abshrms.com') }}" id="username" name="email"
+                            placeholder="Enter username">
+                        @error('email')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
                     </div>
-                </div>
 
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="auth-remember-check">
-                    <label class="form-check-label" for="auth-remember-check">Remember
-                        me</label>
-                    <div class="float-end">
-                        <a href="auth-pass-reset-basic" class="text-muted">Forgot
-                            password?</a>
-                    </div>
-                </div>
+                    <div class="mb-2">
 
-
-                <div class="mt-4 text-center">
-                    <button class="btn sign-in-btn text-white  waves-effect waves-light w-50"
-                        type="submit">Sign-In</button>
-
-                </div>
-                <!-- <div class="mt-4 text-center">
-                                        <p class="mb-0">Don't have an account ?</p>
-                                    </div> -->
-                <div class="mb-2">
-
-                    <div class="divider d-flex align-items-center my-3 mb-2">
-                        <p class="text-center  mx-3 mb-0 text-muted">OR</p>
-                    </div>
-
-                </div>
-                <div class="mb-2">
-
-                    <div class="d-flex align-items-center justify-content-center flex-column">
-                        <div>
-                            <p class="text-center mb-2 text-muted">Connect with</p>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between mb-4">
-                            <button class="btn  mx-2 google-btn text-white rounded-circle">
-                                <span class="ri-google-fill"></span>
-                                <!-- Google -->
-                            </button>
-                            <button class="btn  mx-2 linked-in-btn text-white rounded-circle">
-                                <span class="ri-linkedin-fill "></span>
-                                <!-- Linked-in -->
-                            </button>
-                            <button class="btn btn primary mx-2 facebook-btn text-white rounded-circle">
-                                <span class="ri-facebook-fill "></span>
-                                <!-- Facebook -->
-                            </button>
+                        <label class="form-label" for="password-input">Password</label>
+                        <div class="position-relative auth-pass-inputgroup mb-2">
+                            <input type="password" class="form-control pe-5 @error('password') is-invalid @enderror"
+                                name="password" placeholder="Enter password" id="password-input" value="Abs@123123">
+                            <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted"
+                                type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
+                            @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
                         </div>
                     </div>
 
-                </div>
-            </form>
-        </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="auth-remember-check">
+                        <label class="form-check-label" for="auth-remember-check">Remember
+                            me</label>
+                        <div class="float-end">
+                            <a href="auth-pass-reset-basic" class="text-muted">Forgot
+                                password?</a>
+                        </div>
+                    </div>
 
-        <!-- <div class="power-by text-center mb-2">
-            <p class="mx-2">Powered By</p>
-        </div> -->
-        <div class="d-flex justify-content-center align-items-center mt-5">
-            <img src="{{ URL::asset('assets/images/powerby.png') }}" alt="brand-logo" class="mx-2 w-100 h-75">
+
+                    <div class="my-3 text-center">
+                        <button class="btn sign-in-btn text-white  waves-effect waves-light w-50"
+                            type="submit">Sign-In</button>
+
+                    </div>
+
+                    <div class="">
+
+                        <div class="d-flex align-items-center justify-content-center flex-column">
+                            <div class="mb-3">
+                                <p class="text-center text-muted">Connect with</p>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <button class="btn  mx-2 google-btn text-white ">
+                                    <span class="ri-google-fill"></span>
+
+                                </button>
+                                <button class="btn  mx-2 linked-in-btn text-white ">
+                                    <span class="ri-linkedin-fill "></span>
+
+                                </button>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+
+            <div class="d-flex justify-content-center align-items-center mt-4">
+                <img src="{{ URL::asset('assets/images/powerby.png') }}" alt="brand-logo" class="mx-2 w-100 h-75">
+            </div>
         </div>
     </div>
+
+</div>
+
 
 </div>
 @endsection

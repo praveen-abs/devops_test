@@ -11,7 +11,7 @@
 @slot('title') Assign Roles @endslot
 @endcomponent
 
-<div class="container-fluid home-wrapper">
+<div class="container-fluid home-wrapper px-5">
     <div class="row">
         <div class="col-12">
             <div class="payslip-details-card dashboard-card">
@@ -44,7 +44,7 @@
                                         <g class="pie-container" transform="translate(100, 100)">
                                             <path
                                                 d="M6.123233995736766e-15,-100A100,100 0 1,1 -46.84084406997906,-88.35120444460226L-30.44654864548639,-57.42828288899147A65,65 0 1,0 3.980102097228898e-15,-65Z"
-                                                class="arc cursor-pointer" style="fill: rgb(71, 217, 160);"></path>
+                                                class="arc cursor-pointer" style="fill:#002f56"></path>
                                             <path
                                                 d="M-46.84084406997906,-88.35120444460226A100,100 0 0,1 -1.8369701987210297e-14,-100L-1.1940306291686693e-14,-65A65,65 0 0,0 -30.44654864548639,-57.42828288899147Z"
                                                 class="arc cursor-pointer" style="fill: rgb(255, 105, 121);"></path>
@@ -55,15 +55,15 @@
                         <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="pay-info-column">
                                 <div class="pay-info-item netpay">
-                                    <label class="text-muted">Take Home</label>
+                                    <label class="text-grey">Take Home</label>
                                     <div><span class="font-moderate font-mediumbold">₹21,400.00</span></div>
                                 </div>
                                 <div class="pay-info-item deductions">
-                                    <label class="text-muted">Deductions</label>
+                                    <label class="text-grey">Deductions</label>
                                     <div><span class="font-moderate font-mediumbold">₹1,800.00</span></div>
                                 </div>
                                 <div class="pay-info-item grosspay">
-                                    <label class="text-muted">Gross Pay</label>
+                                    <label class="text-grey">Gross Pay</label>
                                     <div><span class="font-moderate font-mediumbold">₹23,200.00</span></div>
                                 </div>
                             </div>
@@ -101,7 +101,7 @@
                         </svg>
                         Tax Summary: FY 2022 - 2023
                     </span>
-                    <div class="font-mm font-regular text-muted pull-right t">You've opted for the Old Regime <span
+                    <div class="font-mm font-regular text-grey pull-right t">You've opted for the Old Regime <span
                             class="font-mediumbold">(IT Declaration Based)</span></div>
                     <!---->
                 </h5>
@@ -140,7 +140,7 @@
                             <div class="media-body w-100">
                                 <div class="font-mediumbold font-medium" style="line-height: 26px;">You're tax free!
                                 </div>
-                                <span class="text-muted font-mm">Since your taxable income is within the no-tax slab,
+                                <span class="text-grey font-mm">Since your taxable income is within the no-tax slab,
                                     you
                                     don't have to pay any income tax this financial year.</span>
                             </div>
@@ -167,28 +167,34 @@
                         </path>
                     </svg>
                     EPF Summary
-                    <span class="font-regular font-mm text-muted">Year to Date</span>
+                    <span class="font-regular font-mm text-grey">Year to Date</span>
                 </h5>
                 <div class="row group">
                     <div class="col-md-4 col-sm-4 col-xs-12 epf-contribution-separator">
-                        <label class="text-muted">Total Contribution</label>
-                        <div><span class="font-large font-mediumbold h4 ">₹ 3,600.00</span></div>
+                        <label class="text-grey">Total Contribution</label>
+                        <div><span class="font-large font-mediumbold h3 ">₹ 3,600.00</span></div>
                     </div>
                     <div class="col-md-4 col-sm-4 col-xs-12">
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12 d-flex ">
-                                <label class="col-xs-6 text-muted no-pad-left">Your Contribution</label>
-                                <div class="col-xs-6 font-semibold no-pad-left">: ₹ 1,800.00</div>
+                                <label class="col-xs-6 col-lg-6 col-md-6 col-xl-6 col-sm-6 text-grey no-pad-left">Your
+                                    Contribution</label>
+                                <div
+                                    class="col-xs-6 col-lg-6 col-md-6 col-xl-6 col-sm-6 md-text font-semibold no-pad-left ">
+                                    : ₹ 1,800.00</div>
                             </div>
                             <div class="col-md-12 col-sm-12 col-xs-12 d-flex ">
-                                <label class="col-xs-6 text-muted no-pad-left">Employer Contribution</label>
-                                <div class="col-xs-6 font-semibold no-pad-left">: ₹ 1,800.00</div>
+                                <label
+                                    class="col-xs-6 col-lg-6 col-md-6 col-xl-6 col-sm-6 text-grey no-pad-left">Employer
+                                    Contribution</label>
+                                <div class="col-xs-6 col-lg-6 col-md-6 col-xl-6 col-sm-6 font-semibold no-pad-left ">: ₹
+                                    1,800.00</div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="text-muted font-mm">
-                    <i class="mx-1 ri-error-warning-fill text-muted"></i>
+                <div class="text-grey font-mm">
+                    <i class="mx-1 ri-error-warning-fill text-grey"></i>
                     <span>Towards EPF, you contribute 12% of upto ₹ 15,000.00 of your Basic Pay and your employer
                         contributes another 12% of upto ₹ 15,000.00 of your Basic Pay.</span>
                     <a href="#/salary-details/payslips/335214000000934324/details" id="ember68"
