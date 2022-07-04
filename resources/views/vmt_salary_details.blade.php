@@ -218,25 +218,26 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($data as $d)
                                     <tr data-ember-action="" data-ember-action-131="131">
                                         <td>
                                             <a href="#/salary-details/payslips/335214000001040001/details" id="ember132"
                                                 class="ember-view text-secondary">
-                                                June 2022
+                                                {{$d->PAYROLL_MONTH}}
                                             </a>
                                             <span class="status-label">
                                                 <!---->
                                             </span>
                                         </td>
                                         <td>
-                                            ₹23,200.00
+                                            ₹{{$d->TOTAL_EARNED_GROSS}}
                                         </td>
                                         <td>₹0.00</td>
-                                        <td>₹1,800.00</td>
-                                        <td>₹21,400.00</td>
+                                        <td>₹{{$d->TOTAL_DEDUCTIONS}}</td>
+                                        <td>₹{{$d->NET_TAKE_HOME}}</td>
                                         <td>
-                                            <div id="ember133" data-url="{{route('vmt_employee_payslip')}}"
-                                                class="ember-view cursor-pointer paySlipView text-primary">
+                                            <div id="ember133" data="{{$d->EMP_NO}}" data-url="{{route('vmt_employee_payslip')}}"
+                                                class="ember-view cursor-pointer paySlipView" style="color:#009DFF;">
                                                 View
                                             </div>
                                         </td>
@@ -247,35 +248,7 @@
                                             </a>
                                         </td>
                                     </tr>
-                                    <tr data-ember-action="" data-ember-action-135="135">
-                                        <td>
-                                            <a href="#/salary-details/payslips/335214000000934324/details" id="ember136"
-                                                class="ember-view">
-                                                May 2022
-                                            </a>
-                                            <span class="status-label">
-                                                <!---->
-                                            </span>
-                                        </td>
-                                        <td>
-                                            ₹23,200.00
-                                        </td>
-                                        <td>₹0.00</td>
-                                        <td>₹1,800.00</td>
-                                        <td>₹21,400.00</td>
-                                        <td>
-                                            <a href="#/salary-details/payslips/335214000000934324/details" id="ember137"
-                                                class="ember-view">
-                                                View
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="#/salary-details/payslips/335214000000934324/details?isPayslip=false"
-                                                id="ember138" class="ember-view">
-                                                View
-                                            </a>
-                                        </td>
-                                    </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -854,8 +827,7 @@
 <script>
     $('body').on('click', '.paySlipView', function(){
         var url = $(this).attr('data-url');
-        var id = ($(this).attr('id')).replace('ember','');
-        id = 'DM001';
+        var id = $(this).attr('data');
         $.ajax({
             type: "GET",
             url: url,

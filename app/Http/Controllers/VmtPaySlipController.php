@@ -34,12 +34,17 @@ class VmtPaySlipController extends Controller
         return view('vmt_employee_pay_slip', compact('employees'));  
     }
 
+    public function paySlipIndex(Request $request) {
+        $data = VmtEmployeePaySlip::all(); 
+        return view('vmt_salary_details', compact('data'));  
+    }
+
     public function payslipPdfView(Request $request){
         $data['employee'] = VmtEmployeePaySlip::where('EMP_NO', $request->id)->first();
         // return view('vmt_payslipTemplate', $data);
         // download PDF file with download method
         // $pdf = new Dompdf();
-        $html =  view('vmt_payslipTemplate', $data);       
+        $html =  view('vmt_payslipTemplate', $data);
         // $pdf->loadHtml($html, 'UTF-8');
         // $pdf->setPaper('A4', 'portrait');
         // $pdf->render();
