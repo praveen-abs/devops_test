@@ -121,7 +121,7 @@
                     <div class="collapse menu-dropdown" id="attendanceDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{url('vmt-roles')}}" class="nav-link py-1" data-bs-toggle="collapse"
+                                <a href="" class="nav-link py-1" data-bs-toggle="collapse"
                                     role="button"><span>Leave </a>
                                 <div class="collapse menu-dropdown" id="settingsDrop-Down">
                                     <ul class="nav nav-sm flex-column">
@@ -132,15 +132,15 @@
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt-assign-roles')}}" class="nav-link py-1" role="button"><span>
+                                <a href="" class="nav-link py-1" role="button"><span>
                                         Attendance </span> </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt-assign-roles')}}" class="nav-link py-1" role="button"><span>
+                                <a href="" class="nav-link py-1" role="button"><span>
                                         Timesheet </span> </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt-assign-roles')}}" class="nav-link py-1" role="button"><span>
+                                <a href="" class="nav-link py-1" role="button"><span>
                                         Performance </span> </a>
                             </li>
                             <li class="nav-item">
@@ -253,11 +253,11 @@
                     <div class="collapse menu-dropdown" id="reportDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{url('vmt-roles')}}" class="nav-link  py-1"><span> Leave Report
+                                <a href="" class="nav-link  py-1"><span> Leave Report
                                     </span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt-assign-roles')}}" class="nav-link py-1"><span> Attendance Report
+                                <a href="" class="nav-link py-1"><span> Attendance Report
                                     </span></a>
                             </li>
                         </ul>

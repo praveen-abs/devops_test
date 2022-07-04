@@ -60,7 +60,7 @@
                                 </svg>
 
                                 <span
-                                    class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger">3<span
+                                    class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger">2<span
                                         class="visually-hidden">unread messages</span></span>
                             </button>
                             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
@@ -72,7 +72,7 @@
                                                 <h6 class="m-0 fs-16 fw-semibold text-white"> Notifications </h6>
                                             </div>
                                             <div class="col-auto dropdown-tabs">
-                                                <span class="badge badge-soft-light fs-13"> 4 New</span>
+                                                <span class="badge badge-soft-light fs-13"> 2 New</span>
                                             </div>
                                         </div>
                                     </div>
@@ -103,11 +103,7 @@
                                                     </div>
                                                     <div class="flex-1">
                                                         <a href="#!" class="stretched-link">
-                                                            <h6 class="mt-0 mb-2 lh-base">Your <b>Elite</b> author
-                                                                Graphic
-                                                                Optimization <span class="text-secondary">reward</span>
-                                                                is ready!
-                                                            </h6>
+                                                            <h6 class="mt-0 mb-2 lh-base">You missed Check-out on Monday</h6>
                                                         </a>
                                                         <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
                                                             <span><i class="mdi mdi-clock-outline"></i> Just 30 sec
@@ -119,7 +115,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div
+                                            <!-- <div
                                                 class="text-reset notification-item d-block dropdown-item position-relative">
                                                 <div class="d-flex">
                                                     <img src="{{ URL::asset('assets/images/users/avatar-2.jpg') }}"
@@ -143,7 +139,7 @@
                                                         <input class="form-check-input" type="checkbox">
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div
                                                 class="text-reset notification-item d-block dropdown-item position-relative">
                                                 <div class="d-flex">
@@ -161,27 +157,6 @@
                                                         </a>
                                                         <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
                                                             <span><i class="mdi mdi-clock-outline"></i> 2 hrs ago</span>
-                                                        </p>
-                                                    </div>
-                                                    <div class="px-2 fs-15">
-                                                        <input class="form-check-input" type="checkbox">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="text-reset notification-item d-block dropdown-item position-relative">
-                                                <div class="d-flex">
-                                                    <img src="{{ URL::asset('assets/images/users/avatar-8.jpg') }}"
-                                                        class="me-3 rounded-circle avatar-xs" alt="user-pic">
-                                                    <div class="flex-1">
-                                                        <a href="#!" class="stretched-link">
-                                                            <h6 class="mt-0 mb-1 fs-13 fw-semibold">Maureen Gibson</h6>
-                                                        </a>
-                                                        <div class="fs-13 text-muted">
-                                                            <p class="mb-1">We talked about a project on linkedin.</p>
-                                                        </div>
-                                                        <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
-                                                            <span><i class="mdi mdi-clock-outline"></i> 4 hrs ago</span>
                                                         </p>
                                                     </div>
                                                     <div class="px-2 fs-15">
@@ -332,7 +307,7 @@
 
 
 
-                        <a href="vmt_topbar_settings" class="p-0 settings-icon mx-3">
+                        <a href="" class="p-0 settings-icon mx-3">
                             <svg xmlns="http://www.w3.org/2000/svg" width="23.494" height="23.353"
                                 viewBox="0 0 23.494 23.353">
                                 <g id="megaphone" transform="translate(0 -1.529)">
