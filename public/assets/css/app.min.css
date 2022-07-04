@@ -691,7 +691,7 @@
     width: 250px;
     z-index: 1002;
     /* background: var(--vz-sidebar-bg); */
-    background-color: #002F56;
+    background-color: #fff;
     /* border-right: 1px solid #fff; */
 
     bottom: 0;
@@ -706,14 +706,15 @@
 /* george */
 .navbar-menu .navbar-nav .nav-link {
     display: flex;
-    /* align-items: center; */
+
     font-weight: 100;
     padding: 10px;
     flex-direction: column;
     justify-content: center;
     text-align: center;
-    /* color: var(--vz-vertical-menu-bg); */
-    color: #FFFFFF;
+
+    color: #313030;
+    font-weight: 600;
     font-size: 12px;
     font-family: Poppins, sans-serif;
 }
@@ -1885,18 +1886,13 @@
 
 [data-layout=vertical][data-sidebar-size=sm] .navbar-brand-box {
 
-
-    /* bottom: 20px;
-    height: 50px; */
     left: 0;
-    /* margin-top: -1px; */
+
     position: absolute;
-    /* padding: 0px; */
-    /* width: 80px; */
     z-index: 1;
     top: 0;
 
-    background-color: #002F56;
+    background-color: #ffff;
 }
 
 [data-layout=vertical][data-sidebar-size=sm] .logo span.logo-lg {
@@ -1958,7 +1954,9 @@
 }
 
 [data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .nav-link svg {
-    margin-right: 0
+    margin-right: 0;
+    width: 35px;
+
 }
 
 [data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .nav-link:after,
@@ -1980,11 +1978,29 @@
 /* george */
 [data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .nav-item:hover>a.menu-link {
     position: relative;
-    background-color: #DD571D;
-
+    background-color: #e8f3fa;
     transition: none;
+    z-index: 1;
+
+}
+.navbar-menu .navbar-nav .nav-link::after {
+    
 }
 
+.navbar-menu .navbar-nav .nav-item .menu-link hr {
+    position: absolute;
+    height: 100%;
+    background-color: #ff4000;
+    left: 0px;
+    border: 1px solid #ff4000;
+    width: 4px;
+    display: none;
+}
+
+.navbar-menu .navbar-nav .nav-item:hover>.menu-link hr {
+    display: revert;
+
+}
 
 [data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .nav-item:hover>a.menu-link .icon-dual {
     color: var(--vz-vertical-menu-item-hover-color-dark);
@@ -2012,9 +2028,9 @@
     left: 100px;
     position: absolute;
     width: 180px;
-    background-color: #002f56;
+    background-color: #fff;
     height: auto !important;
-    color: #fff;
+    color: #313030;
     box-shadow: 0 2px 4px rgb(15 34 58 / 12%);
 
 }
