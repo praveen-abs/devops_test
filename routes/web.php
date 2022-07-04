@@ -25,15 +25,14 @@ Route::get('/index',  [App\Http\Controllers\VmtMainDashboardController::class, '
 //Update User Details
 Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');
 Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
-
-
+Route::post('/update-personal-info/{id}', [App\Http\Controllers\HomeController::class, 'storePersonalInfo'])->name('updatePersonalInfo');
 
 Route::get('/registerNewAccount', function(){
     return view('/auth/register');
 })->name('registerNewAccount');
 
 Route::get('pages-profile', [App\Http\Controllers\HomeController::class, 'showProfile']);
-Route::get('pages-profile-settings', [App\Http\Controllers\HomeController::class, 'showProfilePage']);
+Route::get('pages-profile-settings', [App\Http\Controllers\HomeController::class, 'showProfilePage'])->name('pages-profile-settings');
 
 Route::get('test-email', 'App\Http\Controllers\HomeController@testEmail');
 

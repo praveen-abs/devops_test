@@ -780,7 +780,8 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form>
+                            <form action="{{route('updatePersonalInfo', $user->id)}}" Method="POST" enctype="multipart/form-data">
+                                @csrf
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="profile-img-wrap edit-img">
@@ -790,14 +791,14 @@
                                                 alt="Header Avatar">
                                             <div class="fileupload btn">
                                                 <span class="btn-text">edit</span>
-                                                <input class="upload" type="file">
+                                                <input class="upload" name="profilePic" type="file">
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group mb-3">
                                                     <label>First Name</label>
-                                                    <input type="text" class="form-control" value="John">
+                                                    <input type="text" class="form-control" name="name" value="{{$user->name}}">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -810,8 +811,8 @@
                                                 <div class="form-group mb-3">
                                                     <label>Birth Date</label>
                                                     <div class="cal-icon">
-                                                        <input class="form-control datetimepicker" type="text"
-                                                            value="05/06/1985">
+                                                        <input class="form-control datetimepicker" type="date" name="dob" 
+                                                            value="{{date('Y-m-d', strtotime($details->dob))}}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -819,11 +820,11 @@
                                                 <label>Gender</label>
 
 
-                                                <select class="form-select  " aria-label="Default select">
+                                                <select class="form-select" name="gender" aria-label="Default select">
                                                     <option selected>-</option>
-                                                    <option value="1">Male</option>
-                                                    <option value="2">Female</option>
-                                                    <option value="3">Other</option>
+                                                    <option value="1" @if($details->gender == '1') 'seletced' @endif>Male</option>
+                                                    <option value="2" @if($details->gender == '2') 'seletced' @endif>Female</option>
+                                                    <option value="3" @if($details->gender == '3') 'seletced' @endif>Other</option>
                                                 </select>
 
                                             </div>
@@ -835,7 +836,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group mb-3">
                                             <label>Address</label>
-                                            <input type="text" class="form-control" value="4487 Snowbird Lane">
+                                            <input type="text" name="present_address" class="form-control" value="{{$details->present_address}}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -859,7 +860,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
                                             <label>Phone Number</label>
-                                            <input type="text" class="form-control" value="631-889-3206">
+                                            <input type="text" class="form-control" name="mobile_number" value="{{$details->mobile_number}}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -868,9 +869,9 @@
 
                                                 <select class="form-select  " aria-label="Default select">
                                                     <option selected>-</option>
-                                                    <option value="1">Male</option>
-                                                    <option value="2">Female</option>
-                                                    <option value="3">Other</option>
+                                                    <option value="1" @if($details->gender == '1') 'seletced' @endif>Male</option>
+                                                    <option value="2" @if($details->gender == '2') 'seletced' @endif>Female</option>
+                                                    <option value="3" @if($details->gender == '3') 'seletced' @endif>Other</option>
                                                 </select>
 
                                             </div>

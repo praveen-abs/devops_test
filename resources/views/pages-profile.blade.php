@@ -53,7 +53,7 @@
 
                 </ul>
                 <div class="flex-shrink-0">
-                    <a href="{{url(pages-profile-settings)}}" class="btn btn-success"><i
+                    <a href="{{route('pages-profile-settings')}}" class="btn btn-success"><i
                             class="ri-edit-box-line align-bottom"></i>
                         Edit Profile</a>
                 </div>
