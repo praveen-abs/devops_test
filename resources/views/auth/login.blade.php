@@ -3,13 +3,23 @@
 @lang('translation.signin')
 @endsection
 @section('content')
+<?php
+    $logoObj = \DB::table('vmt_general_info')->first();
+
+    if($logoObj){
+        $logoSrc = $logoObj->logo_img;
+    }else{
+        $logoSrc = 'assets/images/vasa.jpg';
+    }
+    //dd($logoSrc);
+?>
 <div class="container-fluid conya">
     <div class="side-left">
         <img src="{{ URL::asset($generalInfo->background_img) }}" alt="brand-logo" class="mx-2 w-100 h-100">
     </div>
     <div class="side-right">
         <div class="text-center mt-5">
-            <img src="{{ URL::asset('assets/images/logo-sm.png') }}" alt="brand-logo" class="h-50 w-50 mt-3">
+            <img src="{{ URL::asset($logoSrc) }}" alt="brand-logo" class="h-50 w-50 mt-3">
         </div>
         <div class="p-2 mt-2">
             <form action="{{ route('login') }}" method="POST">
