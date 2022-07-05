@@ -756,22 +756,46 @@ $('#form-5').on('submit', function(e){
             processData: false,
             success: function(data)
             {
-                $('#modalHeader').html(data);
-                $('#modalNot').html("Employee Onboarding success");                
-                $('#modalBody').html("Mail notification sent.");
-                $('#notificationModal').show();
-                $('#notificationModal').removeClass('fade');
+                // if (data.responseText == "Saved") {
+                //     $('#modalHeader').html(data);
+                //     $('#modalNot').html("Employee Onboarding success");                
+                //     $('#modalBody').html("Mail notification sent.");
+                //     $('#notificationModal').show();
+                //     $('#notificationModal').removeClass('fade');
+                // } else {
+                //     $('#modalHeader').html(data);
+                //     $('#modalNot').html("Failed to save Data");                
+                //     //$('#modalBody').html("Request to the server failed");
+                //     $('#notificationModal').show();
+                //     $('#notificationModal').removeClass('fade');
+                // }
+                // console.log(data);
+                
                 //alert(data);
             },
             error : function(data) { //NEED TO FIX IT
+                // console.log('error');
+                if (data.responseText == "Saved") {
+                    $('#modalHeader').html(data);
+                    $('#modalNot').html("Employee Onboarding success");                
+                    $('#modalBody').html("Mail notification sent.");
+                    $('#notificationModal').show();
+                    $('#notificationModal').removeClass('fade');
+                } else {
+                    $('#modalHeader').html(data);
+                    $('#modalNot').html("Failed to save Data");                
+                    //$('#modalBody').html("Request to the server failed");
+                    $('#notificationModal').show();
+                    $('#notificationModal').removeClass('fade');
+                }
                 //var result = $.parseJSON(data);
                 //alert("Server request failed "+result['message']);
                 //alert(data['message']);
-                $('#modalHeader').html(data);
-                $('#modalNot').html("Failed to save Data");                
-                //$('#modalBody').html("Request to the server failed");
-                $('#notificationModal').show();
-                $('#notificationModal').removeClass('fade');
+                // $('#modalHeader').html(data);
+                // $('#modalNot').html("Failed to save Data");                
+                // //$('#modalBody').html("Request to the server failed");
+                // $('#notificationModal').show();
+                // $('#notificationModal').removeClass('fade');
 
                 //alert("Server request failed !");
 
