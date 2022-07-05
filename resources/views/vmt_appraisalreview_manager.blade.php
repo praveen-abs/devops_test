@@ -338,8 +338,12 @@
                 </label>
                 <div class="my-2">
                     <textarea class="form-control" placeholder="" id="gen-info-description-input" name="performance"
-                        rows="4"></textarea>
+                        rows="4">@if(isset( $assignedGoals->appraiser_comment)){{$assignedGoals->appraiser_comment}}@endif</textarea>
                 </div>
+                <div class="buttons d-flex align-items-center justify-content-end mb-3">
+                    <button class="btn btn-primary" id="save_feedback_table">Save<i class="fa fa-save"></i></button>
+                    &nbsp;&nbsp;
+                </div> 
             </div>
         </div>
     @endif
@@ -462,7 +466,22 @@
 
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 <script type="text/javascript">
-    
+
+    $('#save_feedback_table').click(function() {
+        console.log($('#gen-info-description-input').val());
+        $.ajax({
+            type: "POST", 
+            url:"{{url('vmt-pms-saveKPItableFeedback_Manager')}}",
+            data:{
+                "feedback": $('#gen-info-description-input').val(),
+                "_token": "{{ csrf_token() }}",
+                "id": "{{$assignedGoals->id}}"
+            }, 
+            success: function(data){
+                alert(data);
+            }
+        });
+    });
  
     $('#save_table').click(function(e){
         e.preventDefault();
@@ -480,18 +499,22 @@
     });
 
     $('#publish_table').click(function(e){
-        e.preventDefault();
-        console.log("save trigger");
-        console.log($('#employee_self_review').serialize());
+        if ($('#gen-info-description-input').val() != '') {
+            e.preventDefault();
+            console.log("save trigger");
+            console.log($('#employee_self_review').serialize());
 
-        $.ajax({
-            type: "POST", 
-            url:"{{url('vmt-pmsappraisal-managerreview')}}",
-            data:$('#employee_self_review').serialize(), 
-            success: function(data){
-                alert(data);
-            }
-        })
+            $.ajax({
+                type: "POST", 
+                url:"{{url('vmt-pmsappraisal-managerreview')}}",
+                data:$('#employee_self_review').serialize(), 
+                success: function(data){
+                    alert(data);
+                }
+            })
+        } else {
+            alert('Write the Feedback.');
+        }
     });
 
     $('#approve').click(function(e){

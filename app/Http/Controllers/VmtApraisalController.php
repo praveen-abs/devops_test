@@ -678,6 +678,18 @@ class VmtApraisalController extends Controller
         return view('vmt_appraisalreview_manager', compact( 'kpiRows', 'empSelected', 'reviewCompleted'));
     }
 
+
+    public function saveManagerFeedback(Request $request) {
+        $kpiData  = VmtEmployeePMSGoals::find($request->id);
+        if($kpiData){
+            $kpiData->appraiser_comment = $request->feedback; //null
+            $kpiData->save();
+
+            //dd($officialMailList);
+        }
+        return "Saved";
+    }
+
     public function saveKPItableDraft_HR(Request $request){
 
         $kpiData  = VmtEmployeePMSGoals::find($request->goal_id);
