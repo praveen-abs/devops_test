@@ -172,13 +172,23 @@ class VmtEmployeeController extends Controller
     public function employeeOnboard(Request $request)
     {
         // code...
+
         $row = $request->all();
-        $newEmployee = new VmtEmployee; 
+        $user =  User::create([
+            'name' => $row['employee_name'],
+            'email' => $row["email"],
+            'password' => Hash::make('123123123'),
+            'avatar' =>  'avatar-1.jpg',
+        ]);
+        $user->assignRole("Employee");
+
+        $newEmployee = new VmtEmployee;
+         $newEmployee->userid = $user->id;  
         $newEmployee->emp_no   =    $row["employee_code"]; 
         //$newEmployee->emp_name   =    $row["employee_name"]; 
         $newEmployee->gender   =    $row["gender"];  
-        $newEmployee->designation   =    $row["designation"];  
-        $newEmployee->department   =    $row["department"];  
+        //$newEmployee->designation   =    $row["designation"];  
+        //$newEmployee->department   =    $row["department"];  
         //$newEmployee->status   =    $row["status"];  
         $newEmployee->doj   =    $row["doj"];   
         $newEmployee->dol   =    $row["doj"];  
@@ -193,7 +203,7 @@ class VmtEmployeeController extends Controller
         //$newEmployee->marrital_status = $row["marrital_status"];
       
         $newEmployee->mobile_number  = $row["mobile_no"]; 
-        $newEmployee->email_id   = $row["email"];
+        //$newEmployee->email_id   = $row["email"];
         $newEmployee->bank_name   = $row["bank_name"];
         $newEmployee->bank_ifsc_code  = $row["bank_ifsc"]; 
         $newEmployee->bank_account_number  = $row["account_no"]; 
@@ -207,30 +217,20 @@ class VmtEmployeeController extends Controller
         $newEmployee->kid_name   = $row["child_name"];
         $newEmployee->kid_age  = $row["child_dob"];
 
-        $newEmployee->aadhar_card = $this->fileUpload('aadhar_card');
-        $newEmployee->pan_card = $this->fileUpload('pan_card');
-        $newEmployee->passport = $this->fileUpload('passport');
-        $newEmployee->voters_id = $this->fileUpload('voters_id');
+        $newEmployee->aadhar_card_file = $this->fileUpload('aadhar_card');
+        $newEmployee->pan_card_file = $this->fileUpload('pan_card');
+        $newEmployee->passport_file = $this->fileUpload('passport');
+        $newEmployee->voters_id_file = $this->fileUpload('voters_id');
         $newEmployee->dl_file = $this->fileUpload('dl_file');
-        $newEmployee->education_certificate = $this->fileUpload('education_certificate');
-        $newEmployee->reliving_letter = $this->fileUpload('reliving_letter');
+        $newEmployee->education_certificate_file = $this->fileUpload('education_certificate');
+        $newEmployee->reliving_letter_file = $this->fileUpload('reliving_letter');
 
         $newEmployee->save();
 
-        $user =  User::create([
-            'name' => $row['employee_name'],
-            'email' => $row["email"],
-            'password' => Hash::make('123123123'),
-            'avatar' =>  'avatar-1.jpg',
-        ]);
-        $user->assignRole("Employee");
-
-        $newEmployee->userid = $user->id; 
-        $newEmployee->save();
-
+        
         if($newEmployee){
             $empOffice  = new VmtEmployeeOfficeDetails; 
-            //$empOffice->emp_id = $newEmployee->id; // Need to remove this in future
+            $empOffice->emp_id = $newEmployee->id; // Need to remove this in future
             $empOffice->user_id = $newEmployee->userid; //Link between USERS and VmtEmployeeOfficeDetails table
             $empOffice->department = $row["department"];// => "lk"
             $empOffice->process = $row["process"];// => "k"

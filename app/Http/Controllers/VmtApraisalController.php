@@ -199,7 +199,7 @@ class VmtApraisalController extends Controller
                 \Mail::to($mailingRevList)->send(new VmtAssignGoals(url('pms-employee-reviews?goal_id='.$request->kpitable_id.'&user_id='.auth::user()->id)));
             } else {
                $finalMailList = $mailingEmpList->merge($mailingRevList);
-                \Mail::to($finalMailList)->send(new VmtAssignGoals(url('vmt-pms-assigngoals')));
+                \Mail::to($finalMailList)->send(new VmtAssignGoals(url('vmt-pms-assigngoals'),"none"));
             }
             return "Question Created Successfully";
         }
@@ -313,11 +313,26 @@ class VmtApraisalController extends Controller
            $vmtEmployeeGoal =   VmtEmployeePMSGoals::where('kpi_table_id', $request->goal_id)->where('employee_id', $request->user_id)->first(); 
            $vmtEmployeeGoal->is_employee_accepted = $request->approve_flag ? 1 : 0;
            $vmtEmployeeGoal->save();
+           $returnMsg="--";
 
            // is_manager_approved
+           //dd($request->approve_flag);
 
-            
-           $returnMsg = $request->approve_flag ? 'KPI has been accepted. Mail notification sent' : 'KPI has been rejected. Mail notification sent';
+           $mailingList = VmtEmployeeOfficeDetails::where('user_id', $vmtEmployeeGoal->reviewer_id)->pluck('officical_mail');
+
+           if($request->approve_flag == "approved")
+           {
+                \Mail::to($mailingList)->send(new VmtAssignGoals(url('vmt-pms-assigngoals') , "approved"));
+                $returnMsg = 'KPI has been accepted. Mail notification sent';
+           }
+           else
+           if($request->approve_flag == "rejected")
+           {
+                \Mail::to($mailingList)->send(new VmtAssignGoals(url('vmt-pms-assigngoals') , "rejected"));
+                $returnMsg = 'KPI has been rejected. Mail notification sent';
+
+           }
+
            return $returnMsg;
         }
         
@@ -326,7 +341,23 @@ class VmtApraisalController extends Controller
             $vmtEmployeeGoal->is_manager_approved = $request->approve_flag ? 1 : 0;
             $vmtEmployeeGoal->save();
 
-            $returnMsg = $request->approve_flag ? 'KPI has been approved. Mail notification sent' : 'KPI has been rejected. Mail notification sent';
+
+            $mailingList = VmtEmployeeOfficeDetails::where('user_id', $vmtEmployeeGoal->employee_id)->pluck('officical_mail');
+
+
+           if($request->approve_flag == "approved")
+           {
+                \Mail::to($mailingList)->send(new VmtAssignGoals(url('vmt-pms-assigngoals') , "approved"));
+                $returnMsg = 'KPI has been approved. Mail notification sent';
+           }
+           else
+           if($request->approve_flag == "rejected")
+           {
+                \Mail::to($mailingList)->send(new VmtAssignGoals(url('vmt-pms-assigngoals') , "rejected"));
+                $returnMsg = 'KPI has been rejected. Mail notification sent';
+           }
+
+
             return $returnMsg;
         }
 
@@ -386,8 +417,11 @@ class VmtApraisalController extends Controller
                             $kpiRows[$index]['hr_kpi_percentage'] = $percentHrArray[$value->id];
                         }
 
-                        $reviewCompleted = true;
                     }
+
+                    if($assignedGoals->is_hr_submitted)
+                        $reviewCompleted = true;
+
                 }
                 return view('vmt_appraisalreview_employee', compact('kpiRows', 'employeeData', 'assignedGoals', 'showModal', 'reviewCompleted'));
             }else{
@@ -420,7 +454,6 @@ class VmtApraisalController extends Controller
 
     // Manger review : to see kpi table filled by employees
     public function showManagerApraisalReview(Request $request){
-
         // show review for HR
         if(auth::user()->hasRole(['HR','Admin']) ){
             //dd("INside HR login");
@@ -507,6 +540,9 @@ class VmtApraisalController extends Controller
             if($assignedGoals->manager_kpi_review != null){
                 $reviewArrayManager = (json_decode($assignedGoals->manager_kpi_review, true));
                 $percentArrayManager = (json_decode($assignedGoals->manager_kpi_percentage, true));
+                 
+                //dd($reviewArrayManager);
+
                 foreach ($kpiRows as $index => $value) {
                     // code...
                     $kpiRows[$index]['manager_kpi_review'] = $reviewArrayManager[$value->id];
@@ -527,6 +563,8 @@ class VmtApraisalController extends Controller
             }
             $empSelected = true;
 
+            //dd($kpiRows);
+
             return view('vmt_appraisalreview_manager', compact( 'employeeData', 'assignedGoals', 'kpiRows', 'empSelected', 'reviewCompleted'));
         }
         
@@ -544,7 +582,6 @@ class VmtApraisalController extends Controller
 
             $kpiData->hr_kpi_review      = $request->hreview; //null
             $kpiData->hr_kpi_percentage  = $request->hrpercetage; //null
-            $kpiData->save();
 
             $kpiData->is_hr_submitted = 0;//false.
 
@@ -624,6 +661,8 @@ class VmtApraisalController extends Controller
 
             $kpiData->hr_kpi_review      = $request->hreview; //null
             $kpiData->hr_kpi_percentage  = $request->hrpercetage; //null
+            $kpiData->is_hr_submitted = 1;//true
+
             $kpiData->save();
 
             //$managerData   = User::find($kpiData->reviewer_id);
