@@ -455,6 +455,10 @@ class VmtApraisalController extends Controller
                         $ratingDetail['performance'] = "Exceptionally Exceeds Expectations";
                         $ratingDetail['ranking'] = 5;
                         $ratingDetail['action'] = '20%';
+                    } else {
+                        $ratingDetail['performance'] = "Needs Action";
+                        $ratingDetail['ranking'] = 1;
+                        $ratingDetail['action'] = 'Exit';
                     }
                 }
 
@@ -566,6 +570,10 @@ class VmtApraisalController extends Controller
                         $ratingDetail['performance'] = "Exceptionally Exceeds Expectations";
                         $ratingDetail['ranking'] = 5;
                         $ratingDetail['action'] = '20%';
+                    } else {
+                        $ratingDetail['performance'] = "Needs Action";
+                        $ratingDetail['ranking'] = 1;
+                        $ratingDetail['action'] = 'Exit';
                     }
                 }
                 //dd($kpiRows);
@@ -665,6 +673,10 @@ class VmtApraisalController extends Controller
                     $ratingDetail['performance'] = "Exceptionally Exceeds Expectations";
                     $ratingDetail['ranking'] = 5;
                     $ratingDetail['action'] = '20%';
+                } else {
+                    $ratingDetail['performance'] = "Needs Action";
+                    $ratingDetail['ranking'] = 1;
+                    $ratingDetail['action'] = 'Exit';
                 }
             }
             //dd($kpiRows);
