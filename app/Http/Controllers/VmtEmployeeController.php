@@ -258,8 +258,11 @@ class VmtEmployeeController extends Controller
                 $empOffice->save();
             }
 
-            \Mail::to($row["email"])->send(new WelcomeMail($row["email"], '123123123', 'http://vasagroup.abshrms.com'  ));
-            return "Saved";
+            if (\Mail::to($row["email"])->send(new WelcomeMail($row["email"], '123123123', 'http://vasagroup.abshrms.com'  ))) {
+                return "Saved";
+            } else {
+                return "Error";
+            }
         }
         catch (Throwable $e) {        
             return "Error";
