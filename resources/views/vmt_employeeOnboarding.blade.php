@@ -635,6 +635,35 @@
 
 </div>
 
+<!-- Vertically Centered -->
+<div class="modal fade" id="notificationModal" role="dialog" aria-hidden="true" style="opacity:1; display:none;">
+    <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2">
+        <div class="modal-content">
+            <div class="modal-header py-2 bg-primary">
+
+                <div class="w-100 modal-header-content d-flex align-items-center py-2">
+                    <h5 class="modal-title text-white" id="modalHeader">Failure
+                    </h5>
+                    <button 
+                        type="button" 
+                        class="btn-close btn-close-white close-modal" data-bs-dismiss="modal"
+                        aria-label="Close"
+                    >
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="mt-4">
+                    <h4 class="mb-3" id="modalNot">Data Saved Successfully!</h4>
+                    <p class="text-muted mb-4" id="modalBody"></p>
+                    <div class="hstack gap-2 justify-content-center">
+                        <button type="button" class="btn btn-light close-modal" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
@@ -693,6 +722,11 @@
 
 <script>
 
+$('body').on('click', '.close-modal', function() {
+    $('#notificationModal').hide();
+    $('#notificationModal').addClass('fade');
+});
+
 $('#form-5').on('submit', function(e){
         e.preventDefault();
         
@@ -722,7 +756,25 @@ $('#form-5').on('submit', function(e){
             processData: false,
             success: function(data)
             {
-                alert(data);
+                $('#modalHeader').html(data);
+                $('#modalNot').html("Employee Onboarding success");                
+                $('#modalBody').html("Mail notification sent.");
+                $('#notificationModal').show();
+                $('#notificationModal').removeClass('fade');
+                //alert(data);
+            },
+            error : function(data) { //NEED TO FIX IT
+                //var result = $.parseJSON(data);
+                //alert("Server request failed "+result['message']);
+                //alert(data['message']);
+                $('#modalHeader').html(data);
+                $('#modalNot').html("Failed to save Data");                
+                //$('#modalBody').html("Request to the server failed");
+                $('#notificationModal').show();
+                $('#notificationModal').removeClass('fade');
+
+                //alert("Server request failed !");
+
             }
         });
     });
