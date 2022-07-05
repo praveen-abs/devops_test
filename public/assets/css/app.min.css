@@ -199,8 +199,8 @@
 }
 
 
-body{
-    /* overflow:hidden; */
+body {
+    max-height: 100%;
     max-width: 100%;
 }
 
@@ -401,7 +401,7 @@ body{
 }
 
 [data-topbar=dark] .navbar-header .btn-topbar:hover {
-background-color:#e8f3fa;
+    background-color: #e8f3fa;
 
 }
 
@@ -683,35 +683,37 @@ background-color:#e8f3fa;
 }
 
 
-.main-content {
-    transition: all .1s ease-out;
-    
-}
-
 @media (min-width:768px) {
     .main-content {
         margin-left: 250px
     }
 }
 
+.main-content {
+    transition: all .1s ease-out;
+    margin-left: 100px;
+    overflow: hidden;
+}
+
 /* by george 70px to 50px  */
 .page-content {
-   padding: calc(40px + 1.5rem) .75rem 60px;
+    padding: calc(40px + 24px) calc(24px / 2) 60px calc(24px / 2); 
 
 }
-::-webkit-scrollbar {
+/* 
+.page-content::-webkit-scrollbar {
     width: 16px;
 }
- 
-::-webkit-scrollbar-track {
+
+.page-content::-webkit-scrollbar-track {
     background-color: #e4e4e4;
     border-radius: 100px;
 }
- 
-::-webkit-scrollbar-thumb {
+
+.page-content::-webkit-scrollbar-thumb {
     background-color: #d4aa70;
     border-radius: 100px;
-}
+} */
 
 .navbar-menu {
     width: 250px;
@@ -719,7 +721,6 @@ background-color:#e8f3fa;
     /* background: var(--vz-sidebar-bg); */
     background-color: #fff;
     /* border-right: 1px solid #fff; */
-
     bottom: 0;
     margin-top: 0;
     position: fixed;
@@ -916,7 +917,7 @@ background-color:#e8f3fa;
 
 /* by george  background change*/
 .navbar-menu .navbar-nav .nav-sm .nav-link:hover {
-    
+
     background-color: #e8f3fa;
     color: #313030;
 }

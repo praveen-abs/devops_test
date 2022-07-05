@@ -81,7 +81,7 @@
 
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link d-flex" href="#attendanceDrop-Down" data-bs-toggle="collapse"
+                    <a class="nav-link menu-link d-flex" role="button"
                         role="button" aria-expanded="false" aria-controls="sidebarRoles">
                         <hr class="vertical-line">
                         <div class="d-flex flex-column align-items-center justify-content-center">
@@ -204,7 +204,7 @@
 
                 @hasrole("Admin")
                 <li class="nav-item">
-                    <a class="nav-link menu-link d-flex" href="#reportDrop-Down" data-bs-toggle="collapse" role="button"
+                    <a class="nav-link menu-link d-flex"  role="button"
                         aria-expanded="false" aria-controls="sidebarRoles">
                         <hr class="vertical-line">
                         <div class="d-flex flex-column align-items-center justify-content-center ">
@@ -268,7 +268,7 @@
                 @hasrole("Admin")
                 <li class="nav-item">
 
-                    <a class="nav-link menu-link d-flex" href="#ORG-Drop-Down" data-bs-toggle="collapse" role="button">
+                    <a class="nav-link menu-link d-flex" role="button">
                         <hr class="vertical-line">
                         <div class="d-flex flex-column align-items-center justify-content-center ">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -340,7 +340,7 @@
                 <!-- performance -->
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link d-flex" href="#reportDrop-Down" data-bs-toggle="collapse" role="button"
+                    <a class="nav-link menu-link d-flex"  role="button"
                         aria-expanded="false" aria-controls="sidebarRoles">
                         <hr class="vertical-line">
                         <div class="d-flex flex-column align-items-center justify-content-center ">
@@ -444,7 +444,7 @@
 
                 @hasrole("Manager")
                 <li class="nav-item">
-                    <a class="nav-link menu-link d-flex" href="#reportDrop-Down" data-bs-toggle="collapse" role="button"
+                    <a class="nav-link menu-link d-flex" role="button"
                         aria-expanded="false" aria-controls="sidebarRoles">
                         <hr class="vertical-line">
                         <div class="d-flex flex-column align-items-center justify-content-center ">
@@ -587,7 +587,7 @@
                 </li> -->
                 @hasrole("Admin")
                 <li class="nav-item">
-                    <a class="nav-link menu-link d-flex" href="{{url('index')}}">
+                    <a class="nav-link menu-link d-flex"  role="button" >
                         <hr class="vertical-line">
                         <div class="d-flex flex-column align-items-center justify-content-center">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -675,8 +675,8 @@
 
                 <!-- Navigation Menu for Ticketting-->
                 <li class="nav-item">
-                    <a class="nav-link menu-link d-flex" id="employeeInfo" href="#ticketingDrop-Down"
-                        data-bs-toggle="collapse" role="button" aria-expanded="false"
+                    <a class="nav-link menu-link d-flex" 
+                     role="button" aria-expanded="false"
                         aria-controls="sidebar360questions">
                         <hr class="vertical-line">
                         <div class="d-flex flex-column align-items-center justify-content-center ">
@@ -772,8 +772,8 @@
 
                 <!-- Exit -->
                 <li class="nav-item">
-                    <a class="nav-link menu-link d-flex" id="employeeInfo" href="#ticketingDrop-Down"
-                        data-bs-toggle="collapse" role="button" aria-expanded="false"
+                    <a class="nav-link menu-link d-flex" 
+                        role="button" aria-expanded="false"
                         aria-controls="sidebar360questions">
                         <hr class="vertical-line">
                         <div class="d-flex flex-column align-items-center justify-content-center px-2">
