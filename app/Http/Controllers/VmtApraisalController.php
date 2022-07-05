@@ -503,8 +503,32 @@ class VmtApraisalController extends Controller
                     $reviewCompleted = true;
                 }
                 $empSelected = true;
+
+                $per = json_decode($assignedGoals->hr_kpi_percentage, true);
+                $ratingDetail['rating'] = array_sum($per)/count($per);
+                if ($ratingDetail['rating'] < 60) {
+                    $ratingDetail['performance'] = "Needs Action";
+                    $ratingDetail['ranking'] = 1;
+                    $ratingDetail['action'] = 'Exit';
+                } elseif ($ratingDetail['rating'] < 70) {
+                    $ratingDetail['performance'] = "Below Expectations";
+                    $ratingDetail['ranking'] = 2;
+                    $ratingDetail['action'] = 'PIP';
+                } elseif ($ratingDetail['rating'] < 80) {
+                    $ratingDetail['performance'] = "Meet Expectations";
+                    $ratingDetail['ranking'] = 3;
+                    $ratingDetail['action'] = '10%';
+                } elseif ($ratingDetail['rating'] < 90) {
+                    $ratingDetail['performance'] = "Exceeds Expectations";
+                    $ratingDetail['ranking'] = 4;
+                    $ratingDetail['action'] = '15%';
+                } elseif ($ratingDetail['rating'] < 100) {
+                    $ratingDetail['performance'] = "Exceptionally Exceeds Expectations";
+                    $ratingDetail['ranking'] = 5;
+                    $ratingDetail['action'] = '20%';
+                }
                 //dd($kpiRows);
-                return view('vmt_appraisalreview_hr', compact( 'employeeData', 'assignedGoals', 'kpiRows', 'empSelected', 'reviewCompleted'));
+                return view('vmt_appraisalreview_hr', compact( 'employeeData', 'assignedGoals', 'kpiRows', 'empSelected', 'reviewCompleted', 'ratingDetail'));
             }
 
             $kpiRows = [];
@@ -563,9 +587,32 @@ class VmtApraisalController extends Controller
             }
             $empSelected = true;
 
+            $per = json_decode($assignedGoals->hr_kpi_percentage, true);
+            $ratingDetail['rating'] = array_sum($per)/count($per);
+            if ($ratingDetail['rating'] < 60) {
+                $ratingDetail['performance'] = "Needs Action";
+                $ratingDetail['ranking'] = 1;
+                $ratingDetail['action'] = 'Exit';
+            } elseif ($ratingDetail['rating'] < 70) {
+                $ratingDetail['performance'] = "Below Expectations";
+                $ratingDetail['ranking'] = 2;
+                $ratingDetail['action'] = 'PIP';
+            } elseif ($ratingDetail['rating'] < 80) {
+                $ratingDetail['performance'] = "Meet Expectations";
+                $ratingDetail['ranking'] = 3;
+                $ratingDetail['action'] = '10%';
+            } elseif ($ratingDetail['rating'] < 90) {
+                $ratingDetail['performance'] = "Exceeds Expectations";
+                $ratingDetail['ranking'] = 4;
+                $ratingDetail['action'] = '15%';
+            } elseif ($ratingDetail['rating'] < 100) {
+                $ratingDetail['performance'] = "Exceptionally Exceeds Expectations";
+                $ratingDetail['ranking'] = 5;
+                $ratingDetail['action'] = '20%';
+            }
             //dd($kpiRows);
 
-            return view('vmt_appraisalreview_manager', compact( 'employeeData', 'assignedGoals', 'kpiRows', 'empSelected', 'reviewCompleted'));
+            return view('vmt_appraisalreview_manager', compact( 'employeeData', 'assignedGoals', 'kpiRows', 'empSelected', 'reviewCompleted', 'ratingDetail'));
         }
         
         $kpiRows = [];
@@ -579,7 +626,6 @@ class VmtApraisalController extends Controller
         $kpiData  = VmtEmployeePMSGoals::find($request->goal_id);
 
         if($kpiData){
-
             $kpiData->hr_kpi_review      = $request->hreview; //null
             $kpiData->hr_kpi_percentage  = $request->hrpercetage; //null
 
