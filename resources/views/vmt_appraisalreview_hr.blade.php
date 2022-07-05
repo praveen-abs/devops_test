@@ -308,8 +308,8 @@
                 </label>
                 <div class="my-2">
                     <textarea class="form-control" placeholder="" id="gen-info-description-input" name="performance"
-                        rows="4"></textarea>
-                </div>
+                        rows="4">@if(isset( $assignedGoals->appraiser_comment)){{$assignedGoals->appraiser_comment}}@endif</textarea>
+                </div>                    
             </div>
         </div>
     @endif

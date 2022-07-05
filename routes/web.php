@@ -158,6 +158,7 @@ Route::post('vmt-pmsappraisal-review', 'App\Http\Controllers\VmtApraisalControll
 
 // to view employees reviews for manager
 Route::get('pms-employee-reviews', 'App\Http\Controllers\VmtApraisalController@showManagerApraisalReview');
+Route::post('vmt-pms-saveKPItableFeedback_Manager', 'App\Http\Controllers\VmtApraisalController@saveManagerFeedback');
 // store review given by manager
 Route::post('vmt-pmsappraisal-managerreview', 'App\Http\Controllers\VmtApraisalController@storeManagerApraisalReview');
 
