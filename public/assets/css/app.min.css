@@ -400,16 +400,17 @@ body{
     /* background: url(../images/profile-bg.jpg); */
 }
 
-[data-topbar=dark] .navbar-header .btn-topbar {
+[data-topbar=dark] .navbar-header .btn-topbar:hover {
+background-color:#e8f3fa;
 
-    color: var(--vz-header-item-color-dark)
 }
 
 
-[data-topbar=dark] .navbar-header .btn-topbar:focus {
+/* [data-topbar=dark] .navbar-header .btn-topbar:active {
     background-color: hsl(207.2, 100%, 16.9%);
     color: hsla(0, 0%, 100%, .85)
-}
+} */
+
 
 @media (min-width:767.99px) {
     [data-topbar=dark] .topbar-user {
@@ -678,15 +679,14 @@ body{
 
 .app-content .content {
     padding: 0 15px 10px;
-    margin-top: 70px
+    margin-top: 70px;
 }
+
 
 .main-content {
-    transition: all .1s ease-out
+    transition: all .1s ease-out;
+    
 }
-
-
-
 
 @media (min-width:768px) {
     .main-content {
@@ -696,7 +696,21 @@ body{
 
 /* by george 70px to 50px  */
 .page-content {
-    padding: calc(40px + 1.5rem) .75rem 60px
+   padding: calc(40px + 1.5rem) .75rem 60px;
+
+}
+::-webkit-scrollbar {
+    width: 16px;
+}
+ 
+::-webkit-scrollbar-track {
+    background-color: #e4e4e4;
+    border-radius: 100px;
+}
+ 
+::-webkit-scrollbar-thumb {
+    background-color: #d4aa70;
+    border-radius: 100px;
 }
 
 .navbar-menu {
@@ -5282,7 +5296,7 @@ code {
 
 html {
     position: relative;
-    min-height: 100%
+    min-height: 100%;
 }
 
 .h1,

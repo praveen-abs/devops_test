@@ -307,7 +307,7 @@
 
 
 
-                        <a href="" class="p-0 settings-icon mx-3">
+                        <a href="" class="p-0 settings-icon mx-3 header-item ">
                             <svg xmlns="http://www.w3.org/2000/svg" width="23.494" height="23.353"
                                 viewBox="0 0 23.494 23.353">
                                 <g id="megaphone" transform="translate(0 -1.529)">
