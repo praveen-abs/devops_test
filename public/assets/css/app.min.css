@@ -18495,10 +18495,30 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
 
     margin-top: 20px;
 }
+.pms-dashboard-wrapper {
+    background-image: url(../images/pms_bg.png);
+    height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: unset;
+}
+
 
 .pms-dashboard-wrapper .pms-card{
     height: 100px;
     width: 300px;
     border-radius: 10px;
-    box-shadow: rgb(0 0 0 / 15%) 1.95px 1.95px 2.6px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+.pms-card img{
+    height: 70px;
+    width: 70px;
+}
+.pms-card p{
+font-size: 15px;
+font-weight: 500;
+}
+.pms-dashboard-wrapper .inside-pms-container{
+    
+    margin: 0px 70px;
 }
