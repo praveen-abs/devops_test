@@ -20,7 +20,7 @@
 
                     <div class="card pms-card">
                         <div class="card-body">
-                            <img src="{{ URL::asset('assets/images/png_icons/employees_goals.png') }}" alt="" class="">
+                            <img src="{{ URL::asset('assets/images/comingsoon.png') }}" alt="" class="">
                         </div>
                     </div>
                 </div>

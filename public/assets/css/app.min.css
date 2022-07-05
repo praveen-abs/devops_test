@@ -18495,3 +18495,10 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
 
     margin-top: 20px;
 }
+
+.pms-dashboard-wrapper .pms-card{
+    height: 100px;
+    width: 300px;
+    border-radius: 10px;
+    box-shadow: rgb(0 0 0 / 15%) 1.95px 1.95px 2.6px;
+}
