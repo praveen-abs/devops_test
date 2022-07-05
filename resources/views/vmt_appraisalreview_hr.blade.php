@@ -17,6 +17,12 @@
     border-top-width: 0px !important;
     border-bottom-width: 0px !important;
 }
+
+.inp-text {
+    height:46px;
+    width:auto;
+    word-break: break-word;
+}
 </style>
 @endsection
 @section('content')
@@ -121,7 +127,7 @@
                                 <b>Overall Annual Score: </b>
                             </td>
                             <td class="text-left">
-                                80
+                                @if($ratingDetail){{$ratingDetail['rating']}}@else - @endif
                             </td>
                         </tr>
                         <tr style="border: none;">
@@ -129,7 +135,7 @@
                                 <b>Corresponding ANNUAL PERFORMANCE Rating:</b>
                             </td>
                             <td class="text-left">
-                                Exceeds Expectations
+                                @if($ratingDetail){{$ratingDetail['performance']}}@else - @endif
                             </td>
                         </tr>
                         <tr style="border: none;">
@@ -137,7 +143,7 @@
                                 <b>Ranking:</b>
                             </td>
                             <td class="col-xl-6 text-left">
-                                4
+                                @if($ratingDetail){{$ratingDetail['ranking']}}@else - @endif
                             </td>
                         </tr>
                         <tr style="border: none;">
@@ -145,7 +151,7 @@
                                 <b> Action:</b>
                             </td>
                             <td class="col-xl-6 text-left">
-                                15%
+                                @if($ratingDetail){{$ratingDetail['action']}}@else - @endif
                             </td>
                         </tr>
                     </tbody>
@@ -264,7 +270,8 @@
                                     </td>
                                     <td>
                                         @if(!$assignedGoals->is_hr_submitted)
-                                            <textarea name="hrpercetage[{{$kpiRow->id}}]" id="" cols="20" rows="2" placeholder="type here">@if(isset( $kpiRow->hr_kpi_percentage)){{$kpiRow->hr_kpi_percentage}}@endif</textarea>                                        
+                                            <!-- <textarea name="hrpercetage[{{$kpiRow->id}}]" id="" cols="20" rows="2" placeholder="type here">@if(isset( $kpiRow->hr_kpi_percentage)){{$kpiRow->hr_kpi_percentage}}@endif</textarea> -->
+                                            <input type="number" class="inp-text" name="hrpercetage[{{$kpiRow->id}}]" placeholder="type here" value="@if(isset( $kpiRow->hr_kpi_percentage)){{$kpiRow->hr_kpi_percentage}}@endif">
                                         @else
                                             <div>{{$kpiRow->hr_kpi_percentage}}</div>
                                         @endif

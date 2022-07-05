@@ -467,9 +467,9 @@ class VmtApraisalController extends Controller
                 $kpiRowArray  = explode(',', $kpiData->kpi_rows);
                 $kpiRows      = VmtAppraisalQuestion::whereIn('id', $kpiRowArray)->get();
                 if($assignedGoals->self_kpi_review != null){
-                    $reviewArray = (json_decode($assignedGoals->self_kpi_review, true));
-                    $percentArray = (json_decode($assignedGoals->self_kpi_percentage, true));
-                    $commentArray = (json_decode($assignedGoals->self_kpi_comments, true));
+                    $reviewArray = (json_decode($assignedGoals->self_kpi_review, true)) ? (json_decode($assignedGoals->self_kpi_review, true)) : [];
+                    $percentArray = (json_decode($assignedGoals->self_kpi_percentage, true)) ? (json_decode($assignedGoals->self_kpi_percentage, true)) : [];
+                    $commentArray = (json_decode($assignedGoals->self_kpi_comments, true)) ? (json_decode($assignedGoals->self_kpi_comments, true)) : [];
                     foreach ($kpiRows as $index => $value) {
                         // code...
                         $kpiRows[$index]['self_kpi_review'] = $reviewArray[$value->id];
@@ -492,19 +492,49 @@ class VmtApraisalController extends Controller
                 $reviewCompleted = false;
                 //
                 if($assignedGoals->hr_kpi_review != null){
-                    $reviewHrArray = (json_decode($assignedGoals->hr_kpi_review, true));
-                    $percentHrArray = (json_decode($assignedGoals->hr_kpi_percentage, true));
+                    $reviewHrArray = (json_decode($assignedGoals->hr_kpi_review, true)) ? (json_decode($assignedGoals->hr_kpi_review, true)) : [];
+                    $percentHrArray = (json_decode($assignedGoals->hr_kpi_percentage, true)) ? (json_decode($assignedGoals->hr_kpi_percentage, true)) : [];
                     foreach ($kpiRows as $index => $value) {
                         // code...
-                        $kpiRows[$index]['hr_kpi_review'] = $reviewHrArray[$value->id];
-                        $kpiRows[$index]['hr_kpi_percentage'] = $percentHrArray[$value->id];
+                        if (count($reviewHrArray) > 0) {
+                            $kpiRows[$index]['hr_kpi_review'] = $reviewHrArray[$value->id];
+                        }
+                        if (count($percentHrArray) > 0) {
+                            $kpiRows[$index]['hr_kpi_percentage'] = $percentHrArray[$value->id];
+                        }
                     }
 
                     $reviewCompleted = true;
                 }
                 $empSelected = true;
+                $ratingDetail = [];
+                $per = json_decode($assignedGoals->hr_kpi_percentage, true) ? json_decode($assignedGoals->hr_kpi_percentage, true) : [];
+                if (count($per) > 0) {
+                    $ratingDetail['rating'] = array_sum($per)/count($per);
+                    if ($ratingDetail['rating'] < 60) {
+                        $ratingDetail['performance'] = "Needs Action";
+                        $ratingDetail['ranking'] = 1;
+                        $ratingDetail['action'] = 'Exit';
+                    } elseif ($ratingDetail['rating'] < 70) {
+                        $ratingDetail['performance'] = "Below Expectations";
+                        $ratingDetail['ranking'] = 2;
+                        $ratingDetail['action'] = 'PIP';
+                    } elseif ($ratingDetail['rating'] < 80) {
+                        $ratingDetail['performance'] = "Meet Expectations";
+                        $ratingDetail['ranking'] = 3;
+                        $ratingDetail['action'] = '10%';
+                    } elseif ($ratingDetail['rating'] < 90) {
+                        $ratingDetail['performance'] = "Exceeds Expectations";
+                        $ratingDetail['ranking'] = 4;
+                        $ratingDetail['action'] = '15%';
+                    } elseif ($ratingDetail['rating'] < 100) {
+                        $ratingDetail['performance'] = "Exceptionally Exceeds Expectations";
+                        $ratingDetail['ranking'] = 5;
+                        $ratingDetail['action'] = '20%';
+                    }
+                }
                 //dd($kpiRows);
-                return view('vmt_appraisalreview_hr', compact( 'employeeData', 'assignedGoals', 'kpiRows', 'empSelected', 'reviewCompleted'));
+                return view('vmt_appraisalreview_hr', compact( 'employeeData', 'assignedGoals', 'kpiRows', 'empSelected', 'reviewCompleted', 'ratingDetail'));
             }
 
             $kpiRows = [];
@@ -526,46 +556,85 @@ class VmtApraisalController extends Controller
             $kpiRows      = VmtAppraisalQuestion::whereIn('id', $kpiRowArray)->get();
             $reviewCompleted = false;
             if($assignedGoals->self_kpi_review != null){
-                $reviewArray = (json_decode($assignedGoals->self_kpi_review, true));
-                $percentArray = (json_decode($assignedGoals->self_kpi_percentage, true));
-                $commentArray = (json_decode($assignedGoals->self_kpi_comments, true));
+                $reviewArray = (json_decode($assignedGoals->self_kpi_review, true)) ? (json_decode($assignedGoals->self_kpi_review, true)) : [];
+                $percentArray = (json_decode($assignedGoals->self_kpi_percentage, true)) ? (json_decode($assignedGoals->self_kpi_percentage, true)) : [];
+                $commentArray = (json_decode($assignedGoals->self_kpi_comments, true)) ? (json_decode($assignedGoals->self_kpi_comments, true)) : [];
                 foreach ($kpiRows as $index => $value) {
                     // code...
-                    $kpiRows[$index]['self_kpi_review'] = $reviewArray[$value->id];
-                    $kpiRows[$index]['self_kpi_percentage'] = $percentArray[$value->id];
-                    $kpiRows[$index]['self_kpi_comments'] = $commentArray[$value->id];
+                    if (count($reviewArray) > 0) {
+                        $kpiRows[$index]['self_kpi_review'] = $reviewArray[$value->id];
+                    }
+                    if (count($percentArray) > 0) {
+                        $kpiRows[$index]['self_kpi_percentage'] = $percentArray[$value->id];
+                    }
+                    if (count($commentArray) > 0) {
+                        $kpiRows[$index]['self_kpi_comments'] = $commentArray[$value->id];
+                    }
                 }
             }
 
             if($assignedGoals->manager_kpi_review != null){
-                $reviewArrayManager = (json_decode($assignedGoals->manager_kpi_review, true));
-                $percentArrayManager = (json_decode($assignedGoals->manager_kpi_percentage, true));
+                $reviewArrayManager = (json_decode($assignedGoals->manager_kpi_review, true)) ? (json_decode($assignedGoals->manager_kpi_review, true)) : [];
+                $percentArrayManager = (json_decode($assignedGoals->manager_kpi_percentage, true)) ? (json_decode($assignedGoals->manager_kpi_percentage, true)) : [];
                  
                 //dd($reviewArrayManager);
 
                 foreach ($kpiRows as $index => $value) {
                     // code...
-                    $kpiRows[$index]['manager_kpi_review'] = $reviewArrayManager[$value->id];
-                    $kpiRows[$index]['manager_kpi_percentage'] = $percentArrayManager[$value->id];
+                    if (count($reviewArrayManager) > 0) {
+                        $kpiRows[$index]['manager_kpi_review'] = $reviewArrayManager[$value->id];
+                    }
+                    if (count($percentArrayManager) > 0) {
+                        $kpiRows[$index]['manager_kpi_percentage'] = $percentArrayManager[$value->id];
+                    }
                 }
             }
 
             if($assignedGoals->hr_kpi_review != null){
-                $reviewHrArray = (json_decode($assignedGoals->hr_kpi_review, true));
-                $percentHrArray = (json_decode($assignedGoals->hr_kpi_percentage, true));
+                $reviewHrArray = (json_decode($assignedGoals->hr_kpi_review, true)) ? (json_decode($assignedGoals->hr_kpi_review, true)) : [];
+                $percentHrArray = (json_decode($assignedGoals->hr_kpi_percentage, true)) ? (json_decode($assignedGoals->hr_kpi_percentage, true)) : [];
                 foreach ($kpiRows as $index => $value) {
                     // code...
-                    $kpiRows[$index]['hr_kpi_review'] = $reviewHrArray[$value->id];
-                    $kpiRows[$index]['hr_kpi_percentage'] = $percentHrArray[$value->id];
+                    if (count($reviewHrArray) > 0) {
+                        $kpiRows[$index]['hr_kpi_review'] = $reviewHrArray[$value->id];
+                    }
+                    if (count($percentHrArray) > 0) {
+                        $kpiRows[$index]['hr_kpi_percentage'] = $percentHrArray[$value->id];
+                    }
                 }
 
                 $reviewCompleted = true;
             }
             $empSelected = true;
-
+            $ratingDetail = [];
+            $per = json_decode($assignedGoals->hr_kpi_percentage, true) ? json_decode($assignedGoals->hr_kpi_percentage, true): [];
+            if (count($per) > 0) {
+                $ratingDetail['rating'] = array_sum($per)/count($per);
+                if ($ratingDetail['rating'] < 60) {
+                    $ratingDetail['performance'] = "Needs Action";
+                    $ratingDetail['ranking'] = 1;
+                    $ratingDetail['action'] = 'Exit';
+                } elseif ($ratingDetail['rating'] < 70) {
+                    $ratingDetail['performance'] = "Below Expectations";
+                    $ratingDetail['ranking'] = 2;
+                    $ratingDetail['action'] = 'PIP';
+                } elseif ($ratingDetail['rating'] < 80) {
+                    $ratingDetail['performance'] = "Meet Expectations";
+                    $ratingDetail['ranking'] = 3;
+                    $ratingDetail['action'] = '10%';
+                } elseif ($ratingDetail['rating'] < 90) {
+                    $ratingDetail['performance'] = "Exceeds Expectations";
+                    $ratingDetail['ranking'] = 4;
+                    $ratingDetail['action'] = '15%';
+                } elseif ($ratingDetail['rating'] < 100) {
+                    $ratingDetail['performance'] = "Exceptionally Exceeds Expectations";
+                    $ratingDetail['ranking'] = 5;
+                    $ratingDetail['action'] = '20%';
+                }
+            }
             //dd($kpiRows);
 
-            return view('vmt_appraisalreview_manager', compact( 'employeeData', 'assignedGoals', 'kpiRows', 'empSelected', 'reviewCompleted'));
+            return view('vmt_appraisalreview_manager', compact( 'employeeData', 'assignedGoals', 'kpiRows', 'empSelected', 'reviewCompleted', 'ratingDetail'));
         }
         
         $kpiRows = [];
@@ -579,7 +648,6 @@ class VmtApraisalController extends Controller
         $kpiData  = VmtEmployeePMSGoals::find($request->goal_id);
 
         if($kpiData){
-
             $kpiData->hr_kpi_review      = $request->hreview; //null
             $kpiData->hr_kpi_percentage  = $request->hrpercetage; //null
 
