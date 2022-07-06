@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\VmtEmployeeHierarchy;
 use App\Models\VmtEmployee;
+use App\Models\Countries;
+use App\Models\State;
 use App\Imports\VmtEmployeeManagerImport;
 use App\Imports\VmtEmployee as VmtEmployeeImport;
 use App\Models\VmtEmployeeOfficeDetails;
@@ -31,7 +33,14 @@ class VmtEmployeeController extends Controller
         } else {
             $empNo = $maxId;
         }
-        return view('vmt_employeeOnboarding', compact('empNo'));
+        $countries = Countries::all();
+        $india = Countries::where('country_code', 'IN')->first();
+        return view('vmt_employeeOnboarding', compact('empNo', 'countries', 'india'));
+    }
+
+    public function getState(Request $request) {
+        $state = State::where('country_code', $request->code)->get();
+        return response()->json($state);
     }
 
     //

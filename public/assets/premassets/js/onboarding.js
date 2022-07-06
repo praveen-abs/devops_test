@@ -7,6 +7,7 @@ $(document).ready(function() {
             '') {
             var pattern = {
                 'pan': /^([A-Z]){5}([0-9]){4}([A-Z]){1}?$/,
+                // 'pan': /^([A-Z]){3}P[A-Z]){1}([0-9]){4}([A-Z]){1}?$/,
                 'aadhar': /^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$/,
                 'passport': /^[a-zA-Z]{2}[0-9]{7}$/,
                 'account': /^[0-9]{9,18}$/,
@@ -14,6 +15,7 @@ $(document).ready(function() {
                 'gst': /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/,
                 'alp-num': /^[a-zA-Z0-9]+$/,
                 'alpha': /^[a-zA-Z]+$/,
+                'name': /^[a-zA-Z.]+$/,
             };
             var regex = $(this).attr('pattern');
             if (!pattern[regex].test(inputvalues)) {

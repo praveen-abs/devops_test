@@ -44,7 +44,7 @@ p {
 }
 
 .onboard-form {
-    border-bottom: 1px solid !important;
+    border: 1px solid !important;
 }
 
 input {
@@ -69,20 +69,28 @@ option:hover {
     background: orange !important;
 }
 
+.checkbox {
+    width: auto !important;
+}
+
+.checkbox:focus {
+    box-shadow: none !important;
+}
+
 #msform input,
 #msform textarea,
 #msform select {
     padding: 8px 15px 8px 15px;
-    border: none;
+    /* border: none; */
     border-radius: 0px;
     margin-top: 2px;
     width: 100%;
     box-sizing: border-box;
-    font-family: montserrat;
+    /* font-family: montserrat; */
     color: #2C3E50;
     font-size: 16px;
     letter-spacing: 1px;
-    outline: none;
+    /* outline: none; */
 }
 
 #msform input:focus,
@@ -91,7 +99,7 @@ option:hover {
     -moz-box-shadow: none !important;
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
-    box-shadow: 0 1px 0 0 #673AB7 !important;
+    box-shadow: 1px 1px 1px 1px #673AB7 !important;
     outline-width: 0;
 }
 
@@ -159,6 +167,7 @@ option:hover {
     top: -7px;
     transition: 0.2s ease all;
     font-size: 15px;
+    background: white;
 }
 
 #msform .action-button {

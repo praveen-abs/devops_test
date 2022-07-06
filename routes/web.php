@@ -168,6 +168,7 @@ Route::post('vmt-pmsappraisal-hrreview', 'App\Http\Controllers\VmtApraisalContro
 
 
 Route::get('/vmt_employeeOnboarding',  [App\Http\Controllers\VmtEmployeeController::class, 'employeeOnboarding']);
+Route::post('/state',  [App\Http\Controllers\VmtEmployeeController::class, 'getState'])->name('state');
 Route::get('/vmt_salary_details',  [App\Http\Controllers\VmtPaySlipController::class, 'paySlipIndex']);
 Route::get('/vmt_employee_payslip',  [App\Http\Controllers\VmtPaySlipController::class, 'payslipPdfView'])->name('vmt_employee_payslip');
 

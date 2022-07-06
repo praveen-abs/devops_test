@@ -34,278 +34,91 @@
                                         <div class="row mt-5">
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <input type="text" name="employee_code" class="onboard-form" value="{{$empNo}}" required readonly/>
-                                                <label class="fieldlabels" for="employee_code">Employee Code</label>
+                                                <label class="fieldlabels" for="employee_code">Employee Code{!! required() !!}   </label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="employee_name" class="onboard-form" required />
+                                                <input type="text" name="employee_name" class="onboard-form" pattern="name" required />
+                                                <label class="error employee_name_label" for="employee_name" style="display: none;"></label>
                                                 <label class="fieldlabels" for="employee_name">Employee Name as per
-                                                    Aadhar</label>
+                                                    Aadhar{!! required() !!}   </label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <input type="date" name="dob" class="onboard-form" required />
-                                                <label class="fieldlabels" for="dob">Date of Birth</label>
+                                                <label class="fieldlabels" for="dob">Date of Birth{!! required() !!}   </label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <select name="marital_status" class="onboard-form mt-2" required >
+                                                <select name="marital_status" class="onboard-form" required >
+                                                    <option value="">Select</option>
+                                                    <option value="single">Un Married</option>
                                                     <option value="married">Married</option>
                                                     <option value="widowed">Widowed</option>
                                                     <option value="separated">Separated</option>
                                                     <option value="divorced">Divorced</option>
-                                                    <option value="single">Single</option>
                                                 </select>
-                                                <label class="fieldlabels" for="marital_status">Marital Status</label>
+                                                <label class="fieldlabels" for="marital_status">Marital Status{!! required() !!}   </label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <input type="date" name="doj" class="onboard-form" required />
                                                 <label class="fieldlabels" for="doj">Date of Joining</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <select name="gender" class="onboard-form mt-2" required >
+                                                <select name="gender" class="onboard-form" required >
+                                                    <option value="">Select</option>
                                                     <option value="male">Male</option>
                                                     <option value="female">Female</option>
                                                     <option value="other">Other</option>
                                                 </select>
-                                                <label class="fieldlabels" for="gender">Gender</label>
+                                                <label class="fieldlabels" for="gender">Gender{!! required() !!}   </label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <input type="number" name="mobile_no" minlength="10" maxlength="10"
                                                     class="onboard-form" required />
-                                                <label class="fieldlabels" for="mobile_no">Mobile Number</label>
+                                                <label class="fieldlabels" for="mobile_no">Mobile Number{!! required() !!}   </label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <input type="email" name="email" class="onboard-form" required />
-                                                <label class="fieldlabels" for="email">Email ID</label>
+                                                <label class="fieldlabels" for="email">Email ID{!! required() !!}   </label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="number" name="aadhar" pattern="aadhar"
+                                                <input type="number" name="aadhar" id="aadhar" pattern="aadhar"
                                                     class="onboard-form" required />
                                                 <label class="error aadhar_label" for="aadhar"
                                                     style="display: none;"></label>
-                                                <label class="fieldlabels" for="aadhar">Aadhaar Number</label>
+                                                <label class="fieldlabels" for="aadhar">Aadhaar Number{!! required() !!}</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <input type="text" name="pan_no" class="onboard-form pan" pattern="pan"
                                                     required />
                                                 <label class="error pan_no_label" for="pan_no"
                                                     style="display: none;"></label>
-                                                <label class="fieldlabels" for="pan_no">Pan Card Number</label>
+                                                <label class="fieldlabels" for="pan_no">Pan Card Number{!! required() !!}</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="dl_no" class="onboard-form" pattern="dl" required />
+                                                <input type="text" name="dl_no" class="onboard-form not-required validate" pattern="dl" />
                                                 <label class="error dl_no_label" for="dl_no"
                                                     style="display: none;"></label>
                                                 <label class="fieldlabels" for="dl_no">DL Number</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="passport_no" pattern="passport" class="onboard-form not-required validate" />
+                                                <input type="text" name="passport_no" pattern="passport" id="passport_no" class="onboard-form not-required validate" />
                                                 <label class="error passport_no_label" for="passport_no"
                                                     style="display: none;"></label>
-                                                <label class="fieldlabels" for="passport_no">Passport Number</label>
+                                                <label class="fieldlabels" for="passport_no">Passport Number{!! required() !!}</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="date" name="passport_exp" class="onboard-form not-required validate" />
-                                                <label class="fieldlabels" for="passport_exp">Passport Exp Date</label>
+                                                <input type="date" name="passport_exp" id="passport_exp" class="onboard-form not-required validate" />
+                                                <label class="fieldlabels" for="passport_exp">Passport Exp Date{!! required() !!}</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <select name="nationality" class="onboard-form mt-2" required >
-                                                    <option value="">-- select one --</option>
-                                                    <option value="afghan">Afghan</option>
-                                                    <option value="albanian">Albanian</option>
-                                                    <option value="algerian">Algerian</option>
-                                                    <option value="american">American</option>
-                                                    <option value="andorran">Andorran</option>
-                                                    <option value="angolan">Angolan</option>
-                                                    <option value="antiguans">Antiguans</option>
-                                                    <option value="argentinean">Argentinean</option>
-                                                    <option value="armenian">Armenian</option>
-                                                    <option value="australian">Australian</option>
-                                                    <option value="austrian">Austrian</option>
-                                                    <option value="azerbaijani">Azerbaijani</option>
-                                                    <option value="bahamian">Bahamian</option>
-                                                    <option value="bahraini">Bahraini</option>
-                                                    <option value="bangladeshi">Bangladeshi</option>
-                                                    <option value="barbadian">Barbadian</option>
-                                                    <option value="barbudans">Barbudans</option>
-                                                    <option value="batswana">Batswana</option>
-                                                    <option value="belarusian">Belarusian</option>
-                                                    <option value="belgian">Belgian</option>
-                                                    <option value="belizean">Belizean</option>
-                                                    <option value="beninese">Beninese</option>
-                                                    <option value="bhutanese">Bhutanese</option>
-                                                    <option value="bolivian">Bolivian</option>
-                                                    <option value="bosnian">Bosnian</option>
-                                                    <option value="brazilian">Brazilian</option>
-                                                    <option value="british">British</option>
-                                                    <option value="bruneian">Bruneian</option>
-                                                    <option value="bulgarian">Bulgarian</option>
-                                                    <option value="burkinabe">Burkinabe</option>
-                                                    <option value="burmese">Burmese</option>
-                                                    <option value="burundian">Burundian</option>
-                                                    <option value="cambodian">Cambodian</option>
-                                                    <option value="cameroonian">Cameroonian</option>
-                                                    <option value="canadian">Canadian</option>
-                                                    <option value="cape verdean">Cape Verdean</option>
-                                                    <option value="central african">Central African</option>
-                                                    <option value="chadian">Chadian</option>
-                                                    <option value="chilean">Chilean</option>
-                                                    <option value="chinese">Chinese</option>
-                                                    <option value="colombian">Colombian</option>
-                                                    <option value="comoran">Comoran</option>
-                                                    <option value="congolese">Congolese</option>
-                                                    <option value="costa rican">Costa Rican</option>
-                                                    <option value="croatian">Croatian</option>
-                                                    <option value="cuban">Cuban</option>
-                                                    <option value="cypriot">Cypriot</option>
-                                                    <option value="czech">Czech</option>
-                                                    <option value="danish">Danish</option>
-                                                    <option value="djibouti">Djibouti</option>
-                                                    <option value="dominican">Dominican</option>
-                                                    <option value="dutch">Dutch</option>
-                                                    <option value="east timorese">East Timorese</option>
-                                                    <option value="ecuadorean">Ecuadorean</option>
-                                                    <option value="egyptian">Egyptian</option>
-                                                    <option value="emirian">Emirian</option>
-                                                    <option value="equatorial guinean">Equatorial Guinean</option>
-                                                    <option value="eritrean">Eritrean</option>
-                                                    <option value="estonian">Estonian</option>
-                                                    <option value="ethiopian">Ethiopian</option>
-                                                    <option value="fijian">Fijian</option>
-                                                    <option value="filipino">Filipino</option>
-                                                    <option value="finnish">Finnish</option>
-                                                    <option value="french">French</option>
-                                                    <option value="gabonese">Gabonese</option>
-                                                    <option value="gambian">Gambian</option>
-                                                    <option value="georgian">Georgian</option>
-                                                    <option value="german">German</option>
-                                                    <option value="ghanaian">Ghanaian</option>
-                                                    <option value="greek">Greek</option>
-                                                    <option value="grenadian">Grenadian</option>
-                                                    <option value="guatemalan">Guatemalan</option>
-                                                    <option value="guinea-bissauan">Guinea-Bissauan</option>
-                                                    <option value="guinean">Guinean</option>
-                                                    <option value="guyanese">Guyanese</option>
-                                                    <option value="haitian">Haitian</option>
-                                                    <option value="herzegovinian">Herzegovinian</option>
-                                                    <option value="honduran">Honduran</option>
-                                                    <option value="hungarian">Hungarian</option>
-                                                    <option value="icelander">Icelander</option>
+                                                <select name="nationality" id="nationality" class="onboard-form" required >
                                                     <option value="indian">Indian</option>
-                                                    <option value="indonesian">Indonesian</option>
-                                                    <option value="iranian">Iranian</option>
-                                                    <option value="iraqi">Iraqi</option>
-                                                    <option value="irish">Irish</option>
-                                                    <option value="israeli">Israeli</option>
-                                                    <option value="italian">Italian</option>
-                                                    <option value="ivorian">Ivorian</option>
-                                                    <option value="jamaican">Jamaican</option>
-                                                    <option value="japanese">Japanese</option>
-                                                    <option value="jordanian">Jordanian</option>
-                                                    <option value="kazakhstani">Kazakhstani</option>
-                                                    <option value="kenyan">Kenyan</option>
-                                                    <option value="kittian and nevisian">Kittian and Nevisian</option>
-                                                    <option value="kuwaiti">Kuwaiti</option>
-                                                    <option value="kyrgyz">Kyrgyz</option>
-                                                    <option value="laotian">Laotian</option>
-                                                    <option value="latvian">Latvian</option>
-                                                    <option value="lebanese">Lebanese</option>
-                                                    <option value="liberian">Liberian</option>
-                                                    <option value="libyan">Libyan</option>
-                                                    <option value="liechtensteiner">Liechtensteiner</option>
-                                                    <option value="lithuanian">Lithuanian</option>
-                                                    <option value="luxembourger">Luxembourger</option>
-                                                    <option value="macedonian">Macedonian</option>
-                                                    <option value="malagasy">Malagasy</option>
-                                                    <option value="malawian">Malawian</option>
-                                                    <option value="malaysian">Malaysian</option>
-                                                    <option value="maldivan">Maldivan</option>
-                                                    <option value="malian">Malian</option>
-                                                    <option value="maltese">Maltese</option>
-                                                    <option value="marshallese">Marshallese</option>
-                                                    <option value="mauritanian">Mauritanian</option>
-                                                    <option value="mauritian">Mauritian</option>
-                                                    <option value="mexican">Mexican</option>
-                                                    <option value="micronesian">Micronesian</option>
-                                                    <option value="moldovan">Moldovan</option>
-                                                    <option value="monacan">Monacan</option>
-                                                    <option value="mongolian">Mongolian</option>
-                                                    <option value="moroccan">Moroccan</option>
-                                                    <option value="mosotho">Mosotho</option>
-                                                    <option value="motswana">Motswana</option>
-                                                    <option value="mozambican">Mozambican</option>
-                                                    <option value="namibian">Namibian</option>
-                                                    <option value="nauruan">Nauruan</option>
-                                                    <option value="nepalese">Nepalese</option>
-                                                    <option value="new zealander">New Zealander</option>
-                                                    <option value="ni-vanuatu">Ni-Vanuatu</option>
-                                                    <option value="nicaraguan">Nicaraguan</option>
-                                                    <option value="nigerien">Nigerien</option>
-                                                    <option value="north korean">North Korean</option>
-                                                    <option value="northern irish">Northern Irish</option>
-                                                    <option value="norwegian">Norwegian</option>
-                                                    <option value="omani">Omani</option>
-                                                    <option value="pakistani">Pakistani</option>
-                                                    <option value="palauan">Palauan</option>
-                                                    <option value="panamanian">Panamanian</option>
-                                                    <option value="papua new guinean">Papua New Guinean</option>
-                                                    <option value="paraguayan">Paraguayan</option>
-                                                    <option value="peruvian">Peruvian</option>
-                                                    <option value="polish">Polish</option>
-                                                    <option value="portuguese">Portuguese</option>
-                                                    <option value="qatari">Qatari</option>
-                                                    <option value="romanian">Romanian</option>
-                                                    <option value="russian">Russian</option>
-                                                    <option value="rwandan">Rwandan</option>
-                                                    <option value="saint lucian">Saint Lucian</option>
-                                                    <option value="salvadoran">Salvadoran</option>
-                                                    <option value="samoan">Samoan</option>
-                                                    <option value="san marinese">San Marinese</option>
-                                                    <option value="sao tomean">Sao Tomean</option>
-                                                    <option value="saudi">Saudi</option>
-                                                    <option value="scottish">Scottish</option>
-                                                    <option value="senegalese">Senegalese</option>
-                                                    <option value="serbian">Serbian</option>
-                                                    <option value="seychellois">Seychellois</option>
-                                                    <option value="sierra leonean">Sierra Leonean</option>
-                                                    <option value="singaporean">Singaporean</option>
-                                                    <option value="slovakian">Slovakian</option>
-                                                    <option value="slovenian">Slovenian</option>
-                                                    <option value="solomon islander">Solomon Islander</option>
-                                                    <option value="somali">Somali</option>
-                                                    <option value="south african">South African</option>
-                                                    <option value="south korean">South Korean</option>
-                                                    <option value="spanish">Spanish</option>
-                                                    <option value="sri lankan">Sri Lankan</option>
-                                                    <option value="sudanese">Sudanese</option>
-                                                    <option value="surinamer">Surinamer</option>
-                                                    <option value="swazi">Swazi</option>
-                                                    <option value="swedish">Swedish</option>
-                                                    <option value="swiss">Swiss</option>
-                                                    <option value="syrian">Syrian</option>
-                                                    <option value="taiwanese">Taiwanese</option>
-                                                    <option value="tajik">Tajik</option>
-                                                    <option value="tanzanian">Tanzanian</option>
-                                                    <option value="thai">Thai</option>
-                                                    <option value="togolese">Togolese</option>
-                                                    <option value="tongan">Tongan</option>
-                                                    <option value="trinidadian or tobagonian">Trinidadian or Tobagonian</option>
-                                                    <option value="tunisian">Tunisian</option>
-                                                    <option value="turkish">Turkish</option>
-                                                    <option value="tuvaluan">Tuvaluan</option>
-                                                    <option value="ugandan">Ugandan</option>
-                                                    <option value="ukrainian">Ukrainian</option>
-                                                    <option value="uruguayan">Uruguayan</option>
-                                                    <option value="uzbekistani">Uzbekistani</option>
-                                                    <option value="venezuelan">Venezuelan</option>
-                                                    <option value="vietnamese">Vietnamese</option>
-                                                    <option value="welsh">Welsh</option>
-                                                    <option value="yemenite">Yemenite</option>
-                                                    <option value="zambian">Zambian</option>
-                                                    <option value="zimbabwean">Zimbabwean</option>
+                                                    <option value="other_country">Other Nationality</option>
                                                 </select>
-                                                <label class="fieldlabels" for="nationality">Nationality</label>
+                                                <label class="fieldlabels" for="nationality">Nationality{!! required() !!}</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <select name="blood_group" class="onboard-form mt-2" required >
+                                                <select name="blood_group" class="onboard-form not-required validate" >
+                                                    <option value="">Select</option>
                                                     <option value="a-positive">A Positive</option>
                                                     <option value="a-negative">A Negative</option>
                                                     <option value="a-unknown">A Unknown</option>
@@ -322,6 +135,29 @@
                                                 </select>
                                                 <label class="fieldlabels" for="blood_group">Blood Group</label>
                                             </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
+                                                <select name="physically_challenged" class="onboard-form" required >
+                                                    <option value="">Select</option>
+                                                    <option value="yes">Yes</option>
+                                                    <option value="no">No</option>
+                                                </select>
+                                                <label class="fieldlabels" for="physically_challenged">Physically
+                                                    Challenged</label>
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
+                                                <input type="text" name="bank_name" class="onboard-form" required />
+                                                <label class="fieldlabels" for="bank_name">Bank Name</label>
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
+                                                <input type="number" name="account_no" class="onboard-form" pattern="account" required />
+                                                <label class="error account_no_label" for="account_no"
+                                                    style="display: none;"></label>
+                                                <label class="fieldlabels" for="account_no">Account Number</label>
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
+                                                <input type="text" name="bank_ifsc" class="onboard-form" required />
+                                                <label class="fieldlabels" for="bank_ifsc">Bank IFSC Code</label>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -336,79 +172,73 @@
                                 <form id="form-2" enctype="multipart/form-data">
                                     <div class="form-card">
                                         <div class="row mt-5">
-                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="current_address" class="onboard-form"
+                                            <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6 mt-3 mb-3">
+                                                <input type="text" name="current_address" id="current_address" class="onboard-form"
                                                     required />
                                                 <label class="fieldlabels" for="current_address">Current Address</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="current_city" class="onboard-form" required />
+                                                <input type="text" name="current_city" id="current_city" class="onboard-form" required />
                                                 <label class="fieldlabels" for="current_city">Current City</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="curent_district" class="onboard-form"
-                                                    required />
-                                                <label class="fieldlabels" for="curent_district">Current
-                                                    District</label>
+                                                <select name="current_state" id="current_state" class="onboard-form" required >
+                                                </select>
+                                                <label class="fieldlabels" for="current_state">Current State</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="number" name="current_pincode" class="onboard-form"
+                                                <input type="number" name="current_pincode" id="current_pincode" class="onboard-form"
                                                     required />
                                                 <label class="fieldlabels" for="current_pincode">Current Pincode</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="current_state" class="onboard-form" required />
-                                                <label class="fieldlabels" for="current_state">Current State</label>
+                                                <!-- <input type="text" name="curent_district" class="onboard-form"
+                                                    required /> -->
+                                                <select name="current_district" id="current_district" class="onboard-form" required >
+                                                    @foreach($countries as $data)
+                                                    <option value="{{$data->country_code}}">{{$data->country_name}}</option>
+                                                    @endforeach
+                                                </select>
+                                                <label class="fieldlabels" for="curent_district">Country</label>
                                             </div>
-                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="permanent_address" class="onboard-form"
+                                        </div>
+                                        <div class="row mt-5">
+                                            <div class="col-12 mt-3 mb-3">
+                                                <input type="checkbox" name="current_address_copy checkbox" id="current_address_copy" style="width:auto;"/>
+                                                <label for="current_address_copy">Copy current address to the permanent address</label>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-6 col-lg-3 mt-3 mb-3">
+                                                <input type="text" name="permanent_address" id="permanent_address" class="onboard-form"
                                                     required />
                                                 <label class="fieldlabels" for="permanent_address">Permanent
                                                     Address</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="permanent_city" class="onboard-form"
+                                                <input type="text" name="permanent_city" id="permanent_city" class="onboard-form"
                                                     required />
                                                 <label class="fieldlabels" for="permanent_city">Permanent City</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="permanent_district" class="onboard-form"
-                                                    required />
-                                                <label class="fieldlabels" for="permanent_district">Permanent
-                                                    District</label>
+                                                <select name="permanent_state" id="permanent_state" class="onboard-form" required >
+                                                </select>
+                                                <label class="fieldlabels" for="permanent_state">Permanent State</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="number" name="permanent_pincode" class="onboard-form"
+                                                <input type="number" name="permanent_pincode" id="permanent_pincode" class="onboard-form"
                                                     required />
                                                 <label class="fieldlabels" for="permanent_pincode">Permanent
                                                     Pincode</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="permanent_state" class="onboard-form"
-                                                    required />
-                                                <label class="fieldlabels" for="permanent_state">Permanent State</label>
-                                            </div>
-                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <select name="physically_challenged" class="onboard-form mt-2" required >
-                                                    <option value="yes">Yes</option>
-                                                    <option value="no">No</option>
+                                                <!-- <input type="text" name="permanent_district" class="onboard-form"
+                                                    required /> -->
+                                                <select name="permanent_district" id="permanent_district" class="onboard-form" required >
+                                                    @foreach($countries as $data)
+                                                    <option value="{{$data->country_code}}">{{$data->country_name}}</option>
+                                                    @endforeach
                                                 </select>
-                                                <label class="fieldlabels" for="physically_challenged">Physically
-                                                    Challenged</label>
-                                            </div>
-                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="number" name="account_no" class="onboard-form" pattern="account" required />
-                                                <label class="error account_no_label" for="account_no"
-                                                    style="display: none;"></label>
-                                                <label class="fieldlabels" for="account_no">Account Number</label>
-                                            </div>
-                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="bank_ifsc" class="onboard-form" required />
-                                                <label class="fieldlabels" for="bank_ifsc">Bank IFSC Code</label>
-                                            </div>
-                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="bank_name" class="onboard-form" required />
-                                                <label class="fieldlabels" for="bank_name">Bank Name</label>
+                                                <label class="fieldlabels" for="permanent_district">Permanent
+                                                    Country</label>
                                             </div>
                                         </div>
                                     </div>
@@ -447,36 +277,49 @@
                                                 <label class="fieldlabels" for="cost_center">Cost Center</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="confirmation_period" class="onboard-form"
-                                                    required />
-                                                <label class="fieldlabels" for="confirmation_period">Confirmation
+                                                <select name="confirmation_period" class="onboard-form not-required validate" >
+                                                    <option value="">Select</option>
+                                                    <option value="1">1 Month</option>
+                                                    <option value="2">2 Month</option>
+                                                    <option value="3">3 Month</option>
+                                                    <option value="4">4 Month</option>
+                                                    <option value="5">5 Month</option>
+                                                    <option value="6">6 Month</option>
+                                                    <option value="7">7 Month</option>
+                                                    <option value="8">8 Month</option>
+                                                    <option value="9">9 Month</option>
+                                                    <option value="10">10 Month</option>
+                                                    <option value="11">11 Month</option>
+                                                    <option value="12">12 Month</option>
+                                                </select>
+                                                <label class="fieldlabels" for="confirmation_period">Probabition
                                                     Period</label>
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
+                                                <input type="text" name="work_location" class="onboard-form" required />
+                                                <label class="fieldlabels" for="work_location">Work Location</label>
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
+                                                <input type="text" name="l1_manager_code" class="onboard-form"
+                                                    required />
+                                                <label class="fieldlabels" for="l1_manager_code">Reporting Manager Employee Code</label>
+                                            </div>
+                                            <!-- <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
+                                                <input type="text" name="l1_manager_designation" class="onboard-form"
+                                                    required />
+                                                <label class="fieldlabels" for="l1_manager_designation">Reporting Manager
+                                                    Designation</label>
+                                            </div> -->
+                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
+                                                <input type="text" name="l1_manager_name" class="onboard-form"
+                                                    required />
+                                                <label class="fieldlabels" for="l1_manager_name">Reporting Manager Name</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <input type="text" name="holiday_location" class="onboard-form"
                                                     required />
                                                 <label class="fieldlabels" for="holiday_location">Holiday
                                                     Location</label>
-                                            </div>
-                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="l1_manager_code" class="onboard-form"
-                                                    required />
-                                                <label class="fieldlabels" for="l1_manager_code">L1 Manager Code</label>
-                                            </div>
-                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="l1_manager_designation" class="onboard-form"
-                                                    required />
-                                                <label class="fieldlabels" for="l1_manager_designation">L1 Manager
-                                                    Designation</label>
-                                            </div>
-                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="l1_manager_name" class="onboard-form"
-                                                    required />
-                                                <label class="fieldlabels" for="l1_manager_name">L1 Manager Name</label>
-                                            </div>
-                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="work_location" class="onboard-form" required />
-                                                <label class="fieldlabels" for="work_location">Work Location</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <input type="email" name="officical_mail" class="onboard-form"
@@ -529,7 +372,8 @@
                                                 <label class="fieldlabels" for="spouse_name">Spouse Name</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <select name="spouse_gender" class="onboard-form mt-2" required >
+                                                <select name="spouse_gender" class="onboard-form" required >
+                                                    <option value="">Select</option>
                                                     <option value="male">Male</option>
                                                     <option value="female">Female</option>
                                                     <option value="other">Other</option>
@@ -553,7 +397,8 @@
                                                 <label class="fieldlabels" for="child_dob">Children DOB</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <select name="child_gender" class="onboard-form mt-2" required >
+                                                <select name="child_gender" class="onboard-form" required >
+                                                    <option value="">Select</option>
                                                     <option value="male">Male</option>
                                                     <option value="female">Female</option>
                                                     <option value="other">Other</option>
@@ -726,6 +571,86 @@ $('body').on('click', '.close-modal', function() {
     $('#notificationModal').hide();
     $('#notificationModal').addClass('fade');
 });
+
+$('#nationality').change(function() {
+    if ($('#nationality').val() == 'indian') {
+        $('#passport_no').removeAttr('required');
+        if ($('#passport_no').val() == '') {
+            $('.passport_no_label').hide();
+        }
+        $('#passport_no').addClass('not-required validate');
+        $('#passport_exp').addClass('not-required validate');
+        $('#passport_exp').removeAttr('required');
+        $('.passport_exp_label').hide();
+        $('#aadhar').attr('required', true);
+        $('#aadhar').removeClass('not-required validate');
+        $('#permanent_pincode').attr('type', 'number');
+        $('#current_pincode').attr('type', 'number');
+        $('#current_district').val('IN');
+        stateFunction('IN', '#current_state');
+    } else {
+        $('#passport_no').attr('required', true);
+        $('#passport_no').removeClass('not-required validate');
+        $('#passport_exp').removeClass('not-required validate');
+        $('#passport_exp').attr('required', true);
+        $('#aadhar').removeAttr('required');
+        if ($('#aadhar').val() == '') {
+            $('.aadhar_label').hide();
+        }
+        $('#permanent_pincode').attr('type', 'text');
+        $('#current_pincode').attr('type', 'text');
+        $('#aadhar').addClass('not-required validate');
+        $('#current_district').val('AF');
+        stateFunction('AF', '#current_state');
+    }
+}).trigger('change');
+
+$('#current_address_copy').click(function() {
+    if ($('#current_address_copy').val()) {
+        $('#permanent_pincode').val($('#current_pincode').val());
+        $('#permanent_district').val($('#current_district').val());
+        $('#permanent_state').val($('#current_state').val());
+        $('#permanent_city').val($('#current_city').val());
+        $('#permanent_address').val($('#current_address').val());
+    } else {
+        stateFunction($('#current_district').val(), '#permanent_state');
+        $('#permanent_pincode').val('');
+        $('#permanent_district').val('');
+        $('#permanent_state').val('');
+        $('#permanent_city').val('');
+        $('#permanent_address').val('');
+    }
+})
+
+function stateFunction(id, dataId) {
+    $(dataId).empty();
+    $.ajax({
+        url: "{{route('state')}}", 
+        type: "POST", 
+        data: {
+            code: id,
+            _token: '{{csrf_token()}}' 
+        },
+        success: function(data)
+        {
+            console.log(data);
+            $.each(data,function(key,value){
+                $(dataId).append('<option value="'+value.id+'">'+value.state_name+'</option>');
+            });
+        }
+    });
+}
+
+$('#permanent_district').change(function(){
+    var id = $(this).val();
+    stateFunction(id, '#permanent_state');
+});
+
+$('#current_district').change(function(){
+    var id = $(this).val();
+    stateFunction(id, '#current_state');
+});
+
 
 $('#form-5').on('submit', function(e){
         e.preventDefault();
