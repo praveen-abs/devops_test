@@ -214,261 +214,91 @@ th:last-child {
             <div class="col-12 col-lg-12 col-md-12 ">
                 <div class="card ">
 
-                <div class="first">
-                    <div class="container-fluid shadow-lg p-3 mb-5 bg-body rounded">
-                    <div>
-                        <div>
-                            <img src="{{ URL::asset('/assets/images/img_kpi_widget_bg.jpg')}}" class="rounded float-start" alt="..." width="250px">
-                        </div>
-                        <div class="card-group">
-                            <div class="card mb-2 shadow-lg p-3 mb-5 bg-body rounded flex-row" style="width:10rem; ">
-                                <div class="row g-0">
-                                <div class="col-md-3">
-                                    <img src="{{ URL::asset('/assets/images/img_kpi_widget_cardimg_1.jpg')}}" class="img-fluid rounded-start" alt="...">
-                                </div>
+
+                <div class="card px-5 py-2 pms-card-wrapper  pms-dashboard-wrapper ">
+
+
+                    <div class="card-body p-5">
+                        <!-- <div class="row ">
+                            <div class="col-md-4 col-sm-6 col-lg-3 col-xl-3 "> -->
+
+                        <div class="d-flex  flex-wrap align-items-center justify-content-center inside-pms-container">
+                            <div class="card pms-card m-0 m-3">
                                 <div class="card-body">
-                                    <h5 class="card-title">250/300</h5>
-                                    <p class="card-text">Employee with goals.</p>
-                                </div>
+                                    <div class="d-flex align-items-center">
+                                        <img src="{{ URL::asset('assets/images/self_review.png') }}" alt="" class="">
+                                        <p>Self Review</p>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="card mb-2 shadow-lg p-3 mb-5 bg-body rounded flex-row" style="width: 10rem;">
-                                <div class="row g-0">
-                                <div class="col-md-3">
-                                    <img src="{{ URL::asset('/assets/images/img_kpi_widget_cardimg_2.jpg')}}" class="img-fluid rounded-start" alt="...">
-                                </div>
+
+                            <div class="card pms-card m-0 m-3">
                                 <div class="card-body">
-                                    <h5 class="card-title">230/120</h5>
-                                    <p class="card-text">Employee Assessed/Rated.</p>
-                                </div>
+                                    <div class="d-flex align-items-center">
+                                        <img src="{{ URL::asset('assets/images/rating_assessment.png') }}" alt="" class="">
+                                        <p>Rating assessment reminder notiﬁcation</p>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="card mb-2 shadow-lg p-3 mb-5 bg-body rounded" style="width: 10rem;">
-                                <div class="row g-0">
-                                <div class="col-md-3">
-                                    <img src="{{ URL::asset('/assets/images/img_kpi_widget_cardimg_3.jpg')}}" class="img-fluid rounded-start" alt="...">
-                                </div>
+                            <!-- <div class="col-md-4 col-sm-6 col-lg-3 col-xl-3 "> -->
+                            <div class="card pms-card m-0 m-3">
                                 <div class="card-body">
-                                    <h5 class="card-title">24-7-2022</h5>
-                                    <p class="card-text">Goal Assainment reminder notification</p>
-                                </div>
+                                    <div class="d-flex align-items-center">
+                                        <img src="{{ URL::asset('/assets/images/goals_assignment.png')}}" class="rounded-circle">
+                                        <p>Goals assignment reminder notiﬁcation</p>
+                                    </div>
+                                    <!-- </div> -->
                                 </div>
                             </div>
-                            <div class="card mb-2 shadow-lg p-3 mb-5 bg-body rounded" style="width: 10rem;">
-                                <div class="row g-0">
-                                <div class="col-md-3 image">
-                                    <img src="{{ URL::asset('/assets/images/img_kpi_widget_cardimg_4.jpg')}}" class="img-fluid rounded-start" alt="...">
-                                </div>
+                            <!-- <div class="col-md-4 col-sm-6 col-lg-3 col-xl-3 "> -->
+                            <div class="card pms-card m-0 m-3">
                                 <div class="card-body">
-                                    <h5 class="card-title">24-10-2020</h5>
-                                    <p class="card-text">Rating assessment reminder notification.</p>
+                                    <div class="d-flex align-items-center">
+                                        <img src="{{ URL::asset('/assets/images/manager_review.png')}}" class="">
+                                        <p>Manager Review</p>
+
+                                    </div>
+                                    <!-- </div> -->
+
                                 </div>
+                            </div>
+                            <!-- <div class="col-md-4 col-sm-6 col-lg-3 col-xl-3 "> -->
+                            <div class="card pms-card m-0 m-3">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <img src="{{ URL::asset('/assets/images/org.png')}}" class="">
+                                        <p>Organisation Review</p>
+                                    </div>
                                 </div>
+
+                            </div>
+                            <div class="card pms-card m-0 m-3">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <img src="{{ URL::asset('/assets/images/employee_goals.png')}}" class="">
+                                        <p>Employee Goals</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="card pms-card m-0 m-3">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <img src="{{ URL::asset('/assets/images/employees_assessed.png')}}" class="">
+                                        <p>Employees Assessed</p>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
+
                     </div>
 
 
 
-
-
-
-
-
-
-                    <!-- <div class="card-body"> -->
-
-                        <!-- <div class="d-flex justify-content-between align-items-center">
-
-                            <div class="row align-items-center">
-                                <div class="col-6 col-lg-3 col-md-6 col-xl-3">
-                                    <div class="card employee-cards m-0">
-                                        <div class="card-body">
-                                            <div class="d-flex">
-                                                <div class="image-content mx-2">
-                                                    <img src="{{ URL::asset('/assets/premassets/img/client-img5.png') }}"
-                                                        class="img-round">
-                                                </div>
-                                                <div class="message-content mx-2">
-                                                    <h5 class="fw-bold">250/200</h5>
-                                                    <span>Lorem ipsum dolor sit amet.</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-lg-3 col-md-6 col-xl-3">
-                                    <div class="card employee-cards m-0">
-                                        <div class="card-body">
-                                            <div class="d-flex">
-                                                <div class="image-content mx-2">
-                                                    <img src="{{ URL::asset('/assets/premassets/img/client-img5.png') }}"
-                                                        class="img-round">
-                                                </div>
-                                                <div class="message-content mx-2">
-                                                    <h5 class="fw-bold">250/200</h5>
-                                                    <span>Lorem ipsum dolor sit amet.</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-lg-3 col-md-6 col-xl-3">
-                                    <div class="card employee-cards m-0">
-                                        <div class="card-body">
-                                            <div class="d-flex">
-                                                <div class="image-content mx-2">
-                                                    <img src="{{ URL::asset('/assets/premassets/img/client-img5.png') }}"
-                                                        class="img-round">
-                                                </div>
-                                                <div class="message-content mx-2">
-                                                    <h5 class="fw-bold">250/200</h5>
-                                                    <span>Lorem ipsum dolor sit amet.</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-lg-3 col-md-6 col-xl-3">
-                                    <div class="card employee-cards m-0">
-                                        <div class="card-body">
-                                            <div class="d-flex">
-                                                <div class="image-content mx-2">
-                                                    <img src="{{ URL::asset('/assets/premassets/img/client-img5.png') }}"
-                                                        class="img-round">
-                                                </div>
-                                                <div class="message-content mx-2">
-                                                    <h5 class="fw-bold">250/200</h5>
-                                                    <span>Lorem ipsum dolor sit amet.</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
-
-                        <!-- <div class="align-items-center" style="justify-content:center;">
-                            <div class="row align-items-center">
-                                <div class="col-6 col-lg-2 col-md-6 col-xl-2 pr-0"></div>
-                                <div class="col-6 col-lg-2 col-md-6 col-xl-2 pr-0">
-                                    <div class="card employee-cards m-0">
-                                        <div class="card-body p-0">
-                                            <div class="row mt-2">
-                                                <p class="pl-3 col-auto pb-2">
-                                                    <img src="{{ URL::asset('/assets/premassets/img/client-img5.png') }}" class="img-round">
-                                                </p>
-                                                <div class="pt-2 col pb-2 pl-0">
-                                                    <h5 class="fw-bold">-</h5>
-                                                    <span>Employees with Goals</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-lg-2 col-md-6 col-xl-2 pr-0">
-                                    <div class="card employee-cards m-0">
-                                        <div class="card-body p-0">
-                                            <div class="row mt-2">
-                                                <p class="pl-3 col-auto pb-2">
-                                                    <img src="{{ URL::asset('/assets/premassets/img/client-img5.png') }}" class="img-round">
-                                                </p>
-                                                <div class="pt-2 col pb-2 pl-0">
-                                                    <h5 class="fw-bold">-</h5>
-                                                    <span>Employees assessed/ rated</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-lg-2 col-md-6 col-xl-2 pr-0">
-                                    <div class="card employee-cards m-0">
-                                        <div class="card-body p-0">
-                                            <div class="row mt-2">
-                                                <p class="pl-3 col-auto pb-2">
-                                                    <img src="{{ URL::asset('/assets/premassets/img/client-img5.png') }}" class="img-round">
-                                                </p>
-                                                <div class="pt-2 col pb-2 pl-0">
-                                                    <h5 class="fw-bold">-</h5>
-                                                    <span>Goals assignment reminder notification</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-lg-2 col-md-6 col-xl-2 pr-0">
-                                    <div class="card employee-cards m-0">
-                                        <div class="card-body p-0">
-                                            <div class="row mt-2">
-                                                <p class="pl-3 col-auto pb-2">
-                                                    <img src="{{ URL::asset('/assets/premassets/img/client-img5.png') }}" class="img-round">
-                                                </p>
-                                                <div class="pt-2 col pb-2 pl-0">
-                                                    <h5 class="fw-bold">-</h5>
-                                                    <span>Rating assessment reminder notification</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-lg-2 col-md-6 col-xl-2 pr-0"></div>
-                            </div>
-                        </div>
-                        <div class="align-items-center mt-3" style="justify-content:center;">
-
-                            <div class="row align-items-center">
-                                <div class="col-6 col-lg-3 col-md-6 col-xl-3"></div>
-                                <div class="col-6 col-lg-2 col-md-6 col-xl-2 pr-0">
-                                    <div class="card employee-cards m-0">
-                                        <div class="card-body p-0">
-                                            <div class="row mt-2">
-                                                <p class="pl-3 col-auto pb-2">
-                                                    <img src="{{ URL::asset('/assets/premassets/img/client-img5.png') }}" class="img-round">
-                                                </p>
-                                                <div class="pt-2 col pb-2 pl-0">
-                                                    <h5 class="fw-bold">-</h5>
-                                                    <span>Self Review</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-lg-2 col-md-6 col-xl-2 pr-0">
-                                    <div class="card employee-cards m-0">
-                                        <div class="card-body p-0">
-                                            <div class="row mt-2">
-                                                <p class="pl-3 col-auto pb-2">
-                                                    <img src="{{ URL::asset('/assets/premassets/img/client-img5.png') }}" class="img-round">
-                                                </p>
-                                                <div class="pt-2 col pb-2 pl-0">
-                                                    <h5 class="fw-bold">-</h5>
-                                                    <span>Manger Review</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-lg-2 col-md-6 col-xl-2 pr-0">
-                                    <div class="card employee-cards m-0">
-                                        <div class="card-body p-0">
-                                            <div class="row mt-2">
-                                                <p class="pl-3 col-auto pb-2">
-                                                    <img src="{{ URL::asset('/assets/premassets/img/client-img5.png') }}" class="img-round">
-                                                </p>
-                                                <div class="pt-2 col pb-2 pl-0">
-                                                    <h5 class="fw-bold">-</h5>
-                                                    <span>Org review</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
-                                <div class="col-6 col-lg-3 col-md-6 col-xl-3"></div>
-                            </div>
-                        </div>
-
-                    <!-- </div> -->
+ 
+                
                 </div>
             </div>
         </div>
