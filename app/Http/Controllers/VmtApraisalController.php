@@ -455,6 +455,10 @@ class VmtApraisalController extends Controller
                         $ratingDetail['performance'] = "Exceptionally Exceeds Expectations";
                         $ratingDetail['ranking'] = 5;
                         $ratingDetail['action'] = '20%';
+                    } else {
+                        $ratingDetail['performance'] = "Needs Action";
+                        $ratingDetail['ranking'] = 1;
+                        $ratingDetail['action'] = 'Exit';
                     }
                 }
 
@@ -566,6 +570,10 @@ class VmtApraisalController extends Controller
                         $ratingDetail['performance'] = "Exceptionally Exceeds Expectations";
                         $ratingDetail['ranking'] = 5;
                         $ratingDetail['action'] = '20%';
+                    } else {
+                        $ratingDetail['performance'] = "Needs Action";
+                        $ratingDetail['ranking'] = 1;
+                        $ratingDetail['action'] = 'Exit';
                     }
                 }
                 //dd($kpiRows);
@@ -665,6 +673,10 @@ class VmtApraisalController extends Controller
                     $ratingDetail['performance'] = "Exceptionally Exceeds Expectations";
                     $ratingDetail['ranking'] = 5;
                     $ratingDetail['action'] = '20%';
+                } else {
+                    $ratingDetail['performance'] = "Needs Action";
+                    $ratingDetail['ranking'] = 1;
+                    $ratingDetail['action'] = 'Exit';
                 }
             }
             //dd($kpiRows);
@@ -676,6 +688,18 @@ class VmtApraisalController extends Controller
         $empSelected = false;
         $reviewCompleted = false; 
         return view('vmt_appraisalreview_manager', compact( 'kpiRows', 'empSelected', 'reviewCompleted'));
+    }
+
+
+    public function saveManagerFeedback(Request $request) {
+        $kpiData  = VmtEmployeePMSGoals::find($request->id);
+        if($kpiData){
+            $kpiData->appraiser_comment = $request->feedback; //null
+            $kpiData->save();
+
+            //dd($officialMailList);
+        }
+        return "Saved";
     }
 
     public function saveKPItableDraft_HR(Request $request){
