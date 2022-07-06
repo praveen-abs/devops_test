@@ -33,21 +33,24 @@
                                     <div class="form-card">
                                         <div class="row mt-5">
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="employee_code" class="onboard-form" value="{{$empNo}}" required readonly/>
-                                                <label class="fieldlabels" for="employee_code">Employee Code{!! required() !!}   </label>
+                                                <label class="" for="employee_code">Employee Code{!! required() !!}</label>
+                                                <input type="text" name="employee_code" class="onboard-form form-control" value="{{$empNo}}" required readonly/>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="employee_name" class="onboard-form" pattern="name" required />
+                                                <label class="" for="employee_name">Employee Name as per Aadhar{!! required() !!}</label>
+                                                <input type="text" name="employee_name" class="onboard-form form-control" pattern="name" required />
                                                 <label class="error employee_name_label" for="employee_name" style="display: none;"></label>
-                                                <label class="fieldlabels" for="employee_name">Employee Name as per
-                                                    Aadhar{!! required() !!}   </label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="date" name="dob" class="onboard-form" required />
-                                                <label class="fieldlabels" for="dob">Date of Birth{!! required() !!}   </label>
+                                                <label class="" for="dob">Date of Birth{!! required() !!}</label>
+                                                @php
+                                                $date = (date('Y')-18)."-".date('m')."-".date('d');
+                                                @endphp
+                                                <input type="date" name="dob" max="{{$date}}" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <select name="marital_status" class="onboard-form" required >
+                                                <label class="" for="marital_status">Marital Status{!! required() !!}</label>
+                                                <select name="marital_status" class="onboard-form form-control" required >
                                                     <option value="">Select</option>
                                                     <option value="single">Un Married</option>
                                                     <option value="married">Married</option>
@@ -55,69 +58,62 @@
                                                     <option value="separated">Separated</option>
                                                     <option value="divorced">Divorced</option>
                                                 </select>
-                                                <label class="fieldlabels" for="marital_status">Marital Status{!! required() !!}   </label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="date" name="doj" class="onboard-form" required />
-                                                <label class="fieldlabels" for="doj">Date of Joining</label>
+                                                <label class="" for="doj">Date of Joining</label>
+                                                <input type="date" name="doj" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <select name="gender" class="onboard-form" required >
+                                                <label class="" for="gender">Gender{!! required() !!}</label>
+                                                <select name="gender" class="onboard-form form-control" required >
                                                     <option value="">Select</option>
                                                     <option value="male">Male</option>
                                                     <option value="female">Female</option>
                                                     <option value="other">Other</option>
                                                 </select>
-                                                <label class="fieldlabels" for="gender">Gender{!! required() !!}   </label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="number" name="mobile_no" minlength="10" maxlength="10"
-                                                    class="onboard-form" required />
-                                                <label class="fieldlabels" for="mobile_no">Mobile Number{!! required() !!}   </label>
+                                                <label class="" for="mobile_no">Mobile Number{!! required() !!}</label>
+                                                <input type="number" name="mobile_no" minlength="10" maxlength="10" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="email" name="email" class="onboard-form" required />
-                                                <label class="fieldlabels" for="email">Email ID{!! required() !!}   </label>
+                                                <label class="" for="email">Email ID{!! required() !!}</label>
+                                                <input type="email" name="email" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="number" name="aadhar" id="aadhar" pattern="aadhar"
-                                                    class="onboard-form" required />
-                                                <label class="error aadhar_label" for="aadhar"
-                                                    style="display: none;"></label>
-                                                <label class="fieldlabels" for="aadhar">Aadhaar Number{!! required() !!}</label>
+                                                <label class="" for="aadhar">Aadhaar Number{!! required() !!}</label>
+                                                <input type="number" name="aadhar" id="aadhar" pattern="aadhar" class="onboard-form form-control" required />
+                                                <label class="error aadhar_label" for="aadhar" style="display: none;"></label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="pan_no" class="onboard-form pan" pattern="pan"
-                                                    required />
-                                                <label class="error pan_no_label" for="pan_no"
-                                                    style="display: none;"></label>
-                                                <label class="fieldlabels" for="pan_no">Pan Card Number{!! required() !!}</label>
+                                                <label class="" for="pan_no">Pan Card Number{!! required() !!}</label>
+                                                <input type="text" name="pan_no" class="onboard-form form-control pan" pattern="pan" required />
+                                                <label class="error pan_no_label" for="pan_no" style="display: none;"></label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="dl_no" class="onboard-form not-required validate" pattern="dl" />
-                                                <label class="error dl_no_label" for="dl_no"
-                                                    style="display: none;"></label>
-                                                <label class="fieldlabels" for="dl_no">DL Number</label>
+                                                <label class="" for="dl_no">DL Number</label>
+                                                <input type="text" name="dl_no" class="onboard-form form-control not-required validate" pattern="dl" />
+                                                <label class="error dl_no_label" for="dl_no" style="display: none;"></label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="passport_no" pattern="passport" id="passport_no" class="onboard-form not-required validate" />
-                                                <label class="error passport_no_label" for="passport_no"
-                                                    style="display: none;"></label>
-                                                <label class="fieldlabels" for="passport_no">Passport Number{!! required() !!}</label>
+                                                <label class="" for="passport_no">Passport Number{!! required() !!}</label>
+                                                <input type="text" name="passport_no" pattern="passport" id="passport_no" class="onboard-form form-control not-required validate" />
+                                                <label class="error passport_no_label" for="passport_no" style="display: none;"></label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="date" name="passport_exp" id="passport_exp" class="onboard-form not-required validate" />
-                                                <label class="fieldlabels" for="passport_exp">Passport Exp Date{!! required() !!}</label>
+                                                <label class="" for="passport_exp">Passport Exp Date{!! required() !!}</label>
+                                                <input type="date" name="passport_exp" min="{{date('Y-m-d')}}" id="passport_exp" class="onboard-form form-control not-required validate" />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <select name="nationality" id="nationality" class="onboard-form" required >
+                                                <label class="" for="nationality">Nationality{!! required() !!}</label>
+                                                <select name="nationality" id="nationality" class="onboard-form form-control" required >
                                                     <option value="indian">Indian</option>
                                                     <option value="other_country">Other Nationality</option>
                                                 </select>
-                                                <label class="fieldlabels" for="nationality">Nationality{!! required() !!}</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <select name="blood_group" class="onboard-form not-required validate" >
+                                                <label class="" for="blood_group">Blood Group</label>
+                                                <select name="blood_group" class="onboard-form form-control not-required validate" >
                                                     <option value="">Select</option>
                                                     <option value="a-positive">A Positive</option>
                                                     <option value="a-negative">A Negative</option>
@@ -133,38 +129,37 @@
                                                     <option value="o-unknown">O Unknown</option>
                                                     <option value="unknown">Unknown</option>
                                                 </select>
-                                                <label class="fieldlabels" for="blood_group">Blood Group</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <select name="physically_challenged" class="onboard-form" required >
+                                                <label class="" for="physically_challenged">Physically Challenged</label>
+                                                <select name="physically_challenged" class="onboard-form form-control" required >
                                                     <option value="">Select</option>
                                                     <option value="yes">Yes</option>
                                                     <option value="no">No</option>
                                                 </select>
-                                                <label class="fieldlabels" for="physically_challenged">Physically
-                                                    Challenged</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="bank_name" class="onboard-form" required />
-                                                <label class="fieldlabels" for="bank_name">Bank Name</label>
+                                                <label class="" for="bank_name">Bank Name</label>
+                                                <input type="text" name="bank_name" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="number" name="account_no" class="onboard-form" pattern="account" required />
-                                                <label class="error account_no_label" for="account_no"
-                                                    style="display: none;"></label>
-                                                <label class="fieldlabels" for="account_no">Account Number</label>
+                                                <label class="" for="account_no">Account Number</label>
+                                                <input type="number" name="account_no" class="onboard-form form-control" pattern="account" required />
+                                                <label class="error account_no_label" for="account_no" style="display: none;"></label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="bank_ifsc" class="onboard-form" required />
-                                                <label class="fieldlabels" for="bank_ifsc">Bank IFSC Code</label>
+                                                <label class="" for="bank_ifsc">Bank IFSC Code</label>
+                                                <input type="text" name="bank_ifsc" pattern="ifsc" class="onboard-form form-control" required />
+                                                <label class="error bank_ifsc_label" for="bank_ifsc" style="display: none;"></label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-12 text-right p-0"><button type="button" data="row-1"
-                                                next="row-2" name="next" class="next bg-pink action-button text-center"
-                                                value="Next">Next<i
-                                                    class="text-white fa fa-arrow-right ml-2"></i></button></div>
+                                        <div class="col-12 text-right p-0">
+                                            <button type="button" data="row-1" next="row-2" name="next" class="next bg-pink action-button text-center" value="Next">Next
+                                                <i class="text-white fa fa-arrow-right ml-2"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </form>
                             </fieldset>
@@ -173,33 +168,30 @@
                                     <div class="form-card">
                                         <div class="row mt-5">
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6 mt-3 mb-3">
-                                                <input type="text" name="current_address" id="current_address" class="onboard-form"
-                                                    required />
-                                                <label class="fieldlabels" for="current_address">Current Address</label>
+                                                <label class="" for="current_address">Current Address</label>
+                                                <input type="text" name="current_address" id="current_address" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="current_city" id="current_city" class="onboard-form" required />
-                                                <label class="fieldlabels" for="current_city">Current City</label>
+                                                <label class="" for="current_city">Current City</label>
+                                                <input type="text" name="current_city" id="current_city" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <select name="current_state" id="current_state" class="onboard-form" required >
+                                                <label class="" for="current_state">Current State</label>
+                                                <select name="current_state" id="current_state" class="onboard-form form-control" required >
                                                 </select>
-                                                <label class="fieldlabels" for="current_state">Current State</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="number" name="current_pincode" id="current_pincode" class="onboard-form"
-                                                    required />
-                                                <label class="fieldlabels" for="current_pincode">Current Pincode</label>
+                                                <label class="" for="current_pincode">Current Pincode</label>
+                                                <input type="number" name="current_pincode" id="current_pincode" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <!-- <input type="text" name="curent_district" class="onboard-form"
-                                                    required /> -->
-                                                <select name="current_district" id="current_district" class="onboard-form" required >
+                                                <!-- <input type="text" name="curent_district" class="onboard-form form-control" required /> -->
+                                                <label class="" for="curent_district">Country</label>
+                                                <select name="current_district" id="current_district" class="onboard-form form-control" required >
                                                     @foreach($countries as $data)
                                                     <option value="{{$data->country_code}}">{{$data->country_name}}</option>
                                                     @endforeach
                                                 </select>
-                                                <label class="fieldlabels" for="curent_district">Country</label>
                                             </div>
                                         </div>
                                         <div class="row mt-5">
@@ -208,37 +200,30 @@
                                                 <label for="current_address_copy">Copy current address to the permanent address</label>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="permanent_address" id="permanent_address" class="onboard-form"
-                                                    required />
-                                                <label class="fieldlabels" for="permanent_address">Permanent
-                                                    Address</label>
+                                                <label class="" for="permanent_address">Permanent Address</label>
+                                                <input type="text" name="permanent_address" id="permanent_address" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="permanent_city" id="permanent_city" class="onboard-form"
-                                                    required />
-                                                <label class="fieldlabels" for="permanent_city">Permanent City</label>
+                                                <label class="" for="permanent_city">Permanent City</label>
+                                                <input type="text" name="permanent_city" id="permanent_city" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <select name="permanent_state" id="permanent_state" class="onboard-form" required >
+                                                <label class="" for="permanent_state">Permanent State</label>
+                                                <select name="permanent_state" id="permanent_state" class="onboard-form form-control" required >
                                                 </select>
-                                                <label class="fieldlabels" for="permanent_state">Permanent State</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="number" name="permanent_pincode" id="permanent_pincode" class="onboard-form"
-                                                    required />
-                                                <label class="fieldlabels" for="permanent_pincode">Permanent
-                                                    Pincode</label>
+                                                <label class="" for="permanent_pincode">Permanent Pincode</label>
+                                                <input type="number" name="permanent_pincode" id="permanent_pincode" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <!-- <input type="text" name="permanent_district" class="onboard-form"
-                                                    required /> -->
-                                                <select name="permanent_district" id="permanent_district" class="onboard-form" required >
+                                                <!-- <input type="text" name="permanent_district" class="onboard-form form-control" required /> -->
+                                                <label class="" for="permanent_district">Permanent Country</label>
+                                                <select name="permanent_district" id="permanent_district" class="onboard-form form-control" required >
                                                     @foreach($countries as $data)
                                                     <option value="{{$data->country_code}}">{{$data->country_name}}</option>
                                                     @endforeach
                                                 </select>
-                                                <label class="fieldlabels" for="permanent_district">Permanent
-                                                    Country</label>
                                             </div>
                                         </div>
                                     </div>
@@ -261,23 +246,24 @@
                                     <div class="form-card">
                                         <div class="row mt-5">
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="department" class="onboard-form" required />
-                                                <label class="fieldlabels" for="department">Department</label>
+                                                <label class="" for="department">Department</label>
+                                                <input type="text" name="department" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="process" class="onboard-form" required />
-                                                <label class="fieldlabels" for="process">Process</label>
+                                                <label class="" for="process">Process</label>
+                                                <input type="text" name="process" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="designation" class="onboard-form" required />
-                                                <label class="fieldlabels" for="designation">Designation</label>
+                                                <label class="" for="designation">Designation</label>
+                                                <input type="text" name="designation" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="cost_center" class="onboard-form" required />
-                                                <label class="fieldlabels" for="cost_center">Cost Center</label>
+                                                <label class="" for="cost_center">Cost Center</label>
+                                                <input type="text" name="cost_center" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <select name="confirmation_period" class="onboard-form not-required validate" >
+                                                <label class="" for="confirmation_period">Probabition Period</label>
+                                                <select name="confirmation_period" class="onboard-form form-control not-required validate" >
                                                     <option value="">Select</option>
                                                     <option value="1">1 Month</option>
                                                     <option value="2">2 Month</option>
@@ -292,50 +278,39 @@
                                                     <option value="11">11 Month</option>
                                                     <option value="12">12 Month</option>
                                                 </select>
-                                                <label class="fieldlabels" for="confirmation_period">Probabition
-                                                    Period</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="work_location" class="onboard-form" required />
-                                                <label class="fieldlabels" for="work_location">Work Location</label>
+                                                <label class="" for="work_location">Work Location</label>
+                                                <input type="text" name="work_location" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="l1_manager_code" class="onboard-form"
-                                                    required />
-                                                <label class="fieldlabels" for="l1_manager_code">Reporting Manager Employee Code</label>
+                                                <label class="" for="l1_manager_code">Reporting Manager Employee Code</label>
+                                                <input type="text" name="l1_manager_code" class="onboard-form form-control" required />
                                             </div>
                                             <!-- <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="l1_manager_designation" class="onboard-form"
-                                                    required />
-                                                <label class="fieldlabels" for="l1_manager_designation">Reporting Manager
+                                                <input type="text" name="l1_manager_designation" class="onboard-form form-control" required />
+                                                <label class="" for="l1_manager_designation">Reporting Manager
                                                     Designation</label>
                                             </div> -->
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="l1_manager_name" class="onboard-form"
-                                                    required />
-                                                <label class="fieldlabels" for="l1_manager_name">Reporting Manager Name</label>
+                                                <label class="" for="l1_manager_name">Reporting Manager Name</label>
+                                                <input type="text" name="l1_manager_name" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="holiday_location" class="onboard-form"
-                                                    required />
-                                                <label class="fieldlabels" for="holiday_location">Holiday
-                                                    Location</label>
+                                                <label class="" for="holiday_location">Holiday Location</label>
+                                                <input type="text" name="holiday_location" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="email" name="officical_mail" class="onboard-form"
-                                                    required />
-                                                <label class="fieldlabels" for="officical_mail">Official E-Mail
-                                                    Id</label>
+                                                <label class="" for="officical_mail">Official E-Mail Id</label>
+                                                <input type="email" name="officical_mail" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="number" minlength="10" maxlength="10"
-                                                    name="official_mobile" class="onboard-form" required />
-                                                <label class="fieldlabels" for="official_mobile">Official Mobile</label>
+                                                <label class="" for="official_mobile">Official Mobile</label>
+                                                <input type="number" minlength="10" maxlength="10" name="official_mobile" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="number" name="emp_notice" class="onboard-form" required />
-                                                <label class="fieldlabels" for="emp_notice">Employee Notice Period
-                                                    Days</label>
+                                                <label class="" for="emp_notice">Employee Notice Period Days</label>
+                                                <input type="number" name="emp_notice" class="onboard-form form-control" required />
                                             </div>
                                         </div>
                                     </div>
@@ -356,54 +331,54 @@
                                     <div class="form-card">
                                         <div class="row mt-5">
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="father_name" class="onboard-form" required />
-                                                <label class="fieldlabels" for="father_name">Father Name</label>
+                                                <label class="" for="father_name">Father Name</label>
+                                                <input type="text" name="father_name" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="mother_name" class="onboard-form" required />
-                                                <label class="fieldlabels" for="mother_name">Mother Name</label>
+                                                <label class="" for="mother_name">Mother Name</label>
+                                                <input type="text" name="mother_name" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="date" name="dow" class="onboard-form" required />
-                                                <label class="fieldlabels" for="dow">Date of Wedding</label>
+                                                <label class="" for="dow">Date of Wedding</label>
+                                                <input type="date" name="dow" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="spouse_name" class="onboard-form" required />
-                                                <label class="fieldlabels" for="spouse_name">Spouse Name</label>
+                                                <label class="" for="spouse_name">Spouse Name</label>
+                                                <input type="text" name="spouse_name" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <select name="spouse_gender" class="onboard-form" required >
+                                                <label class="" for="spouse_gender">Spouse Gender</label>
+                                                <select name="spouse_gender" class="onboard-form form-control" required >
                                                     <option value="">Select</option>
                                                     <option value="male">Male</option>
                                                     <option value="female">Female</option>
                                                     <option value="other">Other</option>
                                                 </select>
-                                                <label class="fieldlabels" for="spouse_gender">Spouse Gender</label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="date" name="spouse_dob" class="onboard-form" required />
-                                                <label class="fieldlabels" for="spouse_dob">Spouse DOB</label>
+                                                <label class="" for="spouse_dob">Spouse DOB</label>
+                                                <input type="date" name="spouse_dob" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="number" name="no_child" class="onboard-form" required />
-                                                <label class="fieldlabels" for="no_child">Number of Children</label>
+                                                <label class="" for="no_child">Number of Children</label>
+                                                <input type="number" name="no_child" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="text" name="child_name" class="onboard-form" required />
-                                                <label class="fieldlabels" for="child_name">Children Name</label>
+                                                <label class="" for="child_name">Children Name</label>
+                                                <input type="text" name="child_name" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <input type="date" name="child_dob" class="onboard-form" required />
-                                                <label class="fieldlabels" for="child_dob">Children DOB</label>
+                                                <label class="" for="child_dob">Children DOB</label>
+                                                <input type="date" name="child_dob" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <select name="child_gender" class="onboard-form" required >
+                                                <label class="" for="child_gender">Children Gender</label>
+                                                <select name="child_gender" class="onboard-form form-control" required >
                                                     <option value="">Select</option>
                                                     <option value="male">Male</option>
                                                     <option value="female">Female</option>
                                                     <option value="other">Other</option>
                                                 </select>
-                                                <label class="fieldlabels" for="child_gender">Children Gender</label>
                                             </div>
                                         </div>
                                     </div>
@@ -425,32 +400,32 @@
                                     <div class="form-card">
                                         <div class="row mt-5">
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-3 mb-3">
-                                                <input type="file" accept=".doc,.docx,.pdf,image/*" name="aadhar_card" class="onboard-form files" required />
-                                                <label class="fieldlabels" for="aadhar_card">Aadhar Card</label>
+                                                <label class="" for="aadhar_card">Aadhar Card</label>
+                                                <input type="file" accept=".doc,.docx,.pdf,image/*" name="aadhar_card" class="onboard-form form-control files" required />
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-3 mb-3">
-                                                <input type="file" accept=".doc,.docx,.pdf,image/*" name="pan_card" class="onboard-form files" required />
-                                                <label class="fieldlabels" for="pan_card">Pan Card</label>
+                                                <label class="" for="pan_card">Pan Card</label>
+                                                <input type="file" accept=".doc,.docx,.pdf,image/*" name="pan_card" class="onboard-form form-control files" required />
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-3 mb-3">
-                                                <input type="file" accept=".doc,.docx,.pdf,image/*" name="passport" class="onboard-form files" required />
-                                                <label class="fieldlabels" for="passport">Passport</label>
+                                                <label class="" for="passport">Passport</label>
+                                                <input type="file" accept=".doc,.docx,.pdf,image/*" name="passport" class="onboard-form form-control files" required />
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-3 mb-3">
-                                                <input type="file" accept=".doc,.docx,.pdf,image/*" name="voters_id" class="onboard-form files" required />
-                                                <label class="fieldlabels" for="voters_id">Voters ID</label>
+                                                <label class="" for="voters_id">Voters ID</label>
+                                                <input type="file" accept=".doc,.docx,.pdf,image/*" name="voters_id" class="onboard-form form-control files" />
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-3 mb-3">
-                                                <input type="file" accept=".doc,.docx,.pdf,image/*" name="dl_file" class="onboard-form files" required />
-                                                <label class="fieldlabels" for="dl_file">Driving License</label>
+                                                <label class="" for="dl_file">Driving License</label>
+                                                <input type="file" accept=".doc,.docx,.pdf,image/*" name="dl_file" class="onboard-form form-control files" />
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-3 mb-3">
-                                                <input type="file" accept=".doc,.docx,.pdf,image/*" name="education_certificate" class="onboard-form files" required />
-                                                <label class="fieldlabels" for="education_certificate">Educations Certificate</label>
+                                                <label class="" for="education_certificate">Educations Certificate</label>
+                                                <input type="file" accept=".doc,.docx,.pdf,image/*" name="education_certificate" class="onboard-form form-control files" required />
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-3 mb-3">
-                                                <input type="file" accept=".doc,.docx,.pdf,image/*" name="reliving_letter" class="onboard-form files" required />
-                                                <label class="fieldlabels" for="reliving_letter">Reliving Letter</label>
+                                                <label class="" for="reliving_letter">Reliving Letter</label>
+                                                <input type="file" accept=".doc,.docx,.pdf,image/*" name="reliving_letter" class="onboard-form form-control files" />
                                             </div>
                                         </div>
                                     </div>
@@ -571,6 +546,10 @@ $('body').on('click', '.close-modal', function() {
     $('#notificationModal').hide();
     $('#notificationModal').addClass('fade');
 });
+
+$('.onboard-form').keyup(function() {
+    this.value = this.value.toLocaleUpperCase();
+}).trigger('keyup');
 
 $('#nationality').change(function() {
     if ($('#nationality').val() == 'indian') {

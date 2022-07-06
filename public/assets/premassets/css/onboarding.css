@@ -25,7 +25,7 @@ p {
 }
 
 #msform fieldset {
-    background: white;
+    /* background: white; */
     border: 0 none;
     border-radius: 0.5rem;
     box-sizing: border-box;
@@ -43,13 +43,13 @@ p {
     display: none
 }
 
-.onboard-form {
+/* .onboard-form {
     border: 1px solid !important;
-}
+} */
 
-input {
+/* input {
     border: none !important;
-}
+} */
 
 .error {
     color: red;
@@ -60,7 +60,7 @@ input {
     content: '* ';
 }
 select {
-    border:none !important;
+    /* border:none !important; */
     background: white !important;
     width: 100%;
 }
@@ -80,28 +80,28 @@ option:hover {
 #msform input,
 #msform textarea,
 #msform select {
-    padding: 8px 15px 8px 15px;
+    padding: 12px 15px 12px 15px;
     /* border: none; */
-    border-radius: 0px;
-    margin-top: 2px;
-    width: 100%;
-    box-sizing: border-box;
+    border-radius: 20px;
+    /* margin-top: 2px; */
+    /* width: 100%; */
+    /* box-sizing: border-box; */
     /* font-family: montserrat; */
-    color: #2C3E50;
+    /* color: #2C3E50; */
     font-size: 16px;
-    letter-spacing: 1px;
+    /* letter-spacing: 1px; */
     /* outline: none; */
 }
 
-#msform input:focus,
+/* #msform input:focus,
 #msform textarea:focus,
 #msform select:focus {
-    -moz-box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
-    box-shadow: 1px 1px 1px 1px #673AB7 !important;
-    outline-width: 0;
-}
+    -moz-box-shadow: none !important; 
+    -webkit-box-shadow: none !important; 
+    box-shadow: none !important; 
+    box-shadow: 1px 1px 1px 1px #673AB7 !important; 
+    outline-width: 0; 
+} */
 
 #msform input:focus~.fieldlabels {
     top: -9px !important;

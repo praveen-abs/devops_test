@@ -6,8 +6,8 @@ $(document).ready(function() {
         if ($(this).attr('pattern') != undefined && $(this).attr('pattern') != '' && inputvalues !=
             '') {
             var pattern = {
-                'pan': /^([A-Z]){5}([0-9]){4}([A-Z]){1}?$/,
-                // 'pan': /^([A-Z]){3}P[A-Z]){1}([0-9]){4}([A-Z]){1}?$/,
+                'pan': /^([A-Z]){3}P([A-Z]){1}([0-9]){4}([A-Z]){1}?$/,
+                'ifsc': /^([A-Z]){4}0([A-Z0-9]){6}?$/,
                 'aadhar': /^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$/,
                 'passport': /^[a-zA-Z]{2}[0-9]{7}$/,
                 'account': /^[0-9]{9,18}$/,
