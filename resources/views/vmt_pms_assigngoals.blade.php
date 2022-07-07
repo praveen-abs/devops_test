@@ -222,7 +222,7 @@ th:last-child {
                         <!-- <div class="row ">
                             <div class="col-md-4 col-sm-6 col-lg-3 col-xl-3 "> -->
 
-                        <div class="d-flex  flex-wrap align-items-center justify-content-center inside-pms-container">
+                        <div class="align-items-center justify-content-center row">
                             <div class="card pms-card m-0 m-3">
                                 <div class="card-body">
                                     <div class="d-flex align-items-center">
