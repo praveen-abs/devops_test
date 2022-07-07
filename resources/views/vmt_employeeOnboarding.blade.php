@@ -247,11 +247,21 @@
                                         <div class="row mt-5">
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <label class="" for="department">Department</label>
-                                                <input type="text" name="department" class="onboard-form form-control" required />
+                                                <select name="department" id="department" class="onboard-form form-control" required>
+                                                    <option value="">Select</option>
+                                                    @foreach($emp as $e)
+                                                    <option value="{{$e->department}}">{{$e->department}}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <label class="" for="process">Process</label>
-                                                <input type="text" name="process" class="onboard-form form-control" required />
+                                                <select name="process" id="process" class="onboard-form form-control" required>
+                                                    <option value="">Select</option>
+                                                    @foreach($emp as $e)
+                                                    <option value="{{$e->process}}">{{$e->process}}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <label class="" for="designation">Designation</label>
@@ -370,8 +380,8 @@
                                                     <option value="5">5</option>
                                                 </select>
                                             </div>
-                                            <div class="children_container">
-                                                <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
+                                            <div class="children_container row">
+                                                <!-- <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                     <label class="" for="child_name">Children Name</label>
                                                     <input type="text" name="child_name" class="onboard-form form-control spouse_data" required />
                                                 </div>
@@ -387,7 +397,7 @@
                                                         <option value="female">Female</option>
                                                         <option value="other">Other</option>
                                                     </select>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                     </div>
@@ -540,6 +550,10 @@
 <!--Custom Js Script-->
 <script src="{{ URL::asset('/assets/premassets/js/custom.js') }}"></script>
 <script src="{{ URL::asset('/assets/premassets/js/onboarding.js') }}"></script>
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <!-- <script src="{{ URL::asset('/assets/premassets/js/onboarding.js') }}"></script> -->
 
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
@@ -550,6 +564,16 @@
 
 
 <script>
+$(document).ready(function(){
+    $('#process').select2({
+		width: '100%',
+        tags: true,
+    });
+    $('#department').select2({
+		width: '100%',
+        tags: true,
+    });
+});
 
 $('body').on('click', '.close-modal', function() {
     $('#notificationModal').hide();
@@ -561,7 +585,15 @@ $('.onboard-form').keyup(function() {
 }).trigger('keyup');
 
 $('#no_child').change(function() {
-    
+    var val = $('#no_child').val();
+    var data = "";
+    for(var i=1; i<=val; i++) {
+        var childName = $('input[name="child_name'+i+'"]').val();
+        var childDob = $('input[name="child_dob'+i+'"]').val();
+        var childGender = $('input[name="child_gender'+i+'"]').val();
+        data = data+"<div class='col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3'><label class='' for='child_name"+i+"'>Children Name</label><input type='text' name='child_name"+i+"' class='onboard-form form-control spouse_data' required /></div><div class='col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3'><label class='' for='child_dob"+i+"'>Children DOB</label><input type='date' name='child_dob"+i+"' class='onboard-form form-control spouse_data' required /></div><div class='col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3'><label class='' for='child_gender"+i+"'>Children Gender</label><select name='child_gender"+i+"' class='onboard-form form-control spouse_data' required ><option value=''>Select</option><option value='male'>Male</option><option value='female'>Female</option><option value='other'>Other</option></select></div>";
+    }
+    $('.children_container').html(data);
 });
 
 $('#marital_status').change(function() {

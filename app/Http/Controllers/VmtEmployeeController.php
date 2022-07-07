@@ -35,7 +35,8 @@ class VmtEmployeeController extends Controller
         }
         $countries = Countries::all();
         $india = Countries::where('country_code', 'IN')->first();
-        return view('vmt_employeeOnboarding', compact('empNo', 'countries', 'india'));
+        $emp = VmtEmployeeOfficeDetails::all(); 
+        return view('vmt_employeeOnboarding', compact('empNo', 'countries', 'india', 'emp'));
     }
 
     public function getState(Request $request) {
