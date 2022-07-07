@@ -272,12 +272,10 @@
                                         @if($reviewCompleted)
                                             <div>{{$kpiRow->manager_kpi_review}}</div>
                                         @endif
-                                        @if($assignedGoals->is_employee_submitted  && !$reviewCompleted)      
+                                        @if($assignedGoals->is_employee_submitted  && !$reviewCompleted)     
                                         <!-- <textarea name="managerpercetage[{{$kpiRow->id}}]" id="" cols="20" rows="2" 
                                             placeholder="type here">@if(isset( $kpiRow->manager_kpi_percentage)) {{$kpiRow->manager_kpi_percentage}}@endif</textarea> -->
                                         <input type="number" class="inp-text" name="managerpercetage[{{$kpiRow->id}}]" placeholder="type here" value="@if(isset( $kpiRow->manager_kpi_percentage)){{$kpiRow->manager_kpi_percentage}}@endif">
-                                        @else
-
                                         @endif
                                     </td>
                                     @if($reviewCompleted)
@@ -310,9 +308,9 @@
                         &nbsp;&nbsp;
                     @else
                         @if(!$reviewCompleted && $assignedGoals->is_employee_submitted)
-                            <button class="btn btn-primary" id="save_table">Save<i class="fa fa-save"></i></button>
+                            <!-- <button class="btn btn-primary" id="save_table">Save<i class="fa fa-save"></i></button>
                             &nbsp;&nbsp;
-                            <button class="btn btn-primary" id="publish_table">Publish<i class="fa fa-save"></i></button>
+                            <button class="btn btn-primary" id="publish_table">Publish<i class="fa fa-save"></i></button> -->
                         @endif
                         @if(!$assignedGoals->is_employee_submitted)
                             <h4>Employee has not yet submitted this review.</h4>
@@ -340,10 +338,13 @@
                     <textarea class="form-control" placeholder="" id="gen-info-description-input" name="performance"
                         rows="4">@if(isset( $assignedGoals->appraiser_comment)){{$assignedGoals->appraiser_comment}}@endif</textarea>
                 </div>
+                @if(!$reviewCompleted && $assignedGoals->is_employee_submitted)
                 <div class="buttons d-flex align-items-center justify-content-end mb-3">
                     <button class="btn btn-primary" id="save_feedback_table">Save<i class="fa fa-save"></i></button>
                     &nbsp;&nbsp;
+                    <button class="btn btn-primary" id="publish_table">Publish<i class="fa fa-save"></i></button>
                 </div> 
+                @endif
             </div>
         </div>
     @endif
@@ -493,7 +494,18 @@
             url:"{{url('vmt-pms-saveKPItableDraft_Manager')}}",
             data:$('#employee_self_review').serialize(), 
             success: function(data){
-                alert(data);
+                $.ajax({
+                    type: "POST", 
+                    url:"{{url('vmt-pms-saveKPItableFeedback_Manager')}}",
+                    data:{
+                        "feedback": $('#gen-info-description-input').val(),
+                        "_token": "{{ csrf_token() }}",
+                        "id": "{{$assignedGoals->id}}"
+                    }, 
+                    success: function(data){
+                        alert(data);
+                    }
+                });
             }
         })
     });
@@ -514,6 +526,7 @@
             })
         } else {
             alert('Write the Feedback.');
+            window.location.reload();
         }
     });
 
@@ -529,6 +542,7 @@
             url:"{{url('vmt-approvereject-kpitable')}}?goal_id="+goal_id+"&user_id="+user_id+"&approve_flag="+approve_flag,
             success: function(data){
                 alert(data);
+                window.location.reload();
             }
         })
     });
@@ -545,6 +559,7 @@
             url:"{{url('vmt-approvereject-kpitable')}}?goal_id="+goal_id+"&user_id="+user_id+"&approve_flag="+approve_flag,
             success: function(data){
                 alert(data);
+                window.location.reload();
             }
         })
     });

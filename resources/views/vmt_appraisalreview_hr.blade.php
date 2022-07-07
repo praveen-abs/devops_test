@@ -459,6 +459,7 @@
             data:$('#employee_self_review').serialize(), 
             success: function(data){
                 alert(data);
+                window.location.reload();
             }
         })
     });

@@ -260,8 +260,9 @@
                                         @else
                                         <div> 
                                             @if($assignedGoals->is_manager_approved)
-                                                <textarea name="selfkpiachievement[{{$kpiRow->id}}]" id="" cols="40" rows="5"
-                                                placeholder="type here">@if(isset($kpiRow->self_kpi_percentage)) {{$kpiRow->self_kpi_percentage}} @endif</textarea>
+                                                <!-- <textarea name="selfkpiachievement[{{$kpiRow->id}}]" id="" cols="40" rows="5"
+                                                placeholder="type here">@if(isset($kpiRow->self_kpi_percentage)) {{$kpiRow->self_kpi_percentage}} @endif</textarea> -->
+                                                <input type="number" class="inp-text" name="selfkpiachievement[{{$kpiRow->id}}]" placeholder="type here" value="@if(isset( $kpiRow->self_kpi_percentage)){{$kpiRow->self_kpi_percentage}}@endif">
                                             @endif
                                         </div>
                                         @endif
@@ -499,6 +500,7 @@
             data:$('#employee_self_review').serialize(), 
             success: function(data){
                 alert(data);
+                window.location.reload();
             }
         })
     });
