@@ -289,7 +289,7 @@
                     @if($assignedGoals->is_manager_submitted && !$assignedGoals->is_hr_submitted )
                         <button class="btn btn-primary" id="save_table">Save<i class="fa fa-save"></i></button>
                         &nbsp;&nbsp;
-                        <button class="btn btn-primary" id="publish_table">Publish<i class="fa fa-save"></i></button>
+                        <button class="btn btn-primary" id="publish_table">Submit<i class="fa fa-save"></i></button>
                     @endif
                     @else
                         <h4>Goals Not Assigned</h4>

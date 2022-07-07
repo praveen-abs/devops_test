@@ -322,7 +322,7 @@
                         @if(!$reviewCompleted && $assignedGoals->is_manager_approved )
                             <button class="btn btn-primary" id="save_table">Save<i class="fa fa-save"></i></button>
                             &nbsp;&nbsp;
-                            <button class="btn btn-primary" id="publish_table">Publish<i class="fa fa-save"></i></button>
+                            <button class="btn btn-primary" id="publish_table">Submit<i class="fa fa-save"></i></button>
                         @endif
                        
                     @endif

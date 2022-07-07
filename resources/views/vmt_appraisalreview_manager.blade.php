@@ -327,7 +327,7 @@
         </div>
     </div><!-- end col -->
 
-    @if($reviewCompleted)
+    @if(!$assignedGoals->is_manager_submitted)
 
         <div class="row mt-3">
             <div class="col-lg-12">
@@ -342,7 +342,7 @@
                 <div class="buttons d-flex align-items-center justify-content-end mb-3">
                     <button class="btn btn-primary" id="save_feedback_table">Save<i class="fa fa-save"></i></button>
                     &nbsp;&nbsp;
-                    <button class="btn btn-primary" id="publish_table">Publish<i class="fa fa-save"></i></button>
+                    <button class="btn btn-primary" id="publish_table">Submit<i class="fa fa-save"></i></button>
                 </div> 
                 @endif
             </div>
