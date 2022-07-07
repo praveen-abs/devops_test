@@ -50,7 +50,7 @@
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <label class="" for="marital_status">Marital Status{!! required() !!}</label>
-                                                <select name="marital_status" class="onboard-form form-control" required >
+                                                <select name="marital_status" id="marital_status" class="onboard-form form-control" required >
                                                     <option value="">Select</option>
                                                     <option value="single">Un Married</option>
                                                     <option value="married">Married</option>
@@ -65,7 +65,7 @@
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <label class="" for="gender">Gender{!! required() !!}</label>
-                                                <select name="gender" class="onboard-form form-control" required >
+                                                <select name="gender" id="gender" class="onboard-form form-control" required >
                                                     <option value="">Select</option>
                                                     <option value="male">Male</option>
                                                     <option value="female">Female</option>
@@ -199,7 +199,7 @@
                                                 <input type="checkbox" name="current_address_copy checkbox" id="current_address_copy" style="width:auto;"/>
                                                 <label for="current_address_copy">Copy current address to the permanent address</label>
                                             </div>
-                                            <div class="col-md-6 col-sm-6 col-xs-6 col-lg-3 mt-3 mb-3">
+                                            <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6 mt-3 mb-3">
                                                 <label class="" for="permanent_address">Permanent Address</label>
                                                 <input type="text" name="permanent_address" id="permanent_address" class="onboard-form form-control" required />
                                             </div>
@@ -340,15 +340,15 @@
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <label class="" for="dow">Date of Wedding</label>
-                                                <input type="date" name="dow" class="onboard-form form-control" required />
+                                                <input type="date" name="dow" class="onboard-form form-control spouse_data" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <label class="" for="spouse_name">Spouse Name</label>
-                                                <input type="text" name="spouse_name" class="onboard-form form-control" required />
+                                                <input type="text" name="spouse_name" class="onboard-form form-control spouse_data" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <label class="" for="spouse_gender">Spouse Gender</label>
-                                                <select name="spouse_gender" class="onboard-form form-control" required >
+                                                <select name="spouse_gender" id="spouse_gender" class="onboard-form form-control spouse_data" required >
                                                     <option value="">Select</option>
                                                     <option value="male">Male</option>
                                                     <option value="female">Female</option>
@@ -357,28 +357,37 @@
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <label class="" for="spouse_dob">Spouse DOB</label>
-                                                <input type="date" name="spouse_dob" class="onboard-form form-control" required />
+                                                <input type="date" name="spouse_dob" class="onboard-form form-control spouse_data" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <label class="" for="no_child">Number of Children</label>
-                                                <input type="number" name="no_child" class="onboard-form form-control" required />
-                                            </div>
-                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="child_name">Children Name</label>
-                                                <input type="text" name="child_name" class="onboard-form form-control" required />
-                                            </div>
-                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="child_dob">Children DOB</label>
-                                                <input type="date" name="child_dob" class="onboard-form form-control" required />
-                                            </div>
-                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="child_gender">Children Gender</label>
-                                                <select name="child_gender" class="onboard-form form-control" required >
+                                                <select name="no_child" id="no_child" class="onboard-form form-control spouse_data" required >
                                                     <option value="">Select</option>
-                                                    <option value="male">Male</option>
-                                                    <option value="female">Female</option>
-                                                    <option value="other">Other</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
                                                 </select>
+                                            </div>
+                                            <div class="children_container">
+                                                <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
+                                                    <label class="" for="child_name">Children Name</label>
+                                                    <input type="text" name="child_name" class="onboard-form form-control spouse_data" required />
+                                                </div>
+                                                <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
+                                                    <label class="" for="child_dob">Children DOB</label>
+                                                    <input type="date" name="child_dob" class="onboard-form form-control spouse_data" required />
+                                                </div>
+                                                <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
+                                                    <label class="" for="child_gender">Children Gender</label>
+                                                    <select name="child_gender" class="onboard-form form-control spouse_data" required >
+                                                        <option value="">Select</option>
+                                                        <option value="male">Male</option>
+                                                        <option value="female">Female</option>
+                                                        <option value="other">Other</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -551,6 +560,49 @@ $('.onboard-form').keyup(function() {
     this.value = this.value.toLocaleUpperCase();
 }).trigger('keyup');
 
+$('#no_child').change(function() {
+    
+});
+
+$('#marital_status').change(function() {
+    if ($('#marital_status').val() == 'single') {
+        $.each($('.spouse_data'),function(value) {
+            var name = $(this).attr('name');
+            if ($('input[name="'+name+'"]').val() == '') {
+                $('.'+name+'_label').hide();
+            }
+            $(this).attr('disabled', true);
+            $(this).removeAttr('required');
+            $(this).addClass('not-required validate');
+            $('#spouse_gender').val('');
+        });
+    } else {
+        $.each($('.spouse_data'),function(value) {
+            var name = $(this).attr('name');
+            $(this).removeAttr('disabled');
+            $(this).attr('required', true);
+            $(this).removeClass('not-required validate');
+        });
+        if ($('#gender').val() == 'male') {
+            $('#spouse_gender').val('female');
+        } else {
+            $('#spouse_gender').val('male');
+        }
+    }
+});
+
+$('#gender').change(function() {
+    if ($('#marital_status').val() == 'single') {
+        $('#spouse_gender').val('');
+    } else {
+        if ($('#gender').val() == 'male') {
+            $('#spouse_gender').val('female');
+        } else {
+            $('#spouse_gender').val('male');
+        }
+    }
+});
+
 $('#nationality').change(function() {
     if ($('#nationality').val() == 'indian') {
         $('#passport_no').removeAttr('required');
@@ -586,13 +638,13 @@ $('#nationality').change(function() {
 
 $('#current_address_copy').click(function() {
     if ($('#current_address_copy').val()) {
+        stateFunction($('#current_district').val(), '#permanent_state');
         $('#permanent_pincode').val($('#current_pincode').val());
         $('#permanent_district').val($('#current_district').val());
         $('#permanent_state').val($('#current_state').val());
         $('#permanent_city').val($('#current_city').val());
         $('#permanent_address').val($('#current_address').val());
     } else {
-        stateFunction($('#current_district').val(), '#permanent_state');
         $('#permanent_pincode').val('');
         $('#permanent_district').val('');
         $('#permanent_state').val('');

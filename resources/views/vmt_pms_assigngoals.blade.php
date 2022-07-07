@@ -354,7 +354,7 @@ th:last-child {
                                  
                             @endif
                         </td>
-                        <td class="p-3">{{$emp->assignment_period}}</td>
+                        <td class="p-3">{{json_decode($emp->assignment_period, true) ? json_decode($emp->assignment_period, true)['assignment_period_start'] : $emp->assignment_period}}</td>
                         <td class="p-3"><!-- Employee status -->
 
 
@@ -672,7 +672,7 @@ th:last-child {
                             <input type="hidden" name="assignment_period_year" id="assignment_period_year" value="<?php echo date("Y"); ?>">
 
                             <div class="row mt-3">
-                                <div class="col-2  mt-3 mb-3">
+                                <div class="col-3  mt-3 mb-3">
                                     <div class="d-flex flex-column">
                                         <label class="" for="calendar_type">Calendar Type</label>
                                         <select name="calendar_type" id="calendar_type">
@@ -682,27 +682,17 @@ th:last-child {
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-2  mt-3 mb-3">
+                                <div class="col-3  mt-3 mb-3">
                                     <div class="d-flex flex-column">
                                         <label class="" for="year">Year</label>
-                                        <select name="year" id="year">
+                                        <select name="year" id="year" disabled>
                                             <option value="">Select</option>
-                                            <option name="January" value="Jan">January - <?php echo date("Y"); ?> to December - <?= date("Y")?> </option>
-                                            <option name="February" value="Feb">February - <?php echo date("Y"); ?> to January - <?= date("Y")+1?></option>
-                                            <option name="March" value="Mar">March - <?php echo date("Y"); ?> to February - <?= date("Y")+1?></option>
-                                            <option name="April" value="Apr">April - <?php echo date("Y"); ?> to March - <?= date("Y")+1?></option>
-                                            <option name="May" value="May">May - <?php echo date("Y"); ?> to April - <?= date("Y")+1?></option>
-                                            <option name="June" value="Jun">June - <?php echo date("Y"); ?> to May - <?= date("Y")+1?></option>
-                                            <option name="July" value="Jul">July - <?php echo date("Y"); ?> to June - <?= date("Y")+1?></option>
-                                            <option name="August" value="Aug">August - <?php echo date("Y"); ?> to July - <?= date("Y")+1?></option>
-                                            <option name="September" value="Sep">September - <?php echo date("Y"); ?> to August - <?= date("Y")+1?></option>
-                                            <option name="October" value="Oct">October - <?php echo date("Y"); ?> to September - <?= date("Y")+1?></option>
-                                            <option name="November" value="Nov">November - <?php echo date("Y"); ?> to October - <?= date("Y")+1?></option>
-                                            <option name="December" value="Dec">December - <?php echo date("Y"); ?> to November - <?= date("Y")+1?></option>
+                                            <option value="Jan">January - <?php echo date("Y"); ?> to December - <?= date("Y")?> </option>
+                                            <option value="Apr">April - <?php echo date("Y"); ?> to March - <?= date("Y")+1?></option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-2  mt-3 mb-3">
+                                <div class="col-3  mt-3 mb-3">
                                     <div class="d-flex flex-column">
                                         <label class="" for="frequency">Frequency</label>
                                         <select name="frequency" id="frequency">
@@ -714,7 +704,7 @@ th:last-child {
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-2  mt-3 mb-3">
+                                <div class="col-3  mt-3 mb-3">
                                     <div class="d-flex flex-column">
                                         <label class="" for="assignment_period_start">Assignment Period</label>
                                         <select name="assignment_period_start" id="assignment_period_start">
@@ -723,7 +713,7 @@ th:last-child {
                                 </div>
                             </div>
                             <div class="row mt-3">
-                                <div class="col-2 mt-3 mb-3">
+                                <div class="col-3 mt-3 mb-3">
                                     <div class="d-flex flex-column">
                                         <label class="" for="department">Department</label>
                                         <select name="department" id="">
@@ -893,7 +883,7 @@ th:last-child {
 
                                         <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
                                             <button class="btn btn-primary table-btn mx-2" id="save-table">Save Table</button>
-                                            <button class="btn btn-primary table-btn mx-2" id="publish-goal">Publish</button>
+                                            <button class="btn btn-primary mx-2" id="publish-goal">Publish</button>
                                         </div>
 
                                     </div>
@@ -1133,10 +1123,8 @@ $(document).ready(function(){
     $('#calendar_type').change(function() {
         if ($('#calendar_type').val() == 'financial_year') {
             $('#year').val('Apr');
-            $('#year').attr('disabled', true);
         } else {
-            $('#year').val('');
-            $('#year').removeAttr('disabled');
+            $('#year').val('Jan');
         }
     });
 
