@@ -882,7 +882,7 @@ th:last-child {
                                         </div>
 
                                         <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
-                                            <button class="btn btn-primary table-btn mx-2" id="save-table">Save Table</button>
+                                            <button class="btn btn-primary table-btn mx-2" id="save-table">Save</button>
                                             <button class="btn btn-primary mx-2" id="publish-goal">Publish</button>
                                         </div>
 
