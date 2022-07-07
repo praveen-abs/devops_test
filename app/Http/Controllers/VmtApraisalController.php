@@ -41,6 +41,7 @@ class VmtApraisalController extends Controller
                                 'vmt_employee_details.*', 
                                 'users.name as emp_name', 
                                 'users.email as email_id',
+                                'users.avatar as avatar',
                                 'vmt_employee_office_details.department',
                                 'vmt_employee_office_details.designation', 
                                 'vmt_employee_office_details.l1_manager_code',
@@ -78,6 +79,7 @@ class VmtApraisalController extends Controller
             ->select(
                 'vmt_employee_details.*', 
                 'users.name as emp_name', 
+                'users.avatar as avatar', 
             )
             ->orderBy('created_at', 'ASC')
             ->whereNotNull('emp_no')
@@ -90,6 +92,7 @@ class VmtApraisalController extends Controller
             ->select(
                 'vmt_employee_details.*', 
                 'users.name as emp_name', 
+                'users.avatar as avatar', 
             )
             ->orderBy('created_at', 'ASC')
             ->whereNotNull('emp_no')
@@ -155,7 +158,7 @@ class VmtApraisalController extends Controller
                 // code...
                 $empPmsGoal = new VmtEmployeePMSGoals; 
                 $empPmsGoal->kpi_table_id   = $request->kpitable_id;
-                $empPmsGoal->assignment_period = $request->assignment_period_start;
+                $empPmsGoal->assignment_period = json_encode(['calendar_type'=>$request->calendar_type, 'year'=>$request->year, 'frequency'=>$request->frequency, 'assignment_period_start'=>$request->assignment_period_start]);
                 //$empPmsGoal->assignment_period_start = $request->assignment_period_start;
                 //$empPmsGoal->assignment_period_end = $request->assignment_period_end;
                 //$empPmsGoal->assignment_period_year = $request->assignment_period_year;

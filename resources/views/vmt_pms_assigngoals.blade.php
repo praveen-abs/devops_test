@@ -639,9 +639,9 @@ th:last-child {
                                     <span class="left fw-bold text-white pt-3 px-4 pb-4">New</span>
                                     <h5 class="m-0 mx-3">Assign Goals</h5>
                                 </div>
-                                <div class="d-flex align-items-center mx-5">
+                                <!-- <div class="d-flex align-items-center mx-5">
                                     <span class="right rounded-pill py-1 px-2 mx-2 text-white btn btn-lg" id="publish-goal" style="cursor: pointer;">Publish</span>
-                                </div>
+                                </div> -->
                                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">×</span>
                                 </button>
@@ -674,23 +674,55 @@ th:last-child {
                             <div class="row mt-3">
                                 <div class="col-2  mt-3 mb-3">
                                     <div class="d-flex flex-column">
-                                        <label class="" for="assignment_period_start">Assignment Period</label>
-                                        <select name="assignment_period_start" id="">
-                                            <option name="January" value="Jan">January - <?php echo date("Y"); ?> </option>
-                                            <option name="February" value="Feb">February - <?php echo date("Y"); ?></option>
-                                            <option name="March" value="Mar">March - <?php echo date("Y"); ?></option>
-                                            <option name="April" value="Apr">April - <?php echo date("Y"); ?></option>
-                                            <option name="May" value="May">May - <?php echo date("Y"); ?></option>
-                                            <option name="June" value="Jun">June - <?php echo date("Y"); ?></option>
-                                            <option name="July" value="Jul">July - <?php echo date("Y"); ?></option>
-                                            <option name="August" value="Aug">August - <?php echo date("Y"); ?></option>
-                                            <option name="September" value="Sep">September - <?php echo date("Y"); ?></option>
-                                            <option name="October" value="Oct">October - <?php echo date("Y"); ?></option>
-                                            <option name="November" value="Nov">November - <?php echo date("Y"); ?></option>
-                                            <option name="December" value="Dec">December - <?php echo date("Y"); ?></option>
+                                        <label class="" for="calendar_type">Calendar Type</label>
+                                        <select name="calendar_type" id="calendar_type">
+                                            <option value="">Select</option>
+                                            <option name="financial_year" value="financial_year">Financial Year</option>
+                                            <option name="calendar_year" value="calendar_year">Calendar Year</option>
                                         </select>
                                     </div>
                                 </div>
+                                <div class="col-2  mt-3 mb-3">
+                                    <div class="d-flex flex-column">
+                                        <label class="" for="year">Year</label>
+                                        <select name="year" id="year">
+                                            <option value="">Select</option>
+                                            <option name="January" value="Jan">January - <?php echo date("Y"); ?> to December - <?= date("Y")?> </option>
+                                            <option name="February" value="Feb">February - <?php echo date("Y"); ?> to January - <?= date("Y")+1?></option>
+                                            <option name="March" value="Mar">March - <?php echo date("Y"); ?> to February - <?= date("Y")+1?></option>
+                                            <option name="April" value="Apr">April - <?php echo date("Y"); ?> to March - <?= date("Y")+1?></option>
+                                            <option name="May" value="May">May - <?php echo date("Y"); ?> to April - <?= date("Y")+1?></option>
+                                            <option name="June" value="Jun">June - <?php echo date("Y"); ?> to May - <?= date("Y")+1?></option>
+                                            <option name="July" value="Jul">July - <?php echo date("Y"); ?> to June - <?= date("Y")+1?></option>
+                                            <option name="August" value="Aug">August - <?php echo date("Y"); ?> to July - <?= date("Y")+1?></option>
+                                            <option name="September" value="Sep">September - <?php echo date("Y"); ?> to August - <?= date("Y")+1?></option>
+                                            <option name="October" value="Oct">October - <?php echo date("Y"); ?> to September - <?= date("Y")+1?></option>
+                                            <option name="November" value="Nov">November - <?php echo date("Y"); ?> to October - <?= date("Y")+1?></option>
+                                            <option name="December" value="Dec">December - <?php echo date("Y"); ?> to November - <?= date("Y")+1?></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-2  mt-3 mb-3">
+                                    <div class="d-flex flex-column">
+                                        <label class="" for="frequency">Frequency</label>
+                                        <select name="frequency" id="frequency">
+                                            <option value="">Select</option>
+                                            <option value="monthly">Monthly</option>
+                                            <option value="quaterly">Quaterly</option>
+                                            <option value="halfYearly">Half Yearly</option>
+                                            <option value="yearly">Yearly</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-2  mt-3 mb-3">
+                                    <div class="d-flex flex-column">
+                                        <label class="" for="assignment_period_start">Assignment Period</label>
+                                        <select name="assignment_period_start" id="assignment_period_start">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
                                 <div class="col-2 mt-3 mb-3">
                                     <div class="d-flex flex-column">
                                         <label class="" for="department">Department</label>
@@ -709,7 +741,7 @@ th:last-child {
                                         <label class="" for="Assignment">Employees-02</label>
                                         <div class="d-flex align-items-center">
                                             <div class="avatar-group-item">
-                                                <a class="avatar">
+                                                <!-- <a class="avatar">
                                                     <img src="assets/images/users/avatar-5.jpg" alt="" class="rounded-circle p-0">
                                                 </a>
                                                 <a class="avatar">
@@ -720,11 +752,11 @@ th:last-child {
                                                 </a>
                                                 <a class="avatar">
                                                     <img src="assets/images/users/avatar-5.jpg" alt="" class="rounded-circle p-0">
-                                                </a>
-                                                <span class="img-addition" style="background-color: rgb(134, 192, 106);width: 30px;height: 30px;font-size:12px;"> +12 </span>
+                                                </a> -->
+                                                <!-- <span class="img-addition" style="background-color: rgb(134, 192, 106);width: 30px;height: 30px;font-size:12px;"> +12 </span>
                                                 <div class="mt-1 message-content align-items-start d-flex flex-column  mx-2">
                                                     <span id="group-employee"></span>
-                                                </div>
+                                                </div> -->
                                             </div>
                                             <button type="button" target="#changeEmployee" class="right btn btn-primary py-1 px-3 rounded-pill mx-3 text-white chnageButton">Edit</button>
                                         </div>
@@ -861,6 +893,7 @@ th:last-child {
 
                                         <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
                                             <button class="btn btn-primary table-btn mx-2" id="save-table">Save Table</button>
+                                            <button class="btn btn-primary table-btn mx-2" id="publish-goal">Publish</button>
                                         </div>
 
                                     </div>
@@ -1096,6 +1129,30 @@ $(document).ready(function(){
     //      { data: 'city' },
     //   ]
    });
+
+    $('#calendar_type').change(function() {
+        if ($('#calendar_type').val() == 'financial_year') {
+            $('#year').val('Apr');
+            $('#year').attr('disabled', true);
+        } else {
+            $('#year').val('');
+            $('#year').removeAttr('disabled');
+        }
+    });
+
+    $('#frequency').change(function() {
+        var data = "";
+        if ($('#frequency').val() == 'monthly') {
+            data = "<option value=''>Select</option><option value='jan'>January</option><option value='feb'>February</option><option value='mar'>March</option><option value='apr'>April</option><option value='may'>May</option><option value='june'>June</option><option value='july'>July</option><option value='aug'>August</option><option value='sept'>September</option><option value='oct'>October</option><option value='nov'>November</option><option value='dec'>December</option>";
+        } else if ($('#frequency').val() == 'quaterly') {
+            data = "<option value=''>Select</option><option value='q1'>Q1</option><option value='q2'>Q2</option><option value='q3'>Q3</option><option value='q4'>Q4</option>";
+        } else if ($('#frequency').val() == 'halfYearly') {
+            data = "<option value=''>Select</option><option value='h1'>H1</option><option value='h2'>H2</option>";
+        } else {
+            data = "<option value=''>Select</option><option value='yearly'>Yearly</option>";
+        }
+        $('#assignment_period_start').html(data);
+    });
 });
 
 $(function () {
@@ -1159,24 +1216,32 @@ $('#changeEmployeeForm').on('submit', function(e){
     e.preventDefault();
     var employeeSelected = $('#select-employees').val();
     @if(auth()->user()->hasrole('Employee'))
-
     @else
     var employees = {!!json_encode($employees)!!};
 
     @endif
     var employeeArray = [];
-
     $("#sel_employees").val(employeeSelected);
 
+    var imgHtml ="";
+    var count = 0;
     $.each(employees, function(i, data){
         console.log(data);
         console.log('employee selected', employeeSelected);
         if($.inArray(data.id.toString(), employeeSelected) > -1){
             employeeArray.push(data.emp_name);
+            if (count < 4) {
+                imgHtml = imgHtml+"<a class='avatar'><img src='assets/images/"+data.avatar+"' alt='' class='rounded-circle p-0'></a>";
+            }
+            count++;
         }
     });
+    if (count > 4) {
+        imgHtml = imgHtml+"<span class='img-addition' style='background-color: rgb(134, 192, 106);width: 30px;height: 30px;font-size:12px;'> +"+count-3+" </span><div class='mt-1 message-content align-items-start d-flex flex-column  mx-2'><span id='group-employee'></span></div>";
+    }
     $('#group-employee').html(employeeArray.join());
     $('#changeEmployee').css('display', 'none');
+    $('.avatar-group-item').html(imgHtml);
 });
 
 @if(auth()->user()->hasrole('Manager'))
