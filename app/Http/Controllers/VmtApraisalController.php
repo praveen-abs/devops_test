@@ -199,7 +199,7 @@ class VmtApraisalController extends Controller
                 $empPmsGoal->save();
             }
             if (auth()->user()->hasrole('Employee')) {
-                \Mail::to($mailingRevList)->send(new VmtAssignGoals(url('pms-employee-reviews?goal_id='.$request->kpitable_id.'&user_id='.auth::user()->id)));
+                \Mail::to($mailingRevList)->send(new VmtAssignGoals(url('pms-employee-reviews?goal_id='.$request->kpitable_id.'&user_id='.auth::user()->id),"none"));
             } else {
                $finalMailList = $mailingEmpList->merge($mailingRevList);
                 \Mail::to($finalMailList)->send(new VmtAssignGoals(url('vmt-pms-assigngoals'),"none"));

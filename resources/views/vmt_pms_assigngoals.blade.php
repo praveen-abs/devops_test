@@ -1234,7 +1234,7 @@ $('#changeEmployeeForm').on('submit', function(e){
 
 @if(auth()->user()->hasrole('Manager'))
 
-    var userid = {{auth::user()->id}} 
+    var userid = {{auth()->user()->id}} 
     $.ajax({
         type: "GET", 
         url: "{{url('vmt-getAllChildEmployees')}}"+'?emp_id='+userid, 
