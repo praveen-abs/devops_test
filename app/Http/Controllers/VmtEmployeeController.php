@@ -229,6 +229,7 @@ class VmtEmployeeController extends Controller
             $newEmployee->kid_age  = $row["child_dob"];
 
             $newEmployee->aadhar_card_file = $this->fileUpload('aadhar_card');
+            $newEmployee->aadhar_card_backend_file = $this->fileUpload('aadhar_card_backend');
             $newEmployee->pan_card_file = $this->fileUpload('pan_card');
             $newEmployee->passport_file = $this->fileUpload('passport');
             $newEmployee->voters_id_file = $this->fileUpload('voters_id');

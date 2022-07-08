@@ -196,7 +196,7 @@
                                         </div>
                                         <div class="row mt-5">
                                             <div class="col-12 mt-3 mb-3">
-                                                <input type="checkbox" name="current_address_copy checkbox" id="current_address_copy" style="width:auto;"/>
+                                                <input type="checkbox" name="current_address_copy" id="current_address_copy" style="width:auto;"/>
                                                 <label for="current_address_copy">Copy current address to the permanent address</label>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6 mt-3 mb-3">
@@ -418,9 +418,17 @@
                                     @csrf
                                     <div class="form-card">
                                         <div class="row mt-5">
+                                            <div class="col-12 mt-3 mb-3">
+                                                <input type="checkbox" name="aadhar_backend" id="aadhar_backend" style="width:auto;"/>
+                                                <label for="aadhar_backend">Upload aadhar backend</label>
+                                            </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-3 mb-3">
                                                 <label class="" for="aadhar_card">Aadhar Card</label>
                                                 <input type="file" accept=".doc,.docx,.pdf,image/*" name="aadhar_card" class="onboard-form form-control files" required />
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-3 mb-3" id="aadhar_card_backend_content" style="display:none;">
+                                                <label class="" for="aadhar_card_backend">Aadhar Card Backend</label>
+                                                <input type="file" accept=".doc,.docx,.pdf,image/*" name="aadhar_card_backend" id="aadhar_card_backend" class="onboard-form form-control files" />
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-3 mb-3">
                                                 <label class="" for="pan_card">Pan Card</label>
@@ -575,6 +583,16 @@ $(document).ready(function(){
     });
 });
 
+$('#aadhar_backend').click(function() {
+    if ($('#aadhar_backend').val()) {
+        $('#aadhar_card_backend_content').show();
+        $('#aadhar_card_backend').attr('require', true);
+    } else {
+        $('#aadhar_card_backend_content').hide();
+        $('#aadhar_card_backend').removeAttr('require');
+    }
+});
+
 $('body').on('click', '.close-modal', function() {
     $('#notificationModal').hide();
     $('#notificationModal').addClass('fade');
@@ -667,6 +685,8 @@ $('#nationality').change(function() {
         stateFunction('AF', '#current_state');
     }
 }).trigger('change');
+
+$('#nationality').val('indian');
 
 $('#current_address_copy').click(function() {
     if ($('#current_address_copy').val()) {

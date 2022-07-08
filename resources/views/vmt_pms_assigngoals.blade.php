@@ -883,7 +883,7 @@ th:last-child {
 
                                         <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
                                             <button class="btn btn-primary table-btn mx-2" id="save-table">Save</button>
-                                            <button class="btn btn-primary mx-2" id="publish-goal">Publish</button>
+                                            <button class="btn btn-primary mx-2" id="publish-goal" disabled>Publish</button>
                                         </div>
 
                                     </div>
@@ -1133,9 +1133,9 @@ $(document).ready(function(){
         if ($('#frequency').val() == 'monthly') {
             data = "<option value=''>Select</option><option value='jan'>January</option><option value='feb'>February</option><option value='mar'>March</option><option value='apr'>April</option><option value='may'>May</option><option value='june'>June</option><option value='july'>July</option><option value='aug'>August</option><option value='sept'>September</option><option value='oct'>October</option><option value='nov'>November</option><option value='dec'>December</option>";
         } else if ($('#frequency').val() == 'quaterly') {
-            data = "<option value=''>Select</option><option value='q1'>Q1</option><option value='q2'>Q2</option><option value='q3'>Q3</option><option value='q4'>Q4</option>";
+            data = "<option value=''>Select</option><option value='q1'>Q1(Jan-Mar)</option><option value='q2'>Q2(Apr-June)</option><option value='q3'>Q3(July-Sept)</option><option value='q4'>Q4(Oct-Dec)</option>";
         } else if ($('#frequency').val() == 'halfYearly') {
-            data = "<option value=''>Select</option><option value='h1'>H1</option><option value='h2'>H2</option>";
+            data = "<option value=''>Select</option><option value='h1'>H1(Jan-June)</option><option value='h2'>H2(July-Dec)</option>";
         } else {
             data = "<option value=''>Select</option><option value='yearly'>Yearly</option>";
         }
@@ -1360,6 +1360,7 @@ $('body').on('click', '#save-table', function(e){
                 $('#notificationModal').show();
                 $('#notificationModal').removeClass('fade');
                 $("#kpitable_id").val(data.table_id);
+                $('#publish-goal').removeAttr('disabled');
             }
         });
     }
