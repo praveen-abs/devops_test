@@ -309,7 +309,12 @@ th:last-child {
                     <div class="p-3"><img src="{{ URL::asset('assets/images/vmt_user_icon.jpeg') }}" style="width: 37%;height: 74%;"></div>
                     <h4><b>Assign Goals for your employees</b></h4>
                     <div class="mt-4">
-                        <button id="add-goals" class="rounded-pill py-1 px-2 mx-2 text-white btn btn-primary"><h6 class="m-0 text-white p-2"><i class="text-white fa fa-plus mr-2"></i><b>Add</b></h6></button>
+                        <button id="add-goals" class="rounded-pill py-1 px-2 mx-2 text-white btn btn-primary">
+                            <h6 class="m-0 text-white p-2">
+                                <i class="text-white fa fa-plus mr-2"></i>
+                                <b>Add</b>
+                            </h6>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -802,7 +807,16 @@ th:last-child {
                         </form>
 
                         <div class="table-wrapper">
-                            <h5>Key focus areas</h5>
+                            <div class="row">
+                                <div class="col-6"><h5>Key focus areas</h5></div>
+                                <div class="col-6">
+                                    <form action="{{route('upload-file')}}" Method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        <input type="file" name="upload_file" accept=".xls,.csv,.xlsx" class="form-control" required>
+                                        <button type="submit" class="btn btn-primary pull-right" id="upload-goal">Upload</button>
+                                    </form>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-12">
                                     <div class="container-fluid bg-light mt-3 py-2 rounded-border d-felx align-items-center">
@@ -1099,6 +1113,10 @@ $(document).ready(function(){
         dropdownParent: '#createEmployee',
         minimumResultsForSearch: Infinity,
 		width: '100%'
+    });
+
+    $('#upload-goals').click(function() {
+        // upload a file
     });
 
     $(document).on('#select-reviewer:open', () => {
