@@ -810,14 +810,14 @@ th:last-child {
                             <div class="row">
                                 <div class="col-6"><h5>Key focus areas</h5></div>
                                 <div class="col-6">
-                                    <form action="{{route('upload-file')}}" Method="POST" enctype="multipart/form-data">
-                                        @csrf
+                                    <form id="upload_form" enctype="multipart/form-data">
                                         <div class="row pull-right">
+                                            @csrf
                                             <div class="col-8">
-                                                <input type="file" name="upload_file" accept=".xls,.csv,.xlsx" class="form-control" required>
+                                                <input type="file" name="upload_file" id="upload_file" accept=".xls,.xlsx" class="form-control" required>
                                             </div>
                                             <div class="col">
-                                                <button type="submit" class="btn btn-primary pull-right" id="upload-goal">Upload</button>
+                                                <button type="button" class="btn btn-primary pull-right" id="upload-goal">Upload</button>
                                             </div>
                                         </div>
                                     </form>
@@ -1121,8 +1121,27 @@ $(document).ready(function(){
 		width: '100%'
     });
 
-    $('#upload-goals').click(function() {
+    $('#upload-goal').click(function() {
         // upload a file
+        var form_data = new FormData(document.getElementById("upload_form"));
+        $.ajax({
+            type: "POST", 
+            url: "{{route('upload-file')}}", 
+            dataType : "json",
+            contentType: false,
+            processData: false,
+            data: form_data,
+            success: function(data){
+                $('.addition-content').html('');
+                var length = 1;
+                $.each(data,function(k, v) {
+                    $.each(data[k],function(key, value) {
+                        $('.content-container').append('<tr class="addition-content cursor-pointer" id="content'+length+'"><td class=""><span  name="numbers" id="" class="tableInp" >'+length+'</span><div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div></td><td class=""><textarea name="dimension[]" id="" cols="20" rows="2" placeholder="type here">'+value[0]+'</textarea></td><td class=""><textarea name="kpi[]" id="" cols="20" rows="2" placeholder="type here">'+value[1]+'</textarea></td><td class=""><textarea name="operational[]" id="" cols="20" rows="2" placeholder="type here">'+value[2]+'</textarea></td><td class=""><textarea name="measure[]" id="" cols="20" rows="2" placeholder="type here">'+value[3]+'</textarea></td><td class=""><textarea name="frequency[]" id="" cols="20" rows="2" placeholder="type here">'+value[4]+'</textarea></td><td class=""> <textarea name="target[]" id="" cols="20" rows="2" placeholder="type here">'+value[5]+'</textarea></td><td class=""><textarea name="stretchTarget[]" id="" cols="10" rows="2" placeholder="type here">'+value[6]+'</textarea></td><td class=""><textarea name="source[]" id="" cols="10" rows="2" placeholder="type here">'+value[7]+'</textarea></td><td class=""><textarea name="kpiWeightage[]" id="" cols="10" rows="2" placeholder="type here">'+value[8]+'</textarea></td></tr>');
+                        length++;
+                    });
+                });
+            }
+        });
     });
 
     $(document).on('#select-reviewer:open', () => {

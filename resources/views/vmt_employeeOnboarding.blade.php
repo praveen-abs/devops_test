@@ -26,6 +26,7 @@
                                 <li id="personal"><strong class="f-9 onboard-detail">Location Details</strong></li>
                                 <li id="payment"><strong class="f-9 onboard-detail">Official Details</strong></li>
                                 <li id="confirm"><strong class="f-9 onboard-detail">Family Details</strong></li>
+                                <li id="compensatory"><strong class="f-9 onboard-detail">Compensatory</strong></li>
                                 <li id="end"><strong class="f-9 onboard-detail">Personal Documents</strong></li>
                             </ul>
                             <fieldset id="row-1">
@@ -424,6 +425,114 @@
                             </fieldset>
                             <fieldset id="row-5">
                                 <form id="form-5" enctype="multipart/form-data">
+                                    <div class="form-card">
+                                        basic, HRA, statutory bonus, child education allowance, food coupon, LTA, special allowances, other allowances, 
+                                        Gross based on this calculation.
+                                        EpF employer contribution
+                                        Esic employer contribution
+                                        Insurance
+                                        Graduity
+                                        cost of company - gross + epf+esic+ins
+
+                                        EpF employee
+                                        Esic employee
+                                        Professional tax
+                                        labour welfare fund
+                                        net income - gross - epf-esic-ins
+
+                                        <div class="row mt-5">
+                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
+                                                <label class="" for="basic">Basic Salary</label>
+                                                <input type="number" name="basic" class="onboard-form form-control calculation_data gross_data" step="0.01" required />
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
+                                                <label class="" for="hra">HRA</label>
+                                                <input type="number" name="hra" class="onboard-form form-control calculation_data gross_data" step="0.01" required />
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
+                                                <label class="" for="Statutory_bonus">Statutory Bonus</label>
+                                                <input type="number" name="Statutory_bonus" class="onboard-form form-control calculation_data gross_data" step="0.01" required />
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
+                                                <label class="" for="child_education_allowance">Child Education Allowance</label>
+                                                <input type="number" name="child_education_allowance" class="onboard-form form-control calculation_data gross_data" step="0.01" required />
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
+                                                <label class="" for="food_coupon">Food Coupon</label>
+                                                <input type="number" name="food_coupon" class="onboard-form form-control calculation_data gross_data" step="0.01" required />
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
+                                                <label class="" for="lta">LTA</label>
+                                                <input type="number" name="lta" class="onboard-form form-control calculation_data gross_data" step="0.01" required />
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
+                                                <label class="" for="special_allowance">Special Allowance</label>
+                                                <input type="number" name="special_allowance" class="onboard-form form-control calculation_data gross_data" step="0.01" required />
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
+                                                <label class="" for="other_allowance">Other Allowance</label>
+                                                <input type="number" name="other_allowance" class="onboard-form form-control calculation_data gross_data" step="0.01" required />
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
+                                                <label class="" for="gross">Gross Salary</label>
+                                                <input type="number" name="gross" id="gross" class="onboard-form form-control" step="0.01" required disabled/>
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
+                                                <label class="" for="epf_employer_contribution">EPF employer contribution</label>
+                                                <input type="number" name="epf_employer_contribution" class="onboard-form form-control calculation_data cic_data" step="0.01" required />
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
+                                                <label class="" for="esic_employer_contribution">ESIC employer contribution</label>
+                                                <input type="number" name="esic_employer_contribution" class="onboard-form form-control calculation_data cic_data" step="0.01" required />
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
+                                                <label class="" for="insurance">Insurance</label>
+                                                <input type="number" name="insurance" class="onboard-form form-control calculation_data cic_data" step="0.01" required />
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
+                                                <label class="" for="graduity">Graduity</label>
+                                                <input type="number" name="graduity" class="onboard-form form-control calculation_data cic_data" step="0.01" required />
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
+                                                <label class="" for="cic">Cost of Company</label>
+                                                <input type="number" name="cic" id="cic" class="onboard-form form-control" step="0.01" required disabled/>
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
+                                                <label class="" for="epf_employee">EPF Employee</label>
+                                                <input type="number" name="epf_employee" class="onboard-form form-control calculation_data net_data" step="0.01" required />
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
+                                                <label class="" for="esic_employee">ESIC Employee</label>
+                                                <input type="number" name="esic_employee" class="onboard-form form-control calculation_data net_data" step="0.01" required />
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
+                                                <label class="" for="professional_tax">Professional Tax</label>
+                                                <input type="number" name="professional_tax" class="onboard-form form-control calculation_data net_data" step="0.01" required />
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
+                                                <label class="" for="labour_welfare_fund">labour welfare fund</label>
+                                                <input type="number" name="labour_welfare_fund" class="onboard-form form-control calculation_data net_data" step="0.01" required />
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
+                                                <label class="" for="net_income">Net Income</label>
+                                                <input type="number" name="net_income" id="net_income" class="onboard-form form-control" step="0.01" required disabled/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6 text-left p-0"><a type="button" data="row-4" prev="row-3"
+                                                name="previous" class="previous bg-pink action-button text-center"
+                                                value="Previous"><i
+                                                    class="text-white fa fa-arrow-left mr-2"></i>Previous</a></div>
+                                        <div class="col-6 text-right p-0"><button type="button" data="row-4"
+                                                next="row-5" name="next" class="next bg-pink action-button text-center"
+                                                value="Next">Next<i
+                                                    class="text-white fa fa-arrow-right ml-2"></i></button></div>
+                                    </div>
+                                </form>
+                            </fieldset>
+                            <fieldset id="row-6">
+                                <form id="form-6" enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-card">
                                         <div class="row mt-5">
@@ -602,11 +711,27 @@ $('#aadhar_backend').click(function() {
     }
 });
 
+$('.calculation_data').keyup(function() {
+    var gross = 0;
+    var cic = 0;
+    var net = 0;
+    $.each($('.gross_data'),function(value) {
+        gross += parseInt($(this).val());
+    });
+    $.each($('.cic_data'),function(value) {
+        cic += parseInt($(this).val());
+    });
+    $.each($('.net_data'),function(value) {
+        net += parseInt($(this).val());
+    });
+    $('#gross').val(gross);
+    $('#cic').val(gross+cic);
+    $('#net_income').val(gross-cic+net);
+});
+
 $('#bank_name').change(function() {
     var min = $('#bank_name option:selected').attr('min-data');
     var max = $('#bank_name option:selected').attr('max-data');
-    console.log(min);
-    console.log(max);
     $('#account_no').attr('minlength', min);
     $('#account_no').attr('maxlength', min);
 })

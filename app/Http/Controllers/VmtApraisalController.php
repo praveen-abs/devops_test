@@ -27,8 +27,8 @@ class VmtApraisalController extends Controller
     }
     
     public function uploadFile(Request $request) {
-        $importDataArry = \Excel::import(new ApraisalQuestion, request()->file('upload_file'));
-        return back();
+        $importDataArry = \Excel::toArray(new ApraisalQuestion, request()->file('upload_file'));
+        return response()->json($importDataArry);
     }
 
     //
@@ -39,7 +39,6 @@ class VmtApraisalController extends Controller
 
     // assign goals forms
     public function vmtAssignGoals(Request $request){
-
         $empGoalQuery = VmtEmployee::leftJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
                             ->leftJoin('vmt_employee_office_details', 'vmt_employee_details.id','=', 'vmt_employee_office_details.emp_id' )
                             ->join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.employee_id', '=', 'vmt_employee_details.id')
