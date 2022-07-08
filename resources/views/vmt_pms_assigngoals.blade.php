@@ -812,8 +812,14 @@ th:last-child {
                                 <div class="col-6">
                                     <form action="{{route('upload-file')}}" Method="POST" enctype="multipart/form-data">
                                         @csrf
-                                        <input type="file" name="upload_file" accept=".xls,.csv,.xlsx" class="form-control" required>
-                                        <button type="submit" class="btn btn-primary pull-right" id="upload-goal">Upload</button>
+                                        <div class="row pull-right">
+                                            <div class="col-8">
+                                                <input type="file" name="upload_file" accept=".xls,.csv,.xlsx" class="form-control" required>
+                                            </div>
+                                            <div class="col">
+                                                <button type="submit" class="btn btn-primary pull-right" id="upload-goal">Upload</button>
+                                            </div>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
