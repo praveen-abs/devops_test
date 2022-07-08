@@ -87,8 +87,12 @@
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <label class="" for="pan_no">Pan Card Number{!! required() !!}</label>
-                                                <input type="text" name="pan_no" class="onboard-form form-control pan" pattern="pan" required />
-                                                <label class="error pan_no_label" for="pan_no" style="display: none;"></label>
+                                                <input type="text" name="pan_no" id="pan_no" class="onboard-form form-control pan" pattern="pan" required />
+                                                <label class="error pan_no_label" id="pan_no_label" for="pan_no" style="display: none;"></label>
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
+                                                <label class="" for="pan_ack">Pan Acknowlegement{!! required() !!}</label>
+                                                <input type="text" name="pan_ack" id="pan_ack" class="onboard-form form-control not-required validate" />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <label class="" for="dl_no">DL Number</label>
@@ -616,6 +620,26 @@ $('.onboard-form').keyup(function() {
     this.value = this.value.toLocaleUpperCase();
 }).trigger('keyup');
 
+$('#pan_ack').keyup(function() {
+    if ($('#pan_ack').val() == '') {
+        $('#pan_ack').removeAttr('required');
+        $('#pan_no').removeAttr('disabled');
+        $('#pan_no').attr('required', true);
+        $('#pan_no').attr('pattern', 'pan');
+        $('#pan_no_label').addClass('patternErr');
+        $('#pan_ack').addClass('not-required validate');
+    } else {
+        $('#pan_no').removeAttr('required');
+        $('#pan_no').val('');
+        $('#pan_no').attr('disabled', true);
+        $('#pan_no').removeAttr('pattern');
+        $('#pan_ack').attr('required', true);
+        $('#pan_no_label').removeClass('patternErr');
+        $('#pan_no_label').hide();
+        $('#pan_ack').removeClass('not-required validate');
+    }
+})
+
 $('#no_child').change(function() {
     var val = $('#no_child').val();
     var data = "";
@@ -698,7 +722,7 @@ $('#nationality').change(function() {
         $('#current_district').val('AF');
         stateFunction('AF', '#current_state');
     }
-}).trigger('change');
+});
 
 $('#nationality').val('indian');
 
