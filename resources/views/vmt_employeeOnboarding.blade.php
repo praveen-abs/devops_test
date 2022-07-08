@@ -140,11 +140,16 @@
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <label class="" for="bank_name">Bank Name</label>
-                                                <input type="text" name="bank_name" class="onboard-form form-control" required />
+                                                <select name="bank_name" id="bank_name" class="onboard-form form-control" required>
+                                                    <option value="">Select</option>
+                                                    @foreach($bank as $b)
+                                                    <option value="{{$b->bank_name}}" min-data="{{$b->min_length}}" max-data="{{$b->max_length}}">{{$b->bank_name}}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <label class="" for="account_no">Account Number</label>
-                                                <input type="number" name="account_no" class="onboard-form form-control" pattern="account" required />
+                                                <input type="number" name="account_no" id="account_no" class="onboard-form form-control" minlength="10" maxlength="10" required />
                                                 <label class="error account_no_label" for="account_no" style="display: none;"></label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
@@ -592,6 +597,15 @@ $('#aadhar_backend').click(function() {
         $('#aadhar_card_backend').removeAttr('require');
     }
 });
+
+$('#bank_name').change(function() {
+    var min = $('#bank_name option:selected').attr('min-data');
+    var max = $('#bank_name option:selected').attr('max-data');
+    console.log(min);
+    console.log(max);
+    $('#account_no').attr('minlength', min);
+    $('#account_no').attr('maxlength', min);
+})
 
 $('body').on('click', '.close-modal', function() {
     $('#notificationModal').hide();

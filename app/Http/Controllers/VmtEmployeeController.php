@@ -9,6 +9,7 @@ use App\Models\VmtEmployeeHierarchy;
 use App\Models\VmtEmployee;
 use App\Models\Countries;
 use App\Models\State;
+use App\Models\Bank;
 use App\Imports\VmtEmployeeManagerImport;
 use App\Imports\VmtEmployee as VmtEmployeeImport;
 use App\Models\VmtEmployeeOfficeDetails;
@@ -36,7 +37,8 @@ class VmtEmployeeController extends Controller
         $countries = Countries::all();
         $india = Countries::where('country_code', 'IN')->first();
         $emp = VmtEmployeeOfficeDetails::all(); 
-        return view('vmt_employeeOnboarding', compact('empNo', 'countries', 'india', 'emp'));
+        $bank = Bank::all(); 
+        return view('vmt_employeeOnboarding', compact('empNo', 'countries', 'india', 'emp', 'bank'));
     }
 
     public function getState(Request $request) {
