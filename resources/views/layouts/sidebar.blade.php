@@ -81,8 +81,8 @@
 
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link d-flex" role="button"
-                        role="button" aria-expanded="false" aria-controls="sidebarRoles">
+                    <a class="nav-link menu-link d-flex" role="button" role="button" aria-expanded="false"
+                        aria-controls="sidebarRoles">
                         <hr class="vertical-line">
                         <div class="d-flex flex-column align-items-center justify-content-center">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16.022" height="17.411"
@@ -121,8 +121,8 @@
                     <div class="collapse menu-dropdown" id="attendanceDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="" class="nav-link py-1" data-bs-toggle="collapse" role="button"><span>Leave
-                                </a>
+                            <a href="{{url('vmt_noData')}}" class="nav-link py-1" role="button"><span>leave
+                                    </span></a>
                                 <div class="collapse menu-dropdown" id="settingsDrop-Down">
                                     <ul class="nav nav-sm flex-column">
                                         <li class="nav-item">
@@ -132,16 +132,19 @@
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a href="" class="nav-link py-1" role="button"><span>
-                                        Attendance </span> </a>
+
+                                <a href="{{url('vmt_noData')}}" class="nav-link py-1" role="button"><span>Attendance
+                                    </span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="" class="nav-link py-1" role="button"><span>
-                                        Timesheet </span> </a>
+
+                                <a href="{{url('vmt_noData')}}" class="nav-link py-1"
+                                    role="button"><span>Timesheet</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="" class="nav-link py-1" role="button"><span>
-                                        Performance </span> </a>
+
+                                <a href="{{url('vmt_noData')}}" class="nav-link py-1"
+                                    role="button"><span>Performance</span></a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{url('vmt_noData')}}" class="nav-link py-1" role="button"><span>Expenses &
@@ -204,8 +207,8 @@
 
                 @hasrole("Admin")
                 <li class="nav-item">
-                    <a class="nav-link menu-link d-flex"  role="button"
-                        aria-expanded="false" aria-controls="sidebarRoles">
+                    <a class="nav-link menu-link d-flex" role="button" aria-expanded="false"
+                        aria-controls="sidebarRoles">
                         <hr class="vertical-line">
                         <div class="d-flex flex-column align-items-center justify-content-center ">
                             <svg id="laptop" xmlns="http://www.w3.org/2000/svg"
@@ -252,12 +255,14 @@
                     <div class="collapse menu-dropdown" id="reportDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="" class="nav-link  py-1"><span> Leave Report
-                                    </span></a>
+
+                                <a href="{{url('vmt_noData')}}" class="nav-link py-1" role="button"><span>Leave
+                                        Report</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="" class="nav-link py-1"><span> Attendance Report
-                                    </span></a>
+
+                                <a href="{{url('vmt_noData')}}" class="nav-link py-1" role="button"><span>Attendance
+                                        Report</span></a>
                             </li>
                         </ul>
                     </div>
@@ -340,8 +345,8 @@
                 <!-- performance -->
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link d-flex"  role="button"
-                        aria-expanded="false" aria-controls="sidebarRoles">
+                    <a class="nav-link menu-link d-flex" role="button" aria-expanded="false"
+                        aria-controls="sidebarRoles">
                         <hr class="vertical-line">
                         <div class="d-flex flex-column align-items-center justify-content-center ">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -444,8 +449,8 @@
 
                 @hasrole("Manager")
                 <li class="nav-item">
-                    <a class="nav-link menu-link d-flex" role="button"
-                        aria-expanded="false" aria-controls="sidebarRoles">
+                    <a class="nav-link menu-link d-flex" role="button" aria-expanded="false"
+                        aria-controls="sidebarRoles">
                         <hr class="vertical-line">
                         <div class="d-flex flex-column align-items-center justify-content-center ">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -587,7 +592,7 @@
                 </li> -->
                 @hasrole("Admin")
                 <li class="nav-item">
-                    <a class="nav-link menu-link d-flex"  role="button" >
+                    <a class="nav-link menu-link d-flex" role="button">
                         <hr class="vertical-line">
                         <div class="d-flex flex-column align-items-center justify-content-center">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -647,7 +652,7 @@
 
 
                             <li class="nav-item">
-                                <a href="{{url('vmt_home')}}" class="nav-link py-1" role="button"><span>Home</span></a>
+                                <a href="{{url('vmt_home')}}" class="nav-link py-1" role="button"><span>Dashboard</span></a>
                             </li>
                             @can('Team')
                             <li class="nav-item">
@@ -675,8 +680,7 @@
 
                 <!-- Navigation Menu for Ticketting-->
                 <li class="nav-item">
-                    <a class="nav-link menu-link d-flex" 
-                     role="button" aria-expanded="false"
+                    <a class="nav-link menu-link d-flex" role="button" aria-expanded="false"
                         aria-controls="sidebar360questions">
                         <hr class="vertical-line">
                         <div class="d-flex flex-column align-items-center justify-content-center ">
@@ -772,8 +776,7 @@
 
                 <!-- Exit -->
                 <li class="nav-item">
-                    <a class="nav-link menu-link d-flex" 
-                        role="button" aria-expanded="false"
+                    <a class="nav-link menu-link d-flex" role="button" aria-expanded="false"
                         aria-controls="sidebar360questions">
                         <hr class="vertical-line">
                         <div class="d-flex flex-column align-items-center justify-content-center px-2">

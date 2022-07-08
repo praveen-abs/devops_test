@@ -80,7 +80,7 @@
                                     </div>
                                     <div class="profile-basic justify-content-center d-flex">
                                         <div class="row w-100">
-                                            <div class="col-md-5">
+                                            <div class="col-md-5 col-lg-5 col-sm-5 col-xl-5">
                                                 <div class="profile-info-left h-100">
                                                     <h4 class="user-name fw-bold">{{$user->name}}</h4>
                                                     <h6 class="departmnet fw-bold text-muted">{{$details->department}}</h6>
@@ -95,7 +95,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-7">
+                                            <div class="col-md-7 col-lg-7 col-sm-7 col-xl-7"> 
                                                 <ul class="personal-info">
                                                     <li>
                                                         <div class="title">Phone:</div>
@@ -148,11 +148,11 @@
                         <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
                             <ul class="nav nav-tabs nav-tabs-bottom">
                                 <li class="nav-item"><a href="#emp_profile" data-bs-toggle="tab"
-                                        class="nav-link active">Profile</a>
+                                        class="nav-link active fw-bold h5">Profile</a>
                                 </li>
 
                                 <li class="nav-item">
-                                    <a href="#bank_statutory" data-bs-toggle="tab" class="nav-link">Bank
+                                    <a href="#bank_statutory"  data-bs-toggle="tab" class="nav-link fw-bold h5">Bank
                                         &amp;
                                         Statutory <small class="text-danger">(Admin Only)</small>
                                     </a>
