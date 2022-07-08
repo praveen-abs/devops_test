@@ -26,8 +26,10 @@
                                                 <h4 class="user-name fw-bold">{{$user->name}}</h4>
                                                 <h6 class="departmnet fw-bold text-muted">{{$details->department}}</h6>
                                                 <h5 class="role text-muted fw-bold">{{$details->designation}}</h5>
-                                                <div class="staff-id fw-bold text-dark">Employee ID : {{$details->emp_no}}</div>
-                                                <div class="small fw-bold text-muted">Date of Join : {{date('d-m-Y', strtotime($details->doj))}}</div>
+                                                <div class="staff-id fw-bold text-dark">Employee ID :
+                                                    {{$details->emp_no}}</div>
+                                                <div class="small fw-bold text-muted">Date of Join :
+                                                    {{date('d-m-Y', strtotime($details->doj))}}</div>
                                                 <div class="staff-msg mt-4 "><a class="btn btn-custom" href="chat.html">
                                                         <button class="btn btn-primary">Send Message</button>
                                                     </a>
@@ -91,11 +93,11 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
                         <ul class="nav nav-tabs nav-tabs-bottom">
                             <li class="nav-item"><a href="#emp_profile" data-bs-toggle="tab"
-                                    class="nav-link active">Profile</a>
+                                    class="nav-link active fw-bold h5">Profile</a>
                             </li>
 
                             <li class="nav-item">
-                                <a href="#bank_statutory" data-bs-toggle="tab" class="nav-link">Bank
+                                <a href="#bank_statutory" data-bs-toggle="tab" class="nav-link fw-bold h5">Bank
                                     &amp;
                                     Statutory <small class="text-danger">(Admin Only)</small>
                                 </a>
@@ -172,7 +174,8 @@
                                         </li>
                                         <li>
                                             <div class="title">Phone </div>
-                                            <div class="text">{{$details->mobile_number}}, {{$details->official_mobile}}</div>
+                                            <div class="text">{{$details->mobile_number}}, {{$details->official_mobile}}
+                                            </div>
                                         </li>
                                     </ul>
                                     <hr>
@@ -780,7 +783,8 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form action="{{route('updatePersonalInfo', $user->id)}}" Method="POST" enctype="multipart/form-data">
+                            <form action="{{route('updatePersonalInfo', $user->id)}}" Method="POST"
+                                enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-12">
@@ -798,7 +802,8 @@
                                             <div class="col-md-6">
                                                 <div class="form-group mb-3">
                                                     <label>First Name</label>
-                                                    <input type="text" class="form-control" name="name" value="{{$user->name}}">
+                                                    <input type="text" class="form-control" name="name"
+                                                        value="{{$user->name}}">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -811,7 +816,8 @@
                                                 <div class="form-group mb-3">
                                                     <label>Birth Date</label>
                                                     <div class="cal-icon">
-                                                        <input class="form-control datetimepicker" type="date" name="dob" 
+                                                        <input class="form-control datetimepicker" type="date"
+                                                            name="dob"
                                                             value="{{date('Y-m-d', strtotime($details->dob))}}">
                                                     </div>
                                                 </div>
@@ -822,9 +828,12 @@
 
                                                 <select class="form-select" name="gender" aria-label="Default select">
                                                     <option selected>-</option>
-                                                    <option value="1" @if($details->gender == '1') 'seletced' @endif>Male</option>
-                                                    <option value="2" @if($details->gender == '2') 'seletced' @endif>Female</option>
-                                                    <option value="3" @if($details->gender == '3') 'seletced' @endif>Other</option>
+                                                    <option value="1" @if($details->gender == '1') 'seletced'
+                                                        @endif>Male</option>
+                                                    <option value="2" @if($details->gender == '2') 'seletced'
+                                                        @endif>Female</option>
+                                                    <option value="3" @if($details->gender == '3') 'seletced'
+                                                        @endif>Other</option>
                                                 </select>
 
                                             </div>
@@ -836,7 +845,8 @@
                                     <div class="col-md-12">
                                         <div class="form-group mb-3">
                                             <label>Address</label>
-                                            <input type="text" name="present_address" class="form-control" value="{{$details->present_address}}">
+                                            <input type="text" name="present_address" class="form-control"
+                                                value="{{$details->present_address}}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -860,21 +870,25 @@
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
                                             <label>Phone Number</label>
-                                            <input type="text" class="form-control" name="mobile_number" value="{{$details->mobile_number}}">
+                                            <input type="text" class="form-control" name="mobile_number"
+                                                value="{{$details->mobile_number}}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                                <label>Gender</label>
+                                        <label>Gender</label>
 
 
-                                                <select class="form-select  " aria-label="Default select">
-                                                    <option selected>-</option>
-                                                    <option value="1" @if($details->gender == '1') 'seletced' @endif>Male</option>
-                                                    <option value="2" @if($details->gender == '2') 'seletced' @endif>Female</option>
-                                                    <option value="3" @if($details->gender == '3') 'seletced' @endif>Other</option>
-                                                </select>
+                                        <select class="form-select  " aria-label="Default select">
+                                            <option selected>-</option>
+                                            <option value="1" @if($details->gender == '1') 'seletced' @endif>Male
+                                            </option>
+                                            <option value="2" @if($details->gender == '2') 'seletced' @endif>Female
+                                            </option>
+                                            <option value="3" @if($details->gender == '3') 'seletced' @endif>Other
+                                            </option>
+                                        </select>
 
-                                            </div>
+                                    </div>
                                     <div class="col-md-6">
                                         <label>Gender</label>
                                         <div class="select-menu form-control">
@@ -1166,8 +1180,9 @@
                                     </div>
                                     <div class="card">
                                         <div class="card-body">
-                                            <h3 class="card-title fw-bold">Education Informations <a href="javascript:void(0);"
-                                                    class="delete-icon"><i class="   ri-delete-bin-line"></i></a>
+                                            <h3 class="card-title fw-bold">Education Informations <a
+                                                    href="javascript:void(0);" class="delete-icon"><i
+                                                        class="   ri-delete-bin-line"></i></a>
                                             </h3>
                                             <div class="row">
                                                 <div class="col-md-6">
@@ -1196,7 +1211,8 @@
                                                 </div>
                                             </div>
                                             <div class="add-more">
-                                                <a href="javascript:void(0);text-secondary" class="text-secondary"><i class=" ri-add-circle-fill"></i> Add
+                                                <a href="javascript:void(0);text-secondary" class="text-secondary"><i
+                                                        class=" ri-add-circle-fill"></i> Add
                                                     More</a>
                                             </div>
                                         </div>
@@ -1227,60 +1243,61 @@
                                 <div class="form-scroll">
                                     <div class="card">
                                         <div class="card-body">
-                                            <h3 class="card-title fw-bold">Education Informations <a href="javascript:void(0);"
-                                                    class="delete-icon"><i class="   ri-delete-bin-line"></i></a>
+                                            <h3 class="card-title fw-bold">Education Informations <a
+                                                    href="javascript:void(0);" class="delete-icon"><i
+                                                        class="   ri-delete-bin-line"></i></a>
                                             </h3>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group mb-3 form-focus focused">
-                                                    <label class="focus-label">Institution</label>
-                                                    <input type="text" value="Oxford University"
+                                                        <label class="focus-label">Institution</label>
+                                                        <input type="text" value="Oxford University"
                                                             class="form-control floating">
-                                           
+
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group mb-3 form-focus focused">
-                                                    <label class="focus-label">Subject</label>    
-                                                    <input type="text" value="Computer Science"
+                                                        <label class="focus-label">Subject</label>
+                                                        <input type="text" value="Computer Science"
                                                             class="form-control floating">
-                                                        
+
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group mb-3 form-focus focused">
-                                                    <label class="focus-label">Starting Date</label>    
-                                                    <div class="cal-icon">
+                                                        <label class="focus-label">Starting Date</label>
+                                                        <div class="cal-icon">
                                                             <input type="text" value="01/06/2002"
                                                                 class="form-control floating datetimepicker">
                                                         </div>
-                                                        
+
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group mb-3 form-focus focused">
-                                                    <label class="focus-label">Complete Date</label>    
-                                                    <div class="cal-icon">
+                                                        <label class="focus-label">Complete Date</label>
+                                                        <div class="cal-icon">
                                                             <input type="text" value="31/05/2006"
                                                                 class="form-control floating datetimepicker">
                                                         </div>
-                                                        
+
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group mb-3 form-focus focused">
-                                                    <label class="focus-label">Degree</label>    
-                                                    <input type="text" value="BE Computer Science"
+                                                        <label class="focus-label">Degree</label>
+                                                        <input type="text" value="BE Computer Science"
                                                             class="form-control floating">
-                                                        
+
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group mb-3 form-focus focused">
-                                                    <label class="focus-label">Grade</label>    
-                                                    <input type="text" value="Grade A"
+                                                        <label class="focus-label">Grade</label>
+                                                        <input type="text" value="Grade A"
                                                             class="form-control floating">
-                                                        
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -1288,65 +1305,67 @@
                                     </div>
                                     <div class="card">
                                         <div class="card-body">
-                                            <h3 class="card-title fw-bold">Education Informations <a href="javascript:void(0);"
-                                                    class="delete-icon"><i class="   ri-delete-bin-line"></i></a>
+                                            <h3 class="card-title fw-bold">Education Informations <a
+                                                    href="javascript:void(0);" class="delete-icon"><i
+                                                        class="   ri-delete-bin-line"></i></a>
                                             </h3>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group mb-3 form-focus focused">
-                                                    <label class="focus-label">Institution</label>    
-                                                    <input type="text" value="Oxford University"
+                                                        <label class="focus-label">Institution</label>
+                                                        <input type="text" value="Oxford University"
                                                             class="form-control floating">
-                                                        
+
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group mb-3 form-focus focused">
-                                                    <label class="focus-label">Subject</label>    
-                                                    <input type="text" value="Computer Science"
+                                                        <label class="focus-label">Subject</label>
+                                                        <input type="text" value="Computer Science"
                                                             class="form-control floating">
-                                                        
+
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group mb-3 form-focus focused">
                                                         <div class="cal-icon">
-                                                        <label class="focus-label">Starting Date</label>
-                                                        <input type="date" value="01/06/2002"
+                                                            <label class="focus-label">Starting Date</label>
+                                                            <input type="date" value="01/06/2002"
                                                                 class="form-control floating datetimepicker">
                                                         </div>
-                                                        
+
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group mb-3 form-focus focused">
-                                                    <label class="focus-label">Complete Date</label>    
-                                                    <div class="cal-icon">
+                                                        <label class="focus-label">Complete Date</label>
+                                                        <div class="cal-icon">
                                                             <input type="date" value="31/05/2006"
                                                                 class="form-control floating datetimepicker">
                                                         </div>
-                                                        
+
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group mb-3 form-focus focused">
-                                                    <label class="focus-label">Degree</label>    
-                                                    <input type="text" value="BE Computer Science"
+                                                        <label class="focus-label">Degree</label>
+                                                        <input type="text" value="BE Computer Science"
                                                             class="form-control floating">
-                                                        
+
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group mb-3 form-focus focused">
-                                                    <label class="focus-label">Grade</label>    
-                                                    <input type="text" value="Grade A"
+                                                        <label class="focus-label">Grade</label>
+                                                        <input type="text" value="Grade A"
                                                             class="form-control floating">
-                                                        
+
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="add-more ">
-                                                <a href="javascript:void(0);" class="text-secondary" ><i class=" ri-add-circle-fill"></i> Add
+                                                <a href="javascript:void(0);" class="text-secondary"><i
+                                                        class=" ri-add-circle-fill"></i> Add
                                                     More</a>
                                             </div>
                                         </div>
@@ -1378,57 +1397,58 @@
                                 <div class="form-scroll">
                                     <div class="card">
                                         <div class="card-body">
-                                            <h3 class="card-title fw-bold">Experience Informations <a href="javascript:void(0);"
-                                                    class="delete-icon"><i class="   ri-delete-bin-line"></i></a>
+                                            <h3 class="card-title fw-bold">Experience Informations <a
+                                                    href="javascript:void(0);" class="delete-icon"><i
+                                                        class="   ri-delete-bin-line"></i></a>
                                             </h3>
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    
-                                                <div class="form-group mb-3 form-focus focused">
-                                                <label class="focus-label">Company Name</label>
-                                                <input type="text" class="form-control floating"
+
+                                                    <div class="form-group mb-3 form-focus focused">
+                                                        <label class="focus-label">Company Name</label>
+                                                        <input type="text" class="form-control floating"
                                                             value="Digital Devlopment Inc">
-                                                        
+
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
-                                                
-                                                <div class="form-group mb-3 form-focus focused">
-                                                <label class="focus-label">Location</label>    
-                                                <input type="text" class="form-control floating"
+
+                                                    <div class="form-group mb-3 form-focus focused">
+                                                        <label class="focus-label">Location</label>
+                                                        <input type="text" class="form-control floating"
                                                             value="United States">
-                                                        
+
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
-                                                   
-                                                <div class="form-group mb-3 form-focus focused">
-                                                <label class="focus-label">Job Position</label> 
-                                                <input type="text" class="form-control floating"
+
+                                                    <div class="form-group mb-3 form-focus focused">
+                                                        <label class="focus-label">Job Position</label>
+                                                        <input type="text" class="form-control floating"
                                                             value="Web Developer">
-                                                        
+
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group mb-3 form-focus focused">
-                                                    <label class="focus-label">Period From</label>
-                                                    <div class="cal-icon">
+                                                        <label class="focus-label">Period From</label>
+                                                        <div class="cal-icon">
                                                             <input type="text"
                                                                 class="form-control floating datetimepicker"
                                                                 value="01/07/2007">
                                                         </div>
-                                                        
+
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group mb-3 form-focus focused">
-                                                    <label class="focus-label">Period To</label>    
-                                                    <div class="cal-icon">
+                                                        <label class="focus-label">Period To</label>
+                                                        <div class="cal-icon">
                                                             <input type="date"
                                                                 class="form-control floating datetimepicker"
                                                                 value="08/06/2018">
                                                         </div>
-                                                        
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -1436,59 +1456,61 @@
                                     </div>
                                     <div class="card">
                                         <div class="card-body">
-                                            <h3 class="card-title fw-bold">Experience Informations <a href="javascript:void(0);"
-                                                    class="delete-icon"><i class="   ri-delete-bin-line"></i></a>
+                                            <h3 class="card-title fw-bold">Experience Informations <a
+                                                    href="javascript:void(0);" class="delete-icon"><i
+                                                        class="   ri-delete-bin-line"></i></a>
                                             </h3>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group mb-3 form-focus focused">
-                                                    <label class="focus-label">Company Name</label>    
-                                                    <input type="text" class="form-control floating"
+                                                        <label class="focus-label">Company Name</label>
+                                                        <input type="text" class="form-control floating"
                                                             value="Digital Devlopment Inc">
-                                                        
+
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group mb-3 form-focus focused">
-                                                    <label class="focus-label">Location</label>    
-                                                    <input type="text" class="form-control floating"
+                                                        <label class="focus-label">Location</label>
+                                                        <input type="text" class="form-control floating"
                                                             value="United States">
-                                                        
+
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group mb-3 form-focus focused">
-                                                    <label class="focus-label">Job Position</label>    
-                                                    <input type="text" class="form-control floating"
+                                                        <label class="focus-label">Job Position</label>
+                                                        <input type="text" class="form-control floating"
                                                             value="Web Developer">
-                                                        
+
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group mb-3 form-focus focused">
-                                                    <label class="focus-label">Period From</label>    
-                                                    <div class="cal-icon">
+                                                        <label class="focus-label">Period From</label>
+                                                        <div class="cal-icon">
                                                             <input type="date"
                                                                 class="form-control floating datetimepicker"
                                                                 value="01/07/2007">
                                                         </div>
-                                                        
+
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group mb-3 form-focus focused">
                                                         <div class="cal-icon">
-                                                        <label class="focus-label">Period To</label>
-                                                        <input type="date"
+                                                            <label class="focus-label">Period To</label>
+                                                            <input type="date"
                                                                 class="form-control floating datetimepicker"
                                                                 value="08/06/2018">
                                                         </div>
-                                                        
+
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="add-more">
-                                                <a href="javascript:void(0);" class="text-secondary"><i class=" ri-add-circle-fill"></i> Add
+                                                <a href="javascript:void(0);" class="text-secondary"><i
+                                                        class=" ri-add-circle-fill"></i> Add
                                                     More</a>
                                             </div>
                                         </div>

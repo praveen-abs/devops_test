@@ -37,6 +37,7 @@ img {
     max-width: 100%;
 }
 
+
 .form-row {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -230,6 +231,7 @@ body {
     border-color: #863dd9;
 }
 
+
 .btn-success:hover {
     background-color: #863dd9 !important;
     border-color: #863dd9 !important;
@@ -356,14 +358,15 @@ body {
 
 .side-right {
     background-color: #FFF;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    height: 500px;
+    height: 550px;
     width: 400px;
     margin-left: 40px;
     padding: 4px 30px;
     text-align: center;
     border-radius: 10px;
     box-shadow: 1px 0px 4px rgba(74, 73, 73, 0.315);
+    /* box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,rgb(255 124 19) 0px 2px 16px 0px,
+    rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px; */
 }
 
 @media screen and (max-width: 660px) {
@@ -396,6 +399,8 @@ body {
 
 .soc-det hr {
     color: black;
+    opacity: 0.1;
+    height: 5px !important;
 }
 
 
@@ -452,10 +457,12 @@ body {
 
 .dfr .btn {
     /* padding: 5px 40px; */
-    border-radius: 50px;
+    /* border-radius: 50px; */
     float: none;
     margin: auto;
 }
+
+.login-headers {}
 </style>
 @endsection
 @section('content')
@@ -469,93 +476,97 @@ body {
     }
     //dd($logoSrc);
 ?>
-
-
-
-
 <div class="container-fluid conya">
-    <div class="login-main">
+    <div class="login-main login-bg">
+        <img src="{{ URL::asset('assets/images/login_bg3.jpg') }}" alt="" class="">
+    </div>
+    <div class="row slidrow">
+        <div class="sidecol col-6">
 
-        <div class="row slidrow">
-            <div class="sidecol col-6">
+        </div>
+        <div class="sidecol2 col-6">
 
-            </div>
-            <div class="sidecol2 col-6">
-
-                <div class="side-right">
-                    <!-- <img class="logo" src="assets/images/logo.jpg" alt=""> -->
-
-                    <h2 class="mt-3">Login ABS <span>hrms</span> </h2>
-                    <form action="{{ route('login') }}" method="POST">
+            <div class="side-right">
 
 
-                        @csrf
+                <form action="{{ route('login') }}" method="POST">
+                    <div class="login-headers text-align-left my-1 ">
+                        <div class="logo-change   d-flex align-items-center justify-content-center">
+                            <img src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="">
+                        </div>
+                        <div class="login-logo  d-flex align-items-center">
+                            <span class="m-0 mt-1 fw-bold log">Login <span class="mt-1 mx-1">to</span> <img
+                                    src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="">
 
-                            <div class="form-row">
-                                <label for="username" class="form-label">Username</label>
-                                <input type="text"
-                                    class="form-control @error('email') form-control-sm is-invalid @enderror"
-                                    value="{{ old('email', 'hr_augustin@vasagroup.abshrms.com') }}" id="username"
-                                    name="email" placeholder="Enter username">
-                                @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-    
+                        </div>
+                    </div>
+                    @csrf
 
-                        <div class="form-row">
-                            <label for="">Password</label>
+                    <div class="form-row">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control @error('email') form-control-sm is-invalid @enderror"
+                            value="{{ old('email', 'hr_augustin@vasagroup.abshrms.com') }}" id="username" name="email"
+                            placeholder="Enter username">
+                        @error('email')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
 
 
-                            <input type="password"
-                                class="form-control position-relative pe-5 @error('password') is-invalid @enderror"
-                                name="password" placeholder="Enter password" id="password-input" value="Abs@123123">
-                            <!-- <button
+                    <div class="form-row">
+                        <label for="">Password</label>
+
+
+                        <input type="password"
+                            class="form-control position-relative pe-5 @error('password') is-invalid @enderror"
+                            name="password" placeholder="Enter password" id="password-input" value="Abs@123123">
+                        <!-- <button
                                         class="btn btn-link  end-0 top-0 position-absolute text-decoration-none text-muted"
                                         type="button" id="password-addon"><i
                                             class="ri-eye-fill align-middle"></i></button> -->
-                            @error('password')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
+                        @error('password')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
 
 
 
 
+                    </div>
+
+                    <div class="form-row row skjh ">
+                        <div class="col-7 left p-0">
+                            <label for=""><input type="checkbox" class="mx-1 m-0 ">Keep me Sign In</label>
                         </div>
-
-                        <div class="form-row row skjh ">
-                            <div class="col-7 left p-0">
-                                <label for=""><input type="checkbox" class="mx-1 m-0 ">Keep me Sign In</label>
-                            </div>
-                            <div class="col-5">
-                                <span> <a href="">Forget Password ?</a></span>
-                            </div>
-
-
+                        <div class="col-5">
+                            <span> <a href="">Forget Password ?</a></span>
                         </div>
 
 
-                        <div class="form-row dfr  ">
-                            <button class="btn sign-in-btn text-white  waves-effect waves-light w-50"
-                                type="submit">Log-In</button>
-                        </div>
+                    </div>
 
 
-                        <div class="ord-v my-1">
-                            <a href="or login with" class="fw-bold">connect with</a>
-                        </div>
-
-                        <div class="soc-det">
-
-                            <img src="{{ URL::asset('assets/images/social.png') }}" alt="" class=" w-100 ">
+                    <div class="form-row dfr  ">
+                        <button class="btn sign-in-btn text-white  waves-effect waves-light w-50"
+                            type="submit">Log-In</button>
+                    </div>
 
 
+                    <div class="divider d-flex align-items-center mb-1">
+                        <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
+                    </div>
 
-                            <!-- <ul>
+
+                    <div class="soc-det">
+
+                        <img src="{{ URL::asset('assets/images/social.png') }}" alt="" class=" w-100 ">
+
+
+
+                        <!-- <ul>
                                 <li class="facebook"><i class="fab fa-facebook-f"></i></li>
                                 <li class="twitter"><i class="fab fa-twitter"></i></li>
                                 <li class="pin"><i class="fab fa-pinterest-p"></i></li>
@@ -565,31 +576,23 @@ body {
 
 
 
-                            <hr>
+                        <hr class="w-100 ">
 
 
-                            <img src="{{ URL::asset('assets/images/Group 4.png') }}" alt=""
-                                class="  w-100 h-25 mx-3 px-3">
-                        </div>
+                        <img src="{{ URL::asset('assets/images/Group 4.png') }}" alt="" class="  w-100 h-25 mx-3 px-3">
+                    </div>
 
 
-                    </form>
+                </form>
 
 
-
-                </div>
 
             </div>
-
-
 
         </div>
 
     </div>
 
-    <!-- <div class="copyco">
-               <p>Copyrigh 2019 @ smarteyeapps.com</p> 
-            </div> -->
 </div>
 
 
