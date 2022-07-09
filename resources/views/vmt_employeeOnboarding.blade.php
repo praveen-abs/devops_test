@@ -680,10 +680,12 @@
 $(document).ready(function(){
     $('#process').select2({
 		width: '100%',
+		height: '100px',
         tags: true,
     });
     $('#department').select2({
 		width: '100%',
+		height: '100px',
         tags: true,
     });
 });
