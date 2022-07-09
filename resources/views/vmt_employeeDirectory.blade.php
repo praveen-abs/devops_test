@@ -15,8 +15,8 @@ table {
 }
 
 table th {
-    color: #4c9393;
-    background-color: #ccf5e4;
+    background-color: #daf3f3;
+    color: #1c8b8d;
     padding: 15px 10px !important;
 }
 
@@ -67,8 +67,13 @@ tr:last-child td:last-child {
 }
 
 .directory-right button {
-    background-color: #ccf5e4;
-
+    background-color: #1c8b8d;
+    
+}
+.directory-right .add-onboard-btn{
+    color: #1c8b8d !important;
+    background: #fff;
+    border: 1px solid #1c8b8d !important;
 }
 
 .switch-field input {
@@ -82,7 +87,7 @@ tr:last-child td:last-child {
 
 .switch-field label {
     background-color: #fff;
-    color: rgba(0, 0, 0, 0.6);
+    color: #1c8b8d;
     font-size: 14px;
     line-height: 1;
     text-align: center;
@@ -99,7 +104,7 @@ tr:last-child td:last-child {
 }
 
 .switch-field input:checked+label {
-    background-color: #ccf5e4;
+    background-color: #daf3f3;
     box-shadow: none;
 }
 
@@ -111,7 +116,13 @@ tr:last-child td:last-child {
     border-radius: 0 4px 4px 0;
 }
 
-.directory-search-bar {}
+.directory-search-bar {
+    background:#fff !important;
+}
+.directory-search-bar:focus{
+    border:2px solid #1c8b8d !important;
+}
+
 </style>
 
 
@@ -974,7 +985,7 @@ tr:last-child td:last-child {
             </div>
             <div class="col-4">
                 <div class="d-flex directory-right float-right justify-content-end">
-                    <button class="btn border-0 outline-none text-white  mx-2 ">
+                    <button class="btn border-0 outline-none add-onboard-btn text-white  mx-2 ">
                         <i class="ri-menu-add-line fw-bold"></i>
                     </button>
                     <button class="btn border-0 outline-none onboard-employee-btn  text-white">
