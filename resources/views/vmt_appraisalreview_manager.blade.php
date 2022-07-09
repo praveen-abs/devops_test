@@ -456,6 +456,33 @@
 
     
 </div><!-- end row -->
+<div class="modal fade" id="notificationModal" role="dialog" aria-hidden="true" style="opacity:1; display:none;">
+    <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2">
+        <div class="modal-content">
+            <div class="modal-header py-2 bg-primary">
+
+                <div class="w-100 modal-header-content d-flex align-items-center py-2">
+                    <h5 class="modal-title text-white" id="modalHeader">Rejected
+                    </h5>
+                    <button 
+                        type="button" 
+                        class="btn-close btn-close-white close-modal" data-bs-dismiss="modal"
+                        aria-label="Close"
+                    >
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="mt-4">
+                    <h4 class="mb-3" id="modalNot">Data Saved Successfully!</h4>
+                    <div class="hstack gap-2 justify-content-center">
+                        <button type="button" class="btn btn-light close-modal" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
  
 @endsection
@@ -558,8 +585,9 @@
             type: "GET", 
             url:"{{url('vmt-approvereject-kpitable')}}?goal_id="+goal_id+"&user_id="+user_id+"&approve_flag="+approve_flag,
             success: function(data){
-                alert(data);
-                window.location.reload();
+                $('#modalHeader').html("Rejected");
+                $('#modalNot').html(data);
+                $('#notificationModal').show('modal');
             }
         })
     });
