@@ -61,11 +61,11 @@ $(document).ready(function() {
         }
     });
 
-    var current_fs, next_fs, previous_fs; //fieldsets
-    var opacity;
-    var current = 1;
-    var steps = $("fieldset").length;
-    setProgressBar(current);
+    // var current_fs, next_fs, previous_fs; //fieldsets
+    // var opacity;
+    // var current = 1;
+    // var steps = $("fieldset").length;
+    // setProgressBar(current);
 
     $(".next").click(function() {
         current_fs = $('#' + $(this).attr('data'));
@@ -136,9 +136,9 @@ $(document).ready(function() {
 
 
 
-    $(".submit").click(function() {
-        return false;
-    });
+    // $(".submit").click(function() {
+    //     return false;
+    // });
 
    
 

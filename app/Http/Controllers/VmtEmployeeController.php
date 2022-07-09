@@ -226,10 +226,14 @@ class VmtEmployeeController extends Controller
             //$newEmployee->father_age   = $row["father_age"];
             $newEmployee->mother_name   = $row["mother_name"];
             //$newEmployee->mother_age  = $row["mother_age"];
-            $newEmployee->spouse_name   = $row["spouse_name"];
-            $newEmployee->spouse_age   = $row["spouse_dob"];
-            $newEmployee->kid_name   = $row["child_name"];
-            $newEmployee->kid_age  = $row["child_dob"];
+            if ($row['gender'] <> 'single') {
+                $newEmployee->spouse_name   = $row["spouse_name"];
+                $newEmployee->spouse_age   = $row["spouse_dob"];
+                if ($row['no_child'] > 0) {
+                    $newEmployee->kid_name   = json_encode($row["child_name"]);
+                    $newEmployee->kid_age  = json_encode($row["child_dob"]);
+                }
+            }
 
             $newEmployee->aadhar_card_file = $this->fileUpload('aadhar_card');
             $newEmployee->aadhar_card_backend_file = $this->fileUpload('aadhar_card_backend');
@@ -254,7 +258,7 @@ class VmtEmployeeController extends Controller
                 $empOffice->confirmation_period  = $row["confirmation_period"];// => "k"
                 $empOffice->holiday_location  = $row["holiday_location"];// => "k"
                 $empOffice->l1_manager_code  = $row["l1_manager_code"];// => "k"
-                $empOffice->l1_manager_designation  = $row["l1_manager_designation"];// => "k"
+                // $empOffice->l1_manager_designation  = $row["l1_manager_designation"];// => "k"
                 $empOffice->l1_manager_name  = $row["l1_manager_name"];// => "k"
                 // $empOffice->l2_manager_code  = $row["l2_manager_code"];// => "kk"
                 // $empOffice->l2_manager_designation  = $row["l2_manager_designation"];// => "k"

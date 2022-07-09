@@ -21,16 +21,18 @@
                     <div class="p-3">
                         <div id="msform">
                             <!-- progressbar -->
-                            <ul id="progressbar">
+                            <!-- <ul id="progressbar">
                                 <li class="active" id="account"><strong class="f-9 onboard-detail">Personal Details</strong></li>
                                 <li id="personal"><strong class="f-9 onboard-detail">Location Details</strong></li>
                                 <li id="payment"><strong class="f-9 onboard-detail">Official Details</strong></li>
                                 <li id="confirm"><strong class="f-9 onboard-detail">Family Details</strong></li>
                                 <li id="compensatory"><strong class="f-9 onboard-detail">Compensatory</strong></li>
                                 <li id="end"><strong class="f-9 onboard-detail">Personal Documents</strong></li>
-                            </ul>
-                            <fieldset id="row-1">
-                                <form id="form-1" enctype="multipart/form-data">
+                            </ul> -->
+                            <form id="form-1" enctype="multipart/form-data">
+                                @csrf
+                                <fieldset>
+                                    <legend><span>Personal Details</span></legend>
                                     <div class="form-card">
                                         <div class="row mt-5">
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
@@ -164,17 +166,16 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <!-- <div class="row">
                                         <div class="col-12 text-right p-0">
                                             <button type="button" data="row-1" next="row-2" name="next" class="next bg-pink action-button text-center" value="Next">Next
                                                 <i class="text-white fa fa-arrow-right ml-2"></i>
                                             </button>
                                         </div>
-                                    </div>
-                                </form>
-                            </fieldset>
-                            <fieldset id="row-2">
-                                <form id="form-2" enctype="multipart/form-data">
+                                    </div> -->
+                                </fieldset>
+                                <fieldset class="mt-5">
+                                    <legend><span>Location Details</span></legend>
                                     <div class="form-card">
                                         <div class="row mt-5">
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6 mt-3 mb-3">
@@ -237,7 +238,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <!-- <div class="row">
                                         <div class="col-6 text-left p-0">
                                             <a type="button" data="row-2" prev="row-1" name="previous" class="previous bg-pink  action-button text-center" value="Previous">
                                                 <i class="text-white fa fa-arrow-left mr-2"></i>Previous
@@ -248,11 +249,10 @@
                                                 <i class="text-white fa fa-arrow-right ml-2"></i>
                                             </button>
                                         </div>
-                                    </div>
-                                </form>
-                            </fieldset>
-                            <fieldset id="row-3">
-                                <form id="form-3" enctype="multipart/form-data">
+                                    </div> -->
+                                </fieldset>
+                                <fieldset class="mt-5">
+                                    <legend><span>Official Details</span></legend>
                                     <div class="form-card">
                                         <div class="row mt-5">
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
@@ -334,7 +334,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <!-- <div class="row">
                                         <div class="col-6 text-left p-0"><a type="button" data="row-3" prev="row-2"
                                                 name="previous" class="previous bg-pink action-button text-center"
                                                 value="Previous"><i
@@ -343,11 +343,10 @@
                                                 next="row-4" name="next" class="next bg-pink action-button text-center"
                                                 value="Next">Next<i
                                                     class="text-white fa fa-arrow-right ml-2"></i></button></div>
-                                    </div>
-                                </form>
-                            </fieldset>
-                            <fieldset id="row-4">
-                                <form id="form-4" enctype="multipart/form-data">
+                                    </div> -->
+                                </fieldset>
+                                <fieldset class="mt-5">
+                                    <legend><span>Family Details</span></legend>
                                     <div class="form-card">
                                         <div class="row mt-5">
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
@@ -383,6 +382,7 @@
                                                 <label class="" for="no_child">Number of Children</label>
                                                 <select name="no_child" id="no_child" class="onboard-form form-control spouse_data" required >
                                                     <option value="">Select</option>
+                                                    <option value="0">0</option>
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>
                                                     <option value="3">3</option>
@@ -411,7 +411,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <!-- <div class="row">
                                         <div class="col-6 text-left p-0"><a type="button" data="row-4" prev="row-3"
                                                 name="previous" class="previous bg-pink action-button text-center"
                                                 value="Previous"><i
@@ -420,11 +420,10 @@
                                                 next="row-5" name="next" class="next bg-pink action-button text-center"
                                                 value="Next">Next<i
                                                     class="text-white fa fa-arrow-right ml-2"></i></button></div>
-                                    </div>
-                                </form>
-                            </fieldset>
-                            <fieldset id="row-5">
-                                <form id="form-5" enctype="multipart/form-data">
+                                    </div> -->
+                                </fieldset>
+                                <fieldset class="mt-5">
+                                    <legend><span>Compensatory</span></legend>
                                     <div class="form-card">
 
                                         <div class="row mt-5">
@@ -462,7 +461,7 @@
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <label class="" for="gross">Gross Salary</label>
-                                                <input type="number" name="gross" id="gross" class="onboard-form form-control" step="0.01" required disabled/>
+                                                <input type="number" name="gross" id="gross" class="onboard-form form-control" step="0.01" required readOnly/>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <label class="" for="epf_employer_contribution">EPF employer contribution</label>
@@ -482,7 +481,7 @@
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <label class="" for="cic">Cost of Company</label>
-                                                <input type="number" name="cic" id="cic" class="onboard-form form-control" step="0.01" required disabled/>
+                                                <input type="number" name="cic" id="cic" class="onboard-form form-control" step="0.01" required readOnly/>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <label class="" for="epf_employee">EPF Employee</label>
@@ -502,11 +501,11 @@
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <label class="" for="net_income">Net Income</label>
-                                                <input type="number" name="net_income" id="net_income" class="onboard-form form-control" step="0.01" required disabled/>
+                                                <input type="number" name="net_income" id="net_income" class="onboard-form form-control" step="0.01" required readOnly/>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <!-- <div class="row">
                                         <div class="col-6 text-left p-0"><a type="button" data="row-5" prev="row-4"
                                                 name="previous" class="previous bg-pink action-button text-center"
                                                 value="Previous"><i
@@ -515,12 +514,10 @@
                                                 next="row-6" name="next" class="next bg-pink action-button text-center"
                                                 value="Next">Next<i
                                                     class="text-white fa fa-arrow-right ml-2"></i></button></div>
-                                    </div>
-                                </form>
-                            </fieldset>
-                            <fieldset id="row-6">
-                                <form id="form-6" enctype="multipart/form-data">
-                                    @csrf
+                                    </div> -->
+                                </fieldset>
+                                <fieldset class="mt-5">
+                                    <legend><span>Personal Documents</span></legend>
                                     <div class="form-card">
                                         <div class="row mt-5">
                                             <div class="col-12 mt-3 mb-3">
@@ -562,17 +559,17 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-6 text-left p-0"><a type="button" data="row-6" prev="row-5"
+                                        <!-- <div class="col-6 text-left p-0"><a type="button" data="row-6" prev="row-5"
                                                 name="previous" class="previous bg-pink action-button text-center"
                                                 value="Previous"><i
-                                                    class="text-white fa fa-arrow-left mr-2"></i>Previous</a></div>
+                                                    class="text-white fa fa-arrow-left mr-2"></i>Previous</a></div> -->
                                         <div class="col-6 text-right p-0"><button type="submit"
                                                 data="row-6" next="row-6" name="next"
                                                 class="bg-pink action-button  text-center" value="Submit">Submit</button>
                                         </div>
                                     </div>
-                                </form>
-                            </fieldset>
+                                </fieldset>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -680,13 +677,9 @@
 $(document).ready(function(){
     $('#process').select2({
 		width: '100%',
-		height: '100px',
-        tags: true,
     });
     $('#department').select2({
 		width: '100%',
-		height: '100px',
-        tags: true,
     });
 });
 
@@ -761,7 +754,7 @@ $('#no_child').change(function() {
         var childName = $('input[name="child_name'+i+'"]').val();
         var childDob = $('input[name="child_dob'+i+'"]').val();
         var childGender = $('input[name="child_gender'+i+'"]').val();
-        data = data+"<div class='col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3'><label class='' for='child_name"+i+"'>Children Name</label><input type='text' name='child_name"+i+"' class='onboard-form form-control spouse_data' required /></div><div class='col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3'><label class='' for='child_dob"+i+"'>Children DOB</label><input type='date' name='child_dob"+i+"' class='onboard-form form-control spouse_data' required /></div><div class='col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3'><label class='' for='child_gender"+i+"'>Children Gender</label><select name='child_gender"+i+"' class='onboard-form form-control spouse_data' required ><option value=''>Select</option><option value='male'>Male</option><option value='female'>Female</option><option value='other'>Other</option></select></div>";
+        data = data+"<div class='col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3'><label class='' for='child_name"+i+"'>Children Name</label><input type='text' name='child_name[]' id='child_name"+i+"' class='onboard-form form-control spouse_data' required /></div><div class='col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3'><label class='' for='child_dob"+i+"'>Children DOB</label><input type='date' name='child_dob[]' id='child_dob"+i+"' class='onboard-form form-control spouse_data' required /></div><div class='col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3'><label class='' for='child_gender"+i+"'>Children Gender</label><select name='child_gender[]' id='child_gender"+i+"' class='onboard-form form-control spouse_data' required ><option value=''>Select</option><option value='male'>Male</option><option value='female'>Female</option><option value='other'>Other</option></select></div>";
     }
     $('.children_container').html(data);
 });
@@ -887,26 +880,26 @@ $('#current_district').change(function(){
 });
 
 
-$('#form-5').on('submit', function(e){
+$('#form-1').on('submit', function(e){
         e.preventDefault();
         
         var form_data1 = new FormData(document.getElementById("form-1"));
-        var form_data2 = new FormData(document.getElementById("form-2"));
-        var form_data3 = new FormData(document.getElementById("form-3"));
-        var form_data4 = new FormData(document.getElementById("form-4"));
-        var form_data5 = new FormData(document.getElementById("form-5"));
-        for (var pair of form_data2.entries()) {    
-            form_data1.append(pair[0], pair[1]);
-        }
-        for (var pair of form_data3.entries()) {    
-            form_data1.append(pair[0], pair[1]);
-        }
-        for (var pair of form_data4.entries()) {    
-            form_data1.append(pair[0], pair[1]);
-        }
-        for (var pair of form_data5.entries()) {    
-            form_data1.append(pair[0], pair[1]);
-        }
+        // var form_data2 = new FormData(document.getElementById("form-2"));
+        // var form_data3 = new FormData(document.getElementById("form-3"));
+        // var form_data4 = new FormData(document.getElementById("form-4"));
+        // var form_data5 = new FormData(document.getElementById("form-5"));
+        // for (var pair of form_data2.entries()) {    
+        //     form_data1.append(pair[0], pair[1]);
+        // }
+        // for (var pair of form_data3.entries()) {    
+        //     form_data1.append(pair[0], pair[1]);
+        // }
+        // for (var pair of form_data4.entries()) {    
+        //     form_data1.append(pair[0], pair[1]);
+        // }
+        // for (var pair of form_data5.entries()) {    
+        //     form_data1.append(pair[0], pair[1]);
+        // }
         $.ajax({
             url: "{{url('vmt-employee-onboard')}}", 
             type: "POST", 

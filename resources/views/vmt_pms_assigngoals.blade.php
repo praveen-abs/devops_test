@@ -1134,12 +1134,12 @@ $(document).ready(function(){
             success: function(data){
                 $('.addition-content').html('');
                 var length = 1;
-                $.each(data,function(k, v) {
-                    $.each(data[k],function(key, value) {
+                // $.each(data,function(k, v) {
+                    $.each(data[0],function(key, value) {
                         $('.content-container').append('<tr class="addition-content cursor-pointer" id="content'+length+'"><td class=""><span  name="numbers" id="" class="tableInp" >'+length+'</span><div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div></td><td class=""><textarea name="dimension[]" id="" cols="20" rows="2" placeholder="type here">'+value[0]+'</textarea></td><td class=""><textarea name="kpi[]" id="" cols="20" rows="2" placeholder="type here">'+value[1]+'</textarea></td><td class=""><textarea name="operational[]" id="" cols="20" rows="2" placeholder="type here">'+value[2]+'</textarea></td><td class=""><textarea name="measure[]" id="" cols="20" rows="2" placeholder="type here">'+value[3]+'</textarea></td><td class=""><textarea name="frequency[]" id="" cols="20" rows="2" placeholder="type here">'+value[4]+'</textarea></td><td class=""> <textarea name="target[]" id="" cols="20" rows="2" placeholder="type here">'+value[5]+'</textarea></td><td class=""><textarea name="stretchTarget[]" id="" cols="10" rows="2" placeholder="type here">'+value[6]+'</textarea></td><td class=""><textarea name="source[]" id="" cols="10" rows="2" placeholder="type here">'+value[7]+'</textarea></td><td class=""><textarea name="kpiWeightage[]" id="" cols="10" rows="2" placeholder="type here">'+value[8]+'</textarea></td></tr>');
                         length++;
                     });
-                });
+                // });
             }
         });
     });
