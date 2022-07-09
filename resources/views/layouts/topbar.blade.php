@@ -1,4 +1,4 @@
-<header id="pageTopbar">
+<header id="page-topbar">
     <div class="layout-width">
         <div class="navbar-header">
             <div class="d-flex container-fluid">
@@ -29,11 +29,26 @@
 
                 <div class="d-flex justify-content-between align-items-center w-100">
 
-                    <div class="search-content w-25 d-flex  ">
-                        <i class=" ri-search-line "></i>
-                        <input type="text" class="search-bar border-none rounded-pill outline-none"
-                            placeholder="Search">
+
+
+                    <div class="d-flex w-50">
+                        <button type="button"
+                            class="btn btn-sm px-3 fs-16 header-item vertical-menu-btn topnav-hamburger"
+                            id="topnav-hamburger-icon">
+                            <span class="hamburger-icon">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </span>
+                        </button>
+                        <div class="search-content header-item w-50 mx-5">
+
+                            <i class=" ri-search-line "></i>
+                            <input type="text" class="search-bar border-none rounded-pill outline-none"
+                                placeholder="Search">
+                        </div>
                     </div>
+
 
                     <div class="notify-content d-flex align-items-center">
                         @hasrole("Employee")
@@ -103,7 +118,8 @@
                                                     </div>
                                                     <div class="flex-1">
                                                         <a href="#!" class="stretched-link">
-                                                            <h6 class="mt-0 mb-2 lh-base">You missed Check-out on Monday</h6>
+                                                            <h6 class="mt-0 mb-2 lh-base">You missed Check-out on Monday
+                                                            </h6>
                                                         </a>
                                                         <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
                                                             <span><i class="mdi mdi-clock-outline"></i> Just 30 sec
