@@ -426,19 +426,6 @@
                             <fieldset id="row-5">
                                 <form id="form-5" enctype="multipart/form-data">
                                     <div class="form-card">
-                                        basic, HRA, statutory bonus, child education allowance, food coupon, LTA, special allowances, other allowances, 
-                                        Gross based on this calculation.
-                                        EpF employer contribution
-                                        Esic employer contribution
-                                        Insurance
-                                        Graduity
-                                        cost of company - gross + epf+esic+ins
-
-                                        EpF employee
-                                        Esic employee
-                                        Professional tax
-                                        labour welfare fund
-                                        net income - gross - epf-esic-ins
 
                                         <div class="row mt-5">
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
@@ -520,12 +507,12 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-6 text-left p-0"><a type="button" data="row-4" prev="row-3"
+                                        <div class="col-6 text-left p-0"><a type="button" data="row-5" prev="row-4"
                                                 name="previous" class="previous bg-pink action-button text-center"
                                                 value="Previous"><i
                                                     class="text-white fa fa-arrow-left mr-2"></i>Previous</a></div>
-                                        <div class="col-6 text-right p-0"><button type="button" data="row-4"
-                                                next="row-5" name="next" class="next bg-pink action-button text-center"
+                                        <div class="col-6 text-right p-0"><button type="button" data="row-5"
+                                                next="row-6" name="next" class="next bg-pink action-button text-center"
                                                 value="Next">Next<i
                                                     class="text-white fa fa-arrow-right ml-2"></i></button></div>
                                     </div>
@@ -575,12 +562,12 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-6 text-left p-0"><a type="button" data="row-5" prev="row-4"
+                                        <div class="col-6 text-left p-0"><a type="button" data="row-6" prev="row-5"
                                                 name="previous" class="previous bg-pink action-button text-center"
                                                 value="Previous"><i
                                                     class="text-white fa fa-arrow-left mr-2"></i>Previous</a></div>
                                         <div class="col-6 text-right p-0"><button type="submit"
-                                                data="row-5" next="row-3" name="next"
+                                                data="row-6" next="row-6" name="next"
                                                 class="bg-pink action-button  text-center" value="Submit">Submit</button>
                                         </div>
                                     </div>
@@ -693,10 +680,12 @@
 $(document).ready(function(){
     $('#process').select2({
 		width: '100%',
+		height: '100px',
         tags: true,
     });
     $('#department').select2({
 		width: '100%',
+		height: '100px',
         tags: true,
     });
 });

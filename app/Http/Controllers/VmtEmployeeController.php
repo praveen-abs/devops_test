@@ -14,6 +14,7 @@ use App\Imports\VmtEmployeeManagerImport;
 use App\Imports\VmtEmployee as VmtEmployeeImport;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtClientMaster;
+use App\Models\Compensatory;
 use Illuminate\Support\Facades\Hash;
 
 use App\Mail\WelcomeMail; 
@@ -269,6 +270,31 @@ class VmtEmployeeController extends Controller
                 $empOffice->official_mobile  = $row["official_mobile"]; // => "1234567890"
                 $empOffice->emp_notice  = $row["emp_notice"]; // => "0"
                 $empOffice->save();
+            }
+
+            if ($empOffice) {
+                $compensatory = new Compensatory;
+                $compensatory->user_id = $newEmployee->userid;
+                $compensatory->basic = $row["basic"];
+                $compensatory->hra = $row["hra"];
+                $compensatory->Statutory_bonus = $row["Statutory_bonus"];
+                $compensatory->child_education_allowance = $row["child_education_allowance"];
+                $compensatory->food_coupon = $row["food_coupon"];
+                $compensatory->lta = $row["lta"];
+                $compensatory->special_allowance = $row["special_allowance"];
+                $compensatory->other_allowance = $row["other_allowance"];
+                $compensatory->gross = $row["gross"];
+                $compensatory->epf_employer_contribution = $row["epf_employer_contribution"];
+                $compensatory->esic_employer_contribution = $row["esic_employer_contribution"];
+                $compensatory->insurance = $row["insurance"];
+                $compensatory->graduity = $row["graduity"];
+                $compensatory->cic = $row["cic"];
+                $compensatory->epf_employee = $row["epf_employee"];
+                $compensatory->esic_employee = $row["esic_employee"];
+                $compensatory->professional_tax = $row["professional_tax"];
+                $compensatory->labour_welfare_fund = $row["labour_welfare_fund"];
+                $compensatory->net_income = $row["net_income"];
+                $compensatory->save();
             }
 
             if (\Mail::to($row["email"])->send(new WelcomeMail($row["email"], '123123123', 'http://vasagroup.abshrms.com'  ))) {
