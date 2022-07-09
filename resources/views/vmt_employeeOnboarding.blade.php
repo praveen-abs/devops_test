@@ -684,7 +684,7 @@ $(document).ready(function(){
 });
 
 $('#aadhar_backend').click(function() {
-    if ($('#aadhar_backend').val()) {
+    if ($('#aadhar_backend').is(':checked')) {
         $('#aadhar_card_backend_content').show();
         $('#aadhar_card_backend').attr('require', true);
     } else {
@@ -698,14 +698,21 @@ $('.calculation_data').keyup(function() {
     var cic = 0;
     var net = 0;
     $.each($('.gross_data'),function(value) {
-        gross += parseInt($(this).val());
+        if ($(this).val()) {
+            gross += parseInt($(this).val());
+        }
     });
     $.each($('.cic_data'),function(value) {
-        cic += parseInt($(this).val());
+        if ($(this).val()) {
+            cic += parseInt($(this).val());
+        }
     });
     $.each($('.net_data'),function(value) {
-        net += parseInt($(this).val());
+        if ($(this).val()) {
+            net += parseInt($(this).val());
+        }
     });
+    console.log(gross);
     $('#gross').val(gross);
     $('#cic').val(gross+cic);
     $('#net_income').val(gross-cic+net);
@@ -833,8 +840,8 @@ $('#nationality').change(function() {
 
 $('#nationality').val('indian');
 
-$('#current_address_copy').click(function() {
-    if ($('#current_address_copy').val()) {
+$('#current_address_copy').change(function() {
+    if ($('#current_address_copy').is(':checked')) {
         stateFunction($('#current_district').val(), '#permanent_state');
         $('#permanent_pincode').val($('#current_pincode').val());
         $('#permanent_district').val($('#current_district').val());
@@ -848,7 +855,7 @@ $('#current_address_copy').click(function() {
         $('#permanent_city').val('');
         $('#permanent_address').val('');
     }
-})
+});
 
 function stateFunction(id, dataId) {
     $(dataId).empty();
@@ -861,7 +868,6 @@ function stateFunction(id, dataId) {
         },
         success: function(data)
         {
-            console.log(data);
             $.each(data,function(key,value){
                 $(dataId).append('<option value="'+value.id+'">'+value.state_name+'</option>');
             });
