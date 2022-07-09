@@ -44,7 +44,7 @@
                         <div class="search-content header-item w-50 mx-5">
 
                             <i class=" ri-search-line "></i>
-                            <input type="text" class="search-bar border-none rounded-pill outline-none"
+                            <input type="text" class="search-bar border-0 w-100 py-1 rounded-pill outline-none"
                                 placeholder="Search">
                         </div>
                     </div>
