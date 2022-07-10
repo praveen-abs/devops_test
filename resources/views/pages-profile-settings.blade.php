@@ -111,7 +111,7 @@
 
                 <div id="emp_profile" class="pro-overview tab-pane fade active show">
                     <div class="row">
-                        <div class="col-md-6 d-flex">
+                        <div class="col-md-12 col-lg-6 col-xl-6  col-sm-12 d-flex">
                             <div class="card profile-box flex-fill">
                                 <div class="card-body">
                                     <h3 class="card-title fw-bold">Personal Informations
@@ -156,7 +156,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 d-flex">
+                        <div class="col-md-12 col-lg-6 col-xl-6  col-sm-12 d-flex">
                             <div class="card profile-box flex-fill">
                                 <div class="card-body">
                                     <h3 class="card-title fw-bold">Emergency Contact <a href="#" class="edit-icon"
@@ -199,7 +199,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6 d-flex">
+                        <div class="col-md-6 col-lg-4 col-xl-4 col-sm-12 d-flex">
                             <div class="card profile-box flex-fill">
                                 <div class="card-body">
                                     <h3 class="card-title fw-bold">Bank information</h3>
@@ -224,7 +224,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 d-flex">
+                        <div class="col-md-6 col-lg-4 col-xl-4 col-sm-12 d-flex">
                             <div class="card profile-box flex-fill">
                                 <div class="card-body">
                                     <h3 class="card-title fw-bold">Family Informations <a href="#" class="edit-icon"
@@ -268,9 +268,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 d-flex">
+                        <div class="col-md-6 col-lg-4 col-xl-4 col-sm-12 d-flex">
                             <div class="card profile-box flex-fill">
                                 <div class="card-body">
                                     <h3 class="card-title fw-bold">Education Informations <a href="#" class="edit-icon"
@@ -311,7 +309,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 d-flex">
+                        <div class="col-md-6 col-lg-4 col-xl-4 col-sm-12 d-flex">
                             <div class="card profile-box flex-fill">
                                 <div class="card-body">
                                     <h3 class="card-title fw-bold">Experience <a href="#" class="edit-icon"
@@ -358,6 +356,7 @@
                             </div>
                         </div>
                     </div>
+                    
                 </div>
 
 

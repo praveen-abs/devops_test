@@ -83,10 +83,13 @@
                                             <div class="col-md-5 col-lg-5 col-sm-5 col-xl-5">
                                                 <div class="profile-info-left h-100">
                                                     <h4 class="user-name fw-bold">{{$user->name}}</h4>
-                                                    <h6 class="departmnet fw-bold text-muted">{{$details->department}}</h6>
+                                                    <h6 class="departmnet fw-bold text-muted">{{$details->department}}
+                                                    </h6>
                                                     <h5 class="role text-muted fw-bold">{{$details->designation}}</h5>
-                                                    <div class="staff-id fw-bold text-dark">Employee ID : {{$details->emp_no}}</div>
-                                                    <div class="small fw-bold text-muted">Date of Join : {{date('d-m-Y', strtotime($details->doj))}}
+                                                    <div class="staff-id fw-bold text-dark">Employee ID :
+                                                        {{$details->emp_no}}</div>
+                                                    <div class="small fw-bold text-muted">Date of Join :
+                                                        {{date('d-m-Y', strtotime($details->doj))}}
                                                     </div>
                                                     <div class="staff-msg mt-4 "><a class="btn btn-custom"
                                                             href="chat.html">
@@ -95,11 +98,12 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-7 col-lg-7 col-sm-7 col-xl-7"> 
+                                            <div class="col-md-7 col-lg-7 col-sm-7 col-xl-7">
                                                 <ul class="personal-info">
                                                     <li>
                                                         <div class="title">Phone:</div>
-                                                        <div class="text"><a href="">{{$details->mobile_number}}</a></div>
+                                                        <div class="text"><a href="">{{$details->mobile_number}}</a>
+                                                        </div>
                                                     </li>
                                                     <li>
                                                         <div class="title">Email:</div>
@@ -107,7 +111,8 @@
                                                     </li>
                                                     <li>
                                                         <div class="title">Birthday:</div>
-                                                        <div class="text">{{date('d F', strtotime($details->dob))}}</div>
+                                                        <div class="text">{{date('d F', strtotime($details->dob))}}
+                                                        </div>
                                                     </li>
                                                     <li>
                                                         <div class="title">Address:</div>
@@ -152,7 +157,7 @@
                                 </li>
 
                                 <li class="nav-item">
-                                    <a href="#bank_statutory"  data-bs-toggle="tab" class="nav-link fw-bold h5">Bank
+                                    <a href="#bank_statutory" data-bs-toggle="tab" class="nav-link fw-bold h5">Bank
                                         &amp;
                                         Statutory <small class="text-danger">(Admin Only)</small>
                                     </a>
@@ -166,7 +171,7 @@
 
                     <div id="emp_profile" class="pro-overview tab-pane fade active show">
                         <div class="row">
-                            <div class="col-md-6 d-flex">
+                            <div class="col-md-6 col-lg-6 col-xl-6  col-sm-12 d-flex">
                                 <div class="card profile-box flex-fill">
                                     <div class="card-body">
                                         <h3 class="card-title fw-bold">Personal Informations
@@ -209,7 +214,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6 d-flex">
+                            <div class="col-md-6 col-lg-6 col-xl-6  col-sm-12 d-flex">
                                 <div class="card profile-box flex-fill">
                                     <div class="card-body">
                                         <h3 class="card-title fw-bold">Emergency Contact </h3>
@@ -225,7 +230,8 @@
                                             </li>
                                             <li>
                                                 <div class="title">Phone </div>
-                                                <div class="text">{{$details->mobile_number}}, {{$details->official_mobile}}</div>
+                                                <div class="text">{{$details->mobile_number}},
+                                                    {{$details->official_mobile}}</div>
                                             </li>
                                         </ul>
                                         <hr>
@@ -249,7 +255,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6 d-flex">
+                            <div class="col-md-6 col-lg-4 col-xl-4 col-sm-12 d-flex">
                                 <div class="card profile-box flex-fill">
                                     <div class="card-body">
                                         <h3 class="card-title fw-bold">Bank information</h3>
@@ -274,7 +280,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6 d-flex">
+                            <div class="col-md-6 col-lg-4 col-xl-4 col-sm-12 d-flex">
                                 <div class="card profile-box flex-fill">
                                     <div class="card-body">
                                         <h3 class="card-title fw-bold">Family Informations </h3>
@@ -316,9 +322,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 d-flex">
+                            <div class="col-md-6 col-lg-4 col-xl-4 col-sm-12 d-flex">
                                 <div class="card profile-box flex-fill">
                                     <div class="card-body">
                                         <h3 class="card-title fw-bold">Education Informations
@@ -358,7 +362,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6 d-flex">
+                            <div class="col-md-6 col-lg-4 col-xl-4 col-sm-12 d-flex">
                                 <div class="card profile-box flex-fill">
                                     <div class="card-body">
                                         <h3 class="card-title fw-bold">Experience </h3>
@@ -408,6 +412,7 @@
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
 
 
