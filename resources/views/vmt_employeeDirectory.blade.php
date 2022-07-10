@@ -9,14 +9,14 @@
 <style>
 table {
     /* border-collapse: separate; */
-    border-radius: 10px !important;
+    /* border-radius: 10px !important; */
     box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px !important;
 
 }
 
 table th {
-    color: #4c9393;
-    background-color: #ccf5e4;
+    /* color: #4c9393; */
+    background-color: #b0bff1;
     padding: 15px 10px !important;
 }
 
@@ -43,7 +43,7 @@ td .btn i {
 }
 
 
-tr:first-child th:first-child {
+/* tr:first-child th:first-child {
     border-top-left-radius: 10px !important;
 }
 
@@ -57,7 +57,7 @@ tr:first-child th:last-child {
 
 tr:last-child td:last-child {
     border-bottom-right-radius: 10px !important;
-}
+} */
 
 
 /* for radio button */
@@ -66,10 +66,10 @@ tr:last-child td:last-child {
 
 }
 
-.directory-right button {
-    background-color: #ccf5e4;
+/* .directory-right button {
+    background-color: #b0bff1!important;
 
-}
+} */
 
 .switch-field input {
     position: absolute !important;
@@ -99,7 +99,7 @@ tr:last-child td:last-child {
 }
 
 .switch-field input:checked+label {
-    background-color: #ccf5e4;
+    background-color: #b0bff1!important;
     box-shadow: none;
 }
 
@@ -974,10 +974,10 @@ tr:last-child td:last-child {
             </div>
             <div class="col-4">
                 <div class="d-flex directory-right float-right justify-content-end">
-                    <button class="btn border-0 outline-none text-white  mx-2 ">
+                    <div class="btn border-0 outline-none mx-2 ">
                         <i class="ri-menu-add-line fw-bold"></i>
-                    </button>
-                    <button class="btn border-0 outline-none onboard-employee-btn  text-white">
+                    </div>
+                    <button class="btn border-0 outline-none onboard-employee-btn bg-danger text-white">
                         <i class="ri-add-line fw-bold mx-1"></i>
                         Onboard Employee
                     </button>
@@ -991,7 +991,6 @@ tr:last-child td:last-child {
         <table class="w-100 align-middle mb-0">
             <thead class="table-light">
                 <tr>
-
                     <th scope="col">Employee Code</th>
                     <th scope="col">Employee Name</th>
                     <th scope="col">Designation</th>

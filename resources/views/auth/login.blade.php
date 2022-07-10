@@ -462,6 +462,19 @@ body {
     margin: auto;
 }
 
+@media screen and (max-height: 630px){
+    .soc-det-img {
+        height: 10% !important;
+    }
+    .dfr {
+        padding: 5px 10px !important;
+    }
+    .side-right {
+        height: 85% !important;
+    }
+}
+
+
 .login-headers {}
 </style>
 @endsection
@@ -496,7 +509,7 @@ body {
                         </div>
                         <div class="login-logo  d-flex align-items-center">
                             <span class="m-0 mt-1 fw-bold log">Login <span class="mt-1 mx-1">to</span> <img
-                                    src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="">
+                                    src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="" style="height:35px;width:55px;">
 
                         </div>
                     </div>
@@ -562,7 +575,7 @@ body {
 
                     <div class="soc-det">
 
-                        <img src="{{ URL::asset('assets/images/social.png') }}" alt="" class=" w-100 ">
+                        <img src="{{ URL::asset('assets/images/social.png') }}" alt="" class=" w-100 soc-det-img ">
 
 
 
