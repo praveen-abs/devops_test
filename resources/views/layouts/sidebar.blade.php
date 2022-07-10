@@ -52,7 +52,7 @@
             <div id="two-column-menu">
             </div>
             <ul class="navbar-nav" id="navbar-nav">
-                <li class="menu-title"><span>@lang('translation.menu')</span></li>
+                <!-- <li class="menu-title"><span>@lang('translation.menu')</span></li> -->
                 <!-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarDashboards" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarDashboards">
@@ -84,8 +84,12 @@
 
                     <a class="nav-link menu-link" href="{{url('index')}}">
 
-                        <i> <img src="{{ URL::asset('assets/images/sidebar_icons/dashboard.png') }}" alt=""
-                                class="m-2"></i>
+                        <i> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 18.46 18.46">
+                                <path id="bxs-dashboard"
+                                    d="M5.526,14.756h6.153A1.026,1.026,0,0,0,12.7,13.73v-8.2A1.026,1.026,0,0,0,11.679,4.5H5.526A1.026,1.026,0,0,0,4.5,5.526v8.2A1.026,1.026,0,0,0,5.526,14.756ZM4.5,21.935A1.026,1.026,0,0,0,5.526,22.96h6.153A1.026,1.026,0,0,0,12.7,21.935v-4.1a1.026,1.026,0,0,0-1.026-1.026H5.526A1.026,1.026,0,0,0,4.5,17.832Zm10.256,0a1.026,1.026,0,0,0,1.026,1.026h6.153a1.026,1.026,0,0,0,1.026-1.026V14.756a1.026,1.026,0,0,0-1.026-1.026H15.781a1.026,1.026,0,0,0-1.026,1.026Zm1.026-10.256h6.153a1.026,1.026,0,0,0,1.026-1.026V5.526A1.026,1.026,0,0,0,21.935,4.5H15.781a1.026,1.026,0,0,0-1.026,1.026v5.128A1.026,1.026,0,0,0,15.781,11.679Z"
+                                    transform="translate(-4.5 -4.5)" fill="#686363" />
+                            </svg>
+                        </i>
                         <span data-key="t-landing">Dashboard</span>
 
 
@@ -99,8 +103,12 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#attendanceDrop-Down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarRoles">
-                        <i><img src="{{ URL::asset('assets/images/sidebar_icons/attendance.png') }}" alt=""
-                                class="m-2"></i>
+                        <i><svg xmlns="http://www.w3.org/2000/svg" width="17.48" height="23.307"
+                                viewBox="0 0 17.48 23.307">
+                                <path id="clipboard-user-solid"
+                                    d="M15.295,2.913H12.842a4.344,4.344,0,0,0-8.2,0H2.185A2.185,2.185,0,0,0,0,5.1V21.122a2.186,2.186,0,0,0,2.185,2.185h13.11a2.185,2.185,0,0,0,2.185-2.185V5.1A2.185,2.185,0,0,0,15.295,2.913Zm-6.555,0A1.457,1.457,0,1,1,7.283,4.37,1.457,1.457,0,0,1,8.74,2.913Zm0,5.827a2.913,2.913,0,1,1-2.913,2.913A2.913,2.913,0,0,1,8.74,8.74Zm4.37,11.653H4.37a.728.728,0,0,1-.728-.728,3.641,3.641,0,0,1,3.642-3.642H10.2a3.642,3.642,0,0,1,3.642,3.642A.73.73,0,0,1,13.11,20.393Z"
+                                    fill="#686363" />
+                            </svg></i>
                         <span>Attendance</span>
                     </a>
                     <div class="collapse menu-dropdown" id="attendanceDrop-Down">
@@ -140,8 +148,13 @@
                     <a class="nav-link menu-link" href="#orgDrop-Down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarRoles">
 
-                        <i><img src="{{ URL::asset('assets/images/sidebar_icons/organization.png') }}" alt=""
-                                class="m-2"> </i>
+                        <i><svg xmlns="http://www.w3.org/2000/svg" width="22.04" height="17.142"
+                                viewBox="0 0 22.04 17.142">
+                                <path id="sitemap-solid"
+                                    d="M7.959,33.837A1.837,1.837,0,0,1,9.8,32h2.449a1.837,1.837,0,0,1,1.837,1.837v2.449a1.837,1.837,0,0,1-1.837,1.837h-.306v1.531h5.816A2.144,2.144,0,0,1,19.9,41.8V43.02H20.2a1.837,1.837,0,0,1,1.837,1.837v2.449A1.837,1.837,0,0,1,20.2,49.142H17.754a1.837,1.837,0,0,1-1.837-1.837V44.856a1.837,1.837,0,0,1,1.837-1.837h.306V41.8a.307.307,0,0,0-.306-.306H11.938V43.02h.306a1.837,1.837,0,0,1,1.837,1.837v2.449a1.837,1.837,0,0,1-1.837,1.837H9.8a1.837,1.837,0,0,1-1.837-1.837V44.856A1.837,1.837,0,0,1,9.8,43.02H10.1V41.489H4.285a.307.307,0,0,0-.306.306V43.02h.306a1.837,1.837,0,0,1,1.837,1.837v2.449a1.837,1.837,0,0,1-1.837,1.837H1.837A1.837,1.837,0,0,1,0,47.305V44.856A1.837,1.837,0,0,1,1.837,43.02h.306V41.8a2.143,2.143,0,0,1,2.143-2.143H10.1V38.122H9.8a1.837,1.837,0,0,1-1.837-1.837Z"
+                                    transform="translate(0 -32)" fill="#686363" />
+                            </svg>
+                        </i>
 
                         <span>Organization</span>
                     </a>
@@ -184,8 +197,13 @@
                     <a class="nav-link menu-link" href="#PerformanceDrop-Down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarRoles">
 
-                        <i><img src="{{ URL::asset('assets/images/sidebar_icons/performance.png') }}" alt=""
-                                class="m-2"></i>
+                        <i><svg xmlns="http://www.w3.org/2000/svg" width="22.058" height="12.253"
+                                viewBox="0 0 22.058 12.253">
+                                <path id="arrow-trend-up-solid"
+                                    d="M14.705,98.451a1.225,1.225,0,0,1,0-2.451h6.127a1.224,1.224,0,0,1,1.225,1.225v6.127a1.225,1.225,0,0,1-2.451,0v-3.167l-6.487,6.483a1.223,1.223,0,0,1-1.731,0l-4.071-4.032-5.226,5.258a1.225,1.225,0,0,1-1.733-1.731l6.128-6.127a1.223,1.223,0,0,1,1.731,0l4.036,4.032,5.618-5.652Z"
+                                    transform="translate(0 -96)" fill="#686363" />
+                            </svg>
+                        </i>
 
 
                         <span>Performance</span>
@@ -212,7 +230,13 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#teamDrop-Down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarRoles">
-                        <i><img src="{{ URL::asset('assets/images/sidebar_icons/team.png') }}" alt="" class="m-2"></i>
+                        <i><svg xmlns="http://www.w3.org/2000/svg" width="22.058" height="15.44"
+                                viewBox="0 0 22.058 15.44">
+                                <path id="people-group-solid"
+                                    d="M6.342,33.93A1.93,1.93,0,1,1,4.412,32,1.931,1.931,0,0,1,6.342,33.93Zm.841,3.733a4.954,4.954,0,0,0-1.668,3.712,4.768,4.768,0,0,0,1.1,3.119v.741a1.1,1.1,0,0,1-1.1,1.1H3.309a1.1,1.1,0,0,1-1.1-1.1v-.924A3.86,3.86,0,0,1,3.86,36.963h1.1a3.917,3.917,0,0,1,2.22.7Zm-4.977,1.7a2.2,2.2,0,0,0,0,2.916Zm13.235,5.869v-.741a4.963,4.963,0,0,0-.565-6.831,3.843,3.843,0,0,1,2.22-.7h1.1a3.86,3.86,0,0,1,1.654,7.348v.924a1.1,1.1,0,0,1-1.1,1.1H16.543A1.1,1.1,0,0,1,15.441,45.235Zm4.412-2.954a2.2,2.2,0,0,0,0-2.916Zm-.276-8.351A1.93,1.93,0,1,1,17.646,32,1.931,1.931,0,0,1,19.576,33.93Zm-10.753.276a2.206,2.206,0,1,1,2.206,2.206A2.207,2.207,0,0,1,8.823,34.206Zm6.617,7.169a3.862,3.862,0,0,1-2.206,3.488v1.475a1.1,1.1,0,0,1-1.1,1.1H9.926a1.1,1.1,0,0,1-1.1-1.1V44.862a3.86,3.86,0,0,1,1.654-7.348h1.1A3.858,3.858,0,0,1,15.441,41.375ZM8.823,42.832V39.917a2.2,2.2,0,0,0,0,2.916Zm4.412-2.916v2.916a2.2,2.2,0,0,0,0-2.916Z"
+                                    transform="translate(0 -32)" fill="#686363" />
+                            </svg>
+                        </i>
                         <span>Team</span>
                     </a>
                     <div class="collapse menu-dropdown" id="teamDrop-Down">
@@ -258,8 +282,18 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#payRollDrop-Down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarRoles">
-                        <i><img src="{{ URL::asset('assets/images/sidebar_icons/pay_roll.png') }}" alt=""
-                                class="m-2"></i>
+                        <i><svg xmlns="http://www.w3.org/2000/svg" width="20.736" height="20.736"
+                                viewBox="0 0 20.736 20.736">
+                                <g id="Group_34191" data-name="Group 34191" transform="translate(-18 -625)">
+                                    <path id="envelope-open-solid"
+                                        d="M19.991,6.6c-1.008-.795-1.843-1.432-6.654-4.925C12.664,1.183,11.328,0,10.384,0h-.032C9.408,0,8.072,1.183,7.4,1.676,2.584,5.169,1.75,5.77.741,6.6A1.943,1.943,0,0,0,0,8.132v10.66a1.944,1.944,0,0,0,1.944,1.944H18.792a1.937,1.937,0,0,0,1.944-1.908V8.132A1.926,1.926,0,0,0,19.991,6.6ZM12.28,14.884a3.068,3.068,0,0,1-3.822,0L2.592,10.323V8.444C3.449,7.772,4.474,7,8.926,3.766c.129-.094.279-.21.445-.338.224-.17.665-.513,1-.721.332.208.775.551,1,.723.166.128.316.244.452.343,4.42,3.213,5.461,3.991,6.328,4.671V10.32Z"
+                                        transform="translate(18 625)" fill="#686363" />
+                                    <path id="bx-rupee"
+                                        d="M13.792,6.871V6H9v.871h1.525a1.3,1.3,0,0,1,1.226.871H9v.871h2.751a1.3,1.3,0,0,1-1.226.871H9v1.052l2.433,2.433h1.232l-2.614-2.614h.473a2.181,2.181,0,0,0,2.134-1.742h1.133V7.742H12.658a2.149,2.149,0,0,0-.4-.871Z"
+                                        transform="translate(16.972 625.883)" fill="#686363" />
+                                </g>
+                            </svg>
+                        </i>
 
 
                         <span>Pay Roll</span>
@@ -297,8 +331,13 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" id="employeeInfo" href="#paycheckDrop-Down" data-bs-toggle="collapse"
                         role="button" aria-expanded="false" aria-controls="sidebar360questions">
-                        <i><img src="{{ URL::asset('assets/images/sidebar_icons/paycheck.png') }}" alt=""
-                                class="m-2"></i>
+                        <i><svg xmlns="http://www.w3.org/2000/svg" width="21.946" height="17.549"
+                                viewBox="0 0 21.946 17.549">
+                                <path id="money-bill-transfer-solid"
+                                    d="M18.346.241a.788.788,0,0,1,1.135,0l2.195,2.194a.741.741,0,0,1,.271.582.645.645,0,0,1-.271.552L19.481,5.764a.745.745,0,0,1-1.135,0,.793.793,0,0,1,0-1.135l.792-.82h-5.97a.8.8,0,0,1-.823-.792.822.822,0,0,1,.823-.823l5.97-.031-.792-.759a.827.827,0,0,1,0-1.164ZM3.57,12.9l-.76.82,5.938-.031a.821.821,0,0,1,.823.823.787.787,0,0,1-.823.823l-5.938.031.76.789a.745.745,0,0,1,0,1.135.744.744,0,0,1-1.134,0L.241,15.092A.727.727,0,0,1,0,14.509a.808.808,0,0,1,.241-.552l2.195-2.195a.791.791,0,0,1,1.134,0,.745.745,0,0,1,0,1.135Zm-.309-10.7h8.326a1.723,1.723,0,0,0-.2.792A1.765,1.765,0,0,0,13.168,4.77H16.5a2.195,2.195,0,0,0,.97,1.468,2.138,2.138,0,0,0,.2.237,1.786,1.786,0,0,0,2.524,0l.658-.662v7.355a2.2,2.2,0,0,1-2.195,2.195h-8.3a1.856,1.856,0,0,0-1.612-2.637l-3.3.031a2.216,2.216,0,0,0-.97-1.437,2.138,2.138,0,0,0-.2-.237,1.785,1.785,0,0,0-2.523,0l-.69.662V4.389A2.214,2.214,0,0,1,3.261,2.195Zm0,4.389A2.177,2.177,0,0,0,5.456,4.389H3.261Zm15.393,6.584V10.973a2.2,2.2,0,0,0-2.195,2.195Zm-7.712-1.1A3.292,3.292,0,1,0,7.65,8.779,3.3,3.3,0,0,0,10.942,12.071Z"
+                                    transform="translate(0 0)" fill="#686363" />
+                            </svg>
+                        </i>
 
 
                         <span>Paycheck</span>
@@ -342,8 +381,18 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" id="employeeInfo" href="#claimsDrop-Down" data-bs-toggle="collapse"
                         role="button" aria-expanded="false" aria-controls="sidebar360questions">
-                        <i> <img src="{{ URL::asset('assets/images/sidebar_icons/claims.png') }}" alt=""
-                                class="m-2"></i>
+                        <i> <svg xmlns="http://www.w3.org/2000/svg" width="21.946" height="17.354"
+                                viewBox="0 0 21.946 17.354">
+                                <g id="Group_34184" data-name="Group 34184" transform="translate(-18 -404.98)">
+                                    <path id="hand-holding-dollar-solid_1_" data-name="hand-holding-dollar-solid (1)"
+                                        d="M21.763,12.881a1.528,1.528,0,0,0-2.142-.324l-4.585,3.377H10.417a.588.588,0,0,1-.578-.612.611.611,0,0,1,.578-.613h3a1.3,1.3,0,0,0,1.278-1.02,1.228,1.228,0,0,0-1.211-1.432H7.32a4.58,4.58,0,0,0-2.839,1.005L2.7,14.708.578,14.674A.646.646,0,0,0,0,15.321V19a.61.61,0,0,0,.578.614H13.835a4.014,4.014,0,0,0,2.363-.776C22.12,14.52,22.265,13.563,21.763,12.881Z"
+                                        transform="translate(18 402.724)" fill="#686363" />
+                                    <path id="bx-rupee"
+                                        d="M13.792,6.871V6H9v.871h1.525a1.3,1.3,0,0,1,1.226.871H9v.871h2.751a1.3,1.3,0,0,1-1.226.871H9v1.052l2.433,2.433h1.232l-2.614-2.614h.473a2.181,2.181,0,0,0,2.134-1.742h1.133V7.742H12.658a2.149,2.149,0,0,0-.4-.871Z"
+                                        transform="translate(17.577 398.98)" fill="#686363" />
+                                </g>
+                            </svg>
+                        </i>
 
                         <span>Claims</span>
 
@@ -394,7 +443,15 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" id="employeeInfo" href="#reportsDrop-Down" data-bs-toggle="collapse"
                         role="button" aria-expanded="false" aria-controls="sidebar360questions">
-                        <i><img src="{{ URL::asset('assets/images/sidebar_icons/report.png') }}" alt="" class="m-2"></i>
+                        <i>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18.46" height="18.46"
+                                viewBox="0 0 18.46 18.46">
+                                <path id="flag-solid_1_" data-name="flag-solid (1)"
+                                    d="M2.308,17.883a.58.58,0,0,1-.577.577H.577A.58.58,0,0,1,0,17.883V1.154a1.154,1.154,0,0,1,2.308,0ZM17.173,0a1.686,1.686,0,0,0-.7.153A9.327,9.327,0,0,1,12.589,1.16C10.427,1.16,9.171.011,6.68.011A11.134,11.134,0,0,0,3.461.568V13.205A10.225,10.225,0,0,1,6.521,12.7c2.655,0,4.5,1.146,7.161,1.146a10.684,10.684,0,0,0,4.006-.833,1.114,1.114,0,0,0,.773-1.036V1.108A1.162,1.162,0,0,0,17.173,0Z"
+                                    fill="#686363" />
+                            </svg>
+
+                        </i>
 
                         <span>
                             Reports</span>
@@ -424,8 +481,13 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#helpDeskDrop-down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarApps">
-                        <i><img src="{{ URL::asset('assets/images/sidebar_icons/help_desk.png') }}" alt=""
-                                class="m-2"></i>
+                        <i><svg xmlns="http://www.w3.org/2000/svg" width="20.79" height="13.86"
+                                viewBox="0 0 20.79 13.86">
+                                <path id="ticket-solid"
+                                    d="M4.62,67.465H16.17v6.93H4.62ZM18.48,64a2.311,2.311,0,0,1,2.31,2.31V69.2a1.732,1.732,0,0,0,0,3.465V75.55a2.312,2.312,0,0,1-2.31,2.31H2.31A2.311,2.311,0,0,1,0,75.55V72.662A1.733,1.733,0,0,0,1.732,70.93,1.733,1.733,0,0,0,0,69.2V66.31A2.31,2.31,0,0,1,2.31,64ZM3.465,74.395A1.154,1.154,0,0,0,4.62,75.55H16.17a1.154,1.154,0,0,0,1.155-1.155v-6.93A1.154,1.154,0,0,0,16.17,66.31H4.62a1.154,1.154,0,0,0-1.155,1.155Z"
+                                    transform="translate(0 -64)" fill="#686363" />
+                            </svg>
+                        </i>
 
                         <span>Help Desk</span>
                     </a>
@@ -632,8 +694,12 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#configDrop-down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarLayouts">
-                        <i><img src="{{ URL::asset('assets/images/sidebar_icons/configuration.png') }}" alt=""
-                                class="m-2"></i>
+                        <i><svg xmlns="http://www.w3.org/2000/svg" width="20.736" height="22" viewBox="0 0 20.736 22">
+                                <path id="gear-solid_1_" data-name="gear-solid (1)"
+                                    d="M35.378,7.159a.975.975,0,0,1-.271,1.057L33.247,9.909a8.19,8.19,0,0,1,0,2.183l1.861,1.693a.975.975,0,0,1,.271,1.057,10.907,10.907,0,0,1-.675,1.474l-.2.348a11.321,11.321,0,0,1-.95,1.345A.983.983,0,0,1,32.5,18.3l-2.393-.765a9.4,9.4,0,0,1-1.891,1.1l-.537,2.454a1.03,1.03,0,0,1-.782.765,11.228,11.228,0,0,1-1.865.15,10.99,10.99,0,0,1-1.788-.15,1.03,1.03,0,0,1-.782-.765l-.537-2.454a8.445,8.445,0,0,1-1.891-1.1l-2.392.765a.981.981,0,0,1-1.053-.292,11.275,11.275,0,0,1-.95-1.345l-.2-.348a10.717,10.717,0,0,1-.678-1.474.976.976,0,0,1,.273-1.057l1.859-1.693a8.336,8.336,0,0,1,0-2.183L15.033,8.216a.974.974,0,0,1-.273-1.057,10.768,10.768,0,0,1,.678-1.474l.2-.348a11.131,11.131,0,0,1,.95-1.343A.976.976,0,0,1,17.643,3.7l2.392.763A8.263,8.263,0,0,1,21.925,3.37L22.462.917a.975.975,0,0,1,.782-.766,11.131,11.131,0,0,1,3.652,0,.975.975,0,0,1,.782.766l.537,2.454a9.175,9.175,0,0,1,1.891,1.094L32.5,3.7a.978.978,0,0,1,1.053.293,11.125,11.125,0,0,1,.95,1.343l.2.348a10.907,10.907,0,0,1,.675,1.474ZM25.07,14.437a3.457,3.457,0,1,0-3.438-3.476A3.445,3.445,0,0,0,25.07,14.437Z"
+                                    transform="translate(-14.702)" fill="#686363" />
+                            </svg>
+                        </i>
 
 
                         <span>Configuration</span>
@@ -664,7 +730,13 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#exitDrop-down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarLayouts">
-                        <i> <img src="{{ URL::asset('assets/images/sidebar_icons/exit.png') }}" alt="" class="m-2"></i>
+                        <i><svg xmlns="http://www.w3.org/2000/svg" width="20.227" height="17.699"
+                                viewBox="0 0 20.227 17.699">
+                                <path id="right-from-bracket-solid"
+                                    d="M3.793,49.7H6.321a1.264,1.264,0,1,0,0-2.528H3.793a1.264,1.264,0,0,1-1.264-1.264V35.793a1.264,1.264,0,0,1,1.264-1.264H6.321a1.264,1.264,0,0,0,0-2.528H3.793A3.793,3.793,0,0,0,0,35.793V45.906A3.793,3.793,0,0,0,3.793,49.7Zm16.15-9.541L14.25,34.785a.949.949,0,0,0-1.6.69l0,2.844H7.589a1.265,1.265,0,0,0-1.265,1.264v2.528a1.265,1.265,0,0,0,1.265,1.264h5.057l0,2.809a.949.949,0,0,0,1.6.69L19.943,41.5A.935.935,0,0,0,19.943,40.158Z"
+                                    transform="translate(0 -32)" fill="#686363" />
+                            </svg>
+                        </i>
                         <span>Exit</span>
                     </a>
                     <div class="collapse menu-dropdown" id="exitDrop-down">

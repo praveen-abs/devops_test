@@ -82,7 +82,7 @@ tr:last-child td:last-child {
 
 .switch-field label {
     background-color: #fff;
-    color: rgba(0, 0, 0, 0.6);
+    color: #1c8b8d;
     font-size: 14px;
     line-height: 1;
     text-align: center;
@@ -111,7 +111,13 @@ tr:last-child td:last-child {
     border-radius: 0 4px 4px 0;
 }
 
-.directory-search-bar {}
+.directory-search-bar {
+    background:#fff !important;
+}
+.directory-search-bar:focus{
+    border:2px solid #1c8b8d !important;
+}
+
 </style>
 
 

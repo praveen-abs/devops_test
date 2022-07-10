@@ -356,7 +356,7 @@ body {
     align-items: center;
 }
 
-.side-right {
+.side-right form{
     background-color: #FFF;
     height: 550px;
     width: 400px;
@@ -368,6 +368,32 @@ body {
     /* box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,rgb(255 124 19) 0px 2px 16px 0px,
     rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px; */
 }
+/* .side-right form:before{
+   content:'';
+   position:absolute; 
+   top:-2px;
+   bottom:-2px;
+   left:-2px;
+   right:-2px;
+   background:#fff;
+   z-index:-1;
+}
+.side-right form:after{
+   content:'';
+   position:absolute; 
+   top:-2px;
+   bottom:-2px;
+   left:-2px;
+   right:-2px;
+   background:#fff;
+   z-index:-2;
+   filter:blur(40px);
+}
+
+.side-right form:after,
+.side-right form:before{
+background:linear-gradient(235deg,#89ff00,#060c21,#00bcd4);
+} */
 
 @media screen and (max-width: 660px) {
     .side-right {
@@ -500,8 +526,6 @@ body {
         <div class="sidecol2 col-6">
 
             <div class="side-right">
-
-
                 <form action="{{ route('login') }}" method="POST">
                     <div class="login-headers text-align-left my-1 ">
                         <div class="logo-change   d-flex align-items-center justify-content-center">
