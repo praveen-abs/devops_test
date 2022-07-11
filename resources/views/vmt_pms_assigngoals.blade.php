@@ -778,7 +778,7 @@ td .btn i {
                                 <div class="col-3 mt-3 mb-3">
                                     <div class="d-flex flex-column">
                                         <label class="" for="department">Department</label>
-                                        <select name="department" id="">
+                                        <select name="department" id="department">
                                             <option value="Technology">Technology</option>
                                             <option value="Sales">Sales</option>
                                             <option value="Auditing">Auditing</option>
@@ -790,7 +790,7 @@ td .btn i {
                                 <div class="col-4  mt-3 mb-3">
                                     @if (auth()->user()->hasrole('Manager') || auth()->user()->hasrole('Admin'))
                                     <div class="d-flex flex-column">
-                                        <label class="" for="Assignment">Employees-02</label>
+                                        <label class="" for="Assignment">Employees</label>
                                         <div class="d-flex align-items-center">
                                             <div class="avatar-group-item">
                                                 <!-- <a class="avatar">
@@ -810,7 +810,7 @@ td .btn i {
                                                     <span id="group-employee"></span>
                                                 </div> -->
                                             </div>
-                                            <button type="button" target="#changeEmployee" class="right btn btn-primary py-1 px-3 rounded-pill mx-3 text-white chnageButton">Edit</button>
+                                            <button id="btn_selectEmployees" type="button" target="#changeEmployee" class="right btn btn-primary py-1 px-3 rounded-pill mx-3 text-white chnageButton">Add</button>
                                         </div>
                                     </div>
                                     @endif
@@ -825,25 +825,25 @@ td .btn i {
                                                 <div class="card-body">
                                                     <div class="d-flex align-items-center">
                                                         <a>
-                                                            <img src="assets/images/users/avatar-5.jpg" alt="" class="rounded-circle">
+                                                            <img src="assets/images/users/avatar-1.jpg" alt="" class="rounded-circle">
                                                         </a>
 
-                                                        <div class=" mt-1 message-content align-items-start d-flex flex-column  mx-2">
+                                                        <div class=" mt-3 message-content align-items-start d-flex flex-column  mx-2">
                                                             @if(auth()->user()->hasrole('Manager'))
-                                                            <h6 class="fw-bold m-0" id="reviewer-name">{{auth()->user()->name}}</h6>
+                                                            <h6 class="" id="reviewer-name">{{auth()->user()->name}}</h6>
                                                             @elseif(auth()->user()->hasrole('Employee'))
-                                                            <h6 class="fw-bold m-0" id="reviewer-name">{{$users[0]['name']}}</h6>
+                                                            <h6 class="" id="reviewer-name">{{$users[0]['name']}}</h6>
                                                             @else
-                                                            <h6 class="fw-bold m-0" id="reviewer-name">---</h6>
+                                                            <h6 class="" id="reviewer-name">---</h6>
                                                             @endif
 
-                                                            @if(auth()->user()->hasrole('Manager'))
+                                                            {{-- @if(auth()->user()->hasrole('Manager'))
                                                             <span id="reviewer-email">{{auth()->user()->email}}</span>
                                                             @elseif(auth()->user()->hasrole('Employee'))
                                                             <span id="reviewer-email">{{$users[0]['email']}}</span>
                                                             @else
                                                             <span id="reviewer-email">---</span>
-                                                            @endif
+                                                            @endif --}}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -851,10 +851,11 @@ td .btn i {
                                             @hasrole('Admin')
                                             <button 
                                                 type="button" 
+                                                id="btn_changeManager"
                                                 target="#createEmployee"
                                                 class="right btn btn-primary py-1 px-3 rounded-pill mx-3 text-white reviewerButton"
                                             >
-                                                Change
+                                                Select
                                             </button>
                                             @endif
                                         </div>
@@ -996,7 +997,7 @@ td .btn i {
                 </div>
             </div>
             <div class="modal-body">
-                <form id="newQuestion" method="POST" >
+                <form id="form_selectReviewer" method="POST" >
                     @csrf
                     <label for="FormSelectDefault" class="form-label text-muted">Reviewer</label>
                     <select class="form-select mb-3" aria-label="Default select example" name="reviewer" id="select-reviewer" >
@@ -1316,8 +1317,8 @@ $('#changeEmployeeForm').on('submit', function(e){
     var imgHtml ="";
     var count = 0;
     $.each(employees, function(i, data){
-        console.log(data);
-        console.log('employee selected', employeeSelected);
+        //console.log(data);
+        //console.log('employee selected', employeeSelected);
         if($.inArray(data.id.toString(), employeeSelected) > -1){
             employeeArray.push(data.emp_name);
             if (count < 4) {
@@ -1329,6 +1330,22 @@ $('#changeEmployeeForm').on('submit', function(e){
     if (count > 4) {
         imgHtml = imgHtml+"<span class='img-addition' style='background-color: rgb(134, 192, 106);width: 30px;height: 30px;font-size:12px;'> +"+count-3+" </span><div class='mt-1 message-content align-items-start d-flex flex-column  mx-2'><span id='group-employee'></span></div>";
     }
+
+
+   //Change button text based on employee selection count
+
+   if(count > 0)
+    {
+        $('#btn_selectEmployees').html("Edit");
+        console.log("Changed to Edit button");
+    }
+    else
+    {
+        $('#btn_selectEmployees').html("Add");
+        console.log("Changed to Add button");
+    }
+
+
     $('#group-employee').html(employeeArray.join());
     $('#changeEmployee').css('display', 'none');
     $('.avatar-group-item').html(imgHtml);
@@ -1363,16 +1380,18 @@ $('#changeEmployeeForm').on('submit', function(e){
 @endif
 
 // select reviewer
-$('#newQuestion').on('submit', function(e){
+$('#form_selectReviewer').on('submit', function(e){
     e.preventDefault();
     var userList = {!!json_encode($users)!!};
+    
     var selReviewer = $('#select-reviewer').val();
     $("#sel_reviewer").val(selReviewer);
-
     $.each(userList, function(i, data){
         if(data.id == $('#select-reviewer').val()){
             $('#reviewer-name').html(data.name);
             $('#reviewer-email').html(data.email);
+
+             $('#btn_changeManager').html("Edit");
         }
     });
 
@@ -1415,6 +1434,7 @@ $('body').on('click', '#save-table', function(e){
     //console.log('assigning Goals');
     //console.log($('#kpiTableForm').serialize());
 
+    var isAllFieldsEntered = true;
     var canSaveForm = true;
     var kpiWeightageTotal = 0;
 
@@ -1424,26 +1444,42 @@ $('body').on('click', '#save-table', function(e){
         //console.log("length : ");
         if(input.attr('name') == "kpiWeightage[]")
         {
-            kpiWeightageTotal =kpiWeightageTotal+parseInt(input.val());
+            kpiWeightageTotal =kpiWeightageTotal+parseInt(input.val().replace('%', ''));
             //console.log(input.attr('name')+" , "+input.val());
         }
 
-       if(input.val().length < 1)
+       if(input.val().trim().length < 1)
        {
-         canSaveForm = false;
+         isAllFieldsEntered = false;
        }
     });
 
-
-    //Validate KPI Weightage
-    if(kpiWeightageTotal != 100 )
+    //Validate other fields
+    if( $('#reviewer-name').html() != "---" &&
+        $('#btn_selectEmployees').html() == "Edit" &&
+        $('#calendar_type').val() != "" && 
+        $('#year').val() != "" &&
+        $('#frequency').val() != "" &&
+        $('#assignment_period_start').val() != "" &&
+        $('#department').val() != "" &&
+       isAllFieldsEntered
+      )
     {
-        canSaveForm = false;
-        alert("KPI Weightage should be exactly 100%. Please fix it");
+        //Validate KPI Weightage
+        if(kpiWeightageTotal != 100 )
+        {
+            canSaveForm = false;
+            alert("KPI Weightage should be exactly 100%. Please validate.");
+        }
     }
+    else
+    {
+        alert("Please fill all the fields");
+        canSaveForm = false;
 
-    //for testing
-   // canSaveForm = false;
+    }
+        
+
 
     if(canSaveForm)
     {
@@ -1466,10 +1502,7 @@ $('body').on('click', '#save-table', function(e){
             }
         });
     }
-    else
-    {
-        alert("Please fill all the fields");
-    }
+
 })
 
 //
