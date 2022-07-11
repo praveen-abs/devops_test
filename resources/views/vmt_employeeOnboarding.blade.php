@@ -63,7 +63,7 @@
                                                 </select>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="doj">Date of Joining</label>
+                                                <label class="" for="doj">Date of Joining{!! required() !!}</label>
                                                 <input type="date" name="doj" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
@@ -84,17 +84,17 @@
                                                 <input type="email" name="email" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="aadhar">Aadhaar Number{!! required() !!}</label>
+                                                <label class="" for="aadhar">Aadhaar Number<span id="aadhar_req">{!! required() !!}</span></label>
                                                 <input type="number" name="aadhar" id="aadhar" pattern="aadhar" class="onboard-form form-control" required />
                                                 <label class="error aadhar_label" for="aadhar" style="display: none;"></label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="pan_no">Pan Card Number{!! required() !!}</label>
+                                                <label class="" for="pan_no">Pan Card Number<span id="pan_no_req">{!! required() !!}</span></label>
                                                 <input type="text" name="pan_no" id="pan_no" class="onboard-form form-control pan" pattern="pan" required />
                                                 <label class="error pan_no_label" id="pan_no_label" for="pan_no" style="display: none;"></label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="pan_ack">Pan Acknowlegement{!! required() !!}</label>
+                                                <label class="" for="pan_ack">Pan Acknowlegement<span id="pan_ack_req">{!! required() !!}</span></label>
                                                 <input type="text" name="pan_ack" id="pan_ack" class="onboard-form form-control not-required validate" />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
@@ -103,12 +103,12 @@
                                                 <label class="error dl_no_label" for="dl_no" style="display: none;"></label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="passport_no">Passport Number{!! required() !!}</label>
+                                                <label class="" for="passport_no">Passport Number<span id="passport_no_req">{!! required() !!}</span></label>
                                                 <input type="text" name="passport_no" pattern="passport" id="passport_no" class="onboard-form form-control not-required validate" />
                                                 <label class="error passport_no_label" for="passport_no" style="display: none;"></label>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="passport_exp">Passport Exp Date{!! required() !!}</label>
+                                                <label class="" for="passport_exp">Passport Exp Date<span id="passport_exp_req">{!! required() !!}</span></label>
                                                 <input type="date" name="passport_exp" min="{{date('Y-m-d')}}" id="passport_exp" class="onboard-form form-control not-required validate" />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
@@ -179,25 +179,25 @@
                                     <div class="form-card">
                                         <div class="row mt-5">
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6 mt-3 mb-3">
-                                                <label class="" for="current_address">Current Address</label>
+                                                <label class="" for="current_address">Current Address{!! required() !!}</label>
                                                 <input type="text" name="current_address" id="current_address" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="current_city">Current City</label>
+                                                <label class="" for="current_city">Current City{!! required() !!}</label>
                                                 <input type="text" name="current_city" id="current_city" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="current_state">Current State</label>
+                                                <label class="" for="current_state">Current State{!! required() !!}</label>
                                                 <select name="current_state" id="current_state" class="onboard-form form-control" required >
                                                 </select>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="current_pincode">Current Pincode</label>
+                                                <label class="" for="current_pincode">Current Pincode{!! required() !!}</label>
                                                 <input type="number" name="current_pincode" id="current_pincode" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <!-- <input type="text" name="curent_district" class="onboard-form form-control" required /> -->
-                                                <label class="" for="curent_district">Country</label>
+                                                <label class="" for="curent_district">Country{!! required() !!}</label>
                                                 <select name="current_district" id="current_district" class="onboard-form form-control" required >
                                                     @foreach($countries as $data)
                                                     <option value="{{$data->country_code}}">{{$data->country_name}}</option>
@@ -208,28 +208,28 @@
                                         <div class="row mt-5">
                                             <div class="col-12 mt-3 mb-3">
                                                 <input type="checkbox" name="current_address_copy" id="current_address_copy" style="width:auto;"/>
-                                                <label for="current_address_copy">Copy current address to the permanent address</label>
+                                                <label for="current_address_copy">Copy current address to the permanent address{!! required() !!}</label>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6 mt-3 mb-3">
-                                                <label class="" for="permanent_address">Permanent Address</label>
+                                                <label class="" for="permanent_address">Permanent Address{!! required() !!}</label>
                                                 <input type="text" name="permanent_address" id="permanent_address" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="permanent_city">Permanent City</label>
+                                                <label class="" for="permanent_city">Permanent City{!! required() !!}</label>
                                                 <input type="text" name="permanent_city" id="permanent_city" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="permanent_state">Permanent State</label>
+                                                <label class="" for="permanent_state">Permanent State{!! required() !!}</label>
                                                 <select name="permanent_state" id="permanent_state" class="onboard-form form-control" required >
                                                 </select>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="permanent_pincode">Permanent Pincode</label>
+                                                <label class="" for="permanent_pincode">Permanent Pincode{!! required() !!}</label>
                                                 <input type="number" name="permanent_pincode" id="permanent_pincode" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <!-- <input type="text" name="permanent_district" class="onboard-form form-control" required /> -->
-                                                <label class="" for="permanent_district">Permanent Country</label>
+                                                <label class="" for="permanent_district">Permanent Country{!! required() !!}</label>
                                                 <select name="permanent_district" id="permanent_district" class="onboard-form form-control" required >
                                                     @foreach($countries as $data)
                                                     <option value="{{$data->country_code}}">{{$data->country_name}}</option>
@@ -256,7 +256,7 @@
                                     <div class="form-card">
                                         <div class="row mt-5">
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="department">Department</label>
+                                                <label class="" for="department">Department{!! required() !!}</label>
                                                 <select name="department" id="department" class="onboard-form form-control" required>
                                                     <option value="">Select</option>
                                                     @foreach($emp as $e)
@@ -265,7 +265,7 @@
                                                 </select>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="process">Process</label>
+                                                <label class="" for="process">Process{!! required() !!}</label>
                                                 <select name="process" id="process" class="onboard-form form-control" required>
                                                     <option value="">Select</option>
                                                     @foreach($emp as $e)
@@ -274,15 +274,15 @@
                                                 </select>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="designation">Designation</label>
+                                                <label class="" for="designation">Designation{!! required() !!}</label>
                                                 <input type="text" name="designation" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="cost_center">Cost Center</label>
+                                                <label class="" for="cost_center">Cost Center{!! required() !!}</label>
                                                 <input type="text" name="cost_center" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="confirmation_period">Probabition Period</label>
+                                                <label class="" for="confirmation_period">Probabition Period{!! required() !!}</label>
                                                 <select name="confirmation_period" class="onboard-form form-control not-required validate" >
                                                     <option value="">Select</option>
                                                     <option value="1">1 Month</option>
@@ -300,36 +300,36 @@
                                                 </select>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="work_location">Work Location</label>
+                                                <label class="" for="work_location">Work Location{!! required() !!}</label>
                                                 <input type="text" name="work_location" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="l1_manager_code">Reporting Manager Employee Code</label>
+                                                <label class="" for="l1_manager_code">Reporting Manager Employee Code{!! required() !!}</label>
                                                 <input type="text" name="l1_manager_code" class="onboard-form form-control" required />
                                             </div>
                                             <!-- <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <input type="text" name="l1_manager_designation" class="onboard-form form-control" required />
                                                 <label class="" for="l1_manager_designation">Reporting Manager
-                                                    Designation</label>
+                                                    Designation{!! required() !!}</label>
                                             </div> -->
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="l1_manager_name">Reporting Manager Name</label>
+                                                <label class="" for="l1_manager_name">Reporting Manager Name{!! required() !!}</label>
                                                 <input type="text" name="l1_manager_name" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="holiday_location">Holiday Location</label>
+                                                <label class="" for="holiday_location">Holiday Location{!! required() !!}</label>
                                                 <input type="text" name="holiday_location" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="officical_mail">Official E-Mail Id</label>
+                                                <label class="" for="officical_mail">Official E-Mail Id{!! required() !!}</label>
                                                 <input type="email" name="officical_mail" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="official_mobile">Official Mobile</label>
+                                                <label class="" for="official_mobile">Official Mobile{!! required() !!}</label>
                                                 <input type="number" minlength="10" maxlength="10" name="official_mobile" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="emp_notice">Employee Notice Period Days</label>
+                                                <label class="" for="emp_notice">Employee Notice Period Days{!! required() !!}</label>
                                                 <input type="number" name="emp_notice" class="onboard-form form-control" required />
                                             </div>
                                         </div>
@@ -350,23 +350,23 @@
                                     <div class="form-card">
                                         <div class="row mt-5">
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="father_name">Father Name</label>
+                                                <label class="" for="father_name">Father Name{!! required() !!}</label>
                                                 <input type="text" name="father_name" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="mother_name">Mother Name</label>
+                                                <label class="" for="mother_name">Mother Name{!! required() !!}</label>
                                                 <input type="text" name="mother_name" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="dow">Date of Wedding</label>
+                                                <label class="" for="dow">Date of Wedding<span id="dow_req">{!! required() !!}</span></label>
                                                 <input type="date" name="dow" class="onboard-form form-control spouse_data" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="spouse_name">Spouse Name</label>
+                                                <label class="" for="spouse_name">Spouse Name<span id="spouse_name_req">{!! required() !!}</span></label>
                                                 <input type="text" name="spouse_name" class="onboard-form form-control spouse_data" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="spouse_gender">Spouse Gender</label>
+                                                <label class="" for="spouse_gender">Spouse Gender<span id="spouse_gender_req">{!! required() !!}</span></label>
                                                 <select name="spouse_gender" id="spouse_gender" class="onboard-form form-control spouse_data" required >
                                                     <option value="">Select</option>
                                                     <option value="male">Male</option>
@@ -375,11 +375,11 @@
                                                 </select>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="spouse_dob">Spouse DOB</label>
+                                                <label class="" for="spouse_dob">Spouse DOB<span id="spouse_dob_req">{!! required() !!}</span></label>
                                                 <input type="date" name="spouse_dob" class="onboard-form form-control spouse_data" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="no_child">Number of Children</label>
+                                                <label class="" for="no_child">Number of Children<span id="no_child_req">{!! required() !!}</span></label>
                                                 <select name="no_child" id="no_child" class="onboard-form form-control spouse_data" required >
                                                     <option value="">Select</option>
                                                     <option value="0">0</option>
@@ -428,79 +428,79 @@
 
                                         <div class="row mt-5">
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="basic">Basic Salary</label>
+                                                <label class="" for="basic">Basic Salary{!! required() !!}</label>
                                                 <input type="number" name="basic" class="onboard-form form-control calculation_data gross_data" step="0.01" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="hra">HRA</label>
+                                                <label class="" for="hra">HRA{!! required() !!}</label>
                                                 <input type="number" name="hra" class="onboard-form form-control calculation_data gross_data" step="0.01" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="Statutory_bonus">Statutory Bonus</label>
+                                                <label class="" for="Statutory_bonus">Statutory Bonus{!! required() !!}</label>
                                                 <input type="number" name="Statutory_bonus" class="onboard-form form-control calculation_data gross_data" step="0.01" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="child_education_allowance">Child Education Allowance</label>
+                                                <label class="" for="child_education_allowance">Child Education Allowance{!! required() !!}</label>
                                                 <input type="number" name="child_education_allowance" class="onboard-form form-control calculation_data gross_data" step="0.01" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="food_coupon">Food Coupon</label>
+                                                <label class="" for="food_coupon">Food Coupon{!! required() !!}</label>
                                                 <input type="number" name="food_coupon" class="onboard-form form-control calculation_data gross_data" step="0.01" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="lta">LTA</label>
+                                                <label class="" for="lta">LTA{!! required() !!}</label>
                                                 <input type="number" name="lta" class="onboard-form form-control calculation_data gross_data" step="0.01" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="special_allowance">Special Allowance</label>
+                                                <label class="" for="special_allowance">Special Allowance{!! required() !!}</label>
                                                 <input type="number" name="special_allowance" class="onboard-form form-control calculation_data gross_data" step="0.01" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="other_allowance">Other Allowance</label>
+                                                <label class="" for="other_allowance">Other Allowance{!! required() !!}</label>
                                                 <input type="number" name="other_allowance" class="onboard-form form-control calculation_data gross_data" step="0.01" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="gross">Gross Salary</label>
+                                                <label class="" for="gross">Gross Salary{!! required() !!}</label>
                                                 <input type="number" name="gross" id="gross" class="onboard-form form-control" step="0.01" required readOnly/>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="epf_employer_contribution">EPF employer contribution</label>
+                                                <label class="" for="epf_employer_contribution">EPF employer contribution{!! required() !!}</label>
                                                 <input type="number" name="epf_employer_contribution" class="onboard-form form-control calculation_data cic_data" step="0.01" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="esic_employer_contribution">ESIC employer contribution</label>
+                                                <label class="" for="esic_employer_contribution">ESIC employer contribution{!! required() !!}</label>
                                                 <input type="number" name="esic_employer_contribution" class="onboard-form form-control calculation_data cic_data" step="0.01" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="insurance">Insurance</label>
+                                                <label class="" for="insurance">Insurance{!! required() !!}</label>
                                                 <input type="number" name="insurance" class="onboard-form form-control calculation_data cic_data" step="0.01" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="graduity">Graduity</label>
+                                                <label class="" for="graduity">Graduity{!! required() !!}</label>
                                                 <input type="number" name="graduity" class="onboard-form form-control calculation_data cic_data" step="0.01" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="cic">Cost of Company</label>
+                                                <label class="" for="cic">Cost of Company{!! required() !!}</label>
                                                 <input type="number" name="cic" id="cic" class="onboard-form form-control" step="0.01" required readOnly/>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="epf_employee">EPF Employee</label>
+                                                <label class="" for="epf_employee">EPF Employee{!! required() !!}</label>
                                                 <input type="number" name="epf_employee" class="onboard-form form-control calculation_data net_data" step="0.01" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="esic_employee">ESIC Employee</label>
+                                                <label class="" for="esic_employee">ESIC Employee{!! required() !!}</label>
                                                 <input type="number" name="esic_employee" class="onboard-form form-control calculation_data net_data" step="0.01" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="professional_tax">Professional Tax</label>
+                                                <label class="" for="professional_tax">Professional Tax{!! required() !!}</label>
                                                 <input type="number" name="professional_tax" class="onboard-form form-control calculation_data net_data" step="0.01" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="labour_welfare_fund">labour welfare fund</label>
+                                                <label class="" for="labour_welfare_fund">labour welfare fund{!! required() !!}</label>
                                                 <input type="number" name="labour_welfare_fund" class="onboard-form form-control calculation_data net_data" step="0.01" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
-                                                <label class="" for="net_income">Net Income</label>
+                                                <label class="" for="net_income">Net Income{!! required() !!}</label>
                                                 <input type="number" name="net_income" id="net_income" class="onboard-form form-control" step="0.01" required readOnly/>
                                             </div>
                                         </div>
@@ -525,19 +525,19 @@
                                                 <label for="aadhar_backend">Upload aadhar backend</label>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-3 mb-3">
-                                                <label class="" for="aadhar_card">Aadhar Card</label>
+                                                <label class="" for="aadhar_card">Aadhar Card{!! required() !!}</label>
                                                 <input type="file" accept=".doc,.docx,.pdf,image/*" name="aadhar_card" class="onboard-form form-control files" required />
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-3 mb-3" id="aadhar_card_backend_content" style="display:none;">
-                                                <label class="" for="aadhar_card_backend">Aadhar Card Backend</label>
+                                                <label class="" for="aadhar_card_backend">Aadhar Card Backend<span id="aadhar_card_backend_req">{!! required() !!}</span></label>
                                                 <input type="file" accept=".doc,.docx,.pdf,image/*" name="aadhar_card_backend" id="aadhar_card_backend" class="onboard-form form-control files" />
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-3 mb-3">
-                                                <label class="" for="pan_card">Pan Card</label>
+                                                <label class="" for="pan_card">Pan Card{!! required() !!}</label>
                                                 <input type="file" accept=".doc,.docx,.pdf,image/*" name="pan_card" class="onboard-form form-control files" required />
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-3 mb-3">
-                                                <label class="" for="passport">Passport</label>
+                                                <label class="" for="passport">Passport{!! required() !!}</label>
                                                 <input type="file" accept=".doc,.docx,.pdf,image/*" name="passport" class="onboard-form form-control files" required />
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-3 mb-3">
@@ -549,7 +549,7 @@
                                                 <input type="file" accept=".doc,.docx,.pdf,image/*" name="dl_file" class="onboard-form form-control files" />
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-3 mb-3">
-                                                <label class="" for="education_certificate">Educations Certificate</label>
+                                                <label class="" for="education_certificate">Educations Certificate{!! required() !!}</label>
                                                 <input type="file" accept=".doc,.docx,.pdf,image/*" name="education_certificate" class="onboard-form form-control files" required />
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-3 mb-3">
@@ -687,9 +687,11 @@ $('#aadhar_backend').click(function() {
     if ($('#aadhar_backend').is(':checked')) {
         $('#aadhar_card_backend_content').show();
         $('#aadhar_card_backend').attr('require', true);
+        $('#aadhar_card_backend_req').show();
     } else {
         $('#aadhar_card_backend_content').hide();
         $('#aadhar_card_backend').removeAttr('require');
+        $('#aadhar_card_backend_req').hide();
     }
 });
 
@@ -739,18 +741,22 @@ $('#pan_ack').keyup(function() {
         $('#pan_ack').removeAttr('required');
         $('#pan_no').removeAttr('disabled');
         $('#pan_no').attr('required', true);
+        $('#pan_no_req').show();
         $('#pan_no').attr('pattern', 'pan');
         $('#pan_no_label').addClass('patternErr');
         $('#pan_ack').addClass('not-required validate');
+        $('#pan_ack_req').hide();
     } else {
         $('#pan_no').removeAttr('required');
         $('#pan_no').val('');
         $('#pan_no').attr('disabled', true);
         $('#pan_no').removeAttr('pattern');
         $('#pan_ack').attr('required', true);
+        $('#pan_ack_req').show();
         $('#pan_no_label').removeClass('patternErr');
         $('#pan_no_label').hide();
         $('#pan_ack').removeClass('not-required validate');
+        $('#pan_no_req').hide();
     }
 })
 
@@ -777,6 +783,7 @@ $('#marital_status').change(function() {
             $(this).removeAttr('required');
             $(this).addClass('not-required validate');
             $('#spouse_gender').val('');
+            $('#'+name+'_req').hide();
         });
     } else {
         $.each($('.spouse_data'),function(value) {
@@ -784,6 +791,7 @@ $('#marital_status').change(function() {
             $(this).removeAttr('disabled');
             $(this).attr('required', true);
             $(this).removeClass('not-required validate');
+            $('#'+name+'_req').show();
         });
         if ($('#gender').val() == 'male') {
             $('#spouse_gender').val('female');
@@ -808,14 +816,17 @@ $('#gender').change(function() {
 $('#nationality').change(function() {
     if ($('#nationality').val() == 'indian') {
         $('#passport_no').removeAttr('required');
+        $('#passport_no_req').hide();
         if ($('#passport_no').val() == '') {
             $('.passport_no_label').hide();
         }
         $('#passport_no').addClass('not-required validate');
         $('#passport_exp').addClass('not-required validate');
         $('#passport_exp').removeAttr('required');
+        $('#passport_exp_req').hide();
         $('.passport_exp_label').hide();
         $('#aadhar').attr('required', true);
+        $('#aadhar_req').show();
         $('#aadhar').removeClass('not-required validate');
         $('#permanent_pincode').attr('type', 'number');
         $('#current_pincode').attr('type', 'number');
@@ -823,6 +834,8 @@ $('#nationality').change(function() {
         stateFunction('IN', '#current_state');
     } else {
         $('#passport_no').attr('required', true);
+        $('#passport_no_req').show();
+        $('#passport_exp_req').show();
         $('#passport_no').removeClass('not-required validate');
         $('#passport_exp').removeClass('not-required validate');
         $('#passport_exp').attr('required', true);
@@ -833,12 +846,15 @@ $('#nationality').change(function() {
         $('#permanent_pincode').attr('type', 'text');
         $('#current_pincode').attr('type', 'text');
         $('#aadhar').addClass('not-required validate');
+        $('#aadhar_req').hide();
         $('#current_district').val('AF');
         stateFunction('AF', '#current_state');
     }
 });
 
 $('#nationality').val('indian');
+$('#passport_no_req').hide();
+$('#passport_exp_req').hide();
 
 $('#current_address_copy').change(function() {
     if ($('#current_address_copy').is(':checked')) {
