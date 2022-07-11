@@ -195,6 +195,17 @@ td:last-child,
 th:last-child {
   border-radius: 0 10px 10px 0;
 }
+
+/* .text-box-td {
+    padding: 0 !important;
+} */
+
+
+.text-box {
+    width: 100%;
+    height: 100%;
+    border-bottom: 1px solid !important;
+}
 </style>
 
 @endsection
@@ -866,41 +877,41 @@ th:last-child {
                                                             <div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div>
                                                         </td>
 
-                                                        <td class="">
-                                                            <textarea name="dimension[]" id="" cols="20" rows="2"
+                                                        <td class="text-box-td p-1">
+                                                            <textarea name="dimension[]" id="" class="text-box" cols="20"
                                                                 placeholder="type here" ></textarea>
                                                         </td>
 
-                                                        <td class="">
-                                                            <textarea name="kpi[]" id="" cols="20" rows="2"
+                                                        <td class="text-box-td p-1">
+                                                            <textarea name="kpi[]" id="" class="text-box" cols="20"
                                                                 placeholder="type here"></textarea>
                                                         </td>
-                                                        <td class="">
-                                                            <textarea name="operational[]" id="" cols="20" rows="2"
+                                                        <td class="text-box-td p-1">
+                                                            <textarea name="operational[]" id="" class="text-box" cols="20"
                                                                 placeholder="type here"></textarea>
                                                         </td>
-                                                        <td class="">
-                                                            <textarea name="measure[]" id="" cols="20" rows="2"
+                                                        <td class="text-box-td p-1">
+                                                            <textarea name="measure[]" id="" class="text-box" cols="20"
                                                                 placeholder="type here"></textarea>
                                                         </td>
-                                                        <td class="">
-                                                            <textarea name="frequency[]" id="" cols="20" rows="2"
+                                                        <td class="text-box-td p-1">
+                                                            <textarea name="frequency[]" id="" class="text-box" cols="20"
                                                                 placeholder="type here"></textarea>
                                                         </td>
-                                                        <td class="">
-                                                            <textarea name="target[]" id="" cols="20" rows="2"
+                                                        <td class="text-box-td p-1">
+                                                            <textarea name="target[]" id="" class="text-box" cols="20"
                                                                 placeholder="type here"></textarea>
                                                         </td>
-                                                        <td class="">
-                                                            <textarea name="stretchTarget[]" id="" cols="10" rows="2"
+                                                        <td class="text-box-td p-1">
+                                                            <textarea name="stretchTarget[]" id="" class="text-box" cols="10"
                                                                 placeholder="type here"></textarea>
                                                         </td>
-                                                        <td class="">
-                                                            <textarea name="source[]" id="" cols="10" rows="2"
+                                                        <td class="text-box-td p-1">
+                                                            <textarea name="source[]" id="" class="text-box" cols="10"
                                                                 placeholder="type here"></textarea>
                                                         </td>
-                                                        <td class="">
-                                                            <textarea name="kpiWeightage[]" id="" cols="10" rows="2"
+                                                        <td class="text-box-td p-1">
+                                                            <textarea name="kpiWeightage[]" id="" class="text-box" cols="10"
                                                                 placeholder="type here"></textarea>
                                                         </td>
                                                     </tr>
@@ -1147,7 +1158,7 @@ $(document).ready(function(){
                 var length = 1;
                 // $.each(data,function(k, v) {
                     $.each(data[0],function(key, value) {
-                        $('.content-container').append('<tr class="addition-content cursor-pointer" id="content'+length+'"><td class=""><span  name="numbers" id="" class="tableInp" >'+length+'</span><div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div></td><td class=""><textarea name="dimension[]" id="" cols="20" rows="2" placeholder="type here">'+value[0]+'</textarea></td><td class=""><textarea name="kpi[]" id="" cols="20" rows="2" placeholder="type here">'+value[1]+'</textarea></td><td class=""><textarea name="operational[]" id="" cols="20" rows="2" placeholder="type here">'+value[2]+'</textarea></td><td class=""><textarea name="measure[]" id="" cols="20" rows="2" placeholder="type here">'+value[3]+'</textarea></td><td class=""><textarea name="frequency[]" id="" cols="20" rows="2" placeholder="type here">'+value[4]+'</textarea></td><td class=""> <textarea name="target[]" id="" cols="20" rows="2" placeholder="type here">'+value[5]+'</textarea></td><td class=""><textarea name="stretchTarget[]" id="" cols="10" rows="2" placeholder="type here">'+value[6]+'</textarea></td><td class=""><textarea name="source[]" id="" cols="10" rows="2" placeholder="type here">'+value[7]+'</textarea></td><td class=""><textarea name="kpiWeightage[]" id="" cols="10" rows="2" placeholder="type here">'+value[8]+'</textarea></td></tr>');
+                        $('.content-container').append('<tr class="addition-content cursor-pointer" id="content'+length+'"><td class="text-box-td p-1"><span  name="numbers" id="" class="tableInp" >'+length+'</span><div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div></td><td class="text-box-td p-1"><textarea name="dimension[]" id="" class="text-box" cols="20" placeholder="type here">'+value[0]+'</textarea></td><td class="text-box-td p-1"><textarea name="kpi[]" id="" class="text-box" cols="20" placeholder="type here">'+value[1]+'</textarea></td><td class="text-box-td p-1"><textarea name="operational[]" id="" class="text-box" cols="20" placeholder="type here">'+value[2]+'</textarea></td><td class="text-box-td p-1"><textarea name="measure[]" id="" class="text-box" cols="20" placeholder="type here">'+value[3]+'</textarea></td><td class="text-box-td p-1"><textarea name="frequency[]" id="" class="text-box" cols="20" placeholder="type here">'+value[4]+'</textarea></td><td class="text-box-td p-1"> <textarea name="target[]" id="" class="text-box" cols="20" placeholder="type here">'+value[5]+'</textarea></td><td class="text-box-td p-1"><textarea name="stretchTarget[]" id="" class="text-box" cols="10" placeholder="type here">'+value[6]+'</textarea></td><td class="text-box-td p-1"><textarea name="source[]" id="" class="text-box" cols="10" placeholder="type here">'+value[7]+'</textarea></td><td class="text-box-td p-1"><textarea name="kpiWeightage[]" id="" class="text-box" cols="10" placeholder="type here">'+value[8]+'</textarea></td></tr>');
                         length++;
                     });
                 // });
@@ -1247,7 +1258,7 @@ $('body').on('click', '.plus-sign', function() {
     if (id) {
         length = parseInt(id.replace('content', '')) + 1;
     }
-    $('.content-container').append('<tr class="addition-content cursor-pointer" id="content'+length+'"><td class=""><span  name="numbers" id="" class="tableInp" >'+length+'</span><div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div></td><td class=""><textarea name="dimension[]" id="" cols="20" rows="2" placeholder="type here"></textarea></td><td class=""><textarea name="kpi[]" id="" cols="20" rows="2" placeholder="type here"></textarea></td><td class=""><textarea name="operational[]" id="" cols="20" rows="2" placeholder="type here"></textarea></td><td class=""><textarea name="measure[]" id="" cols="20" rows="2" placeholder="type here"></textarea></td><td class=""><textarea name="frequency[]" id="" cols="20" rows="2" placeholder="type here"></textarea></td><td class=""> <textarea name="target[]" id="" cols="20" rows="2" placeholder="type here"></textarea></td><td class=""><textarea name="stretchTarget[]" id="" cols="10" rows="2" placeholder="type here"></textarea></td><td class=""><textarea name="source[]" id="" cols="10" rows="2" placeholder="type here"></textarea></td><td class=""><textarea name="kpiWeightage[]" id="" cols="10" rows="2" placeholder="type here"></textarea></td></tr>');
+    $('.content-container').append('<tr class="addition-content cursor-pointer" id="content'+length+'"><td class="text-box-td p-1"><span  name="numbers" id="" class="tableInp" >'+length+'</span><div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div></td><td class="text-box-td p-1"><textarea name="dimension[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="kpi[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="operational[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="measure[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="frequency[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"> <textarea name="target[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="stretchTarget[]" id="" class="text-box" cols="10" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="source[]" id="" class="text-box" cols="10" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="kpiWeightage[]" id="" class="text-box" cols="10" placeholder="type here"></textarea></td></tr>');
 });
 
 $('body').on('click', '.delete-row', function() {

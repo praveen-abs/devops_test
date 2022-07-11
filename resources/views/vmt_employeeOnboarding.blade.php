@@ -863,7 +863,7 @@ stateFunction('IN', '#permanent_state');
 
 $('#current_address_copy').change(function() {
     if ($('#current_address_copy').is(':checked')) {
-        stateFunction($('#current_district').val(), '#permanent_state');
+        stateFunction($('#current_district').val(), '#permanent_state', true);
         $('#permanent_pincode').val($('#current_pincode').val());
         $('#permanent_district').val($('#current_district').val());
         $('#permanent_state').val($('#current_state').val());
@@ -878,7 +878,8 @@ $('#current_address_copy').change(function() {
     }
 });
 
-function stateFunction(id, dataId) {
+function stateFunction(id, dataId, flag=false) {
+    var val = $('#current_state').val();
     $(dataId).empty();
     $.ajax({
         url: "{{route('state')}}", 
@@ -892,6 +893,9 @@ function stateFunction(id, dataId) {
             $.each(data,function(key,value){
                 $(dataId).append('<option value="'+value.id+'">'+value.state_name+'</option>');
             });
+            if (val && flag) {
+                $('#permanent_state').val($('#current_state').val());
+            }
         }
     });
 }
