@@ -16581,23 +16581,31 @@ select {
 /* for profile */
 
 .profile-view .profile-img-wrap {
-    height: 120px;
-    width: 120px;
+    height: 100px;
+    width: 100px;
     position: absolute;
 }
 
 .profile-img-wrap {
-    height: 120px;
-    position: absolute;
-    width: 120px;
+    height: 100px;
+    /* position: absolute; */
+    width: 100px;
     background: #ffffff;
     overflow: hidden;
 }
 
 .profile-view .profile-img-wrap img {
     border-radius: 50%;
-    height: 120px;
-    width: 120px;
+    height: 100px;
+    width: 100px;
+}
+.profile-wrapper .profile-info{
+    margin: 0px 0px 0px 30px;
+}
+.prograss-wrapper .prograss-bar{
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+/* background:#405189; */
+border-radius: 5px;
 }
 
 .profile-basic {
@@ -16626,6 +16634,7 @@ select {
 
 .personal-info li {
     margin-bottom: 10px;
+display: flex;
 }
 
 
@@ -17410,8 +17419,8 @@ p {
 
 .profile-img-wrap img {
 
-    height: 120px;
-    width: 120px;
+    height: 100px;
+    width: 100px;
 }
 
 .profile-img-wrap.edit-img {
@@ -18576,7 +18585,7 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
 
 
 
-@media (max-width: 480px) {
+@media (max-width: 480px) and (max-width: 580px) {
     [data-layout=vertical][data-sidebar-size=sm] #page-topbar {
         left: 0px;
     }
@@ -18628,6 +18637,11 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
         width: 400px;
         margin: 0px 30px;
     } */
+
+.profile-top{
+
+}
+
 }
 
 
