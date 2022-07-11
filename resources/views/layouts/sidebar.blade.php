@@ -1350,31 +1350,6 @@
 
     </div>
 
-    <div class="navbar-brand-box" style=" position:absolute;bottom:20px;width:100%;height:50px;">
-        <!-- Dark Logo-->
-        <a href="index" class="logo logo-dark">
-            <span class="logo-sm">
-                <img src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="">
-            </span>
-            <span class="logo-lg">
-                <img src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="">
-            </span>
-        </a>
-        <!-- Light Logo-->
-        <a href="index" class="logo logo-light">
-            <span class="logo-sm">
-                <img src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="">
-            </span>
-            <span class="logo-lg">
-                <img src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="">
-            </span>
-        </a>
-        <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
-            id="vertical-hover">
-            <i class="ri-record-circle-line"></i>
-        </button>
-    </div>
-
 </div>
 
 <!-- Left Sidebar End -->

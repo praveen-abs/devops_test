@@ -7,14 +7,7 @@
 
 
 <style>
-/* =======================================================================
-Template Name: Dil Hospital
-Author:  SmartEye Adminpanel
-Author URI: www.smarteyeapps.com
-Version: 1.0
-coder name:Prabin Raja
-Description: This Template is created for web template
-======================================================================= */
+
 /* ===================================== Import Less ================================== */
 @font-face {
     font-family: 'mouse-300';
@@ -529,7 +522,7 @@ background:linear-gradient(235deg,#89ff00,#060c21,#00bcd4);
                 <form action="{{ route('login') }}" method="POST">
                     <div class="login-headers text-align-left my-1 ">
                         <div class="logo-change   d-flex align-items-center justify-content-center">
-                            <img src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="">
+                            <img src="{{ URL::asset($generalInfo->logo_img) }}" alt="" class="">
                         </div>
                         <div class="login-logo  d-flex align-items-center">
                             <span class="m-0 mt-1 fw-bold log">Login <span class="mt-1 mx-1">to</span> <img
