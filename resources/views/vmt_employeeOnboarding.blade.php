@@ -559,11 +559,12 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <!-- <div class="col-6 text-left p-0"><a type="button" data="row-6" prev="row-5"
-                                                name="previous" class="previous bg-pink action-button text-center"
-                                                value="Previous"><i
-                                                    class="text-white fa fa-arrow-left mr-2"></i>Previous</a></div> -->
-                                        <div class="col-6 text-right p-0"><button type="submit"
+                                        <div class="col-6 text-left">
+                                            <!-- <a type="button" data="row-6" prev="row-5" name="previous" class="previous bg-pink action-button text-center" value="Previous">
+                                                <i class="text-white fa fa-arrow-left mr-2"></i>Previous
+                                            </a> -->
+                                        </div>
+                                        <div class="col-6 text-right"><button type="submit"
                                                 data="row-6" next="row-6" name="next"
                                                 class="bg-pink action-button  text-center" value="Submit">Submit</button>
                                         </div>
