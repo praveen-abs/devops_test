@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\VmtClientMaster;
+use App\Mail\WelcomeMail; 
 
 class VmtClientController extends Controller
 {
