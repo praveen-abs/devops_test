@@ -31,6 +31,7 @@ class CreateVmtEmployeesTable extends Migration
             $table->text("dob")->nullable();
             $table->text("father_name")->nullable();
             $table->text("pan_number")->nullable();
+            $table->text("pan_ack")->nullable();
             $table->text("aadhar_number")->nullable();
             $table->text("uan")->nullable();
             $table->text("epf_number")->nullable();

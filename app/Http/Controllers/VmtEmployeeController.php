@@ -208,13 +208,14 @@ class VmtEmployeeController extends Controller
             $newEmployee->dol   =    $row["doj"];  
             $newEmployee->location   =    $row["work_location"];  
             $newEmployee->dob   =    $row["dob"]; 
-            $newEmployee->father_name   =    $row["father_name"];  
-            $newEmployee->pan_number   =    $row["pan_no"]; 
+            $newEmployee->father_name   =  $row["father_name"];  
+            $newEmployee->pan_number   =  isset( $row["pan_no"] ) ? ($row["pan_no"]) : ""; 
+            $newEmployee->pan_ack   =    $row["pan_ack"]; 
             $newEmployee->aadhar_number = $row["aadhar"];  
             //$newEmployee->uan = $row["uan"]; 
             //$newEmployee->epf_number = $row["epf_number"];
             //$newEmployee->esic_number = $row["esic_number"];
-            //$newEmployee->marrital_status = $row["marrital_status"];
+            $newEmployee->marrital_status = $row["marital_status"];
         
             $newEmployee->mobile_number  = $row["mobile_no"]; 
             //$newEmployee->email_id   = $row["email"];
@@ -226,7 +227,7 @@ class VmtEmployeeController extends Controller
             //$newEmployee->father_age   = $row["father_age"];
             $newEmployee->mother_name   = $row["mother_name"];
             //$newEmployee->mother_age  = $row["mother_age"];
-            if ($row['gender'] <> 'single') {
+            if ($row['marital_status'] <> 'single') {
                 $newEmployee->spouse_name   = $row["spouse_name"];
                 $newEmployee->spouse_age   = $row["spouse_dob"];
                 if ($row['no_child'] > 0) {
