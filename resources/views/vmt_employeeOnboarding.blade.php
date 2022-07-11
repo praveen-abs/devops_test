@@ -856,6 +856,10 @@ $('#nationality').change(function() {
 $('#nationality').val('indian');
 $('#passport_no_req').hide();
 $('#passport_exp_req').hide();
+$('#permanent_district').val('IN');
+$('#current_district').val('IN');
+stateFunction('IN', '#current_state');
+stateFunction('IN', '#permanent_state');
 
 $('#current_address_copy').change(function() {
     if ($('#current_address_copy').is(':checked')) {
