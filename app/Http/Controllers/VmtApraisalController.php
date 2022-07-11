@@ -121,7 +121,10 @@ class VmtApraisalController extends Controller
             // ->
             // ->get();
         }
-        return view('vmt_pms_assigngoals', compact('users', 'employees','empGoals'));
+        $userCount = User::count();
+        $empCount = VmtEmployeePMSGoals::groupBy('employee_id')->count();
+        $subCount = VmtEmployeePMSGoals::groupBy('employee_id')->where('is_hr_submitted', true)->count();
+        return view('vmt_pms_assigngoals', compact('users', 'employees','empGoals','userCount','empCount','subCount'));
     }
 
     public function getL1_ManagerName()

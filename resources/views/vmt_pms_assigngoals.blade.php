@@ -225,9 +225,12 @@ th:last-child {
                         <div class="align-items-center justify-content-center row">
                             <div class="card pms-card m-0 m-3">
                                 <div class="card-body p-0">
-                                    <div class="d-flex align-items-center">
-                                        <img src="{{ URL::asset('assets/images/self_review.png') }}" alt="" class="">
-                                        <p>Self Review</p>
+                                    <div class="row mt-2">
+                                        <p class="pl-3 col-auto"><img src="{{ URL::asset('assets/images/self_review.png') }}" alt="" class=""></p>
+                                        <div class="pt-2 col">
+                                            <h4><b>-/{{$userCount}}</b></h4>
+                                            <p>Self Review</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -256,10 +259,8 @@ th:last-child {
                                     <div class="d-flex align-items-center">
                                         <img src="{{ URL::asset('/assets/images/manager_review.png')}}" class="">
                                         <p>Manager Review</p>
-
                                     </div>
                                     <!-- </div> -->
-
                                 </div>
                             </div>
                             <!-- <div class="col-md-4 col-sm-6 col-lg-3 col-xl-3 "> -->
@@ -274,18 +275,28 @@ th:last-child {
                             </div>
                             <div class="card pms-card m-0 m-3">
                                 <div class="card-body p-0">
-                                    <div class="d-flex align-items-center">
-                                        <img src="{{ URL::asset('/assets/images/employee_goals.png')}}" class="">
-                                        <p>Employee Goals</p>
+                                    <div class="row mt-2">
+                                        <p class="pl-3 col-auto"><img src="{{ URL::asset('assets/images/employee_goals.png') }}" alt="" class=""></p>
+                                        <div class="pt-2 col">
+                                            <h4><b>{{$empCount.'/'.$userCount}}</b></h4>
+                                            <p>Employee Goals</p>
+                                        </div>
                                     </div>
                                 </div>
 
                             </div>
                             <div class="card pms-card m-0 m-3">
                                 <div class="card-body p-0">
-                                    <div class="d-flex align-items-center">
+                                    <!-- <div class="d-flex align-items-center">
                                         <img src="{{ URL::asset('/assets/images/employees_assessed.png')}}" class="">
                                         <p>Employees Assessed</p>
+                                    </div> -->
+                                    <div class="row mt-2">
+                                        <p class="pl-3 col-auto"><img src="{{ URL::asset('assets/images/employees_assessed.png') }}" alt="" class=""></p>
+                                        <div class="pt-2 col">
+                                            <h4><b>{{$subCount.'/'.$userCount}}</b></h4>
+                                            <p>Employees Assessed</p>
+                                        </div>
                                     </div>
                                 </div>
 
