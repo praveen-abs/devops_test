@@ -1009,29 +1009,35 @@ tr:last-child td:last-child {
                 </tr>
             </thead>
             <tbody>
+                @foreach($vmtEmployees as $key => $employee)
                 <tr>
-                    <td> <span>1</span></td>
+                    <td> <span>{{$employee->emp_no}}</span></td>
                     <td>
                         <div class="d-flex gap-2 align-items-center">
                             <div class="flex-shrink-0">
-                                <img src="{{ URL::asset('assets/images/login_bg3.jpg') }}" alt=""
+                            @if($employee->avatar)
+                                <img src="{{ URL::asset('assets/images/') }}/{{$employee->avatar}}" alt=""
                                     class="avatar-xs rounded-circle" />
+                            @else
+                                <img src="{{ URL::asset('assets/images/vmt_user_icon.jpeg') }}" alt=""
+                                    class="avatar-xs rounded-circle" />
+                            @endif
                             </div>
                             <div class="flex-grow-1">
-                                Jordan Kennedy
+                            {{$employee->emp_name}}
                             </div>
                         </div>
                     </td>
 
-                    <td><span>Hr</span></td>
-                    <td><span>ray</span></td>
+                    <td><span>{{$employee->designation}}</span></td>
+                    <td><span>{{$employee->l1_manager_name }}</span></td>
 
-                    <td><span>ray@gmail.com</span></td>
+                    <td><span>{{$employee->email_id }}</span></td>
                     <td><span> B <sup>+</sup></span></td>
-                    <td>60%</td>
+                    <td>{{$employee->percentage}}%</td>
                     <td>
                         <div class="d-flex gap-2 align-items-center">
-                            <button class="btn border-0 outline-none bg-transparent p-0  mx-1">
+                            <button data-id="{{$key}}" class="add_goals btn border-0 outline-none bg-transparent p-0  mx-1">
                                 <i class="ri-pencil-line text-primary fw-bold"></i>
                             </button>
                             <button class="btn border-0 outline-none bg-transparent p-0  ">
@@ -1045,6 +1051,7 @@ tr:last-child td:last-child {
                         </button>
                     </td>
                 </tr>
+                @endforeach
 
             </tbody>
 
@@ -1055,6 +1062,277 @@ tr:last-child td:last-child {
 </div><!-- end row -->
 
 
+<div id="add-goals-modal" class="modal custom-modal fade show" role="dialog" aria-modal="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header p-0">
+                <div class="assign-cards-wrapper col-12 p-0">
+                    <div class="assignCards">
+                        <div class="card-header p-0 m-0">
+                            <div class="d-flex   justify-content-between align-items-center ">
+                                <div class="d-flex  align-items-center">
+                                    <span class="left fw-bold text-white pt-3 px-4 pb-4">New</span>
+                                    <h5 class="m-0 mx-3">Assign Goals</h5>
+                                </div>
+                                <!-- <div class="d-flex align-items-center mx-5">
+                                    <span class="right rounded-pill py-1 px-2 mx-2 text-white btn btn-lg" id="publish-goal" style="cursor: pointer;">Publish</span>
+                                </div> -->
+                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="assign-cards-wrapper">
+                    <div class="assignCards">
+                        <form id="goalForm">
+                            @csrf
+                            <input type="hidden" name="kpitable_id" id="kpitable_id">
+                            @if(auth()->user()->hasrole('Employee'))
+                            <input type="hidden" name="employees[]" value="{{auth()->user()->id}}" id="sel_employees">
+                            @else
+                            <input type="hidden" name="employees[]" id="sel_employees">
+                            @endif
+
+                            @if(auth()->user()->hasrole('Manager'))
+                            <input type="hidden" name="reviewer" value="{{auth()->user()->id}}" id="sel_reviewer">
+                            @elseif(auth()->user()->hasrole('Employee'))
+                            <input type="hidden" name="reviewer" value="{{$users[0]['id']}}" id="sel_reviewer">
+                            @else
+                            <input type="hidden" name="reviewer" id="sel_reviewer">
+                            @endif
+                            <input type="hidden" name="assignment_period_year" id="assignment_period_year" value="<?php echo date("Y"); ?>">
+
+                            <div class="row mt-3">
+                                <div class="col-3  mt-3 mb-3">
+                                    <div class="d-flex flex-column">
+                                        <label class="" for="calendar_type">Calendar Type</label>
+                                        <select name="calendar_type" id="calendar_type">
+                                            <option value="">Select</option>
+                                            <option name="financial_year" value="financial_year">Financial Year</option>
+                                            <option name="calendar_year" value="calendar_year">Calendar Year</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-3  mt-3 mb-3">
+                                    <div class="d-flex flex-column">
+                                        <label class="" for="year">Year</label>
+                                        <select name="year" id="year" disabled>
+                                            <option value="">Select</option>
+                                            <option value="Jan">January - <?php echo date("Y"); ?> to December - <?= date("Y")?> </option>
+                                            <option value="Apr">April - <?php echo date("Y"); ?> to March - <?= date("Y")+1?></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-3  mt-3 mb-3">
+                                    <div class="d-flex flex-column">
+                                        <label class="" for="frequency">Frequency</label>
+                                        <select name="frequency" id="frequency">
+                                            <option value="">Select</option>
+                                            <option value="monthly">Monthly</option>
+                                            <option value="quaterly">Quaterly</option>
+                                            <option value="halfYearly">Half Yearly</option>
+                                            <option value="yearly">Yearly</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-3  mt-3 mb-3">
+                                    <div class="d-flex flex-column">
+                                        <label class="" for="assignment_period_start">Assignment Period</label>
+                                        <select name="assignment_period_start" id="assignment_period_start">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-3 mt-3 mb-3">
+                                    <div class="d-flex flex-column">
+                                        <label class="" for="department">Department</label>
+                                        <select name="department" id="">
+                                            <option value="Technology">Technology</option>
+                                            <option value="Sales">Sales</option>
+                                            <option value="Auditing">Auditing</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-4  mt-3 mb-3">
+                                    @if (auth()->user()->hasrole('Manager') || auth()->user()->hasrole('Admin'))
+                                    <div class="d-flex flex-column">
+                                        <label class="" for="Assignment">Employees-02</label>
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar-group-item">
+                                            </div>
+                                            <button type="button" target="#changeEmployee" class="right btn btn-primary py-1 px-3 rounded-pill mx-3 text-white chnageButton">Edit</button>
+                                        </div>
+                                    </div>
+                                    @endif
+                                </div>
+
+                                <div class="col-4 mt-3 mb-3 d-flex ml-5">
+
+                                    <div class="d-flex flex-column">
+                                        <label class="" for="Assignment">Reviewer</label>
+                                        <div class="d-flex align-items-center">
+                                            <div class="card reviwer-cards  m-0 rounded-pill">
+                                                <div class="card-body">
+                                                    <div class="d-flex align-items-center">
+                                                        <a>
+                                                            <img src="assets/images/users/avatar-5.jpg" alt="" class="rounded-circle">
+                                                        </a>
+
+                                                        <div class=" mt-1 message-content align-items-start d-flex flex-column  mx-2">
+                                                            @if(auth()->user()->hasrole('Manager'))
+                                                            <h6 class="fw-bold m-0" id="reviewer-name">{{auth()->user()->name}}</h6>
+                                                            @elseif(auth()->user()->hasrole('Employee'))
+                                                            <h6 class="fw-bold m-0" id="reviewer-name">{{$users[0]['name']}}</h6>
+                                                            @else
+                                                            <h6 class="fw-bold m-0" id="reviewer-name">---</h6>
+                                                            @endif
+
+                                                            @if(auth()->user()->hasrole('Manager'))
+                                                            <span id="reviewer-email">{{auth()->user()->email}}</span>
+                                                            @elseif(auth()->user()->hasrole('Employee'))
+                                                            <span id="reviewer-email">{{$users[0]['email']}}</span>
+                                                            @else
+                                                            <span id="reviewer-email">---</span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @hasrole('Admin')
+                                            <button 
+                                                type="button" 
+                                                target="#createEmployee"
+                                                class="right btn btn-primary py-1 px-3 rounded-pill mx-3 text-white reviewerButton"
+                                            >
+                                                Change
+                                            </button>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="table-wrapper">
+                            <div class="row">
+                                <div class="col-6"><h5>Key focus areas</h5></div>
+                                <div class="col-6">
+                                    <form id="upload_form" enctype="multipart/form-data">
+                                        <div class="row pull-right">
+                                            @csrf
+                                            <div class="col-8">
+                                                <input type="file" name="upload_file" id="upload_file" accept=".xls,.xlsx" class="form-control" required>
+                                            </div>
+                                            <div class="col">
+                                                <button type="button" class="btn btn-primary pull-right" id="upload-goal">Upload</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="container-fluid bg-light mt-3 py-2 rounded-border d-felx align-items-center">
+                                        <h6 class="m-0">Goals / Areas of development</h6>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="container-fluid mb-1 mt-3 ">
+                                        <form id="kpiTableForm">
+                                            <div class="table-responsive">
+                                                <table class="w-100 align-middle mb-0" id="kpiTable">
+                                                    @csrf
+                                                    <thead class="text-white bg-primary thead" id="tHead">
+                                                        <tr class="text-uppercase">
+                                                            <th class="sort" data-sort="id" style="width: 2%;">#</th>
+                                                            <th class="sort" data-sort="customer_name" style="width: 8%;">Dimension</th>
+                                                            <th class="sort" data-sort="product_name" style="width: 25%;">KPI</th>
+                                                            <th class="sort" data-sort="date" style="width: 25%;">Operational Definition</th>
+                                                            <th class="sort" data-sort="amount" style="width: 25%;">Measure</th>
+                                                            <th class="sort" data-sort="payment" style="width: 10%;">Frequency</th>
+                                                            <th class="sort" data-sort="status" style="width: 20%;">Target</th>
+                                                            <th class="sort" data-sort="status" style="width: 20%;">Stretch Target</th>
+                                                            <th class="sort" data-sort="status" style="">Source</th>
+                                                            <th class="sort" data-sort="status" style="width: 10%;" width="10%">KPI Weightage ( % )</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="tbody content-container" id="tbody">
+                                                        <tr class="addition-content cursor-pointer" id="content1">
+                                                            <td class="">
+                                                                <span  name="numbers" id="" class="tableInp" >1</span>
+                                                                <div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div>
+                                                            </td>
+
+                                                            <td class="text-box-td p-1">
+                                                                <textarea name="dimension[]" id="" class="text-box" cols="20"
+                                                                    placeholder="type here" ></textarea>
+                                                            </td>
+
+                                                            <td class="text-box-td p-1">
+                                                                <textarea name="kpi[]" id="" class="text-box" cols="20"
+                                                                    placeholder="type here"></textarea>
+                                                            </td>
+                                                            <td class="text-box-td p-1">
+                                                                <textarea name="operational[]" id="" class="text-box" cols="20"
+                                                                    placeholder="type here"></textarea>
+                                                            </td>
+                                                            <td class="text-box-td p-1">
+                                                                <textarea name="measure[]" id="" class="text-box" cols="20"
+                                                                    placeholder="type here"></textarea>
+                                                            </td>
+                                                            <td class="text-box-td p-1">
+                                                                <textarea name="frequency[]" id="" class="text-box" cols="20"
+                                                                    placeholder="type here"></textarea>
+                                                            </td>
+                                                            <td class="text-box-td p-1">
+                                                                <textarea name="target[]" id="" class="text-box" cols="20"
+                                                                    placeholder="type here"></textarea>
+                                                            </td>
+                                                            <td class="text-box-td p-1">
+                                                                <textarea name="stretchTarget[]" id="" class="text-box" cols="10"
+                                                                    placeholder="type here"></textarea>
+                                                            </td>
+                                                            <td class="text-box-td p-1">
+                                                                <textarea name="source[]" id="" class="text-box" cols="10"
+                                                                    placeholder="type here"></textarea>
+                                                            </td>
+                                                            <td class="text-box-td p-1">
+                                                                <textarea name="kpiWeightage[]" id="" class="text-box" cols="10"
+                                                                    placeholder="type here"></textarea>
+                                                            </td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </form>
+                                        <div class="align-items-center justify-content-center d-flex mt-4 cursor-pointer">
+                                            <span class="plus-sign p-4"><i class="fa fa-plus f-20"></i></span>
+                                        </div>
+
+                                        <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
+                                            <button class="btn btn-primary table-btn mx-2" id="save-table">Save</button>
+                                            <button class="btn btn-primary mx-2" id="publish-goal" disabled>Publish</button>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
@@ -1078,6 +1356,20 @@ $(document).ready(function() {
             },
         });
     });
+
+    $('.add_goals').click(function() {
+        $('#add-goals-modal').modal('show');
+    });
+
+    $('body').on('click', '.plus-sign', function() {
+        var id = $('.addition-content:last').attr('id');
+        var length = 1;
+        if (id) {
+            length = parseInt(id.replace('content', '')) + 1;
+        }
+        $('.content-container').append('<tr class="addition-content cursor-pointer" id="content'+length+'"><td class="text-box-td p-1"><span  name="numbers" id="" class="tableInp" >'+length+'</span><div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div></td><td class="text-box-td p-1"><textarea name="dimension[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="kpi[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="operational[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="measure[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="frequency[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"> <textarea name="target[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="stretchTarget[]" id="" class="text-box" cols="10" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="source[]" id="" class="text-box" cols="10" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="kpiWeightage[]" id="" class="text-box" cols="10" placeholder="type here"></textarea></td></tr>');
+    });
+
 
     $('body').on('click', '.popover-close', function() {
         $("[data-toggle=popover]").popover('hide');

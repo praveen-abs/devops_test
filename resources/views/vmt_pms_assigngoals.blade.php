@@ -169,7 +169,42 @@ span .paginate_button {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-tr.selected td:before {
+table {
+    /* border-collapse: separate; */
+    /* border-radius: 10px !important; */
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px !important;
+
+}
+
+table th {
+    /* color: #4c9393; */
+    background-color: #b0bff1;
+    padding: 15px 10px !important;
+}
+
+tbody {
+    background-color: #fff;
+}
+
+tbody tr:hover {
+    background-color: #f3f3f9;
+
+}
+
+td {
+    border: solid 1px #000;
+    border-style: none solid solid none;
+    padding: 10px;
+    font-weight: 600;
+    color: #878aa5;
+
+}
+
+td .btn i {
+    font-size: 16px;
+}
+
+#empTable tr.selected td:before {
     color: #404040;
 }
 
@@ -186,13 +221,13 @@ tr.selected td:before {
 }
 
 
-td:first-child,
-th:first-child {
+#empTable td:first-child,
+#empTable th:first-child {
   border-radius: 10px 0 0 10px;
 }
 
-td:last-child,
-th:last-child {
+#empTable td:last-child,
+#empTable th:last-child {
   border-radius: 0 10px 10px 0;
 }
 
@@ -854,70 +889,72 @@ th:last-child {
                                 <div class="col-12">
                                     <div class="container-fluid mb-1 mt-3 ">
                                         <form id="kpiTableForm">
-                                            <table class="table align-middle mb-0 table-nowrap responsive table-responsive" id="kpiTable">
-                                                @csrf
-                                                <thead class="text-white bg-primary thead" id="tHead">
-                                                    <tr class="text-uppercase">
-                                                        <th class="sort" data-sort="id" style="width: 2%;">#</th>
-                                                        <th class="sort" data-sort="customer_name" style="width: 8%;">Dimension</th>
-                                                        <th class="sort" data-sort="product_name" style="width: 25%;">KPI</th>
-                                                        <th class="sort" data-sort="date" style="width: 25%;">Operational Definition</th>
-                                                        <th class="sort" data-sort="amount" style="width: 25%;">Measure</th>
-                                                        <th class="sort" data-sort="payment" style="width: 10%;">Frequency</th>
-                                                        <th class="sort" data-sort="status" style="width: 20%;">Target</th>
-                                                        <th class="sort" data-sort="status" style="width: 20%;">Stretch Target</th>
-                                                        <th class="sort" data-sort="status" style="">Source</th>
-                                                        <th class="sort" data-sort="status" style="width: 10%;" width="10%">KPI Weightage ( % )</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="tbody content-container" id="tbody">
-                                                    <tr class="addition-content cursor-pointer" id="content1">
-                                                        <td class="">
-                                                            <span  name="numbers" id="" class="tableInp" >1</span>
-                                                            <div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div>
-                                                        </td>
+                                            <div class="table-responsive">
+                                                <table class="w-100 align-middle mb-0" id="kpiTable">
+                                                    @csrf
+                                                    <thead class="text-white bg-primary thead" id="tHead">
+                                                        <tr class="text-uppercase">
+                                                            <th class="sort" data-sort="id" style="width: 2%;">#</th>
+                                                            <th class="sort" data-sort="customer_name" style="width: 8%;">Dimension</th>
+                                                            <th class="sort" data-sort="product_name" style="width: 25%;">KPI</th>
+                                                            <th class="sort" data-sort="date" style="width: 25%;">Operational Definition</th>
+                                                            <th class="sort" data-sort="amount" style="width: 25%;">Measure</th>
+                                                            <th class="sort" data-sort="payment" style="width: 10%;">Frequency</th>
+                                                            <th class="sort" data-sort="status" style="width: 20%;">Target</th>
+                                                            <th class="sort" data-sort="status" style="width: 20%;">Stretch Target</th>
+                                                            <th class="sort" data-sort="status" style="">Source</th>
+                                                            <th class="sort" data-sort="status" style="width: 10%;" width="10%">KPI Weightage ( % )</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="tbody content-container" id="tbody">
+                                                        <tr class="addition-content cursor-pointer" id="content1">
+                                                            <td class="">
+                                                                <span  name="numbers" id="" class="tableInp" >1</span>
+                                                                <div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div>
+                                                            </td>
 
-                                                        <td class="text-box-td p-1">
-                                                            <textarea name="dimension[]" id="" class="text-box" cols="20"
-                                                                placeholder="type here" ></textarea>
-                                                        </td>
+                                                            <td class="text-box-td p-1">
+                                                                <textarea name="dimension[]" id="" class="text-box" cols="20"
+                                                                    placeholder="type here" ></textarea>
+                                                            </td>
 
-                                                        <td class="text-box-td p-1">
-                                                            <textarea name="kpi[]" id="" class="text-box" cols="20"
-                                                                placeholder="type here"></textarea>
-                                                        </td>
-                                                        <td class="text-box-td p-1">
-                                                            <textarea name="operational[]" id="" class="text-box" cols="20"
-                                                                placeholder="type here"></textarea>
-                                                        </td>
-                                                        <td class="text-box-td p-1">
-                                                            <textarea name="measure[]" id="" class="text-box" cols="20"
-                                                                placeholder="type here"></textarea>
-                                                        </td>
-                                                        <td class="text-box-td p-1">
-                                                            <textarea name="frequency[]" id="" class="text-box" cols="20"
-                                                                placeholder="type here"></textarea>
-                                                        </td>
-                                                        <td class="text-box-td p-1">
-                                                            <textarea name="target[]" id="" class="text-box" cols="20"
-                                                                placeholder="type here"></textarea>
-                                                        </td>
-                                                        <td class="text-box-td p-1">
-                                                            <textarea name="stretchTarget[]" id="" class="text-box" cols="10"
-                                                                placeholder="type here"></textarea>
-                                                        </td>
-                                                        <td class="text-box-td p-1">
-                                                            <textarea name="source[]" id="" class="text-box" cols="10"
-                                                                placeholder="type here"></textarea>
-                                                        </td>
-                                                        <td class="text-box-td p-1">
-                                                            <textarea name="kpiWeightage[]" id="" class="text-box" cols="10"
-                                                                placeholder="type here"></textarea>
-                                                        </td>
-                                                    </tr>
+                                                            <td class="text-box-td p-1">
+                                                                <textarea name="kpi[]" id="" class="text-box" cols="20"
+                                                                    placeholder="type here"></textarea>
+                                                            </td>
+                                                            <td class="text-box-td p-1">
+                                                                <textarea name="operational[]" id="" class="text-box" cols="20"
+                                                                    placeholder="type here"></textarea>
+                                                            </td>
+                                                            <td class="text-box-td p-1">
+                                                                <textarea name="measure[]" id="" class="text-box" cols="20"
+                                                                    placeholder="type here"></textarea>
+                                                            </td>
+                                                            <td class="text-box-td p-1">
+                                                                <textarea name="frequency[]" id="" class="text-box" cols="20"
+                                                                    placeholder="type here"></textarea>
+                                                            </td>
+                                                            <td class="text-box-td p-1">
+                                                                <textarea name="target[]" id="" class="text-box" cols="20"
+                                                                    placeholder="type here"></textarea>
+                                                            </td>
+                                                            <td class="text-box-td p-1">
+                                                                <textarea name="stretchTarget[]" id="" class="text-box" cols="10"
+                                                                    placeholder="type here"></textarea>
+                                                            </td>
+                                                            <td class="text-box-td p-1">
+                                                                <textarea name="source[]" id="" class="text-box" cols="10"
+                                                                    placeholder="type here"></textarea>
+                                                            </td>
+                                                            <td class="text-box-td p-1">
+                                                                <textarea name="kpiWeightage[]" id="" class="text-box" cols="10"
+                                                                    placeholder="type here"></textarea>
+                                                            </td>
+                                                        </tr>
 
-                                                </tbody>
-                                            </table>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </form>
                                         <div class="align-items-center justify-content-center d-flex mt-4 cursor-pointer">
                                             <span class="plus-sign p-4"><i class="fa fa-plus f-20"></i></span>

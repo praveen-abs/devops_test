@@ -15,6 +15,7 @@ use App\Imports\VmtEmployee as VmtEmployeeImport;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtClientMaster;
 use App\Models\Compensatory;
+use App\Models\VmtEmployeePMSGoals;
 use Illuminate\Support\Facades\Hash;
 
 use App\Mail\WelcomeMail; 
@@ -55,6 +56,7 @@ class VmtEmployeeController extends Controller
                                 'vmt_employee_details.*', 
                                 'users.name as emp_name', 
                                 'users.email as email_id',
+                                'users.avatar as avatar',
                                 'vmt_employee_office_details.department',
                                 'vmt_employee_office_details.designation', 
                                 'vmt_employee_office_details.l1_manager_code',
@@ -64,8 +66,19 @@ class VmtEmployeeController extends Controller
                             ->orderBy('created_at', 'DESC')
                             ->whereNotNull('emp_no')
                             ->get();
-
-        
+        foreach($vmtEmployees as $emp) {
+            $assignedGoals  = VmtEmployeePMSGoals::where('employee_id', $emp->id)->first();
+            if ($assignedGoals) {
+                $percentArray = (json_decode($assignedGoals->hr_kpi_percentage, true));
+                if ($percentArray && count($percentArray) > 0) {
+                    $emp['percentage'] = array_sum($percentArray)/count($percentArray);
+                } else {
+                    $emp['percentage'] = 0;
+                }
+            } else {
+                $emp['percentage'] = 0;
+            }
+        }
         return view('vmt_employeeDirectory', compact('vmtEmployees'));
     }
 
