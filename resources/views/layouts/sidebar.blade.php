@@ -737,20 +737,8 @@
                     <div class="collapse menu-dropdown" id="configDrop-down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="layouts-horizontal" target="_blank"
-                                    class="nav-link">@lang('translation.horizontal')</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="layouts-detached" target="_blank"
-                                    class="nav-link">@lang('translation.detached')</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="layouts-two-column" target="_blank"
-                                    class="nav-link">@lang('translation.two-column')</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="layouts-vertical-hovered" target="_blank"
-                                    class="nav-link">@lang('translation.hovered')</a>
+                                <a href="{{url('vmt_clientOnboarding')}}" 
+                                    class="nav-link">Client Onboarding</a>
                             </li>
                         </ul>
                     </div>
