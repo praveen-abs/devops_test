@@ -34,7 +34,7 @@
                     <div class="d-flex w-50">
 
                         <div class="logo w-25 d-flex justify-content-center align-items-center">
-                        <img src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="">
+                        <img src="{{ URL::asset($generalInfo->logo_img) }}" alt="" class="">
                         </div>
                         <button type="button"
                             class="btn btn-sm px-3 fs-16 header-item vertical-menu-btn topnav-hamburger"
