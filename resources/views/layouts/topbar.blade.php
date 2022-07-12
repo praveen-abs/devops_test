@@ -15,10 +15,10 @@
 
                     <a href="index" class="logo logo-light">
                         <span class="logo-sm">
-                            <img src="{{ URL::asset('assets/images/logo-sm.png') }}" alt="" height="22">
+                        <img src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="">
                         </span>
                         <span class="logo-lg">
-                            <img src="{{ URL::asset('assets/images/logo-light.png') }}" alt="" height="17">
+                        <img src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="">
                         </span>
                     </a>
                 </div>
@@ -32,6 +32,10 @@
 
 
                     <div class="d-flex w-50">
+
+                        <div class="logo w-25 d-flex justify-content-center align-items-center">
+                        <img src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="">
+                        </div>
                         <button type="button"
                             class="btn btn-sm px-3 fs-16 header-item vertical-menu-btn topnav-hamburger"
                             id="topnav-hamburger-icon">
