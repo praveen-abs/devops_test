@@ -18578,6 +18578,20 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
 /* media query for login */
 @media only screen and (max-width: 800px) {}
 
+[data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .menu-dropdown .nav-link span {
+display: flex !important;
+margin: 0px !important;
+justify-content: flex-start;
+padding: 0px !important;
+
+}
+
+[data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .menu-dropdown .nav-link:hover span {
+    color: #1c4668;
+    
+    }
+
+
 [data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .nav-link span {
     display: none;
     /* flex-wrap: wrap; */
