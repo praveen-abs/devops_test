@@ -292,9 +292,14 @@
     }
     .fc .fc-row .fc-content-skeleton table, .fc .fc-row .fc-content-skeleton td, .fc .fc-row .fc-helper-skeleton td {
         font-weight: 700 !important;
+        text-align: center !important;
+        vertical-align: middle !important;
     }
-    .fc th.fc-widget-header {
-        padding-left: 25px !important;
+    /* .fc th.fc-widget-header {
+        text-align: right !important;
+    } */
+    .fc-ltr .fc-basic-view .fc-day-top .fc-day-number {
+        float: none !important;
     }
 </style>
 @endsection
@@ -369,12 +374,8 @@
             <div class="col-sm-4 col-md-4 mb-4 ipad-query">
                 <div class="card profile-box flex-fill" style="height:95%;border-top: 5px solid #405189;">
                     <!-- <div class="p-1 bg-primary" ></div> -->
-                    <div class="card-body d-flex justify-content-center align-items-center">
-                        <div class="profile-wrapper d-flex w-100">
-                            <div class="text-center">
-                                <h3>Happy Anniversary</h3>
-                            </div>
-                        </div>
+                    <div class="card-body p-0">
+                        <img src="{{ URL::asset('assets/images/anniversary.png') }}" alt="" class="w-100 h-100">
                     </div>
                 </div>
             </div>

@@ -17,9 +17,8 @@
     <!-- LOGO -->
     <div class="navbar-brand-box ">
         <!-- Dark Logo-->
-        <a href="index" class="logo logo-dark">
+        <!-- <a href="index" class="logo logo-dark">
             <span class="logo-sm d-flex justify-content-center align-items-center">
-                <!-- <img src="{{ URL::asset('assets/images/vasa.jpg') }}" alt="" height="22"> -->
                 <div class="image-circle d-flex justify-content-center align-items-center">
                 <img class="rounded-circle header-profile-user"
                                         src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"
@@ -37,11 +36,10 @@
                                         <span class="mt-1">{{Auth::user()->name}}</span>
                                         <span class="mt-1">UI</span>
             </span>
-        </a>
+        </a> -->
         <!-- Light Logo-->
-        <a href="index" class="logo logo-light">
+        <!-- <a href="index" class="logo logo-light">
             <span class="logo-sm d-flex justify-content-center align-items-center">
-                <!-- <img src="{{ URL::asset('assets/images/vasa.jpg') }}" alt="" height="22"> -->
                 <div class="image-circle">
                  <img class="rounded-circle header-profile-user"
                                         src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"
@@ -50,7 +48,6 @@
                                         <span class="">{{Auth::user()->name}}</span>
             </span>
             <span class="logo-lg d-flex justify-content-center align-items-center">
-                <!-- <img src="{{ URL::asset('assets/images/vasa.jpg') }}" alt="" height="80"> -->
                 <div class="image-circle">
                  <img class="rounded-circle header-profile-user"
                                         src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"
@@ -58,7 +55,7 @@
                                         </div>
                                         <span class="">{{Auth::user()->name}}</span>
             </span>
-        </a>
+        </a> -->
         <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
             id="vertical-hover">
             <i class="ri-record-circle-line"></i>
@@ -76,7 +73,7 @@
             <ul class="navbar-nav" id="navbar-nav">
                 <!-- <li class="menu-title"><span>@lang('translation.menu')</span></li> -->
                 <!-- <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarDashboards" data-bs-toggle="collapse" role="button"
+                    <a class="nav-link menu-link pt-0" href="#sidebarDashboards" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarDashboards">
                         <i class="ri-dashboard-2-line"></i> <span >@lang('translation.dashboards')</span>
                     </a>
@@ -104,7 +101,7 @@
                 <!-- end Dashboard Menu -->
                 <li class="nav-item">
                     @if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin'))
-                    <a class="nav-link menu-link" href="{{url('vmt_hr_dashboard')}}">
+                    <a class="nav-link menu-link pt-0" href="{{url('vmt_hr_dashboard')}}">
                         <i> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 18.46 18.46">
                                 <path id="bxs-dashboard"
                                     d="M5.526,14.756h6.153A1.026,1.026,0,0,0,12.7,13.73v-8.2A1.026,1.026,0,0,0,11.679,4.5H5.526A1.026,1.026,0,0,0,4.5,5.526v8.2A1.026,1.026,0,0,0,5.526,14.756ZM4.5,21.935A1.026,1.026,0,0,0,5.526,22.96h6.153A1.026,1.026,0,0,0,12.7,21.935v-4.1a1.026,1.026,0,0,0-1.026-1.026H5.526A1.026,1.026,0,0,0,4.5,17.832Zm10.256,0a1.026,1.026,0,0,0,1.026,1.026h6.153a1.026,1.026,0,0,0,1.026-1.026V14.756a1.026,1.026,0,0,0-1.026-1.026H15.781a1.026,1.026,0,0,0-1.026,1.026Zm1.026-10.256h6.153a1.026,1.026,0,0,0,1.026-1.026V5.526A1.026,1.026,0,0,0,21.935,4.5H15.781a1.026,1.026,0,0,0-1.026,1.026v5.128A1.026,1.026,0,0,0,15.781,11.679Z"
@@ -114,7 +111,7 @@
                         <span data-key="t-landing">Dashboard</span>
                     </a>
                     @else
-                    <a class="nav-link menu-link" href="{{url('index')}}">
+                    <a class="nav-link menu-link pt-0" href="{{url('index')}}">
                         <i> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 18.46 18.46">
                                 <path id="bxs-dashboard"
                                     d="M5.526,14.756h6.153A1.026,1.026,0,0,0,12.7,13.73v-8.2A1.026,1.026,0,0,0,11.679,4.5H5.526A1.026,1.026,0,0,0,4.5,5.526v8.2A1.026,1.026,0,0,0,5.526,14.756ZM4.5,21.935A1.026,1.026,0,0,0,5.526,22.96h6.153A1.026,1.026,0,0,0,12.7,21.935v-4.1a1.026,1.026,0,0,0-1.026-1.026H5.526A1.026,1.026,0,0,0,4.5,17.832Zm10.256,0a1.026,1.026,0,0,0,1.026,1.026h6.153a1.026,1.026,0,0,0,1.026-1.026V14.756a1.026,1.026,0,0,0-1.026-1.026H15.781a1.026,1.026,0,0,0-1.026,1.026Zm1.026-10.256h6.153a1.026,1.026,0,0,0,1.026-1.026V5.526A1.026,1.026,0,0,0,21.935,4.5H15.781a1.026,1.026,0,0,0-1.026,1.026v5.128A1.026,1.026,0,0,0,15.781,11.679Z"
@@ -131,7 +128,7 @@
                 <!-- Navigation Menu for attendance-->
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#attendanceDrop-Down" data-bs-toggle="collapse" role="button"
+                    <a class="nav-link menu-link pt-0" href="#attendanceDrop-Down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarRoles">
                         <i><svg xmlns="http://www.w3.org/2000/svg" width="17.48" height="23.307"
                                 viewBox="0 0 17.48 23.307">
@@ -175,7 +172,7 @@
                 <!-- Organization -->
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#orgDrop-Down" data-bs-toggle="collapse" role="button"
+                    <a class="nav-link menu-link pt-0" href="#orgDrop-Down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarRoles">
 
                         <i><svg xmlns="http://www.w3.org/2000/svg" width="22.04" height="17.142"
@@ -224,7 +221,7 @@
                 <!-- Performance -->
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#PerformanceDrop-Down" data-bs-toggle="collapse" role="button"
+                    <a class="nav-link menu-link pt-0" href="#PerformanceDrop-Down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarRoles">
 
                         <i><svg xmlns="http://www.w3.org/2000/svg" width="22.058" height="12.253"
@@ -258,7 +255,7 @@
                 <!-- team -->
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#teamDrop-Down" data-bs-toggle="collapse" role="button"
+                    <a class="nav-link menu-link pt-0" href="#teamDrop-Down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarRoles">
                         <i><svg xmlns="http://www.w3.org/2000/svg" width="22.058" height="15.44"
                                 viewBox="0 0 22.058 15.44">
@@ -310,7 +307,7 @@
                 <!-- pay roll -->
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#payRollDrop-Down" data-bs-toggle="collapse" role="button"
+                    <a class="nav-link menu-link pt-0" href="#payRollDrop-Down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarRoles">
                         <i><svg xmlns="http://www.w3.org/2000/svg" width="20.736" height="20.736"
                                 viewBox="0 0 20.736 20.736">
@@ -359,7 +356,7 @@
 
                 <!-- pay check -->
                 <li class="nav-item">
-                    <a class="nav-link menu-link" id="employeeInfo" href="#paycheckDrop-Down" data-bs-toggle="collapse"
+                    <a class="nav-link menu-link pt-0" id="employeeInfo" href="#paycheckDrop-Down" data-bs-toggle="collapse"
                         role="button" aria-expanded="false" aria-controls="sidebar360questions">
                         <i><svg xmlns="http://www.w3.org/2000/svg" width="21.946" height="17.549"
                                 viewBox="0 0 21.946 17.549">
@@ -409,7 +406,7 @@
                 </li>
                 <!-- claims -->
                 <li class="nav-item">
-                    <a class="nav-link menu-link" id="employeeInfo" href="#claimsDrop-Down" data-bs-toggle="collapse"
+                    <a class="nav-link menu-link pt-0" id="employeeInfo" href="#claimsDrop-Down" data-bs-toggle="collapse"
                         role="button" aria-expanded="false" aria-controls="sidebar360questions">
                         <i> <svg xmlns="http://www.w3.org/2000/svg" width="21.946" height="17.354"
                                 viewBox="0 0 21.946 17.354">
@@ -471,7 +468,7 @@
 
                 <!-- reports -->
                 <li class="nav-item">
-                    <a class="nav-link menu-link" id="employeeInfo" href="#reportsDrop-Down" data-bs-toggle="collapse"
+                    <a class="nav-link menu-link pt-0" id="employeeInfo" href="#reportsDrop-Down" data-bs-toggle="collapse"
                         role="button" aria-expanded="false" aria-controls="sidebar360questions">
                         <i>
                             <svg xmlns="http://www.w3.org/2000/svg" width="18.46" height="18.46"
@@ -509,7 +506,7 @@
 
                 <!-- help desk -->
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#helpDeskDrop-down" data-bs-toggle="collapse" role="button"
+                    <a class="nav-link menu-link pt-0" href="#helpDeskDrop-down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarApps">
                         <i><svg xmlns="http://www.w3.org/2000/svg" width="20.79" height="13.86"
                                 viewBox="0 0 20.79 13.86">
@@ -722,7 +719,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#configDrop-down" data-bs-toggle="collapse" role="button"
+                    <a class="nav-link menu-link pt-0" href="#configDrop-down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarLayouts">
                         <i><svg xmlns="http://www.w3.org/2000/svg" width="20.736" height="22" viewBox="0 0 20.736 22">
                                 <path id="gear-solid_1_" data-name="gear-solid (1)"
@@ -730,27 +727,13 @@
                                     transform="translate(-14.702)" fill="#686363" />
                             </svg>
                         </i>
-
-
                         <span>Configuration</span>
                     </a>
                     <div class="collapse menu-dropdown" id="configDrop-down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="layouts-horizontal" target="_blank"
-                                    class="nav-link">@lang('translation.horizontal')</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="layouts-detached" target="_blank"
-                                    class="nav-link">@lang('translation.detached')</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="layouts-two-column" target="_blank"
-                                    class="nav-link">@lang('translation.two-column')</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="layouts-vertical-hovered" target="_blank"
-                                    class="nav-link">@lang('translation.hovered')</a>
+                                <a href="" target=""
+                                    class="nav-link">Config Settings</a>
                             </li>
                         </ul>
                     </div>
@@ -758,7 +741,7 @@
 
                 <!-- exit -->
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#exitDrop-down" data-bs-toggle="collapse" role="button"
+                    <a class="nav-link menu-link pt-0" href="#exitDrop-down" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarLayouts">
                         <i><svg xmlns="http://www.w3.org/2000/svg" width="20.227" height="17.699"
                                 viewBox="0 0 20.227 17.699">
@@ -792,7 +775,7 @@
                 <!-- <li class="menu-title"><i class="ri-more-fill"></i> <span >@lang('translation.pages')</span></li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarAuth" data-bs-toggle="collapse" role="button"
+                    <a class="nav-link menu-link pt-0" href="#sidebarAuth" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarAuth">
                         <i class="ri-account-circle-line"></i> <span >@lang('translation.authentication')</span>
                     </a>
@@ -932,7 +915,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarPages" data-bs-toggle="collapse" role="button"
+                    <a class="nav-link menu-link pt-0" href="#sidebarPages" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarPages">
                         <i class="ri-pages-line"></i> <span >@lang('translation.pages')</span>
                     </a>
@@ -987,7 +970,7 @@
                     </div>
                 </li> -->
                 <!-- <li class="nav-item">
-                    <a class="nav-link menu-link" target="_blank" href="landing">
+                    <a class="nav-link menu-link pt-0" target="_blank" href="landing">
                         <i class="ri-rocket-line"></i> <span data-key="t-landing">Landing</span>
                         <span class="badge badge-pill bg-danger" >@lang('translation.new')</span>
 
@@ -997,7 +980,7 @@
                 <!-- <li class="menu-title"><i class="ri-more-fill"></i> <span >@lang('translation.components')</span></li> -->
 
                 <!-- <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarUI" data-bs-toggle="collapse" role="button"
+                    <a class="nav-link menu-link pt-0" href="#sidebarUI" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarUI">
                         <i class="ri-pencil-ruler-2-line"></i> <span >@lang('translation.base-ui')</span>
                     </a>
@@ -1089,7 +1072,7 @@
                 </li> -->
 
                 <!-- <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarAdvanceUI" data-bs-toggle="collapse" role="button"
+                    <a class="nav-link menu-link pt-0" href="#sidebarAdvanceUI" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarAdvanceUI">
                         <i class="ri-stack-line"></i> <span >@lang('translation.advance-ui')</span>
                     </a>
@@ -1127,13 +1110,13 @@
                 </li> -->
 
                 <!-- <li class="nav-item">
-                    <a class="nav-link menu-link" href="widgets">
+                    <a class="nav-link menu-link pt-0" href="widgets">
                         <i class="ri-honour-line"></i> <span >@lang('translation.widgets')</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarForms" data-bs-toggle="collapse" role="button"
+                    <a class="nav-link menu-link pt-0" href="#sidebarForms" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarForms">
                         <i class="ri-file-list-3-line"></i> <span >@lang('translation.forms')</span>
                     </a>
@@ -1180,7 +1163,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarTables" data-bs-toggle="collapse" role="button"
+                    <a class="nav-link menu-link pt-0" href="#sidebarTables" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarTables">
                         <i class="ri-layout-grid-line"></i> <span >@lang('translation.tables')</span>
                     </a>
@@ -1200,7 +1183,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarCharts" data-bs-toggle="collapse" role="button"
+                    <a class="nav-link menu-link pt-0" href="#sidebarCharts" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarCharts">
                         <i class="ri-pie-chart-line"></i> <span >@lang('translation.charts')</span>
                     </a>
@@ -1274,7 +1257,7 @@
                 </li> -->
 
                 <!-- <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarIcons" data-bs-toggle="collapse" role="button"
+                    <a class="nav-link menu-link pt-0" href="#sidebarIcons" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarIcons">
                         <i class="ri-compasses-2-line"></i> <span >@lang('translation.icons')</span>
                     </a>
@@ -1300,7 +1283,7 @@
                 </li> -->
 
                 <!-- <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarMaps" data-bs-toggle="collapse" role="button"
+                    <a class="nav-link menu-link pt-0" href="#sidebarMaps" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarMaps">
                         <i class="ri-map-pin-line"></i> <span >@lang('translation.maps')</span>
                     </a>
@@ -1326,7 +1309,7 @@
                 </li> -->
 
                 <!-- <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarMultilevel" data-bs-toggle="collapse"
+                    <a class="nav-link menu-link pt-0" href="#sidebarMultilevel" data-bs-toggle="collapse"
                         role="button" aria-expanded="false" aria-controls="sidebarMultilevel">
                         <i class="ri-share-line"></i> <span >@lang('translation.multi-level')</span>
                     </a>
