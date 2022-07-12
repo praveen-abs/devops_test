@@ -500,6 +500,10 @@ background:linear-gradient(235deg,#89ff00,#060c21,#00bcd4);
     }
 }
 
+.footer-img {
+    position: absolute;
+    bottom: 0;
+}
 
 .login-headers {}
 </style>
@@ -517,7 +521,7 @@ background:linear-gradient(235deg,#89ff00,#060c21,#00bcd4);
 ?>
 <div class="container-fluid conya">
     <div class="login-main login-bg">
-        <img src="{{ URL::asset('assets/images/login_bg3.jpg') }}" alt="" class="">
+        <img src="{{ URL::asset('assets/images/login_bg1.jpg') }}" alt="" class="">
     </div>
     <div class="row slidrow">
         <div class="sidecol col-6">
@@ -628,6 +632,9 @@ background:linear-gradient(235deg,#89ff00,#060c21,#00bcd4);
 
         </div>
 
+    </div>
+    <div class="footer-img">
+        <img src="{{ URL::asset('assets/images/footer.png') }}" alt="" class="" style="width:100%;">
     </div>
 
 </div>

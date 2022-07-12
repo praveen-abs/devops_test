@@ -1037,7 +1037,7 @@ tr:last-child td:last-child {
                     <td>{{$employee->percentage}}%</td>
                     <td>
                         <div class="d-flex gap-2 align-items-center">
-                            <button data-id="{{$key}}" class="add_goals btn border-0 outline-none bg-transparent p-0  mx-1">
+                            <button data-id="{{$employee->id}}" class="add_goals btn border-0 outline-none bg-transparent p-0  mx-1">
                                 <i class="ri-pencil-line text-primary fw-bold"></i>
                             </button>
                             <button class="btn border-0 outline-none bg-transparent p-0  ">
@@ -1089,6 +1089,7 @@ tr:last-child td:last-child {
                 <div class="assign-cards-wrapper">
                     <div class="assignCards">
                         <form id="goalForm">
+                            <input type="hidden" name="goal_id" id="goal_id">
                             @csrf
                             <input type="hidden" name="kpitable_id" id="kpitable_id">
                             @if(auth()->user()->hasrole('Employee'))
@@ -1151,7 +1152,7 @@ tr:last-child td:last-child {
                                 <div class="col-3 mt-3 mb-3">
                                     <div class="d-flex flex-column">
                                         <label class="" for="department">Department</label>
-                                        <select name="department" id="">
+                                        <select name="department" id="department">
                                             <option value="Technology">Technology</option>
                                             <option value="Sales">Sales</option>
                                             <option value="Auditing">Auditing</option>
@@ -1246,6 +1247,7 @@ tr:last-child td:last-child {
                                 <div class="col-12">
                                     <div class="container-fluid mb-1 mt-3 ">
                                         <form id="kpiTableForm">
+                                            <input type="hidden" id="kpi_table_id" name="kpi_table_id">
                                             <div class="table-responsive">
                                                 <table class="w-100 align-middle mb-0" id="kpiTable">
                                                     @csrf
@@ -1265,6 +1267,7 @@ tr:last-child td:last-child {
                                                     </thead>
                                                     <tbody class="tbody content-container" id="tbody">
                                                         <tr class="addition-content cursor-pointer" id="content1">
+                                                            <input type="hidden" name="kpi_id[]">
                                                             <td class="">
                                                                 <span  name="numbers" id="" class="tableInp" >1</span>
                                                                 <div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div>
@@ -1334,6 +1337,147 @@ tr:last-child td:last-child {
     </div>
 </div>
 
+<!-- Change Reviewr window -->
+
+<div class="modal fade" id="createEmployee" role="dialog" aria-hidden="true" style="opacity:1; display:none;">
+    <div class="modal-dialog modal-md" id="" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2">
+        <div class="modal-content">
+            <div class="modal-header py-2 bg-primary">
+
+                <div class="w-100 modal-header-content d-flex align-items-center py-2">
+                    <h5 class="modal-title text-white" id="exampleModalToggleLabel2">Change Reviewer
+                    </h5>
+                    <button 
+                        type="button" 
+                        class="btn-close btn-close-white close-reviewerButton" data-bs-dismiss="modal"
+                        aria-label="Close"
+                    >
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <form id="newQuestion" method="POST" >
+                    @csrf
+                    <label for="FormSelectDefault" class="form-label text-muted">Reviewer</label>
+                    <select class="form-select mb-3" aria-label="Default select example" name="reviewer" id="select-reviewer" >
+                        @foreach($users as $index => $user)
+                            <option value="{{$user->id}}">{{$user->name}}</option>
+                        @endforeach
+                    </select>
+                    <div class="content-footer mt-3">
+                        <div class="row">
+                            <div class="col-12 ">
+                                <div class="d-flex">
+                                    <ul class="nav nav-pills w-100 mb-4" id="pills-tab"
+                                        role="tablist">
+                                        <li class="nav-item d-flex w-100 align-items-center justify-content-end "
+                                            role="presentation">
+                                           
+                                            <button class="btn btn-primary waves-effect waves-light"
+                                                type="submit">
+                                                Save
+                                            </button>
+
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+    <!-- add employee  Modal-->
+</div>
+
+<!-- Vertically Centered -->
+<div class="modal fade" id="notificationModal" role="dialog" aria-hidden="true" style="opacity:1; display:none;">
+    <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2">
+        <div class="modal-content">
+            <div class="modal-header py-2 bg-primary">
+
+                <div class="w-100 modal-header-content d-flex align-items-center py-2">
+                    <h5 class="modal-title text-white" id="modalHeader">Success
+                    </h5>
+                    <button 
+                        type="button" 
+                        class="btn-close btn-close-white close-modal" data-bs-dismiss="modal"
+                        aria-label="Close"
+                    >
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="mt-4">
+                    <h4 class="mb-3" id="modalNot">Data Saved Successfully!</h4>
+                    <p class="text-muted mb-4" id="modalBody"> Table Saved, Please publish goals.</p>
+                    <div class="hstack gap-2 justify-content-center">
+                        <button type="button" class="btn btn-light close-modal" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Select Employees window -->
+<div class="modal fade" id="changeEmployee">
+    <div class="modal-dialog modal-md" id="" aria-hidden="true"
+        aria-labelledby="exampleModalToggleLabel2">
+
+        <div class="modal-content">
+            <div class="modal-header py-2 bg-primary">
+
+                <div class="w-100 modal-header-content d-flex align-items-center py-2">
+                    <h5 class="modal-title text-white" id="exampleModalToggleLabel2">Select Employees
+                    </h5>
+                    <button 
+                        type="button" 
+                        class="btn-close btn-close-white close-changeEmployee" data-bs-dismiss="modal"
+                        aria-label="Close"
+                    >
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body">
+
+                <form id="changeEmployeeForm" method="POST" >
+                    @csrf
+                    <label for="FormSelectDefault" class="form-label text-muted">Employees</label>
+                    <select class="form-select mb-3" aria-label="Default select example" name="employees[]" id="select-employees" multiple>
+                      
+                    </select>
+                
+                    <div class="content-footer">
+                        <div class="row">
+                            <div class="col-12 ">
+                                <div class="d-flex">
+                                    <ul class="nav nav-pills w-100 mb-4" id="pills-tab"
+                                        role="tablist">
+                                        <li class="nav-item d-flex w-100 align-items-center justify-content-end "
+                                            role="presentation">
+                                           
+                                            <button class="btn btn-primary waves-effect waves-light"
+                                                type="submit">
+                                                Save
+                                            </button>
+
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+    <!-- add employee  Modal-->
+</div>
+
 
 
 @endsection
@@ -1344,6 +1488,9 @@ tr:last-child td:last-child {
 <script src="{{ URL::asset('/assets/js/pages/dashboard-projects.init.js') }}"></script>
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
 $(document).ready(function() {
@@ -1357,8 +1504,280 @@ $(document).ready(function() {
         });
     });
 
+    $('#upload-goal').click(function() {
+        // upload a file
+        var form_data = new FormData(document.getElementById("upload_form"));
+        $.ajax({
+            type: "POST", 
+            url: "{{route('upload-file')}}", 
+            dataType : "json",
+            contentType: false,
+            processData: false,
+            data: form_data,
+            success: function(data){
+                $('.addition-content').html('');
+                var length = 1;
+                // $.each(data,function(k, v) {
+                    $.each(data[0],function(key, value) {
+                        $('.content-container').append('<tr class="addition-content cursor-pointer" id="content'+length+'"><td class="text-box-td p-1"><span  name="numbers" id="" class="tableInp" >'+length+'</span><div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div></td><td class="text-box-td p-1"><textarea name="dimension[]" id="" class="text-box" cols="20" placeholder="type here">'+value[0]+'</textarea></td><td class="text-box-td p-1"><textarea name="kpi[]" id="" class="text-box" cols="20" placeholder="type here">'+value[1]+'</textarea></td><td class="text-box-td p-1"><textarea name="operational[]" id="" class="text-box" cols="20" placeholder="type here">'+value[2]+'</textarea></td><td class="text-box-td p-1"><textarea name="measure[]" id="" class="text-box" cols="20" placeholder="type here">'+value[3]+'</textarea></td><td class="text-box-td p-1"><textarea name="frequency[]" id="" class="text-box" cols="20" placeholder="type here">'+value[4]+'</textarea></td><td class="text-box-td p-1"> <textarea name="target[]" id="" class="text-box" cols="20" placeholder="type here">'+value[5]+'</textarea></td><td class="text-box-td p-1"><textarea name="stretchTarget[]" id="" class="text-box" cols="10" placeholder="type here">'+value[6]+'</textarea></td><td class="text-box-td p-1"><textarea name="source[]" id="" class="text-box" cols="10" placeholder="type here">'+value[7]+'</textarea></td><td class="text-box-td p-1"><textarea name="kpiWeightage[]" id="" class="text-box" cols="10" placeholder="type here">'+value[8]+'</textarea></td></tr>');
+                        length++;
+                    });
+                // });
+            }
+        });
+    });
+
+    $(document).on('#select-reviewer:open', () => {
+        $('.select2-search__field').focus();
+    });
+
+    $('#calendar_type').change(function() {
+        calendar();
+    });
+
+    function calendar() {
+        if ($('#calendar_type').val() == 'financial_year') {
+            $('#year').val('Apr');
+        } else {
+            $('#year').val('Jan');
+        }
+    }
+
+    $('body').on('click', '.close-modal', function() {
+        $('#notificationModal').hide();
+        $('#notificationModal').addClass('fade');
+    });
+
+    $('#frequency').change(function() {
+        frequency();
+    });
+
+    function frequency(){
+        var data = "";
+        if ($('#frequency').val() == 'monthly') {
+            data = "<option value=''>Select</option><option value='jan'>January</option><option value='feb'>February</option><option value='mar'>March</option><option value='apr'>April</option><option value='may'>May</option><option value='june'>June</option><option value='july'>July</option><option value='aug'>August</option><option value='sept'>September</option><option value='oct'>October</option><option value='nov'>November</option><option value='dec'>December</option>";
+        } else if ($('#frequency').val() == 'quaterly') {
+            data = "<option value=''>Select</option><option value='q1'>Q1(Jan-Mar)</option><option value='q2'>Q2(Apr-June)</option><option value='q3'>Q3(July-Sept)</option><option value='q4'>Q4(Oct-Dec)</option>";
+        } else if ($('#frequency').val() == 'halfYearly') {
+            data = "<option value=''>Select</option><option value='h1'>H1(Jan-June)</option><option value='h2'>H2(July-Dec)</option>";
+        } else {
+            data = "<option value=''>Select</option><option value='yearly'>Yearly</option>";
+        }
+        $('#assignment_period_start').html(data);
+    }
+
+    $(function () {
+        $("#kpiTable").sortable({
+            items: 'tr',
+            cursor: 'pointer',
+            axis: 'y',
+            dropOnEmpty: false,
+            start: function (e, ui) {
+                ui.item.addClass("selected");
+            },
+            stop: function (e, ui) {
+                ui.item.removeClass("selected");
+                $(this).find("tr").each(function (index) {
+                    // if (index > 0) {
+                    //     $(this).find("td").eq(1).html(index);
+                    // }
+                });
+            }
+        });
+    });
+
+    $('.reviewerButton').click(function() {
+        $('#createEmployee').show();
+        $('#createEmployee').removeClass('fade');
+    });
+    $('.close-reviewerButton').click(function() {
+        $('#createEmployee').hide();
+        $('#createEmployee').addClass('fade');
+    });
+    $('.chnageButton').click(function() {
+        $('#changeEmployee').show();
+        $('#changeEmployee').removeClass('fade');
+    });
+    $('.close-changeEmployee').click(function() {
+        $('#changeEmployee').hide();
+        $('#changeEmployee').addClass('fade');
+    });
+    
+    $('#changeEmployeeForm').on('submit', function(e){
+        e.preventDefault();
+        var employeeSelected = $('#select-employees').val();
+        @if(auth()->user()->hasrole('Employee'))
+        @else
+        var employees = {!!json_encode($employees)!!};
+
+        @endif
+        var employeeArray = [];
+        $("#sel_employees").val(employeeSelected);
+
+        var imgHtml ="";
+        var count = 0;
+        $.each(employees, function(i, data){
+            console.log(data);
+            console.log('employee selected', employeeSelected);
+            if($.inArray(data.id.toString(), employeeSelected) > -1){
+                employeeArray.push(data.emp_name);
+                if (count < 4) {
+                    imgHtml = imgHtml+"<a class='avatar'><img src='assets/images/"+data.avatar+"' alt='' class='rounded-circle p-0'></a>";
+                }
+                count++;
+            }
+        });
+        if (count > 4) {
+            imgHtml = imgHtml+"<span class='img-addition' style='background-color: rgb(134, 192, 106);width: 30px;height: 30px;font-size:12px;'> +"+count-3+" </span><div class='mt-1 message-content align-items-start d-flex flex-column  mx-2'><span id='group-employee'></span></div>";
+        }
+        $('#group-employee').html(employeeArray.join());
+        $('#changeEmployee').css('display', 'none');
+        $('.avatar-group-item').html(imgHtml);
+    });
+
+    $('#newQuestion').on('submit', function(e){
+        e.preventDefault();
+        var userList = {!!json_encode($users)!!};
+        var selReviewer = $('#select-reviewer').val();
+        $("#sel_reviewer").val(selReviewer);
+
+        $.each(userList, function(i, data){
+            if(data.id == $('#select-reviewer').val()){
+                $('#reviewer-name').html(data.name);
+                $('#reviewer-email').html(data.email);
+            }
+        });
+
+        $.ajax({
+            type: "GET", 
+            url: "{{url('vmt-getAllChildEmployees')}}"+'?emp_id='+selReviewer, 
+            //data: $('#kpiTableForm').serialize(), 
+            success: function(data){
+            var optionHtml ="";
+            $.each(data, function(i, tempdata){
+                optionHtml = optionHtml+"<option value="+tempdata.id+">"+tempdata.name+"</option>";
+                //if(tempdata.id == $('#select-employees').val()){
+                //        $('#reviewer-name').html(tempdata.name);
+                //        $('#reviewer-email').html(tempdata.email);
+                //    }
+            });
+                
+            $('#select-employees').html(optionHtml);
+                        // $("#kpiTableForm :input").prop("disabled", true);
+            // $(".table-btn").prop('disabled', true);
+                console.log(data);
+                //alert("Table Saved, Please publish goals");
+            // $("#kpitable_id").val(data.table_id);
+            }
+        })
+
+
+        $('#createEmployee').css('display','none');
+    });
+    @if(auth()->user()->hasrole('Manager'))
+
+        var userid = {{auth()->user()->id}} 
+        $.ajax({
+            type: "GET", 
+            url: "{{url('vmt-getAllChildEmployees')}}"+'?emp_id='+userid, 
+            //data: $('#kpiTableForm').serialize(), 
+            success: function(data){
+            var optionHtml ="";
+            $.each(data, function(i, tempdata){
+                optionHtml = optionHtml+"<option value="+tempdata.id+">"+tempdata.name+"</option>";
+                //if(tempdata.id == $('#select-employees').val()){
+                //        $('#reviewer-name').html(tempdata.name);
+                //        $('#reviewer-email').html(tempdata.email);
+                //    }
+            });
+                
+            $('#select-employees').html(optionHtml);
+                        // $("#kpiTableForm :input").prop("disabled", true);
+            // $(".table-btn").prop('disabled', true);
+                console.log(data);
+                //alert("Table Saved, Please publish goals");
+            // $("#kpitable_id").val(data.table_id);
+            }
+        })
+
+    @endif
+
     $('.add_goals').click(function() {
+        // data poplate for edit
+        var key = $(this).attr('data-id');
+        var length = 1;
+        $.ajax({
+            type: "POST", 
+            url: "{{route('kpi-data')}}", 
+            data: {
+                id:key,
+                "_token": "{{ csrf_token() }}",
+            },
+            success: function(data){
+                var goal = data['goal'];
+                var goals = data['goals'];
+                $('#kpi_table_id').val(goals['kpi_table_id']);
+                $('#goal_id').val(goals['id']);
+                // $('#sel_employees').val();
+                $('#sel_reviewer').val(goals['reviewer_id']);
+                $('#select-reviewer').val(goals['reviewer_id']);
+                if (goals['rev'] && goals['rev']['id']) {
+                    $('#reviewer-name').val(goals['rev']['name']);
+                    $('#reviewer-email').val(goals['rev']['email']);
+                }
+                if (goals['emp'] && goals['emp']['id']) {
+                    var employeeSelected = $('#select-employees').val(goals['emp']['id']);
+                    @if(auth()->user()->hasrole('Employee'))
+                    @else
+                    var employees = {!!json_encode($employees)!!};
+
+                    @endif
+                    var employeeArray = [];
+                    $("#sel_employees").val(employeeSelected);
+
+                    var imgHtml ="";
+                    var count = 0;
+                    $.each(goals['emp'], function(i, data){
+                        if($.inArray(data.id.toString(), employeeSelected) > -1){
+                            employeeArray.push(data.emp_name);
+                            if (count < 4) {
+                                imgHtml = imgHtml+"<a class='avatar'><img src='assets/images/"+data.avatar+"' alt='' class='rounded-circle p-0'></a>";
+                            }
+                            count++;
+                        }
+                    });
+                    if (count > 4) {
+                        imgHtml = imgHtml+"<span class='img-addition' style='background-color: rgb(134, 192, 106);width: 30px;height: 30px;font-size:12px;'> +"+count-3+" </span><div class='mt-1 message-content align-items-start d-flex flex-column  mx-2'><span id='group-employee'></span></div>";
+                    }
+                    $('#group-employee').html(employeeArray.join());
+                    $('#changeEmployee').css('display', 'none');
+                    $('.avatar-group-item').html(imgHtml);
+
+                    $('#empiewer-name').val(goals['emp']['name']);
+                    $('#empiewer-email').val(goals['emp']['email']);
+                }
+                $('#calendar_type').val(goal['calendar_type']);
+                calendar();
+                $('#year').val(goal['year']);
+                $('#frequency').val(goal['frequency']);
+                frequency();
+                $('#assignment_period_start').val(goal['assignment_period_start']);
+                $('#department').val(goal['department']);
+
+                if (data) {
+                    $('.addition-content').html('');
+                }
+                $.each(data['kpi'],function(key, value) {
+                    $('.content-container').append('<tr class="addition-content cursor-pointer" id="content'+length+'"><input type="hidden" name="kpi_id[]" value="'+value['id']+'"><td class="text-box-td p-1"><span  name="numbers" id="" class="tableInp" >'+length+'</span><div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div></td><td class="text-box-td p-1"><textarea name="dimension[]" id="" class="text-box" cols="20" placeholder="type here">'+value['dimension']+'</textarea></td><td class="text-box-td p-1"><textarea name="kpi[]" id="" class="text-box" cols="20" placeholder="type here">'+value['kpi']+'</textarea></td><td class="text-box-td p-1"><textarea name="operational[]" id="" class="text-box" cols="20" placeholder="type here">'+value['operational_definition']+'</textarea></td><td class="text-box-td p-1"><textarea name="measure[]" id="" class="text-box" cols="20" placeholder="type here">'+value['measure']+'</textarea></td><td class="text-box-td p-1"><textarea name="frequency[]" id="" class="text-box" cols="20" placeholder="type here">'+value['frequency']+'</textarea></td><td class="text-box-td p-1"> <textarea name="target[]" id="" class="text-box" cols="20" placeholder="type here">'+value['target']+'</textarea></td><td class="text-box-td p-1"><textarea name="stretchTarget[]" id="" class="text-box" cols="10" placeholder="type here">'+value['stretch_target']+'</textarea></td><td class="text-box-td p-1"><textarea name="source[]" id="" class="text-box" cols="10" placeholder="type here">'+value['source']+'</textarea></td><td class="text-box-td p-1"><textarea name="kpiWeightage[]" id="" class="text-box" cols="10" placeholder="type here">'+value['kpi_weightage']+'</textarea></td></tr>');
+                    length++;
+                });
+            }
+        });
         $('#add-goals-modal').modal('show');
+    });
+    
+    $('body').on('click', '.delete-row', function() {
+        $(this).parent().parent().remove();
     });
 
     $('body').on('click', '.plus-sign', function() {
@@ -1367,7 +1786,7 @@ $(document).ready(function() {
         if (id) {
             length = parseInt(id.replace('content', '')) + 1;
         }
-        $('.content-container').append('<tr class="addition-content cursor-pointer" id="content'+length+'"><td class="text-box-td p-1"><span  name="numbers" id="" class="tableInp" >'+length+'</span><div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div></td><td class="text-box-td p-1"><textarea name="dimension[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="kpi[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="operational[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="measure[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="frequency[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"> <textarea name="target[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="stretchTarget[]" id="" class="text-box" cols="10" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="source[]" id="" class="text-box" cols="10" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="kpiWeightage[]" id="" class="text-box" cols="10" placeholder="type here"></textarea></td></tr>');
+        $('.content-container').append('<tr class="addition-content cursor-pointer" id="content'+length+'"><input type="hidden" name="kpi_id[]"><td class="text-box-td p-1"><span  name="numbers" id="" class="tableInp" >'+length+'</span><div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div></td><td class="text-box-td p-1"><textarea name="dimension[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="kpi[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="operational[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="measure[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="frequency[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"> <textarea name="target[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="stretchTarget[]" id="" class="text-box" cols="10" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="source[]" id="" class="text-box" cols="10" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="kpiWeightage[]" id="" class="text-box" cols="10" placeholder="type here"></textarea></td></tr>');
     });
 
 
@@ -1402,6 +1821,100 @@ $(document).ready(function() {
         $(event.target).blur();
         return false;
     });
+    
+    // publishing tables
+    $('body').on('click', '#save-table', function(e){
+
+        var canSaveForm = true;
+        var kpiWeightageTotal = 0;
+
+        //Validate the input fields
+        $("#kpiTableForm :input").each(function(){
+            var input = $(this);
+            //console.log("length : ");
+            if(input.attr('name') == "kpiWeightage[]")
+            {
+                kpiWeightageTotal =kpiWeightageTotal+parseInt(input.val());
+                //console.log(input.attr('name')+" , "+input.val());
+            }
+
+        if(input.val().length < 1)
+        {
+            canSaveForm = false;
+        }
+        });
+
+
+        //Validate KPI Weightage
+        if(kpiWeightageTotal != 100 )
+        {
+            canSaveForm = false;
+            alert("KPI Weightage should be exactly 100%. Please fix it");
+        }
+
+        if(canSaveForm)
+        {
+            $.ajax({
+                type: "POST", 
+                url: "{{url('vmt-pms-kpi-table/save')}}", 
+                data: $('#kpiTableForm').serialize(), 
+                success: function(data){
+
+                    $("#kpiTableForm :input").prop("disabled", true);
+                    $(".table-btn").prop('disabled', true);
+                    $('#notificationModal').show();
+
+                    // alert("Table Saved, Please publish goals");
+                    $('#modalBody').html("Table Saved, Please publish goals.");
+                    $('#notificationModal').show();
+                    $('#notificationModal').removeClass('fade');
+                    $("#kpitable_id").val(data.table_id);
+                    $('#publish-goal').removeAttr('disabled');
+                }
+            });
+        }
+        else
+        {
+            alert("Please fill all the fields");
+        }
+    })
+
+    $("#publish-goal").click(function(e){
+        e.preventDefault();
+
+        if($('#kpitable_id').val()){  
+            $.ajax({
+                type: "POST", 
+                url: "{{url('vmt-pms-assign-goals/publish')}}", 
+                data: $('#goalForm').serialize(), 
+                success: function(data){
+
+                    $("#kpiTableForm :input").prop("disabled", true);
+                    $(".table-btn").prop('disabled', true);
+
+                    @if(auth()->user()->hasrole('Employee'))
+                        $('#modalBody').html("Goals published. Email Sent to your Manager");
+                        $('#notificationModal').show();
+                        $('#notificationModal').removeClass('fade');
+                    @else
+                        $('#modalBody').html("Goals published. Email Sent to your Employees");
+                        $('#notificationModal').show();
+                        $('#notificationModal').removeClass('fade');
+                    @endif
+
+                    $("kpitable_id").val(data.table_id);
+                }
+            })
+        }else{
+            $('#modalBody').html("Please publish table first");
+            $('#modalHeader').html("Failed");
+            $('#modalNot').html("Failed to save Data");
+            $('#notificationModal').show();
+            $('#notificationModal').removeClass('fade');
+        }
+    
+    });
+
 });
 </script>
 @endsection

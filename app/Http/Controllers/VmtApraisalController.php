@@ -164,7 +164,11 @@ class VmtApraisalController extends Controller
             //dd($employeeList);
             foreach ($employeeList as $index => $value) {
                 // code...
-                $empPmsGoal = new VmtEmployeePMSGoals; 
+                if ($request->goal_id && $request->goal_id <> '' && $request->goal_id > 0) {
+                    $empPmsGoal = VmtEmployeePMSGoals::find($request->goal_id); 
+                } else {
+                    $empPmsGoal = new VmtEmployeePMSGoals; 
+                }
                 $empPmsGoal->kpi_table_id   = $request->kpitable_id;
                 $empPmsGoal->assignment_period = json_encode(['calendar_type'=>$request->calendar_type, 'year'=>$request->year, 'frequency'=>$request->frequency, 'assignment_period_start'=>$request->assignment_period_start]);
                 //$empPmsGoal->assignment_period_start = $request->assignment_period_start;
@@ -227,7 +231,11 @@ class VmtApraisalController extends Controller
             $kpiRows = [];
             for ($i=0; $i < $totRows; $i++) { 
                 // code...
-                $kpiRow = new VmtAppraisalQuestion;
+                if ($request->kpi_id && $request->kpi_id[$i] <> '' && $request->kpi_id[$i] > 0) {
+                    $kpiRow = VmtAppraisalQuestion::find($request->kpi_id[$i]);
+                } else {
+                    $kpiRow = new VmtAppraisalQuestion;
+                }
                 //$inputArry[] = $request->dimension[$i];
 
                 $kpiRow->dimension   =    $request->dimension[$i]; 
@@ -245,7 +253,11 @@ class VmtApraisalController extends Controller
                 $kpiRows[] = $kpiRow->id; 
             } 
             if(count($kpiRows) > 0){
-                $kpiTable  = new VmtKPITable; 
+                if ($request->kpi_table_id && $request->kpi_table_id <> '' && $request->kpi_table_id > 0) {
+                    $kpiTable  = VmtKPITable::find($request->kpi_table_id); 
+                } else {
+                    $kpiTable  = new VmtKPITable; 
+                }
                 $kpiTable->kpi_rows        =    implode(',', $kpiRows);
                 $kpiTable->author_id       =    auth::user()->id; 
                 $kpiTable->author_name     =    auth::user()->name;  

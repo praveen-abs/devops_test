@@ -11,11 +11,13 @@ use App\Models\Countries;
 use App\Models\State;
 use App\Models\Bank;
 use App\Imports\VmtEmployeeManagerImport;
+use Illuminate\Support\Facades\Auth;
 use App\Imports\VmtEmployee as VmtEmployeeImport;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtClientMaster;
 use App\Models\Compensatory;
 use App\Models\VmtEmployeePMSGoals;
+use App\Models\VmtAppraisalQuestion;
 use Illuminate\Support\Facades\Hash;
 
 use App\Mail\WelcomeMail; 
@@ -48,6 +50,20 @@ class VmtEmployeeController extends Controller
         return response()->json($state);
     }
 
+    public function showKpiData(Request $request) {
+        $goals = VmtEmployeePMSGoals::where('employee_id', $request->id)->Join('vmt_kpi_table', 'vmt_kpi_table.id', '=', 'vmt_employee_pms_goals_table.kpi_table_id')->first();
+        $kpi = VmtAppraisalQuestion::whereIn('id', explode(',', $goals->kpi_rows))->get();
+        $data['kpi'] = $kpi;
+        $data['goals'] = $goals;
+        $data['rev'] = [];
+        $data['emp'] = [];
+        if ($goals) {
+            $data['rev'] = User::where('id', explode(',',$goals->reviewer_id))->first();
+            $data['emp'] = VmtEmployee::where('id', explode(',',$goals->employee_id))->first();
+        }
+        $data['goal'] = json_decode($goals->assignment_period, true);
+        return response()->json($data);
+    }
     //
     public function showEmployeeDirectory(Request $request){
         $vmtEmployees = VmtEmployee::leftJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
@@ -79,7 +95,34 @@ class VmtEmployeeController extends Controller
                 $emp['percentage'] = 0;
             }
         }
-        return view('vmt_employeeDirectory', compact('vmtEmployees'));
+        $employees = VmtEmployee::leftJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
+        ->select(
+            'vmt_employee_details.*', 
+            'users.name as emp_name', 
+            'users.avatar as avatar', 
+        )
+        ->orderBy('created_at', 'ASC')
+        ->whereNotNull('emp_no')
+        ->get();
+        if (auth()->user()->hasrole('Employee')) {
+            $emp = VmtEmployee::join('vmt_employee_office_details',  'user_id', '=', 'vmt_employee_details.userid')->where('userid', auth()->user()->id)->first();
+            $rev = VmtEmployee::where('emp_no', $emp->l1_manager_code)->first();
+            $users = User::where('id', $rev->userid)->get();
+        } elseif (auth()->user()->hasrole('Manager')) {
+            $users = User::join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.reviewer_id', '=', 'users.id')->get();
+        } else {
+            $currentEmpCode = VmtEmployee::where('userid', auth::user()->id)->first()->value('emp_no');
+            $users = VmtEmployeeOfficeDetails::leftJoin('users', 'users.id', '=', 'vmt_employee_office_details.user_id')
+            ->select(
+                'users.name', 
+                'users.id as id',
+                'vmt_employee_office_details.officical_mail as email',
+            )
+            ->orderBy('users.name', 'ASC')
+            ->where('l1_manager_code', strval($currentEmpCode))
+            ->get();
+        }
+        return view('vmt_employeeDirectory', compact('vmtEmployees', 'users', 'employees'));
     }
 
     //
