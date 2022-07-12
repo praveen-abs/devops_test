@@ -9,6 +9,8 @@ use Dompdf\Options;
 use Dompdf\Dompdf;
 use PDF;
 
+use Illuminate\Support\Facades\DB;
+
 
 class VmtPaySlipController extends Controller
 {
@@ -34,8 +36,17 @@ class VmtPaySlipController extends Controller
         return view('vmt_employee_pay_slip', compact('employees'));  
     }
 
+    /*
+        Fetch payslips for currently logged in user
+
+    */
     public function paySlipIndex(Request $request) {
-        $data = VmtEmployeePaySlip::all(); 
+       // $data = VmtEmployeePaySlip::all(); 
+       $data =  DB::table('vmt_employee_payslip')
+         ->join('vmt_employee_details', 'vmt_employee_payslip.id', '=', 'vmt_employee_details.userid')
+         ->join('users', 'users.id', '=', 'vmt_employee_details.userid')
+        ->where('vmt_employee_payslip.user_id', auth()->user()->id)
+        ->get();
         return view('vmt_salary_details', compact('data'));  
     }
 
