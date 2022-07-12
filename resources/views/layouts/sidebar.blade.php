@@ -18,24 +18,45 @@
     <div class="navbar-brand-box ">
         <!-- Dark Logo-->
         <a href="index" class="logo logo-dark">
-            <span class="logo-sm">
+            <span class="logo-sm d-flex justify-content-center align-items-center">
                 <!-- <img src="{{ URL::asset('assets/images/vasa.jpg') }}" alt="" height="22"> -->
-                <img src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="">
+                <div class="image-circle d-flex justify-content-center align-items-center">
+                <img class="rounded-circle header-profile-user"
+                                        src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"
+                                        alt="Header Avatar">
+                                        </div>
+                                        <span class="">{{Auth::user()->name}}</span>
+                
             </span>
-            <span class="logo-lg">
-                <!-- <img src="{{ URL::asset('assets/images/vasa.jpg') }}" alt="" height="80"> -->
-                <img src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="">
+            <span class="logo-lg d-flex justify-content-center align-items-center flex-column">
+                <div class="image-circle d-flex justify-content-center align-items-center">
+                <img class="rounded-circle header-profile-user"
+                                        src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"
+                                        alt="Header Avatar">
+                                        </div>
+                                        <span class="mt-1">{{Auth::user()->name}}</span>
+                                        <span class="mt-1">UI</span>
             </span>
         </a>
         <!-- Light Logo-->
         <a href="index" class="logo logo-light">
-            <span class="logo-sm">
+            <span class="logo-sm d-flex justify-content-center align-items-center">
                 <!-- <img src="{{ URL::asset('assets/images/vasa.jpg') }}" alt="" height="22"> -->
-                <img src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="">
+                <div class="image-circle">
+                 <img class="rounded-circle header-profile-user"
+                                        src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"
+                                        alt="Header Avatar">
+                                        </div> 
+                                        <span class="">{{Auth::user()->name}}</span>
             </span>
-            <span class="logo-lg">
+            <span class="logo-lg d-flex justify-content-center align-items-center">
                 <!-- <img src="{{ URL::asset('assets/images/vasa.jpg') }}" alt="" height="80"> -->
-                <img src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="">
+                <div class="image-circle">
+                 <img class="rounded-circle header-profile-user"
+                                        src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"
+                                        alt="Header Avatar">
+                                        </div>
+                                        <span class="">{{Auth::user()->name}}</span>
             </span>
         </a>
         <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
@@ -43,7 +64,8 @@
             <i class="ri-record-circle-line"></i>
         </button>
 
-        <hr class="">
+        
+
     </div>
 
     <div id="scrollbar">
@@ -1348,6 +1370,31 @@
         </div>
         <!-- Sidebar -->
 
+    </div>
+
+    <div class="navbar-brand-box" style=" position:absolute;bottom:20px;width:100%;height:50px;">
+        <!-- Dark Logo-->
+        <!-- <a href="index" class="logo logo-dark">
+            <span class="logo-sm">
+                <img src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="">
+            </span>
+            <span class="logo-lg">
+                <img src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="">
+            </span>
+        </a> -->
+        <!-- Light Logo-->
+        <a href="index" class="logo logo-light">
+            <span class="logo-sm">
+                <img src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="">
+            </span>
+            <span class="logo-lg">
+                <img src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="">
+            </span>
+        </a>
+        <!-- <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
+            id="vertical-hover">
+            <i class="ri-record-circle-line"></i>
+        </button> -->
     </div>
 
 </div>
