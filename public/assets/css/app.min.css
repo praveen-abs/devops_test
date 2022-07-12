@@ -5564,15 +5564,15 @@ strong {
 }
 
 .alert-outline.alert-primary {
-    color: #405189
+    color: #405189;
 }
 
 .alert-border-left.alert-primary {
-    border-left-color: #405189
+    border-left-color: #405189;
 }
 
 .alert-top-border.alert-primary {
-    border-top-color: #405189
+    border-top-color: #405189;
 }
 
 .label-arrow.alert-primary .label-icon,
@@ -16636,10 +16636,15 @@ select {
     margin: 0px 0px 0px 30px;
 }
 
-.prograss-wrapper .prograss-bar {
+.progress-wrapper .progress-bar-content {
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     /* background:#405189; */
+
     border-radius: 5px;
+}
+.progress-bar-content .progress-bar{
+    background-color: #e63b1f !important;
+    
 }
 
 .profile-basic {
@@ -16678,6 +16683,8 @@ select {
     display: block;
     font-weight: 600;
     overflow: hidden;
+    text-align: start;
+    width: 50%;
 }
 
 .personal-info li .text a {
@@ -16716,9 +16723,10 @@ select {
 }
 
 .edit-icon {
-    background-color: #eeeeee;
-    border: 1px solid #e3e3e3;
-    color: #bbb;
+    box-shadow: rgb(0 0 0 / 15%) 0px 2px 8px;
+    background-color: #ffffff;
+    border: 1px solid #ffffff;
+    color: #e63b1f;
     float: right;
     font-size: 12px;
     line-height: 24px;
@@ -16842,12 +16850,12 @@ select {
     float: left;
     font-weight: 800;
     margin-right: 30px;
-    width: 25%;
+    width: 50%;
 }
 
 #bank_statutory .card .card-title,
 .pro-overview .card .card-title {
-    color: #1f1f1f;
+    color: #405189;
     font-size: 20px;
     font-weight: 500;
     margin-bottom: 20px;
@@ -18628,7 +18636,9 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
 }
 
 .user-details-wrapper .profile-box {
-    border-top: 5px solid #405189;
+    border-top: 10px solid #405189;
+border-radius: 10px;
+box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 
 

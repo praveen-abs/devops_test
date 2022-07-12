@@ -10,16 +10,18 @@
             <div class="pro-overview">
                 <div class="row">
 
-                    <div class="col-md-4 col-xl-4 col-lg-4 col-sm-12">
+                    <div class="col-md-4 col-xl-4 col-lg-4 col-sm-12 d-flex">
                         <div class="card profile-box flex-fill ">
                             <div class="card-body">
 
                                 <div class="profile-wrapper d-flex w-100">
                                     <div class="profile-img-wrap mx-1">
                                         <div class="profile-img">
-                                            <a href="#"> <img class="rounded-circle header-profile-user"
-                                                    src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"
-                                                    alt="Header Avatar"></a>
+                                            <!-- <a href="#"> <img class="rounded-circle header-profile-user"
+                                                    src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/user-profile-img.jpg') }}@endif"
+                                                    alt="Header Avatar"></a> -->
+                                            <img src="{{ URL::asset('assets/images/user-profile-img.jpg') }}" alt=""
+                                                class=" w-100 soc-det-img ">
                                         </div>
                                     </div>
                                     <div class="profile-info w-75 ">
@@ -44,7 +46,7 @@
                                     <div class="small fw-bold text-muted">Date of Join :
                                         {{date('d-m-Y', strtotime($details->doj))}}</div> -->
 
-                                    <div class="prograss-wrapper">
+                                    <div class="progress-wrapper">
 
                                         <div class="mb-2 d-flex -justify-content-between w-100">
                                             <p class="text-muted fw-bold">Profile Percentage</p>
@@ -55,7 +57,7 @@
                                         <div class="">
 
                                         </div>
-                                        <div class="progress prograss-bar mb-4">
+                                        <div class="progress progress-bar-content mb-4">
                                             <div class="progress-bar" role="progressbar" style="width: 75%"
                                                 aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
@@ -70,7 +72,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 col-xl-4 col-lg-4 col-sm-12">
+                    <div class="col-md-4 col-xl-4 col-lg-4 col-sm-12 d-flex">
 
                         <div class="card profile-box  flex-fill">
                             <div class="card-body">
@@ -105,9 +107,11 @@
                                         <div class="text">
                                             <div class="avatar-box">
                                                 <div class="avatar avatar-xs">
-                                                    <img class="rounded-circle header-profile-user"
+                                                    <!-- <img class="rounded-circle header-profile-user"
                                                         src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"
-                                                        alt="Header Avatar">
+                                                        alt="Header Avatar"> -->
+                                                    <img src="{{ URL::asset('assets/images/user-profile-img.jpg') }}"
+                                                        alt="" class=" w-100 h-100 soc-det-img ">
                                                 </div>
                                             </div>
                                             <a href="profile.html">
@@ -124,7 +128,11 @@
                     <div class="col-md-4 col-xl-4 col-lg-4 col-sm-12 d-flex">
                         <div class="card profile-box flex-fill">
                             <div class="card-body">
-                                <h3 class="card-title fw-bold">Bank information</h3>
+                                <h3 class="card-title fw-bold">Bank information
+                                    <span class="personal-edit"><a href="#" class="edit-icon" data-bs-toggle="modal"
+                                            data-bs-target="#personal_info"><i class="ri-pencil-fill"></i></a></span>
+
+                                </h3>
                                 <ul class="personal-info">
                                     <li>
                                         <div class="title">Bank name</div>
@@ -154,7 +162,7 @@
     <!-- -------- -->
     <div id="emp_profile" class="pro-overview">
         <div class="row">
-            <div class="col-md-6s col-lg-6 col-xl-6  col-sm-12 d-flex">
+            <div class="col-md-4 col-xl-4 col-lg-4 col-sm-12 d-flex">
                 <div class="card profile-box flex-fill ">
                     <div class="card-body">
                         <h3 class="card-title fw-bold">Emergency Contact <a href="#" class="edit-icon"
@@ -206,7 +214,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-6 col-xl-6  col-sm-12 d-flex">
+            <div class="col-md-4 col-xl-4 col-lg-4 col-sm-12 d-flex">
                 <div class="card profile-box flex-fill">
                     <div class="card-body">
                         <h3 class="card-title fw-bold">Personal Informations
@@ -250,14 +258,8 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-
-    <div id="emp_profile" class="pro-overview">
-        <div class="row">
-            <!-- ----------- -->
-            <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 d-flex">
+            <div class="col-md-4 col-xl-4 col-lg-4 col-sm-12 d-flex">
                 <div class="card profile-box flex-fill">
                     <div class="card-body">
                         <h3 class="card-title fw-bold">Family Informations <a href="#" class="edit-icon"
@@ -303,6 +305,14 @@
                 </div>
 
             </div>
+        </div>
+    </div>
+
+
+    <div id="emp_profile" class="pro-overview">
+        <div class="row">
+            <!-- ----------- -->
+
         </div>
     </div>
 
