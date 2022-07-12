@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/fontawesome.css') }}">
     <!--Animate CSS-->
     <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/chartist.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('/assets/css/app.min.css') }}">
     <!--Map-->
     <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/jquery-jvectormap-2.0.2.css') }}">
 
@@ -49,7 +50,7 @@
     .switch-checkbox {
         position: relative;
         display: inline-block;
-        width: 105px;
+        width: 115px;
         height: 28px;
     }
         
@@ -76,7 +77,7 @@
         bottom: 0;
         border-radius: 20px;
         background-color: lightgreen;
-        width:100px;
+        width:110px;
         -webkit-transition: .4s;
         transition: .4s;
     }
@@ -96,6 +97,25 @@
         font-size: 19px;
         font-family: FontAwesome !important;
         padding: 3px 0px 0px 4px;
+    }
+    
+    input:checked + .slider-checkbox>.slider-checkbox-text {
+        left:3px
+    }
+
+    input:checked + .slider-checkbox {
+        background-color: lawngreen;
+    }
+        
+    input:focus + .slider-checkbox {
+        box-shadow: 0 0 1px lawngreen;
+    }
+
+    input:checked + .slider-checkbox:before {
+        -webkit-transform: translateX(65px);
+        -ms-transform: translateX(65px);
+        transform: translateX(65px);
+        left: 18px;
     }
 
     .fc-scroller {
@@ -175,67 +195,107 @@
 
 
     
-.sub-topnav.nav {
-    background-color: #fff;
-    min-height: 40px;
-}
+    .sub-topnav.nav {
+        background-color: #fff;
+        min-height: 40px;
+    }
 
-.sub-topnav.nav {
-    background-color: #fff;
-    border-bottom: 1px solid #a2a9b4;
-    min-height: 40px;
-}
+    .sub-topnav.nav {
+        background-color: #fff;
+        border-bottom: 1px solid #a2a9b4;
+        min-height: 40px;
+    }
 
-.nav {
-    display: flex;
-    flex-wrap: wrap;
-    padding-left: 0;
-    margin-bottom: 0;
-    list-style: none;
-}
+    .nav {
+        display: flex;
+        flex-wrap: wrap;
+        padding-left: 0;
+        margin-bottom: 0;
+        list-style: none;
+    }
 
-.px-20 {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-}
+    .px-20 {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
 
-.sub-topnav.nav li {
-    position: relative;
-    padding-left: 12px !important;
-    padding-right: 8px !important;
-    padding-top: 8px !important;
-    padding-bottom: 8px !important;
-}
+    .sub-topnav.nav li {
+        position: relative;
+        padding-left: 12px !important;
+        padding-right: 8px !important;
+        padding-top: 8px !important;
+        padding-bottom: 8px !important;
+    }
 
-.sub-topnav.nav li a:after {
-    position: absolute;
-    -webkit-transition: width .5s ease-in-out,left .2s ease-in-out;
-    content: "";
-    width: 0;
-    left: 55%;
-}
+    .sub-topnav.nav li a:after {
+        position: absolute;
+        -webkit-transition: width .5s ease-in-out,left .2s ease-in-out;
+        content: "";
+        width: 0;
+        left: 55%;
+    }
 
-.sub-topnav.nav li.active a:after {
-    border-top: 5px solid #f06548;
-    bottom: -9px;
-    width: 88%;
-    left: 6%;
-}
+    .sub-topnav.nav li.active a:after {
+        border-top: 5px solid #f06548;
+        bottom: -9px;
+        width: 88%;
+        left: 6%;
+    }
 
-.emp-job {
-    display: none;
-}
+    .emp-job {
+        display: none;
+    }
 
-.p-16 {
-    padding: 16px;
-}
+    .p-16 {
+        padding: 16px;
+    }
 
-.mb-16, .my-16 {
-    margin-bottom: 16px!important;
-}
+    .mb-16, .my-16 {
+        margin-bottom: 16px!important;
+    }
 
+    /* calendar */
+    .fc-widget-content {
+        border: none !important;
+    }
 
+    .fc th.fc-widget-header {
+        background: white !important;
+        border: none !important;
+    }
 
+    .fc-button {
+        border: none !important;
+    }
+    .fc-icon-right-single-arrow:after {
+        display:none !important;
+    }
+
+    .fc-icon-left-single-arrow:after {
+        display: none !important;
+    }
+
+    .fc-prev-button:before {
+        color: black;
+        font-size:300% !important;
+    }
+
+    .fc-next-button:before {
+        color: black;
+        font-size:300% !important;
+    }
+    .fc-head-container {
+        border: none !important;
+    }
+    .fc-left h2 {
+        font-weight: 700 !important;
+    }
+    .fc .fc-row .fc-content-skeleton table, .fc .fc-row .fc-content-skeleton td, .fc .fc-row .fc-helper-skeleton td {
+        font-weight: 700 !important;
+    }
+    .fc th.fc-widget-header {
+        padding-left: 25px !important;
+    }
 </style>
 @endsection
 @section('content')
@@ -249,7 +309,7 @@
    <!-- Content Row -->
        <div class="row">
             <div class="col-sm-4 col-md-4 mb-4 ipad-query">
-                <div class="card shadow mb-4" style="height:95%;">
+                <div class="card profile-box flex-fill" style="height:95%;">
                     <div class="row pl-2 pr-2 media-query" style="height:100%;">
                         <div class="col-sm-12 col-md-12">
                             <div class="row mt-2">
@@ -262,14 +322,14 @@
                             <div class="d-flex align-items-center mt-4">
                                 <h6 class="f-15 mr-1"><span><i class="fa fa-sun mr-1"></i>General shift</span></h6>
                                 <h6 class="f-15 m-0"><span><label class="switch-checkbox"> <input type="checkbox"> <span class="slider-checkbox round"><span class="slider-checkbox-text">Check in</span></span> </label></span></h6>
-                                <h6 class="f-15 m-0"><span><label class="switch-checkbox"> <input type="checkbox"> <span class="slider-checkbox round"><span class="slider-checkbox-text">Check in</span></span> </label></span></h6>
+                                <h6 class="f-15 m-0"><span><label class="switch-checkbox"> <input type="checkbox"> <span class="slider-checkbox round"><span class="slider-checkbox-text">Check out</span></span> </label></span></h6>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-sm-4 col-md-4 mb-4 ipad-query">
-                <div class="card shadow mb-4" style="height:95%;">
+                <div class="card profile-box flex-fill" style="height:95%;">
                     <div class="card-header py-3">
                         <h5 class="m-0 text-center text-primary"><b>My Actions</b></h5>
                     </div>
@@ -303,27 +363,17 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="mt-2">
-                            <div class="bg-box-color-success p-1">
-                                <div class="row pl-2 mt-2" style="justify-content:space-between;width:100%">
-                                    <div class="d-flex col" style="width:80%;">
-                                        <h6 class="mr-1 f-13"><b>4 July 2022</b></h6>
-                                        <span class="">
-                                            <p class="text-muted f-13"><b class="mr-1">checkin</b>and<b class="ml-1 mr-1">checkOut</b>successfully</p>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-sm-4 col-md-4 mb-4 ipad-query">
-                <div class="card shadow mb-4" style="height:95%;">
-                    <div class="p-1 bg-primary" ></div>
+                <div class="card profile-box flex-fill" style="height:95%;border-top: 5px solid #405189;">
+                    <!-- <div class="p-1 bg-primary" ></div> -->
                     <div class="card-body d-flex justify-content-center align-items-center">
-                        <div class="text-center">
-                            <h3>Happy Anniversary</h3>
+                        <div class="profile-wrapper d-flex w-100">
+                            <div class="text-center">
+                                <h3>Happy Anniversary</h3>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -333,9 +383,8 @@
             <div class="col-sm-8 col-md-8 mb-4 ipad-query"> 
                 <div class="row">
                     <div class="col-sm-4 col-md-4 mb-1">
-                        <div class="card shadow mb-1" style="height:95%;">
-                            <div class="p-1 bg-primary" >
-                            </div>
+                        <div class="card shadow mb-1" style="height:75%;border-top: 5px solid #405189;">
+                            <!-- <div class="p-1 bg-primary" > -->
                             <div class="card-body d-flex justify-content-center align-items-center">
                                 <div class="text-center">
                                     <h4>New Employees</h4>
@@ -345,9 +394,8 @@
                         </div>
                     </div>   
                     <div class="col-sm-4 col-md-4 mb-1">
-                        <div class="card shadow mb-1" style="height:95%;">
-                            <div class="p-1 bg-primary" >
-                            </div>
+                        <div class="card shadow mb-1" style="height:75%;border-top: 5px solid #405189;">
+                            <!-- <div class="p-1 bg-primary" > -->
                             <div class="card-body d-flex justify-content-center align-items-center">
                                 <div class="text-center">
                                     <h4>Total Employees</h4>
@@ -357,9 +405,8 @@
                         </div>
                     </div>
                     <div class="col-sm-2 col-md-2 mb-1">
-                        <div class="card shadow mb-1" style="height:95%;">
-                            <div class="p-1 bg-danger" >
-                            </div>
+                        <div class="card shadow mb-1" style="height:75%;border-top: 5px solid #405189;">
+                            <!-- <div class="p-1 bg-danger" > -->
                             <div class="card-body d-flex justify-content-center align-items-center">
                                 <div class="text-center">
                                     <h4>Online</h4>
@@ -368,9 +415,8 @@
                         </div>
                     </div>
                     <div class="col-sm-2 col-md-2 mb-1">
-                        <div class="card shadow mb-1" style="height:95%;">
-                            <div class="p-1 bg-primary" >
-                            </div>
+                        <div class="card shadow mb-1" style="height:75%;border-top: 5px solid #405189;">
+                            <!-- <div class="p-1 bg-primary" > -->
                             <div class="card-body d-flex justify-content-center align-items-center">
                                 <div class="text-center">
                                     <h4>Offline</h4>
@@ -379,9 +425,8 @@
                         </div>
                     </div>
                     <div class="col-sm-4 col-md-4 mb-1">
-                        <div class="card shadow mb-1" style="height:95%;">
-                            <div class="p-1 bg-primary" >
-                            </div>
+                        <div class="card shadow mb-1" style="height:75%;border-top: 5px solid #405189;">
+                            <!-- <div class="p-1 bg-primary" > -->
                             <div class="card-body d-flex justify-content-center align-items-center">
                                 <div class="text-center">
                                     <h4>Employees on Leave</h4>
@@ -391,9 +436,8 @@
                         </div>
                     </div>
                     <div class="col-sm-4 col-md-4 mb-1">
-                        <div class="card shadow mb-1" style="height:95%;">
-                            <div class="p-1 bg-primary" >
-                            </div>
+                        <div class="card shadow mb-1" style="height:75%;border-top: 5px solid #405189;">
+                            <!-- <div class="p-1 bg-primary" > -->
                             <div class="card-body d-flex justify-content-center align-items-center">
                                 <div class="text-center">
                                     <h4>Future Joiners</h4>
@@ -403,9 +447,8 @@
                         </div>
                     </div>
                     <div class="col-sm-4 col-md-4 mb-1">
-                        <div class="card shadow mb-1" style="height:95%;">
-                            <div class="p-1 bg-primary" >
-                            </div>
+                        <div class="card shadow mb-1" style="height:75%;border-top: 5px solid #405189;">
+                            <!-- <div class="p-1 bg-primary" > -->
                             <div class="card-body d-flex justify-content-center align-items-center">
                                 <div class="text-center">
                                     <h4>Hyrid</h4>
@@ -415,49 +458,51 @@
                         </div>
                     </div>   
                     <div class="col-sm-12 col-md-12 mb-4 ipad-query">
-                        <div class="card shadow mb-4" style="height:95%;">
-                            <div class="p-1 bg-primary" ></div>
+                        <div class="card profile-box flex-fill" style="border-top: 5px solid #405189;">
+                            <!-- <div class="p-1 bg-primary" ></div> -->
                             <div class="card-body p-0">
-                                <div class="popover-body p-0">
-                                    <div class="min-h-250">
-                                        <div>
-                                            <ul class="nav sub-topnav px-20">
-                                                <li class="active topbarNav" id="post"><a>Post</a>
-                                                </li>
-                                                <li class="topbarNav" id="announcement"><a>Announcement</a></li>
-                                                <li class="topbarNav" id="poll"><a>Poll</a></li>
-                                                <li class="topbarNav" id="praise"><a>Praise</a></li>
-                                            </ul>
-                                            <div class="topbarContent emp-post">
-                                                <div>
-                                                    <div class="px-20 p-16 row no-gutters">
-                                                        <p>Payroll is the process of paying a company's employees, which includes tracking hours worked, calculating employees' pay, and distributing payments via direct deposit to employee bank accounts or by check.</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="topbarContent emp-announcement" style="display:none;">
-                                                <div>
+                                <div class="profile-wrapper d-flex w-100">
+                                    <div class="popover-body p-0">
+                                        <div class="min-h-250">
+                                            <div>
+                                                <ul class="nav sub-topnav px-20">
+                                                    <li class="active topbarNav" id="post"><a>Post</a>
+                                                    </li>
+                                                    <li class="topbarNav" id="announcement"><a>Announcement</a></li>
+                                                    <li class="topbarNav" id="poll"><a>Poll</a></li>
+                                                    <li class="topbarNav" id="praise"><a>Praise</a></li>
+                                                </ul>
+                                                <div class="topbarContent emp-post">
                                                     <div>
-                                                        <div class="p-20 row no-gutters">
+                                                        <div class="px-20 p-16 row no-gutters">
                                                             <p>Payroll is the process of paying a company's employees, which includes tracking hours worked, calculating employees' pay, and distributing payments via direct deposit to employee bank accounts or by check.</p>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="topbarContent emp-poll" style="display:none;">
-                                                <div>
+                                                <div class="topbarContent emp-announcement" style="display:none;">
                                                     <div>
-                                                        <div class="p-20 row no-gutters">
-                                                            <p>Payroll is the process of paying a company's employees, which includes tracking hours worked, calculating employees' pay, and distributing payments via direct deposit to employee bank accounts or by check.</p>
+                                                        <div>
+                                                            <div class="p-20 row no-gutters">
+                                                                <p>Payroll is the process of paying a company's employees, which includes tracking hours worked, calculating employees' pay, and distributing payments via direct deposit to employee bank accounts or by check.</p>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="topbarContent emp-praise" style="display:none;">
-                                                <div>
+                                                <div class="topbarContent emp-poll" style="display:none;">
                                                     <div>
-                                                        <div class="p-20 row no-gutters">
-                                                            <p>Payroll is the process of paying a company's employees, which includes tracking hours worked, calculating employees' pay, and distributing payments via direct deposit to employee bank accounts or by check.</p>
+                                                        <div>
+                                                            <div class="p-20 row no-gutters">
+                                                                <p>Payroll is the process of paying a company's employees, which includes tracking hours worked, calculating employees' pay, and distributing payments via direct deposit to employee bank accounts or by check.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="topbarContent emp-praise" style="display:none;">
+                                                    <div>
+                                                        <div>
+                                                            <div class="p-20 row no-gutters">
+                                                                <p>Payroll is the process of paying a company's employees, which includes tracking hours worked, calculating employees' pay, and distributing payments via direct deposit to employee bank accounts or by check.</p>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -470,19 +515,23 @@
                     </div>
                     <h5 class="text-primary"><b>Events</b></h5>
                     <div class="col-sm-4 col-md-4 mb-4 ipad-query">
-                        <div class="card shadow mb-4" style="height:95%;">
-                            <div class="p-1 bg-danger" ></div>
-                            <div class="row pl-2 pr-2 media-query" style="height:100%;">
-                                <div class="col-sm-12 col-md-12">
-                                    <div class="d-flex align-items-center mt-4">
-                                        <i class="mr-1 fa fa-birthday-cake f-13"></i>
-                                        <p class="text-muted f-15 m-0">Happy Birthday</p>
-                                    </div>
-                                    <div class="row mt-2">
-                                        <p class="pl-3 col-auto"><img src="{{ URL::asset('images/' . Auth::user()->avatar) }}" class="img-round"></p>
-                                        <div class="pt-2 col">
-                                            <h4><b class="ml-1">{{auth()->user()->name}}</b></h4>
-                                            <h4 class="pull-right text-danger f-15 m-0">Today</h4>
+                        <div class="card profile-box flex-fill" style="height:95%;border-top: 5px solid #f06548;">
+                            <!-- <div class="p-1 bg-danger" ></div> -->
+                            <div class="card-body p-0">
+                                <div class="profile-wrapper d-flex w-100">
+                                    <div class="row pl-2 pr-2 media-query" style="height:100%;">
+                                        <div class="col-sm-12 col-md-12">
+                                            <div class="d-flex align-items-center mt-4">
+                                                <i class="mr-1 fa fa-birthday-cake f-13"></i>
+                                                <p class="text-muted f-15 m-0">Happy Birthday</p>
+                                            </div>
+                                            <div class="row mt-2">
+                                                <p class="pl-3 col-auto"><img src="{{ URL::asset('images/' . Auth::user()->avatar) }}" class="img-round"></p>
+                                                <div class="pt-2 col">
+                                                    <h4><b class="ml-1">{{auth()->user()->name}}</b></h4>
+                                                    <h4 class="pull-right text-danger f-15 m-0">Today</h4>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -490,19 +539,23 @@
                         </div>
                     </div> 
                     <div class="col-sm-4 col-md-4 mb-4 ipad-query">
-                        <div class="card shadow mb-4" style="height:95%;">
-                            <div class="p-1 bg-success" ></div>
-                            <div class="row pl-2 pr-2 media-query" style="height:100%;">
-                                <div class="col-sm-12 col-md-12">
-                                    <div class="d-flex align-items-center mt-4">
-                                        <i class="mr-1 fa fa-birthday-cake f-13"></i>
-                                        <p class="text-muted f-15 m-0">Work Anniversary</p>
-                                    </div>
-                                    <div class="row mt-2">
-                                        <p class="pl-3 col-auto"><img src="{{ URL::asset('images/' . Auth::user()->avatar) }}" class="img-round"></p>
-                                        <div class="pt-2 col">
-                                            <h4><b class="ml-1">{{auth()->user()->name}}</b></h4>
-                                            <h4 class="pull-right text-success f-15 m-0">Tommorow</h4>
+                        <div class="card profile-box flex-fill" style="height:95%;border-top: 5px solid #0ab39c;">
+                            <!-- <div class="p-1 bg-success" ></div> -->
+                            <div class="card-body p-0">
+                                <div class="profile-wrapper d-flex w-100">
+                                    <div class="row pl-2 pr-2 media-query" style="height:100%;">
+                                        <div class="col-sm-12 col-md-12">
+                                            <div class="d-flex align-items-center mt-4">
+                                                <i class="mr-1 fa fa-birthday-cake f-13"></i>
+                                                <p class="text-muted f-15 m-0">Work Anniversary</p>
+                                            </div>
+                                            <div class="row mt-2">
+                                                <p class="pl-3 col-auto"><img src="{{ URL::asset('images/' . Auth::user()->avatar) }}" class="img-round"></p>
+                                                <div class="pt-2 col">
+                                                    <h4><b class="ml-1">{{auth()->user()->name}}</b></h4>
+                                                    <h4 class="pull-right text-success f-15 m-0">Tommorow</h4>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -510,19 +563,23 @@
                         </div>
                     </div> 
                     <div class="col-sm-4 col-md-4 mb-4 ipad-query">
-                        <div class="card shadow mb-4" style="height:95%;">
-                            <div class="p-1 bg-danger" ></div>
-                            <div class="row pl-2 pr-2 media-query" style="height:100%;">
-                                <div class="col-sm-12 col-md-12">
-                                    <div class="d-flex align-items-center mt-4">
-                                        <i class="mr-1 fa fa-birthday-cake f-13"></i>
-                                        <p class="text-muted f-15 m-0">Marriage Anniversary</p>
-                                    </div>
-                                    <div class="row mt-2">
-                                        <p class="pl-3 col-auto"><img src="{{ URL::asset('images/' . Auth::user()->avatar) }}" class="img-round"></p>
-                                        <div class="pt-2 col">
-                                            <h4><b class="ml-1">{{auth()->user()->name}}</b></h4>
-                                            <h4 class="pull-right text-danger f-15 m-0">09/08/2022</h4>
+                        <div class="card profile-box flex-fill" style="height:95%;border-top: 5px solid #f06548;">
+                            <!-- <div class="p-1 bg-danger" ></div> -->
+                            <div class="card-body p-0">
+                                <div class="profile-wrapper d-flex w-100">
+                                    <div class="row pl-2 pr-2 media-query" style="height:100%;">
+                                        <div class="col-sm-12 col-md-12">
+                                            <div class="d-flex align-items-center mt-4">
+                                                <i class="mr-1 fa fa-birthday-cake f-13"></i>
+                                                <p class="text-muted f-15 m-0">Marriage Anniversary</p>
+                                            </div>
+                                            <div class="row mt-2">
+                                                <p class="pl-3 col-auto"><img src="{{ URL::asset('images/' . Auth::user()->avatar) }}" class="img-round"></p>
+                                                <div class="pt-2 col">
+                                                    <h4><b class="ml-1">{{auth()->user()->name}}</b></h4>
+                                                    <h4 class="pull-right text-danger f-15 m-0">09/08/2022</h4>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -532,39 +589,41 @@
                 </div>
             </div>
             <div class="col-sm-4 col-md-4 mb-4 ipad-query">
-                <div class="card shadow mb-0">
-                    <div class="p-1 bg-primary" ></div>
-                    <div class="card-body p-0">
-                        <div id='full_calendar_events'></div>
-                    </div>
-                </div> 
-                <div class="card shadow mb-0">
-                    <div class="card-header py-4" style="border-bottom:dotted #a4a5a7;">
-                        <h6 class="m-0 font-weight-bold text-primary">List Of Holidays-2022</h6>
-                    </div>
-                    <div class="card-body p-1">
-                    </div>
-                </div> 
-                <div class="card shadow">
-                    <div class="card-body">
-                        <div class="col-sm-12 col-md-12 p-0">
-                            <div class="bg-muted pl-2 pr-2">
-                                <div class="row p-3">
-                                    <h6 class="mr-1 col-auto f-13 pr-0 wrap-text" style="width: 60%;"><i class="fa fa-calendar-alt f-15 mr-2 text-purple"></i>Republic Day</h6>
-                                    <h6 class="f-13 col pl-0">
-                                        <div class="text-right">
-                                            <span>Sun, Jan 26</span>
-                                        </div>
-                                    </h6>
-                                </div>
-                                <hr class="m-0">
-                                <div class="row p-3">
-                                    <h6 class="mr-1 col-auto f-13 pr-0 wrap-text" style="width: 60%;"><i class="fa fa-calendar-alt f-11 mr-2 text-yellow"></i>Shivaratri</h6>
-                                    <h6 class="f-13 col pl-0">
-                                        <div class="text-right">
-                                            <span>Sun, July 26</span>
-                                        </div>
-                                    </h6>
+                <div style="background:white">
+                    <div class="card profile-box flex-fill m-0 mb-2" style="border-top: 5px solid #405189;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);border-radius:3px 3px 20px 20px;">
+                        <!-- <div class="p-1 bg-primary" ></div> -->
+                        <div class="card-body p-2">
+                            <div id='full_calendar_events'></div>
+                        </div>
+                    </div> 
+                    <div class="mb-0">
+                        <div class="card-header py-4" style="border-bottom:dotted #a4a5a7;">
+                            <h6 class="m-0 font-weight-bold text-primary">List Of Holidays-2022</h6>
+                        </div>
+                        <div class="card-body p-1">
+                        </div>
+                    </div> 
+                    <div class="">
+                        <div class="card-body">
+                            <div class="col-sm-12 col-md-12 p-0">
+                                <div class="bg-muted pl-2 pr-2">
+                                    <div class="row p-3">
+                                        <h6 class="mr-1 col-auto f-13 pr-0 wrap-text" style="width: 60%;"><i class="fa fa-calendar-alt f-15 mr-2 text-purple"></i>Republic Day</h6>
+                                        <h6 class="f-13 col pl-0">
+                                            <div class="text-right">
+                                                <span>Sun, Jan 26</span>
+                                            </div>
+                                        </h6>
+                                    </div>
+                                    <hr class="m-0">
+                                    <div class="row p-3">
+                                        <h6 class="mr-1 col-auto f-13 pr-0 wrap-text" style="width: 60%;"><i class="fa fa-calendar-alt f-11 mr-2 text-yellow"></i>Shivaratri</h6>
+                                        <h6 class="f-13 col pl-0">
+                                            <div class="text-right">
+                                                <span>Sun, July 26</span>
+                                            </div>
+                                        </h6>
+                                    </div>
                                 </div>
                             </div>
                         </div>

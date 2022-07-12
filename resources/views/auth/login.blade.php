@@ -482,14 +482,14 @@ background:linear-gradient(235deg,#89ff00,#060c21,#00bcd4);
 }
 
 @media screen and (max-height: 630px){
-    .soc-det-img {
-        height: 10% !important;
-    }
     .dfr {
         padding: 5px 10px !important;
     }
     .side-right {
         height: 85% !important;
+    }
+    .side-right form{
+        height: 98% !important;
     }
 }
 
@@ -498,7 +498,6 @@ background:linear-gradient(235deg,#89ff00,#060c21,#00bcd4);
     bottom: 0;
 }
 
-.login-headers {}
 </style>
 @endsection
 @section('content')
@@ -594,9 +593,12 @@ background:linear-gradient(235deg,#89ff00,#060c21,#00bcd4);
                     </div>
 
 
-                    <div class="soc-det">
+                    <div class="d-flex" style="justify-content: space-between;">
 
-                        <img src="{{ URL::asset('assets/images/social.png') }}" alt="" class=" w-100 soc-det-img ">
+                        <!-- <img src="{{ URL::asset('assets/images/social.png') }}" alt="" class=" w-100 soc-det-img "> -->
+                        <img src="{{ URL::asset('assets/images/google.png') }}" alt="" class="soc-det-img ">
+                        <img src="{{ URL::asset('assets/images/linkedin.png') }}" alt="" class="soc-det-img ">
+                        <img src="{{ URL::asset('assets/images/microsoft.png') }}" alt="" class="soc-det-img ">
 
 
 
@@ -607,13 +609,13 @@ background:linear-gradient(235deg,#89ff00,#060c21,#00bcd4);
                                 <li class="link"><i class="fab fa-linkedin-in"></i></li>
                                
                             </ul> -->
-
-
+                    </div>
+                    <div class="d-flex">
 
                         <hr class="w-100 ">
 
 
-                        <img src="{{ URL::asset('assets/images/Group 4.png') }}" alt="" class="  w-100 h-25 mx-3 px-3">
+                        <img src="{{ URL::asset('assets/images/Group 4.png') }}" alt="" class="  w-100 h-25 mt-3">
                     </div>
 
 
