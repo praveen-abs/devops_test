@@ -137,6 +137,7 @@ Route::get('vmt-employess/bulk-upload', 'App\Http\Controllers\VmtEmployeeControl
 Route::post('vmt-employess/bulk-upload', 'App\Http\Controllers\VmtEmployeeController@storeBulkEmployee');
 
 Route::get('vmt-employess/directory', 'App\Http\Controllers\VmtEmployeeController@showEmployeeDirectory');
+Route::post('vmt-kpi/data', 'App\Http\Controllers\VmtEmployeeController@showKpiData')->name('kpi-data');
 
 
 
