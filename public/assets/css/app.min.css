@@ -1640,13 +1640,14 @@ body {
 
 }
 
-.navbar-brand-box .image-circle{
+.navbar-brand-box .image-circle {
     background: #f3f3f9;
     height: 60px;
     width: 60px;
     border-radius: 50%;
 }
-.navbar-brand-box .image-circle img{
+
+.navbar-brand-box .image-circle img {
     height: 55px;
     width: 55px;
 }
@@ -1995,17 +1996,19 @@ body {
     background-color: #ffff; */
 }
 
-[data-layout=vertical][data-sidebar-size=sm] .logo span.logo-lg  {
+[data-layout=vertical][data-sidebar-size=sm] .logo span.logo-lg {
     display: flex !important;
     /* position: relative;
     top: -40px; */
 }
+
 [data-layout=vertical][data-sidebar-size=sm] .logo span.logo-lg span {
     display: none !important;
     /* position: relative;
     top: -40px; */
     margin-bottom: 5px;
 }
+
 [data-layout=vertical][data-sidebar-size=sm] .logo span.logo-sm {
     display: none !important;
 }
@@ -16628,13 +16631,15 @@ select {
     height: 100px;
     width: 100px;
 }
-.profile-wrapper .profile-info{
+
+.profile-wrapper .profile-info {
     margin: 0px 0px 0px 30px;
 }
-.prograss-wrapper .prograss-bar{
+
+.prograss-wrapper .prograss-bar {
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-/* background:#405189; */
-border-radius: 5px;
+    /* background:#405189; */
+    border-radius: 5px;
 }
 
 .profile-basic {
@@ -16663,7 +16668,7 @@ border-radius: 5px;
 
 .personal-info li {
     margin-bottom: 10px;
-display: flex;
+    display: flex;
 }
 
 
@@ -18579,17 +18584,17 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
 @media only screen and (max-width: 800px) {}
 
 [data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .menu-dropdown .nav-link span {
-display: flex !important;
-margin: 0px !important;
-justify-content: flex-start;
-padding: 0px !important;
+    display: flex !important;
+    margin: 0px !important;
+    justify-content: flex-start;
+    padding: 0px !important;
 
 }
 
 [data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .menu-dropdown .nav-link:hover span {
     color: #1c4668;
-    
-    }
+
+}
 
 
 [data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .nav-link span {
@@ -18622,7 +18627,7 @@ padding: 0px !important;
 
 }
 
-.user-details-wrapper .profile-box{
+.user-details-wrapper .profile-box {
     border-top: 5px solid #405189;
 }
 
@@ -18682,9 +18687,7 @@ padding: 0px !important;
         margin: 0px 30px;
     } */
 
-.profile-top{
-
-}
+    .profile-top {}
 
 }
 
@@ -18706,53 +18709,92 @@ padding: 0px !important;
 
 /* for 404 anime vmt_noData */
 
-#handboy
-{
-   animation: swing ease-in-out 1.3s infinite alternate;
+#handboy {
+    animation: swing ease-in-out 1.3s infinite alternate;
     transform-origin: 98% 98%;
     transform-box: fill-box;
-    
+
 }
 
 
-#girllight
-{
-   animation: swing ease-in-out 1.3s infinite alternate;
+#girllight {
+    animation: swing ease-in-out 1.3s infinite alternate;
     transform-origin: 0% 97%;
     transform-box: fill-box;
 }
 
-#hairgirl
-{
+#hairgirl {
     animation: swinghair ease-in-out 1.3s infinite alternate;
-   transform-origin: 60% 0%;
+    transform-origin: 60% 0%;
     transform-box: fill-box;
-  
+
 }
 
-#zero
-{
-  transform-origin:bottom;
-  transform-box:fill-box;
-  
+#zero {
+    transform-origin: bottom;
+    transform-box: fill-box;
+
 }
 
 /*************swing************/
 @keyframes swing {
-    0% { transform: rotate(10deg); }
-    100% { transform: rotate(-10deg); }
+    0% {
+        transform: rotate(10deg);
+    }
+
+    100% {
+        transform: rotate(-10deg);
+    }
 }
 
 
 /*************swing hair************/
 @keyframes swinghair {
-    0% { transform: rotate(6deg); }
-    100% { transform: rotate(-6deg); }
+    0% {
+        transform: rotate(6deg);
+    }
+
+    100% {
+        transform: rotate(-6deg);
+    }
 }
 
 
-.error-data-wrapper svg{
+.error-data-wrapper svg {
     height: 100% !important;
-    min-width: 70% !important;
+    width: 100% !important;
     max-width: 100% !important;
+}
+
+.footer-contents {
+    position: relative;
+    z-index: 1;
+}
+
+.footer-contents .powerby-footer {
+    position: absolute;
+    right: 150px;
+}
+.footer-contents .powerby-footer img {
+    height: 25px;
+}
+.footer-contents .privacy-policy{
+    position: absolute;
+    right: 50px;
+
+}
+.footer-contents .faq{
+    position: absolute;
+    right: 12px;
+
+}
+.footer-contents .powerby-footer:after,.privacy-policy::after {
+    content: '';
+    margin-right:5px;
+    height: 75%;
+    width: 1px;
+    font-weight: 600;
+    background: #c1d1d1;
+    margin: 0px 5px;
+    position: absolute;
 }
