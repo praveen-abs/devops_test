@@ -1459,10 +1459,10 @@ $('body').on('click', '#save-table', function(e){
             //console.log(input.attr('name')+" , "+input.val());
         }
 
-       if(input.val().trim().length < 1)
-       {
-         isAllFieldsEntered = false;
-       }
+        if(input.val().trim().length < 1)
+        {
+          isAllFieldsEntered = false;
+        }
     });
 
     //Validate other fields
