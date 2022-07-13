@@ -482,22 +482,22 @@ td .btn i {
                         <td class="p-3"><!-- Manager status -->
                             @if(auth()->user()->hasrole('Employee'))
 
-                                {{$emp->is_manager_submitted  ? 'Submitted' :  'Not yet submitted'  }}
+                                {{$emp->is_manager_submitted  ? 'Reviewed' :  'Not yet reviewed'  }}
 
                             @endif
                             @if(auth()->user()->hasrole('Manager'))
 
                                 @if($emp->is_manager_submitted ) 
-                                    Submitted
+                                    Reviewed
                                 @else 
-                                    Not yet submitted
+                                    Not yet Reviewed
                                 @endif
 
                             @endif
 
                             @if(auth()->user()->hasrole(['Admin','HR']))
 
-                                {{$emp->is_manager_submitted  ? 'Submitted' :  'Not yet submitted'  }}
+                                {{$emp->is_manager_submitted  ? 'Reviewed' :  'Not yet Reviewed'  }}
 
                             @endif
                         </td>                       

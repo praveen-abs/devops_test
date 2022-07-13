@@ -66,15 +66,19 @@ class VmtApraisalController extends Controller
                             //->get();
 
 
+        $userCount = User::count();
 
-       // $empGoals = VmtEmployee::select('emp_no', 'emp_name', 'email_id', 'vmt_employee_details.designation', 'l1_manager_name', 'status', 'officical_mail')->join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.employee_id', '=', 'vmt_employee_details.id')->join('vmt_employee_office_details',  'vmt_employee_office_details.emp_id', '=', 'vmt_employee_details.id')->where('author_id', auth()->user()->id)->get();
+        //dd($userCount);
+        $empCount = VmtEmployeePMSGoals::groupBy('employee_id')->count();
+        $subCount = VmtEmployeePMSGoals::groupBy('employee_id')->where('is_hr_submitted', true)->count();
+
         if (auth()->user()->hasrole('Employee')) {
             $emp = VmtEmployee::join('vmt_employee_office_details',  'user_id', '=', 'vmt_employee_details.userid')->where('userid', auth()->user()->id)->first();
             $rev = VmtEmployee::where('emp_no', $emp->l1_manager_code)->first();
             $users = User::where('id', $rev->userid)->get();
             $empGoals = $empGoalQuery->where('users.id', auth::user()->id)->get();
 
-            return view('vmt_pms_assigngoals', compact('users','empGoals'));
+            return view('vmt_pms_assigngoals', compact('users','empGoals','userCount','empCount','subCount'));
 
         } elseif (auth()->user()->hasrole('Manager')) {
             $empGoals = $empGoalQuery->get();
@@ -121,9 +125,7 @@ class VmtApraisalController extends Controller
             // ->
             // ->get();
         }
-        $userCount = User::count();
-        $empCount = VmtEmployeePMSGoals::groupBy('employee_id')->count();
-        $subCount = VmtEmployeePMSGoals::groupBy('employee_id')->where('is_hr_submitted', true)->count();
+
         return view('vmt_pms_assigngoals', compact('users', 'employees','empGoals','userCount','empCount','subCount'));
     }
 

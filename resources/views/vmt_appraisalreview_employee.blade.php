@@ -47,67 +47,6 @@
 
             <div class="card-body  pb-2">
 
-                <table class="table e-table align-middle table-nowrap mb-0 " style="border: none;">
-
-                    <tbody>
-                        <tr style="border: none;">
-                            <td class=" text-left">
-                                <b>Employee Name: </b>
-                            </td>
-                            <td class="text-left">
-                                {{Auth::user()->name}}
-                            </td>
-                        </tr>
-                        <tr style="border: none;">
-                            <td class="text-left">
-                                <b>Employee ID:
-                            </td>
-                            <td class="text-left">
-                                {{$employeeData->emp_no}}
-                            </td>
-                        </tr>
-                        <tr style="border: none;">
-                            <td class="col-xl-6 text-left">
-                                <b>Job Title / Designation:</b>
-                            </td>
-                            <td class="col-xl-6 text-left">
-                                {{$employeeData->designation}}
-                            </td>
-                        </tr>
-                        <tr style="border: none;">
-                            <td class="col-xl-6 text-left">
-                                <b>Business Unit/Process/Function:</b>
-                            </td>
-                            <td class="col-xl-6 text-left">
-                                Call Centre
-                            </td>
-                        </tr>
-                        <tr style="border: none;">
-                            <td class="col-xl-6 text-left">
-                                <b>Reporting Manager :</b>
-                            </td>
-                            <td class="col-xl-6 text-left">
-                                Ajeesh Kumar R -Head Service Delivery
-                            </td>
-                        </tr>
-                        <tr style="border: none;">
-                            <td class="col-xl-6 text-left">
-                                <b>Managers Manager :</b>
-                            </td>
-                            <td class="col-xl-6 text-left">
-                                Kumar
-                            </td>
-                        </tr>
-                        <tr style="border: none;">
-                            <td class="col-xl-6 text-left">
-                                <b>Review Period: </b>
-                            </td>
-                            <td class="col-xl-6 text-left">
-                                Jul’21 To Mar’22
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
 
             </div><!-- end card body -->
         </div><!-- end card -->
@@ -536,7 +475,7 @@
         e.preventDefault();
         //goal_id=26&user_id=4
         var goal_id = "{{\Request::get('id')}}";
-        var user_id = "{{auth::user()->id}}";
+        var user_id = "{{Auth::user()->id}}";
         var approve_flag = "approved";
        
         $.ajax({
