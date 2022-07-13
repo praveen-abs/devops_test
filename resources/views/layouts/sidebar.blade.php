@@ -188,7 +188,7 @@
                     <div class="collapse menu-dropdown" id="orgDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item ">
-                                <a href="{{url('vmt-employess/directory')}}" id="" class="nav-link sidebar py-1"
+                            <a href="{{url('vmt_noData')}}" id="" class="nav-link sidebar py-1"
                                     aria-expanded="false"><span>Dashboard</span> </a>
                             </li>
                             <li class="nav-item ">
@@ -205,13 +205,13 @@
                                     aria-expanded="false"><span>Onboarding</span> </a>
                             </li>
                             <li class="nav-item ">
-                                <a href="" id="tds" class="nav-link sidebar py-1"><span>Exit</span></a>
+                                <a href="{{url('vmt_noData')}}" id="tds" class="nav-link sidebar py-1"><span>Exit</span></a>
                             </li>
                             <li class="nav-item ">
-                                <a href="" id="tds" class="nav-link sidebar py-1"><span>Documents</span></a>
+                                <a href="{{url('vmt_noData')}}" id="tds" class="nav-link sidebar py-1"><span>Documents</span></a>
                             </li>
                             <li class="nav-item ">
-                                <a href="" id="tds" class="nav-link sidebar py-1"><span>Assets</span></a>
+                                <a href="{{url('vmt_noData')}}" id="tds" class="nav-link sidebar py-1"><span>Assets</span></a>
                             </li>
 
                         </ul>
@@ -244,7 +244,7 @@
 
                             @can('360_Degree_Review')
                             <li class="nav-item">
-                                <a href="{{url('vmt_360review')}}" class="nav-link sidebar py-1" role="button"><span>360 Degree
+                            <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>360 Degree
                                         Review</span></a>
                             </li>
                             @endcan
@@ -273,31 +273,31 @@
                                     class="nav-link sidebar py-1"><span>Summary</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt_appraisalreview')}}" class="nav-link sidebar py-1"
+                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1"
                                     role="button"><span>Leave</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt_appraisalreview')}}" class="nav-link sidebar py-1"
+                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1"
                                     role="button"><span>Attendance</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt_appraisalreview')}}" class="nav-link sidebar py-1"
+                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1"
                                     role="button"><span>Expenses & Trevel</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt_360review')}}" class="nav-link sidebar py-1"
+                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1"
                                     role="button"><span>Timesheet</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt_360review')}}" class="nav-link sidebar py-1" role="button"><span>Profile
+                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>Profile
                                         change</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt_360review')}}" class="nav-link sidebar py-1" role="button"><span>Salary on
+                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>Salary on
                                         hold</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt_360review')}}" class="nav-link sidebar py-1"
+                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1"
                                     role="button"><span>Performance</span></a>
                             </li>
                         </ul>
@@ -374,24 +374,24 @@
                         <ul class="nav nav-sm flex-column">
 
                             <li class="nav-item">
-                                <a href="{{url('vmt_home')}}" class="nav-link sidebar py-1"
+                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1"
                                     role="button"><span>Dashboard</span></a>
                             </li>
                             @can('Team')
                             <li class="nav-item">
-                                <a href="{{url('vmt_salary_details')}}" class="nav-link sidebar py-1" role="button"><span>Salary
+                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>Salary
                                         Details</span></a>
                             </li>
                             @endcan
                             @can('ORG')
                             <li class="nav-item">
-                                <a href="{{url('vmt_investments')}}" class="nav-link sidebar py-1"
+                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1"
                                     role="button"><span>Investments</span></a>
                             </li>
                             @endcan
                             @can('360_Degree_Review')
                             <li class="nav-item">
-                                <a href="{{url('vmt_form16')}}" class="nav-link sidebar py-1" role="button"><span>
+                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>
                                         Form 16</span></a>
                             </li>
                             @endcan
