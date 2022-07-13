@@ -236,7 +236,7 @@
                                         <td>₹{{$d->TOTAL_DEDUCTIONS}}</td>
                                         <td>₹{{$d->NET_TAKE_HOME}}</td>
                                         <td>
-                                            <div id="ember133" data="{{$d->EMP_NO}}" data-url="{{route('vmt_employee_payslip')}}"
+                                            <div data="{{$d->PAYROLL_MONTH}}" data-url="{{route('vmt_employee_payslip')}}"
                                                 class="ember-view cursor-pointer paySlipView" style="color:#009DFF;">
                                                 View
                                             </div>
@@ -825,13 +825,13 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script>
-    $('body').on('click', '.paySlipView', function(){
+    $('.paySlipView').on('click',  function(){
         var url = $(this).attr('data-url');
-        var id = $(this).attr('data');
+        var t_paySlipMonth = $(this).attr('data');
         $.ajax({
             type: "GET",
             url: url,
-            data: {id: id},
+            data: {selectedPaySlipMonth: t_paySlipMonth},
             success: function(data)
             {
                 var content = '<div class="row"><div class="col-3"><div class="fill body payslip-filter-container "> <i class="icon icon-blue icon-xlg vertical-align-text-bottom text-secondary ri-filter-2-fill"> </i> <div class="dropdown cursor-pointer payslip-dropdown"><div id="ember127" class="ember-view"><div class="dropdown-toggle" data-toggle="dropdown"><span>Financial Year : </span><span class="font-semibold fw-bold text-dark h5">2022 - 23</span><span class="caret "></span></div><ul class="dropdown-menu dropdown-menu-right"><li data-ember-action="" data-ember-action-129="129"><a>2022 - 23</a></li> </ul></div></div></div></div><div class="col-9">'+data+'</div></div>'
