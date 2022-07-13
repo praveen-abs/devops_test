@@ -182,6 +182,10 @@ table th {
     padding: 15px 10px !important;
 }
 
+#kpiTable th {
+    border: 1px solid #a4a6a9;
+}
+
 tbody {
     background-color: #fff;
 }
@@ -189,6 +193,11 @@ tbody {
 tbody tr:hover {
     background-color: #f3f3f9;
 
+}
+
+#kpiTable td {
+    background: #befbbe5e;
+    border: 1px solid #a4a6a9;
 }
 
 td {
@@ -893,20 +902,20 @@ td .btn i {
                                         <form id="kpiTableForm">
                                             <input type="hidden" id="kpi_table_id" name="kpi_table_id">
                                             <div class="table-responsive">
-                                                <table class="w-100 align-middle mb-0" id="kpiTable">
+                                                <table class="align-middle mb-0" id="kpiTable" style="width:130%;">
                                                     @csrf
-                                                    <thead class="text-white bg-primary thead" id="tHead">
+                                                    <thead class="bg-primary thead" id="tHead">
                                                         <tr class="text-uppercase">
                                                             <th class="sort" data-sort="id" style="width: 2%;">#</th>
                                                             <th class="sort" data-sort="customer_name" style="width: 8%;">Dimension</th>
-                                                            <th class="sort" data-sort="product_name" style="width: 25%;">KPI</th>
-                                                            <th class="sort" data-sort="date" style="width: 25%;">Operational Definition</th>
-                                                            <th class="sort" data-sort="amount" style="width: 25%;">Measure</th>
-                                                            <th class="sort" data-sort="payment" style="width: 10%;">Frequency</th>
-                                                            <th class="sort" data-sort="status" style="width: 20%;">Target</th>
-                                                            <th class="sort" data-sort="status" style="width: 20%;">Stretch Target</th>
-                                                            <th class="sort" data-sort="status" style="">Source</th>
-                                                            <th class="sort" data-sort="status" style="width: 10%;" width="10%">KPI Weightage ( % )</th>
+                                                            <th class="sort" data-sort="product_name" style="width: 15%;">KPI</th>
+                                                            <th class="sort" data-sort="date" style="width: 20%;">Operational Definition</th>
+                                                            <th class="sort" data-sort="amount" style="width: 15%;">Measure</th>
+                                                            <th class="sort" data-sort="payment" style="width: 5%;">Frequency</th>
+                                                            <th class="sort" data-sort="status" style="width: 5%;">Target</th>
+                                                            <th class="sort" data-sort="status" style="width: 10%;">Stretch Target</th>
+                                                            <th class="sort" data-sort="status" style="width: 5%;">Source</th>
+                                                            <th class="sort" data-sort="status" style="width: 15%;" width="10%">KPI Weightage ( % )</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody class="tbody content-container" id="tbody">
