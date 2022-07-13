@@ -732,8 +732,8 @@
                     <div class="collapse menu-dropdown" id="configDrop-down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="" target=""
-                                    class="nav-link sidebar">Config Settings</a>
+                                <a href="{{url('vmt_clientOnboarding')}}" 
+                                    class="nav-link">Client Onboarding</a>
                             </li>
                         </ul>
                     </div>
