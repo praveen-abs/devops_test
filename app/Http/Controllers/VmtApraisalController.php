@@ -141,11 +141,11 @@ class VmtApraisalController extends Controller
             ->select(
                 'users.name', 
                 'vmt_employee_office_details.emp_id as id',
+                'vmt_employee_office_details.l1_manager_code as code',
             )
             ->orderBy('users.name', 'ASC')
             ->where('l1_manager_code', $currentEmpCode)
             ->get();
-
             return $users;
 
         }

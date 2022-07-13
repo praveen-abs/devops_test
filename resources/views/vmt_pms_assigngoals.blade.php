@@ -877,7 +877,14 @@ td .btn i {
                         <div class="table-wrapper">
                             <div class="row">
                                 <div class="col-6"><h5>Key focus areas</h5></div>
-                                <div class="col-6">
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="container-fluid bg-light mt-3 py-2 rounded-border d-felx align-items-center">
+                                        <h6 class="m-0">Goals / Areas of development</h6>
+                                    </div>
+                                </div>
+                                <div class="col-12 mt-3">
                                     <form id="upload_form" enctype="multipart/form-data">
                                         <div class="row pull-right">
                                             @csrf
@@ -889,13 +896,6 @@ td .btn i {
                                             </div>
                                         </div>
                                     </form>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="container-fluid bg-light mt-3 py-2 rounded-border d-felx align-items-center">
-                                        <h6 class="m-0">Goals / Areas of development</h6>
-                                    </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="container-fluid mb-1 mt-3 ">
@@ -1219,21 +1219,22 @@ $(document).ready(function(){
     $(document).on('#select-reviewer:open', () => {
         $('.select2-search__field').focus();
     });
-   $('#empTable').DataTable({
-    //   'processing': true,
-    //   'serverSide': true,
-    //   'serverMethod': 'post',
-    //   'ajax': {
-    //       'url':'ajaxfile.php'
-    //   },
-    //   'columns': [
-    //      { data: 'emp_name' },
-    //      { data: 'email' },
-    //      { data: 'gender' },
-    //      { data: 'salary' },
-    //      { data: 'city' },
-    //   ]
-   });
+
+    $('#empTable').DataTable({
+        //   'processing': true,
+        //   'serverSide': true,
+        //   'serverMethod': 'post',
+        //   'ajax': {
+        //       'url':'ajaxfile.php'
+        //   },
+        //   'columns': [
+        //      { data: 'emp_name' },
+        //      { data: 'email' },
+        //      { data: 'gender' },
+        //      { data: 'salary' },
+        //      { data: 'city' },
+        //   ]
+    });
 
     $('#calendar_type').change(function() {
         if ($('#calendar_type').val() == 'financial_year') {
@@ -1302,66 +1303,64 @@ $(function () {
         $('#add-goals-modal').modal('show');
     });
 
-$('body').on('click', '.plus-sign', function() {
-    var id = $('.addition-content:last').attr('id');
-    var length = 1;
-    if (id) {
-        length = parseInt(id.replace('content', '')) + 1;
-    }
-    $('.content-container').append('<tr class="addition-content cursor-pointer" id="content'+length+'"><input type="hidden" name="kpi_id[]"><td class="text-box-td p-1"><span  name="numbers" id="" class="tableInp" >'+length+'</span><div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div></td><td class="text-box-td p-1"><textarea name="dimension[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="kpi[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="operational[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="measure[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="frequency[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"> <textarea name="target[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="stretchTarget[]" id="" class="text-box" cols="10" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="source[]" id="" class="text-box" cols="10" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="kpiWeightage[]" id="" class="text-box" cols="10" placeholder="type here"></textarea></td></tr>');
-});
-
-$('body').on('click', '.delete-row', function() {
-    $(this).parent().parent().remove();
-});
-
-$('#changeEmployeeForm').on('submit', function(e){
-    e.preventDefault();
-    var employeeSelected = $('#select-employees').val();
-    @if(auth()->user()->hasrole('Employee'))
-    @else
-    var employees = {!!json_encode($employees)!!};
-
-    @endif
-    var employeeArray = [];
-    $("#sel_employees").val(employeeSelected);
-
-    var imgHtml ="";
-    var count = 0;
-    $.each(employees, function(i, data){
-        //console.log(data);
-        //console.log('employee selected', employeeSelected);
-        if($.inArray(data.id.toString(), employeeSelected) > -1){
-            employeeArray.push(data.emp_name);
-            if (count < 4) {
-                imgHtml = imgHtml+"<a class='avatar'><img src='assets/images/"+data.avatar+"' alt='' class='rounded-circle p-0'></a>";
-            }
-            count++;
+    $('body').on('click', '.plus-sign', function() {
+        var id = $('.addition-content:last').attr('id');
+        var length = 1;
+        if (id) {
+            length = parseInt(id.replace('content', '')) + 1;
         }
+        $('.content-container').append('<tr class="addition-content cursor-pointer" id="content'+length+'"><input type="hidden" name="kpi_id[]"><td class="text-box-td p-1"><span  name="numbers" id="" class="tableInp" >'+length+'</span><div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div></td><td class="text-box-td p-1"><textarea name="dimension[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="kpi[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="operational[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="measure[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="frequency[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"> <textarea name="target[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="stretchTarget[]" id="" class="text-box" cols="10" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="source[]" id="" class="text-box" cols="10" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="kpiWeightage[]" id="" class="text-box" cols="10" placeholder="type here"></textarea></td></tr>');
     });
-    if (count > 4) {
-        imgHtml = imgHtml+"<span class='img-addition' style='background-color: rgb(134, 192, 106);width: 30px;height: 30px;font-size:12px;'> +"+count-3+" </span><div class='mt-1 message-content align-items-start d-flex flex-column  mx-2'><span id='group-employee'></span></div>";
+
+    $('body').on('click', '.delete-row', function() {
+        $(this).parent().parent().remove();
+    });
+
+    $('#changeEmployeeForm').on('submit', function(e){
+        e.preventDefault();
+        changeEmployee();
+    });
+
+    function changeEmployee() {
+        var employeeSelected = $('#select-employees').val();
+        @if(auth()->user()->hasrole('Employee'))
+        @else
+        var employees = {!!json_encode($employees)!!};
+
+        @endif
+        var employeeArray = [];
+        $("#sel_employees").val(employeeSelected);
+        var imgHtml ="";
+        var count = 0;
+        $.each(employees, function(i, data){
+            //console.log(data);
+            //console.log('employee selected', employeeSelected);
+            if($.inArray(data.id.toString(), employeeSelected) > -1){
+                employeeArray.push(data.emp_name);
+                if (count < 4) {
+                    imgHtml = imgHtml+"<a class='avatar'><img src='assets/images/"+data.avatar+"' alt='' class='rounded-circle p-0'></a>";
+                }
+                count++;
+            }
+        });
+        if (count > 4) {
+            imgHtml = imgHtml+"<span class='img-addition' style='background-color: rgb(134, 192, 106);width: 30px;height: 30px;font-size:12px;'> +"+count-3+" </span><div class='mt-1 message-content align-items-start d-flex flex-column  mx-2'><span id='group-employee'></span></div>";
+        }
+        //Change button text based on employee selection count
+        if(count > 0)
+        {
+            $('#btn_selectEmployees').html("Edit");
+            console.log("Changed to Edit button");
+        }
+        else
+        {
+            $('#btn_selectEmployees').html("Add");
+            console.log("Changed to Add button");
+        }
+        $('#group-employee').html(employeeArray.join());
+        $('#changeEmployee').css('display', 'none');
+        $('.avatar-group-item').html(imgHtml);
     }
-
-
-   //Change button text based on employee selection count
-
-   if(count > 0)
-    {
-        $('#btn_selectEmployees').html("Edit");
-        console.log("Changed to Edit button");
-    }
-    else
-    {
-        $('#btn_selectEmployees').html("Add");
-        console.log("Changed to Add button");
-    }
-
-
-    $('#group-employee').html(employeeArray.join());
-    $('#changeEmployee').css('display', 'none');
-    $('.avatar-group-item').html(imgHtml);
-});
 
 @if(auth()->user()->hasrole('Manager'))
 
@@ -1373,14 +1372,15 @@ $('#changeEmployeeForm').on('submit', function(e){
         success: function(data){
         var optionHtml ="";
         $.each(data, function(i, tempdata){
-            optionHtml = optionHtml+"<option value="+tempdata.id+">"+tempdata.name+"</option>";
+            optionHtml = optionHtml+"<option data="++" value="+tempdata.id+" selected>"+tempdata.name+"</option>";
             //if(tempdata.id == $('#select-employees').val()){
             //        $('#reviewer-name').html(tempdata.name);
             //        $('#reviewer-email').html(tempdata.email);
             //    }
           });
             
-          $('#select-employees').html(optionHtml);
+            $('#select-employees').html(optionHtml);
+            changeEmployee();
                      // $("#kpiTableForm :input").prop("disabled", true);
            // $(".table-btn").prop('disabled', true);
             console.log(data);
@@ -1414,7 +1414,7 @@ $('#form_selectReviewer').on('submit', function(e){
         success: function(data){
         var optionHtml ="";
         $.each(data, function(i, tempdata){
-            optionHtml = optionHtml+"<option value="+tempdata.id+">"+tempdata.name+"</option>";
+            optionHtml = optionHtml+"<option value="+tempdata.id+" selected>"+tempdata.name+"</option>";
             //if(tempdata.id == $('#select-employees').val()){
             //        $('#reviewer-name').html(tempdata.name);
             //        $('#reviewer-email').html(tempdata.email);
@@ -1422,6 +1422,7 @@ $('#form_selectReviewer').on('submit', function(e){
           });
             
           $('#select-employees').html(optionHtml);
+          changeEmployee();
                      // $("#kpiTableForm :input").prop("disabled", true);
            // $(".table-btn").prop('disabled', true);
             console.log(data);
