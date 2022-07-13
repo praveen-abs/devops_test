@@ -618,7 +618,22 @@ class VmtApraisalController extends Controller
         if($request->has('goal_id')){
             $reviewCompled  = false;
             $assignedGoals  = VmtEmployeePMSGoals::where('kpi_table_id',$request->goal_id)->where('employee_id', $request->user_id)->first();
+            
+            $assignedEmployee_Userdata = User::where('id',  $assignedGoals->employee_id)->first();
+
             $employeeData = VmtEmployee::where('userid', $assignedGoals->employee_id)->first();
+            //dd($employeeData);
+            $assignedEmployeeOfficeDetails = VmtEmployeeOfficeDetails::where('user_id', $assignedGoals->employee_id)->first();
+
+            //Get assigned employee manager name
+            $assignedEmp_manager_name = User::join('vmt_employee_details',  'vmt_employee_details.userid', '=', 'users.id')->where('vmt_employee_details.emp_no', $assignedEmployeeOfficeDetails->l1_manager_code)->pluck('name');
+
+            //dd($t_assignedEmp_manager_name);
+
+            $assignedEmployeeManagerName = User::where('id',  $assignedGoals->employee_id)->first();
+
+
+
             $kpiData      = VmtKPITable::find($assignedGoals->kpi_table_id);
             $kpiRowArray  = explode(',', $kpiData->kpi_rows);
             $kpiRows      = VmtAppraisalQuestion::whereIn('id', $kpiRowArray)->get();
@@ -673,6 +688,7 @@ class VmtApraisalController extends Controller
 
                 $reviewCompleted = true;
             }
+
             $empSelected = true;
             $ratingDetail = [];
             $per = json_decode($assignedGoals->hr_kpi_percentage, true) ? json_decode($assignedGoals->hr_kpi_percentage, true): [];
@@ -706,7 +722,7 @@ class VmtApraisalController extends Controller
             }
             //dd($kpiRows);
 
-            return view('vmt_appraisalreview_manager', compact( 'employeeData', 'assignedGoals', 'kpiRows', 'empSelected', 'reviewCompleted', 'ratingDetail'));
+            return view('vmt_appraisalreview_manager', compact( 'employeeData','assignedEmployee_Userdata','assignedEmp_manager_name','assignedEmployeeOfficeDetails', 'assignedGoals', 'kpiRows', 'empSelected', 'reviewCompleted', 'ratingDetail'));
         }
         
         $kpiRows = [];
