@@ -57,7 +57,7 @@
                                 <b>Employee Name: </b>
                             </td>
                             <td class="text-left">
-                                {{Auth::user()->name}}
+                                {{$assignedEmployee_Userdata->name}}
                             </td>
                         </tr>
                         <tr style="border: none;">
@@ -73,7 +73,7 @@
                                 <b>Job Title / Designation:</b>
                             </td>
                             <td class="col-xl-6 text-left">
-                                {{$employeeData->designation}}
+                                {{$assignedEmployeeOfficeDetails->designation}}
                             </td>
                         </tr>
                         <tr style="border: none;">
@@ -81,7 +81,7 @@
                                 <b>Business Unit/Process/Function:</b>
                             </td>
                             <td class="col-xl-6 text-left">
-                                Call Centre
+                                {{$assignedEmployeeOfficeDetails->department}}
                             </td>
                         </tr>
                         <tr style="border: none;">
@@ -89,23 +89,26 @@
                                 <b>Reporting Manager :</b>
                             </td>
                             <td class="col-xl-6 text-left">
-                                Ajeesh Kumar R -Head Service Delivery
+                                {{$assignedEmp_manager_name[0]}}
                             </td>
                         </tr>
-                        <tr style="border: none;">
+                        {{-- <tr style="border: none;">
                             <td class="col-xl-6 text-left">
                                 <b>Managers Manager :</b>
                             </td>
                             <td class="col-xl-6 text-left">
                                 Kumar
                             </td>
-                        </tr>
+                        </tr> --}}
                         <tr style="border: none;">
                             <td class="col-xl-6 text-left">
                                 <b>Review Period: </b>
                             </td>
                             <td class="col-xl-6 text-left">
-                                Jul’21 To Mar’22
+                                <?php
+                                   print_r(json_decode($assignedGoals->assignment_period, true)['assignment_period_start']);
+                                    //dd($temp);
+                                ?>
                             </td>
                         </tr>
                     </tbody>
