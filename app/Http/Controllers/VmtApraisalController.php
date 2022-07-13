@@ -172,7 +172,7 @@ class VmtApraisalController extends Controller
                     $empPmsGoal = new VmtEmployeePMSGoals; 
                 }
                 $empPmsGoal->kpi_table_id   = $request->kpitable_id;
-                $empPmsGoal->assignment_period = json_encode(['calendar_type'=>$request->calendar_type, 'year'=>$request->year, 'frequency'=>$request->frequency, 'assignment_period_start'=>$request->assignment_period_start]);
+                $empPmsGoal->assignment_period = json_encode(['calendar_type'=>$request->calendar_type, 'year'=>$request->hidden_calendar_year, 'frequency'=>$request->frequency, 'assignment_period_start'=>$request->assignment_period_start]);
                 //$empPmsGoal->assignment_period_start = $request->assignment_period_start;
                 //$empPmsGoal->assignment_period_end = $request->assignment_period_end;
                 //$empPmsGoal->assignment_period_year = $request->assignment_period_year;
@@ -464,26 +464,26 @@ class VmtApraisalController extends Controller
                         $ratingDetail['performance'] = "Needs Action";
                         $ratingDetail['ranking'] = 1;
                         $ratingDetail['action'] = 'Exit';
-                    } elseif ($ratingDetail['rating'] < 70) {
+                    } elseif ($ratingDetail['rating'] >= 60 && $ratingDetail['rating'] < 70) {
                         $ratingDetail['performance'] = "Below Expectations";
                         $ratingDetail['ranking'] = 2;
                         $ratingDetail['action'] = 'PIP';
-                    } elseif ($ratingDetail['rating'] < 80) {
+                    } elseif ($ratingDetail['rating'] >= 70 && $ratingDetail['rating'] < 80) {
                         $ratingDetail['performance'] = "Meet Expectations";
                         $ratingDetail['ranking'] = 3;
                         $ratingDetail['action'] = '10%';
-                    } elseif ($ratingDetail['rating'] < 90) {
+                    } elseif ($ratingDetail['rating'] >= 80 && $ratingDetail['rating'] < 90) {
                         $ratingDetail['performance'] = "Exceeds Expectations";
                         $ratingDetail['ranking'] = 4;
                         $ratingDetail['action'] = '15%';
-                    } elseif ($ratingDetail['rating'] < 100) {
+                    } elseif ($ratingDetail['rating'] >= 90) {
                         $ratingDetail['performance'] = "Exceptionally Exceeds Expectations";
                         $ratingDetail['ranking'] = 5;
                         $ratingDetail['action'] = '20%';
-                    } else {
-                        $ratingDetail['performance'] = "Needs Action";
-                        $ratingDetail['ranking'] = 1;
-                        $ratingDetail['action'] = 'Exit';
+                    } else{
+                        $ratingDetail['performance'] = "error";
+                        $ratingDetail['ranking'] = 000;
+                        $ratingDetail['action'] = '0000%';                      
                     }
                 }
 
@@ -525,7 +525,18 @@ class VmtApraisalController extends Controller
 
             if($request->has('goal_id')){
                 
+
+    
+                //dd($t_assignedEmp_manager_name);
+    
                 $assignedGoals  = VmtEmployeePMSGoals::where('kpi_table_id',$request->goal_id)->where('employee_id', $request->user_id)->first();
+
+                $assignedEmployee_Userdata = User::where('id',  $assignedGoals->employee_id)->first();
+                $assignedEmployeeOfficeDetails = VmtEmployeeOfficeDetails::where('user_id', $assignedGoals->employee_id)->first();
+    
+                //Get assigned employee manager name
+                $assignedEmp_manager_name = User::join('vmt_employee_details',  'vmt_employee_details.userid', '=', 'users.id')->where('vmt_employee_details.emp_no', $assignedEmployeeOfficeDetails->l1_manager_code)->pluck('name');
+
                 $employeeData = VmtEmployee::where('userid', $assignedGoals->employee_id)->first();
                 $kpiData      = VmtKPITable::find($assignedGoals->kpi_table_id);
                 $kpiRowArray  = explode(',', $kpiData->kpi_rows);
@@ -579,30 +590,32 @@ class VmtApraisalController extends Controller
                         $ratingDetail['performance'] = "Needs Action";
                         $ratingDetail['ranking'] = 1;
                         $ratingDetail['action'] = 'Exit';
-                    } elseif ($ratingDetail['rating'] < 70) {
+                    } elseif ($ratingDetail['rating'] >= 60 && $ratingDetail['rating'] < 70) {
                         $ratingDetail['performance'] = "Below Expectations";
                         $ratingDetail['ranking'] = 2;
                         $ratingDetail['action'] = 'PIP';
-                    } elseif ($ratingDetail['rating'] < 80) {
+                    } elseif ($ratingDetail['rating'] >= 70 && $ratingDetail['rating'] < 80) {
                         $ratingDetail['performance'] = "Meet Expectations";
                         $ratingDetail['ranking'] = 3;
                         $ratingDetail['action'] = '10%';
-                    } elseif ($ratingDetail['rating'] < 90) {
+                    } elseif ($ratingDetail['rating'] >= 80 && $ratingDetail['rating'] < 90) {
                         $ratingDetail['performance'] = "Exceeds Expectations";
                         $ratingDetail['ranking'] = 4;
                         $ratingDetail['action'] = '15%';
-                    } elseif ($ratingDetail['rating'] < 100) {
+                    } elseif ($ratingDetail['rating'] >= 90) {
                         $ratingDetail['performance'] = "Exceptionally Exceeds Expectations";
                         $ratingDetail['ranking'] = 5;
                         $ratingDetail['action'] = '20%';
-                    } else {
-                        $ratingDetail['performance'] = "Needs Action";
-                        $ratingDetail['ranking'] = 1;
-                        $ratingDetail['action'] = 'Exit';
+                    }
+                    else{
+                        $ratingDetail['performance'] = "error";
+                        $ratingDetail['ranking'] = 000;
+                        $ratingDetail['action'] = '0000%';                      
                     }
                 }
                 //dd($kpiRows);
-                return view('vmt_appraisalreview_hr', compact( 'employeeData', 'assignedGoals', 'kpiRows', 'empSelected', 'reviewCompleted', 'ratingDetail'));
+
+                return view('vmt_appraisalreview_hr', compact( 'employeeData','assignedEmployee_Userdata','assignedEmp_manager_name','assignedEmployeeOfficeDetails', 'assignedGoals', 'kpiRows', 'empSelected', 'reviewCompleted', 'ratingDetail'));
             }
 
             $kpiRows = [];
@@ -630,14 +643,12 @@ class VmtApraisalController extends Controller
 
             //dd($t_assignedEmp_manager_name);
 
-            $assignedEmployeeManagerName = User::where('id',  $assignedGoals->employee_id)->first();
-
-
 
             $kpiData      = VmtKPITable::find($assignedGoals->kpi_table_id);
             $kpiRowArray  = explode(',', $kpiData->kpi_rows);
             $kpiRows      = VmtAppraisalQuestion::whereIn('id', $kpiRowArray)->get();
             $reviewCompleted = false;
+
             if($assignedGoals->self_kpi_review != null){
                 $reviewArray = (json_decode($assignedGoals->self_kpi_review, true)) ? (json_decode($assignedGoals->self_kpi_review, true)) : [];
                 $percentArray = (json_decode($assignedGoals->self_kpi_percentage, true)) ? (json_decode($assignedGoals->self_kpi_percentage, true)) : [];
@@ -698,26 +709,26 @@ class VmtApraisalController extends Controller
                     $ratingDetail['performance'] = "Needs Action";
                     $ratingDetail['ranking'] = 1;
                     $ratingDetail['action'] = 'Exit';
-                } elseif ($ratingDetail['rating'] < 70) {
+                } elseif ($ratingDetail['rating'] >= 60 && $ratingDetail['rating'] < 70) {
                     $ratingDetail['performance'] = "Below Expectations";
                     $ratingDetail['ranking'] = 2;
                     $ratingDetail['action'] = 'PIP';
-                } elseif ($ratingDetail['rating'] < 80) {
+                } elseif ($ratingDetail['rating'] >= 70 && $ratingDetail['rating'] < 80) {
                     $ratingDetail['performance'] = "Meet Expectations";
                     $ratingDetail['ranking'] = 3;
                     $ratingDetail['action'] = '10%';
-                } elseif ($ratingDetail['rating'] < 90) {
+                } elseif ($ratingDetail['rating'] >= 80 && $ratingDetail['rating'] < 90) {
                     $ratingDetail['performance'] = "Exceeds Expectations";
                     $ratingDetail['ranking'] = 4;
                     $ratingDetail['action'] = '15%';
-                } elseif ($ratingDetail['rating'] < 100) {
+                } elseif ($ratingDetail['rating'] >= 90) {
                     $ratingDetail['performance'] = "Exceptionally Exceeds Expectations";
                     $ratingDetail['ranking'] = 5;
                     $ratingDetail['action'] = '20%';
-                } else {
-                    $ratingDetail['performance'] = "Needs Action";
-                    $ratingDetail['ranking'] = 1;
-                    $ratingDetail['action'] = 'Exit';
+                } else{
+                    $ratingDetail['performance'] = "error";
+                    $ratingDetail['ranking'] = 000;
+                    $ratingDetail['action'] = '0000%';                      
                 }
             }
             //dd($kpiRows);

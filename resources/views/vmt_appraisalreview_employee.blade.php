@@ -40,20 +40,10 @@
 <div class="row">
     <div class="col-xl-12">
         <div class="card">
-            <div class="card-header border-0 align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">PERFORMANCE MANAGEMENT SYSTEMS (PMS) </h4>
 
-            </div><!-- end card header -->
-
-            <div class="card-body  pb-2">
-
-
-            </div><!-- end card body -->
         </div><!-- end card -->
 
         <div class="card">
-
-            <div class="card-body  pb-2">
 
                 <table class="table e-table align-middle table-nowrap mb-0 " style="border: none;">
 
@@ -93,7 +83,6 @@
                     </tbody>
                 </table>
 
-            </div><!-- end card body -->
         </div><!-- end card -->
 
         <!-- @can('L1_Review')
@@ -127,7 +116,7 @@
                     <input type="hidden" name="goal_id" value="{{$assignedGoals->id}}">
                     <div class="table-content mb-4">
                         
-                        <table class="table align-middle mb-0 " id="table">
+                        <table class="table align-middle mb-0 table-bordered " id="table">
 
                             <thead class="thead" id="tHead">
                                 <tr>
@@ -182,11 +171,11 @@
                                         <div>{{$kpiRow->kpi_weightage}}</div>
                                     </td>
                                     <td>
-                                        @if($reviewCompleted)
+                                        @if($assignedGoals->is_employee_submitted)
                                             {{$kpiRow->self_kpi_review}}
                                         @else
                                         <div>
-                                            @if($assignedGoals->is_manager_approved)
+                                            @if($assignedGoals->is_manager_approved && !$assignedGoals->is_employee_submitted)
                                                 <textarea name="selfreview[{{$kpiRow->id}}]" id="" cols="40" rows="5"
                                                 placeholder="type here">@if(isset($kpiRow->self_kpi_review)) {{$kpiRow->self_kpi_review}} @endif</textarea>
                                             @endif
@@ -194,11 +183,11 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if($reviewCompleted)
+                                        @if($assignedGoals->is_employee_submitted)
                                             {{$kpiRow->self_kpi_percentage}}
                                         @else
                                         <div> 
-                                            @if($assignedGoals->is_manager_approved)
+                                            @if($assignedGoals->is_manager_approved && !$assignedGoals->is_employee_submitted)
                                                 <!-- <textarea name="selfkpiachievement[{{$kpiRow->id}}]" id="" cols="40" rows="5"
                                                 placeholder="type here">@if(isset($kpiRow->self_kpi_percentage)) {{$kpiRow->self_kpi_percentage}} @endif</textarea> -->
                                                 <input type="number" class="inp-text" name="selfkpiachievement[{{$kpiRow->id}}]" placeholder="type here" value="@if(isset( $kpiRow->self_kpi_percentage)){{$kpiRow->self_kpi_percentage}}@endif">
@@ -207,11 +196,11 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if($reviewCompleted)
+                                        @if($assignedGoals->is_employee_submitted)
                                             {{$kpiRow->self_kpi_comments}}
                                         @else
                                         <div>
-                                            @if($assignedGoals->is_manager_approved)
+                                            @if($assignedGoals->is_manager_approved && !$assignedGoals->is_employee_submitted)
                                                 <textarea name="selfcomments[{{$kpiRow->id}}]" id="" cols="40" rows="5"
                                                 placeholder="type here"> @if(isset($kpiRow->self_kpi_comments)) {{$kpiRow->self_kpi_comments}} @endif</textarea>
                                             @endif
@@ -258,7 +247,7 @@
                         <button class="btn btn-primary" id="reject">Reject<i class="fa fa-save"></i></button>
                         &nbsp;&nbsp;
                     @else
-                        @if(!$reviewCompleted && $assignedGoals->is_manager_approved )
+                        @if(!$reviewCompleted && !$assignedGoals->is_employee_submitted  && $assignedGoals->is_manager_approved )
                             <button class="btn btn-primary" id="save_table">Save<i class="fa fa-save"></i></button>
                             &nbsp;&nbsp;
                             <button class="btn btn-primary" id="publish_table">Submit<i class="fa fa-save"></i></button>
@@ -281,44 +270,35 @@
                 </label>
                 <div class="my-2">
                     <textarea class="form-control" placeholder="" id="gen-info-description-input" name="performance"
-                        rows="4"></textarea>
+                        rows="4" readonly>@if(isset( $assignedGoals->appraiser_comment)){{$assignedGoals->appraiser_comment}}@endif</textarea>
                 </div>
             </div>
         </div>
     @endif
 
 
+    @if($reviewCompleted)
+
     <div class="card">
         <div class="card-header">
-            <p>Appraisee's Annual Score & Rating</p>
+            <h5>Best People Rating Grid</h5>
         </div>
         <div class="card-body pb-2">
-            <h5>Best People Rating Grid</h5>
-            <div class="table-content mb-4">
-                <table class="table align-middle mb-0  responsive" id="table">
+            <h6>Appraisee's Annual Score & Rating</h6>
+            <div class="table-content mb-1">
+                <table class="table align-middle mb-0 table-bordered  table-striped" id="table">
 
                     <thead class="thead" id="tHead">
                         <tr>
-                            <th scope="col" colspan="6">Best People
-                                Rating Grid</th>
-                            <th scope="col"> Appraisee's Annual Score & Rating</th>
-
+                            <th scope="col">Overall Annual Score</th>
+                            <th scope="col">Less than 60</th>
+                            <th scope="col">60-70</th>
+                            <th scope="col">70-80</th>
+                            <th scope="col">80-90</th>
+                            <th scope="col">90-100</th>
                         </tr>
                     </thead>
                     <tbody class="tbody" id="tbody">
-
-
-                        <tr>
-                            <td class="">
-                                Overall Annual Score
-                            </td>
-                            <td class="">Less than 60 </td>
-                            <td class="">60-70</td>
-                            <td class="">70-80</td>
-                            <td class="">80-90</td>
-                            <td class="">90-100</td>
-                        </tr>
-
                         <tr>
 
                             <td class="">
@@ -358,7 +338,7 @@
             </div>
         </div>
     </div>
-
+    @endif
 
 <!-- Modal -->
                 <div class="modal fade flip" id="acceptPMS" tabindex="-1" aria-hidden="true">
