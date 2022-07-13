@@ -900,7 +900,6 @@ td .btn i {
                                 <div class="col-12">
                                     <div class="container-fluid mb-1 mt-3 ">
                                         <form id="kpiTableForm">
-                                            <input type="hidden" id="kpi_table_id" name="kpi_table_id">
                                             <div class="table-responsive">
                                                 <table class="align-middle mb-0" id="kpiTable" style="width:130%;">
                                                     @csrf
@@ -1460,10 +1459,10 @@ $('body').on('click', '#save-table', function(e){
             //console.log(input.attr('name')+" , "+input.val());
         }
 
-       if(input.val().trim().length < 1)
-       {
-         isAllFieldsEntered = false;
-       }
+        if(input.val().trim().length < 1)
+        {
+          isAllFieldsEntered = false;
+        }
     });
 
     //Validate other fields
