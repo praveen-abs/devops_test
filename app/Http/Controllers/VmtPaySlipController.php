@@ -42,16 +42,22 @@ class VmtPaySlipController extends Controller
     */
     public function paySlipIndex(Request $request) {
        // $data = VmtEmployeePaySlip::all(); 
+       
        $data =  DB::table('vmt_employee_payslip')
-         ->join('vmt_employee_details', 'vmt_employee_payslip.id', '=', 'vmt_employee_details.userid')
-         ->join('users', 'users.id', '=', 'vmt_employee_details.userid')
         ->where('vmt_employee_payslip.user_id', auth()->user()->id)
         ->get();
+
+        //dd($data);
         return view('vmt_salary_details', compact('data'));  
     }
 
     public function payslipPdfView(Request $request){
-        $data['employee'] = VmtEmployeePaySlip::where('EMP_NO', $request->id)->first();
+        //dd($request);
+        $data['employee'] = VmtEmployeePaySlip::where([
+                        ['user_id','=', auth()->user()->id],
+                        ['PAYROLL_MONTH','=', $request->selectedPaySlipMonth],
+                        ])->first();
+        //dd($data);
         // return view('vmt_payslipTemplate', $data);
         // download PDF file with download method
         // $pdf = new Dompdf();
