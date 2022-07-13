@@ -920,7 +920,6 @@ td .btn i {
                                                     </thead>
                                                     <tbody class="tbody content-container" id="tbody">
                                                         <tr class="addition-content cursor-pointer" id="content1">
-                                                            <input type="hidden" name="kpi_id[]">
                                                             <td class="">
                                                                 <span  name="numbers" id="" class="tableInp" >1</span>
                                                                 <div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div>
