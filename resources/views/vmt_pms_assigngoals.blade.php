@@ -990,7 +990,7 @@ td .btn i {
 
 <!-- Change Reviewr window -->
 
-<div class="modal fade" id="createEmployee" role="dialog" aria-hidden="true" style="opacity:1; display:none;">
+<div class="modal fade" id="createEmployee" role="dialog" aria-hidden="true" style="opacity:1; display:none;background:#00000073;">
     <div class="modal-dialog modal-md" id="" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2">
         <div class="modal-content">
             <div class="modal-header py-2 bg-primary">
@@ -1044,7 +1044,7 @@ td .btn i {
 </div>
 
 <!-- Vertically Centered -->
-<div class="modal fade" id="notificationModal" role="dialog" aria-hidden="true" style="opacity:1; display:none;">
+<div class="modal fade" id="notificationModal" role="dialog" aria-hidden="true" style="opacity:1; display:none;background:#00000073;">
     <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2">
         <div class="modal-content">
             <div class="modal-header py-2 bg-primary">
@@ -1074,7 +1074,7 @@ td .btn i {
 </div>
 
 <!-- Select Employees window -->
-<div class="modal fade" id="changeEmployee">
+<div class="modal fade" id="changeEmployee" style="opacity:1; display:none;background:#00000073;">
     <div class="modal-dialog modal-md" id="" aria-hidden="true"
         aria-labelledby="exampleModalToggleLabel2">
 
