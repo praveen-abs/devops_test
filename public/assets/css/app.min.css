@@ -1987,9 +1987,9 @@ body {
 }
 
 @media (min-width:768px) {
-    [data-layout=vertical][data-sidebar-size=sm] {
+    /* [data-layout=vertical][data-sidebar-size=sm] {
         min-height: 1400px
-    }
+    } */
 
     [data-layout=vertical][data-sidebar-size=sm] .main-content {
         margin-left: 100px;
