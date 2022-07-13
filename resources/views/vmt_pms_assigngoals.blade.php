@@ -913,8 +913,8 @@ td .btn i {
                                                             <th class="sort" data-sort="amount" style="width: 15%;">Measure</th>
                                                             <th class="sort" data-sort="payment" style="width: 5%;">Frequency</th>
                                                             <th class="sort" data-sort="status" style="width: 5%;">Target</th>
-                                                            <th class="sort" data-sort="status" style="width: 10%;">Stretch Target</th>
-                                                            <th class="sort" data-sort="status" style="width: 5%;">Source</th>
+                                                            <th class="sort" data-sort="status" style="width: 11%;">Stretch Target</th>
+                                                            <th class="sort" data-sort="status" style="width: 4%;">Source</th>
                                                             <th class="sort" data-sort="status" style="width: 15%;" width="10%">KPI Weightage ( % )</th>
                                                         </tr>
                                                     </thead>

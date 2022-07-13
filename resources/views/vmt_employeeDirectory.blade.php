@@ -392,9 +392,9 @@ tr:last-child td:last-child {
                     <td>{{$employee->percentage}}%</td>
                     <td>
                         <div class="d-flex gap-2 align-items-center">
-                            <button data-id="{{$employee->id}}" class="add_goals btn border-0 outline-none bg-transparent p-0  mx-1">
+                            <a href="{{route('pages-profile')}}" class="btn border-0 outline-none bg-transparent p-0  mx-1">
                                 <i class="ri-pencil-line text-primary fw-bold"></i>
-                            </button>
+                            </a>
                             <button class="btn border-0 outline-none bg-transparent p-0  ">
                                 <i class="ri-delete-bin-line text-danger fw-bold"></i>
                             </button>
@@ -1057,79 +1057,79 @@ $(document).ready(function() {
 
     @endif
 
-    $('.add_goals').click(function() {
-        // data poplate for edit
-        var key = $(this).attr('data-id');
-        var length = 1;
-        $.ajax({
-            type: "POST", 
-            url: "{{route('kpi-data')}}", 
-            data: {
-                id:key,
-                "_token": "{{ csrf_token() }}",
-            },
-            success: function(data){
-                var goal = data['goal'];
-                var goals = data['goals'];
-                $('#kpi_table_id').val(goals['kpi_table_id']);
-                $('#goal_id').val(goals['id']);
-                // $('#sel_employees').val();
-                $('#sel_reviewer').val(goals['reviewer_id']);
-                $('#select-reviewer').val(goals['reviewer_id']);
-                if (goals['rev'] && goals['rev']['id']) {
-                    $('#reviewer-name').val(goals['rev']['name']);
-                    $('#reviewer-email').val(goals['rev']['email']);
-                }
-                if (goals['emp'] && goals['emp']['id']) {
-                    var employeeSelected = $('#select-employees').val(goals['emp']['id']);
-                    @if(auth()->user()->hasrole('Employee'))
-                    @else
-                    var employees = {!!json_encode($employees)!!};
+    // $('.add_goals').click(function() {
+    //     // data poplate for edit
+    //     var key = $(this).attr('data-id');
+    //     var length = 1;
+    //     $.ajax({
+    //         type: "POST", 
+    //         url: "{{route('kpi-data')}}", 
+    //         data: {
+    //             id:key,
+    //             "_token": "{{ csrf_token() }}",
+    //         },
+    //         success: function(data){
+    //             var goal = data['goal'];
+    //             var goals = data['goals'];
+    //             $('#kpi_table_id').val(goals['kpi_table_id']);
+    //             $('#goal_id').val(goals['id']);
+    //             // $('#sel_employees').val();
+    //             $('#sel_reviewer').val(data['rev']['id']);
+    //             $('#select-reviewer').val(data['rev']['id']);
+    //             if (data['rev'] && data['rev']['id']) {
+    //                 $('#reviewer-name').val(data['rev']['name']);
+    //                 $('#reviewer-email').val(data['rev']['email']);
+    //             }
+    //             if (goals['emp'] && goals['emp']['id']) {
+    //                 var employeeSelected = $('#select-employees').val(goals['emp']['id']);
+    //                 @if(auth()->user()->hasrole('Employee'))
+    //                 @else
+    //                 var employees = {!!json_encode($employees)!!};
 
-                    @endif
-                    var employeeArray = [];
-                    $("#sel_employees").val(employeeSelected);
+    //                 @endif
+    //                 var employeeArray = [];
+    //                 $("#sel_employees").val(employeeSelected);
 
-                    var imgHtml ="";
-                    var count = 0;
-                    $.each(goals['emp'], function(i, data){
-                        if($.inArray(data.id.toString(), employeeSelected) > -1){
-                            employeeArray.push(data.emp_name);
-                            if (count < 4) {
-                                imgHtml = imgHtml+"<a class='avatar'><img src='assets/images/"+data.avatar+"' alt='' class='rounded-circle p-0'></a>";
-                            }
-                            count++;
-                        }
-                    });
-                    if (count > 4) {
-                        imgHtml = imgHtml+"<span class='img-addition' style='background-color: rgb(134, 192, 106);width: 30px;height: 30px;font-size:12px;'> +"+count-3+" </span><div class='mt-1 message-content align-items-start d-flex flex-column  mx-2'><span id='group-employee'></span></div>";
-                    }
-                    $('#group-employee').html(employeeArray.join());
-                    $('#changeEmployee').css('display', 'none');
-                    $('.avatar-group-item').html(imgHtml);
+    //                 var imgHtml ="";
+    //                 var count = 0;
+    //                 $.each(goals['emp'], function(i, data){
+    //                     if($.inArray(data.id.toString(), employeeSelected) > -1){
+    //                         employeeArray.push(data.emp_name);
+    //                         if (count < 4) {
+    //                             imgHtml = imgHtml+"<a class='avatar'><img src='assets/images/"+data.avatar+"' alt='' class='rounded-circle p-0'></a>";
+    //                         }
+    //                         count++;
+    //                     }
+    //                 });
+    //                 if (count > 4) {
+    //                     imgHtml = imgHtml+"<span class='img-addition' style='background-color: rgb(134, 192, 106);width: 30px;height: 30px;font-size:12px;'> +"+count-3+" </span><div class='mt-1 message-content align-items-start d-flex flex-column  mx-2'><span id='group-employee'></span></div>";
+    //                 }
+    //                 $('#group-employee').html(employeeArray.join());
+    //                 $('#changeEmployee').css('display', 'none');
+    //                 $('.avatar-group-item').html(imgHtml);
 
-                    $('#empiewer-name').val(goals['emp']['name']);
-                    $('#empiewer-email').val(goals['emp']['email']);
-                }
-                $('#calendar_type').val(goal['calendar_type']);
-                calendar();
-                $('#year').val(goal['year']);
-                $('#frequency').val(goal['frequency']);
-                frequency();
-                $('#assignment_period_start').val(goal['assignment_period_start']);
-                $('#department').val(goal['department']);
+    //                 $('#empiewer-name').val(goals['emp']['name']);
+    //                 $('#empiewer-email').val(goals['emp']['email']);
+    //             }
+    //             $('#calendar_type').val(goal['calendar_type']);
+    //             calendar();
+    //             $('#year').val(goal['year']);
+    //             $('#frequency').val(goal['frequency']);
+    //             frequency();
+    //             $('#assignment_period_start').val(goal['assignment_period_start']);
+    //             $('#department').val(goal['department']);
 
-                if (data) {
-                    $('.addition-content').html('');
-                }
-                $.each(data['kpi'],function(key, value) {
-                    $('.content-container').append('<tr class="addition-content cursor-pointer" id="content'+length+'"><input type="hidden" name="kpi_id[]" value="'+value['id']+'"><td class="text-box-td p-1"><span  name="numbers" id="" class="tableInp" >'+length+'</span><div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div></td><td class="text-box-td p-1"><textarea name="dimension[]" id="" class="text-box" cols="20" placeholder="type here">'+value['dimension']+'</textarea></td><td class="text-box-td p-1"><textarea name="kpi[]" id="" class="text-box" cols="20" placeholder="type here">'+value['kpi']+'</textarea></td><td class="text-box-td p-1"><textarea name="operational[]" id="" class="text-box" cols="20" placeholder="type here">'+value['operational_definition']+'</textarea></td><td class="text-box-td p-1"><textarea name="measure[]" id="" class="text-box" cols="20" placeholder="type here">'+value['measure']+'</textarea></td><td class="text-box-td p-1"><textarea name="frequency[]" id="" class="text-box" cols="20" placeholder="type here">'+value['frequency']+'</textarea></td><td class="text-box-td p-1"> <textarea name="target[]" id="" class="text-box" cols="20" placeholder="type here">'+value['target']+'</textarea></td><td class="text-box-td p-1"><textarea name="stretchTarget[]" id="" class="text-box" cols="10" placeholder="type here">'+value['stretch_target']+'</textarea></td><td class="text-box-td p-1"><textarea name="source[]" id="" class="text-box" cols="10" placeholder="type here">'+value['source']+'</textarea></td><td class="text-box-td p-1"><textarea name="kpiWeightage[]" id="" class="text-box" cols="10" placeholder="type here">'+value['kpi_weightage']+'</textarea></td></tr>');
-                    length++;
-                });
-            }
-        });
-        $('#add-goals-modal').modal('show');
-    });
+    //             if (data) {
+    //                 $('.addition-content').html('');
+    //             }
+    //             $.each(data['kpi'],function(key, value) {
+    //                 $('.content-container').append('<tr class="addition-content cursor-pointer" id="content'+length+'"><input type="hidden" name="kpi_id[]" value="'+value['id']+'"><td class="text-box-td p-1"><span  name="numbers" id="" class="tableInp" >'+length+'</span><div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div></td><td class="text-box-td p-1"><textarea name="dimension[]" id="" class="text-box" cols="20" placeholder="type here">'+value['dimension']+'</textarea></td><td class="text-box-td p-1"><textarea name="kpi[]" id="" class="text-box" cols="20" placeholder="type here">'+value['kpi']+'</textarea></td><td class="text-box-td p-1"><textarea name="operational[]" id="" class="text-box" cols="20" placeholder="type here">'+value['operational_definition']+'</textarea></td><td class="text-box-td p-1"><textarea name="measure[]" id="" class="text-box" cols="20" placeholder="type here">'+value['measure']+'</textarea></td><td class="text-box-td p-1"><textarea name="frequency[]" id="" class="text-box" cols="20" placeholder="type here">'+value['frequency']+'</textarea></td><td class="text-box-td p-1"> <textarea name="target[]" id="" class="text-box" cols="20" placeholder="type here">'+value['target']+'</textarea></td><td class="text-box-td p-1"><textarea name="stretchTarget[]" id="" class="text-box" cols="10" placeholder="type here">'+value['stretch_target']+'</textarea></td><td class="text-box-td p-1"><textarea name="source[]" id="" class="text-box" cols="10" placeholder="type here">'+value['source']+'</textarea></td><td class="text-box-td p-1"><textarea name="kpiWeightage[]" id="" class="text-box" cols="10" placeholder="type here">'+value['kpi_weightage']+'</textarea></td></tr>');
+    //                 length++;
+    //             });
+    //         }
+    //     });
+    //     $('#add-goals-modal').modal('show');
+    // });
     
     $('body').on('click', '.delete-row', function() {
         $(this).parent().parent().remove();
