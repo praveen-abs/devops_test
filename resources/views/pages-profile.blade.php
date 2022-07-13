@@ -78,7 +78,7 @@
                             <div class="card-body">
                                 <h3 class="card-title fw-bold">Employee Informations
                                     <span class="personal-edit"><a href="#" class="edit-icon" data-bs-toggle="modal"
-                                            data-bs-target="#personal_info"><i class="ri-pencil-fill"></i></a></span>
+                                            data-bs-target="#profile_info"><i class="ri-pencil-fill"></i></a></span>
                                 </h3>
                                 <ul class="personal-info">
                                     <li>
@@ -749,14 +749,8 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
-                                            <label>First Name</label>
+                                            <label>Name</label>
                                             <input type="text" class="form-control" name="name" value="{{$user->name}}">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group mb-3">
-                                            <label>Last Name</label>
-                                            <input type="text" class="form-control" value="Doe">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -770,15 +764,13 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label>Gender</label>
-
-
                                         <select class="form-select" name="gender" aria-label="Default select">
                                             <option selected>-</option>
-                                            <option value="1" @if($details->gender == '1') 'seletced'
+                                            <option value="male" @if($details->gender == 'male') 'seletced'
                                                 @endif>Male</option>
-                                            <option value="2" @if($details->gender == '2') 'seletced'
+                                            <option value="female" @if($details->gender == 'female') 'seletced'
                                                 @endif>Female</option>
-                                            <option value="3" @if($details->gender == '3') 'seletced'
+                                            <option value="other" @if($details->gender == 'other') 'seletced'
                                                 @endif>Other</option>
                                         </select>
 
@@ -795,7 +787,7 @@
                                         value="{{$details->present_address}}">
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <!-- <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>State</label>
                                     <input type="text" class="form-control" value="New York">
@@ -812,53 +804,12 @@
                                     <label>Pin Code</label>
                                     <input type="text" class="form-control" value="10523">
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Phone Number</label>
                                     <input type="text" class="form-control" name="mobile_number"
                                         value="{{$details->mobile_number}}">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label>Gender</label>
-
-
-                                <select class="form-select  " aria-label="Default select">
-                                    <option selected>-</option>
-                                    <option value="1" @if($details->gender == '1') 'seletced' @endif>Male
-                                    </option>
-                                    <option value="2" @if($details->gender == '2') 'seletced' @endif>Female
-                                    </option>
-                                    <option value="3" @if($details->gender == '3') 'seletced' @endif>Other
-                                    </option>
-                                </select>
-
-                            </div>
-                            <div class="col-md-6">
-                                <label>Gender</label>
-                                <div class="select-menu form-control">
-
-                                    <div class="select-btn">
-                                        <span class="sBtn-text text-muted">--Select Gender--</span>
-                                        <i class="bx bx-chevron-down mx-3 text-muted"></i>
-                                    </div>
-
-                                    <ul class="options ">
-                                        <li class="option">
-
-                                            <span class="option-text">Male</span>
-                                        </li>
-                                        <li class="option">
-
-                                            <span class="option-text">Female</span>
-                                        </li>
-                                        <li class="option">
-
-                                            <span class="option-text">Other</span>
-                                        </li>
-
-                                    </ul>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -1086,7 +1037,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header py-3 new-role-header d-flex align-items-center">
-                    <h4 class="modal-title mb-1 text-primary">Personal Information</h4>
+                    <h4 class="modal-title mb-1 text-primary">Emergency Contact</h4>
                     <hr class="bottom-dash">
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>

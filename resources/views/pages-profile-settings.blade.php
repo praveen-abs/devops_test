@@ -827,11 +827,11 @@
 
                                                 <select class="form-select" name="gender" aria-label="Default select">
                                                     <option selected>-</option>
-                                                    <option value="1" @if($details->gender == '1') 'seletced'
+                                                    <option value="male" @if($details->gender == 'male') 'seletced'
                                                         @endif>Male</option>
-                                                    <option value="2" @if($details->gender == '2') 'seletced'
+                                                    <option value="female" @if($details->gender == 'female') 'seletced'
                                                         @endif>Female</option>
-                                                    <option value="3" @if($details->gender == '3') 'seletced'
+                                                    <option value="other" @if($details->gender == 'other') 'seletced'
                                                         @endif>Other</option>
                                                 </select>
 
