@@ -4,13 +4,13 @@
 @endsection
 @section('content')
 
-<div class="container-fluid user-details-wrapper">
+<div class="container-fluid user-details-wrapper px-5">
     <div class="row">
         <div class="col-12">
             <div class="pro-overview">
                 <div class="row">
 
-                    <div class="col-md-4 col-xl-4 col-lg-4 col-sm-12 d-flex">
+                    <div class="col-md-4 col-xl-3 col-lg-3 col-sm-12 d-flex">
                         <div class="card profile-box flex-fill ">
                             <div class="card-body">
 
@@ -72,13 +72,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 col-xl-4 col-lg-4 col-sm-12 d-flex">
+                    <div class="col-md-4 col-xl-3 col-lg-3 col-sm-12 d-flex">
 
                         <div class="card profile-box  flex-fill">
                             <div class="card-body">
                                 <h3 class="card-title fw-bold">Employee Informations
                                     <span class="personal-edit"><a href="#" class="edit-icon" data-bs-toggle="modal"
-                                            data-bs-target="#profile_info"><i class="ri-pencil-fill"></i></a></span>
+                                            data-bs-target="#employee_info"><i class="ri-pencil-fill"></i></a></span>
                                 </h3>
                                 <ul class="personal-info">
                                     <li>
@@ -125,12 +125,12 @@
                         </div>
 
                     </div>
-                    <div class="col-md-4 col-xl-4 col-lg-4 col-sm-12 d-flex">
+                    <div class="col-md-4 col-xl-3 col-lg-3 col-sm-12 ">
                         <div class="card profile-box flex-fill">
                             <div class="card-body">
                                 <h3 class="card-title fw-bold">Bank information
                                     <span class="personal-edit"><a href="#" class="edit-icon" data-bs-toggle="modal"
-                                            data-bs-target="#personal_info"><i class="ri-pencil-fill"></i></a></span>
+                                            data-bs-target="#Bank_info"><i class="ri-pencil-fill"></i></a></span>
 
                                 </h3>
                                 <ul class="personal-info">
@@ -154,7 +154,37 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-4 col-xl-3 col-lg-3 col-sm-12 ">
+                        <div class="card profile-box flex-fill">
+                            <div class="card-body">
+                                <h3 class="card-title fw-bold">Experience Details
+                                    <span class="personal-edit"><a href="#" class="edit-icon" data-bs-toggle="modal"
+                                            data-bs-target="#experience_info"><i class="ri-pencil-fill"></i></a></span>
+                                </h3>
+                                <ul class="personal-info">
+                                    <li>
+                                        <div class="title">Organization</div>
+                                        <!-- <div class="text">{{$details->passport}}</div> -->
+                                        <div class="text">-</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">Designation</div>
+                                        <!-- <div class="text">{{$details->passport}}</div> -->
+                                        <div class="text">-</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">From</div>
+                                        <div class="text">-</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">To</div>
+                                        <div class="text">-</div>
+                                    </li>
 
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -162,59 +192,59 @@
     <!-- -------- -->
     <div id="emp_profile" class="pro-overview">
         <div class="row">
-            <div class="col-md-4 col-xl-4 col-lg-4 col-sm-12 d-flex">
+            <div class="col-md-4 col-xl-3 col-lg-3 col-sm-12 ">
                 <div class="card profile-box flex-fill ">
                     <div class="card-body">
                         <h3 class="card-title fw-bold">Emergency Contact <a href="#" class="edit-icon"
                                 data-bs-toggle="modal" data-bs-target="#emergency_contact_modal"><i
                                     class=" ri-pencil-fill"></i></a></h3>
 
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6 col-xl-6  col-sm-6 w-100">
+                                <h5 class="section-title">Primary</h5>
+                                <ul class="personal-info">
+                                    <li>
+                                        <div class="title">Name</div>
+                                        <div class="text">{{$details->father_name}}</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">Relationship</div>
+                                        <div class="text">Father</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">Phone </div>
+                                        <div class="text">{{$details->mobile_number}},
+                                            {{$details->official_mobile}}
+                                        </div>
+                                    </li>
 
-                        <div class="col-md-6 col-lg-6 col-xl-6  col-sm-6">
-                            <h5 class="section-title">Primary</h5>
-                            <ul class="personal-info">
-                                <li>
-                                    <div class="title">Name</div>
-                                    <div class="text">{{$details->father_name}}</div>
-                                </li>
-                                <li>
-                                    <div class="title">Relationship</div>
-                                    <div class="text">Father</div>
-                                </li>
-                                <li>
-                                    <div class="title">Phone </div>
-                                    <div class="text">{{$details->mobile_number}},
-                                        {{$details->official_mobile}}
-                                    </div>
-                                </li>
-
-                            </ul>
+                                </ul>
+                            </div>
+                            <hr>
+                            <div class="col-md-6 col-lg-6 col-xl-6  col-sm-12 w-100">
+                                <h5 class="section-title">Secondary</h5>
+                                <ul class="personal-info">
+                                    <li>
+                                        <div class="title">Name</div>
+                                        <div class="text">Karen Wills</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">Relationship</div>
+                                        <div class="text">Brother</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">Phone </div>
+                                        <div class="text">9876543210, 9876543210</div>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                        <hr>
-                        <div class="col-md-6 col-lg-6 col-xl-6  col-sm-12">
-                            <h5 class="section-title">Secondary</h5>
-                            <ul class="personal-info">
-                                <li>
-                                    <div class="title">Name</div>
-                                    <div class="text">Karen Wills</div>
-                                </li>
-                                <li>
-                                    <div class="title">Relationship</div>
-                                    <div class="text">Brother</div>
-                                </li>
-                                <li>
-                                    <div class="title">Phone </div>
-                                    <div class="text">9876543210, 9876543210</div>
-                                </li>
-                            </ul>
-                        </div>
-
 
 
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 col-xl-4 col-lg-4 col-sm-12 d-flex">
+            <div class="col-md-4 col-xl-3 col-lg-3 col-sm-12 ">
                 <div class="card profile-box flex-fill">
                     <div class="card-body">
                         <h3 class="card-title fw-bold">Personal Informations
@@ -259,7 +289,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4 col-xl-4 col-lg-4 col-sm-12 d-flex">
+            <div class="col-md-4 col-xl-3 col-lg-3 col-sm-12 ">
                 <div class="card profile-box flex-fill">
                     <div class="card-body">
                         <h3 class="card-title fw-bold">Family Informations <a href="#" class="edit-icon"
@@ -305,13 +335,45 @@
                 </div>
 
             </div>
+
+            <div class="col-md-4 col-xl-3 col-lg-3 col-sm-12 ">
+                <div class="card profile-box flex-fill">
+                    <div class="card-body">
+                        <h3 class="card-title fw-bold">Leave Details
+                            <span class="personal-edit"><a href="#" class="edit-icon" data-bs-toggle="modal"
+                                    data-bs-target="#leave_info"><i class="ri-pencil-fill"></i></a></span>
+                        </h3>
+                        <ul class="personal-info">
+                            <li>
+                                <div class="title">Allocated Paid Leaves</div>
+                                <!-- <div class="text">{{$details->passport}}</div> -->
+                                <div class="text">21</div>
+                            </li>
+                            <li>
+                                <div class="title"> Paid Leave Balance</div>
+                                <!-- <div class="text">{{$details->passport}}</div> -->
+                                <div class="text">19</div>
+                            </li>
+                            <li>
+                                <div class="title">Allocated Restricted Holidays</div>
+                                <div class="text">2</div>
+                            </li>
+                            <li>
+                                <div class="title">Allocated Restricted Balance</div>
+                                <div class="text">4</div>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
 
     <div id="emp_profile" class="pro-overview">
         <div class="row">
-            <!-- ----------- -->
+
 
         </div>
     </div>
@@ -718,13 +780,13 @@
 
     </div>
 
-    <!-- profile info modal -->
+    <!-- employee info -->
 
-    <div id="profile_info" class="modal custom-modal fade" role="dialog">
+    <div id="employee_info" class="modal custom-modal fade" role="dialog">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header py-3 new-role-header d-flex align-items-center">
-                    <h4 class="modal-title mb-1 text-primary">Profile Information</h4>
+                    <h4 class="modal-title mb-1 text-primary">Employee Information</h4>
                     <hr class="bottom-dash">
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
@@ -938,6 +1000,115 @@
             </div>
         </div>
     </div>
+
+
+    <!-- bank informatios -->
+
+
+    <div id="Bank_info" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header py-3 new-role-header d-flex align-items-center">
+                    <h4 class="modal-title mb-1 text-primary">Bank Information</h4>
+                    <hr class="bottom-dash">
+                    <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label>Bank name</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label>EmaBank account No</label>
+                                    <div class="cal-icon">
+                                        <input class="form-control" type="text">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label>IFSC Code</label>
+                                    <input class="form-control" type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label>PAN No</label>
+                                    <input class="form-control" type="text">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="submit-section">
+                            <button class="btn btn-primary submit-btn">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- leave information -->
+
+    <div id="leave_info" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header py-3 new-role-header d-flex align-items-center">
+                    <h4 class="modal-title mb-1 text-primary">Leave Information</h4>
+                    <hr class="bottom-dash">
+                    <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label>Allocated Paid Leaves</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label>Paid Leave Balance</label>
+                                    <div class="cal-icon">
+                                        <input class="form-control" type="text">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label>Allocated Restricted Holidays</label>
+                                    <input class="form-control" type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label>Allocated Restricted Balance</label>
+                                    <input class="form-control" type="text">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="submit-section">
+                            <button class="btn btn-primary submit-btn">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 
     <!-- modal -->
