@@ -1,3 +1,14 @@
+<?php
+    $logoObj = \DB::table('vmt_general_info')->first();
+
+    if($logoObj){
+        $logoSrc = $logoObj->logo_img;
+    }else{
+        $logoSrc = 'assets/images/vasa.jpg';
+    }
+   // dd($logoSrc);
+?>
+
 <header id="page-topbar">
     <div class="layout-width">
         <div class="navbar-header">
@@ -34,7 +45,8 @@
                     <div class="d-flex w-50">
 
                         <div class="logo w-25 d-flex justify-content-center align-items-center">
-                        <img src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="">
+                            <img src="{{ URL::asset($logoSrc) }}" alt="" class=""> 
+
                         </div>
                         <button type="button"
                             class="btn btn-sm px-3 fs-16 header-item vertical-menu-btn topnav-hamburger"
