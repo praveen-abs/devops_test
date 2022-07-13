@@ -4,8 +4,8 @@
 		<meta content="text/html; charset=UTF-8" http-equiv="content-type">
 		<style type="text/css">
 			@page {
-  margin: 0;
-}
+				margin: 0;
+			}
 			@import url('https://themes.googleusercontent.com/fonts/css?kit=fpjTOVmNbO4Lz34iLyptLQ1sPDLn3JuDNay4yiy2_As5BpxnPiOl8iQ3pkkf0_oT96xlbbE5D7Gw2o7jubnkMA');
 			ol{margin:0;padding:0}table td,table th{padding:0}.c6{border-right-style:solid;padding:0pt 5.8pt 0pt 5.8pt;border-bottom-color:#ed7d31;border-top-width:1.5pt;border-right-width:1.5pt;border-left-color:#ed7d31;vertical-align:middle;border-right-color:#ed7d31;border-left-width:1.5pt;border-top-style:solid;background-color:#d0cece;border-left-style:solid;border-bottom-width:1.5pt;width:92.2pt;border-top-color:#ed7d31;border-bottom-style:solid}.c8{border-right-style:solid;padding:0pt 5.8pt 0pt 5.8pt;border-bottom-color:#ed7d31;border-top-width:1.5pt;border-right-width:1.5pt;border-left-color:#ed7d31;vertical-align:middle;border-right-color:#ed7d31;border-left-width:1.5pt;border-top-style:solid;background-color:#d9d9d9;border-left-style:solid;border-bottom-width:1.5pt;width:92.2pt;border-top-color:#ed7d31;border-bottom-style:solid}.c21{border-right-style:solid;padding:0pt 5.8pt 0pt 5.8pt;border-bottom-color:#ed7d31;border-top-width:1.5pt;border-right-width:1.5pt;border-left-color:#ed7d31;vertical-align:middle;border-right-color:#ed7d31;border-left-width:1.5pt;border-top-style:solid;background-color:#d9d9d9;border-left-style:solid;border-bottom-width:1.5pt;width:46pt;border-top-color:#ed7d31;border-bottom-style:solid}.c12{border-right-style:solid;padding:0pt 5.8pt 0pt 5.8pt;border-bottom-color:#ed7d31;border-top-width:1.5pt;border-right-width:1.5pt;border-left-color:#ed7d31;vertical-align:middle;border-right-color:#ed7d31;border-left-width:1.5pt;border-top-style:solid;background-color:#d9d9d9;border-left-style:solid;border-bottom-width:1.5pt;width:32.4pt;border-top-color:#ed7d31;border-bottom-style:solid}.c33{border-right-style:solid;padding:0pt 5.8pt 0pt 5.8pt;border-bottom-color:#ed7d31;border-top-width:1.5pt;border-right-width:1.5pt;border-left-color:#ed7d31;vertical-align:middle;border-right-color:#ed7d31;border-left-width:1.5pt;border-top-style:solid;background-color:#d0cece;border-left-style:solid;border-bottom-width:1.5pt;width:105.9pt;border-top-color:#ed7d31;border-bottom-style:solid}.c5{border-right-style:solid;padding:0pt 5.8pt 0pt 5.8pt;border-bottom-color:#ed7d31;border-top-width:1.5pt;border-right-width:1.5pt;border-left-color:#ed7d31;vertical-align:middle;border-right-color:#ed7d31;border-left-width:1.5pt;border-top-style:solid;background-color:#d9d9d9;border-left-style:solid;border-bottom-width:1.5pt;width:46.1pt;border-top-color:#ed7d31;border-bottom-style:solid}.c4{border-right-style:solid;padding:0pt 5.8pt 0pt 5.8pt;border-bottom-color:#ed7d31;border-top-width:1.5pt;border-right-width:1.5pt;border-left-color:#ed7d31;vertical-align:middle;border-right-color:#ed7d31;border-left-width:1.5pt;border-top-style:solid;background-color:#d0cece;border-left-style:solid;border-bottom-width:1.5pt;width:92.1pt;border-top-color:#ed7d31;border-bottom-style:solid}.c32{border-right-style:solid;padding:0pt 5.8pt 0pt 5.8pt;border-bottom-color:#ed7d31;border-top-width:1.5pt;border-right-width:1.5pt;border-left-color:#ed7d31;vertical-align:middle;border-right-color:#ed7d31;border-left-width:1.5pt;border-top-style:solid;background-color:#ffffff;border-left-style:solid;border-bottom-width:1.5pt;width:553pt;border-top-color:#ed7d31;border-bottom-style:solid}.c7{border-right-style:solid;padding:0pt 5.8pt 0pt 5.8pt;border-bottom-color:#ed7d31;border-top-width:1.5pt;border-right-width:1.5pt;border-left-color:#ed7d31;vertical-align:middle;border-right-color:#ed7d31;border-left-width:1.5pt;border-top-style:solid;background-color:#ffffff;border-left-style:solid;border-bottom-width:1.5pt;width:92.2pt;border-top-color:#ed7d31;border-bottom-style:solid}.c20{border-right-style:solid;padding:0pt 5.8pt 0pt 5.8pt;border-bottom-color:#ed7d31;border-top-width:1.5pt;border-right-width:1.5pt;border-left-color:#ed7d31;vertical-align:middle;border-right-color:#ed7d31;border-left-width:1.5pt;border-top-style:solid;background-color:#d9d9d9;border-left-style:solid;border-bottom-width:1.5pt;width:92.1pt;border-top-color:#ed7d31;border-bottom-style:solid}.c47{border-right-style:solid;padding:0pt 5.8pt 0pt 5.8pt;border-bottom-color:#ed7d31;border-top-width:1.5pt;border-right-width:1.5pt;border-left-color:#ed7d31;vertical-align:bottom;border-right-color:#ed7d31;border-left-width:1.5pt;border-top-style:solid;border-left-style:solid;border-bottom-width:1.5pt;width:553pt;border-top-color:#ed7d31;border-bottom-style:solid}.c26{border-right-style:solid;padding:0pt 5.8pt 0pt 5.8pt;border-bottom-color:#ed7d31;border-top-width:1.5pt;border-right-width:1.5pt;border-left-color:#ed7d31;vertical-align:bottom;border-right-color:#ed7d31;border-left-width:1.5pt;border-top-style:solid;border-left-style:solid;border-bottom-width:1.5pt;width:46pt;border-top-color:#ed7d31;border-bottom-style:solid}.c51{border-right-style:solid;padding:0pt 5.8pt 0pt 5.8pt;border-bottom-color:#ed7d31;border-top-width:1.5pt;border-right-width:1.5pt;border-left-color:#ed7d31;vertical-align:middle;border-right-color:#ed7d31;border-left-width:1.5pt;border-top-style:solid;border-left-style:solid;border-bottom-width:1.5pt;width:276.5pt;border-top-color:#ed7d31;border-bottom-style:solid}.c22{border-right-style:solid;padding:0pt 5.8pt 0pt 5.8pt;border-bottom-color:#ed7d31;border-top-width:1.5pt;border-right-width:1.5pt;border-left-color:#ed7d31;vertical-align:middle;border-right-color:#ed7d31;border-left-width:1.5pt;border-top-style:solid;border-left-style:solid;border-bottom-width:1.5pt;width:138.2pt;border-top-color:#ed7d31;border-bottom-style:solid}.c36{border-right-style:solid;padding:0pt 5.8pt 0pt 5.8pt;border-bottom-color:#ed7d31;border-top-width:1.5pt;border-right-width:1.5pt;border-left-color:#ed7d31;vertical-align:middle;border-right-color:#ed7d31;border-left-width:1.5pt;border-top-style:solid;border-left-style:solid;border-bottom-width:1.5pt;width:184.3pt;border-top-color:#ed7d31;border-bottom-style:solid}.c39{border-right-style:solid;padding:0pt 5.8pt 0pt 5.8pt;border-bottom-color:#ed7d31;border-top-width:1.5pt;border-right-width:1.5pt;border-left-color:#ed7d31;vertical-align:bottom;border-right-color:#ed7d31;border-left-width:1.5pt;border-top-style:solid;border-left-style:solid;border-bottom-width:1.5pt;width:13.7pt;border-top-color:#ed7d31;border-bottom-style:solid}.c38{border-right-style:solid;padding:0pt 5.8pt 0pt 5.8pt;border-bottom-color:#ed7d31;border-top-width:1.5pt;border-right-width:1.5pt;border-left-color:#ed7d31;vertical-align:bottom;border-right-color:#ed7d31;border-left-width:1.5pt;border-top-style:solid;border-left-style:solid;border-bottom-width:1.5pt;width:46.1pt;border-top-color:#ed7d31;border-bottom-style:solid}.c40{border-right-style:solid;padding:0pt 5.8pt 0pt 5.8pt;border-bottom-color:#ed7d31;border-top-width:1.5pt;border-right-width:1.5pt;border-left-color:#ed7d31;vertical-align:middle;border-right-color:#ed7d31;border-left-width:1.5pt;border-top-style:solid;border-left-style:solid;border-bottom-width:1.5pt;width:184.4pt;border-top-color:#ed7d31;border-bottom-style:solid}.c28{border-right-style:solid;padding:0pt 5.8pt 0pt 5.8pt;border-bottom-color:#ed7d31;border-top-width:1.5pt;border-right-width:1.5pt;border-left-color:#ed7d31;vertical-align:middle;border-right-color:#ed7d31;border-left-width:1.5pt;border-top-style:solid;border-left-style:solid;border-bottom-width:1.5pt;width:13.7pt;border-top-color:#ed7d31;border-bottom-style:solid}.c35{border-right-style:solid;padding:0pt 5.8pt 0pt 5.8pt;border-bottom-color:#ed7d31;border-top-width:1.5pt;border-right-width:1.5pt;border-left-color:#ed7d31;vertical-align:middle;border-right-color:#ed7d31;border-left-width:1.5pt;border-top-style:solid;border-left-style:solid;border-bottom-width:1.5pt;width:46.1pt;border-top-color:#ed7d31;border-bottom-style:solid}
 			.c29{border-right-style:solid;padding:0pt 5.8pt 0pt 5.8pt;border-bottom-color:#ed7d31;border-top-width:1.5pt;border-right-width:1.5pt;border-left-color:#ed7d31;vertical-align:middle !important;border-right-color:#ed7d31;border-left-width:1.5pt;border-top-style:solid;border-left-style:solid;border-bottom-width:1.5pt;width:92.1pt;border-top-color:#ed7d31;border-bottom-style:solid}
@@ -28,22 +28,30 @@
 		<table class="c41">
 			<tr class="c42">
 				<td class="c50" colspan="9" rowspan="1">
-					<p class="c0">
-						<span class="c54">Ardens Business Solutions Private Limited</span>
-						<span style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px);  width: 190.00px;">
-							<img src="data:image/png;base64,{{base64_encode(file_get_contents(public_path('/assets/images/images/image2.png')))}}" style="width: 206.86px; height: 116.37px; margin-left: -8.82px;  transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);" title="">
-							
-						</span>
-					</p>
-					<p class="c23 c60"><span class="c43"></span></p>
-					<p class="c0">
-						<span class="c34">&ldquo;SHALOM BUILDING&rdquo; </span>
-					</p>
-					<p class="c0">
-						<span class="c53">1</span><span class="c53 c61">st</span><span class="c53 c59">&nbsp;Floor, Office No.20, No.04, Mannar Street, </span>
-					</p>
-					<p class="c0"><span class="c59 c53">T Nagar, Chennai, Tamil Nadu, India &ndash; 600 017</span></p>
-					<p class="c14 c23"><span class="c18"></span></p>
+					<div class="row mt-3">
+						<div class="col">
+							<p class="c0">
+								<span class="c54">Ardens Business Solutions Private Limited</span>
+							</p>
+							<p class="c23 c60"><span class="c43"></span></p>
+							<p class="c0">
+								<span class="c34">&ldquo;SHALOM BUILDING&rdquo; </span>
+							</p>
+							<p class="c0">
+								<span class="c53">1</span><span class="c53 c61">st</span><span class="c53 c59">&nbsp;Floor, Office No.20, No.04, Mannar Street, </span>
+							</p>
+							<p class="c0"><span class="c59 c53">T Nagar, Chennai, Tamil Nadu, India &ndash; 600 017</span></p>
+							<p class="c14 c23"><span class="c18"></span></p>
+						</div>
+						<div class="col-auto">
+							<p class="c0">
+								<span style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px);  width: 190.00px;">
+									<img src="data:image/png;base64,{{base64_encode(file_get_contents(public_path('/assets/images/images/image2.png')))}}" style="width: 206.86px; height: 116.37px; margin-left: -8.82px;  transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);" title="">
+									
+								</span>
+							</p>
+						</div>
+					</div>
 				</td>
 			</tr>
 			<tr class="c10">

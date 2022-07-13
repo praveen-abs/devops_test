@@ -2195,7 +2195,7 @@ body {
 }
 
 [data-layout=vertical][data-sidebar-size=lg] .navbar-menu .navbar-nav .nav-item:hover>.menu-dropdown {
-    left: 250px !important;
+    left: 215px !important;
     display: block;
     top: 0px;
     position: absolute;
