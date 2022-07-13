@@ -301,6 +301,10 @@
     .fc-ltr .fc-basic-view .fc-day-top .fc-day-number {
         float: none !important;
     }
+
+    html {
+        min-height: auto !important;
+    }
 </style>
 @endsection
 @section('content')
