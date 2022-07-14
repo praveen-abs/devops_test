@@ -669,7 +669,7 @@ body {
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    padding: 0.625rem 1.5rem;
+    padding: 0.625rem 0.7rem;
     /* padding: 0px !important; */
     color: #313030;
     font-size: .9375rem;
@@ -778,7 +778,7 @@ body {
     padding: 0;
     box-sizing: border-box;
     /* font-family: Poppins, sans-serif; */
-    font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif; 
+    font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
 }
 
 
@@ -835,12 +835,6 @@ body {
     z-index: 1
 }
 
-/* .navbar-menu .navbar-nav .nav-link:hover {
-    color: #fff;
-    background: var(--vz-vertical-menu-item-hover-color);
-
-} */
-
 .navbar-menu .navbar-nav .nav-link:hover .icon-dual {
     color: var(--vz-vertical-menu-item-hover-color);
     fill: rgba(64, 81, 137, .16)
@@ -859,7 +853,8 @@ body {
 
 }
 
-[data-layout=vertical][data-sidebar-size=lg] .navbar-menu .navbar-nav .nav-link:hover::before {
+[data-layout=vertical][data-sidebar-size=lg] .navbar-menu .navbar-nav .nav-link:hover::before,
+[data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .nav-link:hover::before {
     display: block;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
@@ -875,6 +870,18 @@ body {
     width: 5px;
     background: #ff530a;
 }
+
+[data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .nav-link:hover::before {
+    left: 2px !important;
+}
+
+[data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .nav-link:after {
+    left: 100px !important;
+}
+[data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .nav-item .menu-dropdown .nav-link span{
+    /* padding: 0px 100px 0px 10px !important; */
+    }
+
 
 /* .navbar-menu .navbar-nav .nav-link[data-bs-toggle=collapse][aria-expanded=true] {
     color: var(--vz-vertical-menu-item-active-color)
@@ -1641,13 +1648,14 @@ body {
 
 }
 
-.navbar-brand-box .image-circle{
+.navbar-brand-box .image-circle {
     background: #f3f3f9;
     height: 60px;
     width: 60px;
     border-radius: 50%;
 }
-.navbar-brand-box .image-circle img{
+
+.navbar-brand-box .image-circle img {
     height: 55px;
     width: 55px;
 }
@@ -1655,8 +1663,8 @@ body {
 /* end */
 .hamburger-icon {
     width: 20px;
-    height: 14px;
-    margin-left: 100px;
+    height: 15px;
+    margin-left: 0px;
     position: relative;
     cursor: pointer;
     display: inline-block
@@ -1974,7 +1982,7 @@ body {
     }
 
     [data-layout=vertical][data-sidebar-size=sm] .main-content {
-        margin-left: 100px;
+        margin-left: 80px;
     }
 }
 
@@ -1996,17 +2004,19 @@ body {
     background-color: #ffff; */
 }
 
-[data-layout=vertical][data-sidebar-size=sm] .logo span.logo-lg  {
+[data-layout=vertical][data-sidebar-size=sm] .logo span.logo-lg {
     display: flex !important;
     /* position: relative;
     top: -40px; */
 }
+
 [data-layout=vertical][data-sidebar-size=sm] .logo span.logo-lg span {
     display: none !important;
     /* position: relative;
     top: -40px; */
     margin-bottom: 5px;
 }
+
 [data-layout=vertical][data-sidebar-size=sm] .logo span.logo-sm {
     display: none !important;
 }
@@ -2027,7 +2037,7 @@ body {
 /* padding 70 t0 50 */
 [data-layout=vertical][data-sidebar-size=sm] .navbar-menu {
     position: fixed;
-    width: 100px !important;
+    width: 80px !important;
     padding: 0px;
     margin-top: 50px;
 }
@@ -2164,7 +2174,7 @@ body {
 [data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .nav-item:hover>.menu-dropdown {
     display: block;
     top: 0px;
-    left: 99px;
+    left: 79px;
     position: absolute;
     width: 180px;
     background-color: #fff;
@@ -2173,7 +2183,9 @@ body {
     box-shadow: 0 2px 4px rgb(15 34 58 / 12%);
 
 }
-
+[data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .nav-item .menu-dropdown .nav-link {
+padding: 0px 40px 0px 0px;
+}
 
 [data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .nav-sm {
     padding: 0;
@@ -2186,7 +2198,8 @@ body {
     display: flex !important;
     margin: 0px !important;
     justify-content: flex-start;
-    padding: 0px !important;
+    /* padding: 0px !important; */
+    padding: 0px 10px !important;
 }
 
 
@@ -2209,7 +2222,7 @@ body {
 }
 
 [data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .nav-sm .menu-dropdown {
-    left: 100% !important;
+    left: 180px !important;
     top: 0;
     border-radius: 3px !important
 }
@@ -16637,13 +16650,15 @@ select {
     height: 100px;
     width: 100px;
 }
-.profile-wrapper .profile-info{
+
+.profile-wrapper .profile-info {
     margin: 0px 0px 0px 30px;
 }
-.prograss-wrapper .prograss-bar{
+
+.prograss-wrapper .prograss-bar {
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-/* background:#405189; */
-border-radius: 5px;
+    /* background:#405189; */
+    border-radius: 5px;
 }
 
 .profile-basic {
@@ -16672,7 +16687,7 @@ border-radius: 5px;
 
 .personal-info li {
     margin-bottom: 10px;
-display: flex;
+    display: flex;
 }
 
 
@@ -17257,7 +17272,7 @@ p {
 
 @media (min-width: 768px) {
     .main-content {
-        margin-left: 250px;
+        margin-left: 210px;
     }
 }
 
@@ -18670,9 +18685,7 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
         margin: 0px 30px;
     } */
 
-.profile-top{
-
-}
+    .profile-top {}
 
 }
 
@@ -18713,22 +18726,27 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
     position: absolute;
     right: 150px;
 }
+
 .footer-contents .powerby-footer img {
     height: 25px;
 }
-.footer-contents .privacy-policy{
+
+.footer-contents .privacy-policy {
     position: absolute;
     right: 50px;
 
 }
-.footer-contents .faq{
+
+.footer-contents .faq {
     position: absolute;
     right: 12px;
 
 }
-.footer-contents .powerby-footer:after,.privacy-policy::after {
+
+.footer-contents .powerby-footer:after,
+.privacy-policy::after {
     content: '';
-    margin-right:5px;
+    margin-right: 5px;
     height: 75%;
     width: 1px;
     font-weight: 600;
@@ -18759,6 +18777,7 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
     /* background: #405189; */
     border-radius: 5px;
 }
+
 .progress-bar-content .progress-bar {
     background-color: #e63b1f !important;
 }
@@ -18785,4 +18804,3 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
     text-align: start;
     width: 50%;
 }
-

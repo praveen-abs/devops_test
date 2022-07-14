@@ -61,11 +61,11 @@
     }
 
     .slider-checkbox-text{
-        color: green;
+        color: #000;
         position: relative;
         top: 4px;
         left: 30px;
-        font-size: 14px;
+        font-size: 12px;
     }
         
     .slider-checkbox {
@@ -76,12 +76,20 @@
         right: 0;
         bottom: 0;
         border-radius: 20px;
-        background-color: lightgreen;
-        width:110px;
+        background-color: #f0f0f6;
+        width:100px;
         -webkit-transition: .4s;
+        box-shadow: inset -5px -5px 9px rgba(255,255,255,0.45), inset 5px 5px 9px rgba(94,104,121,0.3);
         transition: .4s;
     }
-        
+    
+    .slider-checkbox.check-out:before{
+        background-color: red;
+    }
+    .slider-checkbox.check-in:before{
+        background-color: green;
+    }
+
     .slider-checkbox:before {
         position: absolute;
         height: 25px;
@@ -89,8 +97,7 @@
         left: 2px;
         border-radius: 20px;
         bottom: 2px;
-        background-color: green;
-        color: white;
+                   color: white;
         -webkit-transition: .4s;
         transition: .4s;
         content: '\f011';
@@ -100,13 +107,20 @@
     }
     
     input:checked + .slider-checkbox>.slider-checkbox-text {
-        left:3px
+        left:6px
     }
 
-    input:checked + .slider-checkbox {
-        background-color: lawngreen;
-    }
         
+    input:checked + .slider-checkbox.check-out {
+        background-color:red;
+        color:#fff;
+    } 
+    
+    input:checked + .slider-checkbox.check-in {
+        background-color: lawngreen;
+        color:#fff;
+    } 
+
     input:focus + .slider-checkbox {
         box-shadow: 0 0 1px lawngreen;
     }
@@ -115,7 +129,15 @@
         -webkit-transform: translateX(65px);
         -ms-transform: translateX(65px);
         transform: translateX(65px);
-        left: 18px;
+        left: 10px;
+        background-color: #f0f0f6;
+        
+    }
+    input:checked + .slider-checkbox.check-out:before {
+        color:red;
+    }
+    input:checked + .slider-checkbox.check-in:before {
+        color:lawngreen;
     }
 
     .fc-scroller {
@@ -330,8 +352,8 @@
                             </div>
                             <div class="d-flex align-items-center mt-4">
                                 <h6 class="f-15 mr-1"><span><i class="fa fa-sun mr-1"></i>General shift</span></h6>
-                                <h6 class="f-15 m-0"><span><label class="switch-checkbox"> <input type="checkbox"> <span class="slider-checkbox round"><span class="slider-checkbox-text">Check in</span></span> </label></span></h6>
-                                <h6 class="f-15 m-0"><span><label class="switch-checkbox"> <input type="checkbox"> <span class="slider-checkbox round"><span class="slider-checkbox-text">Check out</span></span> </label></span></h6>
+                                <h6 class="f-15 m-0"><span><label class="switch-checkbox "> <input type="checkbox"> <span class="slider-checkbox check-in round"><span class="slider-checkbox-text">Check in</span></span> </label></span></h6>
+                                <h6 class="f-15 m-0"><span><label class="switch-checkbox "> <input type="checkbox"> <span class="slider-checkbox check-out round"><span class="slider-checkbox-text">Check out</span></span> </label></span></h6>
                             </div>
                         </div>
                     </div>
