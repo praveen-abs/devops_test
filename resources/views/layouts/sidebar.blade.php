@@ -448,11 +448,11 @@
                                 <div class="collapse  menu-dropdown" id="reportsDrop-Down">
                                     <ul class="nav nav-sm flex-column">
                                         <li class="nav-item">
-                                            <a href="{{url('vmt-assign-roles')}}" class="nav-link sidebar">Appraisal Reports</a>
-                                        </li>
+                                            <a href="{{url('vmt-assign-roles')}}" class="nav-link sidebar"><span> Appraisal Reports</a>
+                                            </span></li>
                                         <li class="nav-item">
-                                            <a href="{{url('vmt-assign-roles')}}" class="nav-link sidebar">Appraisal Review
-                                                Reports</a>
+                                            <a href="{{url('vmt-assign-roles')}}" class="nav-link sidebar"><span> Appraisal Review
+                                                Reports </span></a>
                                         </li>
 
 

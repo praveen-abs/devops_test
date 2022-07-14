@@ -859,7 +859,9 @@ body {
 
 }
 
-[data-layout=vertical][data-sidebar-size=lg] .navbar-menu .navbar-nav .nav-link:hover::before {
+[data-layout=vertical][data-sidebar-size=lg] .navbar-menu .navbar-nav .nav-link:hover::before 
+,[data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .nav-link:hover::before 
+{
     display: block;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
