@@ -1473,11 +1473,15 @@ $('body').on('click', '#save-table', function(e){
         {
           isAllFieldsEntered = false;
         }
+
     });
 
     //Validate other fields
     if( $('#reviewer-name').html() != "---" &&
-        $('#btn_selectEmployees').html() == "Edit" &&
+         @if(auth()->user()->hasrole('Employee'))
+         @else
+           $('#btn_selectEmployees').html() == "Edit" &&
+         @endif
         $('#calendar_type').val() != "" && 
         $("#year option:selected").text() != "Select" &&
         $('#frequency').val() != "" &&
@@ -1498,6 +1502,13 @@ $('body').on('click', '#save-table', function(e){
         alert("Please fill all the fields");
         canSaveForm = false;
 
+        console.log( $('#reviewer-name').html());
+        console.log( $('#btn_selectEmployees').html());
+        console.log( $('#calendar_type').val());
+        console.log( $("#year option:selected").text());
+        console.log( $('#frequency').val());
+        console.log( $('#assignment_period_start').val() );
+        console.log( $('#department').val() );
     }
         
     if(canSaveForm)
