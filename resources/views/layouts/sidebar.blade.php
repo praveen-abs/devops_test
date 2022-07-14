@@ -141,7 +141,9 @@
                     <div class="collapse menu-dropdown" id="attendanceDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1">Leave</a>
+                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1">
+                                <span>   Leave</span> 
+                                </a>
                             </li>
                             <li class="nav-item">
 
@@ -429,12 +431,12 @@
 
                             <li class="nav-item">
                                 <a href="#transitionDrop-Down" id="" class="nav-link sidebar" data-bs-toggle="collapse"
-                                    role="button" aria-expanded="false"> Transaction</a>
+                                    role="button" aria-expanded="false"><span> Transaction</span>  </a>
                                 <div class="collapse menu-dropdown" id="transitionDrop-Down">
                                     <ul class="nav nav-sm flex-column">
                                         <li class="nav-item">
-                                            <a href="{{url('vmt-assign-roles')}}" class="nav-link sidebar">Employee
-                                                Entry</a>
+                                            <a href="{{url('vmt-assign-roles')}}" class="nav-link sidebar">
+                                               <span> Employee Entry</span> </a>
                                         </li>
 
                                     </ul>
@@ -442,7 +444,7 @@
                             </li>
                             <li class="nav-item tdItem">
                                 <a href="#reportsDrop-Down" id="tds" data-bs-toggle="collapse" role="button"
-                                    aria-expanded="false" class="nav-link sidebar">Reports</a>
+                                    aria-expanded="false" class="nav-link sidebar"><span> Reports</span> </a>
                                 <div class="collapse  menu-dropdown" id="reportsDrop-Down">
                                     <ul class="nav nav-sm flex-column">
                                         <li class="nav-item">
@@ -521,14 +523,14 @@
                     <div class="collapse menu-dropdown" id="helpDeskDrop-down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="apps-calendar" class="nav-link sidebar">@lang('translation.calendar')</a>
+                                <a href="apps-calendar" class="nav-link sidebar"><span>Calendar</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="apps-chat" class="nav-link sidebar">@lang('translation.chat')</a>
+                                <a href="apps-chat" class="nav-link sidebar"><span>Chat</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="apps-mailbox" class="nav-link sidebar">@lang('translation.mailbox')</a>
-                            </li>
+                                <a href="apps-mailbox" class="nav-link sidebar"><span>Mail-Box</span></a>
+                            <!-- </li>
                             <li class="nav-item">
                                 <a href="#sidebarEcommerce" class="nav-link sidebar" data-bs-toggle="collapse" role="button"
                                     aria-expanded="false"
@@ -713,7 +715,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                            </li>
+                            </li> -->
                         </ul>
                     </div>
                 </li>
@@ -733,7 +735,7 @@
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a href="{{url('vmt_clientOnboarding')}}" 
-                                    class="nav-link">Client Onboarding</a>
+                                    class="nav-link"><span> Client Onboarding</span></a>
                             </li>
                         </ul>
                     </div>
@@ -1355,7 +1357,7 @@
 
     </div>
 
-    <div class="navbar-brand-box" style=" position:absolute;bottom:20px;width:100%;height:50px;">
+    <!-- <div class="navbar-brand-box" style=" position:absolute;bottom:20px;width:100%;height:50px;"> -->
         <!-- Dark Logo-->
         <!-- <a href="index" class="logo logo-dark">
             <span class="logo-sm">
@@ -1366,19 +1368,19 @@
             </span>
         </a> -->
         <!-- Light Logo-->
-        <a href="index" class="logo logo-light">
+        <!-- <a href="index" class="logo logo-light">
             <span class="logo-sm">
                 <img src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="">
             </span>
             <span class="logo-lg">
                 <img src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="">
             </span>
-        </a>
+        </a> -->
         <!-- <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
             id="vertical-hover">
             <i class="ri-record-circle-line"></i>
         </button> -->
-    </div>
+    <!-- </div> -->
 
 </div>
 
