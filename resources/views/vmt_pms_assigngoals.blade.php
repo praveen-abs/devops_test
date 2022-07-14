@@ -1380,7 +1380,7 @@ $(function () {
         success: function(data){
         var optionHtml ="";
         $.each(data, function(i, tempdata){
-            optionHtml = optionHtml+"<option data="++" value="+tempdata.id+" selected>"+tempdata.name+"</option>";
+            optionHtml = optionHtml+"<option value="+tempdata.id+" selected>"+tempdata.name+"</option>";
             //if(tempdata.id == $('#select-employees').val()){
             //        $('#reviewer-name').html(tempdata.name);
             //        $('#reviewer-email').html(tempdata.email);
