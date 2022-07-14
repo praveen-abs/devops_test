@@ -182,6 +182,10 @@ table th {
     padding: 15px 10px !important;
 }
 
+#kpiTable th {
+    border: 1px solid #a4a6a9;
+}
+
 tbody {
     background-color: #fff;
 }
@@ -189,6 +193,11 @@ tbody {
 tbody tr:hover {
     background-color: #f3f3f9;
 
+}
+
+#kpiTable td {
+    background: #befbbe5e;
+    border: 1px solid #a4a6a9;
 }
 
 td {
@@ -473,22 +482,22 @@ td .btn i {
                         <td class="p-3"><!-- Manager status -->
                             @if(auth()->user()->hasrole('Employee'))
 
-                                {{$emp->is_manager_submitted  ? 'Submitted' :  'Not yet submitted'  }}
+                                {{$emp->is_manager_submitted  ? 'Reviewed' :  'Not yet reviewed'  }}
 
                             @endif
                             @if(auth()->user()->hasrole('Manager'))
 
                                 @if($emp->is_manager_submitted ) 
-                                    Submitted
+                                    Reviewed
                                 @else 
-                                    Not yet submitted
+                                    Not yet Reviewed
                                 @endif
 
                             @endif
 
                             @if(auth()->user()->hasrole(['Admin','HR']))
 
-                                {{$emp->is_manager_submitted  ? 'Submitted' :  'Not yet submitted'  }}
+                                {{$emp->is_manager_submitted  ? 'Reviewed' :  'Not yet Reviewed'  }}
 
                             @endif
                         </td>                       
@@ -748,10 +757,12 @@ td .btn i {
                                 <div class="col-3  mt-3 mb-3">
                                     <div class="d-flex flex-column">
                                         <label class="" for="year">Year</label>
+                                        <input type="hidden" name="hidden_calendar_year" id="hidden_calendar_year" value="">
+
                                         <select name="year" id="year" disabled>
                                             <option value="">Select</option>
-                                            <option value="Jan">January - <?php echo date("Y"); ?> to December - <?= date("Y")?> </option>
-                                            <option value="Apr">April - <?php echo date("Y"); ?> to March - <?= date("Y")+1?></option>
+                                            <option value="Jan-Dec">January - <?php echo date("Y"); ?> to December - <?= date("Y")?> </option>
+                                            <option value="Apr-Mar">April - <?php echo date("Y"); ?> to March - <?= date("Y")+1?></option>
                                         </select>
                                     </div>
                                 </div>
@@ -761,7 +772,7 @@ td .btn i {
                                         <select name="frequency" id="frequency">
                                             <option value="">Select</option>
                                             <option value="monthly">Monthly</option>
-                                            <option value="quaterly">Quaterly</option>
+                                            <option value="quarterly">Quarterly</option>
                                             <option value="halfYearly">Half Yearly</option>
                                             <option value="yearly">Yearly</option>
                                         </select>
@@ -868,7 +879,14 @@ td .btn i {
                         <div class="table-wrapper">
                             <div class="row">
                                 <div class="col-6"><h5>Key focus areas</h5></div>
-                                <div class="col-6">
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="container-fluid bg-light mt-3 py-2 rounded-border d-felx align-items-center">
+                                        <h6 class="m-0">Goals / Areas of development</h6>
+                                    </div>
+                                </div>
+                                <div class="col-12 mt-3">
                                     <form id="upload_form" enctype="multipart/form-data">
                                         <div class="row pull-right">
                                             @csrf
@@ -881,37 +899,28 @@ td .btn i {
                                         </div>
                                     </form>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="container-fluid bg-light mt-3 py-2 rounded-border d-felx align-items-center">
-                                        <h6 class="m-0">Goals / Areas of development</h6>
-                                    </div>
-                                </div>
                                 <div class="col-12">
                                     <div class="container-fluid mb-1 mt-3 ">
                                         <form id="kpiTableForm">
-                                            <input type="hidden" id="kpi_table_id" name="kpi_table_id">
                                             <div class="table-responsive">
-                                                <table class="w-100 align-middle mb-0" id="kpiTable">
+                                                <table class="align-middle mb-0" id="kpiTable" style="width:130%;">
                                                     @csrf
-                                                    <thead class="text-white bg-primary thead" id="tHead">
+                                                    <thead class="bg-primary thead" id="tHead">
                                                         <tr class="text-uppercase">
                                                             <th class="sort" data-sort="id" style="width: 2%;">#</th>
                                                             <th class="sort" data-sort="customer_name" style="width: 8%;">Dimension</th>
-                                                            <th class="sort" data-sort="product_name" style="width: 25%;">KPI</th>
-                                                            <th class="sort" data-sort="date" style="width: 25%;">Operational Definition</th>
-                                                            <th class="sort" data-sort="amount" style="width: 25%;">Measure</th>
-                                                            <th class="sort" data-sort="payment" style="width: 10%;">Frequency</th>
-                                                            <th class="sort" data-sort="status" style="width: 20%;">Target</th>
-                                                            <th class="sort" data-sort="status" style="width: 20%;">Stretch Target</th>
-                                                            <th class="sort" data-sort="status" style="">Source</th>
-                                                            <th class="sort" data-sort="status" style="width: 10%;" width="10%">KPI Weightage ( % )</th>
+                                                            <th class="sort" data-sort="product_name" style="width: 15%;">KPI</th>
+                                                            <th class="sort" data-sort="date" style="width: 20%;">Operational Definition</th>
+                                                            <th class="sort" data-sort="amount" style="width: 15%;">Measure</th>
+                                                            <th class="sort" data-sort="payment" style="width: 5%;">Frequency</th>
+                                                            <th class="sort" data-sort="status" style="width: 5%;">Target</th>
+                                                            <th class="sort" data-sort="status" style="width: 11%;">Stretch Target</th>
+                                                            <th class="sort" data-sort="status" style="width: 4%;">Source</th>
+                                                            <th class="sort" data-sort="status" style="width: 15%;" width="10%">KPI Weightage ( % )</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody class="tbody content-container" id="tbody">
                                                         <tr class="addition-content cursor-pointer" id="content1">
-                                                            <input type="hidden" name="kpi_id[]">
                                                             <td class="">
                                                                 <span  name="numbers" id="" class="tableInp" >1</span>
                                                                 <div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div>
@@ -983,7 +992,7 @@ td .btn i {
 
 <!-- Change Reviewr window -->
 
-<div class="modal fade" id="createEmployee" role="dialog" aria-hidden="true" style="opacity:1; display:none;">
+<div class="modal fade" id="createEmployee" role="dialog" aria-hidden="true" style="opacity:1; display:none;background:#00000073;">
     <div class="modal-dialog modal-md" id="" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2">
         <div class="modal-content">
             <div class="modal-header py-2 bg-primary">
@@ -1037,7 +1046,7 @@ td .btn i {
 </div>
 
 <!-- Vertically Centered -->
-<div class="modal fade" id="notificationModal" role="dialog" aria-hidden="true" style="opacity:1; display:none;">
+<div class="modal fade" id="notificationModal" role="dialog" aria-hidden="true" style="opacity:1; display:none;background:#00000073;">
     <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2">
         <div class="modal-content">
             <div class="modal-header py-2 bg-primary">
@@ -1067,7 +1076,7 @@ td .btn i {
 </div>
 
 <!-- Select Employees window -->
-<div class="modal fade" id="changeEmployee">
+<div class="modal fade" id="changeEmployee" style="opacity:1; display:none;background:#00000073;">
     <div class="modal-dialog modal-md" id="" aria-hidden="true"
         aria-labelledby="exampleModalToggleLabel2">
 
@@ -1199,7 +1208,7 @@ $(document).ready(function(){
                 var length = 1;
                 // $.each(data,function(k, v) {
                     $.each(data[0],function(key, value) {
-                        $('.content-container').append('<tr class="addition-content cursor-pointer" id="content'+length+'"><input type="hidden" name="kpi_id[]"><td class="text-box-td p-1"><span  name="numbers" id="" class="tableInp" >'+length+'</span><div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div></td><td class="text-box-td p-1"><textarea name="dimension[]" id="" class="text-box" cols="20" placeholder="type here">'+value[0]+'</textarea></td><td class="text-box-td p-1"><textarea name="kpi[]" id="" class="text-box" cols="20" placeholder="type here">'+value[1]+'</textarea></td><td class="text-box-td p-1"><textarea name="operational[]" id="" class="text-box" cols="20" placeholder="type here">'+value[2]+'</textarea></td><td class="text-box-td p-1"><textarea name="measure[]" id="" class="text-box" cols="20" placeholder="type here">'+value[3]+'</textarea></td><td class="text-box-td p-1"><textarea name="frequency[]" id="" class="text-box" cols="20" placeholder="type here">'+value[4]+'</textarea></td><td class="text-box-td p-1"> <textarea name="target[]" id="" class="text-box" cols="20" placeholder="type here">'+value[5]+'</textarea></td><td class="text-box-td p-1"><textarea name="stretchTarget[]" id="" class="text-box" cols="10" placeholder="type here">'+value[6]+'</textarea></td><td class="text-box-td p-1"><textarea name="source[]" id="" class="text-box" cols="10" placeholder="type here">'+value[7]+'</textarea></td><td class="text-box-td p-1"><textarea name="kpiWeightage[]" id="" class="text-box" cols="10" placeholder="type here">'+value[8]+'</textarea></td></tr>');
+                        $('.content-container').append('<tr class="addition-content cursor-pointer" id="content'+length+'"><td class="text-box-td p-1"><span  name="numbers" id="" class="tableInp" >'+length+'</span><div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div></td><td class="text-box-td p-1"><textarea name="dimension[]" id="" class="text-box" cols="20" placeholder="type here">'+value[0]+'</textarea></td><td class="text-box-td p-1"><textarea name="kpi[]" id="" class="text-box" cols="20" placeholder="type here">'+value[1]+'</textarea></td><td class="text-box-td p-1"><textarea name="operational[]" id="" class="text-box" cols="20" placeholder="type here">'+value[2]+'</textarea></td><td class="text-box-td p-1"><textarea name="measure[]" id="" class="text-box" cols="20" placeholder="type here">'+value[3]+'</textarea></td><td class="text-box-td p-1"><textarea name="frequency[]" id="" class="text-box" cols="20" placeholder="type here">'+value[4]+'</textarea></td><td class="text-box-td p-1"> <textarea name="target[]" id="" class="text-box" cols="20" placeholder="type here">'+value[5]+'</textarea></td><td class="text-box-td p-1"><textarea name="stretchTarget[]" id="" class="text-box" cols="10" placeholder="type here">'+value[6]+'</textarea></td><td class="text-box-td p-1"><textarea name="source[]" id="" class="text-box" cols="10" placeholder="type here">'+value[7]+'</textarea></td><td class="text-box-td p-1"><textarea name="kpiWeightage[]" id="" class="text-box" cols="10" placeholder="type here">'+value[8]+'</textarea></td></tr>');
                         length++;
                     });
                 // });
@@ -1210,35 +1219,44 @@ $(document).ready(function(){
     $(document).on('#select-reviewer:open', () => {
         $('.select2-search__field').focus();
     });
-   $('#empTable').DataTable({
-    //   'processing': true,
-    //   'serverSide': true,
-    //   'serverMethod': 'post',
-    //   'ajax': {
-    //       'url':'ajaxfile.php'
-    //   },
-    //   'columns': [
-    //      { data: 'emp_name' },
-    //      { data: 'email' },
-    //      { data: 'gender' },
-    //      { data: 'salary' },
-    //      { data: 'city' },
-    //   ]
-   });
+
+    $('#empTable').DataTable({
+        //   'processing': true,
+        //   'serverSide': true,
+        //   'serverMethod': 'post',
+        //   'ajax': {
+        //       'url':'ajaxfile.php'
+        //   },
+        //   'columns': [
+        //      { data: 'emp_name' },
+        //      { data: 'email' },
+        //      { data: 'gender' },
+        //      { data: 'salary' },
+        //      { data: 'city' },
+        //   ]
+    });
 
     $('#calendar_type').change(function() {
         if ($('#calendar_type').val() == 'financial_year') {
-            $('#year').val('Apr');
-        } else {
-            $('#year').val('Jan');
+            $('#year').val('Apr-Mar');
+        }else
+        if ($('#calendar_type').val() == 'calendar_year') {
+            $('#year').val('Jan-Dec');
         }
+        else
+        {
+            $('#year').val('');
+        }
+        $('#hidden_calendar_year').val($("#year option:selected").text())
+        console.log($( "#hidden_calendar_year" ).val());
+
     });
 
     $('#frequency').change(function() {
         var data = "";
         if ($('#frequency').val() == 'monthly') {
             data = "<option value=''>Select</option><option value='jan'>January</option><option value='feb'>February</option><option value='mar'>March</option><option value='apr'>April</option><option value='may'>May</option><option value='june'>June</option><option value='july'>July</option><option value='aug'>August</option><option value='sept'>September</option><option value='oct'>October</option><option value='nov'>November</option><option value='dec'>December</option>";
-        } else if ($('#frequency').val() == 'quaterly') {
+        } else if ($('#frequency').val() == 'quarterly') {
             data = "<option value=''>Select</option><option value='q1'>Q1(Jan-Mar)</option><option value='q2'>Q2(Apr-June)</option><option value='q3'>Q3(July-Sept)</option><option value='q4'>Q4(Oct-Dec)</option>";
         } else if ($('#frequency').val() == 'halfYearly') {
             data = "<option value=''>Select</option><option value='h1'>H1(Jan-June)</option><option value='h2'>H2(July-Dec)</option>";
@@ -1293,66 +1311,64 @@ $(function () {
         $('#add-goals-modal').modal('show');
     });
 
-$('body').on('click', '.plus-sign', function() {
-    var id = $('.addition-content:last').attr('id');
-    var length = 1;
-    if (id) {
-        length = parseInt(id.replace('content', '')) + 1;
-    }
-    $('.content-container').append('<tr class="addition-content cursor-pointer" id="content'+length+'"><input type="hidden" name="kpi_id[]"><td class="text-box-td p-1"><span  name="numbers" id="" class="tableInp" >'+length+'</span><div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div></td><td class="text-box-td p-1"><textarea name="dimension[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="kpi[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="operational[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="measure[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="frequency[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"> <textarea name="target[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="stretchTarget[]" id="" class="text-box" cols="10" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="source[]" id="" class="text-box" cols="10" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="kpiWeightage[]" id="" class="text-box" cols="10" placeholder="type here"></textarea></td></tr>');
-});
-
-$('body').on('click', '.delete-row', function() {
-    $(this).parent().parent().remove();
-});
-
-$('#changeEmployeeForm').on('submit', function(e){
-    e.preventDefault();
-    var employeeSelected = $('#select-employees').val();
-    @if(auth()->user()->hasrole('Employee'))
-    @else
-    var employees = {!!json_encode($employees)!!};
-
-    @endif
-    var employeeArray = [];
-    $("#sel_employees").val(employeeSelected);
-
-    var imgHtml ="";
-    var count = 0;
-    $.each(employees, function(i, data){
-        //console.log(data);
-        //console.log('employee selected', employeeSelected);
-        if($.inArray(data.id.toString(), employeeSelected) > -1){
-            employeeArray.push(data.emp_name);
-            if (count < 4) {
-                imgHtml = imgHtml+"<a class='avatar'><img src='assets/images/"+data.avatar+"' alt='' class='rounded-circle p-0'></a>";
-            }
-            count++;
+    $('body').on('click', '.plus-sign', function() {
+        var id = $('.addition-content:last').attr('id');
+        var length = 1;
+        if (id) {
+            length = parseInt(id.replace('content', '')) + 1;
         }
+        $('.content-container').append('<tr class="addition-content cursor-pointer" id="content'+length+'"><td class="text-box-td p-1"><span  name="numbers" id="" class="tableInp" >'+length+'</span><div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div></td><td class="text-box-td p-1"><textarea name="dimension[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="kpi[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="operational[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="measure[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="frequency[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"> <textarea name="target[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="stretchTarget[]" id="" class="text-box" cols="10" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="source[]" id="" class="text-box" cols="10" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="kpiWeightage[]" id="" class="text-box" cols="10" placeholder="type here"></textarea></td></tr>');
     });
-    if (count > 4) {
-        imgHtml = imgHtml+"<span class='img-addition' style='background-color: rgb(134, 192, 106);width: 30px;height: 30px;font-size:12px;'> +"+count-3+" </span><div class='mt-1 message-content align-items-start d-flex flex-column  mx-2'><span id='group-employee'></span></div>";
+
+    $('body').on('click', '.delete-row', function() {
+        $(this).parent().parent().remove();
+    });
+
+    $('#changeEmployeeForm').on('submit', function(e){
+        e.preventDefault();
+        changeEmployee();
+    });
+
+    function changeEmployee() {
+        var employeeSelected = $('#select-employees').val();
+        @if(auth()->user()->hasrole('Employee'))
+        @else
+        var employees = {!!json_encode($employees)!!};
+
+        @endif
+        var employeeArray = [];
+        $("#sel_employees").val(employeeSelected);
+        var imgHtml ="";
+        var count = 0;
+        $.each(employees, function(i, data){
+            //console.log(data);
+            //console.log('employee selected', employeeSelected);
+            if($.inArray(data.id.toString(), employeeSelected) > -1){
+                employeeArray.push(data.emp_name);
+                if (count < 4) {
+                    imgHtml = imgHtml+"<a class='avatar'><img src='assets/images/"+data.avatar+"' alt='' class='rounded-circle p-0'></a>";
+                }
+                count++;
+            }
+        });
+        if (count > 4) {
+            imgHtml = imgHtml+"<span class='img-addition' style='background-color: rgb(134, 192, 106);width: 30px;height: 30px;font-size:12px;'> +"+count-3+" </span><div class='mt-1 message-content align-items-start d-flex flex-column  mx-2'><span id='group-employee'></span></div>";
+        }
+        //Change button text based on employee selection count
+        if(count > 0)
+        {
+            $('#btn_selectEmployees').html("Edit");
+          //  console.log("Changed to Edit button");
+        }
+        else
+        {
+            $('#btn_selectEmployees').html("Add");
+           // console.log("Changed to Add button");
+        }
+        $('#group-employee').html(employeeArray.join());
+        $('#changeEmployee').css('display', 'none');
+        $('.avatar-group-item').html(imgHtml);
     }
-
-
-   //Change button text based on employee selection count
-
-   if(count > 0)
-    {
-        $('#btn_selectEmployees').html("Edit");
-        console.log("Changed to Edit button");
-    }
-    else
-    {
-        $('#btn_selectEmployees').html("Add");
-        console.log("Changed to Add button");
-    }
-
-
-    $('#group-employee').html(employeeArray.join());
-    $('#changeEmployee').css('display', 'none');
-    $('.avatar-group-item').html(imgHtml);
-});
 
 @if(auth()->user()->hasrole('Manager'))
 
@@ -1364,17 +1380,18 @@ $('#changeEmployeeForm').on('submit', function(e){
         success: function(data){
         var optionHtml ="";
         $.each(data, function(i, tempdata){
-            optionHtml = optionHtml+"<option value="+tempdata.id+">"+tempdata.name+"</option>";
+            optionHtml = optionHtml+"<option data="++" value="+tempdata.id+" selected>"+tempdata.name+"</option>";
             //if(tempdata.id == $('#select-employees').val()){
             //        $('#reviewer-name').html(tempdata.name);
             //        $('#reviewer-email').html(tempdata.email);
             //    }
           });
             
-          $('#select-employees').html(optionHtml);
+            $('#select-employees').html(optionHtml);
+            changeEmployee();
                      // $("#kpiTableForm :input").prop("disabled", true);
            // $(".table-btn").prop('disabled', true);
-            console.log(data);
+            //console.log(data);
             //alert("Table Saved, Please publish goals");
            // $("#kpitable_id").val(data.table_id);
         }
@@ -1405,7 +1422,7 @@ $('#form_selectReviewer').on('submit', function(e){
         success: function(data){
         var optionHtml ="";
         $.each(data, function(i, tempdata){
-            optionHtml = optionHtml+"<option value="+tempdata.id+">"+tempdata.name+"</option>";
+            optionHtml = optionHtml+"<option value="+tempdata.id+" selected>"+tempdata.name+"</option>";
             //if(tempdata.id == $('#select-employees').val()){
             //        $('#reviewer-name').html(tempdata.name);
             //        $('#reviewer-email').html(tempdata.email);
@@ -1413,9 +1430,10 @@ $('#form_selectReviewer').on('submit', function(e){
           });
             
           $('#select-employees').html(optionHtml);
+          changeEmployee();
                      // $("#kpiTableForm :input").prop("disabled", true);
            // $(".table-btn").prop('disabled', true);
-            console.log(data);
+            //console.log(data);
             //alert("Table Saved, Please publish goals");
            // $("#kpitable_id").val(data.table_id);
         }
@@ -1451,17 +1469,17 @@ $('body').on('click', '#save-table', function(e){
             //console.log(input.attr('name')+" , "+input.val());
         }
 
-       if(input.val().trim().length < 1)
-       {
-         isAllFieldsEntered = false;
-       }
+        if(input.val().trim().length < 1)
+        {
+          isAllFieldsEntered = false;
+        }
     });
 
     //Validate other fields
     if( $('#reviewer-name').html() != "---" &&
         $('#btn_selectEmployees').html() == "Edit" &&
         $('#calendar_type').val() != "" && 
-        $('#year').val() != "" &&
+        $("#year option:selected").text() != "Select" &&
         $('#frequency').val() != "" &&
         $('#assignment_period_start').val() != "" &&
         $('#department').val() != "" &&
@@ -1482,14 +1500,12 @@ $('body').on('click', '#save-table', function(e){
 
     }
         
-
-
     if(canSaveForm)
     {
         $.ajax({
             type: "POST", 
             url: "{{url('vmt-pms-kpi-table/save')}}", 
-            data: $('#kpiTableForm').serialize(), 
+            data: $('#kpiTableForm').serialize(),
             success: function(data){
 
                 $("#kpiTableForm :input").prop("disabled", true);

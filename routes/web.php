@@ -31,7 +31,7 @@ Route::get('/registerNewAccount', function(){
     return view('/auth/register');
 })->name('registerNewAccount');
 
-Route::get('pages-profile', [App\Http\Controllers\HomeController::class, 'showProfile']);
+Route::get('pages-profile', [App\Http\Controllers\HomeController::class, 'showProfile'])->name('pages-profile');
 Route::get('pages-profile-settings', [App\Http\Controllers\HomeController::class, 'showProfilePage'])->name('pages-profile-settings');
 
 Route::get('test-email', 'App\Http\Controllers\HomeController@testEmail');
