@@ -3,6 +3,14 @@ $(document).ready(function() {
     $('body').on('keyup', ".onboard-form", function() {
         var inputvalues = $(this).val();
         var data = $(this).attr('name');
+        if ($(this).attr('maxlength')) {
+            var dtl = $(this).val().length;
+            var val = parseInt($(this).attr('maxlength'));
+            console.log(val);
+            if(dtl>val){
+                $(this).val($(this).val().substr(0,val));
+            } 
+        }
         if ($(this).attr('pattern') != undefined && $(this).attr('pattern') != '' && inputvalues !=
             '') {
             var pattern = {
