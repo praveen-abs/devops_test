@@ -915,22 +915,6 @@ $('#form-1').on('submit', function(e){
         e.preventDefault();
         
         var form_data1 = new FormData(document.getElementById("form-1"));
-        // var form_data2 = new FormData(document.getElementById("form-2"));
-        // var form_data3 = new FormData(document.getElementById("form-3"));
-        // var form_data4 = new FormData(document.getElementById("form-4"));
-        // var form_data5 = new FormData(document.getElementById("form-5"));
-        // for (var pair of form_data2.entries()) {    
-        //     form_data1.append(pair[0], pair[1]);
-        // }
-        // for (var pair of form_data3.entries()) {    
-        //     form_data1.append(pair[0], pair[1]);
-        // }
-        // for (var pair of form_data4.entries()) {    
-        //     form_data1.append(pair[0], pair[1]);
-        // }
-        // for (var pair of form_data5.entries()) {    
-        //     form_data1.append(pair[0], pair[1]);
-        // }
         $.ajax({
             url: "{{url('vmt-employee-onboard')}}", 
             type: "POST", 

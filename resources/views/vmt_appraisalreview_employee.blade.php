@@ -374,7 +374,7 @@
     
 </div><!-- end row -->
 
-<div class="modal fade" id="notificationModal" role="dialog" aria-hidden="true" style="opacity:1; display:none;">
+<div class="modal fade" id="notificationModal" role="dialog" aria-hidden="true" style="opacity:1; display:none;background:#00000073;">
     <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2">
         <div class="modal-content">
             <div class="modal-header py-2 bg-primary">
@@ -481,10 +481,19 @@
             success: function(data){
                 $('#modalHeader').html("Rejected");
                 $('#modalNot').html(data);
-                $('#notificationModal').show('modal');
+                $('#notificationModal').show();
+                $('#notificationModal').removeClass('fade');
             }
         })
     });
+
+    
+    $('body').on('click', '.close-modal', function() {
+        $('#notificationModal').hide();
+        $('#notificationModal').addClass('fade');
+        window.location.reload();
+    });
+
 
 
 

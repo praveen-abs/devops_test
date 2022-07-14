@@ -20,6 +20,14 @@ $(document).ready(function() {
             var regex = $(this).attr('pattern');
             if (!pattern[regex].test(inputvalues)) {
                 $('.' + data + '_label').addClass('patternErr');
+                var v = $(this).val();
+                if (regex == 'name') {
+                    $(this).val(v.replace(/[_\W0-9]+/g, ''));
+                } else if (regex == 'alpha') {
+                    $(this).val(v.replace(/[_\W0-9.]+/g, ''));
+                } else if (regex == 'alp-num') {
+                    $(this).val(v.replace(/[_\W.]+/g, ''));
+                }
             } else {
                 $('.' + data + '_label').removeClass('patternErr');
             }
