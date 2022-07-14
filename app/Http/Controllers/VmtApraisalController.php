@@ -15,6 +15,7 @@ use App\Mail\VmtAssignGoals;
 use App\Mail\NotifyPMSManager;
 use App\Mail\PMSReviewCompleted;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ApraisalQuestionExport;
 use Session;
 
 class VmtApraisalController extends Controller
@@ -25,10 +26,20 @@ class VmtApraisalController extends Controller
         //dd($questions);
         return view('vmt_apraisalQuestions', compact('questionList'));
     }
+
+    public function upload_file_review(Request $request) {
+        $importDataArry = \Excel::toArray(new ApraisalQuestionReview, request()->file('upload_file'));
+        return response()->json($importDataArry);
+    }
     
     public function uploadFile(Request $request) {
         $importDataArry = \Excel::toArray(new ApraisalQuestion, request()->file('upload_file'));
         return response()->json($importDataArry);
+    }
+
+    public function downloadFile(Request $request) {
+        $id = $request->id;
+        return Excel::download(new ApraisalQuestionExport($id), 'download.xlsx');
     }
 
     //
@@ -66,6 +77,9 @@ class VmtApraisalController extends Controller
                             //->get();
 
 
+        $userCount = User::count();
+        $empCount = VmtEmployeePMSGoals::groupBy('employee_id')->count();
+        $subCount = VmtEmployeePMSGoals::groupBy('employee_id')->where('is_hr_submitted', true)->count();
 
        // $empGoals = VmtEmployee::select('emp_no', 'emp_name', 'email_id', 'vmt_employee_details.designation', 'l1_manager_name', 'status', 'officical_mail')->join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.employee_id', '=', 'vmt_employee_details.id')->join('vmt_employee_office_details',  'vmt_employee_office_details.emp_id', '=', 'vmt_employee_details.id')->where('author_id', auth()->user()->id)->get();
         if (auth()->user()->hasrole('Employee')) {
@@ -74,7 +88,7 @@ class VmtApraisalController extends Controller
             $users = User::where('id', $rev->userid)->get();
             $empGoals = $empGoalQuery->where('users.id', auth::user()->id)->get();
 
-            return view('vmt_pms_assigngoals', compact('users','empGoals'));
+            return view('vmt_pms_assigngoals', compact('users','empGoals','userCount', 'empCount', 'subCount'));
 
         } elseif (auth()->user()->hasrole('Manager')) {
             $empGoals = $empGoalQuery->get();
@@ -121,9 +135,6 @@ class VmtApraisalController extends Controller
             // ->
             // ->get();
         }
-        $userCount = User::count();
-        $empCount = VmtEmployeePMSGoals::groupBy('employee_id')->count();
-        $subCount = VmtEmployeePMSGoals::groupBy('employee_id')->where('is_hr_submitted', true)->count();
         return view('vmt_pms_assigngoals', compact('users', 'employees','empGoals','userCount','empCount','subCount'));
     }
 
@@ -393,6 +404,8 @@ class VmtApraisalController extends Controller
         // code...
         $employeeData    = VmtEmployee::where('userid', auth::user()->id)->first();
         $kpiRows  = [];
+        $kpiRowsId = '';
+
         if($employeeData){
             $assignedGoals  = VmtEmployeePMSGoals::where('kpi_table_id', $request->id)->where('employee_id', auth::user()->id)->orderBy('updated_at', 'DESC')->first();
             //dd($assignedGoals);
@@ -407,7 +420,10 @@ class VmtApraisalController extends Controller
                     $kpiRowArray  =  explode(',', $kpiData->kpi_rows);
                     //dd($kpiRowArray);
                     $kpiRows      = VmtAppraisalQuestion::whereIn('id', $kpiRowArray)->get();
-
+                    $ids      = VmtAppraisalQuestion::whereIn('id', $kpiRowArray)->pluck('id')->toArray();
+                    if ($ids) {
+                        $kpiRowsId = implode(',', $ids);
+                    }
                     $reviewCompleted = false;
                     if($assignedGoals->self_kpi_review != null){
                         $reviewArray = (json_decode($assignedGoals->self_kpi_review, true));
@@ -485,10 +501,10 @@ class VmtApraisalController extends Controller
                     }
                 }
 
-                return view('vmt_appraisalreview_employee', compact('kpiRows', 'employeeData', 'assignedGoals', 'showModal', 'reviewCompleted', 'ratingDetail'));
+                return view('vmt_appraisalreview_employee', compact('kpiRows', 'employeeData', 'assignedGoals', 'showModal', 'reviewCompleted', 'ratingDetail', 'kpiRowsId'));
             }else{
                 $reviewCompleted = false;
-                return view('vmt_appraisalreview_employee', compact('kpiRows', 'employeeData', 'assignedGoals', 'showModal', 'reviewCompleted'));
+                return view('vmt_appraisalreview_employee', compact('kpiRows', 'employeeData', 'assignedGoals', 'showModal', 'reviewCompleted', 'kpiRowsId'));
             }
         }
         return view('vmt_appraisalreview');
@@ -525,6 +541,8 @@ class VmtApraisalController extends Controller
                 
                 $assignedGoals  = VmtEmployeePMSGoals::where('kpi_table_id',$request->goal_id)->where('employee_id', $request->user_id)->first();
                 $employeeData = VmtEmployee::where('userid', $assignedGoals->employee_id)->first();
+                $assignedEmployee_Userdata  = User::where('id', $employeeData->userid)->first();
+                $assignedEmployeeOfficeDetails  = VmtEmployeeOfficeDetails::where('user_id', $employeeData->userid)->first();
                 $kpiData      = VmtKPITable::find($assignedGoals->kpi_table_id);
                 $kpiRowArray  = explode(',', $kpiData->kpi_rows);
                 $kpiRows      = VmtAppraisalQuestion::whereIn('id', $kpiRowArray)->get();
@@ -600,7 +618,7 @@ class VmtApraisalController extends Controller
                     }
                 }
                 //dd($kpiRows);
-                return view('vmt_appraisalreview_hr', compact( 'employeeData', 'assignedGoals', 'kpiRows', 'empSelected', 'reviewCompleted', 'ratingDetail'));
+                return view('vmt_appraisalreview_hr', compact( 'employeeData', 'assignedGoals', 'kpiRows', 'empSelected', 'reviewCompleted', 'ratingDetail', 'assignedEmployee_Userdata', 'assignedEmployeeOfficeDetails'));
             }
 
             $kpiRows = [];
@@ -617,6 +635,8 @@ class VmtApraisalController extends Controller
             $reviewCompled  = false;
             $assignedGoals  = VmtEmployeePMSGoals::where('kpi_table_id',$request->goal_id)->where('employee_id', $request->user_id)->first();
             $employeeData = VmtEmployee::where('userid', $assignedGoals->employee_id)->first();
+            $assignedEmployee_Userdata  = User::where('id', $employeeData->userid)->first();
+            $assignedEmployeeOfficeDetails  = VmtEmployeeOfficeDetails::where('user_id', $employeeData->userid)->first();
             $kpiData      = VmtKPITable::find($assignedGoals->kpi_table_id);
             $kpiRowArray  = explode(',', $kpiData->kpi_rows);
             $kpiRows      = VmtAppraisalQuestion::whereIn('id', $kpiRowArray)->get();
@@ -704,7 +724,7 @@ class VmtApraisalController extends Controller
             }
             //dd($kpiRows);
 
-            return view('vmt_appraisalreview_manager', compact( 'employeeData', 'assignedGoals', 'kpiRows', 'empSelected', 'reviewCompleted', 'ratingDetail'));
+            return view('vmt_appraisalreview_manager', compact( 'employeeData', 'assignedGoals', 'kpiRows', 'empSelected', 'reviewCompleted', 'ratingDetail', 'assignedEmployee_Userdata', 'assignedEmployeeOfficeDetails'));
         }
         
         $kpiRows = [];
