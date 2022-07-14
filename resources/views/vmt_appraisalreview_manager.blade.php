@@ -82,7 +82,7 @@
                                 <b>Reporting Manager :</b>
                             </td>
                             <td class="col-xl-6 text-left">
-                                {{$assignedEmp_manager_name[0]}}
+                                {{$assignedEmployeeOfficeDetails->l1_manager_name}}
                             </td>
                         </tr>
                         {{-- <tr style="border: none;">
