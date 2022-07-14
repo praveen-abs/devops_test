@@ -110,6 +110,24 @@
         <!-- appraisal table -->
         <div class="card">
             <div class="card-body pb-2">
+                <div class="row">
+                    <div class="col-12 mt-3">
+                        <form id="upload_form" enctype="multipart/form-data">
+                            <div class="row pull-right mb-3">
+                                @csrf
+                                <div class="col">
+                                    <a href="{{route('download-file', $kpiRowsId)}}" class="btn btn-primary pull-right" id="download-excel">Download</a>
+                                </div>
+                                <div class="col-auto p-0">
+                                    <input type="file" name="upload_file" id="upload_file" accept=".xls,.xlsx" class="form-control" required>
+                                </div>
+                                <div class="col">
+                                    <button type="button" class="btn btn-primary pull-right" id="upload-goal" disabled>Upload</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
                 @if(count($kpiRows) > 0)
                 <form id="employee_self_review" method="POST">
                     @csrf
@@ -176,7 +194,7 @@
                                         @else
                                         <div>
                                             @if($assignedGoals->is_manager_approved && !$assignedGoals->is_employee_submitted)
-                                                <textarea name="selfreview[{{$kpiRow->id}}]" id="" cols="40" rows="8"
+                                                <textarea name="selfreview[{{$kpiRow->id}}]" id="selfreview{{$index}}" cols="40" rows="8"
                                                 placeholder="type here">@if(isset($kpiRow->self_kpi_review)) {{$kpiRow->self_kpi_review}} @endif</textarea>
                                             @endif
                                         </div>
@@ -186,11 +204,11 @@
                                         @if($assignedGoals->is_employee_submitted)
                                             {{$kpiRow->self_kpi_percentage}}
                                         @else
-                                        <div> 
+                                        <div>
                                             @if($assignedGoals->is_manager_approved && !$assignedGoals->is_employee_submitted)
                                                 <!-- <textarea name="selfkpiachievement[{{$kpiRow->id}}]" id="" cols="40" rows="8"
                                                 placeholder="type here">@if(isset($kpiRow->self_kpi_percentage)) {{$kpiRow->self_kpi_percentage}} @endif</textarea> -->
-                                                <input type="number" class="inp-text" name="selfkpiachievement[{{$kpiRow->id}}]" placeholder="type here" value="@if(isset( $kpiRow->self_kpi_percentage)){{$kpiRow->self_kpi_percentage}}@endif">
+                                                <input type="number" class="inp-text" id="selfkpiachievement{{$index}}" name="selfkpiachievement[{{$kpiRow->id}}]" placeholder="type here" value="@if(isset( $kpiRow->self_kpi_percentage)){{$kpiRow->self_kpi_percentage}}@endif">
                                             @endif
                                         </div>
                                         @endif
@@ -201,33 +219,25 @@
                                         @else
                                         <div>
                                             @if($assignedGoals->is_manager_approved && !$assignedGoals->is_employee_submitted)
-                                                <textarea name="selfcomments[{{$kpiRow->id}}]" id="" cols="40" rows="8"
+                                                <textarea name="selfcomments[{{$kpiRow->id}}]" id="selfcomments{{$index}}" cols="40" rows="8"
                                                 placeholder="type here"> @if(isset($kpiRow->self_kpi_comments)) {{$kpiRow->self_kpi_comments}} @endif</textarea>
                                             @endif
                                         </div>
                                         @endif
                                     </td>
-
-
-                                    <td>
-                                        @if($reviewCompleted)
-                                            {{$kpiRow->manager_kpi_review}}
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if($reviewCompleted)
-                                            {{$kpiRow->manager_kpi_percentage}}
-                                        @endif
-                                    </td>
                                     @if($reviewCompleted)
+
                                     <td>
-                                       
-                                            {{$kpiRow->hr_kpi_review}}
-                                        
+                                        {{$kpiRow->manager_kpi_review}}
                                     </td>
-                                        <td>
-                                       
-                                            {{$kpiRow->hr_kpi_percentage}}
+                                    <td>
+                                        {{$kpiRow->manager_kpi_percentage}}
+                                    </td>
+                                    <td>
+                                        {{$kpiRow->hr_kpi_review}}
+                                    </td>
+                                    <td>
+                                        {{$kpiRow->hr_kpi_percentage}}
                                         
                                     </td>
                                     @endif
@@ -419,6 +429,33 @@
 
         $('#acceptPMS').modal('show');
     }*/
+    $('#upload_file').change(function() {
+        if ($(this).is(':valid')) {
+            $('#upload-goal').removeAttr('disabled');
+        } else {
+            $('#upload-goal').attr('disabled', true);
+        }
+    });
+
+    $('#upload-goal').click(function() {
+        var form_data = new FormData(document.getElementById("upload_form"));
+        $.ajax({
+            type: "POST", 
+            url: "{{route('upload-file-review')}}", 
+            dataType : "json",
+            contentType: false,
+            processData: false,
+            data: form_data,
+            success: function(data){
+                // $('.addition-content').html('');
+                $.each(data[0],function(key, value) {
+                    $('#selfreview'+key).val(value[9]);
+                    $('#selfkpiachievement'+key).val(value[10]);
+                    $('#selfcomments'+key).val(value[11]);
+                });
+            }
+        });
+    });
     
     $('#save_table').click(function(e){
         e.preventDefault();

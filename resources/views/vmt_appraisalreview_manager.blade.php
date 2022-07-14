@@ -178,6 +178,24 @@
         <!-- appraisal table -->
         <div class="card">
             <div class="card-body pb-2">
+                <div class="row">
+                    <div class="col-12 mt-3">
+                        <form id="upload_form" enctype="multipart/form-data">
+                            <div class="row pull-right mb-3">
+                                @csrf
+                                <div class="col">
+                                    <a href="{{route('download-file', $kpiRowsId)}}" class="btn btn-primary pull-right" id="download-excel">Download</a>
+                                </div>
+                                <div class="col-auto p-0">
+                                    <input type="file" name="upload_file" id="upload_file" accept=".xls,.xlsx" class="form-control" required>
+                                </div>
+                                <div class="col">
+                                    <button type="button" class="btn btn-primary pull-right" id="upload-goal" disabled>Upload</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
                 @if(count($kpiRows) > 0)
                 <form id="employee_self_review" method="POST">
                     @csrf
@@ -497,6 +515,33 @@
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 <script type="text/javascript">
 
+    $('#upload_file').change(function() {
+        if ($(this).is(':valid')) {
+            $('#upload-goal').removeAttr('disabled');
+        } else {
+            $('#upload-goal').attr('disabled', true);
+        }
+    });
+
+    $('#upload-goal').click(function() {
+        var form_data = new FormData(document.getElementById("upload_form"));
+        $.ajax({
+            type: "POST", 
+            url: "{{route('upload-file-review')}}", 
+            dataType : "json",
+            contentType: false,
+            processData: false,
+            data: form_data,
+            success: function(data){
+                // $('.addition-content').html('');
+                $.each(data[0],function(key, value) {
+                    $('#selfreview'+key).val(value[9]);
+                    $('#selfkpiachievement'+key).val(value[10]);
+                    $('#selfcomments'+key).val(value[11]);
+                });
+            }
+        });
+    });
     $('#save_feedback_table').click(function() {
         console.log($('#gen-info-description-input').val());
         $.ajax({
