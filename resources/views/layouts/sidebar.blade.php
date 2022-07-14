@@ -430,9 +430,9 @@
                         <ul class="nav nav-sm flex-column">
 
                             <li class="nav-item">
-                                <a href="#transitionDrop-Down" id="" class="nav-link sidebar" data-bs-toggle="collapse"
+                                <a href="#transitionDrop-Down" id="" class="nav-link sidebar py-1" data-bs-toggle="collapse"
                                     role="button" aria-expanded="false"><span> Transaction</span>  </a>
-                                <div class="collapse menu-dropdown" id="transitionDrop-Down">
+                                <div class="collapse menu-dropdown sub-dropdown" id="transitionDrop-Down">
                                     <ul class="nav nav-sm flex-column">
                                         <li class="nav-item">
                                             <a href="{{url('vmt-assign-roles')}}" class="nav-link sidebar">
@@ -444,8 +444,8 @@
                             </li>
                             <li class="nav-item tdItem">
                                 <a href="#reportsDrop-Down" id="tds" data-bs-toggle="collapse" role="button"
-                                    aria-expanded="false" class="nav-link sidebar"><span> Reports</span> </a>
-                                <div class="collapse  menu-dropdown" id="reportsDrop-Down">
+                                    aria-expanded="false" class="nav-link sidebar py-1"><span> Reports</span> </a>
+                                <div class="collapse  menu-dropdown sub-dropdown" id="reportsDrop-Down">
                                     <ul class="nav nav-sm flex-column">
                                         <li class="nav-item">
                                             <a href="{{url('vmt-assign-roles')}}" class="nav-link sidebar"><span> Appraisal Reports</a>
@@ -523,13 +523,13 @@
                     <div class="collapse menu-dropdown" id="helpDeskDrop-down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="apps-calendar" class="nav-link sidebar"><span>Calendar</span></a>
+                                <a href="apps-calendar" class="nav-link sidebar  py-1"><span>Calendar</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="apps-chat" class="nav-link sidebar"><span>Chat</span></a>
+                                <a href="apps-chat" class="nav-link sidebar py-1"><span>Chat</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="apps-mailbox" class="nav-link sidebar"><span>Mail-Box</span></a>
+                                <a href="apps-mailbox" class="nav-link sidebar py-1"><span>Mail-Box</span></a>
                             <!-- </li>
                             <li class="nav-item">
                                 <a href="#sidebarEcommerce" class="nav-link sidebar" data-bs-toggle="collapse" role="button"
