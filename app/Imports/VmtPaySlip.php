@@ -24,7 +24,12 @@ class VmtPaySlip implements ToModel,  WithHeadingRow
         //}
     public function model(array $row)
     {
+        $errorMessage = "";
         if($row['emp_no'] != null){
+            if (!isset($row['emp_no'])) {
+                $errorMessage .=$row['emp_name'];
+                return $errorMessage;
+            }else{
             return new VmtEmployeePaySlip([
             "EMP_NO" => $row['emp_no'],
             "EMP_NAME" => $row['emp_name'],
@@ -95,6 +100,7 @@ class VmtPaySlip implements ToModel,  WithHeadingRow
             "Greetings" => $row['greetings']
         ]);    
         }
+    }
         
     }
     //}
