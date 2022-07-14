@@ -19,7 +19,7 @@
 }
 
 .inp-text {
-    height:46px;
+    height:165px;
     width:auto;
     word-break: break-word;
 }
@@ -263,7 +263,7 @@
 
                                     <td>
                                         @if(!$assignedGoals->is_hr_submitted)
-                                            <textarea name="hreview[{{$kpiRow->id}}]" id="" cols="20" rows="2" placeholder="type here">@if(isset( $kpiRow->hr_kpi_review)){{$kpiRow->hr_kpi_review}}@endif</textarea>
+                                            <textarea name="hreview[{{$kpiRow->id}}]" id="" cols="20" rows="8" placeholder="type here">@if(isset( $kpiRow->hr_kpi_review)){{$kpiRow->hr_kpi_review}}@endif</textarea>
                                         @else
                                             <div>{{$kpiRow->hr_kpi_review}}</div>
                                         @endif

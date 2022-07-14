@@ -19,7 +19,7 @@
 }
 
 .inp-text {
-    height:46px;
+    height:165px;
     width:auto;
     word-break: break-word;
 }
@@ -263,7 +263,7 @@
                                             <div>{{$kpiRow->manager_kpi_review}}</div>
                                         @endif
                                         @if($assignedGoals->is_employee_submitted && !$reviewCompleted)
-                                            <textarea name="managereview[{{$kpiRow->id}}]" id="" cols="20" rows="2" placeholder="type here">@if(isset( $kpiRow->manager_kpi_review)){{$kpiRow->manager_kpi_review}}@endif</textarea>
+                                            <textarea name="managereview[{{$kpiRow->id}}]" id="" cols="20" rows="8" placeholder="type here">@if(isset( $kpiRow->manager_kpi_review)){{$kpiRow->manager_kpi_review}}@endif</textarea>
                                         @else
 
                                         @endif

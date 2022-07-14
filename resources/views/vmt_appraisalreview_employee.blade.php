@@ -19,7 +19,7 @@
 }
 
 .inp-text {
-    height:46px;
+    height:165px;
     width:auto;
     word-break: break-word;
 }
@@ -248,7 +248,7 @@
                                         @else
                                         <div>
                                             @if($assignedGoals->is_manager_approved)
-                                                <textarea name="selfreview[{{$kpiRow->id}}]" id="" cols="40" rows="5"
+                                                <textarea name="selfreview[{{$kpiRow->id}}]" id="" cols="40" rows="8"
                                                 placeholder="type here">@if(isset($kpiRow->self_kpi_review)) {{$kpiRow->self_kpi_review}} @endif</textarea>
                                             @endif
                                         </div>
@@ -260,7 +260,7 @@
                                         @else
                                         <div> 
                                             @if($assignedGoals->is_manager_approved)
-                                                <!-- <textarea name="selfkpiachievement[{{$kpiRow->id}}]" id="" cols="40" rows="5"
+                                                <!-- <textarea name="selfkpiachievement[{{$kpiRow->id}}]" id="" cols="40" rows="8"
                                                 placeholder="type here">@if(isset($kpiRow->self_kpi_percentage)) {{$kpiRow->self_kpi_percentage}} @endif</textarea> -->
                                                 <input type="number" class="inp-text" name="selfkpiachievement[{{$kpiRow->id}}]" placeholder="type here" value="@if(isset( $kpiRow->self_kpi_percentage)){{$kpiRow->self_kpi_percentage}}@endif">
                                             @endif
@@ -273,7 +273,7 @@
                                         @else
                                         <div>
                                             @if($assignedGoals->is_manager_approved)
-                                                <textarea name="selfcomments[{{$kpiRow->id}}]" id="" cols="40" rows="5"
+                                                <textarea name="selfcomments[{{$kpiRow->id}}]" id="" cols="40" rows="8"
                                                 placeholder="type here"> @if(isset($kpiRow->self_kpi_comments)) {{$kpiRow->self_kpi_comments}} @endif</textarea>
                                             @endif
                                         </div>
