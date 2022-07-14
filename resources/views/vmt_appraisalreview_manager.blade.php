@@ -40,14 +40,7 @@
 <div class="row">
     <div class="col-xl-12">
         <div class="card">
-            <div class="card-header border-0 align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">PERFORMANCE MANAGEMENT SYSTEMS (PMS) </h4>
 
-            </div><!-- end card header -->
-
-            <div class="card-body  pb-2">
-
-                <br/>
                 @if($empSelected)
                     <table class="table e-table align-middle table-nowrap mb-0 " style="border: none;">
 
@@ -57,7 +50,7 @@
                                 <b>Employee Name: </b>
                             </td>
                             <td class="text-left">
-                                {{Auth::user()->name}}
+                                {{$assignedEmployee_Userdata->name}}
                             </td>
                         </tr>
                         <tr style="border: none;">
@@ -73,7 +66,7 @@
                                 <b>Job Title / Designation:</b>
                             </td>
                             <td class="col-xl-6 text-left">
-                                {{$employeeData->designation}}
+                                {{$assignedEmployeeOfficeDetails->designation}}
                             </td>
                         </tr>
                         <tr style="border: none;">
@@ -81,7 +74,7 @@
                                 <b>Business Unit/Process/Function:</b>
                             </td>
                             <td class="col-xl-6 text-left">
-                                Call Centre
+                                {{$assignedEmployeeOfficeDetails->department}}
                             </td>
                         </tr>
                         <tr style="border: none;">
@@ -89,35 +82,36 @@
                                 <b>Reporting Manager :</b>
                             </td>
                             <td class="col-xl-6 text-left">
-                                Ajeesh Kumar R -Head Service Delivery
+                                {{$assignedEmp_manager_name[0]}}
                             </td>
                         </tr>
-                        <tr style="border: none;">
+                        {{-- <tr style="border: none;">
                             <td class="col-xl-6 text-left">
                                 <b>Managers Manager :</b>
                             </td>
                             <td class="col-xl-6 text-left">
                                 Kumar
                             </td>
-                        </tr>
+                        </tr> --}}
                         <tr style="border: none;">
                             <td class="col-xl-6 text-left">
                                 <b>Review Period: </b>
                             </td>
                             <td class="col-xl-6 text-left">
-                                Jul’21 To Mar’22
+                                <?php
+                                    $temp =  json_decode($assignedGoals->assignment_period, true);
+                                   print_r($temp['year']." - ".strtoupper($temp['assignment_period_start']));
+                                    //dd($temp);
+                                ?>
                             </td>
                         </tr>
                     </tbody>
                 </table>
                 @endif
 
-            </div><!-- end card body -->
         </div><!-- end card -->
 
         <div class="card">
-
-            <div class="card-body  pb-2">
 
                 <table class="table e-table align-middle table-nowrap mb-0 " style="border: none;">
 
@@ -157,7 +151,6 @@
                     </tbody>
                 </table>
 
-            </div><!-- end card body -->
         </div><!-- end card -->
 
         <!-- @can('L1_Review')
@@ -191,7 +184,7 @@
                     <input type="hidden" name="goal_id" value="{{$assignedGoals->id}}">
                     <div class="table-content mb-4">
                         
-                        <table class="table align-middle mb-0  responsive" id="table">
+                        <table class="table align-middle mb-0 table-bordered responsive" id="table">
 
                             <thead class="thead" id="tHead">
                                 <tr>
@@ -259,20 +252,20 @@
 
 
                                     <td>
-                                        @if($reviewCompleted)
+                                        @if($reviewCompleted || $assignedGoals->is_manager_submitted )
                                             <div>{{$kpiRow->manager_kpi_review}}</div>
                                         @endif
-                                        @if($assignedGoals->is_employee_submitted && !$reviewCompleted)
+                                        @if($assignedGoals->is_employee_submitted && !$reviewCompleted && !$assignedGoals->is_manager_submitted )
                                             <textarea name="managereview[{{$kpiRow->id}}]" id="" cols="20" rows="8" placeholder="type here">@if(isset( $kpiRow->manager_kpi_review)){{$kpiRow->manager_kpi_review}}@endif</textarea>
                                         @else
 
                                         @endif
                                     </td>
                                     <td>
-                                        @if($reviewCompleted)
-                                            <div>{{$kpiRow->manager_kpi_review}}</div>
+                                        @if($reviewCompleted || $assignedGoals->is_manager_submitted )
+                                            <div>{{$kpiRow->manager_kpi_percentage}}</div>
                                         @endif
-                                        @if($assignedGoals->is_employee_submitted  && !$reviewCompleted)     
+                                        @if($assignedGoals->is_employee_submitted  && !$reviewCompleted && !$assignedGoals->is_manager_submitted )     
                                         <!-- <textarea name="managerpercetage[{{$kpiRow->id}}]" id="" cols="20" rows="2" 
                                             placeholder="type here">@if(isset( $kpiRow->manager_kpi_percentage)) {{$kpiRow->manager_kpi_percentage}}@endif</textarea> -->
                                         <input type="number" class="inp-text" name="managerpercetage[{{$kpiRow->id}}]" placeholder="type here" value="@if(isset( $kpiRow->manager_kpi_percentage)){{$kpiRow->manager_kpi_percentage}}@endif">
@@ -285,10 +278,10 @@
                                      </td>
                                     <td>
                                         
-                                            <div>{{$kpiRow->hr_kpi_review}}</div>
+                                            <div>{{$kpiRow->hr_kpi_percentage}}</div>
                                         
                                     </td>
-                                        @endif
+                                    @endif
                                    
                                     
 
@@ -331,6 +324,8 @@
 
         <div class="row mt-3">
             <div class="col-lg-12">
+                @if(!$reviewCompleted && $assignedGoals->is_employee_submitted)
+
                 <label class="form-label">
                     Appraiser Feedback:
                 </label>
@@ -338,50 +333,55 @@
                     <textarea class="form-control" placeholder="" id="gen-info-description-input" name="performance"
                         rows="4">@if(isset( $assignedGoals->appraiser_comment)){{$assignedGoals->appraiser_comment}}@endif</textarea>
                 </div>
-                @if(!$reviewCompleted && $assignedGoals->is_employee_submitted)
                 <div class="buttons d-flex align-items-center justify-content-end mb-3">
                     <button class="btn btn-primary" id="save_feedback_table">Save<i class="fa fa-save"></i></button>
                     &nbsp;&nbsp;
                     <button class="btn btn-primary" id="publish_table">Submit<i class="fa fa-save"></i></button>
                 </div> 
+
                 @endif
+            </div>
+        </div>
+
+    @else <!-- If manager submitted, then show as readonly textarea -->
+
+        <div class="row mt-3">
+            <div class="col-lg-12">
+                <label class="form-label">
+                    Appraiser Feedback:
+                </label>
+                <div class="my-2">
+                    <textarea class="form-control" placeholder="" id="gen-info-description-input" name="performance"
+                        rows="4" readonly>@if(isset( $assignedGoals->appraiser_comment)){{$assignedGoals->appraiser_comment}}@endif</textarea>
+                </div>
             </div>
         </div>
     @endif
 
 
 
+    @if($reviewCompleted)
+
     <div class="card">
         <div class="card-header">
-            <p>Appraisee's Annual Score & Rating</p>
+            <h5>Best People Rating Grid</h5>
         </div>
         <div class="card-body pb-2">
-            <h5>Best People Rating Grid</h5>
-            <div class="table-content mb-4">
-                <table class="table align-middle mb-0  responsive" id="table">
+            <h6>Appraisee's Annual Score & Rating</h6>
+            <div class="table-content mb-1">
+                <table class="table align-middle mb-0 table-bordered  table-striped" id="table">
 
                     <thead class="thead" id="tHead">
                         <tr>
-                            <th scope="col" colspan="6">Best People
-                                Rating Grid</th>
-                            <th scope="col"> Appraisee's Annual Score & Rating</th>
-
+                            <th scope="col">Overall Annual Score</th>
+                            <th scope="col">Less than 60</th>
+                            <th scope="col">60-70</th>
+                            <th scope="col">70-80</th>
+                            <th scope="col">80-90</th>
+                            <th scope="col">90-100</th>
                         </tr>
                     </thead>
                     <tbody class="tbody" id="tbody">
-
-
-                        <tr>
-                            <td class="">
-                                Overall Annual Score
-                            </td>
-                            <td class="">Less than 60 </td>
-                            <td class="">60-70</td>
-                            <td class="">70-80</td>
-                            <td class="">80-90</td>
-                            <td class="">90-100</td>
-                        </tr>
-
                         <tr>
 
                             <td class="">
@@ -421,6 +421,8 @@
             </div>
         </div>
     </div>
+    @endif
+
 
 
 <!-- Modal -->

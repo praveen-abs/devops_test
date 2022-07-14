@@ -482,22 +482,22 @@ td .btn i {
                         <td class="p-3"><!-- Manager status -->
                             @if(auth()->user()->hasrole('Employee'))
 
-                                {{$emp->is_manager_submitted  ? 'Submitted' :  'Not yet submitted'  }}
+                                {{$emp->is_manager_submitted  ? 'Reviewed' :  'Not yet reviewed'  }}
 
                             @endif
                             @if(auth()->user()->hasrole('Manager'))
 
                                 @if($emp->is_manager_submitted ) 
-                                    Submitted
+                                    Reviewed
                                 @else 
-                                    Not yet submitted
+                                    Not yet Reviewed
                                 @endif
 
                             @endif
 
                             @if(auth()->user()->hasrole(['Admin','HR']))
 
-                                {{$emp->is_manager_submitted  ? 'Submitted' :  'Not yet submitted'  }}
+                                {{$emp->is_manager_submitted  ? 'Reviewed' :  'Not yet Reviewed'  }}
 
                             @endif
                         </td>                       
@@ -757,10 +757,12 @@ td .btn i {
                                 <div class="col-3  mt-3 mb-3">
                                     <div class="d-flex flex-column">
                                         <label class="" for="year">Year</label>
+                                        <input type="hidden" name="hidden_calendar_year" id="hidden_calendar_year" value="">
+
                                         <select name="year" id="year" disabled>
                                             <option value="">Select</option>
-                                            <option value="Jan">January - <?php echo date("Y"); ?> to December - <?= date("Y")?> </option>
-                                            <option value="Apr">April - <?php echo date("Y"); ?> to March - <?= date("Y")+1?></option>
+                                            <option value="Jan-Dec">January - <?php echo date("Y"); ?> to December - <?= date("Y")?> </option>
+                                            <option value="Apr-Mar">April - <?php echo date("Y"); ?> to March - <?= date("Y")+1?></option>
                                         </select>
                                     </div>
                                 </div>
@@ -770,7 +772,7 @@ td .btn i {
                                         <select name="frequency" id="frequency">
                                             <option value="">Select</option>
                                             <option value="monthly">Monthly</option>
-                                            <option value="quaterly">Quaterly</option>
+                                            <option value="quarterly">Quarterly</option>
                                             <option value="halfYearly">Half Yearly</option>
                                             <option value="yearly">Yearly</option>
                                         </select>
@@ -1236,17 +1238,25 @@ $(document).ready(function(){
 
     $('#calendar_type').change(function() {
         if ($('#calendar_type').val() == 'financial_year') {
-            $('#year').val('Apr');
-        } else {
-            $('#year').val('Jan');
+            $('#year').val('Apr-Mar');
+        }else
+        if ($('#calendar_type').val() == 'calendar_year') {
+            $('#year').val('Jan-Dec');
         }
+        else
+        {
+            $('#year').val('');
+        }
+        $('#hidden_calendar_year').val($("#year option:selected").text())
+        console.log($( "#hidden_calendar_year" ).val());
+
     });
 
     $('#frequency').change(function() {
         var data = "";
         if ($('#frequency').val() == 'monthly') {
             data = "<option value=''>Select</option><option value='jan'>January</option><option value='feb'>February</option><option value='mar'>March</option><option value='apr'>April</option><option value='may'>May</option><option value='june'>June</option><option value='july'>July</option><option value='aug'>August</option><option value='sept'>September</option><option value='oct'>October</option><option value='nov'>November</option><option value='dec'>December</option>";
-        } else if ($('#frequency').val() == 'quaterly') {
+        } else if ($('#frequency').val() == 'quarterly') {
             data = "<option value=''>Select</option><option value='q1'>Q1(Jan-Mar)</option><option value='q2'>Q2(Apr-June)</option><option value='q3'>Q3(July-Sept)</option><option value='q4'>Q4(Oct-Dec)</option>";
         } else if ($('#frequency').val() == 'halfYearly') {
             data = "<option value=''>Select</option><option value='h1'>H1(Jan-June)</option><option value='h2'>H2(July-Dec)</option>";
@@ -1348,12 +1358,12 @@ $(function () {
         if(count > 0)
         {
             $('#btn_selectEmployees').html("Edit");
-            console.log("Changed to Edit button");
+          //  console.log("Changed to Edit button");
         }
         else
         {
             $('#btn_selectEmployees').html("Add");
-            console.log("Changed to Add button");
+           // console.log("Changed to Add button");
         }
         $('#group-employee').html(employeeArray.join());
         $('#changeEmployee').css('display', 'none');
@@ -1381,7 +1391,7 @@ $(function () {
             changeEmployee();
                      // $("#kpiTableForm :input").prop("disabled", true);
            // $(".table-btn").prop('disabled', true);
-            console.log(data);
+            //console.log(data);
             //alert("Table Saved, Please publish goals");
            // $("#kpitable_id").val(data.table_id);
         }
@@ -1423,7 +1433,7 @@ $('#form_selectReviewer').on('submit', function(e){
           changeEmployee();
                      // $("#kpiTableForm :input").prop("disabled", true);
            // $(".table-btn").prop('disabled', true);
-            console.log(data);
+            //console.log(data);
             //alert("Table Saved, Please publish goals");
            // $("#kpitable_id").val(data.table_id);
         }
@@ -1469,7 +1479,7 @@ $('body').on('click', '#save-table', function(e){
     if( $('#reviewer-name').html() != "---" &&
         $('#btn_selectEmployees').html() == "Edit" &&
         $('#calendar_type').val() != "" && 
-        $('#year').val() != "" &&
+        $("#year option:selected").text() != "Select" &&
         $('#frequency').val() != "" &&
         $('#assignment_period_start').val() != "" &&
         $('#department').val() != "" &&
@@ -1490,14 +1500,12 @@ $('body').on('click', '#save-table', function(e){
 
     }
         
-
-
     if(canSaveForm)
     {
         $.ajax({
             type: "POST", 
             url: "{{url('vmt-pms-kpi-table/save')}}", 
-            data: $('#kpiTableForm').serialize(), 
+            data: $('#kpiTableForm').serialize(),
             success: function(data){
 
                 $("#kpiTableForm :input").prop("disabled", true);
