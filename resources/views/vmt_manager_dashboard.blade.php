@@ -34,17 +34,17 @@
 <!-- prem content end -->
 
 <style>
-.program-card-wrapper img {
-  
-}
+.program-card-wrapper img {}
 
 .program-card-wrapper {
-   position: relative;
+    position: relative;
 }
-.card-img{
+
+.card-img {
     width: 407px;
     height: 101px;
 }
+
 .profile-status {
     position: relative;
     display: flex;
@@ -52,10 +52,11 @@
     padding: 0px;
     width: 100%;
     height: 100%;
-    
+
 }
-.profile-status .status-circle{
-    position:absolute;
+
+.profile-status .status-circle {
+    position: absolute;
 }
 
 
@@ -437,10 +438,11 @@ html {
                     <div class="row">
                         <div class="col-sm-4 col-md-4 ">
                             <div class="profile-status">
-                            <!-- <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}" > -->
-                            <img src="{{ URL::asset('assets/images/status-pic.png') }}" alt="" class="soc-det-img profile-img-round" >
-                            <!-- <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}" class="profile-img-round"> -->
-                            <!-- <i class="ri-checkbox-blank-circle-fill status-circle"></i> -->
+                                <!-- <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}" > -->
+                                <img src="{{ URL::asset('assets/images/status-pic.png') }}" alt=""
+                                    class="soc-det-img profile-img-round">
+                                <!-- <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}" class="profile-img-round"> -->
+                                <!-- <i class="ri-checkbox-blank-circle-fill status-circle"></i> -->
                             </div>
                         </div>
                         <div class="col-sm-8 col-md-8 ">
@@ -500,7 +502,7 @@ html {
                         </p>
 
                     </div>
-                    
+
                 </div>
             </div>
         </div>
@@ -508,91 +510,16 @@ html {
             <div class="card profile-box card-top-border flex-fill">
                 <!-- <div class="p-1 bg-primary" ></div> -->
                 <div class="card-body ">
-                <div class="card-img">
-                <img src="  {{ URL::asset('assets/images/independence.jpg') }}" alt="" class="w-100 h-100">
+                    <div class="card-img">
+                        <img src="  {{ URL::asset('assets/images/independence.jpg') }}" alt="" class="w-100 h-100">
+                    </div>
                 </div>
-                </div>    
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-sm-8 col-md-8 mb-4 ipad-query">
             <div class="row">
-                <div class="col-sm-4 col-md-4 mb-1">
-                    <div class="card shadow profile-box mb-1" style="height:75%;border-top: 10px solid #405189;">
-                        <!-- <div class="p-1 bg-primary" > -->
-                        <div class="card-body d-flex justify-content-center align-items-center">
-                            <div class="text-center">
-                                <h5 class="fw-bold title">New Employees</h5>
-                                <h4><b>6</b></h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4 col-md-4 mb-1">
-                    <div class="card shadow profile-box mb-1" style="height:75%;border-top: 10px solid #405189;">
-                        <!-- <div class="p-1 bg-primary" > -->
-                        <div class="card-body d-flex justify-content-center align-items-center">
-                            <div class="text-center">
-                                <h5 class="fw-bold title">Total Employees</h5>
-                                <h4><b>30</b></h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-2 col-md-2 mb-1">
-                    <div class="card shadow profile-box mb-1" style="height:75%;border-top: 10px solid #405189;">
-                        <!-- <div class="p-1 bg-danger" > -->
-                        <div class="card-body d-flex justify-content-center align-items-center">
-                            <div class="text-center">
-                                <h5 class="fw-bold title">Online</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-2 col-md-2 mb-1">
-                    <div class="card shadow mb-1 profile-box" style="height:75%;border-top: 10px solid #405189;">
-                        <!-- <div class="p-1 bg-primary" > -->
-                        <div class="card-body d-flex justify-content-center align-items-center">
-                            <div class="text-center">
-                                <h5 class="fw-bold title">Offline</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4 col-md-4 mb-1">
-                    <div class="card shadow mb-1 profile-box" style="height:75%;border-top: 10px solid #405189;">
-                        <!-- <div class="p-1 bg-primary" > -->
-                        <div class="card-body d-flex justify-content-center align-items-center">
-                            <div class="text-center">
-                                <h5 class="fw-bold title">Employees on Leave</h5>
-                                <h4><b>3</b></h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4 col-md-4 mb-1">
-                    <div class="card shadow mb-1 profile-box" style="height:75%;border-top: 10px solid #405189;">
-                        <!-- <div class="p-1 bg-primary" > -->
-                        <div class="card-body d-flex justify-content-center align-items-center">
-                            <div class="text-center">
-                                <h5 class="fw-bold title">Future Joiners</h5>
-                                <h4><b>8</b></h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4 col-md-4 mb-1">
-                    <div class="card profile-box shadow mb-1 " style="height:75%;border-top: 10px solid #405189;">
-                        <!-- <div class="p-1 bg-primary" > -->
-                        <div class="card-body d-flex justify-content-center align-items-center">
-                            <div class="text-center">
-                                <h5 class="fw-bold title">Hyrid</h5>
-                                <h4><b>0</b></h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="col-sm-12 col-md-12 mb-4 ipad-query">
                     <div class="card profile-box flex-fill">
                         <!-- <div class="p-1 bg-primary" ></div> -->
@@ -886,4 +813,4 @@ $(document).ready(function() {
     });
 });
 </script>
-@endsection
+@endsection 
