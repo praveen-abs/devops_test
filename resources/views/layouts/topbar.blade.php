@@ -44,12 +44,8 @@
 
                     <div class="d-flex w-50">
 
-                        <div class="logo w-25 d-flex justify-content-center align-items-center">
-                            <img src="{{ URL::asset($logoSrc) }}" alt="" class=""> 
-
-                        </div>
-                        <button type="button"
-                            class="btn btn-sm px-3 fs-16 header-item vertical-menu-btn topnav-hamburger"
+                    <button type="button"
+                            class="btn btn-sm mx-4 fs-16 header-item vertical-menu-btn topnav-hamburger"
                             id="topnav-hamburger-icon">
                             <span class="hamburger-icon">
                                 <span></span>
@@ -57,6 +53,11 @@
                                 <span></span>
                             </span>
                         </button>
+                        <div class="logo w-25 d-flex justify-content-center align-items-center">
+                            <img src="{{ URL::asset($logoSrc) }}" alt="" class=""> 
+
+                        </div>
+                        
                         <div class="search-content header-item w-50 mx-5">
 
                             <i class=" ri-search-line "></i>

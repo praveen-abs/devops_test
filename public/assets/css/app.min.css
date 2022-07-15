@@ -1712,6 +1712,7 @@ body {
 .hamburger-icon.open {
     transform: rotate(-90deg);
     -webkit-transform: rotate(-90deg);
+    left: -16px !important;
 }
 
 .hamburger-icon.open span:first-child {
@@ -18711,18 +18712,6 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
 
 /* Media Query for Large screens */
 @media (min-width: 1281px) {}
-
-
-
-
-/* for 404 error */
-
-.error-data-wrapper svg {
-    height: 100% !important;
-    width: 70% !important;
-    max-width: 100% !important;
-}
-
 
 
 /* for footer contents */
