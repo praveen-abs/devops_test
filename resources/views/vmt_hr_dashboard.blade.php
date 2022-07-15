@@ -427,7 +427,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-8 col-md-8 mb-4 ipad-query"> 
+            <div class="col-sm-9 col-md-9 mb-4 ipad-query"> 
                 <div class="row">
                     <div class="col-sm-4 col-md-4 mb-1">
                         <div class="card shadow mb-1" style="height:75%;border-top: 5px solid #405189;">
@@ -635,7 +635,7 @@
                     </div> 
                 </div>
             </div>
-            <div class="col-sm-4 col-md-4 mb-4 ipad-query">
+            <div class="col-sm-3 col-md-3 mb-4 ipad-query">
                 <div style="background:white">
                     <div class="card profile-box flex-fill m-0 mb-2" style="border-top: 5px solid #405189;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);border-radius:3px 3px 20px 20px;">
                         <!-- <div class="p-1 bg-primary" ></div> -->

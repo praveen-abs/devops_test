@@ -195,6 +195,11 @@
                                 <a href="{{url('vmt_employeeOnboarding')}}" id="" class="nav-link sidebar py-1"
                                     aria-expanded="false"><span>Onboarding</span> </a>
                             </li>
+
+                            <li class="nav-item ">
+                                <a href="{{route('emp-bulk-upload')}}" id="" class="nav-link sidebar py-1"
+                                    aria-expanded="false"><span>Onboarding Bulk Upload</span> </a>
+                            </li>
                             <li class="nav-item ">
                                 <a href="{{url('vmt_noData')}}" id="tds" class="nav-link sidebar py-1"><span>Exit</span></a>
                             </li>

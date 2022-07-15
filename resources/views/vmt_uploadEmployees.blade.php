@@ -28,7 +28,8 @@
                         <div class="col-md-10">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#createEmployee">Create New
-                                Employee</button>
+                                Employee
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -55,7 +56,7 @@
                         <div class="mb-3 row">
                             <label class="col-md-2 col-form-label">Bulk Employee Upload</label>
                             <div class="col-md-10">
-                                <input name="file" type="file">
+                                <input name="file" type="file" required>
                             </div>
                         </div>
                         <div class="row mt-2">
