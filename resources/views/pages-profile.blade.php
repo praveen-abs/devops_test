@@ -378,13 +378,6 @@
         </div>
     </div>
 
-
-
-
-
-
-
-
     <div class="tab-content">
 
         <div class="tab-pane fade" id="bank_statutory">
@@ -610,8 +603,7 @@
                                 <div class="form-group mb-3">
                                     <label class="col-form-label">Additional rate <span
                                             class="text-danger">*</span></label>
-                                    <select class="select select2-hidden-accessible"
-                                        data-select2-id="select2-data-22-ah6g" tabindex="-1" aria-hidden="true">
+                                    <select class="select ">
                                         <option data-select2-id="select2-data-24-ngjq">Select additional
                                             rate
                                         </option>
@@ -626,19 +618,7 @@
                                         <option>8%</option>
                                         <option>9%</option>
                                         <option>10%</option>
-                                    </select><span class="select2 select2-container select2-container--default"
-                                        dir="ltr" data-select2-id="select2-data-23-46iu" style="width: 100%;"><span
-                                            class="selection"><span class="select2-selection select2-selection--single"
-                                                role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0"
-                                                aria-disabled="false" aria-labelledby="select2-ij1t-container"
-                                                aria-controls="select2-ij1t-container"><span
-                                                    class="select2-selection__rendered" id="select2-ij1t-container"
-                                                    role="textbox" aria-readonly="true"
-                                                    title="Select additional rate">Select
-                                                    additional rate</span><span class="select2-selection__arrow"
-                                                    role="presentation"><b
-                                                        role="presentation"></b></span></span></span><span
-                                            class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-sm-4">
@@ -706,26 +686,11 @@
                             <div class="col-sm-4">
                                 <div class="form-group mb-3">
                                     <label class="col-form-label">Employee ESI rate</label>
-                                    <select class="select select2-hidden-accessible"
-                                        data-select2-id="select2-data-31-k78f" tabindex="-1" aria-hidden="true">
-                                        <option data-select2-id="select2-data-33-6bk0">Select ESI
-                                            contribution
-                                        </option>
+                                    <select class="select ">
+                                        <option>Select ESI contribution</option>
                                         <option>Yes</option>
                                         <option>No</option>
-                                    </select><span class="select2 select2-container select2-container--default"
-                                        dir="ltr" data-select2-id="select2-data-32-7jw0" style="width: 100%;"><span
-                                            class="selection"><span class="select2-selection select2-selection--single"
-                                                role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0"
-                                                aria-disabled="false" aria-labelledby="select2-5oth-container"
-                                                aria-controls="select2-5oth-container"><span
-                                                    class="select2-selection__rendered" id="select2-5oth-container"
-                                                    role="textbox" aria-readonly="true"
-                                                    title="Select ESI contribution">Select
-                                                    ESI contribution</span><span class="select2-selection__arrow"
-                                                    role="presentation"><b
-                                                        role="presentation"></b></span></span></span><span
-                                            class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-sm-4">
@@ -786,8 +751,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header py-3 new-role-header d-flex align-items-center">
-                    <h4 class="modal-title mb-1 text-primary">Employee Information</h4>
-                    <hr class="bottom-dash">
+                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Employee Information</h4>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -819,7 +783,7 @@
                                         <div class="form-group mb-3">
                                             <label>Birth Date</label>
                                             <div class="cal-icon">
-                                                <input class="form-control datetimepicker" type="date" name="dob"
+                                                <input class="form-control datetimepicker" type="date" max="9999-12-31"  name="dob"
                                                     value="{{date('Y-m-d', strtotime($details->dob))}}">
                                             </div>
                                         </div>
@@ -877,23 +841,12 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Reports To <span class="text-danger">*</span></label>
-                                    <select class="select select2-hidden-accessible"
-                                        data-select2-id="select2-data-46-mnpp" tabindex="-1" aria-hidden="true">
-                                        <option data-select2-id="select2-data-48-u3m6">-</option>
+                                    <select class="select">
+                                        <option>-</option>
                                         <option>Wilmer Deluna</option>
                                         <option>Lesley Grauer</option>
                                         <option>Jeffery Lalor</option>
-                                    </select><span class="select2 select2-container select2-container--default"
-                                        dir="ltr" data-select2-id="select2-data-47-2xsw" style="width: 100%;"><span
-                                            class="selection"><span class="select2-selection select2-selection--single"
-                                                role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0"
-                                                aria-disabled="false" aria-labelledby="select2-cedl-container"
-                                                aria-controls="select2-cedl-container"><span
-                                                    class="select2-selection__rendered" id="select2-cedl-container"
-                                                    role="textbox" aria-readonly="true" title="-">-</span><span
-                                                    class="select2-selection__arrow" role="presentation"><b
-                                                        role="presentation"></b></span></span></span><span
-                                            class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -913,8 +866,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header py-3 new-role-header d-flex align-items-center">
-                    <h4 class="modal-title mb-1 text-primary">Personal Information</h4>
-                    <hr class="bottom-dash">
+                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Personal Information</h4>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -947,7 +899,7 @@
                                 <div class="form-group mb-3">
                                     <label>Birthday</label>
                                     <div class="cal-icon">
-                                        <input class="form-control datetimepicker" type="date">
+                                        <input class="form-control datetimepicker" type="date" max="9999-12-31" >
                                     </div>
                                 </div>
                             </div>
@@ -971,23 +923,12 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Gender</label>
-                                    <select class="select form-control select2-hidden-accessible"
-                                        data-select2-id="select2-data-49-p0wk" tabindex="-1" aria-hidden="true">
-                                        <option data-select2-id="select2-data-51-s1yq">-</option>
+                                    <select class="select form-control" tabindex="-1">
+                                        <option>-</option>
                                         <option>Male</option>
                                         <option>Female</option>
                                         <option>Other</option>
-                                    </select><span class="select2 select2-container select2-container--default"
-                                        dir="ltr" data-select2-id="select2-data-50-5xxf" style="width: 100%;"><span
-                                            class="selection"><span class="select2-selection select2-selection--single"
-                                                role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0"
-                                                aria-disabled="false" aria-labelledby="select2-you7-container"
-                                                aria-controls="select2-you7-container"><span
-                                                    class="select2-selection__rendered" id="select2-you7-container"
-                                                    role="textbox" aria-readonly="true" title="-">-</span><span
-                                                    class="select2-selection__arrow" role="presentation"><b
-                                                        role="presentation"></b></span></span></span><span
-                                            class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                    </select>
                                 </div>
                             </div>
 
@@ -1009,8 +950,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header py-3 new-role-header d-flex align-items-center">
-                    <h4 class="modal-title mb-1 text-primary">Bank Information</h4>
-                    <hr class="bottom-dash">
+                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Bank Information</h4>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -1021,14 +961,14 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Bank name</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" value="{{$details->bank_name}}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>EmaBank account No</label>
                                     <div class="cal-icon">
-                                        <input class="form-control" type="text">
+                                        <input class="form-control" value="{{$details->bank_account_number}}" type="text">
                                     </div>
                                 </div>
 
@@ -1036,13 +976,13 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>IFSC Code</label>
-                                    <input class="form-control" type="text">
+                                    <input class="form-control" value="{{$details->bank_ifsc_code}}" type="text">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>PAN No</label>
-                                    <input class="form-control" type="text">
+                                    <input class="form-control" value="{{$details->pan_card}}" type="text">
                                 </div>
                             </div>
 
@@ -1062,8 +1002,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header py-3 new-role-header d-flex align-items-center">
-                    <h4 class="modal-title mb-1 text-primary">Leave Information</h4>
-                    <hr class="bottom-dash">
+                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Leave Information</h4>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -1117,8 +1056,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header py-3 new-role-header d-flex align-items-center">
-                    <h4 class="modal-title mb-1 text-primary">Personal Information</h4>
-                    <hr class="bottom-dash">
+                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Personal Information</h4>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -1129,68 +1067,57 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Passport No</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" value="{{$details->passport}}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Passport Expiry Date</label>
                                     <div class="cal-icon">
-                                        <input class="form-control datetimepicker" type="date">
+                                        <input class="form-control datetimepicker" type="date" max="9999-12-31"  value="{{$details->passport}}">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Tel</label>
-                                    <input class="form-control" type="text">
+                                    <input class="form-control" type="number" maxlength="10" minlength="10">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Nationality <span class="text-danger">*</span></label>
-                                    <input class="form-control" type="text">
+                                    <input class="form-control onboard-form" type="text" pattern="alpha">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Religion</label>
                                     <div class="cal-icon">
-                                        <input class="form-control" type="text">
+                                        <input class="form-control onboard-form" pattern="name" type="text" pattern="alpha">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Marital status <span class="text-danger">*</span></label>
-                                    <select class="select form-control select2-hidden-accessible"
-                                        data-select2-id="select2-data-49-p0wk" tabindex="-1" aria-hidden="true">
-                                        <option data-select2-id="select2-data-51-s1yq">-</option>
+                                    <select class="select form-control">
+                                        <option>-</option>
                                         <option>Single</option>
                                         <option>Married</option>
-                                    </select><span class="select2 select2-container select2-container--default"
-                                        dir="ltr" data-select2-id="select2-data-50-5xxf" style="width: 100%;"><span
-                                            class="selection"><span class="select2-selection select2-selection--single"
-                                                role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0"
-                                                aria-disabled="false" aria-labelledby="select2-you7-container"
-                                                aria-controls="select2-you7-container"><span
-                                                    class="select2-selection__rendered" id="select2-you7-container"
-                                                    role="textbox" aria-readonly="true" title="-">-</span><span
-                                                    class="select2-selection__arrow" role="presentation"><b
-                                                        role="presentation"></b></span></span></span><span
-                                            class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Employment of spouse</label>
-                                    <input class="form-control" type="text">
+                                    <input class="form-control onboard-form" type="text" pattern="alpha">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>No. of children </label>
-                                    <input class="form-control" type="text">
+                                    <input class="form-control onboard-form" type="number" maxlength="2">
                                 </div>
                             </div>
                         </div>
@@ -1208,8 +1135,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header py-3 new-role-header d-flex align-items-center">
-                    <h4 class="modal-title mb-1 text-primary">Emergency Contact</h4>
-                    <hr class="bottom-dash">
+                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Emergency Contact</h4>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -1223,25 +1149,25 @@
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
                                             <label>Name <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control">
+                                            <input type="text" class="form-control onboard-form" pattern="name">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
                                             <label>Relationship <span class="text-danger">*</span></label>
-                                            <input class="form-control" type="text">
+                                            <input class="form-control onboard-form" type="text" pattern="alpha">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
                                             <label>Phone <span class="text-danger">*</span></label>
-                                            <input class="form-control" type="text">
+                                            <input class="form-control onboard-form" type="number" maxlength="10" minlength="10">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
                                             <label>Phone 2</label>
-                                            <input class="form-control" type="text">
+                                            <input class="form-control onboard-form" type="number" maxlength="10" minlength="10">
                                         </div>
                                     </div>
                                 </div>
@@ -1254,25 +1180,25 @@
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
                                             <label>Name <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control">
+                                            <input type="text" class="form-control onboard-form" pattern="name">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
                                             <label>Relationship <span class="text-danger">*</span></label>
-                                            <input class="form-control" type="text">
+                                            <input class="form-control onboard-form" type="text" pattern="alpha">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
                                             <label>Phone <span class="text-danger">*</span></label>
-                                            <input class="form-control" type="text">
+                                            <input class="form-control onboard-form" type="number" maxlength="10" minlength="10">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
                                             <label>Phone 2</label>
-                                            <input class="form-control" type="text">
+                                            <input class="form-control onboard-form" type="number" maxlength="10" minlength="10">
                                         </div>
                                     </div>
                                 </div>
@@ -1293,8 +1219,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header py-3 new-role-header d-flex align-items-center">
-                    <h4 class="modal-title mb-1 text-primary">Family Information</h4>
-                    <hr class="bottom-dash">
+                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Family Information</h4>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -1311,25 +1236,25 @@
                                         <div class="col-md-6">
                                             <div class="form-group mb-3">
                                                 <label>Name <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="text">
+                                                <input class="form-control onboard-form" type="text" pattern="name">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group mb-3">
                                                 <label>Relationship <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="text">
+                                                <input class="form-control onboard-form" type="text" pattern="alpha">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group mb-3">
                                                 <label>Date of birth <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="text">
+                                                <input class="form-control onboard-form" type="date" max="9999-12-31" >
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group mb-3">
                                                 <label>Phone <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="text">
+                                                <input class="form-control onboard-form" type="number" maxlength="10" minlength="10">
                                             </div>
                                         </div>
                                     </div>
@@ -1340,36 +1265,39 @@
                                     <h3 class="card-title fw-bold">Education Informations <a href="javascript:void(0);"
                                             class="delete-icon"><i class="   ri-delete-bin-line"></i></a>
                                     </h3>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group mb-3">
-                                                <label>Name <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="text">
+                                    <div class="content-container">
+                                        <div class="row addition-content" id="content1">
+                                            <div class="col-md-6">
+                                                <div class="form-group mb-3">
+                                                    <label>Name <span class="text-danger">*</span></label>
+                                                    <input class="form-control onboard-form" type="text" pattern="name">
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group mb-3">
-                                                <label>Relationship <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="text">
+                                            <div class="col-md-6">
+                                                <div class="form-group mb-3">
+                                                    <label>Relationship <span class="text-danger">*</span></label>
+                                                    <input class="form-control onboard-form" type="text" pattern="alpha">
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group mb-3">
-                                                <label>Date of birth <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="text">
+                                            <div class="col-md-6">
+                                                <div class="form-group mb-3">
+                                                    <label>Date of birth <span class="text-danger">*</span></label>
+                                                    <input class="form-control onboard-form" type="date" max="9999-12-31" >
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group mb-3">
-                                                <label>Phone <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="text">
+                                            <div class="col-md-6">
+                                                <div class="form-group mb-3">
+                                                    <label>Phone <span class="text-danger">*</span></label>
+                                                    <input class="form-control onboard-form" type="number" maxlength="10" minlength="10">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="add-more">
-                                        <a href="javascript:void(0);text-secondary" class="text-secondary"><i
-                                                class=" ri-add-circle-fill"></i> Add
-                                            More</a>
+                                    <div class="add-more" style="cursor:pointer;">
+                                        <div id="add_more" class="text-secondary">
+                                            <i class=" ri-add-circle-fill"></i> Add
+                                            More
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1388,8 +1316,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header py-3 new-role-header d-flex align-items-center">
-                    <h4 class="modal-title mb-1 text-primary">Education Information</h4>
-                    <hr class="bottom-dash">
+                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Education Information</h4>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -1483,7 +1410,7 @@
                                             <div class="form-group mb-3 form-focus focused">
                                                 <div class="cal-icon">
                                                     <label class="focus-label">Starting Date</label>
-                                                    <input type="date" value="01/06/2002"
+                                                    <input type="date" max="9999-12-31"  value="01/06/2002"
                                                         class="form-control floating datetimepicker">
                                                 </div>
 
@@ -1493,7 +1420,7 @@
                                             <div class="form-group mb-3 form-focus focused">
                                                 <label class="focus-label">Complete Date</label>
                                                 <div class="cal-icon">
-                                                    <input type="date" value="31/05/2006"
+                                                    <input type="date" max="9999-12-31"  value="31/05/2006"
                                                         class="form-control floating datetimepicker">
                                                 </div>
 
@@ -1538,8 +1465,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header py-3 new-role-header d-flex align-items-center">
-                    <h4 class="modal-title mb-1 text-primary">Experience Information</h4>
-                    <hr class="bottom-dash">
+                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Experience Information</h4>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -1582,7 +1508,7 @@
                                             <div class="form-group mb-3 form-focus focused">
                                                 <label class="focus-label">Period From</label>
                                                 <div class="cal-icon">
-                                                    <input type="text" class="form-control floating datetimepicker"
+                                                    <input type="date" max="9999-12-31"  class="form-control floating datetimepicker"
                                                         value="01/07/2007">
                                                 </div>
 
@@ -1592,7 +1518,7 @@
                                             <div class="form-group mb-3 form-focus focused">
                                                 <label class="focus-label">Period To</label>
                                                 <div class="cal-icon">
-                                                    <input type="date" class="form-control floating datetimepicker"
+                                                    <input type="date" max="9999-12-31"  class="form-control floating datetimepicker"
                                                         value="08/06/2018">
                                                 </div>
 
@@ -1606,54 +1532,57 @@
                                     <h3 class="card-title fw-bold">Experience Informations <a href="javascript:void(0);"
                                             class="delete-icon"><i class="   ri-delete-bin-line"></i></a>
                                     </h3>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group mb-3 form-focus focused">
-                                                <label class="focus-label">Company Name</label>
-                                                <input type="text" class="form-control floating"
-                                                    value="Digital Devlopment Inc">
+                                    <div class="exp-content-container">
+                                        <div class="row exp-addition-content" id="content1">
+                                            <div class="col-md-6">
+                                                <div class="form-group mb-3 form-focus focused">
+                                                    <label class="focus-label">Company Name</label>
+                                                    <input type="text" class="form-control floating"
+                                                        value="Digital Devlopment Inc">
 
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group mb-3 form-focus focused">
-                                                <label class="focus-label">Location</label>
-                                                <input type="text" class="form-control floating" value="United States">
-
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group mb-3 form-focus focused">
-                                                <label class="focus-label">Job Position</label>
-                                                <input type="text" class="form-control floating" value="Web Developer">
-
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group mb-3 form-focus focused">
-                                                <label class="focus-label">Period From</label>
-                                                <div class="cal-icon">
-                                                    <input type="date" class="form-control floating datetimepicker"
-                                                        value="01/07/2007">
                                                 </div>
-
                                             </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group mb-3 form-focus focused">
-                                                <div class="cal-icon">
-                                                    <label class="focus-label">Period To</label>
-                                                    <input type="date" class="form-control floating datetimepicker"
-                                                        value="08/06/2018">
-                                                </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group mb-3 form-focus focused">
+                                                    <label class="focus-label">Location</label>
+                                                    <input type="text" class="form-control floating" value="United States">
 
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group mb-3 form-focus focused">
+                                                    <label class="focus-label">Job Position</label>
+                                                    <input type="text" class="form-control floating" value="Web Developer">
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group mb-3 form-focus focused">
+                                                    <label class="focus-label">Period From</label>
+                                                    <div class="cal-icon">
+                                                        <input type="date" max="9999-12-31"  class="form-control floating datetimepicker"
+                                                            value="01/07/2007">
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group mb-3 form-focus focused">
+                                                    <div class="cal-icon">
+                                                        <label class="focus-label">Period To</label>
+                                                        <input type="date" max="9999-12-31"  class="form-control floating datetimepicker"
+                                                            value="08/06/2018">
+                                                    </div>
+
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="add-more">
-                                        <a href="javascript:void(0);" class="text-secondary"><i
-                                                class=" ri-add-circle-fill"></i> Add
-                                            More</a>
+                                        <div class="text-secondary" id="exp-add-more">
+                                            <i class=" ri-add-circle-fill"></i> Add
+                                            More
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1676,9 +1605,10 @@
 <!--end row-->
 @endsection
 @section('script')
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="{{ URL::asset('assets/js/pages/profile-setting.init.js') }}"></script>
-<script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 <script>
 $('.edit-icon').click(function() {
     var id = $(this).attr('data-bs-target');
@@ -1686,16 +1616,35 @@ $('.edit-icon').click(function() {
 });
 
 
-const optionMenu = document.querySelector(".select-menu"),
-    selectBtn = optionMenu.querySelector(".select-btn"),
-    options = optionMenu.querySelectorAll(".option"),
-    sBtn_text = optionMenu.querySelector(".sBtn-text");
+$('#exp-add-more').click(function() {
+    var id = $('.exp-addition-content:last').attr('id');
+    var length = 1;
+    if (id) {
+        length = parseInt(id.replace('content', '')) + 1;
+    }
+    $('.exp-content-container').append('<div class="row exp-addition-content" id="content'+length+'"><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Company Name</label><input type="text" class="form-control floating"value="Digital Devlopment Inc"></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Location</label><input type="text" class="form-control floating" value="United States"></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Job Position</label><input type="text" class="form-control floating" value="Web Developer"></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Period From</label><div class="cal-icon"><input type="date" max="9999-12-31"  class="form-control floating datetimepicker"value="01/07/2007"></div></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><div class="cal-icon"><label class="focus-label">Period To</label><input type="date" max="9999-12-31"  class="form-control floating datetimepicker"value="08/06/2018"></div></div></div></div>');
+});
 
-selectBtn.addEventListener("click", () =>
+$('#add_more').click(function() {
+    var id = $('.addition-content:last').attr('id');
+    var length = 1;
+    if (id) {
+        length = parseInt(id.replace('content', '')) + 1;
+    }
+    $('.content-container').append('<div class="row addition-content" id="content'+length+'"><div class="col-md-6"><div class="form-group mb-3"><label>Name <span class="text-danger">*</span></label><input class="form-control onboard-form" type="text" pattern="name"></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Relationship <span class="text-danger">*</span></label><input class="form-control onboard-form" type="text" pattern="alpha"></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Date of birth <span class="text-danger">*</span></label><input class="form-control onboard-form" type="date" max="9999-12-31" ></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Phone <span class="text-danger">*</span></label><input class="form-control onboard-form" type="number" maxlength="10" minlength="10"></div></div></div>');
+});
+
+
+const optionMenu = $(".select-menu"),
+    selectBtn = $(".select-btn"),
+    options = $(".option"),
+    sBtn_text = $(".sBtn-text");
+
+selectBtn.click(function() {
     optionMenu.classList.toggle("active")
-);
+});
 
-options.forEach((option) => {
+options.each((option) => {
     option.addEventListener("click", () => {
         let selectedOption = option.querySelector(".option-text").innerText;
         sBtn_text.innerText = selectedOption;
@@ -1703,6 +1652,49 @@ options.forEach((option) => {
         optionMenu.classList.remove("active");
 
     });
+});
+
+
+
+$('body').on('keyup', ".onboard-form", function() {
+    var inputvalues = $(this).val();
+    var data = $(this).attr('name');
+    if ($(this).attr('maxlength')) {
+        var dtl = $(this).val().length;
+        var val = parseInt($(this).attr('maxlength'));
+        if(dtl>val){
+            $(this).val($(this).val().substr(0,val));
+        } 
+    }
+    if ($(this).attr('pattern') != undefined && $(this).attr('pattern') != '' && inputvalues !=
+        '') {
+        var pattern = {
+            'pan': /^([A-Z]){3}P([A-Z]){1}([0-9]){4}([A-Z]){1}?$/,
+            'ifsc': /^([A-Z]){4}0([A-Z0-9]){6}?$/,
+            'aadhar': /^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$/,
+            'passport': /^[a-zA-Z]{2}[0-9]{7}$/,
+            'account': /^[0-9]{9,18}$/,
+            'dl': /^(([A-Z]{2}[0-9]{2})( )|([A-Z]{2}-[0-9]{2}))((19|20)[0-9][0-9])[0-9]{7}$/,
+            'gst': /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/,
+            'alp-num': /^[a-zA-Z0-9]+$/,
+            'alpha': /^[a-zA-Z]+$/,
+            'name': /^[a-zA-Z.]+$/,
+        };
+        var regex = $(this).attr('pattern');
+        if (!pattern[regex].test(inputvalues)) {
+            $('.' + data + '_label').addClass('patternErr');
+            var v = $(this).val();
+            if (regex == 'name') {
+                $(this).val(v.replace(/[_\W0-9]+/g, ''));
+            } else if (regex == 'alpha') {
+                $(this).val(v.replace(/[_\W0-9.]+/g, ''));
+            } else if (regex == 'alp-num') {
+                $(this).val(v.replace(/[_\W.]+/g, ''));
+            }
+        } else {
+            $('.' + data + '_label').removeClass('patternErr');
+        }
+    }
 });
 </script>
 @endsection

@@ -49,7 +49,7 @@
                                                 @php
                                                 $date = (date('Y')-18)."-".date('m')."-".date('d');
                                                 @endphp
-                                                <input type="date" name="dob" max="{{$date}}" class="onboard-form form-control" required />
+                                                <input type="date" max="9999-12-31"  name="dob" max="{{$date}}" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <label class="" for="marital_status">Marital Status{!! required() !!}</label>
@@ -64,7 +64,7 @@
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <label class="" for="doj">Date of Joining{!! required() !!}</label>
-                                                <input type="date" name="doj" class="onboard-form form-control" required />
+                                                <input type="date" max="9999-12-31"  name="doj" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <label class="" for="gender">Gender{!! required() !!}</label>
@@ -109,7 +109,7 @@
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <label class="" for="passport_exp">Passport Exp Date<span id="passport_exp_req">{!! required() !!}</span></label>
-                                                <input type="date" name="passport_exp" min="{{date('Y-m-d')}}" id="passport_exp" class="onboard-form form-control not-required validate" />
+                                                <input type="date" max="9999-12-31"  name="passport_exp" min="{{date('Y-m-d')}}" id="passport_exp" class="onboard-form form-control not-required validate" />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <label class="" for="nationality">Nationality{!! required() !!}</label>
@@ -359,7 +359,7 @@
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <label class="" for="dow">Date of Wedding<span id="dow_req">{!! required() !!}</span></label>
-                                                <input type="date" name="dow" class="onboard-form form-control spouse_data" required />
+                                                <input type="date" max="9999-12-31"  name="dow" class="onboard-form form-control spouse_data" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <label class="" for="spouse_name">Spouse Name<span id="spouse_name_req">{!! required() !!}</span></label>
@@ -376,7 +376,7 @@
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <label class="" for="spouse_dob">Spouse DOB<span id="spouse_dob_req">{!! required() !!}</span></label>
-                                                <input type="date" name="spouse_dob" class="onboard-form form-control spouse_data" required />
+                                                <input type="date" max="9999-12-31"  name="spouse_dob" class="onboard-form form-control spouse_data" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <label class="" for="no_child">Number of Children<span id="no_child_req">{!! required() !!}</span></label>
@@ -397,7 +397,7 @@
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                     <label class="" for="child_dob">Children DOB</label>
-                                                    <input type="date" name="child_dob" class="onboard-form form-control spouse_data" required />
+                                                    <input type="date" max="9999-12-31"  name="child_dob" class="onboard-form form-control spouse_data" required />
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                     <label class="" for="child_gender">Children Gender</label>

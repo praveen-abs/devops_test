@@ -141,31 +141,20 @@
                     <div class="collapse menu-dropdown" id="attendanceDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1">
-                                <span>   Leave</span> 
-                                </a>
+                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1"><span>Leave</span></a>
                             </li>
                             <li class="nav-item">
-
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>Attendance
-                                    </span></a>
+                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>Attendance</span></a>
                             </li>
                             <li class="nav-item">
-
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1"
-                                    role="button"><span>Timesheet</span></a>
+                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>Timesheet</span></a>
                             </li>
                             <li class="nav-item">
-
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1"
-                                    role="button"><span>Performance</span></a>
+                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>Performance</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>Expenses &
-                                        Trevel</span></a>
+                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>Expenses & Travel</span></a>
                             </li>
-
-
                         </ul>
                     </div>
                 </li>
