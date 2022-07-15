@@ -147,7 +147,7 @@
                             </li>
                             <li class="nav-item">
 
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>Attendance
+                                <a href="apps-calendar" class="nav-link sidebar py-1" role="button"><span>Attendance
                                     </span></a>
                             </li>
                             <li class="nav-item">
@@ -528,7 +528,7 @@
                     <div class="collapse menu-dropdown" id="helpDeskDrop-down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="apps-calendar" class="nav-link sidebar  py-1"><span>Calendar</span></a>
+                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar  py-1"><span>Calendar</span></a>
                             </li>
                             <li class="nav-item">
                                 <a href="apps-chat" class="nav-link sidebar py-1"><span>Chat</span></a>
