@@ -172,8 +172,9 @@ class VmtApraisalController extends Controller
         //dd($request->all());
         if($request->has("employees")){
             $employeeList  = explode(',', $request->employees[0]); 
-            $mailingEmpList  = VmtEmployee::join('vmt_employee_office_details',  'user_id', '=', 'vmt_employee_details.userid')->whereIn('userid', $employeeList)->pluck('officical_mail'); 
+            $mailingEmpList  = VmtEmployee::join('vmt_employee_office_details',  'user_id', '=', 'vmt_employee_details.userid')->whereIn('userid', $employeeList)->pluck('officical_mail','userid'); 
             $mailingRevList  = VmtEmployeeOfficeDetails::whereIn('id', array($request->reviewer))->pluck('officical_mail'); 
+            $user_emp_name = User::where('id',$request->reviewer)->pluck('name')->first();
             
             //dd($employeeList);
             foreach ($employeeList as $index => $value) {
@@ -223,12 +224,18 @@ class VmtApraisalController extends Controller
                 }
 
                 $empPmsGoal->save();
-            }
-            if (auth()->user()->hasrole('Employee')) {
-                \Mail::to($mailingRevList)->send(new VmtAssignGoals(url('pms-employee-reviews?goal_id='.$request->kpitable_id.'&user_id='.auth::user()->id),"none"));
+                }
+                // \Mail::to($officialMailList)->send(new NotifyPMSManager(auth::user()->name,  $currentUser_empDetails->designation,$hrReview->name));
+                if (auth()->user()->hasrole('Employee')) {
+                     \Mail::to($mailingRevList)->send(new VmtAssignGoals("none",$user_emp_name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start)));
             } else {
                $finalMailList = $mailingEmpList->merge($mailingRevList);
-                \Mail::to($finalMailList)->send(new VmtAssignGoals(url('vmt-pms-assigngoals'),"none"));
+              // dd($finalMailList);
+
+              foreach ($finalMailList as $recipient) {
+                \Mail::to($recipient)->send(new VmtAssignGoals("none", $user_emp_name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start)));
+            }
+                // \Mail::to($finalMailList)->send(new VmtAssignGoals( url('none'), "none", $user_emp_name));
             }
             return "Question Created Successfully";
         }
