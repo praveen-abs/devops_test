@@ -27,6 +27,8 @@ return new class extends Migration
             $table->text('hr_kpi_review')->after('manager_kpi_comments')->nullable();
             $table->text('hr_kpi_percentage')->after('hr_kpi_review')->nullable();
             $table->text('hr_kpi_comments')->after('hr_kpi_percentage')->nullable();
+            $table->string('employee_rejection_comments')->nullable();
+            $table->string('manager_rejection_comments')->nullable();
         });
     }
 

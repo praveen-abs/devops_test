@@ -76,7 +76,7 @@
         right: 0;
         bottom: 0;
         border-radius: 20px;
-        background-color: #f0f0f6;
+        background-color: lightgreen;
         width:100px;
         -webkit-transition: .4s;
         box-shadow: inset -5px -5px 9px rgba(255,255,255,0.45), inset 5px 5px 9px rgba(94,104,121,0.3);
@@ -84,10 +84,18 @@
     }
     
     .slider-checkbox.check-out:before{
-        background-color: red;
+        background-color: green;
     }
     .slider-checkbox.check-in:before{
         background-color: green;
+    }
+    input:checked + .slider>.slider-text:after {
+        content: 'Checkout';
+        color: red;
+    }
+
+    input + .slider>.slider-text:after {
+        content: 'Check In';
     }
 
     .slider-checkbox:before {
@@ -97,7 +105,8 @@
         left: 2px;
         border-radius: 20px;
         bottom: 2px;
-                   color: white;
+        color: white;
+        background-color: green;
         -webkit-transition: .4s;
         transition: .4s;
         content: '\f011';
@@ -112,13 +121,13 @@
 
         
     input:checked + .slider-checkbox.check-out {
-        background-color:red;
-        color:#fff;
+        background-color:#f0657070;
+        color:red;
     } 
     
     input:checked + .slider-checkbox.check-in {
-        background-color: lawngreen;
-        color:#fff;
+        background-color: #f0657070;
+        color:red;
     } 
 
     input:focus + .slider-checkbox {
@@ -134,10 +143,21 @@
         
     }
     input:checked + .slider-checkbox.check-out:before {
-        color:red;
+        color: white;
+        background-color: red;
     }
     input:checked + .slider-checkbox.check-in:before {
-        color:lawngreen;
+        color: white;
+        background-color: red;
+    }
+
+    input:checked + .slider-checkbox>.slider-checkbox-text:after {
+        content: 'Checkout';
+        color: red;
+    }
+
+    input + .slider-checkbox>.slider-checkbox-text:after {
+        content: 'Check In';
     }
 
     .fc-scroller {
@@ -352,8 +372,8 @@
                             </div>
                             <div class="d-flex align-items-center mt-4">
                                 <h6 class="f-15 mr-1"><span><i class="fa fa-sun mr-1"></i>General shift</span></h6>
-                                <h6 class="f-15 m-0"><span><label class="switch-checkbox "> <input type="checkbox"> <span class="slider-checkbox check-in round"><span class="slider-checkbox-text">Check in</span></span> </label></span></h6>
-                                <h6 class="f-15 m-0"><span><label class="switch-checkbox "> <input type="checkbox"> <span class="slider-checkbox check-out round"><span class="slider-checkbox-text">Check out</span></span> </label></span></h6>
+                                <h6 class="f-15 m-0"><span><label class="switch-checkbox "> <input type="checkbox"> <span class="slider-checkbox check-in round"><span class="slider-checkbox-text"></span></span> </label></span></h6>
+                                <h6 class="f-15 m-0"><span><label class="switch-checkbox "> <input type="checkbox"> <span class="slider-checkbox check-out round"><span class="slider-checkbox-text"></span></span> </label></span></h6>
                             </div>
                         </div>
                     </div>

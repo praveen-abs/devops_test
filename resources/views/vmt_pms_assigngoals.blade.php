@@ -805,22 +805,6 @@ td .btn i {
                                         <label class="" for="Assignment">Employees</label>
                                         <div class="d-flex align-items-center">
                                             <div class="avatar-group-item">
-                                                <!-- <a class="avatar">
-                                                    <img src="assets/images/users/avatar-5.jpg" alt="" class="rounded-circle p-0">
-                                                </a>
-                                                <a class="avatar">
-                                                    <img src="assets/images/users/avatar-5.jpg" alt="" class="rounded-circle p-0">
-                                                </a>
-                                                <a class="avatar">
-                                                    <img src="assets/images/users/avatar-5.jpg" alt="" class="rounded-circle p-0">
-                                                </a>
-                                                <a class="avatar">
-                                                    <img src="assets/images/users/avatar-5.jpg" alt="" class="rounded-circle p-0">
-                                                </a> -->
-                                                <!-- <span class="img-addition" style="background-color: rgb(134, 192, 106);width: 30px;height: 30px;font-size:12px;"> +12 </span>
-                                                <div class="mt-1 message-content align-items-start d-flex flex-column  mx-2">
-                                                    <span id="group-employee"></span>
-                                                </div> -->
                                             </div>
                                             <button id="btn_selectEmployees" type="button" target="#changeEmployee" class="right btn btn-primary py-1 px-3 rounded-pill mx-3 text-white chnageButton">Add</button>
                                         </div>

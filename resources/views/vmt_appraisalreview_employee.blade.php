@@ -402,8 +402,10 @@
             </div>
             <div class="modal-body">
                 <div class="mt-4">
-                    <h4 class="mb-3" id="modalNot">Data Saved Successfully!</h4>
+                    <h5 class="mb-3" id="modalNot"></h5>
+                    <textarea name="reject_content" id="reject_content" class="form-control mb-3"></textarea>
                     <div class="hstack gap-2 justify-content-center">
+                        <button type="button" class="btn btn-primary" id="reject_save" disabled>Save</button>
                         <button type="button" class="btn btn-light close-modal" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -505,23 +507,56 @@
         })
     });
 
-    $('#reject').click(function(e){
+    $('body').on("keyup", '#reject_content', function() {
+        if ($(this).val() == '') {
+            $('#reject_save').attr('disabled', true);
+        } else {
+            $('#reject_save').removeAttr('disabled');
+        }
+    });
+
+    $('#reject_save').click(function(e){
         e.preventDefault();
-        //goal_id=26&user_id=4
         var goal_id = "{{\Request::get('id')}}";
         var user_id = "{{auth::user()->id}}";
         var approve_flag = "rejected";
-       
+        var content = $('#reject_content').val();
+
         $.ajax({
-            type: "GET", 
-            url:"{{url('vmt-approvereject-kpitable')}}?goal_id="+goal_id+"&user_id="+user_id+"&approve_flag="+approve_flag,
+            type: "POST", 
+            url:"{{url('vmt-approvereject-command')}}",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                content: content,
+                goal_id: goal_id,
+                user_id: user_id,
+            },
             success: function(data){
-                $('#modalHeader').html("Rejected");
-                $('#modalNot').html(data);
-                $('#notificationModal').show();
-                $('#notificationModal').removeClass('fade');
+                e.preventDefault();
+                var goal_id = "{{\Request::get('id')}}";
+                var user_id = "{{auth::user()->id}}";
+                var approve_flag = "rejected";
+            
+                $.ajax({
+                    type: "GET", 
+                    url:"{{url('vmt-approvereject-kpitable')}}?goal_id="+goal_id+"&user_id="+user_id+"&approve_flag="+approve_flag,
+                    success: function(data){
+                        $('#notificationModal').hide();
+                        $('#notificationModal').addClass('fade');
+                        window.location.reload();
+                    }
+                });
             }
         })
+    });
+
+
+    $('#reject').click(function(e){
+        e.preventDefault();
+        $('#modalHeader').html("Rejected");
+        $('#modalNot').html("Are you sure you want to reject this Kpi. If yes, please entered the reason in the below command box:");
+        $('#notificationModal').show();
+        $('#notificationModal').removeClass('fade');
     });
 
     
@@ -530,9 +565,6 @@
         $('#notificationModal').addClass('fade');
         window.location.reload();
     });
-
-
-
 
 </script>
 @endsection
