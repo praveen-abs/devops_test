@@ -143,7 +143,7 @@
     right: 0;
     bottom: 0;
     border-radius: 50px;
-    background-color: #f0f0f6;
+    background-color: lightgreen;
     width: 90px;
     -webkit-transition: .4s;
     box-shadow: inset -5px -5px 9px rgb(255 255 255 / 45%), inset 5px 5px 9px rgb(94 104 121 / 30%);
@@ -151,11 +151,20 @@
 }
 
 .slider-checkbox.check-out:before {
-    background-color: red;
+    background-color: green;
 }
 
 .slider-checkbox.check-in:before {
     background-color: green;
+}
+
+input:checked + .slider>.slider-text:after {
+    content: 'Checkout';
+    color: red;
+}
+
+input + .slider>.slider-text:after {
+    content: 'Check In';
 }
 
 .slider-checkbox:before {
@@ -166,6 +175,7 @@
     border-radius: 50%;
     bottom: 0px;
     color: white;
+    background-color: green;
     -webkit-transition: .4s;
     transition: .4s;
     content: '\f011';
@@ -181,14 +191,14 @@ input:checked+.slider-checkbox>.slider-checkbox-text {
 }
 
 
-input:checked+.slider-checkbox.check-out {
-    background-color: red;
-    color: #fff;
-}
+input:checked + .slider-checkbox.check-out {
+    background-color:#f0657070;
+    color:red;
+} 
 
-input:checked+.slider-checkbox.check-in {
-    background-color: lawngreen;
-    color: #fff;
+input:checked + .slider-checkbox.check-in {
+    background-color: #f0657070;
+    color:red;
 }
 
 input:focus+.slider-checkbox {
@@ -204,12 +214,22 @@ input:checked+.slider-checkbox:before {
 
 }
 
-input:checked+.slider-checkbox.check-out:before {
+input:checked + .slider-checkbox.check-out:before {
+    color: white;
+    background-color: red;
+}
+input:checked + .slider-checkbox.check-in:before {
+    color: white;
+    background-color: red;
+}
+
+input:checked + .slider-checkbox>.slider-checkbox-text:after {
+    content: 'Checkout';
     color: red;
 }
 
-input:checked+.slider-checkbox.check-in:before {
-    color: lawngreen;
+input + .slider-checkbox>.slider-checkbox-text:after {
+    content: 'Check In';
 }
 
 .fc-scroller {
@@ -458,11 +478,11 @@ html {
                                 <p class="f-15 mr-1"><i class=" ri-sun-line text-warning mr-2"></i>General shift</p>
                                 <p class="f-15  "><span><label class="switch-checkbox m-0"> <input type="checkbox">
                                             <span class="slider-checkbox check-in round"><span
-                                                    class="slider-checkbox-text">Check in</span></span> </label></span>
+                                                    class="slider-checkbox-text"></span></span> </label></span>
                                 </p>
                                 <p class="f-15 m-0 "><label class="switch-checkbox m-0"> <input type="checkbox">
                                         <span class="slider-checkbox check-out round"><span
-                                                class="slider-checkbox-text">Check out</span></span> </label>
+                                                class="slider-checkbox-text"></span></span> </label>
                                 </p>
                             </div>
 
