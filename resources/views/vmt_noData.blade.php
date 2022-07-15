@@ -9,7 +9,7 @@
 
 @component('components.breadcrumb')
 @slot('li_1') Dashboards @endslot
-@slot('title') Assign Roles @endslot
+@slot('title') 404 Page @endslot
 @endcomponent
 
 

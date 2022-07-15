@@ -7,37 +7,9 @@
 @section('content')
 
 @component('components.breadcrumb')
-@slot('li_1') Dashboards @endslot
-@slot('title') Upload Employees Details @endslot
+@slot('li_1') Organizations @endslot
+@slot('title')Bulk Employee Upload @endslot
 @endcomponent
-
-<div class="row">
-    <div class="col-xl-8">
-        <div class="card">
-            <div class="card-header border-0 align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">
-                    <!-- Please Fill Form -->
-                </h4>
-            </div><!-- end card header -->
-
-            <div class="card-body  pb-2">
-                <div>
-                    @csrf
-                    <div class="mb-3 row">
-                        <label class="col-md-2 col-form-label">Create Single Employee</label>
-                        <div class="col-md-10">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#createEmployee">Create New
-                                Employee
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- end card body -->
-        </div><!-- end card -->
-    </div><!-- end col -->
-</div><!-- end row -->
-
 
 <div class="row">
     <div class="col-xl-8">
@@ -53,15 +25,17 @@
                     <form method="POST" id='role-form' action="{{url('/vmt-employess/bulk-upload')}}"
                         enctype="multipart/form-data">
                         @csrf
+                        <div >
+                            <label >Please Upload the employees details excel-sheet.</label>
+                        </div>                        
                         <div class="mb-3 row">
-                            <label class="col-md-2 col-form-label">Bulk Employee Upload</label>
                             <div class="col-md-10">
                                 <input name="file" type="file" required>
                             </div>
                         </div>
                         <div class="row mt-2">
                             <div class="text-end col-xl-12">
-                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="submit" class="btn btn-primary">Upload</button>
                             </div>
                         </div>
                     </form>
