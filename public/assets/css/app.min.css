@@ -1665,11 +1665,21 @@ body {
     width: 55px;
 }
 
+
+[data-layout=vertical][data-sidebar-size=sm] .topbar-logo img{
+margin-left: 20px;
+
+}
+
+.topnav-hamburger{
+ margin-left: 21px;
+}
+
 /* end */
 .hamburger-icon {
     width: 20px;
     height: 15px;
-    margin-left: 0px;
+    /* margin-left: 21px; */
     position: relative;
     cursor: pointer;
     display: inline-block
@@ -1712,7 +1722,7 @@ body {
 .hamburger-icon.open {
     transform: rotate(-90deg);
     -webkit-transform: rotate(-90deg);
-    left: -16px !important;
+    left: -14px !important;
 }
 
 .hamburger-icon.open span:first-child {

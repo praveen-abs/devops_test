@@ -35,14 +35,12 @@
                             <img src="{{ URL::asset($generalInfo->logo_img) }}" alt="" class="">
                         </div>
                         <div class="login-logo  d-flex align-items-center">
-                            <span class="m-0 mt-1 fw-bold log">Login <span class="mt-1 mx-1">to</span> <img
-                                    src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="" style="height:35px;width:55px;">
-
+                            <p class="m-0 mt-1 fw-bold log">Login <span class="mx-1">to</span><span class="h5 m-0 fw-bold mx-1">ABS</span>hrms</p>
                         </div>
                     </div>
                     @csrf
 
-                    <div class="form-row mb-2">  
+                    <div class="form-row mb-2">
                         <label for="username" class="form-label">Username</label>
                         <input type="text" class="form-control @error('email') form-control-sm is-invalid @enderror"
                             value="{{ old('email', 'hr_augustin@vasagroup.abshrms.com') }}" id="username" name="email"
@@ -95,14 +93,12 @@
                     </div>
 
 
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between social-icons-wrapper">
 
                         <!-- <img src="{{ URL::asset('assets/images/social.png') }}" alt="" class=" w-100 soc-det-img "> -->
-                        <img src="{{ URL::asset('assets/images/google.png') }}" alt="" class="soc-det-img ">
+                        <img src="{{ URL::asset('assets/images/google.png') }}" alt="" class="soc-det-img h-">
                         <img src="{{ URL::asset('assets/images/linkedin.png') }}" alt="" class="soc-det-img ">
                         <img src="{{ URL::asset('assets/images/microsoft.png') }}" alt="" class="soc-det-img ">
-
-
 
                         <!-- <ul>
                                 <li class="facebook"><i class="fab fa-facebook-f"></i></li>
@@ -113,7 +109,7 @@
                             </ul> -->
                     </div>
                     <div class="d-flex">
-                                                <img src="{{ URL::asset('assets/images/Group 4.png') }}" alt="" class="  w-100 h-25 mt-3">
+                        <img src="{{ URL::asset('assets/images/Group 4.png') }}" alt="" class="  w-100 h-25 mt-3">
                     </div>
 
 

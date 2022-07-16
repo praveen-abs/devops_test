@@ -1,25 +1,50 @@
-/* ===================================== Import Less ================================== */
-@font-face {
-    font-family: 'mouse-300';
-    src: url("../fonts/RobotoSlab-Regular.ttf") format("truetype");
+.login-bg {
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    height: 200%;
+    width: 200%;
+    min-height: 100%;
+    min-width: 100%;
 }
 
-@font-face {
-    font-family: 'mouse-500';
-    src: url("../fonts/RobotoSlab-Bold.ttf") format("truetype");
+.login-bg img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    min-width: 50%;
+    min-height: 50%;
 }
 
-/* ===================================== Basic CSS ================================== */
-* {
-    margin: 0px;
-    padding: 0px;
-    list-style: none;
+.social-icons-wrapper img{
+    height: 40px;
+    width: 80px;
 }
 
-img {
-    max-width: 100%;
+.login-headers {
+    text-align: left;
+
 }
 
+.login-headers img {
+    height: 50px;
+    width: 100px;
+}
+
+
+.login-main {
+    /* background: url(../images/login_bg3.jpg) no-repeat center center fixed; */
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    /* overflow: hidden;
+    height: 100%; */
+    /* min-height: 100%; */
+}
 
 .form-row {
     display: -webkit-box;
@@ -31,28 +56,6 @@ img {
     margin-left: -5px; */
 }
 
-a {
-    text-decoration: none;
-    outline: none;
-    color: #444;
-}
-
-a:hover {
-    color: #444;
-}
-
-ul {
-    margin-bottom: 0;
-    padding-left: 0;
-}
-
-a:hover,
-a:focus,
-input,
-textarea {
-    text-decoration: none;
-    outline: none;
-}
 
 .center {
     text-align: center;
@@ -75,19 +78,6 @@ body {
     height: 100%;
 }
 
-p {
-    margin-bottom: 0px;
-    width: 100%;
-}
-
-.no-padding {
-    padding: 0px;
-}
-
-.no-margin {
-    margin: 0px;
-}
-
 .hid {
     display: none;
 }
@@ -106,108 +96,8 @@ p {
     opacity: .5 !important;
 }
 
-.container-fluid {
-    padding: 0px;
-}
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-family: "mouse-500", Arial, Helvetica, sans-serif;
-}
 
-strong {
-    font-family: "mouse-500", Arial, Helvetica, sans-serif;
-}
-
-body {
-    background-color: #f7f7ff !important;
-    font-family: "mouse-300", Arial, Helvetica, sans-serif;
-    color: #6A6A6A;
-}
-
-.session-title {
-    padding: 30px;
-    margin: 0px;
-}
-
-.session-title h2 {
-    width: 100%;
-    text-align: center;
-}
-
-.session-title p {
-    max-width: 850px;
-    text-align: center;
-    float: none;
-    margin: auto;
-}
-
-.session-title span {
-    float: right;
-    font-style: italic;
-}
-
-.inner-title {
-    padding: 20px;
-    padding-left: 0px;
-    margin-bottom: 30px;
-}
-
-.inner-title h2 {
-    width: 100%;
-    text-align: center;
-    font-size: 2rem;
-    font-family: "slab", Arial, Helvetica, sans-serif;
-}
-
-.inner-title p {
-    width: 100%;
-    text-align: center;
-}
-
-.page-nav {
-    padding: 40px;
-    text-align: center;
-    padding-top: 160px;
-}
-
-.page-nav ul {
-    float: none;
-    margin: auto;
-}
-
-.page-nav h2 {
-    font-size: 36px;
-    width: 100%;
-    color: #444;
-}
-
-@media screen and (max-width: 600px) {
-    .page-nav h2 {
-        font-size: 26px;
-    }
-}
-
-.page-nav ul li {
-    float: left;
-    margin-right: 10px;
-    margin-top: 10px;
-    font-size: 16px;
-}
-
-.page-nav ul li i {
-    width: 30px;
-    text-align: center;
-    color: #444;
-}
-
-.page-nav ul li a {
-    color: #444;
-}
 
 .btn {
     display: flex;
@@ -296,7 +186,7 @@ body {
     align-items: center;
 }
 
-.side-right form{
+.side-right{
     background-color: #FFF;
     height: auto;
     width: 400px;
@@ -308,7 +198,7 @@ body {
     /* box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,rgb(255 124 19) 0px 2px 16px 0px,
     rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px; */
 }
-/* .side-right form:before{
+/* .side-right:before{
    content:'';
    position:absolute; 
    top:-2px;
@@ -318,7 +208,7 @@ body {
    background:#fff;
    z-index:-1;
 }
-.side-right form:after{
+.side-right:after{
    content:'';
    position:absolute; 
    top:-2px;
@@ -330,8 +220,8 @@ body {
    filter:blur(40px);
 }
 
-.side-right form:after,
-.side-right form:before{
+.side-right:after,
+.side-right:before{
 background:linear-gradient(235deg,#89ff00,#060c21,#00bcd4);
 } */
 

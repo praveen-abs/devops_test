@@ -61,7 +61,7 @@
             <i class="ri-record-circle-line"></i>
         </button>
 
-        
+
 
     </div>
 
@@ -128,8 +128,8 @@
                 <!-- Navigation Menu for attendance-->
 
                 <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0" href="#attendanceDrop-Down" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarRoles">
+                    <a class="nav-link sidebar menu-link pt-0" href="#attendanceDrop-Down" data-bs-toggle="collapse"
+                        role="button" aria-expanded="false" aria-controls="sidebarRoles">
                         <i><svg xmlns="http://www.w3.org/2000/svg" width="17.48" height="23.307"
                                 viewBox="0 0 17.48 23.307">
                                 <path id="clipboard-user-solid"
@@ -142,7 +142,7 @@
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1">
-                                <span>   Leave</span> 
+                                    <span> Leave</span>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -156,7 +156,8 @@
                                     role="button"><span>Timesheet</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>Expenses &
+                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1"
+                                    role="button"><span>Expenses &
                                         Trevel</span></a>
                             </li>
 
@@ -169,8 +170,8 @@
                 <!-- Organization -->
 
                 <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0" href="#orgDrop-Down" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarRoles">
+                    <a class="nav-link sidebar menu-link pt-0" href="#orgDrop-Down" data-bs-toggle="collapse"
+                        role="button" aria-expanded="false" aria-controls="sidebarRoles">
 
                         <i><svg xmlns="http://www.w3.org/2000/svg" width="22.04" height="17.142"
                                 viewBox="0 0 22.04 17.142">
@@ -185,7 +186,7 @@
                     <div class="collapse menu-dropdown" id="orgDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item ">
-                            <a href="{{url('vmt_noData')}}" id="" class="nav-link sidebar py-1"
+                                <a href="{{url('vmt_noData')}}" id="" class="nav-link sidebar py-1"
                                     aria-expanded="false"><span>Dashboard</span> </a>
                             </li>
                             <li class="nav-item ">
@@ -193,7 +194,8 @@
                                     class="nav-link sidebar py-1"><span>Directory </span></a>
                             </li>
                             <li class="nav-item ">
-                                <a href="{{url('vmt-employee-hierarchy')}}" id="tds" class="nav-link sidebar py-1"><span>ORG
+                                <a href="{{url('vmt-employee-hierarchy')}}" id="tds"
+                                    class="nav-link sidebar py-1"><span>ORG
                                         structure</span></a>
                             </li>
 
@@ -207,13 +209,16 @@
                                     aria-expanded="false"><span>Onboarding Bulk Upload</span> </a>
                             </li>
                             <li class="nav-item ">
-                                <a href="{{url('vmt_noData')}}" id="tds" class="nav-link sidebar py-1"><span>Exit</span></a>
+                                <a href="{{url('vmt_noData')}}" id="tds"
+                                    class="nav-link sidebar py-1"><span>Exit</span></a>
                             </li>
                             <li class="nav-item ">
-                                <a href="{{url('vmt_noData')}}" id="tds" class="nav-link sidebar py-1"><span>Documents</span></a>
+                                <a href="{{url('vmt_noData')}}" id="tds"
+                                    class="nav-link sidebar py-1"><span>Documents</span></a>
                             </li>
                             <li class="nav-item ">
-                                <a href="{{url('vmt_noData')}}" id="tds" class="nav-link sidebar py-1"><span>Assets</span></a>
+                                <a href="{{url('vmt_noData')}}" id="tds"
+                                    class="nav-link sidebar py-1"><span>Assets</span></a>
                             </li>
 
                         </ul>
@@ -223,8 +228,8 @@
                 <!-- Performance -->
 
                 <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0" href="#PerformanceDrop-Down" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarRoles">
+                    <a class="nav-link sidebar menu-link pt-0" href="#PerformanceDrop-Down" data-bs-toggle="collapse"
+                        role="button" aria-expanded="false" aria-controls="sidebarRoles">
 
                         <i><svg xmlns="http://www.w3.org/2000/svg" width="22.058" height="12.253"
                                 viewBox="0 0 22.058 12.253">
@@ -246,7 +251,8 @@
 
                             @can('360_Degree_Review')
                             <li class="nav-item">
-                            <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>360 Degree
+                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>360
+                                        Degree
                                         Review</span></a>
                             </li>
                             @endcan
@@ -257,8 +263,8 @@
                 <!-- team -->
 
                 <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0" href="#teamDrop-Down" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarRoles">
+                    <a class="nav-link sidebar menu-link pt-0" href="#teamDrop-Down" data-bs-toggle="collapse"
+                        role="button" aria-expanded="false" aria-controls="sidebarRoles">
                         <i><svg xmlns="http://www.w3.org/2000/svg" width="22.058" height="15.44"
                                 viewBox="0 0 22.058 15.44">
                                 <path id="people-group-solid"
@@ -271,8 +277,7 @@
                     <div class="collapse menu-dropdown" id="teamDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{url('vmt_noData')}}"
-                                    class="nav-link sidebar py-1"><span>Summary</span></a>
+                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1"><span>Summary</span></a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1"
@@ -291,11 +296,13 @@
                                     role="button"><span>Timesheet</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>Profile
+                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1"
+                                    role="button"><span>Profile
                                         change</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>Salary on
+                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>Salary
+                                        on
                                         hold</span></a>
                             </li>
                             <li class="nav-item">
@@ -309,8 +316,8 @@
                 <!-- pay roll -->
 
                 <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0" href="#payRollDrop-Down" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarRoles">
+                    <a class="nav-link sidebar menu-link pt-0" href="#payRollDrop-Down" data-bs-toggle="collapse"
+                        role="button" aria-expanded="false" aria-controls="sidebarRoles">
                         <i><svg xmlns="http://www.w3.org/2000/svg" width="20.736" height="20.736"
                                 viewBox="0 0 20.736 20.736">
                                 <g id="Group_34191" data-name="Group 34191" transform="translate(-18 -625)">
@@ -336,7 +343,8 @@
                             </li>
                             @can('Team')
                             <li class="nav-item">
-                                <a href="{{url('vmt_salary_details')}}" class="nav-link sidebar py-1" role="button"><span>Salary
+                                <a href="{{url('vmt_salary_details')}}" class="nav-link sidebar py-1"
+                                    role="button"><span>Salary
                                         Details</span></a>
                             </li>
                             @endcan
@@ -358,8 +366,9 @@
 
                 <!-- pay check -->
                 <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0" id="employeeInfo" href="#paycheckDrop-Down" data-bs-toggle="collapse"
-                        role="button" aria-expanded="false" aria-controls="sidebar360questions">
+                    <a class="nav-link sidebar menu-link pt-0" id="employeeInfo" href="#paycheckDrop-Down"
+                        data-bs-toggle="collapse" role="button" aria-expanded="false"
+                        aria-controls="sidebar360questions">
                         <i><svg xmlns="http://www.w3.org/2000/svg" width="21.946" height="17.549"
                                 viewBox="0 0 21.946 17.549">
                                 <path id="money-bill-transfer-solid"
@@ -408,8 +417,9 @@
                 </li>
                 <!-- claims -->
                 <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0" id="employeeInfo" href="#claimsDrop-Down" data-bs-toggle="collapse"
-                        role="button" aria-expanded="false" aria-controls="sidebar360questions">
+                    <a class="nav-link sidebar menu-link pt-0" id="employeeInfo" href="#claimsDrop-Down"
+                        data-bs-toggle="collapse" role="button" aria-expanded="false"
+                        aria-controls="sidebar360questions">
                         <i> <svg xmlns="http://www.w3.org/2000/svg" width="21.946" height="17.354"
                                 viewBox="0 0 21.946 17.354">
                                 <g id="Group_34184" data-name="Group 34184" transform="translate(-18 -404.98)">
@@ -430,13 +440,14 @@
                         <ul class="nav nav-sm flex-column">
 
                             <li class="nav-item">
-                                <a href="#transitionDrop-Down" id="" class="nav-link sidebar py-1" data-bs-toggle="collapse"
-                                    role="button" aria-expanded="false"><span> Transaction</span>  </a>
+                                <a href="#transitionDrop-Down" id="" class="nav-link sidebar py-1"
+                                    data-bs-toggle="collapse" role="button" aria-expanded="false"><span>
+                                        Transaction</span> </a>
                                 <div class="collapse menu-dropdown sub-dropdown" id="transitionDrop-Down">
                                     <ul class="nav nav-sm flex-column">
                                         <li class="nav-item">
                                             <a href="{{url('vmt-assign-roles')}}" class="nav-link sidebar">
-                                               <span> Employee Entry</span> </a>
+                                                <span> Employee Entry</span> </a>
                                         </li>
 
                                     </ul>
@@ -448,11 +459,14 @@
                                 <div class="collapse  menu-dropdown sub-dropdown" id="reportsDrop-Down">
                                     <ul class="nav nav-sm flex-column">
                                         <li class="nav-item">
-                                            <a href="{{url('vmt-assign-roles')}}" class="nav-link sidebar"><span> Appraisal Reports</a>
-                                            </span></li>
+                                            <a href="{{url('vmt-assign-roles')}}" class="nav-link sidebar"><span>
+                                                    Appraisal Reports</a>
+                                            </span>
+                                        </li>
                                         <li class="nav-item">
-                                            <a href="{{url('vmt-assign-roles')}}" class="nav-link sidebar"><span> Appraisal Review
-                                                Reports </span></a>
+                                            <a href="{{url('vmt-assign-roles')}}" class="nav-link sidebar"><span>
+                                                    Appraisal Review
+                                                    Reports </span></a>
                                         </li>
 
 
@@ -470,8 +484,9 @@
 
                 <!-- reports -->
                 <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0" id="employeeInfo" href="#reportsDrop-Down" data-bs-toggle="collapse"
-                        role="button" aria-expanded="false" aria-controls="sidebar360questions">
+                    <a class="nav-link sidebar menu-link pt-0" id="employeeInfo" href="#reportsDrop-Down"
+                        data-bs-toggle="collapse" role="button" aria-expanded="false"
+                        aria-controls="sidebar360questions">
                         <i>
                             <svg xmlns="http://www.w3.org/2000/svg" width="18.46" height="18.46"
                                 viewBox="0 0 18.46 18.46">
@@ -495,7 +510,8 @@
                             </li>
                             <li class="nav-item">
 
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>Attendance
+                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1"
+                                    role="button"><span>Attendance
                                         Report</span></a>
                             </li>
                         </ul>
@@ -508,8 +524,8 @@
 
                 <!-- help desk -->
                 <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0" href="#helpDeskDrop-down" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarApps">
+                    <a class="nav-link sidebar menu-link pt-0" href="#helpDeskDrop-down" data-bs-toggle="collapse"
+                        role="button" aria-expanded="false" aria-controls="sidebarApps">
                         <i><svg xmlns="http://www.w3.org/2000/svg" width="20.79" height="13.86"
                                 viewBox="0 0 20.79 13.86">
                                 <path id="ticket-solid"
@@ -530,7 +546,7 @@
                             </li>
                             <li class="nav-item">
                                 <a href="apps-mailbox" class="nav-link sidebar py-1"><span>Mail-Box</span></a>
-                            <!-- </li>
+                                <!-- </li>
                             <li class="nav-item">
                                 <a href="#sidebarEcommerce" class="nav-link sidebar" data-bs-toggle="collapse" role="button"
                                     aria-expanded="false"
@@ -721,8 +737,8 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0" href="#configDrop-down" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarLayouts">
+                    <a class="nav-link sidebar menu-link pt-0" href="#configDrop-down" data-bs-toggle="collapse"
+                        role="button" aria-expanded="false" aria-controls="sidebarLayouts">
                         <i><svg xmlns="http://www.w3.org/2000/svg" width="20.736" height="22" viewBox="0 0 20.736 22">
                                 <path id="gear-solid_1_" data-name="gear-solid (1)"
                                     d="M35.378,7.159a.975.975,0,0,1-.271,1.057L33.247,9.909a8.19,8.19,0,0,1,0,2.183l1.861,1.693a.975.975,0,0,1,.271,1.057,10.907,10.907,0,0,1-.675,1.474l-.2.348a11.321,11.321,0,0,1-.95,1.345A.983.983,0,0,1,32.5,18.3l-2.393-.765a9.4,9.4,0,0,1-1.891,1.1l-.537,2.454a1.03,1.03,0,0,1-.782.765,11.228,11.228,0,0,1-1.865.15,10.99,10.99,0,0,1-1.788-.15,1.03,1.03,0,0,1-.782-.765l-.537-2.454a8.445,8.445,0,0,1-1.891-1.1l-2.392.765a.981.981,0,0,1-1.053-.292,11.275,11.275,0,0,1-.95-1.345l-.2-.348a10.717,10.717,0,0,1-.678-1.474.976.976,0,0,1,.273-1.057l1.859-1.693a8.336,8.336,0,0,1,0-2.183L15.033,8.216a.974.974,0,0,1-.273-1.057,10.768,10.768,0,0,1,.678-1.474l.2-.348a11.131,11.131,0,0,1,.95-1.343A.976.976,0,0,1,17.643,3.7l2.392.763A8.263,8.263,0,0,1,21.925,3.37L22.462.917a.975.975,0,0,1,.782-.766,11.131,11.131,0,0,1,3.652,0,.975.975,0,0,1,.782.766l.537,2.454a9.175,9.175,0,0,1,1.891,1.094L32.5,3.7a.978.978,0,0,1,1.053.293,11.125,11.125,0,0,1,.95,1.343l.2.348a10.907,10.907,0,0,1,.675,1.474ZM25.07,14.437a3.457,3.457,0,1,0-3.438-3.476A3.445,3.445,0,0,0,25.07,14.437Z"
@@ -734,8 +750,8 @@
                     <div class="collapse menu-dropdown" id="configDrop-down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{url('vmt_clientOnboarding')}}" 
-                                    class="nav-link"><span> Client Onboarding</span></a>
+                                <a href="{{url('vmt_clientOnboarding')}}" class="nav-link"><span> Client
+                                        Onboarding</span></a>
                             </li>
                         </ul>
                     </div>
@@ -743,8 +759,8 @@
 
                 <!-- exit -->
                 <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0" href="#exitDrop-down" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarLayouts">
+                    <a class="nav-link sidebar menu-link pt-0" href="#exitDrop-down" data-bs-toggle="collapse"
+                        role="button" aria-expanded="false" aria-controls="sidebarLayouts">
                         <i><svg xmlns="http://www.w3.org/2000/svg" width="20.227" height="17.699"
                                 viewBox="0 0 20.227 17.699">
                                 <path id="right-from-bracket-solid"
@@ -757,11 +773,13 @@
                     <div class="collapse menu-dropdown" id="exitDrop-down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item ">
-                                <a href="{{url('vmt_noData')}}" id="" class="nav-link sidebar py-1"><span> Resignation Entry
+                                <a href="{{url('vmt_noData')}}" id="" class="nav-link sidebar py-1"><span> Resignation
+                                        Entry
                                     </span> </a>
                             </li>
                             <li class="nav-item ">
-                                <a href="{{url('vmt_noData')}}" id="tds" class="nav-link sidebar py-1"><span>Resignation Status
+                                <a href="{{url('vmt_noData')}}" id="tds" class="nav-link sidebar py-1"><span>Resignation
+                                        Status
                                     </span></a>
                             </li>
                         </ul>
@@ -1358,8 +1376,8 @@
     </div>
 
     <!-- <div class="navbar-brand-box" style=" position:absolute;bottom:20px;width:100%;height:50px;"> -->
-        <!-- Dark Logo-->
-        <!-- <a href="index" class="logo logo-dark">
+    <!-- Dark Logo-->
+    <!-- <a href="index" class="logo logo-dark">
             <span class="logo-sm">
                 <img src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="">
             </span>
@@ -1367,8 +1385,8 @@
                 <img src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="">
             </span>
         </a> -->
-        <!-- Light Logo-->
-        <!-- <a href="index" class="logo logo-light">
+    <!-- Light Logo-->
+    <!-- <a href="index" class="logo logo-light">
             <span class="logo-sm">
                 <img src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="">
             </span>
@@ -1376,17 +1394,21 @@
                 <img src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="">
             </span>
         </a> -->
-        <!-- <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
+    <!-- <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
             id="vertical-hover">
             <i class="ri-record-circle-line"></i>
         </button> -->
     <!-- </div> -->
 
+    <div class="sidebar-bottom-bg">
+    <img src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="">
+    </div>
+
 </div>
 
 <!-- Left Sidebar End -->
 <!-- Vertical Overlay-->
-<div class="vertical-overlay"></div>
+
 
 
 

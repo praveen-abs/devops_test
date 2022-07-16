@@ -4,7 +4,6 @@
 <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('assets/libs/swiper/swiper.min.css')}}" rel="stylesheet" type="text/css" />
 
-
 <!-- prem content -->
 
 <!--Bootstrap CSS-->
@@ -510,7 +509,7 @@ html {
                                     class="ml-1">checkOut</b></span>
                         </p>
 
-                        <span class="bg-white  ml-4 px-2 rounded-pill " style="font-size:10px">
+                        <span class="bg-white px-2 rounded-pill " style="font-size:10px">
                             <i class=" ri-flag-fill text-danger mr-1"></i>Report
                         </span>
 
