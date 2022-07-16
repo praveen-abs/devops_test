@@ -42,11 +42,11 @@
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
                                                 <label class="" for="csd">Contract Start Date{!! required() !!}</label>
-                                                <input type="date" name="csd" class="onboard-form form-control" required />
+                                                <input type="date" max="9999-12-31"  name="csd" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
                                                 <label class="" for="ced">Contract End Date{!! required() !!}</label>
-                                                <input type="date" name="ced" class="onboard-form form-control" required />
+                                                <input type="date" max="9999-12-31"  name="ced" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-3 mb-3">
                                                 <label class="" for="cin_no">Company Identification Number{!! required() !!}</label>

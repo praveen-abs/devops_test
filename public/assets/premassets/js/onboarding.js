@@ -6,7 +6,6 @@ $(document).ready(function() {
         if ($(this).attr('maxlength')) {
             var dtl = $(this).val().length;
             var val = parseInt($(this).attr('maxlength'));
-            console.log(val);
             if(dtl>val){
                 $(this).val($(this).val().substr(0,val));
             } 

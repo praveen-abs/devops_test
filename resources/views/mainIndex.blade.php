@@ -64,7 +64,7 @@
                                     <h6 class="f-15 col-auto wrap-text text-danger"><div class="text-right">17:30:59</div></h6>
                                 </div>
                                 <div class="row mt-2">
-                                    <h6 class="col f-15 wrap-text"><label class="switch"> <input type="checkbox"> <span class="slider round"><span class="slider-text">Check in</span></span> </label> </h6>
+                                    <h6 class="col f-15 wrap-text"><label class="switch"> <input type="checkbox"> <span class="slider round"><span class="slider-text"></span></span> </label> </h6>
                                     <h6 class="f-15 col-auto wrap-text text-danger"><div class="text-right">02:20:59</div></h6>
                                 </div>
                             </div>
