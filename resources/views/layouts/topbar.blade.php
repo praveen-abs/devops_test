@@ -45,7 +45,7 @@
                     <div class="d-flex w-50">
 
                     <button type="button"
-                            class="btn btn-sm mx-4 fs-16 header-item vertical-menu-btn topnav-hamburger"
+                            class="btn btn-sm  fs-16 header-item vertical-menu-btn topnav-hamburger"
                             id="topnav-hamburger-icon">
                             <span class="hamburger-icon">
                                 <span></span>
@@ -53,8 +53,8 @@
                                 <span></span>
                             </span>
                         </button>
-                        <div class="logo w-25 d-flex justify-content-center align-items-center">
-                            <img src="{{ URL::asset($logoSrc) }}" alt="" class=""> 
+                        <div class="topbar-logo w-25 d-flex justify-content-start align-items-center">
+                            <img src="{{ URL::asset($logoSrc) }}" alt="" class="w-50 h-50"> 
 
                         </div>
                         
@@ -367,7 +367,7 @@
                                         src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"
                                         alt="Header Avatar">
                                     <span class="text-start ms-xl-2">
-                                        <span class="">{{Auth::user()->name}}</span>
+                                        <span class="fw-bold">{{Auth::user()->name}}</span>
                                         <span class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text"></span>
                                     </span>
                                 </span>

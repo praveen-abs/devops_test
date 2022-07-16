@@ -4,7 +4,7 @@
 @endsection
 @section('content')
 
-<div class="container-fluid user-details-wrapper px-5">
+<div class="container-fluid user-details-wrapper ">
     <div class="row">
         <div class="col-12">
             <div class="pro-overview">
@@ -751,7 +751,8 @@
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header py-3 new-role-header d-flex align-items-center">
-                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Employee Information</h4>
+                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Employee
+                        Information</h4>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -783,8 +784,8 @@
                                         <div class="form-group mb-3">
                                             <label>Birth Date</label>
                                             <div class="cal-icon">
-                                                <input class="form-control datetimepicker" type="date" max="9999-12-31"  name="dob"
-                                                    value="{{date('Y-m-d', strtotime($details->dob))}}">
+                                                <input class="form-control datetimepicker" type="date" max="9999-12-31"
+                                                    name="dob" value="{{date('Y-m-d', strtotime($details->dob))}}">
                                             </div>
                                         </div>
                                     </div>
@@ -866,7 +867,8 @@
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header py-3 new-role-header d-flex align-items-center">
-                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Personal Information</h4>
+                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Personal
+                        Information</h4>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -899,7 +901,7 @@
                                 <div class="form-group mb-3">
                                     <label>Birthday</label>
                                     <div class="cal-icon">
-                                        <input class="form-control datetimepicker" type="date" max="9999-12-31" >
+                                        <input class="form-control datetimepicker" type="date" max="9999-12-31">
                                     </div>
                                 </div>
                             </div>
@@ -950,7 +952,8 @@
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header py-3 new-role-header d-flex align-items-center">
-                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Bank Information</h4>
+                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Bank Information
+                    </h4>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -968,7 +971,8 @@
                                 <div class="form-group mb-3">
                                     <label>EmaBank account No</label>
                                     <div class="cal-icon">
-                                        <input class="form-control" value="{{$details->bank_account_number}}" type="text">
+                                        <input class="form-control" value="{{$details->bank_account_number}}"
+                                            type="text">
                                     </div>
                                 </div>
 
@@ -1002,7 +1006,8 @@
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header py-3 new-role-header d-flex align-items-center">
-                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Leave Information</h4>
+                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Leave Information
+                    </h4>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -1056,7 +1061,8 @@
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header py-3 new-role-header d-flex align-items-center">
-                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Personal Information</h4>
+                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Personal
+                        Information</h4>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -1074,7 +1080,8 @@
                                 <div class="form-group mb-3">
                                     <label>Passport Expiry Date</label>
                                     <div class="cal-icon">
-                                        <input class="form-control datetimepicker" type="date" max="9999-12-31"  value="{{$details->passport}}">
+                                        <input class="form-control datetimepicker" type="date" max="9999-12-31"
+                                            value="{{$details->passport}}">
                                     </div>
                                 </div>
                             </div>
@@ -1094,7 +1101,8 @@
                                 <div class="form-group mb-3">
                                     <label>Religion</label>
                                     <div class="cal-icon">
-                                        <input class="form-control onboard-form" pattern="name" type="text" pattern="alpha">
+                                        <input class="form-control onboard-form" pattern="name" type="text"
+                                            pattern="alpha">
                                     </div>
                                 </div>
                             </div>
@@ -1135,7 +1143,8 @@
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header py-3 new-role-header d-flex align-items-center">
-                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Emergency Contact</h4>
+                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Emergency Contact
+                    </h4>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -1161,13 +1170,15 @@
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
                                             <label>Phone <span class="text-danger">*</span></label>
-                                            <input class="form-control onboard-form" type="number" maxlength="10" minlength="10">
+                                            <input class="form-control onboard-form" type="number" maxlength="10"
+                                                minlength="10">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
                                             <label>Phone 2</label>
-                                            <input class="form-control onboard-form" type="number" maxlength="10" minlength="10">
+                                            <input class="form-control onboard-form" type="number" maxlength="10"
+                                                minlength="10">
                                         </div>
                                     </div>
                                 </div>
@@ -1192,13 +1203,15 @@
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
                                             <label>Phone <span class="text-danger">*</span></label>
-                                            <input class="form-control onboard-form" type="number" maxlength="10" minlength="10">
+                                            <input class="form-control onboard-form" type="number" maxlength="10"
+                                                minlength="10">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
                                             <label>Phone 2</label>
-                                            <input class="form-control onboard-form" type="number" maxlength="10" minlength="10">
+                                            <input class="form-control onboard-form" type="number" maxlength="10"
+                                                minlength="10">
                                         </div>
                                     </div>
                                 </div>
@@ -1219,7 +1232,8 @@
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header py-3 new-role-header d-flex align-items-center">
-                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Family Information</h4>
+                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Family
+                        Information</h4>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -1248,13 +1262,14 @@
                                         <div class="col-md-6">
                                             <div class="form-group mb-3">
                                                 <label>Date of birth <span class="text-danger">*</span></label>
-                                                <input class="form-control onboard-form" type="date" max="9999-12-31" >
+                                                <input class="form-control onboard-form" type="date" max="9999-12-31">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group mb-3">
                                                 <label>Phone <span class="text-danger">*</span></label>
-                                                <input class="form-control onboard-form" type="number" maxlength="10" minlength="10">
+                                                <input class="form-control onboard-form" type="number" maxlength="10"
+                                                    minlength="10">
                                             </div>
                                         </div>
                                     </div>
@@ -1276,19 +1291,22 @@
                                             <div class="col-md-6">
                                                 <div class="form-group mb-3">
                                                     <label>Relationship <span class="text-danger">*</span></label>
-                                                    <input class="form-control onboard-form" type="text" pattern="alpha">
+                                                    <input class="form-control onboard-form" type="text"
+                                                        pattern="alpha">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group mb-3">
                                                     <label>Date of birth <span class="text-danger">*</span></label>
-                                                    <input class="form-control onboard-form" type="date" max="9999-12-31" >
+                                                    <input class="form-control onboard-form" type="date"
+                                                        max="9999-12-31">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group mb-3">
                                                     <label>Phone <span class="text-danger">*</span></label>
-                                                    <input class="form-control onboard-form" type="number" maxlength="10" minlength="10">
+                                                    <input class="form-control onboard-form" type="number"
+                                                        maxlength="10" minlength="10">
                                                 </div>
                                             </div>
                                         </div>
@@ -1316,7 +1334,8 @@
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header py-3 new-role-header d-flex align-items-center">
-                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Education Information</h4>
+                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Education
+                        Information</h4>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -1410,7 +1429,7 @@
                                             <div class="form-group mb-3 form-focus focused">
                                                 <div class="cal-icon">
                                                     <label class="focus-label">Starting Date</label>
-                                                    <input type="date" max="9999-12-31"  value="01/06/2002"
+                                                    <input type="date" max="9999-12-31" value="01/06/2002"
                                                         class="form-control floating datetimepicker">
                                                 </div>
 
@@ -1420,7 +1439,7 @@
                                             <div class="form-group mb-3 form-focus focused">
                                                 <label class="focus-label">Complete Date</label>
                                                 <div class="cal-icon">
-                                                    <input type="date" max="9999-12-31"  value="31/05/2006"
+                                                    <input type="date" max="9999-12-31" value="31/05/2006"
                                                         class="form-control floating datetimepicker">
                                                 </div>
 
@@ -1465,7 +1484,8 @@
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header py-3 new-role-header d-flex align-items-center">
-                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Experience Information</h4>
+                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Experience
+                        Information</h4>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -1508,8 +1528,8 @@
                                             <div class="form-group mb-3 form-focus focused">
                                                 <label class="focus-label">Period From</label>
                                                 <div class="cal-icon">
-                                                    <input type="date" max="9999-12-31"  class="form-control floating datetimepicker"
-                                                        value="01/07/2007">
+                                                    <input type="date" max="9999-12-31"
+                                                        class="form-control floating datetimepicker" value="01/07/2007">
                                                 </div>
 
                                             </div>
@@ -1518,8 +1538,8 @@
                                             <div class="form-group mb-3 form-focus focused">
                                                 <label class="focus-label">Period To</label>
                                                 <div class="cal-icon">
-                                                    <input type="date" max="9999-12-31"  class="form-control floating datetimepicker"
-                                                        value="08/06/2018">
+                                                    <input type="date" max="9999-12-31"
+                                                        class="form-control floating datetimepicker" value="08/06/2018">
                                                 </div>
 
                                             </div>
@@ -1545,14 +1565,16 @@
                                             <div class="col-md-6">
                                                 <div class="form-group mb-3 form-focus focused">
                                                     <label class="focus-label">Location</label>
-                                                    <input type="text" class="form-control floating" value="United States">
+                                                    <input type="text" class="form-control floating"
+                                                        value="United States">
 
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group mb-3 form-focus focused">
                                                     <label class="focus-label">Job Position</label>
-                                                    <input type="text" class="form-control floating" value="Web Developer">
+                                                    <input type="text" class="form-control floating"
+                                                        value="Web Developer">
 
                                                 </div>
                                             </div>
@@ -1560,7 +1582,8 @@
                                                 <div class="form-group mb-3 form-focus focused">
                                                     <label class="focus-label">Period From</label>
                                                     <div class="cal-icon">
-                                                        <input type="date" max="9999-12-31"  class="form-control floating datetimepicker"
+                                                        <input type="date" max="9999-12-31"
+                                                            class="form-control floating datetimepicker"
                                                             value="01/07/2007">
                                                     </div>
 
@@ -1570,7 +1593,8 @@
                                                 <div class="form-group mb-3 form-focus focused">
                                                     <div class="cal-icon">
                                                         <label class="focus-label">Period To</label>
-                                                        <input type="date" max="9999-12-31"  class="form-control floating datetimepicker"
+                                                        <input type="date" max="9999-12-31"
+                                                            class="form-control floating datetimepicker"
                                                             value="08/06/2018">
                                                     </div>
 
@@ -1598,15 +1622,14 @@
 
 
 </div>
-</div>
-</div>
-</div>
+
 
 <!--end row-->
 @endsection
 @section('script')
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="{{ URL::asset('assets/js/pages/profile-setting.init.js') }}"></script>
 <script>
@@ -1622,7 +1645,9 @@ $('#exp-add-more').click(function() {
     if (id) {
         length = parseInt(id.replace('content', '')) + 1;
     }
-    $('.exp-content-container').append('<div class="row exp-addition-content" id="content'+length+'"><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Company Name</label><input type="text" class="form-control floating"value="Digital Devlopment Inc"></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Location</label><input type="text" class="form-control floating" value="United States"></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Job Position</label><input type="text" class="form-control floating" value="Web Developer"></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Period From</label><div class="cal-icon"><input type="date" max="9999-12-31"  class="form-control floating datetimepicker"value="01/07/2007"></div></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><div class="cal-icon"><label class="focus-label">Period To</label><input type="date" max="9999-12-31"  class="form-control floating datetimepicker"value="08/06/2018"></div></div></div></div>');
+    $('.exp-content-container').append('<div class="row exp-addition-content" id="content' + length +
+        '"><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Company Name</label><input type="text" class="form-control floating"value="Digital Devlopment Inc"></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Location</label><input type="text" class="form-control floating" value="United States"></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Job Position</label><input type="text" class="form-control floating" value="Web Developer"></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Period From</label><div class="cal-icon"><input type="date" max="9999-12-31"  class="form-control floating datetimepicker"value="01/07/2007"></div></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><div class="cal-icon"><label class="focus-label">Period To</label><input type="date" max="9999-12-31"  class="form-control floating datetimepicker"value="08/06/2018"></div></div></div></div>'
+    );
 });
 
 $('#add_more').click(function() {
@@ -1631,7 +1656,9 @@ $('#add_more').click(function() {
     if (id) {
         length = parseInt(id.replace('content', '')) + 1;
     }
-    $('.content-container').append('<div class="row addition-content" id="content'+length+'"><div class="col-md-6"><div class="form-group mb-3"><label>Name <span class="text-danger">*</span></label><input class="form-control onboard-form" type="text" pattern="name"></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Relationship <span class="text-danger">*</span></label><input class="form-control onboard-form" type="text" pattern="alpha"></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Date of birth <span class="text-danger">*</span></label><input class="form-control onboard-form" type="date" max="9999-12-31" ></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Phone <span class="text-danger">*</span></label><input class="form-control onboard-form" type="number" maxlength="10" minlength="10"></div></div></div>');
+    $('.content-container').append('<div class="row addition-content" id="content' + length +
+        '"><div class="col-md-6"><div class="form-group mb-3"><label>Name <span class="text-danger">*</span></label><input class="form-control onboard-form" type="text" pattern="name"></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Relationship <span class="text-danger">*</span></label><input class="form-control onboard-form" type="text" pattern="alpha"></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Date of birth <span class="text-danger">*</span></label><input class="form-control onboard-form" type="date" max="9999-12-31" ></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Phone <span class="text-danger">*</span></label><input class="form-control onboard-form" type="number" maxlength="10" minlength="10"></div></div></div>'
+    );
 });
 
 
@@ -1662,9 +1689,9 @@ $('body').on('keyup', ".onboard-form", function() {
     if ($(this).attr('maxlength')) {
         var dtl = $(this).val().length;
         var val = parseInt($(this).attr('maxlength'));
-        if(dtl>val){
-            $(this).val($(this).val().substr(0,val));
-        } 
+        if (dtl > val) {
+            $(this).val($(this).val().substr(0, val));
+        }
     }
     if ($(this).attr('pattern') != undefined && $(this).attr('pattern') != '' && inputvalues !=
         '') {
