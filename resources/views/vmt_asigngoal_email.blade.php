@@ -10,12 +10,19 @@
 		@if($approvalStatus == "none")
 			<p>Your Employee has created Personal Assessment goal. Please review at <a href="{{$linkUri}}" target="_blank">Link</a> to approve it.</p>
 		@elseif ($approvalStatus == "approved")
-			<p>Personal Assessment goal has been accepted by your employee</p>
+			{{-- <p>Personal Assessment goal has been accepted by your employee</p> --}}
+			<p>Dear @php echo $user_manager_name; @endphp,																									
+				KRA/ KPI has been accepted by “@php echo $user_emp_name; @endphp”.																									
+				If you have any questions or concerns, don’t hesitate to reach out your reporting manager or the HR team.
+			</p>
+			<p>																								
+				Regards	<br>																								
+				Team HR.</p>
 		@elseif ($approvalStatus == "rejected")
-			<p>Dear Manger Name,</p>
+			<p>Dear @php echo $user_manager_name; @endphp,</p>
 			<p>																									
-				KRA/ KPI has been rejected by “Mr Employee Name” and reason stated below for your further references.																									
-				Request you to kindly have a great conversation with “Mr. Employee Name” and Complete the KRA/KPA within the time frame.																									
+				KRA/ KPI has been rejected by “@php echo $user_emp_name; @endphp” and reason stated below for your further references.																									
+				Request you to kindly have a great conversation with “@php echo $user_emp_name; @endphp” and Complete the KRA/KPA within the time frame.																									
 				If you have any questions or concerns, don’t hesitate to reach out your reporting manager or the HR team.</p>																									</p>
 		@endif
 	@else{{-- Here Manager sends mail to Employee --}}
@@ -32,20 +39,41 @@
 				Team HR.																									
 			</p>
 		@elseif ($approvalStatus == "approved")
-			<p>Personal Assessment goal has been approved by your Manager</p>
+			{{-- <p>Personal Assessment goal has been approved by your Manager</p> --}}
+			<p>
+				Dear Employee,</p>
+				<p>	&nbsp;&nbsp;&nbsp;																								
+KRA/ KPI has been Approved by “Mr @php echo $user_manager_name; @endphp”.	</p>
+<p>																								
+If you have any questions or concerns, don’t hesitate to reach out your reporting manager or the HR team.</p>
+<p>																									
+Regards	<br>																							
+Team HR.																									
+			</p>
 		@elseif ($approvalStatus == "rejected")
 			{{-- <p>Personal Assessment goal has been rejected by your Manager</p> --}}
 			<p>
-				Dear Employee Name,	</p>
+				Dear @php echo $user_emp_name; @endphp,	</p>																								
+				<p>&nbsp;&nbsp;&nbsp;KRA/ KPI has been rejected by <b>“Mr. @php echo $user_manager_name;@endphp” </b>and reason stated below for your further references.																									
+Request you to kindly have a great conversation with “@php echo $user_emp_name; @endphp” and Complete the KRA/KPA within the time frame.
+<p>																									
+If you have any questions or concerns, don’t hesitate to reach out your reporting manager or the HR team.</p>
+<p>																									
+Regards	<br>																								
+Team HR.																									
+			</p>
+			<p>Dear @php echo $user_emp_name; @endphp ,	</p>
 				<p>																								
-Greetings from the HR Team!!!																									
-This is the inform you that your manager has approved the submitted KRA/KPI in the HRMS Portal.																									
+Greetings from the HR Team!!!</p>
+<p>																									
+&nbsp;&nbsp;&nbsp;This is the inform you that your manager has approved the submitted KRA/KPI in the HRMS Portal.																									
 Please find few tips which needs to be taken care throughout this year.																									
 Take note of your achievement throughout the year.																									
 Be Specific and use numbers to your advantage																									
 Provide evidence to back up and statements of the results.																									
 Reference your job description to account for the company objectives.																									
-If you have any questions or concerns, don’t hesitate to reach out your reporting manager or the HR team.																									
+If you have any questions or concerns, don’t hesitate to reach out your reporting manager or the HR team.
+<p></p>																									
 			</p>
 		@endif	
 			
