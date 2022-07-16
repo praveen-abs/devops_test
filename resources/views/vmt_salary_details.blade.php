@@ -11,8 +11,8 @@
 @section('content')
 
 @component('components.breadcrumb')
-@slot('li_1') Dashboards @endslot
-@slot('title') Assign Roles @endslot
+@slot('li_1') PayCheck  @endslot
+@slot('title') Salary Details @endslot
 @endcomponent
 
 

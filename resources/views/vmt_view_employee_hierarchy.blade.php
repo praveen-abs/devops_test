@@ -156,10 +156,10 @@ right connector from last child*/
 @endsection
 @section('content')
 
-    @component('components.breadcrumb')
-        @slot('li_1') Dashboards @endslot
-        @slot('title') Employee Hierarchy @endslot
-    @endcomponent
+@component('components.breadcrumb')
+@slot('li_1') Organization @endslot
+@slot('title') Employee Hierarchy @endslot
+@endcomponent
 
 
     <div class="row project-wrapper">

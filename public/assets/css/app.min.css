@@ -1671,6 +1671,13 @@ margin-left: 20px;
 
 }
 
+.sidebar-bottom-bg{
+    position: absolute;
+    bottom: 50px;
+    width: 100%;
+    height: auto;
+}
+
 .topnav-hamburger{
  margin-left: 21px;
 }
@@ -9260,6 +9267,7 @@ button {
     justify-content: center;
     align-content: center;
     align-items: center;
+    /* z-index: 10; */
 }
 
 .simplebar-wrapper {

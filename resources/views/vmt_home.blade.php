@@ -1,14 +1,12 @@
 @extends('layouts.master')
 @section('css')
-
 <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
-
 @endsection
 @section('content')
 
 @component('components.breadcrumb')
-@slot('li_1') Dashboards @endslot
-@slot('title') Assign Roles @endslot
+@slot('li_1') PayCheck @endslot
+@slot('title') Home @endslot
 @endcomponent
 
 <div class="container-fluid home-wrapper px-5">

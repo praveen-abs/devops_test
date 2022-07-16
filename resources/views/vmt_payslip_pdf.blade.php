@@ -7,7 +7,7 @@
 @section('content')
 
     @component('components.breadcrumb')
-        @slot('li_1') Dashboards @endslot
+        @slot('li_1') Payslip @endslot
         @slot('title') Upload Pay Slip @endslot
     @endcomponent
 
