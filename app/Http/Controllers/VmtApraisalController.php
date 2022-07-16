@@ -348,6 +348,27 @@ class VmtApraisalController extends Controller
         return 'Question Deleted';
     }
 
+    public function approveRejectCommandKPITable(Request $request){
+    
+        if(auth::user()->hasRole('Employee') ){
+           $vmtEmployeeGoal =   VmtEmployeePMSGoals::where('kpi_table_id', $request->goal_id)->where('employee_id', $request->user_id)->first(); 
+           $vmtEmployeeGoal->employee_rejection_comments = $request->content;
+           $vmtEmployeeGoal->save();
+           $returnMsg="--";
+           return $returnMsg;
+        }
+        
+        if(auth::user()->hasRole('Manager') ){
+            $vmtEmployeeGoal =   VmtEmployeePMSGoals::where('kpi_table_id', $request->goal_id)->where('employee_id', $request->user_id)->first(); 
+            $vmtEmployeeGoal->manager_rejection_comments = $request->content;
+            $vmtEmployeeGoal->save();
+            $returnMsg="--";
+            return $returnMsg;
+        }
+
+        return "Error !";
+    }
+
     //Used by both Employee and Manager KPI approval.
     public function approveRejectKPITable(Request $request){
         dd($request->all());

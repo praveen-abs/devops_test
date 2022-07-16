@@ -38,6 +38,10 @@
     font-size: 20px;
 }
 
+.fade {
+      transition: opacity 0.2s linear !important;
+}
+
 .rounded-corner-add {
     border-radius: 30px !important;
     padding: 10px !important;
@@ -255,7 +259,7 @@ td .btn i {
 @endsection
 @section('content')
 @component('components.breadcrumb')
-@slot('li_1') Dashboards @endslot
+@slot('li_1') Performance @endslot
 @slot('title') Dashboard @endslot
 @endcomponent
 
@@ -698,7 +702,7 @@ td .btn i {
     </div> -->
 </div>
 
-<div id="add-goals-modal" class="modal custom-modal fade show" role="dialog" aria-modal="true">
+<div id="add-goals-modal" class="modal custom-modal show" role="dialog" aria-modal="true" >
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header p-0">
@@ -805,22 +809,6 @@ td .btn i {
                                         <label class="" for="Assignment">Employees</label>
                                         <div class="d-flex align-items-center">
                                             <div class="avatar-group-item">
-                                                <!-- <a class="avatar">
-                                                    <img src="assets/images/users/avatar-5.jpg" alt="" class="rounded-circle p-0">
-                                                </a>
-                                                <a class="avatar">
-                                                    <img src="assets/images/users/avatar-5.jpg" alt="" class="rounded-circle p-0">
-                                                </a>
-                                                <a class="avatar">
-                                                    <img src="assets/images/users/avatar-5.jpg" alt="" class="rounded-circle p-0">
-                                                </a>
-                                                <a class="avatar">
-                                                    <img src="assets/images/users/avatar-5.jpg" alt="" class="rounded-circle p-0">
-                                                </a> -->
-                                                <!-- <span class="img-addition" style="background-color: rgb(134, 192, 106);width: 30px;height: 30px;font-size:12px;"> +12 </span>
-                                                <div class="mt-1 message-content align-items-start d-flex flex-column  mx-2">
-                                                    <span id="group-employee"></span>
-                                                </div> -->
                                             </div>
                                             <button id="btn_selectEmployees" type="button" target="#changeEmployee" class="right btn btn-primary py-1 px-3 rounded-pill mx-3 text-white chnageButton">Add</button>
                                         </div>
@@ -985,9 +973,50 @@ td .btn i {
                         </div>
                     </div>
                 </div>
+            
+            
+            
+            
+            
+            
             </div>
         </div>
     </div>
+
+
+    <div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
+        <div id="errorMessageNotif_fieldsEmpty1" class="toast toast-border-danger fade hide " role="alert" aria-live="assertive" data-bs-animation="true" aria-atomic="true" >
+            <div class="toast-header">
+                <strong class="me-auto">Error</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                <strong class="">
+                    <b>Please fill all the fields.</b>
+                </strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
+        <div id="errorMessageNotif_fieldsEmpty" class="toast toast-border-danger overflow-hidden mt-3" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Error</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            
+            <div class="toast-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0 me-2">
+                        <i class="ri-alert-line align-middle"></i>
+                    </div>
+                    <div class="flex-grow-1">
+                        <h6 class="mb-0">Please fill all the fields.</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
 </div>
 
 <!-- Change Reviewr window -->
@@ -1132,7 +1161,23 @@ td .btn i {
 </div>
 
 
-<!--Main Content-->
+<!-- Error Message Notification -->
+
+<div style="z-index: 11">
+    <div id="errorMessageNotif1" class="toast toast-border-danger overflow-hidden mt-3" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-body">
+            <div class="d-flex align-items-center">
+                <div class="flex-shrink-0 me-2">
+                    <i class="ri-alert-line align-middle"></i>
+                </div>
+                <div class="flex-grow-1">
+                    <h6 class="mb-0">Something is very wrong!  <a href="javascript:void(0);" class="text-decoration-underline">See detailed report.</a></h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 
@@ -1499,16 +1544,22 @@ $('body').on('click', '#save-table', function(e){
     }
     else
     {
-        alert("Please fill all the fields");
+     //alert("Please fill all the fields");
+
+     //var toast = new bootstrap.Toast($('#errorMessageNotif'));
+     setTimeout(() => {
+        $('#errorMessageNotif_fieldsEmpty').toast('show');
+    }, 0)
+
         canSaveForm = false;
 
-        console.log( $('#reviewer-name').html());
-        console.log( $('#btn_selectEmployees').html());
-        console.log( $('#calendar_type').val());
-        console.log( $("#year option:selected").text());
-        console.log( $('#frequency').val());
-        console.log( $('#assignment_period_start').val() );
-        console.log( $('#department').val() );
+        // console.log( $('#reviewer-name').html());
+        // console.log( $('#btn_selectEmployees').html());
+        // console.log( $('#calendar_type').val());
+        // console.log( $("#year option:selected").text());
+        // console.log( $('#frequency').val());
+        // console.log( $('#assignment_period_start').val() );
+        // console.log( $('#department').val() );
     }
         
     if(canSaveForm)

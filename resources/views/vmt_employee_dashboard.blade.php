@@ -34,17 +34,17 @@
 <!-- prem content end -->
 
 <style>
-.program-card-wrapper img {
-  
-}
+.program-card-wrapper img {}
 
 .program-card-wrapper {
-   position: relative;
+    position: relative;
 }
-.card-img{
+
+.card-img {
     width: 407px;
     height: 101px;
 }
+
 .profile-status {
     position: relative;
     display: flex;
@@ -52,10 +52,11 @@
     padding: 0px;
     width: 100%;
     height: 100%;
-    
+
 }
-.profile-status .status-circle{
-    position:absolute;
+
+.profile-status .status-circle {
+    position: absolute;
 }
 
 
@@ -143,7 +144,7 @@
     right: 0;
     bottom: 0;
     border-radius: 50px;
-    background-color: lightgreen;
+    background-color: #f0f0f6;
     width: 90px;
     -webkit-transition: .4s;
     box-shadow: inset -5px -5px 9px rgb(255 255 255 / 45%), inset 5px 5px 9px rgb(94 104 121 / 30%);
@@ -151,20 +152,11 @@
 }
 
 .slider-checkbox.check-out:before {
-    background-color: green;
+    background-color: red;
 }
 
 .slider-checkbox.check-in:before {
     background-color: green;
-}
-
-input:checked + .slider>.slider-text:after {
-    content: 'Checkout';
-    color: red;
-}
-
-input + .slider>.slider-text:after {
-    content: 'Check In';
 }
 
 .slider-checkbox:before {
@@ -175,7 +167,6 @@ input + .slider>.slider-text:after {
     border-radius: 50%;
     bottom: 0px;
     color: white;
-    background-color: green;
     -webkit-transition: .4s;
     transition: .4s;
     content: '\f011';
@@ -191,14 +182,14 @@ input:checked+.slider-checkbox>.slider-checkbox-text {
 }
 
 
-input:checked + .slider-checkbox.check-out {
-    background-color:#f0657070;
-    color:red;
-} 
+input:checked+.slider-checkbox.check-out {
+    background-color: red;
+    color: #fff;
+}
 
-input:checked + .slider-checkbox.check-in {
-    background-color: #f0657070;
-    color:red;
+input:checked+.slider-checkbox.check-in {
+    background-color: lawngreen;
+    color: #fff;
 }
 
 input:focus+.slider-checkbox {
@@ -214,22 +205,12 @@ input:checked+.slider-checkbox:before {
 
 }
 
-input:checked + .slider-checkbox.check-out:before {
-    color: white;
-    background-color: red;
-}
-input:checked + .slider-checkbox.check-in:before {
-    color: white;
-    background-color: red;
-}
-
-input:checked + .slider-checkbox>.slider-checkbox-text:after {
-    content: 'Checkout';
+input:checked+.slider-checkbox.check-out:before {
     color: red;
 }
 
-input + .slider-checkbox>.slider-checkbox-text:after {
-    content: 'Check In';
+input:checked+.slider-checkbox.check-in:before {
+    color: lawngreen;
 }
 
 .fc-scroller {
@@ -443,8 +424,8 @@ html {
 @endsection
 @section('content')
 @component('components.breadcrumb')
-@slot('li_1') Dashboard @endslot
-@slot('title')  @endslot
+@slot('li_1') Dashboards @endslot
+@slot('title') Dashboard @endslot
 @endcomponent
 
 
@@ -455,16 +436,16 @@ html {
             <div class="card profile-box flex-fill">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-auto ">
+                        <div class="col-sm-4 col-md-4 ">
                             <div class="profile-status">
-                            <!-- <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}" > -->
-                            <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}" class="soc-det-img profile-img-round">
-                            {{-- <img src="{{ URL::asset('assets/images/status-pic.png') }}" alt="" class="soc-det-img profile-img-round" > --}}
-                            {{-- <!-- <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}" class="profile-img-round"> --> --}}
-                            <!-- <i class="ri-checkbox-blank-circle-fill status-circle"></i> -->
+                                <!-- <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}" > -->
+                                <img src="{{ URL::asset('assets/images/status-pic.png') }}" alt=""
+                                    class="soc-det-img profile-img-round">
+                                <!-- <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}" class="profile-img-round"> -->
+                                <!-- <i class="ri-checkbox-blank-circle-fill status-circle"></i> -->
                             </div>
                         </div>
-                        <div class="col">
+                        <div class="col-sm-8 col-md-8 ">
                             <div class="d-felx greet-wrap">
                                 <!-- <h4>Welcome Back<b class="ml-1 text-primary">{{auth()->user()->name}}</b></h4> -->
                                 <p>Welcome Back<b class="ml-1 text-primary">{{auth()->user()->name}}</b></p>
@@ -477,16 +458,13 @@ html {
                         <div class="col-sm-12 col-md-12 col-xl-12 col-xl-12 ">
                             <div class="d-flex align-items-center   mt-4">
                                 <p class="f-15 mr-1"><i class=" ri-sun-line text-warning mr-2"></i>General shift</p>
-                                <p class="f-15  ">
-                                    <span>
-                                        <label class="switch-checkbox m-0">
-                                                <input type="checkbox">
-                                                    <span class="slider-checkbox check-in round">
-                                                    <span class="slider-checkbox-text">
-                                                </span>
-                                            </span>
-                                        </label>
-                                    </span>
+                                <p class="f-15  "><span><label class="switch-checkbox m-0"> <input type="checkbox">
+                                            <span class="slider-checkbox check-in round"><span
+                                                    class="slider-checkbox-text">Check in</span></span> </label></span>
+                                </p>
+                                <p class="f-15 m-0 "><label class="switch-checkbox m-0"> <input type="checkbox">
+                                        <span class="slider-checkbox check-out round"><span
+                                                class="slider-checkbox-text">Check out</span></span> </label>
                                 </p>
                             </div>
 
@@ -524,7 +502,7 @@ html {
                         </p>
 
                     </div>
-                    
+
                 </div>
             </div>
         </div>
@@ -532,91 +510,16 @@ html {
             <div class="card profile-box card-top-border flex-fill">
                 <!-- <div class="p-1 bg-primary" ></div> -->
                 <div class="card-body ">
-                <div class="card-img">
-                <img src="  {{ URL::asset('assets/images/independence.jpg') }}" alt="" class="w-100 h-100">
+                    <div class="card-img">
+                        <img src="  {{ URL::asset('assets/images/independence.jpg') }}" alt="" class="w-100 h-100">
+                    </div>
                 </div>
-                </div>    
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-9 col-md-9 mb-4 ipad-query">
+        <div class="col-sm-8 col-md-8 mb-4 ipad-query">
             <div class="row">
-                <div class="col-sm-4 col-md-4 mb-1">
-                    <div class="card shadow profile-box mb-1" style="height:75%;border-top: 10px solid #405189;">
-                        <!-- <div class="p-1 bg-primary" > -->
-                        <div class="card-body d-flex justify-content-center align-items-center">
-                            <div class="text-center">
-                                <h5 class="fw-bold title">New Employees</h5>
-                                <h4><b>6</b></h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4 col-md-4 mb-1">
-                    <div class="card shadow profile-box mb-1" style="height:75%;border-top: 10px solid #405189;">
-                        <!-- <div class="p-1 bg-primary" > -->
-                        <div class="card-body d-flex justify-content-center align-items-center">
-                            <div class="text-center">
-                                <h5 class="fw-bold title">Total Employees</h5>
-                                <h4><b>30</b></h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-2 col-md-2 mb-1">
-                    <div class="card shadow profile-box mb-1" style="height:75%;border-top: 10px solid #405189;">
-                        <!-- <div class="p-1 bg-danger" > -->
-                        <div class="card-body d-flex justify-content-center align-items-center">
-                            <div class="text-center">
-                                <h5 class="fw-bold title">Online</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-2 col-md-2 mb-1">
-                    <div class="card shadow mb-1 profile-box" style="height:75%;border-top: 10px solid #405189;">
-                        <!-- <div class="p-1 bg-primary" > -->
-                        <div class="card-body d-flex justify-content-center align-items-center">
-                            <div class="text-center">
-                                <h5 class="fw-bold title">Offline</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4 col-md-4 mb-1">
-                    <div class="card shadow mb-1 profile-box" style="height:75%;border-top: 10px solid #405189;">
-                        <!-- <div class="p-1 bg-primary" > -->
-                        <div class="card-body d-flex justify-content-center align-items-center">
-                            <div class="text-center">
-                                <h5 class="fw-bold title">Employees on Leave</h5>
-                                <h4><b>3</b></h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4 col-md-4 mb-1">
-                    <div class="card shadow mb-1 profile-box" style="height:75%;border-top: 10px solid #405189;">
-                        <!-- <div class="p-1 bg-primary" > -->
-                        <div class="card-body d-flex justify-content-center align-items-center">
-                            <div class="text-center">
-                                <h5 class="fw-bold title">Future Joiners</h5>
-                                <h4><b>8</b></h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4 col-md-4 mb-1">
-                    <div class="card profile-box shadow mb-1 " style="height:75%;border-top: 10px solid #405189;">
-                        <!-- <div class="p-1 bg-primary" > -->
-                        <div class="card-body d-flex justify-content-center align-items-center">
-                            <div class="text-center">
-                                <h5 class="fw-bold title">Hyrid</h5>
-                                <h4><b>0</b></h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="col-sm-12 col-md-12 mb-4 ipad-query">
                     <div class="card profile-box flex-fill">
                         <!-- <div class="p-1 bg-primary" ></div> -->
@@ -781,7 +684,7 @@ html {
                 </div>
             </div>
         </div>
-        <div class="col-sm-3 col-md-3 mb-4 ipad-query">
+        <div class="col-sm-4 col-md-4 mb-4 ipad-query">
             <div style="background:white">
                 <div class="card profile-box flex-fill m-0 mb-2"
                     style="border-top: 10px solid #405189;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);border-radius:3px 3px 20px 20px;">

@@ -441,42 +441,38 @@
     </div>
     @endif
 
-
-
-<!-- Modal -->
-                <div class="modal fade flip" id="acceptPMS" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-body p-5 text-center">
-                                <lord-icon src="https://cdn.lordicon.com/gsqxdxog.json"
-                                    trigger="loop" colors="primary:#405189,secondary:#f06548"
-                                    style="width:90px;height:90px"></lord-icon>
-                                <div class="mt-4 text-center">
-                                    <h4>You are about to delete a order ?</h4>
-                                    
-                                    <p class="text-muted fs-15 mb-4">Deleting your order will remove
-                                        all of
-                                        your information from our database.</p>
-                                    <div class="hstack gap-2 justify-content-center remove">
-                                        <button
-                                            class="btn btn-link link-success fw-medium text-decoration-none"
-                                            data-bs-dismiss="modal"><i
-                                                class="ri-close-line me-1 align-middle"></i>
-                                            Close</button>
-                                        <button class="btn btn-danger" id="delete-record">Yes,
-                                            Delete It</button>
-                                    </div>
-                                </div>
-                            </div>
+    <!-- Modal -->
+    <div class="modal fade flip" id="acceptPMS" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body p-5 text-center">
+                    <lord-icon src="https://cdn.lordicon.com/gsqxdxog.json"
+                        trigger="loop" colors="primary:#405189,secondary:#f06548"
+                        style="width:90px;height:90px"></lord-icon>
+                    <div class="mt-4 text-center">
+                        <h4>You are about to delete a order ?</h4>
+                        
+                        <p class="text-muted fs-15 mb-4">Deleting your order will remove
+                            all of
+                            your information from our database.</p>
+                        <div class="hstack gap-2 justify-content-center remove">
+                            <button
+                                class="btn btn-link link-success fw-medium text-decoration-none"
+                                data-bs-dismiss="modal"><i
+                                    class="ri-close-line me-1 align-middle"></i>
+                                Close</button>
+                            <button class="btn btn-danger" id="delete-record">Yes,
+                                Delete It</button>
                         </div>
                     </div>
                 </div>
-                <!--end modal -->
-
-
+            </div>
+        </div>
+    </div>
+    <!--end modal -->
     
 </div><!-- end row -->
-<div class="modal fade" id="notificationModal" role="dialog" aria-hidden="true" style="opacity:1; display:none;">
+<div class="modal fade" id="notificationModal" role="dialog" aria-hidden="true" style="opacity:1; display:none;background:#00000073;">
     <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2">
         <div class="modal-content">
             <div class="modal-header py-2 bg-primary">
@@ -494,8 +490,10 @@
             </div>
             <div class="modal-body">
                 <div class="mt-4">
-                    <h4 class="mb-3" id="modalNot">Data Saved Successfully!</h4>
+                    <h4 class="mb-3" id="modalNot"></h4>
+                    <textarea name="reject_content" id="reject_content" class="form-control mb-3"></textarea>
                     <div class="hstack gap-2 justify-content-center">
+                        <button type="button" class="btn btn-primary" id="reject_save" disabled>Save</button>
                         <button type="button" class="btn btn-light close-modal" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -621,22 +619,59 @@
         })
     });
 
-    $('#reject').click(function(e){
+    $('body').on("keyup", '#reject_content', function() {
+        if ($(this).val() == '') {
+            $('#reject_save').attr('disabled', true);
+        } else {
+            $('#reject_save').removeAttr('disabled');
+        }
+    });
+
+    $('#reject_save').click(function(e){
         e.preventDefault();
-        //goal_id=26&user_id=4
         var goal_id = "{{\Request::get('goal_id')}}";
         var user_id = "{{\Request::get('user_id')}}";
         var approve_flag = "rejected";
+        var content = $('#reject_content').val();
        
         $.ajax({
-            type: "GET", 
-            url:"{{url('vmt-approvereject-kpitable')}}?goal_id="+goal_id+"&user_id="+user_id+"&approve_flag="+approve_flag,
+            type: "POST", 
+            url:"{{url('vmt-approvereject-command')}}",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                content: content,
+                goal_id: goal_id,
+                user_id: user_id,
+            },
             success: function(data){
-                $('#modalHeader').html("Rejected");
-                $('#modalNot').html(data);
-                $('#notificationModal').show('modal');
+                e.preventDefault();
+                var goal_id = "{{\Request::get('goal_id')}}";
+                var user_id = "{{\Request::get('user_id')}}";
+                var approve_flag = "rejected";
+            
+                $.ajax({
+                    type: "GET", 
+                    url:"{{url('vmt-approvereject-kpitable')}}?goal_id="+goal_id+"&user_id="+user_id+"&approve_flag="+approve_flag,
+                    success: function(data){
+                        $('#notificationModal').hide();
+                        $('#notificationModal').addClass('fade');
+                        window.location.reload();
+                    }
+                });
             }
         })
+    });
+
+    $('#reject').click(function(e){
+        $('#modalHeader').html("Rejected");
+        $('#modalNot').html("Are you sure you want to reject this Kpi. If yes, please entered the reason in the below command box:");
+        $('#notificationModal').show('modal');
+    });
+
+    $('body').on('click', '.close-modal', function() {
+        $('#notificationModal').hide();
+        $('#notificationModal').addClass('fade');
+        window.location.reload();
     });
 
 </script>

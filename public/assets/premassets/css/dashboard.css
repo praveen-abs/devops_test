@@ -72,7 +72,16 @@
 }
 
 input:checked + .slider>.slider-text {
-  left:3px
+  left:3px;
+}
+
+input:checked + .slider>.slider-text:after {
+  content: 'Checkout';
+  color: red;
+}
+
+input + .slider>.slider-text:after {
+  content: 'Check In';
 }
 
 .f-15 {
@@ -94,17 +103,18 @@ input:checked + .slider>.slider-text {
 }
 
 input:checked + .slider {
-  background-color: lawngreen;
+  background-color: #f0657070;
 }
   
 input:focus + .slider {
-  box-shadow: 0 0 1px lawngreen;
+  box-shadow: 0 0 1px #f0657070;
 }
 
 input:checked + .slider:before {
   -webkit-transform: translateX(65px);
   -ms-transform: translateX(65px);
   transform: translateX(65px);
+  background: red;
 }
 
 .active-emp {

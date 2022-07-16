@@ -623,20 +623,25 @@ body {
     right: 0;
     color: var(--vz-footer-color);
     left: 250px;
-    height: 60px;
+    /* height: 60px; */
     background-color: var(--vz-footer-bg)
 }
 
 @media (max-width:991.98px) {
     .footer {
-        left: 0
+        left: 0;
     }
 }
 
 [data-layout=vertical][data-sidebar-size=sm-hover] .footer,
 [data-layout=vertical][data-sidebar-size=sm] .footer {
-    left: 100px
+    left: 80px;
 }
+[data-layout=vertical][data-sidebar-size=lg-hover] .footer,
+[data-layout=vertical][data-sidebar-size=lg] .footer {
+    left: 215px;
+}
+
 
 [data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .nav-link i {
     font-size: 22px;
@@ -878,9 +883,10 @@ body {
 [data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .nav-link:after {
     left: 100px !important;
 }
-[data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .nav-item .menu-dropdown .nav-link span{
+
+[data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .nav-item .menu-dropdown .nav-link span {
     /* padding: 0px 100px 0px 10px !important; */
-    }
+}
 
 
 /* .navbar-menu .navbar-nav .nav-link[data-bs-toggle=collapse][aria-expanded=true] {
@@ -1386,6 +1392,7 @@ body {
 
 .scrollBar textarea {
     resize: none;
+    cursor: pointer;
 
 }
 
@@ -1593,7 +1600,7 @@ body {
 .left-content-settings::-webkit-scrollbar,
 .right-content-settings::-webkit-scrollbar {
     width: 5px;
-    cursor: pointer;
+
 }
 
 .bottom-dash {
@@ -1613,7 +1620,7 @@ body {
 .left-content-settings::-webkit-scrollbar-track,
 .right-content-settings::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px #cacaca;
-    cursor: pointer;
+
 }
 
 .scrollBar textarea::-webkit-scrollbar-thumb,
@@ -1621,9 +1628,7 @@ body {
 .left-content-settings::-webkit-scrollbar-thumb,
 .right-content-settings::-webkit-scrollbar-thumb {
     background-color: #405189;
-    /* color of the scroll thumb */
     border-radius: 5px;
-    cursor: pointer;
     height: 30px !important;
 }
 
@@ -1707,6 +1712,7 @@ body {
 .hamburger-icon.open {
     transform: rotate(-90deg);
     -webkit-transform: rotate(-90deg);
+    left: -16px !important;
 }
 
 .hamburger-icon.open span:first-child {
@@ -2183,8 +2189,9 @@ body {
     box-shadow: 0 2px 4px rgb(15 34 58 / 12%);
 
 }
+
 [data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .nav-item .menu-dropdown .nav-link {
-padding: 0px 40px 0px 0px;
+    padding: 0px 40px 0px 0px;
 }
 
 [data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .nav-sm {
@@ -5463,6 +5470,10 @@ a {
 label {
     font-weight: 500;
     margin-bottom: .5rem
+}
+
+p {
+    width: 100%;
 }
 
 b,
@@ -17095,14 +17106,14 @@ textarea {
     cursor: pointer;
 }
 
-html,
+/* html,
 body {
     height: 100%;
-}
+} */
 
 p {
-    margin-bottom: 0px;
-    width: 100%;
+    margin: 0px;
+
 }
 
 .no-padding {
@@ -18533,6 +18544,14 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
     height: 100%; */
     /* min-height: 100%; */
 }
+/* .conya{
+    background: url(../images/login_bg1.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+} */
+
 
 .login-bg {
     position: fixed;
@@ -18562,17 +18581,9 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
 }
 
 .login-headers img {
-
-
     height: 50px;
     width: 100px;
-
 }
-
-/* .login-bg img{
-    width: 100%;
-    height: 100vh;
-} */
 
 .pms-dashboard-wrapper .pms-card {
     height: 100px;
@@ -18612,7 +18623,7 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
     color: #313030;
     padding: 5px !important;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 13px;
     margin: 10px 0px;
 }
 
@@ -18703,18 +18714,6 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
 @media (min-width: 1281px) {}
 
 
-
-
-/* for 404 error */
-
-.error-data-wrapper svg {
-    height: 100% !important;
-    width: 70% !important;
-    max-width: 100% !important;
-}
-
-
-
 /* for footer contents */
 
 .footer-contents {
@@ -18728,7 +18727,7 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
 }
 
 .footer-contents .powerby-footer img {
-    height: 25px;
+    height: 45px;
 }
 
 .footer-contents .privacy-policy {
