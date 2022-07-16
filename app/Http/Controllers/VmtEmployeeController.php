@@ -492,102 +492,96 @@ class VmtEmployeeController extends Controller
             ];
             $validator = Validator::make($row, $rules, $messages);
             if ($validator->passes()) {
-                // foreach($data[0] as $key => $row) {
-                    $user =  User::create([
-                        'name' => $row['employee_name'],
-                        'email' => $row["email"],
-                        'password' => Hash::make('123123123'),
-                        'avatar' =>  'avatar-1.jpg',
-                    ]);
-                    $user->assignRole("Employee");
-                    
-                    $newEmployee = new VmtEmployee;
-                    $newEmployee->userid = $user->id;
-                    $newEmployee->emp_no   =    $empNo;
-                    $newEmployee->gender   =    $row["gender"];
-                    $newEmployee->doj   =    $row["doj"]; 
-                    $newEmployee->dol   =    $row["doj"];
-                    $newEmployee->location   =    $row["work_location"];
-                    $newEmployee->dob   =    $row["dob"];
-                    $newEmployee->father_name   =  $row["father_name"];
-                    $newEmployee->pan_number   =  isset( $row["pan_no"] ) ? ($row["pan_no"]) : "";
-                    $newEmployee->pan_ack   =    $row["pan_ack"];
-                    $newEmployee->aadhar_number = $row["aadhar"];
-                    $newEmployee->marrital_status = $row["marital_status"];
-                    $newEmployee->mobile_number  = $row["mobile_no"];
-                    $newEmployee->bank_name   = $row["bank_name"];
-                    $newEmployee->bank_ifsc_code  = $row["bank_ifsc"];
-                    $newEmployee->bank_account_number  = $row["account_no"];
-                    $newEmployee->present_address   = $row["current_address"];
-                    $newEmployee->permanent_address   = $row["permanent_address"];
-                    $newEmployee->mother_name   = $row["mother_name"];
-                    if ($row['marital_status'] <> 'single') {
-                        $newEmployee->spouse_name   = $row["spouse_name"];
-                        $newEmployee->spouse_age   = $row["spouse_dob"];
-                        if ($row['no_child'] > 0) {
-                            $newEmployee->kid_name   = json_encode($row["child_name"]);
-                            $newEmployee->kid_age  = json_encode($row["child_dob"]);
-                        }
+                $user =  User::create([
+                    'name' => $row['employee_name'],
+                    'email' => $row["email"],
+                    'password' => Hash::make('123123123'),
+                    'avatar' =>  'avatar-1.jpg',
+                ]);
+                $user->assignRole("Employee");
+                
+                $newEmployee = new VmtEmployee;
+                $newEmployee->userid = $user->id;
+                $newEmployee->emp_no   =    $empNo;
+                $newEmployee->gender   =    $row["gender"];
+                $newEmployee->doj   =    $row["doj"]; 
+                $newEmployee->dol   =    $row["doj"];
+                $newEmployee->location   =    $row["work_location"];
+                $newEmployee->dob   =    $row["dob"];
+                $newEmployee->father_name   =  $row["father_name"];
+                $newEmployee->pan_number   =  isset( $row["pan_no"] ) ? ($row["pan_no"]) : "";
+                $newEmployee->pan_ack   =    $row["pan_ack"];
+                $newEmployee->aadhar_number = $row["aadhar"];
+                $newEmployee->marrital_status = $row["marital_status"];
+                $newEmployee->mobile_number  = $row["mobile_no"];
+                $newEmployee->bank_name   = $row["bank_name"];
+                $newEmployee->bank_ifsc_code  = $row["bank_ifsc"];
+                $newEmployee->bank_account_number  = $row["account_no"];
+                $newEmployee->present_address   = $row["current_address"];
+                $newEmployee->permanent_address   = $row["permanent_address"];
+                $newEmployee->mother_name   = $row["mother_name"];
+                if ($row['marital_status'] <> 'single') {
+                    $newEmployee->spouse_name   = $row["spouse_name"];
+                    $newEmployee->spouse_age   = $row["spouse_dob"];
+                    if ($row['no_child'] > 0) {
+                        $newEmployee->kid_name   = json_encode($row["child_name"]);
+                        $newEmployee->kid_age  = json_encode($row["child_dob"]);
                     }
-                    $newEmployee->save();
-                    
-                    if($newEmployee){
-                        $empOffice  = new VmtEmployeeOfficeDetails;
-                        $empOffice->emp_id = $newEmployee->id;
-                        $empOffice->user_id = $newEmployee->userid;
-                        $empOffice->department = $row["department"];
-                        $empOffice->process = $row["process"];
-                        $empOffice->designation = $row["designation"];
-                        $empOffice->cost_center = $row["cost_center"];
-                        $empOffice->confirmation_period  = $row["confirmation_period"];
-                        $empOffice->holiday_location  = $row["holiday_location"];
-                        $empOffice->l1_manager_code  = $row["l1_manager_code"];
-                        $empOffice->l1_manager_name  = $row["l1_manager_name"];
-                        $empOffice->work_location  = $row["work_location"];
-                        $empOffice->officical_mail  = $row["official_mail"];
-                        $empOffice->official_mobile  = $row["official_mobile"];
-                        $empOffice->emp_notice  = $row["emp_notice"];
-                        $empOffice->save();
-                    }
-                    
-                    if ($empOffice) {
-                        $compensatory = new Compensatory;
-                        $compensatory->user_id = $newEmployee->userid;
-                        $compensatory->basic = $row["basic"];
-                        $compensatory->hra = $row["hra"];
-                        $compensatory->Statutory_bonus = $row["statutory_bonus"];
-                        $compensatory->child_education_allowance = $row["child_education_allowance"];
-                        $compensatory->food_coupon = $row["food_coupon"];
-                        $compensatory->lta = $row["lta"];
-                        $compensatory->special_allowance = $row["special_allowance"];
-                        $compensatory->other_allowance = $row["other_allowance"];
-                        $compensatory->gross = $row["basic"] + $row["hra"] + $row["statutory_bonus"] + $row["child_education_allowance"] + $row["food_coupon"] + $row["lta"] + $row["special_allowance"] + $row["other_allowance"];
-                        $compensatory->epf_employer_contribution = $row["epf_employer_contribution"];
-                        $compensatory->esic_employer_contribution = $row["esic_employer_contribution"];
-                        $compensatory->insurance = $row["insurance"];
-                        $compensatory->graduity = $row["graduity"];
-                        $compensatory->cic = $compensatory->gross + $row["epf_employer_contribution"] + $row["esic_employer_contribution"] + $row["insurance"] + $row["graduity"];
-                        $compensatory->epf_employee = $row["epf_employee"];
-                        $compensatory->esic_employee = $row["esic_employee"];
-                        $compensatory->professional_tax = $row["professional_tax"];
-                        $compensatory->labour_welfare_fund = $row["labour_welfare_fund"];
-                        $compensatory->net_income = $compensatory->gross + $row["epf_employee"] + $row["esic_employee"] + $row["professional_tax"] + $row["labour_welfare_fund"] - ($row["epf_employer_contribution"] - $row["esic_employer_contribution"] - $row["insurance"] - $row["graduity"]);
-                        $compensatory->save();
-                    }
+                }
+                $newEmployee->save();
+                
+                if($newEmployee){
+                    $empOffice  = new VmtEmployeeOfficeDetails;
+                    $empOffice->emp_id = $newEmployee->id;
+                    $empOffice->user_id = $newEmployee->userid;
+                    $empOffice->department = $row["department"];
+                    $empOffice->process = $row["process"];
+                    $empOffice->designation = $row["designation"];
+                    $empOffice->cost_center = $row["cost_center"];
+                    $empOffice->confirmation_period  = $row["confirmation_period"];
+                    $empOffice->holiday_location  = $row["holiday_location"];
+                    $empOffice->l1_manager_code  = $row["l1_manager_code"];
+                    $empOffice->l1_manager_name  = $row["l1_manager_name"];
+                    $empOffice->work_location  = $row["work_location"];
+                    $empOffice->officical_mail  = $row["official_mail"];
+                    $empOffice->official_mobile  = $row["official_mobile"];
+                    $empOffice->emp_notice  = $row["emp_notice"];
+                    $empOffice->save();
+                }
+                
+                if ($empOffice) {
+                    $compensatory = new Compensatory;
+                    $compensatory->user_id = $newEmployee->userid;
+                    $compensatory->basic = $row["basic"];
+                    $compensatory->hra = $row["hra"];
+                    $compensatory->Statutory_bonus = $row["statutory_bonus"];
+                    $compensatory->child_education_allowance = $row["child_education_allowance"];
+                    $compensatory->food_coupon = $row["food_coupon"];
+                    $compensatory->lta = $row["lta"];
+                    $compensatory->special_allowance = $row["special_allowance"];
+                    $compensatory->other_allowance = $row["other_allowance"];
+                    $compensatory->gross = $row["basic"] + $row["hra"] + $row["statutory_bonus"] + $row["child_education_allowance"] + $row["food_coupon"] + $row["lta"] + $row["special_allowance"] + $row["other_allowance"];
+                    $compensatory->epf_employer_contribution = $row["epf_employer_contribution"];
+                    $compensatory->esic_employer_contribution = $row["esic_employer_contribution"];
+                    $compensatory->insurance = $row["insurance"];
+                    $compensatory->graduity = $row["graduity"];
+                    $compensatory->cic = $compensatory->gross + $row["epf_employer_contribution"] + $row["esic_employer_contribution"] + $row["insurance"] + $row["graduity"];
+                    $compensatory->epf_employee = $row["epf_employee"];
+                    $compensatory->esic_employee = $row["esic_employee"];
+                    $compensatory->professional_tax = $row["professional_tax"];
+                    $compensatory->labour_welfare_fund = $row["labour_welfare_fund"];
+                    $compensatory->net_income = $compensatory->gross + $row["epf_employee"] + $row["esic_employee"] + $row["professional_tax"] + $row["labour_welfare_fund"] - ($row["epf_employer_contribution"] - $row["esic_employer_contribution"] - $row["insurance"] - $row["graduity"]);
+                    $compensatory->save();
+                }
 
-                    if ($newEmployee && $empOffice) {
-                        $addedCount++;
-                        $returnsuccessMsg .= $empNo." get added";
-                    } else {
-                        $failedCount++;
-                        $returnfailedMsg .= $empNo." not get added";
-                    }
-                    // if (\Mail::to($row["email"])->send(new WelcomeMail($row["email"], '123123123', 'http://vasagroup.abshrms.com'  ))) {
-                    //     return "Saved";
-                    // } else {
-                    //     return "Error";
-                    // }
-                // }
+                if ($newEmployee && $empOffice) {
+                    $addedCount++;
+                    $returnsuccessMsg .= $empNo." get added";
+                } else {
+                    $failedCount++;
+                    $returnfailedMsg .= $empNo." not get added";
+                }
+                \Mail::to($row["email"])->send(new WelcomeMail($row["email"], '123123123', 'http://vasagroup.abshrms.com'));
             } else {
                 $returnfailedMsg .= $empNo." not get added because of error ".json_encode($validator->errors()->all());
                 $failedCount++;
@@ -604,9 +598,31 @@ class VmtEmployeeController extends Controller
         $empNameString  = $employeeData['employee_name'];
         $filename = 'appoinment_letter_'.$empNameString.'_'.time().'.pdf';
         $data = $employeeData;
+        $data['basic_monthly'] = 0;
+        $data['basic_yearly'] = 0;
+        $data['hra_monthly'] = 0;
+        $data['hra_yearly'] = 0;
+        $data['spl_allowance_monthly'] = 0;
+        $data['spl_allowance_yearly'] = 0;
+        $data['gross_monthly'] = 0;
+        $data['gross_yearly'] = 0;
+        $data['employer_epf_monthly'] = 0;
+        $data['employer_epf_yearly'] = 0;
+        $data['employer_esi_monthly'] = 0;
+        $data['employer_esi_yearly'] = 0;
+        $data['ctc_monthly'] = 0;
+        $data['ctc_yearly'] = 0;
+        $data['employee_epf_monthly'] = 0;
+        $data['employee_epf_yearly'] = 0;
+        $data['employer_esi_monthly'] = 0;
+        $data['employer_esi_yearly'] = 0;
+        $data['employer_pt_monthly'] = 0;
+        $data['employer_pt_yearly'] = 0;
+        $data['net_take_home_monthly'] = 0;
+        $data['net_take_home_yearly'] = 0;
         // download PDF file with download method
         $pdf = new Dompdf();
-        $html =  view('vmt_appoinment_letterPdf', compact($data));       
+        $html =  view('vmt_appoinment_letterPdf', compact('data'));       
         $pdf->loadHtml($html, 'UTF-8');
         $pdf->setPaper('A4', 'portrait');
         $pdf->render();

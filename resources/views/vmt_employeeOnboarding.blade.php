@@ -49,7 +49,7 @@
                                                 @php
                                                 $date = (date('Y')-18)."-".date('m')."-".date('d');
                                                 @endphp
-                                                <input type="date" max="9999-12-31"  name="dob" max="{{$date}}" class="onboard-form form-control" required />
+                                                <input type="date" name="dob" max="{{$date}}" class="onboard-form form-control" required />
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3 mb-3">
                                                 <label class="" for="marital_status">Marital Status{!! required() !!}</label>
@@ -586,7 +586,7 @@
 </div>
 
 <!-- Vertically Centered -->
-<div class="modal fade" id="notificationModal" role="dialog" aria-hidden="true" style="opacity:1; display:none;">
+<div class="modal fade" id="notificationModal" role="dialog" aria-hidden="true" style="opacity:1; display:none;background:#00000073;">
     <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2">
         <div class="modal-content">
             <div class="modal-header py-2 bg-primary">
@@ -645,16 +645,16 @@
 <script src="http://thecodeplayer.com/uploads/js/jquery.easing.min.js" type="text/javascript"></script>
 
 <!-- Page JavaScript Files-->
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/jquery-1.12.4.min.js"></script>
+<script src="{{ URL::asset('/assets/premassets/js/jquery.min.js') }}"></script>
+<script src="{{ URL::asset('/assets/premassets/js/jquery-1.12.4.min.js') }}"></script>
 <!--Popper JS-->
-<script src="assets/js/popper.min.js"></script>
+<script src="{{ URL::asset('/assets/premassets/js/popper.min.js') }}"></script>
 <!--Bootstrap-->
-<script src="assets/js/bootstrap.min.js"></script>
+<script src="{{ URL::asset('/assets/premassets/js/bootstrap.min.js') }}"></script>
 <!--Sweet alert JS-->
-<script src="assets/js/sweetalert.js"></script>
+<script src="{{ URL::asset('/assets/premassets/js/sweetalert.js') }}"></script>
 <!--Progressbar JS-->
-<script src="assets/js/progressbar.min.js"></script>
+<script src="{{ URL::asset('/assets/premassets/js/progressbar.min.js') }}"></script>
 <!--Charts-->
 <!--Canvas JS-->
 <!--Custom Js Script-->

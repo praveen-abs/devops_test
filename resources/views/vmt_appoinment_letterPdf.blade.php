@@ -59,13 +59,13 @@
             Chennai-600048.
           </p>
           <p>
-            Dear {{$employee_name}},
+            Dear {{$data['employee_name']}},
           </p>
           <p> We thank you for deciding to be a part of the Company <b>Ardens Business Solutions Private Limited</b>  family.
           </p>
           <p> Congratulations! We are pleased to confirm that you have been selected to work for Ardens Business Solutions Private Limited. We are delighted to make you the following job offer.  </p>
-          <p>The position we are offering you is that of {{$designation}} at a monthly salary of Rs.{{$net_income}}/- with an annual cost to the company Rs.1,50,000/-.  </p>
-          <p> This position reports to Frontend Developer, {{$l1_manager_name}}. Your working hours will be from 9AM to 6PM  </p>
+          <p>The position we are offering you is that of {{$data['designation']}} at a monthly salary of Rs.{{$data['net_income']}}/- with an annual cost to the company Rs.1,50,000/-.  </p>
+          <p> This position reports to Frontend Developer, {{$data['l1_manager_name']}}. Your working hours will be from 9AM to 6PM  </p>
           <p>Commencement of employment: You have joined our services on date of joining and the said date has been recorded as your Date of Joining and will be considered as such for all future purposes pertaining to your employmentƒassociation with us.</p>
           <p>Compensation & Benefits: Please refer to Annexure I, for details of your remuneration and benefits as applicable to you. The aforesaid CTC is subject to applicable taxes and statutory deductions that may prevail from time to time.
           </p>
@@ -95,7 +95,7 @@
           <p>
             <div style="float:right;width:50%;">
               I have read the above terms and conditions of my appointment. I accept the same.<br/>
-              <u>{{$employee_name}}</u><br/>
+              <u>{{$data['employee_name']}}</u><br/>
               Applicant Name<br/>
               Employee Code
             </div>
@@ -125,23 +125,23 @@
               </tr>
                <tr >
                 <td style="width:40%">Employee No </td>
-                 <td colspan="2">{{$employee_code}}</td> 
+                 <td colspan="2">{{$data['employee_code']}}</td> 
               </tr>
              <tr >
                 <td style="width:40%">Name  </td>
-                 <td colspan="2">{{$employee_name}}</td> 
+                 <td colspan="2">{{$data['employee_name']}}</td> 
               </tr>
              <tr >
                 <td style="width:40%">Designation  </td>
-                 <td colspan="2">{{$designation}}</td> 
+                 <td colspan="2">{{$data['designation']}}</td> 
               </tr>
              <tr >
                 <td style="width:40%">Department  </td>
-                 <td colspan="2">{{$department}}</td> 
+                 <td colspan="2">{{$data['department']}}</td> 
               </tr> 
               <tr >
                 <td style="width:40%">Date of Joining  </td>
-                 <td colspan="2">{{$doj}}</td> 
+                 <td colspan="2">{{$data['doj']}}</td> 
               </tr> 
               <tr >
                 <td style="width:40%">Remarks  </td>
@@ -157,58 +157,58 @@
               </tr> 
               <tr >
                 <td style="width:40%">Basic  </td>
-                 <td >{{$basic_monthly}}</td> 
-                 <td >{{$basic_yearly}}</td> 
+                 <td >{{$data['basic_monthly']}}</td> 
+                 <td >{{$data['basic_yearly']}}</td> 
               </tr> 
              <tr >
                 <td style="width:40%">HRA  </td>
-                 <td >{{$hra_monthly}}</td> 
-                 <td >{{$hra_yearly}}</td> 
+                 <td >{{$data['hra_monthly']}}</td> 
+                 <td >{{$data['hra_yearly']}}</td> 
               </tr> 
              <tr >
                 <td style="width:40%">Special Allowance</td>
-                 <td >{{$spl_allowance_monthly}}</td> 
-                 <td >{{$spl_allowance_yearly}}</td> 
+                 <td >{{$data['spl_allowance_monthly']}}</td> 
+                 <td >{{$data['spl_allowance_yearly']}}</td> 
               </tr> 
              <tr >
                 <td style="width:40%">Gross Salary</td>
-                 <td >{{$gross_monthly}}</td> 
-                 <td >{{$gross_yearly}}</td> 
+                 <td >{{$data['gross_monthly']}}</td> 
+                 <td >{{$data['gross_yearly']}}</td> 
               </tr> 
              <tr >
                 <td style="width:40%">Employer's Contribution to EPF </td>
-                 <td >{{$employer_epf_monthly}}</td> 
-                 <td >{{$employer_epf_yearly}}</td> 
+                 <td >{{$data['employer_epf_monthly']}}</td> 
+                 <td >{{$data['employer_epf_yearly']}}</td> 
               </tr> 
              <tr >
                 <td style="width:40%">Employer's Contribution to ESI </td>
-                 <td >{{$employer_esi_monthly}}</td> 
-                 <td >{{$employer_esi_yearly}}</td> 
+                 <td >{{$data['employer_esi_monthly']}}</td> 
+                 <td >{{$data['employer_esi_yearly']}}</td> 
               </tr> 
              <tr >
                 <td style="width:40%">CTC (Cost to the company)</td>
-                 <td >{{$ctc_monthly}}</td> 
-                 <td >{{$ctc_yearly}}</td> 
+                 <td >{{$data['ctc_monthly']}}</td> 
+                 <td >{{$data['ctc_yearly']}}</td> 
               </tr> 
              <tr >
                 <td style="width:40%">Employee's Contribution to EPF</td>
-                 <td >{{$employee_epf_monthly}}</td> 
-                 <td >{{$employee_epf_yearly}}</td> 
+                 <td >{{$data['employee_epf_monthly']}}</td> 
+                 <td >{{$data['employee_epf_yearly']}}</td> 
               </tr> 
              <tr >
                 <td style="width:40%">Employee's Contribution to ESI</td>
-                 <td >{{$employer_esi_monthly}}</td> 
-                 <td >{{$employer_esi_yearly}}</td> 
+                 <td >{{$data['employer_esi_monthly']}}</td> 
+                 <td >{{$data['employer_esi_yearly']}}</td> 
               </tr> 
              <tr >
                 <td style="width:40%">Employee's Contribution to PT  </td>
-                 <td >{{$employer_pt_monthly}}</td> 
-                 <td >{{$employer_pt_yearly}}</td> 
+                 <td >{{$data['employer_pt_monthly']}}</td> 
+                 <td >{{$data['employer_pt_yearly']}}</td> 
               </tr> 
               <tr >
                 <td style="width:40%">Net - Take Home</td>
-                 <td >{{$net_take_home_monthly}}</td> 
-                 <td >{{$net_take_home_yearly}}</td> 
+                 <td >{{$data['net_take_home_monthly']}}</td> 
+                 <td >{{$data['net_take_home_yearly']}}</td> 
               </tr> 
               <tr >
                 <td colspan="3" style="width:40%">Remarks: ---------------.
