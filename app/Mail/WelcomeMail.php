@@ -19,13 +19,15 @@ class WelcomeMail extends Mailable
     protected $uEmail;
     protected $uPassowrd;
     protected $loginLink;
+    protected $filename;
 
-    public function __construct($uEmail, $uPassowrd, $loginLink )
+    public function __construct($uEmail, $uPassowrd, $loginLink, $filename )
     {
         //
         $this->uEmail  = $uEmail;
         $this->uPassowrd  = $uPassowrd;
         $this->loginLink  = $loginLink;
+        $this->filename   = $filename;
     }
 
     /**
@@ -38,6 +40,7 @@ class WelcomeMail extends Mailable
         return $this->view('vmt_welcomeemployee_email')
                     ->with('uEmail', $this->uEmail)
                     ->with('uPassowrd', $this->uPassowrd)
-                    ->with('loginLink', $this->loginLink);
+                    ->with('loginLink', $this->loginLink)
+                    ->attach($this->filename);;
     }
 }
