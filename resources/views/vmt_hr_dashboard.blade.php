@@ -1,6 +1,10 @@
 @extends('layouts.master')
 @section('title') @lang('translation.dashboards') @endsection
 @section('css')
+
+<link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
+
+
 <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('assets/libs/swiper/swiper.min.css')}}" rel="stylesheet" type="text/css" />
 
@@ -25,463 +29,55 @@
 <!--Map-->
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/jquery-jvectormap-2.0.2.css') }}">
 
-
 <!-- calendar -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 <!-- prem content end -->
 
-<style>
-.program-card-wrapper img {
-  
-}
-
-.program-card-wrapper {
-   position: relative;
-}
-.card-img{
-    width: 407px;
-    height: 101px;
-}
-.profile-status {
-    position: relative;
-    display: flex;
-    justify-content: flex-start;
-    padding: 0px;
-    width: 100%;
-    height: 100%;
-    
-}
-.profile-status .status-circle{
-    position:absolute;
-}
-
-
-.topbarContent .btn {
-    border-bottom-left-radius: 0px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 10px;
-}
-
-.greet-wrap p b {
-    font-size: 21px;
-}
-
-.program-card-wrapper .program-day {
-    z-index: 10;
-    position: absolute;
-    bottom: 0;
-    /* font-size: 18px !important; */
-}
-
-.program-card-wrapper .bg-icon {
-    transform: rotate(-45deg);
-    font-size: 64px;
-    position: absolute;
-    opacity: 0.1;
-    right: -13px;
-    bottom: -29px;
-    z-index: 0;
-}
-
-.program-card-wrapper .bg-icon.ri-hearts-fill {
-    color: #a0064f;
-}
-
-.profile-wrapper .topbarNav,
-.title {
-    color: #002f56;
-}
-
-
-.bg-box-color-pink {
-    background: pink;
-    border-radius: 4px;
-}
-
-.bg-box-color-success {
-    background: lightgreen;
-    border-radius: 4px;
-}
-
-.profile-img-round {
-    width: 73px;
-    height: 73px;
-    border-radius: 15%;
-}
-
-.switch-checkbox {
-    position: relative;
-    display: inline-block;
-    width: 115px;
-    height: 25px;
-}
-
-.switch-checkbox input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.slider-checkbox-text {
-    color: #000;
-    position: absolute;
-    top: 5px;
-    left: 30px;
-    font-size: 10px;
-}
-
-.slider-checkbox {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    border: 1px solid #e5dddd;
-    right: 0;
-    bottom: 0;
-    border-radius: 50px;
-    background-color: lightgreen;
-    width: 90px;
-    -webkit-transition: .4s;
-    box-shadow: inset -5px -5px 9px rgb(255 255 255 / 45%), inset 5px 5px 9px rgb(94 104 121 / 30%);
-    transition: .4s;
-}
-
-.slider-checkbox.check-out:before {
-    background-color: green;
-}
-
-.slider-checkbox.check-in:before {
-    background-color: green;
-}
-
-input:checked + .slider>.slider-text:after {
-    content: 'Checkout';
-    color: red;
-}
-
-input + .slider>.slider-text:after {
-    content: 'Check In';
-}
-
-.slider-checkbox:before {
-    position: absolute;
-    height: 23px;
-    width: 23px;
-    left: 0px;
-    border-radius: 50%;
-    bottom: 0px;
-    color: white;
-    background-color: green;
-    -webkit-transition: .4s;
-    transition: .4s;
-    content: '\f011';
-    font-family: FontAwesome !important;
-    padding: 1px 2px 0px 5px;
-    font-size: 15px;
-    border: 1 solid;
-}
-
-input:checked+.slider-checkbox>.slider-checkbox-text {
-    left: 10px;
-    color: #fff;
-}
-
-
-input:checked + .slider-checkbox.check-out {
-    background-color:#f0657070;
-    color:red;
-} 
-
-input:checked + .slider-checkbox.check-in {
-    background-color: #f0657070;
-    color:red;
-}
-
-input:focus+.slider-checkbox {
-    box-shadow: 0 0 1px lawngreen;
-}
-
-input:checked+.slider-checkbox:before {
-    -webkit-transform: translateX(65px);
-    -ms-transform: translateX(65px);
-    transform: translateX(65px);
-    left: 0px;
-    background-color: #f0f0f6;
-
-}
-
-input:checked + .slider-checkbox.check-out:before {
-    color: white;
-    background-color: red;
-}
-input:checked + .slider-checkbox.check-in:before {
-    color: white;
-    background-color: red;
-}
-
-input:checked + .slider-checkbox>.slider-checkbox-text:after {
-    content: 'Checkout';
-    color: red;
-}
-
-input + .slider-checkbox>.slider-checkbox-text:after {
-    content: 'Check In';
-}
-
-.fc-scroller {
-    height: auto !important;
-}
-
-.fc-widget-header {
-    margin-right: 0px !important;
-}
-
-.popover {
-    top: 0;
-    left: 0;
-    z-index: 1060;
-    max-width: 276px;
-    font-family: Segoe UI;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 1.5;
-    text-align: left;
-    text-align: start;
-    text-decoration: none;
-    text-shadow: none;
-    text-transform: none;
-    letter-spacing: normal;
-    word-break: normal;
-    word-spacing: normal;
-    white-space: normal;
-    line-break: auto;
-    font-size: .875rem;
-    word-wrap: break-word;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1.1px solid rgba(0, 0, 0, .2);
-    border-radius: 0.3rem;
-    display: block;
-    will-change: transform;
-    top: 0px;
-    left: 0px;
-    transform: translate3d(324px, 179px, 0px);
-}
-
-.bs-popover-auto[x-placement^=right],
-.bs-popover-right {
-    margin-left: 0.5rem;
-}
-
-.popover,
-.popover .arrow {
-    position: absolute;
-    display: block;
-}
-
-.popover {
-    width: 480px;
-    min-width: 480px;
-}
-
-.bs-popover-auto[x-placement^=right],
-.bs-popover-right {
-    box-shadow: 1px 3px 4px 0 rgb(0 0 0 / 24%);
-}
-
-
-.p-20 {
-    padding: 20px !important;
-}
-
-.cursor-pointer {
-    cursor: pointer;
-}
-
-.mr-8 {
-    margin-right: 8px !important;
-}
-
-.ml-2 {
-    margin-left: 2px !important;
-}
-
-
-
-.sub-topnav.nav {
-    background-color: #fff;
-    min-height: 40px;
-}
-
-.sub-topnav.nav {
-    background-color: #fff;
-    border-bottom: 1px solid #a2a9b4;
-    min-height: 40px;
-}
-
-.nav {
-    display: flex;
-    flex-wrap: wrap;
-    padding-left: 0;
-    margin-bottom: 0;
-    list-style: none;
-}
-
-.px-20 {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-}
-
-.sub-topnav.nav li {
-    position: relative;
-    padding-left: 12px !important;
-    padding-right: 8px !important;
-    padding-top: 8px !important;
-    padding-bottom: 8px !important;
-}
-
-.sub-topnav.nav li a:after {
-    position: absolute;
-    -webkit-transition: width .5s ease-in-out, left .2s ease-in-out;
-    content: "";
-    width: 0;
-    left: 55%;
-}
-
-.sub-topnav.nav li.active a:after {
-    border-top: 5px solid #f06548;
-    bottom: -9px;
-    width: 88%;
-    left: 6%;
-}
-
-.emp-job {
-    display: none;
-}
-
-.p-16 {
-    padding: 16px;
-}
-
-.mb-16,
-.my-16 {
-    margin-bottom: 16px !important;
-}
-
-/* calendar */
-.fc-widget-content {
-    border: none !important;
-}
-
-.fc th.fc-widget-header {
-    background: white !important;
-    border: none !important;
-}
-
-.fc-button {
-    border: none !important;
-}
-
-.fc-icon-right-single-arrow:after {
-    display: none !important;
-}
-
-.fc-icon-left-single-arrow:after {
-    display: none !important;
-}
-
-.fc-prev-button:before {
-    color: black;
-    font-size: 300% !important;
-}
-
-.fc-next-button:before {
-    color: black;
-    font-size: 300% !important;
-}
-
-.fc-head-container {
-    border: none !important;
-}
-
-.fc-left h2 {
-    font-weight: 700 !important;
-}
-
-.profile-box {
-    border-radius: 10px !important;
-    box-shadow: rgb(60 64 67 / 30%) 0px 1px 2px 0px, rgb(60 64 67 / 15%) 0px 2px 6px 2px !important;
-}
-
-.card-top-border {
-    border-top: 10px solid #405189 !important;
-}
-
-.fc .fc-row .fc-content-skeleton table,
-.fc .fc-row .fc-content-skeleton td,
-.fc .fc-row .fc-helper-skeleton td {
-    font-weight: 700 !important;
-    text-align: center !important;
-    vertical-align: middle !important;
-}
-
-/* .fc th.fc-widget-header {
-        text-align: right !important;
-    } */
-.fc-ltr .fc-basic-view .fc-day-top .fc-day-number {
-    float: none !important;
-}
-
-html {
-    min-height: auto !important;
-}
-</style>
 @endsection
 @section('content')
 @component('components.breadcrumb')
 @slot('li_1') Dashboard @endslot
-@slot('title')  @endslot
+@slot('title') @endslot
 @endcomponent
 
 
 <div class="main">
     <!-- Content Row -->
     <div class="row">
-        <div class="col-sm-4 col-md-4 mb-2 ">
+        <div class="col-sm-4 col-md-4 ">
             <div class="card profile-box flex-fill">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-auto ">
-                            <div class="profile-status">
-                            <!-- <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}" > -->
-                            <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}" class="soc-det-img profile-img-round">
-                            {{-- <img src="{{ URL::asset('assets/images/status-pic.png') }}" alt="" class="soc-det-img profile-img-round" > --}}
-                            {{-- <!-- <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}" class="profile-img-round"> --> --}}
-                            <!-- <i class="ri-checkbox-blank-circle-fill status-circle"></i> -->
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="d-felx greet-wrap">
-                                <!-- <h4>Welcome Back<b class="ml-1 text-primary">{{auth()->user()->name}}</b></h4> -->
-                                <p>Welcome Back<b class="ml-1 text-primary">{{auth()->user()->name}}</b></p>
+                        <div class="col-auto status-wrapper mr-5">
 
-                            </div>
-                            <div class="">
-                                <p class="text-muted  m-0">{{date('d F Y')}}</p>
+                            <!-- <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}" > -->
+                            <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}" class="soc-det-img profile-img-round h-100 w-100">
+                            <!-- <img src="{{ URL::asset('assets/images/status-pic.png') }}" alt=""
+                                class="profile-img-round"> -->
+                            
+                            <!-- <i class="ri-checkbox-blank-circle-fill status-circle"></i> -->
+
+                        </div>
+                        <div class="col greet-wrap status-wrapper">
+                            <div class="d-felx ">
+                                <!-- <h4>Welcome Back<b class="ml-1 text-primary">{{auth()->user()->name}}</b></h4> -->
+                                <p class="text-muted ">Welcome Back<b
+                                        class="ml-1 text-primary">{{auth()->user()->name}}</b></p>
+
+                                <p class="text-muted f-13 mt-1 m-0">{{date('d F Y')}}</p>
                             </div>
                         </div>
-                        <div class="col-sm-12 col-md-12 col-xl-12 col-xl-12 ">
-                            <div class="d-flex align-items-center   mt-4">
-                                <p class="f-15 mr-1"><i class=" ri-sun-line text-warning mr-2"></i>General shift</p>
-                                <p class="f-15  ">
+                        <div class="col-sm-12 col-md-12 col-xl-12 col-xl-12 mt-2 mb-4">
+                            <div class="d-flex align-items-center ">
+                                <p class="f-13 w-50"><i class=" ri-sun-line text-warning mr-2"></i>General shift</p>
+                                <p class="f-15">
                                     <span>
                                         <label class="switch-checkbox m-0">
-                                                <input type="checkbox">
-                                                    <span class="slider-checkbox check-in round">
-                                                    <span class="slider-checkbox-text">
+                                            <input type="checkbox">
+                                            <span class="slider-checkbox check-in round">
+                                                <span class="slider-checkbox-text">
                                                 </span>
                                             </span>
                                         </label>
@@ -496,7 +92,7 @@ html {
                 </div>
             </div>
         </div>
-        <div class="col-sm-4 col-md-4 mb-4 ipad-query">
+        <div class="col-sm-4 col-md-4  d-flex">
             <div class="card profile-box flex-fill">
 
                 <h4 class="m-0 title text-center text-primary card-title my-3 fw-bold">My Actions</h4>
@@ -523,105 +119,108 @@ html {
                         </p>
 
                     </div>
-                    
+
                 </div>
             </div>
         </div>
-        <div class="col-sm-4 col-md-4 mb-4 d-flex">
+        <div class="col-sm-4 col-md-4 d-flex">
             <div class="card profile-box card-top-border flex-fill">
                 <!-- <div class="p-1 bg-primary" ></div> -->
                 <div class="card-body ">
-                <div class="card-img">
-                <img src="  {{ URL::asset('assets/images/independence.jpg') }}" alt="" class="w-100 h-100">
+                    <div class="card-img">
+                        <img src="  {{ URL::asset('assets/images/independence.jpg') }}" alt="" class="w-100 h-100">
+                    </div>
                 </div>
-                </div>    
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-9 col-md-9 mb-4 ipad-query">
+        <div class="col-sm-9 col-md-9">
             <div class="row">
-                <div class="col-sm-4 col-md-4 mb-1">
-                    <div class="card shadow profile-box mb-1" style="height:75%;border-top: 10px solid #405189;">
+                <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
+                    <div class="card shadow profile-box card-top-border mb-1">
                         <!-- <div class="p-1 bg-primary" > -->
                         <div class="card-body d-flex justify-content-center align-items-center">
                             <div class="text-center">
                                 <h5 class="fw-bold title">New Employees</h5>
-                                <h4><b>6</b></h4>
+                                <h6 class="number-increment fw-bold">10</h6>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4 col-md-4 mb-1">
-                    <div class="card shadow profile-box mb-1" style="height:75%;border-top: 10px solid #405189;">
+                <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
+                    <div class="card shadow profile-box card-top-border ">
                         <!-- <div class="p-1 bg-primary" > -->
                         <div class="card-body d-flex justify-content-center align-items-center">
                             <div class="text-center">
                                 <h5 class="fw-bold title">Total Employees</h5>
-                                <h4><b>30</b></h4>
+                                <h6 class="number-increment fw-bold">30</h6>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-2 col-md-2 mb-1">
-                    <div class="card shadow profile-box mb-1" style="height:75%;border-top: 10px solid #405189;">
+                <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
+                    <div class="card shadow profile-box " style="border-top:7px solid #E54E0D">
                         <!-- <div class="p-1 bg-danger" > -->
                         <div class="card-body d-flex justify-content-center align-items-center">
                             <div class="text-center">
                                 <h5 class="fw-bold title">Online</h5>
+                                <h6 class="number-increment fw-bold">10</h6>
+
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-2 col-md-2 mb-1">
-                    <div class="card shadow mb-1 profile-box" style="height:75%;border-top: 10px solid #405189;">
+                <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
+                    <div class="card shadow  profile-box card-top-border">
                         <!-- <div class="p-1 bg-primary" > -->
                         <div class="card-body d-flex justify-content-center align-items-center">
                             <div class="text-center">
                                 <h5 class="fw-bold title">Offline</h5>
+                                <h6 class="number-increment fw-bold">20</h6>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4 col-md-4 mb-1">
-                    <div class="card shadow mb-1 profile-box" style="height:75%;border-top: 10px solid #405189;">
+                <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
+                    <div class="card shadow  profile-box card-top-border">
                         <!-- <div class="p-1 bg-primary" > -->
                         <div class="card-body d-flex justify-content-center align-items-center">
                             <div class="text-center">
                                 <h5 class="fw-bold title">Employees on Leave</h5>
-                                <h4><b>3</b></h4>
+                                <h6 class="number-increment fw-bold">3</h6>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4 col-md-4 mb-1">
-                    <div class="card shadow mb-1 profile-box" style="height:75%;border-top: 10px solid #405189;">
+                <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
+                    <div class="card shadow  profile-box card-top-border">
                         <!-- <div class="p-1 bg-primary" > -->
                         <div class="card-body d-flex justify-content-center align-items-center">
                             <div class="text-center">
                                 <h5 class="fw-bold title">Future Joiners</h5>
-                                <h4><b>8</b></h4>
+                                <h6 class="number-increment fw-bold">40</h6>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4 col-md-4 mb-1">
-                    <div class="card profile-box shadow mb-1 " style="height:75%;border-top: 10px solid #405189;">
+                <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
+                    <div class="card profile-box shadow  card-top-border ">
                         <!-- <div class="p-1 bg-primary" > -->
                         <div class="card-body d-flex justify-content-center align-items-center">
                             <div class="text-center">
                                 <h5 class="fw-bold title">Hyrid</h5>
-                                <h4><b>0</b></h4>
+                                <h6 class="number-increment fw-bold">10</h6>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-12 mb-4 ipad-query">
+                <div class="col-sm-12 col-md-12 ipad-query">
                     <div class="card profile-box flex-fill">
                         <!-- <div class="p-1 bg-primary" ></div> -->
                         <div class="card-body p-0">
-                            <div class="profile-wrapper d-flex w-100">
-                                <div class="popover-body  w-100">
+                            <div class="profile-wrapper d-flex p-0">
+                                <div class="popover-body p-0 w-100">
                                     <div class="min-h-250">
                                         <div>
                                             <ul class="nav sub-topnav">
@@ -716,16 +315,18 @@ html {
                 </div>
                 <h5 class="text-primary"><b>Events</b></h5>
                 <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
-                    <div class="card profile-box flex-fill" style="border-top: 10px solid #f06548;">
+                    <div class="card profile-box flex-fill" style="border-top: 7px solid #f06548;">
                         <!-- <div class="p-1 bg-danger" ></div> -->
                         <div class="card-body ">
-                            <div class="program-card-wrapper">
+                            <div class="wishes-card-wrapper">
                                 <p class="text-muted f-15 m-0"><i class="ri-cake-2-fill f-13 mr-2"></i> Happy
                                     Birthday</p>
                                 <div class="mt-2 ">
-                                    <div class="px-2 d-flex">
-                                        <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}"
-                                            class="img-round w-25 h-25">
+                                    <div class="px-2 d-flex ">
+                                        <!-- <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}"
+                                            class="img-round"> -->
+                                        <img src="{{ URL::asset('assets/images/users/avatar-8.jpg') }}" alt=""
+                                        class="img-round">
                                         <h6 class=" text-primary mx-3 mt-3">{{auth()->user()->name}}</h6>
                                     </div>
                                     <p class="text-danger fw-bold text-right program-day ">Today</p>
@@ -737,17 +338,18 @@ html {
                     </div>
                 </div>
                 <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
-                    <div class="card profile-box flex-fill" style="border-top: 10px solid #00ffa8;">
+                    <div class="card profile-box flex-fill" style="border-top: 7px solid #00ffa8;">
                         <!-- <div class="p-1 bg-danger" ></div> -->
                         <div class="card-body ">
-                            <div class="program-card-wrapper">
+                            <div class="wishes-card-wrapper">
                                 <p class="text-muted f-15 m-0"><i class=" f-13 mr-2 ri-shopping-bag-fill"></i> Work
                                     Anniversary</p>
                                 <div class="mt-2 ">
                                     <div class="px-2 d-flex">
-                                        <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}"
-                                            class="img-round w-25 h-25">
-                                        <h6 class=" text-primary mx-3 mt-3">{{auth()->user()->name}}</h6>
+                                    <img src="{{ URL::asset('assets/images/users/avatar-10.jpg') }}" alt=""
+                                        class="img-round">
+                                        <!-- <h6 class=" text-primary mx-3 mt-3">{{auth()->user()->name}}</h6> -->
+                                        <h6 class=" text-primary mx-3 mt-3">Ray</h6>
                                     </div>
                                     <p class="fw-bold text-right program-day " style="color:#00ffa8">Tomorrow</p>
                                 </div>
@@ -758,17 +360,18 @@ html {
                     </div>
                 </div>
                 <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
-                    <div class="card profile-box flex-fill" style="border-top: 10px solid #a0064f;">
+                    <div class="card profile-box flex-fill" style="border-top: 7px solid #a0064f;">
                         <!-- <div class="p-1 bg-danger" ></div> -->
                         <div class="card-body ">
-                            <div class="program-card-wrapper">
+                            <div class="wishes-card-wrapper">
                                 <p class="text-muted f-15 m-0"><i class=" ri-hearts-fill f-13 mr-2"></i>Wedding
                                     Anniversary</p>
                                 <div class="mt-2  ">
                                     <div class="px-2 d-flex">
-                                        <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}"
-                                            class="img-round w-25 h-25">
-                                        <h6 class=" text-primary mx-3 mt-3">{{auth()->user()->name}}</h6>
+                                    <img src="{{ URL::asset('assets/images/users/avatar-7.jpg') }}" alt=""
+                                        class="img-round">
+                                        <!-- <h6 class=" text-primary mx-3 mt-3">{{auth()->user()->name}}</h6> -->
+                                        <h6 class=" text-primary mx-3 mt-3">Mosh</h6>
                                     </div>
                                     <p class="fw-bold text-right program-day" style="color:#a0064f">09/07/2022</p>
                                 </div>
@@ -780,10 +383,10 @@ html {
                 </div>
             </div>
         </div>
-        <div class="col-sm-3 col-md-3 mb-4 ipad-query">
-            <div style="background:white">
+        <div class="col-sm-3 col-md-3">
+            <div class="bg-white" style="">
                 <div class="card profile-box flex-fill m-0 mb-2"
-                    style="border-top: 10px solid #405189;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);border-radius:3px 3px 20px 20px;">
+                    style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);border-radius:3px 3px 20px 20px;">
                     <!-- <div class="p-1 bg-primary" ></div> -->
                     <div class="card-body p-2">
                         <div id='full_calendar_events'></div>
@@ -906,6 +509,26 @@ $(document).ready(function() {
         var id = $(this).attr('id');
         $('.topbarContent').hide();
         $('.emp-' + id).css("display", "block");
+    });
+});
+
+
+// for number increament 
+
+$(function() {
+    function count($this) {
+        var current = parseInt($this.html(), 10);
+        $this.html(++current);
+        if (current !== $this.data('count')) {
+            setTimeout(function() {
+                count($this)
+            }, 50);
+        }
+    }
+    $(".number-increment").each(function() {
+        $(this).data('count', parseInt($(this).html(), 10));
+        $(this).html('0');
+        count($(this));
     });
 });
 </script>

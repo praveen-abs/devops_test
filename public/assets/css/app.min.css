@@ -1678,15 +1678,25 @@ margin-left: 20px;
     height: auto;
 }
 
-.topnav-hamburger{
- margin-left: 21px;
-}
+
+[data-layout=vertical][data-sidebar-size=sm] .topnav-hamburger{
+    
+    margin-left: 21px;   
+    }
+
+    [data-layout=vertical][data-sidebar-size=lg] .topnav-hamburger{
+    
+        margin-left: 10px;
+        margin-right: 7px;
+    }
+     
+    
 
 /* end */
 .hamburger-icon {
     width: 20px;
     height: 15px;
-    /* margin-left: 21px; */
+    
     position: relative;
     cursor: pointer;
     display: inline-block
@@ -1729,7 +1739,7 @@ margin-left: 20px;
 .hamburger-icon.open {
     transform: rotate(-90deg);
     -webkit-transform: rotate(-90deg);
-    left: -14px !important;
+ 
 }
 
 .hamburger-icon.open span:first-child {
@@ -18801,7 +18811,7 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
 
 .user-details-wrapper .profile-box {
     border-top: 5px solid #405189;
-    border-radius: 10px;
+    border-radius: 5px;
     box-shadow: rgb(60 64 67 / 30%) 0px 1px 2px 0px, rgb(60 64 67 / 15%) 0px 2px 6px 2px;
 }
 

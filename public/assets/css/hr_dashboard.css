@@ -1,0 +1,440 @@
+
+.f-10{
+    font-size: 10px;
+}
+.f-11{
+    font-size: 11px;  
+}
+.f-11{
+    font-size: 12px;  
+}
+
+.f-13{
+    font-size: 13px;  
+}
+
+.f-14{
+    font-size: 14px;  
+}
+
+
+.f-15{
+    font-size: 15px;
+}
+
+.status-wrapper{
+ height: 70px !important;   
+}
+.status-wrapper.greet-wrap{
+    left: -30px;
+}
+
+.wishes-card-wrapper {
+   position: relative;
+   overflow: hidden;
+}
+.wishes-card-wrapper img{
+    height: 55px !important;
+    width: 55px !important;
+}
+
+.card-img{
+    width: 407px;
+    height: 101px;
+}
+.profile-status {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    padding: 0px;
+    width: 100%;
+    height: 100%;
+    
+}
+.profile-status .status-circle{
+    position:absolute;
+}
+
+
+.topbarContent .btn {
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 10px;
+}
+
+.greet-wrap p{
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.greet-wrap p b {
+    font-size: 21px;
+}
+
+.wishes-card-wrapper .program-day {
+    z-index: 10;
+    position: absolute;
+    bottom: 0;
+    /* font-size: 18px !important; */
+}
+
+.wishes-card-wrapper .bg-icon {
+    transform: rotate(-45deg);
+    font-size: 64px;
+    position: absolute;
+    opacity: 0.1;
+    right: -13px;
+    bottom: -29px;
+    z-index: 0;
+}
+
+.wishes-card-wrapper .bg-icon.ri-hearts-fill {
+    color: #a0064f;
+}
+
+.profile-wrapper .topbarNav,
+.title {
+    color: #002f56;
+}
+
+
+.bg-box-color-pink {
+    background: pink;
+    border-radius: 4px;
+}
+
+.bg-box-color-success {
+    background: lightgreen;
+    border-radius: 4px;
+}
+
+.profile-img-round {
+    width: 100%;
+    height: auto;
+    border-radius: 15%;
+}
+
+.switch-checkbox {
+    position: relative;
+    display: inline-block;
+    width: 115px;
+    height: 25px;
+}
+
+.switch-checkbox input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider-checkbox-text {
+    color: #000;
+    position: absolute;
+    top: 2px;
+    left: 23px;
+    font-size: 10px;
+}
+
+.slider-checkbox {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    border: 1px solid #d9d0d0;
+    right: 0;
+    bottom: 0;
+    border-radius: 50px;
+    background-color: white;
+    width: 75px;
+    -webkit-transition: .4s;
+    height: 22px;
+    box-shadow: inset -5px -5px 9px rgb(255 255 255 / 45%), inset 5px 5px 9px rgb(197 197 197 / 30%),rgb(0 0 0 / 16%) 0px 1px 4px;;
+    transition: .4s;
+}
+
+.slider-checkbox.check-out:before {
+    background-color: green;
+}
+
+.slider-checkbox.check-in:before {
+    background-color: green;
+}
+
+input:checked + .slider>.slider-text:after {
+    content: 'Checkout';
+    color: red;
+}
+
+input + .slider>.slider-text:after {
+    content: 'Check In';
+}
+
+.slider-checkbox:before {
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    left: 0px;
+    border-radius: 50%;
+    bottom: 0px;
+    color: white;
+    background-color: green;
+    -webkit-transition: .4s;
+    transition: .4s;
+    content: '\f011';
+    font-family: FontAwesome !important;
+    padding: 0px 4px 0px 3px;
+    font-size: 15px;
+}
+
+input:checked+.slider-checkbox>.slider-checkbox-text {
+    left: 10px;
+    color: #fff;
+}
+
+
+input:checked + .slider-checkbox.check-out {
+    background-color:#f0657070;
+    color:red;
+} 
+
+input:checked + .slider-checkbox.check-in {
+    background-color: #f0657070;
+    color:red;
+}
+
+input:focus+.slider-checkbox {
+    box-shadow: 0 0 1px lawngreen;
+}
+
+input:checked+.slider-checkbox:before {
+    -webkit-transform: translateX(65px);
+    -ms-transform: translateX(65px);
+    transform: translateX(65px);
+    left: 0px;
+    background-color: #f0f0f6;
+
+}
+
+input:checked + .slider-checkbox.check-out:before {
+    color: white;
+    background-color: red;
+}
+input:checked + .slider-checkbox.check-in:before {
+    color: white;
+    background-color: red;
+}
+
+input:checked + .slider-checkbox>.slider-checkbox-text:after {
+    content: 'Checkout';
+    color: red;
+}
+
+input + .slider-checkbox>.slider-checkbox-text:after {
+    content: 'Check In';
+}
+
+.fc-scroller {
+    height: auto !important;
+}
+
+.fc-widget-header {
+    margin-right: 0px !important;
+}
+
+.popover {
+    top: 0;
+    left: 0;
+    z-index: 1060;
+    max-width: 276px;
+    font-family: Segoe UI;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: left;
+    text-align: start;
+    text-decoration: none;
+    text-shadow: none;
+    text-transform: none;
+    letter-spacing: normal;
+    word-break: normal;
+    word-spacing: normal;
+    white-space: normal;
+    line-break: auto;
+    font-size: .875rem;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1.1px solid rgba(0, 0, 0, .2);
+    border-radius: 0.3rem;
+    display: block;
+    will-change: transform;
+    top: 0px;
+    left: 0px;
+    transform: translate3d(324px, 179px, 0px);
+}
+
+.bs-popover-auto[x-placement^=right],
+.bs-popover-right {
+    margin-left: 0.5rem;
+}
+
+.popover,
+.popover .arrow {
+    position: absolute;
+    display: block;
+}
+
+.popover {
+    width: 480px;
+    min-width: 480px;
+}
+
+.bs-popover-auto[x-placement^=right],
+.bs-popover-right {
+    box-shadow: 1px 3px 4px 0 rgb(0 0 0 / 24%);
+}
+
+
+.p-20 {
+    padding: 20px !important;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.mr-8 {
+    margin-right: 8px !important;
+}
+
+.ml-2 {
+    margin-left: 2px !important;
+}
+
+
+
+.sub-topnav.nav {
+    background-color: #fff;
+    min-height: 40px;
+}
+
+.sub-topnav.nav {
+    background-color: #fff;
+    border-bottom: 1px solid #e2e4e7;
+    min-height: 40px;
+}
+
+.nav {
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+.px-20 {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+}
+
+.sub-topnav.nav li {
+    position: relative;
+    padding-left: 12px !important;
+    padding-right: 8px !important;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+}
+
+.sub-topnav.nav li a:after {
+    position: absolute;
+    -webkit-transition: width .5s ease-in-out, left .2s ease-in-out;
+    content: "";
+    width: 0;
+    left: 55%;
+}
+
+.sub-topnav.nav li.active a:after {
+    border-top: 5px solid #f06548;
+    bottom: -9px;
+    width: 88%;
+    left: 6%;
+}
+
+.emp-job {
+    display: none;
+}
+
+.p-16 {
+    padding: 16px;
+}
+
+.mb-16,
+.my-16 {
+    margin-bottom: 16px !important;
+}
+
+/* calendar */
+.fc-widget-content {
+    border: none !important;
+}
+
+.fc th.fc-widget-header {
+    background: white !important;
+    border: none !important;
+}
+
+.fc-button {
+    border: none !important;
+}
+
+.fc-icon-right-single-arrow:after {
+    display: none !important;
+}
+
+.fc-icon-left-single-arrow:after {
+    display: none !important;
+}
+
+.fc-prev-button:before {
+    color: black;
+    font-size: 300% !important;
+}
+
+.fc-next-button:before {
+    color: black;
+    font-size: 300% !important;
+}
+
+.fc-head-container {
+    border: none !important;
+}
+
+.fc-left h2 {
+    font-weight: 700 !important;
+}
+
+.profile-box {
+    border-radius: 12px !important;
+    box-shadow: rgb(60 64 67 / 30%) 0px 1px 2px 0px, rgb(60 64 67 / 15%) 0px 2px 6px 2px !important;
+}
+.profile-box .card-body{
+    padding: 5px !important;
+}
+
+.card-top-border {
+    border-top: 7px solid #002F56!important;
+}
+
+.fc .fc-row .fc-content-skeleton table,
+.fc .fc-row .fc-content-skeleton td,
+.fc .fc-row .fc-helper-skeleton td {
+    font-weight: 700 !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+.fc-ltr .fc-basic-view .fc-day-top .fc-day-number {
+    float: none !important;
+}
+

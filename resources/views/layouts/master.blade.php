@@ -10,6 +10,9 @@
     <link rel="shortcut icon" href="{{ URL::asset('assets/images/favicon.png')}}">
     @include('layouts.head-css')
     <style>
+        .page-content{
+            background:#F2F2F2;
+        }
         .loading {
             z-index: 20;
             position: absolute;
