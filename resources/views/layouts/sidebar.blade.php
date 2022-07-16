@@ -141,20 +141,26 @@
                     <div class="collapse menu-dropdown" id="attendanceDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1"><span>Leave</span></a>
+                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1">
+                                <span>   Leave</span> 
+                                </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>Attendance</span></a>
+
+                                <a href="apps-calendar" class="nav-link sidebar py-1" role="button"><span>Attendance
+                                    </span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>Timesheet</span></a>
+
+                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1"
+                                    role="button"><span>Timesheet</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>Performance</span></a>
+                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>Expenses &
+                                        Trevel</span></a>
                             </li>
-                            <li class="nav-item">
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>Expenses & Travel</span></a>
-                            </li>
+
+
                         </ul>
                     </div>
                 </li>
@@ -265,7 +271,7 @@
                     <div class="collapse menu-dropdown" id="teamDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{url('indexPerformanceDashboard')}}"
+                                <a href="{{url('vmt_noData')}}"
                                     class="nav-link sidebar py-1"><span>Summary</span></a>
                             </li>
                             <li class="nav-item">
@@ -517,7 +523,7 @@
                     <div class="collapse menu-dropdown" id="helpDeskDrop-down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="apps-calendar" class="nav-link sidebar  py-1"><span>Calendar</span></a>
+                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar  py-1"><span>Calendar</span></a>
                             </li>
                             <li class="nav-item">
                                 <a href="apps-chat" class="nav-link sidebar py-1"><span>Chat</span></a>

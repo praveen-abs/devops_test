@@ -443,8 +443,8 @@ html {
 @endsection
 @section('content')
 @component('components.breadcrumb')
-@slot('li_1') Dashboards @endslot
-@slot('title') Dashboard @endslot
+@slot('li_1') Dashboard @endslot
+@slot('title')  @endslot
 @endcomponent
 
 
@@ -458,8 +458,9 @@ html {
                         <div class="col-auto ">
                             <div class="profile-status">
                             <!-- <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}" > -->
-                            <img src="{{ URL::asset('assets/images/status-pic.png') }}" alt="" class="soc-det-img profile-img-round" >
-                            <!-- <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}" class="profile-img-round"> -->
+                            <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}" class="soc-det-img profile-img-round">
+                            {{-- <img src="{{ URL::asset('assets/images/status-pic.png') }}" alt="" class="soc-det-img profile-img-round" > --}}
+                            {{-- <!-- <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}" class="profile-img-round"> --> --}}
                             <!-- <i class="ri-checkbox-blank-circle-fill status-circle"></i> -->
                             </div>
                         </div>
@@ -476,13 +477,16 @@ html {
                         <div class="col-sm-12 col-md-12 col-xl-12 col-xl-12 ">
                             <div class="d-flex align-items-center   mt-4">
                                 <p class="f-15 mr-1"><i class=" ri-sun-line text-warning mr-2"></i>General shift</p>
-                                <p class="f-15  "><span><label class="switch-checkbox m-0"> <input type="checkbox">
-                                            <span class="slider-checkbox check-in round"><span
-                                                    class="slider-checkbox-text"></span></span> </label></span>
-                                </p>
-                                <p class="f-15 m-0 "><label class="switch-checkbox m-0"> <input type="checkbox">
-                                        <span class="slider-checkbox check-out round"><span
-                                                class="slider-checkbox-text"></span></span> </label>
+                                <p class="f-15  ">
+                                    <span>
+                                        <label class="switch-checkbox m-0">
+                                                <input type="checkbox">
+                                                    <span class="slider-checkbox check-in round">
+                                                    <span class="slider-checkbox-text">
+                                                </span>
+                                            </span>
+                                        </label>
+                                    </span>
                                 </p>
                             </div>
 

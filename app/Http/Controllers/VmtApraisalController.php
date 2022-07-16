@@ -175,7 +175,7 @@ class VmtApraisalController extends Controller
             $mailingEmpList  = VmtEmployee::join('vmt_employee_office_details',  'user_id', '=', 'vmt_employee_details.userid')->whereIn('userid', $employeeList)->pluck('officical_mail','userid'); 
             $mailingRevList  = VmtEmployeeOfficeDetails::whereIn('id', array($request->reviewer))->pluck('officical_mail'); 
             $user_emp_name = User::where('id',$request->reviewer)->pluck('name')->first();
-            
+            $user_manager_name = User::where('id',auth::user()->id)->pluck('name')->first();
             //dd($employeeList);
             foreach ($employeeList as $index => $value) {
                 // code...
@@ -194,7 +194,6 @@ class VmtApraisalController extends Controller
                 $empPmsGoal->employee_id  = $value; 
                 $empPmsGoal->mail_link    = url('vmt-pmsappraisal-review'); 
                 $empPmsGoal->author_id    = auth::user()->id; 
-
                 if(auth::user()->hasRole(['HR','Admin']) ){
 
                     $empPmsGoal->is_employee_accepted  = true;
@@ -227,13 +226,13 @@ class VmtApraisalController extends Controller
                 }
                 // \Mail::to($officialMailList)->send(new NotifyPMSManager(auth::user()->name,  $currentUser_empDetails->designation,$hrReview->name));
                 if (auth()->user()->hasrole('Employee')) {
-                     \Mail::to($mailingRevList)->send(new VmtAssignGoals("none",$user_emp_name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start)));
+                     \Mail::to($mailingRevList)->send(new VmtAssignGoals("none",$user_emp_name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$user_manager_name));
             } else {
                $finalMailList = $mailingEmpList->merge($mailingRevList);
               // dd($finalMailList);
 
               foreach ($finalMailList as $recipient) {
-                \Mail::to($recipient)->send(new VmtAssignGoals("none", $user_emp_name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start)));
+                \Mail::to($recipient)->send(new VmtAssignGoals("none", $user_emp_name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$user_manager_name));
             }
                 // \Mail::to($finalMailList)->send(new VmtAssignGoals( url('none'), "none", $user_emp_name));
             }
@@ -372,7 +371,9 @@ class VmtApraisalController extends Controller
 
     //Used by both Employee and Manager KPI approval.
     public function approveRejectKPITable(Request $request){
-    
+        dd($request->all());
+        $user_emp_name= User::where('id',auth::user()->id)->pluck('name')->first();
+        $user_manager_name = User::where('id',$request->user_id)->pluck('name')->first();
         if(auth::user()->hasRole('Employee') ){
 
            $vmtEmployeeGoal =   VmtEmployeePMSGoals::where('kpi_table_id', $request->goal_id)->where('employee_id', $request->user_id)->first(); 
@@ -387,13 +388,13 @@ class VmtApraisalController extends Controller
 
            if($request->approve_flag == "approved")
            {
-                \Mail::to($mailingList)->send(new VmtAssignGoals(url('vmt-pms-assigngoals') , "approved"));
+                \Mail::to($mailingList)->send(new VmtAssignGoals( "approved",$user_emp_name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$user_manager_name));
                 $returnMsg = 'KPI has been accepted. Mail notification sent';
            }
            else
            if($request->approve_flag == "rejected")
            {
-                \Mail::to($mailingList)->send(new VmtAssignGoals(url('vmt-pms-assigngoals') , "rejected"));
+                \Mail::to($mailingList)->send(new VmtAssignGoals( "rejected",$user_emp_name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$user_manager_name));
                 $returnMsg = 'KPI has been rejected. Mail notification sent';
 
            }
