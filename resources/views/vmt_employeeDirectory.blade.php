@@ -125,7 +125,7 @@ tr:last-child td:last-child {
 @section('content')
 
 @component('components.breadcrumb')
-@slot('li_1') Dashboards @endslot
+@slot('li_1') Organization @endslot
 @slot('title') Employee Directories @endslot
 @endcomponent
 

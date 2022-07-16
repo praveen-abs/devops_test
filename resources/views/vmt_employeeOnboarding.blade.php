@@ -6,10 +6,9 @@
 @section('content')
 
 @component('components.breadcrumb')
-@slot('li_1') Dashboards @endslot
+@slot('li_1') Configuration @endslot
 @slot('title') Employee Onboarding @endslot
 @endcomponent
-
 
 <div class="main">
 

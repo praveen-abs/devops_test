@@ -338,28 +338,10 @@
                         <ul class="nav nav-sm flex-column">
 
                             <li class="nav-item">
-                                <a href="{{url('vmt_home')}}" class="nav-link sidebar py-1"
-                                    role="button"><span>Dashboard</span></a>
+                                <a href="{{url('vmt-payslip')}}" class="nav-link sidebar py-1"
+                                    role="button"><span>Pay Run</span></a>
                             </li>
-                            @can('Team')
-                            <li class="nav-item">
-                                <a href="{{url('vmt_salary_details')}}" class="nav-link sidebar py-1"
-                                    role="button"><span>Salary
-                                        Details</span></a>
-                            </li>
-                            @endcan
-                            @can('ORG')
-                            <li class="nav-item">
-                                <a href="{{url('vmt_investments')}}" class="nav-link sidebar py-1"
-                                    role="button"><span>Investments</span></a>
-                            </li>
-                            @endcan
-                            @can('360_Degree_Review')
-                            <li class="nav-item">
-                                <a href="{{url('vmt_form16')}}" class="nav-link sidebar py-1" role="button"><span>
-                                        Form 16</span></a>
-                            </li>
-                            @endcan
+                          
                         </ul>
                     </div>
                 </li>
@@ -385,24 +367,25 @@
                         <ul class="nav nav-sm flex-column">
 
                             <li class="nav-item">
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1"
+                                <a href="{{url('vmt_home')}}" class="nav-link sidebar py-1"
                                     role="button"><span>Dashboard</span></a>
                             </li>
                             @can('Team')
                             <li class="nav-item">
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>Salary
+                                <a href="{{url('vmt_salary_details')}}" class="nav-link sidebar py-1"
+                                    role="button"><span>Salary
                                         Details</span></a>
                             </li>
                             @endcan
                             @can('ORG')
                             <li class="nav-item">
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1"
+                                <a href="{{url('vmt_investments')}}" class="nav-link sidebar py-1"
                                     role="button"><span>Investments</span></a>
                             </li>
                             @endcan
                             @can('360_Degree_Review')
                             <li class="nav-item">
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>
+                                <a href="{{url('vmt_form16')}}" class="nav-link sidebar py-1" role="button"><span>
                                         Form 16</span></a>
                             </li>
                             @endcan
@@ -750,7 +733,7 @@
                     <div class="collapse menu-dropdown" id="configDrop-down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{url('vmt_clientOnboarding')}}" class="nav-link"><span> Client
+                                <a href="{{url('vmt_employeeOnboarding')}}" class="nav-link"><span> Client
                                         Onboarding</span></a>
                             </li>
                         </ul>
@@ -1400,9 +1383,9 @@
         </button> -->
     <!-- </div> -->
 
-    <div class="sidebar-bottom-bg">
-    <img src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="">
-    </div>
+    <!-- <div class="sidebar-bottom-bg">
+    <img src="{{ URL::asset('assets/images/sidebar_icons/sidebar-bg.png') }}" alt="" class="h-100 w-100">
+    </div> -->
 
 </div>
 
