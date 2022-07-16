@@ -377,7 +377,8 @@ class VmtApraisalController extends Controller
         if(auth::user()->hasRole('Employee') ){
 
            $vmtEmployeeGoal =   VmtEmployeePMSGoals::where('kpi_table_id', $request->goal_id)->where('employee_id', $request->user_id)->first(); 
-           $vmtEmployeeGoal->is_employee_accepted = $request->approve_flag ? 1 : 0;
+           $vmtEmployeeGoal->is_employee_submitted = $request->approve_flag ? 1 : 0;
+           $vmtEmployeeGoal->is_employee_accepted = $request->approve_flag == 'approved' ? 1 : 0;
            $vmtEmployeeGoal->save();
            $returnMsg="--";
 
@@ -404,7 +405,8 @@ class VmtApraisalController extends Controller
         
         if(auth::user()->hasRole('Manager') ){
             $vmtEmployeeGoal =   VmtEmployeePMSGoals::where('kpi_table_id', $request->goal_id)->where('employee_id', $request->user_id)->first(); 
-            $vmtEmployeeGoal->is_manager_approved = $request->approve_flag ? 1 : 0;
+            $vmtEmployeeGoal->is_manager_submitted = $request->approve_flag ? 1 : 0;
+            $vmtEmployeeGoal->is_manager_approved = $request->approve_flag == 'approved' ? 1 : 0;
             $vmtEmployeeGoal->save();
 
 
