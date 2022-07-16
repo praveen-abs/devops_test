@@ -16,9 +16,9 @@ class PMSReviewCompleted extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($user_emp_name)
     {
-        //
+        $this->user_emp_name = $user_emp_name;
     }
 
     /**
@@ -28,6 +28,7 @@ class PMSReviewCompleted extends Mailable
      */
     public function build()
     {
-        return $this->view('vmt_notify_pms_cpmletion');
+        return $this->view('vmt_notify_pms_cpmletion')
+        ->with('user_emp_name', $this->user_emp_name);
     }
 }

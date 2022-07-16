@@ -371,7 +371,7 @@ class VmtApraisalController extends Controller
 
     //Used by both Employee and Manager KPI approval.
     public function approveRejectKPITable(Request $request){
-        dd($request->all());
+      //  dd($request->all());
         $user_emp_name= User::where('id',auth::user()->id)->pluck('name')->first();
         $user_manager_name = User::where('id',$request->user_id)->pluck('name')->first();
         if(auth::user()->hasRole('Employee') ){
@@ -413,13 +413,13 @@ class VmtApraisalController extends Controller
 
            if($request->approve_flag == "approved")
            {
-                \Mail::to($mailingList)->send(new VmtAssignGoals(url('vmt-pms-assigngoals') , "approved"));
+                \Mail::to($mailingList)->send(new VmtAssignGoals("approved",$user_emp_name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$user_manager_name));
                 $returnMsg = 'KPI has been approved. Mail notification sent';
            }
            else
            if($request->approve_flag == "rejected")
            {
-                \Mail::to($mailingList)->send(new VmtAssignGoals(url('vmt-pms-assigngoals') , "rejected"));
+                \Mail::to($mailingList)->send(new VmtAssignGoals("rejected",$user_emp_name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$user_manager_name));
                 $returnMsg = 'KPI has been rejected. Mail notification sent';
            }
 
@@ -889,7 +889,7 @@ class VmtApraisalController extends Controller
     public function storeHRApraisalReview(Request $request){
         //dd($request->all());
         $kpiData  = VmtEmployeePMSGoals::find($request->goal_id);
-
+        $user_emp_name = User::where('id',$request->user_id)->pluck('name')->first();
         if($kpiData){
 
             $kpiData->hr_kpi_review      = $request->hreview; //null
@@ -904,7 +904,7 @@ class VmtApraisalController extends Controller
 
             //$reviewManager = User::find($kpiData->reviewer_id);
             //dd($reviewManager->email);
-            \Mail::to($mailingList)->send(new PMSReviewCompleted());
+            \Mail::to($mailingList)->send(new PMSReviewCompleted($user_emp_name));
         }
         return "Saved.Sent mail to manager and employee ". implode(',', $mailingList->toArray()); // $managerOfficeDetails->officical_mail;
     }
