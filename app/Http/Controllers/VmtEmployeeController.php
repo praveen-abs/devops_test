@@ -22,6 +22,10 @@ use Illuminate\Support\Facades\Hash;
 
 use App\Mail\WelcomeMail; 
 
+use Dompdf\Options;
+use Dompdf\Dompdf;
+use PDF;
+
 class VmtEmployeeController extends Controller
 {
     //
@@ -358,7 +362,11 @@ class VmtEmployeeController extends Controller
                 $compensatory->save();
             }
 
-            if (\Mail::to($row["email"])->send(new WelcomeMail($row["email"], '123123123', 'http://vasagroup.abshrms.com'  ))) {
+            // sent welcome email along with appointment Letter 
+            $isEmailSent  = $this->attachApoinmentPdf($row);
+
+
+            if ($isEmailSent) {
                 return "Saved";
             } else {
                 return "Error";
@@ -396,5 +404,25 @@ class VmtEmployeeController extends Controller
 
 
         return "Processed";
+    }
+
+
+    // Generate Employee Apoinment PDF after onboarding
+    public function attachApoinmentPdf($employeeData){
+        $empNameString  = $employeeData['employee_name'];
+        $filename = 'appoinment_letter_'.$empNameString.'_'.time().'.pdf';
+        $data = $employeeData;
+        // download PDF file with download method
+        $pdf = new Dompdf();
+        $html =  view('vmt_appoinment_letterPdf', compact($data));       
+        $pdf->loadHtml($html, 'UTF-8');
+        $pdf->setPaper('A4', 'portrait');
+        $pdf->render();
+        $docUploads =  $pdf->output();
+        \File::put(public_path('/appoinmentLetter/').$filename, $docUploads);
+        $fileAttr  = file_get_contents(public_path('/appoinmentLetter/').$filename);
+        $appoinmentPath = public_path('/appoinmentLetter/').$filename;
+        $isSent    = \Mail::to($employeeData['email'])->send(new WelcomeMail($employeeData['email'], '123123123', 'http://vasagroup.abshrms.com' ,  $appoinmentPath));
+        return $isSent; 
     }
 }
