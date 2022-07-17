@@ -54,7 +54,7 @@
                             </span>
                         </button>
                         <div class="topbar-logo w-25 d-flex justify-content-start align-items-center">
-                            <img src="{{ URL::asset($logoSrc) }}" alt="" class="w-50 h-50"> 
+                            <img src="{{ URL::asset($logoSrc) }}" alt="" class="w-50 h-80"> 
 
                         </div>
                         

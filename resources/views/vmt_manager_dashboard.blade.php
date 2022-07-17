@@ -439,8 +439,7 @@ html {
                         <div class="col-sm-4 col-md-4 ">
                             <div class="profile-status">
                                 <!-- <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}" > -->
-                                <img src="{{ URL::asset('assets/images/status-pic.png') }}" alt=""
-                                    class="soc-det-img profile-img-round">
+                                <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}" class="soc-det-img profile-img-round">
                                 <!-- <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}" class="profile-img-round"> -->
                                 <!-- <i class="ri-checkbox-blank-circle-fill status-circle"></i> -->
                             </div>
