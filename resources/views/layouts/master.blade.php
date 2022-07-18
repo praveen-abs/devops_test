@@ -10,32 +10,124 @@
     <link rel="shortcut icon" href="{{ URL::asset('assets/images/favicon.png')}}">
     @include('layouts.head-css')
     <style>
-        .loading {
-            z-index: 20;
-            position: absolute;
-            top: 0;
-            left:-5px;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.4);
+    .credit {
+        font-size: 16px;
+        color: rgba(191, 191, 191, 0.36);
+        font-family: Arial Narrow, sans-serif;
+        position: fixed;
+        right: 2%;
+        top: 17%;
+        text-align: center;
+        display: none;
+    }
+    .credit a{text-decoration: none;display: block;    color: rgba(191, 191, 191, 0.36);-webkit-transition:.3s ease;-o-transition:.3s ease;transition:.3s ease}
+    .credit a:hover{color:#283e4a}
+    .loader-container {
+        margin: auto;
+        position: relative;
+    }
+    #loader-image {
+        width: 8% !important;
+    }
+    .face{
+        margin-top: 30%;
+        text-align: center;
+    }
+    .loading {
+        width: 130px;
+        display: block;
+        height: 2px;
+        margin: 28px auto; 
+        border-radius: 2px;
+        background-color: #cfcfcf;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+    }
+    .loading:before {
+        content:'';
+        height: 3px;
+        width: 68px;
+        position: absolute;
+        -webkit-transform: translate(-34px, 0);
+        -ms-transform: translate(-34px, 0);
+        transform: translate(-34px, 0);
+        background-color: #0073b1;
+        border-radius: 2px;
+        -webkit-animation: initial-loading 1.5s infinite ease;
+        animation: animation 1.4s infinite ease;
+    }
+    @-webkit-keyframes animation {
+        0% {
+            left: 0
         }
-        .loading-content {
-            position: absolute;
-            border: 16px solid #f3f3f3; /* Light grey */
-            border-top: 16px solid #3498db; /* Blue */
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            top: 40%;
-            left:50%;
-            animation: spin 2s linear infinite;
+        50% {
+            left: 100%
         }
-	
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        100% {
+            left: 0
         }
-
+    }
+    @keyframes animation {
+        0% {
+            left: 0
+        }
+        50% {
+            left: 100%
+        }
+        100% {
+            left: 0
+        }
+    }
+    .face .loader-container > img {
+        background: transparent;
+        border border-radius: 2px;
+        animation: bounce 1.4s ease infinite;
+        -webkit-animation: bounce 1.4s ease infinite;
+        -moz-animation: bounce 1.4s ease infinite;
+        -ms-animation: bounce 1.4s ease infinite;
+        -o-animation: bounce 1.4s ease infinite;
+    }
+    @-webkit-keyframes bounce {
+        
+        0% {
+            -webkit-transform: scale(1) ;
+            transform: scale(1) ;
+            -webkit-filter: blur(0);
+            filter: blur(0);    
+        }
+        50% {
+            -webkit-transform: scale(.9) ;
+            transform: scale(.9) ;
+            -webkit-filter: blur(1.4);
+            filter: blur(1.4);
+        }
+        100% {
+            -webkit-transform: scale(1) ;
+            transform: scale(1) ;
+            
+        }
+    }
+    @keyframes bounce {
+        
+        0% {
+            -webkit-transform: scale(1) ;
+            transform: scale(1) ;
+            -webkit-filter: blur(0);
+            filter: blur(0);    
+        }
+        50% {
+            -webkit-transform: scale(.9) ;
+            transform: scale(.9) ;
+            -webkit-filter: blur(1.4);
+            filter: blur(1.4);
+        }
+        100% {
+            -webkit-transform: scale(1) ;
+            transform: scale(1) ;
+            
+        }
+    }
     </style>
 </head>
 
@@ -43,8 +135,16 @@
     @include('layouts.body')
 @show
     <!-- Begin page -->
-    <section id="loading" class="loading">
+    <!-- <section id="loading" class="loading">
         <div id="loading-content" class="loading-content"></div>
+    </section> -->
+    <section id="loading">
+        <div class='face'>
+            <div class='loader-container'>
+                <img id="loader-image" src="{{ URL::asset('assets/images/abs logo.png') }}"/>
+                <span class='loading'></span>
+            </div>
+        </div>
     </section>
     <div id="layout-wrapper">
         @include('layouts.topbar')
@@ -52,7 +152,7 @@
         <!-- ============================================================== -->
         <!-- Start right Content here -->
         <!-- ============================================================== -->
-        <div class="main-content">
+        <div class="main-content" style="display:none;">
             <div class="page-content">
                 <div class="container-fluid">
                     @yield('content')
@@ -121,8 +221,15 @@
     @include('layouts.vendor-scripts')
     <script>
         $(document).ready(function() {
-            $('#loading').removeClass('loading');
-            $('#loading-content').removeClass('loading-content');
+            $('#loading').hide();
+            $('.main-content').show();
+        });
+
+        $(function () {
+            setTimeout (function () {
+                $('.credit').fadeIn();
+                $('.credit').delay(15000).fadeOut();
+            },3000);
         });
     </script>
 </body>
