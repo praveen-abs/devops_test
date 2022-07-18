@@ -173,7 +173,7 @@ Route::post('vmt-pmsappraisal-hrreview', 'App\Http\Controllers\VmtApraisalContro
 
 
 
-Route::get('/vmt_employeeOnboarding',  [App\Http\Controllers\VmtEmployeeController::class, 'employeeOnboarding']);
+Route::get('/vmt_employeeOnboarding',  [App\Http\Controllers\VmtEmployeeController::class, 'employeeOnboarding'])->name('vmt_employeeOnboarding');
 Route::post('/upload_file',  [App\Http\Controllers\VmtApraisalController::class, 'uploadFile'])->name('upload-file');
 Route::post('/upload_file_review',  [App\Http\Controllers\VmtApraisalController::class, 'uploadFileReview'])->name('upload-file-review');
 Route::get('/download_file/{id}',  [App\Http\Controllers\VmtApraisalController::class, 'downloadFile'])->name('download-file');
