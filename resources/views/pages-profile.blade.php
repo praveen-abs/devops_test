@@ -220,11 +220,13 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @if($details->family_info_json && $details->family_info_json['name'])
+                                            @foreach($details->family_info_json['name'] as $k => $info)
                                             <tr>
-                                                <td>Leo</td>
-                                                <td>Brother</td>
-                                                <td>Feb 16th, 2019</td>
-                                                <td>9876543210</td>
+                                                <td>{{$details->family_info_json['name'][$k]}}</td>
+                                                <td>{{$details->family_info_json['relationship'][$k]}}</td>
+                                                <td>{{$details->family_info_json['dob'][$k]}}</td>
+                                                <td>{{$details->family_info_json['phone'][$k]}}</td>
                                                 <td class="text-end">
                                                     <div class="dropdown dropdown-action">
                                                         <a aria-expanded="false" data-bs-toggle="dropdown"
@@ -241,6 +243,8 @@
                                                     </div>
                                                 </td>
                                             </tr>
+                                            @endforeach
+                                            @endif
                                         </tbody>
                                     </table>
                                 </div>
@@ -324,16 +328,16 @@
                                         <ul class="personal-info">
                                             <li>
                                                 <div class="title">Name</div>
-                                                <div class="text">{{$details->father_name}}</div>
+                                                <div class="text">{{($details->contact_json && $details->contact_json['primary_name']) ? $details->contact_json['primary_name'] : '-'}}</div>
                                             </li>
                                             <li>
                                                 <div class="title">Relationship</div>
-                                                <div class="text">Father</div>
+                                                <div class="text">{{($details->contact_json && $details->contact_json['primary_relationship']) ? $details->contact_json['primary_relationship'] : '-'}}</div>
                                             </li>
                                             <li>
                                                 <div class="title">Phone </div>
-                                                <div class="text">{{$details->mobile_number}},
-                                                    {{$details->official_mobile}}
+                                                <div class="text">{{($details->contact_json && $details->contact_json['primary_phone1']) ? $details->contact_json['primary_phone1'] : '-'}},
+                                                {{($details->contact_json && $details->contact_json['primary_phone2']) ? $details->contact_json['primary_phone2'] : '-'}}
                                                 </div>
                                             </li>
 
@@ -345,15 +349,15 @@
                                         <ul class="personal-info">
                                             <li>
                                                 <div class="title">Name</div>
-                                                <div class="text">Karen Wills</div>
+                                                <div class="text">{{($details->contact_json && $details->contact_json['secondary_name']) ? $details->contact_json['secondary_name'] : '-'}}</div>
                                             </li>
                                             <li>
                                                 <div class="title">Relationship</div>
-                                                <div class="text">Brother</div>
+                                                <div class="text">{{($details->contact_json && $details->contact_json['secondary_relationship']) ? $details->contact_json['secondary_relationship'] : '-'}}</div>
                                             </li>
                                             <li>
                                                 <div class="title">Phone </div>
-                                                <div class="text">9876543210, 9876543210</div>
+                                                <div class="text">{{($details->contact_json && $details->contact_json['secondary_phone1']) ? $details->contact_json['secondary_phone1'] : '-'}}, {{($details->contact_json && $details->contact_json['secondary_phone2']) ? $details->contact_json['secondary_phone2'] : '-'}}</div>
                                             </li>
                                         </ul>
                                     </div>
@@ -851,8 +855,6 @@
     </div>
 
     <!-- personal info -->
-
-
     <div id="personal_info" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
@@ -864,8 +866,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{route('storeProfileImage', $user->id)}}" Method="POST"
-                        enctype="multipart/form-data">
+                    <form action="{{route('storeProfileImage', $user->id)}}" Method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-md-12">
@@ -891,8 +892,6 @@
 
 
     <!-- bank informatios -->
-
-
     <div id="Bank_info" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
@@ -951,7 +950,6 @@
     </div>
 
     <!-- leave information -->
-
     <div id="leave_info" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
@@ -1003,10 +1001,7 @@
         </div>
     </div>
 
-
-
     <!-- modal -->
-
     <div id="personal_info_modal" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
@@ -1044,14 +1039,14 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Nationality <span class="text-danger">*</span></label>
-                                    <input class="form-control onboard-form" type="text" pattern="alpha" value="--">
+                                    <input class="form-control onboard-form" type="text" pattern-data="alpha" value="--">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Religion</label>
                                     <div class="cal-icon">
-                                        <input class="form-control onboard-form" pattern="name" type="text" pattern="alpha" value="--">
+                                        <input class="form-control onboard-form" pattern-data="name" type="text" pattern-data="alpha" value="--">
                                     </div>
                                 </div>
                             </div>
@@ -1071,7 +1066,7 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Employment of spouse</label>
-                                    <input class="form-control onboard-form" type="text" pattern="alpha" value="--">
+                                    <input class="form-control onboard-form" type="text" pattern-data="alpha" value="--">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -1102,7 +1097,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form action="{{route('updtaeEmergencyInfo', $user->id)}}" Method="POST" enctype="multipart/form-data">
+                        @csrf
                         <div class="card">
                             <div class="card-body">
                                 <h3 class="card-title fw-bold">Primary Contact</h3>
@@ -1110,27 +1106,25 @@
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
                                             <label>Name <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control onboard-form" pattern="name">
+                                            <input type="text" name="primary_name" class="form-control onboard-form" pattern-data="name" value="{{($details->contact_json && $details->contact_json['primary_name']) ? $details->contact_json['primary_name'] : ''}}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
                                             <label>Relationship <span class="text-danger">*</span></label>
-                                            <input class="form-control onboard-form" type="text" pattern="alpha">
+                                            <input name="primary_relationship" class="form-control onboard-form" type="text" pattern-data="alpha" value="{{($details->contact_json && $details->contact_json['primary_relationship']) ? $details->contact_json['primary_relationship'] : ''}}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
                                             <label>Phone <span class="text-danger">*</span></label>
-                                            <input class="form-control onboard-form" type="number" maxlength="10"
-                                                minlength="10">
+                                            <input name="primary_phone1" class="form-control onboard-form" type="number" maxlength="10" minlength="10" value="{{($details->contact_json && $details->contact_json['primary_phone1']) ? $details->contact_json['primary_phone1'] : ''}}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
                                             <label>Phone 2</label>
-                                            <input class="form-control onboard-form" type="number" maxlength="10"
-                                                minlength="10">
+                                            <input name="primary_phone2" class="form-control onboard-form" type="number" maxlength="10" minlength="10" value="{{($details->contact_json && $details->contact_json['primary_phone2']) ? $details->contact_json['primary_phone2'] : ''}}">
                                         </div>
                                     </div>
                                 </div>
@@ -1143,27 +1137,25 @@
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
                                             <label>Name <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control onboard-form" pattern="name">
+                                            <input name="secondary_name" type="text" class="form-control onboard-form" pattern-data="name" value="{{($details->contact_json && $details->contact_json['secondary_name']) ? $details->contact_json['secondary_name'] : ''}}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
                                             <label>Relationship <span class="text-danger">*</span></label>
-                                            <input class="form-control onboard-form" type="text" pattern="alpha">
+                                            <input name="secondary_relationship" class="form-control onboard-form" type="text" pattern-data="alpha" value="{{($details->contact_json && $details->contact_json['secondary_relationship']) ? $details->contact_json['secondary_relationship'] : ''}}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
                                             <label>Phone <span class="text-danger">*</span></label>
-                                            <input class="form-control onboard-form" type="number" maxlength="10"
-                                                minlength="10">
+                                            <input name="secondary_phone1" class="form-control onboard-form" type="number" maxlength="10" minlength="10" value="{{($details->contact_json && $details->contact_json['secondary_phone1']) ? $details->contact_json['secondary_phone1'] : ''}}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
                                             <label>Phone 2</label>
-                                            <input class="form-control onboard-form" type="number" maxlength="10"
-                                                minlength="10">
+                                            <input name="secondary_phone2" class="form-control onboard-form" type="number" maxlength="10" minlength="10" value="{{($details->contact_json && $details->contact_json['secondary_phone2']) ? $details->contact_json['secondary_phone2'] : ''}}">
                                         </div>
                                     </div>
                                 </div>
@@ -1191,7 +1183,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form action="{{route('updtaeFamilyInfo', $user->id)}}" Method="POST" enctype="multipart/form-data">
+                        @csrf
                         <div class="form-scroll">
                             <div class="card">
                                 <div class="card-body">
@@ -1202,26 +1195,26 @@
                                         <div class="col-md-6">
                                             <div class="form-group mb-3">
                                                 <label>Name <span class="text-danger">*</span></label>
-                                                <input class="form-control onboard-form" type="text" pattern="name">
+                                                <input name="name[]" class="form-control onboard-form" type="text" pattern-data="name" required value="{{($details->family_info_json && $details->family_info_json['name']) ? $details->family_info_json['name'][0] : ''}}">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group mb-3">
                                                 <label>Relationship <span class="text-danger">*</span></label>
-                                                <input class="form-control onboard-form" type="text" pattern="alpha">
+                                                <input name="relationship[]" class="form-control onboard-form" type="text" pattern-data="alpha" required value="{{($details->family_info_json && $details->family_info_json['relationship']) ? $details->family_info_json['relationship'][0] : ''}}">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group mb-3">
                                                 <label>Date of birth <span class="text-danger">*</span></label>
-                                                <input class="form-control onboard-form" type="date" max="9999-12-31">
+                                                <input name="dob[]" class="form-control onboard-form" type="date" max="9999-12-31" required value="{{($details->family_info_json && $details->family_info_json['dob']) ? $details->family_info_json['dob'][0] : ''}}">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group mb-3">
                                                 <label>Phone <span class="text-danger">*</span></label>
-                                                <input class="form-control onboard-form" type="number" maxlength="10"
-                                                    minlength="10">
+                                                <input name="phone[]" class="form-control onboard-form" type="number" maxlength="10"
+                                                    minlength="10" required value="{{($details->family_info_json && $details->family_info_json['phone']) ? $details->family_info_json['phone'][0] : ''}}">
                                             </div>
                                         </div>
                                     </div>
@@ -1237,36 +1230,35 @@
                                             <div class="col-md-6">
                                                 <div class="form-group mb-3">
                                                     <label>Name <span class="text-danger">*</span></label>
-                                                    <input class="form-control onboard-form" type="text" pattern="name">
+                                                    <input name="name[]" class="form-control onboard-form" type="text" pattern-data="name" required value="{{($details->family_info_json && $details->family_info_json['name']) ? $details->family_info_json['name'][1] : ''}}">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group mb-3">
                                                     <label>Relationship <span class="text-danger">*</span></label>
-                                                    <input class="form-control onboard-form" type="text"
-                                                        pattern="alpha">
+                                                    <input name="relationship[]" class="form-control onboard-form" type="text"
+                                                        pattern-data="alpha" required value="{{($details->family_info_json && $details->family_info_json['relationship']) ? $details->family_info_json['relationship'][1] : ''}}">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group mb-3">
                                                     <label>Date of birth <span class="text-danger">*</span></label>
-                                                    <input class="form-control onboard-form" type="date"
-                                                        max="9999-12-31">
+                                                    <input name="dob[]" class="form-control onboard-form" type="date"
+                                                        max="9999-12-31" required value="{{($details->family_info_json && $details->family_info_json['dob']) ? $details->family_info_json['dob'][1] : ''}}">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group mb-3">
                                                     <label>Phone <span class="text-danger">*</span></label>
-                                                    <input class="form-control onboard-form" type="number"
-                                                        maxlength="10" minlength="10">
+                                                    <input name="phone[]" class="form-control onboard-form" type="number"
+                                                        maxlength="10" minlength="10" required value="{{($details->family_info_json && $details->family_info_json['phone']) ? $details->family_info_json['phone'][1] : ''}}">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="add-more" style="cursor:pointer;">
                                         <div id="add_more" class="text-secondary">
-                                            <i class=" ri-add-circle-fill"></i> Add
-                                            More
+                                            <i class=" ri-add-circle-fill"></i> Add More
                                         </div>
                                     </div>
                                 </div>
@@ -1453,10 +1445,10 @@
                                     </h3>
                                     <div class="row">
                                         <div class="col-md-6">
-
+                                            <input type="hidden" name="id[]">
                                             <div class="form-group mb-3 form-focus focused">
                                                 <label class="focus-label">Company Name</label>
-                                                <input type="text" class="form-control floating" value="--">
+                                                <input type="text" name="company_name[]" class="form-control floating" value="--" required>
 
                                             </div>
                                         </div>
@@ -1464,7 +1456,7 @@
 
                                             <div class="form-group mb-3 form-focus focused">
                                                 <label class="focus-label">Location</label>
-                                                <input type="text" class="form-control floating" name="work_location" value="{{$details->work_location}}">
+                                                <input type="text" name="location[]" class="form-control floating" name="work_location" value="" required>
 
                                             </div>
                                         </div>
@@ -1472,7 +1464,7 @@
 
                                             <div class="form-group mb-3 form-focus focused">
                                                 <label class="focus-label">Job Position</label>
-                                                <input type="text" class="form-control floating" name="designation" value="{{$details->designation}}">
+                                                <input type="text" name="job_position[]" class="form-control floating" name="designation" value="" required>
 
                                             </div>
                                         </div>
@@ -1480,7 +1472,7 @@
                                             <div class="form-group mb-3 form-focus focused">
                                                 <label class="focus-label">Period From</label>
                                                 <div class="cal-icon">
-                                                    <input type="date" max="9999-12-31" class="form-control floating datetimepicker" value="--">
+                                                    <input type="date" max="9999-12-31" name="period_from[]" class="form-control floating datetimepicker" value="--" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -1488,7 +1480,7 @@
                                             <div class="form-group mb-3 form-focus focused">
                                                 <label class="focus-label">Period To</label>
                                                 <div class="cal-icon">
-                                                    <input type="date" max="9999-12-31" class="form-control floating datetimepicker" value="--">
+                                                    <input type="date" max="9999-12-31" name="period_to[]" class="form-control floating datetimepicker" value="--" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -1502,23 +1494,24 @@
                                     </h3>
                                     <div class="exp-content-container">
                                         <div class="row exp-addition-content" id="content1">
+                                            <input type="hidden" name="id[]">
                                             <div class="col-md-6">
                                                 <div class="form-group mb-3 form-focus focused">
                                                     <label class="focus-label">Company Name</label>
-                                                    <input type="text" class="form-control floating" value="--">
+                                                    <input type="text" name="company_name[]" class="form-control floating" value="--" required>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group mb-3 form-focus focused">
                                                     <label class="focus-label">Location</label>
-                                                    <input type="text" class="form-control floating" value="--">
+                                                    <input type="text" name="location[]" class="form-control floating" value="--" required>
 
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group mb-3 form-focus focused">
                                                     <label class="focus-label">Job Position</label>
-                                                    <input type="text" class="form-control floating" value="--">
+                                                    <input type="text" name="job_position[]" class="form-control floating" value="--" required>
 
                                                 </div>
                                             </div>
@@ -1526,7 +1519,7 @@
                                                 <div class="form-group mb-3 form-focus focused">
                                                     <label class="focus-label">Period From</label>
                                                     <div class="cal-icon">
-                                                        <input type="date" max="9999-12-31" class="form-control floating datetimepicker" value="--">
+                                                        <input type="date" max="9999-12-31" name="period_from[]" class="form-control floating datetimepicker" value="--" required>
                                                     </div>
 
                                                 </div>
@@ -1535,7 +1528,7 @@
                                                 <div class="form-group mb-3 form-focus focused">
                                                     <div class="cal-icon">
                                                         <label class="focus-label">Period To</label>
-                                                        <input type="date" max="9999-12-31" class="form-control floating datetimepicker" value="--">
+                                                        <input type="date" max="9999-12-31" name="period_to[]" class="form-control floating datetimepicker" value="--" required>
                                                     </div>
 
                                                 </div>
@@ -1611,8 +1604,23 @@ $('body').on('keyup', ".onboard-form", function() {
 });
 
 $('.edit-icon').click(function() {
-    var id = $(this).attr('data-bs-target');
-    $(id).modal('show');
+    var modalid = $(this).attr('data-bs-target');
+    $(modalid).modal('show');
+    if (modalid == '#family_info_modal') {
+        var familyInfo = @json($details->family_info_json);
+        var id = $('.exp-addition-content:last').attr('id');
+        var familyInfoCount = 1;
+        if (id) {
+            familyInfoCount = parseInt(id.replace('content', '')) + 1;
+        }
+        $.each(familyInfo['name'],function(key, value) {
+            if (key > 1) {
+                $('.content-container').append('<div class="row addition-content" id="content' + familyInfoCount +'"><input type="hidden" name="id[]"><div class="col-md-6"><div class="form-group mb-3"><label>Name <span class="text-danger">*</span></label><input value="'+familyInfo['name'][key]+'" name="name[]" class="form-control onboard-form" type="text" pattern-data="name" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Relationship <span class="text-danger">*</span></label><input value="'+familyInfo['relationship'][key]+'" name="relationship[]" class="form-control onboard-form" type="text" pattern-data="alpha" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Date of birth <span class="text-danger">*</span></label><input value="'+familyInfo['dob'][key]+'" name="dob[]" class="form-control onboard-form" type="date" max="9999-12-31" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Phone <span class="text-danger">*</span></label><input value="'+familyInfo['phone'][key]+'" name="phone[]" class="form-control onboard-form" type="number" maxlength="10" minlength="10" required></div></div></div>'
+                );
+                familyInfoCount++;
+            }
+        });
+    }
 });
 
 function readURL(input) {
@@ -1637,7 +1645,7 @@ $('#exp-add-more').click(function() {
         length = parseInt(id.replace('content', '')) + 1;
     }
     $('.exp-content-container').append('<div class="row exp-addition-content" id="content' + length +
-        '"><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Company Name</label><input type="text" class="form-control floating"value="Digital Devlopment Inc"></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Location</label><input type="text" class="form-control floating" value="United States"></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Job Position</label><input type="text" class="form-control floating" value="Web Developer"></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Period From</label><div class="cal-icon"><input type="date" max="9999-12-31"  class="form-control floating datetimepicker"value="01/07/2007"></div></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><div class="cal-icon"><label class="focus-label">Period To</label><input type="date" max="9999-12-31"  class="form-control floating datetimepicker"value="08/06/2018"></div></div></div></div>'
+        '"><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Company Name</label><input type="text" class="form-control floating" value="Digital Devlopment Inc" required></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Location</label><input type="text" class="form-control floating" value="United States" required></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Job Position</label><input type="text" class="form-control floating" value="Web Developer" required></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Period From</label><div class="cal-icon"><input type="date" max="9999-12-31" class="form-control floating datetimepicker" value="01/07/2007" required></div></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><div class="cal-icon"><label class="focus-label">Period To</label><input type="date" max="9999-12-31"  class="form-control floating datetimepicker" value="08/06/2018" required></div></div></div></div>'
     );
 });
 
@@ -1648,7 +1656,7 @@ $('#add_more').click(function() {
         length = parseInt(id.replace('content', '')) + 1;
     }
     $('.content-container').append('<div class="row addition-content" id="content' + length +
-        '"><div class="col-md-6"><div class="form-group mb-3"><label>Name <span class="text-danger">*</span></label><input class="form-control onboard-form" type="text" pattern="name"></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Relationship <span class="text-danger">*</span></label><input class="form-control onboard-form" type="text" pattern="alpha"></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Date of birth <span class="text-danger">*</span></label><input class="form-control onboard-form" type="date" max="9999-12-31" ></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Phone <span class="text-danger">*</span></label><input class="form-control onboard-form" type="number" maxlength="10" minlength="10"></div></div></div>'
+        '"><div class="col-md-6"><div class="form-group mb-3"><label>Name <span class="text-danger">*</span></label><input name="name[]" class="form-control onboard-form" type="text" pattern-data="name" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Relationship <span class="text-danger">*</span></label><input name="relationship[]" class="form-control onboard-form" type="text" pattern-data="alpha" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Date of birth <span class="text-danger">*</span></label><input name="dob[]" class="form-control onboard-form" type="date" max="9999-12-31" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Phone <span class="text-danger">*</span></label><input name="phone[]" class="form-control onboard-form" type="number" maxlength="10" minlength="10" required></div></div></div>'
     );
 });
 

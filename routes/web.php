@@ -30,6 +30,8 @@ Route::post('/store-profile-image/{id}', [App\Http\Controllers\HomeController::c
 Route::post('/update-bank-info/{id}', [App\Http\Controllers\HomeController::class, 'updateBankInfo'])->name('updateBankInfo');
 Route::post('/update-personal-info/{id}', [App\Http\Controllers\HomeController::class, 'updatePersonalInfo'])->name('updatePersonalInfo');
 Route::post('/update-experience-info/{id}', [App\Http\Controllers\HomeController::class, 'updateExperienceInfo'])->name('updateExperienceInfo');
+Route::post('/update-emergency-info/{id}', [App\Http\Controllers\HomeController::class, 'updtaeEmergencyInfo'])->name('updtaeEmergencyInfo');
+Route::post('/update-family-info/{id}', [App\Http\Controllers\HomeController::class, 'updtaeFamilyInfo'])->name('updtaeFamilyInfo');
 
 Route::get('/registerNewAccount', function(){
     return view('/auth/register');

@@ -13,6 +13,7 @@ use App\Models\VmtGeneralInfo;
 use App\Models\VmtEmployee;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\Bank;
+use App\Models\Experience;
 use App\Mail\TestEmail;
 use Session as Ses;
 
@@ -140,10 +141,28 @@ class HomeController extends Controller
     }
 
     public function updateExperienceInfo(Request $request) {
-        $reDetails = VmtEmployeeOfficeDetails::where('user_id', $request->id)->first();
-        $details = VmtEmployeeOfficeDetails::find($reDetails->id);
-        $details->work_location = $request->input('work_location');
-        $details->designation = $request->input('designation');
+        $idArr = $request->input('id');
+        $companyNameArr = $request->input('company_name');
+        $locationArr = $request->input('location');
+        $jobPositionArr = $request->input('job_position');
+        $periodFromArr = $request->input('period_from');
+        $periodToArr = $request->input('period_to');
+        foreach($request->input('company_name') as $k => $val) {
+            if ($idArr[$k] && $idArr[$k] > 0) {
+                $exp = Experience::find($idArr[$k]);
+            } else {
+                $exp = new Experience;
+            }
+            $exp->company_name = $companyNameArr[$k];
+            $exp->location = $locationArr[$k];
+            $exp->job_position = $jobPositionArr[$k];
+            $exp->period_from = $periodFromArr[$k];
+            $exp->period_to = $periodToArr[$k];
+            $exp->save();
+        }
+        $reDetails = VmtEmployee::where('userid', $request->id)->first();
+        $details = VmtEmployee::find($reDetails->id);
+        $details->experience_json = implode(',', $idArr);
         $details->save();
         Ses::flash('message', 'Bank Details Updated successfully!');
         Ses::flash('alert-class', 'alert-success');
@@ -159,6 +178,28 @@ class HomeController extends Controller
         $details->pan_number = $request->input('pan_no');
         $details->save();
         Ses::flash('message', 'Bank Details Updated successfully!');
+        Ses::flash('alert-class', 'alert-success');
+        return redirect()->back();
+    }
+
+    public function updtaeFamilyInfo(Request $request) {
+        $familyInfo = json_encode(['name'=> $request->input('name'), 'relationship'=> $request->input('relationship'),'dob'=> $request->input('dob'), 'phone'=> $request->input('phone')]);
+        $reDetails = VmtEmployee::where('userid', $request->id)->first();
+        $details = VmtEmployee::find($reDetails->id);
+        $details->family_info_json = $familyInfo;
+        $details->save();
+        Ses::flash('message', 'Personal Information Updated successfully!');
+        Ses::flash('alert-class', 'alert-success');
+        return redirect()->back();
+    }
+
+    public function updtaeEmergencyInfo(Request $request) {
+        $contact = json_encode(['primary_name'=> $request->input('primary_name'), 'primary_relationship'=> $request->input('primary_relationship'),'primary_phone1'=> $request->input('primary_phone1'), 'primary_phone2'=> $request->input('primary_phone2'), 'secondary_name'=> $request->input('secondary_name'), 'secondary_relationship'=> $request->input('secondary_relationship'),'secondary_phone1'=> $request->input('secondary_phone1'), 'secondary_phone2'=> $request->input('secondary_phone2')]);
+        $reDetails = VmtEmployee::where('userid', $request->id)->first();
+        $details = VmtEmployee::find($reDetails->id);
+        $details->contact_json = $contact;
+        $details->save();
+        Ses::flash('message', 'Personal Information Updated successfully!');
         Ses::flash('alert-class', 'alert-success');
         return redirect()->back();
     }
@@ -280,6 +321,8 @@ class HomeController extends Controller
     public function showProfile(Request $request){
         $user = Auth::user();
         $details = VmtEmployee::join('vmt_employee_office_details', 'emp_id', '=', 'vmt_employee_details.id')->where('userid', $user->id)->first();
+        $details['contact_json'] = json_decode($details['contact_json'], true);
+        $details['family_info_json'] = json_decode($details['family_info_json'], true);
         if($user->hasrole('Employee')) {
             $employee = VmtEmployee::first();
         } else {
