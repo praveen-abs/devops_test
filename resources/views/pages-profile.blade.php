@@ -20,8 +20,7 @@
                                             <!-- <a href="#"> <img class="rounded-circle header-profile-user"
                                                     src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/user-profile-img.jpg') }}@endif"
                                                     alt="Header Avatar"></a> -->
-                                            <img src="{{ URL::asset('assets/images/user-profile-img.jpg') }}" alt=""
-                                                class=" w-100 soc-det-img ">
+                                            <img class=" w-100 soc-det-img" src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif" alt="">
                                         </div>
                                     </div>
                                     <div class="profile-info w-75 ">
@@ -765,12 +764,12 @@
                             <div class="col-md-12">
                                 <div class="profile-img-wrap edit-img">
 
-                                    <img class="rounded-circle header-profile-user"
+                                    <img id="profile_round_image_dist1" class="rounded-circle header-profile-user"
                                         src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"
                                         alt="Header Avatar">
                                     <div class="fileupload btn">
                                         <span class="btn-text">edit</span>
-                                        <input class="upload" name="profilePic" type="file">
+                                        <input type='file' name="profilePic" class="upload"  accept="image/*" onchange="readURL(this);" />
                                     </div>
                                 </div>
                                 <div class="row">
@@ -874,66 +873,21 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form action="{{route('storeProfileImage', $user->id)}}" Method="POST"
+                        enctype="multipart/form-data">
+                        @csrf
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label>Phone</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label>Email</label>
-                                    <div class="cal-icon">
-                                        <input class="form-control" type="text">
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label>Address</label>
-                                    <input class="form-control" type="text">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label>Birthday</label>
-                                    <div class="cal-icon">
-                                        <input class="form-control datetimepicker" type="date" max="9999-12-31">
+                            <div class="col-md-12">
+                                <div class="profile-img-wrap edit-img">
+                                    <img id="profile_round_image_dist" class="rounded-circle header-profile-user"
+                                        src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"
+                                        alt="Header Avatar">
+                                    <div class="fileupload btn">
+                                        <span class="btn-text">edit</span>
+                                        <input type='file' name="profilePic" class="upload"  accept="image/*" onchange="readURL(this);" />
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label>Reports to</label>
-                                    <div class="text">
-                                        <div class="avatar-box">
-                                            <div class="avatar avatar-xs">
-                                                <img class="rounded-circle header-profile-user"
-                                                    src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"
-                                                    alt="Header Avatar">
-                                            </div>
-                                        </div>
-                                        <a href="profile.html">
-                                            {{$details->l1_manager_name}}
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label>Gender</label>
-                                    <select class="select form-control" tabindex="-1">
-                                        <option>-</option>
-                                        <option>Male</option>
-                                        <option>Female</option>
-                                        <option>Other</option>
-                                    </select>
-                                </div>
-                            </div>
-
                         </div>
                         <div class="submit-section">
                             <button class="btn btn-primary submit-btn">Submit</button>
@@ -964,15 +918,19 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Bank name</label>
-                                    <input type="text" class="form-control" value="{{$details->bank_name}}">
+                                    <select name="bank_name" id="bank_name" class="form-control" required>
+                                        <option value="">Select</option>
+                                        @foreach($bank as $b)
+                                        <option value="{{$b->bank_name}}" min-data="{{$b->min_length}}" max-data="{{$b->max_length}}" @if($details->bank_name == $b->bank_name) 'selected' @endif>{{$b->bank_name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>EmaBank account No</label>
                                     <div class="cal-icon">
-                                        <input class="form-control" value="{{$details->bank_account_number}}"
-                                            type="text">
+                                        <input type="number" minlength="9" maxlength="18" class="form-control" value="{{$details->bank_account_number}}" required>
                                     </div>
                                 </div>
 
@@ -980,7 +938,7 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>IFSC Code</label>
-                                    <input class="form-control" value="{{$details->bank_ifsc_code}}" type="text">
+                                    <input class="form-control" value="{{$details->bank_ifsc_code}}" type="text" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -1638,6 +1596,20 @@ $('.edit-icon').click(function() {
     $(id).modal('show');
 });
 
+function readURL(input) {
+	if (input.files && input.files[0]) {
+		var reader = new FileReader();
+		reader.onload = function (e) {
+			$('#profile_round_image_dist')
+				.attr('src', e.target.result);
+                
+			$('#profile_round_image_dist1')
+				.attr('src', e.target.result);
+		};
+		reader.readAsDataURL(input.files[0]);
+	}
+}
+
 
 $('#exp-add-more').click(function() {
     var id = $('.exp-addition-content:last').attr('id');
@@ -1681,7 +1653,12 @@ options.each((option) => {
     });
 });
 
-
+$('#bank_name').change(function() {
+    var min = $('#bank_name option:selected').attr('min-data');
+    var max = $('#bank_name option:selected').attr('max-data');
+    $('#account_no').attr('minlength', min);
+    $('#account_no').attr('maxlength', min);
+});
 
 $('body').on('keyup', ".onboard-form", function() {
     var inputvalues = $(this).val();

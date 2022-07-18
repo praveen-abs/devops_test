@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\VmtGeneralSettings;
 use App\Models\VmtGeneralInfo;
 use App\Models\VmtEmployee;
+use App\Models\Bank;
 use App\Mail\TestEmail;
 use Session as Ses;
 
@@ -137,6 +138,22 @@ class HomeController extends Controller
         return view('vmt_appraisalFlow_generalSettings');
     }
 
+    public function storeProfileImage(Request $request) {
+        $file = $request->file('profilePic');
+        $user = User::find($request->id);
+        $user->name = $request->input('name');
+        if ($file) { 
+            $filename = 'avatar-'.$request->id.'.'. $file->getClientOriginalExtension();
+            $destination = public_path('/images');
+            $file->move($destination, $filename);
+            $user->avatar = $filename;
+        }
+        $user->save();
+        Ses::flash('message', 'User Details Updated successfully!');
+        Ses::flash('alert-class', 'alert-success');
+        return redirect()->back();
+    }
+
     // 
     public function storePersonalInfo(Request $request) {
         $file = $request->file('profilePic');
@@ -227,11 +244,13 @@ class HomeController extends Controller
     public function showProfile(Request $request){
         $user = Auth::user();
         $details = VmtEmployee::join('vmt_employee_office_details', 'emp_id', '=', 'vmt_employee_details.id')->where('userid', $user->id)->first();
-        if($user->hasrole('Employee'))
+        if($user->hasrole('Employee')) {
             $employee = VmtEmployee::first();
-        else
+        } else {
             $employee = null;
-        return view('pages-profile', compact( 'employee', 'user', 'details'));
+        }
+        $bank = Bank::all(); 
+        return view('pages-profile', compact( 'employee', 'user', 'details', 'bank'));
     }
 
     public function showProfilePage(Request $request) {

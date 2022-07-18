@@ -117,15 +117,12 @@ input[type=file] {
 
                                         <div class="mb-3">
                                             <div class="logo-image d-flex align-items-center">
-                                                <img src="http://127.0.0.1:8000/assets/images/vasa.jpg"
-                                                    alt="brand-logo">
+                                                <img id="profile_round_image_dist" src="http://127.0.0.1:8000/assets/images/vasa.jpg" alt="brand-logo">
                                                 <button class="btn btn-primary mx-2">
                                                     <i class="ri-attachment-line px-1"></i>
-                                                    <span>
-                                                        Upload</span>
-                                                    <input type="file" id="logo" name="logo"
-                                                        accept=".png,.jpg,.jpeg,.bmp">
-                                                    </buttonfor=>
+                                                    <span> Upload</span>
+                                                    <input type='file' id="logo" name="logo" accept=".png,.jpg,.jpeg,.bmp" onchange="readURL(this);" />
+                                                </button>
                                             </div>
 
                                         </div>
@@ -146,16 +143,14 @@ input[type=file] {
                                             <div class="background-container d-flex align-items-center">
 
                                                 <div class="background-img">
-                                                    <img src="http://127.0.0.1:8000/assets/images/vasa.jpg"
+                                                    <img id="profile_background_image_dist" src="http://127.0.0.1:8000/assets/images/vasa.jpg"
                                                         alt="brand-logo">
                                                 </div>
                                                 <div class="background-image-pin">
-                                                    <button class="btn btn-primary mx-2">
+                                                    <button type="button" class="btn btn-primary mx-2">
                                                         <i class="ri-attachment-line px-1"></i>
-                                                        <span>
-                                                            Pick different background</span>
-                                                        <input type="file" id="background-img" name="background-img"
-                                                            accept=".png,.jpg,.jpeg,.bmp">
+                                                        <span> Pick different background</span>
+                                                        <input type="file" id="background-img" name="background-img" accept=".png,.jpg,.jpeg,.bmp" onchange="readBackgroundURL(this);">
                                                     </button>
 
                                                 </div>
@@ -188,8 +183,8 @@ input[type=file] {
 
                                         <div class="mb-3">
                                             <div class="buttons-container d-flex align-items-center">
-                                                <button class="btn btn-default mx-2">Preview</button><button
-                                                    class="btn btn-primary">Save</button>
+                                                <button class="btn btn-default mx-2">Preview</button>
+                                                <button type="submit" class="btn btn-primary">Save</button>
                                             </div>
 
 
@@ -1732,6 +1727,26 @@ input[type=file] {
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 <script type="text/javascript">
+function readURL(input) {
+	if (input.files && input.files[0]) {
+		var reader = new FileReader();
+		reader.onload = function (e) {
+			$('#profile_round_image_dist')
+				.attr('src', e.target.result);
+		};
+		reader.readAsDataURL(input.files[0]);
+	}
+}
+function readBackgroundURL(input) {
+	if (input.files && input.files[0]) {
+		var reader = new FileReader();
+		reader.onload = function (e) {
+			$('#profile_background_image_dist')
+				.attr('src', e.target.result);
+		};
+		reader.readAsDataURL(input.files[0]);
+	}
+}
 $('#role-form').on('submit', function(e) {
     e.preventDefault();
 
