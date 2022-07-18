@@ -10,10 +10,9 @@
             <div class="pro-overview">
                 <div class="row">
 
-                    <div class="col-md-4 col-xl-3 col-lg-3 col-sm-12 d-flex">
+                    <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex">
                         <div class="card profile-box flex-fill ">
                             <div class="card-body">
-
                                 <div class="profile-wrapper d-flex w-100">
                                     <div class="profile-img-wrap mx-1">
                                         <div class="profile-img">
@@ -72,7 +71,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 col-xl-3 col-lg-3 col-sm-12 d-flex">
+                    <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex">
 
                         <div class="card profile-box  flex-fill">
                             <div class="card-body">
@@ -125,36 +124,54 @@
                         </div>
 
                     </div>
-                    <div class="col-md-4 col-xl-3 col-lg-3 col-sm-12 ">
+
+                    <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex">
                         <div class="card profile-box flex-fill">
                             <div class="card-body">
-                                <h3 class="card-title fw-bold">Bank information
+                                <h3 class="card-title fw-bold">Personal Informations
                                     <span class="personal-edit"><a href="#" class="edit-icon" data-bs-toggle="modal"
-                                            data-bs-target="#Bank_info"><i class="ri-pencil-fill"></i></a></span>
-
+                                            data-bs-target="#personal_info_modal"><i
+                                                class="ri-pencil-fill"></i></a></span>
                                 </h3>
                                 <ul class="personal-info">
                                     <li>
-                                        <div class="title">Bank name</div>
-                                        <div class="text">{{$details->bank_name}}</div>
+                                        <div class="title">Passport No.</div>
+                                        <div class="text">{{$details->passport}}</div>
                                     </li>
                                     <li>
-                                        <div class="title">Bank account No.</div>
-                                        <div class="text">{{$details->bank_account_number}}</div>
+                                        <div class="title">Passport Exp Date.</div>
+                                        <div class="text">{{$details->passport}}</div>
                                     </li>
                                     <li>
-                                        <div class="title">IFSC Code</div>
-                                        <div class="text">{{$details->bank_ifsc_code}}</div>
+                                        <div class="title">Tel</div>
+                                        <div class="text"><a href="">{{$details->mobile_number}}</a></div>
                                     </li>
                                     <li>
-                                        <div class="title">PAN No</div>
-                                        <div class="text">{{$details->pan_card}}</div>
+                                        <div class="title">Nationality</div>
+                                        <div class="text">Indian</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">Religion</div>
+                                        <div class="text">Christian</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">Marital status</div>
+                                        <div class="text">{{$details->marrital_status}}</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">Employment of spouse</div>
+                                        <div class="text">No</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">No. of children</div>
+                                        <div class="text">2</div>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 col-xl-3 col-lg-3 col-sm-12 ">
+
+                    <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex">
                         <div class="card profile-box flex-fill">
                             <div class="card-body">
                                 <h3 class="card-title fw-bold">Experience Details
@@ -185,199 +202,173 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- -------- -->
-    <div id="emp_profile" class="pro-overview">
-        <div class="row">
-            <div class="col-md-4 col-xl-3 col-lg-3 col-sm-12 ">
-                <div class="card profile-box flex-fill ">
-                    <div class="card-body">
-                        <h3 class="card-title fw-bold">Emergency Contact <a href="#" class="edit-icon"
-                                data-bs-toggle="modal" data-bs-target="#emergency_contact_modal"><i
-                                    class=" ri-pencil-fill"></i></a></h3>
 
-                        <div class="row">
-                            <div class="col-md-6 col-lg-6 col-xl-6  col-sm-6 w-100">
-                                <h5 class="section-title">Primary</h5>
+                    <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex">
+                        <div class="card profile-box flex-fill">
+                            <div class="card-body">
+                                <h3 class="card-title fw-bold">Family Informations <a href="#" class="edit-icon"
+                                        data-bs-toggle="modal" data-bs-target="#family_info_modal"><i
+                                            class=" ri-pencil-fill"></i></a></h3>
+                                <div class="table-responsive">
+                                    <table class="table table-nowrap">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Relationship</th>
+                                                <th>Date of Birth</th>
+                                                <th>Phone</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Leo</td>
+                                                <td>Brother</td>
+                                                <td>Feb 16th, 2019</td>
+                                                <td>9876543210</td>
+                                                <td class="text-end">
+                                                    <div class="dropdown dropdown-action">
+                                                        <a aria-expanded="false" data-bs-toggle="dropdown"
+                                                            class="action-icon dropdown-toggle" href="#"><i
+                                                                class="ri-more-2-fill material-icons"></i></a>
+                                                        <div class="dropdown-menu dropdown-menu-right">
+                                                            <a href="#" class="dropdown-item"><i
+                                                                    class=" ri-pencil-fill m-r-5"></i>
+                                                                Edit</a>
+                                                            <a href="#" class="dropdown-item"><i
+                                                                    class=" ri-delete-bin-line"></i>
+                                                                Delete</a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex">
+                        <div class="card profile-box flex-fill">
+                            <div class="card-body">
+                                <h3 class="card-title fw-bold">Leave Details
+                                    <span class="personal-edit"><a href="#" class="edit-icon" data-bs-toggle="modal"
+                                            data-bs-target="#leave_info"><i class="ri-pencil-fill"></i></a></span>
+                                </h3>
                                 <ul class="personal-info">
                                     <li>
-                                        <div class="title">Name</div>
-                                        <div class="text">{{$details->father_name}}</div>
+                                        <div class="title">Allocated Paid Leaves</div>
+                                        <!-- <div class="text">{{$details->passport}}</div> -->
+                                        <div class="text">21</div>
                                     </li>
                                     <li>
-                                        <div class="title">Relationship</div>
-                                        <div class="text">Father</div>
+                                        <div class="title"> Paid Leave Balance</div>
+                                        <!-- <div class="text">{{$details->passport}}</div> -->
+                                        <div class="text">19</div>
                                     </li>
                                     <li>
-                                        <div class="title">Phone </div>
-                                        <div class="text">{{$details->mobile_number}},
-                                            {{$details->official_mobile}}
-                                        </div>
+                                        <div class="title">Allocated Restricted Holidays</div>
+                                        <div class="text">2</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">Allocated Restricted Balance</div>
+                                        <div class="text">4</div>
                                     </li>
 
                                 </ul>
                             </div>
-                            <hr>
-                            <div class="col-md-6 col-lg-6 col-xl-6  col-sm-12 w-100">
-                                <h5 class="section-title">Secondary</h5>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex">
+                        <div class="card profile-box flex-fill">
+                            <div class="card-body">
+                                <h3 class="card-title fw-bold">Bank information
+                                    <span class="personal-edit"><a href="#" class="edit-icon" data-bs-toggle="modal"
+                                            data-bs-target="#Bank_info"><i class="ri-pencil-fill"></i></a></span>
+
+                                </h3>
                                 <ul class="personal-info">
                                     <li>
-                                        <div class="title">Name</div>
-                                        <div class="text">Karen Wills</div>
+                                        <div class="title">Bank name</div>
+                                        <div class="text">{{$details->bank_name}}</div>
                                     </li>
                                     <li>
-                                        <div class="title">Relationship</div>
-                                        <div class="text">Brother</div>
+                                        <div class="title">Bank account No.</div>
+                                        <div class="text">{{$details->bank_account_number}}</div>
                                     </li>
                                     <li>
-                                        <div class="title">Phone </div>
-                                        <div class="text">9876543210, 9876543210</div>
+                                        <div class="title">IFSC Code</div>
+                                        <div class="text">{{$details->bank_ifsc_code}}</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">PAN No</div>
+                                        <div class="text">{{$details->pan_card}}</div>
                                     </li>
                                 </ul>
                             </div>
                         </div>
-
-
                     </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-xl-3 col-lg-3 col-sm-12 ">
-                <div class="card profile-box flex-fill">
-                    <div class="card-body">
-                        <h3 class="card-title fw-bold">Personal Informations
-                            <span class="personal-edit"><a href="#" class="edit-icon" data-bs-toggle="modal"
-                                    data-bs-target="#personal_info_modal"><i class="ri-pencil-fill"></i></a></span>
-                        </h3>
-                        <ul class="personal-info">
-                            <li>
-                                <div class="title">Passport No.</div>
-                                <div class="text">{{$details->passport}}</div>
-                            </li>
-                            <li>
-                                <div class="title">Passport Exp Date.</div>
-                                <div class="text">{{$details->passport}}</div>
-                            </li>
-                            <li>
-                                <div class="title">Tel</div>
-                                <div class="text"><a href="">{{$details->mobile_number}}</a></div>
-                            </li>
-                            <li>
-                                <div class="title">Nationality</div>
-                                <div class="text">Indian</div>
-                            </li>
-                            <li>
-                                <div class="title">Religion</div>
-                                <div class="text">Christian</div>
-                            </li>
-                            <li>
-                                <div class="title">Marital status</div>
-                                <div class="text">{{$details->marrital_status}}</div>
-                            </li>
-                            <li>
-                                <div class="title">Employment of spouse</div>
-                                <div class="text">No</div>
-                            </li>
-                            <li>
-                                <div class="title">No. of children</div>
-                                <div class="text">2</div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
 
-            <div class="col-md-4 col-xl-3 col-lg-3 col-sm-12 ">
-                <div class="card profile-box flex-fill">
-                    <div class="card-body">
-                        <h3 class="card-title fw-bold">Family Informations <a href="#" class="edit-icon"
-                                data-bs-toggle="modal" data-bs-target="#family_info_modal"><i
-                                    class=" ri-pencil-fill"></i></a></h3>
-                        <div class="table-responsive">
-                            <table class="table table-nowrap">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Relationship</th>
-                                        <th>Date of Birth</th>
-                                        <th>Phone</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Leo</td>
-                                        <td>Brother</td>
-                                        <td>Feb 16th, 2019</td>
-                                        <td>9876543210</td>
-                                        <td class="text-end">
-                                            <div class="dropdown dropdown-action">
-                                                <a aria-expanded="false" data-bs-toggle="dropdown"
-                                                    class="action-icon dropdown-toggle" href="#"><i
-                                                        class="ri-more-2-fill material-icons"></i></a>
-                                                <div class="dropdown-menu dropdown-menu-right">
-                                                    <a href="#" class="dropdown-item"><i
-                                                            class=" ri-pencil-fill m-r-5"></i>
-                                                        Edit</a>
-                                                    <a href="#" class="dropdown-item"><i
-                                                            class=" ri-delete-bin-line"></i>
-                                                        Delete</a>
+                    <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex">
+                        <div class="card profile-box flex-fill ">
+                            <div class="card-body">
+                                <h3 class="card-title fw-bold">Emergency Contact <a href="#" class="edit-icon"
+                                        data-bs-toggle="modal" data-bs-target="#emergency_contact_modal"><i
+                                            class=" ri-pencil-fill"></i></a></h3>
+
+                                <div class="row">
+                                    <div class="col-md-6 col-lg-6 col-xl-6  col-sm-6 w-100">
+                                        <h5 class="section-title">Primary</h5>
+                                        <ul class="personal-info">
+                                            <li>
+                                                <div class="title">Name</div>
+                                                <div class="text">{{$details->father_name}}</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Relationship</div>
+                                                <div class="text">Father</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Phone </div>
+                                                <div class="text">{{$details->mobile_number}},
+                                                    {{$details->official_mobile}}
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                    <hr>
+                                    <div class="col-md-6 col-lg-6 col-xl-6  col-sm-12 w-100">
+                                        <h5 class="section-title">Secondary</h5>
+                                        <ul class="personal-info">
+                                            <li>
+                                                <div class="title">Name</div>
+                                                <div class="text">Karen Wills</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Relationship</div>
+                                                <div class="text">Brother</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Phone </div>
+                                                <div class="text">9876543210, 9876543210</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+
+                            </div>
                         </div>
                     </div>
-                </div>
 
-            </div>
-
-            <div class="col-md-4 col-xl-3 col-lg-3 col-sm-12 ">
-                <div class="card profile-box flex-fill">
-                    <div class="card-body">
-                        <h3 class="card-title fw-bold">Leave Details
-                            <span class="personal-edit"><a href="#" class="edit-icon" data-bs-toggle="modal"
-                                    data-bs-target="#leave_info"><i class="ri-pencil-fill"></i></a></span>
-                        </h3>
-                        <ul class="personal-info">
-                            <li>
-                                <div class="title">Allocated Paid Leaves</div>
-                                <!-- <div class="text">{{$details->passport}}</div> -->
-                                <div class="text">21</div>
-                            </li>
-                            <li>
-                                <div class="title"> Paid Leave Balance</div>
-                                <!-- <div class="text">{{$details->passport}}</div> -->
-                                <div class="text">19</div>
-                            </li>
-                            <li>
-                                <div class="title">Allocated Restricted Holidays</div>
-                                <div class="text">2</div>
-                            </li>
-                            <li>
-                                <div class="title">Allocated Restricted Balance</div>
-                                <div class="text">4</div>
-                            </li>
-
-                        </ul>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-
-    <div id="emp_profile" class="pro-overview">
-        <div class="row">
-
-
-        </div>
-    </div>
-
     <div class="tab-content">
 
         <div class="tab-pane fade" id="bank_statutory">

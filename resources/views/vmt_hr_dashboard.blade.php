@@ -46,14 +46,14 @@
 <div class="main">
     <!-- Content Row -->
     <div class="row">
-        <div class="col-sm-4 col-md-4 ">
+        <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4">
             <div class="card profile-box flex-fill">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-auto status-wrapper mr-5">
+                        <div class="col status-wrapper ">
 
                             <!-- <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}" > -->
-                            <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}" class="soc-det-img profile-img-round h-100 w-100">
+                            <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}" class="soc-det-img profile-img-round h-75 w-75">
                             <!-- <img src="{{ URL::asset('assets/images/status-pic.png') }}" alt=""
                                 class="profile-img-round"> -->
                             
@@ -92,7 +92,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-4 col-md-4  d-flex">
+        <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4  d-flex">
             <div class="card profile-box flex-fill">
 
                 <h4 class="m-0 title text-center text-primary card-title my-3 fw-bold">My Actions</h4>
@@ -123,7 +123,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-4 col-md-4 d-flex">
+        <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4 d-flex">
             <div class="card profile-box card-top-border flex-fill">
                 <!-- <div class="p-1 bg-primary" ></div> -->
                 <div class="card-body ">

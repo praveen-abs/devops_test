@@ -565,13 +565,13 @@ body {
 }
 
 .page-title-box {
-    padding: 11px 1.5rem;
+    padding: 10px 1.5rem;
     background-color: #f3f3f9;
     box-shadow: 0 1px 2px rgb(56 65 74 / 15%);
     border-bottom: 1px;
     border-top: 1px;
     /* border: 1px solid #000; */
-    margin: -14px -0.7rem 1.5rem;
+    margin: -44px -1.5rem 1.5rem -1.5rem;
 }
 
 .page-title-box .breadcrumb {
@@ -743,9 +743,11 @@ body {
 
 /* by george 70px to 50px  */
 .page-content {
-    padding: calc(40px + 24px) calc(24px / 2) 60px calc(24px / 2);
+    /* padding: calc(40px + 24px) calc(24px / 2) 60px calc(24px / 2); */
+    padding: calc(70px + 1.5rem) calc(1.5rem / 2) 60px calc(1.5rem / 2);
 
 }
+
 
 /* 
 .page-content::-webkit-scrollbar {
@@ -2069,7 +2071,7 @@ margin-left: 20px;
 
 /* padding 70 t0 50 */
 [data-layout=vertical][data-sidebar-size=sm] .navbar-menu {
-    position: fixed;
+    position: absolute;
     width: 80px !important;
     padding: 0px;
     margin-top: 50px;
@@ -18680,9 +18682,9 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
         margin-left: 0px;
     }
 
-    .page-content {
+    /* .page-content {
         padding: calc(40px + 24px) 0px 60px 0px;
-    }
+    } */
 
     .search-content {
         margin: 0px 15px 0px 0px;
@@ -18830,4 +18832,27 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
     overflow: hidden;
     text-align: start;
     width: 50%;
+}
+
+
+
+/* query for phones and tablet */
+
+@media (min-width: 576px) and (max-width: 767.98px) { 
+
+    .search-content{
+        display: none;
+    }
+    
+    /* for hide sidebar */
+    [data-layout=vertical] .app-menu {
+        margin-left: -100%;
+        padding: 10px 0 20px 0;
+    }
+ 
+    [data-layout=vertical][data-sidebar-size=sm] .navbar-menu {
+        
+    }
+    
+
 }
