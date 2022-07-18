@@ -5,10 +5,7 @@
 @endsection
 @section('content')
 
-    @component('components.breadcrumb')
-        @slot('li_1') Dashboards @endslot
-        @slot('title') Rating Increment @endslot
-    @endcomponent
+    
 <div class="dashboard">
     <table class="table align-middle mb-0  responsive" id="table">
 

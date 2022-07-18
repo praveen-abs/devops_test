@@ -3,16 +3,10 @@
 <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/onboarding.css') }}">
 @endsection
+
 @section('content')
 
-@component('components.breadcrumb')
-@slot('li_1') Configuration @endslot
-@slot('title') Employee Onboarding @endslot
-@endcomponent
-
 <div class="main">
-
-    <div class="container-fluid">
         <div class="card mt-4 p-5">
 
             <div class="row ">
@@ -576,12 +570,7 @@
 
             </div>
         </div>
-
-
-    </div>
-
-    <!--Main Content-->
-
+   <!--Main Content-->
 </div>
 
 <!-- Vertically Centered -->

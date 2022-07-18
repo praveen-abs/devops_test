@@ -4,11 +4,7 @@
     <link href="{{ ('assets/css/table.css')}}" rel="stylesheet">
 @endsection
 @section('content')
-
-    @component('components.breadcrumb')
-        @slot('li_1') Dashboards @endslot
-        @slot('title') Mail Settings @endslot
-    @endcomponent
+    
 <div class="dashboard ">
             <div class="contents d-flex row justify-content-between align-items-center">
              <h4>Reminder Mail</h4>

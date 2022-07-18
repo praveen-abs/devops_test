@@ -11,11 +11,7 @@
     </style>
 @endsection
 @section('content')
-
-    @component('components.breadcrumb')
-        @slot('li_1') Dashboards @endslot
-        @slot('title') Welcome Screen @endslot
-    @endcomponent
+   
 
 <div class="settings-layout p-0 d-flex justify-content-start container-fluid ">
     <div class="left-content  d-flex">

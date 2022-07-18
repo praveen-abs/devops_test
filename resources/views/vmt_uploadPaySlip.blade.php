@@ -1,68 +1,73 @@
 @extends('layouts.master')
 @section('css')
 
-    <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
+<link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
 
 @endsection
-@section('content')
-
-    @component('components.breadcrumb')
+<!-- @component('components.breadcrumb')
         @slot('li_1') Pay Roll @endslot
         @slot('title') Pay Run @endslot
-    @endcomponent
+    @endcomponent -->
+@section('content')
 
 
-    <div class="row">
-        <div class="col-xl-12">
-            <div class="card">
 
 
-                <div class="form-control">
-  <div class="row">
-    <div class="col-md-6 ">
-    <div class="col-form-label">
-        <h4>  Upload Data</h4>
-         <div class="col col-form-label">
-            <ul class="list-style-numbered p-4">
-                <form method="POST" id='role-form' action="{{url('/vmt-payslip')}}" enctype="multipart/form-data">
-                @csrf
-                <li >Download the
-                    <a href="{{ url('/assets/payslip_sheet.xls')  }}" target="_blank">
-                        <span class="text-link" style=" color: blue;">Sample File</span></a>
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
 
-</li>
-                <li >Read the upload instructions on the right before uploading .</li>
-                <li >Fill the information in excel template</li>
-                <li >Upload the excel sheet  <input name="file"  type="file">
-                      <button type="submit" class=" btn btn-primary">Upload</button> 
-                      <span  container="body" class="icon ic-info cursor-pointer"></span>
-                </li>
-            </ul>
 
-               </form> 
-        </div>
-    </div>
+            <div class="form-control">
+                <div class="row">
+                    <div class="col-md-6 ">
+                        <div class="col-form-label">
+                            <h4> Upload Data</h4>
+                            <div class="col col-form-label">
+                                <ul class="list-style-numbered p-4">
+                                    <form method="POST" id='role-form' action="{{url('/vmt-payslip')}}"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        <li>Download the
+                                            <a href="{{ url('/assets/payslip_sheet.xls')  }}" target="_blank">
+                                                <span class="text-link" style=" color: blue;">Sample File</span></a>
 
-    </div>
-    
-    <div class="col-md-6 ">
-      <div class="col-form-label">
-        <h4>  Upload Instructions</h4>
-        <div  class="alert alert-warning">Read these instructions before uploading the file.</div>
-        <div>
-            <ul>
-                <li class="pl-28">  Client Code, Client Name, Billing Currency, Project Code, Project Name, Start Date, Billing Type are required to create new projects and clients.</li>
-                <br>
-            <li class="pl-28">To add new project under existing client, client name and client code given in excel should be same as client name and client code</li>
+                                        </li>
+                                        <li>Read the upload instructions on the right before uploading .</li>
+                                        <li>Fill the information in excel template</li>
+                                        <li>Upload the excel sheet <input name="file" type="file">
+                                            <button type="submit" class=" btn btn-primary">Upload</button>
+                                            <span container="body" class="icon ic-info cursor-pointer"></span>
+                                        </li>
+                                </ul>
 
-            </ul>
+                                </form>
+                            </div>
+                        </div>
 
-        </div>
-    </div>
-    </div>
-  </div>
-</div>
-              {{--   <div class="card-header border-0 align-items-center d-flex">
+                    </div>
+
+                    <div class="col-md-6 ">
+                        <div class="col-form-label">
+                            <h4> Upload Instructions</h4>
+                            <div class="alert alert-warning">Read these instructions before uploading the file.</div>
+                            <div>
+                                <ul>
+                                    <li class="pl-28"> Client Code, Client Name, Billing Currency, Project Code, Project
+                                        Name, Start Date, Billing Type are required to create new projects and clients.
+                                    </li>
+                                    <br>
+                                    <li class="pl-28">To add new project under existing client, client name and client
+                                        code given in excel should be same as client name and client code</li>
+
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{--   <div class="card-header border-0 align-items-center d-flex">
                     <h4 class="card-title mb-0 flex-grow-1">
                 </div>
 
@@ -77,27 +82,28 @@
                                   
 
                     <div> --}}
-                      {{--   <form method="POST" id='role-form' action="{{url('/vmt-payslip')}}" enctype="multipart/form-data">
-                            @csrf
-                            <div class="mb-3 row">
-                                <label class="col-md-2 col-form-label">Select Files</label>
-                                <div class="col-md-10">
-                                    <input name="file" type="file">
-                                </div>
-                            </div>
-                            <div class="row mt-2">
-                                <div class="text-end col-xl-12">
-                                    <button type="submit" class="btn btn-primary">Save</button>
-                                </div>
-                            </div>
-                        </form> --}}
-                    </div>
-                </div><!-- end card body -->
-            </div><!-- end card -->
-        {{-- </div>end col --}}
-    {{-- </div>end row --}}
+            {{--   <form method="POST" id='role-form' action="{{url('/vmt-payslip')}}" enctype="multipart/form-data">
+            @csrf
+            <div class="mb-3 row">
+                <label class="col-md-2 col-form-label">Select Files</label>
+                <div class="col-md-10">
+                    <input name="file" type="file">
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="text-end col-xl-12">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+            </form> --}}
+        </div>
+    </div><!-- end card body -->
+</div><!-- end card -->
+{{-- </div>end col --}}
+{{-- </div>end row --}}
 <div style="z-index: 11">
-    <div id="borderedToast2" class="toast toast-border-success overflow-hidden mt-3" role="alert" aria-live="assertive" aria-atomic="true" >
+    <div id="borderedToast2" class="toast toast-border-success overflow-hidden mt-3" role="alert" aria-live="assertive"
+        aria-atomic="true">
         <div class="toast-body">
             <div class="d-flex align-items-center">
                 <div class="flex-shrink-0 me-2">
@@ -112,46 +118,42 @@
 </div>
 @endsection
 @section('script')
-    
-    <!-- ui notifications -->
 
-    <script src="{{ URL::asset('/assets/libs/prismjs/prismjs.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/js/pages/notifications.init.js') }}"></script>
-    <!-- apexcharts -->
+<!-- ui notifications -->
 
-    <!-- dashboard init -->
-    <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
-     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="{{ URL::asset('/assets/libs/prismjs/prismjs.min.js') }}"></script>
+<script src="{{ URL::asset('/assets/js/pages/notifications.init.js') }}"></script>
+<!-- apexcharts -->
 
-    <script type="text/javascript">
-        
-       
+<!-- dashboard init -->
+<script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
-        $('#role-form').on('submit', function(e){
-            e.preventDefault();
-          
-            //var formData = new FormData(this);
-            var roleUri = $('#role-form').attr('action');
-            console.log(roleUri);
+<script type="text/javascript">
+$('#role-form').on('submit', function(e) {
+    e.preventDefault();
 
-            $.ajax({
-                type: "POST",
-                url: roleUri,
-                enctype: 'multipart/form-data',
-                data: new FormData(this),
-                processData: false,
-                contentType: false,
-                success: function(data)
-                {
-                  $('#alert-msg').html(data);
-                  var toastLiveExample3 = document.getElementById("borderedToast2");
-                    var toast = new bootstrap.Toast(toastLiveExample3);
-                    toast.show();
-                  //alert(data); // show response from the php script.
-                }
-            })
-            //console.log($('#role-form').serialize());
-        });
+    //var formData = new FormData(this);
+    var roleUri = $('#role-form').attr('action');
+    console.log(roleUri);
 
-    </script>
+    $.ajax({
+        type: "POST",
+        url: roleUri,
+        enctype: 'multipart/form-data',
+        data: new FormData(this),
+        processData: false,
+        contentType: false,
+        success: function(data) {
+            $('#alert-msg').html(data);
+            var toastLiveExample3 = document.getElementById("borderedToast2");
+            var toast = new bootstrap.Toast(toastLiveExample3);
+            toast.show();
+            //alert(data); // show response from the php script.
+        }
+    })
+    //console.log($('#role-form').serialize());
+});
+</script>
 @endsection

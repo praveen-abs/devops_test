@@ -637,6 +637,7 @@ body {
 [data-layout=vertical][data-sidebar-size=sm] .footer {
     left: 80px;
 }
+
 [data-layout=vertical][data-sidebar-size=lg-hover] .footer,
 [data-layout=vertical][data-sidebar-size=lg] .footer {
     left: 215px;
@@ -1668,12 +1669,12 @@ body {
 }
 
 
-[data-layout=vertical][data-sidebar-size=sm] .topbar-logo img{
-margin-left: 20px;
+[data-layout=vertical][data-sidebar-size=sm] .topbar-logo img {
+    margin-left: 20px;
 
 }
 
-.sidebar-bottom-bg{
+.sidebar-bottom-bg {
     position: absolute;
     bottom: 50px;
     width: 100%;
@@ -1681,24 +1682,24 @@ margin-left: 20px;
 }
 
 
-[data-layout=vertical][data-sidebar-size=sm] .topnav-hamburger{
-    
-    margin-left: 21px;   
-    }
+[data-layout=vertical][data-sidebar-size=sm] .topnav-hamburger {
 
-    [data-layout=vertical][data-sidebar-size=lg] .topnav-hamburger{
-    
-        margin-left: 10px;
-        margin-right: 7px;
-    }
-     
-    
+    margin-left: 21px;
+}
+
+[data-layout=vertical][data-sidebar-size=lg] .topnav-hamburger {
+
+    margin-left: 10px;
+    margin-right: 7px;
+}
+
+
 
 /* end */
 .hamburger-icon {
     width: 20px;
     height: 15px;
-    
+
     position: relative;
     cursor: pointer;
     display: inline-block
@@ -1741,7 +1742,7 @@ margin-left: 20px;
 .hamburger-icon.open {
     transform: rotate(-90deg);
     -webkit-transform: rotate(-90deg);
- 
+
 }
 
 .hamburger-icon.open span:first-child {
@@ -2074,6 +2075,7 @@ margin-left: 20px;
     position: absolute;
     width: 80px !important;
     padding: 0px;
+    height: 100%;
     margin-top: 50px;
 }
 
@@ -9273,6 +9275,7 @@ button {
 
 [data-simplebar] {
     margin: 10px 0px 0px 0px;
+    padding: 0px 0px 60px 0px;
     position: relative;
     flex-direction: column;
     flex-wrap: wrap;
@@ -18574,6 +18577,7 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
     height: 100%; */
     /* min-height: 100%; */
 }
+
 /* .conya{
     background: url(../images/login_bg1.jpg) no-repeat center center fixed; 
     -webkit-background-size: cover;
@@ -18838,21 +18842,47 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
 
 /* query for phones and tablet */
 
-@media (min-width: 576px) and (max-width: 767.98px) { 
+@media (min-width: 576px) and (max-width: 767.98px) {
 
-    .search-content{
+    .search-content {
         display: none;
     }
-    
+
     /* for hide sidebar */
     [data-layout=vertical] .app-menu {
         margin-left: -100%;
         padding: 10px 0 20px 0;
     }
- 
-    [data-layout=vertical][data-sidebar-size=sm] .navbar-menu {
-        
-    }
-    
+
+    [data-layout=vertical][data-sidebar-size=sm] .navbar-menu {}
+
 
 }
+
+
+
+/* scroll bard */
+
+/* width */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #002f56;
+    border-radius: 10px;
+
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #023864c7;
+}
+
+body:hover ::-webkit-scrollbar-thumb {}

@@ -4,12 +4,11 @@
     <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
 
 @endsection
+
+
 @section('content')
 
-    @component('components.breadcrumb')
-        @slot('li_1') Dashboards @endslot
-        @slot('title') Employee Hierarchy @endslot
-    @endcomponent
+    
 
 
     <div class="row">

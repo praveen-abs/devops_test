@@ -6,12 +6,10 @@
 
 
 @endsection
+
 @section('content')
 
-@component('components.breadcrumb')
-@slot('li_1') Dashboards @endslot
-@slot('title') Client Onboarding @endslot
-@endcomponent
+
 <div class="main">
 
     <div class="container-fluid">

@@ -10,14 +10,6 @@ input[type=file] {
 @endsection
 @section('content')
 
-@component('components.breadcrumb')
-@slot('li_1') Dashboards @endslot
-@slot('title') General Info @endslot
-@endcomponent
-
-
-
-
 
 
 <div class="settings-wrapper px-5">

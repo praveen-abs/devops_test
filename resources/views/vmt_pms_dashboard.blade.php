@@ -5,10 +5,6 @@
 @endsection
 @section('content')
 
-@component('components.breadcrumb')
-@slot('li_1') Dashboards @endslot
-@slot('title') Employee Onboarding @endslot
-@endcomponent
 
 <div class="container-fluid pms-dashboard">
     <div class="card px-5 py-2 pms-card-wrapper  pms-dashboard-wrapper ">

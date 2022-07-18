@@ -5,11 +5,7 @@
 @endsection
 @section('content')
 
-    @component('components.breadcrumb')
-        @slot('li_1') Dashboards @endslot
-        @slot('title') Rating Conventions @endslot
-    @endcomponent
-<div class="row">
+    <div class="row">
     <div class="col-xl-12">
         <div class="contents">
             <div class=" buttons text-end mb-3 col-12">

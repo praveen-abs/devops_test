@@ -10,10 +10,7 @@
 @endsection
 @section('content')
 
-@component('components.breadcrumb')
-@slot('li_1') PayCheck  @endslot
-@slot('title') Salary Details @endslot
-@endcomponent
+
 
 
 <div class="container-fluid bg-white salary-details-wrapper">
