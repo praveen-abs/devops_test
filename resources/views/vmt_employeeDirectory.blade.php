@@ -338,10 +338,10 @@ tr:last-child td:last-child {
                     <div class="btn border-0 outline-none mx-2 ">
                         <i class="ri-menu-add-line fw-bold"></i>
                     </div>
-                    <button class="btn border-0 outline-none onboard-employee-btn bg-danger text-white">
+                    <a href="{{route('vmt_employeeOnboarding')}}" class="btn border-0 outline-none onboard-employee-btn bg-danger text-white">
                         <i class="ri-add-line fw-bold mx-1"></i>
                         Onboard Employee
-                    </button>
+                    </a>
 
                 </div>
             </div>
