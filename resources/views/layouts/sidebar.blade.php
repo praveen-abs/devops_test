@@ -168,7 +168,7 @@
 
 
                 <!-- Organization -->
-
+                @if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin'))
                 <li class="nav-item">
                     <a class="nav-link sidebar menu-link pt-0" href="#orgDrop-Down" data-bs-toggle="collapse"
                         role="button" aria-expanded="false" aria-controls="sidebarRoles">
@@ -224,6 +224,7 @@
                         </ul>
                     </div>
                 </li>
+                @endif
 
                 <!-- Performance -->
 
@@ -260,6 +261,7 @@
                     </div>
                 </li>
 
+                @if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin') || auth()->user()->hasrole('Manager'))
                 <!-- team -->
 
                 <li class="nav-item">
@@ -312,7 +314,9 @@
                         </ul>
                     </div>
                 </li>
+                @endif
 
+                @if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin'))
                 <!-- pay roll -->
 
                 <li class="nav-item">
@@ -345,6 +349,7 @@
                         </ul>
                     </div>
                 </li>
+                @endif
 
                 <!-- pay check -->
                 <li class="nav-item">
@@ -719,6 +724,7 @@
                     </div>
                 </li>
 
+                @if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin'))
                 <li class="nav-item">
                     <a class="nav-link sidebar menu-link pt-0" href="#configDrop-down" data-bs-toggle="collapse"
                         role="button" aria-expanded="false" aria-controls="sidebarLayouts">
@@ -739,6 +745,7 @@
                         </ul>
                     </div>
                 </li>
+                @endif
 
                 <!-- exit -->
                 <li class="nav-item">

@@ -292,11 +292,13 @@ class HomeController extends Controller
     public function showProfilePage(Request $request) {
         $user = Auth::user();
         $details = VmtEmployee::join('vmt_employee_office_details', 'emp_id', '=', 'vmt_employee_details.id')->where('userid', $user->id)->first();
-        if($user->hasrole('Employee'))
+        if($user->hasrole('Employee')) {
             $employee = VmtEmployee::first();
-        else
+        } else {
             $employee = null;
-        return view('pages-profile-settings', compact( 'employee', 'user', 'details'));
+        }
+        $bank = Bank::all(); 
+        return view('pages-profile-settings', compact( 'employee', 'user', 'details', 'bank'));
     }
 
     //
