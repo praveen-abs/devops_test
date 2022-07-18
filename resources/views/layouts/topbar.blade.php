@@ -103,9 +103,9 @@
                                             <div class="col">
                                                 <h6 class="m-0 fs-16 fw-semibold text-white"> Notifications </h6>
                                             </div>
-                                            <div class="col-auto dropdown-tabs">
+                                            <!-- <div class="col-auto dropdown-tabs">
                                                 <span class="badge badge-soft-light fs-13"> 2 New</span>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
                                     <div class="px-2 pt-2">
@@ -319,27 +319,6 @@
                         </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                         <a href="" class="p-0 settings-icon mx-3 header-item ">
                             <svg xmlns="http://www.w3.org/2000/svg" width="23.494" height="23.353"
                                 viewBox="0 0 23.494 23.353">
@@ -382,8 +361,8 @@
                                 @hasrole("Employee")
 
                                 @else
-                                <a class="dropdown-item" href="vmt_topbar_settings"><span
-                                        class="badge bg-soft-success text-success mt-1 float-end">New</span><i
+                                
+                                <a class="dropdown-item" href="vmt_topbar_settings"><i
                                         class="mdi mdi-cog-outline text-muted fs-16 align-middle me-1"></i> <span
                                         class="align-middle">Settings</span></a>
                                 @endhasrole
