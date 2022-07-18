@@ -135,11 +135,11 @@
                                 <ul class="personal-info">
                                     <li>
                                         <div class="title">Passport No.</div>
-                                        <div class="text">{{$details->passport}}</div>
+                                        <div class="text">--</div>
                                     </li>
                                     <li>
                                         <div class="title">Passport Exp Date.</div>
-                                        <div class="text">{{$details->passport}}</div>
+                                        <div class="text">--</div>
                                     </li>
                                     <li>
                                         <div class="title">Tel</div>
@@ -147,11 +147,11 @@
                                     </li>
                                     <li>
                                         <div class="title">Nationality</div>
-                                        <div class="text">Indian</div>
+                                        <div class="text">--</div>
                                     </li>
                                     <li>
                                         <div class="title">Religion</div>
-                                        <div class="text">Christian</div>
+                                        <div class="text">--</div>
                                     </li>
                                     <li>
                                         <div class="title">Marital status</div>
@@ -159,7 +159,7 @@
                                     </li>
                                     <li>
                                         <div class="title">Employment of spouse</div>
-                                        <div class="text">No</div>
+                                        <div class="text">--</div>
                                     </li>
                                     <li>
                                         <div class="title">No. of children</div>
@@ -186,7 +186,7 @@
                                     <li>
                                         <div class="title">Designation</div>
                                         <!-- <div class="text">{{$details->passport}}</div> -->
-                                        <div class="text">-</div>
+                                        <div class="text">{{$details->designation}}</div>
                                     </li>
                                     <li>
                                         <div class="title">From</div>
@@ -304,7 +304,7 @@
                                     </li>
                                     <li>
                                         <div class="title">PAN No</div>
-                                        <div class="text">{{$details->pan_card}}</div>
+                                        <div class="text">{{$details->pan_number}}</div>
                                     </li>
                                 </ul>
                             </div>
@@ -904,15 +904,16 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form action="{{route('updateBankInfo', $user->id)}}" Method="POST">
+                        @csrf
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Bank name</label>
-                                    <select name="bank_name" id="bank_name" class="form-control" required>
+                                    <select name="bank_name" id="bank_name" class="form-control onboard-form" required>
                                         <option value="">Select</option>
                                         @foreach($bank as $b)
-                                        <option value="{{$b->bank_name}}" min-data="{{$b->min_length}}" max-data="{{$b->max_length}}" @if($details->bank_name == $b->bank_name) 'selected' @endif>{{$b->bank_name}}</option>
+                                        <option value="{{$b->bank_name}}" min-data="{{$b->min_length}}" max-data="{{$b->max_length}}" @if($details->bank_name == $b->bank_name) selected @endif>{{$b->bank_name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -921,7 +922,7 @@
                                 <div class="form-group mb-3">
                                     <label>EmaBank account No</label>
                                     <div class="cal-icon">
-                                        <input type="number" minlength="9" maxlength="18" class="form-control" value="{{$details->bank_account_number}}" required>
+                                        <input name="account_no" type="number" minlength="9" maxlength="18" class="form-control onboard-form" value="{{$details->bank_account_number}}" pattern-data="account" required>
                                     </div>
                                 </div>
 
@@ -929,13 +930,13 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>IFSC Code</label>
-                                    <input class="form-control" value="{{$details->bank_ifsc_code}}" type="text" required>
+                                    <input name="bank_ifsc" class="form-control onboard-form" value="{{$details->bank_ifsc_code}}" type="text" pattern-data="ifsc" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>PAN No</label>
-                                    <input class="form-control" value="{{$details->pan_card}}" type="text">
+                                    <input name="pan_no" class="form-control onboard-form" value="{{$details->pan_number}}" type="text" pattern-data="pan" required>
                                 </div>
                             </div>
 
@@ -1017,64 +1018,66 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form action="{{route('updatePersonalInfo', $user->id)}}" Method="POST">
+                        @csrf
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Passport No</label>
-                                    <input type="text" class="form-control" value="{{$details->passport}}">
+                                    <input type="text" class="form-control" value="--">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Passport Expiry Date</label>
                                     <div class="cal-icon">
-                                        <input class="form-control datetimepicker" type="date" max="9999-12-31"
-                                            value="{{$details->passport}}">
+                                        <input class="form-control datetimepicker" type="date" max="9999-12-31" value="--">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Tel</label>
-                                    <input class="form-control" type="number" maxlength="10" minlength="10">
+                                    <input class="form-control" value="{{$details->mobile_number}}" name="mobile_number" minlength="10" maxlength="10" type="number" maxlength="10" minlength="10" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Nationality <span class="text-danger">*</span></label>
-                                    <input class="form-control onboard-form" type="text" pattern="alpha">
+                                    <input class="form-control onboard-form" type="text" pattern="alpha" value="--">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Religion</label>
                                     <div class="cal-icon">
-                                        <input class="form-control onboard-form" pattern="name" type="text"
-                                            pattern="alpha">
+                                        <input class="form-control onboard-form" pattern="name" type="text" pattern="alpha" value="--">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Marital status <span class="text-danger">*</span></label>
-                                    <select class="select form-control">
-                                        <option>-</option>
-                                        <option>Single</option>
-                                        <option>Married</option>
+                                    <select class="select form-control" name="marital_status" required>
+                                        <option>Select</option>
+                                        <option @if($details->marital_status == 'single') selected @endif>Un Married</option>
+                                        <option @if($details->marital_status == 'married') selected @endif>Married</option>
+                                        <option @if($details->marital_status == 'divorced') selected @endif>Divorces</option>
+                                        <option @if($details->marital_status == 'widowed') selected @endif>Widowe</option>
+                                        <option @if($details->marital_status == 'seperated') selected @endif>Seperated</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Employment of spouse</label>
-                                    <input class="form-control onboard-form" type="text" pattern="alpha">
+                                    <input class="form-control onboard-form" type="text" pattern="alpha" value="--">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>No. of children </label>
-                                    <input class="form-control onboard-form" type="number" maxlength="2">
+                                    <input class="form-control onboard-form" type="number" maxlength="2" value="--">
                                 </div>
                             </div>
                         </div>
@@ -1440,7 +1443,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form action="{{route('updateExperienceInfo', $user->id)}}" Method="POST">
+                        @csrf
                         <div class="form-scroll">
                             <div class="card">
                                 <div class="card-body">
@@ -1452,8 +1456,7 @@
 
                                             <div class="form-group mb-3 form-focus focused">
                                                 <label class="focus-label">Company Name</label>
-                                                <input type="text" class="form-control floating"
-                                                    value="Digital Devlopment Inc">
+                                                <input type="text" class="form-control floating" value="--">
 
                                             </div>
                                         </div>
@@ -1461,7 +1464,7 @@
 
                                             <div class="form-group mb-3 form-focus focused">
                                                 <label class="focus-label">Location</label>
-                                                <input type="text" class="form-control floating" value="United States">
+                                                <input type="text" class="form-control floating" name="work_location" value="{{$details->work_location}}">
 
                                             </div>
                                         </div>
@@ -1469,7 +1472,7 @@
 
                                             <div class="form-group mb-3 form-focus focused">
                                                 <label class="focus-label">Job Position</label>
-                                                <input type="text" class="form-control floating" value="Web Developer">
+                                                <input type="text" class="form-control floating" name="designation" value="{{$details->designation}}">
 
                                             </div>
                                         </div>
@@ -1477,20 +1480,16 @@
                                             <div class="form-group mb-3 form-focus focused">
                                                 <label class="focus-label">Period From</label>
                                                 <div class="cal-icon">
-                                                    <input type="date" max="9999-12-31"
-                                                        class="form-control floating datetimepicker" value="01/07/2007">
+                                                    <input type="date" max="9999-12-31" class="form-control floating datetimepicker" value="--">
                                                 </div>
-
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group mb-3 form-focus focused">
                                                 <label class="focus-label">Period To</label>
                                                 <div class="cal-icon">
-                                                    <input type="date" max="9999-12-31"
-                                                        class="form-control floating datetimepicker" value="08/06/2018">
+                                                    <input type="date" max="9999-12-31" class="form-control floating datetimepicker" value="--">
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -1506,24 +1505,20 @@
                                             <div class="col-md-6">
                                                 <div class="form-group mb-3 form-focus focused">
                                                     <label class="focus-label">Company Name</label>
-                                                    <input type="text" class="form-control floating"
-                                                        value="Digital Devlopment Inc">
-
+                                                    <input type="text" class="form-control floating" value="--">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group mb-3 form-focus focused">
                                                     <label class="focus-label">Location</label>
-                                                    <input type="text" class="form-control floating"
-                                                        value="United States">
+                                                    <input type="text" class="form-control floating" value="--">
 
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group mb-3 form-focus focused">
                                                     <label class="focus-label">Job Position</label>
-                                                    <input type="text" class="form-control floating"
-                                                        value="Web Developer">
+                                                    <input type="text" class="form-control floating" value="--">
 
                                                 </div>
                                             </div>
@@ -1531,9 +1526,7 @@
                                                 <div class="form-group mb-3 form-focus focused">
                                                     <label class="focus-label">Period From</label>
                                                     <div class="cal-icon">
-                                                        <input type="date" max="9999-12-31"
-                                                            class="form-control floating datetimepicker"
-                                                            value="01/07/2007">
+                                                        <input type="date" max="9999-12-31" class="form-control floating datetimepicker" value="--">
                                                     </div>
 
                                                 </div>
@@ -1542,9 +1535,7 @@
                                                 <div class="form-group mb-3 form-focus focused">
                                                     <div class="cal-icon">
                                                         <label class="focus-label">Period To</label>
-                                                        <input type="date" max="9999-12-31"
-                                                            class="form-control floating datetimepicker"
-                                                            value="08/06/2018">
+                                                        <input type="date" max="9999-12-31" class="form-control floating datetimepicker" value="--">
                                                     </div>
 
                                                 </div>
@@ -1553,8 +1544,7 @@
                                     </div>
                                     <div class="add-more">
                                         <div class="text-secondary" id="exp-add-more">
-                                            <i class=" ri-add-circle-fill"></i> Add
-                                            More
+                                            <i class=" ri-add-circle-fill"></i> Add More
                                         </div>
                                     </div>
                                 </div>
@@ -1582,6 +1572,44 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="{{ URL::asset('assets/js/pages/profile-setting.init.js') }}"></script>
 <script>
+$('body').on('keyup', ".onboard-form", function() {
+    var inputvalues = $(this).val();
+    var data = $(this).attr('name');
+    if ($(this).attr('maxlength')) {
+        var dtl = $(this).val().length;
+        var val = parseInt($(this).attr('maxlength'));
+        if(dtl>val){
+            $(this).val($(this).val().substr(0,val));
+        } 
+    }
+    if ($(this).attr('pattern-data') != undefined && $(this).attr('pattern-data') != '' && inputvalues !=
+        '') {
+        var pattern = {
+            'pan': /^([A-Z]){3}P([A-Z]){1}([0-9]){4}([A-Z]){1}?$/,
+            'ifsc': /^([A-Z]){4}0([A-Z0-9]){6}?$/,
+            'aadhar': /^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$/,
+            'passport': /^[a-zA-Z]{2}[0-9]{7}$/,
+            'account': /^[0-9]{9,18}$/,
+            'dl': /^(([A-Z]{2}[0-9]{2})( )|([A-Z]{2}-[0-9]{2}))((19|20)[0-9][0-9])[0-9]{7}$/,
+            'gst': /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/,
+            'alp-num': /^[a-zA-Z0-9]+$/,
+            'alpha': /^[a-zA-Z]+$/,
+            'name': /^[a-zA-Z.]+$/,
+        };
+        var regex = $(this).attr('pattern-data');
+        if (!pattern[regex].test(inputvalues)) {
+            var v = $(this).val();
+            if (regex == 'name') {
+                $(this).val(v.replace(/[_\W0-9]+/g, ''));
+            } else if (regex == 'alpha') {
+                $(this).val(v.replace(/[_\W0-9.]+/g, ''));
+            } else if (regex == 'alp-num') {
+                $(this).val(v.replace(/[_\W.]+/g, ''));
+            }
+        }
+    }
+});
+
 $('.edit-icon').click(function() {
     var id = $(this).attr('data-bs-target');
     $(id).modal('show');

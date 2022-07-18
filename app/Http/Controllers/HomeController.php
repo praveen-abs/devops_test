@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\VmtGeneralSettings;
 use App\Models\VmtGeneralInfo;
 use App\Models\VmtEmployee;
+use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\Bank;
 use App\Mail\TestEmail;
 use Session as Ses;
@@ -136,6 +137,41 @@ class HomeController extends Controller
     // general Settings
     public function generalSettings(Request $request){
         return view('vmt_appraisalFlow_generalSettings');
+    }
+
+    public function updateExperienceInfo(Request $request) {
+        $reDetails = VmtEmployeeOfficeDetails::where('user_id', $request->id)->first();
+        $details = VmtEmployeeOfficeDetails::find($reDetails->id);
+        $details->work_location = $request->input('work_location');
+        $details->designation = $request->input('designation');
+        $details->save();
+        Ses::flash('message', 'Bank Details Updated successfully!');
+        Ses::flash('alert-class', 'alert-success');
+        return redirect()->back();
+    }
+
+    public function updateBankInfo(Request $request) {
+        $reDetails = VmtEmployee::where('userid', $request->id)->first();
+        $details = VmtEmployee::find($reDetails->id);
+        $details->bank_name = $request->input('bank_name');
+        $details->bank_ifsc_code = $request->input('bank_ifsc');
+        $details->bank_account_number = $request->input('account_no');
+        $details->pan_number = $request->input('pan_no');
+        $details->save();
+        Ses::flash('message', 'Bank Details Updated successfully!');
+        Ses::flash('alert-class', 'alert-success');
+        return redirect()->back();
+    }
+
+    public function updatePersonalInfo(Request $request) {
+        $reDetails = VmtEmployee::where('userid', $request->id)->first();
+        $details = VmtEmployee::find($reDetails->id);
+        $details->marrital_status = $request->input('marital_status');
+        $details->mobile_number = $request->input('mobile_number');
+        $details->save();
+        Ses::flash('message', 'Personal Information Updated successfully!');
+        Ses::flash('alert-class', 'alert-success');
+        return redirect()->back();
     }
 
     public function storeProfileImage(Request $request) {
