@@ -38,9 +38,17 @@ class VmtMainDashboardController extends Controller
         //dd($currentUser);
         if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin')) {
             return view('vmt_hr_dashboard', compact( 'currentUserJobDetails'));
-        } else {
-            return view('mainIndex', compact( 'currentUserJobDetails'));
+        }        
+        else 
+        if(auth()->user()->hasrole('Manager'))
+        {
+            return view('vmt_manager_dashboard', compact( 'currentUserJobDetails'));
         }
- 
+        else 
+        if(auth()->user()->hasrole('Employee')) 
+        {
+            return view('vmt_employee_dashboard', compact( 'currentUserJobDetails'));
+        } 
+
     }
 }

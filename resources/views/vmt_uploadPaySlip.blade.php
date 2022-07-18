@@ -13,15 +13,71 @@
 
 
     <div class="row">
-        <div class="col-xl-8">
+        <div class="col-xl-12">
             <div class="card">
-                <div class="card-header border-0 align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1"><!-- Please Fill Form --></h4>
-                </div><!-- end card header -->
+
+
+                <div class="form-control">
+  <div class="row">
+    <div class="col-md-6 ">
+    <div class="col-form-label">
+        <h4>  Upload Data</h4>
+         <div class="col col-form-label">
+            <ul class="list-style-numbered p-4">
+                <form method="POST" id='role-form' action="{{url('/vmt-payslip')}}" enctype="multipart/form-data">
+                @csrf
+                <li >Download the
+                    <a href="{{ url('/assets/payslip_sheet.xls')  }}" target="_blank">
+                        <span class="text-link" style=" color: blue;">Sample File</span></a>
+
+</li>
+                <li >Read the upload instructions on the right before uploading .</li>
+                <li >Fill the information in excel template</li>
+                <li >Upload the excel sheet  <input name="file"  type="file">
+                      <button type="submit" class=" btn btn-primary">Upload</button> 
+                      <span  container="body" class="icon ic-info cursor-pointer"></span>
+                </li>
+            </ul>
+
+               </form> 
+        </div>
+    </div>
+
+    </div>
+    
+    <div class="col-md-6 ">
+      <div class="col-form-label">
+        <h4>  Upload Instructions</h4>
+        <div  class="alert alert-warning">Read these instructions before uploading the file.</div>
+        <div>
+            <ul>
+                <li class="pl-28">  Client Code, Client Name, Billing Currency, Project Code, Project Name, Start Date, Billing Type are required to create new projects and clients.</li>
+                <br>
+            <li class="pl-28">To add new project under existing client, client name and client code given in excel should be same as client name and client code given in Keka.</li>
+
+            </ul>
+
+        </div>
+    </div>
+    </div>
+  </div>
+</div>
+              {{--   <div class="card-header border-0 align-items-center d-flex">
+                    <h4 class="card-title mb-0 flex-grow-1">
+                </div>
 
                 <div class="card-body  pb-2">
-                    <div>
-                        <form method="POST" id='role-form' action="{{url('/vmt-payslip')}}" enctype="multipart/form-data">
+                    <xhr-file-upload>
+                                    <div class="d-inline-flex justify-content-center align-items-center">
+                                        <div containerclass="max-w-300" container="body" class="d-inline-block position-relative"><button class="btn btn-sm btn-primary">Upload Excel File</button><input type="file" name="fileupload" class="input-file" accept=".xlsx"></div>
+                                        <div class="ml-8"><span containerclass="max-w-300" container="body" class="icon ic-info cursor-pointer"></span>
+
+                            </div>
+                            <xhr-file-upload>
+                                  
+
+                    <div> --}}
+                      {{--   <form method="POST" id='role-form' action="{{url('/vmt-payslip')}}" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3 row">
                                 <label class="col-md-2 col-form-label">Select Files</label>
@@ -34,12 +90,12 @@
                                     <button type="submit" class="btn btn-primary">Save</button>
                                 </div>
                             </div>
-                        </form>
+                        </form> --}}
                     </div>
                 </div><!-- end card body -->
             </div><!-- end card -->
-        </div><!-- end col -->
-    </div><!-- end row -->
+        {{-- </div>end col --}}
+    {{-- </div>end row --}}
 <div style="z-index: 11">
     <div id="borderedToast2" class="toast toast-border-success overflow-hidden mt-3" role="alert" aria-live="assertive" aria-atomic="true" >
         <div class="toast-body">
