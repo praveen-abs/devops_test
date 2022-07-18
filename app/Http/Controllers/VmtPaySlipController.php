@@ -120,5 +120,25 @@ class VmtPaySlipController extends Controller
         //$dompdf->stream();
     }
     //vmt_payslipTemplate.blade.php
+    // code add by hentry // 
+        public function download( $filename = '' )
+    {
+        // Check if file exists in app/storage/file folder
+        $file_path = storage_path() . "/assets/" . $filename;
+        $headers = array(
+            'Content-Type: csv',
+            'Content-Disposition: attachment; filename='.$filename,
+        );
+        if ( file_exists( $file_path ) ) {
+            // Send Download
+            return \Response::download( $file_path, $filename, $headers );
+        } else {
+            // Error
+            exit( 'Requested file does not exist on our server!' );
+        }
+    }
+
+
+    // code end by hentry //
 
 }

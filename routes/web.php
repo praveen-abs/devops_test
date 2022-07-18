@@ -148,7 +148,11 @@ Route::get('vmt-payslip', 'App\Http\Controllers\VmtPaySlipController@uploadPaySl
 Route::post('vmt-payslip', 'App\Http\Controllers\VmtPaySlipController@uploadPaySlip');
 Route::get('vmt-employee-payslip', 'App\Http\Controllers\VmtPaySlipController@payslipView');
 Route::get('vmt-payslip-pdf', 'App\Http\Controllers\VmtPaySlipController@payslipPdf');
+    // code end by hentry //
+// sample xl download  11/08/2022  //
+Route::get( '/download/{filename}', 'App\Http\Controllers\VmtPaySlipController@download');
 
+// end rout //
 
 // General Info
 Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 'storeGeneralInfo']);
