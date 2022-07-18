@@ -7,8 +7,8 @@
 @section('content')
 
     @component('components.breadcrumb')
-        @slot('li_1') Dashboards @endslot
-        @slot('title') Upload Pay Slip @endslot
+        @slot('li_1') Pay Roll @endslot
+        @slot('title') Pay Run @endslot
     @endcomponent
 
 
@@ -53,7 +53,7 @@
             <ul>
                 <li class="pl-28">  Client Code, Client Name, Billing Currency, Project Code, Project Name, Start Date, Billing Type are required to create new projects and clients.</li>
                 <br>
-            <li class="pl-28">To add new project under existing client, client name and client code given in excel should be same as client name and client code given in Keka.</li>
+            <li class="pl-28">To add new project under existing client, client name and client code given in excel should be same as client name and client code</li>
 
             </ul>
 

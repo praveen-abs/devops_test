@@ -150,6 +150,71 @@ span .paginate_button {
     background: #405189 !important;
 }
 
+.search-content .directory-search-bar {
+    background: #fff !important;
+    padding: 4px 0px !important;
+    height: 30px;
+    width: 250px;
+    
+}
+.form-control:focus {
+    /* border: 2px solid #1c8b8d !important; */
+    border:1px solid #c1cef9  !important;
+}
+table th {
+    color: #5265a7;
+    background-color: #ccd6f7;
+    padding: 15px 10px !important;
+    font-size: 13px;
+}
+
+tbody {
+    background-color: #fff;
+}
+
+tbody tr:hover {
+    background-color: #f3f3f9;
+
+}
+
+td {
+    border: solid 1px #000;
+    border-style: none solid solid none;
+    padding: 10px;
+    font-weight: 600;
+    color: #878aa5;
+
+}
+
+td .btn i {
+    font-size: 16px;
+}
+
+
+tr:first-child th:first-child {
+    border-top-left-radius: 6px !important;
+}
+tr:first-child th:first-child {
+    border-bottom-left-radius: 6px !important;
+}
+
+
+tr:last-child td:first-child {
+    border-bottom-left-radius: 6px !important;
+}
+
+tr:first-child th:last-child {
+    border-top-right-radius: 6px !important;
+}
+
+tr:first-child th:last-child {
+    border-bottom-right-radius: 6px !important;
+}
+
+
+tr:last-child td:last-child {
+    border-bottom-right-radius: 6px !important;
+}
 
 #empTable td:before {
     content: attr(data-label);
@@ -254,6 +319,69 @@ td .btn i {
     height: 100%;
     border-bottom: 1px solid !important;
 }
+
+/* data table */
+.dataTables_wrapper {
+    position: relative;
+    clear: both;
+     zoom: 1;
+}
+
+/* length */
+.dataTables_wrapper .dataTables_length {
+    float: left;
+    }
+.filter-wrapper label{
+    background: #fff !important;
+    /* padding: 4px 0px !important; */
+    border-radius: 6px;
+    padding: 10px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+}
+.filter-wrapper select {
+    padding: 5px 5px;
+ 
+    border-bottom: none;
+    border-radius: 5px;
+    margin: 0px 5px;
+}
+.filter-wrapper select:focus {
+    background: aliceblue;  
+}
+
+
+/* search bar */
+.dataTables_wrapper .dataTables_filter {
+        float:none !important;
+        left: 230px;
+    position: absolute;
+    text-align: none !important;    
+    
+}
+
+
+
+.dataTables_wrapper .dataTables_filter label{
+    margin:0px 5px 0px 5px !important;
+}
+
+.dataTables_wrapper .dataTables_filter input{
+    position: absolute !important;
+    background: #fff !important;
+    padding: 4px 0px !important;
+    width: 250px !important;  
+    outline:none !important;
+    border-radius:5px !important;
+    border:1px solid #ced4da !important;
+}
+.dataTables_wrapper .dataTables_filter input:focus{
+    border:1px solid #c1cef9  !important;    
+    }
+
+
+
 </style>
 
 @endsection
@@ -271,10 +399,8 @@ td .btn i {
 
         <div class="row">
             <div class="col-12 col-lg-12 col-md-12 ">
-                <div class="card ">
-
-
-                <div class="card px-5 py-2 pms-card-wrapper  pms-dashboard-wrapper ">
+                    <!-- <div class="card "> -->
+               <div class="card px-5 py-2 pms-card-wrapper  pms-dashboard-wrapper ">
 
 
                     <div class="card-body p-3">
@@ -363,7 +489,7 @@ td .btn i {
                         </div>
                     </div>
 
-                    </div>
+                </div>
 
 
 
@@ -390,13 +516,38 @@ td .btn i {
             </div>
         </div>
         @else
-        <button id="add-goals" class="rounded-pill py-1 px-2 mx-2 text-white btn btn-primary mb-2" style="float:right;"><h6 class="m-0 text-white p-2"><i class="text-white fa fa-plus mr-2"></i><b>Add</b></h6></button>
-        <div style="width:100%; overflow:auto;">
-            <table id='empTable' class='table dt-responsive nowrap'>
-                <thead>
-                    <tr style="background:#f6f8fb;">
-                        <th class="p-3"></th>
-                        <th class=""  style="width : 30px"> </th>
+        
+        <div class="filter-wrapper d-flex align-items-center justify-content-between my-3">
+
+        <div class="d-flex float-left align-items-center py-1">
+<label for="" class="m-0">Entries   
+<select name="" id="">
+    <option value="">5</option>
+    <option value="">10</option>
+    <option value="">15</option>
+</select>
+</label>
+<div class="search-content header-item w-50 mx-5">
+
+                        <i class=" ri-search-line "></i>
+                        <input type="text" class="form-control search-bar directory-search-bar py-1"
+                            placeholder="Search">
+                    </div>
+
+
+        </div>
+
+        <div class="d-flex float-right align-items-cetner ">
+        <button id="add-goals" class="py-1 px-2 mx-3 text-white btn btn-danger  "><i class="text-white fa fa-plus mr-2"></i>Add Goals
+    </button>
+</div>
+        </div>
+        
+        <div class="table-responsive">
+        <table class="w-100 align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                <th class=" "> </th>
                         <th class="p-3">Employee ID</th>
                         <th class="p-3">Employee name</th>
                         <th class="p-3">Manager</th>
@@ -404,24 +555,38 @@ td .btn i {
                         <th class="p-3">Employee Status</th>
                         <th class="p-3">Manager Status</th>
                         <th class="p-3">Average Rating</th>
-                    </tr>
-                </thead>
-                <tbody>
+                </tr>
+            </thead>
+            <tbody>
                     @foreach($empGoals as $emp)
                     <tr>
-                        <td>
+                        <!-- <td>
                             <img class="rounded-circle header-profile-user" src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif" alt="Header Avatar">
-                        </td>
-                        <td style="vertical-align : middle">
+                        </td> -->
+                        <!-- <td style="vertical-align : middle">
+
                             @if(auth()->user()->hasrole('Employee'))
                                 <a target="_blank" href="{{url('vmt-pmsappraisal-review?id='.$emp->kpi_table_id)}}"><span class="mr-10 icon"><i class="fa fa-external-link"></i></span></a>
                             @else
                                 <a target="_blank" href="{{url('pms-employee-reviews?goal_id='.$emp->kpi_table_id.'&user_id='.$emp->userid)}}"><span class="mr-10 icon"><i class="fa fa-external-link"></i></span></a>
                             @endif
-                        </td>
+                        </td> -->
 
+                        <td style="vertical-align : middle">
+                        <button id="add-goals" class="py-0 px-1 text-white btn btn-danger  "><i class="text-white  ri-pencil-line mr-1"></i>Review
+                        </td>
+                        
                         <td class="p-3">{{$emp->emp_no}}</td>
-                        <td class="p-3">{{$emp->emp_name}}</td>
+                        
+                        <td class="p-3">
+                            <div class="d-flex align-items-center rounded-pills">
+                        <img src="{{ URL::asset('assets/images/users/avatar-8.jpg') }}" alt=""
+                                    class="avatar-xs rounded-circle" />
+                              
+                              <label for="" class="m-0">  {{$emp->emp_name}}</label>    
+                        </div>
+                                </td>
+                        
                         <td class="p-3">
                             @if(auth()->user()->hasrole('Employee') || auth()->user()->hasrole('Manager') )
                                 {{$users[0]->name}}
@@ -509,8 +674,10 @@ td .btn i {
                     </tr>
                     @endforeach
                 </tbody>
-            </table>
-        </div>
+
+        </table>
+        <!-- end table -->
+    </div>
         @endif
     </div>
     <!-- <div class="assign-cards-wrapper">
@@ -1127,7 +1294,7 @@ td .btn i {
 
                 <form id="changeEmployeeForm" method="POST" >
                     @csrf
-                    <label for="FormSelectDefault" class="form-label text-muted">Employees</label>
+                    <label for="FormSelectDefault" class="form-label m-0 text-muted">Employees</label>
                     <select class="form-select mb-3" aria-label="Default select example" name="employees[]" id="select-employees" multiple>
                       
                     </select>

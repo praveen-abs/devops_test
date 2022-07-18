@@ -15,9 +15,10 @@ table {
 }
 
 table th {
-    /* color: #4c9393; */
-    background-color: #b0bff1;
+    color: #5265a7;
+    background-color: #ccd6f7;
     padding: 15px 10px !important;
+    font-size: 13px;
 }
 
 tbody {
@@ -43,24 +44,35 @@ td .btn i {
 }
 
 
-/* tr:first-child th:first-child {
-    border-top-left-radius: 10px !important;
+tr:first-child th:first-child {
+    border-top-left-radius: 6px !important;
+}
+tr:first-child th:first-child {
+    border-bottom-left-radius: 6px !important;
 }
 
+
 tr:last-child td:first-child {
-    border-bottom-left-radius: 10px !important;
+    border-bottom-left-radius: 6px !important;
 }
 
 tr:first-child th:last-child {
-    border-top-right-radius: 10px !important;
+    border-top-right-radius: 6px !important;
 }
 
+tr:first-child th:last-child {
+    border-bottom-right-radius: 6px !important;
+}
+
+
 tr:last-child td:last-child {
-    border-bottom-right-radius: 10px !important;
-} */
+    border-bottom-right-radius: 6px !important;
+}
 
 
 /* for radio button */
+
+
 .switch-field {
     display: flex;
 
@@ -82,11 +94,12 @@ tr:last-child td:last-child {
 
 .switch-field label {
     background-color: #fff;
-    color: #1c8b8d;
+    color:#acb0b0;
     font-size: 14px;
     line-height: 1;
+    /* font-weight:600; */
     text-align: center;
-    padding: 10px 16px;
+    padding: 5px 15px;
     margin-right: -1px;
     border: 1px solid rgba(0, 0, 0, 0.2);
     /* box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1); */
@@ -99,8 +112,11 @@ tr:last-child td:last-child {
 }
 
 .switch-field input:checked+label {
-    background-color: #b0bff1!important;
+    
     box-shadow: none;
+      color: #5265a7;
+    background-color: #ccd6f7 !important;
+
 }
 
 .switch-field label:first-of-type {
@@ -111,13 +127,16 @@ tr:last-child td:last-child {
     border-radius: 0 4px 4px 0;
 }
 
-.directory-search-bar {
-    background:#fff !important;
-}
-.directory-search-bar:focus{
-    border:2px solid #1c8b8d !important;
+.search-content .directory-search-bar {
+    background: #fff !important;
+    padding:4px 0px !important;
+    
 }
 
+.form-control:focus {
+    /* border: 2px solid #1c8b8d !important; */
+    border:1px solid #c1cef9  !important;
+}
 </style>
 
 
@@ -130,12 +149,13 @@ tr:last-child td:last-child {
 @endcomponent
 
 <div class=" project-wrapper">
-    <div class="row">
+    <h4 class="text-muted fw-bold">Employee Directory</h4>
+    <!-- <div class="row">
         <div class="col-12">
-            <div class="row mb-3">
+            <div class="row ">
                 <div class="card card-animate">
                     <div class="card-body p-0">
-                        <!-- <h5>Employee Directory</h5> -->
+                        
                         <ul class="nav sub-topnav">
                             <li routerlinkactive="active" class="active">
                                 <a routerlink="directory" href="{{url('vmt-employess/directory')}}">Employee
@@ -150,7 +170,7 @@ tr:last-child td:last-child {
                             <li routerlinkactive="active">
                                 <a routerlink="profile-changes" href="#/org/employees/profile-changes">Profile
                                     Changes</a>
-                                <!---->
+                               
                             </li>
                             <li routerlinkactive="active">
                                 <a routerlink="privateprofiles" href="#/org/employees/privateprofiles">Private
@@ -163,8 +183,8 @@ tr:last-child td:last-child {
                                 <a routerlink="settings" href="#/org/employees/settings">Settings</a>
                             </li>
                         </ul>
-                    </div><!-- end card body -->
-                </div><!-- end card body -->
+                    </div>
+                </div>
             </div>
             <div class="page-title">
                 <h1>Employee Directory</h1>
@@ -313,8 +333,8 @@ tr:last-child td:last-child {
 
 
         </div>
-    </div>
-    <div class="directory-content my-3 ">
+    </div> -->
+    <div class="directory-content  mb-3 mt-2">
         <div class="row">
             <div class="col-8">
                 <div class="float-left directory-left d-flex">
@@ -328,17 +348,17 @@ tr:last-child td:last-child {
                     <div class="search-content header-item w-50 mx-5">
 
                         <i class=" ri-search-line "></i>
-                        <input type="text" class="form-control search-bar directory-search-bar w-50 "
+                        <input type="text" class="form-control search-bar directory-search-bar  w-75 "
                             placeholder="Search">
                     </div>
                 </div>
             </div>
             <div class="col-4">
-                <div class="d-flex directory-right float-right justify-content-end">
+                <div class="d-flex directory-right float-right justify-content-end align-items-center">
                     <div class="btn border-0 outline-none mx-2 ">
                         <i class="ri-menu-add-line fw-bold"></i>
                     </div>
-                    <a href="{{route('vmt_employeeOnboarding')}}" class="btn border-0 outline-none onboard-employee-btn bg-danger text-white">
+                    <a href="{{route('vmt_employeeOnboarding')}}" class="btn border-0 outline-none py-1 onboard-employee-btn h-25 fw-bold bg-danger text-white">
                         <i class="ri-add-line fw-bold mx-1"></i>
                         Onboard Employee
                     </a>
@@ -358,8 +378,7 @@ tr:last-child td:last-child {
                     <th scope="col">Reporting Manager</th>
                     <th scope="col">Email Id</th>
                     <th scope="col">Blood Group</th>
-                    <th scope="col">Percentage</th>
-                    <th scope="col">Actions</th>
+                    <th scope="col">Profile</th>
                     <th scope="col">Reminder</th>
                 </tr>
             </thead>
@@ -370,16 +389,16 @@ tr:last-child td:last-child {
                     <td>
                         <div class="d-flex gap-2 align-items-center">
                             <div class="flex-shrink-0">
-                            @if($employee->avatar)
+                                @if($employee->avatar)
                                 <img src="{{ URL::asset('assets/images/') }}/{{$employee->avatar}}" alt=""
                                     class="avatar-xs rounded-circle" />
-                            @else
+                                @else
                                 <img src="{{ URL::asset('assets/images/vmt_user_icon.jpeg') }}" alt=""
                                     class="avatar-xs rounded-circle" />
-                            @endif
+                                @endif
                             </div>
                             <div class="flex-grow-1">
-                            {{$employee->emp_name}}
+                                {{$employee->emp_name}}
                             </div>
                         </div>
                     </td>
@@ -389,20 +408,21 @@ tr:last-child td:last-child {
 
                     <td><span>{{$employee->email_id }}</span></td>
                     <td><span> B <sup>+</sup></span></td>
-                    <td>{{$employee->percentage}}%</td>
-                    <td>
+                    <td><span>70%</span></td>
+                    <!-- <td>
                         <div class="d-flex gap-2 align-items-center">
-                            <a href="{{route('pages-profile')}}" class="btn border-0 outline-none bg-transparent p-0  mx-1">
+                            <a href="{{route('pages-profile')}}"
+                                class="btn border-0 outline-none bg-transparent p-0  mx-1">
                                 <i class="ri-pencil-line text-primary fw-bold"></i>
                             </a>
                             <button class="btn border-0 outline-none bg-transparent p-0  ">
                                 <i class="ri-delete-bin-line text-danger fw-bold"></i>
                             </button>
                         </div>
-                    </td>
+                    </td> -->
                     <td>
                         <button class="btn border-0 outline-none bg-transparent p-0">
-                            <i class="ri-alarm-line fw-bold "></i>
+                            <i class=" bx bx-bell f-15"></i>
                         </button>
                     </td>
                 </tr>
