@@ -17301,10 +17301,10 @@ p {
 
 
 
-.form-control:focus {
+/* .form-control:focus {
     box-shadow: none !important;
     border: 2px solid #863dd9;
-}
+} */
 
 .btn-light {
     background-color: #FFF;
@@ -17323,7 +17323,7 @@ p {
 
 .form-control:focus {
     box-shadow: none;
-    border: 2px solid #364574 !important;
+    /* border: 2px solid #364574 !important; */
 }
 
 .form-control {
@@ -17333,7 +17333,7 @@ p {
 
 .form-control:focus {
     background-color: #FFF;
-    border-color: #002f56;
+    /* border-color: #002f56; */
 }
 
 .container {

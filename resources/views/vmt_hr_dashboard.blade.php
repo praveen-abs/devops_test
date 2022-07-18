@@ -49,26 +49,30 @@
         <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4">
             <div class="card profile-box flex-fill">
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col status-wrapper ">
+                    <div class="d-flex">
+                        <div class="status-wrapper ">
 
                             <!-- <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}" > -->
-                            <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}" class="soc-det-img profile-img-round h-75 w-75">
+                            <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}"
+                                class="soc-det-img profile-img-round h-100 w-100">
                             <!-- <img src="{{ URL::asset('assets/images/status-pic.png') }}" alt=""
                                 class="profile-img-round"> -->
-                            
+
                             <!-- <i class="ri-checkbox-blank-circle-fill status-circle"></i> -->
 
                         </div>
-                        <div class="col greet-wrap status-wrapper">
+                        <div class="greet-wrap mx-3">
                             <div class="d-felx ">
                                 <!-- <h4>Welcome Back<b class="ml-1 text-primary">{{auth()->user()->name}}</b></h4> -->
                                 <p class="text-muted ">Welcome Back<b
-                                        class="ml-1 text-primary">{{auth()->user()->name}}</b></p>
+                                        class="ml-1 text-primary">{{auth()->user()->name}}</b>
+                                </p>
 
                                 <p class="text-muted f-13 mt-1 m-0">{{date('d F Y')}}</p>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-sm-12 col-md-12 col-xl-12 col-xl-12 mt-2 mb-4">
                             <div class="d-flex align-items-center ">
                                 <p class="f-13 w-50"><i class=" ri-sun-line text-warning mr-2"></i>General shift</p>
@@ -326,7 +330,7 @@
                                         <!-- <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}"
                                             class="img-round"> -->
                                         <img src="{{ URL::asset('assets/images/users/avatar-8.jpg') }}" alt=""
-                                        class="img-round">
+                                            class="img-round">
                                         <h6 class=" text-primary mx-3 mt-3">{{auth()->user()->name}}</h6>
                                     </div>
                                     <p class="text-danger fw-bold text-right program-day ">Today</p>
@@ -346,8 +350,8 @@
                                     Anniversary</p>
                                 <div class="mt-2 ">
                                     <div class="px-2 d-flex">
-                                    <img src="{{ URL::asset('assets/images/users/avatar-10.jpg') }}" alt=""
-                                        class="img-round">
+                                        <img src="{{ URL::asset('assets/images/users/avatar-10.jpg') }}" alt=""
+                                            class="img-round">
                                         <!-- <h6 class=" text-primary mx-3 mt-3">{{auth()->user()->name}}</h6> -->
                                         <h6 class=" text-primary mx-3 mt-3">Ray</h6>
                                     </div>
@@ -368,8 +372,8 @@
                                     Anniversary</p>
                                 <div class="mt-2  ">
                                     <div class="px-2 d-flex">
-                                    <img src="{{ URL::asset('assets/images/users/avatar-7.jpg') }}" alt=""
-                                        class="img-round">
+                                        <img src="{{ URL::asset('assets/images/users/avatar-7.jpg') }}" alt=""
+                                            class="img-round">
                                         <!-- <h6 class=" text-primary mx-3 mt-3">{{auth()->user()->name}}</h6> -->
                                         <h6 class=" text-primary mx-3 mt-3">Mosh</h6>
                                     </div>
