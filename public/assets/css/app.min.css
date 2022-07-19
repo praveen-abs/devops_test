@@ -18586,7 +18586,7 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
     -o-background-size: cover;
 } */
 
-
+/* 
 .login-bg {
     position: fixed;
     top: -50%;
@@ -18606,7 +18606,7 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
     margin: auto;
     min-width: 50%;
     min-height: 50%;
-}
+} */
 
 
 .login-headers {
@@ -18854,7 +18854,7 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
         padding: 10px 0 20px 0;
     }
 
-    [data-layout=vertical][data-sidebar-size=sm] .navbar-menu {}
+  
 
 
 }
@@ -18864,25 +18864,26 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
 /* scroll bard */
 
 /* width */
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
     width: 8px;
-}
+    overflow:scroll;
+} */
 
 /* Track */
-::-webkit-scrollbar-track {
+/* ::-webkit-scrollbar-track {
     background: transparent;
-}
+} */
 
 /* Handle */
-::-webkit-scrollbar-thumb {
+/* ::-webkit-scrollbar-thumb {
     background: #002f56;
     border-radius: 10px;
 
-}
+} */
 
 /* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
+/* ::-webkit-scrollbar-thumb:hover {
     background: #023864c7;
-}
+} */
 
-body:hover ::-webkit-scrollbar-thumb {}
+/* body:hover ::-webkit-scrollbar-thumb {} */

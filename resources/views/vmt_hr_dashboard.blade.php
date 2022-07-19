@@ -141,7 +141,7 @@
         <div class="col-sm-9 col-md-9">
             <div class="row">
                 <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
-                    <div class="card shadow profile-box card-top-border mb-1">
+                    <div class="card shadow profile-box card-top-border ">
                         <!-- <div class="p-1 bg-primary" > -->
                         <div class="card-body d-flex justify-content-center align-items-center">
                             <div class="text-center">
