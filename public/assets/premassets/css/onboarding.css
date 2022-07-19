@@ -4,12 +4,22 @@
     padding: 0
 }
 
-
 fieldset {
     border: 1px solid !important;
     padding: 0px 10px !important;
 }
-  
+
+.profile-box {
+    border-radius: 12px !important;
+    box-shadow: rgb(60 64 67 / 30%) 0px 1px 2px 0px, rgb(60 64 67 / 15%) 0px 2px 6px 2px !important;
+}
+.profile-box .card-body{
+    padding: 5px !important;
+}
+
+.card-top-border {
+    border-top: 7px solid #002F56!important;
+}
 
 legend {
     position: relative !important;
@@ -114,7 +124,7 @@ option:hover {
 #msform select {
     padding: 12px 15px 12px 15px;
     /* border: none; */
-    border-radius: 20px;
+    /* border-radius: 20px; */
     /* margin-top: 2px; */
     /* width: 100%; */
     /* box-sizing: border-box; */
