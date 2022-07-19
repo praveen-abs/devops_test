@@ -141,7 +141,10 @@ class HomeController extends Controller
     }
 
     public function updateExperienceInfo(Request $request) {
-        $idArr = $request->input('id');
+        $reDetails = VmtEmployee::where('userid', $request->id)->first();
+        $details = VmtEmployee::find($reDetails->id);
+        $saveId = [];
+        $idArr = $request->input('ids');
         $companyNameArr = $request->input('company_name');
         $locationArr = $request->input('location');
         $jobPositionArr = $request->input('job_position');
@@ -153,16 +156,17 @@ class HomeController extends Controller
             } else {
                 $exp = new Experience;
             }
+            $exp->emp_id = $reDetails->id;
+            $exp->user_id = $request->id;
             $exp->company_name = $companyNameArr[$k];
             $exp->location = $locationArr[$k];
             $exp->job_position = $jobPositionArr[$k];
             $exp->period_from = $periodFromArr[$k];
             $exp->period_to = $periodToArr[$k];
             $exp->save();
+            array_push($saveId, $exp->id);
         }
-        $reDetails = VmtEmployee::where('userid', $request->id)->first();
-        $details = VmtEmployee::find($reDetails->id);
-        $details->experience_json = implode(',', $idArr);
+        $details->experience_json = implode(',', $saveId);
         $details->save();
         Ses::flash('message', 'Bank Details Updated successfully!');
         Ses::flash('alert-class', 'alert-success');
@@ -329,7 +333,8 @@ class HomeController extends Controller
             $employee = null;
         }
         $bank = Bank::all(); 
-        return view('pages-profile', compact( 'employee', 'user', 'details', 'bank'));
+        $exp = Experience::whereIn('id', explode(',', $details->experience_json))->get(); 
+        return view('pages-profile', compact( 'employee', 'user', 'details', 'bank', 'exp'));
     }
 
     public function showProfilePage(Request $request) {
@@ -341,7 +346,8 @@ class HomeController extends Controller
             $employee = null;
         }
         $bank = Bank::all(); 
-        return view('pages-profile-settings', compact( 'employee', 'user', 'details', 'bank'));
+        $exp = Experience::whereIn('id', explode(',', $details->experience_josn))->get(); 
+        return view('pages-profile-settings', compact( 'employee', 'user', 'details', 'bank', 'exp'));
     }
 
     //

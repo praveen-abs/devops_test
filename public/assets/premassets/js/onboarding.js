@@ -22,7 +22,7 @@ $(document).ready(function() {
                 'gst': /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/,
                 'alp-num': /^[a-zA-Z0-9]+$/,
                 'alpha': /^[a-zA-Z]+$/,
-                'name': /^[a-zA-Z.]+$/,
+                'name': /^[a-zA-Z. ]+$/,
             };
             var regex = $(this).attr('pattern');
             if (!pattern[regex].test(inputvalues)) {

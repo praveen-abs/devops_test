@@ -174,30 +174,52 @@
                         <div class="card profile-box flex-fill">
                             <div class="card-body">
                                 <h3 class="card-title fw-bold">Experience Details
-                                    <span class="personal-edit"><a href="#" class="edit-icon" data-bs-toggle="modal"
-                                            data-bs-target="#experience_info"><i class="ri-pencil-fill"></i></a></span>
+                                    <span class="personal-edit">
+                                        <a href="#" class="edit-icon" data-bs-toggle="modal" data-bs-target="#experience_info">
+                                            <i class="ri-pencil-fill"></i>
+                                        </a>
+                                    </span>
                                 </h3>
-                                <ul class="personal-info">
-                                    <li>
-                                        <div class="title">Organization</div>
-                                        <!-- <div class="text">{{$details->passport}}</div> -->
-                                        <div class="text">-</div>
-                                    </li>
-                                    <li>
-                                        <div class="title">Designation</div>
-                                        <!-- <div class="text">{{$details->passport}}</div> -->
-                                        <div class="text">{{$details->designation}}</div>
-                                    </li>
-                                    <li>
-                                        <div class="title">From</div>
-                                        <div class="text">-</div>
-                                    </li>
-                                    <li>
-                                        <div class="title">To</div>
-                                        <div class="text">-</div>
-                                    </li>
-
-                                </ul>
+                                <div class="table-responsive">
+                                    <table class="table table-nowrap">
+                                        <thead>
+                                            <tr>
+                                                <th>Organization</th>
+                                                <th>Designation</th>
+                                                <th>From</th>
+                                                <th>To</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if($exp)
+                                            @foreach($exp as $k => $info)
+                                            <tr>
+                                                <td>{{$info['company_name']}}</td>
+                                                <td>{{$info['job_position']}}</td>
+                                                <td>{{$info['period_from']}}</td>
+                                                <td>{{$info['period_to']}}</td>
+                                                <td class="text-end">
+                                                    <div class="dropdown dropdown-action">
+                                                        <a aria-expanded="false" data-bs-toggle="dropdown"
+                                                            class="action-icon dropdown-toggle" href="#"><i
+                                                                class="ri-more-2-fill material-icons"></i></a>
+                                                        <div class="dropdown-menu dropdown-menu-right">
+                                                            <a href="#" class="dropdown-item"><i
+                                                                    class=" ri-pencil-fill m-r-5"></i>
+                                                                Edit</a>
+                                                            <a href="#" class="dropdown-item"><i
+                                                                    class=" ri-delete-bin-line"></i>
+                                                                Delete</a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -205,9 +227,11 @@
                     <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex">
                         <div class="card profile-box flex-fill">
                             <div class="card-body">
-                                <h3 class="card-title fw-bold">Family Informations <a href="#" class="edit-icon"
-                                        data-bs-toggle="modal" data-bs-target="#family_info_modal"><i
-                                            class=" ri-pencil-fill"></i></a></h3>
+                                <h3 class="card-title fw-bold">Family Informations 
+                                    <a href="#" class="edit-icon" data-bs-toggle="modal" data-bs-target="#family_info_modal">
+                                        <i class=" ri-pencil-fill"></i>
+                                    </a>
+                                </h3>
                                 <div class="table-responsive">
                                     <table class="table table-nowrap">
                                         <thead>
@@ -1188,40 +1212,6 @@
                         <div class="form-scroll">
                             <div class="card">
                                 <div class="card-body">
-                                    <h3 class="card-title fw-bold">Family Member <a href="javascript:void(0);"
-                                            class="delete-icon"><i class="   ri-delete-bin-line"></i></a>
-                                    </h3>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group mb-3">
-                                                <label>Name <span class="text-danger">*</span></label>
-                                                <input name="name[]" class="form-control onboard-form" type="text" pattern-data="name" required value="{{($details->family_info_json && $details->family_info_json['name']) ? $details->family_info_json['name'][0] : ''}}">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group mb-3">
-                                                <label>Relationship <span class="text-danger">*</span></label>
-                                                <input name="relationship[]" class="form-control onboard-form" type="text" pattern-data="alpha" required value="{{($details->family_info_json && $details->family_info_json['relationship']) ? $details->family_info_json['relationship'][0] : ''}}">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group mb-3">
-                                                <label>Date of birth <span class="text-danger">*</span></label>
-                                                <input name="dob[]" class="form-control onboard-form" type="date" max="9999-12-31" required value="{{($details->family_info_json && $details->family_info_json['dob']) ? $details->family_info_json['dob'][0] : ''}}">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group mb-3">
-                                                <label>Phone <span class="text-danger">*</span></label>
-                                                <input name="phone[]" class="form-control onboard-form" type="number" maxlength="10"
-                                                    minlength="10" required value="{{($details->family_info_json && $details->family_info_json['phone']) ? $details->family_info_json['phone'][0] : ''}}">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-body">
                                     <h3 class="card-title fw-bold">Education Informations <a href="javascript:void(0);"
                                             class="delete-icon"><i class="   ri-delete-bin-line"></i></a>
                                     </h3>
@@ -1230,28 +1220,28 @@
                                             <div class="col-md-6">
                                                 <div class="form-group mb-3">
                                                     <label>Name <span class="text-danger">*</span></label>
-                                                    <input name="name[]" class="form-control onboard-form" type="text" pattern-data="name" required value="{{($details->family_info_json && $details->family_info_json['name']) ? $details->family_info_json['name'][1] : ''}}">
+                                                    <input name="name[]" class="form-control onboard-form" type="text" pattern-data="name" required value="{{($details->family_info_json && $details->family_info_json['name']) ? $details->family_info_json['name'][0] : ''}}">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group mb-3">
                                                     <label>Relationship <span class="text-danger">*</span></label>
                                                     <input name="relationship[]" class="form-control onboard-form" type="text"
-                                                        pattern-data="alpha" required value="{{($details->family_info_json && $details->family_info_json['relationship']) ? $details->family_info_json['relationship'][1] : ''}}">
+                                                        pattern-data="alpha" required value="{{($details->family_info_json && $details->family_info_json['relationship']) ? $details->family_info_json['relationship'][0] : ''}}">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group mb-3">
                                                     <label>Date of birth <span class="text-danger">*</span></label>
                                                     <input name="dob[]" class="form-control onboard-form" type="date"
-                                                        max="9999-12-31" required value="{{($details->family_info_json && $details->family_info_json['dob']) ? $details->family_info_json['dob'][1] : ''}}">
+                                                        max="9999-12-31" required value="{{($details->family_info_json && $details->family_info_json['dob']) ? $details->family_info_json['dob'][0] : ''}}">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group mb-3">
                                                     <label>Phone <span class="text-danger">*</span></label>
                                                     <input name="phone[]" class="form-control onboard-form" type="number"
-                                                        maxlength="10" minlength="10" required value="{{($details->family_info_json && $details->family_info_json['phone']) ? $details->family_info_json['phone'][1] : ''}}">
+                                                        maxlength="10" minlength="10" required value="{{($details->family_info_json && $details->family_info_json['phone']) ? $details->family_info_json['phone'][0] : ''}}">
                                                 </div>
                                             </div>
                                         </div>
@@ -1443,75 +1433,26 @@
                                     <h3 class="card-title fw-bold">Experience Informations <a href="javascript:void(0);"
                                             class="delete-icon"><i class="   ri-delete-bin-line"></i></a>
                                     </h3>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <input type="hidden" name="id[]">
-                                            <div class="form-group mb-3 form-focus focused">
-                                                <label class="focus-label">Company Name</label>
-                                                <input type="text" name="company_name[]" class="form-control floating" value="--" required>
-
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-
-                                            <div class="form-group mb-3 form-focus focused">
-                                                <label class="focus-label">Location</label>
-                                                <input type="text" name="location[]" class="form-control floating" name="work_location" value="" required>
-
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-
-                                            <div class="form-group mb-3 form-focus focused">
-                                                <label class="focus-label">Job Position</label>
-                                                <input type="text" name="job_position[]" class="form-control floating" name="designation" value="" required>
-
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group mb-3 form-focus focused">
-                                                <label class="focus-label">Period From</label>
-                                                <div class="cal-icon">
-                                                    <input type="date" max="9999-12-31" name="period_from[]" class="form-control floating datetimepicker" value="--" required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group mb-3 form-focus focused">
-                                                <label class="focus-label">Period To</label>
-                                                <div class="cal-icon">
-                                                    <input type="date" max="9999-12-31" name="period_to[]" class="form-control floating datetimepicker" value="--" required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-body">
-                                    <h3 class="card-title fw-bold">Experience Informations <a href="javascript:void(0);"
-                                            class="delete-icon"><i class="   ri-delete-bin-line"></i></a>
-                                    </h3>
                                     <div class="exp-content-container">
                                         <div class="row exp-addition-content" id="content1">
-                                            <input type="hidden" name="id[]">
+                                            <input type="hidden" name="ids[]">
                                             <div class="col-md-6">
                                                 <div class="form-group mb-3 form-focus focused">
                                                     <label class="focus-label">Company Name</label>
-                                                    <input type="text" name="company_name[]" class="form-control floating" value="--" required>
+                                                    <input type="text" name="company_name[]" class="form-control floating" value="" required>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group mb-3 form-focus focused">
                                                     <label class="focus-label">Location</label>
-                                                    <input type="text" name="location[]" class="form-control floating" value="--" required>
+                                                    <input type="text" name="location[]" class="form-control floating" value="" required>
 
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group mb-3 form-focus focused">
                                                     <label class="focus-label">Job Position</label>
-                                                    <input type="text" name="job_position[]" class="form-control floating" value="--" required>
+                                                    <input type="text" name="job_position[]" class="form-control floating" value="" required>
 
                                                 </div>
                                             </div>
@@ -1519,7 +1460,7 @@
                                                 <div class="form-group mb-3 form-focus focused">
                                                     <label class="focus-label">Period From</label>
                                                     <div class="cal-icon">
-                                                        <input type="date" max="9999-12-31" name="period_from[]" class="form-control floating datetimepicker" value="--" required>
+                                                        <input type="date" max="9999-12-31" name="period_from[]" class="form-control floating datetimepicker" value="" required>
                                                     </div>
 
                                                 </div>
@@ -1528,7 +1469,7 @@
                                                 <div class="form-group mb-3 form-focus focused">
                                                     <div class="cal-icon">
                                                         <label class="focus-label">Period To</label>
-                                                        <input type="date" max="9999-12-31" name="period_to[]" class="form-control floating datetimepicker" value="--" required>
+                                                        <input type="date" max="9999-12-31" name="period_to[]" class="form-control floating datetimepicker" value="" required>
                                                     </div>
 
                                                 </div>
@@ -1606,6 +1547,24 @@ $('body').on('keyup', ".onboard-form", function() {
 $('.edit-icon').click(function() {
     var modalid = $(this).attr('data-bs-target');
     $(modalid).modal('show');
+    if (modalid == '#experience_info') {
+        var expInfo = @json($exp);
+        if (expInfo.length > 0) {
+            $('.exp-content-container').html('');
+        }
+        var id = $('.addition-content:last').attr('id');
+        var expInfoCount = 1;
+        if (id) {
+            expInfoCount = parseInt(id.replace('content', '')) + 1;
+        }
+        console.log(expInfo);
+
+        $.each(expInfo,function(key, value) {
+            $('.exp-content-container').append('<div class="row exp-addition-content" id="content' + expInfoCount +'"><input type="hidden" name="ids[]" value="'+value['id']+'"><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Company Name</label><input type="text" class="form-control floating" value="'+value['company_name']+'" name="company_name[]" required></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Location</label><input type="text" class="form-control floating" value="'+value['location']+'" name="location[]" required></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Job Position</label><input type="text" class="form-control floating" value="'+value['job_position']+'" name="job_position[]" required></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Period From</label><div class="cal-icon"><input type="date" max="9999-12-31"  class="form-control floating datetimepicker" value="'+value['period_from']+'" name="period_from[]" required></div></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><div class="cal-icon"><label class="focus-label">Period To</label><input type="date" max="9999-12-31"  class="form-control floating datetimepicker" value="'+value['period_to']+'" name="period_to[]" required></div></div></div></div>'
+            );
+            expInfoCount++;
+        });
+    }
     if (modalid == '#family_info_modal') {
         var familyInfo = @json($details->family_info_json);
         var id = $('.exp-addition-content:last').attr('id');
@@ -1614,8 +1573,8 @@ $('.edit-icon').click(function() {
             familyInfoCount = parseInt(id.replace('content', '')) + 1;
         }
         $.each(familyInfo['name'],function(key, value) {
-            if (key > 1) {
-                $('.content-container').append('<div class="row addition-content" id="content' + familyInfoCount +'"><input type="hidden" name="id[]"><div class="col-md-6"><div class="form-group mb-3"><label>Name <span class="text-danger">*</span></label><input value="'+familyInfo['name'][key]+'" name="name[]" class="form-control onboard-form" type="text" pattern-data="name" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Relationship <span class="text-danger">*</span></label><input value="'+familyInfo['relationship'][key]+'" name="relationship[]" class="form-control onboard-form" type="text" pattern-data="alpha" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Date of birth <span class="text-danger">*</span></label><input value="'+familyInfo['dob'][key]+'" name="dob[]" class="form-control onboard-form" type="date" max="9999-12-31" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Phone <span class="text-danger">*</span></label><input value="'+familyInfo['phone'][key]+'" name="phone[]" class="form-control onboard-form" type="number" maxlength="10" minlength="10" required></div></div></div>'
+            if (key > 0) {
+                $('.content-container').append('<div class="row addition-content" id="content' + familyInfoCount +'"><input type="hidden" name="ids[]"><div class="col-md-6"><div class="form-group mb-3"><label>Name <span class="text-danger">*</span></label><input value="'+familyInfo['name'][key]+'" name="name[]" class="form-control onboard-form" type="text" pattern-data="name" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Relationship <span class="text-danger">*</span></label><input value="'+familyInfo['relationship'][key]+'" name="relationship[]" class="form-control onboard-form" type="text" pattern-data="alpha" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Date of birth <span class="text-danger">*</span></label><input value="'+familyInfo['dob'][key]+'" name="dob[]" class="form-control onboard-form" type="date" max="9999-12-31" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Phone <span class="text-danger">*</span></label><input value="'+familyInfo['phone'][key]+'" name="phone[]" class="form-control onboard-form" type="number" maxlength="10" minlength="10" required></div></div></div>'
                 );
                 familyInfoCount++;
             }
@@ -1644,8 +1603,7 @@ $('#exp-add-more').click(function() {
     if (id) {
         length = parseInt(id.replace('content', '')) + 1;
     }
-    $('.exp-content-container').append('<div class="row exp-addition-content" id="content' + length +
-        '"><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Company Name</label><input type="text" class="form-control floating" value="Digital Devlopment Inc" required></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Location</label><input type="text" class="form-control floating" value="United States" required></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Job Position</label><input type="text" class="form-control floating" value="Web Developer" required></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Period From</label><div class="cal-icon"><input type="date" max="9999-12-31" class="form-control floating datetimepicker" value="01/07/2007" required></div></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><div class="cal-icon"><label class="focus-label">Period To</label><input type="date" max="9999-12-31"  class="form-control floating datetimepicker" value="08/06/2018" required></div></div></div></div>'
+    $('.exp-content-container').append('<div class="row exp-addition-content" id="content' + length +'"><input type="hidden" name="ids[]"><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Company Name</label><input type="text" class="form-control floating" name="company_name[]" required></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Location</label><input type="text" class="form-control floating" name="location[]" required></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Job Position</label><input type="text" class="form-control floating" name="job_position[]" required></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Period From</label><div class="cal-icon"><input type="date" max="9999-12-31" class="form-control floating datetimepicker" name="period_from[]" required></div></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><div class="cal-icon"><label class="focus-label">Period To</label><input type="date" max="9999-12-31"  class="form-control floating datetimepicker" name="period_to[]" required></div></div></div></div>'
     );
 });
 
