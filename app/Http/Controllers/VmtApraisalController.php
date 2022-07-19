@@ -71,7 +71,7 @@ class VmtApraisalController extends Controller
                                 'vmt_employee_pms_goals_table.is_employee_submitted',
                                 'vmt_employee_pms_goals_table.is_employee_accepted',
                                 'vmt_employee_pms_goals_table.author_id',
-
+                                'vmt_employee_pms_goals_table.hr_kpi_percentage',
                             )
                             ->orderBy('created_at', 'DESC')
                             ->whereNotNull('emp_no');
@@ -83,13 +83,32 @@ class VmtApraisalController extends Controller
         //dd($userCount);
         $empCount = VmtEmployeePMSGoals::groupBy('employee_id')->count();
         $subCount = VmtEmployeePMSGoals::groupBy('employee_id')->where('is_hr_submitted', true)->count();
-
+        
         if (auth()->user()->hasrole('Employee')) {
             $emp = VmtEmployee::join('vmt_employee_office_details',  'user_id', '=', 'vmt_employee_details.userid')->where('userid', auth()->user()->id)->first();
             $rev = VmtEmployee::where('emp_no', $emp->l1_manager_code)->first();
             $users = User::where('id', $rev->userid)->get();
             $empGoals = $empGoalQuery->where('users.id', auth::user()->id)->get();
-
+            foreach ($empGoals as $emp) {
+                $per = json_decode($emp->hr_kpi_percentage, true) ? json_decode($emp->hr_kpi_percentage, true) : [];
+                if (count($per) > 0) {
+                    $emp['ranking'] = 0;
+                    $emp['rating'] = array_sum($per)/count($per);
+                    if ($emp['rating'] < 60) {
+                        $emp['ranking'] = 1;
+                    } elseif ($emp['rating'] >= 60 && $emp['rating'] < 70) {
+                        $emp['ranking'] = 2;
+                    } elseif ($emp['rating'] >= 70 && $emp['rating'] < 80) {
+                        $emp['ranking'] = 3;
+                    } elseif ($emp['rating'] >= 80 && $emp['rating'] < 90) {
+                        $emp['ranking'] = 4;
+                    } elseif ($emp['rating'] >= 90) {
+                        $emp['ranking'] = 5;
+                    } else{
+                        $emp['ranking'] = 0;
+                    }
+                }
+            }
             return view('vmt_pms_assigngoals', compact('users','empGoals','userCount','empCount','subCount'));
 
         } elseif (auth()->user()->hasrole('Manager')) {
@@ -136,6 +155,28 @@ class VmtApraisalController extends Controller
             // ->select('users.id' ,'users.name')
             // ->
             // ->get();
+        }
+
+        
+        foreach ($empGoals as $emp) {
+            $emp['ranking'] = 0;
+            $per = json_decode($emp->hr_kpi_percentage, true) ? json_decode($emp->hr_kpi_percentage, true) : [];
+            if (count($per) > 0) {
+                $emp['rating'] = array_sum($per)/count($per);
+                if ($emp['rating'] < 60) {
+                    $emp['ranking'] = 1;
+                } elseif ($emp['rating'] >= 60 && $emp['rating'] < 70) {
+                    $emp['ranking'] = 2;
+                } elseif ($emp['rating'] >= 70 && $emp['rating'] < 80) {
+                    $emp['ranking'] = 3;
+                } elseif ($emp['rating'] >= 80 && $emp['rating'] < 90) {
+                    $emp['ranking'] = 4;
+                } elseif ($emp['rating'] >= 90) {
+                    $emp['ranking'] = 5;
+                } else{
+                    $emp['ranking'] = 0;
+                }
+            }
         }
 
         return view('vmt_pms_assigngoals', compact('users', 'employees','empGoals','userCount','empCount','subCount'));

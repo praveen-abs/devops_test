@@ -501,7 +501,7 @@ td .btn i {
 
                             @endif
                         </td>                       
-                        <td class="p-3">5</td>
+                        <td class="p-3">{{$emp['ranking']}}</td>
                     </tr>
                     @endforeach
                 </tbody>

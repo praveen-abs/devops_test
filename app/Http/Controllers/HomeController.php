@@ -247,6 +247,16 @@ class HomeController extends Controller
             $user->avatar = $filename;
         }
         $user->save();
+        $report = $request->input('report');
+        $code = VmtEmployee::select('emp_no', 'name', 'designation')->join('vmt_employee_office_details', 'emp_id', '=', 'vmt_employee_details.id')->join('users', 'users.id', '=', 'vmt_employee_details.userid')->where('emp_no', $report)->first();
+        if ($code) {
+            $reDetails = VmtEmployeeOfficeDetails::where('user_id', $request->id)->first();
+            $details = VmtEmployeeOfficeDetails::find($reDetails->id);
+            $details->l1_manager_name = $code->name;
+            $details->l1_manager_code = $code->emp_no;
+            $details->l1_manager_designation = $code->designation;
+            $details->save();
+        }
         $reDetails = VmtEmployee::where('userid', $request->id)->first();
         $details = VmtEmployee::find($reDetails->id);
         $details->dob = $request->input('dob');
@@ -334,7 +344,9 @@ class HomeController extends Controller
         }
         $bank = Bank::all(); 
         $exp = Experience::whereIn('id', explode(',', $details->experience_json))->get(); 
-        return view('pages-profile', compact( 'employee', 'user', 'details', 'bank', 'exp'));
+        $code = VmtEmployee::join('users', 'users.id', '=', 'userid')->join('vmt_employee_office_details', 'emp_id', '=', 'vmt_employee_details.id')->where('emp_no', '<>' , $details->emp_no)->get();
+        $rep = VmtEmployee::select('emp_no', 'name', 'avatar')->join('vmt_employee_office_details', 'emp_id', '=', 'vmt_employee_details.id')->join('users', 'users.id', '=', 'vmt_employee_details.userid')->where('emp_no', $details->l1_manager_code)->first();
+        return view('pages-profile', compact( 'employee', 'user', 'details', 'bank', 'exp', 'code', 'rep'));
     }
 
     public function showProfilePage(Request $request) {
@@ -346,8 +358,10 @@ class HomeController extends Controller
             $employee = null;
         }
         $bank = Bank::all(); 
-        $exp = Experience::whereIn('id', explode(',', $details->experience_josn))->get(); 
-        return view('pages-profile-settings', compact( 'employee', 'user', 'details', 'bank', 'exp'));
+        $exp = Experience::whereIn('id', explode(',', $details->experience_josn))->get();
+        $code = VmtEmployee::join('users', 'users.id', '=', 'userid')->where('emp_no', '<>' , $details->emp_no)->get();
+        $rep = VmtEmployee::select('l1_manager_code', 'l1_manager_name', 'avatar')->join('vmt_employee_office_details', 'emp_id', '=', 'vmt_employee_details.id')->join('users', 'users.id', '=', 'vmt_employee_details.userid')->where('emp_no', $details->l1_manager_code)->first();
+        return view('pages-profile-settings', compact( 'employee', 'user', 'details', 'bank', 'exp', 'code', 'rep'));
     }
 
     //

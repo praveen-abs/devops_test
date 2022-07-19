@@ -105,11 +105,17 @@
                                         <div class="text">
                                             <div class="avatar-box">
                                                 <div class="avatar avatar-xs">
-                                                    <!-- <img class="rounded-circle header-profile-user"
-                                                        src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"
-                                                        alt="Header Avatar"> -->
-                                                    <img src="{{ URL::asset('assets/images/user-profile-img.jpg') }}"
-                                                        alt="" class=" w-100 h-100 soc-det-img ">
+                                                    @if ($rep && $rep->avatar)
+                                                    <img class="w-100 h-100 soc-det-img "
+                                                        src="{{ URL::asset('images/' . $rep->avatar) }}"
+                                                        alt="Header Avatar">
+                                                    @else
+                                                    <img class="w-100 h-100 soc-det-img "
+                                                        src="{{ URL::asset('assets/images/avatar-1.jpg') }}"
+                                                        alt="Header Avatar">
+                                                    @endif
+                                                    <!-- <img src="{{ URL::asset('assets/images/user-profile-img.jpg') }}"
+                                                        alt="" class=" w-100 h-100 soc-det-img "> -->
                                                 </div>
                                             </div>
                                             <a href="profile.html">
@@ -860,11 +866,12 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Reports To <span class="text-danger">*</span></label>
-                                    <select class="select">
-                                        <option>-</option>
-                                        <option>Wilmer Deluna</option>
-                                        <option>Lesley Grauer</option>
-                                        <option>Jeffery Lalor</option>
+                                    <select class="select form-control" name="report">
+                                        <option>Select</option>
+                                        @foreach($code as $c)
+                                        <option value="{{$c->emp_no}}" @if($rep->emp_no == $c->emp_no) selected
+                                                @endif>{{$c->emp_no . ' (' .$c->name. ')'}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
