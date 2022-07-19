@@ -423,10 +423,7 @@ html {
 </style>
 @endsection
 @section('content')
-@component('components.breadcrumb')
-@slot('li_1') Dashboards @endslot
-@slot('title') Dashboard @endslot
-@endcomponent
+
 
 
 <div class="main">
@@ -692,7 +689,7 @@ html {
                         <div id='full_calendar_events'></div>
                     </div>
                 </div>
-                <div class="mb-0">
+                <!-- <div class="mb-0">
                     <div class="title py-4 px-2" style="border-bottom:dotted #a4a5a7;">
                         <h6 class="m-0 font-weight-bold text-primary">List Of Holidays-2022</h6>
                     </div>
@@ -725,7 +722,7 @@ html {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

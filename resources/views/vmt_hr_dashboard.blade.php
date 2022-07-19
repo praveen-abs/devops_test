@@ -36,11 +36,10 @@
 <!-- prem content end -->
 
 @endsection
+
+
 @section('content')
-@component('components.breadcrumb')
-@slot('li_1') Dashboard @endslot
-@slot('title') @endslot
-@endcomponent
+
 
 
 <div class="main">
@@ -396,14 +395,14 @@
                         <div id='full_calendar_events'></div>
                     </div>
                 </div>
-                <div class="mb-0">
+                <!-- <div class="mb-0">
                     <div class="title py-4 px-2" style="border-bottom:dotted #a4a5a7;">
                         <h6 class="m-0 font-weight-bold text-primary">List Of Holidays-2022</h6>
                     </div>
                     <div class="card-body p-1">
                     </div>
-                </div>
-                <div class="">
+                </div> -->
+                <!-- <div class="">
                     <div class="card-body">
                         <div class="col-sm-12 col-md-12 p-0">
                             <div class="bg-muted pl-2 pr-2">
@@ -429,7 +428,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

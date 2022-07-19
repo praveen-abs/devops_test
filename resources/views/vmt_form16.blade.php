@@ -6,10 +6,6 @@
 @endsection
 @section('content')
 
-@component('components.breadcrumb')
-@slot('li_1') PayCheck @endslot
-@slot('title') Form16 @endslot
-@endcomponent
 
 
 <div class="container-fluid investments-wrapper bg-white">

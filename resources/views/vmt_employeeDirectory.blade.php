@@ -47,6 +47,7 @@ td .btn i {
 tr:first-child th:first-child {
     border-top-left-radius: 6px !important;
 }
+
 tr:first-child th:first-child {
     border-bottom-left-radius: 6px !important;
 }
@@ -94,7 +95,7 @@ tr:last-child td:last-child {
 
 .switch-field label {
     background-color: #fff;
-    color:#acb0b0;
+    color: #acb0b0;
     font-size: 14px;
     line-height: 1;
     /* font-weight:600; */
@@ -112,9 +113,9 @@ tr:last-child td:last-child {
 }
 
 .switch-field input:checked+label {
-    
+
     box-shadow: none;
-      color: #5265a7;
+    color: #5265a7;
     background-color: #ccd6f7 !important;
 
 }
@@ -129,24 +130,24 @@ tr:last-child td:last-child {
 
 .search-content .directory-search-bar {
     background: #fff !important;
-    padding:4px 0px !important;
-    
+    padding: 4px 0px !important;
+
 }
 
 .form-control:focus {
     /* border: 2px solid #1c8b8d !important; */
-    border:1px solid #c1cef9  !important;
+    border: 1px solid #c1cef9 !important;
 }
 </style>
 
 
 @endsection
+
+
+
 @section('content')
 
-@component('components.breadcrumb')
-@slot('li_1') Organization @endslot
-@slot('title') Employee Directories @endslot
-@endcomponent
+
 
 <div class=" project-wrapper">
     <h4 class="text-muted fw-bold">Employee Directory</h4>
@@ -358,7 +359,8 @@ tr:last-child td:last-child {
                     <div class="btn border-0 outline-none mx-2 ">
                         <i class="ri-menu-add-line fw-bold"></i>
                     </div>
-                    <a href="{{route('vmt_employeeOnboarding')}}" class="btn border-0 outline-none py-1 onboard-employee-btn h-25 fw-bold bg-danger text-white">
+                    <a href="{{route('vmt_employeeOnboarding')}}"
+                        class="btn border-0 outline-none py-1 onboard-employee-btn h-25 fw-bold bg-danger text-white">
                         <i class="ri-add-line fw-bold mx-1"></i>
                         Onboard Employee
                     </a>

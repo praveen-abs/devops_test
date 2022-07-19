@@ -4,10 +4,7 @@
 @endsection
 @section('content')
 
-@component('components.breadcrumb')
-@slot('li_1') PayCheck @endslot
-@slot('title') Home @endslot
-@endcomponent
+
 
 <div class="container-fluid home-wrapper px-5">
     <div class="row">
