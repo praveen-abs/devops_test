@@ -2,22 +2,16 @@
 @section('css')
 
 <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
+<link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
 
 @endsection
-<!-- @component('components.breadcrumb')
-        @slot('li_1') Pay Roll @endslot
-        @slot('title') Pay Run @endslot
-    @endcomponent -->
+
 @section('content')
-
-
 
 
 <div class="row">
     <div class="col-xl-12">
-        <div class="card">
-
-
+        <div class="card shadow profile-box card-top-border ">
             <div class="form-control">
                 <div class="row">
                     <div class="col-md-6 ">

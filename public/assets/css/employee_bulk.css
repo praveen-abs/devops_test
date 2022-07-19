@@ -1,0 +1,28 @@
+
+ul.list-style-circle{
+    list-style-type: none;
+}
+ul.list-style-circle, ul.list-style-dot, ul.list-style-pipe {
+    padding-left: 0!important;
+}
+ul.list-style-circle li{
+    padding-left: 20px!important;
+}
+ul.list-style-circle li  {
+    position: relative!important;
+}
+ul.list-style-circle li:before{
+    position: absolute!important;
+}
+
+ul.list-style-circle li:before {
+    color: #b4bac5;
+    content: "O";
+    top: 3px;
+}
+ul.list-style-circle li:before{
+    left: 0;
+}
+ul.list-style-circle li{
+    margin-top: 10px!important;
+}
