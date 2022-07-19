@@ -10,9 +10,9 @@
     <link rel="shortcut icon" href="{{ URL::asset('assets/images/favicon.png')}}">
     @include('layouts.head-css')
     <style>
-    .page-content{
-        background:#F2F2F2;
-    }
+    /* .page-content{
+        background:#F2F2F2 url();
+    } */
     .credit {
         font-size: 16px;
         color: rgba(191, 191, 191, 0.36);
