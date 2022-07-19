@@ -84,18 +84,24 @@ p {
 
 .select2-container--default .select2-selection--single {
     /* border-radius: 20px !important; */
-    height: 50px !important;
-    padding: 12px 15px 12px 15px !important;
+    height: 40px !important;
+    padding: 5px 15px 12px 8px !important;
 }
 
 .select2-container--default .select2-selection--single .select2-selection__arrow {
-    top: 12px !important;
+    top: 8px !important;
     right: 12px !important;
 }
 
 .error {
     color: red;
     font-size: 15px;
+}
+
+.header-card-text {
+    font-size: 14px;
+    font-weight: 600;
+    text-align: left;
 }
 
 .error::before {
@@ -122,7 +128,7 @@ option:hover {
 #msform input,
 #msform textarea,
 #msform select {
-    padding: 12px 15px 12px 15px;
+    /* padding: 12px 15px 12px 15px; */
     /* border: none; */
     /* border-radius: 20px; */
     /* margin-top: 2px; */
@@ -130,7 +136,7 @@ option:hover {
     /* box-sizing: border-box; */
     /* font-family: montserrat; */
     /* color: #2C3E50; */
-    font-size: 16px;
+    font-size: 14px;
     /* letter-spacing: 1px; */
     /* outline: none; */
 }

@@ -776,7 +776,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{route('updatePersonalInfo', $user->id)}}" Method="POST"
+                    <form action="{{route('updatePersonalInformation', $user->id)}}" Method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="row">
@@ -811,11 +811,11 @@
                                         <label>Gender</label>
                                         <select class="form-select" name="gender" aria-label="Default select">
                                             <option selected>-</option>
-                                            <option value="male" @if($details->gender == 'male') 'seletced'
+                                            <option value="male" @if($details->gender == 'male') selected
                                                 @endif>Male</option>
-                                            <option value="female" @if($details->gender == 'female') 'seletced'
+                                            <option value="female" @if($details->gender == 'female') selected
                                                 @endif>Female</option>
-                                            <option value="other" @if($details->gender == 'other') 'seletced'
+                                            <option value="other" @if($details->gender == 'other') selected
                                                 @endif>Other</option>
                                         </select>
 

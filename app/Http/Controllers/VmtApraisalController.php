@@ -572,9 +572,6 @@ class VmtApraisalController extends Controller
             //$pmsGoalList  = VmtEmployeePMSGoals::select('vmt_employee_details.emp_name', 'vmt_employee_pms_goals_table.*' )->rightJoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'vmt_employee_pms_goals_table.author_id')->orderBy('updated_at', 'DESC')->get();
             $kpiRowsId = '';
             if($request->has('goal_id')){
-                
-
-    
                 //dd($t_assignedEmp_manager_name);
     
                 $assignedGoals  = VmtEmployeePMSGoals::where('kpi_table_id',$request->goal_id)->where('employee_id', $request->user_id)->first();
