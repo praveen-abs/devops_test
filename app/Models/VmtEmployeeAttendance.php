@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class VmtEmployeeAttendance extends Model
 {
     use HasFactory;
+    protected $table = 'vmt_employee_attendance';
     
 }

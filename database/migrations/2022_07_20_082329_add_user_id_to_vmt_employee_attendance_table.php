@@ -15,7 +15,7 @@ Class AddUserIdToVmtEmployeeAttendanceTable extends Migration
     {
         Schema::table('vmt_employee_attendance', function (Blueprint $table) {
             //
-            $table->string('user_id')->unique()->after('id');
+            $table->string('user_id')->after('id');
         });
     }
 

@@ -14,6 +14,7 @@ use App\Models\VmtEmployee;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\Bank;
 use App\Models\Experience;
+use App\Models\VmtEmployeeAttendance;
 use App\Mail\TestEmail;
 use Session as Ses;
 
@@ -329,6 +330,27 @@ class HomeController extends Controller
 
         $vmtGeneralInfo->save();
         return "General Info Saved";
+    }
+
+    public function updtaeCheckin(Request $request) {
+        $checked = $request->input('checkin');
+        if ($checked == 'true') {
+            $attendance = new VmtEmployeeAttendance;
+            $attendance->user_id = auth()->user()->id;
+            $attendance->date = date('Y-m-d');
+            $attendance->checkin_time = date('Y-m-d H:i:s');
+            $attendance->save();
+            Ses::flash('message', 'You have successfully checkedin!');
+            Ses::flash('alert-class', 'alert-success');
+        } else {
+            $attendance = VmtEmployeeAttendance::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->first();
+            $attendance->user_id = auth()->user()->id;
+            $attendance->date = date('Y-m-d');
+            $attendance->checkout_time = date('Y-m-d H:i:s');
+            $attendance->save();
+            Ses::flash('message', 'You have successfully checkedout!');
+            Ses::flash('alert-class', 'alert-success');
+        }
     }
 
     // Show Profile info
