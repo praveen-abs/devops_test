@@ -268,18 +268,18 @@ class VmtApraisalController extends Controller
 
                 $empPmsGoal->save();
                 }
-                // \Mail::to($officialMailList)->send(new NotifyPMSManager(auth::user()->name,  $currentUser_empDetails->designation,$hrReview->name));
+                 $notification_user = User::where('id',auth::user()->id)->first();
+                $message = "User Notification from ";
                 if (auth()->user()->hasrole('Employee')) {
                      \Mail::to($mailingRevList)->send(new VmtAssignGoals("none",$user_emp_name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$user_manager_name,$command_emp));
-                     Notification::sent($mailingRevList ,new ViewNotification($user_emp_name));
+
+                Notification::send($notification_user ,new ViewNotification($message.auth()->user()->name));
             } else {
                $finalMailList = $mailingEmpList->merge($mailingRevList);
-              // dd($finalMailList);
-               Notification::sent($mailingRevList ,new ViewNotification($user_emp_name));
+                 Notification::send($notification_user ,new ViewNotification($message.auth()->user()->name));
               foreach ($finalMailList as $recipient) {
                 \Mail::to($recipient)->send(new VmtAssignGoals("none", $user_emp_name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$user_manager_name,$command_emp));
             }
-                // \Mail::to($finalMailList)->send(new VmtAssignGoals( url('none'), "none", $user_emp_name));
             }
             return "Question Created Successfully";
         }
