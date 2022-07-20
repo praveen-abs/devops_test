@@ -536,10 +536,10 @@
                 var goal_id = "{{\Request::get('id')}}";
                 var user_id = "{{auth::user()->id}}";
                 var approve_flag = "rejected";
-            
+                var command =  $('#reject_content').val();
                 $.ajax({
                     type: "GET", 
-                    url:"{{url('vmt-approvereject-kpitable')}}?goal_id="+goal_id+"&user_id="+user_id+"&approve_flag="+approve_flag,
+    url:"{{url('vmt-approvereject-kpitable')}}?goal_id="+goal_id+"&user_id="+user_id+"&approve_flag="+approve_flag+"&command="+command,
                     success: function(data){
                         $('#notificationModal').hide();
                         $('#notificationModal').addClass('fade');

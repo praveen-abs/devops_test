@@ -17,7 +17,7 @@ class VmtAssignGoals extends Mailable
      * @return void
      */
     // protected $linkUri;
-    public function __construct( $approvalStatus,$user_emp_name,$appraisal_period,$user_manager_name)
+    public function __construct( $approvalStatus,$user_emp_name,$appraisal_period,$user_manager_name,$command_emp)
     {
         //
          
@@ -25,6 +25,7 @@ class VmtAssignGoals extends Mailable
         $this->user_emp_name = $user_emp_name;
         $this->appraisal_period = $appraisal_period;
         $this->user_manager_name = $user_manager_name;
+        $this->command_emp = $command_emp;
         
     }
 
@@ -39,6 +40,7 @@ class VmtAssignGoals extends Mailable
                 ->with('user_emp_name', $this->user_emp_name)
                 ->with('approvalStatus', $this->approvalStatus)
                 ->with('appraisal_period', $this->appraisal_period)
-                 ->with('user_manager_name', $this->user_manager_name);
+                 ->with('user_manager_name', $this->user_manager_name)
+                 ->with('command_emp', $this->command_emp);
     }
 }

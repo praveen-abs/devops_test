@@ -18,6 +18,8 @@ use App\Mail\PMSReviewCompleted;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ApraisalQuestionExport;
 use Session;
+use App\Notifications\ViewNotification;
+use Illuminate\Support\Facades\Notification;
 
 class VmtApraisalController extends Controller
 {
@@ -218,6 +220,7 @@ class VmtApraisalController extends Controller
             $user_emp_name = User::where('id',$request->reviewer)->pluck('name')->first();
             $user_manager_name = User::where('id',auth::user()->id)->pluck('name')->first();
             //dd($employeeList);
+            $command_emp = "";
             foreach ($employeeList as $index => $value) {
                 // code...
                 if ($request->goal_id && $request->goal_id <> '' && $request->goal_id > 0) {
@@ -267,13 +270,14 @@ class VmtApraisalController extends Controller
                 }
                 // \Mail::to($officialMailList)->send(new NotifyPMSManager(auth::user()->name,  $currentUser_empDetails->designation,$hrReview->name));
                 if (auth()->user()->hasrole('Employee')) {
-                     \Mail::to($mailingRevList)->send(new VmtAssignGoals("none",$user_emp_name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$user_manager_name));
+                     \Mail::to($mailingRevList)->send(new VmtAssignGoals("none",$user_emp_name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$user_manager_name,$command_emp));
+                     Notification::sent($mailingRevList ,new ViewNotification($user_emp_name));
             } else {
                $finalMailList = $mailingEmpList->merge($mailingRevList);
               // dd($finalMailList);
-
+               Notification::sent($mailingRevList ,new ViewNotification($user_emp_name));
               foreach ($finalMailList as $recipient) {
-                \Mail::to($recipient)->send(new VmtAssignGoals("none", $user_emp_name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$user_manager_name));
+                \Mail::to($recipient)->send(new VmtAssignGoals("none", $user_emp_name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$user_manager_name,$command_emp));
             }
                 // \Mail::to($finalMailList)->send(new VmtAssignGoals( url('none'), "none", $user_emp_name));
             }
@@ -412,7 +416,7 @@ class VmtApraisalController extends Controller
 
     //Used by both Employee and Manager KPI approval.
     public function approveRejectKPITable(Request $request){
-      //  dd($request->all());
+     // dd($request->all());exit();
         $user_emp_name= User::where('id',auth::user()->id)->pluck('name')->first();
         $user_manager_name = User::where('id',$request->user_id)->pluck('name')->first();
         if(auth::user()->hasRole('Employee') ){
@@ -422,7 +426,7 @@ class VmtApraisalController extends Controller
            $vmtEmployeeGoal->is_employee_accepted = $request->approve_flag == 'approved' ? 1 : 0;
            $vmtEmployeeGoal->save();
            $returnMsg="--";
-
+            $command_emp = $request->command;
            // is_manager_approved
            //dd($request->approve_flag);
 
@@ -430,13 +434,13 @@ class VmtApraisalController extends Controller
 
            if($request->approve_flag == "approved")
            {
-                \Mail::to($mailingList)->send(new VmtAssignGoals( "approved",$user_emp_name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$user_manager_name));
+                \Mail::to($mailingList)->send(new VmtAssignGoals( "approved",$user_emp_name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$user_manager_name,$command_emp));
                 $returnMsg = 'KPI has been accepted. Mail notification sent';
            }
            else
            if($request->approve_flag == "rejected")
            {
-                \Mail::to($mailingList)->send(new VmtAssignGoals( "rejected",$user_emp_name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$user_manager_name));
+                \Mail::to($mailingList)->send(new VmtAssignGoals( "rejected",$user_emp_name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$user_manager_name,$command_emp));
                 $returnMsg = 'KPI has been rejected. Mail notification sent';
 
            }
@@ -456,13 +460,13 @@ class VmtApraisalController extends Controller
 
            if($request->approve_flag == "approved")
            {
-                \Mail::to($mailingList)->send(new VmtAssignGoals("approved",$user_emp_name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$user_manager_name));
+                \Mail::to($mailingList)->send(new VmtAssignGoals("approved",$user_emp_name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$user_manager_name,$command_emp));
                 $returnMsg = 'KPI has been approved. Mail notification sent';
            }
            else
            if($request->approve_flag == "rejected")
            {
-                \Mail::to($mailingList)->send(new VmtAssignGoals("rejected",$user_emp_name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$user_manager_name));
+                \Mail::to($mailingList)->send(new VmtAssignGoals("rejected",$user_emp_name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$user_manager_name,$command_emp));
                 $returnMsg = 'KPI has been rejected. Mail notification sent';
            }
 
