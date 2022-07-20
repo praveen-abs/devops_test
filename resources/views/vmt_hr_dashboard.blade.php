@@ -78,7 +78,7 @@
                                 <p class="f-15">
                                     <span>
                                         <label class="switch-checkbox m-0">
-                                            <input type="checkbox">
+                                            <input type="checkbox" id="checkin_function">
                                             <span class="slider-checkbox check-in round">
                                                 <span class="slider-checkbox-text">
                                                 </span>
