@@ -354,19 +354,6 @@ $(document).ready(function() {
             },
         });
     });
-    setInterval(function(){
-        var val = $('#check_timing').html();
-        if (val != '') {
-            var array = val.split(".");
-            if (array[1] >= 59) {
-                array[1] = 00;
-                array[0] = parseInt(array[0])+1;
-            } else {
-                array[1] = parseInt(array[1])+1;
-            }
-            $('#check_timing').html(array.join('.'));
-        }
-    }, 1000);
 
     $('body').on('click', '.popover-close', function() {
         $("[data-toggle=popover]").popover('hide');

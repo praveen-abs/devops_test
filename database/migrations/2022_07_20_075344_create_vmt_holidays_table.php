@@ -15,13 +15,11 @@ return new class extends Migration
     {
         Schema::create('vmt_holidays', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->text('holiday_name')->nullable();
             $table->dateTime('holiday_date')->nullable();
             $table->text('holiday_description')->nullable();
             $table->text('image')->nullable();
-
-        
+            $table->timestamps();
         });
     }
 

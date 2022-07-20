@@ -10,6 +10,7 @@ use App\Models\VmtGeneralSettings;
 use App\Models\VmtGeneralInfo;
 use App\Models\VmtEmployee;
 use App\Models\VmtEmployeeAttendance;
+use App\Models\vmtHolidays;
 use Session as Ses;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -36,19 +37,20 @@ class VmtMainDashboardController extends Controller
                     ->where('users.id', auth()->user()->id)
                     ->first();  
         $checked = VmtEmployeeAttendance::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->first();
+        $holidays = vmtHolidays::orderBy('holiday_date', 'ASC')->get();
         //dd($currentUser);
         if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin')) {
-            return view('vmt_hr_dashboard', compact( 'currentUserJobDetails', 'checked'));
+            return view('vmt_hr_dashboard', compact( 'currentUserJobDetails', 'checked', 'holidays'));
         }        
         else 
         if(auth()->user()->hasrole('Manager'))
         {
-            return view('vmt_manager_dashboard', compact( 'currentUserJobDetails', 'checked'));
+            return view('vmt_manager_dashboard', compact( 'currentUserJobDetails', 'checked', 'holidays'));
         }
         else 
         if(auth()->user()->hasrole('Employee')) 
         {
-            return view('vmt_employee_dashboard', compact( 'currentUserJobDetails', 'checked'));
+            return view('vmt_employee_dashboard', compact( 'currentUserJobDetails', 'checked', 'holidays'));
         } 
 
     }
