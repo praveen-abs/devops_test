@@ -2,7 +2,11 @@
 @section('css')
 
 <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
-
+<style>
+    .card-border-blue {
+        border-top: 7px solid #002F56!important;
+    }
+</style>
 @endsection
 <!-- @component('components.breadcrumb')
         @slot('li_1') Pay Roll @endslot
@@ -15,7 +19,7 @@
 
 <div class="row">
     <div class="col-xl-12">
-        <div class="card">
+        <div class="card card-border-blue">
 
 
             <div class="form-control">

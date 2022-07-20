@@ -312,6 +312,10 @@ input + .slider-checkbox>.slider-checkbox-text:after {
     margin-left: 2px !important;
 }
 
+.scrollBar textarea {
+    cursor: auto !important;
+}
+
 .sub-topnav.nav {
     background-color: #fff;
     min-height: 40px;
@@ -342,6 +346,7 @@ input + .slider-checkbox>.slider-checkbox-text:after {
     padding-right: 8px !important;
     padding-top: 8px !important;
     padding-bottom: 8px !important;
+    cursor: pointer !important;
 }
 
 .sub-topnav.nav li a:after {

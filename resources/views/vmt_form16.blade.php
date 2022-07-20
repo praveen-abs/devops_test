@@ -2,13 +2,17 @@
 @section('css')
 
 <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
-
+<style>
+    .card-border-blue {
+        border-top: 7px solid #002F56!important;
+    }
+</style>
 @endsection
 @section('content')
 
 
 
-<div class="container-fluid investments-wrapper bg-white">
+<div class="container-fluid investments-wrapper bg-white card-border-blue">
     <div class="fill-header">
         <h3>Form 16</h3>
     </div>

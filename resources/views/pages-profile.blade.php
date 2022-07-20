@@ -869,8 +869,10 @@
                                     <select class="select form-control" name="report">
                                         <option>Select</option>
                                         @foreach($code as $c)
+                                        @if ($c && $c->emp_no)
                                         <option value="{{$c->emp_no}}" @if($rep->emp_no == $c->emp_no) selected
                                                 @endif>{{$c->emp_no . ' (' .$c->name. ')'}}</option>
+                                        @endif
                                         @endforeach
                                     </select>
                                 </div>

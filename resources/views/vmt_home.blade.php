@@ -1,6 +1,11 @@
 @extends('layouts.master')
 @section('css')
 <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
+<style>
+    .dashboard-card {
+        border-top: 7px solid #002F56!important;
+    }
+</style>
 @endsection
 @section('content')
 
