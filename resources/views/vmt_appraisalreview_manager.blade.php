@@ -23,8 +23,9 @@
                             </div>
                             <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6">
                                 <div class="d-flex flex-column justify-content-center mx-1 my-3 ">
-                                    <h4 class="fw-bold">Augustin</h5>
-                                        <p class="text-muted">Employee</p>
+                                    <h4 class="fw-bold">{{$assignedEmployee_Userdata->name}}</h5>
+                                    <p class="text-muted">{{$assignedEmployeeOfficeDetails->designation}}</p>
+    
                                 </div>
                             </div>
                         </div>
