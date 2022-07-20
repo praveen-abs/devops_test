@@ -103,7 +103,7 @@ body,html{
     --vz-nav-tabs-link-active-bg: #f3f3f9;
     --vz-accordion-button-active-color: #3a497b;
     --vz-progress-bg: #eff2f7;
-    --vz-toast-background-color: hsla(0, 0%, 100%, 0.85);
+    --vz-toast-background-color: rgb(255, 255, 255);
     --vz-toast-border-color: rgba(0, 0, 0, 0.1);
     --vz-toast-header-border-color: rgba(0, 0, 0, 0.05);
     --vz-list-group-hover-bg: #f3f6f9;

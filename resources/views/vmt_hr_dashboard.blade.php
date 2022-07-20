@@ -366,20 +366,7 @@ $(document).ready(function() {
         $('.emp-' + id).css("display", "block");
     });
 
-    $('#checkin_function').change(function() {
-        var checked = $('#checkin_function').is(':checked');
-        console.log(checked);
-        $.ajax({
-            type: "POST", 
-            url: "{{route('updtaeCheckin')}}", 
-            data: {
-                'checkin': checked,
-                "_token": "{{ csrf_token() }}",
-            },
-            success: function(data){
-            }
-        });
-    });
+
 });
 
 

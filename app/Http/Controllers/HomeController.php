@@ -340,16 +340,25 @@ class HomeController extends Controller
             $attendance->date = date('Y-m-d');
             $attendance->checkin_time = date('Y-m-d H:i:s');
             $attendance->save();
-            Ses::flash('message', 'You have successfully checkedin!');
-            Ses::flash('alert-class', 'alert-success');
+            //Ses::flash('message', 'You have successfully checkedin!');
+            //Ses::flash('alert-class', 'alert-success');
+            //return 'You have successfully checkedin!';
+            return response()->json([
+                'message' => 'You have successfully checkedin!',
+                'time' => $attendance->checkin_time,
+            ]);
         } else {
             $attendance = VmtEmployeeAttendance::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->first();
             $attendance->user_id = auth()->user()->id;
             $attendance->date = date('Y-m-d');
             $attendance->checkout_time = date('Y-m-d H:i:s');
             $attendance->save();
-            Ses::flash('message', 'You have successfully checkedout!');
-            Ses::flash('alert-class', 'alert-success');
+            //Ses::flash('message', 'You have successfully checkedout!');
+            //Ses::flash('alert-class', 'alert-success');
+            return response()->json([
+                'message' => 'You have successfully checked out!',
+                'time' => $attendance->checkout_time,
+            ]);
         }
     }
 
