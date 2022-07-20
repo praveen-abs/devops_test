@@ -507,7 +507,7 @@ $(document).ready(function() {
     });
     setInterval(function(){
         var val = $('#check_timing').html();
-        if (val) {
+        if (val != '') {
             var array = val.split(".");
             if (array[1] >= 59) {
                 array[1] = 00;
