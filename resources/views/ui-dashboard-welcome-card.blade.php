@@ -38,7 +38,7 @@
                             </label>
                         </span>
                     @if ($checked && $checked->created_at)
-                    <span id="check_timing" class="text-danger">{{round(abs(strtotime(date('Y-m-d H:i:s')) - strtotime($checked->created_at)) / 60,2)}}</span>
+                    <span id="check_timing" class="text-danger f-13"><b>Check in : {{date('H:i', strtotime($checked->created_at))}}</b></span>
                     @endif
                     </p>
                 </div>
