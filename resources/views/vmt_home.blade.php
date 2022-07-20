@@ -1,20 +1,15 @@
 @extends('layouts.master')
 @section('css')
 <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
-<style>
-    .dashboard-card {
-        border-top: 7px solid #002F56!important;
-    }
-</style>
+<link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
 @endsection
 @section('content')
 
 
-
-<div class="container-fluid home-wrapper px-5">
+<div class="home-wrapper">
     <div class="row">
         <div class="col-12">
-            <div class="payslip-details-card dashboard-card">
+            <div class="payslip-details-card dashboard-card card shadow profile-box card-top-border ">
                 <h5 class="font-semibold font-moderate group">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
                         class="icon dashboard-icon money-icon">
@@ -82,8 +77,8 @@
     </div>
 
     <div class="row">
-        <div class="col-12">
-            <div class="deduction-summary-card dashboard-card">
+        <div class="col-12 ">
+            <div class="deduction-summary-card dashboard-card card  shadow profile-box card-top-border ">
                 <h5 class="dashboard-card-header fw-bold">
                     <div class="row">
                         <div class="col-md-6 col-sm-6 my-2 col-lg-6 col-xl-6">
@@ -173,7 +168,7 @@
 
     <div class="row">
         <div class="col-12">
-            <div class="deduction-summary-card dashboard-card">
+            <div class="deduction-summary-card dashboard-card card shadow profile-box card-top-border ">
 
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12">

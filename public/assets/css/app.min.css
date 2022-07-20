@@ -1,6 +1,6 @@
 @import url(https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap);
 
-@font-face {
+/* @font-face {
     font-family: hkgrotesk;
     src: url(../fonts/hkgrotesk-light.eot);
     src: local("hkgrotesk light"), url(../fonts/hkgrotesk-light.woff) format("woff");
@@ -33,6 +33,10 @@
     src: url(../fonts/hkgrotesk-bold.eot);
     src: local("hkgrotesk bold"), url(../fonts/hkgrotesk-bold.woff) format("woff");
     font-weight: 700
+} */
+
+body,html{
+    background: url(../images/layout_bg.png) no-repeat;
 }
 
 :root {
@@ -618,7 +622,7 @@ body {
 .footer {
     z-index: 10;
     bottom: 0;
-    padding: 10px .75rem;
+    padding: 5px .75rem;
     position: fixed;
     right: 0;
     color: var(--vz-footer-color);
@@ -785,7 +789,7 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* font-family: Poppins, sans-serif; */
+    
     font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
 }
 
@@ -18539,19 +18543,22 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
 /* form 16 */
 .fill-header {
     padding: 0 15px;
-    margin-left: 25px;
+    /* margin-left: 25px; */
     overflow: visible;
     border-bottom: 1px solid #eee;
     top: 0;
     left: 0;
     right: 0;
     height: 68px;
+    position: relative;
+    
 }
 
 .fill-header h3 {
     color: #454351;
     font-size: 25px;
-
+    /* margin-top: 20px; */
+    position: absolute;
     margin-top: 20px;
 }
 

@@ -2,27 +2,26 @@
 @section('css')
 
 <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
-<style>
-    .card-border-blue {
-        border-top: 7px solid #002F56!important;
-    }
-</style>
+<link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
+
 @endsection
 @section('content')
 
 
 
-<div class="container-fluid investments-wrapper bg-white card-border-blue">
-    <div class="fill-header">
-        <h3>Form 16</h3>
-    </div>
-    <div class="fill body content scroll-x scroll-y scrollbox details-container">
-        <div class="empty-state-help-centered ind-empty-state">
-            <img src="https://css.zohostatic.in/zfpayroll/zpayrollportal///assets/documents-empty-state-c3ea989472359383111b9e59961fb1e3.svg"
-                class="empty-state-image">
-            <div class="empty-state-content">
-                <div class="empty-state-content-header">You will be able to view and download your Form 16 once the
-                    payroll admin uploads it.</div>
+<div class="investments-wrapper bg-white">
+    <div class="card shadow profile-box card-top-border ">
+        <div class="fill-header">
+            <h3>Form 16</h3>
+        </div>
+        <div class="fill body content scroll-x scroll-y scrollbox details-container">
+            <div class="empty-state-help-centered ind-empty-state">
+                <img src="https://css.zohostatic.in/zfpayroll/zpayrollportal///assets/documents-empty-state-c3ea989472359383111b9e59961fb1e3.svg"
+                    class="empty-state-image">
+                <div class="empty-state-content">
+                    <div class="empty-state-content-header">You will be able to view and download your Form 16 once the
+                        payroll admin uploads it.</div>
+                </div>
             </div>
         </div>
     </div>

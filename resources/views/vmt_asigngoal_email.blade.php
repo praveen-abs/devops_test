@@ -21,7 +21,9 @@
 		@elseif ($approvalStatus == "rejected")
 			<p>Dear @php echo $user_manager_name; @endphp,</p>
 			<p>																									
-				KRA/ KPI has been rejected by “@php echo $user_emp_name; @endphp” and reason stated below for your further references.																									
+				KRA/ KPI has been rejected by “@php echo $user_emp_name; @endphp” and reason stated below for your further references.	</p>
+				<p>  @php echo $command_emp; @endphp </p>
+				<p>																								
 				Request you to kindly have a great conversation with “@php echo $user_emp_name; @endphp” and Complete the KRA/KPA within the time frame.																									
 				If you have any questions or concerns, don’t hesitate to reach out your reporting manager or the HR team.</p>																									</p>
 		@endif

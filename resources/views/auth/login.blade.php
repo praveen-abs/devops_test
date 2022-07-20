@@ -75,7 +75,7 @@
 
                     <div class="form-row d-flex justify-content-between mt-1">
                         <div class="">
-                            <label for=""><input type="checkbox" class="mx-1 m-0 ">Keep me Sign In</label>
+                            <label for=""><input type="checkbox" class="mx-1 m-0 ">Remember me</label>
                         </div>
                         <div class="">
                             <span> <a href="">Forget Password ?</a></span>
