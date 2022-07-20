@@ -70,7 +70,7 @@ class VmtClientController extends Controller
             $vmtClient->save();
         
 
-            if (\Mail::to($request->auth_person_email)->send(new WelcomeMail($request->auth_person_email, '123123123', 'http://vasagroup.abshrms.com'  ))) {
+            if (\Mail::to($request->auth_person_email)->send(new WelcomeMail($request->auth_person_email, '123123123', 'http://vasagroup.abshrms.com' ,""))) {
                 return "Saved";
             } else {
                 return "Error";
