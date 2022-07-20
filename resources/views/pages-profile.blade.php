@@ -118,9 +118,15 @@
                                                         alt="" class=" w-100 h-100 soc-det-img "> -->
                                                 </div>
                                             </div>
+                                            @if ($rep && $re->name)
                                             <a href="profile.html">
-                                                {{$details->l1_manager_name}}
+                                                {{$rep->name}}
                                             </a>
+                                            @else
+                                            <a href="profile.html">
+                                                --
+                                            </a>
+                                            @endif
                                         </div>
                                     </li>
 

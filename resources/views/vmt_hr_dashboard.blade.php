@@ -513,6 +513,10 @@ $(document).ready(function() {
         $('.topbarContent').hide();
         $('.emp-' + id).css("display", "block");
     });
+
+    $('#checkin_function').change(function() {
+        
+    });
 });
 
 
