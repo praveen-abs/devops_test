@@ -22,4 +22,31 @@
 }
 .input-wrap .appraisal-box{
     padding: 3px 10px;
+    flex: none;
+    text-align: center;
+}
+
+.left-content ul li{
+    margin-bottom: 15px !important;
+}
+
+.e-table>:not(caption)>*>* {
+    border-bottom-width: 0px !important;
+    padding: .45rem .6rem !important;
+}
+
+.e-table .e-table,
+.e-table>thead {
+    border: 0px !important;
+}
+
+.table-bordered .table-bordered>:not(caption)>*>* {
+    border-top-width: 0px !important;
+    border-bottom-width: 0px !important;
+}
+
+.inp-text {
+    height: 165px;
+    width: auto;
+    word-break: break-word;
 }
