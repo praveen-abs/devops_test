@@ -17,6 +17,7 @@
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/quicksand.css') }}">
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/dashboard.css') }}">
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/hr_dashboard.css') }}">
+<link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/holiday.css') }}">
 <!--Bootstrap Calendar-->
 <!-- <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/bootstrap_calendar.css') }}"> -->
 
@@ -46,95 +47,13 @@
     <!-- Content Row -->
     <div class="row">
         <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4">
-            <div class="card profile-box flex-fill">
-                <div class="card-body">
-                    <div class="d-flex">
-                        <div class="status-wrapper ">
-
-                            <!-- <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}" > -->
-                            <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}"
-                                class="soc-det-img profile-img-round h-100 w-100">
-                            <!-- <img src="{{ URL::asset('assets/images/status-pic.png') }}" alt=""
-                                class="profile-img-round"> -->
-
-                            <!-- <i class="ri-checkbox-blank-circle-fill status-circle"></i> -->
-
-                        </div>
-                        <div class="greet-wrap mx-3">
-                            <div class="d-felx ">
-                                <!-- <h4>Welcome Back<b class="ml-1 text-primary">{{auth()->user()->name}}</b></h4> -->
-                                <p class="text-muted ">Welcome Back<b
-                                        class="ml-1 text-primary">{{auth()->user()->name}}</b>
-                                </p>
-
-                                <p class="text-muted f-13 mt-1 m-0">{{date('d F Y')}}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12 col-md-12 col-xl-12 col-xl-12 mt-2 mb-4">
-                            <div class="d-flex align-items-center ">
-                                <p class="f-13 w-50"><i class=" ri-sun-line text-warning mr-2"></i>General shift</p>
-                                <p class="f-15">
-                                    <span>
-                                        <label class="switch-checkbox m-0">
-                                            <input type="checkbox">
-                                            <span class="slider-checkbox check-in round">
-                                                <span class="slider-checkbox-text">
-                                                </span>
-                                            </span>
-                                        </label>
-                                    </span>
-                                </p>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
+            @include('ui-dashboard-welcome-card')
         </div>
         <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4  d-flex">
-            <div class="card profile-box flex-fill">
-
-                <h4 class="m-0 title text-center text-primary card-title my-3 fw-bold">My Actions</h4>
-                <hr class="m-0">
-                <div class="card-body">
-
-                    <div class="p-1 px-3 bg-box-color-pink d-flex align-items-center">
-                        <p class="mr-1 py-1 " style="font-size:10px"><b>6 July 2022</b>
-                            <span class="text-muted ">You miss<b class="mx-1">checkin</b>and<b
-                                    class="ml-1">checkOut</b></span>
-                        </p>
-
-                        <span class="bg-white px-2 rounded-pill " style="font-size:10px">
-                            <i class=" ri-flag-fill text-danger mr-1"></i>Report
-                        </span>
-
-
-                    </div>
-
-                    <div class="p-1 px-3 bg-box-color-success mt-2 d-flex align-items-center">
-                        <p class="mr-1 py-1 " style="font-size:10px"><b>5 July 2022</b>
-                            <span class="text-muted ">You miss<b class="mx-1">check-in</b>and<b
-                                    class="mx-1">check-out</b>successfully</span>
-                        </p>
-
-                    </div>
-
-                </div>
-            </div>
+            @include('ui-dashboard-action-card')
         </div>
         <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4 d-flex">
-            <div class="card profile-box card-top-border flex-fill">
-                <!-- <div class="p-1 bg-primary" ></div> -->
-                <div class="card-body ">
-                    <div class="card-img">
-                        <img src="  {{ URL::asset('assets/images/independence.jpg') }}" alt="" class="w-100 h-100">
-                    </div>
-                </div>
-            </div>
+            @include('ui-dashboard-holiday-card')
         </div>
     </div>
     <div class="row">
@@ -316,74 +235,7 @@
                         </div>
                     </div>
                 </div>
-                <h5 class="text-primary"><b>Events</b></h5>
-                <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
-                    <div class="card profile-box flex-fill" style="border-top: 7px solid #f06548;">
-                        <!-- <div class="p-1 bg-danger" ></div> -->
-                        <div class="card-body ">
-                            <div class="wishes-card-wrapper">
-                                <p class="text-muted f-15 m-0"><i class="ri-cake-2-fill f-13 mr-2"></i> Happy
-                                    Birthday</p>
-                                <div class="mt-2 ">
-                                    <div class="px-2 d-flex ">
-                                        <!-- <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}"
-                                            class="img-round"> -->
-                                        <img src="{{ URL::asset('assets/images/users/avatar-8.jpg') }}" alt=""
-                                            class="img-round">
-                                        <h6 class=" text-primary mx-3 mt-3">{{auth()->user()->name}}</h6>
-                                    </div>
-                                    <p class="text-danger fw-bold text-right program-day ">Today</p>
-                                </div>
-                                <i class="float-right bg-icon text-danger ri-cake-2-fill"></i>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
-                    <div class="card profile-box flex-fill" style="border-top: 7px solid #00ffa8;">
-                        <!-- <div class="p-1 bg-danger" ></div> -->
-                        <div class="card-body ">
-                            <div class="wishes-card-wrapper">
-                                <p class="text-muted f-15 m-0"><i class=" f-13 mr-2 ri-shopping-bag-fill"></i> Work
-                                    Anniversary</p>
-                                <div class="mt-2 ">
-                                    <div class="px-2 d-flex">
-                                        <img src="{{ URL::asset('assets/images/users/avatar-10.jpg') }}" alt=""
-                                            class="img-round">
-                                        <!-- <h6 class=" text-primary mx-3 mt-3">{{auth()->user()->name}}</h6> -->
-                                        <h6 class=" text-primary mx-3 mt-3">Ray</h6>
-                                    </div>
-                                    <p class="fw-bold text-right program-day " style="color:#00ffa8">Tomorrow</p>
-                                </div>
-                                <i class="float-right bg-icon  ri-shopping-bag-fill" style="color:#00ffa8"></i>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
-                    <div class="card profile-box flex-fill" style="border-top: 7px solid #a0064f;">
-                        <!-- <div class="p-1 bg-danger" ></div> -->
-                        <div class="card-body ">
-                            <div class="wishes-card-wrapper">
-                                <p class="text-muted f-15 m-0"><i class=" ri-hearts-fill f-13 mr-2"></i>Wedding
-                                    Anniversary</p>
-                                <div class="mt-2  ">
-                                    <div class="px-2 d-flex">
-                                        <img src="{{ URL::asset('assets/images/users/avatar-7.jpg') }}" alt=""
-                                            class="img-round">
-                                        <!-- <h6 class=" text-primary mx-3 mt-3">{{auth()->user()->name}}</h6> -->
-                                        <h6 class=" text-primary mx-3 mt-3">Mosh</h6>
-                                    </div>
-                                    <p class="fw-bold text-right program-day" style="color:#a0064f">09/07/2022</p>
-                                </div>
-                                <i class="float-right bg-icon  ri-hearts-fill"></i>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
+                @include('ui-dashboard-event-card')
             </div>
         </div>
         <div class="col-sm-3 col-md-3">
@@ -477,6 +329,7 @@
 <!--Custom Js Script-->
 <script src="{{ URL::asset('/assets/premassets/js/custom.js') }}"></script>
 <script src="{{ URL::asset('/assets/premassets/js/dashboard.js') }}"></script>
+<script src="{{ URL::asset('/assets/premassets/js/holiday.js') }}"></script>
 
 
 <!-- Prem assets ends -->
@@ -490,7 +343,6 @@
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 
 <!-- for date and time -->
-
 <script>
 $(document).ready(function() {
     $(function() {
@@ -512,6 +364,21 @@ $(document).ready(function() {
         var id = $(this).attr('id');
         $('.topbarContent').hide();
         $('.emp-' + id).css("display", "block");
+    });
+
+    $('#checkin_function').change(function() {
+        var checked = $('#checkin_function').is(':checked');
+        console.log(checked);
+        $.ajax({
+            type: "POST", 
+            url: "{{route('updtaeCheckin')}}", 
+            data: {
+                'checkin': checked,
+                "_token": "{{ csrf_token() }}",
+            },
+            success: function(data){
+            }
+        });
     });
 });
 

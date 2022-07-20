@@ -5,9 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class VmtEmployeeAttendance extends Model
+class Pooling extends Model
 {
     use HasFactory;
-    protected $table = 'vmt_employee_attendance';
-    
+
+    protected $table = 'polling_questions';
+
+    protected $fillable = [
+        'question',
+        'options',
+    ];
 }

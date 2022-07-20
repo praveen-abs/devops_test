@@ -2,14 +2,18 @@
 @section('css')
 
     <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
-
+    <style>
+        .card-border-blue {
+            border-top: 7px solid #002F56!important;
+        }
+    </style>
 @endsection
 @section('content')
 
     
     <div class="row">
         <div class="col-xl-8">
-            <div class="card">
+            <div class="card card-border-blue">
                 <div class="card-header border-0 align-items-center d-flex">
                     <h4 class="card-title mb-0 flex-grow-1"><!-- Please Fill Form --></h4>
                 </div><!-- end card header -->

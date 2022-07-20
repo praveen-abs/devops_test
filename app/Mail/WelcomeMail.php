@@ -37,10 +37,15 @@ class WelcomeMail extends Mailable
      */
     public function build()
     {
-        return $this->view('vmt_welcomeemployee_email')
+        $output = $this->view('vmt_welcomeemployee_email')
                     ->with('uEmail', $this->uEmail)
                     ->with('uPassowrd', $this->uPassowrd)
-                    ->with('loginLink', $this->loginLink)
-                    ->attach($this->filename);;
+                    ->with('loginLink', $this->loginLink);
+                    
+        //Only for Employee Onboarding
+        if($this->filename != "")
+            $output->attach($this->filename);
+
+        return $output;
     }
 }
