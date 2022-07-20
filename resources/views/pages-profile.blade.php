@@ -118,7 +118,7 @@
                                                         alt="" class=" w-100 h-100 soc-det-img "> -->
                                                 </div>
                                             </div>
-                                            @if ($rep && $re->name)
+                                            @if ($rep && $rep->name)
                                             <a href="profile.html">
                                                 {{$rep->name}}
                                             </a>
