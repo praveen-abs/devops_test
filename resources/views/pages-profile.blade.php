@@ -118,9 +118,15 @@
                                                         alt="" class=" w-100 h-100 soc-det-img "> -->
                                                 </div>
                                             </div>
+                                            @if ($rep && $rep->name)
                                             <a href="profile.html">
-                                                {{$details->l1_manager_name}}
+                                                {{$rep->name}}
                                             </a>
+                                            @else
+                                            <a href="profile.html">
+                                                --
+                                            </a>
+                                            @endif
                                         </div>
                                     </li>
 
@@ -869,7 +875,7 @@
                                     <select class="select form-control" name="report">
                                         <option>Select</option>
                                         @foreach($code as $c)
-                                        <option value="{{$c->emp_no}}" @if($rep->emp_no == $c->emp_no) selected
+                                        <option value="{{$c->emp_no}}" @if($rep && $rep->emp_no == $c->emp_no) selected
                                                 @endif>{{$c->emp_no . ' (' .$c->name. ')'}}</option>
                                         @endforeach
                                     </select>

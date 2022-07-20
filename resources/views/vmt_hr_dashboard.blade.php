@@ -78,13 +78,16 @@
                                 <p class="f-15">
                                     <span>
                                         <label class="switch-checkbox m-0">
-                                            <input type="checkbox">
+                                            <input type="checkbox" id="checkin_function" @if($checked && $checked->id) checked @endif>
                                             <span class="slider-checkbox check-in round">
                                                 <span class="slider-checkbox-text">
                                                 </span>
                                             </span>
                                         </label>
                                     </span>
+                                @if ($checked && $checked->created_at)
+                                <span id="check_timing" class="text-danger">{{round(abs(strtotime(date('Y-m-d H:i:s')) - strtotime($checked->created_at)) / 60,2)}}</span>
+                                @endif
                                 </p>
                             </div>
 
@@ -502,6 +505,19 @@ $(document).ready(function() {
             },
         });
     });
+    setInterval(function(){
+        var val = $('#check_timing').html();
+        if (val != '') {
+            var array = val.split(".");
+            if (array[1] >= 59) {
+                array[1] = 00;
+                array[0] = parseInt(array[0])+1;
+            } else {
+                array[1] = parseInt(array[1])+1;
+            }
+            $('#check_timing').html(array.join('.'));
+        }
+    }, 1000);
 
     $('body').on('click', '.popover-close', function() {
         $("[data-toggle=popover]").popover('hide');
@@ -512,6 +528,21 @@ $(document).ready(function() {
         var id = $(this).attr('id');
         $('.topbarContent').hide();
         $('.emp-' + id).css("display", "block");
+    });
+
+    $('#checkin_function').change(function() {
+        var checked = $('#checkin_function').is(':checked');
+        console.log(checked);
+        $.ajax({
+            type: "POST", 
+            url: "{{route('updtaeCheckin')}}", 
+            data: {
+                'checkin': checked,
+                "_token": "{{ csrf_token() }}",
+            },
+            success: function(data){
+            }
+        });
     });
 });
 
