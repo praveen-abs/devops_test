@@ -683,9 +683,11 @@ body {
     /* padding: 0px !important; */
     color: #313030;
     font-size: .9375rem;
+    border:0;
+    background: transparent;
+    outline: none;
 
 }
-
 
 
 @media (max-width:767.98px) {
@@ -2076,7 +2078,7 @@ body {
 
 /* padding 70 t0 50 */
 [data-layout=vertical][data-sidebar-size=sm] .navbar-menu {
-    position: absolute;
+    position: fixed;
     width: 80px !important;
     padding: 0px;
     height: 100%;
@@ -18849,17 +18851,16 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
 
 /* query for phones and tablet */
 
-@media (min-width: 576px) and (max-width: 767.98px) {
+@media (min-width: 0px) and (max-width: 767.98px) {
 
     .search-content {
         display: none;
     }
-
-    /* for hide sidebar */
-    [data-layout=vertical] .app-menu {
-        margin-left: -100%;
-        padding: 10px 0 20px 0;
+    .topbar-logo{
+        display: none !important;
     }
+
+
 
   
 
