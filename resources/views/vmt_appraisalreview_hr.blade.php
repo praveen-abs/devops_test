@@ -2,91 +2,166 @@
 @section('css')
 
 <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
-<style type="text/css">
-.e-table>:not(caption)>*>* {
-    border-bottom-width: 0px !important;
-    padding: .45rem .6rem !important;
-}
 
-.e-table .e-table,
-.e-table>thead {
-    border: 0px !important;
-}
+<!-- for styling -->
+<link href="{{ URL::asset('assets/css/appraisal_review.css') }}" rel="stylesheet">
 
-.table-bordered .table-bordered>:not(caption)>*>* {
-    border-top-width: 0px !important;
-    border-bottom-width: 0px !important;
-}
-
-.inp-text {
-    height:165px;
-    width:auto;
-    word-break: break-word;
-}
-</style>
 @endsection
 @section('content')
 
-@component('components.breadcrumb')
-@slot('li_1') Dashboards @endslot
-@slot('title') Self Appraisal Review @endslot
-@endcomponent
 
 
 
+
+<div>
+    <div class="card  profile-box card-top-border ">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-xl-12">
+                    <div class="d-flex align-items-center justify-content-start">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6">
+                                <div class=" appraisal-user">
+                                    <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}"
+                                        class="soc-det-img profile-img-round w-100 h-100">
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6">
+                                <div class="d-flex flex-column justify-content-center mx-1 my-3 ">
+                                    <h4 class="fw-bold">Augustin</h5>
+                                        <p class="text-muted">Employee</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 col-lg-6 col-xl-6">
+                            <hr>
+                            @if($empSelected)
+                            <div class="appraisal-info left-content">
+                                <ul class="personal-info">
+                                    <li>
+                                        <p class="title">Employee Name</p>
+                                        <p class="text">{{$assignedEmployee_Userdata->name}}</p>
+                                    </li>
+                                    <li>
+                                        <p class="title"> Employee ID</p>
+                                        <p class="text">{{$employeeData->emp_no}}</p>
+                                    </li>
+                                    <li>
+                                        <p class="title">Job Title/Designation</p>
+                                        <p class="text">{{$assignedEmployeeOfficeDetails->designation}}</p>
+                                    </li>
+                                    <li>
+                                        <p class="title">Business Unit/Process/Function</p>
+                                        <p class="text">{{$assignedEmployeeOfficeDetails->department}}</p>
+                                    </li>
+                                    <li>
+                                        <p class="title">Reporting Manager</p>
+                                        <p class="text">{{$assignedEmployeeOfficeDetails->l1_manager_name}}</p>
+                                    </li>
+                                    <li>
+                                        <p class="title">Review Period</p>
+                                        <p class="text"><?php
+                                    $temp =  json_decode($assignedGoals->assignment_period, true);
+                                   print_r($temp['year']." - ".strtoupper($temp['assignment_period_start']));
+                                    //dd($temp);
+                                ?></p>
+                                    </li>
+                                </ul>
+                            </div>
+                            @endif
+                        </div>
+                        <div class="col-md-6 col-sm-12 col-lg-6 col-xl-6">
+                            <div class="card  appraisal-right-content">
+                                <div class="card-body">
+
+                                    <div class="mb-3 input-wrap">
+                                        <p>Overall Annual Score</p>
+                                        <div class="appraisal-box  btn bg-success text-white ">
+                                            @if($ratingDetail){{$ratingDetail['rating']}}@else - @endif</div>
+
+                                    </div>
+                                    <div class="mb-3 input-wrap">
+                                        <p>Corresponding ANNUAL PERFORMANCE Rating</p>
+                                        <div class="appraisal-box  btn bg-success  text-white">
+                                            @if($ratingDetail){{$ratingDetail['performance']}}@else - @endif</div>
+                                    </div>
+                                    <div class="mb-3 input-wrap">
+                                        <p>Ranking</p>
+                                        <div class="appraisal-box   btn bg-success text-white ">
+                                            @if($ratingDetail){{$ratingDetail['ranking']}}@else - @endif</div>
+                                    </div>
+                                    <div class=" input-wrap">
+                                        <p>Action</p>
+                                        <div class="appraisal-box btn bg-danger text-white">
+                                            @if($ratingDetail){{$ratingDetail['action']}}@else - @endif</div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
 <div class="row">
     <div class="col-xl-12">
-        <div class="card">
+        <!-- <div class="card">
 
-               
-                @if($empSelected)
-                    <table class="table e-table align-middle table-nowrap mb-0 " style="border: none;">
+            @if($empSelected)
+            <table class="table e-table align-middle table-nowrap mb-0 " style="border: none;">
 
-                    <tbody>
-                        <tr style="border: none;">
-                            <td class=" text-left">
-                                <b>Employee Name: </b>
-                            </td>
-                            <td class="text-left">
-                                {{$assignedEmployee_Userdata->name}}
-                            </td>
-                        </tr>
-                        <tr style="border: none;">
-                            <td class="text-left">
-                                <b>Employee ID:
-                            </td>
-                            <td class="text-left">
-                                {{$employeeData->emp_no}}
-                            </td>
-                        </tr>
-                        <tr style="border: none;">
-                            <td class="col-xl-6 text-left">
-                                <b>Job Title / Designation:</b>
-                            </td>
-                            <td class="col-xl-6 text-left">
-                                {{$assignedEmployeeOfficeDetails->designation}}
-                            </td>
-                        </tr>
-                        <tr style="border: none;">
-                            <td class="col-xl-6 text-left">
-                                <b>Business Unit/Process/Function:</b>
-                            </td>
-                            <td class="col-xl-6 text-left">
-                                {{$assignedEmployeeOfficeDetails->department}}
-                            </td>
-                        </tr>
-                        <tr style="border: none;">
-                            <td class="col-xl-6 text-left">
-                                <b>Reporting Manager :</b>
-                            </td>
-                            <td class="col-xl-6 text-left">
-                                {{$assignedEmployeeOfficeDetails->l1_manager_name}}
-                            </td>
-                        </tr>
-                        {{-- <tr style="border: none;">
+                <tbody>
+                    <tr style="border: none;">
+                        <td class=" text-left">
+                            <b>Employee Name: </b>
+                        </td>
+                        <td class="text-left">
+                            {{$assignedEmployee_Userdata->name}}
+                        </td>
+                    </tr>
+                    <tr style="border: none;">
+                        <td class="text-left">
+                            <b>Employee ID:
+                        </td>
+                        <td class="text-left">
+                            {{$employeeData->emp_no}}
+                        </td>
+                    </tr>
+                    <tr style="border: none;">
+                        <td class="col-xl-6 text-left">
+                            <b>Job Title / Designation:</b>
+                        </td>
+                        <td class="col-xl-6 text-left">
+                            {{$assignedEmployeeOfficeDetails->designation}}
+                        </td>
+                    </tr>
+                    <tr style="border: none;">
+                        <td class="col-xl-6 text-left">
+                            <b>Business Unit/Process/Function:</b>
+                        </td>
+                        <td class="col-xl-6 text-left">
+                            {{$assignedEmployeeOfficeDetails->department}}
+                        </td>
+                    </tr>
+                    <tr style="border: none;">
+                        <td class="col-xl-6 text-left">
+                            <b>Reporting Manager :</b>
+                        </td>
+                        <td class="col-xl-6 text-left">
+                            {{$assignedEmployeeOfficeDetails->l1_manager_name}}
+                        </td>
+                    </tr>
+                    {{-- <tr style="border: none;">
                             <td class="col-xl-6 text-left">
                                 <b>Managers Manager :</b>
                             </td>
@@ -94,65 +169,65 @@
                                 Kumar
                             </td>
                         </tr> --}}
-                        <tr style="border: none;">
-                            <td class="col-xl-6 text-left">
-                                <b>Review Period: </b>
-                            </td>
-                            <td class="col-xl-6 text-left">
-                                <?php
+                    <tr style="border: none;">
+                        <td class="col-xl-6 text-left">
+                            <b>Review Period: </b>
+                        </td>
+                        <td class="col-xl-6 text-left">
+                            <?php
                                     $temp =  json_decode($assignedGoals->assignment_period, true);
                                    print_r($temp['year']." - ".strtoupper($temp['assignment_period_start']));
-                                    //dd($temp);
+                                    
                                 ?>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                @endif
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            @endif
 
-        </div><!-- end card -->
+        </div> -->
 
-        <div class="card">
+        <!-- <div class="card">
 
-                <table class="table e-table align-middle table-nowrap mb-0 " style="border: none;">
+            <table class="table e-table align-middle table-nowrap mb-0 " style="border: none;">
 
-                    <tbody>
-                        <tr style="border: none;">
-                            <td class=" text-left">
-                                <b>Overall Annual Score: </b>
-                            </td>
-                            <td class="text-left">
-                                @if($ratingDetail){{$ratingDetail['rating']}}@else - @endif
-                            </td>
-                        </tr>
-                        <tr style="border: none;">
-                            <td class="text-left">
-                                <b>Corresponding ANNUAL PERFORMANCE Rating:</b>
-                            </td>
-                            <td class="text-left">
-                                @if($ratingDetail){{$ratingDetail['performance']}}@else - @endif
-                            </td>
-                        </tr>
-                        <tr style="border: none;">
-                            <td class="col-xl-6 text-left">
-                                <b>Ranking:</b>
-                            </td>
-                            <td class="col-xl-6 text-left">
-                                @if($ratingDetail){{$ratingDetail['ranking']}}@else - @endif
-                            </td>
-                        </tr>
-                        <tr style="border: none;">
-                            <td class="col-xl-6 text-left">
-                                <b> Action:</b>
-                            </td>
-                            <td class="col-xl-6 text-left">
-                                @if($ratingDetail){{$ratingDetail['action']}}@else - @endif
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <tbody>
+                    <tr style="border: none;">
+                        <td class=" text-left">
+                            <b>Overall Annual Score: </b>
+                        </td>
+                        <td class="text-left">
+                            @if($ratingDetail){{$ratingDetail['rating']}}@else - @endif
+                        </td>
+                    </tr>
+                    <tr style="border: none;">
+                        <td class="text-left">
+                            <b>Corresponding ANNUAL PERFORMANCE Rating:</b>
+                        </td>
+                        <td class="text-left">
+                            @if($ratingDetail){{$ratingDetail['performance']}}@else - @endif
+                        </td>
+                    </tr>
+                    <tr style="border: none;">
+                        <td class="col-xl-6 text-left">
+                            <b>Ranking:</b>
+                        </td>
+                        <td class="col-xl-6 text-left">
+                            @if($ratingDetail){{$ratingDetail['ranking']}}@else - @endif
+                        </td>
+                    </tr>
+                    <tr style="border: none;">
+                        <td class="col-xl-6 text-left">
+                            <b> Action:</b>
+                        </td>
+                        <td class="col-xl-6 text-left">
+                            @if($ratingDetail){{$ratingDetail['action']}}@else - @endif
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
-        </div><!-- end card -->
+        </div> -->
 
         <!-- @can('L1_Review')
                             <th style=" background-color: #405189;">
@@ -185,13 +260,16 @@
                             <div class="row pull-right mb-3">
                                 @csrf
                                 <div class="col">
-                                    <a href="{{route('download-file', $kpiRowsId)}}" class="btn btn-primary pull-right" id="download-excel">Download</a>
+                                    <a href="{{route('download-file', $kpiRowsId)}}" class="btn btn-primary pull-right"
+                                        id="download-excel">Download</a>
                                 </div>
                                 <div class="col-auto p-0">
-                                    <input type="file" name="upload_file" id="upload_file" accept=".xls,.xlsx" class="form-control" required>
+                                    <input type="file" name="upload_file" id="upload_file" accept=".xls,.xlsx"
+                                        class="form-control" required>
                                 </div>
                                 <div class="col">
-                                    <button type="button" class="btn btn-primary pull-right" id="upload-goal" disabled>Upload</button>
+                                    <button type="button" class="btn btn-primary pull-right" id="upload-goal"
+                                        disabled>Upload</button>
                                 </div>
                             </div>
                         </form>
@@ -202,7 +280,7 @@
                     @csrf
                     <input type="hidden" name="goal_id" value="{{$assignedGoals->id}}">
                     <div class="table-content mb-4">
-                        
+
                         <table class="table align-middle mb-0 table-bordered  responsive" id="table">
 
                             <thead class="thead" id="tHead">
@@ -229,7 +307,9 @@
                             <tbody class="tbody" id="tbody">
                                 @foreach($kpiRows as $index => $kpiRow)
                                 <tr>
-                                    <th scope="row"><div>{{$kpiRow->dimension}}</div></th>
+                                    <th scope="row">
+                                        <div>{{$kpiRow->dimension}}</div>
+                                    </th>
                                     <td>
                                         <div>{{$kpiRow->kpi}}</div>
                                     </td>
@@ -274,17 +354,20 @@
 
                                     <td>
                                         @if(!$assignedGoals->is_hr_submitted && $assignedGoals->is_manager_submitted)
-                                            <textarea name="hreview[{{$kpiRow->id}}]" id="" cols="20" rows="8" placeholder="type here">@if(isset( $kpiRow->hr_kpi_review)){{$kpiRow->hr_kpi_review}}@endif</textarea>
+                                        <textarea name="hreview[{{$kpiRow->id}}]" id="" cols="20" rows="8"
+                                            placeholder="type here">@if(isset( $kpiRow->hr_kpi_review)){{$kpiRow->hr_kpi_review}}@endif</textarea>
                                         @else
-                                            <div>{{$kpiRow->hr_kpi_review}}</div>
+                                        <div>{{$kpiRow->hr_kpi_review}}</div>
                                         @endif
                                     </td>
                                     <td>
                                         @if(!$assignedGoals->is_hr_submitted && $assignedGoals->is_manager_submitted)
-                                            <!-- <textarea name="hrpercetage[{{$kpiRow->id}}]" id="" cols="20" rows="2" placeholder="type here">@if(isset( $kpiRow->hr_kpi_percentage)){{$kpiRow->hr_kpi_percentage}}@endif</textarea> -->
-                                            <input type="number" class="inp-text" name="hrpercetage[{{$kpiRow->id}}]" placeholder="type here" value="@if(isset( $kpiRow->hr_kpi_percentage)){{$kpiRow->hr_kpi_percentage}}@endif">
+                                        <!-- <textarea name="hrpercetage[{{$kpiRow->id}}]" id="" cols="20" rows="2" placeholder="type here">@if(isset( $kpiRow->hr_kpi_percentage)){{$kpiRow->hr_kpi_percentage}}@endif</textarea> -->
+                                        <input type="number" class="inp-text" name="hrpercetage[{{$kpiRow->id}}]"
+                                            placeholder="type here"
+                                            value="@if(isset( $kpiRow->hr_kpi_percentage)){{$kpiRow->hr_kpi_percentage}}@endif">
                                         @else
-                                            <div>{{$kpiRow->hr_kpi_percentage}}</div>
+                                        <div>{{$kpiRow->hr_kpi_percentage}}</div>
                                         @endif
                                     </td>
 
@@ -293,36 +376,37 @@
                             </tbody>
 
                         </table>
-                       
+
                     </div>
                 </form>
                 <div class="buttons d-flex align-items-center justify-content-end ">
                     @if($assignedGoals->is_manager_submitted && !$assignedGoals->is_hr_submitted )
-                        <button class="btn btn-primary" id="save_table">Save<i class="fa fa-save"></i></button>
-                        &nbsp;&nbsp;
-                        <button class="btn btn-primary" id="publish_table">Submit<i class="fa fa-save"></i></button>
+                    <button class="btn btn-primary" id="save_table">Save<i class="fa fa-save"></i></button>
+                    &nbsp;&nbsp;
+                    <button class="btn btn-primary" id="publish_table">Submit<i class="fa fa-save"></i></button>
                     @endif
                     @else
-                        <h4>Goals Not Assigned</h4>
-                    @endif                    
-                </div>      
+                    <h4>Goals Not Assigned</h4>
+                    @endif
+                </div>
             </div>
         </div>
-    </div><!-- end col -->
+    </div>
 
     @if($reviewCompleted)
 
-        <div class="row mt-3">
-            <div class="col-lg-12">
-                <label class="form-label">
-                    Appraiser Feedback:
-                </label>
-                <div class="my-2">
-                    <textarea class="form-control" placeholder="" id="gen-info-description-input" name="performance"
-                        rows="4" readonly>@if(isset( $assignedGoals->appraiser_comment)){{$assignedGoals->appraiser_comment}}@endif</textarea>
-                </div>                    
+    <div class="row mt-3">
+        <div class="col-lg-12">
+            <label class="form-label">
+                Appraiser Feedback:
+            </label>
+            <div class="my-2">
+                <textarea class="form-control" placeholder="" id="gen-info-description-input" name="performance"
+                    rows="4"
+                    readonly>@if(isset( $assignedGoals->appraiser_comment)){{$assignedGoals->appraiser_comment}}@endif</textarea>
             </div>
         </div>
+    </div>
     @endif
 
 
@@ -391,110 +475,105 @@
 
 
 
-<!-- Modal -->
-                <div class="modal fade flip" id="acceptPMS" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-body p-5 text-center">
-                                <lord-icon src="https://cdn.lordicon.com/gsqxdxog.json"
-                                    trigger="loop" colors="primary:#405189,secondary:#f06548"
-                                    style="width:90px;height:90px"></lord-icon>
-                                <div class="mt-4 text-center">
-                                    <h4>You are about to delete a order ?</h4>
-                                    
-                                    <p class="text-muted fs-15 mb-4">Deleting your order will remove
-                                        all of
-                                        your information from our database.</p>
-                                    <div class="hstack gap-2 justify-content-center remove">
-                                        <button
-                                            class="btn btn-link link-success fw-medium text-decoration-none"
-                                            data-bs-dismiss="modal"><i
-                                                class="ri-close-line me-1 align-middle"></i>
-                                            Close</button>
-                                        <button class="btn btn-danger" id="delete-record">Yes,
-                                            Delete It</button>
-                                    </div>
-                                </div>
-                            </div>
+    <!-- Modal -->
+    <div class="modal fade flip" id="acceptPMS" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body p-5 text-center">
+                    <lord-icon src="https://cdn.lordicon.com/gsqxdxog.json" trigger="loop"
+                        colors="primary:#405189,secondary:#f06548" style="width:90px;height:90px"></lord-icon>
+                    <div class="mt-4 text-center">
+                        <h4>You are about to delete a order ?</h4>
+
+                        <p class="text-muted fs-15 mb-4">Deleting your order will remove
+                            all of
+                            your information from our database.</p>
+                        <div class="hstack gap-2 justify-content-center remove">
+                            <button class="btn btn-link link-success fw-medium text-decoration-none"
+                                data-bs-dismiss="modal"><i class="ri-close-line me-1 align-middle"></i>
+                                Close</button>
+                            <button class="btn btn-danger" id="delete-record">Yes,
+                                Delete It</button>
                         </div>
                     </div>
                 </div>
-                <!--end modal -->
+            </div>
+        </div>
+    </div>
+    <!--end modal -->
 
 
-    
-</div><!-- end row -->
 
- 
+</div>
+
+
 @endsection
 @section('script')
 <!-- apexcharts -->
 
- 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 <script type="text/javascript">
-    
-    $('#upload_file').change(function() {
-        if ($(this).is(':valid')) {
-            $('#upload-goal').removeAttr('disabled');
-        } else {
-            $('#upload-goal').attr('disabled', true);
+$('#upload_file').change(function() {
+    if ($(this).is(':valid')) {
+        $('#upload-goal').removeAttr('disabled');
+    } else {
+        $('#upload-goal').attr('disabled', true);
+    }
+});
+
+$('#upload-goal').click(function() {
+    var form_data = new FormData(document.getElementById("upload_form"));
+    $.ajax({
+        type: "POST",
+        url: "{{route('upload-file-review')}}",
+        dataType: "json",
+        contentType: false,
+        processData: false,
+        data: form_data,
+        success: function(data) {
+            // $('.addition-content').html('');
+            $.each(data[0], function(key, value) {
+                $('#selfreview' + key).val(value[9]);
+                $('#selfkpiachievement' + key).val(value[10]);
+                $('#selfcomments' + key).val(value[11]);
+            });
         }
     });
+});
+$('#save_table').click(function(e) {
+    e.preventDefault();
+    // console.log("save trigger");
+    // console.log($('#employee_self_review').serialize());
 
-    $('#upload-goal').click(function() {
-        var form_data = new FormData(document.getElementById("upload_form"));
-        $.ajax({
-            type: "POST", 
-            url: "{{route('upload-file-review')}}", 
-            dataType : "json",
-            contentType: false,
-            processData: false,
-            data: form_data,
-            success: function(data){
-                // $('.addition-content').html('');
-                $.each(data[0],function(key, value) {
-                    $('#selfreview'+key).val(value[9]);
-                    $('#selfkpiachievement'+key).val(value[10]);
-                    $('#selfcomments'+key).val(value[11]);
-                });
-            }
-        });
-    });
-    $('#save_table').click(function(e){
-        e.preventDefault();
-       // console.log("save trigger");
-       // console.log($('#employee_self_review').serialize());
-
-        $.ajax({
-            type: "POST", 
-            url:"{{url('vmt-pms-saveKPItableDraft_HR')}}",
-            data:$('#employee_self_review').serialize(), 
-            success: function(data){
-                alert(data);
-            }
-        })
-    });
-    
-
-    $('#publish_table').click(function(e){
-        e.preventDefault();
-        console.log("save trigger");
-        console.log($('#employee_self_review').serialize());
-
-        $.ajax({
-            type: "POST", 
-            url:"{{url('vmt-pmsappraisal-hrreview')}}",
-            data:$('#employee_self_review').serialize(), 
-            success: function(data){
-                alert(data);
-                window.location.reload();
-            }
-        })
-    });
+    $.ajax({
+        type: "POST",
+        url: "{{url('vmt-pms-saveKPItableDraft_HR')}}",
+        data: $('#employee_self_review').serialize(),
+        success: function(data) {
+            alert(data);
+        }
+    })
+});
 
 
+$('#publish_table').click(function(e) {
+    e.preventDefault();
+    console.log("save trigger");
+    console.log($('#employee_self_review').serialize());
+
+    $.ajax({
+        type: "POST",
+        url: "{{url('vmt-pmsappraisal-hrreview')}}",
+        data: $('#employee_self_review').serialize(),
+        success: function(data) {
+            alert(data);
+            window.location.reload();
+        }
+    })
+});
 </script>
 @endsection

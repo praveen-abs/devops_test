@@ -21,14 +21,6 @@
 @endsection
 @section('content')
 
-@component('components.breadcrumb')
-@slot('li_1') Dashboards @endslot
-@slot('title') Self Appraisal Review @endslot
-@endcomponent
-
-
-
-
 
 
 <div class="row">
