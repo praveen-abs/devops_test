@@ -155,7 +155,7 @@ right connector from last child*/
 
 @endsection
 @section('content')
-@component('components.attendance_breadcrumb')
+@component('components.organization_breadcrumb')
 @slot('li_1')  @endslot
 @endcomponent
 

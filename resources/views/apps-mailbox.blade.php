@@ -2,9 +2,9 @@
 @section('title') @lang('translation.mailbox') @endsection
 @section('content')
 
-
-
-
+@component('components.helpdesk_breadcrumb')
+@slot('li_1')  @endslot
+@endcomponent
 <div class="email-wrapper d-lg-flex gap-1 mx-n4 mt-n4 p-1">
     <div class="email-menu-sidebar">
         <div class="p-4 d-flex flex-column h-100">

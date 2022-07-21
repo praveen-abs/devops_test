@@ -148,7 +148,9 @@ tr:last-child td:last-child {
 
 
 @section('content')
-
+@component('components.organization_breadcrumb')
+@slot('li_1')  @endslot
+@endcomponent
 
 
 <div class=" project-wrapper">

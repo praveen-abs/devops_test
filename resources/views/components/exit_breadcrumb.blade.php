@@ -1,8 +1,11 @@
-<!-- start page title -->
+@section('css')
+<link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
+<!-- <link rel="stylesheet" href="{{ URL::asset('/assets/css/app.min.css') }}"> -->
+@endsection
 <div class="row">
     <div class="col-12">
         <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-            <!-- <h5 class="mb-sm-0 text-muted  fw-bold" >{{ $title }}</h5> -->
+            
 
             <div class="page-title-right">
                 <ol class="breadcrumb m-0  fw-bold ">

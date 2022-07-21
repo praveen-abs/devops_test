@@ -11,7 +11,9 @@
 @section('content')
 
 
-
+@component('components.paycheck_breadcrumb')
+@slot('li_1')  @endslot
+@endcomponent
 
 <div class="container-fluid bg-white salary-details-wrapper">
 

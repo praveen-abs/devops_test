@@ -7,9 +7,10 @@
 
 
 @section('content')
-
+@component('components.payroll_breadcrumb')
+@slot('li_1')  @endslot
+@endcomponent
     
-
 
     <div class="row">
         <div class="col-xl-8">

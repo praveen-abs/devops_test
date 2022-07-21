@@ -258,9 +258,8 @@ td .btn i {
 
 @endsection
 @section('content')
-@component('components.breadcrumb')
-@slot('li_1') Performance @endslot
-@slot('title') Dashboard @endslot
+@component('components.performance_breadcrumb')
+@slot('li_1')  @endslot
 @endcomponent
 
 
