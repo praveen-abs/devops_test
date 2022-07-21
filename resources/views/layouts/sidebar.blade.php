@@ -739,7 +739,7 @@
                     <div class="collapse menu-dropdown" id="configDrop-down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{url('vmt_employeeOnboarding')}}" class="nav-link"><span> Client
+                                <a href="{{url('vmt_clientOnboarding')}}" class="nav-link"><span> Client
                                         Onboarding</span></a>
                             </li>
                         </ul>
