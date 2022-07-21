@@ -341,9 +341,9 @@ tr:last-child td:last-child {
                 <div class="float-left directory-left d-flex">
                     <div class="switch-field align-items-center">
                         <input type="radio" id="radio-one" name="switch-one" value="Active" checked />
-                        <label for="radio-one ">Active</label>
+                        <label for="radio-one">Active</label>
                         <input type="radio" id="radio-two" name="switch-one" value="Inactive" />
-                        <label for="radio-two ">Inactive</label>
+                        <label for="radio-two">Inactive</label>
                     </div>
 
                     <div class="search-content header-item w-50 mx-5">
