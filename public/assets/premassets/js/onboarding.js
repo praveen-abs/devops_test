@@ -41,6 +41,20 @@ $(document).ready(function() {
         }
     });
 
+    $(".files").on('change',function(){
+        //do whatever you want
+        var val = $(this).val();
+        var id = $(this).attr('id');
+        $('#'+id+'_label').html(val);
+    });
+
+
+    $('.addfiles').on('click', function() { 
+        var attr = $(this).attr('data');
+        $(attr).click();
+        return false;
+    });
+
     $('body').on('click', '.validate', function() {
         $(this).removeClass('not-required');
     });

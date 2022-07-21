@@ -41,11 +41,11 @@
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-2">
                                                     <!-- <label class="" for="csd">Contract Start Date{!! required() !!}</label> -->
-                                                    <input type="date" max="9999-12-31"  placeholder="Contract Start Date" name="csd" class="onboard-form form-control" required />
+                                                    <input type="text" max="9999-12-31"  placeholder="Contract Start Date" name="csd" class="onboard-form form-control" onfocus="(this.type='date')" required />
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-2">
                                                     <!-- <label class="" for="ced">Contract End Date{!! required() !!}</label> -->
-                                                    <input type="date" max="9999-12-31"  placeholder="Contract End Date" name="ced" class="onboard-form form-control" required />
+                                                    <input type="text" max="9999-12-31"  placeholder="Contract End Date" name="ced" class="onboard-form form-control" onfocus="(this.type='date')" required />
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-2">
                                                     <!-- <label class="" for="cin_no">Company Identification Number{!! required() !!}</label> -->
@@ -127,11 +127,13 @@
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-2 dashBoard">
                                                     <!-- <label class="" for="doc_uploads">Documents Upload{!! required() !!}</label> -->
-                                                    <input type="file" placeholder="Documents Upload" name="doc_uploads" class="onboard-form form-control" required accept="image/*" />
+                                                    <div class="addfiles form-control" data="#doc_uploads" id="doc_uploads_label">Choose Documents Upload</div>
+                                                    <input type="file" placeholder="Documents Upload" name="doc_uploads" class="onboard-form form-control" style="display:none;" required accept="image/*" />
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-2 dashBoard">
                                                     <!-- <label class="" for="product">Product{!! required() !!}</label> -->
-                                                    <select placeholder="Product" name="product" class="onboard-form form-control  drop_down" required>
+                                                    <select placeholder="Product" name="product" id="product" class="onboard-form form-control" required>
+                                                        <option selected>Select Product</option>
                                                         <option value="Recruitment">Recruitment</option>
                                                         <option value="Payroll">Payroll</option>
                                                         <option value="Statutory Complainces">Statutory Complainces</option>
@@ -145,7 +147,8 @@
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-2 dashBoard">
                                                     <!-- <label class="" for="subscription_type">Subscription Type{!! required() !!}</label> -->
-                                                    <select placeholder="Subscription Type" name="subscription_type" class="onboard-form form-control drop_down" required>
+                                                    <select placeholder="Subscription Type" name="subscription_type" id="subscription_type" class="onboard-form form-control" required>
+                                                        <option>Select Subscription Type</option>
                                                         <option value="Monthly">Monthly</option>
                                                         <option value="Quarterly">Quarterly</option>
                                                         <option value="BiAnnually">BiAnnually</option>

@@ -38,10 +38,18 @@
 
 @endsection
 
+@section('loading')
+<section id="loading">
+    <div class='face'>
+        <div class='loader-container'>
+            <img id="loader-image" src="{{ URL::asset('assets/images/abs logo.png') }}"/>
+            <span class='loading'></span>
+        </div>
+    </div>
+</section>
+@endsection
 
 @section('content')
-
-
 
 <div class="main">
     <!-- Content Row -->
@@ -288,7 +296,6 @@
 
 <!--  -->
 @endsection
-
 @section('script')
 <!-- Prem assets -->
 <!-- OWL CAROUSEL -->

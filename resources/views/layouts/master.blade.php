@@ -131,6 +131,9 @@
             
         }
     }
+    #loading ~#layout-wrapper .main-content {
+        display:none;
+    }
     </style>
 </head>
 
@@ -141,21 +144,14 @@
     <!-- <section id="loading" class="loading">
         <div id="loading-content" class="loading-content"></div>
     </section> -->
-    <section id="loading">
-        <div class='face'>
-            <div class='loader-container'>
-                <img id="loader-image" src="{{ URL::asset('assets/images/abs logo.png') }}"/>
-                <span class='loading'></span>
-            </div>
-        </div>
-    </section>
+    @yield('loading')
     <div id="layout-wrapper">
         @include('layouts.topbar')
         @include('layouts.sidebar')
         <!-- ============================================================== -->
         <!-- Start right Content here -->
         <!-- ============================================================== -->
-        <div class="main-content" style="display:none;">
+        <div class="main-content">
             <div class="page-content">
                 <div class="container-fluid">
                     @yield('content')
