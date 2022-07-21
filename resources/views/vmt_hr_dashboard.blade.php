@@ -16,7 +16,7 @@
 <!--Custom style.css-->
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/quicksand.css') }}">
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/dashboard.css') }}">
-<link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/hr_dashboard.css') }}">
+<!-- <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/hr_dashboard.css') }}"> -->
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/holiday.css') }}">
 <!--Bootstrap Calendar-->
 <!-- <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/bootstrap_calendar.css') }}"> -->
@@ -341,7 +341,7 @@
 <!-- dashboard init -->
 <script src="{{ URL::asset('/assets/js/pages/dashboard-ecommerce.init.js') }}"></script>
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
-
+@yield('welcome-script')
 <!-- for date and time -->
 <script>
 $(document).ready(function() {

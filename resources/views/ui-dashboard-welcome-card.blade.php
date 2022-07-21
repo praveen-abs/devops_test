@@ -83,7 +83,7 @@
     </div>
 </div>    
 
-@section('script')
+@section('welcome-script')
 
 <script>
 $(document).ready(function() {
