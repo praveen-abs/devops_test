@@ -299,6 +299,10 @@ class HomeController extends Controller
         return "Settings Saved";
     }
 
+    public function vmt_topbar_settings(Request $request){
+        return view('vmt_topbar_settings');
+    }
+
     //
     public function storeGeneralInfo(Request $request){
 

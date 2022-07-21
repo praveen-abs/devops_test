@@ -326,7 +326,7 @@
 
                                 @else
                                 
-                                <a class="dropdown-item" href="vmt_topbar_settings"><i
+                                <a class="dropdown-item" href="{{route('vmt_topbar_settings')}}"><i
                                         class="mdi mdi-cog-outline text-muted fs-16 align-middle me-1"></i> <span
                                         class="align-middle">Settings</span></a>
                                 @endhasrole
