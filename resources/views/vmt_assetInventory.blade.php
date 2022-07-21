@@ -179,7 +179,7 @@ tr:last-child td:last-child {
                     {{-- <div class="btn border-0 outline-none mx-2 ">
                         <i class="ri-menu-add-line fw-bold"></i>
                     </div> --}}
-                    <a href="{{route('vmt-assetinventory-add')}}"
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#modal_add_asset"
                         class="btn border-0 outline-none py-1 onboard-employee-btn h-25 fw-bold bg-danger text-white">
                         <i class="ri-add-line fw-bold mx-1"></i>
                         Add New Asset
@@ -200,6 +200,113 @@ tr:last-child td:last-child {
 
 </div><!-- end row -->
 
+
+<div id="modal_add_asset" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content profile-box">
+            <div class="modal-header py-3 new-role-header d-flex align-items-center">
+                <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Add New Asset
+                </h4>
+                <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body" >
+                <form class="requires-validation" id="form_add_asset" novalidate>
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label>Asset Name</label>
+                                <input type="text" name="asset_name" class="form-control" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid text.
+                                  </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label>Asset Type</label>
+                                <input class="form-control" name="asset_type" type="text" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid text.
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label>Serial Number</label>
+                                <input class="form-control" type="text"  name="serial_number" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid text.
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label>Warranty</label>
+                                <input class="form-control" type="text" name="warranty" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid text.
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label>Vendor</label>
+                                <input class="form-control" type="text" name="vendor" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid text.
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label>Assignee</label>
+                                <input class="form-control" type="text" name="assignee" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid text.
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label>Asset Status</label>
+                                <input class="form-control" type="text" name="asset_status" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid text.
+                                </div>
+
+                            </div>
+                        </div>                        
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label>Assigned Date</label>
+                                <input class="form-control" type="date" name="assigned_date" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid date.
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                    <div class="submit-section">
+                        <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="modal_edit_asset" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content profile-box">
@@ -210,46 +317,118 @@ tr:last-child td:last-child {
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form>
+            <div class="modal-body" >
+                <form class="requires-validation" id="form_edit_asset" novalidate>
+                    @csrf
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group mb-3">
-                                <label>Allocated Paid Leaves</label>
-                                <input type="text" class="form-control">
+                                <label>Asset Name</label>
+                                <input type="text" name="asset_name" class="form-control" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid text.
+                                  </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group mb-3">
-                                <label>Paid Leave Balance</label>
-                                <div class="cal-icon">
-                                    <input class="form-control" type="text">
+                                <label>Asset Type</label>
+                                <input class="form-control" name="asset_type" type="text" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid text.
                                 </div>
                             </div>
 
                         </div>
                         <div class="col-md-6">
                             <div class="form-group mb-3">
-                                <label>Allocated Restricted Holidays</label>
-                                <input class="form-control" type="text">
+                                <label>Serial Number</label>
+                                <input class="form-control" type="text"  name="serial_number" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid text.
+                                </div>
+
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group mb-3">
-                                <label>Allocated Restricted Balance</label>
-                                <input class="form-control" type="text">
+                                <label>Warranty</label>
+                                <input class="form-control" type="text" name="warranty" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid text.
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label>Vendor</label>
+                                <input class="form-control" type="text" name="vendor" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid text.
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label>Assignee</label>
+                                <input class="form-control" type="text" name="assignee" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid text.
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label>Asset Status</label>
+                                <input class="form-control" type="text" name="asset_status" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid text.
+                                </div>
+
+                            </div>
+                        </div>                        
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label>Assigned Date</label>
+                                <input class="form-control" type="date" name="assigned_date" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid date.
+                                </div>
+
                             </div>
                         </div>
 
+
+
                     </div>
                     <div class="submit-section">
-                        <button class="btn btn-primary submit-btn">Submit</button>
+                        <button type="submit" class="btn btn-primary submit-btn">Submit</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<div id="modal_delete_asset"  class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center p-5">
+                <div class="mt-4">
+                    <h4 class="mb-3">Confirm Asset Delete</h4>
+                    {{-- <p class="text-muted mb-4"> The transfer was not successfully received by us. the email of the recipient wasn't correct.</p> --}}
+                    <div class="hstack gap-2 justify-content-center">
+                        <a href="javascript:void(0);" class="btn btn-danger">Yes</a>
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
 @endsection
@@ -266,109 +445,198 @@ tr:last-child td:last-child {
 <script>
 $(document).ready(function() {
 
-    if (document.getElementById("table-assets")) new gridjs.Grid({
-        columns: [
-        {
-            id: 'asset_name',
-            name: 'Name',
-            formatter: function formatter(cell) {
-            return gridjs.html('<b>' + cell + '</b>');
-            }
-        },
-        {
-            id: 'asset_type',
-            name: 'Asset Type',
-        },
-        {
-            id: 'serial_number',
-            name: 'Serial Number',
-        },
-        {
-            id: 'warranty',
-            name: 'Warranty',
-        },
-        {
-            id: 'vendor',
-            name: 'Vendor',
-        },                 
-        {
-            id: 'assignee',
-            name: 'Assignee',
-        },                 
-        {
-            id: 'assigned_date',
-            name: 'Assigned Date',
-        },   
-        {
-            id: 'invoice',
-            name: 'Invoice',
-            formatter: function formatter(cell) {
-                var URL = "{{ url('/assets/')}}"+"/"+cell;
-                return gridjs.html('<a href='+URL+' target="_blank"><span class="text-link" style=" color: blue;"><i class="icon icon-lg  ri-download-2-line text-primary fw-bold"></i></span></a>');
-            }            
-        },                  
-        {
-            id:'id',
-            name: 'Actions',
-            formatter: function formatter(cell) {
-                var url_edit = "{{ url('/assets/')}}"+"/"+cell;
-                var url_delete = "{{ url('/assets/')}}"+"/"+cell;
-
-                var html_edit = '<a href='+url_edit+' target="_blank"><span class="text-link" style=" color: blue;"><i class="icon icon-lg  ri-pencil-line text-primary fw-bold"></i></span></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
-                var html_delete = '<a href='+url_delete+' target="_blank"><span class="text-link" style=" color: blue;"><i class="icon icon-lg  ri-delete-bin-line text-primary fw-bold"></i></span></a>';
-
-                return gridjs.html(html_edit + html_delete);
-            }            
-        }                        
+    
+    (function () {
+        'use strict'
+        const forms = document.querySelectorAll('.requires-validation')
+        Array.from(forms)
+            .forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
         
-        ],
-        pagination: {
-            limit: 5
-        },
-        sort: true,
-        search: true,
-        server: {
-             url: '{{route('vmt-assetinventory-fetchall')}}',
-            then: data => data.map(
-                asset => [
-                    asset.asset_name,
-                    asset.asset_type,
-                    asset.serial_number, 
-                    asset.warranty, 
-                    asset.vendor, 
-                    asset.assignee, 
-                    asset.assigned_date, 
-                    asset.invoice,
-                    asset.id
+            form.classList.add('was-validated')
+            }, false)
+        })
+    })()
 
-                  ]
-                )
-        } 
-        //  ["01", "Jonathan", "jonathan@example.com", "Senior Implementation Architect", "Hauck Inc", "Holy See"],
-        //  ["02", "Harold", "harold@example.com", "Forward Creative Coordinator", "Metz Inc", "Iran"],
-        //  ["03", "Shannon", "shannon@example.com", "Legacy Functionality Associate", "Zemlak Group", "South Georgia"], 
-        //  ["04", "Robert", "robert@example.com", "Product Accounts Technician", "Hoeger", "San Marino"], 
-        //  ["05", "Noel", "noel@example.com", "Customer Data Director", "Howell - Rippin", "Germany"], 
-        //  ["06", "Traci", "traci@example.com", "Corporate Identity Director", "Koelpin - Goldner", "Vanuatu"], 
-        //  ["07", "Kerry", "kerry@example.com", "Lead Applications Associate", "Feeney, Langworth and Tremblay", "Niger"], 
-        //  ["08", "Patsy", "patsy@example.com", "Dynamic Assurance Director", "Streich Group", "Niue"], 
-        //  ["09", "Cathy", "cathy@example.com", "Customer Data Director", "Ebert, Schamberger and Johnston", "Mexico"], 
-        //  ["10", "Tyrone", "tyrone@example.com", "Senior Response Liaison", "Raynor, Rolfson and Daugherty", "Qatar"]
+    $('#form_add_asset').on('submit', function(e){
+        e.preventDefault();
+
+        if ($('#form_add_asset').is(':valid')){
+
+             console.log("Add asset form is being submitted");      
         
-}).render(document.getElementById("table-assets")); // card Table
+            var form_add_data = new FormData(document.getElementById("form_add_asset"));
+            //console.log(form_add_data);
 
-
-    $('.edit-icon').click(function() {
-        var modalid = $(this).attr('data-bs-target');
-        $(modalid).modal('show');
-
-        if (modalid == '#modal_edit_asset') {
-
-            console.log(modalid);
+            $.ajax({
+                url: "{{route('vmt-assetinventory-add')}}", 
+                type: "POST", 
+                processData: false,
+                contentType: false,
+                data: form_add_data ,
+                success: function(data)
+                {
+                    $('#modal_add_asset').modal('hide'); 
+                    //console.log(data);
+                    location.reload(); 
+                }
+            });
 
         }
-
     });
+
+
+
+
+
+
+
+
+
+
+
+
+
+    if (document.getElementById("table-assets"))
+    {
+      const grid =  new gridjs.Grid({
+            columns: [
+            {
+                id: 'asset_name',
+                name: 'Name',
+                formatter: function formatter(cell) {
+                return gridjs.html('<b>' + cell + '</b>');
+                }
+            },
+            {
+                id: 'asset_type',
+                name: 'Asset Type',
+            },
+            {
+                id: 'serial_number',
+                name: 'Serial Number',
+            },
+            {
+                id: 'warranty',
+                name: 'Warranty',
+            },
+            {
+                id: 'vendor',
+                name: 'Vendor',
+            },                 
+            {
+                id: 'assignee',
+                name: 'Assignee',
+            },                 
+            {
+                id: 'assigned_date',
+                name: 'Assigned Date',
+            },   
+            {
+                id: 'invoice',
+                name: 'Invoice',
+                formatter: function formatter(cell) {
+                    var URL = "{{ url('/assets/')}}"+"/"+cell;
+                    return gridjs.html('<a href='+URL+' target="_blank"><span class="text-link" style=" color: blue;"><i class="icon icon-lg  ri-download-2-line text-primary fw-bold"></i></span></a>');
+                }            
+            },                  
+            {
+                id:'id',
+                name: 'Edit',
+                formatter: function formatter(cell) {
+
+                    var htmlcontent = '<a  class="trigger_asset_edit" ><span class="text-link" style=" color: blue;"><i class="icon icon-lg  ri-pencil-line text-primary fw-bold"></i></span></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
+                    //var html_edit="<button style='font-size:24px' onclick='hello()'>Edit</button>";
+                    //var html_delete = '<a href='+url_delete+' target="_blank"><span class="text-link" style=" color: blue;"><i class="icon icon-lg  ri-delete-bin-line text-primary fw-bold"></i></span></a>';
+
+                    return gridjs.html(htmlcontent);
+                }            
+            },                        
+            {
+                data: (row) => row[8], //asset.id
+                name: 'Delete',
+                formatter: function formatter(cell) {
+
+
+                    var htmlcontent = '<a  class="trigger_asset_edit" ><span class="text-link" style=" color: blue;"><i class="icon icon-lg ri-delete-bin-line text-primary fw-bold"></i></span></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
+                    //var html_edit="<button style='font-size:24px' onclick='hello()'>Edit</button>";
+                    //var html_delete = '<a href='+url_delete+' target="_blank"><span class="text-link" style=" color: blue;"><i class="icon icon-lg  ri-delete-bin-line text-primary fw-bold"></i></span></a>';
+
+                    return gridjs.html(htmlcontent);
+                }            
+            }                        
+            
+            ],
+            pagination: {
+                limit: 10
+            },
+            sort: true,
+            search: true,
+            server: {
+                url: '{{route('vmt-assetinventory-fetchall')}}',
+                then: data => data.map(
+                    asset => [
+                        asset.asset_name,
+                        asset.asset_type,
+                        asset.serial_number, 
+                        asset.warranty, 
+                        asset.vendor, 
+                        asset.assignee, 
+                        asset.assigned_date, 
+                        asset.invoice,
+                        asset.id
+
+                    ]
+                    )
+            } 
+            //  ["01", "Jonathan", "jonathan@example.com", "Senior Implementation Architect", "Hauck Inc", "Holy See"],
+            //  ["02", "Harold", "harold@example.com", "Forward Creative Coordinator", "Metz Inc", "Iran"],
+            //  ["03", "Shannon", "shannon@example.com", "Legacy Functionality Associate", "Zemlak Group", "South Georgia"], 
+            //  ["04", "Robert", "robert@example.com", "Product Accounts Technician", "Hoeger", "San Marino"], 
+            //  ["05", "Noel", "noel@example.com", "Customer Data Director", "Howell - Rippin", "Germany"], 
+            //  ["06", "Traci", "traci@example.com", "Corporate Identity Director", "Koelpin - Goldner", "Vanuatu"], 
+            //  ["07", "Kerry", "kerry@example.com", "Lead Applications Associate", "Feeney, Langworth and Tremblay", "Niger"], 
+            //  ["08", "Patsy", "patsy@example.com", "Dynamic Assurance Director", "Streich Group", "Niue"], 
+            //  ["09", "Cathy", "cathy@example.com", "Customer Data Director", "Ebert, Schamberger and Johnston", "Mexico"], 
+            //  ["10", "Tyrone", "tyrone@example.com", "Senior Response Liaison", "Raynor, Rolfson and Daugherty", "Qatar"]
+
+        }).render(document.getElementById("table-assets")); // card Table
+
+        grid.on('cellClick', function (...args) {
+
+           var temp = JSON.stringify(args);
+           console.dir('cell: ' + temp  );
+
+           //Show modal only if Edit column item selected
+           if(args[2]["name"] == "Edit")
+               EditAssetData(args[2]["name"], args[1]["data"]);
+           else
+           if(args[2]["name"] == "Delete")
+               DeleteAssetData(args[2]["name"], args[1]["data"]);
+
+        });
+
+}
+
+    function EditAssetData(column_name, row_id) {
+       // console.log(column_name+" , "+ row_id);
+
+
+        $('#modal_edit_asset').modal('show'); 
+
+    }
+
+    function DeleteAssetData(column_name, row_id) {
+        //console.log(column_name+" , "+ row_id);
+
+
+        $('#modal_delete_asset').modal('show'); 
+
+    }    
 });
 </script>
 @endsection
