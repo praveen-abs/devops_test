@@ -133,7 +133,7 @@
                                                 <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-2 dashBoard">
                                                     <!-- <label class="" for="product">Product{!! required() !!}</label> -->
                                                     <select placeholder="Product" name="product" id="product" class="onboard-form form-control" required>
-                                                        <option selected>Select Product</option>
+                                                        <option value="">Select Product</option>
                                                         <option value="Recruitment">Recruitment</option>
                                                         <option value="Payroll">Payroll</option>
                                                         <option value="Statutory Complainces">Statutory Complainces</option>
@@ -148,7 +148,7 @@
                                                 <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-2 dashBoard">
                                                     <!-- <label class="" for="subscription_type">Subscription Type{!! required() !!}</label> -->
                                                     <select placeholder="Subscription Type" name="subscription_type" id="subscription_type" class="onboard-form form-control" required>
-                                                        <option>Select Subscription Type</option>
+                                                        <option value="">Select Subscription Type</option>
                                                         <option value="Monthly">Monthly</option>
                                                         <option value="Quarterly">Quarterly</option>
                                                         <option value="BiAnnually">BiAnnually</option>
