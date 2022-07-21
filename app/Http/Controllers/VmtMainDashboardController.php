@@ -48,7 +48,7 @@ class VmtMainDashboardController extends Controller
             }
         }
         if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin')) {
-            return view('vmt_hr_dashboard', compact( 'currentUserJobDetails', 'checked', 'holidays', 'polling', 'selectedPoll'));
+            return view('vmt_hr_dashboard', compact( 'currentUserJobDetails', 'checked', 'holidays', 'polling'));
         }        
         else 
         if(auth()->user()->hasrole('Manager'))

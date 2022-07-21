@@ -49,7 +49,7 @@
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="marital_status">Marital Status{!! required() !!}</label> -->
-                                                    <select placeholder="Marital Status" name="marital_status" id="marital_status" class="onboard-form form-control" required >
+                                                    <select placeholder="Marital Status" name="marital_status" id="marital_status" class="onboard-form form-control select2_form_without_search" required >
                                                         <option value="">Select Marital Status</option>
                                                         <option value="single">Un Married</option>
                                                         <option value="married">Married</option>
@@ -64,7 +64,7 @@
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="gender">Gender{!! required() !!}</label> -->
-                                                    <select placeholder="Gender" name="gender" id="gender" class="onboard-form form-control" required >
+                                                    <select placeholder="Gender" name="gender" id="gender" class="onboard-form form-control select2_form_without_search" required >
                                                         <option value="">Select Gender</option>
                                                         <option value="male">Male</option>
                                                         <option value="female">Female</option>
@@ -109,14 +109,14 @@
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="nationality">Nationality{!! required() !!}</label> -->
-                                                    <select placeholder="Nationality" name="nationality" id="nationality" class="onboard-form form-control" required >
+                                                    <select placeholder="Nationality" name="nationality" id="nationality" class="onboard-form form-control select2_form_without_search" required >
                                                         <option value="indian">Indian</option>
                                                         <option value="other_country">Other Nationality</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="blood_group">Blood Group</label> -->
-                                                    <select placeholder="Blood Group" name="blood_group" class="onboard-form form-control not-required validate" >
+                                                    <select placeholder="Blood Group" name="blood_group" class="onboard-form form-control not-required validate select2_form_without_search" >
                                                         <option value="">Select Blood Group</option>
                                                         <option value="a-positive">A Positive</option>
                                                         <option value="a-negative">A Negative</option>
@@ -135,7 +135,7 @@
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="physically_challenged">Physically Challenged</label> -->
-                                                    <select placeholder="Physically Challenged" name="physically_challenged" class="onboard-form form-control" required >
+                                                    <select placeholder="Physically Challenged" name="physically_challenged" class="onboard-form form-control select2_form_without_search" required >
                                                         <option value="">Select Physically Challenged</option>
                                                         <option value="yes">Yes</option>
                                                         <option value="no">No</option>
@@ -143,7 +143,7 @@
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="bank_name">Bank Name</label> -->
-                                                    <select placeholder="Bank Name" name="bank_name" id="bank_name" class="onboard-form form-control" required>
+                                                    <select placeholder="Bank Name" name="bank_name" id="bank_name" class="onboard-form form-control select2_form_without_search" required>
                                                         <option value="">Select Bank Name</option>
                                                         @foreach($bank as $b)
                                                         <option value="{{$b->bank_name}}" min-data="{{$b->min_length}}" max-data="{{$b->max_length}}">{{$b->bank_name}}</option>
@@ -179,7 +179,7 @@
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="current_state">Current State{!! required() !!}</label> -->
-                                                    <select placeholder="Current State" name="current_state" id="current_state" class="onboard-form form-control" required >
+                                                    <select placeholder="Current State" name="current_state" id="current_state" class="onboard-form form-control select2_form_without_search" required >
                                                     </select>
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
@@ -189,7 +189,7 @@
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <input type="text" placeholder="" name="curent_district" class="onboard-form form-control" required /> -->
                                                     <!-- <label class="" for="curent_district">Country{!! required() !!}</label> -->
-                                                    <select placeholder="Country" name="current_district" id="current_district" class="onboard-form form-control" required >
+                                                    <select placeholder="Country" name="current_district" id="current_district" class="onboard-form form-control select2_form_without_search" required >
                                                         @foreach($countries as $data)
                                                         <option value="{{$data->country_code}}">{{$data->country_name}}</option>
                                                         @endforeach
@@ -211,7 +211,7 @@
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="permanent_state">Permanent State{!! required() !!}</label> -->
-                                                    <select placeholder="Permanent State" name="permanent_state" id="permanent_state" class="onboard-form form-control" required >
+                                                    <select placeholder="Permanent State" name="permanent_state" id="permanent_state" class="onboard-form form-control select2_form_without_search" required >
                                                     </select>
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
@@ -221,7 +221,7 @@
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <input type="text" placeholder="" name="permanent_district" class="onboard-form form-control" required /> -->
                                                     <!-- <label class="" for="permanent_district">Permanent Country{!! required() !!}</label> -->
-                                                    <select placeholder="Permanent Country" name="permanent_district" id="permanent_district" class="onboard-form form-control" required >
+                                                    <select placeholder="Permanent Country" name="permanent_district" id="permanent_district" class="onboard-form form-control select2_form_without_search" required >
                                                         @foreach($countries as $data)
                                                         <option value="{{$data->country_code}}">{{$data->country_name}}</option>
                                                         @endforeach
@@ -264,7 +264,7 @@
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="confirmation_period">Probabition Period{!! required() !!}</label> -->
-                                                    <select placeholder="Probabition Period" name="confirmation_period" class="onboard-form form-control not-required validate" >
+                                                    <select placeholder="Probabition Period" name="confirmation_period" class="onboard-form form-control not-required validate select2_form_without_search" >
                                                         <option value="">Select Probabition Period</option>
                                                         <option value="1">1 Month</option>
                                                         <option value="2">2 Month</option>
@@ -340,7 +340,7 @@
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="spouse_gender">Spouse Gender<span id="spouse_gender_req">{!! required() !!}</span></label> -->
-                                                    <select placeholder="Spouse Gender" name="spouse_gender" id="spouse_gender" class="onboard-form form-control spouse_data" required >
+                                                    <select placeholder="Spouse Gender" name="spouse_gender" id="spouse_gender" class="onboard-form form-control spouse_data select2_form_without_search" required >
                                                         <option value="">Select Spouse Gender</option>
                                                         <option value="male">Male</option>
                                                         <option value="female">Female</option>
@@ -353,7 +353,7 @@
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="no_child">Number of Children<span id="no_child_req">{!! required() !!}</span></label> -->
-                                                    <select placeholder="Number of Children" name="no_child" id="no_child" class="onboard-form form-control spouse_data" required >
+                                                    <select placeholder="Number of Children" name="no_child" id="no_child" class="onboard-form form-control spouse_data select2_form_without_search" required >
                                                         <option value="">Select Number of Children</option>
                                                         <option value="0">0</option>
                                                         <option value="1">1</option>
@@ -622,6 +622,10 @@ $(document).ready(function(){
     });
     $('#department').select2({
 		width: '100%',
+    });
+    $('.select2_form_without_search').select2({
+		width: '100%',
+        minimumResultsForSearch: Infinity,
     });
 });
 
