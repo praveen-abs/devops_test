@@ -18,7 +18,8 @@ class VmtAssetInventory extends Model
         "vendor",
         "assignee",
         "assigned_date",
-        "invoice"
+        "invoice",
+        "asset_status"
     ];
 
 }

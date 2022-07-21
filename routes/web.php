@@ -155,7 +155,7 @@ Route::post('vmt-kpi/data', 'App\Http\Controllers\VmtEmployeeController@showKpiD
 
 //Asset Inventory
 Route::get('vmt-assetinventory-index', 'App\Http\Controllers\VmtAssetInventoryController@index')->name('vmt-assetinventory-index');
-Route::get('vmt-assetinventory-add', 'App\Http\Controllers\VmtAssetInventoryController@addAsset')->name('vmt-assetinventory-add');
+Route::post('vmt-assetinventory-add', 'App\Http\Controllers\VmtAssetInventoryController@addAsset')->name('vmt-assetinventory-add');
 Route::get('vmt-assetinventory-fetch/{id}', 'App\Http\Controllers\VmtAssetInventoryController@fetchAsset')->name('vmt-assetinventory-fetch');
 Route::get('vmt-assetinventory-fetchAll', 'App\Http\Controllers\VmtAssetInventoryController@fetchAll')->name('vmt-assetinventory-fetchall');
 Route::get('vmt-assetinventory-edit', 'App\Http\Controllers\VmtAssetInventoryController@updateAsset')->name('vmt-assetinventory-edit');
