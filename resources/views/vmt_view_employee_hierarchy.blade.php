@@ -155,6 +155,9 @@ right connector from last child*/
 
 @endsection
 @section('content')
+@component('components.attendance_breadcrumb')
+@slot('li_1')  @endslot
+@endcomponent
 
     <div class="row project-wrapper">
         <div class="col-12">

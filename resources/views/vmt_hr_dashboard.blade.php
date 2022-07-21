@@ -309,21 +309,7 @@
 <!--Sweet alert JS-->
 <script src="{{ URL::asset('/assets/premassets/js/sweetalert.js') }}"></script>
 <script src="{{ URL::asset('/assets/premassets/js/progressbar.min.js') }}"></script>
-<!--Flot.JS-->
-<script src="{{ URL::asset('/assets/premassets/js/charts/jquery.flot.min.js') }}"></script>
-<script src="{{ URL::asset('/assets/premassets/js/charts/jquery.flot.pie.min.js') }}"></script>
-<script src="{{ URL::asset('/assets/premassets/js/charts/jquery.flot.categories.min.js') }}"></script>
-<script src="{{ URL::asset('/assets/premassets/js/charts/jquery.flot.stack.min.js') }}"></script>
-<!--Echarts-->
-<script src="{{ URL::asset('/assets/premassets/js/charts/echarts.min.js') }}"></script>
-<script src="{{ URL::asset('/assets/premassets/js/charts/echarts-data.js') }}"></script>
-<!--Charts JS-->
-<script src="{{ URL::asset('/assets/premassets/js/charts/chart.min.js') }}"></script>
-<script src="{{ URL::asset('/assets/premassets/js/charts/demo.js') }}"></script>
-<!--Maps-->
-<script src="{{ URL::asset('/assets/premassets/js/maps/jquery-jvectormap-2.0.2.min.js') }}"></script>
-<script src="{{ URL::asset('/assets/premassets/js/maps/jquery-jvectormap-world-mill-en.js') }}"></script>
-<script src="{{ URL::asset('/assets/premassets/js/maps/jvector-maps.js') }}"></script>
+
 <!--Bootstrap Calendar JS-->
 <!-- <script src="{{ URL::asset('/assets/premassets/js/calendar/bootstrap_calendar.js') }}"></script>
     <script src="{{ URL::asset('/assets/premassets/js/calendar/demo.js') }}"></script> -->
