@@ -41,7 +41,11 @@ Route::get('/registerNewAccount', function(){
 })->name('registerNewAccount');
 
 Route::get('pages-profile', [App\Http\Controllers\HomeController::class, 'showProfile'])->name('pages-profile');
-Route::get('pages-profile-settings', [App\Http\Controllers\HomeController::class, 'showProfilePage'])->name('pages-profile-settings');
+// Route::get('pages-profile-settings', [App\Http\Controllers\HomeController::class, 'showProfilePage'])->name('pages-profile-settings');
+
+Route::get('/settings-user', function(){
+    return view('vmt_topbar_settings');
+})->name('settings-user');
 
 Route::get('test-email', 'App\Http\Controllers\HomeController@testEmail');
 
@@ -149,7 +153,12 @@ Route::post('vmt-employess/bulk-upload', 'App\Http\Controllers\VmtEmployeeContro
 Route::get('vmt-employess/directory', 'App\Http\Controllers\VmtEmployeeController@showEmployeeDirectory');
 Route::post('vmt-kpi/data', 'App\Http\Controllers\VmtEmployeeController@showKpiData')->name('kpi-data');
 
-
+//Asset Inventory
+Route::get('vmt-assetinventory-index', 'App\Http\Controllers\VmtAssetInventoryController@index')->name('vmt-assetinventory-index');
+Route::get('vmt-assetinventory-add', 'App\Http\Controllers\VmtAssetInventoryController@addAsset')->name('vmt-assetinventory-add');
+Route::get('vmt-assetinventory-fetch/{id}', 'App\Http\Controllers\VmtAssetInventoryController@fetchAsset')->name('vmt-assetinventory-fetch');
+Route::get('vmt-assetinventory-fetchAll', 'App\Http\Controllers\VmtAssetInventoryController@fetchAll')->name('vmt-assetinventory-fetchall');
+Route::get('vmt-assetinventory-edit', 'App\Http\Controllers\VmtAssetInventoryController@updateAsset')->name('vmt-assetinventory-edit');
 
 // pay slip
 
