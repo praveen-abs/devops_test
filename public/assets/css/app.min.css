@@ -16690,9 +16690,15 @@ select {
 .profile-img-wrap {
     height: 100px;
     /* position: absolute; */
-    width: 100px;
+    width: 120px;
     background: #ffffff;
-    overflow: hidden;
+position: relative;
+}
+.profile-img-wrap .img-edit {
+position: absolute;
+/* z-index: 10; */
+bottom: 0px;
+right: 0px;
 }
 
 .profile-view .profile-img-wrap img {
@@ -16906,12 +16912,20 @@ select {
     border: 0;
 }
 
+.employee-info-card li .title {
+    width: 40%  !important;
+}
+
+.employee-info-card li .text{
+    width: 100% !important;
+}
+
 .personal-info li .title {
     color: #333333;
     float: left;
-    font-weight: 800;
-    margin-right: 30px;
-    width: 25%;
+    font-weight:600;
+    /* margin-right: 30px; */
+    width: 100%;
 }
 
 #bank_statutory .card .card-title,
@@ -18821,7 +18835,7 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
 }
 
 .progress-bar-content .progress-bar {
-    background-color: #e63b1f !important;
+    background-color: #e63b1f87 !important;
 }
 
 .user-details-wrapper .profile-box {
@@ -18830,13 +18844,7 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
     box-shadow: rgb(60 64 67 / 30%) 0px 1px 2px 0px, rgb(60 64 67 / 15%) 0px 2px 6px 2px;
 }
 
-.personal-info li .title {
-    color: #333333;
-    float: left;
-    font-weight: 800;
-    margin-right: 30px;
-    width: 50%;
-}
+
 
 .personal-info li .text {
     color: #888888;

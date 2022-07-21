@@ -11,24 +11,24 @@
                 <div class="row">
 
                     <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex">
-                        <div class="card profile-box flex-fill ">
+                        <div class="card profile-box border-0 flex-fill ">
                             <div class="card-body">
-                                <div class="profile-wrapper d-flex w-100">
+                                <div class="profile-wrapper d-flex w-100 ">
                                     <div class="profile-img-wrap mx-1">
                                         <div class="profile-img">
                                             <!-- <a href="#"> <img class="rounded-circle header-profile-user"
                                                     src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/user-profile-img.jpg') }}@endif"
                                                     alt="Header Avatar"></a> -->
-                                            <img class=" w-100 soc-det-img" src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif" alt="">
+                                            <img class="  soc-det-img rounded-circle" src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif" alt="">
+                                            <span class="personal-edit img-edit"><a href="#" class="edit-icon"
+                                                    data-bs-toggle="modal" data-bs-target="#personal_info"><i
+                                                        class="ri-pencil-fill"></i></a></span>
                                         </div>
                                     </div>
                                     <div class="profile-info w-75 ">
 
                                         <h3 class="card-title m-0 fw-bold mb-2">{{$user->name}}
-                                            <span class="personal-edit"><a href="#" class="edit-icon"
-                                                    data-bs-toggle="modal" data-bs-target="#personal_info"><i
-                                                        class="ri-pencil-fill"></i></a></span>
-
+                                           
                                         </h3>
                                         <h6 class="departmnet fw-bold text-muted">{{$details->department}}</h6>
                                         <!-- <h5 class="role text-muted fw-bold">{{$details->designation}}</h5> -->
@@ -72,7 +72,7 @@
                     </div>
                     <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex">
 
-                        <div class="card profile-box  flex-fill">
+                        <div class="card profile-box employee-info-card flex-fill">
                             <div class="card-body">
                                 <h3 class="card-title fw-bold">Employee Informations
                                     <span class="personal-edit"><a href="#" class="edit-icon" data-bs-toggle="modal"
@@ -154,8 +154,8 @@
                                         <div class="text">--</div>
                                     </li>
                                     <li>
-                                        <div class="title">Tel</div>
-                                        <div class="text"><a href="">{{$details->mobile_number}}</a></div>
+                                        <!-- <div class="title">Tel</div>
+                                        <div class="text"><a href="">{{$details->mobile_number}}</a></div> -->
                                     </li>
                                     <li>
                                         <div class="title">Nationality</div>
@@ -379,8 +379,8 @@
 
                                         </ul>
                                     </div>
-                                    <hr>
-                                    <div class="col-md-6 col-lg-6 col-xl-6  col-sm-12 w-100">
+                                    <!-- <hr> -->
+                                    <!-- <div class="col-md-6 col-lg-6 col-xl-6  col-sm-12 w-100">
                                         <h5 class="section-title">Secondary</h5>
                                         <ul class="personal-info">
                                             <li>
@@ -396,7 +396,7 @@
                                                 <div class="text">{{($details->contact_json && $details->contact_json['secondary_phone1']) ? $details->contact_json['secondary_phone1'] : '-'}}, {{($details->contact_json && $details->contact_json['secondary_phone2']) ? $details->contact_json['secondary_phone2'] : '-'}}</div>
                                             </li>
                                         </ul>
-                                    </div>
+                                    </div> -->
                                 </div>
 
 
@@ -892,9 +892,9 @@
     </div>
 
     <!-- personal info -->
-    <div id="personal_info" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
+    <div id="personal_info" class="modal  custom-modal fade" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content profile-box">
                 <div class="modal-header py-3 new-role-header d-flex align-items-center">
                     <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Personal
                         Information</h4>
@@ -931,7 +931,7 @@
     <!-- bank informatios -->
     <div id="Bank_info" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
+            <div class="modal-content profile-box">
                 <div class="modal-header py-3 new-role-header d-flex align-items-center">
                     <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Bank Information
                     </h4>
@@ -989,7 +989,7 @@
     <!-- leave information -->
     <div id="leave_info" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
+            <div class="modal-content profile-box">
                 <div class="modal-header py-3 new-role-header d-flex align-items-center">
                     <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Leave Information
                     </h4>
@@ -1041,7 +1041,7 @@
     <!-- modal -->
     <div id="personal_info_modal" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
+            <div class="modal-content profile-box">
                 <div class="modal-header py-3 new-role-header d-flex align-items-center">
                     <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Personal
                         Information</h4>
@@ -1125,7 +1125,7 @@
     <!-- emergency modal-->
     <div id="emergency_contact_modal" class="modal custom-modal fade show" aria-modal="true" role="dialog">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
+            <div class="modal-content profile-box">
                 <div class="modal-header py-3 new-role-header d-flex align-items-center">
                     <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Emergency Contact
                     </h4>
@@ -1211,7 +1211,7 @@
 
     <div id="family_info_modal" class="modal custom-modal fade show" role="dialog" aria-modal="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
+            <div class="modal-content profile-box">
                 <div class="modal-header py-3 new-role-header d-flex align-items-center">
                     <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Family
                         Information</h4>
@@ -1279,7 +1279,7 @@
     <!-- education modal-->
     <div id="education_info" class="modal custom-modal fade show" role="dialog" aria-modal="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
+            <div class="modal-content profile-box">
                 <div class="modal-header py-3 new-role-header d-flex align-items-center">
                     <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Education
                         Information</h4>
@@ -1427,9 +1427,9 @@
 
     <!-- experience modal-->
 
-    <div id="experience_info" class="modal custom-modal fade show" role="dialog" aria-modal="true">
+    <div id="experience_info" class="modal custom-modal fade show" role="dialog" aria-modal="true"s>
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
+            <div class="modal-content profile-box">
                 <div class="modal-header py-3 new-role-header d-flex align-items-center">
                     <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Experience
                         Information</h4>
