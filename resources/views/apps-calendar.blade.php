@@ -4,10 +4,7 @@
     <link href="{{ URL::asset('/assets/libs/fullcalendar/fullcalendar.min.css') }}" rel="stylesheet">
 @endsection
 @section('content')
-    @component('components.breadcrumb')
-        @slot('li_1') Apps @endslot
-        @slot('title') Calendar @endslot
-    @endcomponent
+    
     <div class="row">
         <div class="col-12">
             <div class="row">
@@ -48,19 +45,7 @@
                         </div>
                     </div>
 
-                    <div class="card">
-                        <div class="card-body bg-soft-info">
-                            <div class="d-flex">
-                                <div class="flex-shrink-0">
-                                    <i data-feather="calendar" class="text-info icon-dual-info"></i>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <h6 class="fs-15">Welcome to your Calendar!</h6>
-                                    <p class="text-muted mb-0">Event that applications book will appear here. Click on an event to see the details and manage applicants event.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div><!--end card-->
+                    
                 </div> <!-- end col-->
 
                 <div class="col-xl-9">
