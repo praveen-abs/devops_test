@@ -45,12 +45,12 @@
                                                     @php
                                                     $date = (date('Y')-18)."-".date('m')."-".date('d');
                                                     @endphp
-                                                    <input type="date" placeholder="Date of Birth" name="dob" max="{{$date}}" class="onboard-form form-control" required />
+                                                    <input type="text" placeholder="Date of Birth" name="dob" max="{{$date}}" class="onboard-form form-control" onfocus="(this.type='date')" required />
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="marital_status">Marital Status{!! required() !!}</label> -->
                                                     <select placeholder="Marital Status" name="marital_status" id="marital_status" class="onboard-form form-control" required >
-                                                        <option value="">Select</option>
+                                                        <option value="">Select Marital Status</option>
                                                         <option value="single">Un Married</option>
                                                         <option value="married">Married</option>
                                                         <option value="widowed">Widowed</option>
@@ -60,12 +60,12 @@
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="doj">Date of Joining{!! required() !!}</label> -->
-                                                    <input type="date" max="9999-12-31"  placeholder="Date of Joining" name="doj" class="onboard-form form-control" required />
+                                                    <input type="text" max="9999-12-31"  placeholder="Date of Joining" name="doj" class="onboard-form form-control" onfocus="(this.type='date')" required />
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="gender">Gender{!! required() !!}</label> -->
                                                     <select placeholder="Gender" name="gender" id="gender" class="onboard-form form-control" required >
-                                                        <option value="">Select</option>
+                                                        <option value="">Select Gender</option>
                                                         <option value="male">Male</option>
                                                         <option value="female">Female</option>
                                                         <option value="other">Other</option>
@@ -105,7 +105,7 @@
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="passport_exp">Passport Exp Date<span id="passport_exp_req">{!! required() !!}</span></label> -->
-                                                    <input type="date" max="9999-12-31"  placeholder="Passport Exp Date" name="passport_exp" min="{{date('Y-m-d')}}" id="passport_exp" class="onboard-form form-control not-required validate" />
+                                                    <input type="text" max="9999-12-31"  placeholder="Passport Exp Date" name="passport_exp" min="{{date('Y-m-d')}}" id="passport_exp" onfocus="(this.type='date')" class="onboard-form form-control not-required validate" />
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="nationality">Nationality{!! required() !!}</label> -->
@@ -117,7 +117,7 @@
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="blood_group">Blood Group</label> -->
                                                     <select placeholder="Blood Group" name="blood_group" class="onboard-form form-control not-required validate" >
-                                                        <option value="">Select</option>
+                                                        <option value="">Select Blood Group</option>
                                                         <option value="a-positive">A Positive</option>
                                                         <option value="a-negative">A Negative</option>
                                                         <option value="a-unknown">A Unknown</option>
@@ -136,7 +136,7 @@
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="physically_challenged">Physically Challenged</label> -->
                                                     <select placeholder="Physically Challenged" name="physically_challenged" class="onboard-form form-control" required >
-                                                        <option value="">Select</option>
+                                                        <option value="">Select Physically Challenged</option>
                                                         <option value="yes">Yes</option>
                                                         <option value="no">No</option>
                                                     </select>
@@ -144,7 +144,7 @@
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="bank_name">Bank Name</label> -->
                                                     <select placeholder="Bank Name" name="bank_name" id="bank_name" class="onboard-form form-control" required>
-                                                        <option value="">Select</option>
+                                                        <option value="">Select Bank Name</option>
                                                         @foreach($bank as $b)
                                                         <option value="{{$b->bank_name}}" min-data="{{$b->min_length}}" max-data="{{$b->max_length}}">{{$b->bank_name}}</option>
                                                         @endforeach
@@ -239,7 +239,7 @@
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="department">Department{!! required() !!}</label> -->
                                                     <select placeholder="Department" name="department" id="department" class="onboard-form form-control" required>
-                                                        <option value="">Select</option>
+                                                        <option value="">Select Department</option>
                                                         @foreach($emp as $e)
                                                         <option value="{{$e->department}}">{{$e->department}}</option>
                                                         @endforeach
@@ -248,7 +248,7 @@
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="process">Process{!! required() !!}</label> -->
                                                     <select placeholder="Process" name="process" id="process" class="onboard-form form-control" required>
-                                                        <option value="">Select</option>
+                                                        <option value="">Select Process</option>
                                                         @foreach($emp as $e)
                                                         <option value="{{$e->process}}">{{$e->process}}</option>
                                                         @endforeach
@@ -265,7 +265,7 @@
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="confirmation_period">Probabition Period{!! required() !!}</label> -->
                                                     <select placeholder="Probabition Period" name="confirmation_period" class="onboard-form form-control not-required validate" >
-                                                        <option value="">Select</option>
+                                                        <option value="">Select Probabition Period</option>
                                                         <option value="1">1 Month</option>
                                                         <option value="2">2 Month</option>
                                                         <option value="3">3 Month</option>
@@ -332,7 +332,7 @@
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="dow">Date of Wedding<span id="dow_req">{!! required() !!}</span></label> -->
-                                                    <input type="date" max="9999-12-31"  placeholder="Date of Wedding" name="dow" class="onboard-form form-control spouse_data" required />
+                                                    <input type="text" max="9999-12-31"  placeholder="Date of Wedding" name="dow" class="onboard-form form-control spouse_data" onfocus="(this.type='date')" required />
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="spouse_name">Spouse Name<span id="spouse_name_req">{!! required() !!}</span></label> -->
@@ -341,7 +341,7 @@
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="spouse_gender">Spouse Gender<span id="spouse_gender_req">{!! required() !!}</span></label> -->
                                                     <select placeholder="Spouse Gender" name="spouse_gender" id="spouse_gender" class="onboard-form form-control spouse_data" required >
-                                                        <option value="">Select</option>
+                                                        <option value="">Select Spouse Gender</option>
                                                         <option value="male">Male</option>
                                                         <option value="female">Female</option>
                                                         <option value="other">Other</option>
@@ -349,12 +349,12 @@
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="spouse_dob">Spouse DOB<span id="spouse_dob_req">{!! required() !!}</span></label> -->
-                                                    <input type="date" max="9999-12-31"  placeholder="Spouse DOB" name="spouse_dob" class="onboard-form form-control spouse_data" required />
+                                                    <input type="text" max="9999-12-31"  placeholder="Spouse DOB" name="spouse_dob" class="onboard-form form-control spouse_data" onfocus="(this.type='date')" required />
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="no_child">Number of Children<span id="no_child_req">{!! required() !!}</span></label> -->
                                                     <select placeholder="Number of Children" name="no_child" id="no_child" class="onboard-form form-control spouse_data" required >
-                                                        <option value="">Select</option>
+                                                        <option value="">Select Number of Children</option>
                                                         <option value="0">0</option>
                                                         <option value="1">1</option>
                                                         <option value="2">2</option>
@@ -466,35 +466,43 @@
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-2">
                                                     <!-- <label class="" for="aadhar_card">Aadhar Card{!! required() !!}</label> -->
-                                                    <input type="file" accept=".doc,.docx,.pdf,image/*" placeholder="Aadhar Card" name="aadhar_card" class="onboard-form form-control files" required />
+                                                    <div class="addfiles form-control" data="#aadhar_card" id="aadhar_card_label">Choose Aadhar Card</div>
+                                                    <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Aadhar Card" name="aadhar_card" id="aadhar_card" class="onboard-form form-control files" required />
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-2" id="aadhar_card_backend_content" style="display:none;">
                                                     <!-- <label class="" for="aadhar_card_backend">Aadhar Card Backend<span id="aadhar_card_backend_req">{!! required() !!}</span></label> -->
-                                                    <input type="file" accept=".doc,.docx,.pdf,image/*" placeholder="Aadhar Card Backend" name="aadhar_card_backend" id="aadhar_card_backend" class="onboard-form form-control files" />
+                                                    <div class="addfiles form-control" data="#aadhar_card_backend" id="aadhar_card_backend_label">Choose Aadhar Card Backend</div>
+                                                    <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Aadhar Card Backend" name="aadhar_card_backend" id="aadhar_card_backend" class="onboard-form form-control files" />
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-2">
                                                     <!-- <label class="" for="pan_card">Pan Card{!! required() !!}</label> -->
-                                                    <input type="file" accept=".doc,.docx,.pdf,image/*" placeholder="Pan Card" name="pan_card" class="onboard-form form-control files" required />
+                                                    <div class="addfiles form-control" data="#pan_card" id="pan_card_label">Choose Pan Card</div>
+                                                    <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Pan Card" name="pan_card" id="pan_card" class="onboard-form form-control files" required />
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-2">
                                                     <!-- <label class="" for="passport">Passport{!! required() !!}</label> -->
-                                                    <input type="file" accept=".doc,.docx,.pdf,image/*" placeholder="Passport" name="passport" class="onboard-form form-control files" required />
+                                                    <div class="addfiles form-control" data="#passport" id="passport_label">Choose Passport</div>
+                                                    <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Passport" name="passport" id="passport" class="onboard-form form-control files" required />
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-2">
                                                     <!-- <label class="" for="voters_id">Voters ID</label> -->
-                                                    <input type="file" accept=".doc,.docx,.pdf,image/*" placeholder="Voters ID" name="voters_id" class="onboard-form form-control files" />
+                                                    <div class="addfiles form-control" data="#voters_id" id="voters_id_label">Choose Voters ID</div>
+                                                    <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Voters ID" name="voters_id" id="voters_id" class="onboard-form form-control files" />
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-2">
                                                     <!-- <label class="" for="dl_file">Driving License</label> -->
-                                                    <input type="file" accept=".doc,.docx,.pdf,image/*" placeholder="Driving License" name="dl_file" class="onboard-form form-control files" />
+                                                    <div class="addfiles form-control" data="#dl_file" id="dl_file_label">Choose Driving License</div>
+                                                    <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Driving License" name="dl_file" id="dl_file" class="onboard-form form-control files" />
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-2">
                                                     <!-- <label class="" for="education_certificate">Educations Certificate{!! required() !!}</label> -->
-                                                    <input type="file" accept=".doc,.docx,.pdf,image/*" placeholder="Educations Certificate" name="education_certificate" class="onboard-form form-control files" required />
+                                                    <div class="addfiles form-control" data="#education_certificate" id="education_certificate_label">Choose Educations Certificate</div>
+                                                    <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Educations Certificate" name="education_certificate" id="education_certificate" class="onboard-form form-control files" required />
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-2">
                                                     <!-- <label class="" for="reliving_letter">Reliving Letter</label> -->
-                                                    <input type="file" accept=".doc,.docx,.pdf,image/*" placeholder="Reliving Letter" name="reliving_letter" class="onboard-form form-control files" />
+                                                    <div class="addfiles form-control" data="#reliving_letter" id="reliving_letter_label">Choose Reliving Letter</div>
+                                                    <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Reliving Letter" name="reliving_letter" id="reliving_letter" class="onboard-form form-control files" />
                                                 </div>
                                             </div>
                                         </div>
@@ -698,9 +706,9 @@ $('#no_child').change(function() {
     var val = $('#no_child').val();
     var data = "";
     for(var i=1; i<=val; i++) {
-        var childName = $('input[placeholder="" name="child_name'+i+'"]').val();
-        var childDob = $('input[placeholder="" name="child_dob'+i+'"]').val();
-        var childGender = $('input[placeholder="" name="child_gender'+i+'"]').val();
+        var childName = $('input[name="child_name'+i+'"]').val();
+        var childDob = $('input[name="child_dob'+i+'"]').val();
+        var childGender = $('input[name="child_gender'+i+'"]').val();
         // // // data = data+"<div class='col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2'><label class='' for='child_name"+i+"'>Children Name</label><input type='text' name='child_name[]' id='child_name"+i+"' class='onboard-form form-control spouse_data' required /></div><div class='col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3'><label class='' for='child_dob"+i+"'>Children DOB</label><input type='date' name='child_dob[]' id='child_dob"+i+"' class='onboard-form form-control spouse_data' required /></div><div class='col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-3'><label class='' for='child_gender"+i+"'>Children Gender</label><select name='child_gender[]' id='child_gender"+i+"' class='onboard-form form-control spouse_data' required ><option value=''>Select</option><option value='male'>Male</option><option value='female'>Female</option><option value='other'>Other</option></select></div>";
     }
     $('.children_container').html(data);
@@ -710,7 +718,7 @@ $('#marital_status').change(function() {
     if ($('#marital_status').val() == 'single') {
         $.each($('.spouse_data'),function(value) {
             var name = $(this).attr('name');
-            if ($('input[placeholder="" name="'+name+'"]').val() == '') {
+            if ($('input[name="'+name+'"]').val() == '') {
                 $('.'+name+'_label').hide();
             }
             $(this).attr('disabled', true);
