@@ -217,7 +217,7 @@
                                     class="nav-link sidebar py-1"><span>Documents</span></a>
                             </li>
                             <li class="nav-item ">
-                                <a href="{{url('vmt_noData')}}" id="tds"
+                                <a href="{{route('vmt-assetinventory-index')}}" id="tds"
                                     class="nav-link sidebar py-1"><span>Assets</span></a>
                             </li>
 
