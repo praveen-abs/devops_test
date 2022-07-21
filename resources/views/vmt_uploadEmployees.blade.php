@@ -22,15 +22,30 @@
                                         enctype="multipart/form-data">
                                         @csrf
                                         <li>Download the
-                                            <a href="{{ url('/assets/payslip_sheet.xls')  }}" target="_blank">
+                                            <a href="{{ url('/assets/sample_employeeBulkOnboarding.xlsx')  }}" target="_blank">
                                                 <span class="text-link" style=" color: blue;">Sample File</span></a>
 
                                         </li>
                                         <li>Read the upload instructions on the right before uploading .</li>
                                         <li>Fill the information in excel template</li>
-                                        <li>Upload the excel sheet <input name="file" type="file">
-                                            <button type="submit" class=" btn btn-primary">Upload</button>
-                                            <span container="body" class="icon ic-info cursor-pointer"></span>
+                                        <li>
+                                            <form method="POST" id='role-form' action="{{url('/vmt-employess/bulk-upload')}}"
+                                                enctype="multipart/form-data">
+                                                @csrf
+                                                <div >
+                                                    <label >Please Upload the employees details excel-sheet.</label>
+                                                </div>                        
+                                                <div class="mb-3 row">
+                                                    <div class="col-md-10">
+                                                        <input name="file" type="file" required>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-2">
+                                                    <div class="text-end col-xl-12">
+                                                        <button type="submit" class="btn btn-primary">Upload</button>
+                                                    </div>
+                                                </div>
+                                            </form>
                                         </li>
                                 </ul>
 
@@ -104,7 +119,7 @@
 
 
 
-<div class="row">
+{{-- <div class="row">
     <div class="col-xl-8">
         <div class="card">
             <div class="card-header border-0 align-items-center d-flex">
@@ -136,7 +151,7 @@
             </div><!-- end card body -->
         </div><!-- end card -->
     </div><!-- end col -->
-</div><!-- end row -->
+</div><!-- end row --> --}}
 <div style="z-index: 11">
     <div id="borderedToast2" class="toast toast-border-success overflow-hidden mt-3" role="alert" aria-live="assertive"
         aria-atomic="true">
