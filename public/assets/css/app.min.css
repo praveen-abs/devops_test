@@ -18521,6 +18521,14 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
     height: 55px;
 }
 
+.table>thead>tr>th{
+    background: #002F56;
+    color: #fff;
+}
+.table>tbody>tr>td{
+    color: #707274;
+}
+
 .table>tbody>tr>td,
 .table>tbody>tr>th,
 .table>tfoot>tr>td,
@@ -18531,6 +18539,8 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
     line-height: 1.6;
     vertical-align: top;
     border-top: 1px solid #eee;
+    text-align: center;
+    
 }
 
 .amount-column:first-of-type .ytd-summary-column-table tbody tr td {
