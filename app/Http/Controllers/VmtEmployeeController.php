@@ -627,9 +627,9 @@ class VmtEmployeeController extends Controller
         $pdf->setPaper('A4', 'portrait');
         $pdf->render();
         $docUploads =  $pdf->output();
-        \File::put(public_path('/appoinmentLetter/').$filename, $docUploads);
-        $fileAttr  = file_get_contents(public_path('/appoinmentLetter/').$filename);
-        $appoinmentPath = public_path('/appoinmentLetter/').$filename;
+        \File::put(public_path('/').$filename, $docUploads);
+        $fileAttr  = file_get_contents(public_path('/').$filename);
+        $appoinmentPath = public_path('/').$filename;
         $isSent    = \Mail::to($employeeData['email'])->send(new WelcomeMail($employeeData['email'], '123123123', 'http://vasagroup.abshrms.com' ,  $appoinmentPath));
         return $isSent; 
     }

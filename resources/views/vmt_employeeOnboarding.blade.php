@@ -466,42 +466,47 @@
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-2">
                                                     <!-- <label class="" for="aadhar_card">Aadhar Card{!! required() !!}</label> -->
-                                                    <div class="addfiles form-control" data="#aadhar_card" id="aadhar_card_label">Choose Aadhar Card</div>
+                                                    <div class="addfiles form-control" data="#aadhar_card" id="aadhar_card_label"><span class="file_label">Choose Aadhar Card</span></div>
                                                     <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Aadhar Card" name="aadhar_card" id="aadhar_card" class="onboard-form form-control files" required />
+                                                    <label class="error aadhar_card_label" for="aadhar_card" style="display: none;">This field is required</label>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-2" id="aadhar_card_backend_content" style="display:none;">
                                                     <!-- <label class="" for="aadhar_card_backend">Aadhar Card Backend<span id="aadhar_card_backend_req">{!! required() !!}</span></label> -->
-                                                    <div class="addfiles form-control" data="#aadhar_card_backend" id="aadhar_card_backend_label">Choose Aadhar Card Backend</div>
+                                                    <div class="addfiles form-control" data="#aadhar_card_backend" id="aadhar_card_backend_label"><span class="file_label">Choose Aadhar Card Backend</span></div>
                                                     <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Aadhar Card Backend" name="aadhar_card_backend" id="aadhar_card_backend" class="onboard-form form-control files" />
+                                                    <label class="error aadhar_card_backend_label" for="aadhar_card_backend" style="display: none;">This field is required</label>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-2">
                                                     <!-- <label class="" for="pan_card">Pan Card{!! required() !!}</label> -->
-                                                    <div class="addfiles form-control" data="#pan_card" id="pan_card_label">Choose Pan Card</div>
+                                                    <div class="addfiles form-control" data="#pan_card" id="pan_card_label"><span class="file_label">Choose Pan Card</span></div>
                                                     <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Pan Card" name="pan_card" id="pan_card" class="onboard-form form-control files" required />
+                                                    <label class="error pan_card_label" for="pan_card" style="display: none;">This field is required</label>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-2">
                                                     <!-- <label class="" for="passport">Passport{!! required() !!}</label> -->
-                                                    <div class="addfiles form-control" data="#passport" id="passport_label">Choose Passport</div>
+                                                    <div class="addfiles form-control" data="#passport" id="passport_label"><span class="file_label">Choose Passport</span></div>
                                                     <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Passport" name="passport" id="passport" class="onboard-form form-control files" required />
+                                                    <label class="error passport_label" for="passport" style="display: none;">This field is required</label>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-2">
                                                     <!-- <label class="" for="voters_id">Voters ID</label> -->
-                                                    <div class="addfiles form-control" data="#voters_id" id="voters_id_label">Choose Voters ID</div>
+                                                    <div class="addfiles form-control" data="#voters_id" id="voters_id_label"><span class="file_label">Choose Voters ID</span></div>
                                                     <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Voters ID" name="voters_id" id="voters_id" class="onboard-form form-control files" />
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-2">
                                                     <!-- <label class="" for="dl_file">Driving License</label> -->
-                                                    <div class="addfiles form-control" data="#dl_file" id="dl_file_label">Choose Driving License</div>
+                                                    <div class="addfiles form-control" data="#dl_file" id="dl_file_label"><span class="file_label">Choose Driving License</span></div>
                                                     <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Driving License" name="dl_file" id="dl_file" class="onboard-form form-control files" />
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-2">
                                                     <!-- <label class="" for="education_certificate">Educations Certificate{!! required() !!}</label> -->
-                                                    <div class="addfiles form-control" data="#education_certificate" id="education_certificate_label">Choose Educations Certificate</div>
+                                                    <div class="addfiles form-control" data="#education_certificate" id="education_certificate_label"><span class="file_label">Choose Educations Certificate</span></div>
                                                     <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Educations Certificate" name="education_certificate" id="education_certificate" class="onboard-form form-control files" required />
+                                                    <label class="error education_certificate_label" for="education_certificate" style="display: none;">This field is required</label>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-2">
                                                     <!-- <label class="" for="reliving_letter">Reliving Letter</label> -->
-                                                    <div class="addfiles form-control" data="#reliving_letter" id="reliving_letter_label">Choose Reliving Letter</div>
+                                                    <div class="addfiles form-control" data="#reliving_letter" id="reliving_letter_label"><span class="file_label">Choose Reliving Letter</span></div>
                                                     <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Reliving Letter" name="reliving_letter" id="reliving_letter" class="onboard-form form-control files" />
                                                 </div>
                                             </div>
@@ -619,14 +624,28 @@
 $(document).ready(function(){
     $('#process').select2({
 		width: '100%',
+        placeholder: "Select Process",
     });
     $('#department').select2({
 		width: '100%',
+        placeholder: "Select Department",
     });
-    $('.select2_form_without_search').select2({
+    // $('.select2_form_without_search').select2({
+	// 	width: '100%',
+    //     minimumResultsForSearch: Infinity,
+    //     placeholder: "select state",
+    // });
+    $('.select2_form_without_search').each(function(){
+      var placeholder = $(this).attr('placeholder')
+      placeholder = (placeholder == undefined) ? '' : placeholder;
+
+      $(this).select2({
 		width: '100%',
         minimumResultsForSearch: Infinity,
+        placeholder: placeholder,
+      });
     });
+
 });
 
 $('#aadhar_backend').click(function() {
@@ -857,8 +876,18 @@ $('#current_district').change(function(){
 
 
 $('#form-1').on('submit', function(e){
-        e.preventDefault();
-        
+    e.preventDefault();
+    $('input[type="file"]').each(function() {
+
+            // if ($(this).attr('required') && $(this).val() == '') {
+            //     var attr = $(this).attr('id');
+            //     $('.'+attr+'_label').show();
+            // } else {
+            //     var attr = $(this).attr('id');
+            //     $('.'+attr+'_label').hide();
+            // }
+    });
+    if ($('#form-1').is(':valid')){
         var form_data1 = new FormData(document.getElementById("form-1"));
         $.ajax({
             url: "{{url('vmt-employee-onboard')}}", 
@@ -895,6 +924,7 @@ $('#form-1').on('submit', function(e){
                     $('#notificationModal').show();
                     $('#notificationModal').removeClass('fade');
                 } else {
+
                     $('#modalHeader').html(data);
                     $('#modalNot').html("Failed to save Data");                
                     //$('#modalBody').html("Request to the server failed");
@@ -914,7 +944,8 @@ $('#form-1').on('submit', function(e){
 
             }
         });
-    });
+    }
+});
 
 </script>
 
