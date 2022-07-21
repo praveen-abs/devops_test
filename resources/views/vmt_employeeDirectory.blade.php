@@ -101,8 +101,9 @@ tr:last-child td:last-child {
     /* font-weight:600; */
     text-align: center;
     padding: 5px 15px;
+    border-radius:2px !important;   
     margin-right: -1px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    /* border: 1px solid rgba(0, 0, 0, 0.2); */
     /* box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1); */
     transition: all 0.1s ease-in-out;
     margin-bottom: 0px !important;
@@ -115,8 +116,9 @@ tr:last-child td:last-child {
 .switch-field input:checked+label {
 
     box-shadow: none;
-    color: #5265a7;
-    background-color: #ccd6f7 !important;
+    color: #002f56;
+    background-color: #B8C4FF !important;
+    font-weight: 600;
 
 }
 
@@ -371,7 +373,7 @@ tr:last-child td:last-child {
     </div>
 
     <div class="table-responsive">
-        <table class="w-100 align-middle mb-0">
+        <table class=" table table-borderd  mb-0">
             <thead class="table-light">
                 <tr>
                     <th scope="col">Employee Code</th>
@@ -381,6 +383,7 @@ tr:last-child td:last-child {
                     <th scope="col">Email Id</th>
                     <th scope="col">Blood Group</th>
                     <th scope="col">Profile</th>
+                    <th scope="col">Actions</th>
                     <th scope="col">Reminder</th>
                 </tr>
             </thead>
@@ -411,7 +414,7 @@ tr:last-child td:last-child {
                     <td><span>{{$employee->email_id }}</span></td>
                     <td><span> B <sup>+</sup></span></td>
                     <td><span>70%</span></td>
-                    <!-- <td>
+                    <td>
                         <div class="d-flex gap-2 align-items-center">
                             <a href="{{route('pages-profile')}}"
                                 class="btn border-0 outline-none bg-transparent p-0  mx-1">
@@ -421,7 +424,7 @@ tr:last-child td:last-child {
                                 <i class="ri-delete-bin-line text-danger fw-bold"></i>
                             </button>
                         </div>
-                    </td> -->
+                    </td>
                     <td>
                         <button class="btn border-0 outline-none bg-transparent p-0">
                             <i class=" bx bx-bell f-15"></i>
