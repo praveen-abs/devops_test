@@ -11,6 +11,8 @@ use App\Models\VmtGeneralInfo;
 use App\Models\VmtEmployee;
 use App\Models\VmtEmployeeAttendance;
 use App\Models\vmtHolidays;
+use App\Models\Polling;
+use App\Models\PollVoting;
 use Session as Ses;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -38,8 +40,15 @@ class VmtMainDashboardController extends Controller
                     ->first();  
         $checked = VmtEmployeeAttendance::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->first();
         $holidays = vmtHolidays::orderBy('holiday_date', 'ASC')->get();
+        $polling = Polling::first();
+        if ($polling) {
+            $selectedPoll = PollVoting::where('user_id', auth()->user()->id)->where('polling_id', $polling->id)->first();
+            if ($selectedPoll) {
+                $polling->data = $selectedPoll->selected_option;
+            }
+        }
         if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin')) {
-            return view('vmt_hr_dashboard', compact( 'currentUserJobDetails', 'checked', 'holidays'));
+            return view('vmt_hr_dashboard', compact( 'currentUserJobDetails', 'checked', 'holidays', 'polling', 'selectedPoll'));
         }        
         else 
         if(auth()->user()->hasrole('Manager'))

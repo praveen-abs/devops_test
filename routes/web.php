@@ -34,6 +34,7 @@ Route::post('/update-emergency-info/{id}', [App\Http\Controllers\HomeController:
 Route::post('/update-family-info/{id}', [App\Http\Controllers\HomeController::class, 'updtaeFamilyInfo'])->name('updtaeFamilyInfo');
 Route::post('/update-checkin', [App\Http\Controllers\HomeController::class, 'updtaeCheckin'])->name('updtaeCheckin');
 Route::get('/vmt-topbar-settings', [App\Http\Controllers\HomeController::class, 'vmt_topbar_settings'])->name('vmt_topbar_settings');
+Route::post('/poll-voting', [App\Http\Controllers\HomeController::class, 'poll_voting'])->name('poll_voting');
 
 Route::get('/registerNewAccount', function(){
     return view('/auth/register');

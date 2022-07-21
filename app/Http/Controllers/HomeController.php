@@ -15,6 +15,7 @@ use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\Bank;
 use App\Models\Experience;
 use App\Models\VmtEmployeeAttendance;
+use App\Models\PollVoting;
 use App\Mail\TestEmail;
 use Session as Ses;
 
@@ -301,6 +302,22 @@ class HomeController extends Controller
 
     public function vmt_topbar_settings(Request $request){
         return view('vmt_topbar_settings');
+    }
+
+    public function poll_voting(Request $request) {
+        $polling = PollVoting::where('user_id', auth()->user()->id)->where('polling_id', $request->id)->first();
+        if ($polling) {
+            $poll = PollVoting::find($polling->id);
+        } else {
+            $poll = new PollVoting;
+        }
+        $poll->user_id = auth()->user()->id;
+        $poll->polling_id = $request->input('id');
+        $poll->selected_option = $request->input('polling');
+        $poll->save();
+        Ses::flash('message', 'Polling Updated successfully!');
+        Ses::flash('alert-class', 'alert-success');
+        return redirect()->back();
     }
 
     //
