@@ -224,7 +224,7 @@ class HomeController extends Controller
     public function storeProfileImage(Request $request) {
         $file = $request->file('profilePic');
         $user = User::find($request->id);
-        $user->name = $request->input('name');
+        // $user->name = $request->input('name');
         if ($file) { 
             $filename = 'avatar-'.$request->id.'.'. $file->getClientOriginalExtension();
             $destination = public_path('/images');
