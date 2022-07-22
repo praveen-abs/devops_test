@@ -7,7 +7,9 @@
 @endsection
 
 @section('content')
-
+@component('components.organization_breadcrumb')
+@slot('li_1')  @endslot
+@endcomponent
 
 <div class="row">
     <div class="col-xl-12">

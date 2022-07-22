@@ -4,6 +4,10 @@
     <link href="{{ URL::asset('/assets/libs/fullcalendar/fullcalendar.min.css') }}" rel="stylesheet">
 @endsection
 @section('content')
+@component('components.attendance_breadcrumb')
+@slot('li_1')  @endslot
+
+@endcomponent
     
     <div class="row">
         <div class="col-12">

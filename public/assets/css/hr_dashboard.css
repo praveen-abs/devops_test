@@ -64,12 +64,13 @@
 }
 
 .greet-wrap p{
-    font-size: 17px;
+    font-size: 15px;
     font-weight: 500;
 }
 
 .greet-wrap p b {
-    font-size: 21px;
+    font-size: 18px;
+    color: #e54e0d;
 }
 
 .wishes-card-wrapper .program-day {
