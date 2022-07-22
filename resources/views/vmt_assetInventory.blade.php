@@ -578,8 +578,7 @@ $(document).ready(function() {
             sort: true,
             search: true,
             server: {
-                url: '{{route('
-                vmt - assetinventory - fetchall ')}}',
+                url: '{{route('vmt-assetinventory-fetchall')}}',
                 then: data => data.map(
                     asset => [
                         asset.asset_name,
