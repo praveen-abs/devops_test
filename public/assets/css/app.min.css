@@ -18891,8 +18891,8 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
 
 @media (min-width: 0px) and (max-width: 767.98px) {
 
-    .search-content {
-        display: none;
+    .header-search-bar {
+        display: none !important;
     }
     .topbar-logo{
         display: none !important;
