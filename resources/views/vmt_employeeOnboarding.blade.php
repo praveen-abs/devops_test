@@ -841,11 +841,6 @@
             width: '100%',
             placeholder: "Select Department",
         });
-        // $('.select2_form_without_search').select2({
-        // 	width: '100%',
-        //     minimumResultsForSearch: Infinity,
-        //     placeholder: "select state",
-        // });
         $('.select2_form_without_search').each(function() {
             var placeholder = $(this).attr('placeholder')
             placeholder = (placeholder == undefined) ? '' : placeholder;
@@ -1088,18 +1083,19 @@
 
     $('#form-1').on('submit', function(e) {
         e.preventDefault();
+        var flag = false;
         $('.files').each(function() {
             console.log($(this).attr('vali') == "required" && $(this).val().length == 0);
             if ($(this).attr('vali') == "required" && $(this).val().length == 0) {
                 var attr = $(this).attr('id');
-                console.log("error");
                 $('.'+attr+'_label').show();
+                flag = true;
             } else {
                 var attr = $(this).attr('id');
                 $('.'+attr+'_label').hide();
             }
         });
-        if ($('#form-1').is(':valid')) {
+        if ($('#form-1').is(':valid') && !flag) {
             var form_data1 = new FormData(document.getElementById("form-1"));
             $.ajax({
                 url: "{{url('vmt-employee-onboard')}}",

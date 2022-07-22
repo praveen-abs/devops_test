@@ -41,8 +41,8 @@ $(document).ready(function() {
         }
     });
 
-    $('input[type="file"]').click(function() {
-        console.log("here");
+    // $('input[type="file"]').click(function() {
+    //     console.log("here");
         // $('input[type="file"]').each(function() {
         //     if ($(this).attr('required') && $(this).val() == '') {
         //         var attr = $(this).attr('id');
@@ -52,14 +52,14 @@ $(document).ready(function() {
         //         $('.'+attr+'_label').hide();
         //     }
         // });
-    });
+    // });
 
-    $(".files").on('change',function(){
-        //do whatever you want
-        var val = $(this).val();
-        var id = $(this).attr('id');
-        $('#'+id+'_label').html(val);
-    });
+    // $(".files").on('change',function(){
+    //     //do whatever you want
+    //     var val = $(this).val();
+    //     var id = $(this).attr('id');
+    //     $('#'+id+'_label').html(val);
+    // });
 
 
     // $('.addfiles').on('click', function() { 
