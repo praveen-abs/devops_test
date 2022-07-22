@@ -109,7 +109,7 @@ p {
     text-align: left;
 }
 
-.error::before {
+.star_error::before {
     content: '* ';
 }
 select {

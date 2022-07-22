@@ -47,7 +47,7 @@
                                                     <input type="text" placeholder="Employee Name as per Aadhar"
                                                         name="employee_name" class="onboard-form form-control"
                                                         pattern="name" required />
-                                                    <label class="error employee_name_label" for="employee_name"
+                                                    <label class="error star_error employee_name_label" for="employee_name"
                                                         style="display: none;"></label>
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
@@ -106,7 +106,7 @@
                                                     <input type="number" placeholder="Aadhaar Number" name="aadhar"
                                                         id="aadhar" pattern="aadhar" class="onboard-form form-control"
                                                         required />
-                                                    <label class="error aadhar_label" for="aadhar"
+                                                    <label class="error star_error aadhar_label" for="aadhar"
                                                         style="display: none;"></label>
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
@@ -114,7 +114,7 @@
                                                     <input type="text" placeholder="Pan Card Number" name="pan_no"
                                                         id="pan_no" class="onboard-form form-control pan" pattern="pan"
                                                         required />
-                                                    <label class="error pan_no_label" id="pan_no_label" for="pan_no"
+                                                    <label class="error star_error pan_no_label" id="pan_no_label" for="pan_no"
                                                         style="display: none;"></label>
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
@@ -128,7 +128,7 @@
                                                     <input type="text" placeholder="DL Number" name="dl_no"
                                                         class="onboard-form form-control not-required validate"
                                                         pattern="dl" />
-                                                    <label class="error dl_no_label" for="dl_no"
+                                                    <label class="error star_error dl_no_label" for="dl_no"
                                                         style="display: none;"></label>
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
@@ -136,7 +136,7 @@
                                                     <input type="text" placeholder="Passport Number" name="passport_no"
                                                         pattern="passport" id="passport_no"
                                                         class="onboard-form form-control not-required validate" />
-                                                    <label class="error passport_no_label" for="passport_no"
+                                                    <label class="error star_error passport_no_label" for="passport_no"
                                                         style="display: none;"></label>
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
@@ -204,14 +204,14 @@
                                                     <input type="number" placeholder="Account Number" name="account_no"
                                                         id="account_no" class="onboard-form form-control" minlength="10"
                                                         maxlength="10" required />
-                                                    <label class="error account_no_label" for="account_no"
+                                                    <label class="error star_error account_no_label" for="account_no"
                                                         style="display: none;"></label>
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="bank_ifsc">Bank IFSC Code</label> -->
                                                     <input type="text" placeholder="Bank IFSC Code" name="bank_ifsc"
                                                         pattern="ifsc" class="onboard-form form-control" required />
-                                                    <label class="error bank_ifsc_label" for="bank_ifsc"
+                                                    <label class="error star_error bank_ifsc_label" for="bank_ifsc"
                                                         style="display: none;"></label>
                                                 </div>
                                             </div>
@@ -674,7 +674,7 @@
                                                         style="display:none;" placeholder="Passport" name="passport"
                                                         id="passport" class="onboard-form form-control files"
                                                         vali="required" />
-                                                    <label class="error passport_label" for="passport"
+                                                    <label class="error star_error passport_label" for="passport"
                                                         style="display: none;">This field is required</label>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-2">
@@ -1085,7 +1085,6 @@
         e.preventDefault();
         var flag = false;
         $('.files').each(function() {
-            console.log($(this).attr('vali') == "required" && $(this).val().length == 0);
             if ($(this).attr('vali') == "required" && $(this).val().length == 0) {
                 var attr = $(this).attr('id');
                 $('.'+attr+'_label').show();
@@ -1153,6 +1152,25 @@
             });
         }
     });
+    
+$('#form-1').validate({
+    errorPlacement: function (error, element) {
+        error.text('* '+error.text());
+        if (element.parent('.input-group').length) { 
+            error.insertAfter(element.parent());      // radio/checkbox?
+        } else if (element.hasClass('select2-hidden-accessible')) {     
+            error.insertAfter(element.next('span'));  // select2
+            element.next('span').addClass('error').removeClass('valid');
+        } else {                                      
+            error.insertAfter(element);               // default
+        }
+    }
+});
+
+$("select").on("select2:close", function (e) {  
+    $(this).valid();
+});
+    
     </script>
 
 
