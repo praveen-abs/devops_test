@@ -1,7 +1,3 @@
-@section('css')
-<link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
-<!-- <link rel="stylesheet" href="{{ URL::asset('/assets/css/app.min.css') }}"> -->
-@endsection
 <div class="row">
     <div class="col-12">
         <div class="page-title-box d-sm-flex align-items-center justify-content-between">

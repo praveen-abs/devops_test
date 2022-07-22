@@ -3,9 +3,10 @@ img {vertical-align: middle;}
 
 /* Slideshow container */
 .slideshow-container {
-  max-width: 1000px;
+  width: 100%;
   position: relative;
   margin: auto;
+  height: 140px;
 }
 
 /* slide-Next & slide-previous buttons */
