@@ -35,8 +35,9 @@
     font-weight: 700
 } */
 
-body,html{
-    background: url(../images/layout_bg.png) no-repeat;
+body{
+    background: url(../images/bg_full.jpg) no-repeat ;
+    background-size: cover;
 }
 
 :root {
@@ -327,6 +328,7 @@ body {
 .header-item {
     height: 50px;
     display: flex;
+    width: 100%;
     align-items: center
 }
 
@@ -957,10 +959,9 @@ body {
 }
 
 .settings-icon {
-
     font-size: 18px;
     font-weight: 600;
-    padding: 0px 10px;
+    /* padding: 0px 10px; */
 
 }
 
@@ -11156,7 +11157,12 @@ th.gridjs-th .gridjs-th-content {
 
 button.gridjs-sort {
     width: 10px;
-    height: 20px
+    height: 20px;
+    
+}
+
+.trigger_asset_edit{
+
 }
 
 th.gridjs-th-sort .gridjs-th-content {
@@ -18529,12 +18535,12 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
     height: 55px;
 }
 
-.table>thead>tr>th{
-    background: #002F56;
-    color: #fff;
+.table>thead>tr>th,.gridjs-table>thead>tr>th{
+    background: #002F56 !important;
+    color: #fff !important;
 }
-.table>tbody>tr>td{
-    color: #707274;
+.table>tbody>tr>td,.gridjs-table>tbody>tr>td{
+    color: #707274 !important;
 }
 
 .table>tbody>tr>td,
@@ -18542,7 +18548,13 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
 .table>tfoot>tr>td,
 .table>tfoot>tr>th,
 .table>thead>tr>td,
-.table>thead>tr>th {
+.table>thead>tr>th,
+.gridjs-table>tbody>tr>td,
+.gridjs-table>tbody>tr>th,
+.gridjs-table>tfoot>tr>td,
+.gridjs-table>tfoot>tr>th,
+.gridjs-table>thead>tr>td,
+.gridjs-table>thead>tr>th {
     padding: 8px;
     line-height: 1.6;
     vertical-align: top;

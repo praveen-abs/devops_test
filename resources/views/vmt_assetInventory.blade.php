@@ -103,7 +103,7 @@ tr:last-child td:last-child {
     text-align: center;
     padding: 5px 15px;
     margin-right: -1px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    /* border: 1px  solid rgba(0, 0, 0, 0.2); */
     /* box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1); */
     transition: all 0.1s ease-in-out;
     margin-bottom: 0px !important;
@@ -116,9 +116,9 @@ tr:last-child td:last-child {
 .switch-field input:checked+label {
 
     box-shadow: none;
-    color: #5265a7;
-    background-color: #ccd6f7 !important;
-
+    color: #002f56;
+    background-color: #B8C4FF !important;
+    font-weight: 600;
 }
 
 .switch-field label:first-of-type {
@@ -145,17 +145,16 @@ tr:last-child td:last-child {
 @endsection
 
 
-
 @section('content')
 @component('components.organization_breadcrumb')
-@slot('li_1')  @endslot
+@slot('li_1') @endslot
 @endcomponent
 
 
 <div class=" project-wrapper">
-    <h4 class="text-muted fw-bold">Asset Inventory</h4>
 
     <div class="directory-content  mb-3 mt-2">
+        <h5 class="text-muted fw-bold mb-2">Asset Inventory</h5>
         <div class="row">
             <div class="col-8">
                 <div class="float-left directory-left d-flex">
@@ -211,7 +210,7 @@ tr:last-child td:last-child {
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body" >
+            <div class="modal-body">
                 <form class="requires-validation" id="form_add_asset" novalidate>
                     @csrf
                     <div class="row">
@@ -221,7 +220,7 @@ tr:last-child td:last-child {
                                 <input type="text" name="asset_name" class="form-control" required>
                                 <div class="invalid-feedback">
                                     Please provide a valid text.
-                                  </div>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -237,7 +236,7 @@ tr:last-child td:last-child {
                         <div class="col-md-6">
                             <div class="form-group mb-3">
                                 <label>Serial Number</label>
-                                <input class="form-control" type="text"  name="serial_number" required>
+                                <input class="form-control" type="text" name="serial_number" required>
                                 <div class="invalid-feedback">
                                     Please provide a valid text.
                                 </div>
@@ -283,7 +282,7 @@ tr:last-child td:last-child {
                                 </div>
 
                             </div>
-                        </div>                        
+                        </div>
                         <div class="col-md-6">
                             <div class="form-group mb-3">
                                 <label>Assigned Date</label>
@@ -317,7 +316,7 @@ tr:last-child td:last-child {
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body" >
+            <div class="modal-body">
                 <form class="requires-validation" id="form_edit_asset" novalidate>
                     @csrf
                     <div class="row">
@@ -327,7 +326,7 @@ tr:last-child td:last-child {
                                 <input type="text" name="asset_name" class="form-control" required>
                                 <div class="invalid-feedback">
                                     Please provide a valid text.
-                                  </div>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -343,7 +342,7 @@ tr:last-child td:last-child {
                         <div class="col-md-6">
                             <div class="form-group mb-3">
                                 <label>Serial Number</label>
-                                <input class="form-control" type="text"  name="serial_number" required>
+                                <input class="form-control" type="text" name="serial_number" required>
                                 <div class="invalid-feedback">
                                     Please provide a valid text.
                                 </div>
@@ -389,7 +388,7 @@ tr:last-child td:last-child {
                                 </div>
 
                             </div>
-                        </div>                        
+                        </div>
                         <div class="col-md-6">
                             <div class="form-group mb-3">
                                 <label>Assigned Date</label>
@@ -413,7 +412,8 @@ tr:last-child td:last-child {
     </div>
 </div>
 
-<div id="modal_delete_asset"  class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+<div id="modal_delete_asset" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog"
+    aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body text-center p-5">
@@ -445,44 +445,43 @@ tr:last-child td:last-child {
 <script>
 $(document).ready(function() {
 
-    
-    (function () {
+
+    (function() {
         'use strict'
         const forms = document.querySelectorAll('.requires-validation')
         Array.from(forms)
-            .forEach(function (form) {
-            form.addEventListener('submit', function (event) {
-                if (!form.checkValidity()) {
-                    event.preventDefault()
-                    event.stopPropagation()
-                }
-        
-            form.classList.add('was-validated')
-            }, false)
-        })
+            .forEach(function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
     })()
 
-    $('#form_add_asset').on('submit', function(e){
+    $('#form_add_asset').on('submit', function(e) {
         e.preventDefault();
 
-        if ($('#form_add_asset').is(':valid')){
+        if ($('#form_add_asset').is(':valid')) {
 
-             console.log("Add asset form is being submitted");      
-        
+            console.log("Add asset form is being submitted");
+
             var form_add_data = new FormData(document.getElementById("form_add_asset"));
             //console.log(form_add_data);
 
             $.ajax({
-                url: "{{route('vmt-assetinventory-add')}}", 
-                type: "POST", 
+                url: "{{route('vmt-assetinventory-add')}}",
+                type: "POST",
                 processData: false,
                 contentType: false,
-                data: form_add_data ,
-                success: function(data)
-                {
-                    $('#modal_add_asset').modal('hide'); 
+                data: form_add_data,
+                success: function(data) {
+                    $('#modal_add_asset').modal('hide');
                     //console.log(data);
-                    location.reload(); 
+                    location.reload();
                 }
             });
 
@@ -501,75 +500,77 @@ $(document).ready(function() {
 
 
 
-    if (document.getElementById("table-assets"))
-    {
-      const grid =  new gridjs.Grid({
-            columns: [
-            {
-                id: 'asset_name',
-                name: 'Name',
-                formatter: function formatter(cell) {
-                return gridjs.html('<b>' + cell + '</b>');
+    if (document.getElementById("table-assets")) {
+        const grid = new gridjs.Grid({
+            columns: [{
+                    id: 'asset_name',
+                    name: 'Name',
+                    formatter: function formatter(cell) {
+                        return gridjs.html('<b>' + cell + '</b>');
+                    }
+                },
+                {
+                    id: 'asset_type',
+                    name: 'Asset Type',
+                },
+                {
+                    id: 'serial_number',
+                    name: 'Serial Number',
+                },
+                {
+                    id: 'warranty',
+                    name: 'Warranty',
+                },
+                {
+                    id: 'vendor',
+                    name: 'Vendor',
+                },
+                {
+                    id: 'assignee',
+                    name: 'Assignee',
+                },
+                {
+                    id: 'assigned_date',
+                    name: 'Assigned Date',
+                },
+                {
+                    id: 'invoice',
+                    name: 'Invoice',
+                    formatter: function formatter(cell) {
+                        var URL = "{{ url('/assets/')}}" + "/" + cell;
+                        return gridjs.html('<a href=' + URL +
+                            ' target="_blank"><span class="text-link" style=" color: blue;"><i class="icon icon-lg text-info  ri-download-2-line text-primary fw-bold"></i></span></a>'
+                        );
+                    }
+                },
+                {
+                    id: 'id',
+                    name: 'Edit',
+                    formatter: function formatter(cell) {
+
+                        var htmlcontent =
+                            '<a  class="trigger_asset_edit" ><span class="text-link" style=" color: blue;"><i class="icon icon-lg  ri-pencil-line text-dark fw-bold"></i></span></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
+                        //var html_edit="<button style='font-size:24px' onclick='hello()'>Edit</button>";
+                        //var html_delete = '<a href='+url_delete+' target="_blank"><span class="text-link" style=" color: blue;"><i class="icon icon-lg  ri-delete-bin-line text-primary fw-bold"></i></span></a>';
+
+                        return gridjs.html(htmlcontent);
+                    }
+                },
+                {
+                    data: (row) => row[8], //asset.id
+                    name: 'Delete',
+                    formatter: function formatter(cell) {
+
+
+                        var htmlcontent =
+                            '<a  class="trigger_asset_edit" ><span class="text-link" style=" color: blue;"><i class="icon icon-lg text-danger ri-delete-bin-line text-primary fw-bold"></i></span></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
+                        //var html_edit="<button style='font-size:24px' onclick='hello()'>Edit</button>";
+                        //var html_delete = '<a href='+url_delete+' target="_blank"><span class="text-link" style=" color: blue;"><i class="icon icon-lg  ri-delete-bin-line text-primary fw-bold"></i></span></a>';
+
+                        return gridjs.html(htmlcontent);
+                    }
                 }
-            },
-            {
-                id: 'asset_type',
-                name: 'Asset Type',
-            },
-            {
-                id: 'serial_number',
-                name: 'Serial Number',
-            },
-            {
-                id: 'warranty',
-                name: 'Warranty',
-            },
-            {
-                id: 'vendor',
-                name: 'Vendor',
-            },                 
-            {
-                id: 'assignee',
-                name: 'Assignee',
-            },                 
-            {
-                id: 'assigned_date',
-                name: 'Assigned Date',
-            },   
-            {
-                id: 'invoice',
-                name: 'Invoice',
-                formatter: function formatter(cell) {
-                    var URL = "{{ url('/assets/')}}"+"/"+cell;
-                    return gridjs.html('<a href='+URL+' target="_blank"><span class="text-link" style=" color: blue;"><i class="icon icon-lg  ri-download-2-line text-primary fw-bold"></i></span></a>');
-                }            
-            },                  
-            {
-                id:'id',
-                name: 'Edit',
-                formatter: function formatter(cell) {
 
-                    var htmlcontent = '<a  class="trigger_asset_edit" ><span class="text-link" style=" color: blue;"><i class="icon icon-lg  ri-pencil-line text-primary fw-bold"></i></span></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
-                    //var html_edit="<button style='font-size:24px' onclick='hello()'>Edit</button>";
-                    //var html_delete = '<a href='+url_delete+' target="_blank"><span class="text-link" style=" color: blue;"><i class="icon icon-lg  ri-delete-bin-line text-primary fw-bold"></i></span></a>';
-
-                    return gridjs.html(htmlcontent);
-                }            
-            },                        
-            {
-                data: (row) => row[8], //asset.id
-                name: 'Delete',
-                formatter: function formatter(cell) {
-
-
-                    var htmlcontent = '<a  class="trigger_asset_edit" ><span class="text-link" style=" color: blue;"><i class="icon icon-lg ri-delete-bin-line text-primary fw-bold"></i></span></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
-                    //var html_edit="<button style='font-size:24px' onclick='hello()'>Edit</button>";
-                    //var html_delete = '<a href='+url_delete+' target="_blank"><span class="text-link" style=" color: blue;"><i class="icon icon-lg  ri-delete-bin-line text-primary fw-bold"></i></span></a>';
-
-                    return gridjs.html(htmlcontent);
-                }            
-            }                        
-            
             ],
             pagination: {
                 limit: 10
@@ -577,22 +578,23 @@ $(document).ready(function() {
             sort: true,
             search: true,
             server: {
-                url: '{{route('vmt-assetinventory-fetchall')}}',
+                url: '{{route('
+                vmt - assetinventory - fetchall ')}}',
                 then: data => data.map(
                     asset => [
                         asset.asset_name,
                         asset.asset_type,
-                        asset.serial_number, 
-                        asset.warranty, 
-                        asset.vendor, 
-                        asset.assignee, 
-                        asset.assigned_date, 
+                        asset.serial_number,
+                        asset.warranty,
+                        asset.vendor,
+                        asset.assignee,
+                        asset.assigned_date,
                         asset.invoice,
                         asset.id
 
                     ]
-                    )
-            } 
+                )
+            }
             //  ["01", "Jonathan", "jonathan@example.com", "Senior Implementation Architect", "Hauck Inc", "Holy See"],
             //  ["02", "Harold", "harold@example.com", "Forward Creative Coordinator", "Metz Inc", "Iran"],
             //  ["03", "Shannon", "shannon@example.com", "Legacy Functionality Associate", "Zemlak Group", "South Georgia"], 
@@ -606,27 +608,27 @@ $(document).ready(function() {
 
         }).render(document.getElementById("table-assets")); // card Table
 
-        grid.on('cellClick', function (...args) {
+        grid.on('cellClick', function(...args) {
 
-           var temp = JSON.stringify(args);
-           console.dir('cell: ' + temp  );
+            var temp = JSON.stringify(args);
+            console.dir('cell: ' + temp);
 
-           //Show modal only if Edit column item selected
-           if(args[2]["name"] == "Edit")
-               EditAssetData(args[2]["name"], args[1]["data"]);
-           else
-           if(args[2]["name"] == "Delete")
-               DeleteAssetData(args[2]["name"], args[1]["data"]);
+            //Show modal only if Edit column item selected
+            if (args[2]["name"] == "Edit")
+                EditAssetData(args[2]["name"], args[1]["data"]);
+            else
+            if (args[2]["name"] == "Delete")
+                DeleteAssetData(args[2]["name"], args[1]["data"]);
 
         });
 
-}
+    }
 
     function EditAssetData(column_name, row_id) {
-       // console.log(column_name+" , "+ row_id);
+        // console.log(column_name+" , "+ row_id);
 
 
-        $('#modal_edit_asset').modal('show'); 
+        $('#modal_edit_asset').modal('show');
 
     }
 
@@ -634,9 +636,9 @@ $(document).ready(function() {
         //console.log(column_name+" , "+ row_id);
 
 
-        $('#modal_delete_asset').modal('show'); 
+        $('#modal_delete_asset').modal('show');
 
-    }    
+    }
 });
 </script>
 @endsection
