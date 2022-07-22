@@ -635,9 +635,7 @@
                                                     <input type="file" accept=".doc,.docx,.pdf,image/*"
                                                         style="display:none;" placeholder="Aadhar Card"
                                                         name="aadhar_card" id="aadhar_card"
-                                                        class="onboard-form form-control files" vali="required" />
-                                                    <label class="text-danger aadhar_card_label" for="aadhar_card"
-                                                        style="display: none;font-size:15px;">*This field is required</label>
+                                                        class="onboard-form form-control files" />
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-2"
                                                     id="aadhar_card_backend_content" style="display:none;">
@@ -649,9 +647,6 @@
                                                         style="display:none;" placeholder="Aadhar Card Backend"
                                                         name="aadhar_card_backend" id="aadhar_card_backend"
                                                         class="onboard-form form-control files" />
-                                                    <label class="text-danger aadhar_card_backend_label"
-                                                        for="aadhar_card_backend" style="display: none;">*This field is
-                                                        required</label>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-2">
                                                     <!-- <label class="" for="pan_card">Pan Card{!! required() !!}</label> -->
@@ -661,9 +656,7 @@
                                                     <input type="file" accept=".doc,.docx,.pdf,image/*"
                                                         style="display:none;" placeholder="Pan Card" name="pan_card"
                                                         id="pan_card" class="onboard-form form-control files"
-                                                        vali="required" />
-                                                    <label class="text-danger pan_card_label" for="pan_card"
-                                                        style="display: none;font-size:15px;">*This field is required</label>
+                                                        />
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-2">
                                                     <!-- <label class="" for="passport">Passport{!! required() !!}</label> -->
@@ -673,9 +666,7 @@
                                                     <input type="file" accept=".doc,.docx,.pdf,image/*"
                                                         style="display:none;" placeholder="Passport" name="passport"
                                                         id="passport" class="onboard-form form-control files"
-                                                        vali="required" />
-                                                    <label class="error star_error passport_label" for="passport"
-                                                        style="display: none;">This field is required</label>
+                                                         />
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-2">
                                                     <!-- <label class="" for="voters_id">Voters ID</label> -->
@@ -704,10 +695,7 @@
                                                     <input type="file" accept=".doc,.docx,.pdf,image/*"
                                                         style="display:none;" placeholder="Educations Certificate"
                                                         name="education_certificate" id="education_certificate"
-                                                        class="onboard-form form-control files" vali="required" />
-                                                    <label class="text-danger education_certificate_label"
-                                                        for="education_certificate" style="display: none;font-size:15px;">*This field is
-                                                        required</label>
+                                                        class="onboard-form form-control files"  />
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-2">
                                                     <!-- <label class="" for="reliving_letter">Reliving Letter</label> -->

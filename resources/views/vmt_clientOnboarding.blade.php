@@ -276,6 +276,24 @@ $('#form-1').on('submit', function(e) {
     //console.log(familyData);
     //console.log(statutoryData);
 });
+
+$('#form-1').validate({
+    errorPlacement: function (error, element) {
+        error.text('* '+error.text());
+        if (element.parent('.input-group').length) { 
+            error.insertAfter(element.parent());      // radio/checkbox?
+        } else if (element.hasClass('select2-hidden-accessible')) {     
+            error.insertAfter(element.next('span'));  // select2
+            element.next('span').addClass('error').removeClass('valid');
+        } else {                                      
+            error.insertAfter(element);               // default
+        }
+    }
+});
+
+$("select").on("select2:close", function (e) {  
+    $(this).valid();
+});
 </script>
 
 @endsection
