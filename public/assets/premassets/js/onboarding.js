@@ -62,11 +62,11 @@ $(document).ready(function() {
     });
 
 
-    $('.addfiles').on('click', function() { 
-        var attr = $(this).attr('data');
-        $(attr).click();
-        return false;
-    });
+    // $('.addfiles').on('click', function() { 
+    //     var attr = $(this).attr('data');
+    //     $(attr).click();
+    //     return false;
+    // });
 
     $('body').on('click', '.validate', function() {
         $(this).removeClass('not-required');
@@ -185,4 +185,43 @@ $(document).ready(function() {
    
 
 
+});
+
+
+$(function(){
+    // Wrap your File input in a wrapper <div>
+    var wrapper = $('<div/>').css({height:0,width:0,'overflow':'hidden'});
+    var fileInput = $(':file').wrap(wrapper);
+ 
+    // When your file input changes, update the text for your button
+    fileInput.blur(function(){
+        console.log("here");
+        $this = $(this);
+        var attr = $(this).attr('id');
+        // If the selection is empty, reset it
+        if ($this.val().length == 0) {
+            // var text = "Choose aadhar card";
+            $('.'+attr+'_label').text(text);
+            if ($(this).attr('vali') == 'required') {
+                $('.'+attr+'_label').show();
+            } else {
+                $('.'+attr+'_label').hide();
+            }
+        } else {
+            $('#'+attr+'_label').find('span').text($this.val());
+        }
+        //get the file.
+        var file = $this[0].files[0];
+        //transfer the file to the MVC/API controller via FormData.
+    })
+        
+    //get the file.
+    // var file = $this[0].files[0];
+    //transfer the file to the MVC/API controller via FormData.
+ 
+    // When your fake button is clicked, simulate a click of the file button
+    $('.addfiles').click(function(){
+        var data = $(this).attr('data');
+      $(data).click();
+    }).show();
 });

@@ -635,9 +635,9 @@
                                                     <input type="file" accept=".doc,.docx,.pdf,image/*"
                                                         style="display:none;" placeholder="Aadhar Card"
                                                         name="aadhar_card" id="aadhar_card"
-                                                        class="onboard-form form-control files" required />
-                                                    <label class="error aadhar_card_label" for="aadhar_card"
-                                                        style="display: none;">This field is required</label>
+                                                        class="onboard-form form-control files" vali="required" />
+                                                    <label class="text-danger aadhar_card_label" for="aadhar_card"
+                                                        style="display: none;font-size:15px;">*This field is required</label>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-2"
                                                     id="aadhar_card_backend_content" style="display:none;">
@@ -649,8 +649,8 @@
                                                         style="display:none;" placeholder="Aadhar Card Backend"
                                                         name="aadhar_card_backend" id="aadhar_card_backend"
                                                         class="onboard-form form-control files" />
-                                                    <label class="error aadhar_card_backend_label"
-                                                        for="aadhar_card_backend" style="display: none;">This field is
+                                                    <label class="text-danger aadhar_card_backend_label"
+                                                        for="aadhar_card_backend" style="display: none;">*This field is
                                                         required</label>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-2">
@@ -661,9 +661,9 @@
                                                     <input type="file" accept=".doc,.docx,.pdf,image/*"
                                                         style="display:none;" placeholder="Pan Card" name="pan_card"
                                                         id="pan_card" class="onboard-form form-control files"
-                                                        required />
-                                                    <label class="error pan_card_label" for="pan_card"
-                                                        style="display: none;">This field is required</label>
+                                                        vali="required" />
+                                                    <label class="text-danger pan_card_label" for="pan_card"
+                                                        style="display: none;font-size:15px;">*This field is required</label>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-2">
                                                     <!-- <label class="" for="passport">Passport{!! required() !!}</label> -->
@@ -673,7 +673,7 @@
                                                     <input type="file" accept=".doc,.docx,.pdf,image/*"
                                                         style="display:none;" placeholder="Passport" name="passport"
                                                         id="passport" class="onboard-form form-control files"
-                                                        required />
+                                                        vali="required" />
                                                     <label class="error passport_label" for="passport"
                                                         style="display: none;">This field is required</label>
                                                 </div>
@@ -704,9 +704,9 @@
                                                     <input type="file" accept=".doc,.docx,.pdf,image/*"
                                                         style="display:none;" placeholder="Educations Certificate"
                                                         name="education_certificate" id="education_certificate"
-                                                        class="onboard-form form-control files" required />
-                                                    <label class="error education_certificate_label"
-                                                        for="education_certificate" style="display: none;">This field is
+                                                        class="onboard-form form-control files" vali="required" />
+                                                    <label class="text-danger education_certificate_label"
+                                                        for="education_certificate" style="display: none;font-size:15px;">*This field is
                                                         required</label>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-2">
@@ -1088,15 +1088,16 @@
 
     $('#form-1').on('submit', function(e) {
         e.preventDefault();
-        $('input[type="file"]').each(function() {
-
-            // if ($(this).attr('required') && $(this).val() == '') {
-            //     var attr = $(this).attr('id');
-            //     $('.'+attr+'_label').show();
-            // } else {
-            //     var attr = $(this).attr('id');
-            //     $('.'+attr+'_label').hide();
-            // }
+        $('.files').each(function() {
+            console.log($(this).attr('vali') == "required" && $(this).val().length == 0);
+            if ($(this).attr('vali') == "required" && $(this).val().length == 0) {
+                var attr = $(this).attr('id');
+                console.log("error");
+                $('.'+attr+'_label').show();
+            } else {
+                var attr = $(this).attr('id');
+                $('.'+attr+'_label').hide();
+            }
         });
         if ($('#form-1').is(':valid')) {
             var form_data1 = new FormData(document.getElementById("form-1"));
