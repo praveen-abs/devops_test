@@ -401,6 +401,24 @@ class HomeController extends Controller
         return view('pages-profile', compact( 'employee', 'user', 'details', 'bank', 'exp', 'code', 'rep'));
     }
 
+    // Show Impersonate Profile info
+    public function showImpersonateProfile(Request $request){
+        $user = User::where('id', $request->id)->first();
+        $details = VmtEmployee::join('vmt_employee_office_details', 'emp_id', '=', 'vmt_employee_details.id')->where('userid', $user->id)->first();
+        $details['contact_json'] = json_decode($details['contact_json'], true);
+        $details['family_info_json'] = json_decode($details['family_info_json'], true);
+        if($user->hasrole('Employee')) {
+            $employee = VmtEmployee::first();
+        } else {
+            $employee = null;
+        }
+        $bank = Bank::all(); 
+        $exp = Experience::whereIn('id', explode(',', $details->experience_json))->get(); 
+        $code = VmtEmployee::join('users', 'users.id', '=', 'userid')->join('vmt_employee_office_details', 'emp_id', '=', 'vmt_employee_details.id')->where('emp_no', '<>' , $details->emp_no)->get();
+        $rep = VmtEmployee::select('emp_no', 'name', 'avatar')->join('vmt_employee_office_details', 'emp_id', '=', 'vmt_employee_details.id')->join('users', 'users.id', '=', 'vmt_employee_details.userid')->where('emp_no', $details->l1_manager_code)->first();
+        return view('pages-profile', compact( 'employee', 'user', 'details', 'bank', 'exp', 'code', 'rep'));
+    }
+
     public function showProfilePage(Request $request) {
         $user = Auth::user();
         $details = VmtEmployee::join('vmt_employee_office_details', 'emp_id', '=', 'vmt_employee_details.id')->where('userid', $user->id)->first();

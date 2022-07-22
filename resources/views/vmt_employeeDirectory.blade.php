@@ -418,7 +418,7 @@ tr:last-child td:last-child {
                     <td><span>70%</span></td>
                     <td>
                         <div class="d-flex gap-2 align-items-center">
-                            <a href="{{route('pages-profile')}}"
+                            <a href="{{route('pages_impersonate_profile', $employee->userid)}}"
                                 class="btn border-0 outline-none bg-transparent p-0  mx-1">
                                 <i class="ri-pencil-line text-primary fw-bold"></i>
                             </a>
