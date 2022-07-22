@@ -38,13 +38,23 @@ class VmtAssetInventoryController extends Controller
 
         return "Saved";
 
-    }    
+    }   
+
+    public function deleteAsset(Request $request)
+    {
+        $t_asset = VmtAssetInventory::find($request->id);
+        $t_asset->delete();
+        if ($t_asset) {
+            return "200";
+        } else {
+            return "400";
+        }
+
+    }
 
     public function updateAsset(Request $request)
     {
-
         $t_asset = VmtAssetInventory::find($request->id);
-        
         $t_asset->asset_name = $request->asset_name;
         $t_asset->asset_type = $request->asset_type;
         $t_asset->serial_number = $request->serial_number;
@@ -53,10 +63,12 @@ class VmtAssetInventoryController extends Controller
         $t_asset->assignee = $request->assignee;
         $t_asset->assigned_date = $request->assigned_date;
         $t_asset->invoice = $request->invoice;
-
         $t_asset->save();
-
-        return "Updated";
+        if ($t_asset) {
+            return "200";
+        } else {
+            return "400";
+        }
 
     }
 }

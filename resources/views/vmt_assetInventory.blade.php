@@ -321,9 +321,11 @@ tr:last-child td:last-child {
                     @csrf
                     <div class="row">
                         <div class="col-md-6">
+                            <input type="hidden" name="row_id" id="row_id">
+                            <input type="hidden" name="id" id="id">
                             <div class="form-group mb-3">
                                 <label>Asset Name</label>
-                                <input type="text" name="asset_name" class="form-control" required>
+                                <input type="text" name="asset_name" id="asset_name" class="form-control" required>
                                 <div class="invalid-feedback">
                                     Please provide a valid text.
                                 </div>
@@ -332,7 +334,7 @@ tr:last-child td:last-child {
                         <div class="col-md-6">
                             <div class="form-group mb-3">
                                 <label>Asset Type</label>
-                                <input class="form-control" name="asset_type" type="text" required>
+                                <input class="form-control" name="asset_type" id="asset_type" type="text" required>
                                 <div class="invalid-feedback">
                                     Please provide a valid text.
                                 </div>
@@ -342,7 +344,7 @@ tr:last-child td:last-child {
                         <div class="col-md-6">
                             <div class="form-group mb-3">
                                 <label>Serial Number</label>
-                                <input class="form-control" type="text" name="serial_number" required>
+                                <input class="form-control" type="text" name="serial_number" id="serial_number" required>
                                 <div class="invalid-feedback">
                                     Please provide a valid text.
                                 </div>
@@ -352,7 +354,7 @@ tr:last-child td:last-child {
                         <div class="col-md-6">
                             <div class="form-group mb-3">
                                 <label>Warranty</label>
-                                <input class="form-control" type="text" name="warranty" required>
+                                <input class="form-control" type="text" name="warranty" id="warranty" required>
                                 <div class="invalid-feedback">
                                     Please provide a valid text.
                                 </div>
@@ -362,7 +364,7 @@ tr:last-child td:last-child {
                         <div class="col-md-6">
                             <div class="form-group mb-3">
                                 <label>Vendor</label>
-                                <input class="form-control" type="text" name="vendor" required>
+                                <input class="form-control" type="text" name="vendor" id="vendor" required>
                                 <div class="invalid-feedback">
                                     Please provide a valid text.
                                 </div>
@@ -372,7 +374,7 @@ tr:last-child td:last-child {
                         <div class="col-md-6">
                             <div class="form-group mb-3">
                                 <label>Assignee</label>
-                                <input class="form-control" type="text" name="assignee" required>
+                                <input class="form-control" type="text" name="assignee" id="assignee" required>
                                 <div class="invalid-feedback">
                                     Please provide a valid text.
                                 </div>
@@ -382,7 +384,7 @@ tr:last-child td:last-child {
                         <div class="col-md-6">
                             <div class="form-group mb-3">
                                 <label>Asset Status</label>
-                                <input class="form-control" type="text" name="asset_status" required>
+                                <input class="form-control" type="text" name="asset_status" id="asset_status" required>
                                 <div class="invalid-feedback">
                                     Please provide a valid text.
                                 </div>
@@ -392,7 +394,7 @@ tr:last-child td:last-child {
                         <div class="col-md-6">
                             <div class="form-group mb-3">
                                 <label>Assigned Date</label>
-                                <input class="form-control" type="date" name="assigned_date" required>
+                                <input class="form-control" type="date" name="assigned_date" id="assigned_date" required>
                                 <div class="invalid-feedback">
                                     Please provide a valid date.
                                 </div>
@@ -404,7 +406,7 @@ tr:last-child td:last-child {
 
                     </div>
                     <div class="submit-section">
-                        <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+                        <button type="button" id="edit_form_edit_asset" class="btn btn-primary submit-btn">Submit</button>
                     </div>
                 </form>
             </div>
@@ -421,7 +423,9 @@ tr:last-child td:last-child {
                     <h4 class="mb-3">Confirm Asset Delete</h4>
                     {{-- <p class="text-muted mb-4"> The transfer was not successfully received by us. the email of the recipient wasn't correct.</p> --}}
                     <div class="hstack gap-2 justify-content-center">
-                        <a href="javascript:void(0);" class="btn btn-danger">Yes</a>
+                        <input type="hidden" name="delete_row_id" id="delete_row_id">
+                        <input type="hidden" name="delete_id" id="delete_id">
+                        <button id="delete_modal_delete_asset" class="btn btn-danger">Yes</button>
                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">No</button>
                     </div>
                 </div>
@@ -438,6 +442,7 @@ tr:last-child td:last-child {
 <script src="{{ URL::asset('/assets/js/pages/dashboard-projects.init.js') }}"></script>
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>  
 
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -503,6 +508,11 @@ $(document).ready(function() {
     if (document.getElementById("table-assets")) {
         const grid = new gridjs.Grid({
             columns: [{
+                    id: 'id',
+                    name: 'ID',
+                    hidden:true,
+                },
+                {
                     id: 'asset_name',
                     name: 'Name',
                     formatter: function formatter(cell) {
@@ -528,6 +538,11 @@ $(document).ready(function() {
                 {
                     id: 'assignee',
                     name: 'Assignee',
+                },
+                {
+                    id: 'status',
+                    name: 'Status',
+                    hidden:true,
                 },
                 {
                     id: 'assigned_date',
@@ -557,13 +572,13 @@ $(document).ready(function() {
                     }
                 },
                 {
-                    data: (row) => row[8], //asset.id
+                    id: 'delete',
                     name: 'Delete',
                     formatter: function formatter(cell) {
 
 
                         var htmlcontent =
-                            '<a  class="trigger_asset_edit" ><span class="text-link" style=" color: blue;"><i class="icon icon-lg text-danger ri-delete-bin-line text-primary fw-bold"></i></span></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
+                            '<a  class="trigger_asset_delete" ><span class="text-link" style=" color: blue;"><i class="icon icon-lg text-danger ri-delete-bin-line text-primary fw-bold"></i></span></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
                         //var html_edit="<button style='font-size:24px' onclick='hello()'>Edit</button>";
                         //var html_delete = '<a href='+url_delete+' target="_blank"><span class="text-link" style=" color: blue;"><i class="icon icon-lg  ri-delete-bin-line text-primary fw-bold"></i></span></a>';
 
@@ -581,19 +596,21 @@ $(document).ready(function() {
                 url: '{{route('vmt-assetinventory-fetchall')}}',
                 then: data => data.map(
                     asset => [
+                        asset.id,
                         asset.asset_name,
                         asset.asset_type,
                         asset.serial_number,
                         asset.warranty,
                         asset.vendor,
                         asset.assignee,
+                        asset.asset_status,
                         asset.assigned_date,
                         asset.invoice,
                         asset.id
-
+                        asset.id
                     ]
                 )
-            }
+            },
             //  ["01", "Jonathan", "jonathan@example.com", "Senior Implementation Architect", "Hauck Inc", "Holy See"],
             //  ["02", "Harold", "harold@example.com", "Forward Creative Coordinator", "Metz Inc", "Iran"],
             //  ["03", "Shannon", "shannon@example.com", "Legacy Functionality Associate", "Zemlak Group", "South Georgia"], 
@@ -605,33 +622,99 @@ $(document).ready(function() {
         grid.on('cellClick', function(...args) {
 
             var temp = JSON.stringify(args);
-            console.dir('cell: ' + temp);
+            console.log(args);
 
             //Show modal only if Edit column item selected
-            if (args[2]["name"] == "Edit")
-                EditAssetData(args[2]["name"], args[1]["data"]);
-            else
-            if (args[2]["name"] == "Delete")
+            if (args[2]["name"] == "Edit") {
+                console.log(args);
+
+                EditAssetData(args[2]["name"], args[1]["data"], args[3]['cells']);
+            }else if (args[2]["name"] == "Delete") {
+                console.log(args);
                 DeleteAssetData(args[2]["name"], args[1]["data"]);
+            }
 
         });
 
     }
 
-    function EditAssetData(column_name, row_id) {
+    $('#edit_form_edit_asset').click(function() {
+        var form_data1 = new FormData(document.getElementById("form_edit_asset"));
+        $.ajax({
+            url: "{{url('vmt-assetinventory-edit')}}",
+            type: "POST",
+            dataType: "json",
+            data: form_data1,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                console.log(data+'success');
+                if (data == "200") {
+                    var rowId = $('#row_id').val() - 1;
+                    var row = $("table tbody tr:eq(" + rowId + ")");
+                    row.find("td:eq(0)").html('<b>'+$("#asset_name").val()+'</b>');
+                    row.find("td:eq(1)").html($("#asset_type").val());
+                    row.find("td:eq(2)").html($("#serial_number").val());
+                    row.find("td:eq(3)").html($("#warranty").val());
+                    row.find("td:eq(4)").html($("#vendor").val());
+                    row.find("td:eq(5)").html($("#assignee").val());
+                    row.find("td:eq(6)").html($("#assigned_date").val());
+                    window.location.reload();
+                }
+                $('#modal_edit_asset').modal('hide');
+            }, 
+            error: function(data) {
+                console.log(data+'error');
+            }
+        });
+    });
+
+    function EditAssetData(column_name, row_id, data) {
         // console.log(column_name+" , "+ row_id);
 
-
+        $('#id').val(data[0]['data']);
+        $('#asset_name').val(data[1]['data']);
+        $('#asset_type').val(data[2]['data']);
+        $('#serial_number').val(data[3]['data']);
+        $('#warranty').val(data[4]['data']);
+        $('#vendor').val(data[5]['data']);
+        $('#assignee').val(data[6]['data']);
+        $('#asset_status').val(data[7]['data']);
+        $('#assigned_date').val(moment(data[8]['data']).format('YYYY-MM-DD'));
+        $('#row_id').val(row_id);
         $('#modal_edit_asset').modal('show');
 
     }
 
+    $('#delete_modal_delete_asset').click(function() {
+        $.ajax({
+            url: "{{url('vmt-assetinventory-delete')}}",
+            type: "POST",
+            dataType: "json",
+            data: {
+                'id': $('#delete_id').val(),
+                "_token": "{{ csrf_token() }}",
+            },
+            success: function(data) {
+                if (data == "200") {
+                    var rowId = $('#delete_row_id').val() - 1;
+                    console.log(rowId);
+                    var row = $("table tbody tr:eq(" + rowId + ")").remove();
+                    window.location.reload();
+                }
+                $('#modal_delete_asset').modal('hide');
+            }, 
+            error: function(data) {
+            }
+        }); 
+    });
+
     function DeleteAssetData(column_name, row_id) {
         //console.log(column_name+" , "+ row_id);
-
-
+        console.log(row_id);
+        $('#delete_row_id').val(row_id);
+        $('#delete_id').val(row_id);
         $('#modal_delete_asset').modal('show');
-
     }
 });
 </script>
