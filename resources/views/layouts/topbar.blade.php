@@ -26,10 +26,10 @@
 
                     <a href="index" class="logo logo-light">
                         <span class="logo-sm">
-                        <img src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="">
+                            <img src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="">
                         </span>
                         <span class="logo-lg">
-                        <img src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="">
+                            <img src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="">
                         </span>
                     </a>
                 </div>
@@ -43,9 +43,7 @@
 
 
                     <div class="d-flex w-50">
-
-                    <button type="button"
-                            class="btn btn-sm  fs-16 header-item vertical-menu-btn topnav-hamburger"
+                        <button type="button" class="btn btn-sm  fs-16  vertical-menu-btn topnav-hamburger"
                             id="topnav-hamburger-icon">
                             <span class="hamburger-icon open">
                                 <span></span>
@@ -53,12 +51,12 @@
                                 <span></span>
                             </span>
                         </button>
-                        <div class="topbar-logo w-25 d-flex justify-content-start align-items-center">
-                            <img src="{{ URL::asset($logoSrc) }}" alt="" class="w-50 h-80"> 
-
+                        <div class="topbar-logo">
+                            <!-- <img src="{{ URL::asset($logoSrc) }}" alt="" class="w-50 h-80"> -->
+                            <img src="{{ URL::asset('assets/images/vasa.jpg') }}" alt="" height="22">
                         </div>
-                        
-                        <div class="search-content header-item w-50 mx-5">
+
+                        <div class="header-search-bar search-content d-flex justify-content-between align-items-center w-50 mx-5">
 
                             <i class=" ri-search-line "></i>
                             <input type="text" class="search-bar border-0 w-100 py-1 rounded-pill outline-none"
@@ -67,7 +65,7 @@
                     </div>
 
 
-                    <div class="notify-content d-flex align-items-center">
+                    <div class="notify-content d-flex justify-content-center align-items-center">
                         @hasrole("Employee")
 
                         @else
@@ -80,7 +78,7 @@
                         </button> -->
                         @endhasrole
 
-                        <div class="dropdown topbar-head-dropdown ms-1 header-item">
+                        <div class="dropdown topbar-head-dropdown ms-1 ">
                             <button type="button" class="btn btn-icon btn-topbar rounded-circle"
                                 id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
@@ -90,10 +88,9 @@
                                         d="M13.4,25.411a2.357,2.357,0,0,0,2.35-2.35h-4.7A2.357,2.357,0,0,0,13.4,25.411Zm7.049-7.049V12.487c0-3.607-1.915-6.626-5.287-7.425v-.8a1.762,1.762,0,0,0-3.525,0v.8c-3.36.8-5.287,3.807-5.287,7.425v5.875L4,20.711v1.175H22.8V20.711ZM18.1,19.536H8.7V12.487C8.7,9.573,10.474,7.2,13.4,7.2s4.7,2.373,4.7,5.287Z"
                                         transform="translate(-4 -2.5)" fill="#361338" opacity="0.4" />
                                 </svg>
-
-                                <span
-                                    class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger">2<span
-                                        class="visually-hidden">unread messages</span></span>
+                                <!-- 
+                                <span class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger"><span
+                                        class="visually-hidden">unread messages</span></span> -->
                             </button>
                             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
                                 aria-labelledby="page-header-notifications-dropdown">
@@ -114,7 +111,7 @@
 
                                             <li class="nav-item waves-effect waves-light">
                                                 <a class="nav-link" data-bs-toggle="tab" href="#messages-tab" role="tab"
-                                                    aria-selected="false">
+                                                    aria-select ed="false">
                                                     Messages
                                                 </a>
                                             </li>
@@ -133,40 +130,41 @@
                                                         </span>
                                                     </div> --}}
                                                     <div class="flex-1">
-                                                        @php 
+                                                        @php
                                                         $currentUser = Auth::user();
-                                                    foreach ($currentUser->notifications as $notification) {
-                                                    // echo $notification->data['message'];
+                                                        foreach ($currentUser->notifications as $notification) {
+                                                        // echo $notification->data['message'];
 
                                                         @endphp
-                                                  <a href="#!" class="stretched-link">
-                                <h6 class="mt-0 mb-2 lh-base">@php echo $notification->data['message']; @endphp </h6>
+                                                        <a href="#!" class="stretched-link">
+                                                            <h6 class="mt-0 mb-2 lh-base">@php echo
+                                                                $notification->data['message']; @endphp </h6>
                                                         </a>
-  
-                                                @php
-                                                
-                                                     }
-                                                     @endphp
-                                           
-                                                       
+
+                                                        @php
+
+                                                        }
+                                                        @endphp
+
+
 
                                                     </div>
-                                                   
+
                                                 </div>
                                             </div>
-                                           
+
                                             <div
                                                 class="text-reset notification-item d-block dropdown-item position-relative">
                                                 <div class="d-flex">
                                                     <div class="avatar-xs me-3">
-                                                       
-                                                       
+
+
                                                     </div>
-                                               
-                                                   
+
+
                                                 </div>
                                             </div>
-                                           
+
                                         </div>
                                     </div>
                                     <div class="tab-pane fade py-2 ps-2" id="messages-tab" role="tabpanel"
@@ -283,7 +281,7 @@
                         </div>
 
 
-                        <a href="" class="p-0 settings-icon mx-3 header-item ">
+                        <a href="" class="ml-2  settings-icon   ">
                             <svg xmlns="http://www.w3.org/2000/svg" width="23.494" height="23.353"
                                 viewBox="0 0 23.494 23.353">
                                 <g id="megaphone" transform="translate(0 -1.529)">
@@ -302,18 +300,22 @@
                             </i>
                         </a>
 
-                        <div class="dropdown header-item topbar-user mx-1">
-                            <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown"
+                        <div class="dropdown topbar-user ">
+                            <button type="button" class="btn ml-1 py-0" id="page-header-user-dropdown" data-bs-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
-                                <span class="d-flex align-items-center">
-                                    <img class="rounded-circle header-profile-user"
+                                <div class="d-flex align-items-center">
+                                    <!-- <img class="rounded-circle header-profile-user"
                                         src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"
+                                        alt="Header Avatar"> -->
+
+                                    <img class="rounded-circle mx-1 header-profile-user" 
+                                        src="{{ URL::asset('assets/images/users/avatar-8.jpg') }}"
                                         alt="Header Avatar">
                                     <span class="text-start ms-xl-2">
                                         <span class="fw-bold">{{Auth::user()->name}}</span>
                                         <span class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text"></span>
                                     </span>
-                                </span>
+                                </div>
                             </button>
                             <div class="dropdown-menu dropdown-menu-end">
                                 <!-- item-->
@@ -325,7 +327,7 @@
                                 @hasrole("Employee")
 
                                 @else
-                                
+
                                 <a class="dropdown-item" href="{{route('vmt_topbar_settings')}}"><i
                                         class="mdi mdi-cog-outline text-muted fs-16 align-middle me-1"></i> <span
                                         class="align-middle">Settings</span></a>
