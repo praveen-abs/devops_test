@@ -395,7 +395,7 @@ tr:last-child td:last-child {
                         <div class="d-flex gap-2 align-items-center">
                             <div class="flex-shrink-0">
                                 @if($employee->avatar)
-                                <img src="{{ URL::asset('assets/images/') }}/{{$employee->avatar}}" alt=""
+                                <img src="{{ URL::asset('assets/images/'.$employee->avatar) }}" alt=""
                                     class="avatar-xs rounded-circle" />
                                 @else
                                 <img src="{{ URL::asset('assets/images/vmt_user_icon.jpeg') }}" alt=""
