@@ -32,7 +32,7 @@
 
 <!-- calendar -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" /> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 <!-- prem content end -->
 
@@ -259,7 +259,9 @@
                     style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);border-radius:3px 3px 20px 20px;">
                     <!-- <div class="p-1 bg-primary" ></div> -->
                     <div class="card-body p-2">
-                        <div id='full_calendar_events'></div>
+                        <!-- <div id='full_calendar_events'></div> -->
+                        <!-- <div id="calendar"></div> -->
+                        <div class="calendar-wrapper" id="calendar-wrapper"></div>
                     </div>
                 </div>
                 <!-- <div class="mb-0">
@@ -321,16 +323,18 @@
 <!-- <script src="{{ URL::asset('/assets/premassets/js/calendar/bootstrap_calendar.js') }}"></script>
     <script src="{{ URL::asset('/assets/premassets/js/calendar/demo.js') }}"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script> -->
 <!--Nice select-->
 <script src="{{ URL::asset('/assets/premassets/js/jquery.nice-select.min.js') }}"></script>
 
 <!--Custom Js Script-->
 <script src="{{ URL::asset('/assets/premassets/js/custom.js') }}"></script>
-<script src="{{ URL::asset('/assets/premassets/js/dashboard.js') }}"></script>
+<script src="{{ URL::asset('/assets/premassets/js/hr_dashboard.js') }}"></script>
 <script src="{{ URL::asset('/assets/premassets/js/holiday.js') }}"></script>
-
+<script src="{{ URL::asset('/assets/premassets/js/calendar.min.js') }}"></script>
+<script src="{{ URL::asset('/assets/premassets/js/calendar.js') }}"></script>
 
 <!-- Prem assets ends -->
 
@@ -343,6 +347,55 @@
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 @yield('welcome-script')
 <!-- for date and time -->
+
+<script
+      src="https://unpkg.com/codeflask/build/codeflask.min.js"></script>
+    <script type="text/javascript">
+      var config = `
+function selectDate(date) {
+  $('#calendar-wrapper').updateCalendarOptions({
+    date: date
+  });
+  console.log(calendar.getSelectedDate());
+}
+
+var defaultConfig = {
+  weekDayLength: 1,
+  date: '08/05/2021',
+  onClickDate: selectDate,
+  showYearDropdown: true,
+  startOnMonday: false,
+};
+
+var calendar = $('#calendar-wrapper').calendar(defaultConfig);
+console.log(calendar.getSelectedDate());
+`;
+      eval(config);
+      const flask = new CodeFlask('#editor', { 
+        language: 'js', 
+        lineNumbers: true 
+      });
+      flask.updateCode(config);
+      flask.onUpdate((code) => {
+        try {
+          eval(code);
+        } catch(e) {}
+      });
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script defer>
+      fetch('https://raw.githubusercontent.com/wrick17/calendar-plugin/master/README.md')
+        .then(response => response.text())
+        .then(function(text) {
+          const docs = text.split('**DOCS**')[1];
+          document.getElementById('content').innerHTML = `
+          <div>
+            <h2>DOCS</h2>
+            ${marked.parse(docs)}
+          <div>
+          `;
+        });
+    </script>
 <script>
 $(document).ready(function() {
     $(function() {
