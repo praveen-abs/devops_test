@@ -51,7 +51,7 @@
 
 @section('content')
 
-<div class="main">
+<div class="hr-dashboar-wrpper">
     <!-- Content Row -->
     <div class="row">
         <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4">
@@ -139,16 +139,16 @@
                         <!-- <div class="p-1 bg-primary" > -->
                         <div class="card-body d-flex justify-content-center align-items-center">
                             <div class="text-center">
-                                <h5 class="fw-bold title">Hyrid</h5>
+                                <h5 class="fw-bold title">Hybrid</h5>
                                 <h6 class="number-increment fw-bold">10</h6>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-12 ipad-query">
-                    <div class="card profile-box flex-fill">
+                    <div class="card profile-box flex-fill card-top-border">
                         <!-- <div class="p-1 bg-primary" ></div> -->
-                        <div class="card-body p-0">
+                        <div class="card-body ">
                             <div class="profile-wrapper d-flex p-0">
                                 <div class="popover-body p-0 w-100">
                                     <div class="min-h-250">
@@ -254,11 +254,11 @@
             </div>
         </div>
         <div class="col-sm-3 col-md-3">
-            <div class="bg-white" style="">
-                <div class="card profile-box flex-fill m-0 mb-2"
+            <div class="" >
+                <div class="card profile-box flex-fill m-0 mb-2 card-top-border"
                     style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);border-radius:3px 3px 20px 20px;">
                     <!-- <div class="p-1 bg-primary" ></div> -->
-                    <div class="card-body p-2">
+                    <div class="card-body">
                         <!-- <div id='full_calendar_events'></div> -->
                         <!-- <div id="calendar"></div> -->
                         <div class="calendar-wrapper" id="calendar-wrapper"></div>

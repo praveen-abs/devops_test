@@ -1,3 +1,8 @@
+.hr-dashboar-wrpper{
+  position: relative;
+  top: -20px;
+}
+
 
 .f-10{
     font-size: 10px;
@@ -64,13 +69,13 @@
 }
 
 .greet-wrap p{
-    font-size: 15px;
-    font-weight: 500;
+    font-size: 10pt;
+    font-weight: 600;
 }
 
 .greet-wrap p b {
-    font-size: 18px;
-    color: #e54e0d;
+  font-size: 13pt;
+    color: #e54e0d !important;
 }
 
 .wishes-card-wrapper .program-day {
@@ -560,10 +565,29 @@ input + .slider-checkbox>.slider-checkbox-text:after {
   
   .prev-button,
   .next-button {
-    background: transparent;
-    border: none;
-    padding: 10px;
+    height: 20px;
+    width: 20px;
+    position: relative;
+    border-radius: 50%;
+    left: 10px;
+    background: #ff0;
   }
+
+  .prev-button h3,
+  .next-button h3{
+    font-size: 15px;
+    position: absolute;
+    top: 0px;
+    left: 5px;
+    text-align: center;
+  }
+
+  .prev-button:hover,
+  .next-button:hover {
+
+  }
+
+
   
   .week {
     /* margin: 10px 0; */

@@ -1,3 +1,8 @@
+@section('css')
+<link href="{{ URL::asset('assets/css/topbar.css') }}" rel="stylesheet">
+@endsection
+
+
 <?php
     $logoObj = \DB::table('vmt_general_info')->first();
 
@@ -39,9 +44,6 @@
 
 
                 <div class="d-flex justify-content-between align-items-center w-100">
-
-
-
                     <div class="d-flex w-50">
                         <button type="button" class="btn btn-sm  fs-16  vertical-menu-btn topnav-hamburger"
                             id="topnav-hamburger-icon">
@@ -51,12 +53,12 @@
                                 <span></span>
                             </span>
                         </button>
-                        <div class="topbar-logo">
-                            <!-- <img src="{{ URL::asset($logoSrc) }}" alt="" class="w-50 h-80"> -->
-                            <img src="{{ URL::asset('assets/images/vasa.jpg') }}" alt="" height="22">
+                        <div class="topbar-logo mx-2" style="width:100px">
+                            <!-- <img src="{{ URL::asset($logoSrc) }}" alt="" class="w-100 h-100"> -->
+                            <img src="{{ URL::asset('assets/images/vasa.jpg') }}" alt="" class="w-100 h-100">
                         </div>
 
-                        <div class="header-search-bar search-content d-flex justify-content-between align-items-center w-50 mx-5">
+                        <div class="topbar-search-bar search-content d-flex  align-items-center w-50 " style="left:60px">
 
                             <i class=" ri-search-line "></i>
                             <input type="text" class="search-bar border-0 w-100 py-1 rounded-pill outline-none"
@@ -305,12 +307,12 @@
                                 aria-haspopup="true" aria-expanded="false">
                                 <div class="d-flex align-items-center">
                                     <img class="rounded-circle header-profile-user"
-                                        src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"
+                                        src="@if (Auth::user()->avatar != ''){{ URL::asset('images/'. Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"
                                         alt="Header Avatar">
 
-                                    {{-- <img class="rounded-circle mx-1 header-profile-user" 
+                                    <!-- <img class="rounded-circle mx-1 header-profile-user" 
                                         src="{{ URL::asset('assets/images/users/avatar-8.jpg') }}"
-                                        alt="Header Avatar"> --}}
+                                        alt="Header Avatar"> -->
                                     <span class="text-start ms-xl-2">
                                         <span class="fw-bold">{{Auth::user()->name}}</span>
                                         <span class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text"></span>
