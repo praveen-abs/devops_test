@@ -336,7 +336,7 @@
                         </i>
 
 
-                        <span>Pay Roll</span>
+                        <span>Payroll</span>
                     </a>
                     <div class="collapse menu-dropdown" id="payRollDrop-Down">
                         <ul class="nav nav-sm flex-column">
