@@ -16,6 +16,7 @@ use App\Models\PollVoting;
 use Session as Ses;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Carbon\Carbon;
 
 class VmtMainDashboardController extends Controller
 {
@@ -39,6 +40,20 @@ class VmtMainDashboardController extends Controller
                     ->where('users.id', auth()->user()->id)
                     ->first();  
         $checked = VmtEmployeeAttendance::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->first();
+        $effective_hours="";
+
+        //If user already checkout, then send time difference to blade
+        if($checked->checkout_time)
+        {
+            $to = Carbon::createFromFormat('Y-m-d H:i:s', $checked->checkout_time);
+
+            $from = Carbon::createFromFormat('Y-m-d H:i:s', $checked->checkin_time);
+    
+            $effective_hours = gmdate('H:i:s', $to->diffInSeconds($from));
+    
+           // dd($effective_hours);
+        }
+
         $holidays = vmtHolidays::orderBy('holiday_date', 'ASC')->get();
         $polling = Polling::first();
         if ($polling) {
@@ -48,17 +63,17 @@ class VmtMainDashboardController extends Controller
             }
         }
         if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin')) {
-            return view('vmt_hr_dashboard', compact( 'currentUserJobDetails', 'checked', 'holidays', 'polling'));
+            return view('vmt_hr_dashboard', compact( 'currentUserJobDetails', 'checked','effective_hours', 'holidays', 'polling'));
         }        
         else 
         if(auth()->user()->hasrole('Manager'))
         {
-            return view('vmt_manager_dashboard', compact( 'currentUserJobDetails', 'checked', 'holidays', 'polling'));
+            return view('vmt_manager_dashboard', compact( 'currentUserJobDetails', 'checked','effective_hours', 'holidays', 'polling'));
         }
         else 
         if(auth()->user()->hasrole('Employee')) 
         {
-            return view('vmt_employee_dashboard', compact( 'currentUserJobDetails', 'checked', 'holidays', 'polling'));
+            return view('vmt_employee_dashboard', compact( 'currentUserJobDetails', 'checked','effective_hours', 'holidays', 'polling'));
         } 
 
     }

@@ -17,7 +17,9 @@ use App\Models\Experience;
 use App\Models\VmtEmployeeAttendance;
 use App\Models\PollVoting;
 use App\Mail\TestEmail;
+use \Datetime;
 use Session as Ses;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -353,17 +355,16 @@ class HomeController extends Controller
         return "General Info Saved";
     }
 
-    public function updtaeCheckin(Request $request) {
+    public function updateCheckin(Request $request) {
         $checked = $request->input('checkin');
         if ($checked == 'true') {
             $attendance = new VmtEmployeeAttendance;
             $attendance->user_id = auth()->user()->id;
             $attendance->date = date('Y-m-d');
-            $attendance->checkin_time = date('Y-m-d H:i:s');
+            $currentTime = new DateTime("now", new \DateTimeZone('Asia/Kolkata') );
+            $attendance->checkin_time = $currentTime;
             $attendance->save();
-            //Ses::flash('message', 'You have successfully checkedin!');
-            //Ses::flash('alert-class', 'alert-success');
-            //return 'You have successfully checkedin!';
+
             return response()->json([
                 'message' => 'You have successfully checkedin!',
                 'time' => $attendance->checkin_time,
@@ -372,13 +373,24 @@ class HomeController extends Controller
             $attendance = VmtEmployeeAttendance::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->first();
             $attendance->user_id = auth()->user()->id;
             $attendance->date = date('Y-m-d');
-            $attendance->checkout_time = date('Y-m-d H:i:s');
+            $currentTime = new DateTime("now", new \DateTimeZone('Asia/Kolkata') );
+            $attendance->checkout_time = $currentTime;            
             $attendance->save();
-            //Ses::flash('message', 'You have successfully checkedout!');
-            //Ses::flash('alert-class', 'alert-success');
+
+            $checked = VmtEmployeeAttendance::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->first();
+
+            $to = Carbon::createFromFormat('Y-m-d H:i:s', $checked->checkout_time);
+
+            $from = Carbon::createFromFormat('Y-m-d H:i:s', $checked->checkin_time);
+    
+            $effective_hours = gmdate('H:i:s', $to->diffInSeconds($from));
+        
+               // dd($effective_hours);
+    
             return response()->json([
                 'message' => 'You have successfully checked out!',
                 'time' => $attendance->checkout_time,
+                'effective_hours' => $effective_hours,
             ]);
         }
     }
