@@ -426,12 +426,11 @@
                                             <div class="row mt-1">
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="father_name">Father Name{!! required() !!}</label> -->
-                                                    <input type="text" placeholder="Father Name" name="father_name"
-                                                        class="onboard-form form-control" required />
+                                                    <input type="text" placeholder="Father Name" name="father_name" pattern="name" class="onboard-form form-control" required />
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="mother_name">Mother Name{!! required() !!}</label> -->
-                                                    <input type="text" placeholder="Mother Name" name="mother_name"
+                                                    <input type="text" placeholder="Mother Name" name="mother_name" pattern="name"
                                                         class="onboard-form form-control" required />
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
@@ -442,7 +441,7 @@
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="spouse_name">Spouse Name<span id="spouse_name_req">{!! required() !!}</span></label> -->
-                                                    <input type="text" placeholder="Spouse Name" name="spouse_name"
+                                                    <input type="text" placeholder="Spouse Name" name="spouse_name" pattern="name"
                                                         class="onboard-form form-control spouse_data" required />
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
@@ -813,14 +812,11 @@
     <!-- <script src="{{ URL::asset('/assets/premassets/js/onboarding.js') }}"></script> -->
 
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
-
-
-
-
-
+    
 
     <script>
     $(document).ready(function() {
+
         $('#process').select2({
             width: '100%',
             placeholder: "Select Process",
