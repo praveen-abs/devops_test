@@ -200,7 +200,8 @@ Route::get('/download_file/{id}',  [App\Http\Controllers\VmtApraisalController::
 Route::post('/state',  [App\Http\Controllers\VmtEmployeeController::class, 'getState'])->name('state');
 Route::get('/vmt_salary_details',  [App\Http\Controllers\VmtPaySlipController::class, 'paySlipIndex']);
 Route::get('/vmt_employee_payslip',  [App\Http\Controllers\VmtPaySlipController::class, 'payslipPdfView'])->name('vmt_employee_payslip');
-
+Route::get('/pdfview/{selectedPaySlipMonth}',[App\Http\Controllers\VmtPaySlipController::class, 'pdfview'])->name('pdfview');
+  
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index']);
 
 //Onboarding pages
