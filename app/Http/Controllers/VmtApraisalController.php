@@ -269,12 +269,15 @@ class VmtApraisalController extends Controller
                 $empPmsGoal->save();
                 }
                  $notification_user = User::where('id',auth::user()->id)->first();
-                $message = "User Notification from ";
+                    //dd($user_emp_name);exit();
                 if (auth()->user()->hasrole('Employee')) {
                      \Mail::to($mailingRevList)->send(new VmtAssignGoals("none",$user_emp_name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$user_manager_name,$command_emp));
 
+                 $message = "Employee has created Personal Assessment goal ";
                 Notification::send($notification_user ,new ViewNotification($message.auth()->user()->name));
             } else {
+                
+                $message = "KRA's/goals in conformation with your reporting manage ";
                $finalMailList = $mailingEmpList->merge($mailingRevList);
                  Notification::send($notification_user ,new ViewNotification($message.auth()->user()->name));
               foreach ($finalMailList as $recipient) {
@@ -419,6 +422,7 @@ class VmtApraisalController extends Controller
      // dd($request->all());exit();
         $user_emp_name= User::where('id',auth::user()->id)->pluck('name')->first();
         $user_manager_name = User::where('id',$request->user_id)->pluck('name')->first();
+            $command_emp = $request->command;
         if(auth::user()->hasRole('Employee') ){
 
            $vmtEmployeeGoal =   VmtEmployeePMSGoals::where('kpi_table_id', $request->goal_id)->where('employee_id', $request->user_id)->first(); 
@@ -426,22 +430,26 @@ class VmtApraisalController extends Controller
            $vmtEmployeeGoal->is_employee_accepted = $request->approve_flag == 'approved' ? 1 : 0;
            $vmtEmployeeGoal->save();
            $returnMsg="--";
-            $command_emp = $request->command;
+            //print_r("ooooo".$command_emp);
            // is_manager_approved
            //dd($request->approve_flag);
 
            $mailingList = VmtEmployeeOfficeDetails::where('user_id', $vmtEmployeeGoal->reviewer_id)->pluck('officical_mail');
-
+            $notification_user = User::where('id',auth::user()->id)->first();
            if($request->approve_flag == "approved")
            {
                 \Mail::to($mailingList)->send(new VmtAssignGoals( "approved",$user_emp_name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$user_manager_name,$command_emp));
                 $returnMsg = 'KPI has been accepted. Mail notification sent';
+                 $message = "KPI has been accepted.  ";
+                Notification::send($notification_user ,new ViewNotification($message.auth()->user()->name));
            }
            else
            if($request->approve_flag == "rejected")
            {
                 \Mail::to($mailingList)->send(new VmtAssignGoals( "rejected",$user_emp_name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$user_manager_name,$command_emp));
                 $returnMsg = 'KPI has been rejected. Mail notification sent';
+                 $message = "KPI has been rejected.  ";
+                Notification::send($notification_user ,new ViewNotification($message.auth()->user()->name));
 
            }
 
@@ -457,17 +465,21 @@ class VmtApraisalController extends Controller
 
             $mailingList = VmtEmployeeOfficeDetails::where('user_id', $vmtEmployeeGoal->employee_id)->pluck('officical_mail');
 
-
+             $notification_user = User::where('id',auth::user()->id)->first();
            if($request->approve_flag == "approved")
            {
                 \Mail::to($mailingList)->send(new VmtAssignGoals("approved",$user_emp_name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$user_manager_name,$command_emp));
                 $returnMsg = 'KPI has been approved. Mail notification sent';
+                 $message = "KPI has been approved.  ";
+                Notification::send($notification_user ,new ViewNotification($message.auth()->user()->name));
            }
            else
            if($request->approve_flag == "rejected")
            {
                 \Mail::to($mailingList)->send(new VmtAssignGoals("rejected",$user_emp_name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$user_manager_name,$command_emp));
                 $returnMsg = 'KPI has been rejected. Mail notification sent';
+                 $message = "KPI has been rejected.  ";
+                Notification::send($notification_user ,new ViewNotification($message.auth()->user()->name));
            }
 
 
@@ -598,13 +610,15 @@ class VmtApraisalController extends Controller
             $kpiData->self_kpi_comments    = $request->selfcomments;//null
             $kpiData->is_employee_submitted = 1;//true
             $kpiData->save();
-
+            $notification_user = User::where('id',auth::user()->id)->first();
             $reviewManager = User::find($kpiData->reviewer_id);
             //dd($reviewManager->email);
             $managerOfficeDetails =  VmtEmployeeOfficeDetails::where('user_id', $kpiData->reviewer_id)->first();
             $currentUser_empDetails = VmtEmployeeOfficeDetails::where('user_id', auth::user()->id)->first();
 
             \Mail::to($managerOfficeDetails->officical_mail)->send(new NotifyPMSManager(auth::user()->name, $currentUser_empDetails->designation, $reviewManager->name ));
+             $message = "Employee has submitted KPI Assessment.  ";
+                Notification::send($notification_user ,new ViewNotification($message.auth()->user()->name));
         }
         return "Published Review successfully.Sent mail to manager ".$managerOfficeDetails->officical_mail;
     }
@@ -922,9 +936,11 @@ class VmtApraisalController extends Controller
             $hrUsers = $hrList->pluck('id'); 
             $officialMailList =   VmtEmployeeOfficeDetails::whereIn('user_id', $hrUsers)->pluck('officical_mail');
 
-
+            $notification_user = User::where('id',auth::user()->id)->first();
             //dd($officialMailList);
             \Mail::to($officialMailList)->send(new NotifyPMSManager(auth::user()->name,  $currentUser_empDetails->designation,$hrReview->name));
+             $message = "Employee has submitted KPI Assessment.  ";
+                Notification::send($notification_user ,new ViewNotification($message.auth()->user()->name));
         }
         return "Published Review successfully. Sent mail to HR ".$officialMailList;
     }
@@ -941,7 +957,7 @@ class VmtApraisalController extends Controller
             $kpiData->is_hr_submitted = 1;//true
 
             $kpiData->save();
-
+            $notification_user = User::where('id',auth::user()->id)->first();
             //$managerData   = User::find($kpiData->reviewer_id);
             //$employeeData = VmtEmployee::where('id', $kpiData->employee_id)->first();
             $mailingList = VmtEmployeeOfficeDetails::whereIn('user_id', [$kpiData->employee_id, $kpiData->reviewer_id] )->pluck('officical_mail');
@@ -949,6 +965,8 @@ class VmtApraisalController extends Controller
             //$reviewManager = User::find($kpiData->reviewer_id);
             //dd($reviewManager->email);
             \Mail::to($mailingList)->send(new PMSReviewCompleted($user_emp_name));
+             $message = "The HR team has successfully completed your PMS review process.  ";
+                Notification::send($notification_user ,new ViewNotification($message.auth()->user()->name));
         }
         return "Saved.Sent mail to manager and employee ". implode(',', $mailingList->toArray()); // $managerOfficeDetails->officical_mail;
     }

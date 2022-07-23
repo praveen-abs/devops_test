@@ -75,14 +75,14 @@ class VmtPaySlipController extends Controller
     }
      public function pdfview(Request $request)
     {
-
+        $month = $request->selectedPaySlipMonth;
            $data['employee'] = VmtEmployeePaySlip::where([
                         ['user_id','=', auth()->user()->id],
                         ['PAYROLL_MONTH','=', $request->selectedPaySlipMonth],
                         ])->first();
             view()->share('employee',$data);
       
-      return  PDF::loadView('vmt_payslipTemplate', $data)->download('Payslip.pdf');
+      return  PDF::loadView('vmt_payslipTemplate', $data)->download($month.'Payslip.pdf');
        
     }
     //vmt_payslipTemplate.blade.php

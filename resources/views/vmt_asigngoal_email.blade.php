@@ -8,7 +8,9 @@
 <body>
 	@if(auth()->user()->hasrole('Employee')){{-- Here Employee sends mail to manager --}}
 		@if($approvalStatus == "none")
-			<p>Your Employee has created Personal Assessment goal. Please review at <a href="{{$linkUri}}" target="_blank">Link</a> to approve it.</p>
+			{{-- <p>Your Employee has created Personal Assessment goal. Please review at <a href="{{$linkUri}}" target="_blank">Link</a> to approve it.</p> --}}
+						<p>Your Employee has created Personal Assessment goal. Please review at to approve it.</p>
+
 		@elseif ($approvalStatus == "approved")
 			{{-- <p>Personal Assessment goal has been accepted by your employee</p> --}}
 			<p>Dear @php echo $user_manager_name; @endphp,																									

@@ -88,9 +88,9 @@
                                         d="M13.4,25.411a2.357,2.357,0,0,0,2.35-2.35h-4.7A2.357,2.357,0,0,0,13.4,25.411Zm7.049-7.049V12.487c0-3.607-1.915-6.626-5.287-7.425v-.8a1.762,1.762,0,0,0-3.525,0v.8c-3.36.8-5.287,3.807-5.287,7.425v5.875L4,20.711v1.175H22.8V20.711ZM18.1,19.536H8.7V12.487C8.7,9.573,10.474,7.2,13.4,7.2s4.7,2.373,4.7,5.287Z"
                                         transform="translate(-4 -2.5)" fill="#361338" opacity="0.4" />
                                 </svg>
-                                <!-- 
-                                <span class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger"><span
-                                        class="visually-hidden">unread messages</span></span> -->
+                                <span class="badge badge-light fs-10 translate-middle badge rounded-pill bg-danger">{{$User = Auth::user()->notifications->count();}}</span>
+                                {{-- <span class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger"><span
+                                        class="visually-hidden"></span> --}}
                             </button>
                             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
                                 aria-labelledby="page-header-notifications-dropdown">
@@ -100,9 +100,9 @@
                                             <div class="col">
                                                 <h6 class="m-0 fs-16 fw-semibold text-white"> Notifications </h6>
                                             </div>
-                                            <!-- <div class="col-auto dropdown-tabs">
-                                                <span class="badge badge-soft-light fs-13"> 2 New</span>
-                                            </div> -->
+                                            <div class="col-auto dropdown-tabs">
+                                                <span class="badge badge-soft-light fs-13"> {{$User = Auth::user()->notifications->count();}}</span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="px-2 pt-2">
@@ -132,13 +132,13 @@
                                                     <div class="flex-1">
                                                         @php
                                                         $currentUser = Auth::user();
-                                                        foreach ($currentUser->notifications as $notification) {
-                                                        // echo $notification->data['message'];
+                                                        $User = Auth::user()->notifications->count();
 
+                                                        foreach ($currentUser->notifications as $notification) {
                                                         @endphp
-                                                        <a href="#!" class="stretched-link">
-                                                            <h6 class="mt-0 mb-2 lh-base">@php echo
-                                                                $notification->data['message']; @endphp </h6>
+                                                        <a  class="stretched-link rIcon"><i class="fa fa-dot-circle-o mt-0 mb-2 lh-base"><h7>&nbsp;
+                                                          @php echo
+                                                                $notification->data['message']; @endphp</h7></i>
                                                         </a>
 
                                                         @php
