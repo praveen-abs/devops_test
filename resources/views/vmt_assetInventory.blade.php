@@ -7,14 +7,17 @@
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/fontawesome.css') }}">
 <link rel="stylesheet" href="{{ URL::asset('assets/libs/gridjs/gridjs.min.css') }}">
 
+<link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
+
+
 <style>
+    .project-wrapper{
+position: relative;
+top:-20px;
+    }
 table {
-    /* border-collapse: separate; */
-    /* border-radius: 10px !important; */
-    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px !important;
-
+   box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px !important;
 }
-
 table th {
     color: #5265a7;
     background-color: #ccd6f7;
@@ -151,10 +154,9 @@ tr:last-child td:last-child {
 @endcomponent
 
 
-<div class=" project-wrapper">
-
+<div class=" project-wrapper bg-white p-3">
     <div class="directory-content  mb-3 mt-2">
-        <h5 class="text-muted fw-bold mb-2">Asset Inventory</h5>
+        <h5 class="text-muted fw-bold mb-4">Asset Inventory</h5>
         <div class="row">
             <div class="col-8">
                 <div class="float-left directory-left d-flex">
@@ -179,7 +181,7 @@ tr:last-child td:last-child {
                         <i class="ri-menu-add-line fw-bold"></i>
                     </div> --}}
                     <a href="#" data-bs-toggle="modal" data-bs-target="#modal_add_asset"
-                        class="btn border-0 outline-none py-1 onboard-employee-btn h-25 fw-bold bg-danger text-white">
+                        class="btn btn-orange  py-1 onboard-employee-btn h-25 fw-bold bg-danger ">
                         <i class="ri-add-line fw-bold mx-1"></i>
                         Add New Asset
                     </a>
@@ -201,11 +203,11 @@ tr:last-child td:last-child {
 
 
 <div id="modal_add_asset" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content profile-box">
+    <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
+        <div class="modal-content profile-box  card-top-border">
             <div class="modal-header py-3 new-role-header d-flex align-items-center">
-                <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Add New Asset
-                </h4>
+                <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Add New Asset
+                </h5>
                 <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>

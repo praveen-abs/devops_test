@@ -173,7 +173,7 @@
                                                             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
                                                         </textarea>
                                                     </div>
-                                                    <button class="btn btn-danger py-1 px-4  float-right">
+                                                    <button class="btn btn-danger btn-orange py-1 px-4  float-right">
                                                         Submit
                                                     </button>
                                                 </div>
@@ -255,10 +255,10 @@
         </div>
         <div class="col-sm-3 col-md-3">
             <div class="" >
-                <div class="card profile-box flex-fill m-0 mb-2 card-top-border"
+                <div class="card profile-box flex-fill m-0 mb-2 "
                     style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);border-radius:3px 3px 20px 20px;">
                     <!-- <div class="p-1 bg-primary" ></div> -->
-                    <div class="card-body">
+                    <div class="card-body p-0" style="padding:0px !important">
                         <!-- <div id='full_calendar_events'></div> -->
                         <!-- <div id="calendar"></div> -->
                         <div class="calendar-wrapper" id="calendar-wrapper"></div>

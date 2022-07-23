@@ -18,11 +18,11 @@
                 <a class="slide-next" onclick="plusSlides(1)"> <i class="ri-arrow-right-s-line text-white"></i> </a>
                 <a class="slide-prev" onclick="plusSlides(-1)"><i class="ri-arrow-left-s-line text-white"></i></a>
             </div>
-            <div class="text-center carousel-dots">
+            <!-- <div class="text-center carousel-dots">
                 @foreach ($holidays as $key => $day)
                 <span class="dot" onclick="currentSlide({{$key+1}})"></span>
                 @endforeach
-            </div>
+            </div> -->
         </div>
         <!-- </div> -->
     </div>

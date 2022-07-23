@@ -1,4 +1,7 @@
-
+#page-topbar .topbar-img{
+    height: 35px;
+    width: 40px;
+}
 .topbar-logo{
 width: 100px;
 }

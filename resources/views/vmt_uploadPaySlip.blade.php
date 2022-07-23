@@ -3,67 +3,71 @@
 
 <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
 <link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
-
+<link href="{{ URL::asset('assets/css/employee_bulk.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
 @component('components.organization_breadcrumb')
-@slot('li_1')  @endslot
+@slot('li_1') @endslot
 @endcomponent
+<div class="upload-payslip-wrapper">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card shadow profile-box card-top-border ">
+                <div class="form-control">
+                    <div class="row">
+                        <div class="col-md-6 ">
+                            <div class="col-form-label">
+                                <h5> Upload Data</h5>
+                                <div class="col col-form-label">
+                                    <ul class="list-style-numbered list-style-circle p-4">
+                                        <form method="POST" id='role-form' action="{{url('/vmt-payslip')}}"
+                                            enctype="multipart/form-data">
+                                            @csrf
+                                            <li>Download the
+                                                <a href="{{ url('/assets/payslip_sheet.xls')  }}" target="_blank">
+                                                    <span class="text-link" style=" color: blue;">Sample File</span></a>
 
-<div class="row">
-    <div class="col-xl-12">
-        <div class="card shadow profile-box card-top-border ">
-            <div class="form-control">
-                <div class="row">
-                    <div class="col-md-6 ">
-                        <div class="col-form-label">
-                            <h4> Upload Data</h4>
-                            <div class="col col-form-label">
-                                <ul class="list-style-numbered p-4">
-                                    <form method="POST" id='role-form' action="{{url('/vmt-payslip')}}"
-                                        enctype="multipart/form-data">
-                                        @csrf
-                                        <li>Download the
-                                            <a href="{{ url('/assets/payslip_sheet.xls')  }}" target="_blank">
-                                                <span class="text-link" style=" color: blue;">Sample File</span></a>
+                                            </li>
+                                            <li>Read the upload instructions on the right before uploading .</li>
+                                            <li>Fill the information in excel template</li>
+                                            <li>Upload the excel sheet <input name="file" type="file">
+                                                <button type="submit" class=" btn btn-primary">Upload</button>
+                                                <span container="body" class="icon ic-info cursor-pointer"></span>
+                                            </li>
+                                    </ul>
 
-                                        </li>
-                                        <li>Read the upload instructions on the right before uploading .</li>
-                                        <li>Fill the information in excel template</li>
-                                        <li>Upload the excel sheet <input name="file" type="file">
-                                            <button type="submit" class=" btn btn-primary">Upload</button>
-                                            <span container="body" class="icon ic-info cursor-pointer"></span>
-                                        </li>
-                                </ul>
-
-                                </form>
+                                    </form>
+                                </div>
                             </div>
+
                         </div>
 
-                    </div>
+                        <div class="col-md-6 ">
+                            <div class="col-form-label">
+                                <h5> Upload Instructions</h5>
+                                <div class="alert alert-warning">Read these instructions before uploading the file.
+                                </div>
+                                <div>
+                                    <ul class="list-style-circle">
+                                        <li class="pl-28"> Client Code, Client Name, Billing Currency, Project Code,
+                                            Project
+                                            Name, Start Date, Billing Type are required to create new projects and
+                                            clients.
+                                        </li>
+                                        <br>
+                                        <li class="pl-28">To add new project under existing client, client name and
+                                            client
+                                            code given in excel should be same as client name and client code</li>
 
-                    <div class="col-md-6 ">
-                        <div class="col-form-label">
-                            <h4> Upload Instructions</h4>
-                            <div class="alert alert-warning">Read these instructions before uploading the file.</div>
-                            <div>
-                                <ul>
-                                    <li class="pl-28"> Client Code, Client Name, Billing Currency, Project Code, Project
-                                        Name, Start Date, Billing Type are required to create new projects and clients.
-                                    </li>
-                                    <br>
-                                    <li class="pl-28">To add new project under existing client, client name and client
-                                        code given in excel should be same as client name and client code</li>
+                                    </ul>
 
-                                </ul>
-
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            {{--   <div class="card-header border-0 align-items-center d-flex">
+                {{--   <div class="card-header border-0 align-items-center d-flex">
                     <h4 class="card-title mb-0 flex-grow-1">
                 </div>
 
@@ -78,35 +82,37 @@
                                   
 
                     <div> --}}
-            {{--   <form method="POST" id='role-form' action="{{url('/vmt-payslip')}}" enctype="multipart/form-data">
-            @csrf
-            <div class="mb-3 row">
-                <label class="col-md-2 col-form-label">Select Files</label>
-                <div class="col-md-10">
-                    <input name="file" type="file">
+                {{--   <form method="POST" id='role-form' action="{{url('/vmt-payslip')}}"
+                enctype="multipart/form-data">
+                @csrf
+                <div class="mb-3 row">
+                    <label class="col-md-2 col-form-label">Select Files</label>
+                    <div class="col-md-10">
+                        <input name="file" type="file">
+                    </div>
                 </div>
+                <div class="row mt-2">
+                    <div class="text-end col-xl-12">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+                </form> --}}
             </div>
-            <div class="row mt-2">
-                <div class="text-end col-xl-12">
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
-            </div>
-            </form> --}}
-        </div>
-    </div><!-- end card body -->
-</div><!-- end card -->
-{{-- </div>end col --}}
-{{-- </div>end row --}}
-<div style="z-index: 11">
-    <div id="borderedToast2" class="toast toast-border-success overflow-hidden mt-3" role="alert" aria-live="assertive"
-        aria-atomic="true">
-        <div class="toast-body">
-            <div class="d-flex align-items-center">
-                <div class="flex-shrink-0 me-2">
-                    <i class="ri-checkbox-circle-fill align-middle"></i>
-                </div>
-                <div class="flex-grow-1">
-                    <h6 class="mb-0" id="alert-msg">Yey! Everything worked!</h6>
+        </div><!-- end card body -->
+    </div>
+    {{-- </div>end col --}}
+    {{-- </div>end row --}}
+    <div style="z-index: 11">
+        <div id="borderedToast2" class="toast toast-border-success overflow-hidden mt-3" role="alert"
+            aria-live="assertive" aria-atomic="true">
+            <div class="toast-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0 me-2">
+                        <i class="ri-checkbox-circle-fill align-middle"></i>
+                    </div>
+                    <div class="flex-grow-1">
+                        <h6 class="mb-0" id="alert-msg">Yey! Everything worked!</h6>
+                    </div>
                 </div>
             </div>
         </div>
