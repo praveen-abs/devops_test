@@ -194,8 +194,7 @@ $(function(){
     var fileInput = $(':file').wrap(wrapper);
  
     // When your file input changes, update the text for your button
-    fileInput.blur(function(){
-        console.log("here");
+    fileInput.change(function(){
         $this = $(this);
         var attr = $(this).attr('id');
         // If the selection is empty, reset it

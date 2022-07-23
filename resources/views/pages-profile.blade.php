@@ -2,6 +2,9 @@
 @section('title')
 @lang('translation.settings')
 @endsection
+@section('css')
+<link rel="stylesheet" href="{{ URL::asset('/assets/css/app.min.css') }}">
+@endsection
 @section('content')
 
 <div class="container-fluid user-details-wrapper ">
@@ -1519,6 +1522,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="{{ URL::asset('assets/js/pages/profile-setting.init.js') }}"></script>
 <script>
+    <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 $('body').on('keyup', ".onboard-form", function() {
     var inputvalues = $(this).val();
     var data = $(this).attr('name');

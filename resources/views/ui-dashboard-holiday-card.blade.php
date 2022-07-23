@@ -1,21 +1,24 @@
 <div class="card profile-box  flex-fill">
-    <div class="card-body ">
+    <div class="card-body " style="padding:0px !important">
         <!-- <div class="card-img"> -->
 
         <div class="slideshow-container">
             @foreach ($holidays as $day)
-                <div class="slides fade-slider">
-                    <div class="numbertext">View All</div>
-                    <img src="{{ URL::asset('assets/images/holiday/'. $day->image) }}" style="width:100%">
-                    <div class="text">{{$day->holiday_name}}</div>
+                <div class="slides fade-slider h-100">
+                    <div class="numbertext text-white">View All</div>
+                    <img src="{{ URL::asset('assets/images/holiday/'.$day->image) }}">
+                    <div class="holiday-text text-center w-100 text-white ">
+                        {{$day->holiday_name}}
+
+                    </div>
                 </div>
                 @endforeach
             
             <div class="d-flex">
-                <a class="slide-next" onclick="plusSlides(1)"> <i class="ri-arrow-right-s-line"></i> </a>
-                <a class="slide-prev" onclick="plusSlides(-1)"><i class="ri-arrow-left-s-line"></i></a>
+                <a class="slide-next" onclick="plusSlides(1)"> <i class="ri-arrow-right-s-line text-white"></i> </a>
+                <a class="slide-prev" onclick="plusSlides(-1)"><i class="ri-arrow-left-s-line text-white"></i></a>
             </div>
-            <div style="text-align:center">
+            <div class="text-center carousel-dots">
                 @foreach ($holidays as $key => $day)
                 <span class="dot" onclick="currentSlide({{$key+1}})"></span>
                 @endforeach
