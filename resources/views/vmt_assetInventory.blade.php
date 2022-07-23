@@ -606,7 +606,7 @@ $(document).ready(function() {
                         asset.asset_status,
                         asset.assigned_date,
                         asset.invoice,
-                        asset.id
+                        asset.id,
                         asset.id
                     ]
                 )
