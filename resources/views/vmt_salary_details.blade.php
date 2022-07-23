@@ -11,9 +11,7 @@
 @section('content')
 
 
-@component('components.paycheck_breadcrumb')
-@slot('li_1')  @endslot
-@endcomponent
+
 
 <div class="container-fluid bg-white salary-details-wrapper">
 
@@ -214,6 +212,7 @@
                                         <th width="15%">Take Home</th>
                                         <th width="10%" class="text-capitalize">payslip</th>
                                         <th width="13%">Tax Worksheet</th>
+                                        <th width="15%">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -245,6 +244,13 @@
                                                 id="ember134" class="ember-view">
                                                 View
                                             </a>
+                                        </td>
+                                        <td>
+                                            @php 
+                                                $selectedPaySlipMonth = $d->PAYROLL_MONTH;
+                                            @endphp
+                                            <a href="{{ url('pdfview/'. $selectedPaySlipMonth) }}">Download</a>
+
                                         </td>
                                     </tr>
                                     @endforeach

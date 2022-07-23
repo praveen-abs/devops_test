@@ -73,51 +73,17 @@ class VmtPaySlipController extends Controller
         return $html;
         // return view('vmt_employee_pay_slip', compact('employees', 'html'));  
     }
+     public function pdfview(Request $request)
+    {
 
-    //
-    public function payslipPdf(Request $request){
-        $data['employee'] = VmtEmployeePaySlip::where('EMP_NO', $request->id)->first();
-        //dd(public_path("storage/images/"));
-        //$data['logoSrc']  = public_path('/assets/images/images/image2.png');
-        //dd($data['logoSrc']);
-        //$employee = VmtEmployeePaySlip::where('EMP_NO', $request->id)->first();
-        //view()->share('employee', $data['employee']);
-        //$pdf = PDF::loadView('vmt_uploadPaySlip', $data);
-        return view('vmt_payslipTemplate', $data);
-        // download PDF file with download method
-        $pdf = new Dompdf();
-        $html =  view('vmt_payslipTemplate', $data);       
-        $pdf->loadHtml($html, 'UTF-8');
-        $pdf->setPaper('A4', 'portrait');
-        $pdf->render();
-        $filename = $data['employee']->Rename;
-        return $pdf->stream($filename, ["Attachment" => false]);
-
-
-        return $pdf->download($data['employee']->Rename.'.pdf');
-        /*$options = new Options();
-        $options->set('isRemoteEnabled', true);
-        $options->set('debugPng', false);
-        $dompdf = new Dompdf($options);
-        $dompdf->set_option("isPhpEnabled", true);
-        $context = stream_context_create(array(
-            'ssl' => array(
-                'verify_peer'             => FALSE, 
-                'verify_peer_name'        => FALSE,
-                'allow_self_signed'       => TRUE,                
-                'isPhpEnabled'            => TRUE,
-                'isJavascriptEnabled'     => TRUE,
-                'isHtml5ParserEnabled'    => TRUE,
-                'isFontSubsettingEnabled' => TRUE,
-            )
-        ));*/
-        // DOMPDF_FONT_HEIGHT_RATIO
-        //$html =  view('vmt_payslipTemplate', $data); 
-        //return $html;
-        //$dompdf->setHttpContext($context);
-        //$dompdf->load_html($html);
-        //return $dompdf->download("1.pdf");
-        //$dompdf->stream();
+           $data['employee'] = VmtEmployeePaySlip::where([
+                        ['user_id','=', auth()->user()->id],
+                        ['PAYROLL_MONTH','=', $request->selectedPaySlipMonth],
+                        ])->first();
+            view()->share('employee',$data);
+      
+      return  PDF::loadView('vmt_payslipTemplate', $data)->download('Payslip.pdf');
+       
     }
     //vmt_payslipTemplate.blade.php
     // code add by hentry // 
