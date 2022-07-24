@@ -71,7 +71,7 @@ class VmtEmployeeController extends Controller
     //
     public function showEmployeeDirectory(Request $request){
         $vmtEmployees = VmtEmployee::leftJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
-                            ->leftJoin('vmt_employee_office_details', 'vmt_employee_details.id','=', 'vmt_employee_office_details.emp_id' )
+                            ->leftJoin('vmt_employee_office_details','vmt_employee_office_details.user_id', '=', 'users.id' )
                             ->select(
                                 'vmt_employee_details.*', 
                                 'users.name as emp_name', 
@@ -252,7 +252,7 @@ class VmtEmployeeController extends Controller
             $user =  User::create([
                 'name' => $row['employee_name'],
                 'email' => $row["email"],
-                'password' => Hash::make('123123123'),
+                'password' => Hash::make('Abs@123123'),
                 'avatar' =>  'avatar-1.jpg',
             ]);
             $user->assignRole("Employee");
@@ -401,6 +401,7 @@ class VmtEmployeeController extends Controller
         $request->validate([
             'file' => 'required|file|mimes:xls,xlsx'
         ]);
+        
         $importDataArry = \Excel::toArray(new VmtEmployeeImport, request()->file('file'));
 
         // linking Manager To the employees; 
@@ -496,7 +497,7 @@ class VmtEmployeeController extends Controller
                 $user =  User::create([
                     'name' => $row['employee_name'],
                     'email' => $row["email"],
-                    'password' => Hash::make('123123123'),
+                    'password' => Hash::make('Abs@123123'),
                     'avatar' =>  'avatar-1.jpg',
                 ]);
                 $user->assignRole("Employee");
@@ -582,7 +583,7 @@ class VmtEmployeeController extends Controller
                     $failedCount++;
                     $returnfailedMsg .= $empNo." not get added";
                 }
-                \Mail::to($row["email"])->send(new WelcomeMail($row["email"], '123123123', 'http://vasagroup.abshrms.com'));
+                \Mail::to($row["email"])->send(new WelcomeMail($row["email"], 'Abs@123123', 'http://vasagroup.abshrms.com',''));
             } else {
                 $returnfailedMsg .= $empNo." not get added because of error ".json_encode($validator->errors()->all());
                 $failedCount++;
@@ -631,7 +632,7 @@ class VmtEmployeeController extends Controller
         \File::put(public_path('/').$filename, $docUploads);
         $fileAttr  = file_get_contents(public_path('/').$filename);
         $appoinmentPath = public_path('/').$filename;
-        $isSent    = \Mail::to($employeeData['email'])->send(new WelcomeMail($employeeData['email'], '123123123', 'http://vasagroup.abshrms.com' ,  $appoinmentPath));
+        $isSent    = \Mail::to($employeeData['email'])->send(new WelcomeMail($employeeData['email'], 'Abs@123123', 'http://vasagroup.abshrms.com' ,  $appoinmentPath));
         return $isSent; 
     }
 }
