@@ -14,7 +14,7 @@
             <div class="greet-wrap ml-3 mr-0">
                 <div class="d-felx ">
                     <!-- <h4>Welcome Back<b class="ml-1 text-primary">{{auth()->user()->name}}</b></h4> -->
-                    <p class="text-muted ">Welcome Back<b class="ml-1 text-primary">{{auth()->user()->name}}</b>
+                    <p class="text-muted "><span id="greeting_text">Welcome Back</span><b class="ml-1 text-primary">{{auth()->user()->name}}</b>
                     </p>
 
                     <p class="text-muted f-13 mt-1 m-0">{{date('d F Y')}}</p>
@@ -135,10 +135,38 @@ function time() {
     $('#check_timing').html("Check In : " +  ("0" + h).substr(-2) + ":" + ("0" + m).substr(-2) + ":" + ("0" + s).substr(-2));
 }
 
+
+function greetingMessage()
+{
+    $('#greeting_text').text("Hey!!");
+    var currentDate = new Date();
+
+    var currentHour = currentDate.getHours();
+    var message = "";
+
+    if(currentHour <= 11) {
+        message = "Good Morning";
+    }
+    else
+    if(currentHour >= 12 && currentHour <= 15 ) {
+        message = "Good Afternoon";
+    }
+    else
+    if(currentHour >= 15) {
+        message = "Good Evening";
+    }
+
+    $('#greeting_text').text(message);
+
+    console.log(d);
+}
+
 $(document).ready(function() {
 
     var ui_checkInTime_interval;
     var checkIn_time = "";
+
+    greetingMessage();
 
     if($('#checkin_function').is(':checked'))
     {
