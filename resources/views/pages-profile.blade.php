@@ -142,11 +142,11 @@
                     <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex">
                         <div class="card profile-box flex-fill">
                             <div class="card-body">
-                                <h3 class="card-title fw-bold">Personal Informations
+                                <h5 class="card-title fw-bold">Personal Informations
                                     <span class="personal-edit"><a href="#" class="edit-icon" data-bs-toggle="modal"
                                             data-bs-target="#personal_info_modal"><i
                                                 class="ri-pencil-fill"></i></a></span>
-                                </h3>
+                                </h5>
                                 <ul class="personal-info">
                                     <li>
                                         <div class="title">Passport No.</div>
@@ -784,8 +784,8 @@
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header py-3 new-role-header d-flex align-items-center">
-                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Employee
-                        Information</h4>
+                    <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Employee
+                        Information</h5>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -796,14 +796,15 @@
                         @csrf
                         <div class="row">
                             <div class="col-md-12">
+                                <div class="d-flex align-items-center justify-content-center">
                                 <div class="profile-img-wrap edit-img">
-
                                     <img id="profile_round_image_dist1" class="rounded-circle header-profile-user"
                                         src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"
                                         alt="Header Avatar">
                                     <div class="fileupload btn">
                                         <span class="btn-text">edit</span>
                                         <input type='file' name="profilePic" class="upload"  accept="image/*" onchange="readURL(this);" />
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -822,7 +823,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <!-- <div class="col-md-6">
                                         <label>Gender</label>
                                         <select class="form-select" name="gender" aria-label="Default select">
                                             <option selected>-</option>
@@ -834,19 +835,13 @@
                                                 @endif>Other</option>
                                         </select>
 
-                                    </div>
+                                    </div> -->
 
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group mb-3">
-                                    <label>Address</label>
-                                    <input type="text" name="present_address" class="form-control"
-                                        value="{{$details->present_address}}">
-                                </div>
-                            </div>
+                            
                             <!-- <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>State</label>
@@ -884,10 +879,19 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-md-12">
+                                <div class="form-group mb-3">
+                                    <label>Address</label>
+                                    <input type="text" name="present_address" class="form-control"
+                                        value="{{$details->present_address}}">
+                                </div>
+                            </div>
                         </div>
-                        <div class="submit-section">
-                            <button class="btn btn-primary submit-btn">Submit</button>
+                        <div class="col-12">
+                        <div class="text-right">
+                            <button class="btn btn-orange submit-btn">Submit</button>
                         </div>
+                        </div>  
                     </form>
                 </div>
             </div>
@@ -899,8 +903,8 @@
         <div class="modal-dialog  modal-dialog-centered modal-lg" role="document">
             <div class="modal-content profile-box">
                 <div class="modal-header py-3 new-role-header d-flex align-items-center">
-                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Personal
-                        Information</h4>
+                    <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Personal
+                        Information</h5>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -910,7 +914,8 @@
                         @csrf
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="profile-img-wrap edit-img">
+                                <div class=" d-flex align-items-center justify-content-center">
+                                    <div class="profile-img-wrap edit-img">
                                     <img id="profile_round_image_dist" class="rounded-circle header-profile-user"
                                         src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"
                                         alt="Header Avatar">
@@ -918,12 +923,16 @@
                                         <span class="btn-text">edit</span>
                                         <input type='file' name="profilePic" class="upload"  accept="image/*" onchange="readURL(this);" />
                                     </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="submit-section">
-                            <button class="btn btn-primary submit-btn">Submit</button>
+
+                        <div class="col-12">
+                        <div class="text-right">
+                            <button class="btn btn-orange submit-btn">Submit</button>
                         </div>
+                        </div>  
                     </form>
                 </div>
             </div>
@@ -980,9 +989,11 @@
                             </div>
 
                         </div>
-                        <div class="submit-section">
-                            <button class="btn btn-primary submit-btn">Submit</button>
+                        <div class="col-12">
+                        <div class="text-right">
+                            <button class="btn btn-orange submit-btn">Submit</button>
                         </div>
+                        </div>  
                     </form>
                 </div>
             </div>
@@ -1032,9 +1043,11 @@
                             </div>
 
                         </div>
-                        <div class="submit-section">
-                            <button class="btn btn-primary submit-btn">Submit</button>
+                        <div class="col-12">
+                        <div class="text-right">
+                            <button class="btn btn-orange submit-btn">Submit</button>
                         </div>
+                        </div>  
                     </form>
                 </div>
             </div>
@@ -1116,9 +1129,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="submit-section">
-                            <button class="btn btn-primary submit-btn">Submit</button>
+                        <div class="col-12">
+                        <div class="text-right">
+                            <button class="btn btn-orange submit-btn">Submit</button>
                         </div>
+                        </div>  
                     </form>
                 </div>
             </div>
@@ -1201,9 +1216,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="submit-section">
-                            <button class="btn btn-primary submit-btn">Submit</button>
+                        <div class="col-12">
+                        <div class="text-right">
+                            <button class="btn btn-orange submit-btn">Submit</button>
                         </div>
+                        </div>  
                     </form>
                 </div>
             </div>
@@ -1270,9 +1287,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="submit-section">
-                            <button class="btn btn-primary submit-btn">Submit</button>
+                        <div class="col-12">
+                        <div class="text-right">
+                            <button class="btn btn-orange submit-btn">Submit</button>
                         </div>
+                        </div>  
                     </form>
                 </div>
             </div>
@@ -1419,9 +1438,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="submit-section">
-                            <button class="btn btn-primary submit-btn">Submit</button>
+                        <div class="col-12">
+                        <div class="text-right">
+                            <button class="btn btn-orange submit-btn">Submit</button>
                         </div>
+                        </div>  
                     </form>
                 </div>
             </div>
@@ -1500,9 +1521,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="submit-section">
-                            <button class="btn btn-primary submit-btn">Submit</button>
+                        <div class="col-12">
+                        <div class="text-right">
+                            <button class="btn btn-orange submit-btn">Submit</button>
                         </div>
+                        </div>  
                     </form>
                 </div>
             </div>

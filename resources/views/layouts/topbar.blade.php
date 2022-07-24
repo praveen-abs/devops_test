@@ -61,7 +61,7 @@
                         <div class="topbar-search-bar search-content d-flex  align-items-center w-50 " style="left:60px">
 
                             <i class=" ri-search-line "></i>
-                            <input type="text" class="search-bar border-0 w-100 py-1 rounded-pill outline-none"
+                            <input type="text" class="search-bar form-control  w-100 py-1 rounded-pill"
                                 placeholder="Search">
                         </div>
                     </div>

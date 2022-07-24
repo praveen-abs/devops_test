@@ -8,10 +8,7 @@
 
 <style>
 table {
-    /* border-collapse: separate; */
-    /* border-radius: 10px !important; */
     box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px !important;
-
 }
 
 table th {
@@ -101,7 +98,7 @@ tr:last-child td:last-child {
     /* font-weight:600; */
     text-align: center;
     padding: 5px 15px;
-    border-radius:2px !important;   
+    border-radius: 2px !important;
     margin-right: -1px;
     /* border: 1px solid rgba(0, 0, 0, 0.2); */
     /* box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1); */
@@ -130,12 +127,6 @@ tr:last-child td:last-child {
     border-radius: 0 4px 4px 0;
 }
 
-.search-content .directory-search-bar {
-    background: #fff !important;
-    padding: 4px 0px !important;
-
-}
-
 .form-control:focus {
     /* border: 2px solid #1c8b8d !important; */
     border: 1px solid #c1cef9 !important;
@@ -149,12 +140,12 @@ tr:last-child td:last-child {
 
 @section('content')
 @component('components.organization_breadcrumb')
-@slot('li_1')  @endslot
+@slot('li_1') @endslot
 @endcomponent
 
 
-<div class=" project-wrapper">
-    <h4 class="text-muted fw-bold">Employee Directory</h4>
+<div class=" project-wrapper bg-white p-2">
+    <h5 class="fw-bold">Employee Directory</h5>
     <!-- <div class="row">
         <div class="col-12">
             <div class="row ">
@@ -353,18 +344,17 @@ tr:last-child td:last-child {
                     <div class="search-content header-item w-50 mx-5">
 
                         <i class=" ri-search-line "></i>
-                        <input type="text" class="form-control search-bar directory-search-bar  w-75 "
+                        <input type="text" class="form-control py-1 search-bar rounded-pill directory-search-bar  w-75 "
                             placeholder="Search">
                     </div>
                 </div>
             </div>
             <div class="col-4">
                 <div class="d-flex directory-right float-right justify-content-end align-items-center">
-                    <div class="btn border-0 outline-none mx-2 ">
+                    <!-- <div class="btn border-0 outline-none mx-2 ">
                         <i class="ri-menu-add-line fw-bold"></i>
-                    </div>
-                    <a href="{{route('vmt_employeeOnboarding')}}"
-                        class="btn border-0 outline-none py-1 onboard-employee-btn h-25 fw-bold bg-danger text-white">
+                    </div> -->
+                    <a href="{{route('vmt_employeeOnboarding')}}" class="btn   btn-orange  fw-bold ">
                         <i class="ri-add-line fw-bold mx-1"></i>
                         Onboard Employee
                     </a>
@@ -378,11 +368,11 @@ tr:last-child td:last-child {
         <table class=" table table-borderd  mb-0">
             <thead class="table-light">
                 <tr>
-                    <th scope="col">Employee Code</th>
                     <th scope="col">Employee Name</th>
+                    <th scope="col">Employee Code</th>
                     <th scope="col">Designation</th>
                     <th scope="col">Reporting Manager</th>
-                    <th scope="col">Email Id</th>
+                    <!-- <th scope="col">Email Id</th> -->
                     <th scope="col">Blood Group</th>
                     <th scope="col">Profile</th>
                     <th scope="col">Actions</th>
@@ -392,28 +382,34 @@ tr:last-child td:last-child {
             <tbody>
                 @foreach($vmtEmployees as $key => $employee)
                 <tr>
-                    <td> <span>{{$employee->emp_no}}</span></td>
+
                     <td>
-                        <div class="d-flex gap-2 align-items-center">
-                            <div class="flex-shrink-0">
-                                @if($employee->avatar)
-                                <img src="{{ URL::asset('images/'.$employee->avatar) }}" alt=""
-                                    class="avatar-xs rounded-circle" />
-                                @else
-                                <img src="{{ URL::asset('assets/images/vmt_user_icon.jpeg') }}" alt=""
-                                    class="avatar-xs rounded-circle" />
-                                @endif
-                            </div>
-                            <div class="flex-grow-1">
-                                {{$employee->emp_name}}
+                        <div class="card reviwer-cards  m-0 rounded-pill w-75">
+                            <div class="card-body p-1">
+                                <div class="d-flex align-items-center  justify-content-start">
+                                    <div class="mx-2">
+                                        @if($employee->avatar)
+                                        <img src="{{ URL::asset('images/'.$employee->avatar) }}" alt=""
+                                            class="avatar-xs rounded-circle" />
+                                        @else
+                                        <img src="{{ URL::asset('assets/images/vmt_user_icon.jpeg') }}" alt=""
+                                            class="avatar-xs rounded-circle" />
+                                        @endif
+                                    </div>
+                                    <div class="mx-1">
+                                        {{$employee->emp_name}}
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
-                    </td>
 
+                    </td>
+                    <td> <span>{{$employee->emp_no}}</span></td>
                     <td><span>{{$employee->designation}}</span></td>
                     <td><span>{{$employee->l1_manager_name }}</span></td>
 
-                    <td><span>{{$employee->email_id }}</span></td>
+                    <!-- <td><span>{{$employee->email_id }}</span></td> -->
                     <td><span> B <sup>+</sup></span></td>
                     <td><span>70%</span></td>
                     <td>

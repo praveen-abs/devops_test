@@ -15,7 +15,7 @@
                             class="img-round">
                         <h6 class=" text-primary mx-3 mt-3">{{auth()->user()->name}}</h6>
                     </div>
-                    <p class="text-danger fw-bold text-right program-day " style="color:#E54E0D;">>Today</p>
+                    <p class="text-danger fw-bold text-right program-day " style="color:#E54E0D;">Today</p>
                 </div>
                 <i class="float-right bg-icon text-danger ri-cake-2-fill"></i>
             </div>
