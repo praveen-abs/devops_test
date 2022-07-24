@@ -43,6 +43,14 @@
                                                         <button type="submit" class="btn btn-primary">Upload</button>
                                                     </div>
                                                 </div>
+
+                                                 <div class="row mt-4">
+                                                    <div class="col-xl-12">
+                                                        <div id="success-msg"></div>
+                                                        <div id="error-msg"></div>
+                                                        
+                                                    </div>
+                                                </div>
                                             </form>
                                         </li>
                                 </ul>
@@ -980,11 +988,18 @@ $('#role-form').on('submit', function(e) {
         processData: false,
         contentType: false,
         success: function(data) {
-            $('#alert-msg').html(data);
-            var toastLiveExample3 = document.getElementById("borderedToast2");
-            var toast = new bootstrap.Toast(toastLiveExample3);
-            toast.show();
+            console.log('success', data);
+            $('#success-msg').html(data.success);
+            $('#error-msg').html(data.failed);
+            
+
+            //var toastLiveExample3 = document.getElementById("borderedToast2");
+            //var toast = new bootstrap.Toast(toastLiveExample3);
+            //toast.show();
             //alert(data); // show response from the php script.
+        }, error: function(data){
+            //console.log('error', data);
+            $('#error-msg').html(data.responseText);
         }
     })
     //console.log($('#role-form').serialize());

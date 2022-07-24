@@ -401,6 +401,7 @@ class VmtEmployeeController extends Controller
         $request->validate([
             'file' => 'required|file|mimes:xls,xlsx'
         ]);
+        
         $importDataArry = \Excel::toArray(new VmtEmployeeImport, request()->file('file'));
 
         // linking Manager To the employees; 
