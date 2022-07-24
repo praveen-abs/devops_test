@@ -49,15 +49,16 @@
                         @if($checked->checkout_time)
                         <i class="ri-time-line text-warning mr-2"></i><span id="check_timing" class="f-13 w-20">Last Check Out :
                             {{date('H:i:s', strtotime($checked->checkout_time))}}</span>
-                        <i class=" text-warning mr-2"></i><span class="f-13 w-20" id="time_duration">Time Duration:
-                            {{ $effective_hours }}                        
-                        </span>                            
                         @else
                         {{-- If not check_out time, then user havent checked-out yet --}}
                         <i class="ri-time-line text-warning mr-2"></i><span id="check_timing" class="f-13 w-20">Check In :
                             {{date('H:i:s', strtotime($checked->checkin_time))}}</span>
                         @endif
                     @endif
+                    <i class=" text-warning mr-2"></i><span class="f-13 w-20" id="time_duration">Time Duration:
+                        @if($effective_hours) {{$effective_hours}} @else {{ '---' }} @endif         
+                    </span>                            
+              
                 </div>
             </div>
 
@@ -86,6 +87,37 @@
         </div>
     </div>
 </div>
+
+
+<!-- staticBackdrop Modal -->
+<div class="modal fade" id="modal_checkin_confirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center p-5">
+                <lord-icon
+                    src="https://cdn.lordicon.com/lupuorrc.json"
+                    trigger="loop"
+                    colors="primary:#121331,secondary:#08a88a"
+                    style="width:120px;height:120px">
+                </lord-icon>
+                
+                <div class="mt-4">
+                    <h4 class="mb-3">Hello {{auth()->user()->name}}</h4>
+                    <p class="text-muted mb-4"> Welcome back!</p>
+                    <div class="hstack gap-2 justify-content-center">
+                        <a href="javascript:void(0);" class="btn btn-link link-success fw-medium" data-bs-dismiss="modal">
+                            <button type="button" class="btn btn-primary">
+                                Close
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 @section('welcome-script')
 
@@ -135,7 +167,8 @@ $(document).ready(function() {
                 {
                     ui_checkInTime_interval = setInterval(time, 1000);
                     //console.log("Timer start");
-                    $('#time_duration').html("");
+                    $('#time_duration').html("Time Duration: ");
+                    $('#modal_checkin_confirm').modal('show');
                 }   
                 else
                 {
