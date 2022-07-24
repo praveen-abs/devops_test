@@ -252,7 +252,7 @@ class VmtEmployeeController extends Controller
             $user =  User::create([
                 'name' => $row['employee_name'],
                 'email' => $row["email"],
-                'password' => Hash::make('123123123'),
+                'password' => Hash::make('Abs@123123'),
                 'avatar' =>  'avatar-1.jpg',
             ]);
             $user->assignRole("Employee");
@@ -496,7 +496,7 @@ class VmtEmployeeController extends Controller
                 $user =  User::create([
                     'name' => $row['employee_name'],
                     'email' => $row["email"],
-                    'password' => Hash::make('123123123'),
+                    'password' => Hash::make('Abs@123123'),
                     'avatar' =>  'avatar-1.jpg',
                 ]);
                 $user->assignRole("Employee");
@@ -582,7 +582,7 @@ class VmtEmployeeController extends Controller
                     $failedCount++;
                     $returnfailedMsg .= $empNo." not get added";
                 }
-                \Mail::to($row["email"])->send(new WelcomeMail($row["email"], '123123123', 'http://vasagroup.abshrms.com'));
+                \Mail::to($row["email"])->send(new WelcomeMail($row["email"], 'Abs@123123', 'http://vasagroup.abshrms.com',''));
             } else {
                 $returnfailedMsg .= $empNo." not get added because of error ".json_encode($validator->errors()->all());
                 $failedCount++;
@@ -631,7 +631,7 @@ class VmtEmployeeController extends Controller
         \File::put(public_path('/').$filename, $docUploads);
         $fileAttr  = file_get_contents(public_path('/').$filename);
         $appoinmentPath = public_path('/').$filename;
-        $isSent    = \Mail::to($employeeData['email'])->send(new WelcomeMail($employeeData['email'], '123123123', 'http://vasagroup.abshrms.com' ,  $appoinmentPath));
+        $isSent    = \Mail::to($employeeData['email'])->send(new WelcomeMail($employeeData['email'], 'Abs@123123', 'http://vasagroup.abshrms.com' ,  $appoinmentPath));
         return $isSent; 
     }
 }
