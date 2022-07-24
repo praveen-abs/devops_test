@@ -1521,8 +1521,8 @@
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="{{ URL::asset('assets/js/pages/profile-setting.init.js') }}"></script>
+<script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 <script>
-    <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 $('body').on('keyup', ".onboard-form", function() {
     var inputvalues = $(this).val();
     var data = $(this).attr('name');

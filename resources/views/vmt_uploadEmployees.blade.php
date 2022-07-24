@@ -19,9 +19,6 @@
                             <h5> Upload Data</h5>
                             <div class="col col-form-label">
                                 <ul class="list-style-numbered list-style-circle p-4">
-                                    <form method="POST" id='role-form' action="{{url('/vmt-payslip')}}"
-                                        enctype="multipart/form-data">
-                                        @csrf
                                         <li>Download the
                                             <a href="{{ url('/assets/sample_employeeBulkOnboarding.xlsx')  }}" target="_blank">
                                                 <span class="text-link" style=" color: blue;">Sample File</span></a>
