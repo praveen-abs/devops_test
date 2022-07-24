@@ -144,7 +144,7 @@
     <!-- <section id="loading" class="loading">
         <div id="loading-content" class="loading-content"></div>
     </section> -->
-    @yield('loading')
+    {{-- @yield('loading') --}}
     <div id="layout-wrapper">
         @include('layouts.topbar')
         @include('layouts.sidebar')
