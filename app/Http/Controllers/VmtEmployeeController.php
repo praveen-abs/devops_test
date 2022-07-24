@@ -71,7 +71,7 @@ class VmtEmployeeController extends Controller
     //
     public function showEmployeeDirectory(Request $request){
         $vmtEmployees = VmtEmployee::leftJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
-                            ->leftJoin('vmt_employee_office_details', 'vmt_employee_details.id','=', 'vmt_employee_office_details.emp_id' )
+                            ->leftJoin('vmt_employee_office_details', 'users.id','=', 'vmt_employee_office_details.user_id' )
                             ->select(
                                 'vmt_employee_details.*', 
                                 'users.name as emp_name', 
