@@ -12,11 +12,10 @@
 <div class="main">
 
     <div class="container-fluid">
-        <div class="mt-4">
-
+        <div class="">
             <div class="row ">
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
-                    <div class="p-3">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
+                    <div class="">
                         <div id="msform">
                             <!-- progressbar -->
                             <!-- <ul id="progressbar">
@@ -30,8 +29,8 @@
                             <form id="form-1" enctype="multipart/form-data">
                                 @csrf
                                 <div class="card shadow  profile-box card-top-border p-2">
-                                    <div class="card-body justify-content-center align-items-center mb-5">
-                                        <div class="text-primary m-2 header-card-text">
+                                    <div class="card-body justify-content-center align-items-center mb-3">
+                                        <div class="text-primary my-2 header-card-text">
                                             <h5>Personal Details</h5>
                                         </div>
                                         <div class="form-card">
@@ -219,7 +218,7 @@
                                     </div>
                                 </div>
                                 <div class="card shadow  profile-box card-top-border p-2">
-                                    <div class="card-body justify-content-center align-items-center mb-5">
+                                    <div class="card-body justify-content-center align-items-center mb-3">
 
 
                                         <div class="form-card">
@@ -227,12 +226,7 @@
                                                 <h5>Location Details</h5>
                                             </div>
                                             <div class="row mt-1">
-                                                <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6 mt-2">
-                                                    <!-- <label class="" for="current_address">Current Address{!! required() !!}</label> -->
-                                                    <input type="text" placeholder="Current Address"
-                                                        name="current_address" id="current_address"
-                                                        class="onboard-form form-control" required />
-                                                </div>
+                                                
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="current_city">Current City{!! required() !!}</label> -->
                                                     <input type="text" placeholder="Current City" name="current_city"
@@ -265,6 +259,12 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
+                                                <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6 mt-2">
+                                                    <!-- <label class="" for="current_address">Current Address{!! required() !!}</label> -->
+                                                                                                            <textarea placeholder="Current Address"
+                                                        name="current_address" id="current_address"
+                                                        class="onboard-form form-control" required  id="" cols="5" rows="3"></textarea>
+                                                </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-12 mt-2">
@@ -273,12 +273,7 @@
                                                     <label for="current_address_copy">Copy current address to the
                                                         permanent address{!! required() !!}</label>
                                                 </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6 mt-2">
-                                                    <!-- <label class="" for="permanent_address">Permanent Address{!! required() !!}</label> -->
-                                                    <input type="text" placeholder="Permanent Address"
-                                                        name="permanent_address" id="permanent_address"
-                                                        class="onboard-form form-control" required />
-                                                </div>
+                                                
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="permanent_city">Permanent City{!! required() !!}</label> -->
                                                     <input type="text" placeholder="Permanent City"
@@ -312,13 +307,23 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
+                                                <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6 mt-2">
+                                                    <!-- <label class="" for="permanent_address">Permanent Address{!! required() !!}</label> -->
+                                                    
+                                                        <textarea placeholder="Permanent Address"
+                                                        name="permanent_address" id="permanent_address"
+                                                        class="onboard-form form-control" required  cols="5" rows="3"></textarea>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card shadow  profile-box card-top-border p-2">
-                                    <div class="card-body justify-content-center align-items-center mb-5">
-                                        <div class="text-primary mt-4 header-card-text"><b>Official Details</b></div>
+                                    <div class="card-body justify-content-center align-items-center mb-3">
+                                        <div class="text-primary my-2 header-card-text">
+                                            <h5>Official Details</h5>
+                                        </div>
                                         <div class="form-card">
                                             <div class="row mt-1">
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
@@ -420,8 +425,10 @@
                                     </div>
                                 </div>
                                 <div class="card shadow  profile-box card-top-border p-2">
-                                    <div class="card-body justify-content-center align-items-center mb-5">
-                                        <div class="text-primary mt-4 header-card-text"><b>Family Details</b></div>
+                                    <div class="card-body justify-content-center align-items-center mb-3">
+                                        <div class="text-primary my-2 header-card-text">
+                                            <h5>Family Details</h5>
+                                        </div>
                                         <div class="form-card">
                                             <div class="row mt-1">
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
@@ -484,8 +491,9 @@
                                     </div>
                                 </div>
                                 <div class="card shadow  profile-box card-top-border p-2">
-                                    <div class="card-body justify-content-center align-items-center mb-5">
-                                        <div class="text-primary mt-4 header-card-text"><b>Compensatory</b></div>
+                                    <div class="card-body justify-content-center align-items-center mb-3">
+                                        <div class="text-primary my-2 header-card-text">
+                                            <h5>Compensatory</h5></div>
                                         <div class="form-card">
 
                                             <div class="row">
@@ -617,8 +625,8 @@
                                     </div>
                                 </div>
                                 <div class="card shadow  profile-box card-top-border p-2">
-                                    <div class="card-body justify-content-center align-items-center">
-                                        <div class="text-primary mt-4 header-card-text"><b>Personal Documents</b></div>
+                                    <div class="card-body justify-content-center align-items-center mb-3">
+                                        <div class="text-primary my-2 header-card-text"><h5>Personal Documents</h5></div>
                                         <div class="form-card mb-4">
                                             <div class="row mt-1">
                                                 <div class="col-12 mt-2">
@@ -709,11 +717,10 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-6 text-left">
-                                            </div>
-                                            <div class="col-6 text-right"><button type="submit" data="row-6"
+                                            
+                                            <div class="col-12 text-right"><button type="submit" data="row-6"
                                                     next="row-6" placeholder="" name="next"
-                                                    class="bg-pink action-button  text-center"
+                                                    class="btn btn-orange   text-center"
                                                     value="Submit">Submit</button>
                                             </div>
                                         </div>

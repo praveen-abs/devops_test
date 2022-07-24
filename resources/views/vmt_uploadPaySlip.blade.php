@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-@component('components.organization_breadcrumb')
+@component('components.payroll_breadcrumb')
 @slot('li_1') @endslot
 @endcomponent
 <div class="upload-payslip-wrapper">
@@ -18,7 +18,7 @@
                     <div class="row">
                         <div class="col-md-6 ">
                             <div class="col-form-label">
-                                <h5> Upload Data</h5>
+                                <h5 class=""> Upload Data</h5>
                                 <div class="col col-form-label">
                                     <ul class="list-style-numbered list-style-circle p-4">
                                         <form method="POST" id='role-form' action="{{url('/vmt-payslip')}}"
@@ -55,7 +55,7 @@
                                             Name, Start Date, Billing Type are required to create new projects and
                                             clients.
                                         </li>
-                                        <br>
+
                                         <li class="pl-28">To add new project under existing client, client name and
                                             client
                                             code given in excel should be same as client name and client code</li>

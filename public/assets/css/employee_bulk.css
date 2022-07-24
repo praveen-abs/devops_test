@@ -1,6 +1,6 @@
 .uploadEmployee-wrpper,.upload-payslip-wrapper{
     position: relative;
-    top: -20px;
+    /* top: -20px; */
 }
 ul.list-style-circle{
     list-style-type: none;

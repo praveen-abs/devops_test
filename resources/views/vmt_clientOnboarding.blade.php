@@ -4,7 +4,6 @@
 <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/onboarding.css') }}">
 
-
 @endsection
 
 @section('content')
