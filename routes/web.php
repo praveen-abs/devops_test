@@ -98,7 +98,10 @@ Route::get('vmt-getAllChildEmployees', 'App\Http\Controllers\VmtApraisalControll
 
 Route::get('vmt-approvereject-kpitable', 'App\Http\Controllers\VmtApraisalController@approveRejectKPITable');
 Route::post('vmt-approvereject-command', 'App\Http\Controllers\VmtApraisalController@approveRejectCommandKPITable');
-
+// dashboard post task 
+Route::post('vmt-dashboard-post', 'App\Http\Controllers\VmtMainDashboardController@DashBoardPost');
+Route::get('vmt-dashboard-post-view/{id}', 'App\Http\Controllers\VmtMainDashboardController@DashBoardPostView');
+// dashboard task //
 Route::post('vmt-pms-saveKPItableDraft_HR', 'App\Http\Controllers\VmtApraisalController@saveKPItableDraft_HR');
 
 Route::post('vmt-pms-saveKPItableDraft_Manager', 'App\Http\Controllers\VmtApraisalController@saveKPItableDraft_Manager');
