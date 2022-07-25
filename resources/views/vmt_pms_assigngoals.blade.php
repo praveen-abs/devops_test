@@ -58,6 +58,7 @@
                             <div class="col-md-4 col-sm-6 col-lg-3 col-xl-3 "> -->
 
                         <div class="align-items-center justify-content-center row">
+                            @if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin') || auth()->user()->hasrole('Manager'))
                             <div class="card pms-card m-0 m-3">
                                 <div class="card-body p-0">
                                     <div class="row mt-2">
@@ -88,6 +89,7 @@
                                     <!-- </div> -->
                                 </div>
                             </div>
+                            @else
                             <!-- <div class="col-md-4 col-sm-6 col-lg-3 col-xl-3 "> -->
                             <div class="card pms-card m-0 m-3">
                                 <div class="card-body p-0">
@@ -108,6 +110,8 @@
                                 </div>
 
                             </div>
+                            @endif
+                            @if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin') || auth()->user()->hasrole('Manager'))
                             <div class="card pms-card m-0 m-3">
                                 <div class="card-body p-0">
                                     <div class="row mt-2">
@@ -136,6 +140,7 @@
                                 </div>
 
                             </div>
+                            @endif
                         </div>
                     </div>
 

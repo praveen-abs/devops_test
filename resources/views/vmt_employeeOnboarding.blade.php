@@ -349,11 +349,14 @@
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="designation">Designation{!! required() !!}</label> -->
                                                     <input type="text" placeholder="Designation" name="designation"
-                                                        class="onboard-form form-control" required />
+                                                        class="onboard-form form-control" pattern="alpha" required />
+                                                    <label class="error star_error designation_label" for="designation"
+                                                        style="display: none;"></label>
+                                                        
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="cost_center">Cost Center{!! required() !!}</label> -->
-                                                    <input type="text" placeholder="Cost Center" name="cost_center"
+                                                    <input type="number" placeholder="Cost Center" name="cost_center"
                                                         class="onboard-form form-control" required />
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
@@ -378,7 +381,9 @@
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="work_location">Work Location{!! required() !!}</label> -->
                                                     <input type="text" placeholder="Work Location" name="work_location"
-                                                        class="onboard-form form-control" required />
+                                                        class="onboard-form form-control" pattern="alpha" required />
+                                                    <label class="error star_error work_location_label" for="work_location"
+                                                        style="display: none;"></label>
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="l1_manager_code">Reporting Manager Employee Code{!! required() !!}</label> -->
@@ -394,20 +399,26 @@
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="l1_manager_name">Reporting Manager Name{!! required() !!}</label> -->
                                                     <input type="text" placeholder="Reporting Manager Name"
-                                                        name="l1_manager_name" class="onboard-form form-control"
+                                                        name="l1_manager_name" class="onboard-form form-control" pattern="name"
                                                         required />
+                                                    <label class="error star_error l1_manager_name_label" for="l1_manager_name"
+                                                        style="display: none;"></label>
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="holiday_location">Holiday Location{!! required() !!}</label> -->
                                                     <input type="text" placeholder="Holiday Location"
-                                                        name="holiday_location" class="onboard-form form-control"
+                                                        name="holiday_location" class="onboard-form form-control" pattern="alpha"
                                                         required />
+                                                    <label class="error star_error holiday_location_label" for="holiday_location"
+                                                        style="display: none;"></label>
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="officical_mail">Official E-Mail Id{!! required() !!}</label> -->
                                                     <input type="email" placeholder="Official E-Mail Id"
                                                         name="officical_mail" class="onboard-form form-control"
-                                                        required />
+                                                        required pattern="email" />
+                                                    <label class="error star_error officical_mail_label" for="officical_mail"
+                                                        style="display: none;"></label>
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="official_mobile">Official Mobile{!! required() !!}</label> -->

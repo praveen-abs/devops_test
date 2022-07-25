@@ -14,6 +14,7 @@ $(document).ready(function() {
             '') {
             var pattern = {
                 'pan': /^([A-Z]){3}P([A-Z]){1}([0-9]){4}([A-Z]){1}?$/,
+                'email': /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/,
                 'ifsc': /^([A-Z]){4}0([A-Z0-9]){6}?$/,
                 'aadhar': /^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$/,
                 'passport': /^[a-zA-Z]{2}[0-9]{7}$/,
@@ -21,7 +22,7 @@ $(document).ready(function() {
                 'dl': /^(([A-Z]{2}[0-9]{2})( )|([A-Z]{2}-[0-9]{2}))((19|20)[0-9][0-9])[0-9]{7}$/,
                 'gst': /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/,
                 'alp-num': /^[a-zA-Z0-9]+$/,
-                'alpha': /^[a-zA-Z]+$/,
+                'alpha': /^[a-zA-Z ]+$/,
                 'name': /^[a-zA-Z. ]+$/,
             };
             var regex = $(this).attr('pattern');
@@ -34,6 +35,8 @@ $(document).ready(function() {
                     $(this).val(v.replace(/[_\W0-9.]+/g, ''));
                 } else if (regex == 'alp-num') {
                     $(this).val(v.replace(/[_\W.]+/g, ''));
+                // } else if (regex == 'email') {
+                //     $(this).val(v.replace(/[_\W0-9.]+/g, ''));
                 }
             } else {
                 $('.' + data + '_label').removeClass('patternErr');
