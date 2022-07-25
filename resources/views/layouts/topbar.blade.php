@@ -306,10 +306,25 @@
                             <button type="button" class="btn ml-1 py-0" id="page-header-user-dropdown" data-bs-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
                                 <div class="d-flex align-items-center">
-                                    <img class="rounded-circle header-profile-user"
+                                    {{-- <img class="rounded-circle header-profile-user"
                                         src="@if (Auth::user()->avatar != ''){{ URL::asset('images/'. Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"
-                                        alt="Header Avatar">
+                                        alt="Header Avatar"> --}}
+                                    @php
+                                    preg_match('/(?:\w+\. )?(\w+).*?(\w+)(?: \w+\.)?$/',Auth::user()->name , $result);
+                                 $name =   strtoupper($result[1][0].$result[2][0]);
+                                        if (Auth::user()->avatar != ''){
+                                        @endphp 
+                                        <img class="rounded-circle header-profile-user" src=" {{URL::asset('images/'. Auth::user()->avatar)}}"   alt="Header Avatar">
+                                            
+                                            @php
+                                        }else{
+                                            @endphp
+                                    <span class="badge rounded-circle   badge-primary ml-2"><i class="align-middle">{{$name}}</i></span>
 
+                                                @php                                                         
+                                                }
+                                                @endphp
+                                         
                                     <!-- <img class="rounded-circle mx-1 header-profile-user" 
                                         src="{{ URL::asset('assets/images/users/avatar-8.jpg') }}"
                                         alt="Header Avatar"> -->

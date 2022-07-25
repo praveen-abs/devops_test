@@ -165,17 +165,38 @@
                                             <div class="topbarContent emp-post">
                                                 <div>
                                                     <div class="px-20 p-16 row no-gutters scrollBar">
-                                                        <textarea name="" id=""
-                                                            class="border-0 outline-none w-100 h-100">
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
-                                                        </textarea>
+                                                          @foreach($dashboardpost as $key )
+                                                        <textarea name="post_menuss" id="post_menuss" class="border-0 outline-none  w-100 h-100" readonly>{{$key}}</textarea>
+                                                        @endforeach
                                                     </div>
-                                                    <button class="btn btn-danger btn-orange py-1 px-4  float-right">
-                                                        Submit
+                                                     <button class="btn btn-danger py-1 px-4  float-right" type="button" data-bs-toggle="modal" data-bs-target="#showModal">
+                                                        Create Post
                                                     </button>
+                                                     <div class="modal fade" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content border-0">
+                                <div class="modal-header bg-soft-info p-3">
+                                    <h5 class="modal-title" id="exampleModalLabel">Add Post</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                                        id="close-modal"></button>
+                                </div>
+                                <div class="form-control">
+                                     <textarea name="post_menu" id="post_menu" class="border-0 outline-none w-100 h-100"></textarea>
+                                    
+                                </div>
+                             
+                                   
+                                    <div class="modal-footer">
+                                        <div class="hstack gap-2 justify-content-end">
+                                            <button type="button" class="btn btn-success" 
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-success" id="post_menu_submit">Add Post</button>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
                                                 </div>
                                             </div>
                                             <div class="topbarContent emp-announcement " style="display:none;">
@@ -442,4 +463,27 @@ $(function() {
     });
 });
 </script>
+<script type="text/javascript">
+
+$('#post_menu_submit').click(function(e) {
+    e.preventDefault();
+        var command = $('#post_menu').val();
+        var user_ref_id = "{{Auth::user()->id}}";
+    $.ajax({
+        type: "POST",
+        url: "{{url('vmt-dashboard-post')}}",
+         data: {
+            "_token": "{{ csrf_token() }}",
+            command: command,
+            user_ref_id: user_ref_id,
+        },
+        success: function(data) {
+            // alert(data);
+            location.reload();
+        }
+    })
+});
+
+
+    </script>
 @endsection
