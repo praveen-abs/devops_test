@@ -158,7 +158,6 @@ function greetingMessage()
 
     $('#greeting_text').text(message);
 
-    console.log(d);
 }
 
 $(document).ready(function() {
