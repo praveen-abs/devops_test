@@ -162,7 +162,7 @@ right connector from last child*/
     <div class="row project-wrapper">
         <div class="col-12">
             <div class="row mb-3">
-                <div class="card">
+                <!-- <div class="card">
                     <div class="card-body p-0">
                         <ul class="nav sub-topnav">
                             <li routerlinkactive="active">
@@ -175,7 +175,7 @@ right connector from last child*/
                                 <a routerlink="logins" href="#/org/employees/logins">Logins</a>
                             </li>
                             <li routerlinkactive="active">
-                                <a routerlink="profile-changes" href="#/org/employees/profile-changes">Profile Changes</a><!---->
+                                <a routerlink="profile-changes" href="#/org/employees/profile-changes">Profile Changes</a>
                             </li>
                             <li routerlinkactive="active">
                                 <a routerlink="privateprofiles" href="#/org/employees/privateprofiles">Private Profiles</a>
@@ -189,8 +189,9 @@ right connector from last child*/
                         </ul>
                     </div> 
                 </div>
+                 -->
                 <div class="page-title">
-                    <h1>Employee Organization</h1>
+                    <h5>Employee Organization</h5>
                 </div>
                 <div infinitescroll="" class="row no-gutters">
                     <form method="POST" action="{{url('vmt-employee-hierarchy/store')}}" id="role-form">
