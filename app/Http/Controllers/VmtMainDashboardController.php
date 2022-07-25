@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\VmtGeneralSettings;
 use App\Models\VmtGeneralInfo;
 use App\Models\VmtEmployee;
+use App\Models\vmt_dashboard_posts;
 use App\Models\VmtEmployeeAttendance;
 use App\Models\vmtHolidays;
 use App\Models\Polling;
@@ -53,7 +54,7 @@ class VmtMainDashboardController extends Controller
     
            // dd($effective_hours);
         }
-
+         $dashboardpost  =  vmt_dashboard_posts::where('author_id', auth()->user()->id)->pluck('message');
         $holidays = vmtHolidays::orderBy('holiday_date', 'ASC')->get();
         $polling = Polling::first();
         if ($polling) {
@@ -68,7 +69,7 @@ class VmtMainDashboardController extends Controller
         else 
         if(auth()->user()->hasrole('Manager'))
         {
-            return view('vmt_manager_dashboard', compact( 'currentUserJobDetails', 'checked','effective_hours', 'holidays', 'polling'));
+            return view('vmt_manager_dashboard', compact( 'currentUserJobDetails', 'checked','effective_hours', 'holidays', 'polling','dashboardpost'));
         }
         else 
         if(auth()->user()->hasrole('Employee')) 
@@ -76,5 +77,20 @@ class VmtMainDashboardController extends Controller
             return view('vmt_employee_dashboard', compact( 'currentUserJobDetails', 'checked','effective_hours', 'holidays', 'polling'));
         } 
 
+    }
+
+    public function  DashBoardPost(Request $request){
+        $id = $request->input('user_ref_id');
+        $data_dashboard = new vmt_dashboard_posts;
+        $data_dashboard->message = $request->input('command');
+        $data_dashboard->author_id = $request->input('user_ref_id');
+        $data_dashboard->save();
+        $dashboardpost  =  vmt_dashboard_posts::where('author_id', $id)->pluck('message');
+        return $dashboardpost;
+    }
+
+    public function DashBoardPostView($id, Request $request){
+        $dashboardpost  =  vmt_dashboard_posts::where('author_id', $id)->pluck('message');
+        return $dashboardpost;
     }
 }
