@@ -185,10 +185,7 @@
                     </a>
                     <div class="collapse menu-dropdown" id="orgDrop-Down">
                         <ul class="nav nav-sm flex-column">
-                            <li class="nav-item ">
-                                <a href="{{url('vmt_noData')}}" id="" class="nav-link sidebar py-1"
-                                    aria-expanded="false"><span>Dashboard</span> </a>
-                            </li>
+                            
                             <li class="nav-item ">
                                 <a href="{{url('vmt-employess/directory')}}" id="tds"
                                     class="nav-link sidebar py-1"><span>Directory </span></a>

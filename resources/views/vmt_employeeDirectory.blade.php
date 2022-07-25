@@ -12,9 +12,7 @@ table {
 }
 
 table th {
-    color: #5265a7;
-    background-color: #ccd6f7;
-    padding: 15px 10px !important;
+    padding: 10px 5px !important;
     font-size: 13px;
 }
 
@@ -93,15 +91,11 @@ tr:last-child td:last-child {
 .switch-field label {
     background-color: #fff;
     color: #acb0b0;
-    font-size: 14px;
     line-height: 1;
-    /* font-weight:600; */
     text-align: center;
-    padding: 5px 15px;
-    border-radius: 2px !important;
+    padding: 8px;
     margin-right: -1px;
-    /* border: 1px solid rgba(0, 0, 0, 0.2); */
-    /* box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1); */
+    border: 1px solid rgba(0, 0, 0, 0.2);
     transition: all 0.1s ease-in-out;
     margin-bottom: 0px !important;
 }
@@ -334,14 +328,8 @@ tr:last-child td:last-child {
         <div class="row">
             <div class="col-8">
                 <div class="float-left directory-left d-flex">
-                    <div class="switch-field align-items-center">
-                        <input type="radio" id="radio-one" name="switch-one" value="Active" checked />
-                        <label for="radio-one">Active</label>
-                        <input type="radio" id="radio-two" name="switch-one" value="Inactive" />
-                        <label for="radio-two">Inactive</label>
-                    </div>
 
-                    <div class="search-content header-item w-50 mx-5">
+                    <div class="search-content header-item w-50 ">
 
                         <i class=" ri-search-line "></i>
                         <input type="text" class="form-control py-1 search-bar rounded-pill directory-search-bar  w-75 "
@@ -373,10 +361,11 @@ tr:last-child td:last-child {
                     <th scope="col">Designation</th>
                     <th scope="col">Reporting Manager</th>
                     <!-- <th scope="col">Email Id</th> -->
+                    <th scope="col">Date Of Joining</th>
                     <th scope="col">Blood Group</th>
                     <th scope="col">Profile</th>
                     <th scope="col">Actions</th>
-                    <th scope="col">Reminder</th>
+                    <th scope="col">Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -384,31 +373,28 @@ tr:last-child td:last-child {
                 <tr>
 
                     <td>
-                        <div class="card reviwer-cards  m-0 rounded-pill w-75">
-                            <div class="card-body p-1">
-                                <div class="d-flex align-items-center  justify-content-start">
-                                    <div class="mx-2">
-                                        @if($employee->avatar)
-                                        <img src="{{ URL::asset('images/'.$employee->avatar) }}" alt=""
-                                            class="avatar-xs rounded-circle" />
-                                        @else
-                                        <img src="{{ URL::asset('assets/images/vmt_user_icon.jpeg') }}" alt=""
-                                            class="avatar-xs rounded-circle" />
-                                        @endif
-                                    </div>
-                                    <div class="mx-1">
-                                        {{$employee->emp_name}}
-                                    </div>
+                        <div class="d-flex align-items-center">
+                            <div class="mx-2">
+                                @if($employee->avatar)
+                                <img src="{{ URL::asset('images/'.$employee->avatar) }}" alt=""
+                                    class="avatar-xs rounded-circle" />
+                                @else
+                                <img src="{{ URL::asset('assets/images/vmt_user_icon.jpeg') }}" alt=""
+                                    class="avatar-xs rounded-circle" />
+                                @endif
 
-                                </div>
                             </div>
-                        </div>
+                            <span>
 
+                                {{$employee->emp_name}}
+
+                            </span>
+                        </div>
                     </td>
                     <td> <span>{{$employee->emp_no}}</span></td>
                     <td><span>{{$employee->designation}}</span></td>
                     <td><span>{{$employee->l1_manager_name }}</span></td>
-
+                    <td><input type="date" name="" class="form-control" id=""></td>
                     <!-- <td><span>{{$employee->email_id }}</span></td> -->
                     <td><span> B <sup>+</sup></span></td>
                     <td><span>70%</span></td>
@@ -418,15 +404,16 @@ tr:last-child td:last-child {
                                 class="btn border-0 outline-none bg-transparent p-0  mx-1">
                                 <i class="ri-pencil-line text-primary fw-bold"></i>
                             </a>
-                            <button class="btn border-0 outline-none bg-transparent p-0  ">
-                                <i class="ri-delete-bin-line text-danger fw-bold"></i>
-                            </button>
+
                         </div>
                     </td>
                     <td>
-                        <button class="btn border-0 outline-none bg-transparent p-0">
-                            <i class=" bx bx-bell f-15"></i>
-                        </button>
+                        <div class="switch-field align-items-center">
+                            <input type="radio" id="radio-one" name="switch-one" value="Active" checked />
+                            <label for="radio-one">Active</label>
+                            <input type="radio" id="radio-two" name="switch-one" value="Inactive" />
+                            <label for="radio-two">Inactive</label>
+                        </div>
                     </td>
                 </tr>
                 @endforeach
