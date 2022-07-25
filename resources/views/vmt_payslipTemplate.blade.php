@@ -2,7 +2,10 @@
 	<head>
 
 		<meta content="text/html; charset=UTF-8" http-equiv="content-type">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<style type="text/css">
+			div.page { position: absolute; top: 0px bottom: 0px; left: 0px; right: 0px; width: 100%; height: 100%; overflow: hidden; page-break-before: always; }
+        	div.page:first-child { page-break-before: avoid; }
 			@page {
 				margin: 0;
 			}
@@ -14,7 +17,7 @@
 				.c17{border-right-style:solid;padding:0pt 5.8pt 0pt 5.8pt;border-bottom-color:#ed7d31;border-top-width:1.5pt;border-right-width:1.5pt;border-left-color:#ed7d31;vertical-align:middle;border-right-color:#ed7d31;border-left-width:1.5pt;border-top-style:solid;border-left-style:solid;border-bottom-width:1.5pt;width:92.2pt;border-top-color:#ed7d31;border-bottom-style:solid}
 				.c52{border-right-style:solid;padding:0pt 5.8pt 0pt 5.8pt;border-bottom-color:#ed7d31;border-top-width:1.5pt;border-right-width:1.5pt;border-left-color:#ed7d31;vertical-align:bottom;border-right-color:#ed7d31;border-left-width:1.5pt;border-top-style:solid;border-left-style:solid;border-bottom-width:1.5pt;width:32.4pt;border-top-color:#ed7d31;border-bottom-style:solid}.c62{border-right-style:solid;padding:0pt 5.8pt 0pt 5.8pt;border-bottom-color:#ed7d31;border-top-width:1.5pt;border-right-width:1.5pt;border-left-color:#ed7d31;vertical-align:middle;border-right-color:#ed7d31;border-left-width:1.5pt;border-top-style:solid;border-left-style:solid;border-bottom-width:1.5pt;width:447.1pt;border-top-color:#ed7d31;border-bottom-style:solid}.c18{background-color:#ffffff;color:#6e6e6e;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:10.5pt;font-family:"Arial";font-style:normal}.c16{color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:10.5pt;font-family:"Calibri";font-style:normal}.c30{color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:11pt;font-family:"Arial";font-style:normal}.c31{color:#000000;font-weight:700;text-decoration:none;vertical-align:baseline;font-size:10.5pt;font-family:"Calibri";font-style:italic}.c44{color:#000000;font-weight:700;text-decoration:none;vertical-align:baseline;font-size:8pt;font-family:"Calibri";font-style:normal}.c2{color:#000000;font-weight:700;text-decoration:none;vertical-align:baseline;font-size:11pt;font-family:"Calibri";font-style:normal}.c19{color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:12pt;font-family:"Calibri";font-style:normal}.c43{color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:12pt;font-family:"Times New Roman";font-style:normal}
 				.c9{color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline !important;font-size:11pt;font-family:"Calibri";font-style:normal}
-				.c57{color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:10pt;font-family:"Calibri";font-style:normal}.c34{color:#000000;font-weight:700;text-decoration:none;vertical-align:baseline;font-size:9.5pt;font-family:"Tahoma";font-style:normal}.c1{color:#000000;font-weight:700;text-decoration:none;vertical-align:baseline;font-size:10.5pt;font-family:"Calibri";font-style:normal}.c55{color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:11pt;font-family:"Times New Roman";font-style:normal}.c0{padding-top:0pt;padding-bottom:0pt;line-height:1.0;orphans:2;widows:2;text-align:left}.c3{padding-top:0pt;padding-bottom:0pt;line-height:1.0;orphans:2;widows:2;text-align:center}.c60{padding-top:0pt;padding-bottom:0pt;line-height:0.06;orphans:2;widows:2;text-align:left}.c14{padding-top:0pt;padding-bottom:0pt;line-height:1.0;orphans:2;widows:2;text-align:right}.c13{padding-top:0pt;padding-bottom:0pt;line-height:1.15;text-align:left;height:12pt}.c11{font-size:11pt;font-family:"Calibri";color:#000000;font-weight:400}.c59{color:#000000;text-decoration:none;vertical-align:baseline;font-style:normal}.c41{margin-left:-5.8pt;border-spacing:0;border-collapse:collapse;margin-right:auto}.c46{padding-top:0pt;padding-bottom:0pt;line-height:1.1500000000000001;text-align:left}.c37{background-color:#ffffff;max-width:451.3pt;padding:72pt 72pt 72pt 72pt}.c53{font-size:9.5pt;font-family:"Tahoma";font-weight:400}.c54{font-size:11pt;font-family:"Tahoma";font-weight:700}.c58{height:21.6pt}.c49{height:14.3pt}.c61{vertical-align:super}.c10{height:20.6pt}.c45{background-color:#ffffff}.c42{height:55.7pt}.c24{background-color:#d9d9d9}.c56{margin-left:144pt}.c48{background-color:#d0cece}.c63{height:6.3pt}.c23{height:12pt}.title{padding-top:24pt;color:#000000;font-weight:700;font-size:36pt;padding-bottom:6pt;font-family:"Times New Roman";line-height:1.0;page-break-after:avoid;orphans:2;widows:2;text-align:left}.subtitle{padding-top:18pt;color:#666666;font-size:24pt;padding-bottom:4pt;font-family:"Georgia";line-height:1.0;page-break-after:avoid;font-style:italic;orphans:2;widows:2;text-align:left}li{color:#000000;font-size:12pt;font-family:"Times New Roman"}p{margin:0;color:#000000;font-size:12pt;font-family:"Times New Roman"}h1{padding-top:24pt;color:#000000;font-weight:700;font-size:24pt;padding-bottom:6pt;font-family:"Times New Roman";line-height:1.0;page-break-after:avoid;orphans:2;widows:2;text-align:left}h2{padding-top:18pt;color:#000000;font-weight:700;font-size:18pt;padding-bottom:4pt;font-family:"Times New Roman";line-height:1.0;page-break-after:avoid;orphans:2;widows:2;text-align:left}h3{padding-top:14pt;color:#000000;font-weight:700;font-size:14pt;padding-bottom:4pt;font-family:"Times New Roman";line-height:1.0;page-break-after:avoid;orphans:2;widows:2;text-align:left}h4{padding-top:12pt;color:#000000;font-weight:700;font-size:12pt;padding-bottom:2pt;font-family:"Times New Roman";line-height:1.0;page-break-after:avoid;orphans:2;widows:2;text-align:left}h5{padding-top:11pt;color:#000000;font-weight:700;font-size:11pt;padding-bottom:2pt;font-family:"Times New Roman";line-height:1.0;page-break-after:avoid;orphans:2;widows:2;text-align:left}h6{padding-top:10pt;color:#000000;font-weight:700;font-size:10pt;padding-bottom:2pt;font-family:"Times New Roman";line-height:1.0;page-break-after:avoid;orphans:2;widows:2;text-align:left}
+				.c57{color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:10pt;font-family:"Calibri";font-style:normal}.c34{color:#000000;font-weight:700;text-decoration:none;vertical-align:baseline;font-size:9.5pt;font-family:"Tahoma";font-style:normal}.c1{color:#000000;font-weight:700;text-decoration:none;vertical-align:baseline;font-size:10.5pt;font-family:"Calibri";font-style:normal}.c55{color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:11pt;font-family:"Times New Roman";font-style:normal}.c0{padding-top:0pt;padding-bottom:0pt;line-height:1.0;orphans:2;widows:2;text-align:left}.c3{padding-top:0pt;padding-bottom:0pt;line-height:1.0;orphans:2;widows:2;text-align:center}.c60{padding-top:0pt;padding-bottom:0pt;line-height:0.06;orphans:2;widows:2;text-align:left}.c14{padding-top:0pt;padding-bottom:0pt;line-height:1.0;orphans:2;widows:2;text-align:right}.c13{padding-top:0pt;padding-bottom:0pt;line-height:1.15;text-align:left;height:12pt}.c11{font-size:11pt;font-family:"Calibri";color:#000000;font-weight:400}.c59{color:#000000;text-decoration:none;vertical-align:baseline;font-style:normal}.c41{/*margin-left:-5.8pt*/width:100%;border-spacing:0;border-collapse:collapse;margin-right:auto}.c46{padding-top:0pt;padding-bottom:0pt;line-height:1.1500000000000001;text-align:left}.c37{background-color:#ffffff;/*max-width:451.3pt;*/padding:32pt 32pt 32pt 32pt}.c53{font-size:9.5pt;font-family:"Tahoma";font-weight:400}.c54{font-size:11pt;font-family:"Tahoma";font-weight:700}.c58{height:21.6pt}.c49{height:14.3pt}.c61{vertical-align:super}.c10{height:20.6pt}.c45{background-color:#ffffff}.c42{height:55.7pt}.c24{background-color:#d9d9d9}.c56{margin-left:144pt}.c48{background-color:#d0cece}.c63{height:6.3pt}.c23{height:12pt}.title{padding-top:24pt;color:#000000;font-weight:700;font-size:36pt;padding-bottom:6pt;font-family:"Times New Roman";line-height:1.0;page-break-after:avoid;orphans:2;widows:2;text-align:left}.subtitle{padding-top:18pt;color:#666666;font-size:24pt;padding-bottom:4pt;font-family:"Georgia";line-height:1.0;page-break-after:avoid;font-style:italic;orphans:2;widows:2;text-align:left}li{color:#000000;font-size:12pt;font-family:"Times New Roman"}p{margin:0;color:#000000;font-size:12pt;font-family:"Times New Roman"}h1{padding-top:24pt;color:#000000;font-weight:700;font-size:24pt;padding-bottom:6pt;font-family:"Times New Roman";line-height:1.0;page-break-after:avoid;orphans:2;widows:2;text-align:left}h2{padding-top:18pt;color:#000000;font-weight:700;font-size:18pt;padding-bottom:4pt;font-family:"Times New Roman";line-height:1.0;page-break-after:avoid;orphans:2;widows:2;text-align:left}h3{padding-top:14pt;color:#000000;font-weight:700;font-size:14pt;padding-bottom:4pt;font-family:"Times New Roman";line-height:1.0;page-break-after:avoid;orphans:2;widows:2;text-align:left}h4{padding-top:12pt;color:#000000;font-weight:700;font-size:12pt;padding-bottom:2pt;font-family:"Times New Roman";line-height:1.0;page-break-after:avoid;orphans:2;widows:2;text-align:left}h5{padding-top:11pt;color:#000000;font-weight:700;font-size:11pt;padding-bottom:2pt;font-family:"Times New Roman";line-height:1.0;page-break-after:avoid;orphans:2;widows:2;text-align:left}h6{padding-top:10pt;color:#000000;font-weight:700;font-size:10pt;padding-bottom:2pt;font-family:"Times New Roman";line-height:1.0;page-break-after:avoid;orphans:2;widows:2;text-align:left}
 		</style>
 	</head>
 	<body class="c37">
@@ -191,10 +194,10 @@
 				<td class="c6" colspan="1" rowspan="1">
 					<p class="c3"><span class="c1">Availed CL</span></p>
 				</td>
-				<td class="c6" colspan="2" rowspan="1">
+				<td class="c6" colspan="1" rowspan="1">
 					<p class="c3"><span class="c1">Balance SL</span></p>
 				</td>
-				<td class="c6" colspan="1" rowspan="1">
+				<td class="c6" colspan="2" rowspan="1">
 					<p class="c0"><span class="c2">Balance CL</span></p>
 				</td>
 			</tr>
@@ -211,10 +214,10 @@
 				<td class="c7" colspan="1" rowspan="1">
 					<p class="c3"><span class="c1">-</span></p>
 				</td>
-				<td class="c7" colspan="2" rowspan="1">
+				<td class="c7" colspan="1" rowspan="1">
 					<p class="c3"><span class="c1">-</span></p>
 				</td>
-				<td class="c7" colspan="1" rowspan="1">
+				<td class="c7" colspan="2" rowspan="1">
 					<p class="c3"><span class="c2">-</span></p>
 				</td>
 			</tr>
@@ -236,10 +239,10 @@
 				<td class="c8" colspan="1" rowspan="1">
 					<p class="c3"><span class="c1">EARNED AMOUNT</span></p>
 				</td>
-				<td class="c8" colspan="2" rowspan="1">
+				<td class="c8" colspan="1" rowspan="1">
 					<p class="c3"><span class="c1">DEDUCTION</span></p>
 				</td>
-				<td class="c8" colspan="1" rowspan="1">
+				<td class="c8" colspan="2" rowspan="1">
 					<p class="c3"><span class="c1">AMOUNT</span></p>
 				</td>
 			</tr>
@@ -259,8 +262,8 @@
 				<td class="c17" colspan="1" rowspan="1">
 					<p class="c14"><span class="c11"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> </span><span class="c16">4560</span></p>
 				</td>
-				<td class="c17" colspan="2" rowspan="1">
-					<p class="c0"><span class="c1">EPF</span></p></td><td class="c17" colspan="1" rowspan="1"><p class="c14"><span class="c9"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> 638</span></p>
+				<td class="c17" colspan="1" rowspan="1">
+					<p class="c0"><span class="c1">EPF</span></p></td><td class="c17" colspan="2" rowspan="1"><p class="c14"><span class="c9"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> 638</span></p>
 				</td>
 			</tr>
 			<tr class="c10">
@@ -282,10 +285,10 @@
 						<span class="c16">2280</span>
 					</p>
 				</td>
-				<td class="c17" colspan="2" rowspan="1">
+				<td class="c17" colspan="1" rowspan="1">
 					<p class="c0"><span class="c1">ESIC</span></p>
 				</td>
-				<td class="c17" colspan="1" rowspan="1">
+				<td class="c17" colspan="2" rowspan="1">
 					<p class="c14"><span class="c9"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> 58</span></p>
 				</td>
 			</tr>
@@ -302,10 +305,10 @@
 				<td class="c17" colspan="1" rowspan="1">
 					<p class="c14"><span class="c11"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> 760</span></p>
 				</td>
-				<td class="c17" colspan="2" rowspan="1">
+				<td class="c17" colspan="1" rowspan="1">
 					<p class="c0"><span class="c1">PT</span></p>
 				</td>
-				<td class="c17" colspan="1" rowspan="1">
+				<td class="c17" colspan="2" rowspan="1">
 					<p class="c14"><span class="c9"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> {{$employee->PROF_TAX}}</span></p>
 				</td>
 			</tr>
@@ -325,10 +328,10 @@
 						</span>
 					</p>
 				</td>
-				<td class="c17" colspan="2" rowspan="1">
+				<td class="c17" colspan="1" rowspan="1">
 					<p class="c0"><span class="c1">TDS</span></p>
 				</td>
-				<td class="c17" colspan="1" rowspan="1">
+				<td class="c17" colspan="2" rowspan="1">
 					<p class="c14"><span class="c9"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> {{$employee->TDS}}</span></p>
 				</td>
 			</tr>
@@ -344,10 +347,10 @@
 				<td class="c17" colspan="1" rowspan="1">
 					<p class="c14 c23"><span class="c16"></span></p>
 				</td>
-				<td class="c17" colspan="2" rowspan="1">
+				<td class="c17" colspan="1" rowspan="1">
 					<p class="c0"><span class="c1">CANT-DEDUCTION</span></p>
 				</td>
-				<td class="c17" colspan="1" rowspan="1">
+				<td class="c17" colspan="2" rowspan="1">
 					<p class="c14"><span class="c9"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> {{$employee->CANTEEN_DEDN}}</span></p>
 				</td>
 			</tr>
@@ -364,12 +367,12 @@
 				<td class="c17" colspan="1" rowspan="1">
 					<p class="c14 c23"><span class="c16"></span></p>
 				</td>
-				<td class="c17" colspan="2" rowspan="1">
+				<td class="c17" colspan="1" rowspan="1">
 					<p class="c0">
 						<span class="c1">SALARY ADVANCE</span>
 					</p>
 				</td>
-				<td class="c17" colspan="1" rowspan="1">
+				<td class="c17" colspan="2" rowspan="1">
 					<p class="c14"><span class="c9"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> {{$employee->SAL_ADV}}</span></p>
 				</td>
 			</tr>
@@ -386,10 +389,10 @@
 				<td class="c17" colspan="1" rowspan="1">
 					<p class="c14 c23"><span class="c16"></span></p>
 				</td>
-				<td class="c17" colspan="2" rowspan="1">
+				<td class="c17" colspan="1" rowspan="1">
 					<p class="c0"><span class="c1">OTHER DEDUCTIONS</span></p>
 				</td>
-				<td class="c17" colspan="1" rowspan="1">
+				<td class="c17" colspan="2" rowspan="1">
 					<p class="c14"><span class="c9"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> {{$employee->OTHER_DEDUC}}</span></p>
 				</td>
 			</tr>
@@ -406,10 +409,10 @@
 				<td class="c8" colspan="1" rowspan="1">
 					<p class="c14"><span class="c11"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> </span><span class="c1">7666</span></p>
 				</td>
-				<td class="c8" colspan="2" rowspan="1">
+				<td class="c8" colspan="1" rowspan="1">
 					<p class="c0"><span class="c1">TOTAL DEDUCTION</span></p>
 				</td>
-				<td class="c8" colspan="1" rowspan="1">
+				<td class="c8" colspan="2" rowspan="1">
 					<p class="c14"><span class="c11"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> </span><span class="c2">{{$employee->TOTAL_DEDUCTIONS}}</span></p>
 				</td>
 			</tr>

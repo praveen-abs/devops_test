@@ -101,6 +101,7 @@ class VmtPaySlipController extends Controller
         return $html;
         // return view('vmt_employee_pay_slip', compact('employees', 'html'));  
     }
+
      public function pdfview(Request $request)
     {
         $month = $request->selectedPaySlipMonth;
@@ -109,8 +110,14 @@ class VmtPaySlipController extends Controller
                         ['PAYROLL_MONTH','=', $request->selectedPaySlipMonth],
                         ])->first();
             view()->share('employee',$data);
-      
-      return  PDF::loadView('vmt_payslipTemplate', $data)->download($month.'Payslip.pdf');
+            
+        $view = view('vmt_payslipTemplate', $data);
+        $html = $view->render();
+        $html = preg_replace('/>\s+</', "><", $html);
+        $pdf = PDF::loadHTML($html);
+
+        return $pdf->download($month.'Payslip.pdf');
+        //   return  PDF::loadView('vmt_payslipTemplate', $data)->download($month.'Payslip.pdf');
        
     }
     //vmt_payslipTemplate.blade.php
