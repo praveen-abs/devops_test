@@ -56,6 +56,7 @@ class VmtPaySlipController extends Controller
         $result['TOTAL_FIXED_GROSS'] = 0;
         $result['EPFR'] = 0;
         $result['TOTAL_PF_WAGES'] = 0;
+        
         if ($data && $data[0]) {
             $result['CTC'] = $data[0]->CTC;
             $result['TOTAL_EARNED_GROSS'] = $data[0]->TOTAL_EARNED_GROSS;
@@ -64,6 +65,11 @@ class VmtPaySlipController extends Controller
             $result['HRA'] = $data[0]->HRA;
             $result['TOTAL_FIXED_GROSS'] = $data[0]->TOTAL_FIXED_GROSS;
             $result['EPFR'] = $data[0]->EPFR;
+
+            $result['BASIC'] = $data[0]->BASIC;
+            $result['HRA'] = $data[0]->HRA;
+            $result['NET_TAKE_HOME'] = $data[0]->NET_TAKE_HOME;
+            $result['PAYROLL_MONTH'] = $data[0]->PAYROLL_MONTH;
         }
         foreach($data as $d) {
             $result['TOTAL_PF_WAGES'] += $d->PF_WAGES;

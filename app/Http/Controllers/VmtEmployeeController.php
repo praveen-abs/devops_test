@@ -70,7 +70,7 @@ class VmtEmployeeController extends Controller
     }
     //
     public function showEmployeeDirectory(Request $request){
-        $vmtEmployees = VmtEmployee::leftJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
+        $vmtEmployees = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')
                             ->leftJoin('vmt_employee_office_details','vmt_employee_office_details.user_id', '=', 'users.id' )
                             ->select(
                                 'vmt_employee_details.*', 
@@ -87,47 +87,7 @@ class VmtEmployeeController extends Controller
                             ->orderBy('created_at', 'DESC')
                             ->whereNotNull('emp_no')
                             ->get();
-        foreach($vmtEmployees as $emp) {
-            $assignedGoals  = VmtEmployeePMSGoals::where('employee_id', $emp->id)->first();
-            if ($assignedGoals) {
-                $percentArray = (json_decode($assignedGoals->hr_kpi_percentage, true));
-                if ($percentArray && count($percentArray) > 0) {
-                    $emp['percentage'] = array_sum($percentArray)/count($percentArray);
-                } else {
-                    $emp['percentage'] = 0;
-                }
-            } else {
-                $emp['percentage'] = 0;
-            }
-        }
-        $employees = VmtEmployee::leftJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
-        ->select(
-            'vmt_employee_details.*', 
-            'users.name as emp_name', 
-            'users.avatar as avatar', 
-        )
-        ->orderBy('created_at', 'ASC')
-        ->whereNotNull('emp_no')
-        ->get();
-        if (auth()->user()->hasrole('Employee')) {
-            $emp = VmtEmployee::join('vmt_employee_office_details',  'user_id', '=', 'vmt_employee_details.userid')->where('userid', auth()->user()->id)->first();
-            $rev = VmtEmployee::where('emp_no', $emp->l1_manager_code)->first();
-            $users = User::where('id', $rev->userid)->get();
-        } elseif (auth()->user()->hasrole('Manager')) {
-            $users = User::join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.reviewer_id', '=', 'users.id')->get();
-        } else {
-            $currentEmpCode = VmtEmployee::where('userid', auth::user()->id)->first()->value('emp_no');
-            $users = VmtEmployeeOfficeDetails::leftJoin('users', 'users.id', '=', 'vmt_employee_office_details.user_id')
-            ->select(
-                'users.name', 
-                'users.id as id',
-                'vmt_employee_office_details.officical_mail as email',
-            )
-            ->orderBy('users.name', 'ASC')
-            ->where('l1_manager_code', strval($currentEmpCode))
-            ->get();
-        }
-        return view('vmt_employeeDirectory', compact('vmtEmployees', 'users', 'employees'));
+        return view('vmt_employeeDirectory', compact('vmtEmployees'));
     }
 
     //
