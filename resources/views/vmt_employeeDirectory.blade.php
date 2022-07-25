@@ -394,7 +394,7 @@ tr:last-child td:last-child {
                     <td> <span>{{$employee->emp_no}}</span></td>
                     <td><span>{{$employee->designation}}</span></td>
                     <td><span>{{$employee->l1_manager_name }}</span></td>
-                    <td><input type="date" name="" class="form-control" id=""></td>
+                    <td><label for="" class="form-label"></label></td>
                     <!-- <td><span>{{$employee->email_id }}</span></td> -->
                     <td><span> B <sup>+</sup></span></td>
                     <td><span>70%</span></td>
