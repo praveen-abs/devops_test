@@ -148,7 +148,6 @@
 
 
 
- 
                 
                 </div>
             </div>
@@ -171,124 +170,129 @@
             </div>
         </div>
         @else
-        <button id="add-goals" class="rounded-pill py-1 px-2 mx-2 text-white btn btn-primary mb-2" style="float:right;"><h6 class="m-0 text-white p-2"><i class="text-white fa fa-plus mr-2"></i><b>Add</b></h6></button>
-        <div style="width:100%; overflow:auto;">
-            <table id='empTable' class='table dt-responsive nowrap'>
-                <thead>
-                    <tr style="background:#f6f8fb;">
-                        <th class="p-3"></th>
-                        <th class=""  style="width : 30px"> </th>
-                        <th class="p-3">Employee ID</th>
-                        <th class="p-3">Employee name</th>
-                        <th class="p-3">Manager</th>
-                        <th class="p-3">Assignment Period</th>
-                        <th class="p-3">Employee Status</th>
-                        <th class="p-3">Manager Status</th>
-                        <th class="p-3">Average Rating</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($empGoals as $emp)
-                    <tr>
-                        <td>
-                            <img class="rounded-circle header-profile-user" src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif" alt="Header Avatar">
-                        </td>
-                        <td style="vertical-align : middle">
-                            @if(auth()->user()->hasrole('Employee'))
-                                <a target="_blank" href="{{url('vmt-pmsappraisal-review?id='.$emp->kpi_table_id)}}"><span class="mr-10 icon"><i class="fa fa-external-link"></i></span></a>
-                            @else
-                                <a target="_blank" href="{{url('pms-employee-reviews?goal_id='.$emp->kpi_table_id.'&user_id='.$emp->userid)}}"><span class="mr-10 icon"><i class="fa fa-external-link"></i></span></a>
-                            @endif
-                        </td>
+        <div class="container-fluid px-2 bg-white">        
+       
+       <div class="table-responsive">
+       <button id="add-goals" class="btn btn-orange add-assign-goals " style="float:right;"><i class="ri-add-line fw-bold mx-1"></i></i>Add</button>
+           <table id='empTable' class=' table table-borderd  mb-0 w-100'>
+           <thead class="table-light">
+                   <tr>
+                       <th scope="col">Employee Name</th>
+                       <th scope="col">Employee View </th>
+                       <th scope="col">Employee ID</th>
+                       <th scope="col">Employee name</th>
+                       <th scope="col">Manager</th>
+                       <th scope="col">Assignment Period</th>
+                       <th scope="col">Employee Status</th>
+                       <th scope="col">Manager Status</th>
+                       <th scope="col">Average Rating</th>
+                   </tr>
+               </thead>
+               <tbody>
+                   @foreach($empGoals as $emp)
+                   <tr>
+                       <td>
+                           <img class="rounded-circle header-profile-user" src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif" alt="Header Avatar">
+                       </td>
+                       <td>
+                           @if(auth()->user()->hasrole('Employee'))
+                               <a target="_blank" href="{{url('vmt-pmsappraisal-review?id='.$emp->kpi_table_id)}}"><span class="mr-10 icon"><i class="fa fa-external-link"></i></span></a>
+                           @else
+                               <a target="_blank" href="{{url('pms-employee-reviews?goal_id='.$emp->kpi_table_id.'&user_id='.$emp->userid)}}"><span class="mr-10 icon"><i class="fa fa-external-link"></i></span></a>
+                           @endif
+                       </td>
 
-                        <td class="p-3">{{$emp->emp_no}}</td>
-                        <td class="p-3">{{$emp->emp_name}}</td>
-                        <td class="p-3">
-                                {{$users[0]->name}}
-                        </td>
-                        <td class="p-3">{{json_decode($emp->assignment_period, true) ? json_decode($emp->assignment_period, true)['assignment_period_start'] : $emp->assignment_period}}</td>
-                        <td class="p-3"><!-- Employee status -->
-
-
-                               @if(auth()->user()->hasrole('Employee'))
-                                    
-                                    <!-- If employee sets the KPI -->
-                                    @if(auth::user()->id == $emp->author_id)
-
-                                        {{$emp->is_employee_submitted  ? 'Submitted' :  'Not yet submitted'  }}
+                       <td class="">{{$emp->emp_no}}</td>
+                       <td class="">{{$emp->emp_name}}</td>
+                       <td class="">
+                               {{$users[0]->name}}
+                       </td>
+                       <td class="">{{json_decode($emp->assignment_period, true) ? json_decode($emp->assignment_period, true)['assignment_period_start'] : $emp->assignment_period}}</td>
+                       <td class=""><!-- Employee status -->
 
 
-                                            {{--
-                                                 @if($emp->is_manager_approved) 
-                                                    @if($emp->is_employee_accepted) 
-                                                        @if($emp->is_employee_submitted) 
-                                                            {{ 'Submitted'}}
-                                                        @else
-                                                            {{'Accepted, Not yet submitted'}}
-                                                        @endif
-                                                    @else
-                                                        {{ 'Not yet accepted'}}
-                                                    @else
-                                                        {{ 'Not yet approved'}}
-                                                    @endif 
-                                            --}}
-                                    @else 
-                                            {{$emp->is_employee_submitted  ? 'Submitted' :  'Not yet submitted'  }}
-                                    @endif
-                                @endif
-                                @if(auth()->user()->hasrole('Manager'))
+                              @if(auth()->user()->hasrole('Employee'))
+                                   
+                                   <!-- If employee sets the KPI -->
+                                   @if(auth::user()->id == $emp->author_id)
 
-                                    {{$emp->is_employee_submitted  ? 'Submitted' :  'Not yet submitted'  }}
-
-                                    {{--    @if($emp->is_employee_accepted ) 
-                                            {{$emp->is_employee_submitted  ? 'Submitted' :  'Accepted, Not yet submitted'  }}
-                                        @else 
-                                        {{ 'Not yet accepted'}}
-                                        @endif
-                                    --}}
-                                @endif
-
-                                @if(auth()->user()->hasrole(['Admin','HR']))
-
-                                    @if($emp->is_employee_accepted ) 
-                                        {{$emp->is_employee_submitted  ? 'Submitted' :  'Accepted, Not yet submitted'  }}
-                                    @else 
-                                    {{ 'Not yet accepted'}}
-                                    @endif
-
-                                @endif                                
+                                       {{$emp->is_employee_submitted  ? 'Submitted' :  'Not yet submitted'  }}
 
 
-                        </td>   
-                        <td class="p-3"><!-- Manager status -->
-                            @if(auth()->user()->hasrole('Employee'))
+                                           {{--
+                                                @if($emp->is_manager_approved) 
+                                                   @if($emp->is_employee_accepted) 
+                                                       @if($emp->is_employee_submitted) 
+                                                           {{ 'Submitted'}}
+                                                       @else
+                                                           {{'Accepted, Not yet submitted'}}
+                                                       @endif
+                                                   @else
+                                                       {{ 'Not yet accepted'}}
+                                                   @else
+                                                       {{ 'Not yet approved'}}
+                                                   @endif 
+                                           --}}
+                                   @else 
+                                           {{$emp->is_employee_submitted  ? 'Submitted' :  'Not yet submitted'  }}
+                                   @endif
+                               @endif
+                               @if(auth()->user()->hasrole('Manager'))
 
-                                {{$emp->is_manager_submitted  ? 'Reviewed' :  'Not yet reviewed'  }}
+                                   {{$emp->is_employee_submitted  ? 'Submitted' :  'Not yet submitted'  }}
 
-                            @endif
-                            @if(auth()->user()->hasrole('Manager'))
+                                   {{--    @if($emp->is_employee_accepted ) 
+                                           {{$emp->is_employee_submitted  ? 'Submitted' :  'Accepted, Not yet submitted'  }}
+                                       @else 
+                                       {{ 'Not yet accepted'}}
+                                       @endif
+                                   --}}
+                               @endif
 
-                                @if($emp->is_manager_submitted ) 
-                                    Reviewed
-                                @else 
-                                    Not yet Reviewed
-                                @endif
+                               @if(auth()->user()->hasrole(['Admin','HR']))
 
-                            @endif
+                                   @if($emp->is_employee_accepted ) 
+                                       {{$emp->is_employee_submitted  ? 'Submitted' :  'Accepted, Not yet submitted'  }}
+                                   @else 
+                                   {{ 'Not yet accepted'}}
+                                   @endif
 
-                            @if(auth()->user()->hasrole(['Admin','HR']))
+                               @endif                                
 
-                                {{$emp->is_manager_submitted  ? 'Reviewed' :  'Not yet Reviewed'  }}
 
-                            @endif
-                        </td>                       
-                        <td class="p-3">{{$emp['ranking']}}</td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-        @endif
+                       </td>   
+                       <td class=""><!-- Manager status -->
+                           @if(auth()->user()->hasrole('Employee'))
+
+                               {{$emp->is_manager_submitted  ? 'Reviewed' :  'Not yet reviewed'  }}
+
+                           @endif
+                           @if(auth()->user()->hasrole('Manager'))
+
+                               @if($emp->is_manager_submitted ) 
+                                   Reviewed
+                               @else 
+                                   Not yet Reviewed
+                               @endif
+
+                           @endif
+
+                           @if(auth()->user()->hasrole(['Admin','HR']))
+
+                               {{$emp->is_manager_submitted  ? 'Reviewed' :  'Not yet Reviewed'  }}
+
+                           @endif
+                       </td>                       
+                       <td class="">{{$emp['ranking']}}</td>
+                   </tr>
+                   @endforeach
+               </tbody>
+           </table>
+       </div>
+       </div>
+       @endif
+   </div>
+        
     </div>
     <!-- <div class="assign-cards-wrapper">
         <div class="card mt-5 assignCards">

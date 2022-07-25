@@ -74,7 +74,7 @@
                                 <div class="col-xs-8">
                                     <p class="text-light-black font-moderate font-mediumbold"
                                         style="margin-bottom: 4px;">
-                                        Monthly CTC: <span>₹25,000.00</span>
+                                        Monthly CTC: <span>₹{{($result['CTC'])/12}}</span>
                                         <span class="separation-line"></span>
                                         <a class="font-sm  font-regular text-secondary" data-ember-action=""
                                             data-ember-action-193="193">
@@ -85,12 +85,12 @@
                                         </a>
                                     </p>
                                     <div class="group font-small text-light-grey">
-                                        Yearly CTC: ₹3,00,000.00
+                                        Yearly CTC: ₹{{$result['CTC']}}
                                     </div>
                                     <div class="salary-components-section">
                                         <div class="salary-component-item earnings">
                                             <p class=" font-mm text-grey">Earnings</p>
-                                            <p class="font-medium">₹23,200.00</p>
+                                            <p class="font-medium">₹{{$result['TOTAL_EARNED_GROSS']}}</p>
                                         </div>
                                         <div class="salary-component-item reimbursements">
                                             <p class=" font-mm text-grey">Reimbursements</p>
@@ -98,7 +98,7 @@
                                         </div>
                                         <div class="salary-component-item deductions">
                                             <p class=" font-mm text-grey">Deductions</p>
-                                            <p class="font-medium">₹1,800.00</p>
+                                            <p class="font-medium">₹{{$result['TOTAL_DEDUCTIONS']}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -119,7 +119,7 @@
                                             Basic
                                         </td>
                                         <td width="25%" class="text-right font-medium font-mediumbold ">
-                                            ₹12,500.00
+                                            ₹{{$result['BASIC']}}
                                         </td>
                                     </tr>
                                     <tr>
@@ -127,7 +127,7 @@
                                             House Rent Allowance
                                         </td>
                                         <td width="25%" class="text-right font-medium font-mediumbold ">
-                                            ₹6,250.00
+                                            ₹{{$result['HRA']}}
                                         </td>
                                     </tr>
                                     <tr>
@@ -135,7 +135,7 @@
                                             Fixed Allowance
                                         </td>
                                         <td width="25%" class="text-right font-medium font-mediumbold">
-                                            ₹4,450.00
+                                            ₹{{$result['TOTAL_FIXED_GROSS']}}
                                         </td>
                                     </tr>
                                     <!---->
@@ -150,7 +150,7 @@
                                             EPF - Employer Contribution
                                         </td>
                                         <td class="text-right font-medium font-mediumbold">
-                                            ₹1,800.00
+                                            ₹{{$compensatory && $compensatory->epf_employer_contribution ? $compensatory->epf_employer_contribution : 0}}
                                         </td>
                                     </tr>
                                 </tbody>
@@ -161,7 +161,7 @@
                                                 <span class="vertical-align-text-bottom ctc-label mx-2">Monthly
                                                     CTC</span>
                                                 <span class="font-mediumbold font-moderate">
-                                                    ₹25,000.00
+                                                    ₹{{($result['CTC'])/12}}
                                                 </span>
                                             </div>
                                         </td>
@@ -727,7 +727,7 @@
                                                     Total Contribution
                                                 </label>
                                                 <div class="font-semibold font-large">
-                                                    ₹3,600.00
+                                                    ₹{{$compensatory && $compensatory->epf_employer_contribution ? $compensatory->epf_employee + $compensatory->epf_employer_contribution : 0}}
                                                 </div>
                                             </div>
                                         </div>
@@ -735,11 +735,11 @@
                                     <div class="col-xs-6 col-lg-6 col-md-6 col-xl-6  col-sm-6 contribution-stats ">
                                         <div class="text-grey mt-1 mb-2" style="margin-top:3px;margin-bottom:8px;">
                                             Total Employer Contribution : <span
-                                                class="text-black font-medium font-mediumbold">₹1,800.00</span>
+                                                class="text-black font-medium font-mediumbold">₹{{$compensatory && $compensatory->epf_employer_contribution ?  $compensatory->epf_employer_contribution : 0}}</span>
                                         </div>
                                         <div class="text-grey  mt-1 mb-2">
                                             Total Employee Contribution : <span
-                                                class="text-black font-medium font-mediumbold">₹1,800.00</span>
+                                                class="text-black font-medium font-mediumbold">₹{{$compensatory && $compensatory->epf_employee ? $compensatory->epf_employee : 0}}</span>
                                         </div>
                                     </div>
                                     <div class="col-xs-3 col-lg-3 col-md-3 col-xl-3  col-sm-3">
@@ -781,25 +781,27 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach($data as $d)
                                         <tr>
-                                            <td>May 2022</td>
-                                            <td class="text-right">₹15,000.00</td>
-                                            <td class="text-right">₹1,800.00</td>
-                                            <td class="text-right">₹0.00</td>
-                                            <td class="text-right">₹1,800.00</td>
-                                            <td class="text-right">₹0.00</td>
-                                            <td class="text-right">₹3,600.00</td>
+                                            <td>{{$d->PAYROLL_MONTH}}</td>
+                                            <td class="text-right">₹{{$d->PF_WAGES}}</td>
+                                            <td class="text-right">₹{{$compensatory && $compensatory->epf_employee ? $compensatory->epf_employee : 0}}</td>
+                                            <td class="text-right">₹{{$compensatory && $compensatory->esic_employee ? $compensatory->esic_employee : 0}}</td>
+                                            <td class="text-right">₹{{$compensatory && $compensatory->epf_employer_contribution ? $compensatory->epf_employer_contribution : 0}}</td>
+                                            <td class="text-right">₹{{$compensatory && $compensatory->esic_employer_contribution ? $compensatory->esic_employer_contribution : 0}}</td>
+                                            <td class="text-right">₹{{$compensatory && $compensatory->epf_employer_contribution ? $compensatory->epf_employee + $compensatory->epf_employer_contribution : 0}}</td>
                                         </tr>
+                                        @endforeach
                                     </tbody>
                                     <tfoot>
                                         <tr class="font-semibold">
                                             <td>Total</td>
-                                            <td class="text-right">₹15,000.00</td>
-                                            <td class="text-right">₹1,800.00</td>
-                                            <td class="text-right">₹0.00</td>
-                                            <td class="text-right">₹1,800.00</td>
-                                            <td class="text-right">₹0.00</td>
-                                            <td class="text-right">₹3,600.00</td>
+                                            <td class="text-right">₹{{$result['TOTAL_PF_WAGES']}}</td>
+                                            <td class="text-right">₹{{$compensatory && $compensatory->epf_employee ? ($compensatory->epf_employee) * count($data) : 0}}</td>
+                                            <td class="text-right">₹{{$compensatory && $compensatory->esic_employee ? ($compensatory->esic_employee) * count($data) : 0}}</td>
+                                            <td class="text-right">₹{{$compensatory && $compensatory->epf_employer_contribution ? ($compensatory->epf_employer_contribution) * count($data) : 0}}</td>
+                                            <td class="text-right">₹{{$compensatory && $compensatory->esic_employer_contribution ? ($compensatory->esic_employer_contribution) * count($data) : 0}}</td>
+                                            <td class="text-right">₹{{$compensatory && $compensatory->epf_employer_contribution ? ($compensatory->epf_employee + $compensatory->epf_employer_contribution) * count($data) : 0}}</td>
                                         </tr>
                                     </tfoot>
                                 </table>
