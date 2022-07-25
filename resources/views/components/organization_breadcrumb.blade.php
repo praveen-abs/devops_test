@@ -6,7 +6,7 @@
 
             <div class="page-title-right">
                 <ol class="breadcrumb m-0  fw-bold ">
-                    <li class="breadcrumb-item"><a href="{{url('vmt_noData')}}" class="text-muted">Dashboard</a></li>
+                    
                     <li class="breadcrumb-item"><a href="{{url('vmt-employess/directory')}}" class="text-muted">Directory</a></li>
                     <li class="breadcrumb-item"><a href="{{url('vmt-employee-hierarchy')}}" class="text-muted">ORG
                             structure</a></li>
