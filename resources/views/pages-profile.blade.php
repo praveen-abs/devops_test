@@ -22,7 +22,7 @@
                                             <!-- <a href="#"> <img class="rounded-circle header-profile-user"
                                                     src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/user-profile-img.jpg') }}@endif"
                                                     alt="Header Avatar"></a> -->
-                                            <img class="  soc-det-img rounded-circle" src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif" alt="">
+                                            <img class="  soc-det-img rounded-circle" src="@if ($user->avatar != ''){{ URL::asset('images/' . $user->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif" alt="">
                                             <span class="personal-edit img-edit"><a href="#" class="edit-icon"
                                                     data-bs-toggle="modal" data-bs-target="#personal_info"><i
                                                         class="ri-pencil-fill"></i></a></span>
