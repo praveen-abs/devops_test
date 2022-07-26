@@ -622,29 +622,56 @@ class VmtEmployeeController extends Controller
         $returnfailedMsg = '';
         $addedCount = 0;
         $failedCount = 0;
+        //dd($data[0]);
         foreach($data[0] as $key => $row) {
-            /* $clientData  = VmtClientMaster::first();
+            //dd($row);
+            $clientData  = VmtClientMaster::first();
             $maxId  = VmtEmployee::max('id')+1;
             if ($clientData) {
                 $empNo = $clientData->client_code.$maxId;
             } else {
                 $empNo = $maxId;
-            }*/
-
+            }
+            $row['doj'] = date('Y-m-d', $row['doj']);
+            $row['mobile_no'] = (int)$row['mobile_no'];
             $rules = [
                 'employee_name' => 'required|regex:/(^([a-zA-z.]+)(\d+)?$)/u',
-                'email' => 'required|email|unique:users,email',
+                'email' => 'required|email| unique:users,email',
+                'doj' => 'required|date',
+                'mobile_no' => 'required|regex:/^([0-9]{10})?$/u|numeric',
+                'designation' => 'required|regex:/(^([a-zA-z.]+)(\d+)?$)/u',
+                'basic' => 'required|numeric',
+                'hra' => 'required|numeric',
+                'statutory_bonus' => 'required|numeric',
+                'child_education_allowance' => 'required|numeric',
+                'food_coupon' => 'required|numeric',
+                'lta' => 'required|numeric',
+                'special_allowance' => 'required|numeric',
+                'other_allowance' => 'required|numeric',
+                'epf_employer_contribution' => 'required|numeric',
+                'insurance' => 'required|numeric',
+                'graduity' => 'required|numeric',
+                'epf_employee' => 'required|numeric',
+                'esic_employee' => 'required|numeric',
+                'professional_tax' => 'required|numeric',
+                'labour_welfare_fund' => 'required|numeric',
             ];
             $messages = [
                 'required' => 'The :attribute field is required.',
+                'min' => 'The :attribute field should be atleast :min character.',
+                'max' => 'The :attribute field should be not more than :max character.',
+                'numeric' => 'The :attribute field sould contain only numbers.',
                 'email' => 'The :attribute field email is not valid.',
+                'date' => 'The :attribute field date is not valid.',
+                'in' => 'The :attribute field date is not valid. the option should be like :in',
                 'regex' => 'The :attribute field is not valid.',
-                'unique' => 'The :attribute field should be unique'
+                'unique' => 'The :attribute field should be unique',
+                'before' => 'The :attribute should be above 18 years.',
             ];
-            
             $validator = Validator::make($row, $rules, $messages);
             
             if ($validator->passes()) {
+                
                 $user =  User::create([
                     'name' => $row['employee_name'],
                     'email' => $row["email"],
@@ -652,12 +679,62 @@ class VmtEmployeeController extends Controller
                     'avatar' =>  'avatar-1.jpg',
                 ]);
 
-                $addedCount++;
-                $returnsuccessMsg .= $addedCount." get added";
-               
+                $user->active = 0; 
+                $user->save();
+                $user->assignRole("Employee");
+                
+                $newEmployee = new VmtEmployee;
+                $newEmployee->userid = $user->id;
+                $newEmployee->emp_no   =    $empNo;
+                //$newEmployee->gender   =    $row["gender"];
+                $newEmployee->doj   =    $row["doj"]; 
+                $newEmployee->dol   =    $row["doj"];
+                $newEmployee->save();
+                
+                if($newEmployee){
+                    $empOffice  = new VmtEmployeeOfficeDetails;
+                    $empOffice->emp_id      = $newEmployee->id;
+                    $empOffice->user_id     = $newEmployee->userid;
+                    $empOffice->designation = $row["designation"];
+                    $empOffice->save();
+                }
+                
+                if ($empOffice) {
+                    $compensatory = new Compensatory;
+                    $compensatory->user_id = $newEmployee->userid;
+                    $compensatory->basic = $row["basic"];
+                    $compensatory->hra = $row["hra"];
+                    $compensatory->Statutory_bonus = $row["statutory_bonus"];
+                    $compensatory->child_education_allowance = $row["child_education_allowance"];
+                    $compensatory->food_coupon = $row["food_coupon"];
+                    $compensatory->lta = $row["lta"];
+                    $compensatory->special_allowance = $row["special_allowance"];
+                    $compensatory->other_allowance = $row["other_allowance"];
+                    $compensatory->gross = $row["basic"] + $row["hra"] + $row["statutory_bonus"] + $row["child_education_allowance"] + $row["food_coupon"] + $row["lta"] + $row["special_allowance"] + $row["other_allowance"];
+                    $compensatory->epf_employer_contribution = $row["epf_employer_contribution"];
+                    $compensatory->esic_employer_contribution = $row["esic_employer_contribution"];
+                    $compensatory->insurance = $row["insurance"];
+                    $compensatory->graduity = $row["graduity"];
+                    $compensatory->cic = $compensatory->gross + $row["epf_employer_contribution"] + $row["esic_employer_contribution"] + $row["insurance"] + $row["graduity"];
+                    $compensatory->epf_employee = $row["epf_employee"];
+                    $compensatory->esic_employee = $row["esic_employee"];
+                    $compensatory->professional_tax = $row["professional_tax"];
+                    $compensatory->labour_welfare_fund = $row["labour_welfare_fund"];
+                    $compensatory->net_income = $compensatory->gross + $row["epf_employee"] + $row["esic_employee"] + $row["professional_tax"] + $row["labour_welfare_fund"] - ($row["epf_employer_contribution"] - $row["esic_employer_contribution"] - $row["insurance"] - $row["graduity"]);
+                    $compensatory->save();
+                }
+
+                if ($newEmployee && $empOffice) {
+                    $addedCount++;
+                    $returnsuccessMsg .= $empNo." get added";
+                } else {
+                    $failedCount++;
+                    $returnfailedMsg .= $empNo." not get added";
+                }
+
                 \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $row["email"]));
             } else {
-                $returnfailedMsg .= $failedCount." not get added because of error ".json_encode($validator->errors()->all());
+                $returnfailedMsg .= $empNo." not get added because of error ".json_encode($validator->errors()->all());
                 $failedCount++;
             }
         }
