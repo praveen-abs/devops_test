@@ -12,6 +12,7 @@ use App\Models\VmtEmployee;
 use App\Models\VmtKPITable;
 use App\Models\VmtEmployeePMSGoals;
 use App\Models\VmtEmployeeOfficeDetails;
+use App\Models\ConfigPms;
 use App\Mail\VmtAssignGoals;
 use App\Mail\NotifyPMSManager;
 use App\Mail\PMSReviewCompleted;
@@ -81,7 +82,10 @@ class VmtApraisalController extends Controller
 
 
         $userCount = User::count();
-
+        $config = ConfigPms::where('user_id', auth()->user()->id)->first();
+        if ($config) {
+            $config->header = json_decode($config->column_header, true);
+        }
         //dd($userCount);
         $empCount = VmtEmployeePMSGoals::groupBy('employee_id')->count();
         $subCount = VmtEmployeePMSGoals::groupBy('employee_id')->where('is_hr_submitted', true)->count();
@@ -92,7 +96,11 @@ class VmtApraisalController extends Controller
             $users = User::where('id', $rev->userid)->get();
             $empGoals = $empGoalQuery->where('users.id', auth::user()->id)->get();
             foreach ($empGoals as $emp) {
-                $per = json_decode($emp->hr_kpi_percentage, true) ? json_decode($emp->hr_kpi_percentage, true) : [];
+                if ($config && $config->selected_head == 'manager') {
+                    $per = json_decode($emp->manager_kpi_percentage, true) ? json_decode($emp->manager_kpi_percentage, true) : [];
+                } else {
+                    $per = json_decode($emp->hr_kpi_percentage, true) ? json_decode($emp->hr_kpi_percentage, true) : [];
+                }
                 if (count($per) > 0) {
                     $emp['ranking'] = 0;
                     $emp['rating'] = array_sum($per)/count($per);
@@ -111,8 +119,7 @@ class VmtApraisalController extends Controller
                     }
                 }
             }
-            return view('vmt_pms_assigngoals', compact('users','empGoals','userCount','empCount','subCount'));
-
+            return view('vmt_pms_assigngoals', compact('users','empGoals','userCount','empCount','subCount', 'config'));
         } elseif (auth()->user()->hasrole('Manager')) {
             $empGoals = $empGoalQuery->get();
 
@@ -158,11 +165,13 @@ class VmtApraisalController extends Controller
             // ->
             // ->get();
         }
-
-        
         foreach ($empGoals as $emp) {
             $emp['ranking'] = 0;
-            $per = json_decode($emp->hr_kpi_percentage, true) ? json_decode($emp->hr_kpi_percentage, true) : [];
+            if ($config && $config->selected_head == 'manager') {
+                $per = json_decode($emp->manager_kpi_percentage, true) ? json_decode($emp->manager_kpi_percentage, true) : [];
+            } else {
+                $per = json_decode($emp->hr_kpi_percentage, true) ? json_decode($emp->hr_kpi_percentage, true) : [];
+            }
             if (count($per) > 0) {
                 $emp['rating'] = array_sum($per)/count($per);
                 if ($emp['rating'] < 60) {
@@ -181,7 +190,7 @@ class VmtApraisalController extends Controller
             }
         }
 
-        return view('vmt_pms_assigngoals', compact('users', 'employees','empGoals','userCount','empCount','subCount'));
+        return view('vmt_pms_assigngoals', compact('users', 'employees','empGoals','userCount','empCount','subCount', 'config'));
     }
 
     public function getL1_ManagerName()
