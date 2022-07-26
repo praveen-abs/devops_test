@@ -20,7 +20,7 @@ class CreateVmtEmployeeOfficeDetailsTable extends Migration
             $table->id();
             $table->integer("emp_id");
             $table->integer("user_id");//Link between USERS and VmtEmployeeOfficeDetails table
-            $table->text("department")->nullable();
+            $table->text("department_id")->nullable();
             $table->text("process")->nullable();
             $table->text("designation")->nullable();
             $table->text("cost_center")->nullable();
