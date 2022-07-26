@@ -1,0 +1,125 @@
+.pay-summary-border svg {
+    border: 1px solid #C9CEDE;
+    border-radius: 50%;
+    padding: 4px;
+    height: 143px !important;
+    width: 143px !important;
+}
+
+.pay-chart-column {
+    margin-left: 50px !important;
+
+}
+
+.take-home-bar,
+.deductions-bar,
+.cross-pay-bar {
+
+    height: 5px;
+    width: 20px;
+
+}
+
+.take-home-bar {
+    background: #17b510;
+}
+
+.cross-pay-bar {
+    background: #9d3074;
+}
+
+.deductions-bar {
+    background: #9d3074;
+}
+
+.dotted-line {
+    border-top: dashed;
+    opacity: 0.5;
+}
+
+.home-wrapper .declaration-card {}
+
+.nav-tabs .nav-link {
+    padding: 10px 214px;
+}
+
+
+.nav-tabs .nav-link.active {
+    color: #495057;
+    background-color: #fff;
+    border-color: #dee2e6 #dee2e6 #fff;
+    border-top: 7px solid #002F56 !important;
+}
+
+.declaration-card .declaration-important-card {
+    box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
+    background: #ff000014;
+}
+
+.declaration-card .declaration-tax-card,
+.card-left-bar {
+    box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px !important;
+    border-left: 5px solid #002f56 !important;
+    height: 90px !important;
+
+}
+
+.declaration-card .declaration-tax-card span {
+    font-size: 10px;
+
+}
+
+.tax-table tr th hr.one,
+hr.two,
+hr.three {
+
+    margin: 0px;
+    height: 5px !important;
+    width: 25px;
+    bottom: -10px;
+    position: relative;
+    z-index: 10;
+    left: 25px;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+
+}
+
+.tax-table tr th hr.one {
+    background: #ff9100;
+}
+
+.tax-table tr th hr.two {
+    background: #0fd4f7;
+}
+
+.tax-table tr th hr.three {
+    background: #0ff70f;
+}
+
+/* .tax-table>thead>tr>th,.tax-table>thead>tr>td{
+    padding: 0px !important;
+    }
+
+
+    .tax-table tr th p{
+        padding: 10px 0px;
+    } */
+
+
+.tax-details p hr.one{
+    height: 10px;
+    width: 10px;
+    background: #ff9100;
+}
+
+.tax-details:nth-child(2)::before {
+    background: #0fd4f7;
+}
+
+.tax-details:nth-child(3)::before {
+    background: #0ff70f;
+}
+.small-card{
+    height: 170px;
+}
