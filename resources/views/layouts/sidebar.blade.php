@@ -200,10 +200,13 @@
                                 <a href="{{url('vmt_employeeOnboarding')}}" id="" class="nav-link sidebar py-1"
                                     aria-expanded="false"><span>Onboarding</span> </a>
                             </li>
-
                             <li class="nav-item ">
                                 <a href="{{route('emp-bulk-upload')}}" id="" class="nav-link sidebar py-1"
                                     aria-expanded="false"><span>Onboarding Bulk Upload</span> </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a href="{{route('emp-quick-upload')}}" id="" class="nav-link sidebar py-1"
+                                    aria-expanded="false"><span>Onboarding Quick Upload</span> </a>
                             </li>
                             <li class="nav-item ">
                                 <a href="{{url('vmt_noData')}}" id="tds"
@@ -736,8 +739,7 @@
                     <div class="collapse menu-dropdown" id="configDrop-down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{url('vmt_config_pms')}}" class="nav-link"><span> Config
-                                        Pms</span></a>
+                                <a href="{{url('vmt_config_pms')}}" class="nav-link"><span>Master Config</span></a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{url('vmt_clientOnboarding')}}" class="nav-link"><span> Client
