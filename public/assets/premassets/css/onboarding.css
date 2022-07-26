@@ -134,16 +134,16 @@ option:hover {
 #msform textarea,
 #msform select {
     /* padding: 12px 15px 12px 15px; */
-    /* border: none; */
+    border: 1px solid #2C3E50 !important;
     /* border-radius: 20px; */
-    /* margin-top: 2px; */
+    margin-top: 2px;
     /* width: 100%; */
-    /* box-sizing: border-box; */
-    /* font-family: montserrat; */
-    /* color: #2C3E50; */
+    box-sizing: border-box;
+    
+    color: #2C3E50;
     font-size: 14px;
-    /* letter-spacing: 1px; */
-    /* outline: none; */
+    letter-spacing: 1px;
+    outline: none;
 }
 
 /* #msform input:focus,

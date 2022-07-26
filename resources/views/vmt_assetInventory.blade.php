@@ -38,7 +38,7 @@ td {
     border: solid 1px #000;
     border-style: none solid solid none;
     padding: 10px;
-    font-weight: 600;
+    /* font-weight: 600; */
     color: #878aa5;
 
 }
@@ -496,17 +496,6 @@ $(document).ready(function() {
     });
 
 
-
-
-
-
-
-
-
-
-
-
-
     if (document.getElementById("table-assets")) {
         const grid = new gridjs.Grid({
             columns: [{
@@ -518,7 +507,7 @@ $(document).ready(function() {
                     id: 'asset_name',
                     name: 'Name',
                     formatter: function formatter(cell) {
-                        return gridjs.html('<b>' + cell + '</b>');
+                        return gridjs.html( cell );
                     }
                 },
                 {

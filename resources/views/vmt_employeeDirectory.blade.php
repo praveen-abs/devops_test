@@ -29,7 +29,7 @@ td {
     border: solid 1px #000;
     border-style: none solid solid none;
     padding: 10px;
-    font-weight: 600;
+    /* font-weight: 600; */
     color: #878aa5;
 
 }
