@@ -45,15 +45,15 @@
                                                 <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
                                                     <select placeholder="Select Column" name="selected_columns[]" id="selected_columns" class="onboard-form form-control select2_form_without_search" multiple required>
                                                         <option value="">Select Column</option>
-                                                        <option value="dimension" @if(in_array('dimension', explode(',', $data->selected_columns))) selected @endif>Dimension</option>
-                                                        <option value="kpi" @if(in_array('kpi', explode(',', $data->selected_columns))) selected @endif>KPI</option>
-                                                        <option value="operational" @if(in_array('operational', explode(',', $data->selected_columns))) selected @endif>Operational</option>
-                                                        <option value="measure" @if(in_array('measure', explode(',', $data->selected_columns))) selected @endif>Measure</option>
-                                                        <option value="frequency" @if(in_array('frequency', explode(',', $data->selected_columns))) selected @endif>Frequency</option>
-                                                        <option value="target" @if(in_array('target', explode(',', $data->selected_columns))) selected @endif>Target</option>
-                                                        <option value="stretchTarget" @if(in_array('stretchTarget', explode(',', $data->selected_columns))) selected @endif>Stretch Target</option>
-                                                        <option value="source" @if(in_array('source', explode(',', $data->selected_columns))) selected @endif>Source</option>
-                                                        <option value="kpiWeightage" @if(in_array('kpiWeightage', explode(',', $data->selected_columns))) selected @endif>KPI Weightage</option>
+                                                        <option value="dimension" @if($data && $data->selected_columns && in_array('dimension', explode(',', $data->selected_columns))) selected @endif>Dimension</option>
+                                                        <option value="kpi" @if($data && $data->selected_columns && in_array('kpi', explode(',', $data->selected_columns))) selected @endif>KPI</option>
+                                                        <option value="operational" @if($data && $data->selected_columns && in_array('operational', explode(',', $data->selected_columns))) selected @endif>Operational</option>
+                                                        <option value="measure" @if($data && $data->selected_columns && in_array('measure', explode(',', $data->selected_columns))) selected @endif>Measure</option>
+                                                        <option value="frequency" @if($data && $data->selected_columns && in_array('frequency', explode(',', $data->selected_columns))) selected @endif>Frequency</option>
+                                                        <option value="target" @if($data && $data->selected_columns && in_array('target', explode(',', $data->selected_columns))) selected @endif>Target</option>
+                                                        <option value="stretchTarget" @if($data && $data->selected_columns && in_array('stretchTarget', explode(',', $data->selected_columns))) selected @endif>Stretch Target</option>
+                                                        <option value="source" @if($data && $data->selected_columns && in_array('source', explode(',', $data->selected_columns))) selected @endif>Source</option>
+                                                        <option value="kpiWeightage" @if($data && $data->selected_columns && in_array('kpiWeightage', explode(',', $data->selected_columns))) selected @endif>KPI Weightage</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -64,8 +64,8 @@
                                                 <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
                                                     <select placeholder="Select Head" name="selected_head" id="selected_head" class="onboard-form form-control select2_form_without_search" required>
                                                         <option value="">Select Head</option>
-                                                        <option value="manager" @if('manager' == $data->selected_head) selected @endif>Manager</option>
-                                                        <option value="hr" @if('hr' == $data->selected_head) selected @endif>HR</option>
+                                                        <option value="manager" @if($data && $data->selected_head && 'manager' == $data->selected_head) selected @endif>Manager</option>
+                                                        <option value="hr" @if($data && $data->selected_head && 'hr' == $data->selected_head) selected @endif>HR</option>
                                                     </select>
                                                 </div>
                                             </div>
