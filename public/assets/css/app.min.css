@@ -18540,6 +18540,34 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
     height: 55px;
 }
 
+
+tr:first-child th:first-child {
+    border-top-left-radius: 6px !important;
+}
+
+tr:first-child th:first-child {
+    border-bottom-left-radius: 6px !important;
+}
+
+
+tr:last-child td:first-child {
+    border-bottom-left-radius: 6px !important;
+}
+
+tr:first-child th:last-child {
+    border-top-right-radius: 6px !important;
+}
+
+tr:first-child th:last-child {
+    border-bottom-right-radius: 6px !important;
+}
+
+
+tr:last-child td:last-child {
+    border-bottom-right-radius: 6px !important;
+}
+
+
 .table>thead>tr>th,
 .gridjs-table>thead>tr>th {
     background: #002F56 !important;
@@ -18563,7 +18591,7 @@ table.zp-table.ytd-summary-table tbody>tr td.amount-column.ytd-amount-column {
 .gridjs-table>tfoot>tr>th,
 .gridjs-table>thead>tr>td,
 .gridjs-table>thead>tr>th {
-    padding: 2px;
+    padding:10px 5px;
     line-height: 1.6;
     vertical-align: middle;
     border-top: 1px solid #eee;
