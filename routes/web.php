@@ -154,6 +154,14 @@ Route::post('vmt-employee-onboard', 'App\Http\Controllers\VmtEmployeeController@
 Route::get('vmt-employess/bulk-upload', 'App\Http\Controllers\VmtEmployeeController@bulkUploadEmployee')->name('emp-bulk-upload');
 Route::post('vmt-employess/bulk-upload', 'App\Http\Controllers\VmtEmployeeController@storeBulkEmployee');
 
+
+// Bulk upload employees for quick Onboarding
+Route::get('vmt-employess/quick-onboarding/upload', 'App\Http\Controllers\VmtEmployeeController@bulkUploadEmployeeForQuickOnboarding')->name('emp-quick-upload');
+Route::post('vmt-employess/quick-onboarding/upload', 'App\Http\Controllers\VmtEmployeeController@storeEmployeeForQuickOnboarding');
+Route::get('vmt-employee/complete-onboarding', 'App\Http\Controllers\VmtEmployeeController@showQuickOnboardForEmployee');
+Route::post('vmt-employee/complete-onboarding', 'App\Http\Controllers\VmtEmployeeController@storeQuickOnboardFormEmployee');
+
+
 Route::get('vmt-employess/directory', 'App\Http\Controllers\VmtEmployeeController@showEmployeeDirectory');
 Route::post('vmt-kpi/data', 'App\Http\Controllers\VmtEmployeeController@showKpiData')->name('kpi-data');
 
@@ -204,6 +212,9 @@ Route::post('/state',  [App\Http\Controllers\VmtEmployeeController::class, 'getS
 Route::get('/vmt_salary_details',  [App\Http\Controllers\VmtPaySlipController::class, 'paySlipIndex']);
 Route::get('/vmt_employee_payslip',  [App\Http\Controllers\VmtPaySlipController::class, 'payslipPdfView'])->name('vmt_employee_payslip');
 Route::get('/pdfview/{selectedPaySlipMonth}',[App\Http\Controllers\VmtPaySlipController::class, 'pdfview'])->name('pdfview');
+
+Route::get('/vmt-config-pms',[App\Http\Controllers\ConfigPmsController::class, 'index'])->name('vmt_config_pms');
+Route::post('/vmt-config-pms/{id?}',[App\Http\Controllers\ConfigPmsController::class, 'store'])->name('store_config_pms');
   
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index']);
 

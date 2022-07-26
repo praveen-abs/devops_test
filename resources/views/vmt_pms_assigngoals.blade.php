@@ -287,17 +287,17 @@
                 <td class="">{{$emp['ranking']}}</td>
                 <td>
                     @if(auth()->user()->hasrole('Employee'))
-                    <button class="btn btn-orange py-0 px-2 "> <a target="_blank"
-                        href="{{url('vmt-pmsappraisal-review?id='.$emp->kpi_table_id)}}"><span
-                            class="mr-10 icon"><i class="text-white ri-pencil-line"></i></span></a>
-                            
-                        Review</button>
-                    @else
-                    <button class="btn btn-orange py-0 px-2 ">
                     <a target="_blank"
-                        href="{{url('pms-employee-reviews?goal_id='.$emp->kpi_table_id.'&user_id='.$emp->userid)}}"><span
-                            class="mr-10 icon"><i class="text-white ri-pencil-line"></i></span></a>
-                            Review</button>
+                        href="{{url('vmt-pmsappraisal-review?id='.$emp->kpi_table_id)}}"><button class="btn btn-orange py-0 px-2 "> <span
+                            class="mr-10 icon"><i class="text-white ri-pencil-line"></i></span>
+                            
+                        Review</button></a>
+                    @else
+                    
+                    <a target="_blank"
+                        href="{{url('pms-employee-reviews?goal_id='.$emp->kpi_table_id.'&user_id='.$emp->userid)}}"><button class="btn btn-orange py-0 px-2 "><span
+                            class="mr-10 icon"><i class="text-white ri-pencil-line"></i></span>
+                            Review</button></a>
                     @endif
                 </td>              
             </tr>
@@ -692,15 +692,33 @@
                                                     <thead class="bg-primary thead" id="tHead">
                                                         <tr class="text-uppercase">
                                                             <th class="sort" data-sort="id" style="width: 2%;">#</th>
-                                                            <th class="sort" data-sort="customer_name" style="width: 8%;">Dimension</th>
-                                                            <th class="sort" data-sort="product_name" style="width: 15%;">KPI</th>
-                                                            <th class="sort" data-sort="date" style="width: 20%;">Operational Definition</th>
-                                                            <th class="sort" data-sort="amount" style="width: 15%;">Measure</th>
-                                                            <th class="sort" data-sort="payment" style="width: 5%;">Frequency</th>
-                                                            <th class="sort" data-sort="status" style="width: 5%;">Target</th>
-                                                            <th class="sort" data-sort="status" style="width: 11%;">Stretch Target</th>
-                                                            <th class="sort" data-sort="status" style="width: 4%;">Source</th>
-                                                            <th class="sort" data-sort="status" style="width: 15%;" width="10%">KPI Weightage ( % )</th>
+                                                            @if($config && $config->selected_columns && in_array('dimension', explode(',', $config->selected_columns)))
+                                                            <th class="sort" data-sort="customer_name" style="width: 8%;">@if($config && $config->header) {{$config->header['dimension']}} @else Dimension @endif</th>
+                                                            Dimension @endif
+                                                            @if($config && $config->selected_columns && in_array('kpi', explode(',', $config->selected_columns)))
+                                                            <th class="sort" data-sort="product_name" style="width: 15%;">@if($config && $config->header) {{$config->header['kpi']}} @else KPI @endif</th>
+                                                            @endif
+                                                            @if($config && $config->selected_columns && in_array('operational', explode(',', $config->selected_columns)))
+                                                            <th class="sort" data-sort="date" style="width: 20%;">@if($config && $config->header) {{$config->header['operational']}} @else Operational Definition @endif</th>
+                                                            @endif
+                                                            @if($config && $config->selected_columns && in_array('measure', explode(',', $config->selected_columns)))
+                                                            <th class="sort" data-sort="amount" style="width: 15%;">@if($config && $config->header) {{$config->header['measure']}} @else Measure @endif</th>
+                                                            @endif
+                                                            @if($config && $config->selected_columns && in_array('frequency', explode(',', $config->selected_columns)))
+                                                            <th class="sort" data-sort="payment" style="width: 5%;">@if($config && $config->header) {{$config->header['frequency']}} @else Frequency @endif</th>
+                                                            @endif
+                                                            @if($config && $config->selected_columns && in_array('target', explode(',', $config->selected_columns)))
+                                                            <th class="sort" data-sort="status" style="width: 5%;">@if($config && $config->header) {{$config->header['target']}} @else Target @endif</th>
+                                                            @endif
+                                                            @if($config && $config->selected_columns && in_array('stretchTarget', explode(',', $config->selected_columns)))
+                                                            <th class="sort" data-sort="status" style="width: 11%;">@if($config && $config->header) {{$config->header['stretchTarget']}} @else Stretch Target @endif</th>
+                                                            @endif
+                                                            @if($config && $config->selected_columns && in_array('source', explode(',', $config->selected_columns)))
+                                                            <th class="sort" data-sort="status" style="width: 4%;">@if($config && $config->header) {{$config->header['source']}} @else Source @endif</th>
+                                                            @endif
+                                                            @if($config && $config->selected_columns && in_array('kpiWeightage', explode(',', $config->selected_columns)))
+                                                            <th class="sort" data-sort="status" style="width: 15%;" width="10%">@if($config && $config->header) {{$config->header['kpiWeightage']}} @else KPI Weightage ( % ) @endif</th>
+                                                            @endif
                                                         </tr>
                                                     </thead>
                                                     <tbody class="tbody content-container" id="tbody">
@@ -709,44 +727,60 @@
                                                                 <span  name="numbers" id="" class="tableInp" >1</span>
                                                                 <div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div>
                                                             </td>
-
+                                                            @if($config && $config->selected_columns && in_array('dimension', explode(',', $config->selected_columns)))
                                                             <td class="text-box-td p-1">
                                                                 <textarea name="dimension[]" id="" class="text-box" cols="20"
                                                                     placeholder="type here" ></textarea>
                                                             </td>
-
+                                                            @endif
+                                                            @if($config && $config->selected_columns && in_array('kpi', explode(',', $config->selected_columns)))
                                                             <td class="text-box-td p-1">
                                                                 <textarea name="kpi[]" id="" class="text-box" cols="20"
                                                                     placeholder="type here"></textarea>
                                                             </td>
+                                                            @endif
+                                                            @if($config && $config->selected_columns && in_array('operational', explode(',', $config->selected_columns)))
                                                             <td class="text-box-td p-1">
                                                                 <textarea name="operational[]" id="" class="text-box" cols="20"
                                                                     placeholder="type here"></textarea>
                                                             </td>
+                                                            @endif
+                                                            @if($config && $config->selected_columns && in_array('measure', explode(',', $config->selected_columns)))
                                                             <td class="text-box-td p-1">
                                                                 <textarea name="measure[]" id="" class="text-box" cols="20"
                                                                     placeholder="type here"></textarea>
                                                             </td>
+                                                            @endif
+                                                            @if($config && $config->selected_columns && in_array('frequency', explode(',', $config->selected_columns)))
                                                             <td class="text-box-td p-1">
                                                                 <textarea name="frequency[]" id="" class="text-box" cols="20"
                                                                     placeholder="type here"></textarea>
                                                             </td>
+                                                            @endif
+                                                            @if($config && $config->selected_columns && in_array('target', explode(',', $config->selected_columns)))
                                                             <td class="text-box-td p-1">
                                                                 <textarea name="target[]" id="" class="text-box" cols="20"
                                                                     placeholder="type here"></textarea>
                                                             </td>
+                                                            @endif
+                                                            @if($config && $config->selected_columns && in_array('stretchTarget', explode(',', $config->selected_columns)))
                                                             <td class="text-box-td p-1">
                                                                 <textarea name="stretchTarget[]" id="" class="text-box" cols="10"
                                                                     placeholder="type here"></textarea>
                                                             </td>
+                                                            @endif
+                                                            @if($config && $config->selected_columns && in_array('source', explode(',', $config->selected_columns)))
                                                             <td class="text-box-td p-1">
                                                                 <textarea name="source[]" id="" class="text-box" cols="10"
                                                                     placeholder="type here"></textarea>
                                                             </td>
+                                                            @endif
+                                                            @if($config && $config->selected_columns && in_array('kpiWeightage', explode(',', $config->selected_columns)))
                                                             <td class="text-box-td p-1">
                                                                 <textarea name="kpiWeightage[]" id="" class="text-box" cols="10"
                                                                     placeholder="type here"></textarea>
                                                             </td>
+                                                            @endif
                                                         </tr>
 
                                                     </tbody>
@@ -1090,13 +1124,23 @@ $(document).ready(function(){
         }
         $('#hidden_calendar_year').val($("#year option:selected").text())
         console.log($( "#hidden_calendar_year" ).val());
-
+        frequencyChange();
     });
 
     $('#frequency').change(function() {
+        frequencyChange();
+    });
+
+    function frequencyChange() {
         var data = "";
         if ($('#frequency').val() == 'monthly') {
-            data = "<option value=''>Select</option><option value='jan'>January</option><option value='feb'>February</option><option value='mar'>March</option><option value='apr'>April</option><option value='may'>May</option><option value='june'>June</option><option value='july'>July</option><option value='aug'>August</option><option value='sept'>September</option><option value='oct'>October</option><option value='nov'>November</option><option value='dec'>December</option>";
+            var year = "<?=date('Y')?>";
+            var nextyear = "<?=date('Y', strtotime('+1 year'))?>";
+            if ($('#calendar_type').val() == 'financial_year') {
+                data = "<option value=''>Select</option><option value='apr'>April - "+year+"</option><option value='may'>May - "+year+"</option><option value='june'>June - "+year+"</option><option value='july'>July - "+year+"</option><option value='aug'>August - "+year+"</option><option value='sept'>September - "+year+"</option><option value='oct'>October - "+year+"</option><option value='nov'>November - "+year+"</option><option value='dec'>December - "+year+"</option><option value='jan'>January - "+nextyear+"</option><option value='feb'>February - "+nextyear+"</option><option value='mar'>March - "+nextyear+"</option>";
+            } else {
+                data = "<option value=''>Select</option><option value='jan'>January - "+year+"</option><option value='feb'>February - "+year+"</option><option value='mar'>March - "+year+"</option><option value='apr'>April - "+year+"</option><option value='may'>May - "+year+"</option><option value='june'>June - "+year+"</option><option value='july'>July - "+year+"</option><option value='aug'>August - "+year+"</option><option value='sept'>September - "+year+"</option><option value='oct'>October - "+year+"</option><option value='nov'>November - "+year+"</option><option value='dec'>December - "+year+"</option>";
+            }
         } else if ($('#frequency').val() == 'quarterly') {
             data = "<option value=''>Select</option><option value='q1'>Q1(Jan-Mar)</option><option value='q2'>Q2(Apr-June)</option><option value='q3'>Q3(July-Sept)</option><option value='q4'>Q4(Oct-Dec)</option>";
         } else if ($('#frequency').val() == 'halfYearly') {
@@ -1105,7 +1149,7 @@ $(document).ready(function(){
             data = "<option value=''>Select</option><option value='yearly'>Yearly</option>";
         }
         $('#assignment_period_start').html(data);
-    });
+    }
 });
 
 $(function () {
