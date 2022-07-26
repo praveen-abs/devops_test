@@ -20,6 +20,7 @@ use App\Models\VmtEmployeePMSGoals;
 use App\Models\VmtAppraisalQuestion;
 use Illuminate\Support\Facades\Hash;
 use App\Mail\WelcomeMail; 
+use App\Mail\QuickOnboardLink;
 use Validator;
 
 use Dompdf\Options;
@@ -594,5 +595,225 @@ class VmtEmployeeController extends Controller
         $appoinmentPath = public_path('/').$filename;
         $isSent    = \Mail::to($employeeData['email'])->send(new WelcomeMail($employeeData['email'], 'Abs@123123', 'http://vasagroup.abshrms.com' ,  $appoinmentPath));
         return $isSent; 
+    }
+
+    /*
+     *  Quick Onboarding Employee
+     *
+     */
+      // Showing view for uploading quick onboaring excel sheet
+    public function bulkUploadEmployeeForQuickOnboarding(){
+        return view('vmt_quick_employee_upload');
+    }
+
+    // Store employees with partial details for quick onboarding
+    public function storeEmployeeForQuickOnboarding(Request $request){
+        $request->validate([
+            'file' => 'required|file|mimes:xls,xlsx'
+        ]);
+        $importDataArry = \Excel::toArray(new VmtEmployeeImport, request()->file('file'));
+        return $this->storeQuickOnboardEmployee($importDataArry);
+    }
+
+    // insert the employee to database for quick onboarding
+    public function storeQuickOnboardEmployee($data){
+        $rules = [];
+        $returnsuccessMsg = '';
+        $returnfailedMsg = '';
+        $addedCount = 0;
+        $failedCount = 0;
+        foreach($data[0] as $key => $row) {
+            /* $clientData  = VmtClientMaster::first();
+            $maxId  = VmtEmployee::max('id')+1;
+            if ($clientData) {
+                $empNo = $clientData->client_code.$maxId;
+            } else {
+                $empNo = $maxId;
+            }*/
+
+            $rules = [
+                'employee_name' => 'required|regex:/(^([a-zA-z.]+)(\d+)?$)/u',
+                'email' => 'required|email|unique:users,email',
+            ];
+            $messages = [
+                'required' => 'The :attribute field is required.',
+                'email' => 'The :attribute field email is not valid.',
+                'regex' => 'The :attribute field is not valid.',
+                'unique' => 'The :attribute field should be unique'
+            ];
+            
+            $validator = Validator::make($row, $rules, $messages);
+            
+            if ($validator->passes()) {
+                $user =  User::create([
+                    'name' => $row['employee_name'],
+                    'email' => $row["email"],
+                    'password' => Hash::make('Abs@123123'),
+                    'avatar' =>  'avatar-1.jpg',
+                ]);
+
+                $addedCount++;
+                $returnsuccessMsg .= $addedCount." get added";
+               
+                \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $row["email"]));
+            } else {
+                $returnfailedMsg .= $failedCount." not get added because of error ".json_encode($validator->errors()->all());
+                $failedCount++;
+            }
+        }
+
+        $data = ['success'=> $returnsuccessMsg, 'failed'=> $returnfailedMsg, 'success_count'=> $addedCount, 'failed_count'=> $failedCount];
+        return $data;
+    }
+
+    // Show quick onboard form to employee
+    public function showQuickOnboardForEmployee(Request $request){
+        if($request->has('email')){
+            $employee  =  User::where('email', $request->email)->first(); 
+        }
+
+        $clientData  = VmtClientMaster::first();
+        $maxId  = VmtEmployee::max('id')+1;
+        if ($clientData) {
+            $empNo = $clientData->client_code.$maxId;
+        } else {
+            $empNo = $maxId;
+        }
+        $countries = Countries::all();
+        $india = Countries::where('country_code', 'IN')->first();
+        $emp = VmtEmployeeOfficeDetails::all(); 
+        $bank = Bank::all(); 
+
+        return view('vmt_employee_quick_onboarding', compact('empNo', 'countries', 'bank', 'emp'));
+    }
+
+    // Store quick onboard employee data to Database
+    public function storeQuickOnboardFormEmployee(Request $request){
+        // code...
+        try
+        {
+            $row = $request->all();
+            $user =  User::where('email',  $row["email"])->first();
+            $user->assignRole("Employee");
+
+            $newEmployee = new VmtEmployee;
+            $newEmployee->userid = $user->id;  
+            $newEmployee->emp_no   =    $row["employee_code"]; 
+            //$newEmployee->emp_name   =    $row["employee_name"]; 
+            $newEmployee->gender   =    $row["gender"];  
+            //$newEmployee->designation   =    $row["designation"];  
+            //$newEmployee->department   =    $row["department"];  
+            //$newEmployee->status   =    $row["status"];  
+            $newEmployee->doj   =    $row["doj"];   
+            $newEmployee->dol   =    $row["doj"];  
+            $newEmployee->location   =    $row["work_location"];  
+            $newEmployee->dob   =    $row["dob"]; 
+            $newEmployee->father_name   =  $row["father_name"];  
+            $newEmployee->pan_number   =  isset( $row["pan_no"] ) ? ($row["pan_no"]) : ""; 
+            $newEmployee->pan_ack   =    $row["pan_ack"]; 
+            $newEmployee->aadhar_number = $row["aadhar"];  
+            //$newEmployee->uan = $row["uan"]; 
+            //$newEmployee->epf_number = $row["epf_number"];
+            //$newEmployee->esic_number = $row["esic_number"];
+            $newEmployee->marrital_status = $row["marital_status"];
+        
+            $newEmployee->mobile_number  = $row["mobile_no"]; 
+            //$newEmployee->email_id   = $row["email"];
+            $newEmployee->bank_name   = $row["bank_name"];
+            $newEmployee->bank_ifsc_code  = $row["bank_ifsc"]; 
+            $newEmployee->bank_account_number  = $row["account_no"]; 
+            $newEmployee->present_address   = $row["current_address"];
+            $newEmployee->permanent_address   = $row["permanent_address"];
+            //$newEmployee->father_age   = $row["father_age"];
+            $newEmployee->mother_name   = $row["mother_name"];
+            //$newEmployee->mother_age  = $row["mother_age"];
+            if ($row['marital_status'] <> 'single') {
+                $newEmployee->spouse_name   = $row["spouse_name"];
+                $newEmployee->spouse_age   = $row["spouse_dob"];
+                if ($row['no_child'] > 0) {
+                    $newEmployee->kid_name   = json_encode($row["child_name"]);
+                    $newEmployee->kid_age  = json_encode($row["child_dob"]);
+                }
+            }
+
+            $newEmployee->aadhar_card_file = $this->fileUpload('aadhar_card');
+            $newEmployee->aadhar_card_backend_file = $this->fileUpload('aadhar_card_backend');
+            $newEmployee->pan_card_file = $this->fileUpload('pan_card');
+            $newEmployee->passport_file = $this->fileUpload('passport');
+            $newEmployee->voters_id_file = $this->fileUpload('voters_id');
+            $newEmployee->dl_file = $this->fileUpload('dl_file');
+            $newEmployee->education_certificate_file = $this->fileUpload('education_certificate');
+            $newEmployee->reliving_letter_file = $this->fileUpload('reliving_letter');
+
+            $newEmployee->save();
+
+            
+            if($newEmployee){
+                $empOffice  = new VmtEmployeeOfficeDetails; 
+                $empOffice->emp_id = $newEmployee->id; // Need to remove this in future
+                $empOffice->user_id = $newEmployee->userid; //Link between USERS and VmtEmployeeOfficeDetails table
+                $empOffice->department = $row["department"];// => "lk"
+                $empOffice->process = $row["process"];// => "k"
+                $empOffice->designation = $row["designation"];// => "k"
+                $empOffice->cost_center = $row["cost_center"];// => "k"
+                $empOffice->confirmation_period  = $row["confirmation_period"];// => "k"
+                $empOffice->holiday_location  = $row["holiday_location"];// => "k"
+                $empOffice->l1_manager_code  = $row["l1_manager_code"];// => "k"
+                // $empOffice->l1_manager_designation  = $row["l1_manager_designation"];// => "k"
+                $empOffice->l1_manager_name  = $row["l1_manager_name"];// => "k"
+                // $empOffice->l2_manager_code  = $row["l2_manager_code"];// => "kk"
+                // $empOffice->l2_manager_designation  = $row["l2_manager_designation"];// => "k"
+                // $empOffice->l2_manager_name  = $row["l2_manager_name"]; // => "k"
+                // $empOffice->l3_manager_code  = $row["l3_manager_code"]; // => "kk"
+                // $empOffice->l3_manager_designation  = $row["l3_manager_designation"]; // => "k"
+                // $empOffice->l3_manager_name  = $row["l3_manager_name"]; // => "kk"
+                // $empOffice->l4_manager_code  = $row["l4_manager_code"]; // => "kk"
+                // $empOffice->l4_manager_designation  = $row["l4_manager_designation"]; // => "kk"
+                // $empOffice->l4_manager_name  = $row["l4_manager_name"]; // => "kk"
+                $empOffice->work_location  = $row["work_location"]; // => "k"
+                $empOffice->officical_mail  = $row["officical_mail"]; // => "k@k.in"
+                $empOffice->official_mobile  = $row["official_mobile"]; // => "1234567890"
+                $empOffice->emp_notice  = $row["emp_notice"]; // => "0"
+                $empOffice->save();
+            }
+
+            if ($empOffice) {
+                $compensatory = new Compensatory;
+                $compensatory->user_id = $newEmployee->userid;
+                $compensatory->basic = $row["basic"];
+                $compensatory->hra = $row["hra"];
+                $compensatory->Statutory_bonus = $row["Statutory_bonus"];
+                $compensatory->child_education_allowance = $row["child_education_allowance"];
+                $compensatory->food_coupon = $row["food_coupon"];
+                $compensatory->lta = $row["lta"];
+                $compensatory->special_allowance = $row["special_allowance"];
+                $compensatory->other_allowance = $row["other_allowance"];
+                $compensatory->gross = $row["gross"];
+                $compensatory->epf_employer_contribution = $row["epf_employer_contribution"];
+                $compensatory->esic_employer_contribution = $row["esic_employer_contribution"];
+                $compensatory->insurance = $row["insurance"];
+                $compensatory->graduity = $row["graduity"];
+                $compensatory->cic = $row["cic"];
+                $compensatory->epf_employee = $row["epf_employee"];
+                $compensatory->esic_employee = $row["esic_employee"];
+                $compensatory->professional_tax = $row["professional_tax"];
+                $compensatory->labour_welfare_fund = $row["labour_welfare_fund"];
+                $compensatory->net_income = $row["net_income"];
+                $compensatory->save();
+            }
+
+            // sent welcome email along with appointment Letter 
+            $isEmailSent  = $this->attachApoinmentPdf($row);
+
+
+            if ($isEmailSent) {
+                return "Saved";
+            } else {
+                return "Error";
+            }
+        }
+        catch (Throwable $e) {        
+            return "Error";
+        }
     }
 }
