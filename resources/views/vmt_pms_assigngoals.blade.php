@@ -591,9 +591,10 @@
                                     <div class="d-flex flex-column">
                                         <label class="" for="department">Department</label>
                                         <select name="department" id="department">
-                                            <option value="Technology">Technology</option>
-                                            <option value="Sales">Sales</option>
-                                            <option value="Auditing">Auditing</option>
+                                            <option value="">Select Department</option>
+                                            @foreach($department as $dept)
+                                            <option value="{{$dept->id}}">{{$dept->name}}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -1424,7 +1425,74 @@ $('body').on('click', '#save-table', function(e){
         });
     }
 
-})
+});
+
+
+
+$('body').on('change', '#department', function() {
+    $.ajax({
+        type: "POST", 
+        url: "{{route('department')}}", 
+        data: {
+            'id': $('#department').val(),
+            "_token": "{{ csrf_token() }}",
+        },
+        success: function(data) {
+            console.log(data['emp']);
+            var optionHtml ="";
+            $.each(data['emp'], function(i, tempdata){
+                optionHtml = optionHtml+"<option value="+tempdata.id+" selected>"+tempdata.name+"</option>";
+            });
+                
+            $('#select-employees').html(optionHtml);
+            if (data['rev']) {
+                $('#select-reviewer').val(data['rev'].id);
+                $('#reviewer-name').html(data['rev'].name);
+                $('#reviewer-email').html(data['rev'].email);
+            }
+            changeEmployee1(data['emp']);
+        }
+    });
+});
+
+function changeEmployee1(employees) {
+    var employeeSelected = $('#select-employees').val();
+    @if(auth()->user()->hasrole('Employee'))
+    @else
+    var imgHtml ="";
+    var count = 0;
+    var employeeArray = [];
+    $.each(employees, function(i, data){
+        // console.log(data);
+        // console.log('employee selected', employeeSelected);
+        if($.inArray(data.id.toString(), employeeSelected) > -1){
+            employeeArray.push(data.name);
+            if (count < 4) {
+                imgHtml = imgHtml+"<a class='avatar'><img src='assets/images/"+data.avatar+"' alt='' class='rounded-circle p-0'></a>";
+            }
+            count++;
+        }
+    });
+    if (count > 4) {
+        var rem = count -3;
+        imgHtml = imgHtml+"<span class='img-addition' style='background-color: rgb(134, 192, 106);width: 30px;height: 30px;font-size:12px;'> +"+rem+" </span><div class='mt-1 message-content align-items-start d-flex flex-column  mx-2'><span id='group-employee'></span></div>";
+    }
+    //Change button text based on employee selection count
+    if(count > 0)
+    {
+        $('#btn_selectEmployees').html("Edit");
+        //  console.log("Changed to Edit button");
+    }
+    else
+    {
+        $('#btn_selectEmployees').html("Add");
+        // console.log("Changed to Add button");
+    }
+    $('#group-employee').html(employeeArray.join());
+    $('#changeEmployee').css('display', 'none');
+    $('.avatar-group-item').html(imgHtml);
+    @endif
+}
 
 //
 $("#publish-goal").click(function(e){

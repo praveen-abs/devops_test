@@ -13,6 +13,7 @@ use App\Models\VmtKPITable;
 use App\Models\VmtEmployeePMSGoals;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\ConfigPms;
+use App\Models\Department;
 use App\Mail\VmtAssignGoals;
 use App\Mail\NotifyPMSManager;
 use App\Mail\PMSReviewCompleted;
@@ -29,6 +30,35 @@ class VmtApraisalController extends Controller
         $questionList = VmtAppraisalQuestion::all();
         //dd($questions);
         return view('vmt_apraisalQuestions', compact('questionList'));
+    }
+
+    public function department(Request $request) {
+        $department = VmtEmployeeOfficeDetails::join('users', 'users.id', '=', 'vmt_employee_office_details.user_id')
+        ->select(
+            'users.name', 
+            'users.avatar as avatar', 
+            'vmt_employee_office_details.emp_id as id',
+            'vmt_employee_office_details.l1_manager_code as code',
+        )
+        ->orderBy('users.name', 'ASC')
+        ->where('department_id', $request->id)
+        ->get();
+        $data['emp'] = $department;
+        $data['rev'] = '';
+        if ($department) {
+            $data['rev'] = VmtEmployeeOfficeDetails::join('users', 'users.id', '=', 'vmt_employee_office_details.user_id')
+            ->select(
+                'users.name', 
+                'users.email', 
+                'users.avatar as avatar',
+                'vmt_employee_office_details.emp_id as id',
+                'vmt_employee_office_details.l1_manager_code as code',
+            )
+            ->orderBy('users.name', 'ASC')
+            ->where('l1_manager_code', $department[0]->code)
+            ->first();
+        }
+        return response()->json($data);
     }
 
     public function uploadFileReview(Request $request) {
@@ -62,7 +92,7 @@ class VmtApraisalController extends Controller
                                 'users.name as emp_name', 
                                 'users.email as email_id',
                                 'users.avatar as avatar',
-                                'vmt_employee_office_details.department',
+                                'vmt_employee_office_details.department_id',
                                 'vmt_employee_office_details.designation', 
                                 'vmt_employee_office_details.l1_manager_code',
                                 'vmt_employee_office_details.l1_manager_name',
@@ -89,7 +119,7 @@ class VmtApraisalController extends Controller
         //dd($userCount);
         $empCount = VmtEmployeePMSGoals::groupBy('employee_id')->count();
         $subCount = VmtEmployeePMSGoals::groupBy('employee_id')->where('is_hr_submitted', true)->count();
-        
+        $department = Department::where('status', 'A')->get();
         if (auth()->user()->hasrole('Employee')) {
             $emp = VmtEmployee::join('vmt_employee_office_details',  'user_id', '=', 'vmt_employee_details.userid')->where('userid', auth()->user()->id)->first();
             $rev = VmtEmployee::where('emp_no', $emp->l1_manager_code)->first();
@@ -119,7 +149,7 @@ class VmtApraisalController extends Controller
                     }
                 }
             }
-            return view('vmt_pms_assigngoals', compact('users','empGoals','userCount','empCount','subCount', 'config'));
+            return view('vmt_pms_assigngoals', compact('users','empGoals','userCount','empCount','subCount', 'config', 'department'));
         } elseif (auth()->user()->hasrole('Manager')) {
             $empGoals = $empGoalQuery->get();
 
@@ -190,7 +220,7 @@ class VmtApraisalController extends Controller
             }
         }
 
-        return view('vmt_pms_assigngoals', compact('users', 'employees','empGoals','userCount','empCount','subCount', 'config'));
+        return view('vmt_pms_assigngoals', compact('users', 'employees','empGoals','userCount','empCount','subCount', 'config', 'department'));
     }
 
     public function getL1_ManagerName()
