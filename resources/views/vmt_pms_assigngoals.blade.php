@@ -693,9 +693,10 @@
                                                     <thead class="bg-primary thead" id="tHead">
                                                         <tr class="text-uppercase">
                                                             <th class="sort" data-sort="id" style="width: 2%;">#</th>
+                                                            @if($config)
                                                             @if($config && $config->selected_columns && in_array('dimension', explode(',', $config->selected_columns)))
                                                             <th class="sort" data-sort="customer_name" style="width: 8%;">@if($config && $config->header) {{$config->header['dimension']}} @else Dimension @endif</th>
-                                                            Dimension @endif
+                                                            @endif
                                                             @if($config && $config->selected_columns && in_array('kpi', explode(',', $config->selected_columns)))
                                                             <th class="sort" data-sort="product_name" style="width: 15%;">@if($config && $config->header) {{$config->header['kpi']}} @else KPI @endif</th>
                                                             @endif
@@ -719,6 +720,17 @@
                                                             @endif
                                                             @if($config && $config->selected_columns && in_array('kpiWeightage', explode(',', $config->selected_columns)))
                                                             <th class="sort" data-sort="status" style="width: 15%;" width="10%">@if($config && $config->header) {{$config->header['kpiWeightage']}} @else KPI Weightage ( % ) @endif</th>
+                                                            @endif
+                                                            @else
+                                                            <th class="sort" data-sort="customer_name" style="width: 8%;"> Dimension</th>
+                                                            <th class="sort" data-sort="product_name" style="width: 15%;"> KPI</th>
+                                                            <th class="sort" data-sort="date" style="width: 20%;"> Operational Definition</th>
+                                                            <th class="sort" data-sort="amount" style="width: 15%;"> Measure</th>
+                                                            <th class="sort" data-sort="payment" style="width: 5%;"> Frequency</th>
+                                                            <th class="sort" data-sort="status" style="width: 5%;"> Target</th>
+                                                            <th class="sort" data-sort="status" style="width: 11%;"> Stretch Target</th>
+                                                            <th class="sort" data-sort="status" style="width: 4%;"> Source</th>
+                                                            <th class="sort" data-sort="status" style="width: 15%;" width="10%"> KPI Weightage ( % )</th>
                                                             @endif
                                                         </tr>
                                                     </thead>
