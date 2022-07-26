@@ -1124,13 +1124,23 @@ $(document).ready(function(){
         }
         $('#hidden_calendar_year').val($("#year option:selected").text())
         console.log($( "#hidden_calendar_year" ).val());
-
+        frequencyChange();
     });
 
     $('#frequency').change(function() {
+        frequencyChange();
+    });
+
+    function frequencyChange() {
         var data = "";
         if ($('#frequency').val() == 'monthly') {
-            data = "<option value=''>Select</option><option value='jan'>January</option><option value='feb'>February</option><option value='mar'>March</option><option value='apr'>April</option><option value='may'>May</option><option value='june'>June</option><option value='july'>July</option><option value='aug'>August</option><option value='sept'>September</option><option value='oct'>October</option><option value='nov'>November</option><option value='dec'>December</option>";
+            var year = "<?=date('Y')?>";
+            var nextyear = "<?=date('Y', strtotime('+1 year'))?>";
+            if ($('#calendar_type').val() == 'financial_year') {
+                data = "<option value=''>Select</option><option value='apr'>April - "+year+"</option><option value='may'>May - "+year+"</option><option value='june'>June - "+year+"</option><option value='july'>July - "+year+"</option><option value='aug'>August - "+year+"</option><option value='sept'>September - "+year+"</option><option value='oct'>October - "+year+"</option><option value='nov'>November - "+year+"</option><option value='dec'>December - "+year+"</option><option value='jan'>January - "+nextyear+"</option><option value='feb'>February - "+nextyear+"</option><option value='mar'>March - "+nextyear+"</option>";
+            } else {
+                data = "<option value=''>Select</option><option value='jan'>January - "+year+"</option><option value='feb'>February - "+year+"</option><option value='mar'>March - "+year+"</option><option value='apr'>April - "+year+"</option><option value='may'>May - "+year+"</option><option value='june'>June - "+year+"</option><option value='july'>July - "+year+"</option><option value='aug'>August - "+year+"</option><option value='sept'>September - "+year+"</option><option value='oct'>October - "+year+"</option><option value='nov'>November - "+year+"</option><option value='dec'>December - "+year+"</option>";
+            }
         } else if ($('#frequency').val() == 'quarterly') {
             data = "<option value=''>Select</option><option value='q1'>Q1(Jan-Mar)</option><option value='q2'>Q2(Apr-June)</option><option value='q3'>Q3(July-Sept)</option><option value='q4'>Q4(Oct-Dec)</option>";
         } else if ($('#frequency').val() == 'halfYearly') {
@@ -1139,7 +1149,7 @@ $(document).ready(function(){
             data = "<option value=''>Select</option><option value='yearly'>Yearly</option>";
         }
         $('#assignment_period_start').html(data);
-    });
+    }
 });
 
 $(function () {
