@@ -18596,7 +18596,7 @@ tr:last-child td:last-child {
     vertical-align: middle;
     border-top: 1px solid #eee;
     text-align: center;
-
+    width: 0 !important;
 }
 
 .amount-column:first-of-type .ytd-summary-column-table tbody tr td {
@@ -18754,6 +18754,9 @@ tr:last-child td:last-child {
     justify-content: flex-start;
     padding: 10px 0px;
     font-size: 14px;
+    font-weight: 500;
+}
+[data-layout=vertical][data-sidebar-size=lg] .navbar-menu .navbar-nav .nav-link:hover {
     font-weight: 600;
 }
 

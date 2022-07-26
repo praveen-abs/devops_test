@@ -329,7 +329,7 @@
                                         src="{{ URL::asset('assets/images/users/avatar-8.jpg') }}"
                                         alt="Header Avatar"> -->
                                     <span class="text-start ms-xl-2">
-                                        <span class="fw-bold">{{Auth::user()->name}}</span>
+                                        <span class="">{{Auth::user()->name}}</span>
                                         <span class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text"></span>
                                     </span>
                                 </div>
