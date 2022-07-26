@@ -20,7 +20,7 @@
                             <div class="col col-form-label">
                                 <ul class="list-style-numbered list-style-circle p-4">
                                         <li>Download the
-                                            <a href="{{ url('/assets/sample_employeeBulkOnboarding.xlsx')  }}" target="_blank">
+                                            <a href="{{ url('/assets/sample_employeeBulkQuickOnboarding.xlsx')  }}" target="_blank">
                                                 <span class="text-link" style=" color: blue;">Sample File</span></a>
 
                                         </li>
