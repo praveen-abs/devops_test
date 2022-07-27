@@ -729,15 +729,16 @@ class VmtEmployeeController extends Controller
 
                 if ($newEmployee && $empOffice) {
                     $addedCount++;
-                    $returnsuccessMsg .= $empNo." get added";
+                    $returnsuccessMsg .= "<li>".$empNo." get added.</li>";
                 } else {
                     $failedCount++;
-                    $returnfailedMsg .= $empNo." not get added";
+                    $returnfailedMsg .= "<li>".$empNo." not get added.</li>";
                 }
 
                 \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $row["email"]));
             } else {
-                $returnfailedMsg .= $empNo." not get added because of error ".json_encode($validator->errors()->all());
+                $returnfailedMsg .= "<li>".$empNo." not get added because of error ".json_encode($validator->errors()->all());
+                $returnfailedMsg .= "</li>";
                 $failedCount++;
             }
         }
