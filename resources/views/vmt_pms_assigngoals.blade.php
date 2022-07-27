@@ -740,58 +740,40 @@ blockquote p::after {
                                                                 <div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div>
                                                             </td>
                                                             <td class="text-box-td p-1">
-                                                                <!-- <textarea name="dimension[]" id="dimension" class="text-box" cols="20"
-                                                                    placeholder="type here" ></textarea> -->
-                                                                <input type="hidden" id="dimension" name="dimension[]">
-                                                                <blockquote contenteditable="true"><p data-id="dimension" class="bockquote">Edit Dimension Here</p></blockquote>
+                                                                <textarea name="dimension[]" id="dimension" class="text-box" cols="20"
+                                                                    placeholder="type here" ></textarea>
                                                             </td>
                                                             <td class="text-box-td p-1">
-                                                                <!-- <textarea name="kpi[]" id="" class="text-box" cols="20"
-                                                                    placeholder="type here"></textarea> -->
-                                                                <input type="hidden" id="kpi" name="kpi[]">
-                                                                <blockquote contenteditable="true"><p data-id="kpi" class="bockquote">Edit KPI Here</p></blockquote>
+                                                                <textarea name="kpi[]" id="" class="text-box" cols="20"
+                                                                    placeholder="type here"></textarea>
                                                             </td>
                                                             <td class="text-box-td p-1">
-                                                                <!-- <textarea name="operational[]" id="" class="text-box" cols="20"
-                                                                    placeholder="type here"></textarea> -->
-                                                                <input type="hidden" id="operational" name="operational[]">
-                                                                <blockquote contenteditable="true"><p data-id="operational" class="bockquote">Edit Operational Definition Here</p></blockquote>
+                                                                <textarea name="operational[]" id="" class="text-box" cols="20"
+                                                                    placeholder="type here"></textarea>
                                                             </td>
                                                             <td class="text-box-td p-1">
-                                                                <!-- <textarea name="measure[]" id="" class="text-box" cols="20"
-                                                                    placeholder="type here"></textarea> -->
-                                                                <input type="hidden" id="measure" name="measure[]">
-                                                                <blockquote contenteditable="true"><p data-id="measure" class="bockquote">Edit Measure Here</p></blockquote>
+                                                                <textarea name="measure[]" id="" class="text-box" cols="20"
+                                                                    placeholder="type here"></textarea>
                                                             </td>
                                                             <td class="text-box-td p-1">
-                                                                <!-- <textarea name="frequency[]" id="" class="text-box" cols="20"
-                                                                    placeholder="type here"></textarea> -->
-                                                                <input type="hidden" id="frequency" name="frequency[]">
-                                                                <blockquote contenteditable="true"><p data-id="frequency" class="bockquote">Edit Frequency Here</p></blockquote>
+                                                                <textarea name="frequency[]" id="" class="text-box" cols="20"
+                                                                    placeholder="type here"></textarea>
                                                             </td>
                                                             <td class="text-box-td p-1">
-                                                                <!-- <textarea name="target[]" id="" class="text-box" cols="20"
-                                                                    placeholder="type here"></textarea> -->
-                                                                <input type="hidden" id="target" name="target[]">
-                                                                <blockquote contenteditable="true"><p data-id="target" class="bockquote">Edit Target Here</p></blockquote>
+                                                                <textarea name="target[]" id="" class="text-box" cols="20"
+                                                                    placeholder="type here"></textarea>
                                                             </td>
                                                             <td class="text-box-td p-1">
-                                                                <!-- <textarea name="stretchTarget[]" id="" class="text-box" cols="10"
-                                                                    placeholder="type here"></textarea> -->
-                                                                <input type="hidden" id="stretchTarget" name="stretchTarget[]">
-                                                                <blockquote contenteditable="true"><p data-id="stretchTarget" class="bockquote">Edit Stretch Target Here</p></blockquote>
+                                                                <textarea name="stretchTarget[]" id="" class="text-box" cols="10"
+                                                                    placeholder="type here"></textarea>
                                                             </td>
                                                             <td class="text-box-td p-1">
-                                                                <!-- <textarea name="source[]" id="" class="text-box" cols="10"
-                                                                    placeholder="type here"></textarea> -->
-                                                                <input type="hidden" id="source" name="source[]">
-                                                                <blockquote contenteditable="true"><p data-id="source" class="bockquote">Edit Source Here</p></blockquote>
+                                                                <textarea name="source[]" id="" class="text-box" cols="10"
+                                                                    placeholder="type here"></textarea>
                                                             </td>
                                                             <td class="text-box-td p-1">
-                                                                <!-- <textarea name="kpiWeightage[]" id="" class="text-box" cols="10"
-                                                                    placeholder="type here"></textarea> -->
-                                                                <input type="hidden" id="kpiWeightage" name="kpiWeightage[]">
-                                                                <blockquote contenteditable="true"><p data-id="kpiWeightage" class="bockquote">Edit KPI Weightage Here</p></blockquote>
+                                                                <textarea name="kpiWeightage[]" id="" class="text-box" cols="10"
+                                                                    placeholder="type here"></textarea>
                                                             </td>
                                                         </tr>
 
