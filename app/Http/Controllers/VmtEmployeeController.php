@@ -79,7 +79,7 @@ class VmtEmployeeController extends Controller
                                 'users.email as email_id',
                                 'users.id as user_id', 
                                 'users.avatar as avatar',
-                                'vmt_employee_office_details.department',
+                                'vmt_employee_office_details.department_id',
                                 'vmt_employee_office_details.designation', 
                                 'vmt_employee_office_details.l1_manager_code',
                                 'vmt_employee_office_details.l1_manager_name',
