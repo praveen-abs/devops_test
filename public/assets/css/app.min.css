@@ -6491,8 +6491,8 @@ button {
 }
 
 .btn-primary.btn-animation {
-    background-color: #405189;
-    border-color: #405189
+    background-color: #002f56 !important;
+    border-color: #002f56 !important;
 }
 
 .btn-primary.btn-animation:active,
@@ -17340,6 +17340,37 @@ p {
 .text-orange {
     color: #FF4D00;
 }
+.text-primary {
+    color: #002f56;
+}
+
+
+
+.btn-primary {
+    background-color: #002f56;
+    border-color: #002f56;
+    transition: .4s ease-in;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #002f56;
+    border-color: #002f56;
+    color: #fff;
+}
+
+.btn-primary:active {
+    background-color: #002f56 !important;
+    border-color: #002f56 !important;
+}
+
+.btn-primary:focus {
+    background-color: #002f56;
+    border-color: #002f56;
+    color: #fff;
+}
+
+
 
 .btn-orange {
     background-color: #FF4D00;
@@ -18973,3 +19004,8 @@ tr:last-child td:last-child {
 } */
 
 /* body:hover ::-webkit-scrollbar-thumb {} */
+
+
+
+
+
