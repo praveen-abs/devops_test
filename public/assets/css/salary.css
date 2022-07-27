@@ -37,7 +37,6 @@
     opacity: 0.5;
 }
 
-.home-wrapper .declaration-card {}
 
 .nav-tabs .nav-link {
     padding: 10px 214px;
@@ -51,9 +50,21 @@
     border-top: 7px solid #002F56 !important;
 }
 
-.declaration-card .declaration-important-card {
+/* .declaration-card .declaration-important-card,.house-card .declaration-important-card {
     box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
     background: #ff000014;
+} */
+
+.bg-light-red ,.bg-medium-red{
+    box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px !important;
+    
+}
+.bg-light-red{
+    background: #ff000014 !important;
+}
+.bg-medium-red{
+    
+    background:#ff000029 !important;
 }
 
 .declaration-card .declaration-tax-card,

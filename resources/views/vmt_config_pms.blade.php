@@ -40,26 +40,56 @@
                                         <div class="form-card">
                                             <div class="row mt-1">
                                                 <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
-                                                    <label class="" for="selected_columns">Column needs to be shown in KPI{!! required() !!}</label>
+                                                    <label class="" for="selected_columns">Column needs to be shown in KPI</label>
                                                 </div>
                                                 <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
-                                                    <select placeholder="Select Column" name="selected_columns[]" id="selected_columns" class="onboard-form form-control select2_form_without_search" multiple required>
-                                                        <option value="">Select Column</option>
-                                                        <option value="dimension" @if($data && $data->selected_columns && in_array('dimension', explode(',', $data->selected_columns))) selected @endif>Dimension</option>
-                                                        <option value="kpi" @if($data && $data->selected_columns && in_array('kpi', explode(',', $data->selected_columns))) selected @endif>KPI</option>
-                                                        <option value="operational" @if($data && $data->selected_columns && in_array('operational', explode(',', $data->selected_columns))) selected @endif>Operational</option>
-                                                        <option value="measure" @if($data && $data->selected_columns && in_array('measure', explode(',', $data->selected_columns))) selected @endif>Measure</option>
-                                                        <option value="frequency" @if($data && $data->selected_columns && in_array('frequency', explode(',', $data->selected_columns))) selected @endif>Frequency</option>
-                                                        <option value="target" @if($data && $data->selected_columns && in_array('target', explode(',', $data->selected_columns))) selected @endif>Target</option>
-                                                        <option value="stretchTarget" @if($data && $data->selected_columns && in_array('stretchTarget', explode(',', $data->selected_columns))) selected @endif>Stretch Target</option>
-                                                        <option value="source" @if($data && $data->selected_columns && in_array('source', explode(',', $data->selected_columns))) selected @endif>Source</option>
-                                                        <option value="kpiWeightage" @if($data && $data->selected_columns && in_array('kpiWeightage', explode(',', $data->selected_columns))) selected @endif>KPI Weightage</option>
-                                                    </select>
+                                                    <!-- <select placeholder="Select Column" name="selected_columns[]" id="selected_columns" class="onboard-form form-control select2_form_without_search" multiple required>
+                                                        <option value="">Select Column</option> -->
+                                                    <div class="row">
+                                                        <div class="col-3">
+                                                            <input class="mr-1" type="checkbox" name="dimension_check" id="dimension_check" @if($data && $data->selected_columns && in_array('dimension', explode(',', $data->selected_columns))) checked @endif>
+                                                            <label for="dimension_check" style="margin-left:2px;">Dimension</label>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <input class="mr-1" type="checkbox" name="kpi_check" id="kpi_check" @if($data && $data->selected_columns && in_array('kpi', explode(',', $data->selected_columns))) checked @endif>
+                                                            <label for="kpi_check" style="margin-left:2px;">KPI</label>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <input class="mr-1" type="checkbox" name="operational_check" id="operational_check" @if($data && $data->selected_columns && in_array('operational', explode(',', $data->selected_columns))) operational_check @endif>
+                                                            <label for="operational" style="margin-left:2px;">Operational</label>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <input class="mr-1" type="checkbox" name="measure_check" id="measure_check" @if($data && $data->selected_columns && in_array('measure', explode(',', $data->selected_columns))) checked @endif>
+                                                            <label for="measure_check" style="margin-left:2px;">Measure</label>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <input class="mr-1" type="checkbox" name="frequency_check" id="frequency_check" @if($data && $data->selected_columns && in_array('frequency', explode(',', $data->selected_columns))) checked @endif>
+                                                            <label for="frequency_check" style="margin-left:2px;">Frequency</label>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <input class="mr-1" type="checkbox" name="target_check" id="target_check" @if($data && $data->selected_columns && in_array('target', explode(',', $data->selected_columns))) checked @endif>
+                                                            <label for="target_check" style="margin-left:2px;">Target</label>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <input class="mr-1" type="checkbox" name="stretchTarget_check" id="stretchTarget_check" @if($data && $data->selected_columns && in_array('stretchTarget', explode(',', $data->selected_columns))) checked @endif>
+                                                            <label for="stretchTarget_check" style="margin-left:2px;">Stretch Target</label>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <input class="mr-1" type="checkbox" name="source_check" id="source_check" @if($data && $data->selected_columns && in_array('source', explode(',', $data->selected_columns))) checked @endif>
+                                                            <label for="source_check" style="margin-left:2px;">Source</label>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <input class="mr-1" type="checkbox" name="kpiWeightage_check" id="kpiWeightage_check" @if($data && $data->selected_columns && in_array('kpiWeightage', explode(',', $data->selected_columns))) checked @endif>
+                                                            <label for="kpiWeightage_check" style="margin-left:2px;">KPI Weightage</label>
+                                                        </div>
+                                                    <!-- </select> -->
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="row mt-1">
                                                 <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
-                                                    <label class="" for="selected_head">Head needs to be shown in KPI{!! required() !!}</label>
+                                                    <label class="" for="selected_head">Final KPI score based on</label>
                                                 </div>
                                                 <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
                                                     <select placeholder="Select Head" name="selected_head" id="selected_head" class="onboard-form form-control select2_form_without_search" required>
@@ -72,7 +102,7 @@
                                             <h6 class="mt-3">Change column name as per your preference</h6>
                                             <div class="row mt-1">
                                                 <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
-                                                    <label class="" for="selected_head">Dimension{!! required() !!}</label>
+                                                    <label class="" for="selected_head">Dimension</label>
                                                 </div>
                                                 <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
                                                     <input placeholder="" type="text" name="dimension" value="{{$data && $data->header && $data->header['dimension'] ? $data->header['dimension'] : 'Dimension'}}" class="onboard-form form-control" required>
@@ -80,7 +110,7 @@
                                             </div>
                                             <div class="row mt-1">
                                                 <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
-                                                    <label class="" for="selected_head">KPI{!! required() !!}</label>
+                                                    <label class="" for="selected_head">KPI</label>
                                                 </div>
                                                 <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
                                                     <input placeholder="" type="text" name="kpi" value="{{$data && $data->header && $data->header['kpi'] ? $data->header['kpi'] : 'KPI'}}" class="onboard-form form-control" required>
@@ -88,7 +118,7 @@
                                             </div>
                                             <div class="row mt-1">
                                                 <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
-                                                    <label class="" for="selected_head">Operational Definition{!! required() !!}</label>
+                                                    <label class="" for="selected_head">Operational Definition</label>
                                                 </div>
                                                 <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
                                                     <input placeholder="" type="text" name="operational" value="{{$data && $data->header && $data->header['operational'] ? $data->header['operational'] : 'Operational Definition'}}" class="onboard-form form-control" required>
@@ -96,7 +126,7 @@
                                             </div>
                                             <div class="row mt-1">
                                                 <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
-                                                    <label class="" for="selected_head">Measure{!! required() !!}</label>
+                                                    <label class="" for="selected_head">Measure</label>
                                                 </div>
                                                 <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
                                                     <input placeholder="" type="text" name="measure" value="{{$data && $data->header && $data->header['measure'] ? $data->header['measure'] : 'Measure'}}" class="onboard-form form-control" required>
@@ -104,7 +134,7 @@
                                             </div>
                                             <div class="row mt-1">
                                                 <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
-                                                    <label class="" for="selected_head">Frequency{!! required() !!}</label>
+                                                    <label class="" for="selected_head">Frequency</label>
                                                 </div>
                                                 <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
                                                     <input placeholder="" type="text" name="frequency" value="{{$data && $data->header && $data->header['frequency'] ? $data->header['frequency'] : 'Frequency'}}" class="onboard-form form-control" required>
@@ -112,7 +142,7 @@
                                             </div>
                                             <div class="row mt-1">
                                                 <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
-                                                    <label class="" for="selected_head">Target{!! required() !!}</label>
+                                                    <label class="" for="selected_head">Target</label>
                                                 </div>
                                                 <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
                                                     <input placeholder="" type="text" name="target" value="{{$data && $data->header && $data->header['target'] ? $data->header['target'] : 'Target'}}" class="onboard-form form-control" required>
@@ -120,7 +150,7 @@
                                             </div>
                                             <div class="row mt-1">
                                                 <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
-                                                    <label class="" for="selected_head">Stretch Target{!! required() !!}</label>
+                                                    <label class="" for="selected_head">Stretch Target</label>
                                                 </div>
                                                 <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
                                                     <input placeholder="" type="text" name="stretchTarget" value="{{$data && $data->header && $data->header['stretchTarget'] ? $data->header['stretchTarget'] : 'Stretch Target'}}" class="onboard-form form-control" required>
@@ -128,7 +158,7 @@
                                             </div>
                                             <div class="row mt-1">
                                                 <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
-                                                    <label class="" for="selected_head">Source{!! required() !!}</label>
+                                                    <label class="" for="selected_head">Source</label>
                                                 </div>
                                                 <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
                                                     <input placeholder="" type="text" name="source" value="{{$data && $data->header && $data->header['source'] ? $data->header['source'] : 'Source'}}" class="onboard-form form-control" required>
@@ -136,7 +166,7 @@
                                             </div>
                                             <div class="row mt-1">
                                                 <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
-                                                    <label class="" for="selected_head">KPI Weightage{!! required() !!}</label>
+                                                    <label class="" for="selected_head">KPI Weightage</label>
                                                 </div>
                                                 <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
                                                     <input placeholder="" type="text" name="kpiWeightage" value="{{$data && $data->header && $data->header['kpiWeightage'] ? $data->header['kpiWeightage'] : 'KPI Weightage ( % )'}}" class="onboard-form form-control" required>

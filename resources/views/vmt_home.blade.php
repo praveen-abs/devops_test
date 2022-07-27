@@ -3,6 +3,23 @@
 <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
 <link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
 
+<!-- for bootstrap temporary -->
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+</script>
+
+<!-- end -->
+
+
 <link href="{{ URL::asset('assets/css/salary.css') }}" rel="stylesheet">
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/employee-directory.css') }}">
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/onboarding.css') }}">
@@ -95,16 +112,16 @@
                         <div class="col-12">
                             <ul class="personal-info">
                                 <li>
-                                    <div class="title h5 text-muted fw-bold">Total Contribution</div>
-                                    <div class="text  h5 text-primary fw-bold">₹ 3,600.00</div>
+                                    <div class="title h5 text-muted ">Total Contribution</div>
+                                    <div class="text  h5 text-primary ">₹ 3,600.00</div>
                                 </li>
                                 <li>
-                                    <div class="title h5 text-muted fw-bold">Your Contribution</div>
-                                    <div class="text h5 text-primary fw-bold">₹ 3,600.00</div>
+                                    <div class="title h5 text-muted ">Your Contribution</div>
+                                    <div class="text h5 text-primary ">₹ 3,600.00</div>
                                 </li>
                                 <li>
-                                    <div class="title h5 text-muted fw-bold">Employee Contribution</div>
-                                    <div class="text h5 text-primary fw-bold">₹ 3,600.00</div>
+                                    <div class="title h5 text-muted ">Employee Contribution</div>
+                                    <div class="text h5 text-primary ">₹ 3,600.00</div>
                                 </li>
                             </ul>
                         </div>
@@ -134,34 +151,39 @@
                             My Payslip
                         </h5>
                         <div class="btn-group">
-                            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Small button
+                            <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class=" ri-calendar-2-line mx-2"></i>FY 2022-23
                             </button>
-                            <div class="dropdown-menu">
 
+                            <div class="dropdown-menu">
+                                <p class="dropdown-item" href="#"><i class=" ri-calendar-2-line mx-2"></i>FY 2022-23</p>
+                                <p class="dropdown-item" href="#"><i class=" ri-calendar-2-line mx-2"></i>FY 2022-23</p>
+                                <p class="dropdown-item" href="#"><i class=" ri-calendar-2-line mx-2"></i>FY 2022-23</p>
                             </div>
+
                         </div>
+
                     </div>
                     <div class="row">
                         <div class="col-12">
                             <ul class="personal-info">
                                 <li>
-                                    <div class="title h5 text-muted fw-bold">August Salary Slip</div>
+                                    <div class="title h5 text-muted ">August Salary Slip</div>
 
-                                    <div class="text h4  fw-bold"><i class="text-orange  ri-download-cloud-2-fill"></i>
+                                    <div class="text h4  "><i class="text-orange  ri-download-cloud-2-fill"></i>
                                     </div>
                                 </li>
                                 <li>
-                                    <div class="title h5 text-muted fw-bold">September Salary Slip</div>
+                                    <div class="title h5 text-muted ">September Salary Slip</div>
 
-                                    <div class="text h4 text-orange fw-bold"><i
+                                    <div class="text h4 text-orange "><i
                                             class="text-orange ri-download-cloud-2-fill"></i> </div>
                                 </li>
                                 <li>
-                                    <div class="title h5 text-muted fw-bold">October Salary Slip</div>
+                                    <div class="title h5 text-muted ">October Salary Slip</div>
 
-                                    <div class="text h4 text-orange fw-bold"><i
+                                    <div class="text h4 text-orange "><i
                                             class="text-orange ri-download-cloud-2-fill"></i> </div>
                                 </li>
                             </ul>
@@ -181,34 +203,38 @@
                             Tax Complete Sheet
                         </h5>
                         <div class="btn-group">
-                            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Small button
+                            <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class=" ri-calendar-2-line mx-2"></i>FY 2022-23
                             </button>
-                            <div class="dropdown-menu">
 
+                            <div class="dropdown-menu">
+                                <p class="dropdown-item" href="#"><i class=" ri-calendar-2-line mx-2"></i>FY 2022-23</p>
+                                <p class="dropdown-item" href="#"><i class=" ri-calendar-2-line mx-2"></i>FY 2022-23</p>
+                                <p class="dropdown-item" href="#"><i class=" ri-calendar-2-line mx-2"></i>FY 2022-23</p>
                             </div>
+
                         </div>
                     </div>
 
                     <ul class="personal-info">
                         <li>
-                            <div class="title h5 text-muted fw-bold">August Salary Slip</div>
+                            <div class="title h5 text-muted ">August Salary Slip</div>
 
-                            <div class="text h4  fw-bold"><i class="text-orange  ri-download-cloud-2-fill"></i>
+                            <div class="text h4  "><i class="text-orange  ri-download-cloud-2-fill"></i>
                             </div>
                         </li>
                         <li>
-                            <div class="title h5 text-muted fw-bold">September Salary Slip</div>
+                            <div class="title h5 text-muted ">September Salary Slip</div>
 
-                            <div class="text h4 text-orange fw-bold"><i
-                                    class="text-orange ri-download-cloud-2-fill"></i> </div>
+                            <div class="text h4 text-orange "><i class="text-orange ri-download-cloud-2-fill"></i>
+                            </div>
                         </li>
                         <li>
-                            <div class="title h5 text-muted fw-bold">October Salary Slip</div>
+                            <div class="title h5 text-muted ">October Salary Slip</div>
 
-                            <div class="text h4 text-orange fw-bold"><i
-                                    class="text-orange ri-download-cloud-2-fill"></i> </div>
+                            <div class="text h4 text-orange "><i class="text-orange ri-download-cloud-2-fill"></i>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -228,28 +254,31 @@
                             Tax Deduction TDS/TCS
                         </h5>
                         <div class="btn-group">
-                            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Small button
+                            <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class=" ri-calendar-2-line mx-2"></i>FY 2022-23
                             </button>
-                            <div class="dropdown-menu">
 
+                            <div class="dropdown-menu">
+                                <p class="dropdown-item" href="#"><i class=" ri-calendar-2-line mx-2"></i>FY 2022-23</p>
+                                <p class="dropdown-item" href="#"><i class=" ri-calendar-2-line mx-2"></i>FY 2022-23</p>
+                                <p class="dropdown-item" href="#"><i class=" ri-calendar-2-line mx-2"></i>FY 2022-23</p>
                             </div>
+
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12">
                             <ul class="personal-info">
                                 <li>
-                                    <div class="title h5 text-muted fw-bold">Form-16</div>
-
-                                    <div class="text h4  fw-bold"><i class="text-orange  ri-download-cloud-2-fill"></i>
+                                    <div class="title  text-muted h5 ">Form-16</div>
+                                    <div class="text h4"><i class="text-orange  ri-download-cloud-2-fill"></i>
                                     </div>
                                 </li>
                                 <li>
-                                    <div class="title h5 text-muted fw-bold">Form-12BB</div>
+                                    <div class="title  text-muted h5">Form-12BB</div>
 
-                                    <div class="text h4 text-orange fw-bold"><i
+                                    <div class="text h4 text-orange "><i
                                             class="text-orange ri-download-cloud-2-fill"></i> </div>
                                 </li>
 
@@ -276,7 +305,7 @@
                             <ul class="personal-info">
                                 <li>
                                     <div class="title">
-                                        <div class=" h5 text-muted fw-bold">Total Contribution
+                                        <div class=" h5 text-muted ">Total Contribution
 
                                         </div>
                                         <small class="text-muted">(Whole pay structure including all primary salary
@@ -284,7 +313,7 @@
                                     </div>
 
 
-                                    <div class="text h4 text-orange fw-bold"><i
+                                    <div class="text h4 text-orange "><i
                                             class="text-orange ri-download-cloud-2-fill"></i> </div>
                                 </li>
 
@@ -316,26 +345,14 @@
                     <div class="tab-content" id="nav-tabContent">
                         <div class="tab-pane fade show active" id="declaration" role="tabpanel"
                             aria-labelledby="nav-home-tab">
-                            <div class="card declaration-important-card my-5">
+                            <div class="card bg-light-red declaration-important-card my-5">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <span><i class="ri-alert-fill text-danger"></i>Important</span>
-                                                <div class="btn-group">
-                                                    <button class="btn btn-secondary btn-sm dropdown-toggle"
-                                                        type="button" data-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false">
-                                                        <i class=" ri-calendar-2-line"></i>
-                                                        <span>FY 2022 <span>-</span> 23</span>
-                                                    </button>
-                                                    <div class="dropdown-menu">
-
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
-
                                         <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
 
                                             <ul class="list-style-numbered list-style-circle p-4">
@@ -358,71 +375,1086 @@
 
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-sm-4  col-xl-4 col-md-4 col-lg-4">
-                                    <div class="card declaration-tax-card">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
-                                                    <div
-                                                        class="d-flex justify-content-center flex-column text-center align-items-center">
-                                                        <p class="text-muted">Net Taxable Income</p>
-                                                        <h4>INR 4,66,888</h4>
+                            <div class="declaration-tax mb-3">
+                                <div class="row">
+                                    <div class="col-sm-4  col-xl-4 col-md-4 col-lg-4">
+                                        <div class="card declaration-tax-card">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
+                                                        <div
+                                                            class="d-flex justify-content-center flex-column text-center align-items-center">
+                                                            <p class="text-muted">Net Taxable Income</p>
+                                                            <h4>INR 4,66,888</h4>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12 text-right">
+                                                    <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12 text-right">
 
-                                                    <span class="text-muted ">Income Tax Computation</span>
+                                                        <span class="text-muted ">Income Tax Computation</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-sm-4  col-xl-4 col-md-4 col-lg-4">
-                                    <div class="card declaration-tax-card ">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
-                                                    <div
-                                                        class="d-flex justify-content-center flex-column text-center align-items-center">
-                                                        <p class="text-muted">Total Tax Payable</p>
-                                                        <h4>INR 4,66,888</h4>
+                                    <div class="col-sm-4  col-xl-4 col-md-4 col-lg-4">
+                                        <div class="card declaration-tax-card ">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
+                                                        <div
+                                                            class="d-flex justify-content-center flex-column text-center align-items-center">
+                                                            <p class="text-muted">Total Tax Payable</p>
+                                                            <h4>INR 4,66,888</h4>
+                                                        </div>
                                                     </div>
-                                                </div>
 
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-sm-4  col-xl-4 col-md-4 col-lg-4">
-                                    <div class="card declaration-tax-card">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
-                                                    <div
-                                                        class="d-flex justify-content-center flex-column text-center align-items-center">
-                                                        <p class="text-muted">Tax Already Paid</p>
-                                                        <h4>INR 4,66,888</h4>
+                                    <div class="col-sm-4  col-xl-4 col-md-4 col-lg-4">
+                                        <div class="card declaration-tax-card">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
+                                                        <div
+                                                            class="d-flex justify-content-center flex-column text-center align-items-center">
+                                                            <p class="text-muted">Tax Already Paid</p>
+                                                            <h4>INR 4,66,888</h4>
+                                                        </div>
                                                     </div>
-                                                </div>
 
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="declaration-wrapper mb-3">
+                                <div class="row">
+                                    <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
+                                        <h5 class="my-2 ">My Declaration</h5>
+                                        <div class="table-responsive">
+                                            <table class=" table table-borderd  mb-0">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th scope="col">Declaration</th>
+                                                        <th scope="col">No Of Declaration</th>
+                                                        <th scope="col">Amount Declared</th>
+                                                        <th scope="col">Proof Submitted</th>
+                                                        <th scope="col">Amount Rejected</th>
+                                                        <th scope="col">Amount Accepted</th>
+                                                </thead>
+                                                <tbody>
+
+                                                    <tr>
+
+                                                        <td>
+                                                            1.5 lac Exemptions
+                                                        </td>
+                                                        <td>
+                                                            3
+                                                        </td>
+                                                        <td>
+                                                            INR 98,897
+                                                        </td>
+                                                        <td>
+                                                            0
+                                                        </td>
+                                                        <td>
+                                                            INR 0
+                                                        </td>
+                                                        <td>
+                                                            INR 65,000
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+
+                                                        <td>
+                                                            Other Exemptions
+                                                        </td>
+                                                        <td>
+                                                            1
+                                                        </td>
+                                                        <td>
+                                                            INR 98,852
+                                                        </td>
+                                                        <td>
+                                                            0
+                                                        </td>
+                                                        <td>
+                                                            INR 0
+                                                        </td>
+                                                        <td>
+                                                            INR 5,600
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+
+                                                        <td>
+                                                            Tax Saving Allowances
+                                                        </td>
+                                                        <td>
+                                                            1
+                                                        </td>
+                                                        <td>
+                                                            INR 98,897
+                                                        </td>
+                                                        <td>
+                                                            0
+                                                        </td>
+                                                        <td>
+                                                            INR 0
+                                                        </td>
+                                                        <td>
+                                                            INR 65,000
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+
+                                                        <td>
+                                                            House Property
+                                                        </td>
+                                                        <td>
+                                                            1
+                                                        </td>
+                                                        <td>
+                                                            INR 98,897
+                                                        </td>
+                                                        <td>
+                                                            0
+                                                        </td>
+                                                        <td>
+                                                            INR 0
+                                                        </td>
+                                                        <td>
+                                                            INR 65,000
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+
+                                                        <td>
+                                                            Income from other sources
+                                                        </td>
+                                                        <td>
+                                                            0 </td>
+                                                        <td>
+                                                            INR 0
+                                                        </td>
+                                                        <td>
+                                                            0
+                                                        </td>
+                                                        <td>
+                                                            INR 0
+                                                        </td>
+                                                        <td>
+                                                            INR 0
+                                                        </td>
+                                                    </tr>
+
+
+                                                </tbody>
+
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tax-deduction-wrapper mb-3">
+                                <h5>Monthly Tax Deduction Details</h5>
+                                <div class="row">
+                                    <div class="col-sm-6  col-xl-3 col-md-4 col-lg-3">
+                                        <div class="card declaration-tax-card card-left-bar">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
+                                                        <div
+                                                            class="d-flex justify-content-center flex-column text-center align-items-center">
+                                                            <p class="text-muted">Total Tax Payable</p>
+                                                            <h4>INR 48</h4>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-sm-6  col-xl-3 col-md-4 col-lg-3">
+                                        <div class="card declaration-tax-card card-left-bar">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
+                                                        <div
+                                                            class="d-flex justify-content-center flex-column text-center align-items-center">
+                                                            <p class="text-muted"> Tax Paid Till Now</p>
+                                                            <h4>INR 48</h4>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-sm-6  col-xl-3 col-md-4 col-lg-3">
+                                        <div class="card declaration-tax-card card-left-bar">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
+                                                        <div
+                                                            class="d-flex justify-content-center flex-column text-center align-items-center">
+                                                            <p class="text-muted">Remaining Tax Amount</p>
+                                                            <h4>INR 48</h4>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="lac-card-container mb-3">
+
+                                <div class="title">
+                                    <h5>1.5 Lac Exemptions</h5>
+                                    <small class="text-muted">(The aggregate of deductions under section 80C,section
+                                        80CCC and
+                                        sub-section (1) of section 80CCD)</small>
+                                </div>
+                                <div class="lac-card-wrapper mt-3">
+                                    <div class="row">
+                                        <div class="col-sm-6  col-xl-3 col-md-4 col-lg-3">
+                                            <div class="card declaration-tax-card card-left-bar">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
+                                                            <div
+                                                                class="d-flex justify-content-center flex-column text-center align-items-center">
+                                                                <p class="text-muted">Max Limit</p>
+                                                                <h4>INR 0</h4>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-sm-6  col-xl-3 col-md-4 col-lg-3">
+                                            <div class="card declaration-tax-card card-left-bar">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
+                                                            <div
+                                                                class="d-flex justify-content-center flex-column text-center align-items-center">
+                                                                <p class="text-muted"> Amount Declared</p>
+                                                                <h4>INR 48</h4>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-sm-6  col-xl-3 col-md-4 col-lg-3">
+                                            <div class="card declaration-tax-card card-left-bar">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
+                                                            <div
+                                                                class="d-flex justify-content-center flex-column text-center align-items-center">
+                                                                <p class="text-muted">Auto Approved Amount</p>
+                                                                <h4>INR 48</h4>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-sm-6  col-xl-3 col-md-4 col-lg-3">
+                                            <div class="card declaration-tax-card card-left-bar">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
+                                                            <div
+                                                                class="d-flex justify-content-center flex-column text-center align-items-center">
+                                                                <p class="text-muted">Amount Accepted</p>
+                                                                <h4>INR 48</h4>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-sm-6  col-xl-3 col-md-4 col-lg-3">
+                                            <div class="card declaration-tax-card card-left-bar">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
+                                                            <div
+                                                                class="d-flex justify-content-center flex-column text-center align-items-center">
+                                                                <p class="text-muted">Amount Rejected</p>
+                                                                <h4>INR 48</h4>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="lac-card-table mt-3">
+                                    <div class="lac-content mb-3">
+
+                                    </div>
+                                    <div class="lac-table">
+                                        <div class="table-responsive tax-table-responsive ">
+                                            <table class=" table table-borderd tax-table  mb-0">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th scope="col">
+                                                            Amount Declared
+                                                        </th>
+                                                        <th scope="col">
+                                                            Deduction Name
+                                                        </th>
+                                                        <th scope="col">
+                                                            Declaration
+                                                        </th>
+                                                        <th scope="col">
+                                                            Proof
+                                                        </th>
+                                                        <th scope="col">
+                                                            Status
+                                                        </th>
+                                                        <th scope="col">
+                                                            Actions
+                                                        </th>
+                                                </thead>
+                                                <tbody>
+
+                                                    <tr>
+
+                                                        <td>
+                                                            <p>80C</p>
+                                                        </td>
+                                                        <td>
+                                                            <p> PPF</p>
+                                                        </td>
+                                                        <td>
+                                                            <p>INR 34,555</p>
+                                                        </td>
+
+
+                                                        <td>
+                                                            <p>No Proof</p>
+                                                        </td>
+
+                                                        <td>
+                                                            <p>Not Submitted</p>
+
+
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn boder-0 p-0 outline-none">
+                                                                <p class="ri-pencil-line text-orange"></p>
+                                                            </button>
+
+                                                        </td>
+                                                    </tr>
+
+
+                                                </tbody>
+
+                                            </table>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="month-declaration mb-3">
+                                <!-- <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12"> -->
+                                <div class="table-responsive tax-table-responsive ">
+                                    <table class=" table table-borderd tax-table  mb-0">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th scope="col">
+                                                    <p class="text-white"> Month</p>
+                                                </th>
+                                                <th scope="col">
+                                                    <p class="text-white"><span class="mx-1">APR</span>2022
+                                                    </p>
+                                                </th>
+                                                <th scope="col">
+                                                    <p class="text-white"><span class="mx-1">MAY</span>2022
+                                                    </p>
+                                                </th>
+                                                <th scope="col">
+                                                    <p class="text-white"><span class="mx-1">JUN</span>2022
+                                                    </p>
+                                                    <hr class="one">
+                                                </th>
+                                                <th scope="col">
+                                                    <p class="text-white"><span class="mx-1">JUL</span>2022
+                                                    </p>
+                                                    <hr class="two">
+                                                </th>
+                                                <th scope="col">
+                                                    <p class="text-white"><span class="mx-1">AUG</span>2022
+                                                    </p>
+                                                    <hr class="three">
+                                                </th>
+                                                <th scope="col">
+                                                    <p class="text-white"><span class="mx-1">SEP</span>2022
+                                                    </p>
+                                                </th>
+                                                <th scope="col">
+                                                    <p class="text-white"><span class="mx-1">OCT</span>2022
+                                                    </p>
+                                                </th>
+                                                <th scope="col">
+                                                    <p class="text-white"><span class="mx-1">NOV</span>2022
+                                                    </p>
+                                                </th>
+                                                <th scope="col">
+                                                    <p class="text-white"><span class="mx-1">DEC</span>2022
+                                                    </p>
+                                                </th>
+                                                <th scope="col">
+                                                    <p class="text-white"><span class="mx-1">JAN</span>2022
+                                                    </p>
+                                                </th>
+                                                <th scope="col">
+                                                    <p class="text-white"><span class="mx-1">FEB</span>2022
+                                                    </p>
+                                                </th>
+                                                <th scope="col">
+                                                    <p class="text-white"><span class="mx-1">MAR</span>2022
+                                                    </p>
+                                                </th>
+                                        </thead>
+                                        <tbody>
+
+                                            <tr>
+
+                                                <td>
+                                                    Monthly Total Tax
+                                                </td>
+                                                <td>
+                                                    INR 0
+                                                </td>
+                                                <td>
+                                                    INR 0
+                                                </td>
+                                                <td>
+                                                    INR 0
+                                                </td>
+
+                                                <td>
+                                                    INR 0
+                                                </td>
+                                                <td>
+                                                    INR 0
+                                                </td>
+                                                <td>
+                                                    INR 0
+                                                </td>
+                                                <td>
+                                                    INR 0
+                                                </td>
+                                                <td>
+                                                    INR 0
+                                                </td>
+                                                <td>
+                                                    INR 0
+                                                </td>
+                                                <td>
+                                                    INR 0
+                                                </td>
+                                                <td>
+                                                    INR 0
+                                                </td>
+                                                <td>
+                                                    INR 0
+                                                </td>
+
+                                            </tr>
+
+
+                                        </tbody>
+
+                                    </table>
+                                    <div class="d-flex mt-4 align-itemx-center justify-content-start tax-details">
+
+                                        <p class="mx-2 "> Tax deduction from projected salary</p>
+                                        <p class="mx-2 ">Tax deduction from previous employer</p>
+                                        <p class="mx-2 ">Imported tax deduction from current employer</p>
+                                    </div>
+                                </div>
+                                <!-- </div> -->
+                            </div>
+
+                            <div class="other-card-container">
+
+                                <div class="title">
+                                    <h5>Other Exemptions</h5>
+                                    <small class="text-muted">(Other deductions under chapter VI(A) which is
+                                        from 80CCD1(B) to
+                                        80U)</small>
+                                </div>
+                                <div class="other-card-wrapper mt-3">
+                                    <div class="row">
+                                        <div class="col-sm-6  col-xl-3 col-md-4 col-lg-3">
+                                            <div class="card declaration-tax-card card-left-bar">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
+                                                            <div
+                                                                class="d-flex justify-content-center flex-column text-center align-items-center">
+                                                                <p class="text-muted">Amount Declared</p>
+                                                                <h4>INR 0</h4>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-sm-6  col-xl-3 col-md-4 col-lg-3">
+                                            <div class="card declaration-tax-card card-left-bar">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
+                                                            <div
+                                                                class="d-flex justify-content-center flex-column text-center align-items-center">
+                                                                <p class="text-muted">Auto Approved Amount</p>
+                                                                <h4>INR 48</h4>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-sm-6  col-xl-3 col-md-4 col-lg-3">
+                                            <div class="card declaration-tax-card card-left-bar">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
+                                                            <div
+                                                                class="d-flex justify-content-center flex-column text-center align-items-center">
+                                                                <p class="text-muted">Amount Accepted</p>
+                                                                <h4>INR 48</h4>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-sm-6  col-xl-3 col-md-4 col-lg-3">
+                                            <div class="card declaration-tax-card card-left-bar">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
+                                                            <div
+                                                                class="d-flex justify-content-center flex-column text-center align-items-center">
+                                                                <p class="text-muted">Amount Rejected</p>
+                                                                <h4>INR 48</h4>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="other-card-table mb-3">
+
+                                    <div class="other-content mb-3">
+
+                                    </div>
+
+                                    <div class="table-responsive other-table-responsive ">
+                                        <table class=" table table-borderd onter-table  mb-0">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th scope="col">
+                                                        Amount Declared
+                                                    </th>
+                                                    <th scope="col">
+                                                        Deduction Name
+                                                    </th>
+                                                    <th scope="col">
+                                                        Max Limit
+                                                    </th>
+                                                    <th scope="col">
+                                                        Declaration
+                                                    </th>
+                                                    <th scope="col">
+                                                        Proof
+                                                    </th>
+                                                    <th scope="col">
+                                                        Status
+                                                    </th>
+                                                    <th scope="col">
+                                                        Actions
+                                                    </th>
+                                            </thead>
+                                            <tbody>
+
+                                                <tr>
+
+                                                    <td>
+                                                        <p>80C</p>
+                                                    </td>
+                                                    <td>
+                                                        <p> PPF</p>
+                                                    </td>
+                                                    <td>
+                                                        <p>INR 34,005</p>
+                                                    </td>
+
+                                                    <td>
+                                                        <p>Not Declared </p>
+                                                    </td>
+
+                                                    <td>
+                                                        <p>No Proof</p>
+                                                    </td>
+
+                                                    <td>
+                                                        <p>Not Submitted</p>
+
+
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn boder-0 p-0 outline-none">
+                                                            <p class="ri-pencil-line text-orange"></p>
+                                                        </button>
+
+                                                    </td>
+                                                </tr>
+
+
+                                            </tbody>
+
+                                        </table>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <div class="Tax-card-container">
+
+                                <div class="title">
+                                    <h5>Tax Savings Allowances</h5>
+                                    <small class="text-muted">(Following allowance are exempted from gross for
+                                        income tax calculation
+                                        only when claim is submitted against allowances)</small>
+                                </div>
+                                <div class="tax-card-wrapper mt-3">
+                                    <div class="row">
+                                        <div class="col-sm-6  col-xl-3 col-md-4 col-lg-3">
+                                            <div class="card declaration-tax-card card-left-bar">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
+                                                            <div
+                                                                class="d-flex justify-content-center flex-column text-center align-items-center">
+                                                                <p class="text-muted">Amount Declared</p>
+                                                                <h4>INR 0</h4>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-sm-6  col-xl-3 col-md-4 col-lg-3">
+                                            <div class="card declaration-tax-card card-left-bar">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
+                                                            <div
+                                                                class="d-flex justify-content-center flex-column text-center align-items-center">
+                                                                <p class="text-muted">Auto Approved Amount</p>
+                                                                <h4>INR 48</h4>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-sm-6  col-xl-3 col-md-4 col-lg-3">
+                                            <div class="card declaration-tax-card card-left-bar">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
+                                                            <div
+                                                                class="d-flex justify-content-center flex-column text-center align-items-center">
+                                                                <p class="text-muted">Amount Accepted</p>
+                                                                <h4>INR 48</h4>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-sm-6  col-xl-3 col-md-4 col-lg-3">
+                                            <div class="card declaration-tax-card card-left-bar">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
+                                                            <div
+                                                                class="d-flex justify-content-center flex-column text-center align-items-center">
+                                                                <p class="text-muted">Amount Rejected</p>
+                                                                <h4>INR 48</h4>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="other-card-table mb-3">
+
+                                    <div class="other-content mb-3">
+
+                                    </div>
+
+                                    <div class="table-responsive other-table-responsive ">
+                                        <table class=" table table-borderd onter-table  mb-0">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th scope="col">
+                                                        Amount Declared
+                                                    </th>
+                                                    <th scope="col">
+                                                        Deduction Name
+                                                    </th>
+                                                    <th scope="col">
+                                                        Max Limit
+                                                    </th>
+                                                    <th scope="col">
+                                                        Declaration
+                                                    </th>
+                                                    <th scope="col">
+                                                        Proof
+                                                    </th>
+                                                    <th scope="col">
+                                                        Status
+                                                    </th>
+                                                    <th scope="col">
+                                                        Actions
+                                                    </th>
+                                            </thead>
+                                            <tbody>
+
+                                                <tr>
+
+                                                    <td>
+                                                        <p>80C</p>
+                                                    </td>
+                                                    <td>
+                                                        <p> PPF</p>
+                                                    </td>
+                                                    <td>
+                                                        <p>INR 34,005</p>
+                                                    </td>
+
+
+
+                                                    <td>
+                                                        <p>Not Declared </p>
+                                                    </td>
+
+                                                    <td>
+                                                        <p>No Proof</p>
+                                                    </td>
+
+                                                    <td>
+                                                        <p>Not Submitted</p>
+
+
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn boder-0 p-0 outline-none">
+                                                            <p class="ri-pencil-line text-orange"></p>
+                                                        </button>
+
+                                                    </td>
+                                                </tr>
+
+
+                                            </tbody>
+
+                                        </table>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <div class="house-card-container">
+                                <div class="title">
+                                    <h5>House Property</h5>
+                                    <small class="text-muted">(Have you can declare all the house property rentend or
+                                        owned)</small>
+                                </div>
+                                <div class="home-card-wrapper mt-3">
+                                    <div class="row">
+                                        <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
+                                            <div class="card bg-light-red declaration-important-card ">
+
+                                                <div class="card-body">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <span><i class="ri-alert-fill text-danger"></i>Important</span>
+                                                    </div>
+                                                    <ul class="list-style-numbered list-style-circle p-4">
+                                                        <li>
+                                                            You can add more than one rented property or own property
+                                                            for the current
+                                                            financial year.
+                                                        </li>
+                                                        <li>For rented property if the total rent is more than ₹
+                                                            1,00,000 then you need
+                                                            to provide either PAN of owner or declaration letter.</li>
+
+                                                        <li>For rented property you are eligible for HRA and in case HRA
+                                                            is not paid by
+                                                            your employer you will be eligible for exemption under 80 GG
+                                                        </li>
+                                                        <li>For own property/residence you will be for eligible for
+                                                            house loan interst
+                                                            exemption under Section 24</li>
+                                                    </ul>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="other-card-table mb-3">
+                                <div class="other-content mb-3">
+
+                                </div>
+
+                                <div class="table-responsive other-table-responsive ">
+                                    <table class=" table table-borderd onter-table  mb-0">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th scope="col">
+                                                    Month
+                                                </th>
+                                                <th scope="col">
+                                                    City
+                                                </th>
+                                                <th scope="col">
+                                                    No Of Owners
+                                                </th>
+                                                <th scope="col">
+                                                    Status
+                                                </th>
+
+                                                <th scope="col">
+                                                    Actions
+                                                </th>
+                                        </thead>
+                                        <tbody>
+
+                                            <tr>
+
+                                                <td>
+                                                    <p>80C</p>
+                                                </td>
+
+                                                <td>
+                                                    <p>other non metro</p>
+                                                </td>
+
+                                                <td>
+                                                    <p>one</p>
+                                                </td>
+
+
+                                                <td>
+                                                    <p>one</p>
+                                                </td>
+
+
+                                                <td>
+                                                    <button class="btn boder-0 p-0 outline-none">
+                                                        <p class="ri-pencil-line text-orange"></p>
+                                                    </button>
+
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="income-card-container">
+                             
+                                        <div class="title">
+                                            <h5 class="">Income From Others Sources</h5>
+                                            <small class="text-muted">(Income from other sources is a residual category
+                                                used to
+                                                classify Income that is not classified as taxed under any other heard of
+                                                income)</small>
+                                        </div>
+                                        <div class="income-card-wrapper mt-3">
+                                            <div class="row">
+                                                <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
+                                                    <div class="card bg-medium-red declaration-important-card ">
+                                                        <div class="card-body py-2">
+                                                            <ul class="list-style-numbered list-style-circle mx-2">
+                                                                <li> Income form other sources not added
+                                                                </li>
+
+                                                            </ul>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                               
                         </div>
+
+
                         <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+
+                            <div class="previous-income-content mb-2">
+                                <h5>Previous Employment Details</h5>
+                                <small class="text-muted">(Previous Employment details are necessary for income tax
+                                    computation when the employees switches the organization in the middle of the
+                                    FY.)</small>
+                            </div>
+
+                            <div class="table-responsive previous-income-table">
+                                <table class=" table table-borderd  mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th scope="col">Month</th>
+                                            <th scope="col">Gross</th>
+                                            <th scope="col">Basic</th>
+                                            <th scope="col">House</th>
+                                            <th scope="col">Employee</th>
+                                            <th scope="col">ESI</th>
+                                            <th scope="col">LWF</th>
+                                            <th scope="col">LWF Employee</th>
+                                            <th scope="col">Professional</th>
+                                            <th scope="col">Income Tax</th>
+                                            <th scope="col">Other Tax</th>
+                                            <th scope="col">Other Tax</th>
+                                    </thead>
+                                    <tbody>
+
+                                        <tr>
+
+                                            <td>
+                                                -
+                                            </td>
+                                            <td>
+                                                -
+                                            </td>
+                                            <td>
+                                                -
+                                            </td>
+                                            <td>
+                                                -
+                                            </td>
+
+                                            <td>
+                                                -
+                                            </td>
+                                            <td>
+                                                -
+                                            </td>
+
+                                            <td>
+                                                -
+                                            </td>
+                                            <td>
+                                                -
+                                            </td>
+
+                                            <td>
+                                                -
+                                            </td>
+                                            <td>
+                                                -
+                                            </td>
+                                            <td>
+                                                -
+                                            </td>
+                                            <td>
+                                                -
+                                            </td>
+                                        </tr>
+
+
+                                    </tbody>
+
+                                </table>
+                                <!-- end table -->
+                            </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>
         </div>
 
     </div>
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-body">
@@ -466,17 +1498,16 @@
                             </tbody>
 
                         </table>
-                        <!-- end table -->
+           
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div>
-        
+    </div> -->
+    <!-- <div>
         <div class="card">
             <div class="card-body">
-            <h5>Monthly Tax Deduction Details</h5>
+                <h5>Monthly Tax Deduction Details</h5>
                 <div class="row">
                     <div class="col-sm-6  col-xl-3 col-md-4 col-lg-3">
                         <div class="card declaration-tax-card card-left-bar">
@@ -532,123 +1563,10 @@
                 </div>
             </div>
         </div>
-    </div>
-
-
-    <div class="month-declaration">
-        <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="table-responsive tax-table-responsive ">
-                        <table class=" table table-borderd tax-table  mb-0">
-                            <thead class="table-light">
-                                <tr>
-                                    <th scope="col">
-                                        <p class="text-white"> Month</p>
-                                    </th>
-                                    <th scope="col">
-                                        <p class="text-white"><span class="mx-1">APR</span>2022</p>
-                                    </th>
-                                    <th scope="col">
-                                        <p class="text-white"><span class="mx-1">MAY</span>2022</p>
-                                    </th>
-                                    <th scope="col">
-                                        <p class="text-white"><span class="mx-1">JUN</span>2022</p>
-                                        <hr class="one">
-                                    </th>
-                                    <th scope="col">
-                                        <p class="text-white"><span class="mx-1">JUL</span>2022</p>
-                                        <hr class="two">
-                                    </th>
-                                    <th scope="col">
-                                        <p class="text-white"><span class="mx-1">AUG</span>2022</p>
-                                        <hr class="three">
-                                    </th>
-                                    <th scope="col">
-                                        <p class="text-white"><span class="mx-1">SEP</span>2022</p>
-                                    </th>
-                                    <th scope="col">
-                                        <p class="text-white"><span class="mx-1">OCT</span>2022</p>
-                                    </th>
-                                    <th scope="col">
-                                        <p class="text-white"><span class="mx-1">NOV</span>2022</p>
-                                    </th>
-                                    <th scope="col">
-                                        <p class="text-white"><span class="mx-1">DEC</span>2022</p>
-                                    </th>
-                                    <th scope="col">
-                                        <p class="text-white"><span class="mx-1">JAN</span>2022</p>
-                                    </th>
-                                    <th scope="col">
-                                        <p class="text-white"><span class="mx-1">FEB</span>2022</p>
-                                    </th>
-                                    <th scope="col">
-                                        <p class="text-white"><span class="mx-1">MAR</span>2022</p>
-                                    </th>
-                            </thead>
-                            <tbody>
-
-                                <tr>
-
-                                    <td>
-                                        Monthly Total Tax
-                                    </td>
-                                    <td>
-                                        INR 0
-                                    </td>
-                                    <td>
-                                        INR 0
-                                    </td>
-                                    <td>
-                                        INR 0
-                                    </td>
-
-                                    <td>
-                                        INR 0
-                                    </td>
-                                    <td>
-                                        INR 0
-                                    </td>
-                                    <td>
-                                        INR 0
-                                    </td>
-                                    <td>
-                                        INR 0
-                                    </td>
-                                    <td>
-                                        INR 0
-                                    </td>
-                                    <td>
-                                        INR 0
-                                    </td>
-                                    <td>
-                                        INR 0
-                                    </td>
-                                    <td>
-                                        INR 0
-                                    </td>
-                                    <td>
-                                        INR 0
-                                    </td>
-
-                                </tr>
-
-
-                            </tbody>
-
-                        </table>
-                        <div class="d-flex mt-4 align-itemx-center justify-content-start tax-details">
-
-                            <p class="mx-2 "> Tax deduction from projected salary</p>
-                            <p class="mx-2 ">Tax deduction from previous employer</p>
-                            <p class="mx-2 ">Imported tax deduction from current employer</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    </div> -->
 </div>
+
+
 
 
 @endsection
