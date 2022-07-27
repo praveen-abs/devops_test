@@ -155,7 +155,7 @@
                                         <div>
                                             <ul class="nav sub-topnav">
                                                 <li class="title active topbarNav fw-bold" id="postt"><a>View Post</a>
-                                                </li> <li class="title active topbarNav fw-bold" id="post"><a>Post</a>
+                                                </li> <li class="title  topbarNav fw-bold" id="post"><a>Post</a>
                                                 </li>
                                                 <li class="title topbarNav  fw-bold" id="announcement">
                                                     <a>Announcement</a>
@@ -164,7 +164,7 @@
                                                 <li class="title topbarNav fw-bold" id="praise"><a>Praise</a></li>
                                             </ul>
                                              <!-- code post view  -->
-                                               <div class="topbarContent emp-postt" style="display:none;">
+                                               <div class="topbarContent emp-postt" >
                                                   <div>
                                                     <div class="px-20 p-16 row no-gutters scrollBar">
                                                     
@@ -496,7 +496,7 @@ $(function() {
                 });
                 $('#submit_post_data').submit(function(e) {
                         e.preventDefault();
-                            alert("helooo");
+                            // alert("helooo");
                         var formData = new FormData(this);
                         $.ajax({
                         type:'POST',
