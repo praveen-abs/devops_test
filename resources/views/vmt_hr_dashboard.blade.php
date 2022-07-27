@@ -161,7 +161,8 @@
                                     <div class="min-h-250">
                                         <div>
                                             <ul class="nav sub-topnav">
-                                                <li class="title active topbarNav fw-bold" id="post"><a>Post</a>
+                                                <li class="title active topbarNav fw-bold" id="postt"><a>View Post</a>
+                                                </li><li class="title active topbarNav fw-bold" id="post"><a>Post</a>
                                                 </li>
                                                 <li class="title topbarNav  fw-bold" id="announcement">
                                                     <a>Announcement</a>
@@ -169,6 +170,23 @@
                                                 <li class="title topbarNav fw-bold" id="poll"><a>Poll</a></li>
                                                 <li class="title topbarNav fw-bold" id="praise"><a>Praise</a></li>
                                             </ul>
+                                             <!-- code post view  -->
+                                               <div class="topbarContent emp-postt" style="display:none;">
+                                                  <div>
+                                                    <div class="px-20 p-16 row no-gutters scrollBar">
+                                                    
+                                                        @foreach($dashboardpost as $index => $user )
+ <img  style="width: 100px;" src="{{ URL::asset('images/'.$user->post_image)  }}">
+                                                        <textarea name="post_menuss" id="post_menuss" class="border-0 outline-none  w-100 h-100" readonly>{{$user->message}}</textarea>
+                                                        @endforeach
+                                                             </div>
+                                                  <!--   <button class="btn btn-danger py-1 px-4  float-right">
+                                                        Submit
+                                                    </button> -->
+                                                </div>
+                                            </div>
+
+                                            <!-- emd view -->
                                             <div class="topbarContent emp-post">
                                                 <div>
                                                     <div class="px-22 p-16 row no-gutters scrollBar">
@@ -261,20 +279,13 @@
                                                 <div>
                                                     <div>
                                                         <div class="px-20 p-16 row no-gutters scrollBar">
-                                                                   <div class="topbarContent emp-post">
-                                                <div>
-                                                    <div class="px-20 p-16 row no-gutters scrollBar">
-                                                        @foreach($dashboardpost as $index => $user )
- <img class="rounded-circle header-profile-user" src="{{ URL::asset('images/'.$user->post_image)  }}"alt="Header Avatar">
-                                        
-                                                        <textarea name="post_menuss" id="post_menuss" class="border-0 outline-none  w-100 h-100" readonly>{{$user->message}}</textarea>
-                                                        @endforeach
-                                                    </div>
-                                                    <button class="btn btn-danger py-1 px-4  float-right">
-                                                        Submit
-                                                    </button>
-                                                </div>
-                                            </div>
+                                                            <textarea name="" id="" cols="30" rows="10"
+                                                                class="border-0 outline-none w-100">
+                                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
+                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
+                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
+                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
+                                                        </textarea>
                                                         </div>
                                                         <button class="btn btn-danger py-1 px-4  float-right">
                                                             Submit
