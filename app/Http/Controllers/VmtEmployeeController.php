@@ -762,9 +762,10 @@ class VmtEmployeeController extends Controller
         $countries = Countries::all();
         $india = Countries::where('country_code', 'IN')->first();
         $emp = VmtEmployeeOfficeDetails::all(); 
+        $department = Department::all();
         $bank = Bank::all(); 
 
-        return view('vmt_employee_quick_onboarding', compact('empNo', 'countries', 'bank', 'emp'));
+        return view('vmt_employee_quick_onboarding', compact('empNo', 'countries', 'bank', 'emp','department'));
     }
 
     // Store quick onboard employee data to Database
