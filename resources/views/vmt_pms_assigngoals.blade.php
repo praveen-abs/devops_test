@@ -39,12 +39,8 @@ blockquote {
     background: white;
     border-radius: 5px;
     margin: 0 !important;
-    min-height: 50px;
-    height: 100%;
-}
-
-table {
-    table-layout: fixed;
+    height: 100px;
+    overflow-y:auto;
 }
 
 blockquote p {
