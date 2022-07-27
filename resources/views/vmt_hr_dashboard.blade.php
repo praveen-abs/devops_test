@@ -154,7 +154,7 @@
                                     <div class="min-h-250">
                                         <div>
                                             <ul class="nav sub-topnav">
-                                                <li class="title active topbarNav fw-bold" id="post_view"><a>View Post</a>
+                                                {{-- <li class="title active topbarNav fw-bold" id="post_view"><a>View Post</a> --}}
                                                 </li><li class="title  topbarNav fw-bold" id="post"><a>Post</a>
                                                 </li>
                                                 <li class="title topbarNav  fw-bold" id="announcement">
@@ -164,8 +164,8 @@
                                                 <li class="title topbarNav fw-bold" id="praise"><a>Praise</a></li>
                                             </ul>
                                              <!-- code post view  -->
-                                               <div class="topbarContent emp-post_view" >
-                                                  <div>
+                                            {{-- <div class="topbarContent emp-post_view" >
+                                                <div>
                                                     <div class="px-20 p-16 row no-gutters scrollBar">
                                                         @foreach($dashboardpost as $index => $user )
                                                             <img  style="width: 100px;" src="{{ URL::asset('images/'.$user->post_image)  }}">
@@ -173,7 +173,7 @@
                                                         @endforeach
                                                     </div>   
                                                 </div>
-                                            </div>
+                                            </div> --}}
 
                                             <!-- emd view -->
                                             <div class="topbarContent emp-post">
