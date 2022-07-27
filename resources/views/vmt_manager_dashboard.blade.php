@@ -228,11 +228,11 @@
                                                         <div class="px-20 p-16 row no-gutters scrollBar">
                                                           
                                                                 
-                                                            <input  class="border-0 form-control outline-none w-100 h-100"  placeholder="Title of the Announcement" type="text" id="title_data" name="title_data">
+                                                       <input  class="form-control   w-100 h-100"  aria-label="default input example" placeholder="Title of the Announcement" type="text" id="title_data" name="title_data">
                                                             <br>
                                                             <hr size="8" width="90%" color="black">
                                                             <br>
-                                                            <input class="border-0 form-control outline-none w-100 h-100"  placeholder="details of Announcement" type="text" name="details_data" id="details_data">
+                                                           <textarea  class="form-control placeholder-glow w-100 h-100"  placeholder="Details of Announcement" aria-label="default input example" type="text" name="details_data" id="details_data"></textarea>
                                                         
                                                         </div>
                                                         <button class="btn btn-danger py-1 px-4  float-right" id="annon_menu_submit" type="button">
@@ -507,7 +507,7 @@ $(function() {
                         processData: false,
                         success: (data) => {
                         this.reset();
-                        alert('File has been uploaded successfully');
+                        alert('Post Created Successfully');
                         console.log(data);
                         },
                         error: function(data){
