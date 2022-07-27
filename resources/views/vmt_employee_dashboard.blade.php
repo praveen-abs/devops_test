@@ -155,8 +155,8 @@
                                         <div>
                                             <ul class="nav sub-topnav">
                                                 <li class="title active topbarNav fw-bold" id="postt"><a>View Post</a>
-                                                </li> <li class="title active topbarNav fw-bold" id="post"><a>Post</a>
                                                 </li>
+                                                 <!-- <li class="title active topbarNav fw-bold" id="post"><a>Post</a></li> -->
                                                 <li class="title topbarNav  fw-bold" id="announcement">
                                                     <a>Announcement</a>
                                                 </li>
@@ -164,10 +164,10 @@
                                                 <li class="title topbarNav fw-bold" id="praise"><a>Praise</a></li>
                                             </ul>
                                             <!-- code post view  -->
-                                               <div class="topbarContent emp-postt" style="display:none;">
+                                               <div class="topbarContent emp-postt" >
                                                   <div>
                                                     <div class="px-20 p-16 row no-gutters scrollBar">
-                                                    
+
                                                         @foreach($dashboardpost as $index => $user )
  <img  style="width: 100px;" src="{{ URL::asset('images/'.$user->post_image)  }}">
                                                         <textarea name="post_menuss" id="post_menuss" class="border-0 outline-none  w-100 h-100" readonly>{{$user->message}}</textarea>
@@ -180,7 +180,7 @@
                                             </div>
 
                                             <!-- emd view -->
-                                            <div class="topbarContent emp-post">
+                                        <!--     <div class="topbarContent emp-post">
                                                 <div>
                                                     <div class="px-20 p-16 row no-gutters scrollBar">
                                                         @foreach($dashboardpost as $index => $user )
@@ -189,11 +189,11 @@
                                                         <textarea name="post_menuss" id="post_menuss" class="border-0 outline-none  w-100 h-100" readonly>{{$user->message}}</textarea>
                                                         @endforeach
                                                     </div>
-                                                  <!--   <button class="btn btn-danger py-1 px-4  float-right">
+                                                     <button class="btn btn-danger py-1 px-4  float-right">
                                                         Submit
-                                                    </button> -->
+                                                    </button> 
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="topbarContent emp-announcement " style="display:none;">
                                                 <div>
                                                     <div>
