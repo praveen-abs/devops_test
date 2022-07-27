@@ -277,7 +277,7 @@ class VmtEmployeeController extends Controller
                 $empOffice  = new VmtEmployeeOfficeDetails; 
                 $empOffice->emp_id = $newEmployee->id; // Need to remove this in future
                 $empOffice->user_id = $newEmployee->userid; //Link between USERS and VmtEmployeeOfficeDetails table
-                $empOffice->department = $row["department"];// => "lk"
+                $empOffice->department_id = $row["department"];// => "lk"
                 $empOffice->process = $row["process"];// => "k"
                 $empOffice->designation = $row["designation"];// => "k"
                 $empOffice->cost_center = $row["cost_center"];// => "k"
@@ -500,7 +500,7 @@ class VmtEmployeeController extends Controller
                     $empOffice  = new VmtEmployeeOfficeDetails;
                     $empOffice->emp_id = $newEmployee->id;
                     $empOffice->user_id = $newEmployee->userid;
-                    $empOffice->department = $row["department"];
+                    $empOffice->department_id = $row["department"];
                     $empOffice->process = $row["process"];
                     $empOffice->designation = $row["designation"];
                     $empOffice->cost_center = $row["cost_center"];
@@ -833,7 +833,7 @@ class VmtEmployeeController extends Controller
                 $empOffice  = new VmtEmployeeOfficeDetails; 
                 $empOffice->emp_id = $newEmployee->id; // Need to remove this in future
                 $empOffice->user_id = $newEmployee->userid; //Link between USERS and VmtEmployeeOfficeDetails table
-                $empOffice->department = $row["department"];// => "lk"
+                $empOffice->department_id = $row["department"];// => "lk"
                 $empOffice->process = $row["process"];// => "k"
                 $empOffice->designation = $row["designation"];// => "k"
                 $empOffice->cost_center = $row["cost_center"];// => "k"

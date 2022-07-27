@@ -729,9 +729,9 @@
                                         </div>
                                         <div class="row">
                                             
-                                            <div class="col-12 text-right"><button type="submit" data="row-6"
-                                                    next="row-6" placeholder="" name="next"
-                                                    class="btn btn-orange   text-center"
+                                            <div class="col-12 text-right"><button type="button" data="row-6"
+                                                    next="row-6" placeholder="" name="next" id="submit_button"
+                                                    class="btn btn-orange  text-center"
                                                     value="Submit">Submit</button>
                                             </div>
                                         </div>
@@ -1083,20 +1083,10 @@
     });
 
 
-    $('#form-1').on('submit', function(e) {
-        e.preventDefault();
+    $('#submit_button').on('click', function(e) {
+        console.log("here");
         var flag = false;
-        $('.files').each(function() {
-            if ($(this).attr('vali') == "required" && $(this).val().length == 0) {
-                var attr = $(this).attr('id');
-                $('.'+attr+'_label').show();
-                flag = true;
-            } else {
-                var attr = $(this).attr('id');
-                $('.'+attr+'_label').hide();
-            }
-        });
-        if ($('#form-1').is(':valid') && !flag) {
+        if ($('#form-1').valid() && !flag) {
             var form_data1 = new FormData(document.getElementById("form-1"));
             $.ajax({
                 url: "{{url('vmt-employee-onboard')}}",
