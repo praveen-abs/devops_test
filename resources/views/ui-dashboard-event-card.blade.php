@@ -1,7 +1,7 @@
 
 <h5 class="text-primary"><b>Events</b></h5>
 <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
-    <div class="card profile-box flex-fill" style="border-top: 7px solid #E54E0D;">
+    <div class="card profile-box flex-fill" style="border-top: 5px solid #E54E0D;">
         <!-- <div class="p-1 bg-danger" ></div> -->
         <div class="card-body ">
             <div class="wishes-card-wrapper">
@@ -11,7 +11,7 @@
                     <div class="px-2 d-flex ">
                         <!-- <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}"
                             class="img-round"> -->
-                        <img src="{{ URL::asset('assets/images/users/avatar-8.jpg') }}" alt=""
+                        <img src="{{ URL::asset('assets/images/event1.png') }}" alt=""
                             class="img-round">
                         <h6 class=" text-primary mx-3 mt-3">{{auth()->user()->name}}</h6>
                     </div>
@@ -24,7 +24,7 @@
     </div>
 </div>
 <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
-    <div class="card profile-box flex-fill" style="border-top: 7px solid #037B5A;">
+    <div class="card profile-box flex-fill" style="border-top: 5px solid #037B5A;">
         <!-- <div class="p-1 bg-danger" ></div> -->
         <div class="card-body ">
             <div class="wishes-card-wrapper">
@@ -32,7 +32,7 @@
                     Anniversary</p>
                 <div class="mt-2 ">
                     <div class="px-2 d-flex">
-                        <img src="{{ URL::asset('assets/images/users/avatar-10.jpg') }}" alt=""
+                        <img src="{{ URL::asset('assets/images/event2.png') }}" alt=""
                             class="img-round">
                         <!-- <h6 class=" text-primary mx-3 mt-3">{{auth()->user()->name}}</h6> -->
                         <h6 class=" text-primary mx-3 mt-3">Ray</h6>
@@ -46,7 +46,7 @@
     </div>
 </div>
 <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
-    <div class="card profile-box flex-fill" style="border-top: 7px solid #B10856;">
+    <div class="card profile-box flex-fill" style="border-top: 5px solid #B10856;">
         <!-- <div class="p-1 bg-danger" ></div> -->
         <div class="card-body ">
             <div class="wishes-card-wrapper">
@@ -54,7 +54,7 @@
                     Anniversary</p>
                 <div class="mt-2  ">
                     <div class="px-2 d-flex">
-                        <img src="{{ URL::asset('assets/images/users/avatar-7.jpg') }}" alt=""
+                        <img src="{{ URL::asset('assets/images/event3.png') }}" alt=""
                             class="img-round">
                         <!-- <h6 class=" text-primary mx-3 mt-3">{{auth()->user()->name}}</h6> -->
                         <h6 class=" text-primary mx-3 mt-3">Mosh</h6>

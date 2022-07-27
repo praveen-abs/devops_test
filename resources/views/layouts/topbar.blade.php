@@ -144,14 +144,15 @@
 
                                                         foreach ($currentUser->notifications as $notification) {
                                                         @endphp
-                                                        <a class="stretched-link rIcon"><i
-                                                                class=" ri-information-line text-info h6">
-                                                                <h6 class="text-muted">&nbsp;
+                                                        <a class="stretched-link rIcon d-flex align-items-center"><i
+                                                                class=" ri-information-line text-info h6 mx-1   "></i>
+                                                                <h6 class="text-muted">
                                                                     @php echo
                                                                     $notification->data['message']; @endphp</h6>
-                                                            </i>
+                                                           
                                                         </a>
-
+                                                        <small class="text-muted float-end"><i class="ri-time-line"> Just 30 Sec Ago</i> </small>
+                                                        
                                                         @php
 
                                                         }
