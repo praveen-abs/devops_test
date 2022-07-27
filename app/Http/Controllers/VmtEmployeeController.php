@@ -9,6 +9,7 @@ use App\Models\VmtEmployeeHierarchy;
 use App\Models\VmtEmployee;
 use App\Models\Countries;
 use App\Models\State;
+use App\Models\Department;
 use App\Models\Bank;
 use App\Imports\VmtEmployeeManagerImport;
 use Illuminate\Support\Facades\Auth;
@@ -47,7 +48,8 @@ class VmtEmployeeController extends Controller
         $india = Countries::where('country_code', 'IN')->first();
         $emp = VmtEmployeeOfficeDetails::all(); 
         $bank = Bank::all(); 
-        return view('vmt_employeeOnboarding', compact('empNo', 'countries', 'india', 'emp', 'bank'));
+        $department = Department::all();
+        return view('vmt_employeeOnboarding', compact('empNo', 'countries', 'india', 'emp', 'bank', 'department'));
     }
 
     public function getState(Request $request) {
@@ -88,6 +90,7 @@ class VmtEmployeeController extends Controller
                             ->orderBy('created_at', 'DESC')
                             ->whereNotNull('emp_no')
                             ->get();
+            
         return view('vmt_employeeDirectory', compact('vmtEmployees'));
     }
 

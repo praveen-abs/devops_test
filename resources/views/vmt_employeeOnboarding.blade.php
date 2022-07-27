@@ -331,8 +331,8 @@
                                                     <select placeholder="Department" name="department" id="department"
                                                         class="onboard-form form-control" required>
                                                         <option value="">Select Department</option>
-                                                        @foreach($emp as $e)
-                                                        <option value="{{$e->department}}">{{$e->department}}</option>
+                                                        @foreach($department as $e)
+                                                        <option value="{{$e->name}}">{{$e->name}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>

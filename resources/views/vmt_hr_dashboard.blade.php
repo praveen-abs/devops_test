@@ -35,14 +35,7 @@
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" /> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 <!-- prem content end -->
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-</script>
-    <script src='assets\libs\emijo.js\inputEmoji.js'></script>
-        <script>
-        $(function () {
-            $('textarea').emoji({place: 'after'});
-        })
-    </script>
+
 @endsection
 
 @section('loading')
@@ -161,8 +154,8 @@
                                     <div class="min-h-250">
                                         <div>
                                             <ul class="nav sub-topnav">
-                                                <li class="title active topbarNav fw-bold" id="postt"><a>View Post</a>
-                                                </li><li class="title active topbarNav fw-bold" id="post"><a>Post</a>
+                                                <li class="title active topbarNav fw-bold" id="post_view"><a>View Post</a>
+                                                </li><li class="title  topbarNav fw-bold" id="post"><a>Post</a>
                                                 </li>
                                                 <li class="title topbarNav  fw-bold" id="announcement">
                                                     <a>Announcement</a>
@@ -171,18 +164,14 @@
                                                 <li class="title topbarNav fw-bold" id="praise"><a>Praise</a></li>
                                             </ul>
                                              <!-- code post view  -->
-                                               <div class="topbarContent emp-postt" style="display:none;">
+                                               <div class="topbarContent emp-post_view" >
                                                   <div>
                                                     <div class="px-20 p-16 row no-gutters scrollBar">
-                                                    
                                                         @foreach($dashboardpost as $index => $user )
- <img  style="width: 100px;" src="{{ URL::asset('images/'.$user->post_image)  }}">
-                                                        <textarea name="post_menuss" id="post_menuss" class="border-0 outline-none  w-100 h-100" readonly>{{$user->message}}</textarea>
+                                                            <img  style="width: 100px;" src="{{ URL::asset('images/'.$user->post_image)  }}">
+                                                            <input name="post_menuss" id="post_menuss" class="border-0 outline-none  w-100 h-100" readonly value="{{$user->message}}">
                                                         @endforeach
-                                                             </div>
-                                                  <!--   <button class="btn btn-danger py-1 px-4  float-right">
-                                                        Submit
-                                                    </button> -->
+                                                    </div>   
                                                 </div>
                                             </div>
 
@@ -235,11 +224,12 @@
                                                         <div class="px-20 p-16 row no-gutters scrollBar">
                                                           
                                                                 
-                                                            <input  class="border-0 form-control outline-none w-100 h-100"  placeholder="Title of the Announcement" type="text" id="title_data" name="title_data">
+                                                            <input  class="form-control   w-100 h-100"  aria-label="default input example" placeholder="Title of the Announcement" type="text" id="title_data" name="title_data">
                                                             <br>
                                                             <hr size="8" width="90%" color="black">
                                                             <br>
-                                                            <input class="border-0 form-control outline-none w-100 h-100"  placeholder="details of Announcement" type="text" name="details_data" id="details_data">
+<!-- <input class="form-control" type="text" placeholder="Default input" aria-label="default input example"> -->
+                                                            <textarea  class="form-control placeholder-glow w-100 h-100"  placeholder="Details of Announcement" aria-label="default input example" type="text" name="details_data" id="details_data"></textarea>
                                                         
                                                         </div>
                                                         <button class="btn btn-danger py-1 px-4  float-right" id="annon_menu_submit" type="button">
@@ -504,7 +494,7 @@ $(function() {
                 });
                 $('#submit_post_data').submit(function(e) {
                         e.preventDefault();
-                            alert("helooo");
+                           // alert("helooo");
                         var formData = new FormData(this);
                         $.ajax({
                         type:'POST',
@@ -515,7 +505,7 @@ $(function() {
                         processData: false,
                         success: (data) => {
                         this.reset();
-                        alert('File has been uploaded successfully');
+                        alert('Post Created Successfully');
                         console.log(data);
                         },
                         error: function(data){
