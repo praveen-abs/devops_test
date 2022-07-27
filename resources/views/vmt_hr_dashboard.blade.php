@@ -90,7 +90,7 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
-                    <div class="card shadow profile-box " style="border-top:7px solid #E54E0D">
+                <div class="card shadow profile-box orange-top-border">
                         <!-- <div class="p-1 bg-danger" > -->
                         <div class="card-body d-flex justify-content-center align-items-center">
                             <div class="text-center">
