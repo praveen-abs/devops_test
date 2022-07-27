@@ -688,50 +688,20 @@
                                     <div class="container-fluid mb-1 mt-3 ">
                                         <form id="kpiTableForm">
                                             <div class="table-responsive">
-                                                <table class="align-middle mb-0" id="kpiTable" style="width:130%;">
-                                                    @csrf
+                                                <table id='kpiTable' style="width:130%;" class="table align-middle mb-0" data-paging="true" data-paging-size="10" data-paging-limit="3" data-paging-container="#paging-ui-container" data-paging-count-format="{PF} to {PL}" data-sorting="true" data-filtering="false" data-empty="No Results" data-filter-container="#filter-form-container" data-editing-add-text="Add New">
+                                                @csrf
                                                     <thead class="bg-primary thead" id="tHead">
                                                         <tr class="text-uppercase">
                                                             <th class="sort" data-sort="id" style="width: 2%;">#</th>
-                                                            @if($config)
-                                                            @if($config && $config->selected_columns && in_array('dimension', explode(',', $config->selected_columns)))
-                                                            <th class="sort" data-sort="customer_name" style="width: 8%;">@if($config && $config->header) {{$config->header['dimension']}} @else Dimension @endif</th>
-                                                            @endif
-                                                            @if($config && $config->selected_columns && in_array('kpi', explode(',', $config->selected_columns)))
-                                                            <th class="sort" data-sort="product_name" style="width: 15%;">@if($config && $config->header) {{$config->header['kpi']}} @else KPI @endif</th>
-                                                            @endif
-                                                            @if($config && $config->selected_columns && in_array('operational', explode(',', $config->selected_columns)))
-                                                            <th class="sort" data-sort="date" style="width: 20%;">@if($config && $config->header) {{$config->header['operational']}} @else Operational Definition @endif</th>
-                                                            @endif
-                                                            @if($config && $config->selected_columns && in_array('measure', explode(',', $config->selected_columns)))
-                                                            <th class="sort" data-sort="amount" style="width: 15%;">@if($config && $config->header) {{$config->header['measure']}} @else Measure @endif</th>
-                                                            @endif
-                                                            @if($config && $config->selected_columns && in_array('frequency', explode(',', $config->selected_columns)))
-                                                            <th class="sort" data-sort="payment" style="width: 5%;">@if($config && $config->header) {{$config->header['frequency']}} @else Frequency @endif</th>
-                                                            @endif
-                                                            @if($config && $config->selected_columns && in_array('target', explode(',', $config->selected_columns)))
-                                                            <th class="sort" data-sort="status" style="width: 5%;">@if($config && $config->header) {{$config->header['target']}} @else Target @endif</th>
-                                                            @endif
-                                                            @if($config && $config->selected_columns && in_array('stretchTarget', explode(',', $config->selected_columns)))
-                                                            <th class="sort" data-sort="status" style="width: 11%;">@if($config && $config->header) {{$config->header['stretchTarget']}} @else Stretch Target @endif</th>
-                                                            @endif
-                                                            @if($config && $config->selected_columns && in_array('source', explode(',', $config->selected_columns)))
-                                                            <th class="sort" data-sort="status" style="width: 4%;">@if($config && $config->header) {{$config->header['source']}} @else Source @endif</th>
-                                                            @endif
-                                                            @if($config && $config->selected_columns && in_array('kpiWeightage', explode(',', $config->selected_columns)))
-                                                            <th class="sort" data-sort="status" style="width: 15%;" width="10%">@if($config && $config->header) {{$config->header['kpiWeightage']}} @else KPI Weightage ( % ) @endif</th>
-                                                            @endif
-                                                            @else
-                                                            <th class="sort" data-sort="customer_name" style="width: 8%;"> Dimension</th>
-                                                            <th class="sort" data-sort="product_name" style="width: 15%;"> KPI</th>
-                                                            <th class="sort" data-sort="date" style="width: 20%;"> Operational Definition</th>
-                                                            <th class="sort" data-sort="amount" style="width: 15%;"> Measure</th>
-                                                            <th class="sort" data-sort="payment" style="width: 5%;"> Frequency</th>
-                                                            <th class="sort" data-sort="status" style="width: 5%;"> Target</th>
-                                                            <th class="sort" data-sort="status" style="width: 11%;"> Stretch Target</th>
-                                                            <th class="sort" data-sort="status" style="width: 4%;"> Source</th>
-                                                            <th class="sort" data-sort="status" style="width: 15%;" width="10%"> KPI Weightage ( % )</th>
-                                                            @endif
+                                                            <th class="sort" data-sort="customer_name" style="width: 8%;" data-name='dimension' data-filterable="false" data-visible="{{$config ? $config->selected_columns && in_array('dimension', explode(',', $config->selected_columns)) ? true: false : true}}">@if($config && $config->header) {{$config->header['dimension']}} @else Dimension @endif</th>
+                                                            <th class="sort" data-sort="product_name" style="width: 15%;" data-name='kpi' data-filterable="false" data-visible="{{$config ? $config->selected_columns && in_array('kpi', explode(',', $config->selected_columns)) ? true: false : true}}">@if($config && $config->header) {{$config->header['kpi']}} @else KPI @endif</th>
+                                                            <th class="sort" data-sort="date" style="width: 20%;" data-name='operational' data-filterable="false" data-visible="{{$config ? $config->selected_columns && in_array('operational', explode(',', $config->selected_columns)) ? true: false : true}}">@if($config && $config->header) {{$config->header['operational']}} @else Operational Definition @endif</th>
+                                                            <th class="sort" data-sort="amount" style="width: 15%;" data-name='measure' data-filterable="false" data-visible="{{$config ? $config->selected_columns && in_array('measure', explode(',', $config->selected_columns)) ? true: false : true}}">@if($config && $config->header) {{$config->header['measure']}} @else Measure @endif</th>
+                                                            <th class="sort" data-sort="payment" style="width: 5%;" data-name='frequency' data-filterable="false" data-visible="{{$config ? $config->selected_columns && in_array('frequency', explode(',', $config->selected_columns)) ? true: false : true}}">@if($config && $config->header) {{$config->header['frequency']}} @else Frequency @endif</th>
+                                                            <th class="sort" data-sort="status" style="width: 5%;" data-name='target' data-filterable="false" data-visible="{{$config ? $config->selected_columns && in_array('target', explode(',', $config->selected_columns)) ? true: false : true}}">@if($config && $config->header) {{$config->header['target']}} @else Target @endif</th>
+                                                            <th class="sort" data-sort="status" style="width: 11%;" data-name='stretchTarget' data-filterable="false" data-visible="{{$config ? $config->selected_columns && in_array('stretchTarget', explode(',', $config->selected_columns)) ? true: false : true}}">@if($config && $config->header) {{$config->header['stretchTarget']}} @else Stretch Target @endif</th>
+                                                            <th class="sort" data-sort="status" style="width: 4%;" data-name='source' data-filterable="false" data-visible="{{$config ? $config->selected_columns && in_array('source', explode(',', $config->selected_columns)) ? true: false : true}}">@if($config && $config->header) {{$config->header['source']}} @else Source @endif</th>
+                                                            <th class="sort" data-sort="status" style="width: 15%;" width="10%" data-name='kpiWeightage' data-filterable="false" data-visible="{{$config ? $config->selected_columns && in_array('kpiWeightage', explode(',', $config->selected_columns)) ? true: false : true}}">@if($config && $config->header) {{$config->header['kpiWeightage']}} @else KPI Weightage ( % ) @endif</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody class="tbody content-container" id="tbody">
@@ -740,60 +710,42 @@
                                                                 <span  name="numbers" id="" class="tableInp" >1</span>
                                                                 <div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div>
                                                             </td>
-                                                            @if($config && $config->selected_columns && in_array('dimension', explode(',', $config->selected_columns)))
                                                             <td class="text-box-td p-1">
                                                                 <textarea name="dimension[]" id="" class="text-box" cols="20"
                                                                     placeholder="type here" ></textarea>
                                                             </td>
-                                                            @endif
-                                                            @if($config && $config->selected_columns && in_array('kpi', explode(',', $config->selected_columns)))
                                                             <td class="text-box-td p-1">
                                                                 <textarea name="kpi[]" id="" class="text-box" cols="20"
                                                                     placeholder="type here"></textarea>
                                                             </td>
-                                                            @endif
-                                                            @if($config && $config->selected_columns && in_array('operational', explode(',', $config->selected_columns)))
                                                             <td class="text-box-td p-1">
                                                                 <textarea name="operational[]" id="" class="text-box" cols="20"
                                                                     placeholder="type here"></textarea>
                                                             </td>
-                                                            @endif
-                                                            @if($config && $config->selected_columns && in_array('measure', explode(',', $config->selected_columns)))
                                                             <td class="text-box-td p-1">
                                                                 <textarea name="measure[]" id="" class="text-box" cols="20"
                                                                     placeholder="type here"></textarea>
                                                             </td>
-                                                            @endif
-                                                            @if($config && $config->selected_columns && in_array('frequency', explode(',', $config->selected_columns)))
                                                             <td class="text-box-td p-1">
                                                                 <textarea name="frequency[]" id="" class="text-box" cols="20"
                                                                     placeholder="type here"></textarea>
                                                             </td>
-                                                            @endif
-                                                            @if($config && $config->selected_columns && in_array('target', explode(',', $config->selected_columns)))
                                                             <td class="text-box-td p-1">
                                                                 <textarea name="target[]" id="" class="text-box" cols="20"
                                                                     placeholder="type here"></textarea>
                                                             </td>
-                                                            @endif
-                                                            @if($config && $config->selected_columns && in_array('stretchTarget', explode(',', $config->selected_columns)))
                                                             <td class="text-box-td p-1">
                                                                 <textarea name="stretchTarget[]" id="" class="text-box" cols="10"
                                                                     placeholder="type here"></textarea>
                                                             </td>
-                                                            @endif
-                                                            @if($config && $config->selected_columns && in_array('source', explode(',', $config->selected_columns)))
                                                             <td class="text-box-td p-1">
                                                                 <textarea name="source[]" id="" class="text-box" cols="10"
                                                                     placeholder="type here"></textarea>
                                                             </td>
-                                                            @endif
-                                                            @if($config && $config->selected_columns && in_array('kpiWeightage', explode(',', $config->selected_columns)))
                                                             <td class="text-box-td p-1">
                                                                 <textarea name="kpiWeightage[]" id="" class="text-box" cols="10"
                                                                     placeholder="type here"></textarea>
                                                             </td>
-                                                            @endif
                                                         </tr>
 
                                                     </tbody>
@@ -1051,6 +1003,8 @@
 <!--Custom Js Script-->
 <script src="{{ URL::asset('/assets/premassets/js/custom.js') }}"></script>
 <script src="{{ URL::asset('/assets/premassets/js/dashboard.js') }}"></script>
+<script src="{{ URL::asset('/assets/premassets/js/footable.min.js') }}"></script>
+<script src="{{ URL::asset('/assets/premassets/css/footable.bootstrap.min.css') }}"></script>
 
 
 <!-- Prem assets ends -->
@@ -1079,6 +1033,9 @@ $(document).ready(function(){
         dropdownParent: '#createEmployee',
         minimumResultsForSearch: Infinity,
 		width: '100%'
+    });
+
+    ft = FooTable.init('#kpiTable', {
     });
 
     $('#upload-goal').click(function() {
