@@ -165,13 +165,11 @@
                                             <div class="topbarContent emp-post">
                                                 <div>
                                                     <div class="px-20 p-16 row no-gutters scrollBar">
-                                                        <textarea name="" id=""
-                                                            class="border-0 outline-none w-100 h-100">
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
-                                                        </textarea>
+                                                        @foreach($dashboardpost as $index => $user )
+ <img class="rounded-circle header-profile-user" src="{{ URL::asset('images/'.$user->post_image)  }}"alt="Header Avatar">
+                                        
+                                                        <textarea name="post_menuss" id="post_menuss" class="border-0 outline-none  w-100 h-100" readonly>{{$user->message}}</textarea>
+                                                        @endforeach
                                                     </div>
                                                     <button class="btn btn-danger py-1 px-4  float-right">
                                                         Submit

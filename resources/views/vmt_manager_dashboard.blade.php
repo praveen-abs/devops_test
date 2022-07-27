@@ -165,17 +165,19 @@
                                             <div class="topbarContent emp-post">
                                                 <div>
                                                     <div class="px-20 p-16 overflow-auto row no-gutters scrollBar">
-                                                       
-                                                       @foreach($dashboardpost as $key )
-                                                        <textarea name="post_menuss" id="post_menuss" class="border-0 outline-none  w-100 h-100" readonly>{{$key}}</textarea>
-                                                        @endforeach
+                                                    <form method="POST" enctype="multipart/form-data" id="submit_post_data" action="javascript:void(0)" >                            
+ <textarea name="post_menu" id="post_menu" class="border-0 outline-none w-100 h-100" placeholder="Write your Post here"></textarea>
+                                                    
                                                     </div>
-                                                    <button class="btn btn-danger py-1 px-4  float-right" type="button" data-bs-toggle="modal" data-bs-target="#showModal">
+                                                    <input type="file" class="filestyle" name="image_src" id="image_src" data-input="false" data-iconName="fa fa-upload" data-buttonText="Upload File" />
+                                                     <button class="btn btn-danger py-1 px-4  float-right"  type="submit">
                                                         Create Post
                                                     </button>
 
+                                                </form>
 
-         <div class="modal fade" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                       
+                                                 <!--     <div class="modal fade" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                         aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content border-0">
@@ -199,23 +201,23 @@
                                     </div>
                             </div>
                         </div>
-                    </div>
-
+                    </div> -->
                                                 </div>
                                             </div>
                                             <div class="topbarContent emp-announcement " style="display:none;">
                                                 <div>
                                                     <div>
                                                         <div class="px-20 p-16 row no-gutters scrollBar">
-                                                            <textarea name="" id=""
-                                                                class="border-0 outline-none w-100 h-100">
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.\
-                                                        </textarea>
+                                                          
+                                                                
+                                                            <input  class="border-0 form-control outline-none w-100 h-100"  placeholder="Title of the Announcement" type="text" id="title_data" name="title_data">
+                                                            <br>
+                                                            <hr size="8" width="90%" color="black">
+                                                            <br>
+                                                            <input class="border-0 form-control outline-none w-100 h-100"  placeholder="details of Announcement" type="text" name="details_data" id="details_data">
+                                                        
                                                         </div>
-                                                        <button class="btn btn-danger py-1 px-4  float-right">
+                                                        <button class="btn btn-danger py-1 px-4  float-right" id="annon_menu_submit" type="button">
                                                             Submit
                                                         </button>
                                                     </div>
@@ -251,13 +253,20 @@
                                                 <div>
                                                     <div>
                                                         <div class="px-20 p-16 row no-gutters scrollBar">
-                                                            <textarea name="" id="" cols="30" rows="10"
-                                                                class="border-0 outline-none w-100">
-                                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
-                                                        </textarea>
+                                                                   <div class="topbarContent emp-post">
+                                                <div>
+                                                    <div class="px-20 p-16 row no-gutters scrollBar">
+                                                        @foreach($dashboardpost as $index => $user )
+ <img class="rounded-circle header-profile-user" src="{{ URL::asset('images/'.$user->post_image)  }}"alt="Header Avatar">
+                                        
+                                                        <textarea name="post_menuss" id="post_menuss" class="border-0 outline-none  w-100 h-100" readonly>{{$user->message}}</textarea>
+                                                        @endforeach
+                                                    </div>
+                                                    <button class="btn btn-danger py-1 px-4  float-right">
+                                                        Submit
+                                                    </button>
+                                                </div>
+                                            </div>
                                                         </div>
                                                         <button class="btn btn-danger py-1 px-4  float-right">
                                                             Submit
@@ -467,23 +476,56 @@ $(function() {
     });
 });
 </script>
-<script type="text/javascript">
+ <script type="text/javascript">
+                $(document).ready(function (e) {
+                $.ajaxSetup({
+                headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+                });
+                $('#submit_post_data').submit(function(e) {
+                        e.preventDefault();
+                            alert("helooo");
+                        var formData = new FormData(this);
+                        $.ajax({
+                        type:'POST',
+                         url: "{{url('vmt-dashboard-post')}}",
+                        data: formData,
+                        cache:false,
+                        contentType: false,
+                        processData: false,
+                        success: (data) => {
+                        this.reset();
+                        alert('File has been uploaded successfully');
+                        console.log(data);
+                        },
+                        error: function(data){
+                        console.log(data);
+                    }
+                    });
+                    });
+                    });
+</script>
+    <script type="text/javascript">
 
-$('#post_menu_submit').click(function(e) {
+$('#annon_menu_submit').click(function(e) {
     e.preventDefault();
-        var command = $('#post_menu').val();
+        var  image   = $('#image_src').val();
+        var title_data = $('#title_data').val();
+        var details_data = $('#details_data').val();
         var user_ref_id = "{{Auth::user()->id}}";
     $.ajax({
         type: "POST",
-        url: "{{url('vmt-dashboard-post')}}",
+        url: "{{url('vmt-dashboard-announcement')}}",
          data: {
             "_token": "{{ csrf_token() }}",
-            command: command,
+            title_data: title_data,
             user_ref_id: user_ref_id,
+            details_data: details_data,
         },
         success: function(data) {
             // alert(data);
-            location.reload();
+           // location.reload();
         }
     })
 });

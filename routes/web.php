@@ -100,6 +100,8 @@ Route::get('vmt-approvereject-kpitable', 'App\Http\Controllers\VmtApraisalContro
 Route::post('vmt-approvereject-command', 'App\Http\Controllers\VmtApraisalController@approveRejectCommandKPITable');
 // dashboard post task 
 Route::post('vmt-dashboard-post', 'App\Http\Controllers\VmtMainDashboardController@DashBoardPost');
+Route::post('vmt-dashboard-announcement', 'App\Http\Controllers\VmtMainDashboardController@DashBoardAnnouncement');
+
 Route::get('vmt-dashboard-post-view/{id}', 'App\Http\Controllers\VmtMainDashboardController@DashBoardPostView');
 // dashboard task //
 Route::post('vmt-pms-saveKPItableDraft_HR', 'App\Http\Controllers\VmtApraisalController@saveKPItableDraft_HR');
