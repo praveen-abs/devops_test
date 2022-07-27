@@ -281,26 +281,25 @@
                     <input type="hidden" name="goal_id" value="{{$assignedGoals->id}}">
                     <div class="table-content mb-4">
 
-                        <table class="table align-middle mb-0 table-bordered  responsive" id="table">
-
+                        <table id='table' style="width:130%;" class="table align-middle mb-0 table-bordered  responsive" data-paging="true" data-paging-size="10" data-paging-limit="3" data-paging-container="#paging-ui-container" data-paging-count-format="{PF} to {PL}" data-sorting="true" data-filtering="false" data-empty="No Results" data-filter-container="#filter-form-container" data-editing-add-text="Add New">
                             <thead class="thead" id="tHead">
                                 <tr>
-                                    <th scope="col">Dimension</th>
-                                    <th scope="col">KPI</th>
-                                    <th scope="col">Operational Definition</th>
-                                    <th scope="col">Measure</th>
-                                    <th scope="col">Frequency</th>
-                                    <th scope="col">Target</th>
-                                    <th scope="col">Stretch Target</th>
-                                    <th scope="col">Source</th>
-                                    <th scope="col">KPI Weightage</th>
-                                    <th scope="col">KPI - Achievement (Self Review)</th>
-                                    <th scope="col">Self KPI Achievement %</th>
-                                    <th scope="col">Comments</th>
-                                    <th scope="col">KPI - Achievement (Manager Review)</th>
-                                    <th scope="col">Manager KPI Achievement %</th>
-                                    <th scope="col">KPI - Achievement (HR Review)</th>
-                                    <th scope="col">HR KPI Achievement %
+                                    <th scope="col" data-name='dimension' data-filterable="false" data-visible="true">Dimension</th>
+                                    <th scope="col" data-name='kpi' data-filterable="false" data-visible="true">KPI</th>
+                                    <th scope="col" data-name='operational' data-filterable="false" data-visible="true">Operational Definition</th>
+                                    <th scope="col" data-name='measure' data-filterable="false" data-visible="true">Measure</th>
+                                    <th scope="col" data-name='frequency' data-filterable="false" data-visible="true">Frequency</th>
+                                    <th scope="col" data-name='target' data-filterable="false" data-visible="true">Target</th>
+                                    <th scope="col" data-name='stretchTarget' data-filterable="false" data-visible="true">Stretch Target</th>
+                                    <th scope="col" data-name='source' data-filterable="false" data-visible="true">Source</th>
+                                    <th scope="col" data-name='kpiWeightage' data-filterable="false" data-visible="true">KPI Weightage</th>
+                                    <th scope="col" data-name='kpiSelfReview' data-filterable="false" data-visible="true">KPI - Achievement (Self Review)</th>
+                                    <th scope="col" data-name='kpiSelfAchivement' data-filterable="false" data-visible="true">Self KPI Achievement %</th>
+                                    <th scope="col" data-name='comments' data-filterable="false" data-visible="true">Comments</th>
+                                    <th scope="col" data-name='kpiManagerReview' data-filterable="false" data-visible="true">KPI - Achievement (Manager Review)</th>
+                                    <th scope="col" data-name='kpiManagerAchivement' data-filterable="false" data-visible="true">Manager KPI Achievement %</th>
+                                    <th scope="col" data-name='kpiHrReview' data-filterable="false" data-visible="true">KPI - Achievement (HR Review)</th>
+                                    <th scope="col" data-name='kpiHrAchivement' data-filterable="false" data-visible="true">HR KPI Achievement %
                                     </th>
                                 </tr>
                             </thead>
@@ -516,6 +515,8 @@
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
+<script src="{{ URL::asset('/assets/premassets/js/footable.min.js') }}"></script>
+<script src="{{ URL::asset('/assets/premassets/css/footable.bootstrap.min.css') }}"></script>
 <script type="text/javascript">
 $('#upload_file').change(function() {
     if ($(this).is(':valid')) {
@@ -524,6 +525,8 @@ $('#upload_file').change(function() {
         $('#upload-goal').attr('disabled', true);
     }
 });
+
+ft = FooTable.init('#kpiTable', {});
 
 $('#upload-goal').click(function() {
     var form_data = new FormData(document.getElementById("upload_form"));

@@ -164,10 +164,10 @@
                                         <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-2 dashBoard">
                                             <!-- <label class="" for="doc_uploads">Documents Upload{!! required() !!}</label> -->
                                             <div class="addfiles form-control" data="#doc_uploads"
-                                                id="doc_uploads_label">Choose Documents Upload</div>
-                                            <input type="file" placeholder="Documents Upload" name="doc_uploads"
-                                                class="onboard-form form-control" style="display:none;" required
-                                                accept="image/*" />
+                                                id="doc_uploads_label"><span class="file_label">Choose Documents Upload</span></div>
+                                            <input type="file" placeholder="Documents Upload" name="doc_uploads" id="doc_uploads"
+                                                class="onboard-form form-control files" style="display:none;" required
+                                                accept=".doc,.docx,.pdf,image/*" />
                                         </div>
                                         <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mt-2 dashBoard">
                                             <!-- <label class="" for="product">Product{!! required() !!}</label> -->
@@ -250,23 +250,35 @@ $('.onboard-form').keyup(function() {
 
 $('#form-1').on('submit', function(e) {
     e.preventDefault();
-
-    var form_data1 = new FormData(document.getElementById("form-1"));
-    // var form_data2 = new FormData(document.getElementById("form-2"));
-    // for (var pair of form_data2.entries()) {
-    //     form_data1.append(pair[0], pair[1]);
-    // }
-    $.ajax({
-        url: "{{url('vmt_clientOnboarding')}}",
-        type: "POST",
-        dataType: "json",
-        data: form_data1,
-        contentType: false,
-        processData: false,
-        success: function(data) {
-            alert(data);
+    var flag = false;
+    $('.files').each(function() {
+        if ($(this).attr('vali') == "required" && $(this).val().length == 0) {
+            var attr = $(this).attr('id');
+            $('.'+attr+'_label').show();
+            flag = true;
+        } else {
+            var attr = $(this).attr('id');
+            $('.'+attr+'_label').hide();
         }
     });
+    if ($('#form-1').is(':valid') && !flag) {
+        var form_data1 = new FormData(document.getElementById("form-1"));
+        // var form_data2 = new FormData(document.getElementById("form-2"));
+        // for (var pair of form_data2.entries()) {
+        //     form_data1.append(pair[0], pair[1]);
+        // }
+        $.ajax({
+            url: "{{url('vmt_clientOnboarding')}}",
+            type: "POST",
+            dataType: "json",
+            data: form_data1,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                alert(data);
+            }
+        });
+    }
 
 
     //console.log(personalData);
