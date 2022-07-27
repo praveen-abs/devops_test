@@ -13,11 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vmt_dashboard_posts', function (Blueprint $table) {
-            $table->id();
-            $table->integer("author_id");
-            $table->text('message')->nullable();
-            $table->text('post_image');
+               Schema::create('vmt_announcement', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->integer('ann_author_id');
+            $table->text('title_data')->nullable();
+            $table->text('details_data')->nullable();
+            $table->boolean('is_publish')->default(0);
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vmt_dashboard_posts');
+         Schema::dropIfExists('vmt_announcement');
     }
 };

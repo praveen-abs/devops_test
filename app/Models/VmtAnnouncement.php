@@ -5,15 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class vmt_dashboard_posts extends Model
+class VmtAnnouncement extends Model
 {
     use HasFactory;
-     protected $table = 'vmt_dashboard_posts';
+     protected $table = 'vmt_announcement';
 
     protected $fillable = [
-        "author_id",
-        "message",
-        "post_image",
+        "ann_author_id",
+        "title_data",
+        "details_data",
+       
      
     ];
 }

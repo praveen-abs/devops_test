@@ -10,6 +10,7 @@ use App\Models\VmtGeneralSettings;
 use App\Models\VmtGeneralInfo;
 use App\Models\VmtEmployee;
 use App\Models\vmt_dashboard_posts;
+use App\Models\VmtAnnouncement;
 use App\Models\VmtEmployeeAttendance;
 use App\Models\vmtHolidays;
 use App\Models\Polling;
@@ -18,6 +19,8 @@ use Session as Ses;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Carbon\Carbon;
+use App\Notifications\ViewNotification;
+use Illuminate\Support\Facades\Notification;
 
 class VmtMainDashboardController extends Controller
 {
@@ -54,7 +57,7 @@ class VmtMainDashboardController extends Controller
     
            // dd($effective_hours);
         }
-         $dashboardpost  =  vmt_dashboard_posts::where('author_id', auth()->user()->id)->pluck('message');
+         $dashboardpost  =  vmt_dashboard_posts::all();
         $holidays = vmtHolidays::orderBy('holiday_date', 'ASC')->get();
         $polling = Polling::first();
         if ($polling) {
@@ -74,23 +77,52 @@ class VmtMainDashboardController extends Controller
         else 
         if(auth()->user()->hasrole('Employee')) 
         {
-            return view('vmt_employee_dashboard', compact( 'currentUserJobDetails', 'checked','effective_hours', 'holidays', 'polling'));
+            return view('vmt_employee_dashboard', compact( 'currentUserJobDetails', 'checked','effective_hours', 'holidays', 'polling','dashboardpost'));
         } 
 
     }
 
     public function  DashBoardPost(Request $request){
-        $id = $request->input('user_ref_id');
+        $id = auth()->user()->id;
+        $file = $request->file('image_src');
         $data_dashboard = new vmt_dashboard_posts;
-        $data_dashboard->message = $request->input('command');
-        $data_dashboard->author_id = $request->input('user_ref_id');
+        $data_dashboard->message = $request->post_menu;
+        $data_dashboard->author_id = $id;
+             // dd($file);
+          if ($file) { 
+             $filename = 'post-'.'.'. $file->getClientOriginalName();
+        // dd($filename);
+            $destination = public_path('/images');
+            $file->move($destination, $filename);
+            $data_dashboard->post_image = $filename;
+        }
         $data_dashboard->save();
-        $dashboardpost  =  vmt_dashboard_posts::where('author_id', $id)->pluck('message');
+           $notification_user = User::where('id',auth::user()->id)->first();
+
+         $message = "Post Added By "  ;
+           Notification::send($notification_user ,new ViewNotification($message.auth()->user()->name));
+        $dashboardpost  =  vmt_dashboard_posts::where('author_id', $id)->pluck('message','post_image');
         return $dashboardpost;
     }
 
     public function DashBoardPostView($id, Request $request){
         $dashboardpost  =  vmt_dashboard_posts::where('author_id', $id)->pluck('message');
         return $dashboardpost;
+    }
+
+     public function DashBoardAnnouncement(Request $request){
+        $Announcement_data = new VmtAnnouncement;
+         $id = auth()->user()->id;
+        $Announcement_data->title_data = $request->input('title_data');
+        $Announcement_data->ann_author_id = $request->input('user_ref_id');
+        $Announcement_data->details_data = $request->input('details_data');
+         $Announcement_data->save();
+         // dd($Announcement_data);
+         $notification_user = User::where('id',auth::user()->id)->first();
+
+         $message = "Announcement Added By "  ;
+           Notification::send($notification_user ,new ViewNotification($message.auth()->user()->name));
+        $dashboardannoun  =  VmtAnnouncement::where('ann_author_id', $id)->pluck('title_data','ann_author_id','details_data');
+        return $dashboardannoun;
     }
 }
