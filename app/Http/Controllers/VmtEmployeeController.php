@@ -404,13 +404,13 @@ class VmtEmployeeController extends Controller
             $row['confirmation_period'] = date('Y-m-d', $row['confirmation_period']);
             $row['mobile_no'] = (int)$row['mobile_no'];
             $rules = [
-                'employee_name' => 'required|regex:/(^([a-zA-z.]+)(\d+)?$)/u',
+                'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'email' => 'required|email',
                 'gender' => 'required|in:male,female,other',
                 'doj' => 'required|date',
-                'work_location' => 'required|regex:/(^([a-zA-z.]+)(\d+)?$)/u',
+                'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'dob' => 'required|date|before:-18 years',
-                'father_name' => 'required|regex:/(^([a-zA-z.]+)(\d+)?$)/u',
+                'father_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'pan_no' => 'required|regex:/(^([A-Z]){3}P([A-Z]){1}([0-9]){4}([A-Z]){1}$)/u',
                 'pan_ack' => 'required_if:pan_no,==,""',
                 'aadhar' => 'required|regex:/(^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$)/u',
@@ -421,20 +421,20 @@ class VmtEmployeeController extends Controller
                 'account_no' => 'required|regex:/^([0-9]{9,18})?$/u|numeric',
                 'current_address' => 'required',
                 'permanent_address' => 'required',
-                'mother_name' => 'required|regex:/(^([a-zA-z.]+)(\d+)?$)/u',
-                'spouse_name' => 'required_unless:marital_status,single|regex:/(^([a-zA-z.]+)(\d+)?$)/u',
+                'mother_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'spouse_name' => 'required_unless:marital_status,single|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'spouse_dob' => 'required_unless:marital_status,single|date',
                 'child_name' => 'nullable|regex:/(^(,?[a-zA-z. ])$)/u',
                 'child_dob' => 'nullable|regex:/(^(,?([0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$)/u',
-                'department' => 'required|regex:/(^([a-zA-z.]+)(\d+)?$)/u',
-                'process' => 'required|regex:/(^([a-zA-z.]+)(\d+)?$)/u',
-                'designation' => 'required|regex:/(^([a-zA-z.]+)(\d+)?$)/u',
-                'cost_center' => 'required|regex:/(^([a-zA-z.]+)(\d+)?$)/u',
+                'department' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'process' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'designation' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'cost_center' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'confirmation_period' => 'required|date',
-                'holiday_location' => 'required|regex:/(^([a-zA-z.]+)(\d+)?$)/u',
+                'holiday_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'l1_manager_code' => 'required|regex:/(^([a-zA-z0-9.]+)(\d+)?$)/u',
-                'l1_manager_name' => 'required|regex:/(^([a-zA-z.]+)(\d+)?$)/u',
-                'work_location' => 'required|regex:/(^([a-zA-z.]+)(\d+)?$)/u',
+                'l1_manager_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'official_mail' => 'required|email',
                 'official_mobile' => 'required|regex:/^([0-9]{10})?$/u|numeric',
                 'emp_notice' => 'required|numeric',
@@ -581,7 +581,7 @@ class VmtEmployeeController extends Controller
 
     // Generate Employee Apoinment PDF after onboarding
     public function attachApoinmentPdf($employeeData){
-        //dd($employeeData);
+        // dd($employeeData);
         $empNameString  = $employeeData['employee_name'];
         $filename = 'appoinment_letter_'.$empNameString.'_'.time().'.pdf';
         $data = $employeeData;
@@ -591,7 +591,7 @@ class VmtEmployeeController extends Controller
         $data['hra_yearly'] = intval($employeeData['hra']) * 12;
         $data['spl_allowance_monthly'] = $employeeData['special_allowance'];
         $data['spl_allowance_yearly'] = intval($employeeData['special_allowance'])*12;
-        $data['gross_monthly'] = $employeeData["basic"] + $employeeData["hra"] + $employeeData["statutory_bonus"] + $employeeData["child_education_allowance"] + $employeeData["food_coupon"] + $employeeData["lta"] + $employeeData["special_allowance"] + $employeeData["other_allowance"];
+        $data['gross_monthly'] = $employeeData["basic"] + $employeeData["hra"] + $employeeData["Statutory_bonus"] + $employeeData["child_education_allowance"] + $employeeData["food_coupon"] + $employeeData["lta"] + $employeeData["special_allowance"] + $employeeData["other_allowance"];
         $data['gross_yearly'] = intval($data['gross_monthly']) * 12;
         $data['employer_epf_monthly'] = $employeeData['epf_employer_contribution'];
         $data['employer_epf_yearly'] = intval($employeeData['epf_employer_contribution']) * 12;
@@ -657,11 +657,11 @@ class VmtEmployeeController extends Controller
             $row['doj'] = date('Y-m-d', $row['doj']);
             $row['mobile_no'] = (int)$row['mobile_no'];
             $rules = [
-                'employee_name' => 'required|regex:/(^([a-zA-z.]+)(\d+)?$)/u',
+                'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'email' => 'required|email| unique:users,email',
                 'doj' => 'required|date',
                 'mobile_no' => 'required|regex:/^([0-9]{10})?$/u|numeric',
-                'designation' => 'required|regex:/(^([a-zA-z.]+)(\d+)?$)/u',
+                'designation' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'basic' => 'required|numeric',
                 'hra' => 'required|numeric',
                 'statutory_bonus' => 'required|numeric',
@@ -770,22 +770,19 @@ class VmtEmployeeController extends Controller
     public function showQuickOnboardForEmployee(Request $request){
         if($request->has('email')){
             $employee  =  User::where('email', $request->email)->first(); 
-        }
+            $clientData  = VmtEmployee::where('userid', $employee->id)->first();
+            $empNo = '';
+            if ($clientData) {
+                $empNo = $clientData->emp_no;
+            }
+            $countries = Countries::all();
+            $india = Countries::where('country_code', 'IN')->first();
+            $emp = VmtEmployeeOfficeDetails::all(); 
+            $department = Department::all();
+            $bank = Bank::all(); 
 
-        $clientData  = VmtClientMaster::first();
-        $maxId  = VmtEmployee::max('id')+1;
-        if ($clientData) {
-            $empNo = $clientData->client_code.$maxId;
-        } else {
-            $empNo = $maxId;
+            return view('vmt_employee_quick_onboarding', compact('empNo', 'countries', 'bank', 'emp','department'));
         }
-        $countries = Countries::all();
-        $india = Countries::where('country_code', 'IN')->first();
-        $emp = VmtEmployeeOfficeDetails::all(); 
-        $department = Department::all();
-        $bank = Bank::all(); 
-
-        return view('vmt_employee_quick_onboarding', compact('empNo', 'countries', 'bank', 'emp','department'));
     }
 
     // Store quick onboard employee data to Database
@@ -797,7 +794,7 @@ class VmtEmployeeController extends Controller
             $user =  User::where('email',  $row["email"])->first();
             $user->assignRole("Employee");
 
-            $newEmployee = new VmtEmployee;
+            $newEmployee = VmtEmployee::where('userid', $user->id)->first();
             $newEmployee->userid = $user->id;  
             $newEmployee->emp_no   =    $row["employee_code"]; 
             //$newEmployee->emp_name   =    $row["employee_name"]; 
@@ -850,7 +847,7 @@ class VmtEmployeeController extends Controller
 
             
             if($newEmployee){
-                $empOffice  = new VmtEmployeeOfficeDetails; 
+                $empOffice  = VmtEmployeeOfficeDetails::where('user_id', $user->id)->first();; 
                 $empOffice->emp_id = $newEmployee->id; // Need to remove this in future
                 $empOffice->user_id = $newEmployee->userid; //Link between USERS and VmtEmployeeOfficeDetails table
                 $empOffice->department_id = $row["department"];// => "lk"

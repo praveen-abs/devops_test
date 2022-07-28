@@ -85,8 +85,8 @@
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="email">Email ID{!! required() !!}</label> -->
-                                                    <input type="email" placeholder="Email ID" name="email"
-                                                        class="onboard-form form-control" required />
+                                                    <input type="email" placeholder="Email ID" name="email" value="{{request()->has('email')? request()->email : ''}}"
+                                                        class="onboard-form form-control" @if(request()->has('email')) readonly @endif required />
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="aadhar">Aadhaar Number<span id="aadhar_req">{!! required() !!}</span></label> -->
