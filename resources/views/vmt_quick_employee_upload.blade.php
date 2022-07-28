@@ -46,8 +46,8 @@
 
                                                  <div class="row mt-4">
                                                     <div class="col-xl-12">
-                                                        <div id="success-msg"></div>
-                                                        <div id="error-msg"></div>
+                                                        <p id="success-msg"></p>
+                                                        <p id="error-msg"></p>
                                                         
                                                     </div>
                                                 </div>
@@ -128,8 +128,8 @@ $('#role-form').on('submit', function(e) {
         contentType: false,
         success: function(data) {
             console.log('success', data);
-            $('#success-msg').html(data.success);
-            $('#error-msg').html(data.failed);
+            $('#success-msg').html('<p>Upload Info :</p><ul>'+data.success+'</ul>');
+            $('#error-msg').html('<br/><ul>'+data.failed+'</ul>');
             
 
             //var toastLiveExample3 = document.getElementById("borderedToast2");
