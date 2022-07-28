@@ -4,7 +4,7 @@
 
 <link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
 
-
+<meta name="csrf-token" content="{{ csrf_token() }}" />
 <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('assets/libs/swiper/swiper.min.css')}}" rel="stylesheet" type="text/css" />
 
@@ -51,7 +51,7 @@
 
 @section('content')
 
-<div class="main">
+<div class="hr-dashboar-wrpper">
     <!-- Content Row -->
     <div class="row">
         <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4">
@@ -90,7 +90,7 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
-                    <div class="card shadow profile-box " style="border-top:7px solid #E54E0D">
+                <div class="card shadow profile-box orange-top-border">
                         <!-- <div class="p-1 bg-danger" > -->
                         <div class="card-body d-flex justify-content-center align-items-center">
                             <div class="text-center">
@@ -139,76 +139,103 @@
                         <!-- <div class="p-1 bg-primary" > -->
                         <div class="card-body d-flex justify-content-center align-items-center">
                             <div class="text-center">
-                                <h5 class="fw-bold title">Hyrid</h5>
+                                <h5 class="fw-bold title">Hybrid</h5>
                                 <h6 class="number-increment fw-bold">10</h6>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-12 ipad-query">
-                    <div class="card profile-box flex-fill">
+                    <div class="card profile-box flex-fill card-top-border">
                         <!-- <div class="p-1 bg-primary" ></div> -->
-                        <div class="card-body p-0">
+                        <div class="card-body ">
                             <div class="profile-wrapper d-flex p-0">
                                 <div class="popover-body p-0 w-100">
                                     <div class="min-h-250">
                                         <div>
                                             <ul class="nav sub-topnav">
-                                                <li class="title active topbarNav fw-bold" id="postt"><a>View Post</a>
+                                                {{-- <li class="title active topbarNav fw-bold" id="post_view"><a>View Post</a> --}}
+                                                </li><li class="title  topbarNav fw-bold" id="post"><a>Post</a>
                                                 </li>
-                                                 <!-- <li class="title active topbarNav fw-bold" id="post"><a>Post</a></li> -->
-                                                <li class="title topbarNav  fw-bold" id="announcement">
+                                                {{-- <li class="title topbarNav  fw-bold" id="announcement">
                                                     <a>Announcement</a>
-                                                </li>
+                                                </li> --}}
                                                 <li class="title topbarNav fw-bold" id="poll"><a>Poll</a></li>
                                                 <li class="title topbarNav fw-bold" id="praise"><a>Praise</a></li>
                                             </ul>
-                                            <!-- code post view  -->
-                                               <div class="topbarContent emp-postt" >
-                                                  <div>
-                                                    <div class="px-20 p-16 row no-gutters scrollBar">
-
-                                                        @foreach($dashboardpost as $index => $user )
- <img  style="width: 100px;" src="{{ URL::asset('images/'.$user->post_image)  }}">
-                                                        <textarea name="post_menuss" id="post_menuss" class="border-0 outline-none  w-100 h-100" readonly>{{$user->message}}</textarea>
-                                                        @endforeach
-                                                             </div>
-                                                  <!--   <button class="btn btn-danger py-1 px-4  float-right">
-                                                        Submit
-                                                    </button> -->
-                                                </div>
-                                            </div>
-
-                                            <!-- emd view -->
-                                        <!--     <div class="topbarContent emp-post">
+                                             <!-- code post view  -->
+                                            {{-- <div class="topbarContent emp-post_view" >
                                                 <div>
                                                     <div class="px-20 p-16 row no-gutters scrollBar">
                                                         @foreach($dashboardpost as $index => $user )
- <img class="rounded-circle header-profile-user" src="{{ URL::asset('images/'.$user->post_image)  }}"alt="Header Avatar">
-                                        
-                                                        <textarea name="post_menuss" id="post_menuss" class="border-0 outline-none  w-100 h-100" readonly>{{$user->message}}</textarea>
+                                                            <img  style="width: 100px;" src="{{ URL::asset('images/'.$user->post_image)  }}">
+                                                            <input name="post_menuss" id="post_menuss" class="border-0 outline-none  w-100 h-100" readonly value="{{$user->message}}">
                                                         @endforeach
-                                                    </div>
-                                                     <button class="btn btn-danger py-1 px-4  float-right">
-                                                        Submit
-                                                    </button> 
+                                                    </div>   
                                                 </div>
-                                            </div> -->
+                                            </div> --}}
+
+                                            <!-- emd view -->
+                                            <div class="topbarContent emp-post">
+                                                <div>
+                                                    <div class="px-22 p-16 row no-gutters scrollBar">
+<form method="POST" enctype="multipart/form-data" id="submit_post_data" action="javascript:void(0)" >                            
+ <textarea name="post_menu" id="post_menu" class="border-0 outline-none w-100 h-100" placeholder="Write your Post here"></textarea>
+                                                    
+                                                    </div>
+                                                    <input type="file" class="filestyle" name="image_src" id="image_src" data-input="false" data-iconName="fa fa-upload" data-buttonText="Upload File" />
+                                                     <button class="btn btn-danger py-1 px-4  float-right"  type="submit">
+                                                        Create Post
+                                                    </button>
+
+                                                </form>
+
+                       
+                                                 <!--     <div class="modal fade" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content border-0">
+                                <div class="modal-header bg-soft-info p-3">
+                                    <h5 class="modal-title" id="exampleModalLabel">Add Post</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                                        id="close-modal"></button>
+                                </div>
+                                <div class="form-control">
+                                     <textarea name="post_menu" id="post_menu" class="border-0 outline-none w-100 h-100"></textarea>
+                                    
+                                </div>
+                             
+                                   
+                                    <div class="modal-footer">
+                                        <div class="hstack gap-2 justify-content-end">
+                                            <button type="button" class="btn btn-success" 
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-success" id="post_menu_submit">Add Post</button>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div> -->
+                                                </div>
+                                            </div>
                                             <div class="topbarContent emp-announcement " style="display:none;">
                                                 <div>
                                                     <div>
                                                         <div class="px-20 p-16 row no-gutters scrollBar">
-                                                            <textarea name="" id=""
-                                                                class="border-0 outline-none w-100 h-100">
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.\
-                                                        </textarea>
+                                                          
+                                                                
+                                                            <input  class="form-control   w-100 h-100"  aria-label="default input example" placeholder="Title of the Announcement" type="text" id="title_data" name="title_data">
+                                                            <br>
+                                                            <hr size="8" width="90%" color="black">
+                                                            <br>
+<!-- <input class="form-control" type="text" placeholder="Default input" aria-label="default input example"> -->
+                                                            <textarea  class="form-control placeholder-glow w-100 h-100"  placeholder="Details of Announcement" aria-label="default input example" type="text" name="details_data" id="details_data"></textarea>
+                                                        
                                                         </div>
-                                                        <button class="btn btn-danger py-1 px-4  float-right">
+                                                        <button class="btn btn-danger py-1 px-4  float-right" id="annon_menu_submit" type="button">
                                                             Submit
                                                         </button>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -242,13 +269,10 @@
                                                 <div>
                                                     <div>
                                                         <div class="px-20 p-16 row no-gutters scrollBar">
-                                                            <textarea name="" id="" cols="30" rows="10"
+                                                            <textarea name="" id="" cols="30" rows="6"
                                                                 class="border-0 outline-none w-100">
-                                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
-                                                        </textarea>
+
+                                                            </textarea>
                                                         </div>
                                                         <button class="btn btn-danger py-1 px-4  float-right">
                                                             Submit
@@ -270,11 +294,11 @@
             </div>
         </div>
         <div class="col-sm-3 col-md-3">
-            <div class="bg-white" style="">
-                <div class="card profile-box flex-fill m-0 mb-2"
+            <div class="" >
+                <div class="card profile-box flex-fill m-0 mb-2 "
                     style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);border-radius:3px 3px 20px 20px;">
                     <!-- <div class="p-1 bg-primary" ></div> -->
-                    <div class="card-body p-2">
+                    <div class="card-body p-0" style="padding:0px !important">
                         <!-- <div id='full_calendar_events'></div> -->
                         <!-- <div id="calendar"></div> -->
                         <div class="calendar-wrapper" id="calendar-wrapper"></div>
@@ -458,4 +482,61 @@ $(function() {
     });
 });
 </script>
+ <script type="text/javascript">
+                $(document).ready(function (e) {
+                $.ajaxSetup({
+                headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+                });
+                $('#submit_post_data').submit(function(e) {
+                        e.preventDefault();
+                           // alert("helooo");
+                        var formData = new FormData(this);
+                        $.ajax({
+                        type:'POST',
+                         url: "{{url('vmt-dashboard-post')}}",
+                        data: formData,
+                        cache:false,
+                        contentType: false,
+                        processData: false,
+                        success: (data) => {
+                        this.reset();
+                        alert('Post Created Successfully');
+                        console.log(data);
+                        },
+                        error: function(data){
+                        console.log(data);
+                    }
+                    });
+                    });
+                    });
+</script>
+    <script type="text/javascript">
+
+$('#annon_menu_submit').click(function(e) {
+    e.preventDefault();
+                var  image   = $('#image_src').val();
+                //alert(image);
+        var title_data = $('#title_data').val();
+        var details_data = $('#details_data').val();
+        var user_ref_id = "{{Auth::user()->id}}";
+    $.ajax({
+        type: "POST",
+        url: "{{url('vmt-dashboard-announcement')}}",
+         data: {
+            "_token": "{{ csrf_token() }}",
+            title_data: title_data,
+            user_ref_id: user_ref_id,
+            details_data: details_data,
+        },
+        success: function(data) {
+            // alert(data);
+            location.reload();
+        }
+    })
+});
+
+
+    </script>
 @endsection

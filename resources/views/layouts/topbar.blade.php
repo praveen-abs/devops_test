@@ -58,7 +58,8 @@
                             <img src="{{ URL::asset('assets/images/vasa.jpg') }}" alt="" class="w-100 h-100">
                         </div>
 
-                        <div class="topbar-search-bar search-content d-flex  align-items-center w-50 " style="left:60px">
+                        <div class="topbar-search-bar search-content d-flex  align-items-center w-50 "
+                            style="left:60px">
 
                             <i class=" ri-search-line "></i>
                             <input type="text" class="search-bar form-control  w-100 py-1 rounded-pill"
@@ -84,14 +85,17 @@
                             <button type="button" class="btn btn-icon btn-topbar rounded-circle"
                                 id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18.798" height="22.911"
+                                <!-- <svg xmlns="http://www.w3.org/2000/svg" width="18.798" height="22.911"
                                     viewBox="0 0 18.798 22.911">
                                     <path id="ic_notifications_none_24px"
                                         d="M13.4,25.411a2.357,2.357,0,0,0,2.35-2.35h-4.7A2.357,2.357,0,0,0,13.4,25.411Zm7.049-7.049V12.487c0-3.607-1.915-6.626-5.287-7.425v-.8a1.762,1.762,0,0,0-3.525,0v.8c-3.36.8-5.287,3.807-5.287,7.425v5.875L4,20.711v1.175H22.8V20.711ZM18.1,19.536H8.7V12.487C8.7,9.573,10.474,7.2,13.4,7.2s4.7,2.373,4.7,5.287Z"
                                         transform="translate(-4 -2.5)" fill="#361338" opacity="0.4" />
-                                </svg>
-                                <span class="badge badge-light fs-10 translate-middle badge rounded-pill bg-danger">{{$User = Auth::user()->notifications->count();}}</span>
-                                {{-- <span class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger"><span
+                                </svg> -->
+                                <img src="{{ URL::asset('assets/images/bell.png') }}" alt="" class="" style="height:
+                                    20px; width: 20px;">
+                                <span
+                                    class="badge badge-light fs-10 translate-middle badge rounded-pill bg-danger">{{$User = Auth::user()->notifications->count();}}</span>
+                                {{-- <span class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger"
                                         class="visually-hidden"></span> --}}
                             </button>
                             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
@@ -103,7 +107,8 @@
                                                 <h6 class="m-0 fs-16 fw-semibold text-white"> Notifications </h6>
                                             </div>
                                             <div class="col-auto dropdown-tabs">
-                                                <span class="badge badge-soft-light fs-13"> {{$User = Auth::user()->notifications->count();}}</span>
+                                                <span class="badge badge-soft-light fs-13">
+                                                    {{$User = Auth::user()->notifications->count();}}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -132,17 +137,22 @@
                                                         </span>
                                                     </div> --}}
                                                     <div class="flex-1">
+
                                                         @php
                                                         $currentUser = Auth::user();
                                                         $User = Auth::user()->notifications->count();
 
                                                         foreach ($currentUser->notifications as $notification) {
                                                         @endphp
-                                                        <a  class="stretched-link rIcon"><i class="fa fa-dot-circle-o mt-0 mb-2 lh-base"><h7>&nbsp;
-                                                          @php echo
-                                                                $notification->data['message']; @endphp</h7></i>
+                                                        <a class="stretched-link rIcon d-flex align-items-center"><i
+                                                                class=" ri-information-line text-info h6 mx-1   "></i>
+                                                                <h6 class="text-muted">
+                                                                    @php echo
+                                                                    $notification->data['message']; @endphp</h6>
+                                                           
                                                         </a>
-
+                                                        <small class="text-muted float-end"><i class="ri-time-line"> Just 30 Sec Ago</i> </small>
+                                                        
                                                         @php
 
                                                         }
@@ -270,8 +280,8 @@
                                     <div class="tab-pane fade p-4" id="alerts-tab" role="tabpanel"
                                         aria-labelledby="alerts-tab">
                                         <div class="w-25 w-sm-50 pt-3 mx-auto">
-                                            <img src="{{ URL::asset('assets/images/svg/bell.svg') }}" class="img-fluid"
-                                                alt="user-pic">
+                                            <img src="{{ URL::asset('assets/images/bell.png') }}" class="img-fluid"
+                                                alt="user-pic"  style="height:20px;width:20px;">
                                         </div>
                                         <div class="text-center pb-5 mt-2">
                                             <h6 class="fs-18 fw-semibold lh-base">Hey! You have no any notifications
@@ -284,47 +294,35 @@
 
 
                         <a href="" class="ml-2  settings-icon   ">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="23.494" height="23.353"
-                                viewBox="0 0 23.494 23.353">
-                                <g id="megaphone" transform="translate(0 -1.529)">
-                                    <g id="Group_3534" data-name="Group 3534" transform="translate(0 1.529)">
-                                        <g id="Group_3533" data-name="Group 3533" transform="translate(0 0)">
-                                            <circle id="Ellipse_256" data-name="Ellipse 256" cx="0.7" cy="0.7" r="0.7"
-                                                transform="translate(2.962 7.04)" fill="#aea0af" />
-                                            <path id="Path_2943" data-name="Path 2943"
-                                                d="M20.054,7.188V3.86a2.317,2.317,0,0,0-3.422-2.034l-6.116,3.78h-8.2A2.32,2.32,0,0,0,0,7.923V14.9a2.32,2.32,0,0,0,2.317,2.317H3.369v6.809a.854.854,0,0,0,.854.854H8.063a.854.854,0,0,0,.854-.854V17.219h1.6c6.486,4.009,6.129,3.79,6.182,3.817a2.317,2.317,0,0,0,3.356-2.071V15.637A4.314,4.314,0,0,0,20.054,7.188ZM7.21,23.174H5.076V17.219H7.21Zm7.2-5.556-3.2-1.979a.854.854,0,0,0-.449-.128H2.317a.61.61,0,0,1-.609-.609V7.923a.61.61,0,0,1,.609-.609h8.441a.854.854,0,0,0,.449-.128l3.2-1.979Zm3.081,1.9-1.373-.849V4.152L17.491,3.3a.609.609,0,0,1,.855.557c0,.642,0,14.47,0,15.1A.609.609,0,0,1,17.491,19.522Zm2.563-5.651V8.954A2.605,2.605,0,0,1,20.054,13.871Z"
-                                                transform="translate(0 -1.529)" fill="#aea0af" />
-                                        </g>
-                                    </g>
-                                </g>
-                            </svg>
-
-                            </i>
+                        <img src="{{ URL::asset('assets/images/megaphone.png') }}" class=""
+                                                alt="user-pic" style="height:20px;width:20px;">
                         </a>
 
                         <div class="dropdown topbar-user ">
-                            <button type="button" class="btn ml-1 py-0" id="page-header-user-dropdown" data-bs-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
+                            <button type="button" class="btn ml-1 py-0" id="page-header-user-dropdown"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <div class="d-flex align-items-center">
                                     {{-- <img class="rounded-circle header-profile-user"
                                         src="@if (Auth::user()->avatar != ''){{ URL::asset('images/'. Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"
-                                        alt="Header Avatar"> --}}
+                                    alt="Header Avatar"> --}}
                                     @php
                                     preg_match('/(?:\w+\. )?(\w+).*?(\w+)(?: \w+\.)?$/',Auth::user()->name , $result);
-                                 $name =   strtoupper($result[1][0].$result[2][0]);
-                                        if (Auth::user()->avatar != ''){
-                                        @endphp 
-                                        <img class="rounded-circle header-profile-user" src=" {{URL::asset('images/'. Auth::user()->avatar)}}"   alt="Header Avatar">
-                                            
-                                            @php
-                                        }else{
-                                            @endphp
-                                    <span class="badge rounded-circle   badge-primary ml-2"><i class="align-middle">{{$name}}</i></span>
+                                    $name = strtoupper($result[1][0].$result[2][0]);
+                                    if (Auth::user()->avatar != ''){
+                                    @endphp
+                                    <img class="rounded-circle header-profile-user"
+                                        src=" {{URL::asset('images/'. Auth::user()->avatar)}}" alt="Header Avatar">
 
-                                                @php                                                         
-                                                }
-                                                @endphp
-                                         
+                                    @php
+                                    }else{
+                                    @endphp
+                                    <span class="badge rounded-circle   badge-primary ml-2"><i
+                                            class="align-middle">{{$name}}</i></span>
+
+                                    @php
+                                    }
+                                    @endphp
+
                                     <!-- <img class="rounded-circle mx-1 header-profile-user" 
                                         src="{{ URL::asset('assets/images/users/avatar-8.jpg') }}"
                                         alt="Header Avatar"> -->

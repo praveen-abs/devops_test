@@ -9,6 +9,7 @@ use App\Models\VmtEmployeeHierarchy;
 use App\Models\VmtEmployee;
 use App\Models\Countries;
 use App\Models\State;
+use App\Models\Department;
 use App\Models\Bank;
 use App\Imports\VmtEmployeeManagerImport;
 use Illuminate\Support\Facades\Auth;
@@ -47,7 +48,8 @@ class VmtEmployeeController extends Controller
         $india = Countries::where('country_code', 'IN')->first();
         $emp = VmtEmployeeOfficeDetails::all(); 
         $bank = Bank::all(); 
-        return view('vmt_employeeOnboarding', compact('empNo', 'countries', 'india', 'emp', 'bank'));
+        $department = Department::all();
+        return view('vmt_employeeOnboarding', compact('empNo', 'countries', 'india', 'emp', 'bank', 'department'));
     }
 
     public function getState(Request $request) {
@@ -69,6 +71,13 @@ class VmtEmployeeController extends Controller
         $data['goal'] = json_decode($goals->assignment_period, true);
         return response()->json($data);
     }
+
+    public function user_status_change(Request $request) {
+        $user = User::find($request->id);
+        $user->status = $request->input('status');
+        $user->save();
+        return 'saved';
+    }
     //
     public function showEmployeeDirectory(Request $request){
         $vmtEmployees = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')
@@ -76,6 +85,7 @@ class VmtEmployeeController extends Controller
                             ->select(
                                 'vmt_employee_details.*', 
                                 'users.name as emp_name', 
+                                'users.active as emp_status', 
                                 'users.email as email_id',
                                 'users.id as user_id', 
                                 'users.avatar as avatar',
@@ -88,6 +98,7 @@ class VmtEmployeeController extends Controller
                             ->orderBy('created_at', 'DESC')
                             ->whereNotNull('emp_no')
                             ->get();
+            
         return view('vmt_employeeDirectory', compact('vmtEmployees'));
     }
 
@@ -274,7 +285,7 @@ class VmtEmployeeController extends Controller
                 $empOffice  = new VmtEmployeeOfficeDetails; 
                 $empOffice->emp_id = $newEmployee->id; // Need to remove this in future
                 $empOffice->user_id = $newEmployee->userid; //Link between USERS and VmtEmployeeOfficeDetails table
-                $empOffice->department = $row["department"];// => "lk"
+                $empOffice->department_id = $row["department"];// => "lk"
                 $empOffice->process = $row["process"];// => "k"
                 $empOffice->designation = $row["designation"];// => "k"
                 $empOffice->cost_center = $row["cost_center"];// => "k"
@@ -386,6 +397,7 @@ class VmtEmployeeController extends Controller
             } else {
                 $empNo = $maxId;
             }
+            $row['employee_code'] = $empNo;
             $row['doj'] = date('Y-m-d', $row['doj']);
             $row['dob'] = date('Y-m-d', $row['dob']);
             $row['spouse_dob'] = date('Y-m-d', $row['spouse_dob']);
@@ -497,7 +509,7 @@ class VmtEmployeeController extends Controller
                     $empOffice  = new VmtEmployeeOfficeDetails;
                     $empOffice->emp_id = $newEmployee->id;
                     $empOffice->user_id = $newEmployee->userid;
-                    $empOffice->department = $row["department"];
+                    $empOffice->department_id = $row["department"];
                     $empOffice->process = $row["process"];
                     $empOffice->designation = $row["designation"];
                     $empOffice->cost_center = $row["cost_center"];
@@ -544,7 +556,18 @@ class VmtEmployeeController extends Controller
                     $failedCount++;
                     $returnfailedMsg .= $empNo." not get added";
                 }
-                \Mail::to($row["email"])->send(new WelcomeMail($row["email"], 'Abs@123123', 'http://vasagroup.abshrms.com',''));
+               // \Mail::to($row["email"])->send(new WelcomeMail($row["email"], 'Abs@123123', 'http://vasagroup.abshrms.com',''));
+
+                // sent welcome email along with appointment Letter 
+                //dd($row);
+                $isEmailSent  = $this->attachApoinmentPdf($row);
+
+                // if ($isEmailSent) {
+                //     return "Saved";
+                // } else {
+                //     return "Error";
+                // }
+
             } else {
                 $returnfailedMsg .= $empNo." not get added because of error ".json_encode($validator->errors()->all());
                 $failedCount++;
@@ -558,31 +581,30 @@ class VmtEmployeeController extends Controller
 
     // Generate Employee Apoinment PDF after onboarding
     public function attachApoinmentPdf($employeeData){
+        //dd($employeeData);
         $empNameString  = $employeeData['employee_name'];
         $filename = 'appoinment_letter_'.$empNameString.'_'.time().'.pdf';
         $data = $employeeData;
-        $data['basic_monthly'] = "--No Data--";
-        $data['basic_yearly'] = "--No Data--";
-        $data['hra_monthly'] = "--No Data--";
-        $data['hra_yearly'] = "--No Data--";
-        $data['spl_allowance_monthly'] = "--No Data--";
-        $data['spl_allowance_yearly'] = "--No Data--";
-        $data['gross_monthly'] = "--No Data--";
-        $data['gross_yearly'] = "--No Data--";
-        $data['employer_epf_monthly'] = "--No Data--";
-        $data['employer_epf_yearly'] = "--No Data--";
-        $data['employer_esi_monthly'] = "--No Data--";
-        $data['employer_esi_yearly'] = "--No Data--";
-        $data['ctc_monthly'] = "--No Data--";
-        $data['ctc_yearly'] = "--No Data--";
-        $data['employee_epf_monthly'] = "--No Data--";
-        $data['employee_epf_yearly'] = "--No Data--";
-        $data['employer_esi_monthly'] = "--No Data--";
-        $data['employer_esi_yearly'] = "--No Data--";
+        $data['basic_monthly'] = $employeeData['basic'];
+        $data['basic_yearly'] = intval($employeeData['basic']) * 12;
+        $data['hra_monthly'] = $employeeData['hra'];
+        $data['hra_yearly'] = intval($employeeData['hra']) * 12;
+        $data['spl_allowance_monthly'] = $employeeData['special_allowance'];
+        $data['spl_allowance_yearly'] = intval($employeeData['special_allowance'])*12;
+        $data['gross_monthly'] = $employeeData["basic"] + $employeeData["hra"] + $employeeData["statutory_bonus"] + $employeeData["child_education_allowance"] + $employeeData["food_coupon"] + $employeeData["lta"] + $employeeData["special_allowance"] + $employeeData["other_allowance"];
+        $data['gross_yearly'] = intval($data['gross_monthly']) * 12;
+        $data['employer_epf_monthly'] = $employeeData['epf_employer_contribution'];
+        $data['employer_epf_yearly'] = intval($employeeData['epf_employer_contribution']) * 12;
+        $data['employer_esi_monthly'] = $employeeData['esic_employer_contribution'];
+        $data['employer_esi_yearly'] = intval($employeeData['esic_employer_contribution']) * 12;
+        $data['ctc_monthly'] = $data['gross_monthly'];
+        $data['ctc_yearly'] = intval( $data['gross_monthly']) * 12;
+        $data['employee_epf_monthly'] =  $employeeData["epf_employer_contribution"];
+        $data['employee_epf_yearly'] = intval($employeeData["epf_employer_contribution"]) * 12;
         $data['employer_pt_monthly'] = "--No Data--";
         $data['employer_pt_yearly'] = "--No Data--";
-        $data['net_take_home_monthly'] = "--No Data--";
-        $data['net_take_home_yearly'] = "--No Data--";
+        $data['net_take_home_monthly'] = $employeeData["net_income"];
+        $data['net_take_home_yearly'] = intval($employeeData["net_income"]) * 12;
         // download PDF file with download method
         $pdf = new Dompdf();
         $html =  view('vmt_appoinment_letterPdf', compact('data'));       
@@ -726,15 +748,16 @@ class VmtEmployeeController extends Controller
 
                 if ($newEmployee && $empOffice) {
                     $addedCount++;
-                    $returnsuccessMsg .= $empNo." get added";
+                    $returnsuccessMsg .= "<li>".$empNo." get added.</li>";
                 } else {
                     $failedCount++;
-                    $returnfailedMsg .= $empNo." not get added";
+                    $returnfailedMsg .= "<li>".$empNo." not get added.</li>";
                 }
 
                 \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $row["email"]));
             } else {
-                $returnfailedMsg .= $empNo." not get added because of error ".json_encode($validator->errors()->all());
+                $returnfailedMsg .= "<li>".$empNo." not get added because of error ".json_encode($validator->errors()->all());
+                $returnfailedMsg .= "</li>";
                 $failedCount++;
             }
         }
@@ -759,9 +782,10 @@ class VmtEmployeeController extends Controller
         $countries = Countries::all();
         $india = Countries::where('country_code', 'IN')->first();
         $emp = VmtEmployeeOfficeDetails::all(); 
+        $department = Department::all();
         $bank = Bank::all(); 
 
-        return view('vmt_employee_quick_onboarding', compact('empNo', 'countries', 'bank', 'emp'));
+        return view('vmt_employee_quick_onboarding', compact('empNo', 'countries', 'bank', 'emp','department'));
     }
 
     // Store quick onboard employee data to Database
@@ -829,7 +853,7 @@ class VmtEmployeeController extends Controller
                 $empOffice  = new VmtEmployeeOfficeDetails; 
                 $empOffice->emp_id = $newEmployee->id; // Need to remove this in future
                 $empOffice->user_id = $newEmployee->userid; //Link between USERS and VmtEmployeeOfficeDetails table
-                $empOffice->department = $row["department"];// => "lk"
+                $empOffice->department_id = $row["department"];// => "lk"
                 $empOffice->process = $row["process"];// => "k"
                 $empOffice->designation = $row["designation"];// => "k"
                 $empOffice->cost_center = $row["cost_center"];// => "k"

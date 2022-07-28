@@ -1,17 +1,19 @@
 <div class="card profile-box flex-fill">
     <div class="card-body">
         <div class="d-flex">
+        
+        
             <div class="status-wrapper ">
                 <!-- <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}" > -->
                 {{-- <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}"
-                    class="soc-det-img profile-img-round h-100 w-100"> --}}
+                    class="soc-det-img"> --}}
                     @php
                                     preg_match('/(?:\w+\. )?(\w+).*?(\w+)(?: \w+\.)?$/',Auth::user()->name , $result);
                                  $name =   strtoupper($result[1][0].$result[2][0]);
                                         if (Auth::user()->avatar != ''){
                                         @endphp 
                                       <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}"
-                    class="soc-det-img profile-img-round h-100 w-100">
+                    class="soc-det-img ">
                                             
                                             @php
                                         }else{

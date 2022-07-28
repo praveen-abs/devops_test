@@ -117,6 +117,7 @@ blockquote p::after {
                                     <!-- </div> -->
                                 </div>
                             </div>
+                            @if(auth()->user()->hasrole('Employee'))
                             <!-- <div class="col-md-4 col-sm-6 col-lg-3 col-xl-3 "> -->
                             <div class="card pms-card m-0 m-3">
                                 <div class="card-body p-0">
@@ -137,6 +138,7 @@ blockquote p::after {
                                 </div>
 
                             </div>
+                            @endif
                             <div class="card pms-card m-0 m-3">
                                 <div class="card-body p-0">
                                     <div class="row mt-2">
@@ -708,8 +710,12 @@ blockquote p::after {
                                                 <input type="file" name="upload_file" id="upload_file" accept=".xls,.xlsx" class="form-control" required>
                                             </div>
                                             <div class="col">
-                                                <button type="button" class="btn btn-primary pull-right" id="upload-goal">Upload</button>
+                                                <button type="button" class="btn btn-danger pull-right" id="upload-goal">Upload</button>
                                             </div>
+                                            <p>Download the
+                                                <a href="{{ url('/assets/sample_kpi.xls')  }}" target="_blank">
+                                                <span class="text-link" style=" color: blue;">Sample File</span></a>
+                                            </p>
                                         </div>
                                     </form>
                                 </div>
@@ -721,16 +727,16 @@ blockquote p::after {
                                                 @csrf
                                                     <thead class="bg-primary thead" id="tHead">
                                                         <tr class="text-uppercase">
-                                                            <th class="sort" data-sort="id" style="width: 2%;">#</th>
-                                                            <th class="sort" data-sort="customer_name" style="width: 8%;" data-name='dimension' data-filterable="false" data-visible="{{$config ? $config->selected_columns && in_array('dimension', explode(',', $config->selected_columns)) ? true: false : true}}">@if($config && $config->header) {{$config->header['dimension']}} @else Dimension @endif</th>
-                                                            <th class="sort" data-sort="product_name" style="width: 15%;" data-name='kpi' data-filterable="false" data-visible="{{$config ? $config->selected_columns && in_array('kpi', explode(',', $config->selected_columns)) ? true: false : true}}">@if($config && $config->header) {{$config->header['kpi']}} @else KPI @endif</th>
-                                                            <th class="sort" data-sort="date" style="width: 20%;" data-name='operational' data-filterable="false" data-visible="{{$config ? $config->selected_columns && in_array('operational', explode(',', $config->selected_columns)) ? true: false : true}}">@if($config && $config->header) {{$config->header['operational']}} @else Operational Definition @endif</th>
-                                                            <th class="sort" data-sort="amount" style="width: 15%;" data-name='measure' data-filterable="false" data-visible="{{$config ? $config->selected_columns && in_array('measure', explode(',', $config->selected_columns)) ? true: false : true}}">@if($config && $config->header) {{$config->header['measure']}} @else Measure @endif</th>
-                                                            <th class="sort" data-sort="payment" style="width: 5%;" data-name='frequency' data-filterable="false" data-visible="{{$config ? $config->selected_columns && in_array('frequency', explode(',', $config->selected_columns)) ? true: false : true}}">@if($config && $config->header) {{$config->header['frequency']}} @else Frequency @endif</th>
-                                                            <th class="sort" data-sort="status" style="width: 5%;" data-name='target' data-filterable="false" data-visible="{{$config ? $config->selected_columns && in_array('target', explode(',', $config->selected_columns)) ? true: false : true}}">@if($config && $config->header) {{$config->header['target']}} @else Target @endif</th>
-                                                            <th class="sort" data-sort="status" style="width: 11%;" data-name='stretchTarget' data-filterable="false" data-visible="{{$config ? $config->selected_columns && in_array('stretchTarget', explode(',', $config->selected_columns)) ? true: false : true}}">@if($config && $config->header) {{$config->header['stretchTarget']}} @else Stretch Target @endif</th>
-                                                            <th class="sort" data-sort="status" style="width: 4%;" data-name='source' data-filterable="false" data-visible="{{$config ? $config->selected_columns && in_array('source', explode(',', $config->selected_columns)) ? true: false : true}}">@if($config && $config->header) {{$config->header['source']}} @else Source @endif</th>
-                                                            <th class="sort" data-sort="status" style="width: 15%;" width="10%" data-name='kpiWeightage' data-filterable="false" data-visible="{{$config ? $config->selected_columns && in_array('kpiWeightage', explode(',', $config->selected_columns)) ? true: false : true}}">@if($config && $config->header) {{$config->header['kpiWeightage']}} @else KPI Weightage ( % ) @endif</th>
+                                                            <th class="sort" data-sort="id" style="width: 2% !important;">#</th>
+                                                            <th class="sort" data-sort="customer_name" style="width: 8% !important;" data-name='dimension' data-filterable="false" data-visible="{{$show['dimension']}}">@if($config && $config->header) {{$config->header['dimension']}} @else Dimension @endif</th>
+                                                            <th class="sort" data-sort="product_name" style="width: 15% !important;" data-name='kpi' data-filterable="false" data-visible="{{$show['kpi']}}">@if($config && $config->header) {{$config->header['kpi']}} @else KPI @endif</th>
+                                                            <th class="sort" data-sort="date" style="width: 20% !important;" data-name='operational' data-filterable="false" data-visible="{{$show['operational']}}">@if($config && $config->header) {{$config->header['operational']}} @else Operational Definition @endif</th>
+                                                            <th class="sort" data-sort="amount" style="width: 15% !important;" data-name='measure' data-filterable="false" data-visible="{{$show['measure']}}">@if($config && $config->header) {{$config->header['measure']}} @else Measure @endif</th>
+                                                            <th class="sort" data-sort="payment" style="width: 5% !important;" data-name='frequency' data-filterable="false" data-visible="{{$show['frequency']}}">@if($config && $config->header) {{$config->header['frequency']}} @else Frequency @endif</th>
+                                                            <th class="sort" data-sort="status" style="width: 5% !important;" data-name='target' data-filterable="false" data-visible="{{$show['target']}}">@if($config && $config->header) {{$config->header['target']}} @else Target @endif</th>
+                                                            <th class="sort" data-sort="status" style="width: 11% !important;" data-name='stretchTarget' data-filterable="false" data-visible="{{$show['stretchTarget']}}">@if($config && $config->header) {{$config->header['stretchTarget']}} @else Stretch Target @endif</th>
+                                                            <th class="sort" data-sort="status" style="width: 4% !important;" data-name='source' data-filterable="false" data-visible="{{$show['source']}}">@if($config && $config->header) {{$config->header['source']}} @else Source @endif</th>
+                                                            <th class="sort" data-sort="status" style="width: 15% !important;" width="10%" data-name='kpiWeightage' data-filterable="false" data-visible="{{$show['kpiWeightage']}}">@if($config && $config->header) {{$config->header['kpiWeightage']}} @else KPI Weightage ( % ) @endif</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody class="tbody content-container" id="tbody">
@@ -786,8 +792,8 @@ blockquote p::after {
                                         </div>
 
                                         <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
-                                            <button class="btn btn-primary table-btn mx-2" id="save-table">Save</button>
-                                            <button class="btn btn-primary mx-2" id="publish-goal" disabled>Publish</button>
+                                            <button class="btn btn-danger table-btn mx-2" id="save-table">Save</button>
+                                            <button class="btn btn-danger mx-2" id="publish-goal" disabled>Publish</button>
                                         </div>
 
                                     </div>
@@ -1086,9 +1092,54 @@ $(document).ready(function(){
             success: function(data){
                 $('.addition-content').html('');
                 var length = 1;
+                var showdimension = "{{$show['dimension'] == 'true' ? 'block' : 'none'}}";
+                var showkpi = "{{$show['kpi'] == 'true' ? 'block' : 'none'}}";
+                var showoperational = "{{$show['operational'] == 'true' ? 'block' : 'none'}}";
+                var showmeasure = "{{$show['measure'] == 'true' ? 'block' : 'none'}}";
+                var showfrequency = "{{$show['frequency'] == 'true' ? 'block' : 'none'}}";
+                var showtarget = "{{$show['target'] == 'true' ? 'block' : 'none'}}";
+                var showstretchTarget = "{{$show['stretchTarget'] == 'true' ? 'block' : 'none'}}";
+                var showsource = "{{$show['source'] == 'true' ? 'block' : 'none'}}";
+                var showkpiWeightage = "{{$show['kpiWeightage'] == 'true' ? 'block' : 'none'}}";
                 // $.each(data,function(k, v) {
                     $.each(data[0],function(key, value) {
-                        $('.content-container').append('<tr class="addition-content cursor-pointer" id="content'+length+'"><td class="text-box-td p-1"><span  name="numbers" id="" class="tableInp" >'+length+'</span><div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div></td><td class="text-box-td p-1"><textarea name="dimension[]" id="" class="text-box" cols="20" placeholder="type here">'+value[0]+'</textarea></td><td class="text-box-td p-1"><textarea name="kpi[]" id="" class="text-box" cols="20" placeholder="type here">'+value[1]+'</textarea></td><td class="text-box-td p-1"><textarea name="operational[]" id="" class="text-box" cols="20" placeholder="type here">'+value[2]+'</textarea></td><td class="text-box-td p-1"><textarea name="measure[]" id="" class="text-box" cols="20" placeholder="type here">'+value[3]+'</textarea></td><td class="text-box-td p-1"><textarea name="frequency[]" id="" class="text-box" cols="20" placeholder="type here">'+value[4]+'</textarea></td><td class="text-box-td p-1"> <textarea name="target[]" id="" class="text-box" cols="20" placeholder="type here">'+value[5]+'</textarea></td><td class="text-box-td p-1"><textarea name="stretchTarget[]" id="" class="text-box" cols="10" placeholder="type here">'+value[6]+'</textarea></td><td class="text-box-td p-1"><textarea name="source[]" id="" class="text-box" cols="10" placeholder="type here">'+value[7]+'</textarea></td><td class="text-box-td p-1"><textarea name="kpiWeightage[]" id="" class="text-box" cols="10" placeholder="type here">'+value[8]+'</textarea></td></tr>');
+                        var dimension = '';
+                        var kpi = '';
+                        var operational = '';
+                        var measure = '';
+                        var frequency = '';
+                        var target = '';
+                        var stretchTarget = '';
+                        var source = '';
+                        var kpiWeightage = '';
+                        if (showdimension == 'block') {
+                            dimension = '<td class="text-box-td p-1"><textarea name="dimension[]" id="" class="text-box" cols="20" placeholder="type here">'+value[0]+'</textarea></td>';
+                        }
+                        if (showkpi == 'block') {
+                            kpi = '<td class="text-box-td p-1"><textarea name="kpi[]" id="" class="text-box" cols="20" placeholder="type here">'+value[1]+'</textarea></td>';
+                        }
+                        if (showoperational == 'block') {
+                            operational = '<td class="text-box-td p-1"><textarea name="operational[]" id="" class="text-box" cols="20" placeholder="type here">'+value[2]+'</textarea></td>';
+                        }
+                        if (showmeasure == 'block') {
+                            measure = '<td class="text-box-td p-1"><textarea name="measure[]" id="" class="text-box" cols="20" placeholder="type here">'+value[3]+'</textarea></td>';
+                        }
+                        if (showfrequency == 'block') {
+                            frequency = '<td class="text-box-td p-1"><textarea name="frequency[]" id="" class="text-box" cols="20" placeholder="type here">'+value[4]+'</textarea></td>';
+                        }
+                        if (showtarget == 'block') {
+                            target = '<td } class="text-box-td p-1"> <textarea name="target[]" id="" class="text-box" cols="20" placeholder="type here">'+value[5]+'</textarea></td>';
+                        }
+                        if (showstretchTarget == 'block') {
+                            stretchTarget = '<td class="text-box-td p-1"><textarea name="stretchTarget[]" id="" class="text-box" cols="10" placeholder="type here">'+value[6]+'</textarea></td>';
+                        }
+                        if (showsource == 'block') {
+                            source = '<td class="text-box-td p-1"><textarea name="source[]" id="" class="text-box" cols="10" placeholder="type here">'+value[7]+'</textarea></td>';
+                        }
+                        if (showkpiWeightage == 'block') {
+                            kpiWeightage = '<td class="text-box-td p-1"><textarea name="kpiWeightage[]" id="" class="text-box" cols="10" placeholder="type here">'+value[8]+'</textarea></td>';
+                        }
+                        $('.content-container').append('<tr class="addition-content cursor-pointer" id="content'+length+'"><td class="text-box-td p-1"><span  name="numbers" id="" class="tableInp" >'+length+'</span><div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div></td>'+dimension+kpi+operational+measure+frequency+target+stretchTarget+source+kpiWeightage+'</tr>');
                         length++;
                     });
                 // });
@@ -1138,18 +1189,26 @@ $(document).ready(function(){
 
     function frequencyChange() {
         var data = "";
+        var year = "<?=date('Y')?>";
+        var nextyear = "<?=date('Y', strtotime('+1 year'))?>";
         if ($('#frequency').val() == 'monthly') {
-            var year = "<?=date('Y')?>";
-            var nextyear = "<?=date('Y', strtotime('+1 year'))?>";
+
             if ($('#calendar_type').val() == 'financial_year') {
                 data = "<option value=''>Select</option><option value='apr'>April - "+year+"</option><option value='may'>May - "+year+"</option><option value='june'>June - "+year+"</option><option value='july'>July - "+year+"</option><option value='aug'>August - "+year+"</option><option value='sept'>September - "+year+"</option><option value='oct'>October - "+year+"</option><option value='nov'>November - "+year+"</option><option value='dec'>December - "+year+"</option><option value='jan'>January - "+nextyear+"</option><option value='feb'>February - "+nextyear+"</option><option value='mar'>March - "+nextyear+"</option>";
             } else {
                 data = "<option value=''>Select</option><option value='jan'>January - "+year+"</option><option value='feb'>February - "+year+"</option><option value='mar'>March - "+year+"</option><option value='apr'>April - "+year+"</option><option value='may'>May - "+year+"</option><option value='june'>June - "+year+"</option><option value='july'>July - "+year+"</option><option value='aug'>August - "+year+"</option><option value='sept'>September - "+year+"</option><option value='oct'>October - "+year+"</option><option value='nov'>November - "+year+"</option><option value='dec'>December - "+year+"</option>";
             }
         } else if ($('#frequency').val() == 'quarterly') {
-            data = "<option value=''>Select</option><option value='q1'>Q1(Jan-Mar)</option><option value='q2'>Q2(Apr-June)</option><option value='q3'>Q3(July-Sept)</option><option value='q4'>Q4(Oct-Dec)</option>";
+            if ($('#calendar_type').val() == 'financial_year')
+                data = "<option value=''>Select</option><option value='q1'>Q1 "+year+"(Apr-Jun)</option><option value='q2'>Q2 "+year+"(July-Sept)</option><option value='q3'>Q3 "+year+"(Oct-Dec)</option><option value='q4'>Q4 "+nextyear+"(Jan-Mar)</option>";
+            else
+                data = "<option value=''>Select</option><option value='q1'>Q1(Jan-Mar)</option><option value='q2'>Q2(Apr-June)</option><option value='q3'>Q3(July-Sept)</option><option value='q4'>Q4(Oct-Dec)</option>";
         } else if ($('#frequency').val() == 'halfYearly') {
-            data = "<option value=''>Select</option><option value='h1'>H1(Jan-June)</option><option value='h2'>H2(July-Dec)</option>";
+            if ($('#calendar_type').val() == 'financial_year')
+                data = "<option value=''>Select</option><option value='h1'>H1(Apr "+year+" - Sept "+year+")</option><option value='h2'>H2(Oct "+year+"- Mar "+nextyear+")</option>";
+            else
+                data = "<option value=''>Select</option><option value='h1'>H1(Jan-June)</option><option value='h2'>H2(July-Dec)</option>";
+
         } else {
             data = "<option value=''>Select</option><option value='yearly'>Yearly</option>";
         }
@@ -1202,12 +1261,58 @@ $(function () {
     });
 
     $('body').on('click', '.plus-sign', function() {
+        var showdimension = "{{$show['dimension'] == 'true' ? 'block' : 'none'}}";
+        var showkpi = "{{$show['kpi'] == 'true' ? 'block' : 'none'}}";
+        var showoperational = "{{$show['operational'] == 'true' ? 'block' : 'none'}}";
+        var showmeasure = "{{$show['measure'] == 'true' ? 'block' : 'none'}}";
+        var showfrequency = "{{$show['frequency'] == 'true' ? 'block' : 'none'}}";
+        var showtarget = "{{$show['target'] == 'true' ? 'block' : 'none'}}";
+        var showstretchTarget = "{{$show['stretchTarget'] == 'true' ? 'block' : 'none'}}";
+        var showsource = "{{$show['source'] == 'true' ? 'block' : 'none'}}";
+        var showkpiWeightage = "{{$show['kpiWeightage'] == 'true' ? 'block' : 'none'}}";
         var id = $('.addition-content:last').attr('id');
         var length = 1;
         if (id) {
             length = parseInt(id.replace('content', '')) + 1;
         }
-        $('.content-container').append('<tr class="addition-content cursor-pointer" id="content'+length+'"><td class="text-box-td p-1"><span  name="numbers" id="" class="tableInp" >'+length+'</span><div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div></td><td class="text-box-td p-1"><textarea name="dimension[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="kpi[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="operational[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="measure[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="frequency[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"> <textarea name="target[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="stretchTarget[]" id="" class="text-box" cols="10" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="source[]" id="" class="text-box" cols="10" placeholder="type here"></textarea></td><td class="text-box-td p-1"><textarea name="kpiWeightage[]" id="" class="text-box" cols="10" placeholder="type here"></textarea></td></tr>');
+        var dimension = '';
+        var kpi = '';
+        var operational = '';
+        var measure = '';
+        var frequency = '';
+        var target = '';
+        var stretchTarget = '';
+        var source = '';
+        var kpiWeightage = '';
+        
+        if (showdimension == 'block') {
+            dimension = '<td class="text-box-td p-1"><textarea name="dimension[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td>';
+        }
+        if (showkpi == 'block') {
+            kpi = '<td class="text-box-td p-1"><textarea name="kpi[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td>';
+        }
+        if (showoperational == 'block') {
+            operational = '<td class="text-box-td p-1"><textarea name="operational[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td>';
+        }
+        if (showmeasure == 'block') {
+            measure = '<td class="text-box-td p-1"><textarea name="measure[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td>';
+        }
+        if (showfrequency == 'block') {
+            frequency = '<td class="text-box-td p-1"><textarea name="frequency[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td>';
+        }
+        if (showtarget == 'block') {
+            target = '<td } class="text-box-td p-1"> <textarea name="target[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td>';
+        }
+        if (showstretchTarget == 'block') {
+            stretchTarget = '<td class="text-box-td p-1"><textarea name="stretchTarget[]" id="" class="text-box" cols="10" placeholder="type here"></textarea></td>';
+        }
+        if (showsource == 'block') {
+            source = '<td class="text-box-td p-1"><textarea name="source[]" id="" class="text-box" cols="10" placeholder="type here"></textarea></td>';
+        }
+        if (showkpiWeightage == 'block') {
+            kpiWeightage = '<td class="text-box-td p-1"><textarea name="kpiWeightage[]" id="" class="text-box" cols="10" placeholder="type here"></textarea></td>';
+        }
+        $('.content-container').append('<tr class="addition-content cursor-pointer" id="content'+length+'"><td class="text-box-td p-1"><span  name="numbers" id="" class="tableInp" >'+length+'</span><div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div></td>'+dimension+kpi+operational+measure+frequency+target+stretchTarget+source+kpiWeightage+'</tr>');
     });
 
     $('body').on('click', '.delete-row', function() {

@@ -90,7 +90,7 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
-                    <div class="card shadow profile-box " style="border-top:7px solid #E54E0D">
+                <div class="card shadow profile-box orange-top-border">
                         <!-- <div class="p-1 bg-danger" > -->
                         <div class="card-body d-flex justify-content-center align-items-center">
                             <div class="text-center">
@@ -154,7 +154,7 @@
                                     <div class="min-h-250">
                                         <div>
                                             <ul class="nav sub-topnav">
-                                                <li class="title active topbarNav fw-bold" id="post_view"><a>View Post</a>
+                                                {{-- <li class="title active topbarNav fw-bold" id="post_view"><a>View Post</a> --}}
                                                 </li><li class="title  topbarNav fw-bold" id="post"><a>Post</a>
                                                 </li>
                                                 <li class="title topbarNav  fw-bold" id="announcement">
@@ -164,8 +164,8 @@
                                                 <li class="title topbarNav fw-bold" id="praise"><a>Praise</a></li>
                                             </ul>
                                              <!-- code post view  -->
-                                               <div class="topbarContent emp-post_view" >
-                                                  <div>
+                                            {{-- <div class="topbarContent emp-post_view" >
+                                                <div>
                                                     <div class="px-20 p-16 row no-gutters scrollBar">
                                                         @foreach($dashboardpost as $index => $user )
                                                             <img  style="width: 100px;" src="{{ URL::asset('images/'.$user->post_image)  }}">
@@ -173,7 +173,7 @@
                                                         @endforeach
                                                     </div>   
                                                 </div>
-                                            </div>
+                                            </div> --}}
 
                                             <!-- emd view -->
                                             <div class="topbarContent emp-post">
@@ -269,13 +269,10 @@
                                                 <div>
                                                     <div>
                                                         <div class="px-20 p-16 row no-gutters scrollBar">
-                                                            <textarea name="" id="" cols="30" rows="10"
+                                                            <textarea name="" id="" cols="30" rows="6"
                                                                 class="border-0 outline-none w-100">
-                                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
-                                                        </textarea>
+
+                                                            </textarea>
                                                         </div>
                                                         <button class="btn btn-danger py-1 px-4  float-right">
                                                             Submit
