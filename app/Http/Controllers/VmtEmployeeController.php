@@ -365,7 +365,7 @@ class VmtEmployeeController extends Controller
 
     // show bulk upload form
     public function bulkUploadEmployee(Request $request){
-        return view('vmt_uploadEmployees');
+        return view('vmt_employeeOnboarding_BulkUpload');
     }
 
     // store employeess from excel sheet to database
@@ -584,7 +584,7 @@ class VmtEmployeeController extends Controller
 
     // Generate Employee Apoinment PDF after onboarding
     public function attachApoinmentPdf($employeeData){
-        // dd($employeeData);
+        //dd($employeeData);
         $empNameString  = $employeeData['employee_name'];
         $filename = 'appoinment_letter_'.$empNameString.'_'.time().'.pdf';
         $data = $employeeData;
@@ -604,8 +604,8 @@ class VmtEmployeeController extends Controller
         $data['ctc_yearly'] = intval( $data['gross_monthly']) * 12;
         $data['employee_epf_monthly'] =  $employeeData["epf_employer_contribution"];
         $data['employee_epf_yearly'] = intval($employeeData["epf_employer_contribution"]) * 12;
-        $data['employer_pt_monthly'] = "--No Data--";
-        $data['employer_pt_yearly'] = "--No Data--";
+        $data['employer_pt_monthly'] = $employeeData["professional_tax"];
+        $data['employer_pt_yearly'] =  intval($employeeData["professional_tax"]) * 12;
         $data['net_take_home_monthly'] = $employeeData["net_income"];
         $data['net_take_home_yearly'] = intval($employeeData["net_income"]) * 12;
         // download PDF file with download method
