@@ -85,7 +85,7 @@ class VmtEmployeeController extends Controller
                             ->select(
                                 'vmt_employee_details.*', 
                                 'users.name as emp_name', 
-                                'users.status as emp_status', 
+                                'users.active as emp_status', 
                                 'users.email as email_id',
                                 'users.id as user_id', 
                                 'users.avatar as avatar',

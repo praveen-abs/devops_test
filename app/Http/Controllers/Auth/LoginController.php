@@ -65,7 +65,7 @@ class LoginController extends Controller
 
         // Remember token set to false
         $save_credentials = false;
-        $user = User::where('email', $request->email)->where('status', '1')->first();
+        $user = User::where('email', $request->email)->where('active', 1)->first();
         if($user){
             $credentials = $request->only('email', 'password');
             if (Hash::check($request->password, $user->password)) {
