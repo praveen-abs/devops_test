@@ -784,7 +784,7 @@ class VmtEmployeeController extends Controller
             $department = Department::all();
             $bank = Bank::all(); 
 
-            return view('vmt_employee_quick_onboarding', compact('empNo', 'countries', 'bank', 'emp','department'));
+            return view('vmt_employeeOnboarding_QuickUpload', compact('empNo', 'countries', 'bank', 'emp','department'));
         }
     }
 

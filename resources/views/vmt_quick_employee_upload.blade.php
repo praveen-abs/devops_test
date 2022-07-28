@@ -16,7 +16,7 @@
                 <div class="row">
                     <div class="col-md-6 ">
                         <div class="col-form-label">
-                            <h5> Upload Data</h5>
+                            <h5> Quick Employee Onboarding Bulk Upload</h5>
                             <div class="col col-form-label">
                                 <ul class="list-style-numbered list-style-circle p-4">
                                         <li>Download the
