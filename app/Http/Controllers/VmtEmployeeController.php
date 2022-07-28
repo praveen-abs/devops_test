@@ -102,10 +102,57 @@ class VmtEmployeeController extends Controller
         return view('vmt_employeeDirectory', compact('vmtEmployees'));
     }
 
+
+    public function getThreeLevelOrgTree($id, Request $request)
+    {
+        $levels = 2; //tree level for current user
+        $data = [];
+        //get the given node's username,designation
+        $data['name'] = User::where('id',$id)->value('name');
+
+        $data['emp_no'] = VmtEmployee::where('userid',$id)->value('emp_no');
+        $data['designation'] =  VmtEmployeeOfficeDetails::where('user_id',$id)->value('designation');
+
+        $data['children'] =$this->getChildrenForUser( $data['emp_no'])['children'];
+
+        for($i=0; $i<2 ; $i++)
+        {
+            foreach($data['children'] as $child)
+            {
+                $child['children'] = $this->getChildrenForUser($child['emp_no'])['children'];    
+                //dd($child['children']);
+            } 
+        }
+
+
+        //dd(json_encode($data));
+        return $data;
+    }
+
+
     //
-    public function getChildForUser($id, Request $request){
-        $childrenIds  =  VmtEmployeeHierarchy::where('user_id', $id)->pluck('child_nodes');
-        return $childrenIds;
+    public function getChildrenForUser($emp_no){
+        
+        $data =array();
+        
+
+        //get the child nodes of the given parent node
+        $data['children'] = User::leftJoin('vmt_employee_office_details','users.id','=','vmt_employee_office_details.user_id')
+                            ->leftJoin('vmt_employee_details','users.id','=','vmt_employee_details.userid')
+                            ->where('l1_manager_code',$emp_no)
+                            ->select('users.name','users.id','vmt_employee_details.emp_no','vmt_employee_office_details.designation')
+                            ->get();
+
+        //Add empty children attributes
+        foreach($data['children'] as $temp)
+        {
+            $temp['children'] ='';
+        }
+
+       
+       //dd(json_encode($data));
+
+       return $data;
     }
 
     //
@@ -917,4 +964,5 @@ class VmtEmployeeController extends Controller
             return "Error";
         }
     }
+    
 }

@@ -5,22 +5,14 @@
     <style>
     #chart-container {
         font-family: Arial;
-        height: 420px;
+        height: 500px;
         border: 1px solid #aaa;
         overflow: auto;
         text-align: center;
+
       }
       
-      #github-link {
-        display: inline-block;
-        background-image: url("https://dabeng.github.io/OrgChart/img/logo.png");
-        background-size: cover;
-        width: 64px;
-        height: 64px;
-        position: absolute;
-        top: 0;
-        left: 0;
-      }
+      .orgchart { background: rgba(255, 255, 255, 0); }
     </style>
 @endsection
 @section('content')
@@ -108,8 +100,10 @@
     };
 
     $('#chart-container').orgchart({
-    'data' : mydata,
-    'nodeContent': 'title'
+    'data' : '{{ route('vmt-emphierarchy-getChildForUser',['id' => Auth::user()->id ]) }}',
+    'pan' : true,
+    'zoom' : true,
+    'nodeContent': 'designation'
     });
 
 });
