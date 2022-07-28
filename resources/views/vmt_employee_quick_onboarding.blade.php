@@ -189,7 +189,7 @@
         <div class="page-content">
             <div class="container-fluid">
                 <div class="main">
-                    @yield('onboarding')
+                    @yield('ui-onboarding')
                 </div>
             </div>
         </div>

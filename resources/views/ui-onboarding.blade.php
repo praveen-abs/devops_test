@@ -1,4 +1,4 @@
-@section('onboarding')
+@section('ui-onboarding')
     <div class="container-fluid">
         <div class="">
             <div class="row ">
