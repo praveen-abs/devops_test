@@ -71,6 +71,13 @@ class VmtEmployeeController extends Controller
         $data['goal'] = json_decode($goals->assignment_period, true);
         return response()->json($data);
     }
+
+    public function user_status_change(Request $request) {
+        $user = User::find($request->id);
+        $user->status = $request->input('status');
+        $user->save();
+        return 'saved';
+    }
     //
     public function showEmployeeDirectory(Request $request){
         $vmtEmployees = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')
@@ -78,6 +85,7 @@ class VmtEmployeeController extends Controller
                             ->select(
                                 'vmt_employee_details.*', 
                                 'users.name as emp_name', 
+                                'users.status as emp_status', 
                                 'users.email as email_id',
                                 'users.id as user_id', 
                                 'users.avatar as avatar',

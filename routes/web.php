@@ -35,6 +35,7 @@ Route::post('/update-family-info/{id}', [App\Http\Controllers\HomeController::cl
 Route::post('/update-checkin', [App\Http\Controllers\HomeController::class, 'updateCheckin'])->name('updateCheckin');
 Route::get('/vmt-topbar-settings', [App\Http\Controllers\HomeController::class, 'vmt_topbar_settings'])->name('vmt_topbar_settings');
 Route::post('/poll-voting', [App\Http\Controllers\HomeController::class, 'poll_voting'])->name('poll_voting');
+Route::post('/signin', [App\Http\Controllers\HomeController::class, 'signin'])->name('signin');
 
 Route::get('/registerNewAccount', function(){
     return view('/auth/register');
@@ -166,6 +167,7 @@ Route::post('vmt-employee/complete-onboarding', 'App\Http\Controllers\VmtEmploye
 
 Route::get('vmt-employess/directory', 'App\Http\Controllers\VmtEmployeeController@showEmployeeDirectory');
 Route::post('vmt-kpi/data', 'App\Http\Controllers\VmtEmployeeController@showKpiData')->name('kpi-data');
+Route::post('vmt-employess/status', 'App\Http\Controllers\VmtEmployeeController@user_status_change')->name('user_status_change');
 
 //Asset Inventory
 Route::get('vmt-assetinventory-index', 'App\Http\Controllers\VmtAssetInventoryController@index')->name('vmt-assetinventory-index');

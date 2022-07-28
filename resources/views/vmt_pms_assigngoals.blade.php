@@ -117,6 +117,7 @@ blockquote p::after {
                                     <!-- </div> -->
                                 </div>
                             </div>
+                            @if(auth()->user()->hasrole('Employee'))
                             <!-- <div class="col-md-4 col-sm-6 col-lg-3 col-xl-3 "> -->
                             <div class="card pms-card m-0 m-3">
                                 <div class="card-body p-0">
@@ -137,6 +138,7 @@ blockquote p::after {
                                 </div>
 
                             </div>
+                            @endif
                             <div class="card pms-card m-0 m-3">
                                 <div class="card-body p-0">
                                     <div class="row mt-2">

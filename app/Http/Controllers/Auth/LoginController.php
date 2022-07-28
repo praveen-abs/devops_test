@@ -5,8 +5,12 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth as auth;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 use App\Models\VmtGeneralInfo;
+use App\Models\User;
 
 class LoginController extends Controller
 {
@@ -50,5 +54,31 @@ class LoginController extends Controller
         $generalInfo = VmtGeneralInfo::first();
         //dd($generalInfo);
         return view('auth.login', compact('generalInfo'));
+    }
+
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        // Remember token set to false
+        $save_credentials = false;
+        $user = User::where('email', $request->email)->where('status', '1')->first();
+        if($user){
+            $credentials = $request->only('email', 'password');
+            if (Hash::check($request->password, $user->password)) {
+            // if (Auth::attempt($credentials)) {
+                // Auth::login($user, $save_credentials);
+                if (auth::attempt(['email' => $request->email, 'password' => $request->password], $save_credentials)) {
+                    return redirect(route('index'));
+                }
+            }
+
+            return redirect()->back();
+        }
+        return redirect()->back();
+        
     }
 }

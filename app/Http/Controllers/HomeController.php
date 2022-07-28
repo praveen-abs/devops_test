@@ -451,4 +451,5 @@ class HomeController extends Controller
         //::
         \Mail::to('rahul.sgsits2015@gmail.com')->send(new TestEmail());
     }
+
 }

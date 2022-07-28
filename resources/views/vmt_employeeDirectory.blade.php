@@ -409,10 +409,11 @@ tr:last-child td:last-child {
                     </td>
                     <td>
                         <div class="switch-field align-items-center">
-                            <input type="radio" id="radio-one" name="switch-one" value="Active" checked />
-                            <label for="radio-one">Active</label>
-                            <input type="radio" id="radio-two" name="switch-one" value="Inactive" />
-                            <label for="radio-two">Inactive</label>
+                            <input type="hidden" value="{{$employee->user_id}}" name="id{{$key}}" id="id{{$key}}">
+                            <input class="status" type="radio" id="radio-one{{$key}}" name="{{$key}}" value="1" @if($employee->emp_status) checked @endif />
+                            <label for="radio-one{{$key}}">Active</label>
+                            <input class="status" type="radio" id="radio-two{{$key}}" name="{{$key}}" value="0" @if(!$employee->emp_status) checked @endif>
+                            <label for="radio-two{{$key}}">Inactive</label>
                         </div>
                     </td>
                 </tr>
@@ -447,6 +448,24 @@ $(document).ready(function() {
                 var content = $(this).attr("data-popover-content");
                 return $(content).children(".popover-body").html();
             },
+        });
+    });
+
+    $('.status').click(function() {
+        var status = $(this).val();
+        var name = $(this).attr('name');
+        var id = $('#id'+name).val();
+        $.ajax({
+            url: "{{route('user_status_change')}}",
+            type: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+                "status" : status,
+                "id" : id,
+            },
+            success: function(data) {
+                window.location.reload();
+            }
         });
     });
 
