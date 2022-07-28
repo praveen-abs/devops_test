@@ -12,7 +12,7 @@
 @endcomponent
 <div class="main">
 
-    @yield('onboarding')
+    @yield('ui-onboarding')
 
 
 
