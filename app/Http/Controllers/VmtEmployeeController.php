@@ -549,6 +549,9 @@ class VmtEmployeeController extends Controller
                     $compensatory->save();
                 }
 
+                //Add new items into $row
+                $row['net_income'] = $compensatory->gross + $row["epf_employee"] + $row["esic_employee"] + $row["professional_tax"] + $row["labour_welfare_fund"] - ($row["epf_employer_contribution"] - $row["esic_employer_contribution"] - $row["insurance"] - $row["graduity"]);
+
                 if ($newEmployee && $empOffice) {
                     $addedCount++;
                     $returnsuccessMsg .= $empNo." get added";
@@ -591,7 +594,7 @@ class VmtEmployeeController extends Controller
         $data['hra_yearly'] = intval($employeeData['hra']) * 12;
         $data['spl_allowance_monthly'] = $employeeData['special_allowance'];
         $data['spl_allowance_yearly'] = intval($employeeData['special_allowance'])*12;
-        $data['gross_monthly'] = $employeeData["basic"] + $employeeData["hra"] + $employeeData["Statutory_bonus"] + $employeeData["child_education_allowance"] + $employeeData["food_coupon"] + $employeeData["lta"] + $employeeData["special_allowance"] + $employeeData["other_allowance"];
+        $data['gross_monthly'] = $employeeData["basic"] + $employeeData["hra"] + $employeeData["statutory_bonus"] + $employeeData["child_education_allowance"] + $employeeData["food_coupon"] + $employeeData["lta"] + $employeeData["special_allowance"] + $employeeData["other_allowance"];
         $data['gross_yearly'] = intval($data['gross_monthly']) * 12;
         $data['employer_epf_monthly'] = $employeeData['epf_employer_contribution'];
         $data['employer_epf_yearly'] = intval($employeeData['epf_employer_contribution']) * 12;
