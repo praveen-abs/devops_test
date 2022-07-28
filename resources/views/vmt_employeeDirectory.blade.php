@@ -11,10 +11,6 @@ table {
     box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px !important;
 }
 
-table th {
-    padding: 10px 5px !important;
-    font-size: 13px;
-}
 
 tbody {
     background-color: #fff;
@@ -25,13 +21,16 @@ tbody tr:hover {
 
 }
 
+td img{
+    height: 25px !important;
+    width: 25px !important;
+}
 td {
     border: solid 1px #000;
     border-style: none solid solid none;
     padding: 10px;
     /* font-weight: 600; */
     color: #878aa5;
-
 }
 
 td .btn i {
@@ -93,7 +92,7 @@ tr:last-child td:last-child {
     color: #acb0b0;
     line-height: 1;
     text-align: center;
-    padding: 8px;
+    padding: 5px;
     margin-right: -1px;
     border: 1px solid rgba(0, 0, 0, 0.2);
     transition: all 0.1s ease-in-out;
@@ -373,14 +372,14 @@ tr:last-child td:last-child {
                 <tr>
 
                     <td>
-                        <div class="d-flex align-items-center">
+                        <div class="d-flex justify-content-start align-items-center table-img">
                             <div class="mx-2">
                                 @if($employee->avatar)
                                 <img src="{{ URL::asset('images/'.$employee->avatar) }}" alt=""
-                                    class="avatar-xs rounded-circle" />
+                                    class="" />
                                 @else
                                 <img src="{{ URL::asset('assets/images/vmt_user_icon.jpeg') }}" alt=""
-                                    class="avatar-xs rounded-circle" />
+                                    class="" />
                                 @endif
 
                             </div>
@@ -391,24 +390,24 @@ tr:last-child td:last-child {
                             </span>
                         </div>
                     </td>
-                    <td> <span>{{$employee->emp_no}}</span></td>
-                    <td><span>{{$employee->designation}}</span></td>
-                    <td><span>{{$employee->l1_manager_name }}</span></td>
+                    <td> {{$employee->emp_no}}</td>
+                    <td>{{$employee->designation}}</td>
+                    <td>{{$employee->l1_manager_name }}</td>
                     <td><label for="" class="form-label"></label></td>
                     <!-- <td><span>{{$employee->email_id }}</span></td> -->
-                    <td><span> B <sup>+</sup></span></td>
-                    <td><span>70%</span></td>
+                    <td>B <sup>+</sup></td>
+                    <td>70%</td>
                     <td>
-                        <div class="d-flex gap-2 align-items-center">
+                        <!-- <div class="d-flex justify-content-center align-items-center"> -->
                             <a href="{{route('pages_impersonate_profile', $employee->userid)}}"
                                 class="btn border-0 outline-none bg-transparent p-0  mx-1">
                                 <i class="ri-pencil-line text-primary fw-bold"></i>
                             </a>
 
-                        </div>
+                        <!-- </div> -->
                     </td>
                     <td>
-                        <div class="switch-field align-items-center">
+                        <div class="switch-field align-items-center  justify-content-center">
                             <input type="hidden" value="{{$employee->user_id}}" name="id{{$key}}" id="id{{$key}}">
                             <input class="status" type="radio" id="radio-one{{$key}}" name="{{$key}}" value="1" @if($employee->emp_status) checked @endif />
                             <label for="radio-one{{$key}}">Active</label>

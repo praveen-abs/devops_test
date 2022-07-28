@@ -18622,13 +18622,31 @@ tr:last-child td:last-child {
 .gridjs-table>tfoot>tr>th,
 .gridjs-table>thead>tr>td,
 .gridjs-table>thead>tr>th {
-    padding:10px 5px;
+    padding:8px;
     line-height: 1.6;
     vertical-align: middle;
     border-top: 1px solid #eee;
     text-align: center;
+    
+}
+.gridjs-table>tbody>tr>td,
+.gridjs-table>tbody>tr>th,
+.gridjs-table>tfoot>tr>td,
+.gridjs-table>tfoot>tr>th,
+.gridjs-table>thead>tr>td,
+.gridjs-table>thead>tr>th {
     width: 0 !important;
 }
+
+
+.table>tbody>tr>td>img,
+table>tbody>tr>td>img,
+.gridjs-table>tbody>tr>td>img
+
+ {
+ 
+ }
+
 
 .amount-column:first-of-type .ytd-summary-column-table tbody tr td {
     border-left: none !important;
