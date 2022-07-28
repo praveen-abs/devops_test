@@ -42,7 +42,7 @@
 <section id="loading">
     <div class='face'>
         <div class='loader-container'>
-            <img id="loader-image" src="{{ URL::asset('assets/images/abs logo.png') }}"/>
+            <img id="loader-image" src="{{ URL::asset('assets/images/abs logo.png') }}" />
             <span class='loading'></span>
         </div>
     </div>
@@ -90,7 +90,7 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
-                <div class="card shadow profile-box orange-top-border">
+                    <div class="card shadow profile-box orange-top-border">
                         <!-- <div class="p-1 bg-danger" > -->
                         <div class="card-body d-flex justify-content-center align-items-center">
                             <div class="text-center">
@@ -154,8 +154,10 @@
                                     <div class="min-h-250">
                                         <div>
                                             <ul class="nav sub-topnav">
-                                                {{-- <li class="title active topbarNav fw-bold" id="post_view"><a>View Post</a> --}}
-                                                </li><li class="title  topbarNav fw-bold" id="post"><a>Post</a>
+                                                <!-- <li class="title active topbarNav fw-bold" id="post_view"><a>View
+                                                        Post</a>
+                                                </li> -->
+                                                <li class="title  topbarNav fw-bold active" id="post"><a>Post</a>
                                                 </li>
                                                 <li class="title topbarNav  fw-bold" id="announcement">
                                                     <a>Announcement</a>
@@ -163,105 +165,195 @@
                                                 <li class="title topbarNav fw-bold" id="poll"><a>Poll</a></li>
                                                 <li class="title topbarNav fw-bold" id="praise"><a>Praise</a></li>
                                             </ul>
-                                             <!-- code post view  -->
-                                            {{-- <div class="topbarContent emp-post_view" >
+                                            <!-- code post view  -->
+                                            <!-- <div class="topbarContent emp-post_view">
                                                 <div>
                                                     <div class="px-20 p-16 row no-gutters scrollBar">
                                                         @foreach($dashboardpost as $index => $user )
-                                                            <img  style="width: 100px;" src="{{ URL::asset('images/'.$user->post_image)  }}">
-                                                            <input name="post_menuss" id="post_menuss" class="border-0 outline-none  w-100 h-100" readonly value="{{$user->message}}">
+                                                        <img style="width: 100px;"
+                                                            src="{{ URL::asset('images/'.$user->post_image)  }}">
+                                                        <input name="post_menuss" id="post_menuss"
+                                                            class="border-0 outline-none  w-100 h-100" readonly
+                                                            value="{{$user->message}}">
                                                         @endforeach
-                                                    </div>   
+                                                    </div>
                                                 </div>
-                                            </div> --}}
+                                            </div> -->
 
                                             <!-- emd view -->
                                             <div class="topbarContent emp-post">
                                                 <div>
                                                     <div class="px-22 p-16 row no-gutters scrollBar">
-<form method="POST" enctype="multipart/form-data" id="submit_post_data" action="javascript:void(0)" >                            
- <textarea name="post_menu" id="post_menu" class="border-0 outline-none w-100 h-100" placeholder="Write your Post here"></textarea>
-                                                    
+
+                                                        <textarea name="post_menu" id="post_menu"
+                                                            class="border-0 outline-none w-100 h-100"
+                                                            placeholder="Write your Post here"></textarea>
+
                                                     </div>
-                                                    <input type="file" class="filestyle" name="image_src" id="image_src" data-input="false" data-iconName="fa fa-upload" data-buttonText="Upload File" />
-                                                     <button class="btn btn-danger py-1 px-4  float-right"  type="submit">
+                                                    <div class="post-contents d-flex align-items-center mx-4">
+
+                                                        <div class="img-contents">
+                                                            <i class="ri-image-2-fill"></i>
+                                                            <input type="file" class="filestyle" name="image_src"
+                                                                id="image_src" data-input="false" multiple
+                                                                accept="image/*" data-iconName="fa fa-upload"
+                                                                data-buttonText="Upload File" />
+
+                                                        </div>
+
+                                                        <div class="emoji-content mx-3">
+                                                            <i class="ri-user-smile-line"></i>
+                                                        </div>
+
+
+                                                    </div>
+                                                    <button class="btn btn-danger py-1 px-4  float-right" type="submit">
                                                         Create Post
                                                     </button>
 
-                                                </form>
-
-                       
-                                                 <!--     <div class="modal fade" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content border-0">
-                                <div class="modal-header bg-soft-info p-3">
-                                    <h5 class="modal-title" id="exampleModalLabel">Add Post</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                                        id="close-modal"></button>
-                                </div>
-                                <div class="form-control">
-                                     <textarea name="post_menu" id="post_menu" class="border-0 outline-none w-100 h-100"></textarea>
-                                    
-                                </div>
-                             
-                                   
-                                    <div class="modal-footer">
-                                        <div class="hstack gap-2 justify-content-end">
-                                            <button type="button" class="btn btn-success" 
-                                                data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-success" id="post_menu_submit">Add Post</button>
-                                        </div>
-                                    </div>
-                            </div>
-                        </div>
-                    </div> -->
                                                 </div>
                                             </div>
                                             <div class="topbarContent emp-announcement " style="display:none;">
                                                 <div>
-                                                    <div>
-                                                        <div class="px-20 p-16 row no-gutters scrollBar">
-                                                          
-                                                                
-                                                            <input  class="form-control   w-100 h-100"  aria-label="default input example" placeholder="Title of the Announcement" type="text" id="title_data" name="title_data">
-                                                            <br>
-                                                            <hr size="8" width="90%" color="black">
-                                                            <br>
-<!-- <input class="form-control" type="text" placeholder="Default input" aria-label="default input example"> -->
-                                                            <textarea  class="form-control placeholder-glow w-100 h-100"  placeholder="Details of Announcement" aria-label="default input example" type="text" name="details_data" id="details_data"></textarea>
-                                                        
+
+                                                    <div class="announcement-content scrollBar">
+
+                                                        <input class="form-control   w-100 h-100"
+                                                            aria-label="default input example"
+                                                            placeholder="Title of the Announcement" type="text"
+                                                            id="title_data" name="title_data">
+                                                        <hr>
+                                                        <!-- <input class="form-control" type="text" placeholder="Default input" aria-label="default input example"> -->
+                                                        <textarea class="form-control placeholder-glow w-100 h-100"
+                                                            placeholder="Details of Announcement"
+                                                            aria-label="default input example" type="text"
+                                                            name="details_data" id="details_data"></textarea>
+
+
+
+                                                        <div class="bottom-content d-flex mx-2">
+                                                            <div class="form-check mx-2">
+                                                                <input class="form-check-input check-box mr-1"
+                                                                    type="checkbox" value="" id="notifyEmp">
+                                                                <label class="form-check-label" for="notifyEmp">
+                                                                    Notify employees
+                                                                </label>
+                                                            </div>
+                                                            <div class="form-check mx-2">
+                                                                <input class="form-check-input check-box  mr-1"
+                                                                    type="checkbox" value="" id="requireAcknowledge">
+                                                                <label class="form-check-label"
+                                                                    for="requireAcknowledge">
+                                                                    Require Acknowledgement
+                                                                </label>
+                                                            </div>
+                                                            <div class="form-check mx-2">
+                                                                <input class="form-check-input check-box mr-1"
+                                                                    type="checkbox" value="" id="hideAfter">
+                                                                <label class="form-check-label" for="hideAfter">
+                                                                    Hide After
+                                                                </label>
+                                                            </div>
+                                                            <div class="form-check mx-2">
+                                                                <input class="form-control mr-1 anounce-date "
+                                                                    type="text" placeholder="Select date" value="" id=""
+                                                                    disabled>
+
+                                                            </div>
                                                         </div>
-                                                        <button class="btn btn-danger py-1 px-4  float-right" id="annon_menu_submit" type="button">
-                                                            Submit
-                                                        </button>
 
                                                     </div>
+                                                    <button class="btn btn-danger py-1 px-4  float-right"
+                                                        id="annon_menu_submit" type="button">
+                                                        Submit
+                                                    </button>
+
+
                                                 </div>
                                             </div>
                                             <div class="topbarContent emp-poll" style="display:none;">
                                                 <div>
-                                                    <div>
-                                                        <form action="{{route('poll_voting')}}" method="POST">
+                                                    <div class="poll-content">
+                                                        <!-- <form action="{{route('poll_voting')}}" method="POST">
                                                             @csrf
                                                             <div class="px-20 p-16 row no-gutters scrollBar">
                                                                 @if ($polling)
                                                                 <h3>{{$polling->question}}</h3>
                                                                 <div class="d-flex align-items-center">
-                                                                    @foreach(json_decode($polling->options, true) as $key => $option)
-                                                                    <div class="mr-2"><input id="polling{{$key}}" type="radio" name="polling" value="{{$option}}" @if($polling->data && $polling->data == $option) checked @endif>
-                                                                    <label for="polling{{$key}}" class="m-0 mr-2">{{$option}}</label></div>
+                                                                    @foreach(json_decode($polling->options, true) as
+                                                                    $key => $option)
+                                                                    <div class="mr-2"><input id="polling{{$key}}"
+                                                                            type="radio" name="polling"
+                                                                            value="{{$option}}" @if($polling->data &&
+                                                                        $polling->data == $option) checked @endif>
+                                                                        <label for="polling{{$key}}"
+                                                                            class="m-0 mr-2">{{$option}}</label>
+                                                                    </div>
                                                                     @endforeach
-                                                                    <input type="hidden" name="id" value="{{$polling->id}}">
+                                                                    <input type="hidden" name="id"
+                                                                        value="{{$polling->id}}">
                                                                 </div>
                                                                 @else
-                                                                <div class="text-center"><h4>There is no polling now..!</h4></div>
+                                                                <div class="text-center">
+                                                                    <h4>There is no polling now..!</h4>
+                                                                </div>
                                                                 @endif
                                                             </div>
                                                             <button class="btn btn-danger py-1 px-4  float-right">
                                                                 Submit
                                                             </button>
-                                                        </form>
+                                                        </form> -->
+
+                                                        <input type="text" name="" id=""
+                                                            class="form-control border-0 outline-none"
+                                                            placeholder="What this poll is about">
+                                                        <hr>
+                                                        <div class="mt-3 d-flex align-items-center">
+                                                            <input type="text" name="" id="" class="form-control w-50"
+                                                                placeholder="Add option here">
+                                                            <i class="ri-delete-bin-7-fill mx-2"></i>
+                                                        </div>
+
+                                                        <div class="mt-2 d-flex align-items-center">
+                                                            <input type="text" name="" id="" class="form-control w-50"
+                                                                placeholder="Add option here">
+                                                            <i class="ri-delete-bin-7-fill mx-2"></i>
+                                                        </div>
+                                                        <div class="text-start">
+                                                            <!-- <button class="btn btn-secondary outline-none border-0"><i class=" ri-add-circle-line mr-2">Add More</i></button> -->
+                                                            <button
+                                                                class="btn btn-light text-secondary px-0 bg-transparent outline-none border-0"><span
+                                                                    class="mr-2">+</span> Add More</i></button>
+                                                        </div>
+
+                                                        <div class="bottom-content d-flex justify-content-between mx-2">
+                                                            <div class=" mx-2">
+                                                                <label for="">Poll Expires On</label>
+                                                                <input class=" mr-1 anounce-date "
+                                                                    type="text" placeholder="Select date" value="" id=""
+                                                                    disabled>
+
+                                                            </div>
+                                                            <div class=" mx-2">
+                                                                <input class="form-check-input check-box mr-1"
+                                                                    type="checkbox" value="" id="notifyEmp2">
+                                                                <label class="form-check-label" for="notifyEmp2">
+                                                                    Notify employees
+                                                                </label>
+                                                            </div>
+                                                            <div class="mx-2">
+                                                                <input class="form-check-input check-box mr-1"
+                                                                    type="checkbox" value="" id="anonymous">
+                                                                <label class="form-check-label" for="anonymous">
+                                                                    Anonymous Poll
+                                                                </label>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="mt-3 text-end">
+                                                            <button class="btn btn-default">Cancel</button>
+                                                            <button class="btn btn-primary">Post</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -269,10 +361,13 @@
                                                 <div>
                                                     <div>
                                                         <div class="px-20 p-16 row no-gutters scrollBar">
-                                                            <textarea name="" id="" cols="30" rows="6"
+                                                            <textarea name="" id="" cols="30" rows="10"
                                                                 class="border-0 outline-none w-100">
-
-                                                            </textarea>
+                                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
+                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
+                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
+                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
+                                                        </textarea>
                                                         </div>
                                                         <button class="btn btn-danger py-1 px-4  float-right">
                                                             Submit
@@ -294,7 +389,7 @@
             </div>
         </div>
         <div class="col-sm-3 col-md-3">
-            <div class="" >
+            <div class="">
                 <div class="card profile-box flex-fill m-0 mb-2 "
                     style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);border-radius:3px 3px 20px 20px;">
                     <!-- <div class="p-1 bg-primary" ></div> -->
@@ -388,10 +483,9 @@
 @yield('welcome-script')
 <!-- for date and time -->
 
-<script
-      src="https://unpkg.com/codeflask/build/codeflask.min.js"></script>
-    <script type="text/javascript">
-      var config = `
+<script src="https://unpkg.com/codeflask/build/codeflask.min.js"></script>
+<script type="text/javascript">
+var config = `
 function selectDate(date) {
   $('#calendar-wrapper').updateCalendarOptions({
     date: date
@@ -410,32 +504,32 @@ var defaultConfig = {
 var calendar = $('#calendar-wrapper').calendar(defaultConfig);
 console.log(calendar.getSelectedDate());
 `;
-      eval(config);
-      const flask = new CodeFlask('#editor', { 
-        language: 'js', 
-        lineNumbers: true 
-      });
-      flask.updateCode(config);
-      flask.onUpdate((code) => {
-        try {
-          eval(code);
-        } catch(e) {}
-      });
-    </script>
-    <script defer src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script defer>
-      fetch('https://raw.githubusercontent.com/wrick17/calendar-plugin/master/README.md')
-        .then(response => response.text())
-        .then(function(text) {
-          const docs = text.split('**DOCS**')[1];
-          document.getElementById('content').innerHTML = `
+eval(config);
+const flask = new CodeFlask('#editor', {
+    language: 'js',
+    lineNumbers: true
+});
+flask.updateCode(config);
+flask.onUpdate((code) => {
+    try {
+        eval(code);
+    } catch (e) {}
+});
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script defer>
+fetch('https://raw.githubusercontent.com/wrick17/calendar-plugin/master/README.md')
+    .then(response => response.text())
+    .then(function(text) {
+        const docs = text.split('**DOCS**')[1];
+        document.getElementById('content').innerHTML = `
           <div>
             <h2>DOCS</h2>
             ${marked.parse(docs)}
           <div>
           `;
-        });
-    </script>
+    });
+</script>
 <script>
 $(document).ready(function() {
     $(function() {
@@ -482,49 +576,48 @@ $(function() {
     });
 });
 </script>
- <script type="text/javascript">
-                $(document).ready(function (e) {
-                $.ajaxSetup({
-                headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-                });
-                $('#submit_post_data').submit(function(e) {
-                        e.preventDefault();
-                           // alert("helooo");
-                        var formData = new FormData(this);
-                        $.ajax({
-                        type:'POST',
-                         url: "{{url('vmt-dashboard-post')}}",
-                        data: formData,
-                        cache:false,
-                        contentType: false,
-                        processData: false,
-                        success: (data) => {
-                        this.reset();
-                        alert('Post Created Successfully');
-                        console.log(data);
-                        },
-                        error: function(data){
-                        console.log(data);
-                    }
-                    });
-                    });
-                    });
+<script type="text/javascript">
+$(document).ready(function(e) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $('#submit_post_data').submit(function(e) {
+        e.preventDefault();
+        // alert("helooo");
+        var formData = new FormData(this);
+        $.ajax({
+            type: 'POST',
+            url: "{{url('vmt-dashboard-post')}}",
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: (data) => {
+                this.reset();
+                alert('Post Created Successfully');
+                console.log(data);
+            },
+            error: function(data) {
+                console.log(data);
+            }
+        });
+    });
+});
 </script>
-    <script type="text/javascript">
-
+<script type="text/javascript">
 $('#annon_menu_submit').click(function(e) {
     e.preventDefault();
-                var  image   = $('#image_src').val();
-                //alert(image);
-        var title_data = $('#title_data').val();
-        var details_data = $('#details_data').val();
-        var user_ref_id = "{{Auth::user()->id}}";
+    var image = $('#image_src').val();
+    //alert(image);
+    var title_data = $('#title_data').val();
+    var details_data = $('#details_data').val();
+    var user_ref_id = "{{Auth::user()->id}}";
     $.ajax({
         type: "POST",
         url: "{{url('vmt-dashboard-announcement')}}",
-         data: {
+        data: {
             "_token": "{{ csrf_token() }}",
             title_data: title_data,
             user_ref_id: user_ref_id,
@@ -536,7 +629,5 @@ $('#annon_menu_submit').click(function(e) {
         }
     })
 });
-
-
-    </script>
+</script>
 @endsection
