@@ -143,7 +143,11 @@ class VmtMainDashboardController extends Controller
             $hrUsers = $hrList->pluck('id'); 
           $officialMailList =   VmtEmployeeOfficeDetails::whereIn('user_id', $hrUsers)->pluck('officical_mail');
          $user_emp_name =  $message;
+         // var_dump($officialMailList);
+         if($officialMailList !=null){
+
        \Mail::to($officialMailList)->send(new PMSReviewCompleted('announcement',$user_emp_name,$title_data,$details_data));
+         }
          // end email 
            Notification::send($notification_user ,new ViewNotification($message.auth()->user()->name));
         $dashboardannoun  =  VmtAnnouncement::where('ann_author_id', $id)->pluck('title_data','ann_author_id','details_data');
