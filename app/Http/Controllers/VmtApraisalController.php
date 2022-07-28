@@ -310,7 +310,7 @@ class VmtApraisalController extends Controller
                  $notification_user = User::where('id',auth::user()->id)->first();
                     //dd($user_emp_name);exit();
                 if (auth()->user()->hasrole('Employee')) {
-                     \Mail::to($mailingRevList)->send(new VmtAssignGoals("none",$user_emp_name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$user_manager_name,$command_emp));
+         \Mail::to($mailingRevList)->send(new VmtAssignGoals("none",$user_emp_name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$user_manager_name,$command_emp));
 
                  $message = "Employee has created Personal Assessment goal ";
                 Notification::send($notification_user ,new ViewNotification($message.auth()->user()->name));
@@ -1003,7 +1003,7 @@ class VmtApraisalController extends Controller
 
             //$reviewManager = User::find($kpiData->reviewer_id);
             //dd($reviewManager->email);
-            \Mail::to($mailingList)->send(new PMSReviewCompleted($user_emp_name));
+            \Mail::to($mailingList)->send(new PMSReviewCompleted('none',$user_emp_name));
              $message = "The HR team has successfully completed your PMS review process.  ";
                 Notification::send($notification_user ,new ViewNotification($message.auth()->user()->name));
         }

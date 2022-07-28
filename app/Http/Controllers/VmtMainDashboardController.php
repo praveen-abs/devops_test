@@ -21,6 +21,10 @@ use App\Models\User;
 use Carbon\Carbon;
 use App\Notifications\ViewNotification;
 use Illuminate\Support\Facades\Notification;
+use App\Mail\VmtAssignGoals;
+use App\Mail\NotifyPMSManager;
+use App\Models\VmtEmployeeOfficeDetails;
+use App\Mail\PMSReviewCompleted;
 
 class VmtMainDashboardController extends Controller
 {
@@ -100,6 +104,17 @@ class VmtMainDashboardController extends Controller
            $notification_user = User::where('id',auth::user()->id)->first();
 
          $message = "Post Added By "  ;
+
+         // code email 4
+
+         $title_data  = null;
+         $details_data  = null;
+          $hrList =  User::role(['HR','Employee', 'admin', 'Admin'])->get(); 
+            $hrUsers = $hrList->pluck('id'); 
+          $officialMailList =   VmtEmployeeOfficeDetails::whereIn('user_id', $hrUsers)->pluck('officical_mail');
+         $user_emp_name = $request->post_menu;
+       \Mail::to($officialMailList)->send(new PMSReviewCompleted('post',$user_emp_name,$title_data,$details_data));
+         // end email 
            Notification::send($notification_user ,new ViewNotification($message.auth()->user()->name));
         $dashboardpost  =  vmt_dashboard_posts::where('author_id', $id)->pluck('message','post_image');
         return $dashboardpost;
@@ -113,6 +128,8 @@ class VmtMainDashboardController extends Controller
      public function DashBoardAnnouncement(Request $request){
         $Announcement_data = new VmtAnnouncement;
          $id = auth()->user()->id;
+         $details_data = $request->input('details_data');
+         $title_data =$request->input('title_data');
         $Announcement_data->title_data = $request->input('title_data');
         $Announcement_data->ann_author_id = $request->input('user_ref_id');
         $Announcement_data->details_data = $request->input('details_data');
@@ -121,6 +138,13 @@ class VmtMainDashboardController extends Controller
          $notification_user = User::where('id',auth::user()->id)->first();
 
          $message = "Announcement Added By "  ;
+                  // code email 
+          $hrList =  User::role(['HR','Employee', 'admin', 'Admin'])->get(); 
+            $hrUsers = $hrList->pluck('id'); 
+          $officialMailList =   VmtEmployeeOfficeDetails::whereIn('user_id', $hrUsers)->pluck('officical_mail');
+         $user_emp_name =  $message;
+       \Mail::to($officialMailList)->send(new PMSReviewCompleted('announcement',$user_emp_name,$title_data,$details_data));
+         // end email 
            Notification::send($notification_user ,new ViewNotification($message.auth()->user()->name));
         $dashboardannoun  =  VmtAnnouncement::where('ann_author_id', $id)->pluck('title_data','ann_author_id','details_data');
         return $dashboardannoun;

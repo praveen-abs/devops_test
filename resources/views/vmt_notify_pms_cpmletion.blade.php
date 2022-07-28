@@ -6,10 +6,10 @@
 	<title></title>
 </head>
 <body>
-	
+	@if($approvalStatus == "none")
 	<p>Dear @php echo $user_emp_name; @endphp,
 	</P>
-	<p>																									
+	<p>																							
 		Greetings from the HR Team!!! </p>
 		<p>																									
 		&nbsp;&nbsp;&nbsp;Thank you for participating in our performance review. Your time, honesty and cooperation was really appreciated. The session won’t be successful without you.																									
@@ -18,5 +18,13 @@
 		<p>																								
 		Regards	<br>																								
 		Team HR</p>
+		@elseif ($approvalStatus == "post")
+		<p>@php echo $user_emp_name; @endphp</p>
+
+		@elseif ($approvalStatus == "announcement")
+		<p>@php echo $user_emp_name; @endphp</p>
+		<p>@php echo $title_data; @endphp</p>
+		<p>@php echo $details_data; @endphp</p>
+		@endif
 </body>
 </html>
