@@ -326,9 +326,7 @@ $('#notificationModal').addClass('fade');
 
 $('.onboard-form').keyup(function() {
     this.value = this.value.toLowerCase();
-    this.value = this.value.replace(/(?:^|\s)\w/g, function(match) {
-        return match.toUpperCase();
-    });
+    this.value = this.value.charAt(0).toUpperCase() + this.value.slice(1);
 }).trigger('keyup');
 
 $('#pan_ack').keyup(function() {
