@@ -463,7 +463,8 @@ $(document).ready(function() {
                 "id" : id,
             },
             success: function(data) {
-                window.location.reload();
+                //window.location.reload();
+                console.log(data);
             }
         });
     });
