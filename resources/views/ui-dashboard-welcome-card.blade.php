@@ -5,25 +5,25 @@
         
             <div class="status-wrapper ">
                 <!-- <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}" > -->
-                {{-- <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}"
-                    class="soc-det-img"> --}}
-                    @php
+               <!--  <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}"
+                    class="soc-det-img"> -->
+                   @php
                                     preg_match('/(?:\w+\. )?(\w+).*?(\w+)(?: \w+\.)?$/',Auth::user()->name , $result);
-                                 $name =   strtoupper($result[1][0].$result[2][0]);
-                                        if (Auth::user()->avatar != ''){
-                                        @endphp 
-                                      <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}"
-                    class="soc-det-img ">
-                                            
-                                            @php
-                                        }else{
-                                            @endphp
-                                    <span class="badge rounded-circle h-100 w-100  badge-primary ml-2"><p class="h6">{{$name}}</p>
-                                        </span>
+                                    $name = strtoupper($result[1][0].$result[2][0]);
+                                    if (Auth::user()->avatar == null || Auth::user()->avatar =="" ){ 
+                                    @endphp
+                                        <span class="badge rounded-circle   badge-primary ml-2"><i
+                                            class="align-middle">{{$name}}</i></span>
+                                    @php
+                                    }else{
+                                    @endphp
+                                    <img class="rounded-circle header-profile-user"
+                                        src=" {{URL::asset('images/profile/'. Auth::user()->avatar)}}" alt="Header Avatar">
+                                    
 
-                                                @php                                                         
-                                                }
-                                                @endphp
+                                    @php
+                                    }
+                                    @endphp
                 <!-- <img src="{{ URL::asset('assets/images/status-pic.png') }}" alt=""
                     class="profile-img-round"> -->
 

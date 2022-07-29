@@ -22,7 +22,23 @@
                                             <!-- <a href="#"> <img class="rounded-circle header-profile-user"
                                                     src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/user-profile-img.jpg') }}@endif"
                                                     alt="Header Avatar"></a> -->
-                                            <img class="  soc-det-img rounded-circle" src="@if ($user->avatar != ''){{ URL::asset('images/' . $user->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif" alt="">
+                                             @php
+                                    preg_match('/(?:\w+\. )?(\w+).*?(\w+)(?: \w+\.)?$/',Auth::user()->name , $result);
+                                    $name = strtoupper($result[1][0].$result[2][0]);
+                                    if (Auth::user()->avatar == null || Auth::user()->avatar =="" ){ 
+                                    @endphp
+                                        <span class="badge rounded-circle   badge-primary ml-2"><i
+                                            class="align-middle">{{$name}}</i></span>
+                                    @php
+                                    }else{
+                                    @endphp
+                                    <img class="rounded-circle header-profile-user"
+                                        src=" {{URL::asset('images/profile/'. Auth::user()->avatar)}}" alt="Header Avatar">
+                                    
+
+                                    @php
+                                    }
+                                    @endphp
                                             <span class="personal-edit img-edit"><a href="#" class="edit-icon"
                                                     data-bs-toggle="modal" data-bs-target="#personal_info"><i
                                                         class="ri-pencil-fill"></i></a></span>

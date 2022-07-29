@@ -244,9 +244,10 @@ class HomeController extends Controller
         $file = $request->file('profilePic');
         $user = User::find($request->id);
         $user->name = $request->input('name');
+        $number = mt_rand(1000000000, 9999999999);
         if ($file) { 
-            $filename = 'avatar-'.$request->id.'.'. $file->getClientOriginalExtension();
-            $destination = public_path('/images');
+            $filename = 'avatar-'.$request->id.$number.'.'. $file->getClientOriginalExtension();
+            $destination = public_path('/images/profile/');
             $file->move($destination, $filename);
             $user->avatar = $filename;
         }
