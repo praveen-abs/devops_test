@@ -33,10 +33,10 @@ $(document).ready(function() {
                     $(this).val(v.replace(/[_\W0-9]+/g, ''));
                 } else if (regex == 'alpha') {
                     $(this).val(v.replace(/[_\W0-9.]+/g, ''));
-                } else if (regex == 'alp-num') {
+                } else if (regex == 'alp-num' || regex == 'pan') {
                     $(this).val(v.replace(/[_\W.]+/g, ''));
-                // } else if (regex == 'email') {
-                //     $(this).val(v.replace(/[_\W0-9.]+/g, ''));
+                } else if (regex == 'email') {
+                    $(this).val(v.replace(/[$#!%^&*():;,<>?/'"|\\]+/g, ''));
                 }
             } else {
                 $('.' + data + '_label').removeClass('patternErr');
