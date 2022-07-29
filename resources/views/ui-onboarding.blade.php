@@ -628,11 +628,11 @@
                                         <div class="text-primary my-2 header-card-text"><h5>Personal Documents</h5></div>
                                         <div class="form-card mb-4">
                                             <div class="row mt-1">
-                                                <div class="col-12 mt-2">
+                                                <!-- <div class="col-12 mt-2">
                                                     <input type="checkbox" placeholder="" name="aadhar_backend"
                                                         id="aadhar_backend" style="width:auto;" />
                                                     <label for="aadhar_backend">Upload aadhar backend</label>
-                                                </div>
+                                                </div> -->
                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-2">
                                                     <!-- <label class="" for="aadhar_card">Aadhar Card{!! required() !!}</label> -->
                                                     <div class="addfiles form-control" data="#aadhar_card"
@@ -644,7 +644,7 @@
                                                         class="onboard-form form-control files" />
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-2"
-                                                    id="aadhar_card_backend_content" style="display:none;">
+                                                    id="aadhar_card_backend_content">
                                                     <!-- <label class="" for="aadhar_card_backend">Aadhar Card Backend<span id="aadhar_card_backend_req">{!! required() !!}</span></label> -->
                                                     <div class="addfiles form-control" data="#aadhar_card_backend"
                                                         id="aadhar_card_backend_label"><span class="file_label">Choose
