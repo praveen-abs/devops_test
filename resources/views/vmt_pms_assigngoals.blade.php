@@ -68,38 +68,72 @@ blockquote p::after {
 @slot('li_1')  @endslot
 @endcomponent
 
-
-
-
 <div class="container-fluid ">
     <div class="cards-wrapper">
-
         <div class="row">
             <div class="col-12 col-lg-12 col-md-12 ">
-                <div class="card ">
+                <div class="card pms-card">
+                
+                <div class="    pms-dashboard-wrapper ">
+                            <!-- <img src="{{ URL::asset('assets/images/performance_bg.png') }}" alt="" class="bg-img"> -->
 
-
-                <div class="card px-5 py-2 pms-card-wrapper  pms-dashboard-wrapper ">
-
-
-                    <div class="card-body p-3">
+                    <div class="card-body p-5">
                         <!-- <div class="row ">
                             <div class="col-md-4 col-sm-6 col-lg-3 col-xl-3 "> -->
+                            
+                        <div class="align-items-center justify-content-center d-flex pms-gadget-container">
+                        
 
-                        <div class="align-items-center justify-content-center row">
                             <div class="card pms-card m-0 m-3">
                                 <div class="card-body p-0">
-                                    <div class="row mt-2">
-                                        <p class="pl-3 col-auto"><img src="{{ URL::asset('assets/images/self_review.png') }}" alt="" class=""></p>
-                                        <div class="pt-2 col">
-                                            <h4><b>-/{{$userCount}}</b></h4>
-                                            <p>Self Review</p>
+                                                                       <div class="d-flex mt-2">
+                                    <p class="pl-3 col-auto"><img src="{{ URL::asset('assets/images/employee_goals.png') }}" alt="" class=""></p>
+                                        <div class="  d-flex align-items-center mt-3 flex-column">
+                                        <p>Employee Goals</p>
+                                        <h5><b>{{$empCount.'/'.$userCount}}</b></h5>
+                                            
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
 
                             <div class="card pms-card m-0 m-3">
+                                <div class="card-body p-0">
+                                    
+                                    <div class="d-flex mt-2">
+                                    <p class="pl-3 col-auto"><img src="{{ URL::asset('assets/images/self_review.png') }}" alt="" class=""></p>
+                                        <div class="  d-flex align-items-center mt-3 flex-column">
+                                        <p>Self Review</p>
+
+                                        <h5><b>-/{{$userCount}}</b></h5>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="card pms-card m-0 m-3">
+                                <div class="card-body p-0">
+                                    <!-- <div class="d-flex align-items-center">
+                                        <img src="{{ URL::asset('/assets/images/employees_assessed.png')}}" class="">
+                                        <p>Employees Assessed</p>
+                                    </div> -->
+                                    <div class="d-flex mt-2">
+                                        <p class="pl-3 col-auto"><img src="{{ URL::asset('assets/images/employees_assessed.png') }}" alt="" class=""></p>
+                                        <div class="  d-flex align-items-center mt-3 flex-column">
+                                        <p>Employees Assessed</p>    
+                                        <h5><b>{{$subCount.'/'.$userCount}}</b></h5>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- <div class="card pms-card m-0 m-3">
                                 <div class="card-body p-0">
                                     <div class="d-flex align-items-center">
                                         <img src="{{ URL::asset('assets/images/rating_assessment.png') }}" alt="" class="">
@@ -107,29 +141,28 @@ blockquote p::after {
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div class="col-md-4 col-sm-6 col-lg-3 col-xl-3 "> -->
+                            
                             <div class="card pms-card m-0 m-3">
                                 <div class="card-body p-0">
                                     <div class="d-flex align-items-center">
                                         <img src="{{ URL::asset('/assets/images/goals_assignment.png')}}" class="rounded-circle">
                                         <p>Goals assignment reminder notiﬁcation</p>
                                     </div>
-                                    <!-- </div> -->
+                                    
                                 </div>
-                            </div>
-                            @if(auth()->user()->hasrole('Employee'))
+                            </div> -->
                             <!-- <div class="col-md-4 col-sm-6 col-lg-3 col-xl-3 "> -->
-                            <div class="card pms-card m-0 m-3">
+                            <!-- <div class="card pms-card m-0 m-3">
                                 <div class="card-body p-0">
                                     <div class="d-flex align-items-center">
                                         <img src="{{ URL::asset('/assets/images/manager_review.png')}}" class="">
                                         <p>Manager Review</p>
                                     </div>
-                                    <!-- </div> -->
+                                    
                                 </div>
-                            </div>
+                            </div> -->
                             <!-- <div class="col-md-4 col-sm-6 col-lg-3 col-xl-3 "> -->
-                            <div class="card pms-card m-0 m-3">
+                            <!-- <div class="card pms-card m-0 m-3">
                                 <div class="card-body p-0">
                                     <div class="d-flex align-items-center">
                                         <img src="{{ URL::asset('/assets/images/org.png')}}" class="">
@@ -137,36 +170,26 @@ blockquote p::after {
                                     </div>
                                 </div>
 
-                            </div>
-                            @endif
-                            <div class="card pms-card m-0 m-3">
-                                <div class="card-body p-0">
-                                    <div class="row mt-2">
-                                        <p class="pl-3 col-auto"><img src="{{ URL::asset('assets/images/employee_goals.png') }}" alt="" class=""></p>
-                                        <div class="pt-2 col">
-                                            <h4><b>{{$empCount.'/'.$userCount}}</b></h4>
-                                            <p>Employee Goals</p>
-                                        </div>
-                                    </div>
-                                </div>
+                            </div> -->
+<!-- 
+                            <div id="container-floating">
+  <div class="nd4 nds"> 
+    <p class="letter">RA</p>
+  </div>
+  
+  <div class="nd3 nds"> </div>
+  
+  <div class="nd1 nds">
+    <p class="letter">GR</p>
+  </div>
 
-                            </div>
-                            <div class="card pms-card m-0 m-3">
-                                <div class="card-body p-0">
-                                    <!-- <div class="d-flex align-items-center">
-                                        <img src="{{ URL::asset('/assets/images/employees_assessed.png')}}" class="">
-                                        <p>Employees Assessed</p>
-                                    </div> -->
-                                    <div class="row mt-2">
-                                        <p class="pl-3 col-auto"><img src="{{ URL::asset('assets/images/employees_assessed.png') }}" alt="" class=""></p>
-                                        <div class="pt-2 col">
-                                            <h4><b>{{$subCount.'/'.$userCount}}</b></h4>
-                                            <p>Employees Assessed</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
+  <div id="floating-button">
+    <p class="plus">+</p>
+    <img class="edit" src="https://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png">
+  </div>
+</div> -->
+                 
+                    
                         </div>
                     </div>
 
@@ -318,17 +341,24 @@ blockquote p::after {
                 <td class="">{{$emp['ranking']}}</td>
                 <td>
                     @if(auth()->user()->hasrole('Employee'))
-                    <a target="_blank"
+                    <!-- <a target="_blank"
                         href="{{url('vmt-pmsappraisal-review?id='.$emp->kpi_table_id)}}"><button class="btn btn-orange py-0 px-2 "> <span
                             class="mr-10 icon"><i class="text-white ri-pencil-line"></i></span>
+                                                    Review</button></a> -->
+                                                    <a target="_blank"
+                        href="{{url('vmt-pmsappraisal-review?id='.$emp->kpi_table_id)}}"><button class="btn btn-orange py-0 px-2 "> <span
+                            class="mr-10 icon"></span>
                             
                         Review</button></a>
                     @else
-                    
                     <a target="_blank"
                         href="{{url('pms-employee-reviews?goal_id='.$emp->kpi_table_id.'&user_id='.$emp->userid)}}"><button class="btn btn-orange py-0 px-2 "><span
-                            class="mr-10 icon"><i class="text-white ri-pencil-line"></i></span>
+                            class="mr-10 icon"></span>
                             Review</button></a>
+                    <!-- <a target="_blank"
+                        href="{{url('pms-employee-reviews?goal_id='.$emp->kpi_table_id.'&user_id='.$emp->userid)}}"><button class="btn btn-orange py-0 px-2 "><span
+                            class="mr-10 icon"><i class="text-white ri-pencil-line"></i></span>
+                            Review</button></a> -->
                     @endif
                 </td>              
             </tr>
