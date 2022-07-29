@@ -72,12 +72,13 @@ class VmtEmployeeController extends Controller
         return response()->json($data);
     }
 
-    public function user_status_change(Request $request) {
+    public function updateUserAccountStatus(Request $request) {
         $user = User::find($request->id);
-        $user->status = $request->input('status');
+        $user->active = $request->input('status');
         $user->save();
-        return 'saved';
+        return 'User Account Status : '.$request->input('status');
     }
+
     //
     public function showEmployeeDirectory(Request $request){
         $vmtEmployees = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')

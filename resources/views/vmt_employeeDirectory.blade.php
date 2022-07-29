@@ -455,7 +455,7 @@ $(document).ready(function() {
         var name = $(this).attr('name');
         var id = $('#id'+name).val();
         $.ajax({
-            url: "{{route('user_status_change')}}",
+            url: "{{route('updateUserAccountStatus')}}",
             type: "POST",
             data: {
                 _token: "{{ csrf_token() }}",

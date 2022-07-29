@@ -167,7 +167,7 @@ Route::post('vmt-employee/complete-onboarding', 'App\Http\Controllers\VmtEmploye
 
 Route::get('vmt-employess/directory', 'App\Http\Controllers\VmtEmployeeController@showEmployeeDirectory');
 Route::post('vmt-kpi/data', 'App\Http\Controllers\VmtEmployeeController@showKpiData')->name('kpi-data');
-Route::post('vmt-employess/status', 'App\Http\Controllers\VmtEmployeeController@user_status_change')->name('user_status_change');
+Route::post('vmt-employess/status', 'App\Http\Controllers\VmtEmployeeController@updateUserAccountStatus')->name('updateUserAccountStatus');
 
 //Asset Inventory
 Route::get('vmt-assetinventory-index', 'App\Http\Controllers\VmtAssetInventoryController@index')->name('vmt-assetinventory-index');
