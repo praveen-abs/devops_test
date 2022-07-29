@@ -2,7 +2,7 @@
 @section('css')
 <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
 <link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
-
+<link href="{{ URL::asset('assets/css/salary.css') }}" rel="stylesheet">
 <!-- for bootstrap temporary -->
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
@@ -20,7 +20,7 @@
 <!-- end -->
 
 
-<link href="{{ URL::asset('assets/css/salary.css') }}" rel="stylesheet">
+
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/employee-directory.css') }}">
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/onboarding.css') }}">
 
@@ -247,7 +247,7 @@
 
     <div class="row">
         <div class="col-sm-12 col-md-12 col-xl-6 col-lg-6 ">
-            <div class="card shadow profile-box card-top-border small-card p-3 ">
+            <div class="card shadow profile-box card-top-border  p-3 ">
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between mb-3">
                         <h5 class="text-primary">
@@ -291,7 +291,7 @@
             </div>
         </div>
         <div class="col-sm-12 col-md-12 col-xl-6 col-lg-6 ">
-            <div class="card shadow profile-box card-top-border p-3 small-card">
+            <div class="card shadow profile-box card-top-border p-3 ">
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between mb-3">
                         <h5 class="text-primary">
@@ -569,7 +569,7 @@
                                 <h5>Monthly Tax Deduction Details</h5>
                                 <div class="row">
                                     <div class="col-sm-6  col-xl-3 col-md-4 col-lg-3">
-                                        <div class="card declaration-tax-card card-left-bar">
+                                        <div class="card declaration-tax-card small-card">
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
@@ -586,7 +586,7 @@
 
                                     </div>
                                     <div class="col-sm-6  col-xl-3 col-md-4 col-lg-3">
-                                        <div class="card declaration-tax-card card-left-bar">
+                                        <div class="card declaration-tax-card small-card card-left-bar">
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
@@ -603,7 +603,7 @@
 
                                     </div>
                                     <div class="col-sm-6  col-xl-3 col-md-4 col-lg-3">
-                                        <div class="card declaration-tax-card card-left-bar">
+                                        <div class="card declaration-tax-card small-card card-left-bar">
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
@@ -633,7 +633,7 @@
                                 <div class="lac-card-wrapper mt-3">
                                     <div class="row">
                                         <div class="col-sm-6  col-xl-3 col-md-4 col-lg-3">
-                                            <div class="card declaration-tax-card card-left-bar">
+                                            <div class="card declaration-tax-card small-card card-left-bar">
                                                 <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
@@ -650,7 +650,7 @@
 
                                         </div>
                                         <div class="col-sm-6  col-xl-3 col-md-4 col-lg-3">
-                                            <div class="card declaration-tax-card card-left-bar">
+                                            <div class="card declaration-tax-card small-card card-left-bar">
                                                 <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
@@ -667,7 +667,7 @@
 
                                         </div>
                                         <div class="col-sm-6  col-xl-3 col-md-4 col-lg-3">
-                                            <div class="card declaration-tax-card card-left-bar">
+                                            <div class="card declaration-tax-card small-card card-left-bar">
                                                 <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
@@ -684,7 +684,7 @@
 
                                         </div>
                                         <div class="col-sm-6  col-xl-3 col-md-4 col-lg-3">
-                                            <div class="card declaration-tax-card card-left-bar">
+                                            <div class="card declaration-tax-card small-card card-left-bar">
                                                 <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
@@ -701,7 +701,7 @@
 
                                         </div>
                                         <div class="col-sm-6  col-xl-3 col-md-4 col-lg-3">
-                                            <div class="card declaration-tax-card card-left-bar">
+                                            <div class="card declaration-tax-card small-card card-left-bar">
                                                 <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
@@ -925,7 +925,7 @@
                                 <div class="other-card-wrapper mt-3">
                                     <div class="row">
                                         <div class="col-sm-6  col-xl-3 col-md-4 col-lg-3">
-                                            <div class="card declaration-tax-card card-left-bar">
+                                            <div class="card declaration-tax-card small-card card-left-bar">
                                                 <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
@@ -942,7 +942,7 @@
 
                                         </div>
                                         <div class="col-sm-6  col-xl-3 col-md-4 col-lg-3">
-                                            <div class="card declaration-tax-card card-left-bar">
+                                            <div class="card declaration-tax-card small-card card-left-bar">
                                                 <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
@@ -960,7 +960,7 @@
                                         </div>
 
                                         <div class="col-sm-6  col-xl-3 col-md-4 col-lg-3">
-                                            <div class="card declaration-tax-card card-left-bar">
+                                            <div class="card declaration-tax-card small-card card-left-bar">
                                                 <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
@@ -977,7 +977,7 @@
 
                                         </div>
                                         <div class="col-sm-6  col-xl-3 col-md-4 col-lg-3">
-                                            <div class="card declaration-tax-card card-left-bar">
+                                            <div class="card declaration-tax-card small-card card-left-bar">
                                                 <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
@@ -1086,7 +1086,7 @@
                                 <div class="tax-card-wrapper mt-3">
                                     <div class="row">
                                         <div class="col-sm-6  col-xl-3 col-md-4 col-lg-3">
-                                            <div class="card declaration-tax-card card-left-bar">
+                                            <div class="card declaration-tax-card small-card card-left-bar">
                                                 <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
@@ -1103,7 +1103,7 @@
 
                                         </div>
                                         <div class="col-sm-6  col-xl-3 col-md-4 col-lg-3">
-                                            <div class="card declaration-tax-card card-left-bar">
+                                            <div class="card declaration-tax-card small-card card-left-bar">
                                                 <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
@@ -1121,7 +1121,7 @@
                                         </div>
 
                                         <div class="col-sm-6  col-xl-3 col-md-4 col-lg-3">
-                                            <div class="card declaration-tax-card card-left-bar">
+                                            <div class="card declaration-tax-card small-card card-left-bar">
                                                 <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
@@ -1138,7 +1138,7 @@
 
                                         </div>
                                         <div class="col-sm-6  col-xl-3 col-md-4 col-lg-3">
-                                            <div class="card declaration-tax-card card-left-bar">
+                                            <div class="card declaration-tax-card small-card card-left-bar">
                                                 <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">

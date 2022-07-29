@@ -16634,23 +16634,6 @@ span.flatpickr-weekday {
     color: #49505c;
 }
 
-.assign-cards-wrapper input,
-select {
-    border: none;
-    border-bottom: 1px solid #49505c;
-    outline: none;
-    color: #002f56;
-    font-weight: 500;
-    padding-bottom: 10px;
-}
-
-/* .avatar-group .avatar-group-item {
-    margin-left: -12px;
-    border: 2px solid var(--vz-card-bg);
-    border-radius: 50%;
-    -webkit-transition: all .2s;
-    transition: all .2s;
-} */
 
 .reviwer-cards {
     position: relative;
@@ -17335,6 +17318,7 @@ p {
 .text-orange {
     color: #FF4D00;
 }
+
 .text-primary {
     color: #002f56;
 }
@@ -17588,22 +17572,6 @@ p {
 
 
 
-.custom-modal .modal-content .modal-header .close {
-    background-color: #a0a0a0;
-    color: #ffffff;
-    font-size: 13px;
-    height: 20px;
-    line-height: 20px;
-    opacity: 1;
-    width: 20px;
-    z-index: 99;
-    margin: 0;
-    padding: 0;
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    border-radius: 50%;
-}
 
 .profile-img-wrap img {
     height: 100px;
@@ -18617,13 +18585,14 @@ tr:last-child td:last-child {
 .gridjs-table>tfoot>tr>th,
 .gridjs-table>thead>tr>td,
 .gridjs-table>thead>tr>th {
-    padding:8px;
+    padding: 8px;
     line-height: 1.6;
     vertical-align: middle;
     border-top: 1px solid #eee;
     text-align: center;
-    
+
 }
+
 .gridjs-table>tbody>tr>td,
 .gridjs-table>tbody>tr>th,
 .gridjs-table>tfoot>tr>td,
@@ -18636,11 +18605,7 @@ tr:last-child td:last-child {
 
 .table>tbody>tr>td>img,
 table>tbody>tr>td>img,
-.gridjs-table>tbody>tr>td>img
-
- {
- 
- }
+.gridjs-table>tbody>tr>td>img {}
 
 
 .amount-column:first-of-type .ytd-summary-column-table tbody tr td {
@@ -18688,10 +18653,11 @@ table>tbody>tr>td>img,
     margin-top: 20px;
 }
 
-.pms-card{
+.pms-card {
     height: auto;
 }
-.pms-dashboard-wrapper .pms-gadget-container{
+
+.pms-dashboard-wrapper .pms-gadget-container {
     margin: 0px 0px 0px 200px;
 }
 
@@ -18807,6 +18773,7 @@ table>tbody>tr>td>img,
     font-size: 14px;
     font-weight: 500;
 }
+
 [data-layout=vertical][data-sidebar-size=lg] .navbar-menu .navbar-nav .nav-link:hover {
     font-weight: 600;
 }
@@ -18904,7 +18871,7 @@ table>tbody>tr>td>img,
 }
 
 .footer-contents .powerby-footer img {
-     height: 15px;
+    height: 15px;
 }
 
 .footer-contents .privacy-policy {
@@ -19030,4 +18997,8 @@ table>tbody>tr>td>img,
 
 
 
-                    
+/* card sizes */
+
+.card-md{
+    height: 180px;
+}
