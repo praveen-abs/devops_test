@@ -2,7 +2,7 @@
     <div class="card-body " style="padding:0px !important">
         <!-- <div class="card-img"> -->
 
-        <div class="slideshow-container">
+        <div class="slideshow-container h-100">
             @foreach ($holidays as $day)
                 <div class="slides fade-slider h-100">
                     <div class="numbertext text-white">View All</div>

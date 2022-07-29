@@ -3,7 +3,7 @@
         <div class=" d-flex justify-content-end align-items-center footer-contents py-2 overflow-hidden">
             <div class="d-flex  align-items-center">
                 <span class="powerby-footer w-0 ">Powered By
-                    <img src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="">
+                    <img src="{{ URL::asset('assets/images/footer_logo.png') }}" alt="" class="">
                 </span>
                 <a href="{{url('vmt_privacy_policy')}}" class="text-secondary privacy-policy" role="button">
                                        Privacy

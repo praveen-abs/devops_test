@@ -116,7 +116,7 @@
                                         <ul class="nav nav-tabs dropdown-tabs nav-tabs-custom" data-dropdown-tabs="true"
                                             id="notificationItemsTab" role="tablist">
 
-                                            <li class="nav-item waves-effect waves-light">
+                                            <li class="nav-item waves-effect active waves-light">
                                                 <a class="nav-link" data-bs-toggle="tab" href="#messages-tab" role="tab"
                                                     aria-select ed="false">
                                                     Messages
@@ -138,25 +138,7 @@
                                                     </div> --}}
                                                     <div class="flex-1">
 
-                                                        @php
-                                                        $currentUser = Auth::user();
-                                                        $User = Auth::user()->notifications->count();
 
-                                                        foreach ($currentUser->notifications as $notification) {
-                                                        @endphp
-                                                        <a class="stretched-link rIcon d-flex align-items-center"><i
-                                                                class=" ri-information-line text-info h6 mx-1   "></i>
-                                                                <h6 class="text-muted">
-                                                                    @php echo
-                                                                    $notification->data['message']; @endphp</h6>
-                                                           
-                                                        </a>
-                                                        <small class="text-muted float-end"><i class="ri-time-line"> Just 30 Sec Ago</i> </small>
-                                                        
-                                                        @php
-
-                                                        }
-                                                        @endphp
 
 
 
@@ -179,19 +161,26 @@
 
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade py-2 ps-2" id="messages-tab" role="tabpanel"
+                                    <div class="tab-pane fade py-2 ps-2 " id="messages-tab" role="tabpanel"
                                         aria-labelledby="messages-tab">
                                         <div data-simplebar style="max-height: 300px;" class="pe-2">
+                                            @php
+                                            $currentUser = Auth::user();
+                                            $User = Auth::user()->notifications->count();
+                                            foreach ($currentUser->notifications as $notification) {
+                                            @endphp
                                             <div class="text-reset notification-item d-block dropdown-item">
                                                 <div class="d-flex">
-                                                    <img src="{{ URL::asset('assets/images/users/avatar-3.jpg') }}"
+
+                                                    <img src="{{ URL::asset('assets/images/event1.png') }}"
                                                         class="me-3 rounded-circle avatar-xs" alt="user-pic">
                                                     <div class="flex-1">
-                                                        <a href="#!" class="stretched-link">
+                                                        <!-- <a href="#!" class="stretched-link">
                                                             <h6 class="mt-0 mb-1 fs-13 fw-semibold">James Lemire</h6>
-                                                        </a>
+                                                        </a> -->
                                                         <div class="fs-13 text-muted">
-                                                            <p class="mb-1">We talked about a project on linkedin.</p>
+                                                            <p class="mb-1"> @php echo
+                                                                $notification->data['message']; @endphp</p>
                                                         </div>
                                                         <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
                                                             <span><i class="mdi mdi-clock-outline"></i> 30 min
@@ -203,72 +192,9 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="text-reset notification-item d-block dropdown-item">
-                                                <div class="d-flex">
-                                                    <img src="{{ URL::asset('assets/images/users/avatar-2.jpg') }}"
-                                                        class="me-3 rounded-circle avatar-xs" alt="user-pic">
-                                                    <div class="flex-1">
-                                                        <a href="#!" class="stretched-link">
-                                                            <h6 class="mt-0 mb-1 fs-13 fw-semibold">Angela Bernier</h6>
-                                                        </a>
-                                                        <div class="fs-13 text-muted">
-                                                            <p class="mb-1">Answered to your comment on the cash flow
-                                                                forecast's
-                                                                graph 🔔.
-                                                            </p>
-                                                        </div>
-                                                        <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
-                                                            <span><i class="mdi mdi-clock-outline"></i> 2 hrs ago</span>
-                                                        </p>
-                                                    </div>
-                                                    <div class="px-2 fs-15">
-                                                        <input class="form-check-input" type="checkbox">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="text-reset notification-item d-block dropdown-item">
-                                                <div class="d-flex">
-                                                    <img src="{{ URL::asset('assets/images/users/avatar-6.jpg') }}"
-                                                        class="me-3 rounded-circle avatar-xs" alt="user-pic">
-                                                    <div class="flex-1">
-                                                        <a href="#!" class="stretched-link">
-                                                            <h6 class="mt-0 mb-1 fs-13 fw-semibold">Kenneth Brown</h6>
-                                                        </a>
-                                                        <div class="fs-13 text-muted">
-                                                            <p class="mb-1">Mentionned you in his comment on 📃 invoice
-                                                                #12501. </p>
-                                                        </div>
-                                                        <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
-                                                            <span><i class="mdi mdi-clock-outline"></i> 10 hrs
-                                                                ago</span>
-                                                        </p>
-                                                    </div>
-                                                    <div class="px-2 fs-15">
-                                                        <input class="form-check-input" type="checkbox">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="text-reset notification-item d-block dropdown-item">
-                                                <div class="d-flex">
-                                                    <img src="{{ URL::asset('assets/images/users/avatar-8.jpg') }}"
-                                                        class="me-3 rounded-circle avatar-xs" alt="user-pic">
-                                                    <div class="flex-1">
-                                                        <a href="#!" class="stretched-link">
-                                                            <h6 class="mt-0 mb-1 fs-13 fw-semibold">Maureen Gibson</h6>
-                                                        </a>
-                                                        <div class="fs-13 text-muted">
-                                                            <p class="mb-1">We talked about a project on linkedin.</p>
-                                                        </div>
-                                                        <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
-                                                            <span><i class="mdi mdi-clock-outline"></i> 3 days
-                                                                ago</span>
-                                                        </p>
-                                                    </div>
-                                                    <div class="px-2 fs-15">
-                                                        <input class="form-check-input" type="checkbox">
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            @php
+                                            }
+                                            @endphp
                                             <div class="my-3 text-center">
                                                 <button type="button"
                                                     class="btn btn-soft-success waves-effect waves-light">View
@@ -281,7 +207,7 @@
                                         aria-labelledby="alerts-tab">
                                         <div class="w-25 w-sm-50 pt-3 mx-auto">
                                             <img src="{{ URL::asset('assets/images/bell.png') }}" class="img-fluid"
-                                                alt="user-pic"  style="height:20px;width:20px;">
+                                                alt="user-pic" style="height:20px;width:20px;">
                                         </div>
                                         <div class="text-center pb-5 mt-2">
                                             <h6 class="fs-18 fw-semibold lh-base">Hey! You have no any notifications
@@ -294,30 +220,30 @@
 
 
                         <a href="" class="ml-2  settings-icon   ">
-                        <img src="{{ URL::asset('assets/images/megaphone.png') }}" class=""
-                                                alt="user-pic" style="height:20px;width:20px;">
+                            <img src="{{ URL::asset('assets/images/megaphone.png') }}" class="" alt="user-pic"
+                                style="height:20px;width:20px;">
                         </a>
 
                         <div class="dropdown topbar-user ">
                             <button type="button" class="btn ml-1 py-0" id="page-header-user-dropdown"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <div class="d-flex align-items-center">
-                                    {{-- <img class="rounded-circle header-profile-user"
-                                        src="@if (Auth::user()->avatar != ''){{ URL::asset('images/'. Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"
-                                    alt="Header Avatar"> --}}
+                                     <!-- <img class="rounded-circle header-profile-user" src="@if (Auth::user()->avatar != ''){{ URL::asset('images/'. Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"alt="Header Avatar"> -->
+                                    
                                     @php
                                     preg_match('/(?:\w+\. )?(\w+).*?(\w+)(?: \w+\.)?$/',Auth::user()->name , $result);
                                     $name = strtoupper($result[1][0].$result[2][0]);
-                                    if (Auth::user()->avatar != ''){
-                                    @endphp
-                                    <img class="rounded-circle header-profile-user"
-                                        src=" {{URL::asset('images/'. Auth::user()->avatar)}}" alt="Header Avatar">
 
+                                    if (Auth::user()->avatar == null || Auth::user()->avatar =='' ){ 
+                                    @endphp
+                                        <span class="badge rounded-circle   badge-primary ml-2"><i
+                                            class="align-middle">{{$name}}</i></span>
                                     @php
                                     }else{
                                     @endphp
-                                    <span class="badge rounded-circle   badge-primary ml-2"><i
-                                            class="align-middle">{{$name}}</i></span>
+                                    <img class="rounded-circle header-profile-user"
+                                        src="{{URL::asset('images/profile/'. Auth::user()->avatar)}}" alt="Header Avatar">
+                                    
 
                                     @php
                                     }

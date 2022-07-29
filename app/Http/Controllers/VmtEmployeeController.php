@@ -72,12 +72,13 @@ class VmtEmployeeController extends Controller
         return response()->json($data);
     }
 
-    public function user_status_change(Request $request) {
+    public function updateUserAccountStatus(Request $request) {
         $user = User::find($request->id);
-        $user->status = $request->input('status');
+        $user->active = $request->input('status');
         $user->save();
-        return 'saved';
+        return 'User Account Status : '.$request->input('status');
     }
+
     //
     public function showEmployeeDirectory(Request $request){
         $vmtEmployees = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')
@@ -102,10 +103,57 @@ class VmtEmployeeController extends Controller
         return view('vmt_employeeDirectory', compact('vmtEmployees'));
     }
 
+
+    public function getThreeLevelOrgTree($id, Request $request)
+    {
+        $levels = 2; //tree level for current user
+        $data = [];
+        //get the given node's username,designation
+        $data['name'] = User::where('id',$id)->value('name');
+
+        $data['emp_no'] = VmtEmployee::where('userid',$id)->value('emp_no');
+        $data['designation'] =  VmtEmployeeOfficeDetails::where('user_id',$id)->value('designation');
+
+        $data['children'] =$this->getChildrenForUser( $data['emp_no'])['children'];
+
+        for($i=0; $i<2 ; $i++)
+        {
+            foreach($data['children'] as $child)
+            {
+                $child['children'] = $this->getChildrenForUser($child['emp_no'])['children'];    
+                //dd($child['children']);
+            } 
+        }
+
+
+        //dd(json_encode($data));
+        return $data;
+    }
+
+
     //
-    public function getChildForUser($id, Request $request){
-        $childrenIds  =  VmtEmployeeHierarchy::where('user_id', $id)->pluck('child_nodes');
-        return $childrenIds;
+    public function getChildrenForUser($emp_no){
+        
+        $data =array();
+        
+
+        //get the child nodes of the given parent node
+        $data['children'] = User::leftJoin('vmt_employee_office_details','users.id','=','vmt_employee_office_details.user_id')
+                            ->leftJoin('vmt_employee_details','users.id','=','vmt_employee_details.userid')
+                            ->where('l1_manager_code',$emp_no)
+                            ->select('users.name','users.id','vmt_employee_details.emp_no','vmt_employee_office_details.designation')
+                            ->get();
+
+        //Add empty children attributes
+        foreach($data['children'] as $temp)
+        {
+            $temp['children'] ='';
+        }
+
+       
+       //dd(json_encode($data));
+
+       return $data;
     }
 
     //
@@ -365,7 +413,7 @@ class VmtEmployeeController extends Controller
 
     // show bulk upload form
     public function bulkUploadEmployee(Request $request){
-        return view('vmt_uploadEmployees');
+        return view('vmt_employeeOnboarding_BulkUpload');
     }
 
     // store employeess from excel sheet to database
@@ -549,6 +597,9 @@ class VmtEmployeeController extends Controller
                     $compensatory->save();
                 }
 
+                //Add new items into $row
+                $row['net_income'] = $compensatory->gross + $row["epf_employee"] + $row["esic_employee"] + $row["professional_tax"] + $row["labour_welfare_fund"] - ($row["epf_employer_contribution"] - $row["esic_employer_contribution"] - $row["insurance"] - $row["graduity"]);
+
                 if ($newEmployee && $empOffice) {
                     $addedCount++;
                     $returnsuccessMsg .= $empNo." get added";
@@ -581,7 +632,7 @@ class VmtEmployeeController extends Controller
 
     // Generate Employee Apoinment PDF after onboarding
     public function attachApoinmentPdf($employeeData){
-        // dd($employeeData);
+        //dd($employeeData);
         $empNameString  = $employeeData['employee_name'];
         $filename = 'appoinment_letter_'.$empNameString.'_'.time().'.pdf';
         $data = $employeeData;
@@ -591,7 +642,7 @@ class VmtEmployeeController extends Controller
         $data['hra_yearly'] = intval($employeeData['hra']) * 12;
         $data['spl_allowance_monthly'] = $employeeData['special_allowance'];
         $data['spl_allowance_yearly'] = intval($employeeData['special_allowance'])*12;
-        $data['gross_monthly'] = $employeeData["basic"] + $employeeData["hra"] + $employeeData["Statutory_bonus"] + $employeeData["child_education_allowance"] + $employeeData["food_coupon"] + $employeeData["lta"] + $employeeData["special_allowance"] + $employeeData["other_allowance"];
+        $data['gross_monthly'] = $employeeData["basic"] + $employeeData["hra"] + $employeeData["statutory_bonus"] + $employeeData["child_education_allowance"] + $employeeData["food_coupon"] + $employeeData["lta"] + $employeeData["special_allowance"] + $employeeData["other_allowance"];
         $data['gross_yearly'] = intval($data['gross_monthly']) * 12;
         $data['employer_epf_monthly'] = $employeeData['epf_employer_contribution'];
         $data['employer_epf_yearly'] = intval($employeeData['epf_employer_contribution']) * 12;
@@ -601,8 +652,8 @@ class VmtEmployeeController extends Controller
         $data['ctc_yearly'] = intval( $data['gross_monthly']) * 12;
         $data['employee_epf_monthly'] =  $employeeData["epf_employer_contribution"];
         $data['employee_epf_yearly'] = intval($employeeData["epf_employer_contribution"]) * 12;
-        $data['employer_pt_monthly'] = "--No Data--";
-        $data['employer_pt_yearly'] = "--No Data--";
+        $data['employer_pt_monthly'] = $employeeData["professional_tax"];
+        $data['employer_pt_yearly'] =  intval($employeeData["professional_tax"]) * 12;
         $data['net_take_home_monthly'] = $employeeData["net_income"];
         $data['net_take_home_yearly'] = intval($employeeData["net_income"]) * 12;
         // download PDF file with download method
@@ -781,7 +832,7 @@ class VmtEmployeeController extends Controller
             $department = Department::all();
             $bank = Bank::all(); 
 
-            return view('vmt_employee_quick_onboarding', compact('empNo', 'countries', 'bank', 'emp','department'));
+            return view('vmt_employeeOnboarding_QuickUpload', compact('empNo', 'countries', 'bank', 'emp','department'));
         }
     }
 
@@ -914,4 +965,5 @@ class VmtEmployeeController extends Controller
             return "Error";
         }
     }
+    
 }

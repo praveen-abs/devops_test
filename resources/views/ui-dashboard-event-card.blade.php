@@ -5,7 +5,7 @@
         <!-- <div class="p-1 bg-danger" ></div> -->
         <div class="card-body ">
             <div class="wishes-card-wrapper">
-                <p class="text-muted f-15 m-0"><i class="ri-cake-2-fill f-13 mr-2" style="color:#E54E0D;"></i> Happy
+                <p class="text-muted  m-0"><i class="ri-cake-2-fill f-13 mr-2" style="color:#E54E0D;"></i> Happy
                     Birthday</p>
                 <div class="mt-2 ">
                     <div class="px-2 d-flex ">
@@ -28,7 +28,7 @@
         <!-- <div class="p-1 bg-danger" ></div> -->
         <div class="card-body ">
             <div class="wishes-card-wrapper">
-                <p class="text-muted f-15 m-0"><i class=" f-13 mr-2 ri-shopping-bag-fill"></i> Work
+                <p class="text-muted  m-0"><i class=" f-13 mr-2 ri-shopping-bag-fill"></i> Work
                     Anniversary</p>
                 <div class="mt-2 ">
                     <div class="px-2 d-flex">
@@ -50,7 +50,7 @@
         <!-- <div class="p-1 bg-danger" ></div> -->
         <div class="card-body ">
             <div class="wishes-card-wrapper">
-                <p class="text-muted f-15 m-0"><i class=" ri-hearts-fill f-13 mr-2"></i>Wedding
+                <p class="text-muted  m-0"><i class=" ri-hearts-fill f-13 mr-2"></i>Wedding
                     Anniversary</p>
                 <div class="mt-2  ">
                     <div class="px-2 d-flex">

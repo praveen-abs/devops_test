@@ -138,12 +138,12 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-.rounded-circle{
+/* .rounded-circle{
   width:30px;
   height:30px;
   border-radius:50% !important;
   padding: 2px 5px 3px 5px;
-}
+} */
 
 .rounded-circle-box {
   border-radius:30% !important;

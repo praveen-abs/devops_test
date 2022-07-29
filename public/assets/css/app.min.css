@@ -1221,11 +1221,6 @@ body {
     font-size: 2.1rem;
 }
 
-.content {
-    width: 95%;
-    margin: 0 auto 50px;
-}
-
 .content__title {
     margin-bottom: 40px;
     font-size: 20px;
@@ -18622,13 +18617,31 @@ tr:last-child td:last-child {
 .gridjs-table>tfoot>tr>th,
 .gridjs-table>thead>tr>td,
 .gridjs-table>thead>tr>th {
-    padding:10px 5px;
+    padding:8px;
     line-height: 1.6;
     vertical-align: middle;
     border-top: 1px solid #eee;
     text-align: center;
+    
+}
+.gridjs-table>tbody>tr>td,
+.gridjs-table>tbody>tr>th,
+.gridjs-table>tfoot>tr>td,
+.gridjs-table>tfoot>tr>th,
+.gridjs-table>thead>tr>td,
+.gridjs-table>thead>tr>th {
     width: 0 !important;
 }
+
+
+.table>tbody>tr>td>img,
+table>tbody>tr>td>img,
+.gridjs-table>tbody>tr>td>img
+
+ {
+ 
+ }
+
 
 .amount-column:first-of-type .ytd-summary-column-table tbody tr td {
     border-left: none !important;
@@ -18675,15 +18688,22 @@ tr:last-child td:last-child {
     margin-top: 20px;
 }
 
+.pms-card{
+    height: auto;
+}
+.pms-dashboard-wrapper .pms-gadget-container{
+    margin: 0px 0px 0px 200px;
+}
+
 .pms-dashboard-wrapper {
-    background-image: url(../images/pms_bg.png);
+    background-image: url(../images/performancebg.png);
     /* height: 400px; */
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: unset;
+    /* background-position: unset;
     max-width: 100%;
     max-height: 100%;
-    min-height: 450px;
+    min-height: 450px; */
 
 }
 
@@ -18884,7 +18904,7 @@ tr:last-child td:last-child {
 }
 
 .footer-contents .powerby-footer img {
-    height: 45px;
+     height: 15px;
 }
 
 .footer-contents .privacy-policy {
