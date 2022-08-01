@@ -1,5 +1,56 @@
 $(document).ready(function() {
-
+    $('.onboard-form').bind('input', function() {
+        // var c = this.selectionStart,
+        //     r = /[^a-z0-9 .]/gi,
+        //     v = $(this).val();
+        // if(r.test(v)) {
+        //   $(this).val(v.replace(r, ''));
+        //   c--;
+        // }
+        // this.setSelectionRange(c, c)
+        
+        var inputvalues = $(this).val();
+        var data = $(this).attr('name');
+        if ($(this).attr('maxlength')) {
+            var dtl = $(this).val().length;
+            var val = parseInt($(this).attr('maxlength'));
+            if(dtl>val){
+                $(this).val($(this).val().substr(0,val));
+            } 
+        }
+        if ($(this).attr('pattern') != undefined && $(this).attr('pattern') != '' && inputvalues !=
+            '') {
+            var pattern = {
+                'pan': /^([A-Z]){3}P([A-Z]){1}([0-9]){4}([A-Z]){1}?$/,
+                'email': /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/,
+                'ifsc': /^([A-Z]){4}0([A-Z0-9]){6}?$/,
+                'aadhar': /^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$/,
+                'passport': /^[a-zA-Z]{2}[0-9]{7}$/,
+                'account': /^[0-9]{9,18}$/,
+                'dl': /^(([A-Z]{2}[0-9]{2})( )|([A-Z]{2}-[0-9]{2}))((19|20)[0-9][0-9])[0-9]{7}$/,
+                'gst': /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/,
+                'alp-num': /^[a-zA-Z0-9]+$/,
+                'alpha': /^[a-zA-Z ]+$/,
+                'name': /^[a-zA-Z. ]+$/,
+            };
+            var regex = $(this).attr('pattern');
+            if (!pattern[regex].test(inputvalues)) {
+                // $('.' + data + '_label').addClass('patternErr');
+                var v = $(this).val();
+                if (regex == 'name') {
+                    $(this).val(v.replace(/[_\W0-9]+/g, ''));
+                } else if (regex == 'alpha') {
+                    $(this).val(v.replace(/[_\W0-9.]+/g, ''));
+                } else if (regex == 'alp-num' || regex == 'pan') {
+                    $(this).val(v.replace(/[_\W.]+/g, ''));
+                } else if (regex == 'email') {
+                    $(this).val(v.replace(/[$#!%^&*():;,<>?/'"|\\]+/g, ''));
+                }
+            // } else {
+            //     $('.' + data + '_label').removeClass('patternErr');
+            }
+        };
+    });
     $('body').on('keyup', ".onboard-form", function() {
         var inputvalues = $(this).val();
         var data = $(this).attr('name');
@@ -33,10 +84,10 @@ $(document).ready(function() {
                     $(this).val(v.replace(/[_\W0-9]+/g, ''));
                 } else if (regex == 'alpha') {
                     $(this).val(v.replace(/[_\W0-9.]+/g, ''));
-                } else if (regex == 'alp-num') {
+                } else if (regex == 'alp-num' || regex == 'pan') {
                     $(this).val(v.replace(/[_\W.]+/g, ''));
-                // } else if (regex == 'email') {
-                //     $(this).val(v.replace(/[_\W0-9.]+/g, ''));
+                } else if (regex == 'email') {
+                    $(this).val(v.replace(/[$#!%^&*():;,<>?/'"|\\]+/g, ''));
                 }
             } else {
                 $('.' + data + '_label').removeClass('patternErr');

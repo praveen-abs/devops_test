@@ -209,6 +209,40 @@ body {
     max-width: 100%;
 }
 
+/* font-sizes */
+
+.f-10{
+font-size: 10px;
+}
+.f-11{
+    font-size: 11px;
+}
+.f-12{
+    font-size: 12px;   
+}
+.f-13{
+    font-size: 13px;
+}
+.f-14{
+    font-size: 14px;
+}
+
+.f-15{
+    font-size: 15px;
+}
+
+.f-16{
+    font-size: 16px;
+}
+
+.f-17{
+    font-size: 17px;
+}
+
+.f-18{
+    font-size: 18px;
+}
+
 
 #page-topbar {
     position: fixed;
@@ -649,30 +683,25 @@ body {
     left: 215px;
 }
 
-
-[data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .nav-link i {
+/* [data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .nav-link i {
     font-size: 22px;
-}
+} */
 
-[data-layout=vertical][data-sidebar-size=lg] .navbar-menu .navbar-nav .nav-link svg {
-    margin-right: 0;
-    width: 25px !important;
-    font-size: 22px;
+[data-layout=vertical][data-sidebar="light"] .navbar-menu .navbar-nav .nav-link svg,[data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .nav-link svg {
+    width: 20px !important;
+    height: 20px !important;
 }
-
+   
 
 .navbar-menu .navbar-nav .nav-link i {
     display: inline-block;
     min-width: 1.75rem;
-    font-size: 22px;
+    /* font-size: 22px; */
     line-height: inherit;
     padding: 0px 15px;
 }
 
-.navbar-menu .navbar-nav .nav-link i svg {
-    width: 25px !important;
-    height: 25px !important;
-}
+
 
 .navbar-menu .navbar-nav .nav-link {
     display: -webkit-box;
@@ -753,14 +782,29 @@ body {
 /* by george 70px to 50px  */
 .page-content {
     /* padding: calc(40px + 24px) calc(24px / 2) 60px calc(24px / 2); */
-    padding: calc(70px + 1.5rem) calc(1.5rem / 2) 60px calc(1.5rem / 2);
+    padding: calc(70px + 1.5rem) calc(1.5rem / 2) 25px calc(1.5rem / 2);
 
 }
 
 
-/* 
+/* body::-webkit-scrollbar-track{
+    -webkit-box-shadow:inset  0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    background: rgb(212, 212, 212);
+}
+
+body::-webkit-scrollbar{
+    width: 5px;
+    background-color:#00bcd4;
+}
+body::-webkit-scrollbar-thumb{
+    background-color: #002F56;
+} */
+
+
+
 .page-content::-webkit-scrollbar {
-    width: 16px;
+    width: 10px;
 }
 
 .page-content::-webkit-scrollbar-track {
@@ -771,7 +815,7 @@ body {
 .page-content::-webkit-scrollbar-thumb {
     background-color: #d4aa70;
     border-radius: 100px;
-} */
+}
 
 .navbar-menu {
     width: 215px;
@@ -869,7 +913,7 @@ body {
 
 }
 
-[data-layout=vertical][data-sidebar-size=lg] .navbar-menu .navbar-nav .nav-link:hover::before,
+ .navbar-menu .navbar-nav .nav-link:hover::before,
 [data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .nav-link:hover::before {
     display: block;
     border-top-right-radius: 5px;
@@ -885,6 +929,10 @@ body {
     /* transition: all .4s ease-in-out; */
     width: 5px;
     background: #ff530a;
+}
+
+.navbar-menu .navbar-nav .nav-link:hover::before {
+    left: 2px !important;
 }
 
 [data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .nav-link:hover::before {
@@ -1681,7 +1729,7 @@ body {
 .sidebar-bottom-bg {
     position: absolute;
     bottom: 50px;
-    width: 100%;
+    width: auto;
     height: auto;
 }
 
@@ -9287,7 +9335,7 @@ button {
     justify-content: center;
     align-content: center;
     align-items: center;
-    /* z-index: 10; */
+    z-index: 10;
 }
 
 .simplebar-wrapper {
@@ -16634,23 +16682,6 @@ span.flatpickr-weekday {
     color: #49505c;
 }
 
-.assign-cards-wrapper input,
-select {
-    border: none;
-    border-bottom: 1px solid #49505c;
-    outline: none;
-    color: #002f56;
-    font-weight: 500;
-    padding-bottom: 10px;
-}
-
-/* .avatar-group .avatar-group-item {
-    margin-left: -12px;
-    border: 2px solid var(--vz-card-bg);
-    border-radius: 50%;
-    -webkit-transition: all .2s;
-    transition: all .2s;
-} */
 
 .reviwer-cards {
     position: relative;
@@ -16926,7 +16957,7 @@ select {
 .personal-info li .title {
     color: #333333;
     float: left;
-    font-weight: 600;
+    /* font-weight: 600; */
     /* margin-right: 30px; */
     width: 100%;
 }
@@ -17335,6 +17366,7 @@ p {
 .text-orange {
     color: #FF4D00;
 }
+
 .text-primary {
     color: #002f56;
 }
@@ -17588,22 +17620,6 @@ p {
 
 
 
-.custom-modal .modal-content .modal-header .close {
-    background-color: #a0a0a0;
-    color: #ffffff;
-    font-size: 13px;
-    height: 20px;
-    line-height: 20px;
-    opacity: 1;
-    width: 20px;
-    z-index: 99;
-    margin: 0;
-    padding: 0;
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    border-radius: 50%;
-}
 
 .profile-img-wrap img {
     height: 100px;
@@ -18617,13 +18633,14 @@ tr:last-child td:last-child {
 .gridjs-table>tfoot>tr>th,
 .gridjs-table>thead>tr>td,
 .gridjs-table>thead>tr>th {
-    padding:8px;
+    padding: 8px;
     line-height: 1.6;
     vertical-align: middle;
     border-top: 1px solid #eee;
     text-align: center;
-    
+
 }
+
 .gridjs-table>tbody>tr>td,
 .gridjs-table>tbody>tr>th,
 .gridjs-table>tfoot>tr>td,
@@ -18636,11 +18653,7 @@ tr:last-child td:last-child {
 
 .table>tbody>tr>td>img,
 table>tbody>tr>td>img,
-.gridjs-table>tbody>tr>td>img
-
- {
- 
- }
+.gridjs-table>tbody>tr>td>img {}
 
 
 .amount-column:first-of-type .ytd-summary-column-table tbody tr td {
@@ -18688,10 +18701,11 @@ table>tbody>tr>td>img,
     margin-top: 20px;
 }
 
-.pms-card{
+.pms-card {
     height: auto;
 }
-.pms-dashboard-wrapper .pms-gadget-container{
+
+.pms-dashboard-wrapper .pms-gadget-container {
     margin: 0px 0px 0px 200px;
 }
 
@@ -18807,12 +18821,13 @@ table>tbody>tr>td>img,
     font-size: 14px;
     font-weight: 500;
 }
+
 [data-layout=vertical][data-sidebar-size=lg] .navbar-menu .navbar-nav .nav-link:hover {
     font-weight: 600;
 }
 
 [data-layout=vertical][data-sidebar-size=lg] .navbar-menu .navbar-nav .nav-link i {
-    font-size: 22px;
+    /* font-size: 22px; */
 }
 
 [data-layout=vertical][data-sidebar-size=lg] .navbar-menu .navbar-nav .nav-link span {
@@ -18904,7 +18919,7 @@ table>tbody>tr>td>img,
 }
 
 .footer-contents .powerby-footer img {
-     height: 15px;
+    height: 15px;
 }
 
 .footer-contents .privacy-policy {
@@ -19025,9 +19040,11 @@ table>tbody>tr>td>img,
 
 /* body:hover ::-webkit-scrollbar-thumb {} */
 
+/* card sizes */
 
-
-
-
-
-                    
+.card-md {
+    height: 180px;
+}
+.card-lg {
+    height: 180px;
+}

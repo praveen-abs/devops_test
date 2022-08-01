@@ -325,7 +325,8 @@ $('#notificationModal').addClass('fade');
 });
 
 $('.onboard-form').keyup(function() {
-this.value = this.value.toLocaleUpperCase();
+    this.value = this.value.toLowerCase();
+    this.value = this.value.charAt(0).toUpperCase() + this.value.slice(1);
 }).trigger('keyup');
 
 $('#pan_ack').keyup(function() {
@@ -422,7 +423,7 @@ if ($('#nationality').val() == 'indian') {
     $('#aadhar').removeClass('not-required validate');
     $('#permanent_pincode').attr('type', 'number');
     $('#current_pincode').attr('type', 'number');
-    $('#current_district').val('IN');
+    $('#current_district').val('IN').trigger('change');
     stateFunction('IN', '#current_state');
 } else {
     $('#passport_no').attr('required', true);
@@ -439,7 +440,7 @@ if ($('#nationality').val() == 'indian') {
     $('#current_pincode').attr('type', 'text');
     $('#aadhar').addClass('not-required validate');
     $('#aadhar_req').hide();
-    $('#current_district').val('AF');
+    $('#current_district').val('AF').trigger('change');
     stateFunction('AF', '#current_state');
 }
 });
@@ -447,8 +448,8 @@ if ($('#nationality').val() == 'indian') {
 $('#nationality').val('indian');
 $('#passport_no_req').hide();
 $('#passport_exp_req').hide();
-$('#permanent_district').val('IN');
-$('#current_district').val('IN');
+$('#permanent_district').val('IN').trigger('change');
+$('#current_district').val('IN').trigger('change');
 stateFunction('IN', '#current_state');
 stateFunction('IN', '#permanent_state');
 
@@ -456,13 +457,13 @@ $('#current_address_copy').change(function() {
 if ($('#current_address_copy').is(':checked')) {
     stateFunction($('#current_district').val(), '#permanent_state', true);
     $('#permanent_pincode').val($('#current_pincode').val());
-    $('#permanent_district').val($('#current_district').val());
+    $('#permanent_district').val($('#current_district').val()).trigger('change');
     $('#permanent_state').val($('#current_state').val());
     $('#permanent_city').val($('#current_city').val());
     $('#permanent_address').val($('#current_address').val());
 } else {
     $('#permanent_pincode').val('');
-    $('#permanent_district').val('');
+    $('#permanent_district').val('').trigger('change');
     $('#permanent_state').val('');
     $('#permanent_city').val('');
     $('#permanent_address').val('');

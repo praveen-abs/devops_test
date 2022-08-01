@@ -85,7 +85,7 @@
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="email">Email ID{!! required() !!}</label> -->
-                                                    <input type="email" placeholder="Email ID" name="email" value="{{request()->has('email')? request()->email : ''}}"
+                                                    <input type="email" pattern="email" placeholder="Email ID" name="email" value="{{request()->has('email')? request()->email : ''}}"
                                                         class="onboard-form form-control" @if(request()->has('email')) readonly @endif required />
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
@@ -106,7 +106,7 @@
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="pan_ack">Pan Acknowlegement<span id="pan_ack_req">{!! required() !!}</span></label> -->
-                                                    <input type="text" placeholder="Pan Acknowlegement" name="pan_ack"
+                                                    <input type="text" placeholder="Pan Acknowlegement" name="pan_ack" pattern="alp-num"
                                                         id="pan_ack"
                                                         class="onboard-form form-control not-required validate" />
                                                 </div>
@@ -120,8 +120,8 @@
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="passport_no">Passport Number<span id="passport_no_req">{!! required() !!}</span></label> -->
-                                                    <input type="text" placeholder="Passport Number" name="passport_no"
-                                                        pattern="passport" id="passport_no"
+                                                    <input type="number" placeholder="Passport Number" name="passport_no"
+                                                        id="passport_no"
                                                         class="onboard-form form-control not-required validate" />
                                                     <label class="error star_error passport_no_label" for="passport_no"
                                                         style="display: none;"></label>
@@ -628,11 +628,11 @@
                                         <div class="text-primary my-2 header-card-text"><h5>Personal Documents</h5></div>
                                         <div class="form-card mb-4">
                                             <div class="row mt-1">
-                                                <div class="col-12 mt-2">
+                                                <!-- <div class="col-12 mt-2">
                                                     <input type="checkbox" placeholder="" name="aadhar_backend"
                                                         id="aadhar_backend" style="width:auto;" />
                                                     <label for="aadhar_backend">Upload aadhar backend</label>
-                                                </div>
+                                                </div> -->
                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-2">
                                                     <!-- <label class="" for="aadhar_card">Aadhar Card{!! required() !!}</label> -->
                                                     <div class="addfiles form-control" data="#aadhar_card"
@@ -644,7 +644,7 @@
                                                         class="onboard-form form-control files" />
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mt-2"
-                                                    id="aadhar_card_backend_content" style="display:none;">
+                                                    id="aadhar_card_backend_content">
                                                     <!-- <label class="" for="aadhar_card_backend">Aadhar Card Backend<span id="aadhar_card_backend_req">{!! required() !!}</span></label> -->
                                                     <div class="addfiles form-control" data="#aadhar_card_backend"
                                                         id="aadhar_card_backend_label"><span class="file_label">Choose

@@ -6,7 +6,9 @@
 
 
 <link href="{{ URL::asset('assets/css/assign_goals.css') }}" rel="stylesheet">
-
+<link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
+<link href="{{ URL::asset('assets/css/salary.css') }}" rel="stylesheet">
+<link href="{{ URL::asset('assets/css/app.min.css') }}" rel="stylesheet">
 <!-- prem content -->
 
 <!--Custom style.css-->
@@ -559,325 +561,317 @@ blockquote p::after {
     </div> -->
 </div>
 
-<div id="add-goals-modal" class="modal custom-modal show" role="dialog" aria-modal="true" >
-    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-header p-0">
-                <div class="assign-cards-wrapper col-12 p-0">
-                    <div class="assignCards">
-                        <div class="card-header p-0 m-0">
-                            <div class="d-flex   justify-content-between align-items-center ">
-                                <div class="d-flex  align-items-center">
-                                    <span class="left fw-bold text-white pt-3 px-4 pb-4">New</span>
-                                    <h5 class="m-0 mx-3">Assign Goals</h5>
-                                </div>
-                                <!-- <div class="d-flex align-items-center mx-5">
-                                    <span class="right rounded-pill py-1 px-2 mx-2 text-white btn btn-lg" id="publish-goal" style="cursor: pointer;">Publish</span>
-                                </div> -->
-                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">×</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+<div id="add-goals-modal" class="modal custom-modal fade" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-xl" role="document">
+            <div class="modal-content"> 
+                <div class="modal-header py-3 new-role-header d-flex align-items-center">
+                    <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
+             New Assign Goals</h5>
+                    <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
                 </div>
+                <div class="modal-body">
+              <div class="card card-md profile-box p-2 card-left-bar">
+                <div class="card-body">
+                    
+
+
+<form id="goalForm">
+    <input type="hidden" name="goal_id" id="goal_id">
+    @csrf
+    <input type="hidden" name="kpitable_id" id="kpitable_id">
+    @if(auth()->user()->hasrole('Employee'))
+    <input type="hidden" name="employees[]" value="{{auth()->user()->id}}" id="sel_employees">
+    @else
+    <input type="hidden" name="employees[]" id="sel_employees">
+    @endif
+
+    @if(auth()->user()->hasrole('Manager'))
+    <input type="hidden" name="reviewer" value="{{auth()->user()->id}}" id="sel_reviewer">
+    @elseif(auth()->user()->hasrole('Employee'))
+    <input type="hidden" name="reviewer" value="{{$users[0]['id']}}" id="sel_reviewer">
+    @else
+    <input type="hidden" name="reviewer" id="sel_reviewer">
+    @endif
+    <input type="hidden" name="assignment_period_year" id="assignment_period_year" value="<?php echo date("Y"); ?>">
+
+    <div class="row ">
+    <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
+            
+                <label class="" for="calendar_type">Calendar Type</label>
+                <select name="calendar_type" id="calendar_type" class="form-control">
+                    <option value="">Select</option>
+                    <option name="financial_year" value="financial_year">Financial Year</option>
+                    <option name="calendar_year" value="calendar_year">Calendar Year</option>
+                </select>
+            
+        </div>
+        <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
+            
+                <label class="" for="year">Year</label>
+                <input type="hidden" name="hidden_calendar_year" id="hidden_calendar_year" value="" >
+
+                <select name="year" id="year" disabled class="form-control">
+                    <option value="">Select</option>
+                    <option value="Jan-Dec">January - <?php echo date("Y"); ?> to December - <?= date("Y")?> </option>
+                    <option value="Apr-Mar">April - <?php echo date("Y"); ?> to March - <?= date("Y")+1?></option>
+                </select>
+            
+        </div>
+        <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
+            
+                <label class="" for="frequency">Frequency</label>
+                <select name="frequency" id="frequency" class="form-control">
+                    <option value="">Select</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="quarterly">Quarterly</option>
+                    <option value="halfYearly">Half Yearly</option>
+                    <option value="yearly">Yearly</option>
+                </select>
+            
+        </div>
+        <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
+  
+                <label class="" for="assignment_period_start">Assignment Period</label>
+                <select name="assignment_period_start" id="assignment_period_start" class="form-control">
+                </select>
             </div>
-            <div class="modal-body">
-                <div class="assign-cards-wrapper">
-                    <div class="assignCards">
-                        <form id="goalForm">
-                            <input type="hidden" name="goal_id" id="goal_id">
-                            @csrf
-                            <input type="hidden" name="kpitable_id" id="kpitable_id">
-                            @if(auth()->user()->hasrole('Employee'))
-                            <input type="hidden" name="employees[]" value="{{auth()->user()->id}}" id="sel_employees">
-                            @else
-                            <input type="hidden" name="employees[]" id="sel_employees">
-                            @endif
-
-                            @if(auth()->user()->hasrole('Manager'))
-                            <input type="hidden" name="reviewer" value="{{auth()->user()->id}}" id="sel_reviewer">
-                            @elseif(auth()->user()->hasrole('Employee'))
-                            <input type="hidden" name="reviewer" value="{{$users[0]['id']}}" id="sel_reviewer">
-                            @else
-                            <input type="hidden" name="reviewer" id="sel_reviewer">
-                            @endif
-                            <input type="hidden" name="assignment_period_year" id="assignment_period_year" value="<?php echo date("Y"); ?>">
-
-                            <div class="row mt-3">
-                                <div class="col-3  mt-3 mb-3">
-                                    <div class="d-flex flex-column">
-                                        <label class="" for="calendar_type">Calendar Type</label>
-                                        <select name="calendar_type" id="calendar_type">
-                                            <option value="">Select</option>
-                                            <option name="financial_year" value="financial_year">Financial Year</option>
-                                            <option name="calendar_year" value="calendar_year">Calendar Year</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-3  mt-3 mb-3">
-                                    <div class="d-flex flex-column">
-                                        <label class="" for="year">Year</label>
-                                        <input type="hidden" name="hidden_calendar_year" id="hidden_calendar_year" value="">
-
-                                        <select name="year" id="year" disabled>
-                                            <option value="">Select</option>
-                                            <option value="Jan-Dec">January - <?php echo date("Y"); ?> to December - <?= date("Y")?> </option>
-                                            <option value="Apr-Mar">April - <?php echo date("Y"); ?> to March - <?= date("Y")+1?></option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-3  mt-3 mb-3">
-                                    <div class="d-flex flex-column">
-                                        <label class="" for="frequency">Frequency</label>
-                                        <select name="frequency" id="frequency">
-                                            <option value="">Select</option>
-                                            <option value="monthly">Monthly</option>
-                                            <option value="quarterly">Quarterly</option>
-                                            <option value="halfYearly">Half Yearly</option>
-                                            <option value="yearly">Yearly</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-3  mt-3 mb-3">
-                                    <div class="d-flex flex-column">
-                                        <label class="" for="assignment_period_start">Assignment Period</label>
-                                        <select name="assignment_period_start" id="assignment_period_start">
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mt-3">
-                                <div class="col-3 mt-3 mb-3">
-                                    <div class="d-flex flex-column">
-                                        <label class="" for="department">Department</label>
-                                        <select name="department" id="department">
-                                            <option value="">Select Department</option>
-                                            @foreach($department as $dept)
-                                            <option value="{{$dept->id}}">{{$dept->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mt-3">
-                                <div class="col-4  mt-3 mb-3">
-                                    @if (auth()->user()->hasrole('Manager') || auth()->user()->hasrole('Admin'))
-                                    <div class="d-flex flex-column">
-                                        <label class="" for="Assignment">Employees</label>
-                                        <div class="d-flex align-items-center">
-                                            <div class="avatar-group-item">
-                                            </div>
-                                            <button id="btn_selectEmployees" type="button" target="#changeEmployee" class="right btn btn-primary py-1 px-3 rounded-pill mx-3 text-white chnageButton">Add</button>
-                                        </div>
-                                    </div>
-                                    @endif
-                                </div>
-
-                                <div class="col-4 mt-3 mb-3 d-flex ml-5">
-
-                                    <div class="d-flex flex-column">
-                                        <label class="" for="Assignment">Reviewer</label>
-                                        <div class="d-flex align-items-center">
-                                            <div class="card reviwer-cards  m-0 rounded-pill">
-                                                <div class="card-body">
-                                                    <div class="d-flex align-items-center">
-                                                        <a>
-                                                            <img src="assets/images/users/avatar-1.jpg" alt="" class="rounded-circle">
-                                                        </a>
-
-                                                        <div class=" mt-3 message-content align-items-start d-flex flex-column  mx-2">
-                                                            @if(auth()->user()->hasrole('Manager'))
-                                                            <h6 class="" id="reviewer-name">{{auth()->user()->name}}</h6>
-                                                            @elseif(auth()->user()->hasrole('Employee'))
-                                                            <h6 class="" id="reviewer-name">{{$users[0]['name']}}</h6>
-                                                            @else
-                                                            <h6 class="" id="reviewer-name">---</h6>
-                                                            @endif
-
-                                                            {{-- @if(auth()->user()->hasrole('Manager'))
-                                                            <span id="reviewer-email">{{auth()->user()->email}}</span>
-                                                            @elseif(auth()->user()->hasrole('Employee'))
-                                                            <span id="reviewer-email">{{$users[0]['email']}}</span>
-                                                            @else
-                                                            <span id="reviewer-email">---</span>
-                                                            @endif --}}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @hasrole('Admin')
-                                            <button 
-                                                type="button" 
-                                                id="btn_changeManager"
-                                                target="#createEmployee"
-                                                class="right btn btn-primary py-1 px-3 rounded-pill mx-3 text-white reviewerButton"
-                                            >
-                                                Select
-                                            </button>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-
-                        <div class="table-wrapper">
-                            <div class="row">
-                                <div class="col-6"><h5>Key focus areas</h5></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="container-fluid bg-light mt-3 py-2 rounded-border d-felx align-items-center">
-                                        <h6 class="m-0">Goals / Areas of development</h6>
-                                    </div>
-                                </div>
-                                <div class="col-12 mt-3">
-                                    <form id="upload_form" enctype="multipart/form-data">
-                                        <div class="row pull-right">
-                                            @csrf
-                                            <div class="col-8">
-                                                <input type="file" name="upload_file" id="upload_file" accept=".xls,.xlsx" class="form-control" required>
-                                            </div>
-                                            <div class="col">
-                                                <button type="button" class="btn btn-danger pull-right" id="upload-goal">Upload</button>
-                                            </div>
-                                            <p>Download the
-                                                <a href="{{ url('/assets/sample_kpi.xls')  }}" target="_blank">
-                                                <span class="text-link" style=" color: blue;">Sample File</span></a>
-                                            </p>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="col-12">
-                                    <div class="container-fluid mb-1 mt-3 ">
-                                        <form id="kpiTableForm">
-                                            <div class="table-responsive">
-                                                <table id='kpiTable' style="width:130%;" class="table align-middle mb-0" data-paging="true" data-paging-size="10" data-paging-limit="3" data-paging-container="#paging-ui-container" data-paging-count-format="{PF} to {PL}" data-sorting="true" data-filtering="false" data-empty="No Results" data-filter-container="#filter-form-container" data-editing-add-text="Add New">
-                                                @csrf
-                                                    <thead class="bg-primary thead" id="tHead">
-                                                        <tr class="text-uppercase">
-                                                            <th class="sort" data-sort="id" style="width: 2% !important;">#</th>
-                                                            <th class="sort" data-sort="customer_name" style="width: 8% !important;" data-name='dimension' data-filterable="false" data-visible="{{$show['dimension']}}">@if($config && $config->header) {{$config->header['dimension']}} @else Dimension @endif</th>
-                                                            <th class="sort" data-sort="product_name" style="width: 15% !important;" data-name='kpi' data-filterable="false" data-visible="{{$show['kpi']}}">@if($config && $config->header) {{$config->header['kpi']}} @else KPI @endif</th>
-                                                            <th class="sort" data-sort="date" style="width: 20% !important;" data-name='operational' data-filterable="false" data-visible="{{$show['operational']}}">@if($config && $config->header) {{$config->header['operational']}} @else Operational Definition @endif</th>
-                                                            <th class="sort" data-sort="amount" style="width: 15% !important;" data-name='measure' data-filterable="false" data-visible="{{$show['measure']}}">@if($config && $config->header) {{$config->header['measure']}} @else Measure @endif</th>
-                                                            <th class="sort" data-sort="payment" style="width: 5% !important;" data-name='frequency' data-filterable="false" data-visible="{{$show['frequency']}}">@if($config && $config->header) {{$config->header['frequency']}} @else Frequency @endif</th>
-                                                            <th class="sort" data-sort="status" style="width: 5% !important;" data-name='target' data-filterable="false" data-visible="{{$show['target']}}">@if($config && $config->header) {{$config->header['target']}} @else Target @endif</th>
-                                                            <th class="sort" data-sort="status" style="width: 11% !important;" data-name='stretchTarget' data-filterable="false" data-visible="{{$show['stretchTarget']}}">@if($config && $config->header) {{$config->header['stretchTarget']}} @else Stretch Target @endif</th>
-                                                            <th class="sort" data-sort="status" style="width: 4% !important;" data-name='source' data-filterable="false" data-visible="{{$show['source']}}">@if($config && $config->header) {{$config->header['source']}} @else Source @endif</th>
-                                                            <th class="sort" data-sort="status" style="width: 15% !important;" width="10%" data-name='kpiWeightage' data-filterable="false" data-visible="{{$show['kpiWeightage']}}">@if($config && $config->header) {{$config->header['kpiWeightage']}} @else KPI Weightage ( % ) @endif</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody class="tbody content-container" id="tbody">
-                                                        <tr class="addition-content cursor-pointer" id="content1">
-                                                            <td class="">
-                                                                <span  name="numbers" id="" class="tableInp" >1</span>
-                                                                <div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div>
-                                                            </td>
-                                                            <td class="text-box-td p-1">
-                                                                <textarea name="dimension[]" id="dimension" class="text-box" cols="20"
-                                                                    placeholder="type here" ></textarea>
-                                                            </td>
-                                                            <td class="text-box-td p-1">
-                                                                <textarea name="kpi[]" id="" class="text-box" cols="20"
-                                                                    placeholder="type here"></textarea>
-                                                            </td>
-                                                            <td class="text-box-td p-1">
-                                                                <textarea name="operational[]" id="" class="text-box" cols="20"
-                                                                    placeholder="type here"></textarea>
-                                                            </td>
-                                                            <td class="text-box-td p-1">
-                                                                <textarea name="measure[]" id="" class="text-box" cols="20"
-                                                                    placeholder="type here"></textarea>
-                                                            </td>
-                                                            <td class="text-box-td p-1">
-                                                                <textarea name="frequency[]" id="" class="text-box" cols="20"
-                                                                    placeholder="type here"></textarea>
-                                                            </td>
-                                                            <td class="text-box-td p-1">
-                                                                <textarea name="target[]" id="" class="text-box" cols="20"
-                                                                    placeholder="type here"></textarea>
-                                                            </td>
-                                                            <td class="text-box-td p-1">
-                                                                <textarea name="stretchTarget[]" id="" class="text-box" cols="10"
-                                                                    placeholder="type here"></textarea>
-                                                            </td>
-                                                            <td class="text-box-td p-1">
-                                                                <textarea name="source[]" id="" class="text-box" cols="10"
-                                                                    placeholder="type here"></textarea>
-                                                            </td>
-                                                            <td class="text-box-td p-1">
-                                                                <textarea name="kpiWeightage[]" id="" class="text-box" cols="10"
-                                                                    placeholder="type here"></textarea>
-                                                            </td>
-                                                        </tr>
-
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </form>
-                                        <div class="align-items-center justify-content-center d-flex mt-4 cursor-pointer">
-                                            <span class="plus-sign p-4"><i class="fa fa-plus f-20"></i></span>
-                                        </div>
-
-                                        <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
-                                            <button class="btn btn-danger table-btn mx-2" id="save-table">Save</button>
-                                            <button class="btn btn-danger mx-2" id="publish-goal" disabled>Publish</button>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  
+    </div>
+    <div class="row">
+    <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
             
+                <label class="" for="department">Department</label>
+                <select name="department" id="department"  class="form-control">
+                    <option value="">Select Department</option>
+                    @foreach($department as $dept)
+                    <option value="{{$dept->id}}">{{$dept->name}}</option>
+                    @endforeach
+                </select>
             
+        </div>
+        <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3 ">
+        <label class="" for="">Employees</label>
+                <input type="text" name="" id=""  class="form-control  increment-input" placeholder="Employees">
+                <button class="btn btn-orange increment-btn py-1 px-2">+</button>
             
+        </div>
+        <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
+        <label class="" for="">Reviewer</label>
+        <input type="text" name="" id=""  class="form-control increment-input" placeholder="Reviewer">
+                <button class="btn py-1 px-3 btn-orange increment-btn">Select</button>
             
-            
-            
-            </div>
         </div>
     </div>
-
-
-    <div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
-        <div id="errorMessageNotif_fieldsEmpty1" class="toast toast-border-danger fade hide " role="alert" aria-live="assertive" data-bs-animation="true" aria-atomic="true" >
-            <div class="toast-header">
-                <strong class="me-auto">Error</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body">
-                <strong class="">
-                    <b>Please fill all the fields.</b>
-                </strong>
-            </div>
-        </div>
-    </div>
-
-    <div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
-        <div id="errorMessageNotif_fieldsEmpty" class="toast toast-border-danger overflow-hidden mt-3" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-                <strong class="me-auto">Error</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            
-            <div class="toast-body">
+    <div class="row mt-3">
+        <!-- <div class="col-4  mt-3 mb-3">
+            @if (auth()->user()->hasrole('Manager') || auth()->user()->hasrole('Admin'))
+            <div class="d-flex flex-column">
+                <label class="" for="Assignment">Employees</label>
                 <div class="d-flex align-items-center">
-                    <div class="flex-shrink-0 me-2">
-                        <i class="ri-alert-line align-middle"></i>
+                    <div class="avatar-group-item">
                     </div>
-                    <div class="flex-grow-1">
-                        <h6 class="mb-0">Please fill all the fields.</h6>
+                    <button id="btn_selectEmployees" type="button" target="#changeEmployee"
+                        class="right btn btn-primary py-1 px-3 rounded-pill mx-3 text-white chnageButton">Add</button>
+                </div>
+            </div>
+            @endif
+        </div> -->
+
+        <div class="col-4 mt-3 mb-3 d-flex ml-5">
+
+            <!-- <div class="d-flex flex-column">
+                <label class="" for="Assignment">Reviewer</label>
+                <div class="d-flex align-items-center">
+                    <div class="card reviwer-cards  m-0 rounded-pill">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <a>
+                                    <img src="assets/images/users/avatar-1.jpg" alt="" class="rounded-circle">
+                                </a>
+
+                                <div class=" mt-3 message-content align-items-start d-flex flex-column  mx-2">
+                                    @if(auth()->user()->hasrole('Manager'))
+                                    <h6 class="" id="reviewer-name">{{auth()->user()->name}}</h6>
+                                    @elseif(auth()->user()->hasrole('Employee'))
+                                    <h6 class="" id="reviewer-name">{{$users[0]['name']}}</h6>
+                                    @else
+                                    <h6 class="" id="reviewer-name">---</h6>
+                                    @endif
+
+                                    {{-- @if(auth()->user()->hasrole('Manager'))
+                                                            <span id="reviewer-email">{{auth()->user()->email}}</span>
+                                    @elseif(auth()->user()->hasrole('Employee'))
+                                    <span id="reviewer-email">{{$users[0]['email']}}</span>
+                                    @else
+                                    <span id="reviewer-email">---</span>
+                                    @endif --}}
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    @hasrole('Admin')
+                    <button type="button" id="btn_changeManager" target="#createEmployee"
+                        class="right btn btn-primary py-1 px-3 rounded-pill mx-3 text-white reviewerButton">
+                        Select
+                    </button>
+                    @endif
+                </div>
+            </div> -->
+        </div>
+    </div>
+</form>
+                </div>
+              </div>
+              <div class="card  profile-box p-2 card-left-bar">
+                <div class="card-body ">
+                <div class="table-wrapper m-2">
+    <div class="row">
+        <div class="col-12">
+            <h5>Goals / Areas of development</h5>
+        </div>
+    </div>
+    <div class="row">
+            <div class="col-12 mt-2">
+            <form id="upload_form" enctype="multipart/form-data">
+                <div class="d-flex align-items-center justify-content-between">
+                    @csrf
+                    <div class="d-flex align-items-center">
+                        <input type="file" name="upload_file" id="upload_file" accept=".xls,.xlsx" class="form-control"
+                            required>
+                            <button type="button" class="btn btn-orange mx-2 w-50" id="upload-goal"><i class="ri-file-upload-fill mx-1"></i> Upload</button>
+                    </div>
+                    <div class=" d-flex align-items-center">
+                    <span>Download the </span>    
+                        
+                    <button class="btn btn-orange mx-2"><i class="ri-file-download-fill mx-1"></i> <a href="{{ url('/assets/sample_kpi.xls')  }}" target="_blank">
+                            </a>
+                            Sample File
+                            </button>
+                    
+                    </div>
+                    
+                </div>
+            </form>
+        </div>
+        <div class="col-12">
+            <div class="container-fluid mb-1 mt-3 ">
+                <form id="kpiTableForm">
+                    <div class="table-responsive">
+                        <table id='kpiTable' class="table table-borderd align-middle mb-0" data-paging="true"
+                            data-paging-size="10" data-paging-limit="3" data-paging-container="#paging-ui-container"
+                            data-paging-count-format="{PF} to {PL}" data-sorting="true" data-filtering="false"
+                            data-empty="No Results" data-filter-container="#filter-form-container"
+                            data-editing-add-text="Add New">
+                            @csrf
+                            <thead class="bg-primary thead" id="tHead">
+                                <tr class="text-uppercase">
+                                    <th class="sort" data-sort="id">#</th>
+                                    <th class="sort" data-sort="customer_name"
+                                        data-name='dimension' data-filterable="false"
+                                        data-visible="{{$show['dimension']}}">@if($config && $config->header)
+                                        {{$config->header['dimension']}} @else Dimension @endif</th>
+                                    <th class="sort" data-sort="product_name"
+                                        data-name='kpi' data-filterable="false" data-visible="{{$show['kpi']}}">
+                                        @if($config && $config->header) {{$config->header['kpi']}} @else KPI @endif</th>
+                                    <th class="sort" data-sort="date" 
+                                        data-name='operational' data-filterable="false"
+                                        data-visible="{{$show['operational']}}">@if($config && $config->header)
+                                        {{$config->header['operational']}} @else Operational Definition @endif</th>
+                                    <th class="sort" data-sort="amount" 
+                                        data-name='measure' data-filterable="false" data-visible="{{$show['measure']}}">
+                                        @if($config && $config->header) {{$config->header['measure']}} @else Measure
+                                        @endif</th>
+                                    <th class="sort" data-sort="payment"
+                                        data-name='frequency' data-filterable="false"
+                                        data-visible="{{$show['frequency']}}">@if($config && $config->header)
+                                        {{$config->header['frequency']}} @else Frequency @endif</th>
+                                    <th class="sort" data-sort="status"  data-name='target'
+                                        data-filterable="false" data-visible="{{$show['target']}}">@if($config &&
+                                        $config->header) {{$config->header['target']}} @else Target @endif</th>
+                                    <th class="sort" data-sort="status" 
+                                        data-name='stretchTarget' data-filterable="false"
+                                        data-visible="{{$show['stretchTarget']}}">@if($config && $config->header)
+                                        {{$config->header['stretchTarget']}} @else Stretch Target @endif</th>
+                                    <th class="sort" data-sort="status"  data-name='source'
+                                        data-filterable="false" data-visible="{{$show['source']}}">@if($config &&
+                                        $config->header) {{$config->header['source']}} @else Source @endif</th>
+                                    <th class="sort" data-sort="status"                                         data-name='kpiWeightage' data-filterable="false"
+                                        data-visible="{{$show['kpiWeightage']}}">@if($config && $config->header)
+                                        {{$config->header['kpiWeightage']}} @else KPI Weightage ( % ) @endif</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbody content-container" id="tbody">
+                                <tr class="addition-content cursor-pointer" id="content1">
+                                    <td class="">
+                                        <button class="btn bg-transparent border-0 outline-none"><i
+                                                class="fa fa-trash text-danger f-20"></i></button>
+                                        
+                                    </td>
+                                    <td class="text-box-td">
+                                        <textarea name="dimension[]" id="dimension" class="text-box" row="2" cols="20"
+                                            placeholder="type here"></textarea>
+                                    </td>
+                                    <td class="text-box-td ">
+                                        <textarea name="kpi[]" id="" class="text-box"  row="2" cols="20"
+                                            placeholder="type here"></textarea>
+                                    </td>
+                                    <td class="text-box-td ">
+                                        <textarea name="operational[]" id="" class="text-box" row="2" cols="20"
+                                            placeholder="type here"></textarea>
+                                    </td>
+                                    <td class="text-box-td ">
+                                        <textarea name="measure[]" id="" class="text-box" row="2" cols="20"
+                                            placeholder="type here"></textarea>
+                                    </td>
+                                    <td class="text-box-td ">
+                                        <textarea name="frequency[]" id="" class="text-box" row="2" cols="20"
+                                            placeholder="type here"></textarea>
+                                    </td>
+                                    <td class="text-box-td ">
+                                        <textarea name="target[]" id="" class="text-box" row="2" cols="20"
+                                            placeholder="type here"></textarea>
+                                    </td>
+                                    <td class="text-box-td ">
+                                        <textarea name="stretchTarget[]" id="" class="text-box" row="2" cols="20"
+                                            placeholder="type here"></textarea>
+                                    </td>
+                                    <td class="text-box-td ">
+                                        <textarea name="source[]" id="" class="text-box" row="2" cols="20"
+                                            placeholder="type here"></textarea>
+                                    </td>
+                                    <td class="text-box-td ">
+                                        <textarea name="kpiWeightage[]" id="" class="text-box" row="2" cols="20"
+                                            placeholder="type here"></textarea>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+                <div class="align-items-center justify-content-end d-flex mt-2 cursor-pointer">
+                <span class="plus-sign text-info "><i class="fa fa-plus f-20"></i>Add More</span>
+                </div>
+
+                <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
+                    <button class="btn btn-orange table-btn mx-2" id="save-table">Save</button>
+                    <button class="btn btn-orange mx-2" id="publish-goal" disabled>Publish</button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+                </div>
+              </div>
+
                 </div>
             </div>
         </div>
-    </div>    
-</div>
+    </div>
 
 <!-- Change Reviewr window -->
 

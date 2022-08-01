@@ -10,15 +10,12 @@
 @section('content')
 
 
-
-
-
-<div>
+<div class="employee-review-wrapper">
     <div class="card  profile-box card-top-border ">
         <div class="card-body">
             <div class="row">
                 <div class="col-md-12 col-lg-12 col-xl-12">
-                    <div class="d-flex align-items-center justify-content-start">
+                    <!-- <div class="d-flex align-items-center justify-content-start">
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6">
                                 <div class=" appraisal-user">
@@ -34,11 +31,11 @@
                             </div>
                         </div>
 
-                    </div>
+                    </div> -->
 
                     <div class="row">
                         <div class="col-md-6 col-sm-12 col-lg-6 col-xl-6">
-                            <hr>
+                            <!-- <hr> -->
                             @if($empSelected)
                             <div class="appraisal-info left-content">
                                 <ul class="personal-info">
