@@ -8,6 +8,7 @@
 <link href="{{ URL::asset('assets/css/assign_goals.css') }}" rel="stylesheet">
 <link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
 <link href="{{ URL::asset('assets/css/salary.css') }}" rel="stylesheet">
+<link href="{{ URL::asset('assets/css/app.min.css') }}" rel="stylesheet">
 <!-- prem content -->
 
 <!--Custom style.css-->
@@ -566,7 +567,7 @@ blockquote p::after {
                 <div class="modal-header py-3 new-role-header d-flex align-items-center">
                     <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
              New Assign Goals</h5>
-                    <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
@@ -723,30 +724,34 @@ blockquote p::after {
 </form>
                 </div>
               </div>
-              <div class="card  profile-box p-2 card-top-border">
-                <div class="card-body">
-                <div class="table-wrapper">
+              <div class="card  profile-box p-2 card-left-bar">
+                <div class="card-body ">
+                <div class="table-wrapper m-2">
     <div class="row">
         <div class="col-12">
             <h5>Goals / Areas of development</h5>
         </div>
     </div>
     <div class="row">
-                <div class="col-12 mt-3">
+            <div class="col-12 mt-2">
             <form id="upload_form" enctype="multipart/form-data">
-                <div class="row pull-right">
+                <div class="d-flex align-items-center justify-content-between">
                     @csrf
-                    <div class="col-8">
+                    <div class="d-flex align-items-center">
                         <input type="file" name="upload_file" id="upload_file" accept=".xls,.xlsx" class="form-control"
                             required>
+                            <button type="button" class="btn btn-orange mx-2 w-50" id="upload-goal"><i class="ri-file-upload-fill mx-1"></i> Upload</button>
                     </div>
-                    <div class="col">
-                        <button type="button" class="btn btn-danger pull-right" id="upload-goal">Upload</button>
+                    <div class=" d-flex align-items-center">
+                    <span>Download the </span>    
+                        
+                    <button class="btn btn-orange mx-2"><i class="ri-file-download-fill mx-1"></i> <a href="{{ url('/assets/sample_kpi.xls')  }}" target="_blank">
+                            </a>
+                            Sample File
+                            </button>
+                    
                     </div>
-                    <!-- <p>Download the
-                        <a href="{{ url('/assets/sample_kpi.xls')  }}" target="_blank">
-                            <span class="text-link" style=" color: blue;">Sample File</span></a>
-                    </p> -->
+                    
                 </div>
             </form>
         </div>
@@ -754,7 +759,7 @@ blockquote p::after {
             <div class="container-fluid mb-1 mt-3 ">
                 <form id="kpiTableForm">
                     <div class="table-responsive">
-                        <table id='kpiTable' style="width:130%;" class="table align-middle mb-0" data-paging="true"
+                        <table id='kpiTable' class="table table-borderd align-middle mb-0" data-paging="true"
                             data-paging-size="10" data-paging-limit="3" data-paging-container="#paging-ui-container"
                             data-paging-count-format="{PF} to {PL}" data-sorting="true" data-filtering="false"
                             data-empty="No Results" data-filter-container="#filter-form-container"
@@ -762,38 +767,37 @@ blockquote p::after {
                             @csrf
                             <thead class="bg-primary thead" id="tHead">
                                 <tr class="text-uppercase">
-                                    <th class="sort" data-sort="id" style="width: 2% !important;">#</th>
-                                    <th class="sort" data-sort="customer_name" style="width: 8% !important;"
+                                    <th class="sort" data-sort="id">#</th>
+                                    <th class="sort" data-sort="customer_name"
                                         data-name='dimension' data-filterable="false"
                                         data-visible="{{$show['dimension']}}">@if($config && $config->header)
                                         {{$config->header['dimension']}} @else Dimension @endif</th>
-                                    <th class="sort" data-sort="product_name" style="width: 15% !important;"
+                                    <th class="sort" data-sort="product_name"
                                         data-name='kpi' data-filterable="false" data-visible="{{$show['kpi']}}">
                                         @if($config && $config->header) {{$config->header['kpi']}} @else KPI @endif</th>
-                                    <th class="sort" data-sort="date" style="width: 20% !important;"
+                                    <th class="sort" data-sort="date" 
                                         data-name='operational' data-filterable="false"
                                         data-visible="{{$show['operational']}}">@if($config && $config->header)
                                         {{$config->header['operational']}} @else Operational Definition @endif</th>
-                                    <th class="sort" data-sort="amount" style="width: 15% !important;"
+                                    <th class="sort" data-sort="amount" 
                                         data-name='measure' data-filterable="false" data-visible="{{$show['measure']}}">
                                         @if($config && $config->header) {{$config->header['measure']}} @else Measure
                                         @endif</th>
-                                    <th class="sort" data-sort="payment" style="width: 5% !important;"
+                                    <th class="sort" data-sort="payment"
                                         data-name='frequency' data-filterable="false"
                                         data-visible="{{$show['frequency']}}">@if($config && $config->header)
                                         {{$config->header['frequency']}} @else Frequency @endif</th>
-                                    <th class="sort" data-sort="status" style="width: 5% !important;" data-name='target'
+                                    <th class="sort" data-sort="status"  data-name='target'
                                         data-filterable="false" data-visible="{{$show['target']}}">@if($config &&
                                         $config->header) {{$config->header['target']}} @else Target @endif</th>
-                                    <th class="sort" data-sort="status" style="width: 11% !important;"
+                                    <th class="sort" data-sort="status" 
                                         data-name='stretchTarget' data-filterable="false"
                                         data-visible="{{$show['stretchTarget']}}">@if($config && $config->header)
                                         {{$config->header['stretchTarget']}} @else Stretch Target @endif</th>
-                                    <th class="sort" data-sort="status" style="width: 4% !important;" data-name='source'
+                                    <th class="sort" data-sort="status"  data-name='source'
                                         data-filterable="false" data-visible="{{$show['source']}}">@if($config &&
                                         $config->header) {{$config->header['source']}} @else Source @endif</th>
-                                    <th class="sort" data-sort="status" style="width: 15% !important;" width="10%"
-                                        data-name='kpiWeightage' data-filterable="false"
+                                    <th class="sort" data-sort="status"                                         data-name='kpiWeightage' data-filterable="false"
                                         data-visible="{{$show['kpiWeightage']}}">@if($config && $config->header)
                                         {{$config->header['kpiWeightage']}} @else KPI Weightage ( % ) @endif</th>
                                 </tr>
@@ -801,44 +805,44 @@ blockquote p::after {
                             <tbody class="tbody content-container" id="tbody">
                                 <tr class="addition-content cursor-pointer" id="content1">
                                     <td class="">
-                                        <span name="numbers" id="" class="tableInp">1</span>
-                                        <div class="text-danger delete-row cursor-pointer"><i
-                                                class="fa fa-trash f-20"></i></div>
+                                        <button class="btn bg-transparent border-0 outline-none"><i
+                                                class="fa fa-trash text-danger f-20"></i></button>
+                                        
                                     </td>
-                                    <td class="text-box-td p-1">
-                                        <textarea name="dimension[]" id="dimension" class="text-box" cols="20"
+                                    <td class="text-box-td">
+                                        <textarea name="dimension[]" id="dimension" class="text-box" row="2" cols="20"
                                             placeholder="type here"></textarea>
                                     </td>
-                                    <td class="text-box-td p-1">
-                                        <textarea name="kpi[]" id="" class="text-box" cols="20"
+                                    <td class="text-box-td ">
+                                        <textarea name="kpi[]" id="" class="text-box"  row="2" cols="20"
                                             placeholder="type here"></textarea>
                                     </td>
-                                    <td class="text-box-td p-1">
-                                        <textarea name="operational[]" id="" class="text-box" cols="20"
+                                    <td class="text-box-td ">
+                                        <textarea name="operational[]" id="" class="text-box" row="2" cols="20"
                                             placeholder="type here"></textarea>
                                     </td>
-                                    <td class="text-box-td p-1">
-                                        <textarea name="measure[]" id="" class="text-box" cols="20"
+                                    <td class="text-box-td ">
+                                        <textarea name="measure[]" id="" class="text-box" row="2" cols="20"
                                             placeholder="type here"></textarea>
                                     </td>
-                                    <td class="text-box-td p-1">
-                                        <textarea name="frequency[]" id="" class="text-box" cols="20"
+                                    <td class="text-box-td ">
+                                        <textarea name="frequency[]" id="" class="text-box" row="2" cols="20"
                                             placeholder="type here"></textarea>
                                     </td>
-                                    <td class="text-box-td p-1">
-                                        <textarea name="target[]" id="" class="text-box" cols="20"
+                                    <td class="text-box-td ">
+                                        <textarea name="target[]" id="" class="text-box" row="2" cols="20"
                                             placeholder="type here"></textarea>
                                     </td>
-                                    <td class="text-box-td p-1">
-                                        <textarea name="stretchTarget[]" id="" class="text-box" cols="10"
+                                    <td class="text-box-td ">
+                                        <textarea name="stretchTarget[]" id="" class="text-box" row="2" cols="20"
                                             placeholder="type here"></textarea>
                                     </td>
-                                    <td class="text-box-td p-1">
-                                        <textarea name="source[]" id="" class="text-box" cols="10"
+                                    <td class="text-box-td ">
+                                        <textarea name="source[]" id="" class="text-box" row="2" cols="20"
                                             placeholder="type here"></textarea>
                                     </td>
-                                    <td class="text-box-td p-1">
-                                        <textarea name="kpiWeightage[]" id="" class="text-box" cols="10"
+                                    <td class="text-box-td ">
+                                        <textarea name="kpiWeightage[]" id="" class="text-box" row="2" cols="20"
                                             placeholder="type here"></textarea>
                                     </td>
                                 </tr>
@@ -847,13 +851,13 @@ blockquote p::after {
                         </table>
                     </div>
                 </form>
-                <div class="align-items-center justify-content-center d-flex mt-4 cursor-pointer">
-                    <span class="plus-sign p-4"><i class="fa fa-plus f-20"></i></span>
+                <div class="align-items-center justify-content-end d-flex mt-2 cursor-pointer">
+                <span class="plus-sign text-info "><i class="fa fa-plus f-20"></i>Add More</span>
                 </div>
 
                 <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
-                    <button class="btn btn-danger table-btn mx-2" id="save-table">Save</button>
-                    <button class="btn btn-danger mx-2" id="publish-goal" disabled>Publish</button>
+                    <button class="btn btn-orange table-btn mx-2" id="save-table">Save</button>
+                    <button class="btn btn-orange mx-2" id="publish-goal" disabled>Publish</button>
                 </div>
 
             </div>

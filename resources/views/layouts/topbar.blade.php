@@ -54,8 +54,8 @@
                             </span>
                         </button>
                         <div class="topbar-logo mx-2" style="width:100px">
-                            <!-- <img src="{{ URL::asset($logoSrc) }}" alt="" class="w-100 h-100"> -->
-                            <img src="{{ URL::asset('assets/images/vasa.jpg') }}" alt="" class="w-100 h-100">
+                            <img src="{{ URL::asset($logoSrc) }}" alt="" class="w-100 h-100">
+                            <!-- <img src="{{ URL::asset('assets/images/vasa.jpg') }}" alt="" class="w-100 h-100"> -->
                         </div>
 
                         <div class="topbar-search-bar search-content d-flex  align-items-center w-50 "
