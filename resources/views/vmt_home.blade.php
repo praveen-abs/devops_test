@@ -5,6 +5,7 @@
 <link href="{{ URL::asset('assets/css/salary.css') }}" rel="stylesheet">
 <!-- for bootstrap temporary -->
 
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -19,6 +20,8 @@
 
 <!-- end -->
 
+<!-- for font awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/employee-directory.css') }}">
@@ -42,27 +45,20 @@
                         <h5 class="text-primary">
                             Your Pay Summary
                         </h5>
-                        <button class="btn btn-primary"> <i class=" ri-calendar-2-line"></i> </button>
+                        <button class="btn btn-primary py-1 px-2"> <i class=" ri-calendar-2-line"></i> </button>
                     </div>
 
                     <div class="row">
                         <div class="col-4">
-
-                            <div class="pay-chart-column pay-summary-border">
-                                <div id="ember67" class="ember-view"><svg width="100%" height="200"
-                                        viewBox="0 0 200 200" preserveAspectRatio="xMidYMid meet">
-                                        <g class="pie-container" transform="translate(100, 100)">
-                                            <path
-                                                d="M6.123233995736766e-15,-100A100,100 0 1,1 -46.84084406997906,-88.35120444460226L-30.44654864548639,-57.42828288899147A65,65 0 1,0 3.980102097228898e-15,-65Z"
-                                                class="arc cursor-pointer" style="fill:#002f56"></path>
-                                            <path
-                                                d="M-46.84084406997906,-88.35120444460226A100,100 0 0,1 -1.8369701987210297e-14,-100L-1.1940306291686693e-14,-65A65,65 0 0,0 -30.44654864548639,-57.42828288899147Z"
-                                                class="arc cursor-pointer" style="fill: rgb(255, 105, 121);">
-                                            </path>
-                                        </g><text class="default-label" dx="100" dy="103">May 2022</text>
-                                    </svg></div>
-
-                            </div>
+                            <figure>
+                                <!-- <figcaption>SVG PIE Chart with CSS animation</figcaption> -->
+                                <svg viewBox="0 0 63.6619772368 63.6619772368">
+                                    <circle class="pie1" cx="31.8309886184" cy="31.8309886184" r="15.9154943092" />
+                                    <circle class="pie2" cx="31.8309886184" cy="31.8309886184" r="15.9154943092" />
+                                    <circle class="pie3" cx="31.8309886184" cy="31.8309886184" r="15.9154943092" />
+                                    <circle class="pie4" cx="31.8309886184" cy="31.8309886184" r="15.9154943092" />
+                                </svg>
+                            </figure>
                         </div>
                         <div class="col-8 d-flex align-items-center justify-content-center">
 
@@ -105,23 +101,23 @@
                         <h5 class="text-primary">
                             EPF Summary
                         </h5>
-                        <button class="btn btn-primary"> <i class=" ri-calendar-2-line"></i> </button>
+                        <button class="btn btn-primary px-2 py-1"> <i class=" ri-calendar-2-line"></i> </button>
                     </div>
 
                     <div class="row">
                         <div class="col-12">
                             <ul class="personal-info">
                                 <li>
-                                    <div class="title h5 text-muted ">Total Contribution</div>
-                                    <div class="text  h5 text-primary ">₹ 3,600.00</div>
+                                    <div class="title f-15  text-muted ">Total Contribution</div>
+                                    <div class="text text-end h5 text-primary ">₹ 3,600.00</div>
                                 </li>
                                 <li>
-                                    <div class="title h5 text-muted ">Your Contribution</div>
-                                    <div class="text h5 text-primary ">₹ 3,600.00</div>
+                                    <div class="title f-15 text-muted ">Your Contribution</div>
+                                    <div class="text  text-end h5 text-primary ">₹ 3,600.00</div>
                                 </li>
                                 <li>
-                                    <div class="title h5 text-muted ">Employee Contribution</div>
-                                    <div class="text h5 text-primary ">₹ 3,600.00</div>
+                                    <div class="title f-15 text-muted ">Employee Contribution</div>
+                                    <div class="text text-end h5 text-primary ">₹ 3,600.00</div>
                                 </li>
                             </ul>
                         </div>
@@ -130,8 +126,10 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="dotted-line pt-2">
-                                <i class="mx-1 ri-error-warning-fill text-grey"></i>
-                                <span>Towards EPF, you contribute 12% of upto ₹ 15,000.00 of your Basic Pay and your
+
+                                <i class="mr-1 text-danger ri-error-warning-fill text-grey"></i>
+                                <span class="opacity-medium f-12">Towards EPF, you contribute 12% of upto ₹ 15,000.00 of
+                                    your Basic Pay and your
                                     employer
                                     contributes another 12% of upto ₹ 15,000.00 of your Basic Pay.</span>
                             </div>
@@ -169,22 +167,21 @@
                         <div class="col-12">
                             <ul class="personal-info">
                                 <li>
-                                    <div class="title h5 text-muted ">August Salary Slip</div>
+                                    <div class="title f-15 text-muted ">August Salary Slip</div>
 
-                                    <div class="text h4  "><i class="text-orange  ri-download-cloud-2-fill"></i>
+                                    <div class="text h4  text-end"><i class="text-orange fa fa-download"
+                                            aria-hidden="true"></i></i>
                                     </div>
                                 </li>
                                 <li>
-                                    <div class="title h5 text-muted ">September Salary Slip</div>
+                                    <div class="title f-15 text-muted ">September Salary Slip</div>
 
-                                    <div class="text h4 text-orange "><i
-                                            class="text-orange ri-download-cloud-2-fill"></i> </div>
+                                    <div class="text h4 text-end"><i class="text-orange fa fa-download"></i> </div>
                                 </li>
                                 <li>
-                                    <div class="title h5 text-muted ">October Salary Slip</div>
+                                    <div class="title f-15 text-muted ">October Salary Slip</div>
 
-                                    <div class="text h4 text-orange "><i
-                                            class="text-orange ri-download-cloud-2-fill"></i> </div>
+                                    <div class="text h4 text-end "><i class="text-orange  fa fa-download"></i> </div>
                                 </li>
                             </ul>
                         </div>
@@ -219,21 +216,21 @@
 
                     <ul class="personal-info">
                         <li>
-                            <div class="title h5 text-muted ">August Salary Slip</div>
+                            <div class="title f-15 text-muted ">August Salary Slip</div>
 
-                            <div class="text h4  "><i class="text-orange  ri-download-cloud-2-fill"></i>
+                            <div class="text h4  text-end"><i class="text-orange  fa fa-download"></i>
                             </div>
                         </li>
                         <li>
-                            <div class="title h5 text-muted ">September Salary Slip</div>
+                            <div class="title f-15 text-muted ">September Salary Slip</div>
 
-                            <div class="text h4 text-orange "><i class="text-orange ri-download-cloud-2-fill"></i>
+                            <div class="text h4 text-end "><i class="text-orange fa fa-download"></i>
                             </div>
                         </li>
                         <li>
-                            <div class="title h5 text-muted ">October Salary Slip</div>
+                            <div class="title f-15 text-muted ">October Salary Slip</div>
 
-                            <div class="text h4 text-orange "><i class="text-orange ri-download-cloud-2-fill"></i>
+                            <div class="text h4 text-end "><i class="text-orange fa fa-download"></i>
                             </div>
                         </li>
                     </ul>
@@ -271,15 +268,14 @@
                         <div class="col-12">
                             <ul class="personal-info">
                                 <li>
-                                    <div class="title  text-muted h5 ">Form-16</div>
-                                    <div class="text h4"><i class="text-orange  ri-download-cloud-2-fill"></i>
+                                    <div class="title  text-muted f-15 ">Form-16</div>
+                                    <div class="text h4 text-end"><i class="text-orange  fa fa-download"></i>
                                     </div>
                                 </li>
                                 <li>
-                                    <div class="title  text-muted h5">Form-12BB</div>
+                                    <div class="title  text-muted f-15">Form-12BB</div>
 
-                                    <div class="text h4 text-orange "><i
-                                            class="text-orange ri-download-cloud-2-fill"></i> </div>
+                                    <div class="text h4 text-end "><i class="text-orange fa fa-download"></i> </div>
                                 </li>
 
                             </ul>
@@ -297,7 +293,7 @@
                         <h5 class="text-primary">
                             Cost To Company(CTC)
                         </h5>
-                        <button class="btn btn-primary"> <i class=" ri-calendar-2-line"></i> </button>
+                        <button class="btn btn-primary px-2 py-1"> <i class=" ri-calendar-2-line"></i> </button>
                     </div>
 
                     <div class="row">
@@ -305,16 +301,15 @@
                             <ul class="personal-info">
                                 <li>
                                     <div class="title">
-                                        <div class=" h5 text-muted ">Total Contribution
+                                        <div class=" f-15 text-muted ">Total Contribution
 
                                         </div>
-                                        <small class="text-muted">(Whole pay structure including all primary salary
+                                        <small class="text-muted f-10">(Whole pay structure including all primary salary
                                             components)</small>
                                     </div>
 
 
-                                    <div class="text h4 text-orange "><i
-                                            class="text-orange ri-download-cloud-2-fill"></i> </div>
+                                    <div class="text h4 text-end "><i class="text-orange fa fa-download"></i> </div>
                                 </li>
 
                             </ul>
@@ -1340,33 +1335,33 @@
                             </div>
 
                             <div class="income-card-container">
-                             
-                                        <div class="title">
-                                            <h5 class="">Income From Others Sources</h5>
-                                            <small class="text-muted">(Income from other sources is a residual category
-                                                used to
-                                                classify Income that is not classified as taxed under any other heard of
-                                                income)</small>
-                                        </div>
-                                        <div class="income-card-wrapper mt-3">
-                                            <div class="row">
-                                                <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
-                                                    <div class="card bg-medium-red declaration-important-card ">
-                                                        <div class="card-body py-2">
-                                                            <ul class="list-style-numbered list-style-circle mx-2">
-                                                                <li> Income form other sources not added
-                                                                </li>
 
-                                                            </ul>
+                                <div class="title">
+                                    <h5 class="">Income From Others Sources</h5>
+                                    <small class="text-muted">(Income from other sources is a residual category
+                                        used to
+                                        classify Income that is not classified as taxed under any other heard of
+                                        income)</small>
+                                </div>
+                                <div class="income-card-wrapper mt-3">
+                                    <div class="row">
+                                        <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
+                                            <div class="card bg-medium-red declaration-important-card ">
+                                                <div class="card-body py-2">
+                                                    <ul class="list-style-numbered list-style-circle mx-2">
+                                                        <li> Income form other sources not added
+                                                        </li>
 
-                                                        </div>
-                                                    </div>
+                                                    </ul>
+
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
 
-                               
+
                         </div>
 
 

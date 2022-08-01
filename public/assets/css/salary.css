@@ -6,6 +6,8 @@
     width: 143px !important;
 }
 
+
+
 .pay-chart-column {
     margin-left: 50px !important;
 
@@ -29,13 +31,23 @@
 }
 
 .deductions-bar {
-    background: #9d3074;
+    background: #3d2fff;
 }
 
 .dotted-line {
-    border-top: dashed;
+    border-top:2px dashed #f1f3f4;
+    
+}
+.opacity-low{
+    opacity: 0.2;
+}
+.opacity-medium{
     opacity: 0.5;
 }
+
+/* .dotted-line i,span{
+    opacity: 1;
+} */
 
 
 .nav-tabs .nav-link {
@@ -139,3 +151,101 @@ hr.three {
 .small-card{
     height: 170px;
 }
+
+
+.chart{
+    height: 200px;
+    width: 200px;
+    background-color: red; /* For browsers that do not support gradients */
+    background-image: conic-gradient(red 0deg, red 90deg, yellow 90deg, yellow 180deg, green 180deg, green 270deg, blue 270deg);
+    border-radius: 50%;
+}
+
+/* chart */
+
+figure {
+    background-color:transparent;
+    display: block;
+    height: 140px !important;
+    border: 1px solid #eee;
+    border-radius: 50%;
+    position: relative;
+    font-size:16px;
+    font-size:1vw;
+    width:140px !important;
+    /* padding-bottom: 40em; */
+    margin: 0 !important;
+  }
+  
+  svg {
+    display: block;
+    height: 130px !important;
+    width: 130px !important;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    overflow: visible;
+  }
+  circle {
+      fill:rgba(0,0,0,0);
+    stroke-width:31.8309886184;
+    stroke-dasharray: 0,0,0,100;
+    stroke-dashoffset: 25;
+    -webkit-animation: pie1 3s infinite ease both;
+    animation: pie1 6s ease both;
+  }
+  .pie1 {
+    stroke: #9c3073;
+  }
+  .pie2 {
+    stroke:#26d9d9;
+    -webkit-animation-name: pie2;
+    animation-name: pie2;
+  }
+  .pie3 {
+    stroke: #18b710;
+    -webkit-animation-name: pie3;
+    animation-name: pie3;
+  }
+  .pie4 {
+    stroke:#3d2fff;
+    -webkit-animation-name: pie4;
+    animation-name: pie4;
+  }
+  /*
+   pie percentage made by stroke-dasharray.
+   stroke-dasharray format is...
+  
+   keyframe 100% : 0 offset this-percentage rest
+  
+   I added keyframe 50% for infinite presentation.
+  */
+  
+  /* 1st pie is 40% */
+  @-webkit-keyframes pie1 {
+    50%,100% {stroke-dasharray: 40,60,0,0;}
+  }
+  @keyframes pie1 {
+    50%,100% {stroke-dasharray: 40,60,0,0;}
+  }
+  /* 2nd pie is 30% */
+  @-webkit-keyframes pie2 {
+    50%,100% {stroke-dasharray: 0,40,30,30;}
+  }
+  @keyframes pie2 {
+    50%,100% {stroke-dasharray: 0,40,30,30;}
+  }
+  /* 3rd pie is 30% */
+  @-webkit-keyframes pie3 {
+    50%,100% {stroke-dasharray: 0,70,20,10;}
+  }
+  @keyframes pie3 {
+    50%,100% {stroke-dasharray: 0,70,20,10;}
+  }
+  /* 4th pie is 10% */
+  @-webkit-keyframes pie4 {
+    50%,100% {stroke-dasharray: 0,90,10,0;}
+  }
+  @keyframes pie4 {
+    50%,100% {stroke-dasharray: 0,90,10,0;}
+  }
