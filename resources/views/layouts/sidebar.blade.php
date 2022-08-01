@@ -1393,9 +1393,9 @@
         </button> -->
     <!-- </div> -->
 
-    <!-- <div class="sidebar-bottom-bg">
-    <img src="{{ URL::asset('assets/images/sidebar_icons/sidebar-bg.png') }}" alt="" class="h-100 w-100">
-    </div> -->
+    <div class="sidebar-bottom-bg" style="z-index:1;">
+    <img src="{{ URL::asset('assets/images/sidebar_icons/sidebar-bg.png') }}" alt="" class="h-100 w-100" >
+    </div>
 
 </div>
 

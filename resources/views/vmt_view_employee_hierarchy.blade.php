@@ -4,12 +4,13 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/orgchart/3.1.1/css/jquery.orgchart.min.css" rel="stylesheet">
     <style>
     #chart-container {
-        font-family: Arial;
         height: 500px;
-        border: 1px solid #aaa;
-        overflow: auto;
-        text-align: center;
-
+    /* border: 1px solid #aaa; */
+    overflow: auto;
+    text-align: center;
+    background: #fff;
+    border-radius: 12px;
+    border-top: 5px solid #002f56;
       }
       
       .orgchart { background: rgba(255, 255, 255, 0); }
