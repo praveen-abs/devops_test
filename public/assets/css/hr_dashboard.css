@@ -582,8 +582,7 @@ input+.slider-checkbox>.slider-checkbox-text:after {
 }
 
 .buttons-container .label-container {
-  display: flex;
-  flex-direction: column;
+
   -webkit-box-flex: 1;
   -moz-box-flex: 1;
   -webkit-flex: 1;
@@ -611,15 +610,9 @@ font-size: 15px;
 }
 
 .buttons-container {
-  height: 55px;
+  height: 45px;
   border-radius: 12px 12px 0px 0px !important;
   background: #002f56;
-}
-
-.month-container {
-  display: flex;
-  flex-direction: column;
-
 }
 
 .month-container span {
@@ -804,8 +797,8 @@ font-size: 15px;
     border-radius: 50%;
     align-items: center;
     display: flex;
- justify-content: center
- ;
+ justify-content: center;
+ cursor: pointer;
    
 }
 .post-contents  .img-contents i{

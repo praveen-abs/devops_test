@@ -9,7 +9,7 @@ img {
 .slideshow-container {
     position: relative;
   margin: auto;
-  height: 115pt;
+  height: 153px ;
 }
 
 /* slide-Next & slide-previous buttons */
@@ -82,6 +82,8 @@ img {
 .fade-slider {
   animation-name: fade;
   animation-duration: 1.5s;
+  height: 100%;
+  width: 100%;
 }
 
 @keyframes fade {
