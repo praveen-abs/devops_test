@@ -363,7 +363,7 @@ class VmtEmployeeController extends Controller
                 $compensatory->user_id = $newEmployee->userid;
                 $compensatory->basic = $row["basic"];
                 $compensatory->hra = $row["hra"];
-                $compensatory->Statutory_bonus = $row["Statutory_bonus"];
+                $compensatory->Statutory_bonus = $row["statutory_bonus"];
                 $compensatory->child_education_allowance = $row["child_education_allowance"];
                 $compensatory->food_coupon = $row["food_coupon"];
                 $compensatory->lta = $row["lta"];
@@ -931,7 +931,7 @@ class VmtEmployeeController extends Controller
                 $compensatory->user_id = $newEmployee->userid;
                 $compensatory->basic = $row["basic"];
                 $compensatory->hra = $row["hra"];
-                $compensatory->Statutory_bonus = $row["Statutory_bonus"];
+                $compensatory->Statutory_bonus = $row["statutory_bonus"];
                 $compensatory->child_education_allowance = $row["child_education_allowance"];
                 $compensatory->food_coupon = $row["food_coupon"];
                 $compensatory->lta = $row["lta"];

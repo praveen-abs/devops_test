@@ -323,64 +323,81 @@ stateFunction(id, '#current_state');
 
 $('#submit_button').on('click', function(e) {
 console.log("here");
+console.log($('#form-1').valid());
 var flag = false;
-if ($('#form-1').valid() && !flag) {
-    var form_data1 = new FormData(document.getElementById("form-1"));
-    $.ajax({
-        url: "{{url('vmt-employee-onboard')}}",
-        type: "POST",
-        dataType: "json",
-        data: form_data1,
-        contentType: false,
-        processData: false,
-        success: function(data) {
-            // if (data.responseText == "Saved") {
-            //     $('#modalHeader').html(data);
-            //     $('#modalNot').html("Employee Onboarding success");                
-            //     $('#modalBody').html("Mail notification sent.");
-            //     $('#notificationModal').show();
-            //     $('#notificationModal').removeClass('fade');
-            // } else {
-            //     $('#modalHeader').html(data);
-            //     $('#modalNot').html("Failed to save Data");                
-            //     //$('#modalBody').html("Request to the server failed");
-            //     $('#notificationModal').show();
-            //     $('#notificationModal').removeClass('fade');
-            // }
-            // console.log(data);
 
-            //alert(data);
-        },
-        error: function(data) { //NEED TO FIX IT
-            // console.log('error');
-            if (data.responseText == "Saved") {
-                $('#modalHeader').html(data);
-                $('#modalNot').html("Employee Onboarding success");
-                $('#modalBody').html("Mail notification sent.");
-                $('#notificationModal').show();
-                $('#notificationModal').removeClass('fade');
-            } else {
+    //alert("1 st one");
 
-                $('#modalHeader').html(data);
-                $('#modalNot').html("Failed to save Data");
-                //$('#modalBody').html("Request to the server failed");
-                $('#notificationModal').show();
-                $('#notificationModal').removeClass('fade');
-            }
-            //var result = $.parseJSON(data);
-            //alert("Server request failed "+result['message']);
-            //alert(data['message']);
-            // $('#modalHeader').html(data);
-            // $('#modalNot').html("Failed to save Data");                
-            // //$('#modalBody').html("Request to the server failed");
-            // $('#notificationModal').show();
-            // $('#notificationModal').removeClass('fade');
+    var regex =' /([A-Z]){5}([0-9]){4}([A-Z]){1}$/';
+    var txtPANCard = $("#pan_no").val();
+    var textDLno = $("#dl_no").val();
+    var txtIFSCNo = $("#bank_ifsc").val();
+    var ifsc = '^[A-Z]{4}0[A-Z0-9]{6}$';
+    var dl_pat = '/^(([A-Z]{2}[0-9]{2})( )|([A-Z]{2}-[0-9]{2}))((19|20)[0-9][0-9])[0-9]{7}$/';
+    if(txtPANCard.match(regex)){
+        //alert("done ");
+        console.log("Pan card correct");
+    }else if(textDLno.match(dl_pat)){
+        //alert("dl no done");
+        console.log("DL No correct");
 
-            //alert("Server request failed !");
+    }else if(txtIFSCNo.match(ifsc)){
+       // alert("done ifsc");
+       console.log("IFSC correct");
 
+    }else{ 
+
+        if ($('#form-1').valid() && !flag) {
+            //alert("1 st one");
+            var form_data1 = new FormData(document.getElementById("form-1"));
+            var txtPANCard = $("#pan_no").val();
+        
+            $.ajax({
+                url: "{{url('vmt-employee-onboard')}}",
+                type: "POST",
+                dataType: "json",
+                data: form_data1,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    if (data.responseText == "Saved") {
+                        $('#modalHeader').html(data);
+                        $('#modalNot').html("Employee Onboarding success");                
+                        $('#modalBody').html("Mail notification sent.");
+                        $('#notificationModal').show();
+                        $('#notificationModal').removeClass('fade');
+                    } else {
+                        $('#modalHeader').html(data);
+                        $('#modalNot').html("Failed to save Data");                
+                        //$('#modalBody').html("Request to the server failed");
+                        $('#notificationModal').show();
+                        $('#notificationModal').removeClass('fade');
+                    }
+                    console.log(data);
+
+                    //alert(data);
+                },
+                error: function(data) { //NEED TO FIX IT
+                    // console.log('error');
+                    if (data.responseText == "Saved") {
+                        $('#modalHeader').html(data);
+                        $('#modalNot').html("Employee Onboarding success");
+                        $('#modalBody').html("Mail notification sent.");
+                        $('#notificationModal').show();
+                        $('#notificationModal').removeClass('fade');
+                    } else {
+
+                        $('#modalHeader').html(data);
+                        $('#modalNot').html("Failed to save Data");
+                        //$('#modalBody').html("Request to the server failed");
+                        $('#notificationModal').show();
+                        $('#notificationModal').removeClass('fade');
+                    }
+
+                }
+            });
         }
-    });
-}
+    }
 });
 
 $('#form-1').validate({
