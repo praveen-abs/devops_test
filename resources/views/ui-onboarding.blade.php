@@ -99,7 +99,7 @@
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="pan_no">Pan Card Number<span id="pan_no_req">{!! required() !!}</span></label> -->
                                                     <input type="text" placeholder="Pan Card Number" name="pan_no"
-                                                        id="pan_no" class="onboard-form form-control pan" pattern="pan"
+                                                        id="pan_no" class=" form-control pan" pattern="pan"
                                                         required />
                                                     <label class="error star_error pan_no_label" id="pan_no_label" for="pan_no"
                                                         style="display: none;"></label>
@@ -111,9 +111,9 @@
                                                         class="onboard-form form-control not-required validate" />
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
-                                                    <!-- <label class="" for="dl_no">DL Number</label> -->
-                                                    <input type="text" placeholder="DL Number" name="dl_no"
-                                                        class="onboard-form form-control not-required validate"
+                                                    <!-- <label class="" for="444">DL Number</label> -->
+                                                    <input type="text" placeholder="DL Number" name="dl_no" id="dl_no"
+                                                        class=" form-control not-required validate"
                                                         pattern="dl" />
                                                     <label class="error star_error dl_no_label" for="dl_no"
                                                         style="display: none;"></label>
@@ -196,8 +196,8 @@
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="bank_ifsc">Bank IFSC Code</label> -->
-                                                    <input type="text" placeholder="Bank IFSC Code" name="bank_ifsc"
-                                                        pattern="ifsc" class="onboard-form form-control" required />
+                                                    <input type="text" placeholder="Bank IFSC Code" name="bank_ifsc" id="bank_ifsc"
+                                                        pattern="ifsc" class=" form-control" required />
                                                     <label class="error star_error bank_ifsc_label" for="bank_ifsc"
                                                         style="display: none;"></label>
                                                 </div>
@@ -511,7 +511,7 @@
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mt-2">
                                                     <!-- <label class="" for="Statutory_bonus">Statutory Bonus{!! required() !!}</label> -->
                                                     <input type="number" placeholder="Statutory Bonus"
-                                                        name="Statutory_bonus"
+                                                        name="statutory_bonus"
                                                         class="onboard-form form-control calculation_data gross_data"
                                                         step="0.01" required />
                                                 </div>
