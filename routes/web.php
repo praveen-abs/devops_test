@@ -96,6 +96,7 @@ Route::post('vmt-pms-kpi-table/save', 'App\Http\Controllers\VmtPmsController@vmt
 Route::post('vmt-pms-assign-goals/publish', 'App\Http\Controllers\VmtPmsController@vmtPublishGoals');
 
 Route::get('vmt-getAllChildEmployees', 'App\Http\Controllers\VmtPmsController@vmtGetAllChildEmployees');
+Route::get('vmt-getAllParentReviewer', 'App\Http\Controllers\VmtPmsController@vmtGetAllParentReviewer');
 
 Route::get('vmt-approvereject-kpitable', 'App\Http\Controllers\VmtApraisalController@approveRejectKPITable');
 Route::post('vmt-approvereject-command', 'App\Http\Controllers\VmtApraisalController@approveRejectCommandKPITable');
@@ -194,7 +195,7 @@ Route::get( '/download/{filename}', 'App\Http\Controllers\VmtPaySlipController@d
 Route::post('vmt-general-info',  [App\Http\Controllers\HomeController::class, 'storeGeneralInfo']);
 
 // self appraisal review for employees
-Route::get('vmt-pmsappraisal-review', 'App\Http\Controllers\VmtApraisalController@showEmployeeApraisalReview');
+Route::get('vmt-pmsappraisal-review', 'App\Http\Controllers\VmtPmsController@showEmployeeApraisalReview');
 
 Route::post('vmt-pmsappraisal-review', 'App\Http\Controllers\VmtApraisalController@storeEmployeeApraisalReview');
 

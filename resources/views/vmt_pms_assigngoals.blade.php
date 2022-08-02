@@ -341,26 +341,26 @@
                 </td>
                 <td class="">{{$emp['ranking']}}</td>
                 <td>
-                    @if(auth()->user()->hasrole('Employee'))
+                                                    <a target="_blank"
+                        href="{{url('vmt-pmsappraisal-review?id='.$emp->kpi_table_id.'&user_id='.$emp->userid)}}"><button class="btn btn-orange py-0 px-2 "> <span
+                            class="mr-10 icon"></span>
+                            
+                        Review</button></a>
+                    <!-- @if(auth()->user()->hasrole('Employee')) -->
                     <!-- <a target="_blank"
                         href="{{url('vmt-pmsappraisal-review?id='.$emp->kpi_table_id)}}"><button class="btn btn-orange py-0 px-2 "> <span
                             class="mr-10 icon"><i class="text-white ri-pencil-line"></i></span>
                                                     Review</button></a> -->
-                                                    <a target="_blank"
-                        href="{{url('vmt-pmsappraisal-review?id='.$emp->kpi_table_id)}}"><button class="btn btn-orange py-0 px-2 "> <span
-                            class="mr-10 icon"></span>
-                            
-                        Review</button></a>
-                    @else
+                    <!-- @else
                     <a target="_blank"
                         href="{{url('pms-employee-reviews?goal_id='.$emp->kpi_table_id.'&user_id='.$emp->userid)}}"><button class="btn btn-orange py-0 px-2 "><span
                             class="mr-10 icon"></span>
-                            Review</button></a>
+                            Review</button></a> -->
                     <!-- <a target="_blank"
                         href="{{url('pms-employee-reviews?goal_id='.$emp->kpi_table_id.'&user_id='.$emp->userid)}}"><button class="btn btn-orange py-0 px-2 "><span
                             class="mr-10 icon"><i class="text-white ri-pencil-line"></i></span>
                             Review</button></a> -->
-                    @endif
+                    <!-- @endif -->
                 </td>              
             </tr>
             @endforeach
@@ -1327,6 +1327,46 @@ $(function () {
         e.preventDefault();
         changeEmployee();
     });
+    
+    $('#changeEmployeeForm').on('submit', function(e){
+        e.preventDefault();    
+        var employeeSelected = $('#select-employees').val();    
+        $.ajax({
+            type: "GET", 
+            url: "{{url('vmt-getAllParentReviewer')}}"+'?emp_id='+employeeSelected, 
+            success: function(data){
+                var reviewerId = [];
+                var reviewer = [];
+                $.each(data, function(i, tempdata){
+                    reviewer.push(tempdata.name);
+                    reviewerId.push(tempdata.id);
+                });
+                    
+                $('#select-reviewer').val(reviewerId).trigger('change');
+                $("#sel_reviewer").val(reviewerId.join());
+                $('#selected_reviewer').val(reviewer.join());
+            }
+        });
+
+        changeReviewer();
+        changeEmployee();
+    });
+
+    function changeReviewer() {
+        var reviewerSelected = $('#select-reviewer').val();
+        var reviewers = {!!json_encode($users)!!};
+
+        var reviewerArray = [];
+        $("#sel_reviewer").val(reviewerSelected);
+        $.each(reviewers, function(i, data){
+            if($.inArray(data.id.toString(), reviewerSelected) > -1){
+                reviewerArray.push(data.emp_name);
+            }
+        });
+        $('#selected_reviewer').val(reviewerArray.join());
+    }
+
+
 
     function changeEmployee() {
         var employeeSelected = $('#select-employees').val();
@@ -1415,30 +1455,30 @@ $('#form_selectReviewer').on('submit', function(e){
              $('#btn_changeManager').html("Edit");
         }
     });
-    $('#selected_reviewer').val(reviewer.join()).trigger('change');
+    $('#selected_reviewer').val(reviewer.join());
     $.ajax({
         type: "GET", 
         url: "{{url('vmt-getAllChildEmployees')}}"+'?emp_id='+selReviewer, 
         //data: $('#kpiTableForm').serialize(), 
         success: function(data){
-        var optionHtml ="";
-        $.each(data, function(i, tempdata){
-            optionHtml = optionHtml+"<option value="+tempdata.id+" selected>"+tempdata.name+"</option>";
-            //if(tempdata.id == $('#select-employees').val()){
-            //        $('#reviewer-name').html(tempdata.name);
-            //        $('#reviewer-email').html(tempdata.email);
-            //    }
-          });
-            
-          $('#select-employees').html(optionHtml);
-          changeEmployee();
+            var optionHtml ="";
+            $.each(data, function(i, tempdata){
+                optionHtml = optionHtml+"<option value="+tempdata.id+" selected>"+tempdata.name+"</option>";
+                //if(tempdata.id == $('#select-employees').val()){
+                //        $('#reviewer-name').html(tempdata.name);
+                //        $('#reviewer-email').html(tempdata.email);
+                //}
+            });
+                
+            $('#select-employees').html(optionHtml);
+            changeEmployee();
                      // $("#kpiTableForm :input").prop("disabled", true);
            // $(".table-btn").prop('disabled', true);
             //console.log(data);
             //alert("Table Saved, Please publish goals");
            // $("#kpitable_id").val(data.table_id);
         }
-    })
+    });
 
 
     $('#createEmployee').css('display','none');
@@ -1566,7 +1606,7 @@ $('body').on('change', '#department', function() {
             });
             $("#sel_reviewer").val(reviewerId.join());
             $('#selected_reviewer').val(reviewer.join());
-            $('#select-reviewer').val(reviewer.join()).trigger('change');
+            $('#select-reviewer').val(reviewer).trigger('change');
             changeEmployee1(data['emp']);
         }
     });

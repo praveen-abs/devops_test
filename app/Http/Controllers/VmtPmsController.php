@@ -79,7 +79,7 @@ class VmtPmsController extends Controller
         //dd($userCount);
         $empCount = VmtEmployeePMSGoals::groupBy('employee_id')->count();
         $subCount = VmtEmployeePMSGoals::groupBy('employee_id')->where('is_hr_submitted', true)->count();
-        $users = User::all();
+        $users = User::join('vmt_employee_details',  'vmt_employee_details.userid', '=', 'users.id')->get();
         $department = Department::where('status', 'A')->get();
         // if (auth()->user()->hasrole('Employee')) {
             // $emp = VmtEmployee::join('vmt_employee_office_details',  'user_id', '=', 'vmt_employee_details.userid')->where('userid', auth()->user()->id)->first();
@@ -206,6 +206,25 @@ class VmtPmsController extends Controller
             )
             ->orderBy('users.name', 'ASC')
             ->whereIn('l1_manager_code', $currentEmpCode)
+            ->get();
+            return $users;
+
+        }
+
+        return array();
+    }
+
+    public function vmtGetAllParentReviewer(Request $request) {
+        if($request->has("emp_id")){
+            $currentEmpCode = VmtEmployeeOfficeDetails::whereIn('user_id',explode(',', $request->emp_id))->pluck('l1_manager_code');
+            $users = VmtEmployee::leftJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
+            ->select(
+                'users.name', 
+                'users.id as id',
+                'vmt_employee_details.emp_no as code',
+            )
+            ->orderBy('users.name', 'ASC')
+            ->whereIn('emp_no', $currentEmpCode)
             ->get();
             return $users;
 
@@ -367,6 +386,138 @@ class VmtPmsController extends Controller
         }
         return "Permission Denied";
 
+    }
+
+
+    // Appraisal review
+    public function showEmployeeApraisalReview(Request $request)
+    {
+        // code...
+        $kpiRows = [];
+        $kpiRowsId = '';
+
+        $config = ConfigPms::where('user_id', auth()->user()->id)->first();
+        $show['dimension'] = 'true';
+        $show['kpi'] = 'true';
+        $show['operational'] = 'true';
+        $show['measure'] = 'true';
+        $show['frequency'] = 'true';
+        $show['target'] = 'true';
+        $show['stretchTarget'] = 'true';
+        $show['source'] = 'true';
+        $show['kpiWeightage'] = 'true';
+        if ($config) {
+            $config->header = json_decode($config->column_header, true);
+            $show['dimension'] = $config->selected_columns && in_array('dimension', explode(',', $config->selected_columns)) ? 'true': 'false';
+            $show['kpi'] = $config->selected_columns && in_array('kpi', explode(',', $config->selected_columns)) ? 'true': 'false';
+            $show['operational'] = $config->selected_columns && in_array('operational', explode(',', $config->selected_columns)) ? 'true': 'false';
+            $show['measure'] = $config->selected_columns && in_array('measure', explode(',', $config->selected_columns)) ? 'true': 'false';
+            $show['frequency'] = $config->selected_columns && in_array('frequency', explode(',', $config->selected_columns)) ? 'true': 'false';
+            $show['target'] = $config->selected_columns && in_array('target', explode(',', $config->selected_columns)) ? 'true': 'false';
+            $show['stretchTarget'] = $config->selected_columns && in_array('stretchTarget', explode(',', $config->selected_columns)) ? 'true': 'false';
+            $show['source'] = $config->selected_columns && in_array('source', explode(',', $config->selected_columns)) ? 'true': 'false';
+            $show['kpiWeightage'] = $config->selected_columns && in_array('kpiWeightage', explode(',', $config->selected_columns)) ? 'true': 'false';
+        }
+        if($request->has('id')) {
+            $assignedGoals  = VmtEmployeePMSGoals::where('kpi_table_id', $request->id)->where('employee_id', $request->user_id)->orderBy('updated_at', 'DESC')->first();
+            //dd($assignedGoals);
+            $assignedEmployee_Userdata = User::where('id',  $assignedGoals->employee_id)->first();
+            $assignedEmployeeOfficeDetails = VmtEmployeeOfficeDetails::where('user_id', $assignedGoals->employee_id)->first();
+            $assignedEmp_manager_name = User::join('vmt_employee_details',  'vmt_employee_details.userid', '=', 'users.id')->where('vmt_employee_details.emp_no', $assignedEmployeeOfficeDetails->l1_manager_code)->pluck('name');
+            $employeeData = VmtEmployee::where('userid', $assignedGoals->employee_id)->first();
+            $kpiData      = VmtKPITable::find($assignedGoals->kpi_table_id);
+            $kpiRowArray  = explode(',', $kpiData->kpi_rows);
+            $kpiRows      = VmtAppraisalQuestion::whereIn('id', $kpiRowArray)->get();
+            $ids      = VmtAppraisalQuestion::whereIn('id', $kpiRowArray)->pluck('id')->toArray();
+            $assigners = User::whereIn('id', explode(',', $assignedGoals->reviewer_id))->get();
+            $assignersName = User::whereIn('id', explode(',', $assignedGoals->reviewer_id))->pluck('name')->toArray();
+            if ($assignersName) {
+                $assignersName = implode(',', $assignersName);
+            }
+            if ($ids) {
+                $kpiRowsId = implode(',', $ids);
+            }
+            if($assignedGoals->self_kpi_review != null){
+                $reviewArray = (json_decode($assignedGoals->self_kpi_review, true)) ? (json_decode($assignedGoals->self_kpi_review, true)) : [];
+                $percentArray = (json_decode($assignedGoals->self_kpi_percentage, true)) ? (json_decode($assignedGoals->self_kpi_percentage, true)) : [];
+                $commentArray = (json_decode($assignedGoals->self_kpi_comments, true)) ? (json_decode($assignedGoals->self_kpi_comments, true)) : [];
+                foreach ($kpiRows as $index => $value) {
+                    // code...
+                    $kpiRows[$index]['self_kpi_review'] = $reviewArray[$value->id];
+                    $kpiRows[$index]['self_kpi_percentage'] = $percentArray[$value->id];
+                    $kpiRows[$index]['self_kpi_comments'] = $commentArray[$value->id];
+                }
+            }
+            // 
+            if($assignedGoals->manager_kpi_review != null){
+                $reviewArrayManager = (json_decode($assignedGoals->manager_kpi_review, true));
+                $percentArrayManager = (json_decode($assignedGoals->manager_kpi_percentage, true));
+                //$commentArray = (json_decode($assignedGoals->self_kpi_comments, true));
+                foreach ($kpiRows as $index => $value) {
+                    // code...
+                    $kpiRows[$index]['manager_kpi_review'] = $reviewArrayManager[$value->id];
+                    $kpiRows[$index]['manager_kpi_percentage'] = $percentArrayManager[$value->id];
+                    //$kpiRows[$index]['self_kpi_comments'] = $commentArray[$value->id];
+                }
+            }
+            $reviewCompleted = false;
+            //
+            if($assignedGoals->hr_kpi_review != null){
+                $reviewHrArray = (json_decode($assignedGoals->hr_kpi_review, true)) ? (json_decode($assignedGoals->hr_kpi_review, true)) : [];
+                $percentHrArray = (json_decode($assignedGoals->hr_kpi_percentage, true)) ? (json_decode($assignedGoals->hr_kpi_percentage, true)) : [];
+                foreach ($kpiRows as $index => $value) {
+                    // code...
+                    if (count($reviewHrArray) > 0) {
+                        $kpiRows[$index]['hr_kpi_review'] = $reviewHrArray[$value->id];
+                    }
+                    if (count($percentHrArray) > 0) {
+                        $kpiRows[$index]['hr_kpi_percentage'] = $percentHrArray[$value->id];
+                    }
+                }
+
+                $reviewCompleted = true;
+            }
+            $empSelected = true;
+            $ratingDetail = [];
+            $per = json_decode($assignedGoals->hr_kpi_percentage, true) ? json_decode($assignedGoals->hr_kpi_percentage, true) : [];
+            if (count($per) > 0) {
+                $ratingDetail['rating'] = array_sum($per)/count($per);
+                if ($ratingDetail['rating'] < 60) {
+                    $ratingDetail['performance'] = "Needs Action";
+                    $ratingDetail['ranking'] = 1;
+                    $ratingDetail['action'] = 'Exit';
+                } elseif ($ratingDetail['rating'] >= 60 && $ratingDetail['rating'] < 70) {
+                    $ratingDetail['performance'] = "Below Expectations";
+                    $ratingDetail['ranking'] = 2;
+                    $ratingDetail['action'] = 'PIP';
+                } elseif ($ratingDetail['rating'] >= 70 && $ratingDetail['rating'] < 80) {
+                    $ratingDetail['performance'] = "Meet Expectations";
+                    $ratingDetail['ranking'] = 3;
+                    $ratingDetail['action'] = '10%';
+                } elseif ($ratingDetail['rating'] >= 80 && $ratingDetail['rating'] < 90) {
+                    $ratingDetail['performance'] = "Exceeds Expectations";
+                    $ratingDetail['ranking'] = 4;
+                    $ratingDetail['action'] = '15%';
+                } elseif ($ratingDetail['rating'] >= 90) {
+                    $ratingDetail['performance'] = "Exceptionally Exceeds Expectations";
+                    $ratingDetail['ranking'] = 5;
+                    $ratingDetail['action'] = '20%';
+                }
+                else{
+                    $ratingDetail['performance'] = "error";
+                    $ratingDetail['ranking'] = 000;
+                    $ratingDetail['action'] = '0000%';                      
+                }
+            }
+            //dd($kpiRows);
+
+            return view('vmt_appraisalreview_hr', compact( 'employeeData','assignedEmployee_Userdata','assignedEmp_manager_name','assignedEmployeeOfficeDetails', 'assignedGoals', 'kpiRows', 'empSelected', 'reviewCompleted', 'ratingDetail', 'kpiRowsId', 'assigners', 'assignersName', 'config', 'show'));
+        }
+
+        $kpiRows = [];
+        $empSelected = false;
+        $reviewCompleted = false;
+        return view('vmt_appraisalreview_hr', compact('pmsGoalList', 'kpiRows', 'empSelected', 'reviewCompleted', 'kpiRowsId', 'config', 'show'));
     }
 
 }
