@@ -33,34 +33,33 @@
 
 <link href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css' rel='stylesheet' type='text/css'>
 <style>
-.output {
-    font: 1rem 'Fira Sans', sans-serif;
-}
+    .output {
+        font: 1rem 'Fira Sans', sans-serif;
+    }
 
-blockquote {
-    background: white;
-    border-radius: 5px;
-    margin: 0 !important;
-    height: 100px;
-    overflow-y:auto;
-}
+    blockquote {
+        background: white;
+        border-radius: 5px;
+        margin: 0 !important;
+        height: 100px;
+        overflow-y:auto;
+    }
 
-blockquote p {
-    padding: 15px;
-}
+    blockquote p {
+        padding: 15px;
+    }
 
-/* blockquote p::before {
-    content: '\201C';
-}
+    /* blockquote p::before {
+        content: '\201C';
+    }
 
-blockquote p::after {
-    content: '\201D';
-} */
+    blockquote p::after {
+        content: '\201D';
+    } */
 
-[contenteditable='true'] {
-    caret-color: red;
-}
-
+    [contenteditable='true'] {
+        caret-color: red;
+    }
 </style>
 @endsection
 
@@ -574,154 +573,137 @@ blockquote p::after {
                 <div class="modal-body">
               <div class="card card-md profile-box p-2 card-left-bar">
                 <div class="card-body">
+
+                    <form id="goalForm">
+                        <input type="hidden" name="goal_id" id="goal_id">
+                        @csrf
+                        <input type="hidden" name="kpitable_id" id="kpitable_id">
+                        <input type="hidden" name="employees[]" id="sel_employees">
+                        <input type="hidden" name="reviewer" id="sel_reviewer">
+                        <input type="hidden" name="assignment_period_year" id="assignment_period_year" value="<?php echo date("Y"); ?>">
+
+                        <div class="row ">
+                        <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
+                                
+                                    <label class="" for="calendar_type">Calendar Type</label>
+                                    <select name="calendar_type" id="calendar_type" class="form-control">
+                                        <option value="">Select</option>
+                                        <option name="financial_year" value="financial_year">Financial Year</option>
+                                        <option name="calendar_year" value="calendar_year">Calendar Year</option>
+                                    </select>
+                                
+                            </div>
+                            <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
+                                
+                                    <label class="" for="year">Year</label>
+                                    <input type="hidden" name="hidden_calendar_year" id="hidden_calendar_year" value="" >
+
+                                    <select name="year" id="year" disabled class="form-control">
+                                        <option value="">Select</option>
+                                        <option value="Jan-Dec">January - <?php echo date("Y"); ?> to December - <?= date("Y")?> </option>
+                                        <option value="Apr-Mar">April - <?php echo date("Y"); ?> to March - <?= date("Y")+1?></option>
+                                    </select>
+                                
+                            </div>
+                            <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
+                                
+                                    <label class="" for="frequency">Frequency</label>
+                                    <select name="frequency" id="frequency" class="form-control">
+                                        <option value="">Select</option>
+                                        <option value="monthly">Monthly</option>
+                                        <option value="quarterly">Quarterly</option>
+                                        <option value="halfYearly">Half Yearly</option>
+                                        <option value="yearly">Yearly</option>
+                                    </select>
+                                
+                            </div>
+                            <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
                     
-
-
-<form id="goalForm">
-    <input type="hidden" name="goal_id" id="goal_id">
-    @csrf
-    <input type="hidden" name="kpitable_id" id="kpitable_id">
-    @if(auth()->user()->hasrole('Employee'))
-    <input type="hidden" name="employees[]" value="{{auth()->user()->id}}" id="sel_employees">
-    @else
-    <input type="hidden" name="employees[]" id="sel_employees">
-    @endif
-
-    @if(auth()->user()->hasrole('Manager'))
-    <input type="hidden" name="reviewer" value="{{auth()->user()->id}}" id="sel_reviewer">
-    @elseif(auth()->user()->hasrole('Employee'))
-    <input type="hidden" name="reviewer" value="{{$users[0]['id']}}" id="sel_reviewer">
-    @else
-    <input type="hidden" name="reviewer" id="sel_reviewer">
-    @endif
-    <input type="hidden" name="assignment_period_year" id="assignment_period_year" value="<?php echo date("Y"); ?>">
-
-    <div class="row ">
-    <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
-            
-                <label class="" for="calendar_type">Calendar Type</label>
-                <select name="calendar_type" id="calendar_type" class="form-control">
-                    <option value="">Select</option>
-                    <option name="financial_year" value="financial_year">Financial Year</option>
-                    <option name="calendar_year" value="calendar_year">Calendar Year</option>
-                </select>
-            
-        </div>
-        <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
-            
-                <label class="" for="year">Year</label>
-                <input type="hidden" name="hidden_calendar_year" id="hidden_calendar_year" value="" >
-
-                <select name="year" id="year" disabled class="form-control">
-                    <option value="">Select</option>
-                    <option value="Jan-Dec">January - <?php echo date("Y"); ?> to December - <?= date("Y")?> </option>
-                    <option value="Apr-Mar">April - <?php echo date("Y"); ?> to March - <?= date("Y")+1?></option>
-                </select>
-            
-        </div>
-        <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
-            
-                <label class="" for="frequency">Frequency</label>
-                <select name="frequency" id="frequency" class="form-control">
-                    <option value="">Select</option>
-                    <option value="monthly">Monthly</option>
-                    <option value="quarterly">Quarterly</option>
-                    <option value="halfYearly">Half Yearly</option>
-                    <option value="yearly">Yearly</option>
-                </select>
-            
-        </div>
-        <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
-  
-                <label class="" for="assignment_period_start">Assignment Period</label>
-                <select name="assignment_period_start" id="assignment_period_start" class="form-control">
-                </select>
-            </div>
-  
-    </div>
-    <div class="row">
-    <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
-            
-                <label class="" for="department">Department</label>
-                <select name="department" id="department"  class="form-control">
-                    <option value="">Select Department</option>
-                    @foreach($department as $dept)
-                    <option value="{{$dept->id}}">{{$dept->name}}</option>
-                    @endforeach
-                </select>
-            
-        </div>
-        <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3 ">
-        <label class="" for="">Employees</label>
-                <input type="text" name="" id=""  class="form-control  increment-input" placeholder="Employees">
-                <button class="btn btn-orange increment-btn py-1 px-2">+</button>
-            
-        </div>
-        <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
-        <label class="" for="">Reviewer</label>
-        <input type="text" name="" id=""  class="form-control increment-input" placeholder="Reviewer">
-                <button class="btn py-1 px-3 btn-orange increment-btn">Select</button>
-            
-        </div>
-    </div>
-    <div class="row mt-3">
-        <!-- <div class="col-4  mt-3 mb-3">
-            @if (auth()->user()->hasrole('Manager') || auth()->user()->hasrole('Admin'))
-            <div class="d-flex flex-column">
-                <label class="" for="Assignment">Employees</label>
-                <div class="d-flex align-items-center">
-                    <div class="avatar-group-item">
-                    </div>
-                    <button id="btn_selectEmployees" type="button" target="#changeEmployee"
-                        class="right btn btn-primary py-1 px-3 rounded-pill mx-3 text-white chnageButton">Add</button>
-                </div>
-            </div>
-            @endif
-        </div> -->
-
-        <div class="col-4 mt-3 mb-3 d-flex ml-5">
-
-            <!-- <div class="d-flex flex-column">
-                <label class="" for="Assignment">Reviewer</label>
-                <div class="d-flex align-items-center">
-                    <div class="card reviwer-cards  m-0 rounded-pill">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <a>
-                                    <img src="assets/images/users/avatar-1.jpg" alt="" class="rounded-circle">
-                                </a>
-
-                                <div class=" mt-3 message-content align-items-start d-flex flex-column  mx-2">
-                                    @if(auth()->user()->hasrole('Manager'))
-                                    <h6 class="" id="reviewer-name">{{auth()->user()->name}}</h6>
-                                    @elseif(auth()->user()->hasrole('Employee'))
-                                    <h6 class="" id="reviewer-name">{{$users[0]['name']}}</h6>
-                                    @else
-                                    <h6 class="" id="reviewer-name">---</h6>
-                                    @endif
-
-                                    {{-- @if(auth()->user()->hasrole('Manager'))
-                                                            <span id="reviewer-email">{{auth()->user()->email}}</span>
-                                    @elseif(auth()->user()->hasrole('Employee'))
-                                    <span id="reviewer-email">{{$users[0]['email']}}</span>
-                                    @else
-                                    <span id="reviewer-email">---</span>
-                                    @endif --}}
+                                    <label class="" for="assignment_period_start">Assignment Period</label>
+                                    <select name="assignment_period_start" id="assignment_period_start" class="form-control">
+                                    </select>
                                 </div>
+                    
+                        </div>
+                        <div class="row">
+                            <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
+                                <label class="" for="department">Department</label>
+                                <select name="department" id="department"  class="form-control">
+                                    <option value="">Select Department</option>
+                                    @foreach($department as $dept)
+                                    <option value="{{$dept->id}}">{{$dept->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3 ">
+                                <label class="" for="">Employees</label>
+                                <input type="text" name="" id="selected_employee" target="#changeEmployee" class="form-control  increment-input" placeholder="Employees">
+                                <button type="button" id="" class="btn btn-orange increment-btn py-1 px-2 chnageButton">+</button>
+                            </div>
+                            <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
+                                <label class="" for="">Reviewer</label>
+                                <input type="text" name="" id="selected_reviewer" class="form-control increment-input" placeholder="Reviewer">
+                                <button type="button" id="" target="#createEmployee" class="btn py-1 px-3 btn-orange increment-btn reviewerButton">Select</button>
                             </div>
                         </div>
-                    </div>
-                    @hasrole('Admin')
-                    <button type="button" id="btn_changeManager" target="#createEmployee"
-                        class="right btn btn-primary py-1 px-3 rounded-pill mx-3 text-white reviewerButton">
-                        Select
-                    </button>
-                    @endif
-                </div>
-            </div> -->
-        </div>
-    </div>
-</form>
+                        <div class="row mt-3">
+                            <!-- <div class="col-4  mt-3 mb-3">
+                                @if (auth()->user()->hasrole('Manager') || auth()->user()->hasrole('Admin'))
+                                <div class="d-flex flex-column">
+                                    <label class="" for="Assignment">Employees</label>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar-group-item">
+                                        </div>
+                                        <button id="btn_selectEmployees" type="button" target="#changeEmployee"
+                                            class="right btn btn-primary py-1 px-3 rounded-pill mx-3 text-white chnageButton">Add</button>
+                                    </div>
+                                </div>
+                                @endif
+                            </div> -->
+
+                            <div class="col-4 mt-3 mb-3 d-flex ml-5">
+
+                                <!-- <div class="d-flex flex-column">
+                                    <label class="" for="Assignment">Reviewer</label>
+                                    <div class="d-flex align-items-center">
+                                        <div class="card reviwer-cards  m-0 rounded-pill">
+                                            <div class="card-body">
+                                                <div class="d-flex align-items-center">
+                                                    <a>
+                                                        <img src="assets/images/users/avatar-1.jpg" alt="" class="rounded-circle">
+                                                    </a>
+
+                                                    <div class=" mt-3 message-content align-items-start d-flex flex-column  mx-2">
+                                                        @if(auth()->user()->hasrole('Manager'))
+                                                        <h6 class="" id="reviewer-name">{{auth()->user()->name}}</h6>
+                                                        @elseif(auth()->user()->hasrole('Employee'))
+                                                        <h6 class="" id="reviewer-name">{{$users[0]['name']}}</h6>
+                                                        @else
+                                                        <h6 class="" id="reviewer-name">---</h6>
+                                                        @endif
+
+                                                        {{-- @if(auth()->user()->hasrole('Manager'))
+                                                                                <span id="reviewer-email">{{auth()->user()->email}}</span>
+                                                        @elseif(auth()->user()->hasrole('Employee'))
+                                                        <span id="reviewer-email">{{$users[0]['email']}}</span>
+                                                        @else
+                                                        <span id="reviewer-email">---</span>
+                                                        @endif --}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @hasrole('Admin')
+                                        <button type="button" id="btn_changeManager" target="#createEmployee"
+                                            class="right btn btn-primary py-1 px-3 rounded-pill mx-3 text-white reviewerButton">
+                                            Select
+                                        </button>
+                                        @endif
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </form>
                 </div>
               </div>
               <div class="card  profile-box p-2 card-left-bar">
@@ -810,39 +792,39 @@ blockquote p::after {
                                         
                                     </td>
                                     <td class="text-box-td">
-                                        <textarea name="dimension[]" id="dimension" class="text-box" row="2" cols="20"
+                                        <textarea data-show="{{$show['dimension']}}" name="dimension[]" id="dimension" class="text-box" row="2" cols="20"
                                             placeholder="type here"></textarea>
                                     </td>
                                     <td class="text-box-td ">
-                                        <textarea name="kpi[]" id="" class="text-box"  row="2" cols="20"
+                                        <textarea data-show="{{$show['kpi']}}" name="kpi[]" id="" class="text-box"  row="2" cols="20"
                                             placeholder="type here"></textarea>
                                     </td>
                                     <td class="text-box-td ">
-                                        <textarea name="operational[]" id="" class="text-box" row="2" cols="20"
+                                        <textarea data-show="{{$show['operational']}}" name="operational[]" id="" class="text-box" row="2" cols="20"
                                             placeholder="type here"></textarea>
                                     </td>
                                     <td class="text-box-td ">
-                                        <textarea name="measure[]" id="" class="text-box" row="2" cols="20"
+                                        <textarea data-show="{{$show['measure']}}" name="measure[]" id="" class="text-box" row="2" cols="20"
                                             placeholder="type here"></textarea>
                                     </td>
                                     <td class="text-box-td ">
-                                        <textarea name="frequency[]" id="" class="text-box" row="2" cols="20"
+                                        <textarea data-show="{{$show['frequency']}}" name="frequency[]" id="" class="text-box" row="2" cols="20"
                                             placeholder="type here"></textarea>
                                     </td>
                                     <td class="text-box-td ">
-                                        <textarea name="target[]" id="" class="text-box" row="2" cols="20"
+                                        <textarea data-show="{{$show['target']}}" name="target[]" id="" class="text-box" row="2" cols="20"
                                             placeholder="type here"></textarea>
                                     </td>
                                     <td class="text-box-td ">
-                                        <textarea name="stretchTarget[]" id="" class="text-box" row="2" cols="20"
+                                        <textarea data-show="{{$show['stretchTarget']}}" name="stretchTarget[]" id="" class="text-box" row="2" cols="20"
                                             placeholder="type here"></textarea>
                                     </td>
                                     <td class="text-box-td ">
-                                        <textarea name="source[]" id="" class="text-box" row="2" cols="20"
+                                        <textarea data-show="{{$show['source']}}" name="source[]" id="" class="text-box" row="2" cols="20"
                                             placeholder="type here"></textarea>
                                     </td>
                                     <td class="text-box-td ">
-                                        <textarea name="kpiWeightage[]" id="" class="text-box" row="2" cols="20"
+                                        <textarea data-show="{{$show['kpiWeightage']}}" name="kpiWeightage[]" id="" class="text-box" row="2" cols="20"
                                             placeholder="type here"></textarea>
                                     </td>
                                 </tr>
@@ -895,7 +877,7 @@ blockquote p::after {
                 <form id="form_selectReviewer" method="POST" >
                     @csrf
                     <label for="FormSelectDefault" class="form-label text-muted">Reviewer</label>
-                    <select class="form-select mb-3" aria-label="Default select example" name="reviewer" id="select-reviewer" >
+                    <select class="form-select mb-3" aria-label="Default select example" name="reviewer[]" multiple id="select-reviewer" >
                         @foreach($users as $index => $user)
                             <option value="{{$user->id}}">{{$user->name}}</option>
                         @endforeach
@@ -906,11 +888,9 @@ blockquote p::after {
                                 <div class="d-flex">
                                     <ul class="nav nav-pills w-100 mb-4" id="pills-tab"
                                         role="tablist">
-                                        <li class="nav-item d-flex w-100 align-items-center justify-content-end "
-                                            role="presentation">
+                                        <li class="nav-item d-flex w-100 align-items-center justify-content-end" role="presentation">
                                            
-                                            <button class="btn btn-primary waves-effect waves-light"
-                                                type="submit">
+                                            <button class="btn btn-primary waves-effect waves-light" type="submit">
                                                 Save
                                             </button>
 
@@ -1350,73 +1330,72 @@ $(function () {
 
     function changeEmployee() {
         var employeeSelected = $('#select-employees').val();
-        @if(auth()->user()->hasrole('Employee'))
-        @else
         var employees = {!!json_encode($employees)!!};
 
-        @endif
         var employeeArray = [];
         $("#sel_employees").val(employeeSelected);
-        var imgHtml ="";
-        var count = 0;
+        // var imgHtml ="";
+        // var count = 0;
         $.each(employees, function(i, data){
             //console.log(data);
             //console.log('employee selected', employeeSelected);
             if($.inArray(data.id.toString(), employeeSelected) > -1){
                 employeeArray.push(data.emp_name);
-                if (count < 4) {
-                    imgHtml = imgHtml+"<a class='avatar'><img src='assets/images/"+data.avatar+"' alt='' class='rounded-circle p-0'></a>";
-                }
-                count++;
+                // if (count < 4) {
+                //     imgHtml = imgHtml+"<a class='avatar'><img src='assets/images/"+data.avatar+"' alt='' class='rounded-circle p-0'></a>";
+                // }
+                // count++;
             }
         });
-        if (count > 4) {
-            imgHtml = imgHtml+"<span class='img-addition' style='background-color: rgb(134, 192, 106);width: 30px;height: 30px;font-size:12px;'> +"+count-3+" </span><div class='mt-1 message-content align-items-start d-flex flex-column  mx-2'><span id='group-employee'></span></div>";
-        }
+        // if (count > 4) {
+        //     imgHtml = imgHtml+"<span class='img-addition' style='background-color: rgb(134, 192, 106);width: 30px;height: 30px;font-size:12px;'> +"+count-3+" </span><div class='mt-1 message-content align-items-start d-flex flex-column  mx-2'><span id='group-employee'></span></div>";
+        // }
         //Change button text based on employee selection count
-        if(count > 0)
-        {
-            $('#btn_selectEmployees').html("Edit");
-          //  console.log("Changed to Edit button");
-        }
-        else
-        {
-            $('#btn_selectEmployees').html("Add");
-           // console.log("Changed to Add button");
-        }
+        // if(count > 0)
+        // {
+        //     $('#btn_selectEmployees').html("Edit");
+        //   //  console.log("Changed to Edit button");
+        // }
+        // else
+        // {
+        //     $('#btn_selectEmployees').html("Add");
+        //    // console.log("Changed to Add button");
+        // }
+        $('#selected_employee').val(employeeArray.join());
         $('#group-employee').html(employeeArray.join());
         $('#changeEmployee').css('display', 'none');
-        $('.avatar-group-item').html(imgHtml);
+        // $('.avatar-group-item').html(imgHtml);
     }
 
-@if(auth()->user()->hasrole('Manager'))
+    // for all roles should have a employee related to that manager Id
+// @if(auth()->user()->hasrole('Manager'))
 
-    var userid = {{auth()->user()->id}} 
-    $.ajax({
-        type: "GET", 
-        url: "{{url('vmt-getAllChildEmployees')}}"+'?emp_id='+userid, 
-        //data: $('#kpiTableForm').serialize(), 
-        success: function(data){
-        var optionHtml ="";
-        $.each(data, function(i, tempdata){
-            optionHtml = optionHtml+"<option value="+tempdata.id+" selected>"+tempdata.name+"</option>";
-            //if(tempdata.id == $('#select-employees').val()){
-            //        $('#reviewer-name').html(tempdata.name);
-            //        $('#reviewer-email').html(tempdata.email);
-            //    }
-          });
+    // var userid = {{auth()->user()->id}} 
+    // $.ajax({
+    //     type: "GET", 
+    //     url: "{{url('vmt-getAllChildEmployees')}}"+'?emp_id='+userid, 
+    //     //data: $('#kpiTableForm').serialize(), 
+    //     success: function(data){
+    //     var optionHtml ="";
+    //     $.each(data, function(i, tempdata){
+    //         optionHtml = optionHtml+"<option value="+tempdata.id+" selected>"+tempdata.name+"</option>";
+    //         //if(tempdata.id == $('#select-employees').val()){
+    //         //        $('#reviewer-name').html(tempdata.name);
+    //         //        $('#reviewer-email').html(tempdata.email);
+    //         //    }
+    //       });
             
-            $('#select-employees').html(optionHtml);
-            changeEmployee();
-                     // $("#kpiTableForm :input").prop("disabled", true);
-           // $(".table-btn").prop('disabled', true);
-            //console.log(data);
-            //alert("Table Saved, Please publish goals");
-           // $("#kpitable_id").val(data.table_id);
-        }
-    })
+    //         $('#select-employees').html(optionHtml);
+    //         changeEmployee();
+    //                  // $("#kpiTableForm :input").prop("disabled", true);
+    //        // $(".table-btn").prop('disabled', true);
+    //         //console.log(data);
+    //         //alert("Table Saved, Please publish goals");
+    //        // $("#kpitable_id").val(data.table_id);
+    //     }
+    // })
 
-@endif
+// @endif
 
 // select reviewer
 $('#form_selectReviewer').on('submit', function(e){
@@ -1424,16 +1403,19 @@ $('#form_selectReviewer').on('submit', function(e){
     var userList = {!!json_encode($users)!!};
     
     var selReviewer = $('#select-reviewer').val();
+    var reviewer = [];
     $("#sel_reviewer").val(selReviewer);
     $.each(userList, function(i, data){
-        if(data.id == $('#select-reviewer').val()){
+        if($.inArray(data.id.toString(), selReviewer) > -1){
+        // if(data.id == $('#select-reviewer').val()){
+            reviewer.push(data.name);
             $('#reviewer-name').html(data.name);
             $('#reviewer-email').html(data.email);
 
              $('#btn_changeManager').html("Edit");
         }
     });
-
+    $('#selected_reviewer').val(reviewer.join()).trigger('change');
     $.ajax({
         type: "GET", 
         url: "{{url('vmt-getAllChildEmployees')}}"+'?emp_id='+selReviewer, 
@@ -1482,25 +1464,20 @@ $('body').on('click', '#save-table', function(e){
     $("#kpiTableForm :input").each(function(){
         var input = $(this);
         //console.log("length : ");
-        if(input.attr('name') == "kpiWeightage[]")
+        if(input.attr('name') == "kpiWeightage[]" && input.attr('data-show') == 'true')
         {
             kpiWeightageTotal =kpiWeightageTotal+parseInt(input.val().replace('%', ''));
             //console.log(input.attr('name')+" , "+input.val());
         }
-
-        if(input.val().trim().length < 1)
+        if(input.val().trim().length < 1 && input.attr('data-show') == 'true')
         {
           isAllFieldsEntered = false;
         }
 
     });
-
+    console.log(isAllFieldsEntered);
     //Validate other fields
-    if( $('#reviewer-name').html() != "---" &&
-         @if(auth()->user()->hasrole('Employee'))
-         @else
-           $('#btn_selectEmployees').html() == "Edit" &&
-         @endif
+    if( $('#selected_reviewer').val() != "" && $('#selected_employee').val() != "" &&
         $('#calendar_type').val() != "" && 
         $("#year option:selected").text() != "Select" &&
         $('#frequency').val() != "" &&
@@ -1510,7 +1487,7 @@ $('body').on('click', '#save-table', function(e){
       )
     {
         //Validate KPI Weightage
-        if(kpiWeightageTotal != 100 )
+        if(kpiWeightageTotal != 100 && $('input[name="kpiWeightage[]"]').attr('data-show') == 'true')
         {
             canSaveForm = false;
             alert("KPI Weightage should be exactly 100%. Please validate.");
@@ -1578,11 +1555,18 @@ $('body').on('change', '#department', function() {
             });
                 
             $('#select-employees').html(optionHtml);
-            if (data['rev']) {
-                $('#select-reviewer').val(data['rev'].id);
-                $('#reviewer-name').html(data['rev'].name);
-                $('#reviewer-email').html(data['rev'].email);
-            }
+            // if (data['rev']) {
+            var reviewer = [];
+            var reviewerId = [];
+            $.each(data['rev'], function(i, val){
+                reviewer.push(val.name);
+                reviewerId.push(val.id);
+                // $('#reviewer-name').html(data['rev'].name);
+                // $('#reviewer-email').html(data['rev'].email);
+            });
+            $("#sel_reviewer").val(reviewerId.join());
+            $('#selected_reviewer').val(reviewer.join());
+            $('#select-reviewer').val(reviewer.join()).trigger('change');
             changeEmployee1(data['emp']);
         }
     });
@@ -1592,38 +1576,42 @@ function changeEmployee1(employees) {
     var employeeSelected = $('#select-employees').val();
     @if(auth()->user()->hasrole('Employee'))
     @else
-    var imgHtml ="";
-    var count = 0;
+    // var imgHtml ="";
+    // var count = 0;
     var employeeArray = [];
+    var employeeIdArray = [];
     $.each(employees, function(i, data){
         // console.log(data);
         // console.log('employee selected', employeeSelected);
         if($.inArray(data.id.toString(), employeeSelected) > -1){
             employeeArray.push(data.name);
-            if (count < 4) {
-                imgHtml = imgHtml+"<a class='avatar'><img src='assets/images/"+data.avatar+"' alt='' class='rounded-circle p-0'></a>";
-            }
-            count++;
+            employeeIdArray.push(data.id);
+            // if (count < 4) {
+            //     imgHtml = imgHtml+"<a class='avatar'><img src='assets/images/"+data.avatar+"' alt='' class='rounded-circle p-0'></a>";
+            // }
+            // count++;
         }
     });
-    if (count > 4) {
-        var rem = count -3;
-        imgHtml = imgHtml+"<span class='img-addition' style='background-color: rgb(134, 192, 106);width: 30px;height: 30px;font-size:12px;'> +"+rem+" </span><div class='mt-1 message-content align-items-start d-flex flex-column  mx-2'><span id='group-employee'></span></div>";
-    }
+    // if (count > 4) {
+    //     var rem = count -3;
+    //     imgHtml = imgHtml+"<span class='img-addition' style='background-color: rgb(134, 192, 106);width: 30px;height: 30px;font-size:12px;'> +"+rem+" </span><div class='mt-1 message-content align-items-start d-flex flex-column  mx-2'><span id='group-employee'></span></div>";
+    // }
     //Change button text based on employee selection count
-    if(count > 0)
-    {
-        $('#btn_selectEmployees').html("Edit");
-        //  console.log("Changed to Edit button");
-    }
-    else
-    {
-        $('#btn_selectEmployees').html("Add");
-        // console.log("Changed to Add button");
-    }
+    // if(count > 0)
+    // {
+    //     $('#btn_selectEmployees').html("Edit");
+    //     //  console.log("Changed to Edit button");
+    // }
+    // else
+    // {
+    //     $('#btn_selectEmployees').html("Add");
+    //     // console.log("Changed to Add button");
+    // }
+    $("#sel_employees").val(employeeIdArray.join());
+    $('#selected_employee').val(employeeArray.join());
     $('#group-employee').html(employeeArray.join());
     $('#changeEmployee').css('display', 'none');
-    $('.avatar-group-item').html(imgHtml);
+    // $('.avatar-group-item').html(imgHtml);
     @endif
 }
 

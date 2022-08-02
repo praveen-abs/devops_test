@@ -89,13 +89,13 @@ Route::post('vmt-apraisal-question/bulk-upload', 'App\Http\Controllers\VmtAprais
 Route::post('vmt-apraisal-question/save', 'App\Http\Controllers\VmtApraisalController@addNewQuestion');
 
 // assign pms goals
-Route::get('vmt-pms-assigngoals', 'App\Http\Controllers\VmtApraisalController@vmtAssignGoals');
+Route::get('vmt-pms-assigngoals', 'App\Http\Controllers\VmtPmsController@vmtAssignGoals');
 
-Route::post('vmt-pms-kpi-table/save', 'App\Http\Controllers\VmtApraisalController@vmtStoreKpiTable');
+Route::post('vmt-pms-kpi-table/save', 'App\Http\Controllers\VmtPmsController@vmtStoreKpiTable');
 
-Route::post('vmt-pms-assign-goals/publish', 'App\Http\Controllers\VmtApraisalController@vmtPublishGoals');
+Route::post('vmt-pms-assign-goals/publish', 'App\Http\Controllers\VmtPmsController@vmtPublishGoals');
 
-Route::get('vmt-getAllChildEmployees', 'App\Http\Controllers\VmtApraisalController@vmtGetAllChildEmployees');
+Route::get('vmt-getAllChildEmployees', 'App\Http\Controllers\VmtPmsController@vmtGetAllChildEmployees');
 
 Route::get('vmt-approvereject-kpitable', 'App\Http\Controllers\VmtApraisalController@approveRejectKPITable');
 Route::post('vmt-approvereject-command', 'App\Http\Controllers\VmtApraisalController@approveRejectCommandKPITable');
@@ -176,7 +176,7 @@ Route::get('vmt-assetinventory-fetch/{id}', 'App\Http\Controllers\VmtAssetInvent
 Route::get('vmt-assetinventory-fetchAll', 'App\Http\Controllers\VmtAssetInventoryController@fetchAll')->name('vmt-assetinventory-fetchall');
 Route::post('vmt-assetinventory-edit', 'App\Http\Controllers\VmtAssetInventoryController@updateAsset')->name('vmt-assetinventory-edit');
 Route::post('vmt-assetinventory-delete', 'App\Http\Controllers\VmtAssetInventoryController@deleteAsset')->name('vmt-assetinventory-delete');
-Route::post('department', 'App\Http\Controllers\VmtApraisalController@department')->name('department');
+Route::post('department', 'App\Http\Controllers\VmtPmsController@department')->name('department');
 
 // pay slip
 
