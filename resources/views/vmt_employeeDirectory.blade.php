@@ -372,14 +372,18 @@ tr:last-child td:last-child {
                 <tr>
 
                     <td>
-                        <div class="d-flex justify-content-start align-items-center table-img">
+                         <div class="d-flex justify-content-start align-items-center table-img">
                             <div class="mx-2">
                                 @if($employee->avatar)
                                 <img src="{{ URL::asset('images/'.$employee->avatar) }}" alt=""
                                     class="" />
                                 @else
-                                <img src="{{ URL::asset('assets/images/vmt_user_icon.jpeg') }}" alt=""
-                                    class="" />
+                                @php
+                                    preg_match('/(?:\w+\. )?(\w+).*?(\w+)(?: \w+\.)?$/',Auth::user()->name , $result);
+                                    $name = strtoupper($result[1][0].$result[2][0]);
+                                @endphp
+                                 <span class="badge rounded-circle h-10 w-10   badge-primary ml-2"><i
+                                            class="align-middle">{{$name}}</i></span>
                                 @endif
 
                             </div>

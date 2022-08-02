@@ -26,7 +26,7 @@
                                     }else{
                                     @endphp
                                     <img class="rounded-circle header-profile-user"
-                                        src=" {{URL::asset('images/profile/'. Auth::user()->avatar)}}" alt="Header Avatar">
+                                        src=" {{URL::asset('images/'. Auth::user()->avatar)}}" alt="Header Avatar">
                                     
 
                                     @php

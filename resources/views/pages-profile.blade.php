@@ -33,7 +33,7 @@
                                     }else{
                                     @endphp
                                     <img class="rounded-circle header-profile-user"
-                                        src=" {{URL::asset('images/profile/'. Auth::user()->avatar)}}" alt="Header Avatar">
+                                        src=" {{URL::asset('images/'. Auth::user()->avatar)}}" alt="Header Avatar">
                                     
 
                                     @php
@@ -158,6 +158,8 @@
                     <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex">
                         <div class="card profile-box flex-fill">
                             <div class="card-body">
+                                 <form action="{{route('updatePersonalInformation', $user->id)}}" Method="POST"
+                        enctype="multipart/form-data">
                                 <h5 class="card-title fw-bold">Personal Informations
                                     <span class="personal-edit"><a href="#" class="edit-icon" data-bs-toggle="modal"
                                             data-bs-target="#personal_info_modal"><i
@@ -166,11 +168,13 @@
                                 <ul class="personal-info">
                                     <li>
                                         <div class="title">Passport No.</div>
-                                        <div class="text">--</div>
+                                        <div class="text">
+                                         {{$details->passport_number}} 
+                                        </div>
                                     </li>
                                     <li>
                                         <div class="title">Passport Exp Date.</div>
-                                        <div class="text">--</div>
+                                        <div class="text">{{$details->passport_date}}</div>
                                     </li>
                                     <li>
                                         <!-- <div class="title">Tel</div>
@@ -178,11 +182,11 @@
                                     </li>
                                     <li>
                                         <div class="title">Nationality</div>
-                                        <div class="text">--</div>
+                                        <div class="text">{{$details->nationality}}</div>
                                     </li>
                                     <li>
                                         <div class="title">Religion</div>
-                                        <div class="text">--</div>
+                                        <div class="text">{{$details->religion}}</div>
                                     </li>
                                     <li>
                                         <div class="title">Marital status</div>
@@ -190,14 +194,15 @@
                                     </li>
                                     <li>
                                         <div class="title">Employment of spouse</div>
-                                        <div class="text">--</div>
+                                        <div class="text">{{$details->spouse_name}}</div>
                                     </li>
                                     <li>
                                         <div class="title">No. of children</div>
-                                        <div class="text">2</div>
+                                        <div class="text">{{$details->children}}</div>
                                     </li>
                                 </ul>
                             </div>
+                        </form>
                         </div>
                     </div>
 
@@ -814,9 +819,27 @@
                             <div class="col-md-12">
                                 <div class="d-flex align-items-center justify-content-center">
                                 <div class="profile-img-wrap edit-img">
-                                    <img id="profile_round_image_dist1" class="rounded-circle header-profile-user"
+                                  <!--   <img id="profile_round_image_dist1" class="rounded-circle header-profile-user"
                                         src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"
-                                        alt="Header Avatar">
+                                        alt="Header Avatar"> -->
+                                         @php
+                                    preg_match('/(?:\w+\. )?(\w+).*?(\w+)(?: \w+\.)?$/',Auth::user()->name , $result);
+                                    $name = strtoupper($result[1][0].$result[2][0]);
+
+                                    if (Auth::user()->avatar == null || Auth::user()->avatar =='' ){ 
+                                    @endphp
+                                        <span class="badge rounded-circle h-100 w-100 header-profile-user  badge-primary ml-2"><i
+                                            class="align-middle">{{$name}}</i></span>
+                                    @php
+                                    }else{
+                                    @endphp
+                                    <img id="profile_round_image_dist1" class="rounded-circle header-profile-user"
+                                        src="{{URL::asset('images/'. Auth::user()->avatar)}}" alt="Header Avatar">
+                                    
+
+                                    @php
+                                    }
+                                    @endphp
                                     <div class="fileupload btn">
                                         <span class="btn-text">edit</span>
                                         <input type='file' name="profilePic" class="upload"  accept="image/*" onchange="readURL(this);" />
@@ -827,7 +850,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
                                             <label>Name</label>
-                                            <input type="text" class="form-control" name="name" value="{{$user->name}}">
+                                            <input type="text" class="form-control" name="name" value="{{$user->name}}" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -839,8 +862,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- <div class="col-md-6">
-                                        <label>Gender</label>
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-3">
+                                            <label>Gender</label>
                                         <select class="form-select" name="gender" aria-label="Default select">
                                             <option selected>-</option>
                                             <option value="male" @if($details->gender == 'male') selected
@@ -851,7 +875,21 @@
                                                 @endif>Other</option>
                                         </select>
 
-                                    </div> -->
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                          <div class="form-group mb-3">
+                                    <label>Reports To <span class="text-danger">*</span></label>
+                                    <select class="select form-control" name="report">
+                                        <option>Select</option>
+                                        @foreach($code as $c)
+                                        <option value="{{$c->emp_no}}" @if($rep && $rep->emp_no == $c->emp_no) selected
+                                                @endif>{{$c->emp_no . ' (' .$c->name. ')'}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                    </div>
 
                                 </div>
                             </div>
@@ -879,20 +917,15 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Phone Number</label>
-                                    <input type="text" class="form-control" name="mobile_number"
-                                        value="{{$details->mobile_number}}">
+                                    <input type=text  size=20 maxlength=10 onkeypress='return isNumberKey(event)' class="form-control"  name="mobile_number"  value="{{$details->mobile_number}}">
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label>Reports To <span class="text-danger">*</span></label>
-                                    <select class="select form-control" name="report">
-                                        <option>Select</option>
-                                        @foreach($code as $c)
-                                        <option value="{{$c->emp_no}}" @if($rep && $rep->emp_no == $c->emp_no) selected
-                                                @endif>{{$c->emp_no . ' (' .$c->name. ')'}}</option>
-                                        @endforeach
-                                    </select>
+                             
+                                 <div class="form-group mb-3">
+                                    <label>Email</label>
+                                    <input type="email" name="present_email" onkeypress='return isValidEmail(email)' class="form-control"
+                                        value="{{$user->email}}">
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -913,7 +946,6 @@
             </div>
         </div>
     </div>
-
     <!-- personal info -->
     <div id="personal_info" class="modal  custom-modal fade" style="display: none;" aria-hidden="true">
         <div class="modal-dialog  modal-dialog-centered modal-lg" role="document">
@@ -1088,14 +1120,14 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Passport No</label>
-                                    <input type="text" class="form-control" value="--">
+                                    <input type="text" class="form-control" name="passport_number" value="{{$details->passport_number}}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Passport Expiry Date</label>
                                     <div class="cal-icon">
-                                        <input class="form-control datetimepicker" type="date" max="9999-12-31" value="--">
+                                        <input class="form-control datetimepicker" name="passport_date" type="date" max="9999-12-31" value="{{date('Y-m-d', strtotime($details->passport_data))}}">
                                     </div>
                                 </div>
                             </div>
@@ -1108,14 +1140,14 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Nationality <span class="text-danger">*</span></label>
-                                    <input class="form-control onboard-form" type="text" pattern-data="alpha" value="--">
+                                    <input class="form-control onboard-form" type="text" name="nationality" pattern-data="alpha" value="{{$details->nationality}}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Religion</label>
                                     <div class="cal-icon">
-                                        <input class="form-control onboard-form" pattern-data="name" type="text" pattern-data="alpha" value="--">
+                                        <input class="form-control onboard-form" pattern-data="name" name="religion" type="text" pattern-data="alpha" value="{{$details->religion}}">
                                     </div>
                                 </div>
                             </div>
@@ -1135,13 +1167,13 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Employment of spouse</label>
-                                    <input class="form-control onboard-form" type="text" pattern-data="alpha" value="--">
+                                    <input class="form-control onboard-form" type="text" name="spouse" pattern-data="alpha" value="{{$details->spouse_name}}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>No. of children </label>
-                                    <input class="form-control onboard-form" type="number" maxlength="2" value="--">
+                                    <input class="form-control onboard-form" type="number" name="children" maxlength="2" value="{{$details->children}}">
                                 </div>
                             </div>
                         </div>
@@ -1741,5 +1773,20 @@ $('body').on('keyup', ".onboard-form", function() {
         }
     }
 });
+</script>
+<!-- number validation  -->
+<script type="text/javascript">
+function isNumberKey(evt){
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+        return false;
+    return true;
+
+}
+
+function isValidEmail(email) {
+  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+}
 </script>
 @endsection

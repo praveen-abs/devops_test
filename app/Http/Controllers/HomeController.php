@@ -213,10 +213,17 @@ class HomeController extends Controller
     }
 
     public function updatePersonalInfo(Request $request) {
+       // dd($request->all());
         $reDetails = VmtEmployee::where('userid', $request->id)->first();
         $details = VmtEmployee::find($reDetails->id);
         $details->marrital_status = $request->input('marital_status');
         $details->mobile_number = $request->input('mobile_number');
+        $details->children = $request->input('children');
+        $details->spouse_name = $request->input('spouse');
+        $details->religion = $request->input('religion');
+        $details->nationality = $request->input('nationality');
+        $details->passport_date = $request->input('passport_date');
+        $details->passport_number = $request->input('passport_number');
         $details->save();
         Ses::flash('message', 'Personal Information Updated successfully!');
         Ses::flash('alert-class', 'alert-success');
@@ -241,13 +248,14 @@ class HomeController extends Controller
 
     // 
     public function storePersonalInfo(Request $request) {
+        // dd($request->all());
         $file = $request->file('profilePic');
         $user = User::find($request->id);
         $user->name = $request->input('name');
         $number = mt_rand(1000000000, 9999999999);
         if ($file) { 
             $filename = 'avatar-'.$request->id.$number.'.'. $file->getClientOriginalExtension();
-            $destination = public_path('/images/profile/');
+            $destination = public_path('/images/');
             $file->move($destination, $filename);
             $user->avatar = $filename;
         }
