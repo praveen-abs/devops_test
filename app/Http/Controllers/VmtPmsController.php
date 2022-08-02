@@ -27,7 +27,8 @@ class VmtPmsController extends Controller
 {   
     // assign goals forms
     public function vmtAssignGoals(Request $request){
-        $empGoals = VmtEmployee::leftJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
+        if(auth::user()->hasRole(['HR','Admin']) ){
+            $empGoals = VmtEmployee::leftJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
                             ->leftJoin('vmt_employee_office_details', 'vmt_employee_details.id','=', 'vmt_employee_office_details.emp_id' )
                             ->join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.employee_id', '=', 'vmt_employee_details.id')
                             ->select(
@@ -52,7 +53,36 @@ class VmtPmsController extends Controller
                             ->orderBy('created_at', 'DESC')
                             ->whereNotNull('emp_no')->get();
 
-
+        } else {
+            $empId = VmtEmployee::where('userid', auth()->user()->id)->first();
+            $empGoals = VmtEmployee::leftJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
+            ->join('vmt_employee_office_details', 'vmt_employee_details.id','=', 'vmt_employee_office_details.emp_id' )
+            ->join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.employee_id', '=', 'vmt_employee_details.id')
+            ->select(
+                'vmt_employee_details.*',
+                'users.name as emp_name',
+                'users.email as email_id',
+                'users.avatar as avatar',
+                'vmt_employee_office_details.department_id',
+                'vmt_employee_office_details.designation', 
+                'vmt_employee_office_details.l1_manager_code',
+                'vmt_employee_office_details.l1_manager_name',
+                'vmt_employee_office_details.l1_manager_designation',
+                'vmt_employee_pms_goals_table.assignment_period',
+                'vmt_employee_pms_goals_table.kpi_table_id',
+                'vmt_employee_pms_goals_table.is_manager_approved',
+                'vmt_employee_pms_goals_table.is_manager_submitted',
+                'vmt_employee_pms_goals_table.is_employee_submitted',
+                'vmt_employee_pms_goals_table.is_employee_accepted',
+                'vmt_employee_pms_goals_table.author_id',
+                'vmt_employee_pms_goals_table.hr_kpi_percentage',
+            )
+            ->orderBy('created_at', 'DESC')
+            // ->where('vmt_employee_pms_goals_table.author_id', auth()->user()->id)
+            ->orWhere('vmt_employee_pms_goals_table.employee_id', $empId->id)
+            ->orWhereRaw("find_in_set(".auth()->user()->id.", vmt_employee_pms_goals_table.reviewer_id)")
+            ->whereNotNull('emp_no')->get();
+        }
         $userCount = User::count();
         $config = ConfigPms::where('user_id', auth()->user()->id)->first();
         $show['dimension'] = 'true';
@@ -234,7 +264,7 @@ class VmtPmsController extends Controller
     }
 
     // Store Assigned Goals
-    public function vmtStoreKpiTable(Request $request){
+    public function vmtStoreKpiTable(Request $request) {
         //return "Stored";
         if ($request->has('dimension')) {
             $totRows  = count($request->dimension);
@@ -315,7 +345,7 @@ class VmtPmsController extends Controller
     }
 
     // publish goals
-    public function vmtPublishGoals(Request $request){
+    public function vmtPublishGoals(Request $request) {
         //dd($request->all());
         if($request->has("employees")){
             $employeeList  = explode(',', $request->employees[0]); 
