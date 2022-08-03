@@ -1,7 +1,6 @@
-<div class="card profile-box flex-fill">
+<div class="card profile-box flex-fill card-top-border">
     <div class="card-body">
-        <div class="d-flex">
-        
+        <div class="d-flex">       
         
             <div class="status-wrapper ">
                 <!-- <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}" > -->

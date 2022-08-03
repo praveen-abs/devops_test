@@ -3,6 +3,7 @@
 <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
 <link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
 <link href="{{ URL::asset('assets/css/salary.css') }}" rel="stylesheet">
+<link href="{{ URL::asset('assets/css/app.min.css') }}" rel="stylesheet">
 <!-- for bootstrap temporary -->
 
 
@@ -430,7 +431,7 @@
                                     <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
                                         <h5 class="my-2 ">My Declaration</h5>
                                         <div class="table-responsive">
-                                            <table class=" table table-borderd  mb-0">
+                                            <table class=" table  table-hover  mb-0">
                                                 <thead class="table-light">
                                                     <tr>
                                                         <th scope="col">Declaration</th>
@@ -790,7 +791,7 @@
                             <div class="month-declaration mb-3">
                                 <!-- <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12"> -->
                                 <div class="table-responsive tax-table-responsive ">
-                                    <table class=" table table-borderd tax-table  mb-0">
+                                    <table class=" table  table-hover tax-table  mb-0">
                                         <thead class="table-light">
                                             <tr>
                                                 <th scope="col">
@@ -998,7 +999,7 @@
                                     </div>
 
                                     <div class="table-responsive other-table-responsive ">
-                                        <table class=" table table-borderd onter-table  mb-0">
+                                        <table class=" table  table-hover onter-table  mb-0">
                                             <thead class="table-light">
                                                 <tr>
                                                     <th scope="col">
@@ -1159,7 +1160,7 @@
                                     </div>
 
                                     <div class="table-responsive other-table-responsive ">
-                                        <table class=" table table-borderd onter-table  mb-0">
+                                        <table class=" table  table-hover onter-table  mb-0">
                                             <thead class="table-light">
                                                 <tr>
                                                     <th scope="col">
@@ -1280,7 +1281,7 @@
                                 </div>
 
                                 <div class="table-responsive other-table-responsive ">
-                                    <table class=" table table-borderd onter-table  mb-0">
+                                    <table class=" table  table-hover onter-table  mb-0">
                                         <thead class="table-light">
                                             <tr>
                                                 <th scope="col">
@@ -1375,7 +1376,7 @@
                             </div>
 
                             <div class="table-responsive previous-income-table">
-                                <table class=" table table-borderd  mb-0">
+                                <table class=" table  table-hover">
                                     <thead class="table-light">
                                         <tr>
                                             <th scope="col">Month</th>
@@ -1455,7 +1456,7 @@
                 <div class="card-body">
                     <h5 class="my-2 ">My Declaration</h5>
                     <div class="table-responsive">
-                        <table class=" table table-borderd  mb-0">
+                        <table class=" table  table-hover">
                             <thead class="table-light">
                                 <tr>
                                     <th scope="col">Declaration</th>

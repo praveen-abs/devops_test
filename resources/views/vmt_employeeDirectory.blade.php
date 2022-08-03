@@ -7,23 +7,14 @@
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/fontawesome.css') }}">
 
 <style>
-table {
-    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px !important;
-}
-
-
-tbody {
-    background-color: #fff;
-}
-
 tbody tr:hover {
     background-color: #f3f3f9;
 
 }
-
 td img{
     height: 25px !important;
     width: 25px !important;
+    border-radius:50%;
 }
 td {
     border: solid 1px #000;
@@ -32,38 +23,9 @@ td {
     /* font-weight: 600; */
     color: #878aa5;
 }
-
 td .btn i {
     font-size: 16px;
 }
-
-
-tr:first-child th:first-child {
-    border-top-left-radius: 6px !important;
-}
-
-tr:first-child th:first-child {
-    border-bottom-left-radius: 6px !important;
-}
-
-
-tr:last-child td:first-child {
-    border-bottom-left-radius: 6px !important;
-}
-
-tr:first-child th:last-child {
-    border-top-right-radius: 6px !important;
-}
-
-tr:first-child th:last-child {
-    border-bottom-right-radius: 6px !important;
-}
-
-
-tr:last-child td:last-child {
-    border-bottom-right-radius: 6px !important;
-}
-
 
 /* for radio button */
 
@@ -72,11 +34,6 @@ tr:last-child td:last-child {
     display: flex;
 
 }
-
-/* .directory-right button {
-    background-color: #b0bff1!important;
-
-} */
 
 .switch-field input {
     position: absolute !important;
@@ -137,7 +94,7 @@ tr:last-child td:last-child {
 @endcomponent
 
 
-<div class=" project-wrapper bg-white p-2">
+<div class=" project-wrapper bg-white p-4 ">
     <h5 class="fw-bold">Employee Directory</h5>
     <!-- <div class="row">
         <div class="col-12">
@@ -323,13 +280,11 @@ tr:last-child td:last-child {
 
         </div>
     </div> -->
-    <div class="directory-content  mb-3 mt-2">
+    <div class="directory-content   my-2">
         <div class="row">
             <div class="col-8">
                 <div class="float-left directory-left d-flex">
-
                     <div class="search-content header-item w-50 ">
-
                         <i class=" ri-search-line "></i>
                         <input type="text" class="form-control py-1 search-bar rounded-pill directory-search-bar  w-75 "
                             placeholder="Search">
@@ -352,7 +307,7 @@ tr:last-child td:last-child {
     </div>
 
     <div class="table-responsive">
-        <table class=" table table-borderd  mb-0">
+        <table class=" table table-borderd ">
             <thead class="table-light">
                 <tr>
                     <th scope="col">Employee Name</th>
