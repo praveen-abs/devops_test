@@ -6,7 +6,7 @@
             @foreach ($holidays as $day)
                 <div class="slides fade-slider ">
                     <div class="numbertext text-white">View All</div>
-                    <img src="{{ URL::asset('assets/images/holiday/'.$day->image) }}" class="w-100 h-100">
+                    <img src="{{ URL::asset('assets/images/holiday/'.$day->image) }}" class="w-100">
                     <div class="holiday-text text-center w-100 text-white ">
                         {{$day->holiday_name}}
 

@@ -64,88 +64,84 @@
             @include('ui-dashboard-holiday-card')
         </div>
     </div>
+
     <div class="row">
+        <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
+            <div class="card shadow profile-box card-top-border">
+                <!-- <div class="p-1 bg-primary" > -->
+                <div class="card-body d-flex justify-content-center align-items-center">
+                    <div class="text-center">
+                        <h5 class="fw-bold title">New Employees</h5>
+                        <h6 class="number-increment fw-bold">10</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
+            <div class="card shadow profile-box card-top-border ">
+                <!-- <div class="p-1 bg-primary" > -->
+                <div class="card-body d-flex justify-content-center align-items-center">
+                    <div class="text-center">
+                        <h5 class="fw-bold title">Total Employees</h5>
+                        <h6 class="number-increment fw-bold">30</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
+            <div class="card shadow profile-box orange-top-border ">
+                <!-- <div class="p-1 bg-danger" > -->
+                <div class="card-body d-flex justify-content-center align-items-center">
+                    <div class="text-center">
+                        <h5 class="fw-bold title">Online</h5>
+                        <h6 class="number-increment fw-bold">10</h6>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
+            <div class="card shadow  profile-box card-top-border ">
+                <!-- <div class="p-1 bg-primary" > -->
+                <div class="card-body d-flex justify-content-center align-items-center">
+                    <div class="text-center">
+                        <h5 class="fw-bold title">Offline</h5>
+                        <h6 class="number-increment fw-bold">20</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
+            <div class="card shadow  profile-box card-top-border ">
+                <!-- <div class="p-1 bg-primary" > -->
+                <div class="card-body d-flex justify-content-center align-items-center">
+                    <div class="text-center">
+                        <h5 class="fw-bold title">Employees on Leave</h5>
+                        <h6 class="number-increment fw-bold">3</h6>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
+            <div class="card shadow  profile-box card-top-border ">
+                <!-- <div class="p-1 bg-primary" > -->
+                <div class="card-body d-flex justify-content-center align-items-center">
+                    <div class="text-center">
+                        <h5 class="fw-bold title">Future Joiners</h5>
+                        <h6 class="number-increment fw-bold">40</h6>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+
         <div class="col-sm-9 col-md-9">
             <div class="row">
-                <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
-                    <div class="card shadow profile-box card-top-border ">
-                        <!-- <div class="p-1 bg-primary" > -->
-                        <div class="card-body d-flex justify-content-center align-items-center">
-                            <div class="text-center">
-                                <h5 class="fw-bold title">New Employees</h5>
-                                <h6 class="number-increment fw-bold">10</h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
-                    <div class="card shadow profile-box card-top-border ">
-                        <!-- <div class="p-1 bg-primary" > -->
-                        <div class="card-body d-flex justify-content-center align-items-center">
-                            <div class="text-center">
-                                <h5 class="fw-bold title">Total Employees</h5>
-                                <h6 class="number-increment fw-bold">30</h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
-                    <div class="card shadow profile-box orange-top-border">
-                        <!-- <div class="p-1 bg-danger" > -->
-                        <div class="card-body d-flex justify-content-center align-items-center">
-                            <div class="text-center">
-                                <h5 class="fw-bold title">Online</h5>
-                                <h6 class="number-increment fw-bold">10</h6>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
-                    <div class="card shadow  profile-box card-top-border">
-                        <!-- <div class="p-1 bg-primary" > -->
-                        <div class="card-body d-flex justify-content-center align-items-center">
-                            <div class="text-center">
-                                <h5 class="fw-bold title">Offline</h5>
-                                <h6 class="number-increment fw-bold">20</h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
-                    <div class="card shadow  profile-box card-top-border">
-                        <!-- <div class="p-1 bg-primary" > -->
-                        <div class="card-body d-flex justify-content-center align-items-center">
-                            <div class="text-center">
-                                <h5 class="fw-bold title">Employees on Leave</h5>
-                                <h6 class="number-increment fw-bold">3</h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
-                    <div class="card shadow  profile-box card-top-border">
-                        <!-- <div class="p-1 bg-primary" > -->
-                        <div class="card-body d-flex justify-content-center align-items-center">
-                            <div class="text-center">
-                                <h5 class="fw-bold title">Future Joiners</h5>
-                                <h6 class="number-increment fw-bold">40</h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
-                    <div class="card profile-box shadow  card-top-border ">
-                        <!-- <div class="p-1 bg-primary" > -->
-                        <div class="card-body d-flex justify-content-center align-items-center">
-                            <div class="text-center">
-                                <h5 class="fw-bold title">Hybrid</h5>
-                                <h6 class="number-increment fw-bold">10</h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-12 ipad-query">
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 ipad-query">
                     <div class="card profile-box flex-fill card-top-border">
                         <!-- <div class="p-1 bg-primary" ></div> -->
                         <div class="card-body ">
@@ -198,16 +194,20 @@
                                                                 id="image_src" data-input="false" multiple
                                                                 accept="image/*" data-iconName="fa fa-upload"
                                                                 data-buttonText="Upload File" />
+                                                                <span class="tooltiptext">Image</span>
 
                                                         </div>
 
                                                         <div class="emoji-content mx-3">
                                                             <i class="ri-user-smile-line"></i>
+                                                            <span class="tooltiptext">Emoji</span>
+
                                                         </div>
 
 
                                                     </div>
-                                                    <button class="btn btn-danger py-1 px-4  float-right" type="submit">
+                                                    <button class="btn btn-primary py-1 px-4  float-right"
+                                                        type="submit">
                                                         Create Post
                                                     </button>
 
@@ -263,7 +263,7 @@
                                                         </div>
 
                                                     </div>
-                                                    <button class="btn btn-danger py-1 px-4  float-right"
+                                                    <button class="btn btn-primary py-1 px-4  float-right"
                                                         id="annon_menu_submit" type="button">
                                                         Submit
                                                     </button>
@@ -311,13 +311,13 @@
                                                         <div class="mt-3 d-flex align-items-center">
                                                             <input type="text" name="" id="" class="form-control w-50"
                                                                 placeholder="Add option here">
-                                                            <i class="ri-delete-bin-7-fill mx-2"></i>
+                                                            <i class="ri-delete-bin-7-fill mx-2 text-danger"></i>
                                                         </div>
 
                                                         <div class="mt-2 d-flex align-items-center">
                                                             <input type="text" name="" id="" class="form-control w-50"
                                                                 placeholder="Add option here">
-                                                            <i class="ri-delete-bin-7-fill mx-2"></i>
+                                                            <i class="ri-delete-bin-7-fill mx-2 text-danger"></i>
                                                         </div>
                                                         <div class="text-start">
                                                             <!-- <button class="btn btn-secondary outline-none border-0"><i class=" ri-add-circle-line mr-2">Add More</i></button> -->
@@ -329,9 +329,8 @@
                                                         <div class="bottom-content d-flex justify-content-between mx-2">
                                                             <div class=" mx-2">
                                                                 <label for="">Poll Expires On</label>
-                                                                <input class=" mr-1 anounce-date "
-                                                                    type="text" placeholder="Select date" value="" id=""
-                                                                    disabled>
+                                                                <input class=" mr-1 anounce-date " type="text"
+                                                                    placeholder="Select date" value="" id="" disabled>
 
                                                             </div>
                                                             <div class=" mx-2">
@@ -361,7 +360,7 @@
                                                 <div>
                                                     <div>
                                                         <div class="px-20 p-16 row no-gutters scrollBar">
-                                                            <textarea name="" id="" cols="30" rows="10"
+                                                            <textarea name="" id="" cols="30" rows="3"
                                                                 class="border-0 outline-none w-100">
                                                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
                                                             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
@@ -369,7 +368,7 @@
                                                             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
                                                         </textarea>
                                                         </div>
-                                                        <button class="btn btn-danger py-1 px-4  float-right">
+                                                        <button class="btn btn-primary py-1 px-4  float-right">
                                                             Submit
                                                         </button>
                                                     </div>
@@ -378,16 +377,16 @@
                                         </div>
                                     </div>
                                 </div>
-
-
-
                             </div>
                         </div>
                     </div>
                 </div>
-                @include('ui-dashboard-event-card')
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 ipad-query">
+                    @include('ui-dashboard-event-card')
+                </div>
             </div>
         </div>
+
         <div class="col-sm-3 col-md-3">
             <div class="">
                 <div class="card profile-box flex-fill m-0 mb-2 "

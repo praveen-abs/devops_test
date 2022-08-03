@@ -1,5 +1,4 @@
-
-<div class="card profile-box flex-fill">
+<div class="card profile-box flex-fill card-top-border">
     <h4 class="m-0 title text-center text-primary card-title my-3 fw-bold">My Actions</h4>
     <hr class="m-0">
     <div class="card-body">
