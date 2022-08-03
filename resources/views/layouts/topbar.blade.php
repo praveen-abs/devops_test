@@ -115,9 +115,8 @@
                                     <div class="px-2 pt-2">
                                         <ul class="nav nav-tabs dropdown-tabs nav-tabs-custom" data-dropdown-tabs="true"
                                             id="notificationItemsTab" role="tablist">
-
                                             <li class="nav-item waves-effect active waves-light">
-                                                <a class="nav-link" data-bs-toggle="tab" href="#messages-tab" role="tab"
+                                                <a class="nav-link active" data-bs-toggle="tab" href="#messages-tab" role="tab"
                                                     aria-select ed="false">
                                                     Messages
                                                 </a>
@@ -126,7 +125,7 @@
                                     </div>
                                 </div>
                                 <div class="tab-content" id="notificationItemsTabContent">
-                                    <div class="tab-pane fade show active py-2 ps-2" id="all-noti-tab" role="tabpanel">
+                                    <!-- <div class="tab-pane fade show active py-2 ps-2" id="all-noti-tab" role="tabpanel">
                                         <div data-simplebar style="max-height: 300px;" class="pe-2">
                                             <div
                                                 class="text-reset notification-item d-block dropdown-item position-relative">
@@ -137,11 +136,6 @@
                                                         </span>
                                                     </div> --}}
                                                     <div class="flex-1">
-
-
-
-
-
                                                     </div>
 
                                                 </div>
@@ -151,17 +145,13 @@
                                                 class="text-reset notification-item d-block dropdown-item position-relative">
                                                 <div class="d-flex">
                                                     <div class="avatar-xs me-3">
-
-
                                                     </div>
-
-
                                                 </div>
                                             </div>
 
                                         </div>
-                                    </div>
-                                    <div class="tab-pane fade py-2 ps-2 " id="messages-tab" role="tabpanel"
+                                    </div> -->
+                                    <div class="tab-pane fade show active py-2 ps-2 " id="messages-tab" role="tabpanel"
                                         aria-labelledby="messages-tab">
                                         <div data-simplebar style="max-height: 300px;" class="pe-2">
                                             @php
@@ -187,33 +177,23 @@
                                                                 ago</span>
                                                         </p>
                                                     </div>
-                                                    <div class="px-2 fs-15">
+                                                    <!-- <div class="px-2 fs-15">
                                                         <input class="form-check-input" type="checkbox">
-                                                    </div>
+                                                    </div> -->
                                                 </div>
                                             </div>
                                             @php
                                             }
                                             @endphp
-                                            <div class="my-3 text-center">
+                                            <!-- <div class="my-3 text-center">
                                                 <button type="button"
                                                     class="btn btn-soft-success waves-effect waves-light">View
                                                     All Messages <i
                                                         class="ri-arrow-right-line align-middle"></i></button>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade p-4" id="alerts-tab" role="tabpanel"
-                                        aria-labelledby="alerts-tab">
-                                        <div class="w-25 w-sm-50 pt-3 mx-auto">
-                                            <img src="{{ URL::asset('assets/images/bell.png') }}" class="img-fluid"
-                                                alt="user-pic" style="height:20px;width:20px;">
-                                        </div>
-                                        <div class="text-center pb-5 mt-2">
-                                            <h6 class="fs-18 fw-semibold lh-base">Hey! You have no any notifications
-                                            </h6>
-                                        </div>
-                                    </div>
+                                  
                                 </div>
                             </div>
                         </div>

@@ -51,7 +51,7 @@
 
                     <div class="row">
                         <div class="col-4">
-                            <figure>
+                            <figure class="pie-chart">
                                 <!-- <figcaption>SVG PIE Chart with CSS animation</figcaption> -->
                                 <svg viewBox="0 0 63.6619772368 63.6619772368">
                                     <circle class="pie1" cx="31.8309886184" cy="31.8309886184" r="15.9154943092" />
