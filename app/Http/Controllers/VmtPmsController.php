@@ -649,7 +649,7 @@ class VmtPmsController extends Controller
 
                 //$reviewManager = User::find($kpiData->reviewer_id);
                 //dd($reviewManager->email);
-                \Mail::to($mailingList)->send(new PMSReviewCompleted('none',$user_emp_name));
+                \Mail::to($mailingList)->send(new PMSReviewCompleted('none',$user_emp_name, 'title', 'details'));
                 $message = "The HR team has successfully completed your PMS review process.  ";
                     Notification::send($notification_user ,new ViewNotification($message.auth()->user()->name));
                 return "Saved.Sent mail to manager and employee ". implode(',', $mailingList->toArray()); // $managerOfficeDetails->officical_mail;
