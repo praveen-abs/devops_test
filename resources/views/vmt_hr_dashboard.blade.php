@@ -72,7 +72,7 @@
                 <div class="card-body d-flex justify-content-center align-items-center">
                     <div class="text-center">
                         <h5 class="fw-bold title">New Employees</h5>
-                        <h6 class="number-increment fw-bold">10</h6>
+                        <h6 class="number-increment fw-bold">{{ json_decode($json_dashboardCountersData)->newEmployeesCount }}</h6>
                     </div>
                 </div>
             </div>
@@ -83,7 +83,7 @@
                 <div class="card-body d-flex justify-content-center align-items-center">
                     <div class="text-center">
                         <h5 class="fw-bold title">Total Employees</h5>
-                        <h6 class="number-increment fw-bold">30</h6>
+                        <h6 class="number-increment fw-bold">{{ json_decode($json_dashboardCountersData)->totalEmployeesCount }}</h6>
                     </div>
                 </div>
             </div>
@@ -94,7 +94,7 @@
                 <div class="card-body d-flex justify-content-center align-items-center">
                     <div class="text-center">
                         <h5 class="fw-bold title">Online</h5>
-                        <h6 class="number-increment fw-bold">10</h6>
+                        <h6 class="number-increment fw-bold">{{ json_decode($json_dashboardCountersData)->todayEmployeesCheckedInCount }}</h6>
 
                     </div>
                 </div>
@@ -106,7 +106,7 @@
                 <div class="card-body d-flex justify-content-center align-items-center">
                     <div class="text-center">
                         <h5 class="fw-bold title">Offline</h5>
-                        <h6 class="number-increment fw-bold">20</h6>
+                        <h6 class="number-increment fw-bold">4</h6>
                     </div>
                 </div>
             </div>
@@ -117,7 +117,7 @@
                 <div class="card-body d-flex justify-content-center align-items-center">
                     <div class="text-center">
                         <h5 class="fw-bold title">Employees on Leave</h5>
-                        <h6 class="number-increment fw-bold">3</h6>
+                        <h6 class="number-increment fw-bold">{{ json_decode($json_dashboardCountersData)->todayEmployeesOnLeaveCount }}</h6>
                     </div>
 
                 </div>
@@ -129,7 +129,7 @@
                 <div class="card-body d-flex justify-content-center align-items-center">
                     <div class="text-center">
                         <h5 class="fw-bold title">Future Joiners</h5>
-                        <h6 class="number-increment fw-bold">40</h6>
+                        <h6 class="number-increment fw-bold">5</h6>
                     </div>
                 </div>
             </div>
@@ -556,7 +556,7 @@ $(document).ready(function() {
 });
 
 
-// for number increament 
+// for number increament
 
 $(function() {
     function count($this) {
