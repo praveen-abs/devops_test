@@ -489,7 +489,7 @@ class VmtPmsController extends Controller
                 //$commentArray = (json_decode($assignedGoals->self_kpi_comments, true));
                 foreach ($kpiRows as $index => $value) {
                     // code...
-                    if (in_array(auth()->user()->id, explode(',', $assignedGoals->reviewer_id))) {
+                    if ($assignedGoals->is_hr_submitted) {
                         if (isset($reviewArrayManager[auth()->user()->id])) {
                             $kpiRows[$index]['manager_kpi_review'] = $reviewArrayManager[auth()->user()->id][$value->id];
                             $kpiRows[$index]['manager_kpi_percentage'] = $percentArrayManager[auth()->user()->id][$value->id];

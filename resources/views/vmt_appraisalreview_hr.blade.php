@@ -302,9 +302,9 @@
                                     <th scope="col" data-name='kpiSelfReview' data-filterable="false" data-visible="true">KPI - Achievement (Self Review)</th>
                                     <th scope="col" data-name='kpiSelfAchivement' data-filterable="false" data-visible="true">Self KPI Achievement %</th>
                                     <th scope="col" data-name='comments' data-filterable="false" data-visible="true">Comments</th>
-                                    @if ($show['manager'] || $show['managerCount'] < 2)
-                                    <th scope="col" data-name='kpiManagerReview' data-filterable="false" data-visible="{{($reviewCompleted || $show['manager']) ? 'true' :'false' }}">KPI - Achievement (Manager Review)</th>
-                                    <th scope="col" data-name='kpiManagerAchivement' data-filterable="false" data-visible="{{($reviewCompleted || $show['manager']) ? 'true' :'false' }}">Manager KPI Achievement %</th>
+                                    @if (!$assignedGoals->is_hr_submitted || $show['managerCount'] < 2)
+                                    <th scope="col" data-name='kpiManagerReview' data-filterable="false" data-visible="{{(($reviewCompleted && $assignedGoals->is_hr_submitted) || $show['manager']) ? 'true' :'false' }}">KPI - Achievement (Manager Review)</th>
+                                    <th scope="col" data-name='kpiManagerAchivement' data-filterable="false" data-visible="{{(($reviewCompleted && $assignedGoals->is_hr_submitted) || $show['manager']) ? 'true' :'false' }}">Manager KPI Achievement %</th>
                                     @else
                                     @for($i=1; $i<=$show['managerCount']; $i++)
                                     <th scope="col" data-name='kpiManagerReview' data-filterable="false" data-visible="true">KPI - Achievement (Manager Review) - {{$i}}</th>
@@ -388,7 +388,7 @@
                                         <div>{{$kpiRow->self_kpi_comments}}</div>
                                         @endif
                                     </td>
-                                    @if ($show['manager'] || ($show['managerCount']) < 2))
+                                    @if (!$assignedGoals->is_hr_submitted || ($show['managerCount']) < 2))
                                     <td>
                                         @if($assignedGoals->is_employee_submitted && !$reviewCompleted &&
                                         !$assignedGoals->is_manager_submitted && $show['manager'])
@@ -505,7 +505,7 @@
         </div>
     </div>
 
-    @if($reviewCompleted)
+    @if($reviewCompleted && $assignedGoals->is_hr_submitted)
 
     <div class="row mt-3">
         <div class="col-lg-12">
@@ -522,7 +522,7 @@
     @endif
 
 
-    @if($reviewCompleted)
+    @if($reviewCompleted && $assignedGoals->is_hr_submitted)
 
     <div class="card">
         <div class="card-header">
