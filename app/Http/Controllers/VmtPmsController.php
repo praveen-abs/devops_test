@@ -436,6 +436,7 @@ class VmtPmsController extends Controller
         $show['stretchTarget'] = 'true';
         $show['source'] = 'true';
         $show['kpiWeightage'] = 'true';
+        $show['managerCount'] = 0;
         if ($config) {
             $config->header = json_decode($config->column_header, true);
             $show['dimension'] = $config->selected_columns && in_array('dimension', explode(',', $config->selected_columns)) ? 'true': 'false';
@@ -482,11 +483,24 @@ class VmtPmsController extends Controller
             if($assignedGoals->manager_kpi_review != null){
                 $reviewArrayManager = (json_decode($assignedGoals->manager_kpi_review, true));
                 $percentArrayManager = (json_decode($assignedGoals->manager_kpi_percentage, true));
+                if (count($reviewArrayManager) > $show['managerCount']) {
+                    $show['managerCount'] = count($reviewArrayManager);
+                }
                 //$commentArray = (json_decode($assignedGoals->self_kpi_comments, true));
                 foreach ($kpiRows as $index => $value) {
                     // code...
-                    $kpiRows[$index]['manager_kpi_review'] = $reviewArrayManager[$value->id];
-                    $kpiRows[$index]['manager_kpi_percentage'] = $percentArrayManager[$value->id];
+                    if ($assignedGoals->is_hr_submitted) {
+                        if (isset($reviewArrayManager[auth()->user()->id])) {
+                            $kpiRows[$index]['manager_kpi_review'] = $reviewArrayManager[auth()->user()->id][$value->id];
+                            $kpiRows[$index]['manager_kpi_percentage'] = $percentArrayManager[auth()->user()->id][$value->id];
+                        } else {
+                            $kpiRows[$index]['manager_kpi_review'] = '';
+                            $kpiRows[$index]['manager_kpi_percentage'] = '';
+                        }
+                    } else {
+                        $kpiRows[$index]['manager_kpi_review'] = $reviewArrayManager;
+                        $kpiRows[$index]['manager_kpi_percentage'] = $percentArrayManager;
+                    }
                     //$kpiRows[$index]['self_kpi_comments'] = $commentArray[$value->id];
                 }
             }
@@ -539,15 +553,150 @@ class VmtPmsController extends Controller
                     $ratingDetail['action'] = '0000%';                      
                 }
             }
+            $show['appraiser'] = false;
+            $show['manager'] = false;
             //dd($kpiRows);
-
+            if ($assignedEmployee_Userdata->id == auth()->user()->id)
+            {
+                $show['appraiser'] = true;
+            }
+            if (in_array(auth()->user()->id, explode(',', $assignedGoals->reviewer_id))) {
+                $show['manager'] = true;
+            }
             return view('vmt_appraisalreview_hr', compact( 'employeeData','assignedEmployee_Userdata','assignedEmp_manager_name','assignedEmployeeOfficeDetails', 'assignedGoals', 'kpiRows', 'empSelected', 'reviewCompleted', 'ratingDetail', 'kpiRowsId', 'assigners', 'assignersName', 'config', 'show'));
         }
-
         $kpiRows = [];
         $empSelected = false;
         $reviewCompleted = false;
         return view('vmt_appraisalreview_hr', compact('pmsGoalList', 'kpiRows', 'empSelected', 'reviewCompleted', 'kpiRowsId', 'config', 'show'));
+    }
+
+    public function saveKPItableDraft_HR(Request $request){
+
+        $kpiData  = VmtEmployeePMSGoals::find($request->goal_id);
+        $employeeData = VmtEmployee::where('id', $kpiData->employee_id)->first();
+
+        if($kpiData){
+            if ($employeeData->userid == auth()->user()->id) {
+                $kpiData->self_kpi_review      = $request->selfreview; //null
+                $kpiData->self_kpi_percentage  = $request->selfkpiachievement; //null
+                $kpiData->self_kpi_comments    = $request->selfcomments;//null
+                $kpiData->is_employee_submitted = 0;//false
+            } else if (in_array(auth()->user()->id, explode(',', $kpiData->reviewer_id))) {
+                $review = [];
+                $percentage = [];
+                if ($kpiData->manager_kpi_review) {
+                    $review = json_decode($kpiData->manager_kpi_review, true);
+                    $review[auth()->user()->id] = $request->managereview;
+                }
+                if ($kpiData->manager_kpi_percentage) {
+                    $percentage = json_decode($kpiData->manager_kpi_percentage, true);
+                    $percentage[auth()->user()->id] = $request->managerpercetage;
+                }
+                $review[auth()->user()->id] = $request->managereview;
+                $percentage[auth()->user()->id] = $request->managerpercetage;
+                $kpiData->manager_kpi_review      = json_encode($review); //null
+                $kpiData->manager_kpi_percentage  = json_encode($percentage); //null
+                //$kpiData->self_kpi_comments    = $request->selfcomments;//null
+
+                $kpiData->is_manager_submitted = 0;//false.
+
+            } else if (auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin')) {
+                $kpiData->hr_kpi_review      = $request->hreview; //null
+                $kpiData->hr_kpi_percentage  = $request->hrpercetage; //null
+
+                $kpiData->is_hr_submitted = 0;//false.
+            }
+            $kpiData->save();
+
+            //dd($officialMailList);
+        }
+
+        return "Saved as draft";
+    }
+
+    public function storeHRApraisalReview(Request $request){
+        //dd($request->all());
+        $kpiData  = VmtEmployeePMSGoals::find($request->goal_id);
+        $employeeData = VmtEmployee::where('id', $kpiData->employee_id)->first();
+        $user_emp_name = User::where('id',$request->user_id)->pluck('name')->first();
+        if($kpiData){
+            if ($employeeData->userid == auth()->user()->id) {
+                $kpiData->self_kpi_review      = $request->selfreview; //null
+                $kpiData->self_kpi_percentage  = $request->selfkpiachievement; //null
+                $kpiData->self_kpi_comments    = $request->selfcomments;//null
+                $kpiData->is_employee_submitted = 1;//true
+            } else if (in_array(auth()->user()->id, explode(',', $kpiData->reviewer_id))) {
+                $review = [];
+                $percentage = [];
+                if ($kpiData->manager_kpi_review) {
+                    $review = json_decode($kpiData->manager_kpi_review, true);
+                    $review[auth()->user()->id] = $request->managereview;
+                }
+                if ($kpiData->manager_kpi_percentage) {
+                    $percentage = json_decode($kpiData->manager_kpi_percentage, true);
+                    $percentage[auth()->user()->id] = $request->managerpercetage;
+                }
+                $review[auth()->user()->id] = $request->managereview;
+                $percentage[auth()->user()->id] = $request->managerpercetage;
+                $kpiData->manager_kpi_review      = json_encode($review); //null
+                $kpiData->manager_kpi_percentage  = json_encode($percentage); //null
+                //$kpiData->self_kpi_comments    = $request->selfcomments;//null
+                if (count($review) == count(explode(',', $kpiData->reviewer_id))) {
+                    $kpiData->is_manager_submitted = 1;//true
+                } else {
+                    $kpiData->is_manager_submitted = 0;//false
+                }
+    
+            } else if (auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin')) {
+                $kpiData->hr_kpi_review      = $request->hreview; //null
+                $kpiData->hr_kpi_percentage  = $request->hrpercetage; //null
+                $kpiData->is_hr_submitted = 1;//true
+            }
+            $kpiData->save();
+            if ($employeeData->userid == auth()->user()->id) {
+                
+                $notification_user = User::where('id',auth::user()->id)->first();
+                $reviewManager = User::find($kpiData->reviewer_id);
+                //dd($reviewManager->email);
+                $managerOfficeDetails =  VmtEmployeeOfficeDetails::where('user_id', $kpiData->reviewer_id)->first();
+                $currentUser_empDetails = VmtEmployeeOfficeDetails::where('user_id', auth::user()->id)->first();
+
+                \Mail::to($managerOfficeDetails->officical_mail)->send(new NotifyPMSManager(auth::user()->name, $currentUser_empDetails->designation, $reviewManager->name ));
+                $message = "Employee has submitted KPI Assessment.  ";
+                    Notification::send($notification_user ,new ViewNotification($message.auth()->user()->name));
+                return "Published Review successfully.Sent mail to manager ".$managerOfficeDetails->officical_mail;
+            } else if (in_array(auth()->user()->id, explode(',', $kpiData->reviewer_id))) {
+                $hrReview = User::find($kpiData->author_id);
+
+                $currentUser_empDetails = VmtEmployeeOfficeDetails::where('user_id', auth::user()->id)->first();
+
+                $hrList =  User::role(['HR', 'admin', 'Admin'])->get(); 
+                $hrUsers = $hrList->pluck('id'); 
+                $officialMailList =   VmtEmployeeOfficeDetails::whereIn('user_id', $hrUsers)->pluck('officical_mail');
+
+                $notification_user = User::where('id',auth::user()->id)->first();
+                //dd($officialMailList);
+                \Mail::to($officialMailList)->send(new NotifyPMSManager(auth::user()->name,  $currentUser_empDetails->designation,$hrReview->name));
+                $message = "Employee has submitted KPI Assessment.  ";
+                    Notification::send($notification_user ,new ViewNotification($message.auth()->user()->name));
+                return "Published Review successfully. Sent mail to HR ".$officialMailList;
+            } else if (auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin')) {
+                
+                $notification_user = User::where('id',auth::user()->id)->first();
+                //$managerData   = User::find($kpiData->reviewer_id);
+                //$employeeData = VmtEmployee::where('id', $kpiData->employee_id)->first();
+                $mailingList = VmtEmployeeOfficeDetails::whereIn('user_id', [$kpiData->employee_id, $kpiData->reviewer_id] )->pluck('officical_mail');
+
+                //$reviewManager = User::find($kpiData->reviewer_id);
+                //dd($reviewManager->email);
+                \Mail::to($mailingList)->send(new PMSReviewCompleted('none',$user_emp_name, 'title', 'details'));
+                $message = "The HR team has successfully completed your PMS review process.  ";
+                    Notification::send($notification_user ,new ViewNotification($message.auth()->user()->name));
+                return "Saved.Sent mail to manager and employee ". implode(',', $mailingList->toArray()); // $managerOfficeDetails->officical_mail;
+            }
+            
+        }
     }
 
 }

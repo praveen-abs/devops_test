@@ -106,7 +106,7 @@ Route::post('vmt-dashboard-announcement', 'App\Http\Controllers\VmtMainDashboard
 
 Route::get('vmt-dashboard-post-view/{id}', 'App\Http\Controllers\VmtMainDashboardController@DashBoardPostView');
 // dashboard task //
-Route::post('vmt-pms-saveKPItableDraft_HR', 'App\Http\Controllers\VmtApraisalController@saveKPItableDraft_HR');
+Route::post('vmt-pms-saveKPItableDraft_HR', 'App\Http\Controllers\VmtPmsController@saveKPItableDraft_HR');
 
 Route::post('vmt-pms-saveKPItableDraft_Manager', 'App\Http\Controllers\VmtApraisalController@saveKPItableDraft_Manager');
 
@@ -206,7 +206,7 @@ Route::post('vmt-pms-saveKPItableFeedback_Manager', 'App\Http\Controllers\VmtApr
 Route::post('vmt-pmsappraisal-managerreview', 'App\Http\Controllers\VmtApraisalController@storeManagerApraisalReview');
 
 // Store Review Given by HR
-Route::post('vmt-pmsappraisal-hrreview', 'App\Http\Controllers\VmtApraisalController@storeHRApraisalReview');
+Route::post('vmt-pmsappraisal-hrreview', 'App\Http\Controllers\VmtPmsController@storeHRApraisalReview');
 
 
 
