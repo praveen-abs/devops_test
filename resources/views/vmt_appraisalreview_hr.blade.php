@@ -278,7 +278,7 @@
                     <input type="hidden" name="goal_id" value="{{$assignedGoals->id}}">
                     <div class="table-content mb-4">
 
-                        <table id='table' style="width:130%;" class="table align-middle mb-0 table-bordered  responsive" data-paging="true" data-paging-size="10" data-paging-limit="3" data-paging-container="#paging-ui-container" data-paging-count-format="{PF} to {PL}" data-sorting="true" data-filtering="false" data-empty="No Results" data-filter-container="#filter-form-container" data-editing-add-text="Add New">
+                        <table id="table_review" style="width:130%;" class="table align-middle mb-0 table-bordered  responsive" data-paging="true" data-paging-size="10" data-paging-limit="3" data-paging-container="#paging-ui-container" data-paging-count-format="{PF} to {PL}" data-sorting="true" data-filtering="false" data-empty="No Results" data-filter-container="#filter-form-container" data-editing-add-text="Add New">
                             <thead class="thead" id="tHead">
                                 <tr>
                                     <th scope="col" data-name='dimension' data-filterable="false" data-visible="{{$show['dimension']}}">@if($config && $config->header)
@@ -302,10 +302,10 @@
                                     <th scope="col" data-name='kpiSelfReview' data-filterable="false" data-visible="true">KPI - Achievement (Self Review)</th>
                                     <th scope="col" data-name='kpiSelfAchivement' data-filterable="false" data-visible="true">Self KPI Achievement %</th>
                                     <th scope="col" data-name='comments' data-filterable="false" data-visible="true">Comments</th>
-                                    <th scope="col" data-name='kpiManagerReview' data-filterable="false" data-visible="true">KPI - Achievement (Manager Review)</th>
-                                    <th scope="col" data-name='kpiManagerAchivement' data-filterable="false" data-visible="true">Manager KPI Achievement %</th>
-                                    <th scope="col" data-name='kpiHrReview' data-filterable="false" data-visible="true">KPI - Achievement (HR Review)</th>
-                                    <th scope="col" data-name='kpiHrAchivement' data-filterable="false" data-visible="true">HR KPI Achievement %</th>
+                                    <th scope="col" data-name='kpiManagerReview' data-filterable="false" data-visible="{{($reviewCompleted || $show['manager']) ? 'true' :'false' }}">KPI - Achievement (Manager Review)</th>
+                                    <th scope="col" data-name='kpiManagerAchivement' data-filterable="false" data-visible="{{($reviewCompleted || $show['manager']) ? 'true' :'false' }}">Manager KPI Achievement %</th>
+                                    <th scope="col" data-name='kpiHrReview' data-filterable="false" data-visible="{{(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin')) ? 'true': 'false'}}">KPI - Achievement (HR Review)</th>
+                                    <th scope="col" data-name='kpiHrAchivement' data-filterable="false" data-visible="{{(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin')) ? 'true': 'false'}}">HR KPI Achievement %</th>
                                 </tr>
                             </thead>
                             <tbody class="tbody" id="tbody">
@@ -338,24 +338,72 @@
                                     <td>
                                         <div>{{$kpiRow->kpi_weightage}}</div>
                                     </td>
+
                                     <td>
+                                        @if($assignedGoals->is_manager_approved &&
+                                            !$assignedGoals->is_employee_submitted && $show['appraiser'])
+                                        <div>
+                                            <textarea name="selfreview[{{$kpiRow->id}}]" id="selfreview{{$index}}"
+                                                cols="40" rows="8"
+                                                placeholder="type here">@if(isset($kpiRow->self_kpi_review)) {{$kpiRow->self_kpi_review}} @endif</textarea>
+                                        </div>
+                                        @else
                                         <div>
                                             {{$kpiRow->self_kpi_review}}
                                         </div>
+                                        @endif
                                     </td>
                                     <td>
+                                        @if($assignedGoals->is_manager_approved &&
+                                            !$assignedGoals->is_employee_submitted && $show['appraiser'])
+                                        <div>
+                                            <!-- <textarea name="selfkpiachievement[{{$kpiRow->id}}]" id="" cols="40" rows="8"
+                                                placeholder="type here">@if(isset($kpiRow->self_kpi_percentage)) {{$kpiRow->self_kpi_percentage}} @endif</textarea> -->
+                                            <input type="number" class="inp-text" id="selfkpiachievement{{$index}}"
+                                                name="selfkpiachievement[{{$kpiRow->id}}]" placeholder="type here"
+                                                value="@if(isset( $kpiRow->self_kpi_percentage)){{$kpiRow->self_kpi_percentage}}@endif">
+                                        </div>
+                                        @else
                                         <div> {{$kpiRow->self_kpi_percentage}}</div>
+                                        @endif
                                     </td>
                                     <td>
+                                        @if($assignedGoals->is_manager_approved &&
+                                            !$assignedGoals->is_employee_submitted && $show['appraiser'])
+                                        <div>
+                                            <textarea name="selfcomments[{{$kpiRow->id}}]" id="selfcomments{{$index}}"
+                                                cols="40" rows="8"
+                                                placeholder="type here"> @if(isset($kpiRow->self_kpi_comments)) {{$kpiRow->self_kpi_comments}} @endif</textarea>
+                                        </div>
+                                        @else
                                         <div>{{$kpiRow->self_kpi_comments}}</div>
-                                    </td>
-                                    <td>
-                                        <div>{{$kpiRow->manager_kpi_review}}</div>
-                                    </td>
-                                    <td>
-                                        <div>{{$kpiRow->manager_kpi_percentage}}</div>
+                                        @endif
                                     </td>
 
+                                    <td>
+                                        @if($assignedGoals->is_employee_submitted && !$reviewCompleted &&
+                                        !$assignedGoals->is_manager_submitted && !$show['appraiser'])
+
+                                        <textarea name="managereview[{{$kpiRow->id}}]" id="" cols="20" rows="8"
+                                            placeholder="type here">@if(isset( $kpiRow->manager_kpi_review)){{$kpiRow->manager_kpi_review}}@endif</textarea>
+                                        @else
+                                        <div>{{$kpiRow->manager_kpi_review}}</div>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($assignedGoals->is_employee_submitted && !$reviewCompleted &&
+                                        !$assignedGoals->is_manager_submitted && !$show['appraiser'])
+                                        <!-- <textarea name="managerpercetage[{{$kpiRow->id}}]" id="" cols="20" rows="2" 
+                                            placeholder="type here">@if(isset( $kpiRow->manager_kpi_percentage)) {{$kpiRow->manager_kpi_percentage}}@endif</textarea> -->
+                                        <input type="number" class="inp-text" name="managerpercetage[{{$kpiRow->id}}]"
+                                            placeholder="type here"
+                                            value="@if(isset( $kpiRow->manager_kpi_percentage)){{$kpiRow->manager_kpi_percentage}}@endif">
+                                        @else
+                                        <div>{{$kpiRow->manager_kpi_percentage}}</div>
+                                        @endif
+                                    </td>
+                                    <!-- @if(($reviewCompleted && $show['appraiser']) || !$show['appraiser'])
+                                    @endif -->
                                     <td>
                                         @if(!$assignedGoals->is_hr_submitted && $assignedGoals->is_manager_submitted)
                                         <textarea name="hreview[{{$kpiRow->id}}]" id="" cols="20" rows="8"
@@ -374,6 +422,8 @@
                                         <div>{{$kpiRow->hr_kpi_percentage}}</div>
                                         @endif
                                     </td>
+                                    <!-- @if((auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin')) && $reviewCompleted) -->
+                                    <!-- @endif -->
 
                                 </tr>
                                 @endforeach
@@ -383,16 +433,53 @@
 
                     </div>
                 </form>
+                @if($show['appraiser'])
+                <div class="buttons d-flex align-items-center justify-content-end ">
+                    @if(!$assignedGoals->is_employee_accepted)
+                    <button class="btn btn-primary" id="approve">Accept<i class="fa fa-save"></i></button>
+                    &nbsp;&nbsp;
+                    <button class="btn btn-primary" id="reject">Reject<i class="fa fa-save"></i></button>
+                    &nbsp;&nbsp;
+                    @else
+                    @if(!$reviewCompleted && !$assignedGoals->is_employee_submitted &&
+                    $assignedGoals->is_manager_approved )
+                    <button class="btn btn-primary" id="save_table">Save<i class="fa fa-save"></i></button>
+                    &nbsp;&nbsp;
+                    <button class="btn btn-primary" id="publish_table">Submit<i class="fa fa-save"></i></button>
+                    @endif
+
+                    @endif
+                </div>
+                @endif
+                @if($show['manager'])
+                <div class="buttons d-flex align-items-center justify-content-end ">
+                    @if(!$assignedGoals->is_manager_approved)
+                    <button class="btn btn-primary" id="approve">Approve<i class="fa fa-save"></i></button>
+                    &nbsp;&nbsp;
+                    <button class="btn btn-primary" id="reject">Reject<i class="fa fa-save"></i></button>
+                    &nbsp;&nbsp;
+                    @elseif(!$reviewCompleted && $assignedGoals->is_employee_submitted)
+                    <button class="btn btn-primary" id="save_table">Save<i class="fa fa-save"></i></button>
+                            &nbsp;&nbsp;
+                            <button class="btn btn-primary" id="publish_table">Publish<i class="fa fa-save"></i></button>
+                    @endif
+                    @if(!$assignedGoals->is_employee_submitted)
+                    <h4>Employee has not yet submitted this review.</h4>
+                    @endif
+                </div>
+                @endif
+                @if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin'))
                 <div class="buttons d-flex align-items-center justify-content-end ">
                     @if($assignedGoals->is_manager_submitted && !$assignedGoals->is_hr_submitted )
                     <button class="btn btn-primary" id="save_table">Save<i class="fa fa-save"></i></button>
                     &nbsp;&nbsp;
                     <button class="btn btn-primary" id="publish_table">Submit<i class="fa fa-save"></i></button>
                     @endif
-                    @else
-                    <h4>Goals Not Assigned</h4>
-                    @endif
                 </div>
+                @endif
+                @else
+                <h4>Goals Not Assigned</h4>
+                @endif
             </div>
         </div>
     </div>
@@ -478,6 +565,34 @@
     @endif
 
 
+<div class="modal fade" id="notificationModal" role="dialog" aria-hidden="true"
+    style="opacity:1; display:none;background:#00000073;">
+    <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true"
+        aria-labelledby="exampleModalToggleLabel2">
+        <div class="modal-content">
+            <div class="modal-header py-2 bg-primary">
+
+                <div class="w-100 modal-header-content d-flex align-items-center py-2">
+                    <h5 class="modal-title text-white" id="modalHeader">Rejected
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white close-modal" data-bs-dismiss="modal"
+                        aria-label="Close">
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="mt-4">
+                    <h4 class="mb-3" id="modalNot"></h4>
+                    <textarea name="reject_content" id="reject_content" class="form-control mb-3"></textarea>
+                    <div class="hstack gap-2 justify-content-center">
+                        <button type="button" class="btn btn-primary" id="reject_save" disabled>Save</button>
+                        <button type="button" class="btn btn-light close-modal" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
     <!-- Modal -->
     <div class="modal fade flip" id="acceptPMS" tabindex="-1" aria-hidden="true">
@@ -531,7 +646,7 @@ $('#upload_file').change(function() {
     }
 });
 
-ft = FooTable.init('#table', {});
+ft = FooTable.init('#table_review', {});
 
 $('#upload-goal').click(function() {
     var form_data = new FormData(document.getElementById("upload_form"));
@@ -565,6 +680,87 @@ $('#save_table').click(function(e) {
             alert(data);
         }
     })
+});
+
+
+$('body').on('click', '.close-modal', function() {
+    $('#notificationModal').hide();
+    $('#notificationModal').addClass('fade');
+    window.location.reload();
+});
+
+$('body').on("keyup", '#reject_content', function() {
+    if ($(this).val() == '') {
+        $('#reject_save').attr('disabled', true);
+    } else {
+        $('#reject_save').removeAttr('disabled');
+    }
+});
+
+$('#reject_save').click(function(e) {
+    e.preventDefault();
+    var goal_id = "{{\Request::get('goal_id')}}";
+    var user_id = "{{\Request::get('user_id')}}";
+    var approve_flag = "rejected";
+    var content = $('#reject_content').val();
+
+    $.ajax({
+        type: "POST",
+        url: "{{url('vmt-approvereject-command')}}",
+        data: {
+            "_token": "{{ csrf_token() }}",
+            content: content,
+            goal_id: goal_id,
+            user_id: user_id,
+        },
+        success: function(data) {
+            e.preventDefault();
+            var goal_id = "{{\Request::get('goal_id')}}";
+            var user_id = "{{\Request::get('user_id')}}";
+            var approve_flag = "rejected";
+               var command = $('#reject_content').val();
+            $.ajax({
+                type: "GET",
+                url: "{{url('vmt-approvereject-kpitable')}}?goal_id=" + goal_id +
+                    "&user_id=" + user_id + "&approve_flag=" + approve_flag + "&command=" +
+                    command,
+                success: function(data) {
+                    $('#notificationModal').hide();
+                    $('#notificationModal').addClass('fade');
+                    window.location.reload();
+                }
+            });
+        }
+    })
+});
+
+
+$('#approve').click(function(e) {
+    e.preventDefault();
+    //goal_id=26&user_id=4
+    var goal_id = "{{\Request::get('goal_id')}}";
+    var user_id = "{{\Request::get('user_id')}}";
+    var approve_flag = "approved";
+
+    $.ajax({
+        type: "GET",
+        url: "{{url('vmt-approvereject-kpitable')}}?goal_id=" + goal_id + "&user_id=" + user_id +
+            "&approve_flag=" + approve_flag,
+        success: function(data) {
+            alert(data);
+            window.location.reload();
+        }
+    })
+});
+
+
+
+$('#reject').click(function(e) {
+    $('#modalHeader').html("Rejected");
+    $('#modalNot').html(
+        "Are you sure you want to reject this Kpi. If yes, please entered the reason in the below command box:"
+    );
+    $('#notificationModal').show('modal');
 });
 
 
