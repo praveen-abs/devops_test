@@ -436,6 +436,7 @@ class VmtPmsController extends Controller
         $show['stretchTarget'] = 'true';
         $show['source'] = 'true';
         $show['kpiWeightage'] = 'true';
+        $show['managerCount'] = 0;
         if ($config) {
             $config->header = json_decode($config->column_header, true);
             $show['dimension'] = $config->selected_columns && in_array('dimension', explode(',', $config->selected_columns)) ? 'true': 'false';
@@ -482,11 +483,24 @@ class VmtPmsController extends Controller
             if($assignedGoals->manager_kpi_review != null){
                 $reviewArrayManager = (json_decode($assignedGoals->manager_kpi_review, true));
                 $percentArrayManager = (json_decode($assignedGoals->manager_kpi_percentage, true));
+                if (count($reviewArrayManager) > $show['managerCount']) {
+                    $show['managerCount'] = count($reviewArrayManager);
+                }
                 //$commentArray = (json_decode($assignedGoals->self_kpi_comments, true));
                 foreach ($kpiRows as $index => $value) {
                     // code...
-                    $kpiRows[$index]['manager_kpi_review'] = $reviewArrayManager[$value->id];
-                    $kpiRows[$index]['manager_kpi_percentage'] = $percentArrayManager[$value->id];
+                    if (in_array(auth()->user()->id, explode(',', $assignedGoals->reviewer_id))) {
+                        if (isset($reviewArrayManager[auth()->user()->id])) {
+                            $kpiRows[$index]['manager_kpi_review'] = $reviewArrayManager[auth()->user()->id][$value->id];
+                            $kpiRows[$index]['manager_kpi_percentage'] = $percentArrayManager[auth()->user()->id][$value->id];
+                        } else {
+                            $kpiRows[$index]['manager_kpi_review'] = '';
+                            $kpiRows[$index]['manager_kpi_percentage'] = '';
+                        }
+                    } else {
+                        $kpiRows[$index]['manager_kpi_review'] = $reviewArrayManager;
+                        $kpiRows[$index]['manager_kpi_percentage'] = $percentArrayManager;
+                    }
                     //$kpiRows[$index]['self_kpi_comments'] = $commentArray[$value->id];
                 }
             }
@@ -569,9 +583,20 @@ class VmtPmsController extends Controller
                 $kpiData->self_kpi_comments    = $request->selfcomments;//null
                 $kpiData->is_employee_submitted = 0;//false
             } else if (in_array(auth()->user()->id, explode(',', $kpiData->reviewer_id))) {
-                
-                $kpiData->manager_kpi_review      = $request->managereview; //null
-                $kpiData->manager_kpi_percentage  = $request->managerpercetage; //null
+                $review = [];
+                $percentage = [];
+                if ($kpiData->manager_kpi_review) {
+                    $review = json_decode($kpiData->manager_kpi_review, true);
+                    $review[auth()->user()->id] = $request->managereview;
+                }
+                if ($kpiData->manager_kpi_percentage) {
+                    $percentage = json_decode($kpiData->manager_kpi_percentage, true);
+                    $percentage[auth()->user()->id] = $request->managerpercetage;
+                }
+                $review[auth()->user()->id] = $request->managereview;
+                $percentage[auth()->user()->id] = $request->managerpercetage;
+                $kpiData->manager_kpi_review      = json_encode($review); //null
+                $kpiData->manager_kpi_percentage  = json_encode($percentage); //null
                 //$kpiData->self_kpi_comments    = $request->selfcomments;//null
 
                 $kpiData->is_manager_submitted = 0;//false.
@@ -602,10 +627,26 @@ class VmtPmsController extends Controller
                 $kpiData->self_kpi_comments    = $request->selfcomments;//null
                 $kpiData->is_employee_submitted = 1;//true
             } else if (in_array(auth()->user()->id, explode(',', $kpiData->reviewer_id))) {
-                $kpiData->manager_kpi_review      = $request->managereview; //null
-                $kpiData->manager_kpi_percentage  = $request->managerpercetage; //null
+                $review = [];
+                $percentage = [];
+                if ($kpiData->manager_kpi_review) {
+                    $review = json_decode($kpiData->manager_kpi_review, true);
+                    $review[auth()->user()->id] = $request->managereview;
+                }
+                if ($kpiData->manager_kpi_percentage) {
+                    $percentage = json_decode($kpiData->manager_kpi_percentage, true);
+                    $percentage[auth()->user()->id] = $request->managerpercetage;
+                }
+                $review[auth()->user()->id] = $request->managereview;
+                $percentage[auth()->user()->id] = $request->managerpercetage;
+                $kpiData->manager_kpi_review      = json_encode($review); //null
+                $kpiData->manager_kpi_percentage  = json_encode($percentage); //null
                 //$kpiData->self_kpi_comments    = $request->selfcomments;//null
-                $kpiData->is_manager_submitted = 1;//true
+                if (count($review) == count(explode(',', $kpiData->reviewer_id))) {
+                    $kpiData->is_manager_submitted = 1;//true
+                } else {
+                    $kpiData->is_manager_submitted = 0;//false
+                }
     
             } else if (auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin')) {
                 $kpiData->hr_kpi_review      = $request->hreview; //null

@@ -302,8 +302,17 @@
                                     <th scope="col" data-name='kpiSelfReview' data-filterable="false" data-visible="true">KPI - Achievement (Self Review)</th>
                                     <th scope="col" data-name='kpiSelfAchivement' data-filterable="false" data-visible="true">Self KPI Achievement %</th>
                                     <th scope="col" data-name='comments' data-filterable="false" data-visible="true">Comments</th>
+                                    @if ($show['manager'] || $show['managerCount'] < 2)
                                     <th scope="col" data-name='kpiManagerReview' data-filterable="false" data-visible="{{($reviewCompleted || $show['manager']) ? 'true' :'false' }}">KPI - Achievement (Manager Review)</th>
                                     <th scope="col" data-name='kpiManagerAchivement' data-filterable="false" data-visible="{{($reviewCompleted || $show['manager']) ? 'true' :'false' }}">Manager KPI Achievement %</th>
+                                    @else
+                                    @for($i=1; $i<=$show['managerCount']; $i++)
+                                    <th scope="col" data-name='kpiManagerReview' data-filterable="false" data-visible="true">KPI - Achievement (Manager Review) - {{$i}}</th>
+                                    @endfor
+                                    @for($i=1; $i<=$show['managerCount']; $i++)
+                                    <th scope="col" data-name='kpiManagerAchivement' data-filterable="false" data-visible="true">Manager KPI Achievement % - {{$i}}</th>
+                                    @endfor
+                                    @endif
                                     <th scope="col" data-name='kpiHrReview' data-filterable="false" data-visible="{{(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin')) ? 'true': 'false'}}">KPI - Achievement (HR Review)</th>
                                     <th scope="col" data-name='kpiHrAchivement' data-filterable="false" data-visible="{{(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin')) ? 'true': 'false'}}">HR KPI Achievement %</th>
                                 </tr>
@@ -379,10 +388,10 @@
                                         <div>{{$kpiRow->self_kpi_comments}}</div>
                                         @endif
                                     </td>
-
+                                    @if ($show['manager'] || ($show['managerCount']) < 2))
                                     <td>
                                         @if($assignedGoals->is_employee_submitted && !$reviewCompleted &&
-                                        !$assignedGoals->is_manager_submitted && !$show['appraiser'])
+                                        !$assignedGoals->is_manager_submitted && $show['manager'])
 
                                         <textarea name="managereview[{{$kpiRow->id}}]" id="" cols="20" rows="8"
                                             placeholder="type here">@if(isset( $kpiRow->manager_kpi_review)){{$kpiRow->manager_kpi_review}}@endif</textarea>
@@ -392,7 +401,7 @@
                                     </td>
                                     <td>
                                         @if($assignedGoals->is_employee_submitted && !$reviewCompleted &&
-                                        !$assignedGoals->is_manager_submitted && !$show['appraiser'])
+                                        !$assignedGoals->is_manager_submitted && $show['manager'])
                                         <!-- <textarea name="managerpercetage[{{$kpiRow->id}}]" id="" cols="20" rows="2" 
                                             placeholder="type here">@if(isset( $kpiRow->manager_kpi_percentage)) {{$kpiRow->manager_kpi_percentage}}@endif</textarea> -->
                                         <input type="number" class="inp-text" name="managerpercetage[{{$kpiRow->id}}]"
@@ -402,6 +411,18 @@
                                         <div>{{$kpiRow->manager_kpi_percentage}}</div>
                                         @endif
                                     </td>
+                                    @else
+                                    @foreach($kpiRow->manager_kpi_review as $key => $mgr)
+                                    <td>
+                                        <div>{{$mgr[$kpiRow['id']]}}</div>
+                                    </td>
+                                    @endforeach
+                                    @foreach($kpiRow->manager_kpi_percentage as $key => $mgr)
+                                    <td>
+                                        <div>{{$mgr[$kpiRow['id']]}}</div>
+                                    </td>
+                                    @endforeach
+                                    @endif
                                     <!-- @if(($reviewCompleted && $show['appraiser']) || !$show['appraiser'])
                                     @endif -->
                                     <td>
