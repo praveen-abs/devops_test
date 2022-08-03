@@ -25,6 +25,7 @@ use App\Mail\VmtAssignGoals;
 use App\Mail\NotifyPMSManager;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Mail\PMSReviewCompleted;
+use Illuminate\Support\Arr;
 
 class VmtMainDashboardController extends Controller
 {
@@ -36,17 +37,17 @@ class VmtMainDashboardController extends Controller
 
     public function index()
     {
-        
+
         $currentUserJobDetails = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
                                 ->join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
                     ->select(
-                        'users.name', 
-                        'users.avatar', 
+                        'users.name',
+                        'users.avatar',
                         'vmt_employee_details.emp_no',
                         'vmt_employee_office_details.designation'
                     )
                     ->where('users.id', auth()->user()->id)
-                    ->first();  
+                    ->first();
         $checked = VmtEmployeeAttendance::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->first();
         $effective_hours="";
 
@@ -56,12 +57,13 @@ class VmtMainDashboardController extends Controller
             $to = Carbon::createFromFormat('Y-m-d H:i:s', $checked->checkout_time);
 
             $from = Carbon::createFromFormat('Y-m-d H:i:s', $checked->checkin_time);
-    
+
             $effective_hours = gmdate('H:i:s', $to->diffInSeconds($from));
-    
+
            // dd($effective_hours);
         }
-         $dashboardpost  =  vmt_dashboard_posts::all();
+
+        $dashboardpost  =  vmt_dashboard_posts::all();
         $holidays = vmtHolidays::orderBy('holiday_date', 'ASC')->get();
         $polling = Polling::first();
         if ($polling) {
@@ -70,21 +72,55 @@ class VmtMainDashboardController extends Controller
                 $polling->data = $selectedPoll->selected_option;
             }
         }
+
+        ////Dashboard counters data
+        //Total Employees Count
+        $totalEmployeesCount = User::all()->count();
+
+        //New Joinees Count
+        $currentDate = Carbon::now();
+        $currentDate->setTimezone("Asia/Kolkata");
+        $dateDifferenceForNewJoinees = 7; //Right now, showing 1 week old joinees
+        $newEmployeesCount = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
+                                ->whereRaw('DATEDIFF(? , vmt_employee_details.doj) <= ?',[$currentDate, $dateDifferenceForNewJoinees])->get()->count();
+
+
+        //Employees who checked-in today
+        $todayEmployeesCheckedInCount = User::join('vmt_employee_attendance','vmt_employee_attendance.user_id','=','users.id')
+                                ->whereDate('vmt_employee_attendance.checkin_time','=', $currentDate )
+                                ->whereNull('vmt_employee_attendance.checkout_time')
+                                ->get()->count();
+
+        //Employees Leave today count
+        $todayEmployeesOnLeaveCount =  $totalEmployeesCount - $todayEmployeesCheckedInCount;
+        //dd($newEmployeesCount);
+
+        //Parse into json
+        $dashboardCountersData = [];
+            $dashboardCountersData['totalEmployeesCount'] = $totalEmployeesCount;
+            $dashboardCountersData['newEmployeesCount'] = $newEmployeesCount;
+            $dashboardCountersData['todayEmployeesCheckedInCount'] = $todayEmployeesCheckedInCount;
+            $dashboardCountersData['todayEmployeesOnLeaveCount'] = $todayEmployeesOnLeaveCount;
+
+        $json_dashboardCountersData = json_encode($dashboardCountersData);
+
         if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin')) {
-            return view('vmt_hr_dashboard', compact( 'currentUserJobDetails', 'checked','effective_hours', 'holidays', 'polling','dashboardpost'));
-        }        
-        else 
+            return view('vmt_hr_dashboard', compact( 'currentUserJobDetails', 'checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData'));
+        }
+        else
         if(auth()->user()->hasrole('Manager'))
         {
-            return view('vmt_manager_dashboard', compact( 'currentUserJobDetails', 'checked','effective_hours', 'holidays', 'polling','dashboardpost'));
+            return view('vmt_manager_dashboard', compact( 'currentUserJobDetails', 'checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData'));
         }
-        else 
-        if(auth()->user()->hasrole('Employee')) 
+        else
+        if(auth()->user()->hasrole('Employee'))
         {
-            return view('vmt_employee_dashboard', compact( 'currentUserJobDetails', 'checked','effective_hours', 'holidays', 'polling','dashboardpost'));
-        } 
+            return view('vmt_employee_dashboard', compact( 'currentUserJobDetails', 'checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData'));
+        }
 
     }
+
+
 
     public function  DashBoardPost(Request $request){
         $id = auth()->user()->id;
@@ -93,7 +129,7 @@ class VmtMainDashboardController extends Controller
         $data_dashboard->message = $request->post_menu;
         $data_dashboard->author_id = $id;
              // dd($file);
-          if ($file) { 
+          if ($file) {
              $filename = 'post-'.'.'. $file->getClientOriginalName();
         // dd($filename);
             $destination = public_path('/images');
@@ -109,12 +145,12 @@ class VmtMainDashboardController extends Controller
 
          $title_data  = null;
          $details_data  = null;
-          $hrList =  User::role(['HR','Employee', 'admin', 'Admin'])->get(); 
-            $hrUsers = $hrList->pluck('id'); 
+          $hrList =  User::role(['HR','Employee', 'admin', 'Admin'])->get();
+            $hrUsers = $hrList->pluck('id');
           $officialMailList =   VmtEmployeeOfficeDetails::whereIn('user_id', $hrUsers)->pluck('officical_mail');
          $user_emp_name = $request->post_menu;
        \Mail::to($officialMailList)->send(new PMSReviewCompleted('post',$user_emp_name,$title_data,$details_data));
-         // end email 
+         // end email
            Notification::send($notification_user ,new ViewNotification($message.auth()->user()->name));
         $dashboardpost  =  vmt_dashboard_posts::where('author_id', $id)->pluck('message','post_image');
         return $dashboardpost;
@@ -138,9 +174,9 @@ class VmtMainDashboardController extends Controller
          $notification_user = User::where('id',auth::user()->id)->first();
 
          $message = "Announcement Added By "  ;
-                  // code email 
-          $hrList =  User::role(['HR','Employee', 'admin', 'Admin'])->get(); 
-            $hrUsers = $hrList->pluck('id'); 
+                  // code email
+          $hrList =  User::role(['HR','Employee', 'admin', 'Admin'])->get();
+            $hrUsers = $hrList->pluck('id');
           $officialMailList =   VmtEmployeeOfficeDetails::whereIn('user_id', $hrUsers)->pluck('officical_mail');
          $user_emp_name =  $message;
          // var_dump($officialMailList);
@@ -148,7 +184,7 @@ class VmtMainDashboardController extends Controller
 
        \Mail::to($officialMailList)->send(new PMSReviewCompleted('announcement',$user_emp_name,$title_data,$details_data));
          }
-         // end email 
+         // end email
            Notification::send($notification_user ,new ViewNotification($message.auth()->user()->name));
         $dashboardannoun  =  VmtAnnouncement::where('ann_author_id', $id)->pluck('title_data','ann_author_id','details_data');
         return $dashboardannoun;
