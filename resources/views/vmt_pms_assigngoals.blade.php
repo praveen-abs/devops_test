@@ -1353,9 +1353,9 @@ $(function () {
                     reviewer.push(tempdata.name);
                     reviewerId.push(tempdata.id);
                 });
-                var data = {!!json_encode($users)!!};
+                var rev = {!!json_encode($users)!!};
                 var optionHtml ="";
-                $.each(data, function(i, tempdata){
+                $.each(rev, function(i, tempdata){
                     if($.inArray(parseInt(tempdata.id), reviewerId) > -1){
                         optionHtml = optionHtml+"<div class='col-3'><input type='checkbox' name='reviewer"+tempdata.id+"' id='reviewer"+tempdata.id+"' value="+tempdata.id+" class='reviewer mr-1' checked>"+tempdata.name+"</div>";
                     } else {
@@ -1432,7 +1432,7 @@ $(function () {
         // var imgHtml ="";
         // var count = 0;
         $.each(employees, function(i, data){
-            if($.inArray(data.id.toString(), employeeSelected) > -1){
+            if(data.id && $.inArray(data.id.toString(), employeeSelected) > -1){
                 employeeArray.push(data.emp_name);
                 // if (count < 4) {
                 //     imgHtml = imgHtml+"<a class='avatar'><img src='assets/images/"+data.avatar+"' alt='' class='rounded-circle p-0'></a>";
@@ -1534,11 +1534,11 @@ $('#form_selectReviewer').on('submit', function(e){
             });
                 
             $('#select-employees').html(optionHtml);
-            changeEmployee();
                      // $("#kpiTableForm :input").prop("disabled", true);
            // $(".table-btn").prop('disabled', true);
             //alert("Table Saved, Please publish goals");
            // $("#kpitable_id").val(data.table_id);
+            changeEmployee();
         }
     });
 
@@ -1579,7 +1579,6 @@ $('body').on('click', '#save-table', function(e){
         $("#year option:selected").text() != "Select" &&
         $('#frequency').val() != "" &&
         $('#assignment_period_start').val() != "" &&
-        $('#department').val() != "" &&
        isAllFieldsEntered
       )
     {
