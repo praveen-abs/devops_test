@@ -7,7 +7,7 @@
 
 <link href="{{ URL::asset('assets/css/assign_goals.css') }}" rel="stylesheet">
 <link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
-<link href="{{ URL::asset('assets/css/salary.css') }}" rel="stylesheet">
+<!-- <link href="{{ URL::asset('assets/css/salary.css') }}" rel="stylesheet"> -->
 <link href="{{ URL::asset('assets/css/app.min.css') }}" rel="stylesheet">
 <!-- prem content -->
 
@@ -210,7 +210,7 @@
                     <div class="p-3"><img src="{{ URL::asset('assets/images/vmt_user_icon.jpeg') }}" style="width: 37%;height: 74%;"></div>
                     <h4><b>Assign Goals for your employees</b></h4>
                     <div class="mt-4">
-                        <button id="add-goals" class="text-white btn btn-orange">
+                        <button id="add-goals" class="btn btn-primary">
                             <h6 class="m-0 text-white p-2">
                                 <i class="text-white fa fa-plus mx-1"></i>
                                 <b>Add</b>
@@ -226,7 +226,7 @@
 <div class="table-responsive">
         
         <div class="container-fluid px-2 bg-white" style="position:relative;">
-        <button id="add-goals" class="text-white py-1 px-3 btn btn-orange add-goals" ><i class="text-white fa fa-plus mx-1"></i>Add Goals</button>
+        <button id="add-goals" class="text-white py-1 px-3 btn btn-primary add-goals" ><i class="text-white fa fa-plus mx-1"></i>Add Goals</button>
     
     <table id='empTable' class=' table table-borderd  mb-0'>
         <thead class="table-light">
@@ -638,12 +638,12 @@
                             <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3 ">
                                 <label class="" for="">Employees</label>
                                 <input type="text" name="" id="selected_employee" target="#changeEmployee" class="form-control  increment-input" placeholder="Employees">
-                                <button type="button" id="" class="btn btn-orange increment-btn py-1 px-2 chnageButton">+</button>
+                                <button type="button" id="" class="btn btn-primary increment-btn py-1 px-2 chnageButton">+</button>
                             </div>
                             <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
                                 <label class="" for="">Reviewer</label>
                                 <input type="text" name="" id="selected_reviewer" class="form-control increment-input" placeholder="Reviewer">
-                                <button type="button" id="" target="#createEmployee" class="btn py-1 px-3 btn-orange increment-btn reviewerButton">Select</button>
+                                <button type="button" id="" target="#createEmployee" class="btn py-1 px-3 btn-primary increment-btn reviewerButton">Select</button>
                             </div>
                         </div>
                         <div class="row mt-3">
@@ -706,7 +706,7 @@
                     </form>
                 </div>
               </div>
-              <div class="card  profile-box p-2 card-left-bar">
+              <div class="card  profile-box p-2 card-left-bar ">
                 <div class="card-body ">
                 <div class="table-wrapper m-2">
     <div class="row">
@@ -715,19 +715,19 @@
         </div>
     </div>
     <div class="row">
-            <div class="col-12 mt-2">
+            <div class="col-12 ">
             <form id="upload_form" enctype="multipart/form-data">
                 <div class="d-flex align-items-center justify-content-between">
                     @csrf
                     <div class="d-flex align-items-center">
                         <input type="file" name="upload_file" id="upload_file" accept=".xls,.xlsx" class="form-control"
                             required>
-                            <button type="button" class="btn btn-orange mx-2 w-50" id="upload-goal"><i class="ri-file-upload-fill mx-1"></i> Upload</button>
+                            <button type="button" class="btn btn-primary mx-2 w-50" id="upload-goal"><i class="ri-file-upload-fill mx-1"></i> Upload</button>
                     </div>
                     <div class=" d-flex align-items-center">
                     <span>Download the </span>    
                         
-                    <button class="btn btn-orange mx-2"><i class="ri-file-download-fill mx-1"></i> <a href="{{ url('/assets/sample_kpi.xls')  }}" target="_blank">
+                    <button class="btn btn-primary mx-2"><i class="ri-file-download-fill mx-1"></i> <a href="{{ url('/assets/sample_kpi.xls')  }}" target="_blank">
                             </a>
                             Sample File
                             </button>

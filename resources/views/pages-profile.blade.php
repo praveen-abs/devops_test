@@ -57,7 +57,7 @@
 
                                 <div class="mt-4">
 
-                                    <h4 class="mb-3">Profile Completeness</h4>
+                                    <h5 class="mb-3">Profile Completeness</h5>
                                     <!-- <div class="staff-id fw-bold text-dark">Employee ID :
                                         {{$details->emp_no}}</div>
                                     <div class="small fw-bold text-muted">Date of Join :
@@ -948,7 +948,7 @@
     </div>
     <!-- personal info -->
     <div id="personal_info" class="modal  custom-modal fade" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog  modal-dialog-centered modal-lg" role="document">
+        <div class="modal-dialog  modal-dialog-centered " role="document">
             <div class="modal-content profile-box">
                 <div class="modal-header py-3 new-role-header d-flex align-items-center">
                     <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Personal
@@ -978,7 +978,7 @@
 
                         <div class="col-12">
                         <div class="text-right">
-                            <button class="btn btn-orange submit-btn">Submit</button>
+                            <button class="btn btn-primary submit-btn">Submit</button>
                         </div>
                         </div>  
                     </form>
@@ -1039,7 +1039,7 @@
                         </div>
                         <div class="col-12">
                         <div class="text-right">
-                            <button class="btn btn-orange submit-btn">Submit</button>
+                            <button class="btn btn-primary submit-btn">Submit</button>
                         </div>
                         </div>  
                     </form>
@@ -1093,7 +1093,7 @@
                         </div>
                         <div class="col-12">
                         <div class="text-right">
-                            <button class="btn btn-orange submit-btn">Submit</button>
+                            <button class="btn btn-primary submit-btn">Submit</button>
                         </div>
                         </div>  
                     </form>
@@ -1179,7 +1179,7 @@
                         </div>
                         <div class="col-12">
                         <div class="text-right">
-                            <button class="btn btn-orange submit-btn">Submit</button>
+                            <button class="btn btn-primary submit-btn">Submit</button>
                         </div>
                         </div>  
                     </form>
@@ -1266,7 +1266,7 @@
                         </div>
                         <div class="col-12">
                         <div class="text-right">
-                            <button class="btn btn-orange submit-btn">Submit</button>
+                            <button class="btn btn-primary submit-btn">Submit</button>
                         </div>
                         </div>  
                     </form>
@@ -1337,7 +1337,7 @@
                         </div>
                         <div class="col-12">
                         <div class="text-right">
-                            <button class="btn btn-orange submit-btn">Submit</button>
+                            <button class="btn btn-primary submit-btn">Submit</button>
                         </div>
                         </div>  
                     </form>
@@ -1488,7 +1488,7 @@
                         </div>
                         <div class="col-12">
                         <div class="text-right">
-                            <button class="btn btn-orange submit-btn">Submit</button>
+                            <button class="btn btn-primary submit-btn">Submit</button>
                         </div>
                         </div>  
                     </form>
@@ -1571,7 +1571,7 @@
                         </div>
                         <div class="col-12">
                         <div class="text-right">
-                            <button class="btn btn-orange submit-btn">Submit</button>
+                            <button class="btn btn-primary submit-btn">Submit</button>
                         </div>
                         </div>  
                     </form>
