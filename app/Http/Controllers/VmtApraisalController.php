@@ -407,12 +407,12 @@ class VmtApraisalController extends Controller
         $vmtApQuestion->dimension   =    $row["dimension"]; 
         $vmtApQuestion->kpi         =    $row["kpi"]; 
         $vmtApQuestion->operational_definition   =    $row["operational_definition"];  
-        $vmtApQuestion->measure     =    $row["measure"];  
-        $vmtApQuestion->frequency   =    $row["frequency"];  
-        $vmtApQuestion->target      =    $row["target"];  
-        $vmtApQuestion->stretch_target  =    $row["stretch_target"];   
-        $vmtApQuestion->source          =    $row["source"];  
-        $vmtApQuestion->kpi_weightage   =    $row["kpi_weightage"];  
+        $vmtApQuestion->measure     =    $row["measure"];
+        $vmtApQuestion->frequency   =    $row["frequency"];
+        $vmtApQuestion->target      =    $row["target"];
+        $vmtApQuestion->stretch_target  =    $row["stretch_target"];
+        $vmtApQuestion->source          =    $row["source"];
+        $vmtApQuestion->kpi_weightage   =    $row["kpi_weightage"];
         $vmtApQuestion->author_id       =    auth::user()->id; 
         $vmtApQuestion->author_name     =    auth::user()->name;  
         $vmtApQuestion->save();

@@ -877,11 +877,16 @@
                 <form id="form_selectReviewer" method="POST" >
                     @csrf
                     <label for="FormSelectDefault" class="form-label text-muted">Reviewer</label>
-                    <select class="form-select mb-3" aria-label="Default select example" name="reviewer[]" multiple id="select-reviewer" >
+                    <div class="mb-3 row" id="select-reviewer">
+                    <!-- <select class="form-select mb-3" aria-label="Default select example" name="reviewer[]" multiple id="select-reviewer" > -->
                         @foreach($users as $index => $user)
-                            <option value="{{$user->id}}">{{$user->name}}</option>
+                        <div class="col-3">
+                            <input type="checkbox" name="reviewer{{$user->id}}" id="reviewer{{$user->id}}" value="{{$user->id}}" class="mr-1 reviewer">{{$user->name}}
+                            <!-- <option value="{{$user->id}}">{{$user->name}}</option> -->
+                        </div>
                         @endforeach
-                    </select>
+                    <!-- </select> -->
+                    </div>
                     <div class="content-footer mt-3">
                         <div class="row">
                             <div class="col-12 ">
@@ -962,9 +967,11 @@
                 <form id="changeEmployeeForm" method="POST" >
                     @csrf
                     <label for="FormSelectDefault" class="form-label text-muted">Employees</label>
-                    <select class="form-select mb-3" aria-label="Default select example" name="employees[]" id="select-employees" multiple>
+                    <div class="mb-3 row" id="select-employees">
+                    <!-- <select class="form-select mb-3" aria-label="Default select example" name="employees[]" id="select-employees" multiple>
                       
-                    </select>
+                    </select> -->
+                    </div>
                 
                     <div class="content-footer">
                         <div class="row">
@@ -1068,11 +1075,11 @@
 <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-    $('#select-reviewer').select2({
-        dropdownParent: '#createEmployee',
-        minimumResultsForSearch: Infinity,
-		width: '100%'
-    });
+    // $('#select-reviewer').select2({
+    //     dropdownParent: '#createEmployee',
+    //     minimumResultsForSearch: Infinity,
+	// 	width: '100%'
+    // });
 
     ft = FooTable.init('#kpiTable', {
     });
@@ -1183,7 +1190,6 @@ $(document).ready(function(){
             $('#year').val('');
         }
         $('#hidden_calendar_year').val($("#year option:selected").text())
-        console.log($( "#hidden_calendar_year" ).val());
         frequencyChange();
     });
 
@@ -1330,7 +1336,13 @@ $(function () {
     
     $('#changeEmployeeForm').on('submit', function(e){
         e.preventDefault();    
-        var employeeSelected = $('#select-employees').val();    
+        // var employeeSelected = $('#select-employees').val();    
+        var employeeSelected = [];
+        $.each($('.employee'), function() {
+            if ($(this).is(':checked')) {
+                employeeSelected.push($(this).val());
+            }
+        });
         $.ajax({
             type: "GET", 
             url: "{{url('vmt-getAllParentReviewer')}}"+'?emp_id='+employeeSelected, 
@@ -1341,19 +1353,56 @@ $(function () {
                     reviewer.push(tempdata.name);
                     reviewerId.push(tempdata.id);
                 });
+                var data = {!!json_encode($users)!!};
+                var optionHtml ="";
+                $.each(data, function(i, tempdata){
+                    if($.inArray(parseInt(tempdata.id), reviewerId) > -1){
+                        optionHtml = optionHtml+"<div class='col-3'><input type='checkbox' name='reviewer"+tempdata.id+"' id='reviewer"+tempdata.id+"' value="+tempdata.id+" class='reviewer mr-1' checked>"+tempdata.name+"</div>";
+                    } else {
+                        optionHtml = optionHtml+"<div class='col-3'><input type='checkbox' name='reviewer"+tempdata.id+"' id='reviewer"+tempdata.id+"' value="+tempdata.id+" class='reviewer mr-1'>"+tempdata.name+"</div>";
+                    }
+                });
                     
-                $('#select-reviewer').val(reviewerId).trigger('change');
+                $('#select-reviewer').html(optionHtml);
+
+                // $.each($('.reviewer'), function() {
+                //     if($.inArray(parseInt($(this).val()), reviewerId) > -1){
+                //         $(this).attr('checked', true);
+                //     } else {
+                //         $(this).removeAttr('checked');
+                //     }
+                // });  
+                // $('#select-reviewer').val(reviewerId).trigger('change');
                 $("#sel_reviewer").val(reviewerId.join());
                 $('#selected_reviewer').val(reviewer.join());
+                
             }
         });
-
         changeReviewer();
         changeEmployee();
     });
 
     function changeReviewer() {
-        var reviewerSelected = $('#select-reviewer').val();
+        // var reviewerSelected = $('#select-reviewer').val();
+        var reviewerSelected = [];
+        
+        $.each($('.reviewer'), function() {
+            if ($(this).is(':checked')) {
+                reviewerSelected.push($(this).val());
+            }
+        });
+        
+        var data = {!!json_encode($users)!!};
+        var optionHtml ="";
+        $.each(data, function(i, tempdata){
+            if($.inArray((tempdata.id).toString(), reviewerSelected) > -1){
+                optionHtml = optionHtml+"<div class='col-3'><input type='checkbox' name='reviewer"+tempdata.id+"' id='reviewer"+tempdata.id+"' value="+tempdata.id+" class='reviewer mr-1' checked>"+tempdata.name+"</div>";
+            } else {
+                optionHtml = optionHtml+"<div class='col-3'><input type='checkbox' name='reviewer"+tempdata.id+"' id='reviewer"+tempdata.id+"' value="+tempdata.id+" class='reviewer mr-1'>"+tempdata.name+"</div>";
+            }
+        });
+        $('#select-reviewer').html(optionHtml);
+
         var reviewers = {!!json_encode($users)!!};
 
         var reviewerArray = [];
@@ -1369,16 +1418,20 @@ $(function () {
 
 
     function changeEmployee() {
-        var employeeSelected = $('#select-employees').val();
+        // var employeeSelected = $('#select-employees').val();
+        var employeeSelected = [];
         var employees = {!!json_encode($employees)!!};
 
         var employeeArray = [];
+        $.each($('.employee'), function() {
+            if ($(this).is(':checked')) {
+                employeeSelected.push($(this).val());
+            }
+        });
         $("#sel_employees").val(employeeSelected);
         // var imgHtml ="";
         // var count = 0;
         $.each(employees, function(i, data){
-            //console.log(data);
-            //console.log('employee selected', employeeSelected);
             if($.inArray(data.id.toString(), employeeSelected) > -1){
                 employeeArray.push(data.emp_name);
                 // if (count < 4) {
@@ -1394,13 +1447,18 @@ $(function () {
         // if(count > 0)
         // {
         //     $('#btn_selectEmployees').html("Edit");
-        //   //  console.log("Changed to Edit button");
         // }
         // else
         // {
         //     $('#btn_selectEmployees').html("Add");
-        //    // console.log("Changed to Add button");
         // }
+        $.each($('.employee'), function(i, data){
+            if($.inArray($(this).val().toString(), employeeSelected) > -1){
+                $(this).attr('checked', true);
+            } else {
+                $(this).removeAttr('checked');
+            }
+        });
         $('#selected_employee').val(employeeArray.join());
         $('#group-employee').html(employeeArray.join());
         $('#changeEmployee').css('display', 'none');
@@ -1429,7 +1487,6 @@ $(function () {
     //         changeEmployee();
     //                  // $("#kpiTableForm :input").prop("disabled", true);
     //        // $(".table-btn").prop('disabled', true);
-    //         //console.log(data);
     //         //alert("Table Saved, Please publish goals");
     //        // $("#kpitable_id").val(data.table_id);
     //     }
@@ -1441,18 +1498,23 @@ $(function () {
 $('#form_selectReviewer').on('submit', function(e){
     e.preventDefault();
     var userList = {!!json_encode($users)!!};
-    
-    var selReviewer = $('#select-reviewer').val();
+    var selReviewer = [];
+    $.each($('.reviewer'), function() {
+        if ($(this).is(':checked')) {
+            selReviewer.push($(this).val());
+        }
+    });
+    // var selReviewer = $('#select-reviewer').val();
     var reviewer = [];
     $("#sel_reviewer").val(selReviewer);
     $.each(userList, function(i, data){
         if($.inArray(data.id.toString(), selReviewer) > -1){
         // if(data.id == $('#select-reviewer').val()){
             reviewer.push(data.name);
-            $('#reviewer-name').html(data.name);
-            $('#reviewer-email').html(data.email);
+            // $('#reviewer-name').html(data.name);
+            // $('#reviewer-email').html(data.email);
 
-             $('#btn_changeManager').html("Edit");
+            //  $('#btn_changeManager').html("Edit");
         }
     });
     $('#selected_reviewer').val(reviewer.join());
@@ -1463,7 +1525,8 @@ $('#form_selectReviewer').on('submit', function(e){
         success: function(data){
             var optionHtml ="";
             $.each(data, function(i, tempdata){
-                optionHtml = optionHtml+"<option value="+tempdata.id+" selected>"+tempdata.name+"</option>";
+                // optionHtml = optionHtml+"<option value="+tempdata.id+" selected>"+tempdata.name+"</option>";
+                optionHtml = optionHtml+"<div class='col-3'><input type='checkbox' name='employees"+tempdata.id+"' id='employees"+tempdata.id+"' value="+tempdata.id+" class='employee mr-1' checked>"+tempdata.name+"</div>";
                 //if(tempdata.id == $('#select-employees').val()){
                 //        $('#reviewer-name').html(tempdata.name);
                 //        $('#reviewer-email').html(tempdata.email);
@@ -1474,7 +1537,6 @@ $('#form_selectReviewer').on('submit', function(e){
             changeEmployee();
                      // $("#kpiTableForm :input").prop("disabled", true);
            // $(".table-btn").prop('disabled', true);
-            //console.log(data);
             //alert("Table Saved, Please publish goals");
            // $("#kpitable_id").val(data.table_id);
         }
@@ -1493,8 +1555,6 @@ $('body').on('click', '.close-modal', function() {
 // publishing tables
 $('body').on('click', '#save-table', function(e){
     // e.preventDefault();
-    //console.log('assigning Goals');
-    //console.log($('#kpiTableForm').serialize());
 
     var isAllFieldsEntered = true;
     var canSaveForm = true;
@@ -1503,11 +1563,9 @@ $('body').on('click', '#save-table', function(e){
     //Validate the input fields
     $("#kpiTableForm :input").each(function(){
         var input = $(this);
-        //console.log("length : ");
         if(input.attr('name') == "kpiWeightage[]" && input.attr('data-show') == 'true')
         {
             kpiWeightageTotal =kpiWeightageTotal+parseInt(input.val().replace('%', ''));
-            //console.log(input.attr('name')+" , "+input.val());
         }
         if(input.val().trim().length < 1 && input.attr('data-show') == 'true')
         {
@@ -1515,7 +1573,6 @@ $('body').on('click', '#save-table', function(e){
         }
 
     });
-    console.log(isAllFieldsEntered);
     //Validate other fields
     if( $('#selected_reviewer').val() != "" && $('#selected_employee').val() != "" &&
         $('#calendar_type').val() != "" && 
@@ -1543,14 +1600,6 @@ $('body').on('click', '#save-table', function(e){
     }, 0)
 
         canSaveForm = false;
-
-        // console.log( $('#reviewer-name').html());
-        // console.log( $('#btn_selectEmployees').html());
-        // console.log( $('#calendar_type').val());
-        // console.log( $("#year option:selected").text());
-        // console.log( $('#frequency').val());
-        // console.log( $('#assignment_period_start').val() );
-        // console.log( $('#department').val() );
     }
         
     if(canSaveForm)
@@ -1588,10 +1637,10 @@ $('body').on('change', '#department', function() {
             "_token": "{{ csrf_token() }}",
         },
         success: function(data) {
-            console.log(data['emp']);
             var optionHtml ="";
             $.each(data['emp'], function(i, tempdata){
-                optionHtml = optionHtml+"<option value="+tempdata.id+" selected>"+tempdata.name+"</option>";
+                // optionHtml = optionHtml+"<option value="+tempdata.id+" selected>"+tempdata.name+"</option>";
+                optionHtml = optionHtml+"<div class='col-3'><input type='checkbox' name='employees"+tempdata.id+"' id='employees"+tempdata.id+"' value="+tempdata.id+" class='employee mr-1' checked>"+tempdata.name+"</div>";
             });
                 
             $('#select-employees').html(optionHtml);
@@ -1606,14 +1655,42 @@ $('body').on('change', '#department', function() {
             });
             $("#sel_reviewer").val(reviewerId.join());
             $('#selected_reviewer').val(reviewer.join());
-            $('#select-reviewer').val(reviewer).trigger('change');
+                  
+            // $.each($('.reviewer'), function() {
+
+            //     if($.inArray(parseInt($(this).val()), reviewerId) > -1){
+            //         $(this).attr('checked', true);
+            //     } else {
+            //         $(this).removeAttr('checked');
+            //     }
+            // });
             changeEmployee1(data['emp']);
+            var data = {!!json_encode($users)!!};
+            var optionHtml ="";
+            $.each(data, function(i, tempdata){
+                if($.inArray(tempdata.id, reviewerId) > -1){
+                    optionHtml = optionHtml+"<div class='col-3'><input type='checkbox' name='reviewer"+tempdata.id+"' id='reviewer"+tempdata.id+"' value="+tempdata.id+" class='reviewer mr-1' checked>"+tempdata.name+"</div>";
+                } else {
+                    optionHtml = optionHtml+"<div class='col-3'><input type='checkbox' name='reviewer"+tempdata.id+"' id='reviewer"+tempdata.id+"' value="+tempdata.id+" class='reviewer mr-1'>"+tempdata.name+"</div>";
+                }
+            });
+            $('#select-reviewer').html(optionHtml);
+            
+
+            // $('#select-reviewer').val(reviewer).trigger('change');
+            
         }
     });
 });
 
 function changeEmployee1(employees) {
-    var employeeSelected = $('#select-employees').val();
+    // var employeeSelected = $('#select-employees').val();
+    var employeeSelected = [];
+    $.each($('.employee'), function() {
+        if ($(this).is(':checked')) {
+            employeeSelected.push($(this).val());
+        }
+    });
     @if(auth()->user()->hasrole('Employee'))
     @else
     // var imgHtml ="";
@@ -1621,8 +1698,6 @@ function changeEmployee1(employees) {
     var employeeArray = [];
     var employeeIdArray = [];
     $.each(employees, function(i, data){
-        // console.log(data);
-        // console.log('employee selected', employeeSelected);
         if($.inArray(data.id.toString(), employeeSelected) > -1){
             employeeArray.push(data.name);
             employeeIdArray.push(data.id);
@@ -1640,12 +1715,10 @@ function changeEmployee1(employees) {
     // if(count > 0)
     // {
     //     $('#btn_selectEmployees').html("Edit");
-    //     //  console.log("Changed to Edit button");
     // }
     // else
     // {
     //     $('#btn_selectEmployees').html("Add");
-    //     // console.log("Changed to Add button");
     // }
     $("#sel_employees").val(employeeIdArray.join());
     $('#selected_employee').val(employeeArray.join());
