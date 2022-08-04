@@ -6,7 +6,57 @@
 <link href="{{ URL::asset('assets/css/app.min.css') }}" rel="stylesheet">
 <!-- for bootstrap temporary -->
 
+<style type="text/css">
+    .scrollbar
+{
+    margin-left: 30px;
+    float: left;
+    height: 200px;
+    width: 65px;
+   
+    overflow-y: scroll;
+    margin-bottom: 25px;
+}
 
+.force-overflow
+{
+    min-height: 450px;
+}
+
+#wrapper
+{
+    
+    width: 500px;
+    margin: auto;
+}
+
+#style-9::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+#style-9::-webkit-scrollbar
+{
+    width: 10px;
+    background-color: #F5F5F5;
+}
+
+#style-9::-webkit-scrollbar-thumb
+{
+    background-color: #F90; 
+    background-image: -webkit-linear-gradient(90deg,
+                                              rgba(255, 255, 255, .2) 25%,
+                                              transparent 25%,
+                                              transparent 50%,
+                                              rgba(255, 255, 255, .2) 50%,
+                                              rgba(255, 255, 255, .2) 75%,
+                                              transparent 75%,
+                                              transparent)
+}
+
+
+</style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -67,17 +117,17 @@
                                 <div class=" d-flex align-items-center mx-2 flex-column">
                                     <div class="take-home-bar #17b510"></div>
                                     <p>Take Home</p>
-                                    <div><span class="font-large font-mediumbold h5 ">₹ 3,600.00</span></div>
+                                    <div><span class="font-large font-mediumbold h5 ">₹{{ json_decode($json_PayCheck)->NET_TAKE_HOME}}</span></div>
                                 </div>
                                 <div class=" d-flex align-items-center mx-2 flex-column">
                                     <div class="deductions-bar"></div>
                                     <p>Deductions</p>
-                                    <div><span class="font-large font-mediumbold h5 ">₹ 3,600.00</span></div>
+                                    <div><span class="font-large font-mediumbold h5 ">₹{{ json_decode($json_PayCheck)->TOTAL_DEDUCTIONS}}</span></div>
                                 </div>
                                 <div class=" d-flex align-items-center mx-2 flex-column">
                                     <div class="cross-pay-bar "></div>
                                     <p>Cross Pay</p>
-                                    <div><span class="font-large font-mediumbold h5 ">₹ 3,600.00</span></div>
+                                    <div><span class="font-large font-mediumbold h5 ">₹{{ json_decode($json_PayCheck)->TOTAL_FIXED_GROSS}}</span></div>
                                 </div>
                             </div>
                         </div>
@@ -110,15 +160,15 @@
                             <ul class="personal-info">
                                 <li>
                                     <div class="title f-15  text-muted ">Total Contribution</div>
-                                    <div class="text text-end h5 text-primary ">₹ 3,600.00</div>
+                                    <div class="text text-end h5 text-primary ">₹{{ json_decode($json_PayCheck)->TOTAL_CON}}</div>
                                 </li>
                                 <li>
                                     <div class="title f-15 text-muted ">Your Contribution</div>
-                                    <div class="text  text-end h5 text-primary ">₹ 3,600.00</div>
+                                    <div class="text  text-end h5 text-primary ">₹{{ json_decode($json_PayCheck)->epfemployer}}</div>
                                 </li>
                                 <li>
                                     <div class="title f-15 text-muted ">Employee Contribution</div>
-                                    <div class="text text-end h5 text-primary ">₹ 3,600.00</div>
+                                    <div class="text text-end h5 text-primary ">₹{{ json_decode($json_PayCheck)->your_employee}}</div>
                                 </li>
                             </ul>
                         </div>
@@ -144,8 +194,8 @@
     <div class="row">
         <div class="col-sm-12 col-md-12 col-xl-6 col-lg-6 ">
             <div class="card shadow profile-box card-top-border p-3 flex-fill">
-                <div class="card-body">
-                    <div class="d-flex align-items-center justify-content-between mb-3">
+                <div class="card-body ">
+                    <div class="d-flex align-items-center  justify-content-between mb-3">
                         <h5 class="text-primary">
                             My Payslip
                         </h5>
@@ -164,9 +214,9 @@
                         </div>
 
                     </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <ul class="personal-info">
+                    <div class="row scrollbar" id="wrapper" >
+                        <div class="col-12 " id="style-9">
+                            <ul class="personal-info force-overflow">
                                          @foreach($data as $d)
                                 <li>
                                     <div class="title f-15 text-muted ">
@@ -1570,7 +1620,13 @@
     </div> -->
 </div>
 
-
+<script type="text/javascript">
+    $(document).ready(function () {
+          if (!$.browser.webkit) {
+              $('.wrapper').html('<p>Sorry! Non webkit users. :(</p>');
+          }
+      });
+</script>
 
 
 @endsection
