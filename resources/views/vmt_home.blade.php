@@ -167,14 +167,22 @@
                     <div class="row">
                         <div class="col-12">
                             <ul class="personal-info">
+                                         @foreach($data as $d)
                                 <li>
-                                    <div class="title f-15 text-muted ">August Salary Slip</div>
+                                    <div class="title f-15 text-muted ">
 
-                                    <div class="text h4  text-end"><i class="text-orange fa fa-download"
-                                            aria-hidden="true"></i></i>
+                                           @php 
+                                                $selectedPaySlipMonth = $d->PAYROLL_MONTH;
+                                            @endphp
+                                            @php echo $selectedPaySlipMonth; @endphp
+                                    </div>
+
+                                    <div class="text h4  text-end">
+                                            <a  href="{{ url('pdfview/'. $selectedPaySlipMonth) }}"><i class="text-orange fa fa-download"></i></a>
+                                         @endforeach
                                     </div>
                                 </li>
-                                <li>
+                             {{--    <li>
                                     <div class="title f-15 text-muted ">September Salary Slip</div>
 
                                     <div class="text h4 text-end"><i class="text-orange fa fa-download"></i> </div>
@@ -183,7 +191,7 @@
                                     <div class="title f-15 text-muted ">October Salary Slip</div>
 
                                     <div class="text h4 text-end "><i class="text-orange  fa fa-download"></i> </div>
-                                </li>
+                                </li> --}}
                             </ul>
                         </div>
 
