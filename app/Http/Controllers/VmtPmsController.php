@@ -332,9 +332,10 @@ class VmtPmsController extends Controller
             $data['rev'] = VmtEmployeeOfficeDetails::join('users', 'users.id', '=', 'vmt_employee_office_details.user_id')
             ->select(
                 'users.name', 
+                'users.id as id', 
                 'users.email', 
                 'users.avatar as avatar',
-                'vmt_employee_office_details.emp_id as id',
+                'vmt_employee_office_details.emp_id as emp_id',
                 'vmt_employee_office_details.l1_manager_code as code',
             )
             ->orderBy('users.name', 'ASC')
