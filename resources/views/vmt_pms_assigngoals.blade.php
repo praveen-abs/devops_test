@@ -1356,7 +1356,7 @@ $(function () {
                 var rev = {!!json_encode($users)!!};
                 var optionHtml ="";
                 $.each(rev, function(i, tempdata){
-                    if($.inArray(parseInt(tempdata.id), reviewerId) > -1){
+                    if($.inArray(parseInt(tempdata.id), reviewerId) > -1 && !$.inArray((tempdata.id).toString(), employeeSelected) > -1){
                         optionHtml = optionHtml+"<div class='col-3'><input type='checkbox' name='reviewer"+tempdata.id+"' id='reviewer"+tempdata.id+"' value="+tempdata.id+" class='reviewer mr-1' checked>"+tempdata.name+"</div>";
                     } else {
                         optionHtml = optionHtml+"<div class='col-3'><input type='checkbox' name='reviewer"+tempdata.id+"' id='reviewer"+tempdata.id+"' value="+tempdata.id+" class='reviewer mr-1'>"+tempdata.name+"</div>";
@@ -1391,18 +1391,6 @@ $(function () {
                 reviewerSelected.push($(this).val());
             }
         });
-        
-        var data = {!!json_encode($users)!!};
-        var optionHtml ="";
-        $.each(data, function(i, tempdata){
-            if($.inArray((tempdata.id).toString(), reviewerSelected) > -1){
-                optionHtml = optionHtml+"<div class='col-3'><input type='checkbox' name='reviewer"+tempdata.id+"' id='reviewer"+tempdata.id+"' value="+tempdata.id+" class='reviewer mr-1' checked>"+tempdata.name+"</div>";
-            } else {
-                optionHtml = optionHtml+"<div class='col-3'><input type='checkbox' name='reviewer"+tempdata.id+"' id='reviewer"+tempdata.id+"' value="+tempdata.id+" class='reviewer mr-1'>"+tempdata.name+"</div>";
-            }
-        });
-        $('#select-reviewer').html(optionHtml);
-
         var reviewers = {!!json_encode($users)!!};
 
         var reviewerArray = [];
@@ -1525,8 +1513,10 @@ $('#form_selectReviewer').on('submit', function(e){
         success: function(data){
             var optionHtml ="";
             $.each(data, function(i, tempdata){
+                if (!$.inArray((tempdata.id).toString(), selReviewer) > -1) {
                 // optionHtml = optionHtml+"<option value="+tempdata.id+" selected>"+tempdata.name+"</option>";
-                optionHtml = optionHtml+"<div class='col-3'><input type='checkbox' name='employees"+tempdata.id+"' id='employees"+tempdata.id+"' value="+tempdata.id+" class='employee mr-1' checked>"+tempdata.name+"</div>";
+                    optionHtml = optionHtml+"<div class='col-3'><input type='checkbox' name='employees"+tempdata.id+"' id='employees"+tempdata.id+"' value="+tempdata.id+" class='employee mr-1' checked>"+tempdata.name+"</div>";
+                }
                 //if(tempdata.id == $('#select-employees').val()){
                 //        $('#reviewer-name').html(tempdata.name);
                 //        $('#reviewer-email').html(tempdata.email);
@@ -1637,7 +1627,9 @@ $('body').on('change', '#department', function() {
         },
         success: function(data) {
             var optionHtml ="";
+            var empSelected = [];
             $.each(data['emp'], function(i, tempdata){
+                empSelected.push(tempdata.id);
                 // optionHtml = optionHtml+"<option value="+tempdata.id+" selected>"+tempdata.name+"</option>";
                 optionHtml = optionHtml+"<div class='col-3'><input type='checkbox' name='employees"+tempdata.id+"' id='employees"+tempdata.id+"' value="+tempdata.id+" class='employee mr-1' checked>"+tempdata.name+"</div>";
             });
@@ -1664,10 +1656,10 @@ $('body').on('change', '#department', function() {
             //     }
             // });
             changeEmployee1(data['emp']);
-            var data = {!!json_encode($users)!!};
+            var rev = {!!json_encode($users)!!};
             var optionHtml ="";
-            $.each(data, function(i, tempdata){
-                if($.inArray(tempdata.id, reviewerId) > -1){
+            $.each(rev, function(i, tempdata){
+                if($.inArray(tempdata.id, reviewerId) > -1 && !$.inArray(tempdata.id, reviewerId) > -1){
                     optionHtml = optionHtml+"<div class='col-3'><input type='checkbox' name='reviewer"+tempdata.id+"' id='reviewer"+tempdata.id+"' value="+tempdata.id+" class='reviewer mr-1' checked>"+tempdata.name+"</div>";
                 } else {
                     optionHtml = optionHtml+"<div class='col-3'><input type='checkbox' name='reviewer"+tempdata.id+"' id='reviewer"+tempdata.id+"' value="+tempdata.id+" class='reviewer mr-1'>"+tempdata.name+"</div>";
