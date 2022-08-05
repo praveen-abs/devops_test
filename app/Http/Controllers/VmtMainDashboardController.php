@@ -44,10 +44,23 @@ class VmtMainDashboardController extends Controller
                         'users.name',
                         'users.avatar',
                         'vmt_employee_details.emp_no',
-                        'vmt_employee_office_details.designation'
+                        'vmt_employee_office_details.designation',
+                        'vmt_employee_details.dob'
                     )
                     ->where('users.id', auth()->user()->id)
-                    ->first();
+                    ->first(); 
+         $currentUserJobDetailss = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
+                    ->join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
+        ->select(
+            'users.name',
+            'users.avatar',
+            'vmt_employee_details.emp_no',
+            'vmt_employee_office_details.designation',
+            'vmt_employee_details.dob'
+        )
+      //          ->where('users.id', auth()->user()->id)
+        ->get();
+                    // dd($currentUserJobDetails);
         $checked = VmtEmployeeAttendance::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->first();
         $effective_hours="";
 
@@ -105,17 +118,17 @@ class VmtMainDashboardController extends Controller
         $json_dashboardCountersData = json_encode($dashboardCountersData);
 
         if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin')) {
-            return view('vmt_hr_dashboard', compact( 'currentUserJobDetails', 'checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData'));
+            return view('vmt_hr_dashboard', compact( 'currentUserJobDetails','currentUserJobDetailss', 'checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData'));
         }
         else
         if(auth()->user()->hasrole('Manager'))
         {
-            return view('vmt_manager_dashboard', compact( 'currentUserJobDetails', 'checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData'));
+            return view('vmt_manager_dashboard', compact( 'currentUserJobDetails','currentUserJobDetailss', 'checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData'));
         }
         else
         if(auth()->user()->hasrole('Employee'))
         {
-            return view('vmt_employee_dashboard', compact( 'currentUserJobDetails', 'checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData'));
+            return view('vmt_employee_dashboard', compact( 'currentUserJobDetails','currentUserJobDetailss', 'checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData'));
         }
 
     }
@@ -189,4 +202,6 @@ class VmtMainDashboardController extends Controller
         $dashboardannoun  =  VmtAnnouncement::where('ann_author_id', $id)->pluck('title_data','ann_author_id','details_data');
         return $dashboardannoun;
     }
+
+    
 }
