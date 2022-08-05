@@ -5,7 +5,11 @@
             <div class="card profile-box flex-fill" style="border-top: 5px solid #E54E0D;">
                 <!-- <div class="p-1 bg-danger" ></div> -->
                 <div class="card-body ">
+                @php 
+                if($date != date('Y-m-d')){
+                @endphp
                     <div class="wishes-card-wrapper">
+
                         <p class="text-muted  m-0"><i class="ri-cake-2-fill f-13 mr-2" style="color:#E54E0D;"></i> Happy
                             Birthday</p>
                         <div class="mt-2 ">
@@ -15,15 +19,16 @@
                                 <img src="{{ URL::asset('assets/images/event1.png') }}" alt="" class="img-round">
                                 <h6 class=" text-primary mx-3 mt-3">{{auth()->user()->name}}</h6>
                             </div>
-                            <p class="text-danger fw-bold text-right program-day " style="color:#E54E0D;">Today</p>
+                            <p class="text-danger fw-bold text-right program-day " style="color:#E54E0D;">Today{{$date}}</p>
                         </div>
                         <i class="float-right bg-icon text-danger ri-cake-2-fill"></i>
                     </div>
 
+                @php } @endphp
                 </div>
             </div>
         </div>
-        <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
+        {{-- <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
             <div class="card profile-box flex-fill" style="border-top: 5px solid #037B5A;">
                 <!-- <div class="p-1 bg-danger" ></div> -->
                 <div class="card-body ">
@@ -43,8 +48,8 @@
 
                 </div>
             </div>
-        </div>
-        <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
+        </div> --}}
+     {{--    <div class="col-sm-4 col-md-4 col-xl-4 col-lg-4">
             <div class="card profile-box flex-fill" style="border-top: 5px solid #B10856;">
                 <!-- <div class="p-1 bg-danger" ></div> -->
                 <div class="card-body ">
@@ -64,6 +69,6 @@
 
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 </div>

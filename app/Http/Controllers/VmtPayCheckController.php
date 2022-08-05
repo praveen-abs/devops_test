@@ -32,6 +32,7 @@ class VmtPayCheckController extends Controller
         $dataVmtHome['epfemployer'] = $value->epfemployer;
         $dataVmtHome['your_employee'] = $value->epfemployee;
         $dataVmtHome['TOTAL_FIXED_GROSS'] = $value->TOTAL_FIXED_GROSS;
+        $dataVmtHome['dob'] = $value->dob;
         $json_PayCheck = json_encode($dataVmtHome);
         }
         
