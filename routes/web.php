@@ -222,6 +222,10 @@ Route::get('/pdfview/{selectedPaySlipMonth}',[App\Http\Controllers\VmtPaySlipCon
 
 Route::get('/vmt-config-pms',[App\Http\Controllers\ConfigPmsController::class, 'index'])->name('vmt_config_pms');
 Route::post('/vmt-config-pms/{id?}',[App\Http\Controllers\ConfigPmsController::class, 'store'])->name('store_config_pms');
+
+Route::get('/vmt-pms-kpi',[App\Http\Controllers\VmtPmsController::class, 'vmt_pms_kpi'])->name('vmt_pms_kpi');
+Route::get('/vmt-pms-kpi-create',[App\Http\Controllers\VmtPmsController::class, 'vmt_pms_kpi_create'])->name('vmt_pms_kpi_create');
+Route::post('/vmt-pms-kpi-create',[App\Http\Controllers\VmtPmsController::class, 'vmt_pms_kpi_create_store']);
   
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index']);
 

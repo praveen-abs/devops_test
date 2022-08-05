@@ -14,6 +14,7 @@ use App\Models\VmtEmployeePMSGoals;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\ConfigPms;
 use App\Models\Department;
+use App\Models\VmtKpiFormTable;
 use App\Mail\VmtAssignGoals;
 use App\Mail\NotifyPMSManager;
 use App\Mail\PMSReviewCompleted;
@@ -699,6 +700,68 @@ class VmtPmsController extends Controller
                 return "Saved.Sent mail to manager and employee ". implode(',', $mailingList->toArray()); // $managerOfficeDetails->officical_mail;
             }
             
+        }
+    }
+
+    public function vmt_pms_kpi(Request $request) {
+        return view('vmt_pms_kpi');
+    }
+
+    public function vmt_pms_kpi_create(Request $request) {
+        $config = ConfigPms::where('user_id', auth()->user()->id)->first();
+        $show['dimension'] = 'true';
+        $show['kpi'] = 'true';
+        $show['operational'] = 'true';
+        $show['measure'] = 'true';
+        $show['frequency'] = 'true';
+        $show['target'] = 'true';
+        $show['stretchTarget'] = 'true';
+        $show['source'] = 'true';
+        $show['kpiWeightage'] = 'true';
+        $show['managerCount'] = 0;
+        if ($config) {
+            $config->header = json_decode($config->column_header, true);
+            $show['dimension'] = $config->selected_columns && in_array('dimension', explode(',', $config->selected_columns)) ? 'true': 'false';
+            $show['kpi'] = $config->selected_columns && in_array('kpi', explode(',', $config->selected_columns)) ? 'true': 'false';
+            $show['operational'] = $config->selected_columns && in_array('operational', explode(',', $config->selected_columns)) ? 'true': 'false';
+            $show['measure'] = $config->selected_columns && in_array('measure', explode(',', $config->selected_columns)) ? 'true': 'false';
+            $show['frequency'] = $config->selected_columns && in_array('frequency', explode(',', $config->selected_columns)) ? 'true': 'false';
+            $show['target'] = $config->selected_columns && in_array('target', explode(',', $config->selected_columns)) ? 'true': 'false';
+            $show['stretchTarget'] = $config->selected_columns && in_array('stretchTarget', explode(',', $config->selected_columns)) ? 'true': 'false';
+            $show['source'] = $config->selected_columns && in_array('source', explode(',', $config->selected_columns)) ? 'true': 'false';
+            $show['kpiWeightage'] = $config->selected_columns && in_array('kpiWeightage', explode(',', $config->selected_columns)) ? 'true': 'false';
+        }
+        return view('vmt_pms_kpi_create', compact('show', 'config'));
+    }
+
+    public function vmt_pms_kpi_create_store(Request $request) {
+        if($request->has('dimension')){
+            $totRows  = count($request->dimension);
+            //dd($totRows);
+            for ($i=0; $i < $totRows; $i++) { 
+                // code...
+                // if ($request->kpi_id && $request->kpi_id[$i] <> '' && $request->kpi_id[$i] > 0) {
+                //     $kpiRow = VmtKpiFormTable::find($request->kpi_id[$i]);
+                // } else {
+                    $kpiRow = new VmtKpiFormTable;
+                // }
+                //$inputArry[] = $request->dimension[$i];
+
+                $kpiRow->name   =    $request->name;
+                $kpiRow->dimension   =    $request->dimension[$i]; 
+                $kpiRow->kpi         =    $request->kpi[$i]; 
+                $kpiRow->operational_definition   = $request->operational[$i] ;     
+                $kpiRow->measure     =    $request->measure[$i];  
+                $kpiRow->frequency   =    $request->frequency[$i];  
+                $kpiRow->target      =    $request->target[$i];  
+                $kpiRow->stretch_target  =    $request->stretchTarget[$i];   
+                $kpiRow->source          =    $request->source[$i];  
+                $kpiRow->kpi_weightage   =    $request->kpiWeightage[$i];  
+                $kpiRow->author_id       =    auth::user()->id; 
+                $kpiRow->author_name     =    auth::user()->name;  
+                $kpiRow->save();
+            }
+            return "Question Created Successfully"; 
         }
     }
 
