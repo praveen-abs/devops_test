@@ -5,9 +5,22 @@
 
 <!-- for styling -->
 <link href="{{ URL::asset('assets/css/appraisal_review.css') }}" rel="stylesheet">
-
+<style>
+    .loader{
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url('{{ URL::asset("assets/images/loader.gif") }}') 
+                    50% 50% no-repeat rgb(249,249,249);
+        opacity: 0.4;
+    }
+</style>
 @endsection
 @section('content')
+<div class="loader" style="display:none;"></div>
 
 
 <div class="employee-review-wrapper">
@@ -277,7 +290,6 @@
                     @csrf
                     <input type="hidden" name="goal_id" value="{{$assignedGoals->id}}">
                     <div class="table-content mb-4">
-
                         <table id="table_review" style="width:130%;" class="table align-middle mb-0 table-bordered  responsive" data-paging="true" data-paging-size="10" data-paging-limit="3" data-paging-container="#paging-ui-container" data-paging-count-format="{PF} to {PL}" data-sorting="true" data-filtering="false" data-empty="No Results" data-filter-container="#filter-form-container" data-editing-add-text="Add New">
                             <thead class="thead" id="tHead">
                                 <tr>
@@ -667,10 +679,11 @@ $('#upload_file').change(function() {
     }
 });
 
-ft = FooTable.init('#table_review', {});
+ft = FooTable.init('#table_review');
 
 $('#upload-goal').click(function() {
     var form_data = new FormData(document.getElementById("upload_form"));
+    $('.loader').show();
     $.ajax({
         type: "POST",
         url: "{{route('upload-file-review')}}",
@@ -685,22 +698,31 @@ $('#upload-goal').click(function() {
                 $('#selfkpiachievement' + key).val(value[10]);
                 $('#selfcomments' + key).val(value[11]);
             });
+            $('.loader').hide();
+        },
+        error: function(error) {
+            $('.loader').hide();
         }
     });
 });
+
 $('#save_table').click(function(e) {
     e.preventDefault();
     // console.log("save trigger");
     // console.log($('#employee_self_review').serialize());
-
+    $('.loader').show();
     $.ajax({
         type: "POST",
         url: "{{url('vmt-pms-saveKPItableDraft_HR')}}",
         data: $('#employee_self_review').serialize(),
         success: function(data) {
             alert(data);
+            $('.loader').hide();
+        },
+        error: function(error) {
+            $('.loader').hide();
         }
-    })
+    });
 });
 
 
@@ -724,7 +746,7 @@ $('#reject_save').click(function(e) {
     var user_id = "{{\Request::get('user_id')}}";
     var approve_flag = "rejected";
     var content = $('#reject_content').val();
-
+    $('.loader').show();
     $.ajax({
         type: "POST",
         url: "{{url('vmt-approvereject-command')}}",
@@ -749,10 +771,14 @@ $('#reject_save').click(function(e) {
                     $('#notificationModal').hide();
                     $('#notificationModal').addClass('fade');
                     window.location.reload();
+                },
+                
+                error: function(error) {
+                    $('.loader').hide();
                 }
             });
         }
-    })
+    });
 });
 
 
@@ -762,7 +788,7 @@ $('#approve').click(function(e) {
     var goal_id = "{{\Request::get('goal_id')}}";
     var user_id = "{{\Request::get('user_id')}}";
     var approve_flag = "approved";
-
+    $('.loader').show();
     $.ajax({
         type: "GET",
         url: "{{url('vmt-approvereject-kpitable')}}?goal_id=" + goal_id + "&user_id=" + user_id +
@@ -770,8 +796,11 @@ $('#approve').click(function(e) {
         success: function(data) {
             alert(data);
             window.location.reload();
+        },
+        error: function(error) {
+            $('.loader').hide();
         }
-    })
+    });
 });
 
 
@@ -789,7 +818,7 @@ $('#publish_table').click(function(e) {
     e.preventDefault();
     console.log("save trigger");
     console.log($('#employee_self_review').serialize());
-
+    $('.loader').show();
     $.ajax({
         type: "POST",
         url: "{{url('vmt-pmsappraisal-hrreview')}}",
@@ -797,8 +826,11 @@ $('#publish_table').click(function(e) {
         success: function(data) {
             alert(data);
             window.location.reload();
+        },
+        error: function(error) {
+            $('.loader').hide();
         }
-    })
+    });
 });
 </script>
 @endsection
