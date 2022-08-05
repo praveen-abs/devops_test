@@ -748,15 +748,15 @@ class VmtPmsController extends Controller
                 //$inputArry[] = $request->dimension[$i];
 
                 $kpiRow->name   =    $request->name;
-                $kpiRow->dimension   =    $request->dimension[$i]; 
-                $kpiRow->kpi         =    $request->kpi[$i]; 
-                $kpiRow->operational_definition   = $request->operational[$i] ;     
-                $kpiRow->measure     =    $request->measure[$i];  
-                $kpiRow->frequency   =    $request->frequency[$i];  
-                $kpiRow->target      =    $request->target[$i];  
-                $kpiRow->stretch_target  =    $request->stretchTarget[$i];   
-                $kpiRow->source          =    $request->source[$i];  
-                $kpiRow->kpi_weightage   =    $request->kpiWeightage[$i];  
+                $kpiRow->dimension   =    $request->dimension ? $request->dimension[$i] : '';
+                $kpiRow->kpi         =    $request->kpi ? $request->kpi[$i] : '';
+                $kpiRow->operational_definition   = $request->operational ? $request->operational[$i]: '' ;     
+                $kpiRow->measure     =    $request->measure ? $request->measure[$i] : '';
+                $kpiRow->frequency   =    $request->frequency ? $request->frequency[$i] : '';
+                $kpiRow->target      =    $request->target ? $request->target[$i] : '';
+                $kpiRow->stretch_target  =    $request->stretchTarget ? $request->stretchTarget[$i] : '';
+                $kpiRow->source          =    $request->source ? $request->source[$i] : '';
+                $kpiRow->kpi_weightage   =    $request->kpiWeightage ? $request->kpiWeightage[$i] : '';
                 $kpiRow->author_id       =    auth::user()->id; 
                 $kpiRow->author_name     =    auth::user()->name;  
                 $kpiRow->save();
