@@ -40,7 +40,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-12 col-md-12 col-xl-12 col-xl-12 mt-2 mb-3">
+            <div class="col-sm-12 col-md-12 col-xl-12 col-xl-12 my-2   ">
                 <div class="d-flex align-items-center ">
                     <p class="f-13 w-50"><i class=" ri-sun-line text-warning mr-2"></i>General shift</p>
                     <p class="f-15">

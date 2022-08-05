@@ -8,7 +8,7 @@
 @slot('li_1')  @endslot
 
 @endcomponent
-    
+    <div class="calendar-wrapper mt15-mb30 ">
     <div class="row">
         <div class="col-12">
             <div class="row">
@@ -194,6 +194,7 @@
             <!-- end modal-->
         </div>
     </div> <!-- end row-->
+    </div>
 @endsection
 @section('script')
     <script src="{{ URL::asset('assets/libs/fullcalendar/fullcalendar.min.js') }}"></script>
