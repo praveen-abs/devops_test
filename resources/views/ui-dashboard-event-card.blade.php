@@ -5,6 +5,7 @@
             <div class="card profile-box flex-fill" style="border-top: 5px solid #E54E0D;">
                 <!-- <div class="p-1 bg-danger" ></div> -->
                 <div class="card-body ">
+                @isset($date)
                 @php 
                 if($date != date('Y-m-d')){
                 @endphp
@@ -25,6 +26,7 @@
                     </div>
 
                 @php } @endphp
+                @endisset
                 </div>
             </div>
         </div>
