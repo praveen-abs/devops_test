@@ -400,7 +400,7 @@
                                         <div>{{$kpiRow->self_kpi_comments}}</div>
                                         @endif
                                     </td>
-                                    @if (!$assignedGoals->is_hr_submitted || ($show['managerCount']) < 2))
+                                    @if (!$assignedGoals->is_hr_submitted))
                                     <td>
                                         @if($assignedGoals->is_employee_submitted && !$reviewCompleted &&
                                         !$assignedGoals->is_manager_submitted && $show['manager'])
@@ -742,7 +742,7 @@ $('body').on("keyup", '#reject_content', function() {
 
 $('#reject_save').click(function(e) {
     e.preventDefault();
-    var goal_id = "{{\Request::get('goal_id')}}";
+    var goal_id = "{{\Request::get('id')}}";
     var user_id = "{{\Request::get('user_id')}}";
     var approve_flag = "rejected";
     var content = $('#reject_content').val();
@@ -758,7 +758,7 @@ $('#reject_save').click(function(e) {
         },
         success: function(data) {
             e.preventDefault();
-            var goal_id = "{{\Request::get('goal_id')}}";
+            var goal_id = "{{\Request::get('id')}}";
             var user_id = "{{\Request::get('user_id')}}";
             var approve_flag = "rejected";
                var command = $('#reject_content').val();
@@ -785,7 +785,7 @@ $('#reject_save').click(function(e) {
 $('#approve').click(function(e) {
     e.preventDefault();
     //goal_id=26&user_id=4
-    var goal_id = "{{\Request::get('goal_id')}}";
+    var goal_id = "{{\Request::get('id')}}";
     var user_id = "{{\Request::get('user_id')}}";
     var approve_flag = "approved";
     $('.loader').show();

@@ -480,10 +480,10 @@ class VmtApraisalController extends Controller
         $user_emp_name= User::where('id',auth::user()->id)->pluck('name')->first();
         $user_manager_name = User::where('id',$request->user_id)->pluck('name')->first();
             $command_emp = $request->command;
-        if(auth::user()->hasRole('Employee') ){
-
-           $vmtEmployeeGoal =   VmtEmployeePMSGoals::where('kpi_table_id', $request->goal_id)->where('employee_id', $request->user_id)->first(); 
-           $vmtEmployeeGoal->is_employee_submitted = $request->approve_flag ? 1 : 0;
+        $vmtEmployeeGoal =   VmtEmployeePMSGoals::where('kpi_table_id', $request->goal_id)->where('employee_id', $request->user_id)->first(); 
+        if ($vmtEmployeeGoal->employee_id == auth()->user()->id) {
+        //    $vmtEmployeeGoal =   VmtEmployeePMSGoals::where('kpi_table_id', $request->goal_id)->where('employee_id', $request->user_id)->first(); 
+        //    $vmtEmployeeGoal->is_employee_submitted = $request->approve_flag ? 1 : 0;
            $vmtEmployeeGoal->is_employee_accepted = $request->approve_flag == 'approved' ? 1 : 0;
            $vmtEmployeeGoal->save();
            $returnMsg="--";
@@ -511,11 +511,9 @@ class VmtApraisalController extends Controller
            }
 
            return $returnMsg;
-        }
-        
-        if(auth::user()->hasRole('Manager') ){
-            $vmtEmployeeGoal =   VmtEmployeePMSGoals::where('kpi_table_id', $request->goal_id)->where('employee_id', $request->user_id)->first(); 
-            $vmtEmployeeGoal->is_manager_submitted = $request->approve_flag ? 1 : 0;
+        } else if (in_array(auth()->user()->id, explode(',', $vmtEmployeeGoal->reviewer_id))) {
+            // $vmtEmployeeGoal =   VmtEmployeePMSGoals::where('kpi_table_id', $request->goal_id)->where('employee_id', $request->user_id)->first(); 
+            // $vmtEmployeeGoal->is_manager_submitted = $request->approve_flag ? 1 : 0;
             $vmtEmployeeGoal->is_manager_approved = $request->approve_flag == 'approved' ? 1 : 0;
             $vmtEmployeeGoal->save();
 

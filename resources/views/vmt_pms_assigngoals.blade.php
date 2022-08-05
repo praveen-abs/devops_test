@@ -1489,14 +1489,14 @@ $('#form_selectReviewer').on('submit', function(e){
     var selReviewer = [];
     $.each($('.reviewer'), function() {
         if ($(this).is(':checked')) {
-            selReviewer.push($(this).val());
+            selReviewer.push(parseInt($(this).val()));
         }
     });
     // var selReviewer = $('#select-reviewer').val();
     var reviewer = [];
     $("#sel_reviewer").val(selReviewer);
     $.each(userList, function(i, data){
-        if($.inArray(data.id.toString(), selReviewer) > -1){
+        if($.inArray(parseInt(data.id), selReviewer) > -1){
         // if(data.id == $('#select-reviewer').val()){
             reviewer.push(data.name);
             // $('#reviewer-name').html(data.name);
@@ -1513,8 +1513,10 @@ $('#form_selectReviewer').on('submit', function(e){
         success: function(data){
             var optionHtml ="";
             $.each(data, function(i, tempdata){
-                if (!$.inArray((tempdata.id).toString(), selReviewer) > -1) {
+                if ($.inArray(tempdata.id, selReviewer) > -1) {
                 // optionHtml = optionHtml+"<option value="+tempdata.id+" selected>"+tempdata.name+"</option>";
+                    optionHtml = optionHtml+"<div class='col-3'><input type='checkbox' name='employees"+tempdata.id+"' id='employees"+tempdata.id+"' value="+tempdata.id+" class='employee mr-1'>"+tempdata.name+"</div>";
+                } else {
                     optionHtml = optionHtml+"<div class='col-3'><input type='checkbox' name='employees"+tempdata.id+"' id='employees"+tempdata.id+"' value="+tempdata.id+" class='employee mr-1' checked>"+tempdata.name+"</div>";
                 }
                 //if(tempdata.id == $('#select-employees').val()){
