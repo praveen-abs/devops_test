@@ -2,87 +2,10 @@
 @section('title') @lang('translation.projects') @endsection
 @section('css')
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/employee-directory.css') }}">
+<link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/app.min.css') }}">
 <!--Font Awesome-->
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/fontawesome-all.min.css') }}">
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/fontawesome.css') }}">
-
-<style>
-tbody tr:hover {
-    background-color: #f3f3f9;
-
-}
-td img{
-    height: 25px !important;
-    width: 25px !important;
-    border-radius:50%;
-}
-td {
-    border: solid 1px #000;
-    border-style: none solid solid none;
-    padding: 10px;
-    /* font-weight: 600; */
-    color: #878aa5;
-}
-td .btn i {
-    font-size: 16px;
-}
-
-/* for radio button */
-
-
-.switch-field {
-    display: flex;
-
-}
-
-.switch-field input {
-    position: absolute !important;
-    clip: rect(0, 0, 0, 0);
-    height: 1px;
-    width: 1px;
-    border: 0;
-    overflow: hidden;
-}
-
-.switch-field label {
-    background-color: #fff;
-    color: #acb0b0;
-    line-height: 1;
-    text-align: center;
-    padding: 5px;
-    margin-right: -1px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    transition: all 0.1s ease-in-out;
-    margin-bottom: 0px !important;
-}
-
-.switch-field label:hover {
-    cursor: pointer;
-}
-
-.switch-field input:checked+label {
-
-    box-shadow: none;
-    color: #002f56;
-    background-color: #B8C4FF !important;
-    font-weight: 600;
-
-}
-
-.switch-field label:first-of-type {
-    border-radius: 4px 0 0 4px;
-}
-
-.switch-field label:last-of-type {
-    border-radius: 0 4px 4px 0;
-}
-
-.form-control:focus {
-    /* border: 2px solid #1c8b8d !important; */
-    border: 1px solid #c1cef9 !important;
-}
-</style>
-
 
 @endsection
 
@@ -94,7 +17,7 @@ td .btn i {
 @endcomponent
 
 
-<div class=" project-wrapper bg-white p-4 mt-mb-15">
+<div class=" directory-wrapper bg-white px-3 pt-3 pb-0 mt-mb-15">
     <h5 class="fw-bold">Employee Directory</h5>
     <!-- <div class="row">
         <div class="col-12">
@@ -280,7 +203,7 @@ td .btn i {
 
         </div>
     </div> -->
-    <div class="directory-content   my-2">
+    <!-- <div class="directory-content ">
         <div class="row">
             <div class="col-8">
                 <div class="float-left directory-left d-flex">
@@ -293,97 +216,102 @@ td .btn i {
             </div>
             <div class="col-4">
                 <div class="d-flex directory-right float-right justify-content-end align-items-center">
-                    <!-- <div class="btn border-0 outline-none mx-2 ">
+                    <div class="btn border-0 outline-none mx-2 ">
                         <i class="ri-menu-add-line fw-bold"></i>
-                    </div> -->
+                    </div>
                     <a href="{{route('vmt_employeeOnboarding')}}" class="btn   btn-orange  fw-bold ">
                         <i class="ri-add-line fw-bold mx-1"></i>
                         Onboard Employee
                     </a>
-
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <div class="table-responsive">
-        <table class=" table table-borderd ">
-            <thead class="table-light">
-                <tr>
-                    <th scope="col">Employee Name</th>
-                    <th scope="col">Employee Code</th>
-                    <th scope="col">Designation</th>
-                    <th scope="col">Reporting Manager</th>
-                    <!-- <th scope="col">Email Id</th> -->
-                    <th scope="col">Date Of Joining</th>
-                    <th scope="col">Blood Group</th>
-                    <th scope="col">Profile</th>
-                    <th scope="col">Actions</th>
-                    <th scope="col">Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($vmtEmployees as $key => $employee)
-                <tr>
+        <div class="container-fluid px-2 bg-white" style="position:relative;">
+            <button class="btn btn-primary py-1 fw-bold left-corner-btn"><a href="{{route('vmt_employeeOnboarding')}}" class=" text-white">
+                    <i class="ri-add-line fw-bold mx-1"></i>
+                    Onboard Employee
+                </a></button>
+            <table class=" table table-borderd " id="directory-table">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col">Employee Name</th>
+                        <th scope="col">Employee Code</th>
+                        <th scope="col">Designation</th>
+                        <th scope="col">Reporting Manager</th>
+                        <!-- <th scope="col">Email Id</th> -->
+                        <th scope="col">Date Of Joining</th>
+                        <th scope="col">Blood Group</th>
+                        <th scope="col">Profile</th>
+                        <th scope="col">Actions</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($vmtEmployees as $key => $employee)
+                    <tr>
 
-                    <td>
-                         <div class="d-flex justify-content-start align-items-center table-img">
-                            <div class="mx-2">
-                                @if($employee->avatar)
-                                <img src="{{ URL::asset('images/'.$employee->avatar) }}" alt=""
-                                    class="" />
-                                @else
-                                @php
+                        <td>
+                            <div class="d-flex justify-content-start align-items-center table-img">
+                                <div class="mx-2">
+                                    @if($employee->avatar)
+                                    <img src="{{ URL::asset('images/'.$employee->avatar) }}" alt="" class="" />
+                                    @else
+                                    @php
                                     preg_match('/(?:\w+\. )?(\w+).*?(\w+)(?: \w+\.)?$/',Auth::user()->name , $result);
                                     $name = strtoupper($result[1][0].$result[2][0]);
-                                @endphp
-                                 <span class="badge rounded-circle h-10 w-10   badge-primary ml-2"><i
+                                    @endphp
+                                    <span class="badge rounded-circle h-10 w-10   badge-primary ml-2"><i
                                             class="align-middle">{{$name}}</i></span>
-                                @endif
+                                    @endif
 
+                                </div>
+                                <span>
+
+                                    {{$employee->emp_name}}
+
+                                </span>
                             </div>
-                            <span>
-
-                                {{$employee->emp_name}}
-
-                            </span>
-                        </div>
-                    </td>
-                    <td> {{$employee->emp_no}}</td>
-                    <td>{{$employee->designation}}</td>
-                    <td>{{$employee->l1_manager_name }}</td>
-                    <td>{{$employee->doj }}</td>
-                    <!-- <td><span>{{$employee->email_id }}</span></td> -->
-                    <td>B <sup>+</sup></td>
-                    <td>70%</td>
-                    <td>
-                        <!-- <div class="d-flex justify-content-center align-items-center"> -->
+                        </td>
+                        <td> {{$employee->emp_no}}</td>
+                        <td>{{$employee->designation}}</td>
+                        <td>{{$employee->l1_manager_name }}</td>
+                        <td>{{$employee->doj }}</td>
+                        <!-- <td><span>{{$employee->email_id }}</span></td> -->
+                        <td>B <sup>+</sup></td>
+                        <td>70%</td>
+                        <td>
+                            <!-- <div class="d-flex justify-content-center align-items-center"> -->
                             <a href="{{route('pages_impersonate_profile', $employee->userid)}}"
                                 class="btn border-0 outline-none bg-transparent p-0  mx-1">
                                 <i class="ri-pencil-line text-primary fw-bold"></i>
                             </a>
 
-                        <!-- </div> -->
-                    </td>
-                    <td>
-                        <div class="switch-field align-items-center  justify-content-center">
-                            <input type="hidden" value="{{$employee->user_id}}" name="id{{$key}}" id="id{{$key}}">
-                            <input class="status" type="radio" id="radio-one{{$key}}" name="{{$key}}" value="1" @if($employee->emp_status) checked @endif />
-                            <label for="radio-one{{$key}}">Active</label>
-                            <input class="status" type="radio" id="radio-two{{$key}}" name="{{$key}}" value="0" @if(!$employee->emp_status) checked @endif>
-                            <label for="radio-two{{$key}}">Inactive</label>
-                        </div>
-                    </td>
-                </tr>
-                @endforeach
+                            <!-- </div> -->
+                        </td>
+                        <td>
+                            <div class="switch-field align-items-center  justify-content-center">
+                                <input type="hidden" value="{{$employee->user_id}}" name="id{{$key}}" id="id{{$key}}">
+                                <input class="status" type="radio" id="radio-one{{$key}}" name="{{$key}}" value="1"
+                                    @if($employee->emp_status) checked @endif />
+                                <label for="radio-one{{$key}}">Active</label>
+                                <input class="status" type="radio" id="radio-two{{$key}}" name="{{$key}}" value="0"
+                                    @if(!$employee->emp_status) checked @endif>
+                                <label for="radio-two{{$key}}">Inactive</label>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
 
-            </tbody>
+                </tbody>
 
-        </table>
-        <!-- end table -->
+            </table>
+
+        </div>
     </div>
-
-</div><!-- end row -->
+</div>
 
 @endsection
 @section('script')
@@ -396,6 +324,9 @@ td .btn i {
 
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<!-- data table -->
+<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 
 <script>
 $(document).ready(function() {
@@ -412,14 +343,14 @@ $(document).ready(function() {
     $('.status').click(function() {
         var status = $(this).val();
         var name = $(this).attr('name');
-        var id = $('#id'+name).val();
+        var id = $('#id' + name).val();
         $.ajax({
             url: "{{route('updateUserAccountStatus')}}",
             type: "POST",
             data: {
                 _token: "{{ csrf_token() }}",
-                "status" : status,
-                "id" : id,
+                "status": status,
+                "id": id,
             },
             success: function(data) {
                 //window.location.reload();
@@ -427,6 +358,12 @@ $(document).ready(function() {
             }
         });
     });
+
+    $('#directory-table').DataTable({
+
+    });
+
+
 
     $('#calendar_type').change(function() {
         calendar();
