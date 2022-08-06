@@ -69,7 +69,7 @@
 @slot('li_1')  @endslot
 @endcomponent
 
-<div class="container-fluid ">
+<div class="container-fluid assign-goal-wrapper mt-mb-15">
     <div class="cards-wrapper">
         <div class="row">
             <div class="col-12 col-lg-12 col-md-12 ">
@@ -842,8 +842,8 @@
                 </div>
 
                 <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
-                    <button class="btn btn-orange table-btn mx-2" id="save-table">Save</button>
-                    <button class="btn btn-orange mx-2" id="publish-goal" disabled>Publish</button>
+                    <button class="btn btn-primary  mx-2" id="save-table">Save</button>
+                    <button class="btn btn-primary ml-2" id="publish-goal" disabled>Publish</button>
                 </div>
 
             </div>

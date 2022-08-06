@@ -1,5 +1,19 @@
 @section('css')
-<link href="{{ URL::asset('assets/css/topbar.css') }}" rel="stylesheet">
+<link href="{{ URL::asset('assets/css/top_bar.css') }}" rel="stylesheet">
+
+<style>
+    .page-header-user-dropdown span{
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: aliceblue;
+
+}
+</style>
+
 @endsection
 
 
@@ -207,7 +221,7 @@
                         <div class="dropdown topbar-user ">
                             <button type="button" class="btn ml-1 py-0" id="page-header-user-dropdown"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <div class="d-flex align-items-center">
+                                <div class="d-flex align-items-center page-header-user-dropdown">
                                      <!-- <img class="rounded-circle header-profile-user" src="@if (Auth::user()->avatar != ''){{ URL::asset('images/'. Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"alt="Header Avatar"> -->
                                     
                                     @php
@@ -216,7 +230,7 @@
 
                                     if (Auth::user()->avatar == null || Auth::user()->avatar =='' ){ 
                                     @endphp
-                                        <span class="badge rounded-circle   badge-primary ml-2"><i
+                                        <span class="rounded-circle user-profile  ml-2"><i
                                             class="align-middle">{{$name}}</i></span>
                                     @php
                                     }else{

@@ -66,7 +66,7 @@
   width: 70px;
   border-radius: 50%;
 
-  background: transparent;
+  background: #f1f1f1;
   position: relative;
 }
 
@@ -128,16 +128,6 @@
   border-top-left-radius: 10px;
   border-top-right-radius: 0px;
   border-bottom-right-radius: 10px;
-}
-
-.greet-wrap p {
-  font-size: 10pt;
-  font-weight: 600;
-}
-
-.greet-wrap p b {
-  font-size: 13pt;
-  color: #e54e0d !important;
 }
 
 .wishes-card-wrapper .program-day {

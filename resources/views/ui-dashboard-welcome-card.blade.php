@@ -11,8 +11,8 @@
                                     $name = strtoupper($result[1][0].$result[2][0]);
                                     if (Auth::user()->avatar == null || Auth::user()->avatar =="" ){ 
                                     @endphp
-                                        <span class="badge rounded-circle h-100 w-100   badge-primary ml-2"><i
-                                            class="align-middle">{{$name}}</i></span>
+                                        <span class="bage rounded-circle h-100 w-100 d-flex align-items-center justify-content-center  "><i
+                                            class="align-middle ">{{$name}}</i></span>
                                     @php
                                     }else{
                                     @endphp
@@ -32,7 +32,7 @@
             <div class="greet-wrap ml-3 mr-0">
                 <div class="d-felx ">
                     <!-- <h4>Welcome Back<b class="ml-1 text-primary">{{auth()->user()->name}}</b></h4> -->
-                    <p class="text-muted "><span id="greeting_text">Welcome Back</span><b class="ml-1 text-primary">{{auth()->user()->name}}</b>
+                    <p class="text-muted "><span id="greeting_text f-12">Welcome Back</span><b class="ml-1 f-15 text-primary">{{auth()->user()->name}}</b>
                     </p>
 
                     <p class="text-muted f-13 mt-1 m-0">{{date('d F Y')}}</p>
@@ -42,11 +42,11 @@
         <div class="row">
             <div class="col-sm-12 col-md-12 col-xl-12 col-xl-12 my-2   ">
                 <div class="d-flex align-items-center ">
-                    <p class="f-13 w-50"><i class=" ri-sun-line text-warning mr-2"></i>General shift</p>
-                    <p class="f-15">
+                    <p class="f-13 text-muted w-50"><i class=" ri-sun-line text-warning mr-2"></i>General shift</p>
+                    <p class="f-13 text-muted">
                         <span>
-                            <label class="switch-checkbox m-0">
-                                <input type="checkbox" id="checkin_function" @if($checked && $checked->checkin_time)
+                            <label class="switch-checkbox f-13 text-muted  m-0">
+                                <input type="checkbox" id="checkin_function" class="f-13 text-muted" @if($checked && $checked->checkin_time)
                                 @if($checked->checkout_time)
 
                                 @else
@@ -62,18 +62,18 @@
                     </p>
                 </div>
                 <div class="d-flex align-items-center mt-1">
-                    <input type="hidden" id="hidden_timer_value" name="hidden_timer_value" value="0">                     
+                    <input type="hidden" class="f-13 text-muted" id="hidden_timer_value" name="hidden_timer_value" value="0">                     
                     @if ($checked && $checked->checkin_time)
                         @if($checked->checkout_time)
-                        <i class="ri-time-line text-warning mr-2"></i><span id="check_timing" class="f-13 w-20">Last Check Out :
+                        <i class="ri-time-line text-warning mr-2"></i><span id="check_timing" class="f-13 text-muted ">Last Check Out :
                             {{date('H:i:s', strtotime($checked->checkout_time))}}</span>
                         @else
                         {{-- If not check_out time, then user havent checked-out yet --}}
-                        <i class="ri-time-line text-warning mr-2"></i><span id="check_timing" class="f-13 w-20">Check In :
+                        <i class="ri-time-line text-warning mr-2"></i><span id="check_timing" class="f-13 text-muted ">Check In :
                             {{date('H:i:s', strtotime($checked->checkin_time))}}</span>
                         @endif
                     @endif
-                    <i class=" text-warning mr-2"></i><span class="f-13 w-20" id="time_duration">Time Duration:
+                    <i class=" text-warning mr-2"></i><span class="f-13 text-muted " id="time_duration f-13 text-muted">Time Duration:
                         @if($effective_hours) {{$effective_hours}} @else {{ '---' }} @endif         
                     </span>                            
               
@@ -91,7 +91,7 @@
         <div class="toast-header">
             <strong class="me-auto">Info</strong>
             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
+        </div>4
 
         <div class="toast-body">
             <div class="d-flex align-items-center">
