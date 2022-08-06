@@ -378,7 +378,7 @@ class HomeController extends Controller
         //$vmtGeneralInfo->short_name  = ;
         if ($request->file('logo')) {
             $avatar = $request->file('logo');
-            $avatarName = time() . '-logo.' . $avatar->getClientOriginalExtension();
+            $avatarName = 'client-logo.png';
             $avatarPath = public_path('/generalinfo/');
             $avatar->move($avatarPath, $avatarName);
             $vmtGeneralInfo->logo_img =  '/generalinfo/'.$avatarName;
