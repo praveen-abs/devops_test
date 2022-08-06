@@ -1,9 +1,6 @@
 <?php
-
 $employee = \DB::table('vmt_employee_payslip')->first();
 $generalInfo = \DB::table('vmt_general_info')->first();
-
-
 ?>
 
 <html>
