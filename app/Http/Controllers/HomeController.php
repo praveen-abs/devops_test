@@ -144,25 +144,29 @@ class HomeController extends Controller
         return view('vmt_appraisalFlow_generalSettings');
     }
 
-    public function calculateProfileCompleteness(Request $request)
+    public function calculateProfileCompleteness($user_id)
     {
         $employee_columns = ['gender','dob','present_address','passport_number','passport_date','nationality','religion','marrital_status','spouse_name','children','family_info_json','contact_json','experience_json','bank_name','bank_ifsc_code','bank_account_number','pan_number'];
-        $empDetails = VmtEmployee::where('userid', $request->id)->get($employee_columns)->first();
+        $empDetails = VmtEmployee::where('userid', $user_id)->get($employee_columns)->first();
 
         $totalCount = count($employee_columns);
         $totalNullCount = 0;
-        //dd($empDetails["gender"]);
+
+        ////Missing fields check
+        //$missingFields = [];
 
         foreach($employee_columns as $singleColumn)
         {
             if( empty($empDetails[$singleColumn]))
             {
                 $totalNullCount++;
+                //array_push($missingFields,$singleColumn);
             }
         }
 
-        $value = (int)( round(($totalNullCount/$totalCount) * 100) );
-        //dd($value);
+        //dd($missingFields);
+       // dd($totalCount);
+        $value = (int)( round(( ($totalCount -$totalNullCount)/$totalCount) * 100 ));
 
         return $value;
     }
@@ -448,7 +452,7 @@ class HomeController extends Controller
         $code = VmtEmployee::join('users', 'users.id', '=', 'userid')->join('vmt_employee_office_details', 'emp_id', '=', 'vmt_employee_details.id')->where('emp_no', '<>' , $details->emp_no)->get();
         $rep = VmtEmployee::select('emp_no', 'name', 'avatar')->join('vmt_employee_office_details', 'emp_id', '=', 'vmt_employee_details.id')->join('users', 'users.id', '=', 'vmt_employee_details.userid')->where('emp_no', $details->l1_manager_code)->first();
 
-        $profileCompletenessValue  = $this->calculateProfileCompleteness($request);
+        $profileCompletenessValue  = $this->calculateProfileCompleteness($user->id);
 
         return view('pages-profile', compact( 'employee', 'user', 'details', 'bank', 'exp', 'code', 'rep','profileCompletenessValue'));
     }
