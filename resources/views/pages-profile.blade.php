@@ -23,22 +23,25 @@
                                                     src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/user-profile-img.jpg') }}@endif"
                                                     alt="Header Avatar"></a> -->
                                              @php
-                                    preg_match('/(?:\w+\. )?(\w+).*?(\w+)(?: \w+\.)?$/',Auth::user()->name , $result);
-                                    $name = strtoupper($result[1][0].$result[2][0]);
-                                    if (Auth::user()->avatar == null || Auth::user()->avatar =="" ){
-                                    @endphp
-                                        <span class="badge rounded-circle   badge-primary ml-2"><i
-                                            class="align-middle">{{$name}}</i></span>
-                                    @php
-                                    }else{
-                                    @endphp
-                                    <img class="rounded-circle header-profile-user"
-                                        src=" {{URL::asset('images/'. Auth::user()->avatar)}}" alt="Header Avatar">
+                                                preg_match('/(?:\w+\. )?(\w+).*?(\w+)(?: \w+\.)?$/',Auth::user()->name , $result);
+                                                $name = strtoupper($result[1][0].$result[2][0]);
+                                                if (empty($user->avatar))
+                                                {
+                                                @endphp
 
+                                                <span class=" rounded-circle   badge-primary ml-2"><i
+                                                        class="align-middle">{{$name}}</i></span>
+                                                @php
+                                                }
+                                                else
+                                                {
+                                                @endphp
+                                                <img class="rounded-circle header-profile-user"
+                                                    src=" {{URL::asset('images/'. $user->avatar)}}" alt="Header Avatar">
 
-                                    @php
-                                    }
-                                    @endphp
+                                                @php
+                                                }
+                                            @endphp
                                             <span class="personal-edit img-edit"><a href="#" class="edit-icon"
                                                     data-bs-toggle="modal" data-bs-target="#personal_info"><i
                                                         class="ri-pencil-fill"></i></a></span>
@@ -968,7 +971,7 @@
                                 <div class=" d-flex align-items-center justify-content-center">
                                     <div class="profile-img-wrap edit-img">
                                     <img id="profile_round_image_dist" class="rounded-circle header-profile-user"
-                                        src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"
+                                        src="@if (!empty($user->avatar)){{ URL::asset('images/' . $user->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"
                                         alt="Header Avatar">
                                     <div class="fileupload btn">
                                         <span class="btn-text">edit</span>

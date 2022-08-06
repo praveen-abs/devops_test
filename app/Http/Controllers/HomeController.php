@@ -267,7 +267,9 @@ class HomeController extends Controller
         $user = User::find($request->id);
         // $user->name = $request->input('name');
         if ($file) {
-            $filename = 'avatar-'.$request->id.'.'. $file->getClientOriginalExtension();
+            //$filename = 'avatar-'.$request->id.'.'. $file->getClientOriginalExtension();
+            $filename = 'avatar_'.date("Y-m-d_h_i_sa").'.'. $file->getClientOriginalExtension();
+            //dd($filename);
             $destination = public_path('/images');
             $file->move($destination, $filename);
             $user->avatar = $filename;
@@ -472,7 +474,9 @@ class HomeController extends Controller
         $exp = Experience::whereIn('id', explode(',', $details->experience_json))->get();
         $code = VmtEmployee::join('users', 'users.id', '=', 'userid')->join('vmt_employee_office_details', 'emp_id', '=', 'vmt_employee_details.id')->where('emp_no', '<>' , $details->emp_no)->get();
         $rep = VmtEmployee::select('emp_no', 'name', 'avatar')->join('vmt_employee_office_details', 'emp_id', '=', 'vmt_employee_details.id')->join('users', 'users.id', '=', 'vmt_employee_details.userid')->where('emp_no', $details->l1_manager_code)->first();
-        return view('pages-profile', compact( 'employee', 'user', 'details', 'bank', 'exp', 'code', 'rep'));
+
+        $profileCompletenessValue  = $this->calculateProfileCompleteness($user->id);
+        return view('pages-profile', compact( 'employee', 'user', 'details', 'bank', 'exp', 'code', 'rep','profileCompletenessValue'));
     }
 
     public function showProfilePage(Request $request) {
