@@ -1,3 +1,11 @@
+<?php
+
+$employee = \DB::table('vmt_employee_payslip')->first();
+$generalInfo = \DB::table('vmt_general_info')->first();
+
+
+?>
+
 <html>
 	<head>
 
@@ -31,8 +39,8 @@
 		<table class="c41">
 			<tr class="c42">
 				<td class="c50" colspan="9" rowspan="1">
-					<div class="row mt-3">
-						<div class="col">
+					<div class="row">
+						<div class="col-md-4">
 							<p class="c0">
 								<span class="c54">Ardens Business Solutions Private Limited</span>
 							</p>
@@ -46,11 +54,11 @@
 							<p class="c0"><span class="c59 c53">T Nagar, Chennai, Tamil Nadu, India &ndash; 600 017</span></p>
 							<p class="c14 c23"><span class="c18"></span></p>
 						</div>
-						<div class="col-auto">
+						<div class="col-md-4 offset-md-4">
 							<p class="c0">
 								<span style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px);  width: 190.00px;">
-									<img src="data:image/png;base64,{{base64_encode(file_get_contents(public_path('/assets/images/images/image2.png')))}}" style="width: 206.86px; height: 116.37px; margin-left: -8.82px;  transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);" title="">
-									
+									<img src="data:image/png;base64,{{base64_encode(file_get_contents(public_path('/generalinfo/client-logo.png')))}}" style="width: 206.86px; height: 116.37px; margin-left: -8.82px;  transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);" title="">
+
 								</span>
 							</p>
 						</div>
@@ -436,7 +444,7 @@
 			<td class="c62" colspan="7" rowspan="1"><p class="c3"><span class="c1">{{$employee->Rupees}}</span></p></td></tr><tr class="c49"><td class="c47" colspan="9" rowspan="1"><p class="c3"><span class="c16">&nbsp;</span></p></td></tr><tr class="c10"><td class="c22 c24" colspan="3" rowspan="1"><p class="c3"><span class="c2">TRANSACTION ID</span></p></td><td class="c22" colspan="2" rowspan="1"><p class="c3 c23"><span class="c16"></span></p></td><td class="c22 c24" colspan="2" rowspan="1"><p class="c3"><span class="c1">Paid Date</span></p></td><td class="c22" colspan="2" rowspan="1"><p class="c3"><span class="c9">11-MAY-2022</span></p></td></tr><tr class="c49"><td class="c47" colspan="9" rowspan="1"><p class="c3"><span class="c16">&nbsp;</span></p></td></tr><tr class="c58"><td class="c50" colspan="9" rowspan="1"><p class="c3"><span class="c31">This is a computer-generated slip does not require signature</span></p></td></tr>
 		</table>
 
-					
+
 
 					<div>
 						<p class="c0">
@@ -445,9 +453,9 @@
 							<span class="c44">Powered By</span>
 							<span class="c19">&nbsp;</span>
 							<span style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 150.13px; height: 28.00px;">
-								<img 
-									alt="Logo Description automatically generated" 
-									src="data:image/png;base64,{{base64_encode(file_get_contents(public_path('assets/images/images/image1.png')))}}" 
+								<img
+									alt="Logo Description automatically generated"
+									src="data:image/png;base64,{{base64_encode(file_get_contents(public_path('assets/images/images/image1.png')))}}"
 									style="width: 160.94px; height: 90.54px; margin-left: -7.13px; margin-top: -31.21px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);" title="" />
 							</span>
 						</p>
