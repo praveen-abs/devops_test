@@ -7,7 +7,7 @@
 @endsection
 @section('content')
 
-<div class="container-fluid user-details-wrapper ">
+<div class="container-fluid user-details-wrapper mt-30 ">
     <div class="row">
         <div class="col-12">
             <div class="pro-overview">

@@ -16787,7 +16787,7 @@ span.flatpickr-weekday {
 }
 
 .personal-info li {
-    margin-bottom: 10px;
+   margin-bottom: 5px;
     display: flex;
 }
 
@@ -16796,8 +16796,10 @@ span.flatpickr-weekday {
 .personal-info li .text {
     color: #888888;
     display: block;
-    font-weight: 600;
+    /* font-weight: 600; */
     overflow: hidden;
+    text-align: start;
+    width: 50%;
 }
 
 .personal-info li .text a {
@@ -18990,8 +18992,24 @@ table>tbody>tr>td>img,
     box-shadow: rgb(60 64 67 / 30%) 0px 1px 2px 0px, rgb(60 64 67 / 15%) 0px 2px 6px 2px;
 }
 
+.mt30-mb15,.mt-30,.mt15-mb30,.mt-mb-15 {
+ position: relative;   
+ }
+ .mt30-mb15
+{
+    margin: -30px 0px -15px;
+}
+.mt-30{
+    margin: -30px 0px;
+}
+.mt15-mb30 {
+    margin: -15px 0px -30px;
+}
+.mt-mb-15{
+        margin: -15px 0px;
+}
 
-
+/* 
 .personal-info li .text {
     color: #888888;
     display: block;
@@ -18999,7 +19017,7 @@ table>tbody>tr>td>img,
     overflow: hidden;
     text-align: start;
     width: 50%;
-}
+} */
 
 
 

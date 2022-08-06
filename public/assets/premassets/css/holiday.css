@@ -1,14 +1,12 @@
 .slides {
   display: none
 }
-/* img {
-  vertical-align: middle;
-} */
+
 
 /* Slideshow container */
 .slideshow-container {
   position: relative;
-  height: 153px;
+  height: 150px;
   min-height: 100%;
   max-height: 100%;
 }
@@ -110,7 +108,7 @@
 .slides img {
   max-height: 100%;
   min-height: 100%;
-  border-radius: 12px;
+  border-radius: 5px;
 }
 
 .carousel-dots {

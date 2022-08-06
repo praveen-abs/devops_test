@@ -7,15 +7,18 @@
 
 .emoji-content .tooltiptext ,.img-contents .tooltiptext {
   visibility: hidden;
-  width: 100px;
+  width: auto;
   background-color: #002f56;
   color: #fff;
   text-align: center;
   border-radius: 6px;
-  padding: 5px 0;
+  padding: 5px 10px;
   position: absolute;
   top: -40px;
   z-index: 1;
+  display: flex;
+  justify-content: center;
+
 }
 
 .emoji-content .tooltiptext::after ,.img-contents .tooltiptext::after {
@@ -32,13 +35,6 @@
 .emoji-content:hover .tooltiptext,.img-contents:hover .tooltiptext{
   visibility: visible;
 }
-
-
-.hr-dashboar-wrpper {
-  position: relative;
-  top: -20px;
-}
-
 
 .f-10 {
   font-size: 10px;
@@ -454,7 +450,7 @@ input+.slider-checkbox>.slider-checkbox-text:after {
 }
 
 .profile-box {
-  border-radius: 12px !important;
+  border-radius: 8px !important;
   box-shadow: rgb(60 64 67 / 30%) 0px 1px 2px 0px, rgb(60 64 67 / 15%) 0px 2px 6px 2px !important;
 }
 
@@ -652,8 +648,8 @@ input+.slider-checkbox>.slider-checkbox-text:after {
 }
 
 .buttons-container {
-  height: 45px;
-  border-radius: 12px 12px 0px 0px !important;
+  height: 40px;
+  border-radius: 5px 5px 0px 0px !important;
   background: #002f56;
 }
 

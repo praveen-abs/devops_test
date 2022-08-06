@@ -94,7 +94,7 @@ td .btn i {
 @endcomponent
 
 
-<div class=" project-wrapper bg-white p-4 ">
+<div class=" project-wrapper bg-white p-4 mt-mb-15">
     <h5 class="fw-bold">Employee Directory</h5>
     <!-- <div class="row">
         <div class="col-12">
