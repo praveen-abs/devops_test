@@ -144,6 +144,29 @@ class HomeController extends Controller
         return view('vmt_appraisalFlow_generalSettings');
     }
 
+    public function calculateProfileCompleteness(Request $request)
+    {
+        $employee_columns = ['gender','dob','present_address','passport_number','passport_date','nationality','religion','marrital_status','spouse_name','children','family_info_json','contact_json','experience_json','bank_name','bank_ifsc_code','bank_account_number','pan_number'];
+        $empDetails = VmtEmployee::where('userid', $request->id)->get($employee_columns)->first();
+
+        $totalCount = count($employee_columns);
+        $totalNullCount = 0;
+        //dd($empDetails["gender"]);
+
+        foreach($employee_columns as $singleColumn)
+        {
+            if( empty($empDetails[$singleColumn]))
+            {
+                $totalNullCount++;
+            }
+        }
+
+        $value = (int)( round(($totalNullCount/$totalCount) * 100) );
+        //dd($value);
+
+        return $value;
+    }
+
     public function updateExperienceInfo(Request $request) {
         $reDetails = VmtEmployee::where('userid', $request->id)->first();
         $details = VmtEmployee::find($reDetails->id);
@@ -230,11 +253,16 @@ class HomeController extends Controller
         return redirect()->back();
     }
 
+    public function updateLeaveInfo(Request $request) {
+
+         return "Function is not implemented";
+     }
+
     public function storeProfileImage(Request $request) {
         $file = $request->file('profilePic');
         $user = User::find($request->id);
         // $user->name = $request->input('name');
-        if ($file) { 
+        if ($file) {
             $filename = 'avatar-'.$request->id.'.'. $file->getClientOriginalExtension();
             $destination = public_path('/images');
             $file->move($destination, $filename);
@@ -246,14 +274,14 @@ class HomeController extends Controller
         return redirect()->back();
     }
 
-    // 
+    //
     public function storePersonalInfo(Request $request) {
         // dd($request->all());
         $file = $request->file('profilePic');
         $user = User::find($request->id);
         $user->name = $request->input('name');
         $number = mt_rand(1000000000, 9999999999);
-        if ($file) { 
+        if ($file) {
             $filename = 'avatar-'.$request->id.$number.'.'. $file->getClientOriginalExtension();
             $destination = public_path('/images/');
             $file->move($destination, $filename);
@@ -383,7 +411,7 @@ class HomeController extends Controller
             $attendance->user_id = auth()->user()->id;
             $attendance->date = date('Y-m-d');
             $currentTime = new DateTime("now", new \DateTimeZone('Asia/Kolkata') );
-            $attendance->checkout_time = $currentTime;            
+            $attendance->checkout_time = $currentTime;
             $attendance->save();
 
             $checked = VmtEmployeeAttendance::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->first();
@@ -391,11 +419,11 @@ class HomeController extends Controller
             $to = Carbon::createFromFormat('Y-m-d H:i:s', $checked->checkout_time);
 
             $from = Carbon::createFromFormat('Y-m-d H:i:s', $checked->checkin_time);
-    
+
             $effective_hours = gmdate('H:i:s', $to->diffInSeconds($from));
-        
+
                // dd($effective_hours);
-    
+
             return response()->json([
                 'message' => 'You have successfully checked out!',
                 'time' => $attendance->checkout_time,
@@ -415,11 +443,14 @@ class HomeController extends Controller
         } else {
             $employee = null;
         }
-        $bank = Bank::all(); 
-        $exp = Experience::whereIn('id', explode(',', $details->experience_json))->get(); 
+        $bank = Bank::all();
+        $exp = Experience::whereIn('id', explode(',', $details->experience_json))->get();
         $code = VmtEmployee::join('users', 'users.id', '=', 'userid')->join('vmt_employee_office_details', 'emp_id', '=', 'vmt_employee_details.id')->where('emp_no', '<>' , $details->emp_no)->get();
         $rep = VmtEmployee::select('emp_no', 'name', 'avatar')->join('vmt_employee_office_details', 'emp_id', '=', 'vmt_employee_details.id')->join('users', 'users.id', '=', 'vmt_employee_details.userid')->where('emp_no', $details->l1_manager_code)->first();
-        return view('pages-profile', compact( 'employee', 'user', 'details', 'bank', 'exp', 'code', 'rep'));
+
+        $profileCompletenessValue  = $this->calculateProfileCompleteness($request);
+
+        return view('pages-profile', compact( 'employee', 'user', 'details', 'bank', 'exp', 'code', 'rep','profileCompletenessValue'));
     }
 
     // Show Impersonate Profile info
@@ -433,8 +464,8 @@ class HomeController extends Controller
         } else {
             $employee = null;
         }
-        $bank = Bank::all(); 
-        $exp = Experience::whereIn('id', explode(',', $details->experience_json))->get(); 
+        $bank = Bank::all();
+        $exp = Experience::whereIn('id', explode(',', $details->experience_json))->get();
         $code = VmtEmployee::join('users', 'users.id', '=', 'userid')->join('vmt_employee_office_details', 'emp_id', '=', 'vmt_employee_details.id')->where('emp_no', '<>' , $details->emp_no)->get();
         $rep = VmtEmployee::select('emp_no', 'name', 'avatar')->join('vmt_employee_office_details', 'emp_id', '=', 'vmt_employee_details.id')->join('users', 'users.id', '=', 'vmt_employee_details.userid')->where('emp_no', $details->l1_manager_code)->first();
         return view('pages-profile', compact( 'employee', 'user', 'details', 'bank', 'exp', 'code', 'rep'));
@@ -448,7 +479,7 @@ class HomeController extends Controller
         } else {
             $employee = null;
         }
-        $bank = Bank::all(); 
+        $bank = Bank::all();
         $exp = Experience::whereIn('id', explode(',', $details->experience_josn))->get();
         $code = VmtEmployee::join('users', 'users.id', '=', 'userid')->where('emp_no', '<>' , $details->emp_no)->get();
         $rep = VmtEmployee::select('l1_manager_code', 'l1_manager_name', 'avatar')->join('vmt_employee_office_details', 'emp_id', '=', 'vmt_employee_details.id')->join('users', 'users.id', '=', 'vmt_employee_details.userid')->where('emp_no', $details->l1_manager_code)->first();

@@ -25,7 +25,7 @@
                                              @php
                                     preg_match('/(?:\w+\. )?(\w+).*?(\w+)(?: \w+\.)?$/',Auth::user()->name , $result);
                                     $name = strtoupper($result[1][0].$result[2][0]);
-                                    if (Auth::user()->avatar == null || Auth::user()->avatar =="" ){ 
+                                    if (Auth::user()->avatar == null || Auth::user()->avatar =="" ){
                                     @endphp
                                         <span class="badge rounded-circle   badge-primary ml-2"><i
                                             class="align-middle">{{$name}}</i></span>
@@ -34,7 +34,7 @@
                                     @endphp
                                     <img class="rounded-circle header-profile-user"
                                         src=" {{URL::asset('images/'. Auth::user()->avatar)}}" alt="Header Avatar">
-                                    
+
 
                                     @php
                                     }
@@ -47,7 +47,7 @@
                                     <div class="profile-info w-75 ">
 
                                         <h3 class="card-title m-0 fw-bold mb-2">{{$user->name}}
-                                           
+
                                         </h3>
                                         <h6 class="departmnet fw-bold text-muted">{{$details->department}}</h6>
                                         <!-- <h5 class="role text-muted fw-bold">{{$details->designation}}</h5> -->
@@ -67,7 +67,7 @@
 
                                         <div class="mb-2 d-flex -justify-content-between w-100">
                                             <p class="text-muted fw-bold">Profile Percentage</p>
-                                            <p class="text-end fw-bold">75%</p>
+                                            <p class="text-end fw-bold">{{ $profileCompletenessValue}}%</p>
 
                                         </div>
 
@@ -75,8 +75,8 @@
 
                                         </div>
                                         <div class="progress progress-bar-content mb-4">
-                                            <div class="progress-bar" role="progressbar" style="width: 75%"
-                                                aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div class="progress-bar" role="progressbar" style="width: {{ $profileCompletenessValue}}%"
+                                                aria-valuenow="{{ $profileCompletenessValue}}" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                         <p class="text-muted fw-bold">Your profile is completed</p>
                                     </div>
@@ -169,7 +169,7 @@
                                     <li>
                                         <div class="title">Passport No.</div>
                                         <div class="text">
-                                         {{$details->passport_number}} 
+                                         {{$details->passport_number}}
                                         </div>
                                     </li>
                                     <li>
@@ -193,7 +193,7 @@
                                         <div class="text">{{$details->marrital_status}}</div>
                                     </li>
                                     <li>
-                                        <div class="title">Employment of spouse</div>
+                                        <div class="title">Spouse Name</div>
                                         <div class="text">{{$details->spouse_name}}</div>
                                     </li>
                                     <li>
@@ -235,7 +235,7 @@
                                                 <td>{{$info['job_position']}}</td>
                                                 <td>{{$info['period_from']}}</td>
                                                 <td>{{$info['period_to']}}</td>
-                                                <td class="text-end">
+                                                {{-- <td class="text-end">
                                                     <div class="dropdown dropdown-action">
                                                         <a aria-expanded="false" data-bs-toggle="dropdown"
                                                             class="action-icon dropdown-toggle" href="#"><i
@@ -249,7 +249,7 @@
                                                                 Delete</a>
                                                         </div>
                                                     </div>
-                                                </td>
+                                                </td> --}}
                                             </tr>
                                             @endforeach
                                             @endif
@@ -263,7 +263,7 @@
                     <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex">
                         <div class="card profile-box flex-fill">
                             <div class="card-body">
-                                <h3 class="card-title fw-bold">Family Informations 
+                                <h3 class="card-title fw-bold">Family Informations
                                     <a href="#" class="edit-icon" data-bs-toggle="modal" data-bs-target="#family_info_modal">
                                         <i class=" ri-pencil-fill"></i>
                                     </a>
@@ -276,7 +276,7 @@
                                                 <th>Relationship</th>
                                                 <th>Date of Birth</th>
                                                 <th>Phone</th>
-                                                <th></th>
+                                                {{-- <th></th> --}}
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -287,7 +287,7 @@
                                                 <td>{{$details->family_info_json['relationship'][$k]}}</td>
                                                 <td>{{$details->family_info_json['dob'][$k]}}</td>
                                                 <td>{{$details->family_info_json['phone'][$k]}}</td>
-                                                <td class="text-end">
+                                                {{-- <td class="text-end">
                                                     <div class="dropdown dropdown-action">
                                                         <a aria-expanded="false" data-bs-toggle="dropdown"
                                                             class="action-icon dropdown-toggle" href="#"><i
@@ -301,7 +301,7 @@
                                                                 Delete</a>
                                                         </div>
                                                     </div>
-                                                </td>
+                                                </td> --}}
                                             </tr>
                                             @endforeach
                                             @endif
@@ -313,7 +313,7 @@
 
                     </div>
 
-                    <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex">
+                    {{-- <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex">
                         <div class="card profile-box flex-fill">
                             <div class="card-body">
                                 <h3 class="card-title fw-bold">Leave Details
@@ -343,7 +343,7 @@
                                 </ul>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex">
                         <div class="card profile-box flex-fill">
@@ -395,12 +395,15 @@
                                                 <div class="text">{{($details->contact_json && $details->contact_json['primary_relationship']) ? $details->contact_json['primary_relationship'] : '-'}}</div>
                                             </li>
                                             <li>
-                                                <div class="title">Phone </div>
-                                                <div class="text">{{($details->contact_json && $details->contact_json['primary_phone1']) ? $details->contact_json['primary_phone1'] : '-'}},
-                                                {{($details->contact_json && $details->contact_json['primary_phone2']) ? $details->contact_json['primary_phone2'] : '-'}}
+                                                <div class="title">Phone - 1 </div>
+                                                <div class="text">{{($details->contact_json && $details->contact_json['primary_phone1']) ? $details->contact_json['primary_phone1'] : '-'}}
                                                 </div>
                                             </li>
-
+                                            <li>
+                                                <div class="title">Phone - 2</div>
+                                                <div class="text">{{($details->contact_json && $details->contact_json['primary_phone2']) ? $details->contact_json['primary_phone2'] : '-'}}
+                                                </div>
+                                            </li>
                                         </ul>
                                     </div>
                                     <!-- <hr> -->
@@ -826,7 +829,7 @@
                                     preg_match('/(?:\w+\. )?(\w+).*?(\w+)(?: \w+\.)?$/',Auth::user()->name , $result);
                                     $name = strtoupper($result[1][0].$result[2][0]);
 
-                                    if (Auth::user()->avatar == null || Auth::user()->avatar =='' ){ 
+                                    if (Auth::user()->avatar == null || Auth::user()->avatar =='' ){
                                     @endphp
                                         <span class="badge rounded-circle h-100 w-100 header-profile-user  badge-primary ml-2"><i
                                             class="align-middle">{{$name}}</i></span>
@@ -835,7 +838,7 @@
                                     @endphp
                                     <img id="profile_round_image_dist1" class="rounded-circle header-profile-user"
                                         src="{{URL::asset('images/'. Auth::user()->avatar)}}" alt="Header Avatar">
-                                    
+
 
                                     @php
                                     }
@@ -895,7 +898,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            
+
                             <!-- <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>State</label>
@@ -921,7 +924,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                             
+
                                  <div class="form-group mb-3">
                                     <label>Email</label>
                                     <input type="email" name="present_email" onkeypress='return isValidEmail(email)' class="form-control"
@@ -940,7 +943,7 @@
                         <div class="text-right">
                             <button class="btn btn-orange submit-btn">Submit</button>
                         </div>
-                        </div>  
+                        </div>
                     </form>
                 </div>
             </div>
@@ -980,7 +983,7 @@
                         <div class="text-right">
                             <button class="btn btn-primary submit-btn">Submit</button>
                         </div>
-                        </div>  
+                        </div>
                     </form>
                 </div>
             </div>
@@ -1016,7 +1019,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
-                                    <label>EmaBank account No</label>
+                                    <label>Bank account No</label>
                                     <div class="cal-icon">
                                         <input name="account_no" type="number" minlength="9" maxlength="18" class="form-control onboard-form" value="{{$details->bank_account_number}}" pattern-data="account" required>
                                     </div>
@@ -1041,7 +1044,7 @@
                         <div class="text-right">
                             <button class="btn btn-primary submit-btn">Submit</button>
                         </div>
-                        </div>  
+                        </div>
                     </form>
                 </div>
             </div>
@@ -1060,7 +1063,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form action="{{route('updateLeaveInfo', $user->id)}}" Method="POST">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
@@ -1095,7 +1098,7 @@
                         <div class="text-right">
                             <button class="btn btn-primary submit-btn">Submit</button>
                         </div>
-                        </div>  
+                        </div>
                     </form>
                 </div>
             </div>
@@ -1166,7 +1169,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
-                                    <label>Employment of spouse</label>
+                                    <label>Spouse Name</label>
                                     <input class="form-control onboard-form" type="text" name="spouse" pattern-data="alpha" value="{{$details->spouse_name}}">
                                 </div>
                             </div>
@@ -1181,7 +1184,7 @@
                         <div class="text-right">
                             <button class="btn btn-primary submit-btn">Submit</button>
                         </div>
-                        </div>  
+                        </div>
                     </form>
                 </div>
             </div>
@@ -1220,7 +1223,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
-                                            <label>Phone <span class="text-danger">*</span></label>
+                                            <label>Phone 1<span class="text-danger">*</span></label>
                                             <input name="primary_phone1" class="form-control onboard-form" type="number" maxlength="10" minlength="10" value="{{($details->contact_json && $details->contact_json['primary_phone1']) ? $details->contact_json['primary_phone1'] : ''}}">
                                         </div>
                                     </div>
@@ -1233,42 +1236,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card">
-                            <div class="card-body">
-                                <h3 class="card-title fw-bold">Primary Contact</h3>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group mb-3">
-                                            <label>Name <span class="text-danger">*</span></label>
-                                            <input name="secondary_name" type="text" class="form-control onboard-form" pattern-data="name" value="{{($details->contact_json && $details->contact_json['secondary_name']) ? $details->contact_json['secondary_name'] : ''}}">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group mb-3">
-                                            <label>Relationship <span class="text-danger">*</span></label>
-                                            <input name="secondary_relationship" class="form-control onboard-form" type="text" pattern-data="alpha" value="{{($details->contact_json && $details->contact_json['secondary_relationship']) ? $details->contact_json['secondary_relationship'] : ''}}">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group mb-3">
-                                            <label>Phone <span class="text-danger">*</span></label>
-                                            <input name="secondary_phone1" class="form-control onboard-form" type="number" maxlength="10" minlength="10" value="{{($details->contact_json && $details->contact_json['secondary_phone1']) ? $details->contact_json['secondary_phone1'] : ''}}">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group mb-3">
-                                            <label>Phone 2</label>
-                                            <input name="secondary_phone2" class="form-control onboard-form" type="number" maxlength="10" minlength="10" value="{{($details->contact_json && $details->contact_json['secondary_phone2']) ? $details->contact_json['secondary_phone2'] : ''}}">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="col-12">
                         <div class="text-right">
                             <button class="btn btn-primary submit-btn">Submit</button>
                         </div>
-                        </div>  
+                        </div>
                     </form>
                 </div>
             </div>
@@ -1294,7 +1266,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h3 class="card-title fw-bold">Education Informations <a href="javascript:void(0);"
-                                            class="delete-icon"><i class="   ri-delete-bin-line"></i></a>
+                                            {{-- class="delete-icon"><i class="   ri-delete-bin-line"></i></a> --}}
                                     </h3>
                                     <div class="content-container">
                                         <div class="row addition-content" id="content1">
@@ -1339,7 +1311,7 @@
                         <div class="text-right">
                             <button class="btn btn-primary submit-btn">Submit</button>
                         </div>
-                        </div>  
+                        </div>
                     </form>
                 </div>
             </div>
@@ -1363,7 +1335,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h3 class="card-title fw-bold">Education Informations <a href="javascript:void(0);"
-                                            class="delete-icon"><i class="   ri-delete-bin-line"></i></a>
+                                            {{-- class="delete-icon"><i class="   ri-delete-bin-line"></i></a> --}}
                                     </h3>
                                     <div class="row">
                                         <div class="col-md-6">
@@ -1423,7 +1395,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h3 class="card-title fw-bold">Education Informations <a href="javascript:void(0);"
-                                            class="delete-icon"><i class="   ri-delete-bin-line"></i></a>
+                                            {{-- class="delete-icon"><i class="   ri-delete-bin-line"></i></a> --}}
                                     </h3>
                                     <div class="row">
                                         <div class="col-md-6">
@@ -1490,7 +1462,7 @@
                         <div class="text-right">
                             <button class="btn btn-primary submit-btn">Submit</button>
                         </div>
-                        </div>  
+                        </div>
                     </form>
                 </div>
             </div>
@@ -1516,7 +1488,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h3 class="card-title fw-bold">Experience Informations <a href="javascript:void(0);"
-                                            class="delete-icon"><i class="   ri-delete-bin-line"></i></a>
+                                            {{-- class="delete-icon"><i class="   ri-delete-bin-line"></i></a> --}}
                                     </h3>
                                     <div class="exp-content-container">
                                         <div class="row exp-addition-content" id="content1">
@@ -1573,7 +1545,7 @@
                         <div class="text-right">
                             <button class="btn btn-primary submit-btn">Submit</button>
                         </div>
-                        </div>  
+                        </div>
                     </form>
                 </div>
             </div>
@@ -1594,6 +1566,10 @@
 <script src="{{ URL::asset('assets/js/pages/profile-setting.init.js') }}"></script>
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 <script>
+$( document ).ready(function() {
+    console.log( "ready!" );
+});
+
 $('body').on('keyup', ".onboard-form", function() {
     var inputvalues = $(this).val();
     var data = $(this).attr('name');
@@ -1602,7 +1578,7 @@ $('body').on('keyup', ".onboard-form", function() {
         var val = parseInt($(this).attr('maxlength'));
         if(dtl>val){
             $(this).val($(this).val().substr(0,val));
-        } 
+        }
     }
     if ($(this).attr('pattern-data') != undefined && $(this).attr('pattern-data') != '' && inputvalues !=
         '') {
@@ -1676,7 +1652,7 @@ function readURL(input) {
 		reader.onload = function (e) {
 			$('#profile_round_image_dist')
 				.attr('src', e.target.result);
-                
+
 			$('#profile_round_image_dist1')
 				.attr('src', e.target.result);
 		};
