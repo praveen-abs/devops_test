@@ -1,0 +1,10 @@
+.page-header-user-dropdown span{
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: aliceblue;
+
+}

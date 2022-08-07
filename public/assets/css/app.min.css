@@ -19211,15 +19211,15 @@ span .paginate_button {
 .dataTables_wrapper .dataTables_length {
     float: left;
 }
-
 #profileShortNameLargeCircle {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background: #512DA8;
+    background: #f1f1f1;
     font-size: 20px;
-    color: #fff;
+    /* color: #212529; */
     text-align: center;
     line-height: 60px;
     margin: 0px 0;
-  }
+    font-weight: 600;
+}

@@ -99,8 +99,9 @@
 }
 
 .wishes-card-wrapper img {
-  height: 55px !important;
-  width: 55px !important;
+  height: 60px !important;
+    width: 60px !important;
+    opacity: 0.5;
 }
 
 .card-img {

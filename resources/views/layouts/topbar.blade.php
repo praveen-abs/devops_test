@@ -231,7 +231,7 @@
                                     if (Auth::user()->avatar == null || Auth::user()->avatar =='' ){ 
                                     @endphp
                                         <span class="rounded-circle user-profile  ml-2"><i
-                                            class="align-middle">{{$name}}</i></span>
+                                            class="align-middle f-12 fw-bold">{{$name}}</i></span>
                                     @php
                                     }else{
                                     @endphp
