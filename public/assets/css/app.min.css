@@ -1623,8 +1623,8 @@ body::-webkit-scrollbar-thumb{
 }
 
 /* .left-content-settings:hover,.right-content-settings:hover{
-       
-       
+
+
 } */
 
 
@@ -3294,10 +3294,10 @@ body::-webkit-scrollbar-thumb{
 
 /*!
  * Waves v0.7.6
- * http://fian.my.id/Waves 
- * 
- * Copyright 2014-2018 Alfiana E. Sibuea and other contributors 
- * Released under the MIT license 
+ * http://fian.my.id/Waves
+ *
+ * Copyright 2014-2018 Alfiana E. Sibuea and other contributors
+ * Released under the MIT license
  * https://github.com/fians/Waves/blob/master/LICENSE */
 .waves-effect {
     position: relative;
@@ -18747,14 +18747,14 @@ table>tbody>tr>td>img,
 }
 
 /* .conya{
-    background: url(../images/login_bg1.jpg) no-repeat center center fixed; 
+    background: url(../images/login_bg1.jpg) no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
 } */
 
-/* 
+/*
 .login-bg {
     position: fixed;
     top: -50%;
@@ -19026,7 +19026,7 @@ table>tbody>tr>td>img,
     margin: -15px 0px;
 }
 
-/* 
+/*
 .personal-info li .text {
     color: #888888;
     display: block;
@@ -19252,3 +19252,15 @@ span .paginate_button {
 .dataTables_wrapper .dataTables_length {
     float: left;
 }
+
+#profileShortNameLargeCircle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #512DA8;
+    font-size: 20px;
+    color: #fff;
+    text-align: center;
+    line-height: 60px;
+    margin: 0px 0;
+  }
