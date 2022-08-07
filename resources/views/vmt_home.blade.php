@@ -96,7 +96,7 @@
                         <h5 class="text-primary">
                             Your Pay Summary
                         </h5>
-                        <button class="btn btn-primary py-1 px-2"> <i class=" ri-calendar-2-line"></i> </button>
+                        <!-- <button class="btn btn-primary py-1 px-2"> <i class=" ri-calendar-2-line"></i> </button> -->
                     </div>
 
                     <div class="row">
@@ -105,7 +105,7 @@
                                 <!-- <figcaption>SVG PIE Chart with CSS animation</figcaption> -->
                                 <svg viewBox="0 0 63.6619772368 63.6619772368">
                                     <circle class="pie1" cx="31.8309886184" cy="31.8309886184" r="15.9154943092" />
-                                    <circle class="pie2" cx="31.8309886184" cy="31.8309886184" r="15.9154943092" />
+                                    <!-- <circle class="pie2" cx="31.8309886184" cy="31.8309886184" r="15.9154943092" /> -->
                                     <circle class="pie3" cx="31.8309886184" cy="31.8309886184" r="15.9154943092" />
                                     <circle class="pie4" cx="31.8309886184" cy="31.8309886184" r="15.9154943092" />
                                 </svg>
@@ -167,7 +167,7 @@
                                     <div class="text  text-end h5 text-primary ">₹{{ json_decode($json_PayCheck)->epfemployer}}</div>
                                 </li>
                                 <li>
-                                    <div class="title f-15 text-muted ">Employee Contribution</div>
+                                    <div class="title f-15 text-muted ">Employer Contribution</div>
                                     <div class="text text-end h5 text-primary ">₹{{ json_decode($json_PayCheck)->your_employee}}</div>
                                 </li>
                             </ul>

@@ -124,6 +124,79 @@
                 </li>
 
 
+                <!-- CRM -->
+
+                <li class="nav-item">
+                    <a class="nav-link sidebar menu-link pt-0" href="#crmDrop-Down" data-bs-toggle="collapse"
+                        role="button" aria-expanded="false" aria-controls="sidebarRoles">
+                        <i><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 23.4 23.9">
+                                <defs>
+                                    <style>
+                                    .cls-1 {
+                                        font-size: 5.37px;
+                                        font-family: BerlinSansFB-Reg, Berlin Sans FB;
+                                    }
+
+                                    .cls-1,
+                                    .cls-4 {
+                                        fill: #354a00;
+                                    }
+
+                                    .cls-2,
+                                    .cls-3 {
+                                        fill: none;
+                                        stroke: #354a00;
+                                        stroke-miterlimit: 10;
+                                    }
+
+                                    .cls-2 {
+                                        stroke-width: 0.5px;
+                                    }
+
+                                    .cls-3 {
+                                        stroke-width: 0.8px;
+                                    }
+                                    </style>
+                                </defs><text class="cls-1" transform="translate(6.39 17.13)">CRM</text>
+                                <path class="cls-2"
+                                    d="M13.57,9V8a1.7,1.7,0,0,0-1-1.57,1.07,1.07,0,0,1-.89.46,1.08,1.08,0,0,1-.89-.46A1.71,1.71,0,0,0,9.78,8v.88" />
+                                <path class="cls-2"
+                                    d="M12.79,5.81a1.07,1.07,0,0,1-.22.66,1.1,1.1,0,0,1-.9.46,1.08,1.08,0,0,1-.89-.46,1.07,1.07,0,0,1-.22-.66,1.12,1.12,0,0,1,2.23,0Z" />
+                                <circle class="cls-2" cx="11.71" cy="6.17" r="3.37" />
+                                <path class="cls-2"
+                                    d="M5.27,2.93,3.53,4.67a.13.13,0,0,1-.21-.09V4.06H.54A.14.14,0,0,1,.4,3.92V1.77a.14.14,0,0,1,.14-.14H3.32V1.11A.13.13,0,0,1,3.53,1L5.27,2.76A.14.14,0,0,1,5.27,2.93Z" />
+                                <path class="cls-2"
+                                    d="M23,1.78V3.94a.14.14,0,0,1-.14.14H20.07v.64a.13.13,0,0,1-.22.09L18,3a.13.13,0,0,1,0-.18L19.85.92a.13.13,0,0,1,.22.09v.64h2.79A.13.13,0,0,1,23,1.78Z" />
+                                <path class="cls-3"
+                                    d="M1,20.49H22.41a.59.59,0,0,1,.59.59v1a1.41,1.41,0,0,1-1.41,1.41H1.81A1.41,1.41,0,0,1,.4,22.09v-1A.59.59,0,0,1,1,20.49Z" />
+                                <path class="cls-3"
+                                    d="M14.07,20.49V21A1.11,1.11,0,0,1,13,22.08H10.35A1.1,1.1,0,0,1,9.25,21v-.49" />
+                                <path class="cls-3"
+                                    d="M17.23,6.17h3.35a.86.86,0,0,1,.86.86v12.6a.86.86,0,0,1-.86.86H2.77a.87.87,0,0,1-.86-.86V7a.87.87,0,0,1,.86-.86h3.4" />
+                                <path class="cls-3"
+                                    d="M15.65,7.74h4.16a.15.15,0,0,1,.14.15V18.83a.15.15,0,0,1-.14.15H3.62a.15.15,0,0,1-.15-.15V7.89a.15.15,0,0,1,.15-.15H7.75" />
+                                <path class="cls-4"
+                                    d="M17.29,4.92l-.88-.15a5.14,5.14,0,0,0-.35-.84l.52-.73a.76.76,0,0,0-.09-1l-.77-.77a.77.77,0,0,0-1-.09L14,1.87a5.09,5.09,0,0,0-.88-.36L13,.64A.76.76,0,0,0,12.22,0h-1.1a.78.78,0,0,0-.76.64l-.15.89a5.14,5.14,0,0,0-.84.35l-.72-.51a.8.8,0,0,0-.45-.14.77.77,0,0,0-.54.22l-.78.78a.77.77,0,0,0-.08,1L7.32,4A5.24,5.24,0,0,0,7,4.8L6.11,5a.77.77,0,0,0-.65.76V6.8a.77.77,0,0,0,.65.76L7,7.72s0,0,0,0a4.22,4.22,0,0,0,.35.82l-.51.71a.77.77,0,0,0,.08,1L7.7,11a.73.73,0,0,0,.54.23.77.77,0,0,0,.44-.14l.74-.53a4.89,4.89,0,0,0,.82.34l.14.88a.78.78,0,0,0,.76.64h1.1a.76.76,0,0,0,.76-.64l.15-.88a4.22,4.22,0,0,0,.85-.35l.72.52a.8.8,0,0,0,.45.14.74.74,0,0,0,.54-.23l.78-.77a.77.77,0,0,0,.08-1l-.51-.73a5,5,0,0,0,.33-.79s0,0,0-.06l.87-.14a.77.77,0,0,0,.65-.76V5.68A.78.78,0,0,0,17.29,4.92Zm-.06,1.86a.09.09,0,0,1-.06.07L16.08,7a.33.33,0,0,0-.28.26,4,4,0,0,1-.15.45,3.15,3.15,0,0,1-.31.64.35.35,0,0,0,0,.38l.64.91a.05.05,0,0,1,0,.08l-.77.78a.06.06,0,0,1-.05,0h0l-.9-.65a.37.37,0,0,0-.39,0,4.18,4.18,0,0,1-1.09.45l-.17.11a.38.38,0,0,0-.08.17l-.19,1.1s0,0-.07,0H11.15s-.07,0-.07,0l-.18-1.1,0-.08h0l-.38-.24a4,4,0,0,1-.92-.4.33.33,0,0,0-.17,0,.39.39,0,0,0-.21.06l-.91.65h0a.06.06,0,0,1-.05,0l-.77-.77a.06.06,0,0,1,0-.09l.64-.9a.35.35,0,0,0,0-.38,3.43,3.43,0,0,1-.32-.67,3.45,3.45,0,0,1-.14-.42.35.35,0,0,0-.28-.26L6.22,6.87s0,0,0-.07V5.71a.07.07,0,0,1,0-.07l1.09-.18a.34.34,0,0,0,.28-.26A4.32,4.32,0,0,1,8,4.11a.35.35,0,0,0,0-.38l-.65-.92a.06.06,0,0,1,0-.08L8.16,2s0,0,.05,0h0l.9.64a.37.37,0,0,0,.39,0,4.2,4.2,0,0,1,1.09-.46.36.36,0,0,0,.25-.28l.19-1.1A.07.07,0,0,1,11.13.7h1.09s.07,0,.07.06l.18,1.08a.38.38,0,0,0,.27.29,4.14,4.14,0,0,1,1.11.46.35.35,0,0,0,.38,0l.9-.65h0a.06.06,0,0,1,.05,0l.78.78a.07.07,0,0,1,0,.09l-.64.9a.35.35,0,0,0,0,.38,4.32,4.32,0,0,1,.45,1.09.33.33,0,0,0,.28.26l1.09.18a.07.07,0,0,1,.06.07Z" />
+                            </svg></i>
+                        <span>CRM</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="crmDrop-Down">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1">
+                                    <span>Vendor</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+
+                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1"
+                                    role="button"><span>Client</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
 
                 <!-- Navigation Menu for attendance-->
 
@@ -185,7 +258,7 @@
                     </a>
                     <div class="collapse menu-dropdown" id="orgDrop-Down">
                         <ul class="nav nav-sm flex-column">
-                            
+
                             <li class="nav-item ">
                                 <a href="{{url('vmt-employess/directory')}}" id="tds"
                                     class="nav-link sidebar py-1"><span>Directory </span></a>
@@ -261,7 +334,8 @@
                     </div>
                 </li>
 
-                @if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin') || auth()->user()->hasrole('Manager'))
+                @if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin') ||
+                auth()->user()->hasrole('Manager'))
                 <!-- team -->
 
                 <li class="nav-item">
@@ -342,10 +416,10 @@
                         <ul class="nav nav-sm flex-column">
 
                             <li class="nav-item">
-                                <a href="{{url('vmt-payslip')}}" class="nav-link sidebar py-1"
-                                    role="button"><span>Pay Run</span></a>
+                                <a href="{{url('vmt-payslip')}}" class="nav-link sidebar py-1" role="button"><span>Pay
+                                        Run</span></a>
                             </li>
-                          
+
                         </ul>
                     </div>
                 </li>
@@ -1394,7 +1468,7 @@
     <!-- </div> -->
 
     <div class="sidebar-bottom-bg" style="z-index:1;">
-    <img src="{{ URL::asset('assets/images/sidebar_icons/sidebar-bg.png') }}" alt="" class="h-100 w-100" >
+        <img src="{{ URL::asset('assets/images/sidebar_icons/sidebar-bg.png') }}" alt="" class="h-100 w-100">
     </div>
 
 </div>

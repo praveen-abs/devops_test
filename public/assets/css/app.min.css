@@ -17133,47 +17133,6 @@ span.flatpickr-weekday {
     color: #333333;
 }
 
-/* .rectangle-one{
-    background-image: url('../images/Rectangleone.png');
-} */
-
-.rectangle-one {
-    background-image: url(../images/Rectangleone.png);
-    height: 543px;
-    width: 880px;
-    border-top-right-radius: 33px;
-    border-bottom-right-radius: 33px;
-}
-
-.rectangle-two {
-    position: absolute;
-    box-shadow: rgb(17 17 26 / 5%) 0px 1px 0px, rgb(17 17 26 / 10%) 0px 0px 8px;
-    background-image: url(../images/Rectangletwo.png);
-    height: 500px;
-    border-top-right-radius: 33px;
-    border-bottom-right-radius: 33px;
-    width: 750px;
-}
-
-.login-right-content .login-card {
-    box-shadow: rgb(17 17 26 / 5%) 0px 1px 0px, rgb(17 17 26 / 10%) 0px 0px 8px;
-    height: fit-content;
-    width: 400px;
-    padding: 20px;
-    border-radius: 10px;
-    margin: 30px;
-
-}
-
-.login-right-content {
-    position: relative;
-    right: 180px;
-}
-
-
-/* img {
-    max-width: 100%;
-} */
 
 a {
     text-decoration: none;

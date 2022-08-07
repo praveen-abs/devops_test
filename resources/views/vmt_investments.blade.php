@@ -9,7 +9,7 @@
 @component('components.paycheck_breadcrumb')
 @slot('li_1')  @endslot
 @endcomponent
-<div class="investments-wrapper bg-white">
+<div class="investments-wrapper bg-white mt15-mb30">
     <div class="card shadow profile-box card-top-border ">
         <div class="fill salary-header nav-tab-header">
             <div class="row">

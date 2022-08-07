@@ -9,12 +9,7 @@
 </style>
 @endsection
 @section('content')
-
-
-
-
-<div class="container-fluid bg-white salary-details-wrapper">
-
+<div class="container-fluid bg-white salary-details-wrapper mt30-mb15">
     <div class="fill salary-header nav-tab-header">
         <div>
             <ul class="nav nav-pills mb-3 nav-tabs-dashed" id="pills-tab" role="tablist">
