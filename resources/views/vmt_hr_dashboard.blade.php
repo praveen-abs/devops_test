@@ -112,7 +112,7 @@
                         <div class="card-body d-flex justify-content-center align-items-center">
                             <div class="text-center">
                                 <h5 class="fw-bold title">Offline</h5>
-                                <span class="number-increment text-muted f-15 fw-bold">4</span>
+                                <span class="number-increment text-muted f-15 fw-bold">0</span>
                             </div>
                         </div>
                     </div>
@@ -126,7 +126,6 @@
                                 <span class="number-increment text-muted f-15 fw-bold">
                                     {{ json_decode($json_dashboardCountersData)->todayEmployeesOnLeaveCount }}</span>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -136,7 +135,7 @@
                         <div class="card-body d-flex justify-content-center align-items-center">
                             <div class="text-center">
                                 <h5 class="fw-bold title">Future Joiners</h5>
-                                <span class="number-increment text-muted f-15 fw-bold">5</span>
+                                <span class="number-increment text-muted f-15 fw-bold">0</span>
                             </div>
                         </div>
                     </div>
