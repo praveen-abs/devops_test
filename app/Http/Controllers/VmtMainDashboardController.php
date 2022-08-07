@@ -38,29 +38,35 @@ class VmtMainDashboardController extends Controller
     public function index()
     {
 
-        $currentUserJobDetails = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
+        $employeesEventDetails = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
                                 ->join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
-                    ->select(
-                        'users.name',
-                        'users.avatar',
-                        'vmt_employee_details.emp_no',
-                        'vmt_employee_office_details.designation',
-                        'vmt_employee_details.dob'
-                    )
-                    ->where('users.id', auth()->user()->id)
-                    ->first(); 
-         $currentUserJobDetailss = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
-                    ->join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
-        ->select(
-            'users.name',
-            'users.avatar',
-            'vmt_employee_details.emp_no',
-            'vmt_employee_office_details.designation',
-            'vmt_employee_details.dob'
+                                ->select(
+                                    'users.name',
+                                    'users.avatar',
+                                    'vmt_employee_details.emp_no',
+                                    'vmt_employee_office_details.designation',
+                                    'vmt_employee_details.dob',
+                                    'vmt_employee_details.doj'
+                                );
+
+        //Employee events for the current month only
+        $dashboardEmployeeEventsData = [];
+        $dashboardEmployeeEventsData['birthday'] = $employeesEventDetails->whereMonth('vmt_employee_details.dob',Carbon::now()->month)->get();
+        $dashboardEmployeeEventsData['work_anniversary'] = $employeesEventDetails->whereMonth('vmt_employee_details.doj',Carbon::now()->month)->get();
+        $dashboardEmployeeEventsData['hasData'] = 'true';
+
+        //If any events found, then set 'hasData' to TRUE else FALSE
+        if(count($dashboardEmployeeEventsData['birthday']) == 0 &&
+           count($dashboardEmployeeEventsData['work_anniversary']) == 0
         )
-      //          ->where('users.id', auth()->user()->id)
-        ->get();
-                    // dd($currentUserJobDetails);
+            $dashboardEmployeeEventsData['hasData'] = 'false';
+        else
+            $dashboardEmployeeEventsData['hasData'] = 'true';
+
+        //$dashboardEmployeeEventsData['hasData'] =
+        //$dashboardEmployeeEventsData['wedding_anniversary'] = $employeesEventDetails;
+
+        //dd($dashboardEmployeeEventsData);
         $checked = VmtEmployeeAttendance::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->first();
         $effective_hours="";
 
@@ -78,6 +84,7 @@ class VmtMainDashboardController extends Controller
 
         $dashboardpost  =  vmt_dashboard_posts::all();
         $holidays = vmtHolidays::orderBy('holiday_date', 'ASC')->get();
+        //dd($holidays);
         $polling = Polling::first();
         if ($polling) {
             $selectedPoll = PollVoting::where('user_id', auth()->user()->id)->where('polling_id', $polling->id)->first();
@@ -118,17 +125,17 @@ class VmtMainDashboardController extends Controller
         $json_dashboardCountersData = json_encode($dashboardCountersData);
 
         if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin')) {
-            return view('vmt_hr_dashboard', compact( 'currentUserJobDetails','currentUserJobDetailss', 'checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData'));
+            return view('vmt_hr_dashboard', compact( 'dashboardEmployeeEventsData', 'checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData'));
         }
         else
         if(auth()->user()->hasrole('Manager'))
         {
-            return view('vmt_manager_dashboard', compact( 'currentUserJobDetails','currentUserJobDetailss', 'checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData'));
+            return view('vmt_manager_dashboard', compact( 'dashboardEmployeeEventsData','checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData'));
         }
         else
         if(auth()->user()->hasrole('Employee'))
         {
-            return view('vmt_employee_dashboard', compact( 'currentUserJobDetails','currentUserJobDetailss', 'checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData'));
+            return view('vmt_employee_dashboard', compact( 'dashboardEmployeeEventsData','checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData'));
         }
 
     }
@@ -203,5 +210,5 @@ class VmtMainDashboardController extends Controller
         return $dashboardannoun;
     }
 
-    
+
 }

@@ -391,14 +391,11 @@
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 ipad-query">
-                    @php
-                    foreach($currentUserJobDetailss as $key) {
-                    // $birthdate = $currentUserJobDetailss['dob'];
-                    // var_dump($key->dob);
-                    if( $key->dob == date('Y-m-d')){
-                    @endphp
-                    @include('ui-dashboard-event-card',['date' => $key->dob])
-                    @php } } @endphp
+                    {{-- @foreach($dashboardEmployeeEventsData['birthday'] as $key)
+                            @include('ui-dashboard-event-card',['date' => $key->dob])
+                    @endforeach --}}
+                    @include('ui-dashboard-event-card',['dashboardEmployeeEventsData' => $dashboardEmployeeEventsData])
+
                 </div>
             </div>
         </div>
