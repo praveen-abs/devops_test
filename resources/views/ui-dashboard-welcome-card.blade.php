@@ -75,7 +75,7 @@
         <div class="toast-header">
             <strong class="me-auto">Info</strong>
             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>4
+        </div>
 
         <div class="toast-body">
             <div class="d-flex align-items-center">
