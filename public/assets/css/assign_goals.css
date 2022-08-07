@@ -205,16 +205,12 @@ table.dataTable.no-footer {
 }
 
 /* pagination */
-
-
 .add-goals {
   position: absolute;
   right: 20px;
   top: 10px;
   z-index: 10;
 }
-
-
 
 /* animate button */
 
@@ -481,7 +477,6 @@ table.dataTable.no-footer {
 
 
 /* pms modal */
-
 .increment-input{
   position: relative !important;
 }

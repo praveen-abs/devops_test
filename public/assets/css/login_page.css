@@ -1,316 +1,162 @@
-.login-bg {
-    position: fixed;
-    top: -50%;
-    left: -50%;
-    height: 200%;
-    width: 200%;
-    min-height: 100%;
-    min-width: 100%;
+.login-wrpper {
+    /* background: url(../images/login_img/login_bg2.svg) no-repeat; */
+    /* background-position: center center;
+    background-size: cover; */
+    height: 100vh;
+    position: relative;
 }
-
-.login-bg img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-    min-width: 50%;
-    min-height: 50%;
-}
-
-.social-icons-wrapper img{
-    height: 40px;
-    width: 80px;
-}
-
-.login-headers {
-    text-align: left;
-
-}
-
-.login-headers img {
-    height: 50px;
-    width: 100px;
-}
-
-
-.login-main {
-    /* background: url(../images/login_bg3.jpg) no-repeat center center fixed; */
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    background-size: cover;
-    -o-background-size: cover;
-    /* overflow: hidden;
-    height: 100%; */
-    /* min-height: 100%; */
-}
-
-.form-row {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    /* margin-right: -5px;
-    margin-left: -5px; */
-}
-
-
-.center {
-    text-align: center;
-}
-
-.left {
-    text-align: left;
-}
-
-.right {
-    text-align: right;
-}
-
-.cp {
-    cursor: pointer;
-}
-
-html,
-body {
-    height: 100%;
-}
-
-.hid {
-    display: none;
-}
-
-.top-mar {
-    margin-top: 15px;
-}
-
-.h-100 {
-    height: 100%;
-}
-
-::placeholder {
-    color: #747f8a !important;
-    font-size: 13px;
-    opacity: .5 !important;
-}
-
-
-
-
-.btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #FF4D00 !important;
-
-    color: white !important;
-    font-weight: 600 !important;
-    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12) !important;
-}
-
-
-.btn-light {
-    background-color: #FFF;
-    color: #3F3F3F;
-}
-
-.collapse.show {
-    display: block !important;
-}
-
-
-.form-control {
-    background-color: #F8F8F8;
-    /* margin-bottom: 20px; */
-}
-
-.form-control:focus {
-    background-color: #FFF;
-    border-color: #CCC;
-}
-
-.container {
-    max-width: 1100px;
-}
-
-@media screen and (max-width: 575px) {
-    .container {
-        padding: 20px 30px;
-    }
-}
-
-/* ===================================== Body CSS ================================== */
-body {
-    height: 100%;
-}
-
-.conya {
-
-    width: 100%;
-    height: 100%;
-    padding: 10px;
-}
-
-.main {
-    width: 100%;
-    height: 100%;
-    background-image: url(../images/hrmslog.jpg);
+.login-bottom{
     background-position: center;
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-
-
+    width: -webkit-fill-available;
+    position: absolute;
+    background: url(../images/login_img/Login_bottom.svg);
+    height: 100px;
+    /* height: inherit; */
+    /* bottom: -283px; */
+    background-size: cover;
+    bottom: 0px;
 }
-
-.slidrow {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.login-left-content img{
+    width: 100%;
+    height: 400px;
 }
-
-.sidecol2 {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.side-right{
-    background-color: #FFF;
-    height: auto;
-    width: 375px;
-    margin-left: 40px;
-    /* padding: 4px 20px; */
-    text-align: center;
-    border-radius: 10px;
-    box-shadow: 1px 0px 4px rgba(74, 73, 73, 0.315);
-    /* box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,rgb(255 124 19) 0px 2px 16px 0px,
-    rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px; */
-}
-/* .side-right:before{
-   content:'';
-   position:absolute; 
-   top:-2px;
-   bottom:-2px;
-   left:-2px;
-   right:-2px;
-   background:#fff;
-   z-index:-1;
-}
-.side-right:after{
-   content:'';
-   position:absolute; 
-   top:-2px;
-   bottom:-2px;
-   left:-2px;
-   right:-2px;
-   background:#fff;
-   z-index:-2;
-   filter:blur(40px);
-}
-
-.side-right:after,
-.side-right:before{
-background:linear-gradient(235deg,#89ff00,#060c21,#00bcd4);
-} */
-
-@media screen and (max-width: 660px) {
-    .side-right {
-        width: 100%;
-    }
-}
-
-.side-right .logo {
-    width: 200px;
-}
-
-.side-right .soc-det {
-    display: flex;
-}
-
-.side-right .soc-det ul {
-    float: none;
+.login-right-content{
+        position: absolute;
+    top: 50px;
+    background: transparent;
+    left: 0px;
+    width: 400px;
+    /* transform: translate(50px, 50px); */
     margin: auto;
+    right: 0px;
+    
+}
+.login-right-bg{
+    background: #e0e0e040;
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.carousel-caption {
+    bottom: 80px !important;
+    font-size: 18px !important;
+    color: #898787 !important;
+    font-weight: 600 !important;
+}
+
+.circle-1,.circle-2,.circle-3{
+    height: 100%;
+    width: 100%;
+    border-top: 1px solid #ff4d0021;
+    border-radius: 50%;
+    background: transparent;
+    border-bottom: 1px  solid #ff4d0021;
+    
+}
+.circle-1{
+    height: 100%;
+    width: 100%;
+}
+.circle-2{
+    height: 80%;
+    width: 80%;
+    
+}
+.circle-3{
+    height: 60%;
+    width: 60%;
+}
+
+.social-icons-wrapper a{
+height: 40px;
+width: 40px;
+border-radius: 50%;
+background: rgba(228, 227, 227, 0.719);
+display: flex;
+margin: 0px 10px;
+align-items: center;
+justify-content: center;
+}
+.social-icons-wrapper a i{
+
+font-size: 13px;
+}
+.divider:after, .divider:before {
+    content: "";
+    flex: 1;
+    height: 2px !important;
+    background: #c1c1c1 !important;
 }
 
 
 
-.soc-det {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
 
-.soc-det hr {
-    color: black;
-    opacity: 0.1;
-    height: 5px !important;
-}
+    .login-wrpper {
 
-
-.side-right h2 {
-    font-size: 20px;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-weight: 700;
-    padding: 2px 0px;
-}
-
-.side-right h2 span {
-
-    font-size: 14px;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-weight: 500;
-}
-
-.side-right .form-row label {
-    font-size: .8rem;
-}
-
-.side-right .skjh {
-    font-size: .8rem;
-}
-
-.side-right .skjh span {
-    float: right;
-}
-
-.dfr {
-    padding: 20px 10px;
-    text-align: center;
-}
-
-.dfr .btn {
-    /* padding: 5px 40px; */
-    /* border-radius: 50px; */
-    float: none;
-    margin: auto;
-}
-
-@media screen and (max-height: 630px){
-    /* .dfr {
-        padding: 5px 10px !important;
     }
-    .side-right {
-        height: 85% !important;
+    .carousel{
+        display: none;
     }
-    .side-right form{
-        height: 98% !important;
+    .login-left-content{
+        display: none;
+    }
+    .login-right-content {
+        
+        background: #fff;
+        border-radius: 10px;
+        /* position: relative; */
+        /* margin: auto; */
+        
+        top: 0;
+        left: 0;
+        /*right: 0;
+        bottom: 0; */
+        /* transform: translate(50px,50px); */
+    }
+    .login-bottom{
+        display: none;
+    }
+    .circle-1,.circle-2,.circle-3{
+        /* display: none; */
+    }
+    .left-content{
+        display: none;
+    }
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    .login-wrpper {
+
+    }
+    /* .login-left-content{
+        display: none;
+    } */
+    /* .login-right-content {
+        display: block;
+        background: #fff;
+        border-radius: 10px;
+    } */
+    /* .login-bottom{
+        display: none;
     } */
 }
 
-.footer-img {
-    position: absolute;
-    bottom: 0;
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+
 }
 
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
 
+}
 
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
 
-
-
-
-
+}
