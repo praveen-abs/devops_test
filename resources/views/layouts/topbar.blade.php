@@ -182,16 +182,39 @@
                                                     <img src="{{ URL::asset('assets/images/event1.png') }}"
                                                         class="me-3 rounded-circle avatar-xs" alt="user-pic">
                                                     <div class="flex-1">
-                                                        <!-- <a href="#!" class="stretched-link">
-                                                            <h6 class="mt-0 mb-1 fs-13 fw-semibold">James Lemire</h6>
-                                                        </a> -->
                                                         <div class="fs-13 text-muted">
-                                 <a href="{{url('notifications/'.$notification->id)}}" data-notif-id="{{$notification->id}}">
+                                 <a style="color: blue;" href="{{url('notifications/'.$notification->id)}}" data-notif-id="{{$notification->id}}">
                     {{$notification->data['message']}}
                 </a>
-                                                        {{-- 
-<a class="mb-1  " id="read_id" data-notif-id="{{$notification->id}}" {{$notification->data['message']}}href="javascript:void()" onclick="read()" > @php echo
-                                                                $notification->data['message']; @endphp</a> --}}
+                                                        </div>
+                                                        <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
+                                                            <span><i class="mdi mdi-clock-outline"></i> 30 min
+                                                                ago</span>
+                                                        </p>
+                                                    </div>
+                                                    <!-- <div class="px-2 fs-15">
+                                                        <input class="form-check-input" type="checkbox">
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                            @php
+                                        // }
+                                            }
+                                            @endphp
+                                            @php
+                                             foreach ($currentUser->Notifications  as $notification) {
+                                                // if($notification){
+                                            @endphp
+                                            <div class="text-reset notification-item d-block dropdown-item">
+                                                <div class="d-flex">
+
+                                                    <img src="{{ URL::asset('assets/images/event1.png') }}"
+                                                        class="me-3 rounded-circle avatar-xs" alt="user-pic">
+                                                    <div class="flex-1">
+                                                        <div class="fs-13 text-muted">
+                                 <a  href="{{url('notifications/'.$notification->id)}}" data-notif-id="{{$notification->id}}">
+                    {{$notification->data['message']}}
+                </a>
                                                         </div>
                                                         <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
                                                             <span><i class="mdi mdi-clock-outline"></i> 30 min
