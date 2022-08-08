@@ -18,7 +18,7 @@
                         <li id="ember76" class="active ember-view">
                             <a href="#/investments-and-proofs/investment-declaration" id="ember77"
                                 class="active ember-view">
-                                PayCheck
+                                Salary Details
                             </a>
                         </li>
                     </ul>
