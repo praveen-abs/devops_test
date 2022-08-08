@@ -727,10 +727,9 @@
                     <div class=" d-flex align-items-center">
                     <span>Download the </span>    
                         
-                    <button class="btn btn-primary mx-2"><i class="ri-file-download-fill mx-1"></i> <a href="{{ url('/assets/sample_kpi.xls')  }}" target="_blank">
-                            </a>
-                            Sample File
-                            </button>
+                    <a href="{{ url('/assets/sample_kpi.xls')  }}" target="_blank" class="btn btn-primary mx-2"><i class="ri-file-download-fill mx-1"></i> 
+                        Sample File
+                    </a>
                     
                     </div>
                     
@@ -740,10 +739,10 @@
         <div class="col-12">
             <div class="container-fluid mb-1 mt-3 ">
                 <form id="kpiTableForm">
-                    <label>Select existing form from the Dropdown</label>
+                    <!-- <label>Select existing form from the Dropdown</label>
                     <select name="kpi_table" class="form-control">
                         <option value="">Select KPI Form</option>
-                    </select>
+                    </select> -->
                     <div class="table-responsive">
                         <table id='kpiTable' class="table table-borderd align-middle mb-0" data-paging="true"
                             data-paging-size="10" data-paging-limit="3" data-paging-container="#paging-ui-container"
