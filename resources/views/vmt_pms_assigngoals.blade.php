@@ -74,16 +74,16 @@
         <div class="row">
             <div class="col-12 col-lg-12 col-md-12 ">
                 <div class="card pms-card">
-                
+
                 <div class="    pms-dashboard-wrapper ">
                             <!-- <img src="{{ URL::asset('assets/images/performance_bg.png') }}" alt="" class="bg-img"> -->
 
                     <div class="card-body p-5">
                         <!-- <div class="row ">
                             <div class="col-md-4 col-sm-6 col-lg-3 col-xl-3 "> -->
-                            
+
                         <div class="align-items-center justify-content-center d-flex pms-gadget-container">
-                        
+
 
                             <div class="card pms-card m-0 m-3">
                                 <div class="card-body p-0">
@@ -92,7 +92,7 @@
                                         <div class="  d-flex align-items-center mt-3 flex-column">
                                         <p>Employee Goals</p>
                                         <h5><b>{{$empCount.'/'.$userCount}}</b></h5>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -101,14 +101,14 @@
 
                             <div class="card pms-card m-0 m-3">
                                 <div class="card-body p-0">
-                                    
+
                                     <div class="d-flex mt-2">
                                     <p class="pl-3 col-auto"><img src="{{ URL::asset('assets/images/self_review.png') }}" alt="" class=""></p>
                                         <div class="  d-flex align-items-center mt-3 flex-column">
                                         <p>Self Review</p>
 
                                         <h5><b>-/{{$userCount}}</b></h5>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -125,9 +125,9 @@
                                     <div class="d-flex mt-2">
                                         <p class="pl-3 col-auto"><img src="{{ URL::asset('assets/images/employees_assessed.png') }}" alt="" class=""></p>
                                         <div class="  d-flex align-items-center mt-3 flex-column">
-                                        <p>Employees Assessed</p>    
+                                        <p>Employees Assessed</p>
                                         <h5><b>{{$subCount.'/'.$userCount}}</b></h5>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -142,14 +142,14 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="card pms-card m-0 m-3">
                                 <div class="card-body p-0">
                                     <div class="d-flex align-items-center">
                                         <img src="{{ URL::asset('/assets/images/goals_assignment.png')}}" class="rounded-circle">
                                         <p>Goals assignment reminder notiﬁcation</p>
                                     </div>
-                                    
+
                                 </div>
                             </div> -->
                             <!-- <div class="col-md-4 col-sm-6 col-lg-3 col-xl-3 "> -->
@@ -159,7 +159,7 @@
                                         <img src="{{ URL::asset('/assets/images/manager_review.png')}}" class="">
                                         <p>Manager Review</p>
                                     </div>
-                                    
+
                                 </div>
                             </div> -->
                             <!-- <div class="col-md-4 col-sm-6 col-lg-3 col-xl-3 "> -->
@@ -172,14 +172,14 @@
                                 </div>
 
                             </div> -->
-<!-- 
+<!--
                             <div id="container-floating">
-  <div class="nd4 nds"> 
+  <div class="nd4 nds">
     <p class="letter">RA</p>
   </div>
-  
+
   <div class="nd3 nds"> </div>
-  
+
   <div class="nd1 nds">
     <p class="letter">GR</p>
   </div>
@@ -189,8 +189,8 @@
     <img class="edit" src="https://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png">
   </div>
 </div> -->
-                 
-                    
+
+
                         </div>
                     </div>
 
@@ -198,8 +198,8 @@
 
 
 
- 
-                
+
+
                 </div>
             </div>
         </div>
@@ -207,7 +207,7 @@
         <div class="mt-2 p-5" id="initial-section">
             <div class="row justify-content-center">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center p-0 mt-3 mb-2 p-5">
-                    <div class="p-3"><img src="{{ URL::asset('assets/images/vmt_user_icon.jpeg') }}" style="width: 37%;height: 74%;"></div>
+                    <div class="p-3"><img src="{{ URL::asset('assets/images/assign_goals.png') }}" style="width: 37%;height: 74%;"></div>
                     <h4><b>Assign Goals for your employees</b></h4>
                     <div class="mt-4">
                         <button id="add-goals" class="btn btn-primary">
@@ -221,22 +221,22 @@
             </div>
         </div>
         @else
-        
-        
+
+
 <div class="table-responsive">
-        
+
         <div class="container-fluid px-2 bg-white" style="position:relative;">
         <button id="add-goals" class="text-white py-1 px-3 btn btn-primary add-goals" ><i class="text-white fa fa-plus mx-1"></i>Add Goals</button>
-    
+
     <table id='empTable' class=' table table-borderd  mb-0'>
         <thead class="table-light">
             <tr>
                 <th scope="col">Employee Name</th>
                 <th scope="col">Employee ID</th>
-                
+
                 <th scope="col">Manager</th>
                 <!-- <th scope="col">Employee name</th> -->
-                
+
                 <th scope="col">Assignment Period</th>
                 <th scope="col">Employee Status</th>
                 <th scope="col">Manager Status</th>
@@ -254,8 +254,8 @@
                 </td> -->
                 <td class="">{{$emp->emp_name}}</td>
                 <td class="">{{$emp->emp_no}}</td>
-                
-                
+
+
                 <td class="">
                     {{$users[0]->name}}
                 </td>
@@ -275,9 +275,9 @@
 
 
                     {{--
-                                    @if($emp->is_manager_approved) 
-                                       @if($emp->is_employee_accepted) 
-                                           @if($emp->is_employee_submitted) 
+                                    @if($emp->is_manager_approved)
+                                       @if($emp->is_employee_accepted)
+                                           @if($emp->is_employee_submitted)
                                                {{ 'Submitted'}}
                     @else
                     {{'Accepted, Not yet submitted'}}
@@ -296,7 +296,7 @@
 
                     {{$emp->is_employee_submitted  ? 'Submitted' :  'Not yet submitted'  }}
 
-                    {{--    @if($emp->is_employee_accepted ) 
+                    {{--    @if($emp->is_employee_accepted )
                                {{$emp->is_employee_submitted  ? 'Submitted' :  'Accepted, Not yet submitted'  }}
                     @else
                     {{ 'Not yet accepted'}}
@@ -344,7 +344,7 @@
                                                     <a target="_blank"
                         href="{{url('vmt-pmsappraisal-review?id='.$emp->kpi_table_id.'&user_id='.$emp->userid)}}"><button class="btn btn-orange py-0 px-2 "> <span
                             class="mr-10 icon"></span>
-                            
+
                         Review</button></a>
                     <!-- @if(auth()->user()->hasrole('Employee')) -->
                     <!-- <a target="_blank"
@@ -361,7 +361,7 @@
                             class="mr-10 icon"><i class="text-white ri-pencil-line"></i></span>
                             Review</button></a> -->
                     <!-- @endif -->
-                </td>              
+                </td>
             </tr>
             @endforeach
         </tbody>
@@ -450,8 +450,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button 
-                                        type="button" 
+                                    <button
+                                        type="button"
                                         data-bs-toggle="modal"
                                         data-bs-target="#createEmployee"
                                         class="right btn btn-primary py-1 px-3 rounded-pill mx-3 text-white"
@@ -476,7 +476,7 @@
                         <div class="col-12">
                             <div class="container-fluid mb-1 mt-3 ">
                                 <form id="kpiTableForm">
-                                    
+
                                 <table class="table align-middle mb-0 table-nowrap responsive table-responsive" id="kpiTable">
                                     @csrf
                                     <thead class="text-white bg-primary thead" id="tHead">
@@ -562,7 +562,7 @@
 
 <div id="add-goals-modal" class="modal custom-modal fade" role="dialog">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-xl" role="document">
-            <div class="modal-content"> 
+            <div class="modal-content">
                 <div class="modal-header py-3 new-role-header d-flex align-items-center">
                     <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
              New Assign Goals</h5>
@@ -584,17 +584,17 @@
 
                         <div class="row ">
                         <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
-                                
+
                                     <label class="" for="calendar_type">Calendar Type</label>
                                     <select name="calendar_type" id="calendar_type" class="form-control">
                                         <option value="">Select</option>
                                         <option name="financial_year" value="financial_year">Financial Year</option>
                                         <option name="calendar_year" value="calendar_year">Calendar Year</option>
                                     </select>
-                                
+
                             </div>
                             <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
-                                
+
                                     <label class="" for="year">Year</label>
                                     <input type="hidden" name="hidden_calendar_year" id="hidden_calendar_year" value="" >
 
@@ -603,10 +603,10 @@
                                         <option value="Jan-Dec">January - <?php echo date("Y"); ?> to December - <?= date("Y")?> </option>
                                         <option value="Apr-Mar">April - <?php echo date("Y"); ?> to March - <?= date("Y")+1?></option>
                                     </select>
-                                
+
                             </div>
                             <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
-                                
+
                                     <label class="" for="frequency">Frequency</label>
                                     <select name="frequency" id="frequency" class="form-control">
                                         <option value="">Select</option>
@@ -615,15 +615,15 @@
                                         <option value="halfYearly">Half Yearly</option>
                                         <option value="yearly">Yearly</option>
                                     </select>
-                                
+
                             </div>
                             <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
-                    
+
                                     <label class="" for="assignment_period_start">Assignment Period</label>
                                     <select name="assignment_period_start" id="assignment_period_start" class="form-control">
                                     </select>
                                 </div>
-                    
+
                         </div>
                         <div class="row">
                             <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
@@ -725,15 +725,15 @@
                             <button type="button" class="btn btn-primary mx-2 w-50" id="upload-goal"><i class="ri-file-upload-fill mx-1"></i> Upload</button>
                     </div>
                     <div class=" d-flex align-items-center">
-                    <span>Download the </span>    
-                        
+                    <span>Download the </span>
+
                     <button class="btn btn-primary mx-2"><i class="ri-file-download-fill mx-1"></i> <a href="{{ url('/assets/sample_kpi.xls')  }}" target="_blank">
                             </a>
                             Sample File
                             </button>
-                    
+
                     </div>
-                    
+
                 </div>
             </form>
         </div>
@@ -761,11 +761,11 @@
                                     <th class="sort" data-sort="product_name"
                                         data-name='kpi' data-filterable="false" data-visible="{{$show['kpi']}}">
                                         @if($config && $config->header) {{$config->header['kpi']}} @else KPI @endif</th>
-                                    <th class="sort" data-sort="date" 
+                                    <th class="sort" data-sort="date"
                                         data-name='operational' data-filterable="false"
                                         data-visible="{{$show['operational']}}">@if($config && $config->header)
                                         {{$config->header['operational']}} @else Operational Definition @endif</th>
-                                    <th class="sort" data-sort="amount" 
+                                    <th class="sort" data-sort="amount"
                                         data-name='measure' data-filterable="false" data-visible="{{$show['measure']}}">
                                         @if($config && $config->header) {{$config->header['measure']}} @else Measure
                                         @endif</th>
@@ -776,7 +776,7 @@
                                     <th class="sort" data-sort="status"  data-name='target'
                                         data-filterable="false" data-visible="{{$show['target']}}">@if($config &&
                                         $config->header) {{$config->header['target']}} @else Target @endif</th>
-                                    <th class="sort" data-sort="status" 
+                                    <th class="sort" data-sort="status"
                                         data-name='stretchTarget' data-filterable="false"
                                         data-visible="{{$show['stretchTarget']}}">@if($config && $config->header)
                                         {{$config->header['stretchTarget']}} @else Stretch Target @endif</th>
@@ -793,7 +793,7 @@
                                     <td class="">
                                         <button class="btn bg-transparent border-0 outline-none"><i
                                                 class="fa fa-trash text-danger f-20"></i></button>
-                                        
+
                                     </td>
                                     <td class="text-box-td">
                                         <textarea data-show="{{$show['dimension']}}" name="dimension[]" id="dimension" class="text-box" row="2" cols="20"
@@ -869,8 +869,8 @@
                 <div class="w-100 modal-header-content d-flex align-items-center py-2">
                     <h5 class="modal-title text-white" id="exampleModalToggleLabel2">Change Reviewer
                     </h5>
-                    <button 
-                        type="button" 
+                    <button
+                        type="button"
                         class="btn-close btn-close-white close-reviewerButton" data-bs-dismiss="modal"
                         aria-label="Close"
                     >
@@ -898,7 +898,7 @@
                                     <ul class="nav nav-pills w-100 mb-4" id="pills-tab"
                                         role="tablist">
                                         <li class="nav-item d-flex w-100 align-items-center justify-content-end" role="presentation">
-                                           
+
                                             <button class="btn btn-primary waves-effect waves-light" type="submit">
                                                 Save
                                             </button>
@@ -910,7 +910,7 @@
                         </div>
                     </div>
                 </form>
-                
+
             </div>
         </div>
     </div>
@@ -926,8 +926,8 @@
                 <div class="w-100 modal-header-content d-flex align-items-center py-2">
                     <h5 class="modal-title text-white" id="modalHeader">Success
                     </h5>
-                    <button 
-                        type="button" 
+                    <button
+                        type="button"
                         class="btn-close btn-close-white close-modal" data-bs-dismiss="modal"
                         aria-label="Close"
                     >
@@ -958,8 +958,8 @@
                 <div class="w-100 modal-header-content d-flex align-items-center py-2">
                     <h5 class="modal-title text-white" id="exampleModalToggleLabel2">Select Employees
                     </h5>
-                    <button 
-                        type="button" 
+                    <button
+                        type="button"
                         class="btn-close btn-close-white close-changeEmployee" data-bs-dismiss="modal"
                         aria-label="Close"
                     >
@@ -973,10 +973,10 @@
                     <label for="FormSelectDefault" class="form-label text-muted">Employees</label>
                     <div class="mb-3 row" id="select-employees">
                     <!-- <select class="form-select mb-3" aria-label="Default select example" name="employees[]" id="select-employees" multiple>
-                      
+
                     </select> -->
                     </div>
-                
+
                     <div class="content-footer">
                         <div class="row">
                             <div class="col-12 ">
@@ -985,7 +985,7 @@
                                         role="tablist">
                                         <li class="nav-item d-flex w-100 align-items-center justify-content-end "
                                             role="presentation">
-                                           
+
                                             <button class="btn btn-primary waves-effect waves-light"
                                                 type="submit">
                                                 Save
@@ -998,7 +998,7 @@
                         </div>
                     </div>
                 </form>
-                
+
             </div>
         </div>
     </div>
@@ -1098,8 +1098,8 @@ $(document).ready(function(){
         // upload a file
         var form_data = new FormData(document.getElementById("upload_form"));
         $.ajax({
-            type: "POST", 
-            url: "{{route('upload-file')}}", 
+            type: "POST",
+            url: "{{route('upload-file')}}",
             dataType : "json",
             contentType: false,
             processData: false,
@@ -1316,7 +1316,7 @@ $(function () {
         var stretchTarget = '';
         var source = '';
         var kpiWeightage = '';
-        
+
         if (showdimension == 'block') {
             dimension = '<td class="text-box-td p-1"><textarea name="dimension[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td>';
         } else {
@@ -1373,10 +1373,10 @@ $(function () {
         e.preventDefault();
         changeEmployee();
     });
-    
+
     $('#changeEmployeeForm').on('submit', function(e){
-        e.preventDefault();    
-        // var employeeSelected = $('#select-employees').val();    
+        e.preventDefault();
+        // var employeeSelected = $('#select-employees').val();
         var employeeSelected = [];
         $.each($('.employee'), function() {
             if ($(this).is(':checked')) {
@@ -1384,8 +1384,8 @@ $(function () {
             }
         });
         $.ajax({
-            type: "GET", 
-            url: "{{url('vmt-getAllParentReviewer')}}"+'?emp_id='+employeeSelected, 
+            type: "GET",
+            url: "{{url('vmt-getAllParentReviewer')}}"+'?emp_id='+employeeSelected,
             success: function(data){
                 var reviewerId = [];
                 var reviewer = [];
@@ -1402,7 +1402,7 @@ $(function () {
                         optionHtml = optionHtml+"<div class='col-3'><input type='checkbox' name='reviewer"+tempdata.id+"' id='reviewer"+tempdata.id+"' value="+tempdata.id+" class='reviewer mr-1'>"+tempdata.name+"</div>";
                     }
                 });
-                    
+
                 $('#select-reviewer').html(optionHtml);
 
                 // $.each($('.reviewer'), function() {
@@ -1411,11 +1411,11 @@ $(function () {
                 //     } else {
                 //         $(this).removeAttr('checked');
                 //     }
-                // });  
+                // });
                 // $('#select-reviewer').val(reviewerId).trigger('change');
                 $("#sel_reviewer").val(reviewerId.join());
                 $('#selected_reviewer').val(reviewer.join());
-                
+
             }
         });
         changeReviewer();
@@ -1425,7 +1425,7 @@ $(function () {
     function changeReviewer() {
         // var reviewerSelected = $('#select-reviewer').val();
         var reviewerSelected = [];
-        
+
         $.each($('.reviewer'), function() {
             if ($(this).is(':checked')) {
                 reviewerSelected.push($(this).val());
@@ -1496,11 +1496,11 @@ $(function () {
     // for all roles should have a employee related to that manager Id
 // @if(auth()->user()->hasrole('Manager'))
 
-    // var userid = {{auth()->user()->id}} 
+    // var userid = {{auth()->user()->id}}
     // $.ajax({
-    //     type: "GET", 
-    //     url: "{{url('vmt-getAllChildEmployees')}}"+'?emp_id='+userid, 
-    //     //data: $('#kpiTableForm').serialize(), 
+    //     type: "GET",
+    //     url: "{{url('vmt-getAllChildEmployees')}}"+'?emp_id='+userid,
+    //     //data: $('#kpiTableForm').serialize(),
     //     success: function(data){
     //     var optionHtml ="";
     //     $.each(data, function(i, tempdata){
@@ -1510,7 +1510,7 @@ $(function () {
     //         //        $('#reviewer-email').html(tempdata.email);
     //         //    }
     //       });
-            
+
     //         $('#select-employees').html(optionHtml);
     //         changeEmployee();
     //                  // $("#kpiTableForm :input").prop("disabled", true);
@@ -1547,9 +1547,9 @@ $('#form_selectReviewer').on('submit', function(e){
     });
     $('#selected_reviewer').val(reviewer.join());
     $.ajax({
-        type: "GET", 
-        url: "{{url('vmt-getAllChildEmployees')}}"+'?emp_id='+selReviewer, 
-        //data: $('#kpiTableForm').serialize(), 
+        type: "GET",
+        url: "{{url('vmt-getAllChildEmployees')}}"+'?emp_id='+selReviewer,
+        //data: $('#kpiTableForm').serialize(),
         success: function(data){
             var optionHtml ="";
             $.each(data, function(i, tempdata){
@@ -1564,7 +1564,7 @@ $('#form_selectReviewer').on('submit', function(e){
                 //        $('#reviewer-email').html(tempdata.email);
                 //}
             });
-                
+
             $('#select-employees').html(optionHtml);
                      // $("#kpiTableForm :input").prop("disabled", true);
            // $(".table-btn").prop('disabled', true);
@@ -1607,7 +1607,7 @@ $('body').on('click', '#save-table', function(e){
     });
     //Validate other fields
     if( $('#selected_reviewer').val() != "" && $('#selected_employee').val() != "" &&
-        $('#calendar_type').val() != "" && 
+        $('#calendar_type').val() != "" &&
         $("#year option:selected").text() != "Select" &&
         $('#frequency').val() != "" &&
         $('#assignment_period_start').val() != "" &&
@@ -1632,12 +1632,12 @@ $('body').on('click', '#save-table', function(e){
 
         canSaveForm = false;
     }
-        
+
     if(canSaveForm)
     {
         $.ajax({
-            type: "POST", 
-            url: "{{url('vmt-pms-kpi-table/save')}}", 
+            type: "POST",
+            url: "{{url('vmt-pms-kpi-table/save')}}",
             data: $('#kpiTableForm').serialize(),
             success: function(data){
 
@@ -1661,8 +1661,8 @@ $('body').on('click', '#save-table', function(e){
 
 $('body').on('change', '#department', function() {
     $.ajax({
-        type: "POST", 
-        url: "{{route('department')}}", 
+        type: "POST",
+        url: "{{route('department')}}",
         data: {
             'id': $('#department').val(),
             "_token": "{{ csrf_token() }}",
@@ -1675,7 +1675,7 @@ $('body').on('change', '#department', function() {
                 // optionHtml = optionHtml+"<option value="+tempdata.id+" selected>"+tempdata.name+"</option>";
                 optionHtml = optionHtml+"<div class='col-3'><input type='checkbox' name='employees"+tempdata.id+"' id='employees"+tempdata.id+"' value="+tempdata.id+" class='employee mr-1' checked>"+tempdata.name+"</div>";
             });
-                
+
             $('#select-employees').html(optionHtml);
             // if (data['rev']) {
             var reviewer = [];
@@ -1688,7 +1688,7 @@ $('body').on('change', '#department', function() {
             });
             $("#sel_reviewer").val(reviewerId.join());
             $('#selected_reviewer').val(reviewer.join());
-                  
+
             // $.each($('.reviewer'), function() {
 
             //     if($.inArray(parseInt($(this).val()), reviewerId) > -1){
@@ -1708,10 +1708,10 @@ $('body').on('change', '#department', function() {
                 }
             });
             $('#select-reviewer').html(optionHtml);
-            
+
 
             // $('#select-reviewer').val(reviewer).trigger('change');
-            
+
         }
     });
 });
@@ -1765,11 +1765,11 @@ function changeEmployee1(employees) {
 $("#publish-goal").click(function(e){
     e.preventDefault();
 
-    if($('#kpitable_id').val()){  
+    if($('#kpitable_id').val()){
         $.ajax({
-            type: "POST", 
-            url: "{{url('vmt-pms-assign-goals/publish')}}", 
-            data: $('#goalForm').serialize(), 
+            type: "POST",
+            url: "{{url('vmt-pms-assign-goals/publish')}}",
+            data: $('#goalForm').serialize(),
             success: function(data){
 
                 $("#kpiTableForm :input").prop("disabled", true);
@@ -1795,7 +1795,7 @@ $("#publish-goal").click(function(e){
         $('#notificationModal').show();
         $('#notificationModal').removeClass('fade');
     }
-   
+
 });
 
 
