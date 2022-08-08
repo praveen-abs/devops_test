@@ -641,7 +641,7 @@ $generalInfo = \DB::table('vmt_general_info')->first();
         font-weight: 400;
         text-decoration: none;
         vertical-align: baseline !important;
-        font-size: 11pt;
+        font-size: 8pt;
         font-family: "Calibri";
         font-style: normal
     }
@@ -671,7 +671,7 @@ $generalInfo = \DB::table('vmt_general_info')->first();
         font-weight: 700;
         text-decoration: none;
         vertical-align: baseline;
-        font-size: 10.5pt;
+        font-size: 8pt;
         font-family: "Calibri";
         font-style: normal
     }
@@ -965,18 +965,13 @@ $generalInfo = \DB::table('vmt_general_info')->first();
 </head>
 
 <body class="c37">
-    <div>
-        <p class="c0 c23"><span class="c43"></span></p>
-        <p class="c0 c23"><span class="c43"></span></p>
-    </div>
-    <p class="c23 c46"><span class="c30"></span></p>
     <a id="t.0e2b524f6165b05bbdb6f4fbd7e769650e7816db"></a>
     <a id="t.0"></a>
-    <table class="c41">
-        <tr class="c42">
-            <td class="c50" colspan="9" rowspan="1">
-                <div class="row p-1">
-                    <div class="col-md-6 col-lg-6 col-xl-6">
+    <table width="100%">
+        <tr class="">
+            <td class="">
+                <div class="">
+                    <div class="">
                         <p class="c0 mb-2">
                             <span class="c54">Ardens Business Solutions Private Limited</span>
                         </p>
@@ -992,18 +987,18 @@ $generalInfo = \DB::table('vmt_general_info')->first();
                                 017</span></p>
                         <p class="c14 c23"><span class="c18"></span></p>
                     </div>
-                    <div class="col-md-6 col-lg-6 col-xl-6">
-                        <p class="c0 mb-0 d-flex justify-content-end">
-                            <span style="transform: rotate(0.00rad) translateZ(0px);">
-                                <img src="data:image/png;base64,{{base64_encode(file_get_contents(public_path('/generalinfo/client-logo.png')))}}"
-                                    style="width: 160px; height: 90px;" title="">
-
-                            </span>
-                        </p>
-                    </div>
                 </div>
             </td>
+            <td align ="right" >
+                        <span style="transform: rotate(0.00rad) translateZ(0px);">
+                            <img src="data:image/png;base64,{{base64_encode(file_get_contents(public_path('/generalinfo/client-logo.png')))}}"
+                                style="width: 140px; height: 70px;" title="">
+
+                        </span>
+            </td>
         </tr>
+    </table>
+    <table class="c41">
         <tr class="c10">
             <td class="c50 c24" colspan="9" rowspan="1">
                 <p class="c3 text-center"><span class="c1">PAYSLIP FOR THE MONTH OF &ndash;
@@ -1012,10 +1007,10 @@ $generalInfo = \DB::table('vmt_general_info')->first();
         </tr>
         <tr class="c10">
             <td class="c22 c24" colspan="3" rowspan="1">
-                <p class="c0"><span class="c2">EMPLOYEE NAME</span></p>
+                <p class="c0"><span class="c1">EMPLOYEE NAME</span></p>
             </td>
             <td class="c22" colspan="2" rowspan="1">
-                <p class="c3"><span class="c16">{{$employee->EMP_NAME}}</span></p>
+                <p class="c3"><span class="c9">{{$employee->EMP_NAME}}</span></p>
             </td>
             <td class="c22 c24" colspan="2" rowspan="1">
                 <p class="c0"><span class="c1">EMPLOYEE CODE</span></p>
@@ -1026,10 +1021,10 @@ $generalInfo = \DB::table('vmt_general_info')->first();
         </tr>
         <tr class="c10">
             <td class="c22 c24" colspan="3" rowspan="1">
-                <p class="c0"><span class="c2">DATE OF BIRTH</span></p>
+                <p class="c0"><span class="c1">DATE OF BIRTH</span></p>
             </td>
             <td class="c22" colspan="2" rowspan="1">
-                <p class="c3"><span class="c16">{{$employee->DOB}}</span></p>
+                <p class="c3"><span class="c9">{{$employee->DOB}}</span></p>
             </td>
             <td class="c22 c24" colspan="2" rowspan="1">
                 <p class="c0"><span class="c1">DATE OF JOINING</span></p>
@@ -1040,10 +1035,10 @@ $generalInfo = \DB::table('vmt_general_info')->first();
         </tr>
         <tr class="c10">
             <td class="c22 c24" colspan="3" rowspan="1">
-                <p class="c0"><span class="c2">DESIGNATION</span></p>
+                <p class="c0"><span class="c1">DESIGNATION</span></p>
             </td>
             <td class="c22" colspan="2" rowspan="1">
-                <p class="c3"><span class="c16">{{$employee->DESIGNATION}}</span></p>
+                <p class="c3"><span class="c9">{{$employee->DESIGNATION}}</span></p>
             </td>
             <td class="c22 c24" colspan="2" rowspan="1">
                 <p class="c0"><span class="c1">LOCATION</span></p>
@@ -1054,10 +1049,10 @@ $generalInfo = \DB::table('vmt_general_info')->first();
         </tr>
         <tr class="c10">
             <td class="c22 c24" colspan="3" rowspan="1">
-                <p class="c0"><span class="c2">EPF NUMBER</span></p>
+                <p class="c0"><span class="c1">EPF NUMBER</span></p>
             </td>
             <td class="c22" colspan="2" rowspan="1">
-                <p class="c3"><span class="c16">{{$employee->EPF_Number}}</span></p>
+                <p class="c3"><span class="c9">{{$employee->EPF_Number}}</span></p>
             </td>
             <td class="c22 c24" colspan="2" rowspan="1">
                 <p class="c0"><span class="c1">ESIC NUMBER</span></p>
@@ -1068,10 +1063,10 @@ $generalInfo = \DB::table('vmt_general_info')->first();
         </tr>
         <tr class="c10">
             <td class="c22 c24" colspan="3" rowspan="1">
-                <p class="c0"><span class="c2">UAN</span></p>
+                <p class="c0"><span class="c1">UAN</span></p>
             </td>
             <td class="c22" colspan="2" rowspan="1">
-                <p class="c3"><span class="c16">{{$employee->UAN}}</span></p>
+                <p class="c3"><span class="c9">{{$employee->UAN}}</span></p>
             </td>
             <td class="c22 c24" colspan="2" rowspan="1">
                 <p class="c0"><span class="c1">PAN</span></p>
@@ -1082,13 +1077,13 @@ $generalInfo = \DB::table('vmt_general_info')->first();
         </tr>
         <tr class="c10">
             <td class="c24 c36" colspan="4" rowspan="1">
-                <p class="c3"><span class="c2">BANK NAME</span></p>
+                <p class="c3"><span class="c1">BANK NAME</span></p>
             </td>
             <td class="c40 c24" colspan="2" rowspan="1">
                 <p class="c3"><span class="c1">ACCOUNT NUMBER</span></p>
             </td>
             <td class="c40 c24" colspan="3" rowspan="1">
-                <p class="c3"><span class="c2">IFSC CODE</span></p>
+                <p class="c3"><span class="c1">IFSC CODE</span></p>
             </td>
         </tr>
         <tr class="c10">
@@ -1096,7 +1091,7 @@ $generalInfo = \DB::table('vmt_general_info')->first();
                 <p class="c3"><span class="c9">{{$employee->Bank_Name}}</span></p>
             </td>
             <td class="c40" colspan="2" rowspan="1">
-                <p class="c3"><span class="c16">{{$employee->Account_Number}}</span></p>
+                <p class="c3"><span class="c9">{{$employee->Account_Number}}</span></p>
             </td>
             <td class="c40" colspan="3" rowspan="1">
                 <p class="c3"><span class="c9">{{$employee->Bank_IFSC_Code}}</span></p>
@@ -1104,7 +1099,7 @@ $generalInfo = \DB::table('vmt_general_info')->first();
         </tr>
         <tr class="c10">
             <td class="c22 c24" colspan="3" rowspan="1">
-                <p class="c3"><span class="c2">MONTH DAYS</span></p>
+                <p class="c3"><span class="c1">MONTH DAYS</span></p>
             </td>
             <td class="c22 c24" colspan="2" rowspan="1">
                 <p class="c3"><span class="c1">WORKED DAYS</span></p>
@@ -1113,7 +1108,7 @@ $generalInfo = \DB::table('vmt_general_info')->first();
                 <p class="c3"><span class="c1">LOSS OF PAY</span></p>
             </td>
             <td class="c22 c24" colspan="2" rowspan="1">
-                <p class="c3"><span class="c2">ARREAR DAYS</span></p>
+                <p class="c3"><span class="c1">ARREAR DAYS</span></p>
             </td>
         </tr>
         <tr class="c10">
@@ -1122,12 +1117,12 @@ $generalInfo = \DB::table('vmt_general_info')->first();
             </td>
             <td class="c22" colspan="2" rowspan="1">
                 <p class="c3">
-                    <span class="c16">{{$employee->Worked_Days}}</span>
+                    <span class="c9">{{$employee->Worked_Days}}</span>
                 </p>
             </td>
             <td class="c22" colspan="2" rowspan="1">
                 <p class="c3">
-                    <span class="c16">{{$employee->LOP}}</span>
+                    <span class="c9">{{$employee->LOP}}</span>
                 </p>
             </td>
             <td class="c22" colspan="2" rowspan="1">
@@ -1139,10 +1134,10 @@ $generalInfo = \DB::table('vmt_general_info')->first();
         </tr>
         <tr class="c10">
             <td class="c6" colspan="1" rowspan="1">
-                <p class="c0"><span class="c2">SL Open Balance</span></p>
+                <p class="c0"><span class="c1">SL Open Balance</span></p>
             </td>
             <td class="c4" colspan="3" rowspan="1">
-                <p class="c3"><span class="c2">CL Open Balance</span></p>
+                <p class="c3"><span class="c1">CL Open Balance</span></p>
             </td>
             <td class="c6" colspan="1" rowspan="1">
                 <p class="c3"><span class="c1">Availed SL</span></p>
@@ -1154,27 +1149,27 @@ $generalInfo = \DB::table('vmt_general_info')->first();
                 <p class="c3"><span class="c1">Balance SL</span></p>
             </td>
             <td class="c6" colspan="2" rowspan="1">
-                <p class="c0"><span class="c2">Balance CL</span></p>
+                <p class="c0"><span class="c1">Balance CL</span></p>
             </td>
         </tr>
         <tr class="c10">
             <td class="c7" colspan="1" rowspan="1">
-                <p class="c3"><span class="c2">-</span></p>
+                <p class="c3"><span class="c9">-</span></p>
             </td>
             <td class="c29 c45" colspan="3" rowspan="1">
                 <p class="c3"><span class="c9">-</span></p>
             </td>
             <td class="c7" colspan="1" rowspan="1">
-                <p class="c3"><span class="c1">-</span></p>
+                <p class="c3"><span class="c9">-</span></p>
             </td>
             <td class="c7" colspan="1" rowspan="1">
-                <p class="c3"><span class="c1">-</span></p>
+                <p class="c3"><span class="c9">-</span></p>
             </td>
             <td class="c7" colspan="1" rowspan="1">
-                <p class="c3"><span class="c1">-</span></p>
+                <p class="c3"><span class="c9">-</span></p>
             </td>
             <td class="c7" colspan="2" rowspan="1">
-                <p class="c3"><span class="c2">-</span></p>
+                <p class="c3"><span class="c9">-</span></p>
             </td>
         </tr>
         <tr class="c63">
@@ -1204,7 +1199,7 @@ $generalInfo = \DB::table('vmt_general_info')->first();
         </tr>
         <tr class="c10">
             <td class="c17" colspan="1" rowspan="1">
-                <p class="c0"><span class="c2">BASIC</span></p>
+                <p class="c0"><span class="c1">BASIC</span></p>
             </td>
             <td class="c29" colspan="3" rowspan="1">
                 <p class="c14"><span class="c9"> <span
@@ -1212,13 +1207,13 @@ $generalInfo = \DB::table('vmt_general_info')->first();
             </td>
             <td class="c17" colspan="1" rowspan="1">
                 <p class="c14">
-                    <span class="c11"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> </span>
-                    <span class="c16">0</span>
+                    <span class="c9"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> </span>
+                    <span class="c9">0</span>
                 </p>
             </td>
             <td class="c17" colspan="1" rowspan="1">
                 <p class="c14"><span class="c11"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>
-                    </span><span class="c16">4560</span></p>
+                    </span><span class="c9">4560</span></p>
             </td>
             <td class="c17" colspan="1" rowspan="1">
                 <p class="c0"><span class="c1">EPF</span></p>
@@ -1230,7 +1225,7 @@ $generalInfo = \DB::table('vmt_general_info')->first();
         </tr>
         <tr class="c10">
             <td class="c17" colspan="1" rowspan="1">
-                <p class="c0"><span class="c2">HRA</span></p>
+                <p class="c0"><span class="c1">HRA</span></p>
             </td>
             <td class="c29" colspan="3" rowspan="1">
                 <p class="c14"><span class="c9"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>
@@ -1238,14 +1233,14 @@ $generalInfo = \DB::table('vmt_general_info')->first();
             </td>
             <td class="c17" colspan="1" rowspan="1">
                 <p class="c14">
-                    <span class="c11"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> </span>
-                    <span class="c16">0</span>
+                    <span class="c9"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> </span>
+                    <span class="c9">0</span>
                 </p>
             </td>
             <td class="c17" colspan="1" rowspan="1">
                 <p class="c14">
-                    <span class="c11"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> </span>
-                    <span class="c16">2280</span>
+                    <span class="c9"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> </span>
+                    <span class="c9">2280</span>
                 </p>
             </td>
             <td class="c17" colspan="1" rowspan="1">
@@ -1258,18 +1253,18 @@ $generalInfo = \DB::table('vmt_general_info')->first();
         </tr>
         <tr class="c10">
             <td class="c17" colspan="1" rowspan="1">
-                <p class="c0"><span class="c2">SPECIAL ALLOW</span></p>
+                <p class="c0"><span class="c1">SPECIAL ALLOW</span></p>
             </td>
             <td class="c29" colspan="3" rowspan="1">
                 <p class="c14"><span class="c9"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>
                         {{$employee->SPL_ALW}}</span></p>
             </td>
             <td class="c17" colspan="1" rowspan="1">
-                <p class="c14"><span class="c11"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>
+                <p class="c14"><span class="c9"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>
                         0</span></p>
             </td>
             <td class="c17" colspan="1" rowspan="1">
-                <p class="c14"><span class="c11"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>
+                <p class="c14"><span class="c9"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>
                         760</span></p>
             </td>
             <td class="c17" colspan="1" rowspan="1">
@@ -1282,7 +1277,7 @@ $generalInfo = \DB::table('vmt_general_info')->first();
         </tr>
         <tr class="c10">
             <td class="c17" colspan="1" rowspan="1">
-                <p class="c0"><span class="c2">OVERTIME</span></p>
+                <p class="c0"><span class="c1">OVERTIME</span></p>
             </td>
             <td class="c29" colspan="3" rowspan="1">
                 <p class="c14 c23"><span class="c9"></span></p>
@@ -1292,7 +1287,7 @@ $generalInfo = \DB::table('vmt_general_info')->first();
             </td>
             <td class="c17" colspan="1" rowspan="1">
                 <p class="c14">
-                    <span class="c11"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>
+                    <span class="c9"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>
                         {{$employee->Overtime}}
                     </span>
                 </p>
@@ -1372,11 +1367,11 @@ $generalInfo = \DB::table('vmt_general_info')->first();
         </tr>
         <tr class="c10">
             <td class="c8" colspan="1" rowspan="1">
-                <p class="c0"><span class="c2">TOTAL EARNINGS</span></p>
+                <p class="c0"><span class="c1">TOTAL EARNINGS</span></p>
             </td>
             <td class="c20" colspan="3" rowspan="1">
-                <p class="c14"><span class="c11"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>
-                    </span><span class="c2">{{$employee->TOTAL_EARNED_GROSS}}</span></p>
+                <p class="c14"><span class="c1"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>
+                    </span><span class="c1">{{$employee->TOTAL_EARNED_GROSS}}</span></p>
             </td>
             <td class="c8" colspan="1" rowspan="1">
                 <p class="c14 c23"><span class="c1"></span></p>
@@ -1389,8 +1384,8 @@ $generalInfo = \DB::table('vmt_general_info')->first();
                 <p class="c0"><span class="c1">TOTAL DEDUCTION</span></p>
             </td>
             <td class="c8" colspan="2" rowspan="1">
-                <p class="c14"><span class="c11"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>
-                    </span><span class="c2">{{$employee->TOTAL_DEDUCTIONS}}</span></p>
+                <p class="c14"><span class="c1"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>
+                    </span><span class="c1">{{$employee->TOTAL_DEDUCTIONS}}</span></p>
             </td>
         </tr>
         <tr class="c49">
@@ -1409,7 +1404,7 @@ $generalInfo = \DB::table('vmt_general_info')->first();
         </tr>
         <tr class="c10">
             <td class="c33" colspan="2" rowspan="1">
-                <p class="c0"><span class="c2">NET PAY IN WORDS</span></p>
+                <p class="c0"><span class="c1">NET PAY IN WORDS</span></p>
             </td>
             <td class="c62" colspan="7" rowspan="1">
                 <p class="c3"><span class="c1">{{$employee->Rupees}}</span></p>
@@ -1422,7 +1417,7 @@ $generalInfo = \DB::table('vmt_general_info')->first();
         </tr>
         <tr class="c10">
             <td class="c22 c24" colspan="3" rowspan="1">
-                <p class="c3"><span class="c2">TRANSACTION ID</span></p>
+                <p class="c3"><span class="c1">TRANSACTION ID</span></p>
             </td>
             <td class="c22" colspan="2" rowspan="1">
                 <p class="c3 c23"><span class="c16"></span></p>
@@ -1446,21 +1441,26 @@ $generalInfo = \DB::table('vmt_general_info')->first();
         </tr>
     </table>
 
-    <div class="c0 d-flex align-items-center justify-content between">
-        <div>
-            <span class="c57">Please reach out to us for any payroll queries at -payroll@ardens.in</span>
-        </div>
-        <div class="c44 ml-5 ">
-            <span class="c44 ml-5 pl-5">Powered By</span>
+    <table width="100%">
+        <tr>
+            <td>
+                <div>
+                    <span class="c57">Please reach out to us for any payroll queries at -payroll@ardens.in</span>
+                </div>
+            </td>
+            <td align="right">
+                <div class="c44 ml-5 ">
+                    <span class="c44 ml-5 pl-5">Powered By</span>
 
-            <img alt="Logo Description automatically generated"
-                src="data:image/png;base64,{{base64_encode(file_get_contents(public_path('assets/images/images/image1.png')))}}"
-                style="width: 160.94px; height: 90.54px;"
-                title="" />
+                    <img alt="Logo Description automatically generated"
+                        src="data:image/png;base64,{{base64_encode(file_get_contents(public_path('assets/images/images/image1.png')))}}"
+                        style="width: 160.94px; height: 90.54px;"
+                        title="" />
 
-        </div>
-
-    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
 </body>
 
 </html>

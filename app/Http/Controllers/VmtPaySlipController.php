@@ -120,7 +120,7 @@ class VmtPaySlipController extends Controller
 
         $html = $view->render();
         $html = preg_replace('/>\s+</', "><", $html);
-        $pdf = PDF::loadHTML($html);
+        $pdf = PDF::loadHTML($html)->setPaper('a4', 'portrait')->setWarnings(false);
 
         return $pdf->download($month.'Payslip.pdf');
         //   return  PDF::loadView('vmt_payslipTemplate', $data)->download($month.'Payslip.pdf');
