@@ -2,27 +2,16 @@
 
 @section('css')
     <link href="https://cdnjs.cloudflare.com/ajax/libs/orgchart/3.1.1/css/jquery.orgchart.min.css" rel="stylesheet">
-    <style>
-    #chart-container {
-        height: 500px;
-    /* border: 1px solid #aaa; */
-    overflow: auto;
-    text-align: center;
-    background: #fff;
-    border-radius: 12px;
-    border-top: 5px solid #002f56;
-      }
-      
-      .orgchart { background: rgba(255, 255, 255, 0); }
-    </style>
+    <link href="{{ URL::asset('assets/css/employee_hirarchy.css') }}" rel="stylesheet">
+    <link href="{{ URL::asset('assets/css/app.min.css') }}" rel="stylesheet">
+
 @endsection
 @section('content')
 @component('components.organization_breadcrumb')
 @slot('li_1')  @endslot
 @endcomponent
-<div id="chart-container"></div>
-
-    
+<div id="chart-container" class="mt-mb-15" style="overflow: hidden;">
+</div>
 
 
 

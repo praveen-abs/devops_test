@@ -51,7 +51,7 @@
 
 @section('content')
 
-<div class="hr-dashboar-wrpper">
+<div class="hr-dashboar-wrpper mt30-mb15">
     <!-- Content Row -->
     <div class="row">
         <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4">
@@ -62,78 +62,6 @@
         </div>
         <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4 d-flex">
             @include('ui-dashboard-holiday-card')
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
-            <div class="card shadow profile-box card-top-border">
-                <!-- <div class="p-1 bg-primary" > -->
-                <div class="card-body d-flex justify-content-center align-items-center">
-                    <div class="text-center">
-                        <h5 class="fw-bold title">New Employees</h5>
-                        <h6 class="number-increment fw-bold">{{ json_decode($json_dashboardCountersData)->newEmployeesCount }}</h6>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
-            <div class="card shadow profile-box card-top-border ">
-                <!-- <div class="p-1 bg-primary" > -->
-                <div class="card-body d-flex justify-content-center align-items-center">
-                    <div class="text-center">
-                        <h5 class="fw-bold title">Total Employees</h5>
-                        <h6 class="number-increment fw-bold">{{ json_decode($json_dashboardCountersData)->totalEmployeesCount }}</h6>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
-            <div class="card shadow profile-box orange-top-border ">
-                <!-- <div class="p-1 bg-danger" > -->
-                <div class="card-body d-flex justify-content-center align-items-center">
-                    <div class="text-center">
-                        <h5 class="fw-bold title">Online</h5>
-                        <h6 class="number-increment fw-bold">{{ json_decode($json_dashboardCountersData)->todayEmployeesCheckedInCount }}</h6>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
-            <div class="card shadow  profile-box card-top-border ">
-                <!-- <div class="p-1 bg-primary" > -->
-                <div class="card-body d-flex justify-content-center align-items-center">
-                    <div class="text-center">
-                        <h5 class="fw-bold title">Offline</h5>
-                        <h6 class="number-increment fw-bold">4</h6>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
-            <div class="card shadow  profile-box card-top-border ">
-                <!-- <div class="p-1 bg-primary" > -->
-                <div class="card-body d-flex justify-content-center align-items-center">
-                    <div class="text-center">
-                        <h5 class="fw-bold title">Employees on Leave</h5>
-                        <h6 class="number-increment fw-bold">{{ json_decode($json_dashboardCountersData)->todayEmployeesOnLeaveCount }}</h6>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
-            <div class="card shadow  profile-box card-top-border ">
-                <!-- <div class="p-1 bg-primary" > -->
-                <div class="card-body d-flex justify-content-center align-items-center">
-                    <div class="text-center">
-                        <h5 class="fw-bold title">Future Joiners</h5>
-                        <h6 class="number-increment fw-bold">5</h6>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 
@@ -194,7 +122,7 @@
                                                                 id="image_src" data-input="false" multiple
                                                                 accept="image/*" data-iconName="fa fa-upload"
                                                                 data-buttonText="Upload File" />
-                                                                <span class="tooltiptext">Image</span>
+                                                            <span class="tooltiptext">Image</span>
 
                                                         </div>
 
@@ -382,7 +310,11 @@
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 ipad-query">
-                    @include('ui-dashboard-event-card')
+                    {{-- @foreach($dashboardEmployeeEventsData['birthday'] as $key)
+                            @include('ui-dashboard-event-card',['date' => $key->dob])
+                    @endforeach --}}
+                    @include('ui-dashboard-event-card',['dashboardEmployeeEventsData' => $dashboardEmployeeEventsData])
+
                 </div>
             </div>
         </div>
@@ -562,16 +494,23 @@ $(function() {
     function count($this) {
         var current = parseInt($this.html(), 10);
         $this.html(++current);
-        if (current !== $this.data('count')) {
-            setTimeout(function() {
-                count($this)
-            }, 50);
+
+        if (current != 0) {
+            if (current !== $this.data('count')) {
+                setTimeout(function() {
+                    count($this)
+                }, 50);
+            }
         }
     }
+
     $(".number-increment").each(function() {
-        $(this).data('count', parseInt($(this).html(), 10));
+        var currentValue = parseInt($(this).html(), 10);
+        $(this).data('count', currentValue);
         $(this).html('0');
-        count($(this));
+
+        if (currentValue != 0)
+            count($(this));
     });
 });
 </script>

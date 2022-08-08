@@ -25,9 +25,9 @@
 
 #wrapper
 {
-    
-    width: 500px;
+    width: 100%;
     margin: auto;
+    height: 108px;
 }
 
 #style-9::-webkit-scrollbar-track
@@ -87,16 +87,16 @@
 @slot('li_1') @endslot
 @endcomponent
 
-<div class="home-wrapper">
+<div class="home-wrapper mb-45">
     <div class="row">
         <div class="col-sm-12 col-md-12 col-xl-6 col-lg-6 ">
-            <div class="card shadow profile-box card-top-border p-3">
+            <div class="card shadow profile-box card-top-border p-2">
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between">
                         <h5 class="text-primary">
                             Your Pay Summary
                         </h5>
-                        <button class="btn btn-primary py-1 px-2"> <i class=" ri-calendar-2-line"></i> </button>
+                        <!-- <button class="btn btn-primary py-1 px-2"> <i class=" ri-calendar-2-line"></i> </button> -->
                     </div>
 
                     <div class="row">
@@ -105,7 +105,7 @@
                                 <!-- <figcaption>SVG PIE Chart with CSS animation</figcaption> -->
                                 <svg viewBox="0 0 63.6619772368 63.6619772368">
                                     <circle class="pie1" cx="31.8309886184" cy="31.8309886184" r="15.9154943092" />
-                                    <circle class="pie2" cx="31.8309886184" cy="31.8309886184" r="15.9154943092" />
+                                    <!-- <circle class="pie2" cx="31.8309886184" cy="31.8309886184" r="15.9154943092" /> -->
                                     <circle class="pie3" cx="31.8309886184" cy="31.8309886184" r="15.9154943092" />
                                     <circle class="pie4" cx="31.8309886184" cy="31.8309886184" r="15.9154943092" />
                                 </svg>
@@ -145,8 +145,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-12 col-md-12 col-xl-6 col-lg-6 ">
-            <div class="card shadow profile-box card-top-border p-3 flex-fill">
+        <div class="col-sm-12 col-md-12 col-xl-6 col-lg-6 d-flex">
+            <div class="card shadow profile-box card-top-border p-2 flex-fill">
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between mb-3">
                         <h5 class="text-primary">
@@ -167,7 +167,7 @@
                                     <div class="text  text-end h5 text-primary ">₹{{ json_decode($json_PayCheck)->epfemployer}}</div>
                                 </li>
                                 <li>
-                                    <div class="title f-15 text-muted ">Employee Contribution</div>
+                                    <div class="title f-15 text-muted ">Employer Contribution</div>
                                     <div class="text text-end h5 text-primary ">₹{{ json_decode($json_PayCheck)->your_employee}}</div>
                                 </li>
                             </ul>
@@ -192,8 +192,8 @@
     </div>
 
     <div class="row">
-        <div class="col-sm-12 col-md-12 col-xl-6 col-lg-6 ">
-            <div class="card shadow profile-box card-top-border p-3 flex-fill">
+        <div class="col-sm-12 col-md-12 col-xl-6 col-lg-6 d-flex">
+            <div class="card shadow profile-box card-top-border p-2 flex-fill">
                 <div class="card-body ">
                     <div class="d-flex align-items-center  justify-content-between mb-3">
                         <h5 class="text-primary">
@@ -252,7 +252,7 @@
         </div>
 
         <div class="col-sm-12 col-md-12 col-xl-6 col-lg-6 ">
-            <div class="card shadow profile-box card-top-border p-3 flex-fill">
+            <div class="card shadow profile-box card-top-border p-2 flex-fill">
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between mb-3">
                         <h5 class="text-primary">
@@ -303,7 +303,7 @@
 
     <div class="row">
         <div class="col-sm-12 col-md-12 col-xl-6 col-lg-6 ">
-            <div class="card shadow profile-box card-top-border  p-3 ">
+            <div class="card shadow profile-box card-top-border  p-2 ">
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between mb-3">
                         <h5 class="text-primary">
@@ -346,7 +346,7 @@
             </div>
         </div>
         <div class="col-sm-12 col-md-12 col-xl-6 col-lg-6 ">
-            <div class="card shadow profile-box card-top-border p-3 ">
+            <div class="card shadow profile-box card-top-border p-2 ">
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between mb-3">
                         <h5 class="text-primary">
@@ -399,7 +399,7 @@
                     <div class="tab-content" id="nav-tabContent">
                         <div class="tab-pane fade show active" id="declaration" role="tabpanel"
                             aria-labelledby="nav-home-tab">
-                            <div class="card bg-light-red declaration-important-card my-5">
+                            <div class="card bg-light-red declaration-important-card my-3">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
@@ -424,25 +424,22 @@
 
                                         </div>
                                     </div>
-
-
-
                                 </div>
                             </div>
-                            <div class="declaration-tax mb-3">
+                            <div class="declaration-tax  mb-n2">
                                 <div class="row">
                                     <div class="col-sm-4  col-xl-4 col-md-4 col-lg-4">
                                         <div class="card declaration-tax-card">
                                             <div class="card-body">
                                                 <div class="row">
-                                                    <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
+                                                    <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12 ">
                                                         <div
                                                             class="d-flex justify-content-center flex-column text-center align-items-center">
                                                             <p class="text-muted">Net Taxable Income</p>
                                                             <h4>INR 4,66,888</h4>
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12 text-right">
+                                                    <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12 text-right mt-n2">
 
                                                         <span class="text-muted ">Income Tax Computation</span>
                                                     </div>
@@ -679,7 +676,7 @@
                             <div class="lac-card-container mb-3">
 
                                 <div class="title">
-                                    <h5>1.5 Lac Exemptions</h5>
+                                    <h5 class="mb-n1">1.5 Lac Exemptions</h5>
                                     <small class="text-muted">(The aggregate of deductions under section 80C,section
                                         80CCC and
                                         sub-section (1) of section 80CCD)</small>
@@ -971,7 +968,7 @@
                             <div class="other-card-container">
 
                                 <div class="title">
-                                    <h5>Other Exemptions</h5>
+                                    <h5 class="mb-n1">Other Exemptions</h5>
                                     <small class="text-muted">(Other deductions under chapter VI(A) which is
                                         from 80CCD1(B) to
                                         80U)</small>
@@ -1132,7 +1129,7 @@
                             <div class="Tax-card-container">
 
                                 <div class="title">
-                                    <h5>Tax Savings Allowances</h5>
+                                    <h5 class="mb-n1">Tax Savings Allowances</h5>
                                     <small class="text-muted">(Following allowance are exempted from gross for
                                         income tax calculation
                                         only when claim is submitted against allowances)</small>
@@ -1294,7 +1291,7 @@
 
                             <div class="house-card-container">
                                 <div class="title">
-                                    <h5>House Property</h5>
+                                    <h5 class="mb-n1">House Property</h5>
                                     <small class="text-muted">(Have you can declare all the house property rentend or
                                         owned)</small>
                                 </div>
@@ -1396,16 +1393,16 @@
                             <div class="income-card-container">
 
                                 <div class="title">
-                                    <h5 class="">Income From Others Sources</h5>
+                                    <h5 class="mb-n1">Income From Others Sources</h5>
                                     <small class="text-muted">(Income from other sources is a residual category
                                         used to
                                         classify Income that is not classified as taxed under any other heard of
                                         income)</small>
                                 </div>
-                                <div class="income-card-wrapper mt-3">
+                                <div class="income-card-wrapper mt-2">
                                     <div class="row">
                                         <div class="col-sm-12  col-xl-12 col-md-12 col-lg-12">
-                                            <div class="card bg-medium-red declaration-important-card ">
+                                            <div class="card bg-medium-red declaration-important-card mb-n1">
                                                 <div class="card-body py-2">
                                                     <ul class="list-style-numbered list-style-circle mx-2">
                                                         <li> Income form other sources not added
@@ -1426,7 +1423,7 @@
 
                         <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
 
-                            <div class="previous-income-content mb-2">
+                            <div class="previous-income-content my-2">
                                 <h5>Previous Employment Details</h5>
                                 <small class="text-muted">(Previous Employment details are necessary for income tax
                                     computation when the employees switches the organization in the middle of the

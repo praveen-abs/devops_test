@@ -20,7 +20,7 @@ use App\Models\Compensatory;
 use App\Models\VmtEmployeePMSGoals;
 use App\Models\VmtAppraisalQuestion;
 use Illuminate\Support\Facades\Hash;
-use App\Mail\WelcomeMail; 
+use App\Mail\WelcomeMail;
 use App\Mail\QuickOnboardLink;
 use Validator;
 
@@ -46,8 +46,8 @@ class VmtEmployeeController extends Controller
         }
         $countries = Countries::all();
         $india = Countries::where('country_code', 'IN')->first();
-        $emp = VmtEmployeeOfficeDetails::all(); 
-        $bank = Bank::all(); 
+        $emp = VmtEmployeeOfficeDetails::all();
+        $bank = Bank::all();
         $department = Department::all();
         return view('vmt_employeeOnboarding', compact('empNo', 'countries', 'india', 'emp', 'bank', 'department'));
     }
@@ -84,14 +84,14 @@ class VmtEmployeeController extends Controller
         $vmtEmployees = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')
                             ->leftJoin('vmt_employee_office_details','vmt_employee_office_details.user_id', '=', 'users.id' )
                             ->select(
-                                'vmt_employee_details.*', 
-                                'users.name as emp_name', 
-                                'users.active as emp_status', 
+                                'vmt_employee_details.*',
+                                'users.name as emp_name',
+                                'users.active as emp_status',
                                 'users.email as email_id',
-                                'users.id as user_id', 
+                                'users.id as user_id',
                                 'users.avatar as avatar',
                                 'vmt_employee_office_details.department_id',
-                                'vmt_employee_office_details.designation', 
+                                'vmt_employee_office_details.designation',
                                 'vmt_employee_office_details.l1_manager_code',
                                 'vmt_employee_office_details.l1_manager_name',
                                 'vmt_employee_office_details.l1_manager_designation'
@@ -99,7 +99,7 @@ class VmtEmployeeController extends Controller
                             ->orderBy('created_at', 'DESC')
                             ->whereNotNull('emp_no')
                             ->get();
-            
+
         return view('vmt_employeeDirectory', compact('vmtEmployees'));
     }
 
@@ -120,9 +120,9 @@ class VmtEmployeeController extends Controller
         {
             foreach($data['children'] as $child)
             {
-                $child['children'] = $this->getChildrenForUser($child['emp_no'])['children'];    
+                $child['children'] = $this->getChildrenForUser($child['emp_no'])['children'];
                 //dd($child['children']);
-            } 
+            }
         }
 
 
@@ -133,9 +133,9 @@ class VmtEmployeeController extends Controller
 
     //
     public function getChildrenForUser($emp_no){
-        
+
         $data =array();
-        
+
 
         //get the child nodes of the given parent node
         $data['children'] = User::leftJoin('vmt_employee_office_details','users.id','=','vmt_employee_office_details.user_id')
@@ -150,7 +150,7 @@ class VmtEmployeeController extends Controller
             $temp['children'] ='';
         }
 
-       
+
        //dd(json_encode($data));
 
        return $data;
@@ -180,13 +180,13 @@ class VmtEmployeeController extends Controller
                $parentData =   User::select('id', 'name')->where('id', $parentIds[0])->first();
             }
 
-            $childArray  = [];  
+            $childArray  = [];
             $childData   =   User::select('id', 'name')->whereIn('id', $childIds)->get();
-            
+
             foreach ($childData as $key => $value) {
                 $childArray[] = array( "text" => array( "name" => $value->name ), "_json_id" => $value->id);
             }
-           
+
             if(isset($parentData)){
                 $reponseArray   =  array(
                     "text"      => array( "name" => $parentData->name ),"_json_id" => $parentData->id,
@@ -203,7 +203,7 @@ class VmtEmployeeController extends Controller
                     "text"     => array( "name" => $selfData->name ),
                     "_json_id" => $selfData->id,
                     "children" => $childArray
-                );  
+                );
             }
             return array('child' => $childIds, 'parent' => $parentIds, "self_id" => $id);
         }else{
@@ -211,11 +211,11 @@ class VmtEmployeeController extends Controller
                 "text"     => array( "name" => $selfData->name ),
                 "_json_id" => $selfData->id,
                 "children" => []
-            ); 
+            );
         }
     }
 
-    // 
+    //
     public function store(Request $request){
         $prevChilds = VmtEmployeeHierarchy::where('user_id', $request->parent)->get();
         foreach ($prevChilds as $key => $value) {
@@ -225,7 +225,7 @@ class VmtEmployeeController extends Controller
         $parentNode  = VmtEmployeeHierarchy::where('child_nodes', $request->parent)->first();
         //dd($parentNode);
         if($parentNode){
-            $parentId  = $parentNode->user_id; 
+            $parentId  = $parentNode->user_id;
         }else{
             $parentId  = null;
         }
@@ -235,7 +235,7 @@ class VmtEmployeeController extends Controller
             if($totalChild > 0){
                 foreach ($childrenList as $key => $childVal) {
                     // code...
-                    $newHierarchy              = new VmtEmployeeHierarchy; 
+                    $newHierarchy              = new VmtEmployeeHierarchy;
                     $newHierarchy->user_id     = $request->parent;
                     $newHierarchy->child_nodes = $childVal;
                     $newHierarchy->child_count = $totalChild;
@@ -247,7 +247,7 @@ class VmtEmployeeController extends Controller
         }else{
             return "Please select node";
         }
-       
+
     }
 
 
@@ -273,36 +273,36 @@ class VmtEmployeeController extends Controller
                 'name' => $row['employee_name'],
                 'email' => $row["email"],
                 'password' => Hash::make('Abs@123123'),
-                'avatar' =>  'avatar-1.jpg',
+                'avatar' =>  $row['employee_name'].'_avatar.jpg',
             ]);
             $user->assignRole("Employee");
 
             $newEmployee = new VmtEmployee;
-            $newEmployee->userid = $user->id;  
-            $newEmployee->emp_no   =    $row["employee_code"]; 
-            //$newEmployee->emp_name   =    $row["employee_name"]; 
-            $newEmployee->gender   =    $row["gender"];  
-            //$newEmployee->designation   =    $row["designation"];  
-            //$newEmployee->department   =    $row["department"];  
-            //$newEmployee->status   =    $row["status"];  
-            $newEmployee->doj   =    $row["doj"];   
-            $newEmployee->dol   =    $row["doj"];  
-            $newEmployee->location   =    $row["work_location"];  
-            $newEmployee->dob   =    $row["dob"]; 
-            $newEmployee->father_name   =  $row["father_name"];  
-            $newEmployee->pan_number   =  isset( $row["pan_no"] ) ? ($row["pan_no"]) : ""; 
-            $newEmployee->pan_ack   =    $row["pan_ack"]; 
-            $newEmployee->aadhar_number = $row["aadhar"];  
-            //$newEmployee->uan = $row["uan"]; 
+            $newEmployee->userid = $user->id;
+            $newEmployee->emp_no   =    $row["employee_code"];
+            //$newEmployee->emp_name   =    $row["employee_name"];
+            $newEmployee->gender   =    $row["gender"];
+            //$newEmployee->designation   =    $row["designation"];
+            //$newEmployee->department   =    $row["department"];
+            //$newEmployee->status   =    $row["status"];
+            $newEmployee->doj   =    $row["doj"];
+            $newEmployee->dol   =    $row["doj"];
+            $newEmployee->location   =    $row["work_location"];
+            $newEmployee->dob   =    $row["dob"];
+            $newEmployee->father_name   =  $row["father_name"];
+            $newEmployee->pan_number   =  isset( $row["pan_no"] ) ? ($row["pan_no"]) : "";
+            $newEmployee->pan_ack   =    $row["pan_ack"];
+            $newEmployee->aadhar_number = $row["aadhar"];
+            //$newEmployee->uan = $row["uan"];
             //$newEmployee->epf_number = $row["epf_number"];
             //$newEmployee->esic_number = $row["esic_number"];
             $newEmployee->marrital_status = $row["marital_status"];
-        
-            $newEmployee->mobile_number  = $row["mobile_no"]; 
+
+            $newEmployee->mobile_number  = $row["mobile_no"];
             //$newEmployee->email_id   = $row["email"];
             $newEmployee->bank_name   = $row["bank_name"];
-            $newEmployee->bank_ifsc_code  = $row["bank_ifsc"]; 
-            $newEmployee->bank_account_number  = $row["account_no"]; 
+            $newEmployee->bank_ifsc_code  = $row["bank_ifsc"];
+            $newEmployee->bank_account_number  = $row["account_no"];
             $newEmployee->present_address   = $row["current_address"];
             $newEmployee->permanent_address   = $row["permanent_address"];
             //$newEmployee->father_age   = $row["father_age"];
@@ -328,9 +328,9 @@ class VmtEmployeeController extends Controller
 
             $newEmployee->save();
 
-            
+
             if($newEmployee){
-                $empOffice  = new VmtEmployeeOfficeDetails; 
+                $empOffice  = new VmtEmployeeOfficeDetails;
                 $empOffice->emp_id = $newEmployee->id; // Need to remove this in future
                 $empOffice->user_id = $newEmployee->userid; //Link between USERS and VmtEmployeeOfficeDetails table
                 $empOffice->department_id = $row["department"];// => "lk"
@@ -383,7 +383,7 @@ class VmtEmployeeController extends Controller
                 $compensatory->save();
             }
 
-            // sent welcome email along with appointment Letter 
+            // sent welcome email along with appointment Letter
             $isEmailSent  = $this->attachApoinmentPdf($row);
 
 
@@ -393,7 +393,7 @@ class VmtEmployeeController extends Controller
                 return "Error";
             }
         }
-        catch (Throwable $e) {        
+        catch (Throwable $e) {
             return "Error";
         }
     }
@@ -421,10 +421,10 @@ class VmtEmployeeController extends Controller
         $request->validate([
             'file' => 'required|file|mimes:xls,xlsx'
         ]);
-        
+
         $importDataArry = \Excel::toArray(new VmtEmployeeImport, request()->file('file'));
 
-        // linking Manager To the employees; 
+        // linking Manager To the employees;
         // $linkToManager  = \Excel::import(new VmtEmployeeManagerImport, request()->file('file'));
 
         $data = $this->uploadEmployee($importDataArry);
@@ -519,15 +519,15 @@ class VmtEmployeeController extends Controller
                     'name' => $row['employee_name'],
                     'email' => $row["email"],
                     'password' => Hash::make('Abs@123123'),
-                    'avatar' =>  'avatar-1.jpg',
+                    'avatar' =>  $row['employee_name'].'_avatar.jpg',
                 ]);
                 $user->assignRole("Employee");
-                
+
                 $newEmployee = new VmtEmployee;
                 $newEmployee->userid = $user->id;
                 $newEmployee->emp_no   =    $empNo;
                 $newEmployee->gender   =    $row["gender"];
-                $newEmployee->doj   =    $row["doj"]; 
+                $newEmployee->doj   =    $row["doj"];
                 $newEmployee->dol   =    $row["doj"];
                 $newEmployee->location   =    $row["work_location"];
                 $newEmployee->dob   =    $row["dob"];
@@ -552,7 +552,7 @@ class VmtEmployeeController extends Controller
                     }
                 }
                 $newEmployee->save();
-                
+
                 if($newEmployee){
                     $empOffice  = new VmtEmployeeOfficeDetails;
                     $empOffice->emp_id = $newEmployee->id;
@@ -571,7 +571,7 @@ class VmtEmployeeController extends Controller
                     $empOffice->emp_notice  = $row["emp_notice"];
                     $empOffice->save();
                 }
-                
+
                 if ($empOffice) {
                     $compensatory = new Compensatory;
                     $compensatory->user_id = $newEmployee->userid;
@@ -609,7 +609,7 @@ class VmtEmployeeController extends Controller
                 }
                // \Mail::to($row["email"])->send(new WelcomeMail($row["email"], 'Abs@123123', 'http://vasagroup.abshrms.com',''));
 
-                // sent welcome email along with appointment Letter 
+                // sent welcome email along with appointment Letter
                 //dd($row);
                 $isEmailSent  = $this->attachApoinmentPdf($row);
 
@@ -658,7 +658,7 @@ class VmtEmployeeController extends Controller
         $data['net_take_home_yearly'] = intval($employeeData["net_income"]) * 12;
         // download PDF file with download method
         $pdf = new Dompdf();
-        $html =  view('vmt_appoinment_letterPdf', compact('data'));       
+        $html =  view('vmt_appoinment_letterPdf', compact('data'));
         $pdf->loadHtml($html, 'UTF-8');
         $pdf->setPaper('A4', 'portrait');
         $pdf->render();
@@ -667,7 +667,7 @@ class VmtEmployeeController extends Controller
         $fileAttr  = file_get_contents(public_path('/').$filename);
         $appoinmentPath = public_path('/').$filename;
         $isSent    = \Mail::to($employeeData['email'])->send(new WelcomeMail($employeeData['email'], 'Abs@123123', 'http://vasagroup.abshrms.com' ,  $appoinmentPath));
-        return $isSent; 
+        return $isSent;
     }
 
     /*
@@ -742,28 +742,28 @@ class VmtEmployeeController extends Controller
                 'before' => 'The :attribute should be above 18 years.',
             ];
             $validator = Validator::make($row, $rules, $messages);
-            
+
             if ($validator->passes()) {
-                
+
                 $user =  User::create([
                     'name' => $row['employee_name'],
                     'email' => $row["email"],
                     'password' => Hash::make('Abs@123123'),
-                    'avatar' =>  'avatar-1.jpg',
+                    'avatar' =>  $row['employee_name'].'_avatar.jpg',
                 ]);
 
-                $user->active = 0; 
+                $user->active = 0;
                 $user->save();
                 $user->assignRole("Employee");
-                
+
                 $newEmployee = new VmtEmployee;
                 $newEmployee->userid = $user->id;
                 $newEmployee->emp_no   =    $empNo;
                 //$newEmployee->gender   =    $row["gender"];
-                $newEmployee->doj   =    $row["doj"]; 
+                $newEmployee->doj   =    $row["doj"];
                 $newEmployee->dol   =    $row["doj"];
                 $newEmployee->save();
-                
+
                 if($newEmployee){
                     $empOffice  = new VmtEmployeeOfficeDetails;
                     $empOffice->emp_id      = $newEmployee->id;
@@ -771,7 +771,7 @@ class VmtEmployeeController extends Controller
                     $empOffice->designation = $row["designation"];
                     $empOffice->save();
                 }
-                
+
                 if ($empOffice) {
                     $compensatory = new Compensatory;
                     $compensatory->user_id = $newEmployee->userid;
@@ -820,7 +820,7 @@ class VmtEmployeeController extends Controller
     // Show quick onboard form to employee
     public function showQuickOnboardForEmployee(Request $request){
         if($request->has('email')){
-            $employee  =  User::where('email', $request->email)->first(); 
+            $employee  =  User::where('email', $request->email)->first();
             $clientData  = VmtEmployee::where('userid', $employee->id)->first();
             $empNo = '';
             if ($clientData) {
@@ -828,9 +828,9 @@ class VmtEmployeeController extends Controller
             }
             $countries = Countries::all();
             $india = Countries::where('country_code', 'IN')->first();
-            $emp = VmtEmployeeOfficeDetails::all(); 
+            $emp = VmtEmployeeOfficeDetails::all();
             $department = Department::all();
-            $bank = Bank::all(); 
+            $bank = Bank::all();
 
             return view('vmt_employeeOnboarding_QuickUpload', compact('empNo', 'countries', 'bank', 'emp','department'));
         }
@@ -846,31 +846,31 @@ class VmtEmployeeController extends Controller
             $user->assignRole("Employee");
 
             $newEmployee = VmtEmployee::where('userid', $user->id)->first();
-            $newEmployee->userid = $user->id;  
-            $newEmployee->emp_no   =    $row["employee_code"]; 
-            //$newEmployee->emp_name   =    $row["employee_name"]; 
-            $newEmployee->gender   =    $row["gender"];  
-            //$newEmployee->designation   =    $row["designation"];  
-            //$newEmployee->department   =    $row["department"];  
-            //$newEmployee->status   =    $row["status"];  
-            $newEmployee->doj   =    $row["doj"];   
-            $newEmployee->dol   =    $row["doj"];  
-            $newEmployee->location   =    $row["work_location"];  
-            $newEmployee->dob   =    $row["dob"]; 
-            $newEmployee->father_name   =  $row["father_name"];  
-            $newEmployee->pan_number   =  isset( $row["pan_no"] ) ? ($row["pan_no"]) : ""; 
-            $newEmployee->pan_ack   =    $row["pan_ack"]; 
-            $newEmployee->aadhar_number = $row["aadhar"];  
-            //$newEmployee->uan = $row["uan"]; 
+            $newEmployee->userid = $user->id;
+            $newEmployee->emp_no   =    $row["employee_code"];
+            //$newEmployee->emp_name   =    $row["employee_name"];
+            $newEmployee->gender   =    $row["gender"];
+            //$newEmployee->designation   =    $row["designation"];
+            //$newEmployee->department   =    $row["department"];
+            //$newEmployee->status   =    $row["status"];
+            $newEmployee->doj   =    $row["doj"];
+            $newEmployee->dol   =    $row["doj"];
+            $newEmployee->location   =    $row["work_location"];
+            $newEmployee->dob   =    $row["dob"];
+            $newEmployee->father_name   =  $row["father_name"];
+            $newEmployee->pan_number   =  isset( $row["pan_no"] ) ? ($row["pan_no"]) : "";
+            $newEmployee->pan_ack   =    $row["pan_ack"];
+            $newEmployee->aadhar_number = $row["aadhar"];
+            //$newEmployee->uan = $row["uan"];
             //$newEmployee->epf_number = $row["epf_number"];
             //$newEmployee->esic_number = $row["esic_number"];
             $newEmployee->marrital_status = $row["marital_status"];
-        
-            $newEmployee->mobile_number  = $row["mobile_no"]; 
+
+            $newEmployee->mobile_number  = $row["mobile_no"];
             //$newEmployee->email_id   = $row["email"];
             $newEmployee->bank_name   = $row["bank_name"];
-            $newEmployee->bank_ifsc_code  = $row["bank_ifsc"]; 
-            $newEmployee->bank_account_number  = $row["account_no"]; 
+            $newEmployee->bank_ifsc_code  = $row["bank_ifsc"];
+            $newEmployee->bank_account_number  = $row["account_no"];
             $newEmployee->present_address   = $row["current_address"];
             $newEmployee->permanent_address   = $row["permanent_address"];
             //$newEmployee->father_age   = $row["father_age"];
@@ -896,9 +896,9 @@ class VmtEmployeeController extends Controller
 
             $newEmployee->save();
 
-            
+
             if($newEmployee){
-                $empOffice  = VmtEmployeeOfficeDetails::where('user_id', $user->id)->first();; 
+                $empOffice  = VmtEmployeeOfficeDetails::where('user_id', $user->id)->first();
                 $empOffice->emp_id = $newEmployee->id; // Need to remove this in future
                 $empOffice->user_id = $newEmployee->userid; //Link between USERS and VmtEmployeeOfficeDetails table
                 $empOffice->department_id = $row["department"];// => "lk"
@@ -951,7 +951,7 @@ class VmtEmployeeController extends Controller
                 $compensatory->save();
             }
 
-            // sent welcome email along with appointment Letter 
+            // sent welcome email along with appointment Letter
             $isEmailSent  = $this->attachApoinmentPdf($row);
 
 
@@ -961,9 +961,9 @@ class VmtEmployeeController extends Controller
                 return "Error";
             }
         }
-        catch (Throwable $e) {        
+        catch (Throwable $e) {
             return "Error";
         }
     }
-    
+
 }
