@@ -37,6 +37,10 @@ Route::post('/update-emergency-info/{id}', [App\Http\Controllers\HomeController:
 Route::post('/update-family-info/{id}', [App\Http\Controllers\HomeController::class, 'updtaeFamilyInfo'])->name('updtaeFamilyInfo');
 Route::post('/update-checkin', [App\Http\Controllers\HomeController::class, 'updateCheckin'])->name('updateCheckin');
 Route::get('/vmt-topbar-settings', [App\Http\Controllers\HomeController::class, 'vmt_topbar_settings'])->name('vmt_topbar_settings');
+// notifications
+Route::get('/notifications/{id}', [App\Http\Controllers\HomeController::class, 'delete'])->name('delete');
+
+//notifications
 Route::post('/poll-voting', [App\Http\Controllers\HomeController::class, 'poll_voting'])->name('poll_voting');
 Route::post('/signin', [App\Http\Controllers\HomeController::class, 'signin'])->name('signin');
 

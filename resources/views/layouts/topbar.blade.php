@@ -108,7 +108,7 @@
                                 <img src="{{ URL::asset('assets/images/bell.png') }}" alt="" class="" style="height:
                                     20px; width: 20px;">
                                 <span
-                                    class="badge badge-light fs-10 translate-middle badge rounded-pill bg-danger">{{$User = Auth::user()->notifications->count();}}</span>
+                                    class="badge badge-light fs-10 translate-middle badge rounded-pill bg-danger">{{$User = Auth::user()->unreadNotifications->count();}}</span>
                                 {{-- <span class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger"
                                         class="visually-hidden"></span> --}}
                             </button>
@@ -122,7 +122,7 @@
                                             </div>
                                             <div class="col-auto dropdown-tabs">
                                                 <span class="badge badge-soft-light fs-13">
-                                                    {{$User = Auth::user()->notifications->count();}}</span>
+                                                    {{$User = Auth::user()->unreadNotifications->count();}}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -170,8 +170,11 @@
                                         <div data-simplebar style="max-height: 300px;" class="pe-2">
                                             @php
                                             $currentUser = Auth::user();
-                                            $User = Auth::user()->notifications->count();
-                                            foreach ($currentUser->notifications as $notification) {
+                                            $User = Auth::user()->unreadNotifications  ->count();
+                                           // $read_id= Auth::user()->notifications()->where('id', $id)->first();
+                                                // var_dump($currentUser->notifications);
+                                            foreach ($currentUser->unreadNotifications  as $notification) {
+                                                // if($notification){
                                             @endphp
                                             <div class="text-reset notification-item d-block dropdown-item">
                                                 <div class="d-flex">
@@ -183,8 +186,12 @@
                                                             <h6 class="mt-0 mb-1 fs-13 fw-semibold">James Lemire</h6>
                                                         </a> -->
                                                         <div class="fs-13 text-muted">
-                                                            <p class="mb-1"> @php echo
-                                                                $notification->data['message']; @endphp</p>
+                                 <a href="{{url('notifications/'.$notification->id)}}" data-notif-id="{{$notification->id}}">
+                    {{$notification->data['message']}}
+                </a>
+                                                        {{-- 
+<a class="mb-1  " id="read_id" data-notif-id="{{$notification->id}}" {{$notification->data['message']}}href="javascript:void()" onclick="read()" > @php echo
+                                                                $notification->data['message']; @endphp</a> --}}
                                                         </div>
                                                         <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
                                                             <span><i class="mdi mdi-clock-outline"></i> 30 min
@@ -197,6 +204,7 @@
                                                 </div>
                                             </div>
                                             @php
+                                        // }
                                             }
                                             @endphp
                                             <!-- <div class="my-3 text-center">
@@ -852,7 +860,46 @@
     </div>
 </header>
 
+<script type="text/javascript">
+    $('a[data-notif-id]').click(function () {
 
+        var notif_id   = $(this).data('notifId');
+        alert(notif_id);
+        var targetHref = $(this).data('href');
+
+        $.post('/NotifMarkAsRead', {'notif_id': notif_id}, function (data) {
+            data.success ? (window.location.href = targetHref) : false;
+        }, 'json');
+
+        return false;
+});
+
+    function read_id() {
+
+        var notif_id   = $(this).data('notifId');
+alert(notif_id);
+        //var targetHref = $(this).data('href');
+
+        $.post('/NotifMarkAsRead', {'notif_id': notif_id}, function (data) {
+            data.success ? (window.location.href = targetHref) : false;
+        }, 'json');
+
+        return false;
+}
+    // function read(){
+    //     var read_id = $('#read_id').val();
+    //     alert(read_id);
+    //      $.ajax({
+    //             type: "GET",
+    //             url: '/vmt-role-list', // serializes the form's elements.
+    //             success: function(data)
+    //             {
+
+
+    //             }
+    //         })
+    // }
+</script>
 
 
 @section('script')

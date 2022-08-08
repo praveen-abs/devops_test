@@ -500,4 +500,17 @@ class HomeController extends Controller
         \Mail::to('rahul.sgsits2015@gmail.com')->send(new TestEmail());
     }
 
+     public function delete($id) {
+        $user = \Auth::user();
+        $notification = $user->notifications()->where('id',$id)->first();
+        if ($notification)
+        {
+            $notification->markAsRead();
+            return back();
+        }
+        else
+            return back()->withErrors('we could not found the specified notification');
+    }
+
+
 }
