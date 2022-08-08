@@ -132,12 +132,7 @@
                                                         src="{{ URL::asset('images/' . $rep->avatar) }}"
                                                         alt="Header Avatar">
                                                     @else
-                                                    <img class="w-100 h-100 soc-det-img "
-                                                        src="{{ URL::asset('assets/images/avatar-1.jpg') }}"
-                                                        alt="Header Avatar">
                                                     @endif
-                                                    <!-- <img src="{{ URL::asset('assets/images/user-profile-img.jpg') }}"
-                                                        alt="" class=" w-100 h-100 soc-det-img "> -->
                                                 </div>
                                             </div>
                                             @if ($rep && $rep->name)
@@ -145,9 +140,7 @@
                                                 {{$rep->name}}
                                             </a>
                                             @else
-                                            <a href="profile.html">
-                                                --
-                                            </a>
+                                                ---
                                             @endif
                                         </div>
                                     </li>
