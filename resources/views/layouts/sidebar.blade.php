@@ -25,7 +25,7 @@
                                         alt="Header Avatar">
                                         </div>
                                         <span class="">{{Auth::user()->name}}</span>
-                
+
             </span>
             <span class="logo-lg d-flex justify-content-center align-items-center flex-column">
                 <div class="image-circle d-flex justify-content-center align-items-center">
@@ -44,7 +44,7 @@
                  <img class="rounded-circle header-profile-user"
                                         src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"
                                         alt="Header Avatar">
-                                        </div> 
+                                        </div>
                                         <span class="">{{Auth::user()->name}}</span>
             </span>
             <span class="logo-lg d-flex justify-content-center align-items-center">
@@ -127,6 +127,8 @@
                 <!-- CRM -->
 
                 <li class="nav-item">
+                    @if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin'))
+
                     <a class="nav-link sidebar menu-link pt-0" href="#crmDrop-Down" data-bs-toggle="collapse"
                         role="button" aria-expanded="false" aria-controls="sidebarRoles">
                         <i><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"
@@ -195,6 +197,7 @@
                             </li>
                         </ul>
                     </div>
+                    @endif
                 </li>
 
 

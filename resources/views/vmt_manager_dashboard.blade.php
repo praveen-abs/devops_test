@@ -70,23 +70,11 @@
         <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
             <div class="row mb-n4">
                 <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
-                    <div class="card shadow profile-box card-top-border">
-                        <!-- <div class="p-1 bg-primary" > -->
-                        <div class="card-body d-flex justify-content-center align-items-center">
-                            <div class="text-center">
-                                <h5 class="fw-bold title">New Employees</h5>
-                                <span class="number-increment text-muted f-15 fw-bold">
-                                    {{ json_decode($json_dashboardCountersData)->newEmployeesCount }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
                     <div class="card shadow profile-box card-top-border ">
                         <!-- <div class="p-1 bg-primary" > -->
                         <div class="card-body d-flex justify-content-center align-items-center">
                             <div class="text-center">
-                                <h5 class="fw-bold title">Total Employees</h5>
+                                <h5 class="fw-bold title">Total Team Members</h5>
                                 <span class="number-increment text-muted f-15 fw-bold">
                                     {{ json_decode($json_dashboardCountersData)->totalEmployeesCount }}</span>
                             </div>
@@ -98,7 +86,7 @@
                         <!-- <div class="p-1 bg-danger" > -->
                         <div class="card-body d-flex justify-content-center align-items-center">
                             <div class="text-center">
-                                <h5 class="fw-bold title">Online</h5>
+                                <h5 class="fw-bold title">Total Team Members Online</h5>
                                 <span class="number-increment text-muted f-15 fw-bold">
                                     {{ json_decode($json_dashboardCountersData)->todayEmployeesCheckedInCount }}</span>
 
@@ -111,8 +99,8 @@
                         <!-- <div class="p-1 bg-primary" > -->
                         <div class="card-body d-flex justify-content-center align-items-center">
                             <div class="text-center">
-                                <h5 class="fw-bold title">Offline</h5>
-                                <span class="number-increment text-muted f-15 fw-bold">4</span>
+                                <h5 class="fw-bold title">Total Team Members Offline</h5>
+                                <span class="number-increment text-muted f-15 fw-bold">0</span>
                             </div>
                         </div>
                     </div>
@@ -122,11 +110,10 @@
                         <!-- <div class="p-1 bg-primary" > -->
                         <div class="card-body d-flex justify-content-center align-items-center">
                             <div class="text-center">
-                                <h5 class="fw-bold title">Employees on Leave</h5>
+                                <h5 class="fw-bold title">Team Members on Leave</h5>
                                 <span class="number-increment text-muted f-15 fw-bold">
                                     {{ json_decode($json_dashboardCountersData)->todayEmployeesOnLeaveCount }}</span>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -135,8 +122,8 @@
                         <!-- <div class="p-1 bg-primary" > -->
                         <div class="card-body d-flex justify-content-center align-items-center">
                             <div class="text-center">
-                                <h5 class="fw-bold title">Future Joiners</h5>
-                                <span class="number-increment text-muted f-15 fw-bold">5</span>
+                                <h5 class="fw-bold title">Team Members Hybrid</h5>
+                                <span class="number-increment text-muted f-15 fw-bold">0</span>
                             </div>
                         </div>
                     </div>
