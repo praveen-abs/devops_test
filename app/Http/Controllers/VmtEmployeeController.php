@@ -707,7 +707,7 @@ class VmtEmployeeController extends Controller
         \File::put(public_path('/').$filename, $docUploads);
         $fileAttr  = file_get_contents(public_path('/').$filename);
         $appoinmentPath = public_path('/').$filename;
-        $isSent    = \Mail::to($employeeData['email'])->send(new WelcomeMail($employeeData['email'], 'Abs@123123', 'http://vasagroup.abshrms.com' ,  $appoinmentPath));
+        $isSent    = \Mail::to($employeeData['email'])->send(new WelcomeMail($employeeData['email'], 'Abs@123123', request()->getSchemeAndHttpHost() ,  $appoinmentPath));
         return $isSent;
     }
 
