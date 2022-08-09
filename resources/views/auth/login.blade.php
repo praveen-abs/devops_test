@@ -90,7 +90,7 @@
                             <div class="circle-3">
                                 <div class="login-right-content ">
                                     <form action="{{ route('login') }}" method="POST" class="px-3">
-                                        <div class="login-headers text-align-left ">
+                                        <div class="login-headers text-align-left mb-3">
                                             <div class="logo-change   d-flex align-items-center justify-content-center">
                                                 <img src="{{ URL::asset($generalInfo->logo_img) }}" alt="" class="">
                                             </div>
@@ -106,9 +106,10 @@
                                         @csrf
                                         <div class="form-row mb-3">
                                             <input type="text"
-                                                class="form-control @error('email') form-control-sm is-invalid @enderror"
+                                                class="form-control textbox    @error('email') form-control-sm is-invalid @enderror"
                                                 value="{{ old('email', 'hr_augustin@vasagroup.abshrms.com') }}"
                                                 id="username" name="email" placeholder="Username   ">
+                                                <label for="" class="float-label">Email</label>
                                             @error('email')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -117,10 +118,10 @@
                                         </div>
                                         <div class="form-row ">
                                              <input type="password"
-                                                class="form-control position-relative @error('password') is-invalid @enderror"
+                                                class="form-control textbox @error('password') is-invalid @enderror"
                                                 name="password" placeholder="Password" id="password-input"
                                                 value="Abs@123123">
-
+                                                <label for="" class="float-label">Password</label>
                                             @error('password')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
