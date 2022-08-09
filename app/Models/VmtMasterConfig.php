@@ -5,13 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class VmtClientMaster extends Model
+class VmtMasterConfig extends Model
 {
     use HasFactory;
-    protected $table = 'vmt_client_master';
 
-    
-    protected $fillable = [
-        "client_code", 
-    ];
+    protected $table = 'vmt_config_master';
+
 }
