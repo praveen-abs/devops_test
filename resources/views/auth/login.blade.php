@@ -116,7 +116,7 @@
                                             @enderror
                                         </div>
                                         <div class="form-row ">
-                                            <input type="password"
+                                             <input type="password"
                                                 class="form-control position-relative @error('password') is-invalid @enderror"
                                                 name="password" placeholder="Password" id="password-input"
                                                 value="Abs@123123">
