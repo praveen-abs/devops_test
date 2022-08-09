@@ -739,11 +739,15 @@
         <div class="col-12">
             <div class="container-fluid mb-1 mt-3 ">
                 <form id="kpiTableForm">
-                    <!-- <label>Select existing form from the Dropdown</label>
-                    <select name="kpi_table" class="form-control">
+                    @csrf
+                    <label>Select existing form from the Dropdown</label>
+                    <select name="kpi_table" class="form-control mb-2">
                         <option value="">Select KPI Form</option>
-                    </select> -->
-                    <div class="table-responsive">
+                        @foreach($kpiForms as $kpiForm)
+                        <option value="{{$kpiForm->author_name}}">{{$kpiForm->name}}</option>
+                        @endforeach
+                    </select>
+                    <!-- <div class="table-responsive">
                         <table id='kpiTable' class="table table-borderd align-middle mb-0" data-paging="true"
                             data-paging-size="10" data-paging-limit="3" data-paging-container="#paging-ui-container"
                             data-paging-count-format="{PF} to {PL}" data-sorting="true" data-filtering="false"
@@ -834,10 +838,10 @@
 
                             </tbody>
                         </table>
-                    </div>
+                    </div> -->
                 </form>
                 <div class="align-items-center justify-content-end d-flex mt-2 cursor-pointer">
-                <span class="plus-sign text-info "><i class="fa fa-plus f-20"></i>Add More</span>
+                <a href="{{route('vmt_pms_kpi_create')}}" target="_blank"><span class="plus-sign text-info "><i class="fa fa-plus f-20"></i>Add More</span></a>
                 </div>
 
                 <div class="buttons d-flex justify-content-end align-items-center mt-4 ">

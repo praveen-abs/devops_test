@@ -77,6 +77,11 @@ class LoginController extends Controller
             }
 
             return redirect()->back();
+        }else{
+            $errors = ['Your Account is not Active.'];
+return redirect()->back()->withErrors($errors);
+             // return back()->withErrors('Your Account is not Active.');
+
         }
         return redirect()->back();
         
