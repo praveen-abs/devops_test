@@ -4,10 +4,17 @@
 @endsection
 @section('css')
 <link href="{{ URL::asset('assets/css/login_page.css') }}" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+</script>
 
 @endsection
 @section('content')
@@ -109,19 +116,20 @@
                                                 class="form-control textbox    @error('email') form-control-sm is-invalid @enderror"
                                                 value="{{ old('email', 'hr_augustin@vasagroup.abshrms.com') }}"
                                                 id="username" name="email" placeholder="Username   ">
-                                                <label for="" class="float-label">Email</label>
+                                            <label for="" class="float-label">Email</label>
                                             @error('email')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                             @enderror
                                         </div>
+
                                         <div class="form-row ">
-                                             <input type="password"
+                                            <input type="password"
                                                 class="form-control textbox @error('password') is-invalid @enderror"
                                                 name="password" placeholder="Password" id="password-input"
                                                 value="Abs@123123">
-                                                <label for="" class="float-label">Password</label>
+                                            <label for="" class="float-label">Password</label>
                                             @error('password')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -130,13 +138,13 @@
                                         </div>
                                         <br>
                                         @if(count($errors) > 0)
- @foreach( $errors->all() as $message )
-  <div class="alert alert-danger display-hide">
-   <button class="close" data-close="alert"></button>
-   <span>{{ $message }}</span>
-  </div>
- @endforeach
-@endif
+                                        @foreach( $errors->all() as $message )
+                                        <div class="alert alert-danger display-hide">
+                                            <button class="close" data-close="alert"></button>
+                                            <span>{{ $message }}</span>
+                                        </div>
+                                        @endforeach
+                                        @endif
                                         <div class="d-flex justify-content-between align-items-center my-1">
                                             <!-- Checkbox -->
                                             <div class="form-check mb-0">
@@ -169,15 +177,26 @@
                                                 <i class="ri-windows-fill"></i>
                                             </a>
                                         </div>
-                                        <div class="d-flex align-items-center my-5 justify-content-center ">
-                                            <span class="f-10">Powered by</span>
+                                        <div class="d-flex align-items-center mt-4 mb-5 available-app justify-content-center ">
+                                            
+                                                <span class="f-12 mr-3">Available</span>
+                                                <a href="#" class="mx-2">
+                                                    <img src="{{ URL::asset('assets/images/Google_Play_Store.png') }}"
+                                                        alt="" class=" ">
+                                                </a>
+                                                <a href="#" class="">
+                                                    <img src="{{ URL::asset('assets/images/apple_play_store.png') }}" alt=""
+                                                        class="">
+                                                </a>
+                                            
+                                        </div>
+                                        <div class="d-flex align-items-center mt-5 power-by-logo justify-content-center">
+                                            <span class="f-12">Powered by</span>
                                             <a href="#" class="">
                                                 <img src="{{ URL::asset('assets/images/power_logo_abs.png     ') }}"
-                                                    alt="" class="h-50 w-100 ">
+                                                    alt="" class="h-75 w-75 ">
                                             </a>
-
                                         </div>
-
                                     </form>
 
                                 </div>
