@@ -169,7 +169,7 @@ Route::post('vmt-employess/bulk-upload', 'App\Http\Controllers\VmtEmployeeContro
 // Bulk upload employees for quick Onboarding
 Route::get('vmt-employess/quick-onboarding/upload', 'App\Http\Controllers\VmtEmployeeController@bulkUploadEmployeeForQuickOnboarding')->name('emp-quick-upload');
 Route::post('vmt-employess/quick-onboarding/upload', 'App\Http\Controllers\VmtEmployeeController@storeEmployeeForQuickOnboarding');
-Route::get('vmt-employee/complete-onboarding', 'App\Http\Controllers\VmtEmployeeController@showQuickOnboardForEmployee');
+Route::get('vmt-employee/complete-onboarding', 'App\Http\Controllers\VmtEmployeeController@employeeOnboarding');
 Route::post('vmt-employee/complete-onboarding', 'App\Http\Controllers\VmtEmployeeController@storeQuickOnboardFormEmployee');
 
 

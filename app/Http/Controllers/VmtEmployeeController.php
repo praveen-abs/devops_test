@@ -37,6 +37,24 @@ class VmtEmployeeController extends Controller
     }
 
     public function employeeOnboarding(Request $request) {
+        if($request->has('email')){
+            $employee  =  User::where('email', $request->email)->first();
+            $clientData  = VmtEmployee::where('userid', $employee->id)->first();
+            $empNo = '';
+            if ($clientData) {
+                $empNo = $clientData->emp_no;
+            }
+            $countries = Countries::all();
+            $compensatory = Compensatory::where('user_id', $employee->id)->first();
+            $india = Countries::where('country_code', 'IN')->first();
+            $emp = VmtEmployeeOfficeDetails::all();
+            $emp_details = VmtEmployeeOfficeDetails::where('emp_id', $clientData->id)->first();
+             // dd($emp);
+            $department = Department::all();
+            $bank = Bank::all();
+
+            return view('vmt_employeeOnboarding', compact('empNo','emp_details', 'countries', 'compensatory', 'bank', 'emp','department'));
+        }else{
         $clientData  = VmtClientMaster::first();
         $maxId  = VmtEmployee::max('id')+1;
         if ($clientData) {
@@ -50,6 +68,29 @@ class VmtEmployeeController extends Controller
         $bank = Bank::all();
         $department = Department::all();
         return view('vmt_employeeOnboarding', compact('empNo', 'countries', 'india', 'emp', 'bank', 'department'));
+
+    }
+    }
+     // Show quick onboard form to employee
+    public function showQuickOnboardForEmployee(Request $request){
+        if($request->has('email')){
+           $employee  =  User::where('email', $request->email)->first();
+            $clientData  = VmtEmployee::where('userid', $employee->id)->first();
+            $empNo = '';
+            if ($clientData) {
+                $empNo = $clientData->emp_no;
+            }
+            $countries = Countries::all();
+            $compensatory = Compensatory::where('user_id', $employee->id)->first();
+            $india = Countries::where('country_code', 'IN')->first();
+            $emp = VmtEmployeeOfficeDetails::all();
+            $emp_details = VmtEmployeeOfficeDetails::where('emp_id', $clientData->id)->first();
+             // dd($emp);
+            $department = Department::all();
+            $bank = Bank::all();
+
+            return view('vmt_employeeOnboarding_QuickUpload', compact('empNo','emp_details', 'countries', 'compensatory', 'bank', 'emp','department'));
+        }
     }
 
     public function getState(Request $request) {
@@ -817,24 +858,7 @@ class VmtEmployeeController extends Controller
         return $data;
     }
 
-    // Show quick onboard form to employee
-    public function showQuickOnboardForEmployee(Request $request){
-        if($request->has('email')){
-            $employee  =  User::where('email', $request->email)->first();
-            $clientData  = VmtEmployee::where('userid', $employee->id)->first();
-            $empNo = '';
-            if ($clientData) {
-                $empNo = $clientData->emp_no;
-            }
-            $countries = Countries::all();
-            $india = Countries::where('country_code', 'IN')->first();
-            $emp = VmtEmployeeOfficeDetails::all();
-            $department = Department::all();
-            $bank = Bank::all();
-
-            return view('vmt_employeeOnboarding_QuickUpload', compact('empNo', 'countries', 'bank', 'emp','department'));
-        }
-    }
+   
 
     // Store quick onboard employee data to Database
     public function storeQuickOnboardFormEmployee(Request $request){
