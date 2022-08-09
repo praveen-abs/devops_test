@@ -841,7 +841,7 @@
                     </div> -->
                 </form>
                 <div class="align-items-center justify-content-end d-flex mt-2 cursor-pointer">
-                <span class="plus-sign text-info "><i class="fa fa-plus f-20"></i>Add More</span>
+                <a href="{{route('vmt_pms_kpi_create')}}" target="_blank"><span class="plus-sign text-info "><i class="fa fa-plus f-20"></i>Add More</span></a>
                 </div>
 
                 <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
