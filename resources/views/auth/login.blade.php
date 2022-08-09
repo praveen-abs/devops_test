@@ -28,6 +28,7 @@
         $logoSrc = 'assets/images/vasa.jpg';
     }
     //dd($logoSrc);
+    
 ?>
 
 <div class="login-wrpper bg-white">
@@ -113,11 +114,11 @@
                                         @csrf
                                         <div class="form-row mb-3">
                                             <input type="text"
-                                                class="form-control textbox    @error('email') form-control-sm is-invalid @enderror"
-                                                value="{{ old('email', 'hr_augustin@abshrms.com') }}"
-                                                id="username" name="email" placeholder="Username   ">
-                                            <label for="" class="float-label">Email</label>
-                                            @error('email')
+                                                class="form-control textbox  @error('user_code') is-invalid @enderror" 
+                                                value="{{ old('user_code', 'ABS100') }}"
+                                                id="user_code" name="user_code" placeholder="Employee Code">
+                                            <label for="" class="float-label">Employee Code</label>
+                                            @error('user_code')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -217,6 +218,14 @@
 @endsection
 
 @section('script')
+<script type="text/javascript">
+
+$( document ).ready(function() {
+    var temp = '{{ $cacheStatus}}';
+    console.log(temp);
+});
+</script>
+
 <script src="{{ URL::asset('assets/libs/particles.js/particles.js.min.js') }}"></script>
 <script src="{{ URL::asset('assets/js/pages/particles.app.js') }}"></script>
 <script src="{{ URL::asset('assets/js/pages/password-addon.init.js')}}"></script>

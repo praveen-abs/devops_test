@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 
 use App\Models\VmtGeneralInfo;
 use App\Models\User;
+use Illuminate\Support\Facades\Cache;
 
 class LoginController extends Controller
 {
@@ -53,25 +54,31 @@ class LoginController extends Controller
     {
         $generalInfo = VmtGeneralInfo::first();
         //dd($generalInfo);
-        return view('auth.login', compact('generalInfo'));
+        $cacheStatus = "";
+        if(Cache::flush())
+            $cacheStatus = "Cache cleared";
+        else
+            $cacheStatus = "Cache not cleared";
+
+        return view('auth.login', compact('generalInfo','cacheStatus'));
     }
 
     public function login(Request $request)
     {
         $request->validate([
-            'email' => 'required|email',
+            'user_code' => 'required',
             'password' => 'required',
         ]);
 
         // Remember token set to false
         $save_credentials = false;
-        $user = User::where('email', $request->email)->where('active', 1)->first();
+        $user = User::where('user_code', $request->user_code)->where('active', 1)->first();
         if($user){
-            $credentials = $request->only('email', 'password');
+            $credentials = $request->only('user_code', 'password');
             if (Hash::check($request->password, $user->password)) {
             // if (Auth::attempt($credentials)) {
                 // Auth::login($user, $save_credentials);
-                if (auth::attempt(['email' => $request->email, 'password' => $request->password], $save_credentials)) {
+                if (auth::attempt(['user_code' => $request->user_code, 'password' => $request->password], $save_credentials)) {
                     return redirect(route('index'));
                 }
             }
@@ -79,7 +86,7 @@ class LoginController extends Controller
             return redirect()->back();
         }else{
             $errors = ['Your Account is not Active.'];
-return redirect()->back()->withErrors($errors);
+            return redirect()->back()->withErrors($errors);
              // return back()->withErrors('Your Account is not Active.');
 
         }
