@@ -222,7 +222,9 @@ class VmtPmsController extends Controller
             }
         }
 
-        return view('vmt_pms_assigngoals', compact('users', 'employees','empGoals','userCount','empCount','subCount', 'config', 'show', 'department'));
+        $kpiForms = VmtKpiFormTable::select('author_name', 'name')->groupBy('author_name')->get();
+
+        return view('vmt_pms_assigngoals', compact('users', 'employees','empGoals','userCount','empCount','subCount', 'config', 'show', 'department', 'kpiForms'));
     }
 
     public function vmtGetAllChildEmployees(Request $request)
@@ -268,35 +270,35 @@ class VmtPmsController extends Controller
     // Store Assigned Goals
     public function vmtStoreKpiTable(Request $request) {
         //return "Stored";
-        if ($request->has('dimension')) {
-            $totRows  = count($request->dimension);
-            //dd($totRows);
+        if ($request->has('kpi_table')) {
+            $kpiTable = VmtKpiFormTable::where('author_name', $request->kpi_table)->get();
+            $totRows  = count($kpiTable);
             $kpiRows = [];
-            for ($i=0; $i < $totRows; $i++) { 
+            foreach ($kpiTable as $kpi) { 
                 // code...
-                if ($request->kpi_id && $request->kpi_id[$i] <> '' && $request->kpi_id[$i] > 0) {
-                    $kpiRow = VmtAppraisalQuestion::find($request->kpi_id[$i]);
-                } else {
+                // if ($kpi->kpi_id && $kpi->kpi_id[$i] <> '' && $kpi->kpi_id[$i] > 0) {
+                //     $kpiRow = VmtAppraisalQuestion::find($kpi->kpi_id[$i]);
+                // } else {
                     $kpiRow = new VmtAppraisalQuestion;
-                }
-                //$inputArry[] = $request->dimension[$i];
-                $kpiRow->dimension   =    $request->dimension ? $request->dimension[$i] : ''; 
-                $kpiRow->kpi         =    $request->kpi ? $request->kpi[$i] : ''; 
-                $kpiRow->operational_definition   = $request->operational ? $request->operational[$i] : '' ;     
-                $kpiRow->measure     =    $request->measure ? $request->measure[$i] : '';  
-                $kpiRow->frequency   =    $request->frequency ? $request->frequency[$i] : '';  
-                $kpiRow->target      =    $request->target ? $request->target[$i] : '';  
-                $kpiRow->stretch_target  =    $request->stretchTarget ? $request->stretchTarget[$i] : '';   
-                $kpiRow->source          =    $request->source ? $request->source[$i] : '';  
-                $kpiRow->kpi_weightage   =    $request->kpiWeightage ? $request->kpiWeightage[$i] : '';  
+                // }
+                //$inputArry[] = $kpi->dimension[$i];
+                $kpiRow->dimension   =    $kpi->dimension ? $kpi->dimension : ''; 
+                $kpiRow->kpi         =    $kpi->kpi ? $kpi->kpi : ''; 
+                $kpiRow->operational_definition   = $kpi->operational ? $kpi->operational : '' ;     
+                $kpiRow->measure     =    $kpi->measure ? $kpi->measure : '';  
+                $kpiRow->frequency   =    $kpi->frequency ? $kpi->frequency : '';  
+                $kpiRow->target      =    $kpi->target ? $kpi->target : '';  
+                $kpiRow->stretch_target  =    $kpi->stretchTarget ? $kpi->stretchTarget : '';   
+                $kpiRow->source          =    $kpi->source ? $kpi->source : '';  
+                $kpiRow->kpi_weightage   =    $kpi->kpiWeightage ? $kpi->kpiWeightage : '';  
                 $kpiRow->author_id       =    auth::user()->id; 
                 $kpiRow->author_name     =    auth::user()->name;  
                 $kpiRow->save();
                 $kpiRows[] = $kpiRow->id; 
             } 
             if(count($kpiRows) > 0){
-                if ($request->kpi_table_id && $request->kpi_table_id <> '' && $request->kpi_table_id > 0) {
-                    $kpiTable  = VmtKPITable::find($request->kpi_table_id); 
+                if ($kpi->kpi_table_id && $kpi->kpi_table_id <> '' && $kpi->kpi_table_id > 0) {
+                    $kpiTable  = VmtKPITable::find($kpi->kpi_table_id); 
                 } else {
                     $kpiTable  = new VmtKPITable; 
                 }
@@ -307,9 +309,9 @@ class VmtPmsController extends Controller
 
                 return array("status" => true, "table_id" => $kpiTable->id); 
             }
-            dd($inputArry);
+            // dd($inputArry);
         }
-        dd($request->all());
+        // dd($kpi->all());
     }
 
     public function department(Request $request) {
@@ -757,7 +759,7 @@ class VmtPmsController extends Controller
                 $kpiRow->source          =    $request->source ? $request->source[$i] : '';
                 $kpiRow->kpi_weightage   =    $request->kpiWeightage ? $request->kpiWeightage[$i] : '';
                 $kpiRow->author_id       =    auth::user()->id; 
-                $kpiRow->author_name     =    auth::user()->name;  
+                $kpiRow->author_name     =    str_replace(' ', '_', strtolower($request->name));  
                 $kpiRow->save();
             }
             return "Question Created Successfully"; 
