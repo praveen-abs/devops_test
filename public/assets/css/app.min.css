@@ -318,7 +318,7 @@ body {
     height: 38px;
     padding-left: 40px;
     padding-right: 30px;
-    background-color: var(--vz-topbar-search-bg);
+    /* background-color: var(--vz-topbar-search-bg); */
     box-shadow: none
 }
 
@@ -479,7 +479,7 @@ body {
 }
 
 [data-topbar=dark] .app-search .form-control {
-    background-color: hsla(0, 0%, 100%, .05);
+    /* background-color: hsla(0, 0%, 100%, .05); */
     color: #fff
 }
 
@@ -17425,14 +17425,11 @@ p {
     /* border: 2px solid #364574 !important; */
 }
 
-.form-control {
-    /* background-color: #F8F8F8; */
 
-}
+
 
 .form-control:focus {
-    background-color: #FFF;
-    /* border-color: #002f56; */
+    background-color: #fff;
 }
 
 .container {
