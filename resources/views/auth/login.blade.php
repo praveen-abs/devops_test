@@ -114,7 +114,7 @@
                                         <div class="form-row mb-3">
                                             <input type="text"
                                                 class="form-control textbox    @error('email') form-control-sm is-invalid @enderror"
-                                                value="{{ old('email', 'hr_augustin@vasagroup.abshrms.com') }}"
+                                                value="{{ old('email', 'hr_augustin@abshrms.com') }}"
                                                 id="username" name="email" placeholder="Username   ">
                                             <label for="" class="float-label">Email</label>
                                             @error('email')
