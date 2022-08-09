@@ -223,6 +223,15 @@
 $( document ).ready(function() {
     var temp = '{{ $cacheStatus}}';
     console.log(temp);
+
+    var allCookies = document.cookie.split(';');
+    
+    for (var i = 0; i < allCookies.length; i++)
+        document.cookie = allCookies[i] + "=;expires="
+        + new Date(0).toUTCString();
+
+    console.log("All cookies cleared");
+  
 });
 </script>
 
