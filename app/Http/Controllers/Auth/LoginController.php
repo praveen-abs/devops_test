@@ -56,24 +56,28 @@ class LoginController extends Controller
         //dd($generalInfo);
         $cacheStatus = "";
 
-        $cookies = \Cookie::get();
+        // $cookies = \Cookie::get();
 
-        foreach($cookies as $key => $value)
-        {
-           // dd($key);
-            \Cookie::queue(\Cookie::forget($key));
-        }
+        // foreach($cookies as $key => $value)
+        // {
+        //    // dd($key);
+        //     \Cookie::queue(\Cookie::forget($key));
+        // }
 
         if(Cache::flush())
             $cacheStatus = "Cache cleared";
         else
             $cacheStatus = "Cache not cleared";
 
+
         return view('auth.login', compact('generalInfo','cacheStatus'));
     }
 
     public function login(Request $request)
     {
+
+        $request->session()->invalidate();
+        
         $request->validate([
             'user_code' => 'required',
             'password' => 'required',
@@ -91,6 +95,7 @@ class LoginController extends Controller
                     return redirect(route('index'));
                 }
             }
+
 
             return redirect()->back();
         }else{
