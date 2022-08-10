@@ -846,7 +846,7 @@ class VmtEmployeeController extends Controller
                     $returnfailedMsg .= "<li>".$empNo." not get added.</li>";
                 }
 
-                \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $row["email"]));
+                \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $empNo, 'Abs@123123', request()->getSchemeAndHttpHost()));
             } else {
                 $returnfailedMsg .= "<li>".$empNo." not get added because of error ".json_encode($validator->errors()->all());
                 $returnfailedMsg .= "</li>";
@@ -858,7 +858,7 @@ class VmtEmployeeController extends Controller
         return $data;
     }
 
-   
+
 
     // Store quick onboard employee data to Database
     public function storeQuickOnboardFormEmployee(Request $request){

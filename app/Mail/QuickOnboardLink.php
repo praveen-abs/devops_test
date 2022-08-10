@@ -17,14 +17,19 @@ class QuickOnboardLink extends Mailable
      * @return void
      */
 
-    protected $employeeName; 
-    protected $employeeEmail;
+    protected $employeeName;
+    protected $employeeEmpCode;
+    protected $employeePassword;
+    protected $loginLink;
 
-    public function __construct($employeeName, $employeeEmail)
+
+    public function __construct($employeeName, $employeeEmpCode, $employeePassword , $loginLink)
     {
         //
         $this->employeeName     = $employeeName;
-        $this->employeeEmail    = $employeeEmail;
+        $this->employeeEmpCode    = $employeeEmpCode;
+        $this->employeePassword    = $employeePassword;
+        $this->loginLink    = $loginLink;
     }
 
     /**
@@ -36,6 +41,8 @@ class QuickOnboardLink extends Mailable
     {
         return $this->view('vmt_quickonboard_email')
                     ->with('employeeName', $this->employeeName)
-                    ->with('employeeEmail', $this->employeeEmail);   
+                    ->with('employeeEmpCode', $this->employeeEmpCode)
+                    ->with('employeePassword', $this->employeePassword)
+                    ->with('loginLink', $this->loginLink);
     }
 }
