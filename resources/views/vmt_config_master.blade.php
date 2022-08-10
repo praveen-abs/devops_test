@@ -3,7 +3,7 @@
 
 <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
 <style>
-    
+
 .profile-box {
     border-radius: 12px !important;
     box-shadow: rgb(60 64 67 / 30%) 0px 1px 2px 0px, rgb(60 64 67 / 15%) 0px 2px 6px 2px !important;
@@ -45,6 +45,14 @@
                                             </div>
                                             <div class="row mt-1">
                                                 <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
+                                                    <label class="" for="selected_head">Client Code Series</label>
+                                                </div>
+                                                <div class="col-md-7 col-sm-7 mt-2">
+                                                    <input placeholder="" type="number" name="client_code_series" value="{{ isset($data['client_code_series']) ? $data["client_code_series"] : "" }}" class="onboard-form form-control" required>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-1">
+                                                <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
                                                     <label class="" for="selected_head">Send Appointment Letter after Onboard form submit?</label>
                                                 </div>
                                                 <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
@@ -65,7 +73,7 @@
                                         <div class="text-primary my-2 header-card-text">
                                             <div class="col-12 text-right"><button type="submit" data="row-6" next="row-6" placeholder="" id="next" class="btn btn-orange   text-center">Submit</button>
                                             </div>
-                                        </div>                                        
+                                        </div>
                                     </div>
 
                                 </div>

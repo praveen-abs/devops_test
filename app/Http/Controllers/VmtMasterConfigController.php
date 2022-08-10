@@ -11,14 +11,21 @@ use Illuminate\Http\Request;
 class VmtMasterConfigController extends Controller
 {
     public function index(Request $request) {
-        $queryData = VmtMasterConfig::all(['config_name','config_value']);
+        //Fetch all master configs
+        $masterData = VmtMasterConfig::all(['config_name','config_value']);
 
-        $data = $queryData->mapWithKeys(function ($item, $key) {
+
+        //Convert to KV pair
+        $data = $masterData->mapWithKeys(function ($item, $key) {
             return [$item['config_name'] => $item['config_value']];
         });
-         
-        //$kvData->all();
-        //dd($kvData);
+
+
+        //Get Client-code
+        $clientCode = VmtClientMaster::first(['client_code'])->toArray();
+        $data['client_code'] = $clientCode['client_code'];
+
+        //dd($data);
 
         return view('vmt_config_master', compact('data'));
     }
@@ -33,12 +40,15 @@ class VmtMasterConfigController extends Controller
         foreach($input as $key => $value)
         {
             //dd($key);
-            $temp = VmtMasterConfig::where('config_name',$key)->update(['config_value' => $value]);
 
             //Update client code
-            if($key == "client_code")         
-            {   
+            if($key == "client_code")
+            {
                 $clientData  = VmtClientMaster::first()->update(['client_code' => $value]);
+            }
+            else
+            {
+                $temp = VmtMasterConfig::where('config_name',$key)->update(['config_value' => $value]);
             }
 
         }

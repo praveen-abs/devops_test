@@ -16,18 +16,14 @@ return new class extends Migration
     {
         Schema::create('vmt_config_master', function (Blueprint $table) {
             $table->id();
-            $table->text("config_name");
+            $table->text("config_name")->unique();
             $table->text("config_value");
             $table->timestamps();
         });
 
         //Default Configs
 
-        DB::table('vmt_config_master')->insert(array(
-            ['config_name'=>'client_code', 'config_value'=>'ABS'],
-            ['config_name'=>'can_send_appointmentletter_after_onboarding', 'config_value'=>'true'],
-    
-        ));        
+
     }
 
     /**
