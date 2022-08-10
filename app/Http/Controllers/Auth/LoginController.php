@@ -55,6 +55,15 @@ class LoginController extends Controller
         $generalInfo = VmtGeneralInfo::first();
         //dd($generalInfo);
         $cacheStatus = "";
+
+        $cookies = \Cookie::get();
+
+        foreach($cookies as $key => $value)
+        {
+           // dd($key);
+            \Cookie::queue(\Cookie::forget($key));
+        }
+
         if(Cache::flush())
             $cacheStatus = "Cache cleared";
         else
@@ -91,6 +100,6 @@ class LoginController extends Controller
 
         }
         return redirect()->back();
-        
+
     }
 }
