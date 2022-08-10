@@ -60,4 +60,14 @@ class VmtMasterConfigController extends Controller
 
     }
 
+    public function getMaxClientCode()
+    {
+        //Get the most recent employee emp_code from USERS table
+
+        //Increment it
+
+        //return the value
+
+    }
+
 }
