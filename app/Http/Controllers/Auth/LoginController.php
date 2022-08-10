@@ -77,6 +77,7 @@ class LoginController extends Controller
     {
 
         $request->session()->invalidate();
+        $request->session()->regenerateToken();
         
         $request->validate([
             'user_code' => 'required',
