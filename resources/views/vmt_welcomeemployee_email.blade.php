@@ -33,7 +33,8 @@
                     <tr>
                         <td style="text-align:center;">
                             <a href="https://abshrms.com" title="logo" target="_blank">
-                            <img width="60" src="https://i.ibb.co/hL4XZp2/android-chrome-192x192.png" title="logo" alt="logo">
+                            <img src="data:image/png;base64,{{base64_encode(file_get_contents(public_path('/generalinfo/client-logo.png')))}}"
+                                style="width: 140px; height: 70px;" title="">
                           </a>
                         </td>
                     </tr>

@@ -55,8 +55,10 @@ class VmtEmployeeController extends Controller
 
             return view('vmt_employeeOnboarding', compact('empNo','emp_details', 'countries', 'compensatory', 'bank', 'emp','department'));
         }else{
+            $employee  =  User::orderBy('created_at','DESC')->first();
+              $ucode =(int) filter_var($employee->user_code, FILTER_SANITIZE_NUMBER_INT);  
         $clientData  = VmtClientMaster::first();
-        $maxId  = VmtEmployee::max('id')+1;
+        $maxId  = $ucode+1;
         if ($clientData) {
             $empNo = $clientData->client_code.$maxId;
         } else {
