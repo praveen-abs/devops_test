@@ -137,7 +137,7 @@
                                             </span>
                                             @enderror
                                         </div>
-                                        <br>
+                                        
                                         @if(count($errors) > 0)
                                         @foreach( $errors->all() as $message )
                                         <div class="alert alert-danger display-hide">
@@ -146,7 +146,7 @@
                                         </div>
                                         @endforeach
                                         @endif
-                                        <div class="d-flex justify-content-between align-items-center my-1">
+                                        <div class="d-flex justify-content-between align-items-center mt-1 mb-3">
                                             <!-- Checkbox -->
                                             <div class="form-check mb-0">
                                                 <!-- <input class="form-check-input " type="checkbox" value=""
@@ -155,11 +155,11 @@
                                                     Remember me
                                                 </label> -->
                                             </div>
-                                            <a href="#!" class="f-12 my-1 text-orange">Forgot password?</a>
+                                            <a href="#!" class="f-12 text-orange">Forgot password?</a>
                                         </div>
                                         <div class="form-row d-flex justify-content-center my-1">
                                             <button
-                                                class="btn btn-orange sign-in-btn text-white  waves-effect waves-light w-100"
+                                                class="btn btn-orange fw-bold sign-in-btn text-white  waves-effect waves-light w-100"
                                                 type="submit">Log-In</button>
                                         </div>
                                         <div class="divider d-flex align-items-center my-4 px-2 mx-5">
@@ -168,22 +168,28 @@
                                         <div
                                             class="d-flex align-items-center justify-content-center social-icons-wrapper">
                                             <a href="https://accounts.google.com/signin" class="mr-5">
-                                                <i class="ri-google-fill"></i>
+                                                <!-- <i class="ri-google-fill"></i> -->
+                                                <img src="{{ URL::asset('assets/images/login_img/google.png') }}"
+                                                alt="" class="h-50 w-25">
                                             </a>
                                             <a href="https://www.linkedin.com/login" class="mr-5">
-                                                <i class="ri-linkedin-fill"></i>
+                                                <!-- <i class="ri-linkedin-fill"></i> -->
+                                                <img src="{{ URL::asset('assets/images/login_img/linkedIn_PNG39.png') }}"
+                                                alt="" class="h-50 w-25">
                                             </a>
                                             <a class="mr"
                                                 href="https://login.live.com/login.srf?wa=wsignin1.0&rpsnv=13&ct=1658217648&rver=7.0.6738.0&wp=MBI_SSL&wreply=https:%2F%2Faccount.microsoft.com%2Fauth%2Fcomplete-signin%3Fru%3Dhttps%253A%252F%252Faccount.microsoft.com%252F%253Frefp%253Dsignedout-index%2526refd%253D127.0.0.1&lc=1033&id=292666&lw=1&fl=easi2">
-                                                <i class="ri-windows-fill"></i>
+                                                <!-- <i class="ri-windows-fill"></i> -->
+                                                <img src="{{ URL::asset('assets/images/login_img/microsoft_PNG18.png') }}"
+                                                alt="" class="h-50 w-25">
                                             </a>
                                         </div>
                                         <div class="d-flex align-items-center mt-4 mb-5 available-app justify-content-center ">
                                             
-                                                <span class="f-12 mr-3">Available</span>
+                                                <span class="f-12 mr-3">Available On</span>
                                                 <a href="#" class="mx-2">
                                                     <img src="{{ URL::asset('assets/images/Google_Play_Store.png') }}"
-                                                        alt="" class=" ">
+                                                        alt="" class="">
                                                 </a>
                                                 <a href="#" class="">
                                                     <img src="{{ URL::asset('assets/images/apple_play_store.png') }}" alt=""
@@ -191,11 +197,12 @@
                                                 </a>
                                             
                                         </div>
-                                        <div class="d-flex align-items-center mt-5 power-by-logo justify-content-center">
-                                            <span class="f-12">Powered by</span>
+                                        <div class="d-flex text-center align-items-center mt-5 power-by-logo justify-content-center">
+                                        
                                             <a href="#" class="">
-                                                <img src="{{ URL::asset('assets/images/power_logo_abs.png     ') }}"
-                                                    alt="" class="h-75 w-75 ">
+                                            <span class="f-12">Powered by</span>    
+                                                <img src="{{ URL::asset('assets/images/logo-dark.png') }}"
+                                                    alt="" class="h-25 w-25 ">
                                             </a>
                                         </div>
                                     </form>
