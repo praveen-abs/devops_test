@@ -256,15 +256,15 @@
                         <td>
                             <div class="d-flex justify-content-start align-items-center table-img">
                                 <div class="mx-2">
-                                    @if($employee->avatar)
-                                    <img src="{{ URL::asset('images/'.$employee->avatar) }}" alt="" class="" />
+                                    @if( empty($employee->avatar) || !file_exists(public_path('images/'. $employee->avatar)) )
+                                        @php
+                                        preg_match('/(?:\w+\. )?(\w+).*?(\w+)(?: \w+\.)?$/',$employee->emp_name , $result);
+                                        $name = strtoupper($result[1][0].$result[2][0]);
+                                        @endphp
+                                        <span class="badge rounded-circle h-10 w-10   badge-primary ml-2"><i
+                                                class="align-middle">{{$name}}</i></span>
                                     @else
-                                    @php
-                                    preg_match('/(?:\w+\. )?(\w+).*?(\w+)(?: \w+\.)?$/',Auth::user()->name , $result);
-                                    $name = strtoupper($result[1][0].$result[2][0]);
-                                    @endphp
-                                    <span class="badge rounded-circle h-10 w-10   badge-primary ml-2"><i
-                                            class="align-middle">{{$name}}</i></span>
+                                        <img src="{{ URL::asset('images/'.$employee->avatar) }}" alt="" class="" />
                                     @endif
 
                                 </div>
