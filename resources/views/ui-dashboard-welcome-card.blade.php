@@ -3,15 +3,7 @@
         <div class="d-flex">
 
             <div class="status-wrapper ">
-                @if( empty(Auth::user()->avatar))
-                    <span class="bage rounded-circle h-100 w-100 d-flex align-items-center justify-content-center  "><i id="profileShortNameLargeCircle"
-                        class="align-middle "></i></span>
-                @else
-                <img class="rounded-circle header-profile-user"
-                    src=" {{URL::asset('images/'. Auth::user()->avatar)}}" alt="Header Avatar">
-
-
-                @endif
+                @include('ui-profile-avatar')
             </div>
             <div class="greet-wrap ml-3 mr-0">
                 <div class="d-felx ">
@@ -137,13 +129,7 @@ function time() {
     $('#check_timing').html("Check In : " +  ("0" + h).substr(-2) + ":" + ("0" + m).substr(-2) + ":" + ("0" + s).substr(-2));
 }
 
-function generateProfileShortName()
-{
-    var username = '{{auth()->user()->name}}';
-    const myArray = username.split(" ");
-    var a = $('#profileShortNameLargeCircle').text(myArray[0][0]+""+myArray[1][0]);
-    //console.log(a);
-}
+
 
 
 function greetingMessage()
@@ -175,7 +161,6 @@ $(document).ready(function() {
     var ui_checkInTime_interval;
     var checkIn_time = "";
 
-    generateProfileShortName();
     greetingMessage();
 
     if($('#checkin_function').is(':checked'))

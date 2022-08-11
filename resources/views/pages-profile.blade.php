@@ -17,35 +17,11 @@
                         <div class="card profile-box border-0 flex-fill ">
                             <div class="card-body">
                                 <div class="profile-wrapper d-flex w-100 ">
-                                    <div class="profile-img-wrap mx-1">
-                                        <div class="profile-img">
-                                            <!-- <a href="#"> <img class="rounded-circle header-profile-user"
-                                                    src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/user-profile-img.jpg') }}@endif"
-                                                    alt="Header Avatar"></a> -->
-                                             @php
-                                                preg_match('/(?:\w+\. )?(\w+).*?(\w+)(?: \w+\.)?$/',Auth::user()->name , $result);
-                                                $name = strtoupper($result[1][0].$result[2][0]);
-                                                if (empty($user->avatar))
-                                                {
-                                                @endphp
-
-                                                <span class=" rounded-circle   badge-primary ml-2"><i
-                                                        class="align-middle">{{$name}}</i></span>
-                                                @php
-                                                }
-                                                else
-                                                {
-                                                @endphp
-                                                <img class="rounded-circle header-profile-user"
-                                                    src=" {{URL::asset('images/'. $user->avatar)}}" alt="Header Avatar">
-
-                                                @php
-                                                }
-                                            @endphp
-                                            <span class="personal-edit img-edit"><a href="#" class="edit-icon"
-                                                    data-bs-toggle="modal" data-bs-target="#personal_info"><i
-                                                        class="ri-pencil-fill"></i></a></span>
-                                        </div>
+                                    <div class="profile-img">
+                                        @include('ui-profile-avatar')
+                                        <span class="personal-edit img-edit"><a href="#" class="edit-icon"
+                                            data-bs-toggle="modal" data-bs-target="#personal_info"><i
+                                                class="ri-pencil-fill"></i></a></span>
                                     </div>
                                     <div class="profile-info w-75 ">
 
@@ -1555,6 +1531,7 @@
 <!--end row-->
 @endsection
 @section('script')
+@yield('script-profile-avatar')
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>

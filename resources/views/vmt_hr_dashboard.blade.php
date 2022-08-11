@@ -492,6 +492,7 @@
 <script src="{{ URL::asset('/assets/js/pages/dashboard-ecommerce.init.js') }}"></script>
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 @yield('welcome-script')
+@yield('script-profile-avatar')
 <!-- for date and time -->
 
 <script src="https://unpkg.com/codeflask/build/codeflask.min.js"></script>
