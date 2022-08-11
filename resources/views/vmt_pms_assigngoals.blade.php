@@ -725,12 +725,12 @@
                             <button type="button" class="btn btn-primary mx-2 w-50" id="upload-goal"><i class="ri-file-upload-fill mx-1"></i> Upload</button>
                     </div>
                     <div class=" d-flex align-items-center">
-                    <span>Download the </span>    
-                        
-                    <a href="{{ url('/assets/sample_kpi.xls')  }}" target="_blank" class="btn btn-primary mx-2"><i class="ri-file-download-fill mx-1"></i> 
+                    <span>Download the </span>
+
+                    <a href="{{ url('/assets/sample_kpi.xls')  }}" target="_blank" class="btn btn-primary mx-2"><i class="ri-file-download-fill mx-1"></i>
                         Sample File
                     </a>
-                    
+
                     </div>
 
                 </div>
@@ -841,7 +841,7 @@
                     </div> -->
                 </form>
                 <div class="align-items-center justify-content-end d-flex mt-2 cursor-pointer">
-                <a href="{{route('vmt_pms_kpi_create')}}" target="_blank"><span class="plus-sign text-info "><i class="fa fa-plus f-20"></i>Add More</span></a>
+                <a href="{{route('vmt_pms_kpi_create')}}" target="_blank"><span class="plus-sign text-info "><i class="fa fa-plus f-20"></i>Create KPI Form</span></a>
                 </div>
 
                 <div class="buttons d-flex justify-content-end align-items-center mt-4 ">

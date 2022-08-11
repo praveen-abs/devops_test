@@ -87,14 +87,14 @@
                             <button type="button" class="btn btn-primary mx-2 w-50" id="upload-goal"><i class="ri-file-upload-fill mx-1"></i> Upload</button>
                     </div>
                     <div class=" d-flex align-items-center">
-                    <span>Download the </span>    
-                        
-                    <a href="{{ url('/assets/sample_kpi.xls')  }}" target="_blank" class="btn btn-primary mx-2"><i class="ri-file-download-fill mx-1"></i> 
+                    <span>Download the </span>
+
+                    <a href="{{ url('/assets/sample_kpi.xls')  }}" target="_blank" class="btn btn-primary mx-2"><i class="ri-file-download-fill mx-1"></i>
                             Sample File
                     </a>
-                    
+
                     </div>
-                    
+
                 </div>
             </form>
         </div>
@@ -126,11 +126,11 @@
                                     <th class="sort" data-sort="product_name"
                                         data-name='kpi' data-filterable="false" data-visible="{{$show['kpi']}}">
                                         @if($config && $config->header) {{$config->header['kpi']}} @else KPI @endif</th>
-                                    <th class="sort" data-sort="date" 
+                                    <th class="sort" data-sort="date"
                                         data-name='operational' data-filterable="false"
                                         data-visible="{{$show['operational']}}">@if($config && $config->header)
                                         {{$config->header['operational']}} @else Operational Definition @endif</th>
-                                    <th class="sort" data-sort="amount" 
+                                    <th class="sort" data-sort="amount"
                                         data-name='measure' data-filterable="false" data-visible="{{$show['measure']}}">
                                         @if($config && $config->header) {{$config->header['measure']}} @else Measure
                                         @endif</th>
@@ -141,7 +141,7 @@
                                     <th class="sort" data-sort="status"  data-name='target'
                                         data-filterable="false" data-visible="{{$show['target']}}">@if($config &&
                                         $config->header) {{$config->header['target']}} @else Target @endif</th>
-                                    <th class="sort" data-sort="status" 
+                                    <th class="sort" data-sort="status"
                                         data-name='stretchTarget' data-filterable="false"
                                         data-visible="{{$show['stretchTarget']}}">@if($config && $config->header)
                                         {{$config->header['stretchTarget']}} @else Stretch Target @endif</th>
@@ -228,8 +228,8 @@
                 <div class="w-100 modal-header-content d-flex align-items-center py-2">
                     <h5 class="modal-title text-white" id="modalHeader">Success
                     </h5>
-                    <button 
-                        type="button" 
+                    <button
+                        type="button"
                         class="btn-close btn-close-white close-modal" data-bs-dismiss="modal"
                         aria-label="Close"
                     >
@@ -342,8 +342,8 @@ $(document).ready(function(){
         // upload a file
         var form_data = new FormData(document.getElementById("upload_form"));
         $.ajax({
-            type: "POST", 
-            url: "{{route('upload-file')}}", 
+            type: "POST",
+            url: "{{route('upload-file')}}",
             dataType : "json",
             contentType: false,
             processData: false,
@@ -412,7 +412,7 @@ $(document).ready(function(){
                             source = '<input type="hidden" name="source[]">';
                         }
                         if (showkpiWeightage == 'block') {
-                            kpiWeightage = '<td class="text-box-td p-1"><textarea name="kpiWeightage[]" id="" class="text-box" cols="10" placeholder="type here">'+value[8]+'</textarea></td>';
+                            kpiWeightage = '<td class="text-box-td p-1"><textarea name="kpiWeightage[]" data-show="true" id="" class="text-box" cols="10" placeholder="type here">'+value[8]+'</textarea></td>';
                         } else {
                             kpiWeightage = '<input type="hidden" name="kpiWeightage[]">';
                         }
@@ -468,7 +468,7 @@ $(function () {
         var stretchTarget = '';
         var source = '';
         var kpiWeightage = '';
-        
+
         if (showdimension == 'block') {
             dimension = '<td class="text-box-td p-1"><textarea name="dimension[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td>';
         } else {
@@ -510,7 +510,7 @@ $(function () {
             source = '<input type="hidden" name="source[]">';
         }
         if (showkpiWeightage == 'block') {
-            kpiWeightage = '<td class="text-box-td p-1"><textarea name="kpiWeightage[]" id="" class="text-box" cols="10" placeholder="type here"></textarea></td>';
+            kpiWeightage = '<td class="text-box-td p-1"><textarea name="kpiWeightage[]" data-show="true" id="" class="text-box" cols="10" placeholder="type here"></textarea></td>';
         } else {
             kpiWeightage = '<input type="hidden" name="kpiWeightage[]">';
         }
@@ -527,7 +527,7 @@ $(function () {
         window.location.reload();
     });
 
-    
+
     // publishing tables
     $('body').on('click', '#save-table', function(e){
         // e.preventDefault();
@@ -539,21 +539,25 @@ $(function () {
         //Validate the input fields
         $("#kpiTableForm :input").each(function(){
             var input = $(this);
+
             if(input.attr('name') == "kpiWeightage[]" && input.attr('data-show') == 'true')
             {
                 kpiWeightageTotal =kpiWeightageTotal+parseInt(input.val().replace('%', ''));
+                console.log("adding KPI weightage");
             }
             if(input.val().trim().length < 1 && input.attr('data-show') == 'true')
             {
-            isAllFieldsEntered = false;
+                isAllFieldsEntered = false;
             }
 
         });
         //Validate other fields
         if( isAllFieldsEntered )
         {
+            console.log($('textarea[name="kpiWeightage[]"]').attr('data-show'));
+
             //Validate KPI Weightage
-            if(kpiWeightageTotal != 100 && $('input[name="kpiWeightage[]"]').attr('data-show') == 'true')
+            if(kpiWeightageTotal != 100 && $('textarea[name="kpiWeightage[]"]').attr('data-show') == 'true')
             {
                 canSaveForm = false;
                 alert("KPI Weightage should be exactly 100%. Please validate.");
@@ -570,12 +574,12 @@ $(function () {
 
             canSaveForm = false;
         }
-            
+
         if(canSaveForm)
         {
             $.ajax({
-                type: "POST", 
-                url: "{{route('vmt_pms_kpi_create')}}", 
+                type: "POST",
+                url: "{{route('vmt_pms_kpi_create')}}",
                 data: $('#kpiTableForm').serialize(),
                 success: function(data){
                     $("#kpiTableForm :input").prop("disabled", true);
