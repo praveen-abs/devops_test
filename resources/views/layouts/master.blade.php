@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ URL::asset('assets/images/favicon.png')}}">
+    <link rel="shortcut icon" href="{{ URL::asset('assets/images/favicon_abs.png')}}">
     @include('layouts.head-css')
     <style>
     /* .page-content{
@@ -40,7 +40,7 @@
         width: 130px;
         display: block;
         height: 2px;
-        margin: 28px auto; 
+        margin: 28px auto;
         border-radius: 2px;
         background-color: #cfcfcf;
         position: relative;
@@ -92,12 +92,12 @@
         -o-animation: bounce 1.4s ease infinite;
     }
     @-webkit-keyframes bounce {
-        
+
         0% {
             -webkit-transform: scale(1) ;
             transform: scale(1) ;
             -webkit-filter: blur(0);
-            filter: blur(0);    
+            filter: blur(0);
         }
         50% {
             -webkit-transform: scale(.9) ;
@@ -108,16 +108,16 @@
         100% {
             -webkit-transform: scale(1) ;
             transform: scale(1) ;
-            
+
         }
     }
     @keyframes bounce {
-        
+
         0% {
             -webkit-transform: scale(1) ;
             transform: scale(1) ;
             -webkit-filter: blur(0);
-            filter: blur(0);    
+            filter: blur(0);
         }
         50% {
             -webkit-transform: scale(.9) ;
@@ -128,7 +128,7 @@
         100% {
             -webkit-transform: scale(1) ;
             transform: scale(1) ;
-            
+
         }
     }
     #loading ~#layout-wrapper .main-content {
@@ -178,7 +178,7 @@
             </div>
         </div>
     </div>
-    
+
     <div style="position:fixed;top:80px;right: 40px">
         <div class="toast hide common-toast-success common-toast toast-border-success" role="alert" aria-live="assertive" data-delay="3000" aria-atomic="true">
             <div class="toast-body">
@@ -190,7 +190,7 @@
                         <h6 id="result-toast-success" class="m-0"></h6>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>
