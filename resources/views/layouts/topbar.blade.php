@@ -238,7 +238,7 @@
                                             </div> -->
                                         </div>
                                     </div>
-                                  
+
                                 </div>
                             </div>
                         </div>
@@ -254,12 +254,12 @@
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <div class="d-flex align-items-center page-header-user-dropdown">
                                      <!-- <img class="rounded-circle header-profile-user" src="@if (Auth::user()->avatar != ''){{ URL::asset('images/'. Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"alt="Header Avatar"> -->
-                                    
+
                                     @php
                                     preg_match('/(?:\w+\. )?(\w+).*?(\w+)(?: \w+\.)?$/',Auth::user()->name , $result);
                                     $name = strtoupper($result[1][0].$result[2][0]);
 
-                                    if (Auth::user()->avatar == null || Auth::user()->avatar =='' ){ 
+                                    if (Auth::user()->avatar == null || Auth::user()->avatar =='' ){
                                     @endphp
                                         <span class="rounded-circle user-profile  ml-2"><i
                                             class="align-middle f-12 fw-bold">{{$name}}</i></span>
@@ -268,13 +268,13 @@
                                     @endphp
                                     <img class="rounded-circle header-profile-user"
                                         src="{{URL::asset('images/'. Auth::user()->avatar)}}" alt="Header Avatar">
-                                    
+
 
                                     @php
                                     }
                                     @endphp
 
-                                    <!-- <img class="rounded-circle mx-1 header-profile-user" 
+                                    <!-- <img class="rounded-circle mx-1 header-profile-user"
                                         src="{{ URL::asset('assets/images/users/avatar-8.jpg') }}"
                                         alt="Header Avatar"> -->
                                     <span class="text-start ms-xl-2">
@@ -290,19 +290,12 @@
                                         class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i> <span
                                         class="align-middle">Profile</span></a>
 
-                                @hasrole("Employee")
-
-                                @else
+                                @if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin'))
 
                                 <a class="dropdown-item" href="{{route('vmt_topbar_settings')}}"><i
                                         class="mdi mdi-cog-outline text-muted fs-16 align-middle me-1"></i> <span
                                         class="align-middle">Settings</span></a>
-                                @endhasrole
-
-                                <!-- <div class="colors-content">
-                            <button class="selectColor" id="colorOne" value="red">one</button>
-                            
-                        </div> -->
+                                @endif
 
 
                                 <a class="dropdown-item " href="javascript:void();"
@@ -618,7 +611,7 @@
                                     </div>
                                 </div>
 
-                                
+
                     </div>
                 </div> -->
 
