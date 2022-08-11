@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Models\VmtMasterConfig;
 
 class MasterConfigSeeder extends Seeder
 {
@@ -15,9 +16,31 @@ class MasterConfigSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('vmt_config_master')->insert(array(
-            ['config_name'=>'client_code_series', 'config_value'=>'100'],
-            ['config_name'=>'can_send_appointmentletter_after_onboarding', 'config_value'=>'true'],
-        ));
+        //Add new configs here
+        $config_settings = [
+            "client_code_series" => "100",
+            "can_send_appointmentletter_after_onboarding"=>"true"
+        ];
+
+        $existingConfigs = VmtMasterConfig::whereIn('config_name', array_keys($config_settings))->pluck('config_name');
+
+        //Remove config which already exists in DB
+        foreach($existingConfigs as $keys)
+        {
+            unset($config_settings[$keys]);
+        }
+
+        //dd($config_settings);
+
+        //Insert missing configs
+        $newConfigsCount = 0;
+        foreach($config_settings as $key => $value)
+        {
+            DB::table('vmt_config_master')->insert(['config_name'=>$key, 'config_value'=>$value]);
+            $newConfigsCount++;
+        }
+
+        //dd(DB::table('vmt_config_master')->get()->toArray());
+        echo "Configs addded : ".$newConfigsCount." \n";
     }
 }
