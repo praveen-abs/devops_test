@@ -715,7 +715,7 @@
         </div>
     </div>
     <div class="row">
-            <div class="col-12 ">
+        {{-- <div class="col-12 ">
             <form id="upload_form" enctype="multipart/form-data">
                 <div class="d-flex align-items-center justify-content-between">
                     @csrf
@@ -735,7 +735,7 @@
 
                 </div>
             </form>
-        </div>
+        </div> --}}
         <div class="col-12">
             <div class="container-fluid mb-1 mt-3 ">
                 <form id="kpiTableForm">

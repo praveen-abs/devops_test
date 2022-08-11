@@ -15,18 +15,18 @@ return new class extends Migration
     {
         Schema::create('vmt_kpi_form_table', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 200);
-            $table->text('dimension');
-            $table->text('kpi');
-            $table->text('operational_definition');
-            $table->text('measure');
-            $table->text('frequency');
-            $table->text('target');
-            $table->text('stretch_target');
-            $table->text('source');
-            $table->text('kpi_weightage');
-            $table->string('author_id');
-            $table->string('author_name');
+            $table->string('name', 200)->nullable();
+            $table->text('dimension')->nullable();
+            $table->text('kpi')->nullable();
+            $table->text('operational_definition')->nullable();
+            $table->text('measure')->nullable();
+            $table->text('frequency')->nullable();
+            $table->text('target')->nullable();
+            $table->text('stretch_target')->nullable();
+            $table->text('source')->nullable();
+            $table->text('kpi_weightage')->nullable();
+            $table->string('author_id')->nullable();
+            $table->string('author_name')->nullable();
             $table->timestamps();
         });
     }

@@ -4,7 +4,6 @@
 <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('assets/libs/swiper/swiper.min.css')}}" rel="stylesheet" type="text/css" />
 
-
 <link href="{{ URL::asset('assets/css/assign_goals.css') }}" rel="stylesheet">
 <link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
 <!-- <link href="{{ URL::asset('assets/css/salary.css') }}" rel="stylesheet"> -->
@@ -24,7 +23,6 @@
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/chartist.min.css') }}">
 <!--Map-->
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/jquery-jvectormap-2.0.2.css') }}">
-
 
 <!-- calendar -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" />
@@ -92,9 +90,7 @@
                     <a href="{{ url('/assets/sample_kpi.xls')  }}" target="_blank" class="btn btn-primary mx-2"><i class="ri-file-download-fill mx-1"></i>
                             Sample File
                     </a>
-
                     </div>
-
                 </div>
             </form>
         </div>
@@ -252,15 +248,20 @@
 
 <!-- Error Message Notification -->
 
-<div style="z-index: 11">
-    <div id="errorMessageNotif1" class="toast toast-border-danger overflow-hidden mt-3" role="alert" aria-live="assertive" aria-atomic="true">
+<div class="position-fixed top-0 end-0 p-4" style="z-index: 11">
+    <div id="errorMessageNotif_fieldsEmpty" class="toast toast-border-danger overflow-hidden mt-3" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Error</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+
         <div class="toast-body">
             <div class="d-flex align-items-center">
                 <div class="flex-shrink-0 me-2">
                     <i class="ri-alert-line align-middle"></i>
                 </div>
                 <div class="flex-grow-1">
-                    <h6 class="mb-0">Something is very wrong!  <a href="javascript:void(0);" class="text-decoration-underline">See detailed report.</a></h6>
+                    <h6 class="mb-0">Please fill all the fields.</h6>
                 </div>
             </div>
         </div>
@@ -268,7 +269,32 @@
 </div>
 
 
+<!-- Default bootstrap model -->
 
+
+<div class="modal zoomIn" id="Modal_Message">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Info</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <b id="info_message">Please fill all the fields.</b>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
 
 <!--  -->
 @endsection
@@ -372,42 +398,42 @@ $(document).ready(function(){
                         var source = '';
                         var kpiWeightage = '';
                         if (showdimension == 'block') {
-                            dimension = '<td class="text-box-td p-1"><textarea name="dimension[]" id="" class="text-box" cols="20" placeholder="type here">'+value[0]+'</textarea></td>';
+                            dimension = '<td class="text-box-td p-1"><textarea name="dimension[]" data-show="true" id="" class="text-box" cols="20" placeholder="type here">'+value[0]+'</textarea></td>';
                         } else {
                             dimension = '<input type="hidden" name="dimension[]">';
                         }
                         if (showkpi == 'block') {
-                            kpi = '<td class="text-box-td p-1"><textarea name="kpi[]" id="" class="text-box" cols="20" placeholder="type here">'+value[1]+'</textarea></td>';
+                            kpi = '<td class="text-box-td p-1"><textarea name="kpi[]" data-show="true" id="" class="text-box" cols="20" placeholder="type here">'+value[1]+'</textarea></td>';
                         } else {
                             kpi = '<input type="hidden" name="kpi[]">';
                         }
                         if (showoperational == 'block') {
-                            operational = '<td class="text-box-td p-1"><textarea name="operational[]" id="" class="text-box" cols="20" placeholder="type here">'+value[2]+'</textarea></td>';
+                            operational = '<td class="text-box-td p-1"><textarea name="operational[]" data-show="true" id="" class="text-box" cols="20" placeholder="type here">'+value[2]+'</textarea></td>';
                         } else {
                             operational = '<input type="hidden" name="operational[]">';
                         }
                         if (showmeasure == 'block') {
-                            measure = '<td class="text-box-td p-1"><textarea name="measure[]" id="" class="text-box" cols="20" placeholder="type here">'+value[3]+'</textarea></td>';
+                            measure = '<td class="text-box-td p-1"><textarea name="measure[]" data-show="true" id="" class="text-box" cols="20" placeholder="type here">'+value[3]+'</textarea></td>';
                         } else {
                             measure = '<input type="hidden" name="measure[]">';
                         }
                         if (showfrequency == 'block') {
-                            frequency = '<td class="text-box-td p-1"><textarea name="frequency[]" id="" class="text-box" cols="20" placeholder="type here">'+value[4]+'</textarea></td>';
+                            frequency = '<td class="text-box-td p-1"><textarea name="frequency[]" data-show="true" id="" class="text-box" cols="20" placeholder="type here">'+value[4]+'</textarea></td>';
                         } else {
                             frequency = '<input type="hidden" name="frequency[]">';
                         }
                         if (showtarget == 'block') {
-                            target = '<td } class="text-box-td p-1"> <textarea name="target[]" id="" class="text-box" cols="20" placeholder="type here">'+value[5]+'</textarea></td>';
+                            target = '<td } class="text-box-td p-1"> <textarea name="target[]" data-show="true" id="" class="text-box" cols="20" placeholder="type here">'+value[5]+'</textarea></td>';
                         } else {
                             target = '<input type="hidden" name="target[]">';
                         }
                         if (showstretchTarget == 'block') {
-                            stretchTarget = '<td class="text-box-td p-1"><textarea name="stretchTarget[]" id="" class="text-box" cols="10" placeholder="type here">'+value[6]+'</textarea></td>';
+                            stretchTarget = '<td class="text-box-td p-1"><textarea name="stretchTarget[]" data-show="true" id="" class="text-box" cols="10" placeholder="type here">'+value[6]+'</textarea></td>';
                         } else {
                             stretchTarget = '<input type="hidden" name="stretchTarget[]">';
                         }
                         if (showsource == 'block') {
-                            source = '<td class="text-box-td p-1"><textarea name="source[]" id="" class="text-box" cols="10" placeholder="type here">'+value[7]+'</textarea></td>';
+                            source = '<td class="text-box-td p-1"><textarea name="source[]" data-show="true" id="" class="text-box" cols="10" placeholder="type here">'+value[7]+'</textarea></td>';
                         } else {
                             source = '<input type="hidden" name="source[]">';
                         }
@@ -470,42 +496,42 @@ $(function () {
         var kpiWeightage = '';
 
         if (showdimension == 'block') {
-            dimension = '<td class="text-box-td p-1"><textarea name="dimension[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td>';
+            dimension = '<td class="text-box-td p-1"><textarea name="dimension[]" data-show="true" id="" class="text-box" cols="20" placeholder="type here"></textarea></td>';
         } else {
             dimension = '<input type="hidden" name="dimension[]">';
         }
         if (showkpi == 'block') {
-            kpi = '<td class="text-box-td p-1"><textarea name="kpi[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td>';
+            kpi = '<td class="text-box-td p-1"><textarea name="kpi[]" data-show="true" id="" class="text-box" cols="20" placeholder="type here"></textarea></td>';
         } else {
             kpi = '<input type="hidden" name="kpi[]">';
         }
         if (showoperational == 'block') {
-            operational = '<td class="text-box-td p-1"><textarea name="operational[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td>';
+            operational = '<td class="text-box-td p-1"><textarea name="operational[]" data-show="true" id="" class="text-box" cols="20" placeholder="type here"></textarea></td>';
         } else {
             operational = '<input type="hidden" name="operational[]">';
         }
         if (showmeasure == 'block') {
-            measure = '<td class="text-box-td p-1"><textarea name="measure[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td>';
+            measure = '<td class="text-box-td p-1"><textarea name="measure[]" data-show="true" id="" class="text-box" cols="20" placeholder="type here"></textarea></td>';
         } else {
             measure = '<input type="hidden" name="measure[]">';
         }
         if (showfrequency == 'block') {
-            frequency = '<td class="text-box-td p-1"><textarea name="frequency[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td>';
+            frequency = '<td class="text-box-td p-1"><textarea name="frequency[]" data-show="true" id="" class="text-box" cols="20" placeholder="type here"></textarea></td>';
         } else {
             frequency = '<input type="hidden" name="frequency[]">';
         }
         if (showtarget == 'block') {
-            target = '<td } class="text-box-td p-1"> <textarea name="target[]" id="" class="text-box" cols="20" placeholder="type here"></textarea></td>';
+            target = '<td } class="text-box-td p-1"> <textarea name="target[]" data-show="true" id="" class="text-box" cols="20" placeholder="type here"></textarea></td>';
         } else {
             target = '<input type="hidden" name="target[]">';
         }
         if (showstretchTarget == 'block') {
-            stretchTarget = '<td class="text-box-td p-1"><textarea name="stretchTarget[]" id="" class="text-box" cols="10" placeholder="type here"></textarea></td>';
+            stretchTarget = '<td class="text-box-td p-1"><textarea name="stretchTarget[]" data-show="true" id="" class="text-box" cols="10" placeholder="type here"></textarea></td>';
         } else {
             stretchTarget = '<input type="hidden" name="stretchTarget[]">';
         }
         if (showsource == 'block') {
-            source = '<td class="text-box-td p-1"><textarea name="source[]" id="" class="text-box" cols="10" placeholder="type here"></textarea></td>';
+            source = '<td class="text-box-td p-1"><textarea name="source[]" data-show="true" id="" class="text-box" cols="10" placeholder="type here"></textarea></td>';
         } else {
             source = '<input type="hidden" name="source[]">';
         }
@@ -535,10 +561,12 @@ $(function () {
         var isAllFieldsEntered = true;
         var canSaveForm = true;
         var kpiWeightageTotal = 0;
+        var errorMessages = [];
 
         //Validate the input fields
         $("#kpiTableForm :input").each(function(){
             var input = $(this);
+            //console.log(input.attr('name'));
 
             if(input.attr('name') == "kpiWeightage[]" && input.attr('data-show') == 'true')
             {
@@ -551,28 +579,46 @@ $(function () {
             }
 
         });
-        //Validate other fields
-        if( isAllFieldsEntered )
+
+        //Check if form name entered
+        if($('#name').val().trim().length==0)
         {
-            console.log($('textarea[name="kpiWeightage[]"]').attr('data-show'));
+            isAllFieldsEntered = false;
+            errorMessages.push("<li>KPI Form name is empty.</li>");
+            console.log("KPI Form name is empty! ");
+        }
+
+        //Validate other fields
+        if( isAllFieldsEntered)
+        {
+           // console.log($('textarea[name="kpiWeightage[]"]').attr('data-show'));
 
             //Validate KPI Weightage
             if(kpiWeightageTotal != 100 && $('textarea[name="kpiWeightage[]"]').attr('data-show') == 'true')
             {
                 canSaveForm = false;
-                alert("KPI Weightage should be exactly 100%. Please validate.");
+                //alert("KPI Weightage should be exactly 100%. Please validate.");
+                errorMessages.push("<li>Please make sure that KPI Weightage is exactly 100%.</li>");
+                //$('#error_message').html("Please make sure that KPI Weightage is exactly 100%.");
+                //$('#errorModal_FillAllFields').modal('show');
             }
+
+
+
         }
         else
         {
-        //alert("Please fill all the fields");
-
-        //var toast = new bootstrap.Toast($('#errorMessageNotif'));
-        setTimeout(() => {
-            $('#errorMessageNotif_fieldsEmpty').toast('show');
-        }, 0)
+            errorMessages.push("<li>Please fill all the fields in KPI Form.</li>");
+            //alert("Please fill all the fields");
+            // $('#error_message').html("Please fill all the fields.");
+            // $('#errorModal_FillAllFields').modal('show');
+            //var toast = new bootstrap.Toast($('#errorMessageNotif'));
+            // setTimeout(() => {
+            //     $('#errorMessageNotif_fieldsEmpty').toast('show');
+            // }, 0);
 
             canSaveForm = false;
+            console.log("Error : Some form fields are missing");
         }
 
         if(canSaveForm)
@@ -584,16 +630,19 @@ $(function () {
                 success: function(data){
                     $("#kpiTableForm :input").prop("disabled", true);
                     $(".table-btn").prop('disabled', true);
-                    $('#notificationModal').show();
+                    //$('#notificationModal').show();
 
-                    // alert("Table Saved, Please publish goals");
                     $('#modalBody').html("Kpi Form Table Saved.");
-                    $('#notificationModal').show();
-                    $('#notificationModal').removeClass('fade');
-                    $("#kpitable_id").val(data.table_id);
-                    $('#publish-goal').removeAttr('disabled');
+                    $('#info_message').html("Kpi Form Table Saved.");
+                    $('#Modal_Message').modal('show');
                 }
             });
+        }
+        else
+        {
+            console.log(errorMessages);
+            $('#info_message').html("Please fix the following errors : <br/><br/><ul>"+errorMessages.join("").toString()+"</ul>");
+            $('#Modal_Message').modal('show');
         }
 
     });
