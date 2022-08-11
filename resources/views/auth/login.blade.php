@@ -115,7 +115,7 @@
                                         <div class="form-row mb-3">
                                             <input type="text"
                                                 class="form-control textbox  @error('user_code') is-invalid @enderror" 
-                                                value="{{ old('user_code', 'ABS100') }}"
+                                                value="{{ old('user_code', 'ADMIN100') }}"
                                                 id="user_code" name="user_code" placeholder="Employee Code">
                                             <label for="" class="float-label">Employee Code</label>
                                             @error('user_code')

@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Imports\VmtEmployeeImport;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtClientMaster;
+use App\Models\VmtMasterConfig;
 use App\Models\Compensatory;
 use App\Models\VmtEmployeePMSGoals;
 use App\Models\VmtAppraisalQuestion;
@@ -37,6 +38,7 @@ class VmtEmployeeController extends Controller
     }
 
     public function employeeOnboarding(Request $request) {
+        // Used for Quick onboarding 
         if($request->has('email')){
             $employee  =  User::where('email', $request->email)->first();
             $clientData  = VmtEmployee::where('userid', $employee->id)->first();
@@ -55,15 +57,21 @@ class VmtEmployeeController extends Controller
 
             return view('vmt_employeeOnboarding', compact('empNo','emp_details', 'countries', 'compensatory', 'bank', 'emp','department'));
         }else{
-            $employee  =  User::orderBy('created_at','DESC')->first();
-              $ucode =(int) filter_var($employee->user_code, FILTER_SANITIZE_NUMBER_INT);  
-        $clientData  = VmtClientMaster::first();
-        $maxId  = $ucode+1;
-        if ($clientData) {
-            $empNo = $clientData->client_code.$maxId;
-        } else {
-            $empNo = $maxId;
-        }
+            $clientData  = VmtClientMaster::first();       
+            $employee  =  User::orderBy('created_at','DESC')->where('user_code', 'LIKE', '%'.$clientData->client_code.'%')->first();
+            if(empty($employee))
+            {
+               $client_code_series = VmtMasterConfig::where('config_name','=','client_code_series')->first()->value('config_value');
+                $maxId = (int)($client_code_series) + 1;
+            }else{
+                $ucode =(int) filter_var($employee->user_code, FILTER_SANITIZE_NUMBER_INT);  
+                $maxId  = $ucode+1;
+            }
+            if ($clientData) {
+                $empNo = $clientData->client_code.$maxId;
+            } else {
+                $empNo = $maxId;
+            }
         $countries = Countries::all();
         $india = Countries::where('country_code', 'IN')->first();
         $emp = VmtEmployeeOfficeDetails::all();
