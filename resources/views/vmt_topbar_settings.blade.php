@@ -109,7 +109,7 @@ input[type=file] {
 
                                         <div class="mb-3">
                                             <div class="logo-image d-flex align-items-center">
-                                                <img id="profile_round_image_dist" src="http://127.0.0.1:8000/assets/images/vasa.jpg" alt="brand-logo">
+                                                <img id="profile_round_image_dist" src="" alt="brand-logo">
                                                 <button class="btn btn-primary mx-2">
                                                     <i class="ri-attachment-line px-1"></i>
                                                     <span> Upload</span>
@@ -135,7 +135,7 @@ input[type=file] {
                                             <div class="background-container d-flex align-items-center">
 
                                                 <div class="background-img">
-                                                    <img id="profile_background_image_dist" src="http://127.0.0.1:8000/assets/images/vasa.jpg"
+                                                    <img id="profile_background_image_dist" src=""
                                                         alt="brand-logo">
                                                 </div>
                                                 <div class="background-image-pin">

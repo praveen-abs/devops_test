@@ -24,7 +24,7 @@
             <div class="row ">
                 <div class="card card-animate">
                     <div class="card-body p-0">
-                        
+
                         <ul class="nav sub-topnav">
                             <li routerlinkactive="active" class="active">
                                 <a routerlink="directory" href="{{url('vmt-employess/directory')}}">Employee
@@ -39,7 +39,7 @@
                             <li routerlinkactive="active">
                                 <a routerlink="profile-changes" href="#/org/employees/profile-changes">Profile
                                     Changes</a>
-                               
+
                             </li>
                             <li routerlinkactive="active">
                                 <a routerlink="privateprofiles" href="#/org/employees/privateprofiles">Private
@@ -246,7 +246,7 @@
                         <th scope="col">Blood Group</th>
                         <th scope="col">Profile</th>
                         <th scope="col">Actions</th>
-                        <th scope="col">Status</th>
+                        {{-- <th scope="col">Status</th> --}}
                     </tr>
                 </thead>
                 <tbody>
@@ -291,7 +291,7 @@
 
                             <!-- </div> -->
                         </td>
-                        <td>
+                        {{-- <td>
                             <div class="switch-field align-items-center  justify-content-center">
                                 <input type="hidden" value="{{$employee->user_id}}" name="id{{$key}}" id="id{{$key}}">
                                 <input class="status" type="radio" id="radio-one{{$key}}" name="{{$key}}" value="1"
@@ -301,7 +301,7 @@
                                     @if(!$employee->emp_status) checked @endif>
                                 <label for="radio-two{{$key}}">Inactive</label>
                             </div>
-                        </td>
+                        </td> --}}
                     </tr>
                     @endforeach
 
