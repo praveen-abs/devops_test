@@ -1,21 +1,12 @@
 @extends('layouts.master-without-nav')
 @section('title')
-@lang('translation.signin')
 @endsection
 @section('css')
+    <link href="{{ URL::asset('assets/css/login_page.css') }}" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
 <link href="{{ URL::asset('assets/css/login_page.css') }}" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
-</script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
-</script>
-
 @endsection
 @section('content')
 
@@ -24,11 +15,11 @@
 
     if($logoObj){
         $logoSrc = $logoObj->logo_img;
-    }else{  
+    }else{
         $logoSrc = 'assets/images/vasa.jpg';
     }
     //dd($logoSrc);
-    
+
 ?>
 
 
@@ -106,13 +97,13 @@
                                     <p class="m-0   h5 fw-bold log">Login <span class="mr-1">to</span><span
                                             class="m-0 fw-bold h4 mr-1">ABS</span><small
                                             class="text-orange fw-bold f-10">hrms</small></p>
-                                    <p class="text-muted f-10 mb-2">Login to run your business together</p>                                                                 
+                                    <p class="text-muted f-10 mb-2">Login to run your business together</p>
 
 
                                     @csrf
                                     <div class="form-outline mb-3 form-row">
                                     <input type="text"
-                                                class="form-control textbox  @error('user_code') is-invalid @enderror" 
+                                                class="form-control textbox  @error('user_code') is-invalid @enderror"
                                                 value="{{ old('user_code', 'ADMIN100') }}"
                                                 id="user_code" name="user_code" placeholder="Employee Code">
                                         <label for="" class="float-label">Employee Code</label>
@@ -159,18 +150,18 @@
                                     </div>
                                     <div class="d-flex align-items-center justify-content-center social-icons-wrapper">
                                         <a href="https://accounts.google.com/signin" class="mr-5">
-                                            
+
                                             <img src="{{ URL::asset('assets/images/login_img/google.png') }}" alt=""
                                                 class="h-50 w-25">
                                         </a>
                                         <a href="https://www.linkedin.com/login" class="mr-5">
-                                            
+
                                             <img src="{{ URL::asset('assets/images/login_img/linkedIn_PNG39.png') }}"
                                                 alt="" class="h-50 w-25">
                                         </a>
                                         <a class="mr"
                                             href="https://login.live.com/login.srf?wa=wsignin1.0&rpsnv=13&ct=1658217648&rver=7.0.6738.0&wp=MBI_SSL&wreply=https:%2F%2Faccount.microsoft.com%2Fauth%2Fcomplete-signin%3Fru%3Dhttps%253A%252F%252Faccount.microsoft.com%252F%253Frefp%253Dsignedout-index%2526refd%253D127.0.0.1&lc=1033&id=292666&lw=1&fl=easi2">
-                                            
+
                                             <img src="{{ URL::asset('assets/images/login_img/microsoft_PNG18.png') }}"
                                                 alt="" class="h-50 w-25">
                                         </a>
@@ -222,17 +213,14 @@ $( document ).ready(function() {
     console.log(temp);
 
     var allCookies = document.cookie.split(';');
-    
+
     for (var i = 0; i < allCookies.length; i++)
         document.cookie = allCookies[i] + "=;expires="
         + new Date(0).toUTCString();
 
     console.log("All cookies cleared");
-  
+
 });
 </script>
 
-<script src="{{ URL::asset('assets/libs/particles.js/particles.js.min.js') }}"></script>
-<script src="{{ URL::asset('assets/js/pages/particles.app.js') }}"></script>
-<script src="{{ URL::asset('assets/js/pages/password-addon.init.js')}}"></script>
 @endsection

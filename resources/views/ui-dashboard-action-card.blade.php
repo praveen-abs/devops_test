@@ -1,10 +1,3 @@
-<script type="text/javascript">
-$(document).ready(function() {
-    if (!$.browser.webkit) {
-        $('.wrapper').html('<p>Sorry! Non webkit users. :(</p>');
-    }
-});
-</script>
 <style type="text/css">
 header {
     font-family: 'Lobster', cursive;
@@ -65,23 +58,23 @@ header {
             // if($notification){
             @endphp
 
-            
+
                 {{-- <b>6 July 2022</b> --}}
-            
+
                 <p
                     class="text-muted mr-1 w-100 f-10 my-2 d-felx align-items-center justify-content-center p-1 bg-box-color-success">{{$notification->data['message']}}
                 </p>
                 <!-- <br>       -->
-            
+
 
             @php } @endphp
             @php
             foreach ($currentUser->Notifications as $not) {
             @endphp
-            
-            
+
+
                 <p class="text-muted w-100 f-10 my-2 d-felx align-items-center justify-content-center p-1 bg-box-color-pink  align-items-center ">{{$not->data['message']}}
-            
+
             @php } @endphp
         </div>
     </div>

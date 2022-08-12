@@ -5,34 +5,24 @@
 <link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
 
 <meta name="csrf-token" content="{{ csrf_token() }}" />
-<link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('assets/libs/swiper/swiper.min.css')}}" rel="stylesheet" type="text/css" />
 
 <!-- prem content -->
 
 <!--Bootstrap CSS-->
-<link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/bootstrap.min.css') }}">
 
 <!--Custom style.css-->
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/quicksand.css') }}">
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/dashboard.css') }}">
 <!-- <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/hr_dashboard.css') }}"> -->
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/holiday.css') }}">
-<!--Bootstrap Calendar-->
-<!-- <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/bootstrap_calendar.css') }}"> -->
 
 <!--Font Awesome-->
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/fontawesome-all.min.css') }}">
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/fontawesome.css') }}">
 <!--Animate CSS-->
-<link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/chartist.min.css') }}">
-<link rel="stylesheet" href="{{ URL::asset('/assets/css/app.min.css') }}">
 <!--Map-->
-<link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/jquery-jvectormap-2.0.2.css') }}">
 
-<!-- calendar -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" />
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" /> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 <!-- prem content end -->
 
@@ -456,28 +446,15 @@
 <!-- OWL CAROUSEL -->
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
 
-<script src="{{ URL::asset('/assets/premassets/js/jquery-1.12.4.min.js') }}"></script>
-<!--Popper JS-->
-<script src="{{ URL::asset('/assets/premassets/js/popper.min.js') }}"></script>
-<!--Bootstrap-->
-<script src="{{ URL::asset('/assets/premassets/js/bootstrap.min.js') }}"></script>
 <!--Sweet alert JS-->
 <script src="{{ URL::asset('/assets/premassets/js/sweetalert.js') }}"></script>
 <script src="{{ URL::asset('/assets/premassets/js/progressbar.min.js') }}"></script>
 
-<!--Bootstrap Calendar JS-->
-<!-- <script src="{{ URL::asset('/assets/premassets/js/calendar/bootstrap_calendar.js') }}"></script>
-    <script src="{{ URL::asset('/assets/premassets/js/calendar/demo.js') }}"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment.min.js"></script>
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script> -->
 <!--Nice select-->
 <script src="{{ URL::asset('/assets/premassets/js/jquery.nice-select.min.js') }}"></script>
 
 <!--Custom Js Script-->
 <script src="{{ URL::asset('/assets/premassets/js/custom.js') }}"></script>
-<script src="{{ URL::asset('/assets/premassets/js/hr_dashboard.js') }}"></script>
 <script src="{{ URL::asset('/assets/premassets/js/holiday.js') }}"></script>
 <script src="{{ URL::asset('/assets/premassets/js/calendar.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/premassets/js/calendar.js') }}"></script>
@@ -485,63 +462,13 @@
 <!-- Prem assets ends -->
 
 <!-- apexcharts -->
-<script src="{{ URL::asset('/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
-<script src="{{ URL::asset('/assets/libs/jsvectormap/jsvectormap.min.js') }}"></script>
 <script src="{{ URL::asset('assets/libs/swiper/swiper.min.js')}}"></script>
 <!-- dashboard init -->
-<script src="{{ URL::asset('/assets/js/pages/dashboard-ecommerce.init.js') }}"></script>
-<script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 @yield('welcome-script')
 @yield('script-profile-avatar')
 <!-- for date and time -->
 
-<script src="https://unpkg.com/codeflask/build/codeflask.min.js"></script>
-<script type="text/javascript">
-var config = `
-function selectDate(date) {
-  $('#calendar-wrapper').updateCalendarOptions({
-    date: date
-  });
-  console.log(calendar.getSelectedDate());
-}
 
-var defaultConfig = {
-  weekDayLength: 1,
-  date: '08/05/2021',
-  onClickDate: selectDate,
-  showYearDropdown: true,
-  startOnMonday: false,
-};
-
-var calendar = $('#calendar-wrapper').calendar(defaultConfig);
-console.log(calendar.getSelectedDate());
-`;
-eval(config);
-const flask = new CodeFlask('#editor', {
-    language: 'js',
-    lineNumbers: true
-});
-flask.updateCode(config);
-flask.onUpdate((code) => {
-    try {
-        eval(code);
-    } catch (e) {}
-});
-</script>
-<script defer src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<script defer>
-fetch('https://raw.githubusercontent.com/wrick17/calendar-plugin/master/README.md')
-    .then(response => response.text())
-    .then(function(text) {
-        const docs = text.split('**DOCS**')[1];
-        document.getElementById('content').innerHTML = `
-          <div>
-            <h2>DOCS</h2>
-            ${marked.parse(docs)}
-          <div>
-          `;
-    });
-</script>
 <script>
 $(document).ready(function() {
     $(function() {
@@ -566,42 +493,62 @@ $(document).ready(function() {
     });
 
 
-});
+    $('#annon_menu_submit').click(function(e) {
+        e.preventDefault();
+        var image = $('#image_src').val();
+        //alert(image);
+        var title_data = $('#title_data').val();
+        var details_data = $('#details_data').val();
+        var user_ref_id = "{{Auth::user()->id}}";
+        $.ajax({
+            type: "POST",
+            url: "{{url('vmt-dashboard-announcement')}}",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                title_data: title_data,
+                user_ref_id: user_ref_id,
+                details_data: details_data,
+            },
+            success: function(data) {
+                // alert(data);
+                location.reload();
+            }
+        })
+    });
 
 
-// for number increament
+    // for number increament
 
-$(function() {
-    function count($this) {
-        var current = parseInt($this.html(), 10);
-        $this.html(++current);
+    $(function() {
+        function count($this) {
+            var current = parseInt($this.html(), 10);
+            $this.html(++current);
 
-        if (current != 0) {
-            if (current !== $this.data('count')) {
-                setTimeout(function() {
-                    count($this)
-                }, 50);
+            if (current != 0) {
+                if (current !== $this.data('count')) {
+                    setTimeout(function() {
+                        count($this)
+                    }, 50);
+                }
             }
         }
-    }
 
-    $(".number-increment").each(function() {
-        var currentValue = parseInt($(this).html(), 10);
-        $(this).data('count', currentValue);
-        $(this).html('0');
+        $(".number-increment").each(function() {
+            var currentValue = parseInt($(this).html(), 10);
+            $(this).data('count', currentValue);
+            $(this).html('0');
 
-        if (currentValue != 0)
-            count($(this));
+            if (currentValue != 0)
+                count($(this));
+        });
     });
-});
-</script>
-<script type="text/javascript">
-$(document).ready(function(e) {
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+
     $('#submit_post_data').submit(function(e) {
         e.preventDefault();
         // alert("helooo");
@@ -624,29 +571,7 @@ $(document).ready(function(e) {
         });
     });
 });
-</script>
-<script type="text/javascript">
-$('#annon_menu_submit').click(function(e) {
-    e.preventDefault();
-    var image = $('#image_src').val();
-    //alert(image);
-    var title_data = $('#title_data').val();
-    var details_data = $('#details_data').val();
-    var user_ref_id = "{{Auth::user()->id}}";
-    $.ajax({
-        type: "POST",
-        url: "{{url('vmt-dashboard-announcement')}}",
-        data: {
-            "_token": "{{ csrf_token() }}",
-            title_data: title_data,
-            user_ref_id: user_ref_id,
-            details_data: details_data,
-        },
-        success: function(data) {
-            // alert(data);
-            location.reload();
-        }
-    })
-});
+
+
 </script>
 @endsection

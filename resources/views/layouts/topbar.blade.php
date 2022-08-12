@@ -876,48 +876,6 @@
     </div>
 </header>
 
-<script type="text/javascript">
-    $('a[data-notif-id]').click(function () {
-
-        var notif_id   = $(this).data('notifId');
-        alert(notif_id);
-        var targetHref = $(this).data('href');
-
-        $.post('/NotifMarkAsRead', {'notif_id': notif_id}, function (data) {
-            data.success ? (window.location.href = targetHref) : false;
-        }, 'json');
-
-        return false;
-});
-
-    function read_id() {
-
-        var notif_id   = $(this).data('notifId');
-alert(notif_id);
-        //var targetHref = $(this).data('href');
-
-        $.post('/NotifMarkAsRead', {'notif_id': notif_id}, function (data) {
-            data.success ? (window.location.href = targetHref) : false;
-        }, 'json');
-
-        return false;
-}
-    // function read(){
-    //     var read_id = $('#read_id').val();
-    //     alert(read_id);
-    //      $.ajax({
-    //             type: "GET",
-    //             url: '/vmt-role-list', // serializes the form's elements.
-    //             success: function(data)
-    //             {
-
-
-    //             }
-    //         })
-    // }
-</script>
-
-
 @section('script')
 <!-- apexcharts -->
 <!-- <script src="{{ URL::asset('/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
