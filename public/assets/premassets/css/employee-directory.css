@@ -78,7 +78,7 @@
 
 .badge {
     background: #a2a9b4;
-    margin-left: 10px !important;
+    margin-left: 0px !important;    /*10px*/
     padding-left: 4px !important;
     padding-right: 4px !important;
     padding-top: 0 !important;
@@ -345,4 +345,11 @@ td img {
 
 .form-control:focus {
      border: 1px solid #c1cef9 !important;
+}
+
+.profile-name-icon{
+    height: 26px;
+    width: 26px;
+    background-color: #f3f3f9;
+    border-radius: 50%;
 }

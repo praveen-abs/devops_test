@@ -3,10 +3,7 @@
 @endsection
 @section('css')
     <link href="{{ URL::asset('assets/css/login_page.css') }}" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
-    </script>
-<link href="{{ URL::asset('assets/css/login_page.css') }}" rel="stylesheet">
+    {{-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> --}}
 @endsection
 @section('content')
 
@@ -23,23 +20,22 @@
 ?>
 
 
-<section class="vh-100">
+<section class="vh-100" id="section-head">
     <div class="container-fluid h-100">
-        <div class="row h-100 mx-1 mx-sm-2">
+        <div class="row h-100">
             <div class="col col-xl-12">
                 <div class="card h-100">
                     <div class="row g-0 h-100">
-                        <div class="col-md-6 col-xl-7 col-lg-7 d-none d-xs-none d-sm-none d-md-block">
-                            <div id="carouselExampleIndicators" class="carousel w-100 slide" data-ride="carousel">
+                        <div class="col-md-6 col-xl-7 col-lg-7 d-none d-xs-none d-sm-none d-md-block left-content">
+                            <div id="carouselExampleIndicators" class="carousel w-100 slide" data-bs-ride="carousel">
                                 <ol class="carousel-indicators">
-                                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                                    <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+                                    <li data-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></li>
+                                    <li data-target="#carouselExampleIndicators" data-bs-slide-to="1"></li>
+                                    <li data-target="#carouselExampleIndicators" data-bs-slide-to="2"></li>
+                                    <li data-target="#carouselExampleIndicators" data-bs-slide-to="3"></li>
                                 </ol>
                                 <div class="carousel-inner h-100">
-                                    <div class="carousel-item active h-100">
-
+                                    <div class="carousel-item active h-100" data-bs-interval="2000">
                                         <img src="{{ URL::asset('assets/images/login_img/illustrator.svg') }}" alt=""
                                             class="">
                                         <div class="carousel-caption">
@@ -49,7 +45,7 @@
                                             </p>
                                         </div>
                                     </div>
-                                    <div class="carousel-item  h-100">
+                                    <div class="carousel-item h-100" data-bs-interval="2000">
                                         <img src="{{ URL::asset('assets/images/login_img/Chat support.svg') }}" alt=""
                                             class="">
                                         <div class="carousel-caption d-none d-md-block">
@@ -57,7 +53,7 @@
                                                 your questions with <span class="text-orange">Chat Support</span></p>
                                         </div>
                                     </div>
-                                    <div class="carousel-item h-100">
+                                    <div class="carousel-item h-100" data-bs-interval="2000">
                                         <img src="{{ URL::asset('assets/images/login_img/Payroll.svg') }}" alt=""
                                             class="">
                                         <div class="carousel-caption d-none d-md-block">
@@ -88,14 +84,14 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="col-md-6 col-sm-12 col-xs-12 col-xl-5 col-lg-5 d-flex align-items-center right-cotent">
-                            <div class="card-body  p-4 p-lg-5 te1xt-black login-card">
+                        <div class="col-md-6 col-sm-12 col-xs-12 col-xl-5 col-lg-5 d-flex align-items-center right-content">
+                            <div class="card-body te1xt-black login-card">
                                 <form action="{{ route('login') }}" method="POST" class="login-form">
                                     <div class="d-flex align-items-center justify-content-center mb-3">
                                         <img src="{{ URL::asset($generalInfo->logo_img) }}" alt="" class="">
                                     </div>
-                                    <p class="m-0   h5 fw-bold log">Login <span class="mr-1">to</span><span
-                                            class="m-0 fw-bold h4 mr-1">ABS</span><small
+                                    <p class="m-0   h5 fw-bold log">Login <span class="me-1">to</span><span
+                                            class="m-0 fw-bold h4 me-1">ABS</span><small
                                             class="text-orange fw-bold f-10">hrms</small></p>
                                     <p class="text-muted f-10 mb-2">Login to run your business together</p>
 
@@ -149,17 +145,17 @@
                                         <span class="text-center fw-bold mx-3 mb-0 text-muted">OR</span>
                                     </div>
                                     <div class="d-flex align-items-center justify-content-center social-icons-wrapper">
-                                        <a href="https://accounts.google.com/signin" class="mr-5">
+                                        <a href="https://accounts.google.com/signin" class="me-5">
 
                                             <img src="{{ URL::asset('assets/images/login_img/google.png') }}" alt=""
                                                 class="h-50 w-25">
                                         </a>
-                                        <a href="https://www.linkedin.com/login" class="mr-5">
+                                        <a href="https://www.linkedin.com/login" class="me-5">
 
                                             <img src="{{ URL::asset('assets/images/login_img/linkedIn_PNG39.png') }}"
                                                 alt="" class="h-50 w-25">
                                         </a>
-                                        <a class="mr"
+                                        <a class="me"
                                             href="https://login.live.com/login.srf?wa=wsignin1.0&rpsnv=13&ct=1658217648&rver=7.0.6738.0&wp=MBI_SSL&wreply=https:%2F%2Faccount.microsoft.com%2Fauth%2Fcomplete-signin%3Fru%3Dhttps%253A%252F%252Faccount.microsoft.com%252F%253Frefp%253Dsignedout-index%2526refd%253D127.0.0.1&lc=1033&id=292666&lw=1&fl=easi2">
 
                                             <img src="{{ URL::asset('assets/images/login_img/microsoft_PNG18.png') }}"
@@ -168,7 +164,7 @@
                                     </div>
                                     <div class="d-flex align-items-center my-4  available-app justify-content-center ">
 
-                                        <span class="f-12 mr-3">Available On</span>
+                                        <span class="f-12 me-3">Available On</span>
                                         <a href="#" class="mx-2">
                                             <img src="{{ URL::asset('assets/images/Google_Play_Store.png') }}" alt=""
                                                 class="">

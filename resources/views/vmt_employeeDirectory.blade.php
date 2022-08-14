@@ -2,11 +2,10 @@
 @section('title') @lang('translation.projects') @endsection
 @section('css')
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/employee-directory.css') }}">
-<link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/app.min.css') }}">
+<link rel="stylesheet" href="{{ URL::asset('/assets/css/app.min.css') }}">
 <!--Font Awesome-->
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/fontawesome-all.min.css') }}">
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/fontawesome.css') }}">
-
 @endsection
 
 
@@ -255,16 +254,16 @@
 
                         <td>
                             <div class="d-flex justify-content-start align-items-center table-img">
-                                <div class="mx-2">
+                                <div class="mx-2 d-flex justify-content-center align-items-center profile-name-icon">
                                     @if( empty($employee->avatar) || !file_exists(public_path('images/'. $employee->avatar)) )
                                         @php
                                         preg_match('/(?:\w+\. )?(\w+).*?(\w+)(?: \w+\.)?$/',$employee->emp_name , $result);
                                         $name = strtoupper($result[1][0].$result[2][0]);
                                         @endphp
-                                        <span class="badge rounded-circle h-10 w-10   badge-primary ml-2"><i
-                                                class="align-middle">{{$name}}</i></span>
+                                        <!--span class="badge rounded-circle h-10 w-10   badge-primary ms-2"-->
+                                        <span class="align-middle">{{$name}}</span><!--/span-->
                                     @else
-                                        <img src="{{ URL::asset('images/'.$employee->avatar) }}" alt="" class="" />
+                                        <img src="{{ URL::asset('images/'.$employee->avatar) }}" alt="" class="h-100 w-100" />
                                     @endif
 
                                 </div>
@@ -363,7 +362,13 @@ $(document).ready(function() {
 
     });
 
-
+    $('body').on('click', '.topbarNav', function() {
+        $('.topbarNav').removeClass('active');
+        $(this).addClass('active');
+        var id = $(this).attr('id');
+        $('.topbarContent').hide();
+        $('.emp-' + id).css("display", "block");
+    });
 
     $('#calendar_type').change(function() {
         calendar();
@@ -386,13 +391,7 @@ $(document).ready(function() {
         $("[data-toggle=popover]").popover('hide');
     });
 
-    $('body').on('click', '.topbarNav', function() {
-        $('.topbarNav').removeClass('active');
-        $(this).addClass('active');
-        var id = $(this).attr('id');
-        $('.topbarContent').hide();
-        $('.emp-' + id).css("display", "block");
-    });
+
     var options = [];
     $('.dropdown-menu a').on('click', function(event) {
         var $target = $(event.currentTarget),

@@ -6,6 +6,7 @@
     <title>ABS - HRMS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <script src="{{ URL::asset('assets/js/app.min.js') }}" defer></script>
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ URL::asset('assets/images/favicon_abs.png')}}">
     @include('layouts.head-css')
