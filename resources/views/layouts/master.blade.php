@@ -24,7 +24,7 @@
         text-align: center;
         display: none;
     }
-    .credit a{text-decoration: none;display: block;    color: rgba(191, 191, 191, 0.36);-webkit-transition:.3s ease;-o-transition:.3s ease;transition:.3s ease}
+    .credit a{text-decoration: none;display: block;   color: rgba(191, 191, 191, 0.36);-webkit-transition:.3s ease;-o-transition:.3s ease;transition:.3s ease}
     .credit a:hover{color:#283e4a}
     .loader-container {
         margin: auto;

@@ -17613,12 +17613,13 @@ p {
 }
 
 .profile-img-wrap .fileupload {
-    background: rgba(33, 33, 33, 0.5);
-    bottom: 30px;
+    background: rgba(33, 33, 33, 0.75);
+    bottom: 46px;
     position: relative;
     width: inherit;
-
-
+    color: white;
+    z-index: 0;
+    border: none;
 }
 
 .profile-img-wrap .fileupload .upload {
@@ -19247,4 +19248,12 @@ span .paginate_button {
 #pencil-on-avatar{
     margin-top: 45px;
     margin-left: -15px;
+}
+
+
+#experience-detail-table::-webkit-scrollbar-track {
+    background-color: #ccc;
+}
+#experience-detail-table::-webkit-scrollbar-thumb {
+    background-color: red;
 }
