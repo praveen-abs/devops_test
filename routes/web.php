@@ -20,6 +20,7 @@ Auth::routes();
 //Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
 
 Route::get('/',  [App\Http\Controllers\VmtMainDashboardController::class, 'index'])->name('index');
+
 // Route::get('/index',  [App\Http\Controllers\VmtMainDashboardController::class, 'index'])->name('main');
 
 //Update User Details
@@ -95,6 +96,11 @@ Route::post('vmt-apraisal-question/bulk-upload', 'App\Http\Controllers\VmtAprais
 
 Route::post('vmt-apraisal-question/save', 'App\Http\Controllers\VmtApraisalController@addNewQuestion');
 
+// dashboard post task
+Route::post('vmt-dashboard-post', 'App\Http\Controllers\VmtMainDashboardController@DashBoardPost');
+Route::post('vmt-dashboard-announcement', 'App\Http\Controllers\VmtMainDashboardController@DashBoardAnnouncement');
+
+
 // assign pms goals
 Route::get('vmt-pms-assigngoals', 'App\Http\Controllers\VmtPmsController@vmtAssignGoals');
 
@@ -107,9 +113,6 @@ Route::get('vmt-getAllParentReviewer', 'App\Http\Controllers\VmtPmsController@vm
 
 Route::get('vmt-approvereject-kpitable', 'App\Http\Controllers\VmtApraisalController@approveRejectKPITable');
 Route::post('vmt-approvereject-command', 'App\Http\Controllers\VmtApraisalController@approveRejectCommandKPITable');
-// dashboard post task
-Route::post('vmt-dashboard-post', 'App\Http\Controllers\VmtMainDashboardController@DashBoardPost');
-Route::post('vmt-dashboard-announcement', 'App\Http\Controllers\VmtMainDashboardController@DashBoardAnnouncement');
 
 Route::get('vmt-dashboard-post-view/{id}', 'App\Http\Controllers\VmtMainDashboardController@DashBoardPostView');
 // dashboard task //
@@ -238,7 +241,6 @@ Route::get('/vmt-pms-kpi',[App\Http\Controllers\VmtPmsController::class, 'vmt_pm
 Route::get('/vmt-pms-kpi-create',[App\Http\Controllers\VmtPmsController::class, 'vmt_pms_kpi_create'])->name('vmt_pms_kpi_create');
 Route::post('/vmt-pms-kpi-create',[App\Http\Controllers\VmtPmsController::class, 'vmt_pms_kpi_create_store']);
 
-Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index']);
 
 //Onboarding pages
 
@@ -248,3 +250,9 @@ Route::get('/vmt_clientOnboarding', function () {
 
 //
 Route::post('vmt_clientOnboarding', 'App\Http\Controllers\VmtClientController@store');
+
+//PMS v2
+Route::get('/pms',  [App\Http\Controllers\PMS\VmtPMSModuleController::class, 'showPMSDashboard'])->name('pms-dashboard');
+
+//DONT WRITE ANT ROUTES BELOW THIS
+Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index']);
