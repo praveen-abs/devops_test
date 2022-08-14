@@ -3,28 +3,14 @@
 @section('css')
 
 <link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
-
-<meta name="csrf-token" content="{{ csrf_token() }}" />
-<link href="{{ URL::asset('assets/libs/swiper/swiper.min.css')}}" rel="stylesheet" type="text/css" />
-
-<!-- prem content -->
-
-<!--Bootstrap CSS-->
-
-<!--Custom style.css-->
-<link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/quicksand.css') }}">
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/dashboard.css') }}">
-<!-- <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/hr_dashboard.css') }}"> -->
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/holiday.css') }}">
 
-<!--Font Awesome-->
-<link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/fontawesome-all.min.css') }}">
-<link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/fontawesome.css') }}">
-<!--Animate CSS-->
-<!--Map-->
+<meta name="csrf-token" content="{{ csrf_token() }}" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
-<!-- prem content end -->
+<!--Custom style.css-->
+<!-- <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/hr_dashboard.css') }}"> -->
+
 
 @endsection
 
@@ -444,7 +430,6 @@
 @section('script')
 <!-- Prem assets -->
 <!-- OWL CAROUSEL -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
 
 <!--Sweet alert JS-->
 <script src="{{ URL::asset('/assets/premassets/js/sweetalert.js') }}"></script>
@@ -462,7 +447,6 @@
 <!-- Prem assets ends -->
 
 <!-- apexcharts -->
-<script src="{{ URL::asset('assets/libs/swiper/swiper.min.js')}}"></script>
 <!-- dashboard init -->
 @yield('welcome-script')
 @yield('script-profile-avatar')
