@@ -101,7 +101,7 @@
                 <!-- end Dashboard Menu -->
                 <li class="nav-item">
                     @if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin'))
-                    <a class="nav-link sidebar menu-link pt-0" href="{{url('index')}}">
+                    <a class="nav-link sidebar menu-link pt-0" href="{{route('index')}}">
                         <i> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#686363"
                                 class="bi bi-grid-fill" viewBox="0 0 16 16">
                                 <path
@@ -111,7 +111,7 @@
                         <span data-key="t-landing">Dashboard</span>
                     </a>
                     @else
-                    <a class="nav-link sidebar menu-link pt-0" href="{{url('index')}}">
+                    <a class="nav-link sidebar menu-link pt-0" href="{{route('index')}}">
                         <i> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#686363"
                                 class="bi bi-grid-fill" viewBox="0 0 16 16">
                                 <path
