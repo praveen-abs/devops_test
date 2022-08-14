@@ -99,7 +99,154 @@
                         @endhasrole
 
                         <!--DROPDOWN CODE WAS HERE-->
+                        <div class="dropdown topbar-head-dropdown ms-1 ">
+                            <button type="button" class="btn btn-icon btn-topbar rounded-circle"
+                                id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false" style="border: 0px;">
+                                <!-- <svg xmlns="http://www.w3.org/2000/svg" width="18.798" height="22.911"
+                                    viewBox="0 0 18.798 22.911">
+                                    <path id="ic_notifications_none_24px"
+                                        d="M13.4,25.411a2.357,2.357,0,0,0,2.35-2.35h-4.7A2.357,2.357,0,0,0,13.4,25.411Zm7.049-7.049V12.487c0-3.607-1.915-6.626-5.287-7.425v-.8a1.762,1.762,0,0,0-3.525,0v.8c-3.36.8-5.287,3.807-5.287,7.425v5.875L4,20.711v1.175H22.8V20.711ZM18.1,19.536H8.7V12.487C8.7,9.573,10.474,7.2,13.4,7.2s4.7,2.373,4.7,5.287Z"
+                                        transform="translate(-4 -2.5)" fill="#361338" opacity="0.4" />
+                                </svg> -->
+                                <img src="{{ URL::asset('assets/images/bell.png') }}" alt="" class="" style="height:
+                                    20px; width: 20px;">
+                                <span
+                                    class="badge badge-light fs-10 translate-middle badge rounded-pill bg-danger">{{$User = Auth::user()->unreadNotifications->count();}}</span>
+                                {{-- <span class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger"
+                                        class="visually-hidden"></span> --}}
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
+                                aria-labelledby="page-header-notifications-dropdown">
+                                <div class="dropdown-head bg-primary bg-pattern rounded-top">
+                                    <div class="p-3">
+                                        <div class="row align-items-center">
+                                            <div class="col">
+                                                <h6 class="m-0 fs-16 fw-semibold text-white"> Notifications </h6>
+                                            </div>
+                                            <div class="col-auto dropdown-tabs">
+                                                <span class="badge badge-soft-light fs-13">
+                                                    {{$User = Auth::user()->unreadNotifications->count();}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="px-2 pt-2">
+                                        <ul class="nav nav-tabs dropdown-tabs nav-tabs-custom" data-dropdown-tabs="true"
+                                            id="notificationItemsTab" role="tablist">
+                                            <li class="nav-item waves-effect active waves-light">
+                                                <a class="nav-link active" data-bs-toggle="tab" href="#messages-tab" role="tab"
+                                                    aria-select ed="false">
+                                                    Messages
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="tab-content" id="notificationItemsTabContent">
+                                    <!-- <div class="tab-pane fade show active py-2 ps-2" id="all-noti-tab" role="tabpanel">
+                                        <div data-simplebar style="max-height: 300px;" class="pe-2">
+                                            <div
+                                                class="text-reset notification-item d-block dropdown-item position-relative">
+                                                <div class="d-flex">
+                                                    {{-- <div class="avatar-xs me-3">
+                                                        <span class="avatar-title bg-soft-info text-info rounded-circle fs-16">
+                                                            <i class="bx bx-badge-check"></i>
+                                                        </span>
+                                                    </div> --}}
+                                                    <div class="flex-1">
+                                                    </div>
 
+                                                </div>
+                                            </div>
+
+                                            <div
+                                                class="text-reset notification-item d-block dropdown-item position-relative">
+                                                <div class="d-flex">
+                                                    <div class="avatar-xs me-3">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div> -->
+                                    <div class="tab-pane fade show active py-2 ps-2 " id="messages-tab" role="tabpanel"
+                                        aria-labelledby="messages-tab">
+                                        <div data-simplebar style="max-height: 300px;" class="pe-2">
+                                            @php
+                                            $currentUser = Auth::user();
+                                            $User = Auth::user()->unreadNotifications  ->count();
+                                           // $read_id= Auth::user()->notifications()->where('id', $id)->first();
+                                                // var_dump($currentUser->notifications);
+                                            foreach ($currentUser->unreadNotifications  as $notification) {
+                                                // if($notification){
+                                            @endphp
+                                            <div class="text-reset notification-item d-block dropdown-item">
+                                                <div class="d-flex">
+
+                                                    <img src="{{ URL::asset('assets/images/event1.png') }}"
+                                                        class="me-3 rounded-circle avatar-xs" alt="user-pic">
+                                                    <div class="flex-1">
+                                                        <div class="fs-13 text-muted">
+                                                <a style="color: blue;" href="{{url('notifications/'.$notification->id)}}" data-notif-id="{{$notification->id}}">
+
+                                             {{$notification->data['message']}}
+                                </a>
+                                                        </div>
+                                                        <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
+                                                            <span><i class="mdi mdi-clock-outline"></i> 30 min
+                                                                ago</span>
+                                                        </p>
+                                                    </div>
+                                                    <!-- <div class="px-2 fs-15">
+                                                        <input class="form-check-input" type="checkbox">
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                            @php
+                                        // }
+                                            }
+                                            @endphp
+                                            @php
+                                             foreach ($currentUser->Notifications  as $notification) {
+                                                // if($notification){
+                                            @endphp
+                                            <div class="text-reset notification-item d-block dropdown-item">
+                                                <div class="d-flex">
+
+                                                    <img src="{{ URL::asset('assets/images/event1.png') }}"
+                                                        class="me-3 rounded-circle avatar-xs" alt="user-pic">
+                                                    <div class="flex-1">
+                                                        <div class="fs-13 text-muted">
+                                 <a  href="{{url('notifications/'.$notification->id)}}" data-notif-id="{{$notification->id}}">
+                                {{$notification->data['message']}}
+                                 </a>
+                                                        </div>
+                                                        <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
+                                                            <span><i class="mdi mdi-clock-outline"></i> 30 min
+                                                                ago</span>
+                                                        </p>
+                                                    </div>
+                                                    <!-- <div class="px-2 fs-15">
+                                                        <input class="form-check-input" type="checkbox">
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                            @php
+                                        // }
+                                            }
+                                            @endphp
+                                            <!-- <div class="my-3 text-center">
+                                                <button type="button"
+                                                    class="btn btn-soft-success waves-effect waves-light">View
+                                                    All Messages <i
+                                                        class="ri-arrow-right-line align-middle"></i></button>
+                                            </div> -->
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
 
 
                         <a href="" class="ml-2  settings-icon   ">

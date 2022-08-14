@@ -261,7 +261,7 @@
                                         $name = strtoupper($result[1][0].$result[2][0]);
                                         @endphp
                                         <!--span class="badge rounded-circle h-10 w-10   badge-primary ms-2"-->
-                                        <span class="align-middle">{{$name}}</span><!--/span-->
+                                        <span class="align-middle fw-bold text-white">{{$name}}</span><!--/span-->
                                     @else
                                         <img src="{{ URL::asset('images/'.$employee->avatar) }}" alt="" class="h-100 w-100" />
                                     @endif
