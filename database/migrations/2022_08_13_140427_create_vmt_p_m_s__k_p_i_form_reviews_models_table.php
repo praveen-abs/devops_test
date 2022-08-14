@@ -39,10 +39,7 @@ return new class extends Migration
             $table->text('is_reviewer_accepted');
 
             $table->text('assignee_rejection_comments');
-
-
             $table->text('reviewer_rejection_comments');
-            $table->text('assignee_rejection_comments');
 
             $table->text('overall_score');
 
