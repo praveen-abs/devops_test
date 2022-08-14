@@ -155,6 +155,7 @@
                                                         <input name="post_menuss" id="post_menuss"
                                                             class="border-0 outline-none  w-100 h-100" readonly
                                                             value="{{$user->message}}">
+
                                                         @endforeach
                                                     </div>
                                                 </div>
@@ -468,13 +469,13 @@ $(document).ready(function() {
     $('body').on('click', '.popover-close', function() {
         $("[data-toggle=popover]").popover('hide');
     });
-    $('body').on('click', '.topbarNav', function() {
+    /*$('body').on('click', '.topbarNav', function() {
         $('.topbarNav').removeClass('active');
         $(this).addClass('active');
         var id = $(this).attr('id');
         $('.topbarContent').hide();
         $('.emp-' + id).css("display", "block");
-    });
+    });*/
 
 
     $('#annon_menu_submit').click(function(e) {
