@@ -12,20 +12,19 @@
         <div class="col-12">
             <div class="pro-overview">
                 <div class="row">
-
                     <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex">
                         <div class="card profile-box border-0 flex-fill ">
                             <div class="card-body">
                                 <div class="profile-wrapper d-flex w-100 ">
-                                    <div class="profile-img">
-                                        @include('ui-profile-avatar')
+                                    <div class="profile-img d-flex">
+                                        @include('ui-profile-avatar-lg')
                                         <span class="personal-edit img-edit"><a href="#" class="edit-icon"
-                                            data-bs-toggle="modal" data-bs-target="#personal_info"><i
-                                                class="ri-pencil-fill"></i></a></span>
+                                            data-bs-toggle="modal" data-bs-target="#personal_info" id="pencil-on-avatar">
+                                            <i class="ri-pencil-fill"></i></a></span>
                                     </div>
                                     <div class="profile-info w-75 ">
 
-                                        <h3 class="card-title m-0 fw-bold mb-2">{{$user->name}}
+                                        <h3 class="card-title m-0 fw-bold mb-2 pt-1">{{$user->name}}
 
                                         </h3>
                                         <h6 class="departmnet fw-bold text-muted">{{$details->department}}</h6>
@@ -35,7 +34,6 @@
                                 </div>
 
                                 <div class="mt-4">
-
                                     <h5 class="mb-3">Profile Completeness</h5>
                                     <!-- <div class="staff-id fw-bold text-dark">Employee ID :
                                         {{$details->emp_no}}</div>
@@ -188,7 +186,7 @@
                                         </a>
                                     </span>
                                 </h3>
-                                <div class="table-responsive">
+                                <div class="table-responsive" id="experience-detail-table">
                                     <table class="table table-nowrap">
                                         <thead>
                                             <tr>
@@ -803,7 +801,7 @@
 
                                     if (Auth::user()->avatar == null || Auth::user()->avatar =='' ){
                                     @endphp
-                                        <span class="badge rounded-circle h-100 w-100 header-profile-user  badge-primary ml-2"><i
+                                        <span class="badge rounded-circle h-100 w-100 header-profile-user badge-primary ml-2"><i
                                             class="align-middle">{{$name}}</i></span>
                                     @php
                                     }else{

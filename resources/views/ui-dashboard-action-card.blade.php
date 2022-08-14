@@ -51,7 +51,7 @@ header {
     <h4 class="m-0 title text-center text-primary card-title my-2 fw-bold">My Actions</h4>
     <hr class="m-0">
     <div class="card-body " id="style-4">
-        <div class="action-content pr-1 d-felx align-items-start"> @php
+        <div class="action-content pr-1 d-flex align-items-start"> @php
             $currentUser = Auth::user();
             $User = Auth::user()->unreadNotifications->count();
             foreach ($currentUser->unreadNotifications as $notification) {

@@ -670,10 +670,10 @@ body {
 }
 
 .footer {
+    position: relative;
     z-index: 10;
     bottom: 0;
     padding: 5px .75rem;
-    position: fixed;
     right: 0;
     color: var(--vz-footer-color);
     left: 200px;
@@ -689,12 +689,12 @@ body {
 
 [data-layout=vertical][data-sidebar-size=sm-hover] .footer,
 [data-layout=vertical][data-sidebar-size=sm] .footer {
-    left: 80px;
+    left: 0px;
 }
 
 [data-layout=vertical][data-sidebar-size=lg-hover] .footer,
 [data-layout=vertical][data-sidebar-size=lg] .footer {
-    left: 200px;
+    left: 0px;
 }
 
 /* [data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .nav-link i {
@@ -797,7 +797,7 @@ body {
 /* by george 70px to 50px  */
 .page-content {
     /* padding: calc(40px + 24px) calc(24px / 2) 60px calc(24px / 2); */
-    padding: calc(70px + 1.5rem) calc(1.5rem / 2) 50px calc(1.5rem / 2);
+    padding: calc(70px + 1.5rem) calc(1.5rem / 2) 18px calc(1.5rem / 2);
 
 }
 
@@ -17613,12 +17613,13 @@ p {
 }
 
 .profile-img-wrap .fileupload {
-    background: rgba(33, 33, 33, 0.5);
-    bottom: 30px;
+    background: rgba(33, 33, 33, 0.75);
+    bottom: 46px;
     position: relative;
     width: inherit;
-
-
+    color: white;
+    z-index: 0;
+    border: none;
 }
 
 .profile-img-wrap .fileupload .upload {
@@ -18897,7 +18898,7 @@ table>tbody>tr>td>img,
 
 .footer-contents .powerby-footer {
     position: absolute;
-    right: 150px;
+    right: 190px;   /*150px*/
 }
 
 .footer-contents .powerby-footer img {
@@ -18906,7 +18907,7 @@ table>tbody>tr>td>img,
 
 .footer-contents .privacy-policy {
     position: absolute;
-    right: 50px;
+    right: 65px;    /*50px*/
 
 }
 
@@ -19229,4 +19230,30 @@ span .paginate_button {
     line-height: 60px;
     margin: 0px 0;
     font-weight: 600;
+}
+
+#profileShortNameLargeCircle-profile {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    background: #f1f1f1;
+    font-size: 35px;
+    /* color: #212529; */
+    text-align: center;
+    line-height: 70px;
+    margin: 0px 0;
+    font-weight: 600;
+}
+
+#pencil-on-avatar{
+    margin-top: 45px;
+    margin-left: -15px;
+}
+
+
+#experience-detail-table::-webkit-scrollbar-track {
+    background-color: #ccc;
+}
+#experience-detail-table::-webkit-scrollbar-thumb {
+    background-color: red;
 }

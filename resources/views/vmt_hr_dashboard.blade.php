@@ -10,7 +10,7 @@
 
 <!--Custom style.css-->
 <!-- <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/hr_dashboard.css') }}"> -->
-
+<script src="{{ URL::asset('assets/js/app.min.js') }}" defer></script>
 
 @endsection
 
@@ -123,7 +123,7 @@
     </div>
     <div class="row">
 
-        <div class="col-sm-9 col-md-9">
+        <div class="col-sm-12 col-md-12">
             <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 ipad-query">
                     <div class="card profile-box flex-fill card-top-border">
@@ -191,7 +191,7 @@
 
 
                                                     </div>
-                                                    <button class="btn btn-primary py-1 px-4  float-right"
+                                                    <button class="btn btn-primary py-1 px-4  float-end"
                                                         type="submit">
                                                         Create Post
                                                     </button>

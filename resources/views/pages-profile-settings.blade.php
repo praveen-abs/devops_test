@@ -4,6 +4,11 @@
 @endsection
 @section('content')
 
+<!-- The script tag to crop our image -->
+<link rel="stylesheet" href="https://unpkg.com/bootstrap@5/dist/css/bootstrap.min.css" crossorigin="anonymous">
+<link rel="stylesheet" href="{{ URL::asset('/assets/css/cropper.css') }}">
+<script src="{{ URL::asset('assets/js/cropper.js') }}"></script>
+
 <div class="container-fluid user-details-wrapper">
     <div class="row">
         <div class="col-12">
@@ -14,11 +19,11 @@
                             <div class="profile-view">
                                 <div class="profile-img-wrap">
                                     <div class="profile-img">
-                                        <a href="#"> 
+                                        <a href="#">
                                              @php
                                     preg_match('/(?:\w+\. )?(\w+).*?(\w+)(?: \w+\.)?$/',Auth::user()->name , $result);
                                     $name = strtoupper($result[1][0].$result[2][0]);
-                                    if (Auth::user()->avatar == null || Auth::user()->avatar =="" ){ 
+                                    if (Auth::user()->avatar == null || Auth::user()->avatar =="" ){
                                     @endphp
                                         <span class="badge rounded-circle   badge-primary ml-2"><i
                                             class="align-middle">{{$name}}</i></span>
@@ -27,7 +32,7 @@
                                     @endphp
                                     <img class="rounded-circle header-profile-user"
                                         src=" {{URL::asset('images/'. Auth::user()->avatar)}}" alt="Header Avatar">
-                                    
+
 
                                     @php
                                     }
@@ -373,7 +378,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
 
 
@@ -805,13 +810,12 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="profile-img-wrap edit-img">
-
                                             <img class="rounded-circle header-profile-user"
                                                 src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"
                                                 alt="Header Avatar">
                                             <div class="fileupload btn">
                                                 <span class="btn-text">edit</span>
-                                                <input class="upload" name="profilePic" type="file">
+                                                <input class="upload" name="profilePic" type="file" accept="image/*">
                                             </div>
                                         </div>
                                         <div class="row">
