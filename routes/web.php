@@ -20,7 +20,7 @@ Auth::routes();
 //Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
 
 Route::get('/',  [App\Http\Controllers\VmtMainDashboardController::class, 'index'])->name('index');
-Route::get('/index',  [App\Http\Controllers\VmtMainDashboardController::class, 'index'])->name('index');
+// Route::get('/index',  [App\Http\Controllers\VmtMainDashboardController::class, 'index'])->name('index');
 
 //Update User Details
 Route::get('/profile-completeness/{id}', [App\Http\Controllers\HomeController::class, 'calculateProfileCompleteness'])->name('calculateProfileCompleteness');
