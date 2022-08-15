@@ -3,7 +3,7 @@
 
 <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
 <style>
-    
+
 .profile-box {
     border-radius: 12px !important;
     box-shadow: rgb(60 64 67 / 30%) 0px 1px 2px 0px, rgb(60 64 67 / 15%) 0px 2px 6px 2px !important;
@@ -198,12 +198,6 @@
 <script src="{{ URL::asset('/assets/libs/prismjs/prismjs.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/js/pages/notifications.init.js') }}"></script>
 <!-- apexcharts -->
-
-<!-- dashboard init -->
-<script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
 
 <!-- for validating -->
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
