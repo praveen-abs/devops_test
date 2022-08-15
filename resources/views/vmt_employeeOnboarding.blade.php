@@ -4,6 +4,22 @@
  @section('css')
 <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/onboarding.css') }}">
+
+<style>
+
+input {
+  width: 100% !important;
+  margin-left: 0 !important;
+  height: 2.7em;
+}
+
+.addfiles
+{
+padding: 7px;
+border-radius: 2px;
+}
+
+</style>
 @endsection
 
 @section('content')
@@ -14,9 +30,6 @@
 <div class="main">
 
     @include('ui-onboarding')
-
-
-
 
     @endsection
     @section('script')
