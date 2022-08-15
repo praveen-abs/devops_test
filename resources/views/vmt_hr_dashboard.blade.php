@@ -5,6 +5,7 @@
 <link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/dashboard.css') }}">
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/holiday.css') }}">
+<link href="{{ URL::asset('/assets/libs/fullcalendar/fullcalendar.min.css') }}" rel="stylesheet">
 
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 
@@ -125,7 +126,7 @@
 
         <div class="col-sm-12 col-md-12">
             <div class="row">
-                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 ipad-query">
+                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 ipad-query">
                     <div class="card profile-box flex-fill card-top-border">
                         <!-- <div class="p-1 bg-primary" ></div> -->
                         <div class="card-body ">
@@ -218,14 +219,14 @@
 
                                                         <div class="bottom-content d-flex mx-2">
                                                             <div class="form-check mx-2">
-                                                                <input class="form-check-input check-box mr-1"
+                                                                <input class="form-check-input check-box me-1"
                                                                     type="checkbox" value="" id="notifyEmp">
                                                                 <label class="form-check-label" for="notifyEmp">
                                                                     Notify employees
                                                                 </label>
                                                             </div>
                                                             <div class="form-check mx-2">
-                                                                <input class="form-check-input check-box  mr-1"
+                                                                <input class="form-check-input check-box  me-1"
                                                                     type="checkbox" value="" id="requireAcknowledge">
                                                                 <label class="form-check-label"
                                                                     for="requireAcknowledge">
@@ -233,14 +234,14 @@
                                                                 </label>
                                                             </div>
                                                             <div class="form-check mx-2">
-                                                                <input class="form-check-input check-box mr-1"
+                                                                <input class="form-check-input check-box me-1"
                                                                     type="checkbox" value="" id="hideAfter">
                                                                 <label class="form-check-label" for="hideAfter">
                                                                     Hide After
                                                                 </label>
                                                             </div>
                                                             <div class="form-check mx-2">
-                                                                <input class="form-control mr-1 anounce-date "
+                                                                <input class="form-control me-1 anounce-date "
                                                                     type="text" placeholder="Select date" value="" id=""
                                                                     disabled>
 
@@ -308,25 +309,25 @@
                                                             <!-- <button class="btn btn-secondary outline-none border-0"><i class=" ri-add-circle-line mr-2">Add More</i></button> -->
                                                             <button
                                                                 class="btn btn-light text-secondary px-0 bg-transparent outline-none border-0"><span
-                                                                    class="mr-2">+</span> Add More</i></button>
+                                                                    class="me-2">+</span> Add More</i></button>
                                                         </div>
 
                                                         <div class="bottom-content d-flex justify-content-between mx-2">
                                                             <div class=" mx-2">
                                                                 <label for="">Poll Expires On</label>
-                                                                <input class=" mr-1 anounce-date " type="text"
+                                                                <input class=" me-1 anounce-date " type="text"
                                                                     placeholder="Select date" value="" id="" disabled>
 
                                                             </div>
                                                             <div class=" mx-2">
-                                                                <input class="form-check-input check-box mr-1"
+                                                                <input class="form-check-input check-box me-1"
                                                                     type="checkbox" value="" id="notifyEmp2">
                                                                 <label class="form-check-label" for="notifyEmp2">
                                                                     Notify employees
                                                                 </label>
                                                             </div>
                                                             <div class="mx-2">
-                                                                <input class="form-check-input check-box mr-1"
+                                                                <input class="form-check-input check-box me-1"
                                                                     type="checkbox" value="" id="anonymous">
                                                                 <label class="form-check-label" for="anonymous">
                                                                     Anonymous Poll
@@ -366,6 +367,16 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 ipad-query">
+                    <div class="card profile-box flex-fill card-top-border">
+                        <div class="card-body ">
+                            <div class="profile-wrapper d-flex p-0">
+                                <div class="popover-body p-0 w-100">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 ipad-query">
                     {{-- @foreach($dashboardEmployeeEventsData['birthday'] as $key)
                             @include('ui-dashboard-event-card',['date' => $key->dob])
@@ -387,40 +398,6 @@
                         <div class="calendar-wrapper" id="calendar-wrapper"></div>
                     </div>
                 </div>
-                <!-- <div class="mb-0">
-                    <div class="title py-4 px-2" style="border-bottom:dotted #a4a5a7;">
-                        <h6 class="m-0 font-weight-bold text-primary">List Of Holidays-2022</h6>
-                    </div>
-                    <div class="card-body p-1">
-                    </div>
-                </div> -->
-                <!-- <div class="">
-                    <div class="card-body">
-                        <div class="col-sm-12 col-md-12 p-0">
-                            <div class="bg-muted pl-2 pr-2">
-                                <div class="row p-3">
-                                    <h6 class="mr-1 col-auto f-13 pr-0 wrap-text" style="width: 60%;"><i
-                                            class="fa fa-calendar-alt f-15 mr-2 text-purple"></i>Republic Day</h6>
-                                    <h6 class="f-13 col pl-0">
-                                        <div class="text-right">
-                                            <span>Sun, Jan 26</span>
-                                        </div>
-                                    </h6>
-                                </div>
-                                <hr class="m-0">
-                                <div class="row p-3">
-                                    <h6 class="mr-1 col-auto f-13 pr-0 wrap-text" style="width: 60%;"><i
-                                            class="fa fa-calendar-alt f-11 mr-2 text-yellow"></i>Shivaratri</h6>
-                                    <h6 class="f-13 col pl-0">
-                                        <div class="text-right">
-                                            <span>Sun, July 26</span>
-                                        </div>
-                                    </h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
             </div>
         </div>
     </div>
@@ -560,3 +537,5 @@ $(document).ready(function() {
 
 </script>
 @endsection
+
+
