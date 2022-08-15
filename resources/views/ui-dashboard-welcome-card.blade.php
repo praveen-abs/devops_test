@@ -102,9 +102,9 @@
                     style="width:120px;height:120px">
                 </lord-icon-->
                 <!--https://cdn.lordicon.com/pdlhjibh.json-->
-                <lord-icon src="https://cdn.lordicon.com/gbzcqtgv.json"
+                <lord-icon src="https://cdn.lordicon.com/dcfqtwxe.json"
                     trigger="loop"
-                    delay="2050"
+                    delay="2000"
                     colors="primary:#1aff1a,secondary:#1aff1a" style="width:300px;height:300px; top: 100px;">
                 </lord-icon>
                 <lord-icon src="https://cdn.lordicon.com/twopqjaj.json"
@@ -136,9 +136,9 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-body text-center p-1">
-                <lord-icon src="https://cdn.lordicon.com/gbzcqtgv.json"
+                <lord-icon src="https://cdn.lordicon.com/dcfqtwxe.json"
                     trigger="loop"
-                    delay="2050"
+                    delay="2000"
                     colors="primary:#ff3300,secondary:#ff3300" style="width:300px;height:300px; top: 100px;">
                 </lord-icon>
                 <lord-icon src="https://cdn.lordicon.com/twopqjaj.json"

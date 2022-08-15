@@ -5,12 +5,14 @@
 <link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/dashboard.css') }}">
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/holiday.css') }}">
-<link href="{{ URL::asset('/assets/libs/fullcalendar/fullcalendar.min.css') }}" rel="stylesheet">
+<link rel="stylesheet" href="{{ URL::asset('/assets/css/calendar-vanila.css') }}">
 
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 
 <!--Custom style.css-->
 <!-- <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/hr_dashboard.css') }}"> -->
+
+<script src="{{ URL::asset('assets/js/calendar-vanila.js') }}" defer></script>
 
 @endsection
 
@@ -45,7 +47,7 @@
         <div class="card-body">
         <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
             <div class="row mb-n4">
-                <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
+                <div class="col-sm-6 col-md-4 col-xl-3 col-lg-4">
                     <div class="card shadow profile-box card-top-border">
                         <!-- <div class="p-1 bg-primary" > -->
                         <div class="card-body d-flex justify-content-center align-items-center">
@@ -56,33 +58,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
-                    <div class="card shadow profile-box card-top-border ">
-                        <!-- <div class="p-1 bg-primary" > -->
-                        <div class="card-body d-flex justify-content-center align-items-center">
-                            <div class="text-center">
-                                <h5 class="fw-bold title">Total Employees</h5>
-                                <span class="number-increment text-muted f-15 fw-bold">
-                                    {{ json_decode($json_dashboardCountersData)->totalEmployeesCount }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
-                    <div class="card shadow profile-box orange-top-border ">
-                        <!-- <div class="p-1 bg-danger" > -->
-                        <div class="card-body d-flex justify-content-center align-items-center">
-                            <div class="text-center">
-                                <h5 class="fw-bold title">Online</h5>
-                                <span class="number-increment text-muted f-15 fw-bold">
-                                    {{ json_decode($json_dashboardCountersData)->todayEmployeesCheckedInCount }}</span>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
                     <div class="card shadow  profile-box card-top-border ">
                         <!-- <div class="p-1 bg-primary" > -->
                         <div class="card-body d-flex justify-content-center align-items-center">
@@ -92,41 +67,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
-                    <div class="card shadow  profile-box card-top-border ">
-                        <!-- <div class="p-1 bg-primary" > -->
-                        <div class="card-body d-flex justify-content-center align-items-center">
-                            <div class="text-center">
-                                <h5 class="fw-bold title">Employees on Leave</h5>
-                                <span class="number-increment text-muted f-15 fw-bold">
-                                    {{ json_decode($json_dashboardCountersData)->todayEmployeesOnLeaveCount }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
-                    <div class="card shadow  profile-box card-top-border ">
-                        <!-- <div class="p-1 bg-primary" > -->
-                        <div class="card-body d-flex justify-content-center align-items-center">
-                            <div class="text-center">
-                                <h5 class="fw-bold title">Future Joiners</h5>
-                                <span class="number-increment text-muted f-15 fw-bold">0</span>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        </div>
-    </div>
-    <div class="row">
-
-        <div class="col-sm-12 col-md-12">
-            <div class="row">
-                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 ipad-query">
-                    <div class="card profile-box flex-fill card-top-border">
+                    <div class="card profile-box flex-fill card-top-border" style="width: 316%">
                         <!-- <div class="p-1 bg-primary" ></div> -->
                         <div class="card-body ">
                             <div class="profile-wrapper d-flex p-0">
@@ -191,7 +132,7 @@
 
 
                                                     </div>
-                                                    <button class="btn btn-primary py-1 px-4  float-end"
+                                                    <button class="btn btn-primary py-1 px-4 float-end" style="margin-top: 17px;"
                                                         type="submit">
                                                         Create Post
                                                     </button>
@@ -366,16 +307,104 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 ipad-query">
+                <div class="col-sm-6 col-md-4 col-xl-3 col-lg-4">
+                    <div class="card shadow profile-box card-top-border ">
+                        <!-- <div class="p-1 bg-primary" > -->
+                        <div class="card-body d-flex justify-content-center align-items-center">
+                            <div class="text-center">
+                                <h5 class="fw-bold title">Total Employees</h5>
+                                <span class="number-increment text-muted f-15 fw-bold">
+                                    {{ json_decode($json_dashboardCountersData)->totalEmployeesCount }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card shadow  profile-box card-top-border ">
+                        <!-- <div class="p-1 bg-primary" > -->
+                        <div class="card-body d-flex justify-content-center align-items-center">
+                            <div class="text-center">
+                                <h5 class="fw-bold title">Employees on Leave</h5>
+                                <span class="number-increment text-muted f-15 fw-bold">
+                                    {{ json_decode($json_dashboardCountersData)->todayEmployeesOnLeaveCount }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-xl-3 col-lg-4">
+                    <div class="card shadow profile-box orange-top-border ">
+                        <!-- <div class="p-1 bg-danger" > -->
+                        <div class="card-body d-flex justify-content-center align-items-center">
+                            <div class="text-center">
+                                <h5 class="fw-bold title">Online</h5>
+                                <span class="number-increment text-muted f-15 fw-bold">
+                                    {{ json_decode($json_dashboardCountersData)->todayEmployeesCheckedInCount }}</span>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card shadow  profile-box card-top-border ">
+                        <!-- <div class="p-1 bg-primary" > -->
+                        <div class="card-body d-flex justify-content-center align-items-center">
+                            <div class="text-center">
+                                <h5 class="fw-bold title">Future Joiners</h5>
+                                <span class="number-increment text-muted f-15 fw-bold">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12 col-xl-3 col-lg-12">
                     <div class="card profile-box flex-fill card-top-border">
                         <div class="card-body ">
                             <div class="profile-wrapper d-flex p-0">
                                 <div class="popover-body p-0 w-100">
+                                    <div class="card-body">
+                                        <div class="_wrapper">
+                                            <div class="_container-calendar">
+                                                <h6 id="_monthAndYear"></h6>
+                                                <div class="_button-container-calendar">
+                                                    <button id="_previous" onclick="previous()">&#8249;</button>
+                                                    <button id="_next" onclick="next()">&#8250;</button>
+                                                </div>
+
+                                                <table class="_table-calendar" id="_calendar" data-lang="en">
+                                                    <thead id="_thead-month"></thead>
+                                                    <tbody id="_calendar-body"></tbody>
+                                                </table>
+
+                                                {{-- <div class="_footer-container-calendar">
+                                                     <label for="_month">Jump To: </label>
+                                                     <select id="_month" onchange="jump()">
+                                                         <option value=0>Jan</option>
+                                                         <option value=1>Feb</option>
+                                                         <option value=2>Mar</option>
+                                                         <option value=3>Apr</option>
+                                                         <option value=4>May</option>
+                                                         <option value=5>Jun</option>
+                                                         <option value=6>Jul</option>
+                                                         <option value=7>Aug</option>
+                                                         <option value=8>Sep</option>
+                                                         <option value=9>Oct</option>
+                                                         <option value=10>Nov</option>
+                                                         <option value=11>Dec</option>
+                                                     </select>
+                                                     <select id="_year" onchange="jump()"></select>
+                                                </div> --}}
+
+                                            </div>
+
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-12">
+            <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 ipad-query">
                     {{-- @foreach($dashboardEmployeeEventsData['birthday'] as $key)
                             @include('ui-dashboard-event-card',['date' => $key->dob])
@@ -392,9 +421,7 @@
                     style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);border-radius:3px 3px 20px 20px;">
                     <!-- <div class="p-1 bg-primary" ></div> -->
                     <div class="card-body p-0" style="padding:0px !important">
-                        <!-- <div id='full_calendar_events'></div> -->
-                        <!-- <div id="calendar"></div> -->
-                        <div class="calendar-wrapper" id="calendar-wrapper"></div>
+
                     </div>
                 </div>
             </div>
