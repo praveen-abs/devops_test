@@ -16,7 +16,7 @@
 @endcomponent
 
 
-<div class=" directory-wrapper bg-white px-3 pt-3 pb-0 mt-mb-15">
+<div class=" directory-wrapper bg-white px-3 pt-3 pb-0 mt-15">
     <h5 class="fw-bold">Employee Directory</h5>
     <!-- <div class="row">
         <div class="col-12">

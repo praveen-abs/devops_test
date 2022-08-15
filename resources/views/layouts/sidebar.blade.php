@@ -186,13 +186,13 @@
                     <div class="collapse menu-dropdown" id="crmDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1">
+                                <a href="{{url('vmt_vendor')}}" class="nav-link sidebar py-1">
                                     <span>Vendor</span>
                                 </a>
                             </li>
                             <li class="nav-item">
 
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1"
+                                <a href="{{url('vmt_client')}}" class="nav-link sidebar py-1"
                                     role="button"><span>Client</span></a>
                             </li>
                         </ul>
