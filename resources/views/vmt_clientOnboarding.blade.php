@@ -226,11 +226,6 @@
 <script src="{{ URL::asset('/assets/js/pages/notifications.init.js') }}"></script>
 <!-- apexcharts -->
 
-<!-- dashboard init -->
-<script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
 
 <!-- for validating -->
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
@@ -291,18 +286,18 @@ $('#form-1').on('submit', function(e) {
 $('#form-1').validate({
     errorPlacement: function (error, element) {
         error.text('* '+error.text());
-        if (element.parent('.input-group').length) { 
+        if (element.parent('.input-group').length) {
             error.insertAfter(element.parent());      // radio/checkbox?
-        } else if (element.hasClass('select2-hidden-accessible')) {     
+        } else if (element.hasClass('select2-hidden-accessible')) {
             error.insertAfter(element.next('span'));  // select2
             element.next('span').addClass('error').removeClass('valid');
-        } else {                                      
+        } else {
             error.insertAfter(element);               // default
         }
     }
 });
 
-$("select").on("select2:close", function (e) {  
+$("select").on("select2:close", function (e) {
     $(this).valid();
 });
 </script>

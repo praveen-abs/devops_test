@@ -27,7 +27,6 @@
 
 
 <!-- calendar -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 
@@ -1034,12 +1033,7 @@
 
 @section('script')
 <!-- Prem assets -->
-<!-- OWL CAROUSEL -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
 
-<!--Charts JS-->
-<script src="{{ URL::asset('/assets/premassets/js/charts/chart.min.js') }}"></script>
-<script src="{{ URL::asset('/assets/premassets/js/charts/demo.js') }}"></script>
 <!--Maps-->
 <script src="{{ URL::asset('/assets/premassets/js/maps/jquery-jvectormap-2.0.2.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/premassets/js/maps/jquery-jvectormap-world-mill-en.js') }}"></script>
@@ -1047,8 +1041,6 @@
 <!--Bootstrap Calendar JS-->
 <!-- <script src="{{ URL::asset('/assets/premassets/js/calendar/bootstrap_calendar.js') }}"></script>
     <script src="{{ URL::asset('/assets/premassets/js/calendar/demo.js') }}"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
 <!--Nice select-->
 <script src="{{ URL::asset('/assets/premassets/js/jquery.nice-select.min.js') }}"></script>
@@ -1066,9 +1058,6 @@
 <script src="{{ URL::asset('/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/libs/jsvectormap/jsvectormap.min.js') }}"></script>
 <script src="{{ URL::asset('assets/libs/swiper/swiper.min.js')}}"></script>
-<!-- dashboard init -->
-<script src="{{ URL::asset('/assets/js/pages/dashboard-ecommerce.init.js') }}"></script>
-<script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 
 <!-- for date and time -->
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>

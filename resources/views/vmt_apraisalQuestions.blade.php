@@ -28,7 +28,7 @@
                 <div class="d-flex align-items-center">
                     <h5 class="card-title mb-0 flex-grow-1">Questions</h5>
                     <div class="flex-shrink-0">
-                        <button type="button" class="btn btn-success add-btn" 
+                        <button type="button" class="btn btn-success add-btn"
                             id="create-btn" >
                             <a href="{{url('vmt_uploadApraisalQuestion')}}"><i
                                 class="ri-add-line align-bottom me-1"></i> Create
@@ -40,7 +40,7 @@
                     </div>
                 </div>
             </div>
-           
+
             <div class="card-body pt-0">
                 <div>
                     <!-- <ul class="nav nav-tabs nav-tabs-custom nav-success mb-3" role="tablist">
@@ -82,7 +82,7 @@
                         <table class="table table-nowrap align-middle" id="orderTable" style="">
                             <thead class="text-muted table-light">
                                 <tr class="text-uppercase">
-                                  
+
                                     <th class="sort" data-sort="id" style="width: 2%;">#</th>
                                     <th class="sort" data-sort="customer_name" style="width: 8%;">Dimension</th>
                                     <th class="sort" data-sort="product_name" style="width: 25%;">KPI</th>
@@ -101,7 +101,7 @@
                             <tbody class="list form-check-all">
                                 @foreach($questionList as $question)
                                 <tr>
-                                  
+
                                     <td class="id"><a href="apps-ecommerce-order-details"
                                         class="fw-medium link-primary">{{$question->id}}</a></td>
                                     <td class="customer_name" style="text-align:center">{{$question->dimension}}</td>
@@ -119,7 +119,7 @@
                                     </td>
                                     <td>
                                         <ul class="list-inline hstack gap-2 mb-0">
-                                           
+
                                             <li class="list-inline-item edit"
                                                 data-bs-toggle="tooltip" data-bs-trigger="hover"
                                                 data-bs-placement="top" title="Edit">
@@ -168,7 +168,7 @@
                         </div>
                     </div>
                 </div>
-              
+
 
                 <!-- Modal -->
                 <div class="modal fade flip" id="deleteOrder" tabindex="-1" aria-hidden="true">
@@ -232,9 +232,7 @@
         <!--ecommerce-customer init js -->
         <script src="{{ URL::asset('assets/js/pages/ecommerce-order.init.js') }}"></script>
         <script src="{{ URL::asset('assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
-<script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 
 <script type="text/javascript">
     function deleteQuestion(qId){
@@ -246,9 +244,9 @@
         console.log($('#delete-form').serialize());
 
         $.ajax({
-            type: "POST", 
-            data: $('#delete-form').serialize(), 
-            url: "{{url('vmt-apraisal-question/delete')}}", 
+            type: "POST",
+            data: $('#delete-form').serialize(),
+            url: "{{url('vmt-apraisal-question/delete')}}",
             success: function(data)
             {
                 $('#alert-msg').html(data);

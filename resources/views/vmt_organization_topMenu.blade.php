@@ -34,13 +34,13 @@
                     <a routerlink="privateprofiles" href="#/org/employees/privateprofiles">Documents
                         </a>
                 </li>
-            
+
                 <li routerlinkactive="active">
                     <a routerlink="privateprofiles" href="#/org/employees/privateprofiles">Assets
                         </a>
                 </li>
-                
-            
+
+
             </ul>
         </div>
     </div>
@@ -52,8 +52,5 @@
 
 <script src="{{ URL::asset('/assets/libs/prismjs/prismjs.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/js/pages/notifications.init.js') }}"></script>
-<!-- dashboard init -->
-<script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
-
 
 @endsection

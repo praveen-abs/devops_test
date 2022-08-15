@@ -11,7 +11,6 @@
 
 <!--Custom style.css-->
 <!-- <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/hr_dashboard.css') }}"> -->
-<script src="{{ URL::asset('assets/js/app.min.js') }}" defer></script>
 
 @endsection
 

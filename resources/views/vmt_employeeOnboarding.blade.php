@@ -28,30 +28,14 @@
     <!-- apexcharts -->
 
     <!-- dashboard init -->
-    <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
 
     <!--Page Wrapper-->
 
-    <script src="http://thecodeplayer.com/uploads/js/jquery-1.9.1.min.js" type="text/javascript"></script><!-- -->
-    <!-- jQuery easing plugin -->
-    <script src="http://thecodeplayer.com/uploads/js/jquery.easing.min.js" type="text/javascript"></script>
-
 
     <script src="http://thecodeplayer.com/uploads/js/jquery-1.9.1.min.js" type="text/javascript"></script><!-- -->
     <!-- jQuery easing plugin -->
     <script src="http://thecodeplayer.com/uploads/js/jquery.easing.min.js" type="text/javascript"></script>
 
-    <!-- Page JavaScript Files-->
-    <script src="{{ URL::asset('/assets/premassets/js/jquery.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/premassets/js/jquery-1.12.4.min.js') }}"></script>
-    <!--Popper JS-->
-    <script src="{{ URL::asset('/assets/premassets/js/popper.min.js') }}"></script>
-    <!--Bootstrap-->
-    <script src="{{ URL::asset('/assets/premassets/js/bootstrap.min.js') }}"></script>
-    <!--Sweet alert JS-->
     <script src="{{ URL::asset('/assets/premassets/js/sweetalert.js') }}"></script>
     <!--Progressbar JS-->
     <script src="{{ URL::asset('/assets/premassets/js/progressbar.min.js') }}"></script>
@@ -65,13 +49,12 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-    <!-- <script src="{{ URL::asset('/assets/premassets/js/onboarding.js') }}"></script> -->
 
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
-    
+
 
     <script>
-    
+
 $(document).ready(function() {
 
 $('#process').select2({
@@ -346,13 +329,13 @@ var flag = false;
        // alert("done ifsc");
        console.log("IFSC correct");
 
-    }else{ 
+    }else{
 
         if ($('#form-1').valid() && !flag) {
             //alert("1 st one");
             var form_data1 = new FormData(document.getElementById("form-1"));
             var txtPANCard = $("#pan_no").val();
-        
+
             $.ajax({
                 url: "{{url('vmt-employee-onboard')}}",
                 type: "POST",
@@ -363,13 +346,13 @@ var flag = false;
                 success: function(data) {
                     if (data.responseText == "Saved") {
                         $('#modalHeader').html(data);
-                        $('#modalNot').html("Employee Onboarding success");                
+                        $('#modalNot').html("Employee Onboarding success");
                         $('#modalBody').html("Mail notification sent.");
                         $('#notificationModal').show();
                         $('#notificationModal').removeClass('fade');
                     } else {
                         $('#modalHeader').html(data);
-                        $('#modalNot').html("Failed to save Data");                
+                        $('#modalNot').html("Failed to save Data");
                         //$('#modalBody').html("Request to the server failed");
                         $('#notificationModal').show();
                         $('#notificationModal').removeClass('fade');
@@ -404,18 +387,18 @@ var flag = false;
 $('#form-1').validate({
 errorPlacement: function (error, element) {
 error.text('* '+error.text());
-if (element.parent('.input-group').length) { 
+if (element.parent('.input-group').length) {
     error.insertAfter(element.parent());      // radio/checkbox?
-} else if (element.hasClass('select2-hidden-accessible')) {     
+} else if (element.hasClass('select2-hidden-accessible')) {
     error.insertAfter(element.next('span'));  // select2
     element.next('span').addClass('error').removeClass('valid');
-} else {                                      
+} else {
     error.insertAfter(element);               // default
 }
 }
 });
 
-$("select").on("select2:close", function (e) {  
+$("select").on("select2:close", function (e) {
 $(this).valid();
 });
 });

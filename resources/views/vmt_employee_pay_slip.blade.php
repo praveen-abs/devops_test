@@ -76,31 +76,4 @@
 <script src="{{ URL::asset('/assets/js/pages/notifications.init.js') }}"></script>
 <!-- apexcharts -->
 
-<!-- dashboard init -->
-<script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
-<script type="text/javascript">
-/* $('#role-form').on('submit', function(e){
-            e.preventDefault();
-            var roleUri = $('#role-form').attr('action');
-            console.log(roleUri);
-
-            $.ajax({
-                type: "GET",
-                url: roleUri,
-                data: $('#role-form').serialize(), // serializes the form's elements.
-                success: function(data)
-                {
-                  $('#alert-msg').html(data);
-                  var toastLiveExample3 = document.getElementById("borderedToast2");
-                    var toast = new bootstrap.Toast(toastLiveExample3);
-                    toast.show();
-                  //alert(data); // show response from the php script.
-                }
-            })
-            //console.log($('#role-form').serialize());
-        });*/
-</script>
 @endsection

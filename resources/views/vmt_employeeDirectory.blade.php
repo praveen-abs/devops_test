@@ -315,10 +315,7 @@
 @endsection
 @section('script')
 <!-- apexcharts -->
-<script src="{{ URL::asset('/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
-
 <script src="{{ URL::asset('/assets/js/pages/dashboard-projects.init.js') }}"></script>
-<script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />

@@ -17,7 +17,7 @@
             <div class="card">
                 <div class="card-header border-0 align-items-center d-flex">
                     <h4 class="card-title mb-0 flex-grow-1">Please Fill Form</h4>
-                    
+
                 </div><!-- end card header -->
 
                 <div class="card-body  pb-2">
@@ -169,6 +169,4 @@
 @section('script')
     <!-- apexcharts -->
 
-    <!-- dashboard init -->
-    <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 @endsection

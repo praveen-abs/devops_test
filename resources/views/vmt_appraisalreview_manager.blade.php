@@ -25,7 +25,7 @@
                                 <div class="d-flex flex-column justify-content-center mx-1 my-3 ">
                                     <h4 class="fw-bold">{{$assignedEmployee_Userdata->name}}</h5>
                                     <p class="text-muted">{{$assignedEmployeeOfficeDetails->designation}}</p>
-    
+
                                 </div>
                             </div>
                         </div>
@@ -172,7 +172,7 @@
                             <?php
                                     $temp =  json_decode($assignedGoals->assignment_period, true);
                                    print_r($temp['year']." - ".strtoupper($temp['assignment_period_start']));
-                                    
+
                                 ?>
                         </td>
                     </tr>
@@ -360,7 +360,7 @@
                                         @endif
                                         @if($assignedGoals->is_employee_submitted && !$reviewCompleted &&
                                         !$assignedGoals->is_manager_submitted )
-                                        <!-- <textarea name="managerpercetage[{{$kpiRow->id}}]" id="" cols="20" rows="2" 
+                                        <!-- <textarea name="managerpercetage[{{$kpiRow->id}}]" id="" cols="20" rows="2"
                                             placeholder="type here">@if(isset( $kpiRow->manager_kpi_percentage)) {{$kpiRow->manager_kpi_percentage}}@endif</textarea> -->
                                         <input type="number" class="inp-text" name="managerpercetage[{{$kpiRow->id}}]"
                                             placeholder="type here"
@@ -584,10 +584,6 @@
 <!-- apexcharts -->
 
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
-<script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/premassets/js/footable.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/premassets/css/footable.bootstrap.min.css') }}"></script>
 <script type="text/javascript">

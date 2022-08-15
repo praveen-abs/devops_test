@@ -54,13 +54,7 @@
 @section('script')
 <!-- Prem assets -->
 <!-- OWL CAROUSEL -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
 
-<script src="{{ URL::asset('/assets/premassets/js/jquery-1.12.4.min.js') }}"></script>
-<!--Popper JS-->
-<script src="{{ URL::asset('/assets/premassets/js/popper.min.js') }}"></script>
-<!--Bootstrap-->
-<script src="{{ URL::asset('/assets/premassets/js/bootstrap.min.js') }}"></script>
 <!--Sweet alert JS-->
 <script src="{{ URL::asset('/assets/premassets/js/sweetalert.js') }}"></script>
 <script src="{{ URL::asset('/assets/premassets/js/progressbar.min.js') }}"></script>
@@ -82,8 +76,6 @@
 <!--Bootstrap Calendar JS-->
 <!-- <script src="{{ URL::asset('/assets/premassets/js/calendar/bootstrap_calendar.js') }}"></script>
     <script src="{{ URL::asset('/assets/premassets/js/calendar/demo.js') }}"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
 <!--Nice select-->
 <script src="{{ URL::asset('/assets/premassets/js/jquery.nice-select.min.js') }}"></script>
@@ -101,7 +93,6 @@
 <script src="{{ URL::asset('assets/libs/swiper/swiper.min.js')}}"></script>
 <!-- dashboard init -->
 <script src="{{ URL::asset('/assets/js/pages/dashboard-ecommerce.init.js') }}"></script>
-<script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 
 
 @endsection

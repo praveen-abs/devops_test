@@ -32,7 +32,7 @@
                                                 @csrf
                                                 <div >
                                                     <label >Please Upload the employees details excel-sheet.</label>
-                                                </div>                        
+                                                </div>
                                                 <div class="mb-3 row">
                                                     <div class="col-md-10">
                                                         <input name="file" type="file" required>
@@ -48,7 +48,7 @@
                                                     <div class="col-xl-12">
                                                         <p id="success-msg"></p>
                                                         <p id="error-msg"></p>
-                                                        
+
                                                     </div>
                                                 </div>
                                             </form>
@@ -73,8 +73,8 @@
                     </div>
                 </div>
             </div>
-           
-           
+
+
         </div>
     </div><!-- end card body -->
 </div><!-- end card -->
@@ -106,10 +106,6 @@
 <!-- apexcharts -->
 
 <!-- dashboard init -->
-<script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
-</script>
 
 <script type="text/javascript">
 $('#role-form').on('submit', function(e) {
@@ -130,7 +126,7 @@ $('#role-form').on('submit', function(e) {
             console.log('success', data);
             $('#success-msg').html('<p>Upload Info :</p><ul>'+data.success+'</ul>');
             $('#error-msg').html('<br/><ul>'+data.failed+'</ul>');
-            
+
 
             //var toastLiveExample3 = document.getElementById("borderedToast2");
             //var toast = new bootstrap.Toast(toastLiveExample3);

@@ -8,7 +8,7 @@
 
 @section('content')
 
-    
+
 
 
     <div class="row">
@@ -36,7 +36,7 @@
                             </div>
                         </form>
                     </div>
-                    
+
                     <div class="mb-1  row"><hr/></div>
                     <div>
                         <form method="POST" action="/vmt-delete-roles" id="delete-roles">
@@ -52,14 +52,14 @@
                                         @foreach($roles as $pRole)
                                             <option value="{{$pRole->id}}">{{$pRole->name}}</option>
                                         @endforeach
-                                        
+
                                     </select>
                                 </div>
                             </div>
-                           
-                           
 
-                            
+
+
+
                             <div class="row mt-2">
                                 <div class="text-end col-xl-12">
                                     <button type="submit" class="btn btn-primary">Delete</button>
@@ -82,7 +82,7 @@
                                         @foreach($roles as $pRole)
                                             <option value="{{$pRole->id}}">{{$pRole->name}}</option>
                                         @endforeach
-                                        
+
                                     </select>
                                 </div>
                             </div>
@@ -124,7 +124,7 @@
                                     </div>
                                 </div><!--end col-->
                             </div>
-                           
+
 
                             <div class="mb-3 mt-1 row" style="align-items: baseline;">
                                 <label for="example-text-input" class="col-md-3 col-form-label">Section Level</label>
@@ -148,7 +148,7 @@
                                                 Can see Final review
                                             </label>
                                         </div>
-                                        
+
                                     </div>
                                 </div><!--end col-->
                             </div>
@@ -212,7 +212,6 @@
     <script src="{{ URL::asset('/assets/libs/prismjs/prismjs.min.js') }}"></script>
     <script src="{{ URL::asset('/assets/js/pages/notifications.init.js') }}"></script>
     <!-- dashboard init -->
-    <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
@@ -244,7 +243,7 @@
                       //console.log(data[i]);
                         var optionText = data[i].name;
                         var optionValue = data[i].id;
-  
+
                         $('#permission-select').append(new Option(optionText, optionValue));
                         $('#delete-select').append(new Option(optionText, optionValue));
                     }
@@ -257,7 +256,7 @@
             })
         }
 
-        // select roles to assign permission 
+        // select roles to assign permission
         $('#permission-select').on('change', function(){
             getPermissions($(this).val())
         });
@@ -269,39 +268,39 @@
                 url: '/vmt-role-permissions/'+roleId, // serializes the form's elements.
                 success: function(data)
                 {
-                    console.log(data); 
+                    console.log(data);
 
                     if(data.length == 0){
                         console.log('nodata')
                         $('input[type=checkbox]').each(function () {
                             //console.log($(this).val());
-                            
+
                                 $(this).prop("checked", false);
                             //$(this).removeAttribute("checked");
-                            
+
                         });
-                        return false; 
+                        return false;
                     }else{
                         $('input[type=checkbox]').each(function () {
                             //console.log($(this).val());
-                            var dValue =  $(this).val(); 
+                            var dValue =  $(this).val();
                             console.log($.inArray(dValue, data));
                             if($.inArray(dValue, data) != -1 ) {
                                 $(this).prop("checked", true);
                                 console.log("is in array" + dValue  );
                             } else {
-                                //$("#captureAudio").prop('checked', false); 
+                                //$("#captureAudio").prop('checked', false);
                                 $(this).removeAttr("checked");
                                 console.log("is NOT in array"+ dValue);
                             }
                             //var sThisVal = (this.checked ? $(this).val() : "");
                         });
                     }
-                  
+
                 }
             })
         }
-        
+
         // Save Permissions
         $('#permission-form').on('submit', function(e){
             e.preventDefault();

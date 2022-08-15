@@ -3,7 +3,6 @@
 <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
 <link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
 <link href="{{ URL::asset('assets/css/salary.css') }}" rel="stylesheet">
-<link href="{{ URL::asset('assets/css/app.min.css') }}" rel="stylesheet">
 <!-- for bootstrap temporary -->
 
 <style type="text/css">
@@ -13,7 +12,7 @@
     float: left;
     height: 200px;
     width: 65px;
-   
+
     overflow-y: scroll;
     margin-bottom: 25px;
 }
@@ -44,7 +43,7 @@
 
 #style-9::-webkit-scrollbar-thumb
 {
-    background-color: #F90; 
+    background-color: #F90;
     background-image: -webkit-linear-gradient(90deg,
                                               rgba(255, 255, 255, .2) 25%,
                                               transparent 25%,
@@ -221,7 +220,7 @@
                                 <li>
                                     <div class="title f-15 text-muted ">
 
-                                           @php 
+                                           @php
                                                 $selectedPaySlipMonth = $d->PAYROLL_MONTH;
                                             @endphp
                                             @php echo $selectedPaySlipMonth; @endphp
@@ -1549,7 +1548,7 @@
                             </tbody>
 
                         </table>
-           
+
                     </div>
                 </div>
             </div>
@@ -1634,10 +1633,5 @@
 <script src="{{ URL::asset('/assets/libs/prismjs/prismjs.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/js/pages/notifications.init.js') }}"></script>
 <!-- apexcharts -->
-
-<!-- dashboard init -->
-<script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 @endsection
