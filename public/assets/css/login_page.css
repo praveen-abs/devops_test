@@ -161,23 +161,15 @@
     }
 }
 
-@media only screen and (min-width: 770px) and (max-width: 999px) {
+@media only screen and (min-width: 770px) and (max-width: 991px) {
     .carousel-item img {
-
         height: 390px;  /*390px*/
     }
 }
 
 
-/* Large devices (laptops/desktops, 992px and up) */
+
 @media only screen and (min-width: 992px) {
-
-}
-
-/* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {}
-
-@media only screen and (min-width: 991px){
     .carousel-item img {
         height: 460px;  /*460px*/
     }

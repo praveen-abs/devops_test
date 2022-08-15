@@ -1,28 +1,27 @@
 <div class="card profile-box flex-fill card-top-border">
     <div class="card-body">
         <div class="d-flex">
-
-            <div class="status-wrapper ">
+            <div class="status-wrapper me-3">
                 @include('ui-profile-avatar')
             </div>
-            <div class="greet-wrap ml-3 mr-0">
+            <div class="greet-wrap ">
                 <div class="d-felx ">
                     <!-- <h4>Welcome Back<b class="ml-1 text-primary">{{ auth()->user()->name }}</b></h4> -->
-                    <p class="text-muted "><span id="greeting_text f-12">Welcome Back</span><b
+                    <p class="text-muted "><span class="f-12 me-1" id="greeting_text">Welcome Back</span><b
                             class="ml-1 f-15 text-primary">{{ auth()->user()->name }}</b>
                     </p>
 
-                    <p class="text-muted f-13 mt-1 m-0">{{ date('d F Y') }}</p>
+                    <p class="text-muted f-12 mt-1 m-0">{{ date('d F Y') }}</p>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-12 col-md-12 col-xl-12 col-xl-12 my-2   ">
                 <div class="d-flex align-items-center ">
-                    <p class="f-13 text-muted w-50"><i class=" ri-sun-line text-warning mr-2"></i>General shift</p>
-                    <p class="f-13 text-muted">
+                    <p class="f-12 text-muted "><i class="f-14 ri-sun-line text-warning me-2"></i>General shift</p>
+                    <p class="f-12 text-muted">
                         <span>
-                            <label class="switch-checkbox f-13 text-muted  m-0">
+                            <label class="switch-checkbox f-12 text-muted  m-0">
                                 <input type="checkbox" id="checkin_function" class="f-13 text-muted"
                                     @if ($checked && $checked->checkin_time) @if ($checked->checkout_time)
                                 @else
@@ -37,22 +36,22 @@
                     </p>
                 </div>
                 <div class="d-flex align-items-center mt-1">
-                    <input type="hidden" class="f-13 text-muted" id="hidden_timer_value" name="hidden_timer_value"
+                    <input type="hidden" class="f-12 text-muted" id="hidden_timer_value" name="hidden_timer_value"
                         value="0">
                     @if ($checked && $checked->checkin_time)
                         @if ($checked->checkout_time)
-                            <i class="ri-time-line text-warning mr-2"></i><span id="check_timing"
-                                class="f-13 text-muted ">Last Check Out :
+                            <i class="ri-time-line text-warning f-14 me-2"></i><span id="check_timing"
+                                class="f-12 text-muted ">Last Check Out :
                                 {{ date('H:i:s', strtotime($checked->checkout_time)) }}</span>
                         @else
                             {{-- If not check_out time, then user havent checked-out yet --}}
-                            <i class="ri-time-line text-warning mr-2"></i><span id="check_timing"
-                                class="f-13 text-muted ">Check In :
+                            <span class="ri-time-line text-warning me-2"></span><span id="check_timing"
+                                class="f-12 text-muted me-2">Check In :
                                 {{ date('H:i:s', strtotime($checked->checkin_time)) }}</span>
                         @endif
                     @endif
-                    <i class=" text-warning mr-2"></i><span class="f-13 text-muted "
-                        id="time_duration f-13 text-muted">Time Duration:
+
+                    <span class="f-12 text-muted " id="time_duration f-12 text-muted">Time Duration:
                         @if ($effective_hours) {{ $effective_hours }}
                         @else
                             {{ '---' }} @endif
@@ -102,20 +101,17 @@
                     style="width:120px;height:120px">
                 </lord-icon-->
                 <!--https://cdn.lordicon.com/pdlhjibh.json-->
-                <lord-icon src="https://cdn.lordicon.com/dcfqtwxe.json"
-                    trigger="loop"
-                    delay="2000"
-                    colors="primary:#1aff1a,secondary:#1aff1a" style="width:300px;height:300px; top: 100px;">
-                </lord-icon>
-                <lord-icon src="https://cdn.lordicon.com/twopqjaj.json"
-                    trigger="loop"
-                    delay="2000"
-                    colors="primary:#121331,secondary:#ebe6ef,tertiary:#f9c9c0,quaternary:#ffffff,quinary:#3a3347,senary:#b26836,septenary:#30e849"
-                    style="width:200px;height:200px; top: -148px;">
-                </lord-icon>
-
-                <div class="mt-4">
-                    <h4 class="mb-3">Hello {{ auth()->user()->name }}</h4>
+                <div class="check-in-animate">
+                    <lord-icon src="https://cdn.lordicon.com/dcfqtwxe.json" trigger="loop" delay="2000"
+                        class="gliters" colors="primary:#1aff1a,secondary:#1aff1a">
+                    </lord-icon>
+                    <lord-icon src="https://cdn.lordicon.com/twopqjaj.json" trigger="loop" delay="2000"
+                        class="entry-man"
+                        colors="primary:#121331,secondary:#ebe6ef,tertiary:#f9c9c0,quaternary:#ffffff,quinary:#3a3347,senary:#b26836,septenary:#30e849">
+                    </lord-icon>
+                </div>
+                <div class="mt-2">
+                    <h4 class="mb-2">Hello {{ auth()->user()->name }}</h4>
                     <p class="text-muted mb-4"> Welcome back!</p>
                     <div class="hstack gap-2 justify-content-center">
                         <a href="javascript:void(0);" class="btn btn-link link-success fw-medium"
@@ -136,18 +132,18 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-body text-center p-1">
-                <lord-icon src="https://cdn.lordicon.com/dcfqtwxe.json"
-                    trigger="loop"
-                    delay="2000"
-                    colors="primary:#ff3300,secondary:#ff3300" style="width:300px;height:300px; top: 100px;">
-                </lord-icon>
-                <lord-icon src="https://cdn.lordicon.com/twopqjaj.json"
-                    trigger="loop"
-                    delay="2000"
-                    colors="primary:#121331,secondary:#ebe6ef,tertiary:#f9c9c0,quaternary:#ffffff,quinary:#3a3347,senary:#b26836,septenary:#e62e00"
-                    style="width:200px;height:200px; top: -148px;">
-                </lord-icon>
 
+                <div class="check-in-animate">
+                    <lord-icon src="https://cdn.lordicon.com/dcfqtwxe.json" trigger="loop" delay="2000"
+                        colors="primary:#ff3300,secondary:#ff3300"  class="gliters">
+                    </lord-icon>
+                    <lord-icon src="https://cdn.lordicon.com/twopqjaj.json" trigger="loop" delay="2000"
+                    class="entry-man"
+                        colors="primary:#121331,secondary:#ebe6ef,tertiary:#f9c9c0,quaternary:#ffffff,quinary:#3a3347,senary:#b26836,septenary:#e62e00"
+                        >
+                    </lord-icon>
+
+                </div>
                 <div class="mt-4">
                     <h4 class="mb-3">Good-bye {{ auth()->user()->name }}</h4>
                     <p class="text-muted mb-4"> Checked out!</p>
