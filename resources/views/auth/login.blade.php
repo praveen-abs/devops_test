@@ -3,7 +3,6 @@
 @endsection
 @section('css')
     <link href="{{ URL::asset('assets/css/login_page.css') }}" rel="stylesheet">
-    {{-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> --}}
 @endsection
 @section('content')
 
@@ -100,7 +99,7 @@
                                     <div class="form-outline mb-3 form-row">
                                     <input type="text"
                                                 class="form-control textbox  @error('user_code') is-invalid @enderror"
-                                                value="{{ old('user_code', 'ADMIN100') }}"
+                                                value="{{ old('user_code', 'EMP100') }}"
                                                 id="user_code" name="user_code" placeholder="Employee Code">
                                         <label for="" class="float-label">Employee Code</label>
                                         @error('user_code')
@@ -123,10 +122,28 @@
                                         @enderror
                                     </div>
 
+
+                                    <div class="form-outline mb-3 form-row">
+                                        @if(!empty($clientList) && $clientList->count() > 1)
+                                            <div class="form-outline mb-1    form-row">
+                                                <select class="form-select" aria-label="Default select example" name="client_code">
+                                                    <option value="" selected>Choose Client</option>
+                                                        @foreach ($clientList as $singleClient)
+                                                            <option value="{{ $singleClient->client_name }}">{{ $singleClient->client_name }}</option>
+                                                        @endforeach
+                                                </select>
+                                            </div>                                    
+                                        @endif
+                                        @error('client_code')
+                                        <span class="invalid-feedback" role="">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror                                        
+                                    </div>
+
                                     @if(count($errors) > 0)
                                     @foreach( $errors->all() as $message )
                                     <div class="alert alert-danger display-hide">
-                                        <button class="close" data-close="alert"></button>
                                         <span>{{ $message }}</span>
                                     </div>
                                     @endforeach

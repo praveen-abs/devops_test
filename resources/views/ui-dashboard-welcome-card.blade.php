@@ -51,7 +51,7 @@
                         @endif
                     @endif
 
-                    <span class="f-12 text-muted " id="time_duration f-12 text-muted">Time Duration:
+                    <span class="f-12 text-muted " id="time_duration">Time Duration:
                         @if ($effective_hours) {{ $effective_hours }}
                         @else
                             {{ '---' }} @endif
@@ -247,10 +247,10 @@
                             //console.log( $("#hidden_timer_value").val());
                         }
 
-                        $("#toast_message").html(data['message']);
-                        setTimeout(() => {
-                            $('#toast_notification').toast('show');
-                        }, 0);
+                        // $("#toast_message").html(data['message']);
+                        // setTimeout(() => {
+                        //     $('#toast_notification').toast('show');
+                        // }, 0);
 
                     }
                 });

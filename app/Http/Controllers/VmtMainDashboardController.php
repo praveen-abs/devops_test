@@ -47,7 +47,9 @@ class VmtMainDashboardController extends Controller
                                     'vmt_employee_office_details.designation',
                                     'vmt_employee_details.dob',
                                     'vmt_employee_details.doj'
-                                );
+                                )
+                                ->where('users.is_admin','<>','1')
+                                ;
 
         //Employee events for the current month only
         $dashboardEmployeeEventsData = [];
@@ -67,7 +69,8 @@ class VmtMainDashboardController extends Controller
         //$dashboardEmployeeEventsData['wedding_anniversary'] = $employeesEventDetails;
 
         //dd($dashboardEmployeeEventsData);
-        $checked = VmtEmployeeAttendance::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->first();
+        $checked = VmtEmployeeAttendance::where('user_id', auth()->user()->id)
+                                        ->orderBy('created_at', 'DESC')->first();
         $effective_hours="";
 
         //If user already checkout, then send time difference to blade
@@ -79,7 +82,7 @@ class VmtMainDashboardController extends Controller
 
             $effective_hours = gmdate('H:i:s', $to->diffInSeconds($from));
 
-           // dd($effective_hours);
+        // dd($effective_hours);
         }
 
         $dashboardpost  =  vmt_dashboard_posts::all();
@@ -95,20 +98,23 @@ class VmtMainDashboardController extends Controller
 
         ////Dashboard counters data
         //Total Employees Count
-        $totalEmployeesCount = User::all()->count();
+        $totalEmployeesCount = User::where('users.is_admin','<>','1')->count();
 
         //New Joinees Count
         $currentDate = Carbon::now();
         $currentDate->setTimezone("Asia/Kolkata");
         $dateDifferenceForNewJoinees = 7; //Right now, showing 1 week old joinees
         $newEmployeesCount = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
-                                ->whereRaw('DATEDIFF(? , vmt_employee_details.doj) <= ?',[$currentDate, $dateDifferenceForNewJoinees])->get()->count();
+                                ->whereRaw('DATEDIFF(? , vmt_employee_details.doj) <= ?',[$currentDate, $dateDifferenceForNewJoinees])
+                                ->where('users.is_admin','<>','1')
+                                ->get()->count();
 
 
         //Employees who checked-in today
         $todayEmployeesCheckedInCount = User::join('vmt_employee_attendance','vmt_employee_attendance.user_id','=','users.id')
                                 ->whereDate('vmt_employee_attendance.checkin_time','=', $currentDate )
                                 ->whereNull('vmt_employee_attendance.checkout_time')
+                                ->where('users.is_admin','<>','1')
                                 ->get()->count();
 
         //Employees Leave today count

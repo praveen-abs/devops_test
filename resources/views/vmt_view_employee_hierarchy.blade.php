@@ -89,13 +89,16 @@
             ]
     };
 
-    $('#chart-container').orgchart({
-    'data' : '{{ route('vmt-emphierarchy-getChildForUser',['id' => Auth::user()->id ]) }}',
-    'pan' : true,
-    'zoom' : true,
-    'nodeContent': 'designation'
-    });
-
+    @if(Auth::user()->is_admin != 1)
+        $('#chart-container').orgchart({
+        'data' : '{{ route('vmt-emphierarchy-getChildForUser',['id' => Auth::user()->id ]) }}',
+        'pan' : true,
+        'zoom' : true,
+        'nodeContent': 'designation'
+        });
+    @else
+        $('#chart-container').html('<h4> Not available for Super Admin</h4>');
+    @endif
 });
 </script>
   

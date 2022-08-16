@@ -99,8 +99,10 @@
 
                                 <img src="{{ URL::asset('assets/images/bell.png') }}" alt="" class="" style="height:
                                     20px; width: 20px;">
+                                @if($User = Auth::user()->unreadNotifications->count() != 0 )
                                 <span
                                     class="badge fs-10 translate-middle  rounded-circle  bg-danger">{{$User = Auth::user()->unreadNotifications->count();}}</span>
+                                @endif
                                 {{-- <span class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger"
                                         class="visually-hidden"></span> --}}
                             </button>

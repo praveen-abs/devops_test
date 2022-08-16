@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 
 use App\Models\VmtGeneralInfo;
 use App\Models\User;
+use App\Models\VmtClientMaster;
 use Illuminate\Support\Facades\Cache;
 
 class LoginController extends Controller
@@ -53,6 +54,7 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         $generalInfo = VmtGeneralInfo::first();
+        $clientList = VmtClientMaster::all(['id','client_name']);
         //dd($generalInfo);
         $cacheStatus = "";
 
@@ -70,7 +72,7 @@ class LoginController extends Controller
             $cacheStatus = "Cache not cleared";
 
 
-        return view('auth.login', compact('generalInfo','cacheStatus'));
+        return view('auth.login', compact('generalInfo','clientList','cacheStatus'));
     }
 
     public function login(Request $request)
@@ -87,24 +89,65 @@ class LoginController extends Controller
         // Remember token set to false
         $save_credentials = false;
         $user = User::where('user_code', $request->user_code)->where('active', 1)->first();
-        if($user){
-            $credentials = $request->only('user_code', 'password');
-            if (Hash::check($request->password, $user->password)) {
-            // if (Auth::attempt($credentials)) {
-                // Auth::login($user, $save_credentials);
-                if (auth::attempt(['user_code' => $request->user_code, 'password' => $request->password], $save_credentials)) {
-                    return redirect(route('index'));
+
+        if($user)
+        {
+            //If client_code selected
+            if(isset($request->client_code))
+            {
+                if(str_contains( $user->user_code , $request->client_code) || str_contains( $user->user_code , 'EMP'))
+                {
+                    $credentials = $request->only('user_code', 'password');
+                    if (Hash::check($request->password, $user->password)) {
+                    // if (Auth::attempt($credentials)) {
+                        // Auth::login($user, $save_credentials);
+                        if (auth::attempt(['user_code' => $request->user_code, 'password' => $request->password], $save_credentials)) {
+                            return redirect(route('index'));
+                        }
+                    }
+                    else
+                    {
+                        $errors = ['Invalid credentials provided'];
+                        return redirect()->back()->withErrors($errors);            
+                    }
+    
                 }
+                else
+                {
+                    //Invalid client-code selected
+                    $errors = ['Employee is not part of selected Client'];
+                    return redirect()->back()->withErrors($errors);                    
+                }
+
+                // return redirect()->back();
             }
+            else
+            {
 
+                //If no client_code selected, then perform login based on username and pwd
+                $credentials = $request->only('user_code', 'password');
+                if (Hash::check($request->password, $user->password)) {
+                // if (Auth::attempt($credentials)) {
+                    // Auth::login($user, $save_credentials);
+                    if (auth::attempt(['user_code' => $request->user_code, 'password' => $request->password], $save_credentials)) {
+                        return redirect(route('index'));
+                    }
+                }
+                else
+                {
+                    $errors = ['Invalid credentials provided'];
+                    return redirect()->back()->withErrors($errors);            
+                }                
 
-            return redirect()->back();
-        }else{
+            }
+        }
+        else
+        {
             $errors = ['Your Account is not Active.'];
             return redirect()->back()->withErrors($errors);
-             // return back()->withErrors('Your Account is not Active.');
-
+            // return back()->withErrors('Your Account is not Active.');
         }
+
         return redirect()->back();
 
     }
