@@ -210,8 +210,8 @@ body {
 
 /* font-sizes */
 
-label,p,a,span{
-    font-size: 13px !important;
+label, p, a, span {
+    font-size: 13px;
 }
 
 .f-9 {
@@ -623,15 +623,25 @@ label,p,a,span{
     background: url("../images/verification-img.png");
 }
 
+/* sub header (bread-crumb) */
 .page-title-box {
-    padding: 10px 1.5rem;
+    padding: 5px 1rem;
     background-color: #f3f3f9;
     box-shadow: 0 1px 2px rgb(56 65 74 / 15%);
     border-bottom: 1px;
     border-top: 1px;
     /* border: 1px solid #000; */
-    margin: -44px -1.5rem 1.5rem -1.5rem;
+    margin: -44px -27px 1.5rem -27px;
 }
+
+.breadcrumb .crumb-item:not(:first-child)::before {
+    content: '';
+    border-left: 1px solid #6c757d;
+    height: auto;
+    margin: 0px 10px;
+}
+
+
 
 .page-title-box .breadcrumb {
     background-color: transparent;
@@ -16810,14 +16820,6 @@ span.flatpickr-weekday {
     display: flex;
 }
 
-
-
-.personal-info li .text {
-    color: #888888;
-    text-align: start;
-    /* width: 50%; */
-}
-
 .personal-info li .text a {
     color: #3577f1;
 }
@@ -16853,18 +16855,6 @@ span.flatpickr-weekday {
     border-radius: 0;
 }
 
-.edit-icon {
-    background-color: #eeeeee;
-    border: 1px solid #e3e3e3;
-    color: #bbb;
-    float: right;
-    font-size: 12px;
-    line-height: 24px;
-    min-height: 26px;
-    text-align: center;
-    width: 26px;
-    border-radius: 24px;
-}
 
 .profile-view .pro-edit {
     position: absolute;
@@ -16943,7 +16933,6 @@ span.flatpickr-weekday {
 }
 
 .material-icons {
-
     font-weight: normal;
     font-style: normal;
     font-size: 24px;
@@ -16979,11 +16968,14 @@ span.flatpickr-weekday {
     color: #333333;
     float: left;
     font-size: 13px;
-    /* width: 100%; */
+    width: 50%;
+    text-align: start;
 }
 
 .personal-info li .text {
     font-size: 13px;
+    width: 50%;
+    text-align: start;
 }
 
 #bank_statutory .card .card-title,
@@ -17416,14 +17408,11 @@ p {
     color: #fff;
 }
 
+/* background color */
 
-
-
-
-/* .form-control:focus {
-    box-shadow: none !important;
-    border: 2px solid #863dd9;
-} */
+.bg-primary{
+    background-color: #002f56 !important;
+}
 
 .btn-light {
     background-color: #FFF;
@@ -17608,9 +17597,6 @@ p {
 }
 
 
-
-
-
 .profile-img-wrap img {
     height: 100px;
     width: 100px;
@@ -17622,27 +17608,9 @@ p {
     border-radius: 50%;
 }
 
-.profile-img-wrap .fileupload {
-    background: rgba(33, 33, 33, 0.75);
-    bottom: 46px;
-    position: relative;
-    width: inherit;
-    color: white;
-    z-index: 0;
-    border: none;
+.form-control:focus {
+    border-color: #002f56 !important;
 }
-
-.profile-img-wrap .fileupload .upload {
-    cursor: pointer;
-    opacity: 0;
-    padding: 5px;
-    position: absolute;
-    top: -3px;
-    width: inherit;
-    left: 0px;
-
-}
-
 
 /* for vmt_home */
 
@@ -18713,58 +18681,6 @@ table>tbody>tr>td>img,
 
 }
 
-.login-main {
-    /* background: url(../images/login_bg3.jpg) no-repeat center center fixed; */
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    background-size: cover;
-    -o-background-size: cover;
-    /* overflow: hidden;
-    height: 100%; */
-    /* min-height: 100%; */
-}
-
-/* .conya{
-    background: url(../images/login_bg1.jpg) no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    background-size: cover;
-    -o-background-size: cover;
-} */
-
-/*
-.login-bg {
-    position: fixed;
-    top: -50%;
-    left: -50%;
-    height: 200%;
-    width: 200%;
-    min-height: 100%;
-    min-width: 100%;
-}
-
-.login-bg img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-    min-width: 50%;
-    min-height: 50%;
-} */
-
-
-.login-headers {
-    text-align: left;
-
-}
-
-.login-headers img {
-    height: 50px;
-    width: 100px;
-}
-
 .pms-dashboard-wrapper .pms-card {
     height: 100px;
     width: 250px;
@@ -18923,19 +18839,7 @@ table>tbody>tr>td>img,
 
 /* for pages-profile */
 
-.edit-icon {
-    box-shadow: rgb(0 0 0 / 15%) 0px 2px 8px;
-    background-color: #ffffff;
-    border: 1px solid #ffffff;
-    color: #e63b1f;
-    float: right;
-    font-size: 12px;
-    line-height: 24px;
-    min-height: 26px;
-    text-align: center;
-    width: 26px;
-    border-radius: 24px;
-}
+
 
 .progress-wrapper .progress-bar-content {
     box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
@@ -19251,4 +19155,15 @@ span .paginate_button {
 
 #experience-detail-table::-webkit-scrollbar-thumb {
     background-color: red;
+}
+
+
+/* top bar message notification */
+
+ .dropdown-item:focus{
+background-color: #adb5bd !important;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+    background-color: #adb5bd !important;
 }

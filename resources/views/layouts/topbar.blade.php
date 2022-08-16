@@ -112,7 +112,7 @@
                                 <img src="{{ URL::asset('assets/images/bell.png') }}" alt="" class="" style="height:
                                     20px; width: 20px;">
                                 <span
-                                    class="badge badge-light fs-10 translate-middle badge rounded-pill bg-danger">{{$User = Auth::user()->unreadNotifications->count();}}</span>
+                                    class="badge fs-10 translate-middle  rounded-circle  bg-danger">{{$User = Auth::user()->unreadNotifications->count();}}</span>
                                 {{-- <span class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger"
                                         class="visually-hidden"></span> --}}
                             </button>
@@ -125,13 +125,13 @@
                                                 <h6 class="m-0 fs-16 fw-semibold text-white"> Notifications </h6>
                                             </div>
                                             <div class="col-auto dropdown-tabs">
-                                                <span class="badge badge-soft-light fs-13">
+                                                <span class="badge badge-soft-light rounded-circle fs-13 bg-danger">
                                                     {{$User = Auth::user()->unreadNotifications->count();}}</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="px-2 pt-2">
-                                        <ul class="nav nav-tabs dropdown-tabs nav-tabs-custom" data-dropdown-tabs="true"
+                                        <ul class="nav nav-tabs  dropdown-tabs nav-tabs-custom" data-dropdown-tabs="true"
                                             id="notificationItemsTab" role="tablist">
                                             <li class="nav-item waves-effect active waves-light">
                                                 <a class="nav-link active" data-bs-toggle="tab" href="#messages-tab" role="tab"
@@ -187,12 +187,12 @@
                                                         class="me-3 rounded-circle avatar-xs" alt="user-pic">
                                                     <div class="flex-1">
                                                         <div class="fs-13 text-muted">
-                                                <a style="color: blue;" href="{{url('notifications/'.$notification->id)}}" data-notif-id="{{$notification->id}}">
+                                                <a href="{{url('notifications/'.$notification->id)}}" data-notif-id="{{$notification->id}}" class="text-primary">
 
                                              {{$notification->data['message']}}
                                 </a>
                                                         </div>
-                                                        <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
+                                                        <p class="mb-0 f-10 text-end text-muted">
                                                             <span><i class="mdi mdi-clock-outline"></i> 30 min
                                                                 ago</span>
                                                         </p>
@@ -221,7 +221,7 @@
                                 {{$notification->data['message']}}
                                  </a>
                                                         </div>
-                                                        <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
+                                                        <p class="mb-0 f-11 text-end fw-mediumtext-muted">
                                                             <span><i class="mdi mdi-clock-outline"></i> 30 min
                                                                 ago</span>
                                                         </p>
@@ -656,18 +656,7 @@
                             <div class="px-2 pt-2">
                                 <ul class="nav nav-tabs dropdown-tabs nav-tabs-custom" data-dropdown-tabs="true"
                                     id="notificationItemsTab" role="tablist">
-                                    <li class="nav-item waves-effect waves-light">
-                                        <a class="nav-link active" data-bs-toggle="tab" href="#all-noti-tab" role="tab"
-                                            aria-selected="true">
-                                            All (4)
-                                        </a>
-                                    </li>
-                                    <li class="nav-item waves-effect waves-light">
-                                        <a class="nav-link" data-bs-toggle="tab" href="#messages-tab" role="tab"
-                                            aria-selected="false">
-                                            Messages
-                                        </a>
-                                    </li>
+
                                     <li class="nav-item waves-effect waves-light">
                                         <a class="nav-link" data-bs-toggle="tab" href="#alerts-tab" role="tab"
                                             aria-selected="false">

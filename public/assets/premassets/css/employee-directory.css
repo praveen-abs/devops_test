@@ -76,17 +76,6 @@
     border-radius: 3px!important;
 }
 
-.badge {
-    background: #a2a9b4;
-    margin-left: 0px !important;    /*10px*/
-    padding-left: 4px !important;
-    padding-right: 4px !important;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-    font-size: 10px;
-    line-height: 16px;
-    text-transform: uppercase;
-}
 .bg-accent-violet {
     background-color: #9785c2!important;
 }

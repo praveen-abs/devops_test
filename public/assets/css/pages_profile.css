@@ -1,0 +1,46 @@
+/* .personal-info li .title {
+    font-size: 12px;
+}
+.personal-info li .title {
+    font-size: 12px;
+
+} */
+
+
+
+.profile-img-wrap .fileupload {
+    background: rgba(33, 33, 33, 0.75);
+    bottom: 35px;
+    position: relative;
+    width: inherit;
+    color: white;
+    z-index: 0;
+    border: none;
+}
+
+.profile-img-wrap .fileupload .upload {
+    cursor: pointer;
+    opacity: 0;
+    padding: 5px;
+    position: absolute;
+    top: -3px;
+    width: inherit;
+    left: 0px;
+}
+
+
+
+.edit-icon {
+    box-shadow: rgb(0 0 0 / 15%) 0px 2px 8px;
+    background-color: #ffffff;
+    border: 1px solid #ffffff;
+    color: #e63b1f;
+    float: right;
+    font-size: 12px;
+    line-height: 20px;
+    /* min-height: 26px; */
+    height: 22px;
+    text-align: center;
+    width: 22px;
+    border-radius: 50%;
+}

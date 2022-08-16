@@ -6,11 +6,11 @@
             <div class="page-title-right">
 
                 <ol class="breadcrumb m-0  fw-bold ">
-                    <li class="breadcrumb-item active"><a href="{{url('vmt_noData')}}" target="_self"
+                    <li class="crumb-item active"><a href="{{url('vmt_noData')}}" target="_self"
                             class="text-muted">Leave</a></li>
-                    <li class="breadcrumb-item"><a href="apps-calendar" class="text-muted">Attendance</a></li>
-                    <li class="breadcrumb-item"><a href="{{url('vmt_noData')}}" class="text-muted">Timesheet</a></li>
-                    <li class="breadcrumb-item"><a href="{{url('vmt_noData')}}" class="text-muted">Expenses &
+                    <li class="crumb-item"><a href="apps-calendar" class="text-muted">Attendance</a></li>
+                    <li class="crumb-item"><a href="{{url('vmt_noData')}}" class="text-muted">Timesheet</a></li>
+                    <li class="crumb-item"><a href="{{url('vmt_noData')}}" class="text-muted">Expenses &
                             Trevel</a></li>
 
                 </ol>

@@ -3,7 +3,7 @@
 @lang('translation.settings')
 @endsection
 @section('css')
-<link rel="stylesheet" href="{{ URL::asset('/assets/css/app.min.css') }}">
+<link rel="stylesheet" href="{{ URL::asset('/assets/css/pages_profile.css') }}">
 @endsection
 @section('content')
 
@@ -23,18 +23,16 @@
                                             <i class="ri-pencil-fill"></i></a></span>
                                     </div>
                                     <div class="profile-info w-75 ">
-
-                                        <h3 class="card-title m-0 fw-bold mb-2 pt-1">{{$user->name}}
-
-                                        </h3>
-                                        <h6 class="departmnet fw-bold text-muted">{{$details->department}}</h6>
-                                        <!-- <h5 class="role text-muted fw-bold">{{$details->designation}}</h5> -->
+                                        <h6 class="fw-bold mb-2 pt-1">{{$user->name}}
+                                        </h6>
+                                        <p class="departmnet fw-bold f-15 text-muted">{{$details->department}}</p>
+                                        <p class="role text-muted f-15 fw-bold">{{$details->designation}}</p>
                                     </div>
 
                                 </div>
 
                                 <div class="mt-4">
-                                    <h5 class="mb-3">Profile Completeness</h5>
+                                    <h6 class="mb-2">Profile Completeness</h6>
                                     <!-- <div class="staff-id fw-bold text-dark">Employee ID :
                                         {{$details->emp_no}}</div>
                                     <div class="small fw-bold text-muted">Date of Join :
@@ -42,38 +40,28 @@
 
                                     <div class="progress-wrapper">
 
-                                        <div class="mb-2 d-flex -justify-content-between w-100">
-                                            <p class="text-muted fw-bold">Profile Percentage</p>
-                                            <p class="text-end fw-bold">{{ $profileCompletenessValue}}%</p>
-
+                                        <div class="mb-1 d-flex -justify-content-between ">
+                                            <p class="text-muted f-12">Profile Percentage</p>
+                                            <p class="text-muted text-end f-12 fw-bold">{{ $profileCompletenessValue}}%</p>
                                         </div>
-
-                                        <div class="">
-
-                                        </div>
-                                        <div class="progress progress-bar-content mb-4">
-                                            <div class="progress-bar" role="progressbar" style="width: {{ $profileCompletenessValue}}%"
+                                                            <div class="progress progress-bar-content mb-2">
+                                            <div class="progress-bar " role="progressbar" style="width: {{ $profileCompletenessValue}}%"
                                                 aria-valuenow="{{ $profileCompletenessValue}}" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
-                                        <p class="text-muted fw-bold">Your profile is completed</p>
+                                            <p class="text-muted f-12 fw-bold">Your profile is completed</p>
                                     </div>
 
                                 </div>
-
-
-
-
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex">
-
+                    <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12s">
                         <div class="card profile-box employee-info-card flex-fill">
                             <div class="card-body">
-                                <h3 class="card-title fw-bold">Employee Informations
+                                <h6 class="">Employee Informations
                                     <span class="personal-edit"><a href="#" class="edit-icon" data-bs-toggle="modal"
                                             data-bs-target="#employee_info"><i class="ri-pencil-fill"></i></a></span>
-                                </h3>
+                                </h6>
                                 <ul class="personal-info">
                                     <li>
                                         <div class="title">Phone:</div>
@@ -125,16 +113,16 @@
 
                     </div>
 
-                    <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex">
+                    <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 ">
                         <div class="card profile-box flex-fill">
                             <div class="card-body">
                                  <form action="{{route('updatePersonalInformation', $user->id)}}" Method="POST"
                         enctype="multipart/form-data">
-                                <h5 class="card-title fw-bold">Personal Informations
+                                <h6 class="">Personal Informations
                                     <span class="personal-edit"><a href="#" class="edit-icon" data-bs-toggle="modal"
                                             data-bs-target="#personal_info_modal"><i
                                                 class="ri-pencil-fill"></i></a></span>
-                                </h5>
+                                </h6>
                                 <ul class="personal-info">
                                     <li>
                                         <div class="title">Passport No.</div>
@@ -179,13 +167,13 @@
                     <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex">
                         <div class="card profile-box flex-fill">
                             <div class="card-body">
-                                <h3 class="card-title fw-bold">Experience Details
+                                <h6 class="">Experience Details
                                     <span class="personal-edit">
                                         <a href="#" class="edit-icon" data-bs-toggle="modal" data-bs-target="#experience_info">
                                             <i class="ri-pencil-fill"></i>
                                         </a>
                                     </span>
-                                </h3>
+                                </h6>
                                 <div class="table-responsive" id="experience-detail-table">
                                     <table class="table table-nowrap">
                                         <thead>
@@ -233,11 +221,13 @@
                     <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex">
                         <div class="card profile-box flex-fill">
                             <div class="card-body">
-                                <h3 class="card-title fw-bold">Family Informations
-                                    <a href="#" class="edit-icon" data-bs-toggle="modal" data-bs-target="#family_info_modal">
-                                        <i class=" ri-pencil-fill"></i>
-                                    </a>
-                                </h3>
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                <h6 class="fw-bold mb-0 ">Family Informations
+                                                                    </h6>
+                                                                    <a href="#" class="edit-icon" data-bs-toggle="modal" data-bs-target="#family_info_modal">
+                                                                        <i class=" ri-pencil-fill"></i>
+                                                                    </a>
+                            </div>
                                 <div class="table-responsive">
                                     <table class="table table-nowrap">
                                         <thead>
@@ -318,11 +308,11 @@
                     <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex">
                         <div class="card profile-box flex-fill">
                             <div class="card-body">
-                                <h3 class="card-title fw-bold">Bank information
+                                <h6 class="">Bank information
                                     <span class="personal-edit"><a href="#" class="edit-icon" data-bs-toggle="modal"
                                             data-bs-target="#Bank_info"><i class="ri-pencil-fill"></i></a></span>
 
-                                </h3>
+                                </h6>
                                 <ul class="personal-info">
                                     <li>
                                         <div class="title">Bank name</div>
@@ -348,13 +338,11 @@
                     <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12 d-flex">
                         <div class="card profile-box flex-fill ">
                             <div class="card-body">
-                                <h3 class="card-title fw-bold">Emergency Contact <a href="#" class="edit-icon"
+                                <h6 class="">Emergency Contact <a href="#" class="edit-icon"
                                         data-bs-toggle="modal" data-bs-target="#emergency_contact_modal"><i
-                                            class=" ri-pencil-fill"></i></a></h3>
+                                            class=" ri-pencil-fill"></i></a></h6>
 
-                                <div class="row">
-                                    <div class="col-md-6 col-lg-6 col-xl-6  col-sm-6 w-100">
-                                        <h5 class="section-title">Primary</h5>
+                                                                        <h6 class="text-muted">Primary</h6>
                                         <ul class="personal-info">
                                             <li>
                                                 <div class="title">Name</div>
@@ -375,7 +363,7 @@
                                                 </div>
                                             </li>
                                         </ul>
-                                    </div>
+
                                     <!-- <hr> -->
                                     <!-- <div class="col-md-6 col-lg-6 col-xl-6  col-sm-12 w-100">
                                         <h5 class="section-title">Secondary</h5>
@@ -394,8 +382,6 @@
                                             </li>
                                         </ul>
                                     </div> -->
-                                </div>
-
 
                             </div>
                         </div>
@@ -417,7 +403,7 @@
                                 <div class="form-group mb-3">
                                     <label class="col-form-label">Salary basis <span
                                             class="text-danger">*</span></label>
-                                    <select class="select select2-hidden-accessible"
+                                    <select class="form-select form-control select2-hidden-accessible"
                                         data-select2-id="select2-data-1-ecvr" tabindex="-1" aria-hidden="true">
                                         <option data-select2-id="select2-data-3-iget">Select salary basis
                                             type
@@ -456,7 +442,7 @@
                             <div class="col-sm-4">
                                 <div class="form-group mb-3">
                                     <label class="col-form-label">Payment type</label>
-                                    <select class="select select2-hidden-accessible"
+                                    <select class="form-select form-control select2-hidden-accessible"
                                         data-select2-id="select2-data-4-dj2y" tabindex="-1" aria-hidden="true">
                                         <option data-select2-id="select2-data-6-iwpp">Select payment type
                                         </option>
@@ -777,9 +763,9 @@
     <div id="employee_info" class="modal custom-modal fade" role="dialog">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header py-3 new-role-header d-flex align-items-center">
-                    <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Employee
-                        Information</h5>
+                <div class="modal-header">
+                    <h6 class="">Employee
+                        Information</h6>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -838,7 +824,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
                                             <label>Gender</label>
-                                        <select class="form-select" name="gender" aria-label="Default select">
+                                        <select class="form-select form-control" name="gender" aria-label="Default select">
                                             <option selected>-</option>
                                             <option value="male" @if($details->gender == 'male') selected
                                                 @endif>Male</option>
@@ -853,7 +839,7 @@
                                     <div class="col-md-6">
                                           <div class="form-group mb-3">
                                     <label>Reports To <span class="text-danger">*</span></label>
-                                    <select class="select form-control" name="report">
+                                    <select class="form-select form-control" name="report">
                                         <option>Select</option>
                                         @foreach($code as $c)
                                         <option value="{{$c->emp_no}}" @if($rep && $rep->emp_no == $c->emp_no) selected
@@ -904,14 +890,13 @@
                             <div class="col-md-12">
                                 <div class="form-group mb-3">
                                     <label>Address</label>
-                                    <input type="text" name="present_address" class="form-control"
-                                        value="{{$details->present_address}}">
+                                    <textarea name="" id="" cols="30" rows="3"  class="form-control"  value="{{$details->present_address}}"></textarea>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12">
                         <div class="text-right">
-                            <button class="btn btn-orange submit-btn">Submit</button>
+                            <button class="btn btn-primary submit-btn">Submit</button>
                         </div>
                         </div>
                     </form>
@@ -923,9 +908,9 @@
     <div id="personal_info" class="modal  custom-modal fade" style="display: none;" aria-hidden="true">
         <div class="modal-dialog  modal-dialog-centered " role="document">
             <div class="modal-content profile-box">
-                <div class="modal-header py-3 new-role-header d-flex align-items-center">
-                    <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Personal
-                        Information</h5>
+                <div class="modal-header  new-role-header d-flex align-items-center">
+                    <h6 class="">Personal
+                        Information</h6>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -965,9 +950,9 @@
     <div id="Bank_info" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content profile-box">
-                <div class="modal-header py-3 new-role-header d-flex align-items-center">
-                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Bank Information
-                    </h4>
+                <div class="modal-header d-flex align-items-center">
+                    <h6 class="">Bank Information
+                    </h6>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -979,7 +964,7 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Bank name</label>
-                                    <select name="bank_name" id="bank_name" class="form-control onboard-form" required>
+                                    <select name="bank_name" id="bank_name" class="form-select form-control onboard-form" required>
                                         <option value="">Select</option>
                                         @foreach($bank as $b)
                                         <option value="{{$b->bank_name}}" min-data="{{$b->min_length}}" max-data="{{$b->max_length}}" @if($details->bank_name == $b->bank_name) selected @endif>{{$b->bank_name}}</option>
@@ -1025,9 +1010,9 @@
     <div id="leave_info" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content profile-box">
-                <div class="modal-header py-3 new-role-header d-flex align-items-center">
-                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Leave Information
-                    </h4>
+                <div class="modal-header">
+                    <h6 class="">Leave Information
+                    </h6>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -1079,9 +1064,9 @@
     <div id="personal_info_modal" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content profile-box">
-                <div class="modal-header py-3 new-role-header d-flex align-items-center">
-                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Personal
-                        Information</h4>
+                <div class="modal-header">
+                    <h6 class="">Personal
+                        Information</h6>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -1127,7 +1112,7 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Marital status <span class="text-danger">*</span></label>
-                                    <select class="select form-control" name="marital_status" required>
+                                    <select class="form-select form-control" name="marital_status" required>
                                         <option>Select</option>
                                         <option @if($details->marital_status == 'single') selected @endif>Un Married</option>
                                         <option @if($details->marital_status == 'married') selected @endif>Married</option>
@@ -1165,9 +1150,9 @@
     <div id="emergency_contact_modal" class="modal custom-modal fade show" aria-modal="true" role="dialog">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content profile-box">
-                <div class="modal-header py-3 new-role-header d-flex align-items-center">
-                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Emergency Contact
-                    </h4>
+                <div class="modal-header new-role-header d-flex align-items-center">
+                    <h6 class="">Emergency Contact
+                    </h6>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -1177,7 +1162,7 @@
                         @csrf
                         <div class="card">
                             <div class="card-body">
-                                <h3 class="card-title fw-bold">Primary Contact</h3>
+                                <h6 class="text-muted">Primary Contact</h6>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
@@ -1222,9 +1207,9 @@
     <div id="family_info_modal" class="modal custom-modal fade show" role="dialog" aria-modal="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content profile-box">
-                <div class="modal-header py-3 new-role-header d-flex align-items-center">
-                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Family
-                        Information</h4>
+                <div class="modal-header new-role-header">
+                    <h6 class="modal-title">Family
+                        Information</h6>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -1292,9 +1277,9 @@
     <div id="education_info" class="modal custom-modal fade show" role="dialog" aria-modal="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content profile-box">
-                <div class="modal-header py-3 new-role-header d-flex align-items-center">
-                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Education
-                        Information</h4>
+                <div class="modal-header">
+                    <h6 class="">Education
+                        Information</h6>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -1305,7 +1290,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h3 class="card-title fw-bold">Education Informations <a href="javascript:void(0);"
-                                            {{-- class="delete-icon"><i class="   ri-delete-bin-line"></i></a> --}}
+                                            class="delete-icon"><i class="   ri-delete-bin-line"></i></a>
                                     </h3>
                                     <div class="row">
                                         <div class="col-md-6">
@@ -1444,9 +1429,9 @@
     <div id="experience_info" class="modal custom-modal fade show" role="dialog" aria-modal="true"s>
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content profile-box">
-                <div class="modal-header py-3 new-role-header d-flex align-items-center">
-                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Experience
-                        Information</h4>
+                <div class="modal-header">
+                    <h6 class="">Experience
+                        Information</h6>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -1457,9 +1442,9 @@
                         <div class="form-scroll">
                             <div class="card">
                                 <div class="card-body">
-                                    <h3 class="card-title fw-bold">Experience Informations <a href="javascript:void(0);"
-                                            {{-- class="delete-icon"><i class="   ri-delete-bin-line"></i></a> --}}
-                                    </h3>
+                                    <h6 class="">Experience Informations <a href="javascript:void(0);"
+                                            class="delete-icon"><i class="   ri-delete-bin-line"></i></a>
+                                    </h6>
                                     <div class="exp-content-container">
                                         <div class="row exp-addition-content" id="content1">
                                             <input type="hidden" name="ids[]">
@@ -1735,5 +1720,9 @@ function isValidEmail(email) {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
 }
+    // $(".progress-bar").animate({
+    // style="width: {{ $profileCompletenessValue}}%"
+    // }, 2500);
+
 </script>
 @endsection
