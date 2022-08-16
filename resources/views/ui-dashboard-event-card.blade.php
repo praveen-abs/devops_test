@@ -5,7 +5,7 @@
             <div class="row">
                 @if ($dashboardEmployeeEventsData['hasData'] == 'true')
                     @foreach ($dashboardEmployeeEventsData['birthday'] as $employee)
-                        <div class="col-sm-6 col-md-6 col-xl-4 col-lg-4">
+                        <div class="col-sm-6 col-md-6 col-xl-3 col-lg-3">
                             <div class="card profile-box flex-fill" style="border-top: 5px solid #E54E0D;">
                                 <!-- <div class="p-1 bg-danger" ></div> -->
                                 <div class="card-body ">
@@ -37,7 +37,7 @@
                     @endforeach
 
                     @foreach ($dashboardEmployeeEventsData['work_anniversary'] as $employee)
-                        <div class="col-sm-6 col-md-6 col-xl-4 col-lg-4">
+                        <div class="col-sm-6 col-md-6 col-xl-3 col-lg-3">
                             <div class="card profile-box flex-fill" style="border-top: 5px solid #037B5A;">
                                 <div class="card-body ">
                                     <div class="wishes-card-wrapper">
