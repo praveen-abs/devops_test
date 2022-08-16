@@ -2,8 +2,15 @@
 @section('css')
     <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
 @endsection
+
 @section('content')
-    <div class="client-wrapper bg-white container-fluid p-2 mt-30">
+
+@component('components.crm_breadcrumb')
+@slot('li_1') @endslot
+@endcomponent
+
+
+    <div class="client-wrapper bg-white container-fluid p-2 mt-15">
         <h6 class="">Client List</h6>
         <div class=" text-end mb-2">
             <button class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#newInventry">Create

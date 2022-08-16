@@ -3,7 +3,14 @@
 <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
 
 @endsection
+
+
+
 @section('content')
+
+@component('components.crm_breadcrumb')
+@slot('li_1') @endslot
+@endcomponent
 
 <div class="vendor-wrapper bg-white container-fluid p-2 mt-30">
     <h6 class="">Vendor List</h6>
