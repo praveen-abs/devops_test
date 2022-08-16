@@ -142,19 +142,7 @@
                                                             </li>
                                                         </ul>
                                                         <!-- code post view  -->
-                                                        <!-- <div class="topbarContent emp-post_view">
-                                                                    <div>
-                                                                        <div class="px-20 p-16 row no-gutters scrollBar">
-                                                                            @foreach ($dashboardpost as $index => $user)
-    <img style="width: 100px;"
-                                                                                src="{{ URL::asset('images/' . $user->post_image) }}">
-                                                                            <input name="post_menuss" id="post_menuss"
-                                                                                class="border-0 outline-none  w-100 h-100" readonly
-                                                                                value="{{ $user->message }}">
-    @endforeach
-                                                                        </div>
-                                                                    </div>
-                                                                </div> -->
+
 
                                                         <!-- emd view -->
                                                         <div class="topbarContent emp-post">

@@ -20,7 +20,6 @@
         var username = '{{auth()->user()->name}}';
         const myArray = username.split(" ");
         var a = $('#profileShortNameLargeCircle').text(myArray[0][0]+""+myArray[1][0]);
-        console.log(a);
     }
 
 </script>
