@@ -1,7 +1,7 @@
 <div class="event-wrapper">
     <div class="card profile-box">
         <div class="card-body">
-            <h5 class="text-primary"><b>Events</b></h5>
+            <h6 class="text-primary">Events</h6>
             <div class="row">
                 @if ($dashboardEmployeeEventsData['hasData'] == 'true')
                     @foreach ($dashboardEmployeeEventsData['birthday'] as $employee)
@@ -41,7 +41,6 @@
                             <div class="card profile-box flex-fill" style="border-top: 5px solid #037B5A;">
                                 <div class="card-body ">
                                     <div class="wishes-card-wrapper">
-
                                         <p class="text-muted  m-0"><i class=" f-12 mr-2 ri-shopping-bag-fill"
                                                 style="color:#037B5A;"></i>
                                             Work Anniversary</p>
@@ -113,7 +112,7 @@
                     <div
                         class="wishes-card-wrapper no-events d-flex align-items-center justify-content-center flex-column">
                         <img id="" src="{{ URL::asset('assets/images/event/cancel-event.png') }}" />
-                        <span class="text-muted h5  m-0"><i class="f-13 mr-2"></i>No upcoming events
+                        <span class="text-muted h6  m-0">No upcoming events
                         </span>
 
                     </div>

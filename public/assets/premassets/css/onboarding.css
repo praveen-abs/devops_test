@@ -97,7 +97,8 @@ p {
 
 .error {
     color: red;
-    font-size: 15px;
+    font-size: 12px;
+    margin: 0px;
 }
 
 .header-card-text {
@@ -136,7 +137,7 @@ option:hover {
     margin-top: 2px;
     /* width: 100%; */
     box-sizing: border-box;
-    
+
     color: #2C3E50;
     font-size: 14px;
     letter-spacing: 1px;
@@ -146,11 +147,11 @@ option:hover {
 /* #msform input:focus,
 #msform textarea:focus,
 #msform select:focus {
-    -moz-box-shadow: none !important; 
-    -webkit-box-shadow: none !important; 
-    box-shadow: none !important; 
-    box-shadow: 1px 1px 1px 1px #673AB7 !important; 
-    outline-width: 0; 
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    box-shadow: 1px 1px 1px 1px #673AB7 !important;
+    outline-width: 0;
 } */
 
 #msform input:focus~.fieldlabels {

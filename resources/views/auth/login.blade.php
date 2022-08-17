@@ -84,9 +84,9 @@
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-12 col-xs-12 col-xl-5 col-lg-5 d-flex align-items-center right-content">
-                            <div class="card-body te1xt-black login-card">
+                            <div class="card-body te1xt-black login-card px-3 py-0">
                                 <form action="{{ route('login') }}" method="POST" class="login-form">
-                                    <div class="d-flex align-items-center justify-content-center mb-3">
+                                    <div class="d-flex align-items-center justify-content-center mb-1">
                                         <img src="{{ URL::asset($generalInfo->logo_img) }}" alt="" class="">
                                     </div>
                                     <p class="m-0   h5 fw-bold log">Login <span class="me-1">to</span><span
@@ -109,7 +109,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="form-outline mb-1    form-row">
+                                    <div class="form-outline mb-3    form-row">
                                         <input type="password"
                                             class="form-control textbox @error('password') is-invalid @enderror"
                                             name="password" placeholder="Password" id="password-input"
@@ -123,7 +123,7 @@
                                     </div>
 
 
-                                    <div class="form-outline mb-3 form-row">
+                                    <div class="form-outline mb-1 form-row">
                                         @if(!empty($clientList) && $clientList->count() > 1)
                                             <div class="form-outline mb-1    form-row">
                                                 <select class="form-select" aria-label="Default select example" name="client_code">
@@ -132,13 +132,13 @@
                                                             <option value="{{ $singleClient->client_name }}">{{ $singleClient->client_name }}</option>
                                                         @endforeach
                                                 </select>
-                                            </div>                                    
+                                            </div>
                                         @endif
                                         @error('client_code')
                                         <span class="invalid-feedback" role="">
                                             <strong>{{ $message }}</strong>
                                         </span>
-                                        @enderror                                        
+                                        @enderror
                                     </div>
 
                                     @if(count($errors) > 0)
@@ -149,7 +149,7 @@
                                     @endforeach
                                     @endif
 
-                                    <div class="d-flex justify-content-end align-items-center mb-3">
+                                    <div class="d-flex justify-content-end align-items-center mb-2">
                                         <a href="#!" class="f-12 text-orange">Forgot password?</a>
                                     </div>
 

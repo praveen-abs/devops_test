@@ -1682,13 +1682,7 @@ body::-webkit-scrollbar-thumb{
 }
 
 
-.scrollBar textarea::-webkit-scrollbar,
-.scrollBar .assest::-webkit-scrollbar,
-.left-content-settings::-webkit-scrollbar,
-.right-content-settings::-webkit-scrollbar {
-    width: 5px;
 
-}
 
 .bottom-dash {
     height: 3px !important;
@@ -1700,7 +1694,13 @@ body::-webkit-scrollbar-thumb{
     background-color: var(--vz-link-hover-color);
 }
 
+.scrollBar textarea::-webkit-scrollbar,
+.scrollBar .assest::-webkit-scrollbar,
+.left-content-settings::-webkit-scrollbar,
+.right-content-settings::-webkit-scrollbar {
+    width: 5px;
 
+}
 
 .scrollBar textarea::-webkit-scrollbar-track,
 .scrollBar .assest::-webkit-scrollbar-track,
@@ -1766,24 +1766,11 @@ body::-webkit-scrollbar-thumb{
 }
 
 
-[data-layout=vertical][data-sidebar-size=sm] .topnav-hamburger {
-
-    margin-left: 21px;
-}
-
-[data-layout=vertical][data-sidebar-size=lg] .topnav-hamburger {
-
-    margin-left: 10px;
-    margin-right: 7px;
-}
-
-
 
 /* end */
 .hamburger-icon {
     width: 20px;
     height: 15px;
-
     position: relative;
     cursor: pointer;
     display: inline-block
@@ -5579,7 +5566,7 @@ h4,
 h5,
 h6 {
     color: #002f56 !important;
-    font-weight: 700;
+    font-weight: 600 !important;
     /* font-family: Poppins, sans-serif */
 }
 
@@ -17356,13 +17343,12 @@ p {
 
 
 .btn-primary {
-    background-color: #002f56;
-    border-color: #002f56;
+    background-color: #002f56 !important;
+    border-color: #002f56 !important;
     transition: .4s ease-in;
     color: #fff;
-    /* padding: 0.375rem 0.75rem; */
-    padding: 5px 8px;
-    font-size: 14px;
+    padding: 5px 8px !important;
+    font-size: 14px !important;
 }
 
 .btn-primary:hover {
@@ -19167,3 +19153,68 @@ background-color: #adb5bd !important;
 .dropdown-item.active, .dropdown-item:active {
     background-color: #adb5bd !important;
 }
+
+
+.uploadEmployee-wrpper,.upload-payslip-wrapper{
+    position: relative;
+    /* top: -20px; */
+}
+ul.list-style-circle{
+    list-style-type: none;
+}
+ul.list-style-circle, ul.list-style-dot, ul.list-style-pipe {
+    padding-left: 0!important;
+}
+ul.list-style-circle li{
+    padding-left: 20px!important;
+    font-size: 13px;
+}
+ul.list-style-circle li  {
+    position: relative!important;
+}
+ul.list-style-circle li:before{
+    position: absolute!important;
+}
+
+ul.list-style-circle li:before {
+    color: #b4bac5;
+    content: "O";
+    top: 3px;
+}
+ul.list-style-circle li:before{
+    left: 0;
+}
+ul.list-style-circle li{
+    margin-top: 10px!important;
+}
+
+.alert-primary{
+    background-color:#002f56 !important;
+    color: #fff;
+}
+
+.text-primary{
+    color: #002f56 !important;
+}
+
+
+/* card sizes */
+
+.small-card-left-line{
+height: 90px !important;
+border-left: 5px solid #002f56 !important;
+}
+.mini-card-left-line{
+    height: 80px !important;
+    border-left: 5px solid #002f56 !important;
+    }
+
+
+    .topbar-logo{
+        height: 40px;
+        width: 100px;
+        }
+        .topbar-logo img{
+            height: 40px !important;
+        width: 100px !important;
+        }

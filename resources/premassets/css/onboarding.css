@@ -1,13 +1,4 @@
-* {
-    margin: 0;
-    padding: 0
-}
-html {
-    height: 100%
-}
-p {
-    color: grey
-}
+
 #heading {
     text-transform: uppercase;
     color: #673AB7;
