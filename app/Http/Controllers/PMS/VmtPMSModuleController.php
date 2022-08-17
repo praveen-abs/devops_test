@@ -41,17 +41,18 @@ class VmtPMSModuleController extends Controller
         $totalSelfReviewCount = 0;
 
         $pmsConfig = $this->getUserPMSConfig(auth::user()->id);
-
-        $employees = VmtEmployee::leftJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
+        $pmsgetemployees = $this->getAllEmployees();
+        $employees = VmtEmployee::rightJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
             ->select(
                 'users.name as emp_name',
                 'users.id as id',
                 'users.avatar as avatar',
             )
+             ->where('users.is_admin','0')
             ->orderBy('vmt_employee_details.created_at', 'ASC')
-            ->whereNotNull('emp_no')
+            // ->whereNotNull('emp_no')
             ->get();
-
+            //dd($employees->toArray());
 
         $dashboardCountersData = [];
             $dashboardCountersData['employeesGoalsSetCount'] = $employeesGoalsSetCount;
@@ -108,6 +109,17 @@ class VmtPMSModuleController extends Controller
     public function getManagerForEmployees($employee_id)
     {
 
+    }
+
+    /*
+
+        Returns all Reviewers
+    */
+    public function getAllEmployees()
+    {
+        $reviewerList = User::where('active',1)->where('is_admin',0)->get(['id','name']);
+
+        return $reviewerList;
     }
 
     /*
