@@ -252,7 +252,7 @@
 
 
                 <td class="">
-                    {{$users[0]->name}}
+                    {{$userNames[$emp->reviewer_id]}}
                 </td>
                 <td class="">
                     {{json_decode($emp->assignment_period, true) ? json_decode($emp->assignment_period, true)['assignment_period_start'] : $emp->assignment_period}}
@@ -336,26 +336,20 @@
                 </td>
                 <td class="">{{$emp['ranking']}}</td>
                 <td>
-                                                    <a target="_blank"
-                        href="{{url('vmt-pmsappraisal-review?id='.$emp->kpi_table_id.'&user_id='.$emp->userid)}}"><button class="btn btn-orange py-0 px-2 "> <span
-                            class="mr-10 icon"></span>
+                    <a target="_blank" href="{{url('vmt-pmsappraisal-review?id='.$emp->kpi_table_id.'&user_id='.$emp->userid)}}">
+                        <button class="btn btn-orange py-0 px-2 ">
+                             <span class="mr-10 icon"></span>
 
-                        Review</button></a>
-                    <!-- @if(auth()->user()->hasrole('Employee')) -->
-                    <!-- <a target="_blank"
-                        href="{{url('vmt-pmsappraisal-review?id='.$emp->kpi_table_id)}}"><button class="btn btn-orange py-0 px-2 "> <span
-                            class="mr-10 icon"><i class="text-white ri-pencil-line"></i></span>
-                                                    Review</button></a> -->
-                    <!-- @else
-                    <a target="_blank"
-                        href="{{url('pms-employee-reviews?goal_id='.$emp->kpi_table_id.'&user_id='.$emp->userid)}}"><button class="btn btn-orange py-0 px-2 "><span
-                            class="mr-10 icon"></span>
-                            Review</button></a> -->
-                    <!-- <a target="_blank"
-                        href="{{url('pms-employee-reviews?goal_id='.$emp->kpi_table_id.'&user_id='.$emp->userid)}}"><button class="btn btn-orange py-0 px-2 "><span
-                            class="mr-10 icon"><i class="text-white ri-pencil-line"></i></span>
-                            Review</button></a> -->
-                    <!-- @endif -->
+                        @if($emp->emp_id == auth()->user()->id)
+                        Self-Review
+                        @else
+                        Review
+                        @endif
+                    </td>
+
+
+                    </button>
+                    </a>
                 </td>
             </tr>
             @endforeach
