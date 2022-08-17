@@ -254,6 +254,6 @@ Route::post('vmt_clientOnboarding', 'App\Http\Controllers\VmtClientController@st
 //PMS v2
 Route::get('/pms',  [App\Http\Controllers\PMS\VmtPMSModuleController::class, 'showPMSDashboard'])->name('pms-dashboard');
 Route::get('vmt-pmsgetAllEmployees', 'App\Http\Controllers\PMS\VmtPMSModuleController@getEmployeesOfManager');
-
+Route::get('vmt-pms-create-form',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'ShowKpiCreateForm'])->name('vmt-pms-create-form');
 //DONT WRITE ANT ROUTES BELOW THIS
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index']);
