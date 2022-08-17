@@ -17,6 +17,7 @@ use App\Imports\VmtEmployeeImport;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtClientMaster;
 use App\Models\VmtMasterConfig;
+use App\Models\VmtGeneralInfo;
 use App\Models\Compensatory;
 use App\Models\VmtEmployeePMSGoals;
 use App\Models\VmtAppraisalQuestion;
@@ -741,6 +742,8 @@ class VmtEmployeeController extends Controller
 
     // insert the employee to database for quick onboarding
     public function storeQuickOnboardEmployee($data){
+         $VmtGeneralInfo = VmtGeneralInfo::where('id','1')->orderBy('created_at', 'DESC')->first();
+                
         $rules = [];
         $returnsuccessMsg = '';
         $returnfailedMsg = '';
@@ -856,7 +859,8 @@ class VmtEmployeeController extends Controller
                     $returnfailedMsg .= "<li>".$empNo." not get added.</li>";
                 }
 
-                \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $empNo, 'Abs@123123', request()->getSchemeAndHttpHost()));
+               $image_view = url('/').$VmtGeneralInfo->logo_img;
+                \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $empNo, 'Abs@123123', request()->getSchemeAndHttpHost(),$image_view));
             } else {
                 $returnfailedMsg .= "<li>".$empNo." not get added because of error ".json_encode($validator->errors()->all());
                 $returnfailedMsg .= "</li>";

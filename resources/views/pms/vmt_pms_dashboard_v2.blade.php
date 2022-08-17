@@ -40,6 +40,55 @@
             caret-color: red;
         }
     </style>
+    <style type="text/css">
+header {
+    font-family: 'Lobster', cursive;
+    text-align: center;
+    font-size: 25px;
+}
+
+
+.scrollbar {
+    /*margin-left: 67px;*/
+    /*float: left;*/
+    height: 300px;
+    /*width: 400px;*/
+
+    overflow-y: scroll;
+    margin-bottom: 25px;
+}
+
+.force-overflow {
+    min-height: 450px;
+}
+
+#wrapper {
+    text-align: center;
+    width: 500px;
+    margin: auto;
+}
+
+/*
+ *  STYLE 1
+ */
+
+#style-1::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+}
+
+#style-1::-webkit-scrollbar {
+    width: 12px;
+    background-color: #F5F5F5;
+}
+
+#style-1::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color: #555;
+}
+</style>
 @endsection
 
 
@@ -417,16 +466,27 @@
                     <form id="form_selectReviewer" method="POST">
                         @csrf
                         <label for="FormSelectDefault" class="form-label text-muted">Reviewer</label>
-                        <div class="mb-3 row" id="select-reviewer">
+                        <div class="mb-3 row scrollbar" id="select-reviewer">
                             <!-- <select class="form-select mb-3" aria-label="Default select example" name="reviewer[]" multiple id="select-reviewer" > -->
-                            @foreach ($employees as $singleEmployee)
+                                <ul>
+                                    <li>
+                                        @foreach ($employees as $singleEmployee)
+                               {{--  <div class="col-3"> --}}
+                        <input type="checkbox" name="reviewer{{ $singleEmployee->id }}" id="reviewer{{ $singleEmployee->id }}" value="{{ $singleEmployee->id }}" class="mr-1 reviewer">&nbsp;{{ $singleEmployee->emp_name }}
+                    </br>
+                        {{-- <option value="{{ $singleEmployee->id }}">  {{ $singleEmployee->name }}</option> --}}
+                                {{-- </div> --}}
+                            @endforeach
+                                    </li>
+                                </ul>
+                            {{-- @foreach ($employees as $singleEmployee)
                                 <div class="col-3">
                                     <input type="checkbox" name="reviewer{{ $singleEmployee->id }}"
                                         id="reviewer{{ $singleEmployee->id }}" value="{{ $singleEmployee->id }}"
                                         class="mr-1 reviewer">{{ $singleEmployee->emp_name }}
-                                    <!-- <option value="{{ $singleEmployee->id }}">{{ $singleEmployee->name }}</option> -->
+                                    <option value="{{ $singleEmployee->id }}">{{ $singleEmployee->name }}</option> 
                                 </div>
-                            @endforeach
+                            @endforeach --}}
                             <!-- </select> -->
                         </div>
                         <div class="content-footer mt-3">
@@ -509,6 +569,17 @@
                             <!-- <select class="form-select mb-3" aria-label="Default select example" name="employees[]" id="select-employees" multiple>
 
                         </select> -->
+                         <ul>
+                                    <li>
+                                        @foreach ($employees as $singleEmployee)
+                               {{--  <div class="col-3"> --}}
+                        <input type="checkbox" name="emp{{ $singleEmployee->id }}" id="emp{{ $singleEmployee->id }}" value="{{ $singleEmployee->id }}" class="mr-1 emp">&nbsp;{{ $singleEmployee->emp_name }}
+                    </br>
+                        {{-- <option value="{{ $singleEmployee->id }}">  {{ $singleEmployee->name }}</option> --}}
+                                {{-- </div> --}}
+                            @endforeach
+                                    </li>
+                                </ul>
                         </div>
 
                         <div class="content-footer">
@@ -952,13 +1023,30 @@
 
         $('#changeEmployeeForm').on('submit', function(e) {
             e.preventDefault();
-            // var employeeSelected = $('#select-employees').val();
+             var userList = {!! json_encode($employees) !!};
             var employeeSelected = [];
-            $.each($('.employee'), function() {
-                if ($(this).is(':checked')) {
-                    employeeSelected.push($(this).val());
+            $.each($('.emp'), function() {
+                // if ($(this).is(':checked')) {
+                //     employeeSelected.push($(this).val());
+                // }
+                 if ($(this).is(':checked')) {
+                    employeeSelected.push(parseInt($(this).val()));
                 }
             });
+             var employees = [];
+            $("#sel_employees").val(employeeSelected);
+            $.each(userList, function(i, data) {
+                if ($.inArray(parseInt(data.id), employeeSelected) > -1) {
+                    // if(data.id == $('#select-employees').val()){
+                    employees.push(data.emp_name);
+                    // $('#reviewer-name').html(data.name);
+                    // $('#reviewer-email').html(data.email);
+
+                    //  $('#btn_changeManager').html("Edit");
+                }
+            });
+            
+             $('#selected_employee').val(employees.join());
             $.ajax({
                 type: "GET",
                 url: "{{ url('vmt-getAllParentReviewer') }}" + '?emp_id=' + employeeSelected,
@@ -970,6 +1058,7 @@
                         reviewerId.push(tempdata.id);
                     });
                     var rev = {!! json_encode($employees) !!};
+
                     var optionHtml = "";
                     $.each(rev, function(i, tempdata) {
                         if ($.inArray(parseInt(tempdata.id), reviewerId) > -1 && !$.inArray((
@@ -990,25 +1079,25 @@
 
                     $('#select-reviewer').html(optionHtml);
 
-                    // $.each($('.reviewer'), function() {
-                    //     if($.inArray(parseInt($(this).val()), reviewerId) > -1){
-                    //         $(this).attr('checked', true);
-                    //     } else {
-                    //         $(this).removeAttr('checked');
-                    //     }
-                    // });
-                    // $('#select-reviewer').val(reviewerId).trigger('change');
+                    $.each($('.reviewer'), function() {
+                        if($.inArray(parseInt($(this).val()), reviewerId) > -1){
+                            $(this).attr('checked', true);
+                        } else {
+                            $(this).removeAttr('checked');
+                        }
+                    });
+                    $('#select-reviewer').val(reviewerId).trigger('change');
                     $("#sel_reviewer").val(reviewerId.join());
                     $('#selected_reviewer').val(reviewer.join());
 
                 }
             });
             changeReviewer();
-            changeEmployee();
+          //  changeEmployee();
         });
 
         function changeReviewer() {
-            // var reviewerSelected = $('#select-reviewer').val();
+            var reviewerSelected = $('#select-reviewer').val();
             var reviewerSelected = [];
 
             $.each($('.reviewer'), function() {
@@ -1031,7 +1120,7 @@
 
 
         function changeEmployee() {
-            // var employeeSelected = $('#select-employees').val();
+            var employeeSelected = $('#select-employees').val();
             var employeeSelected = [];
             var employees = {!! json_encode($employees) !!};
 
@@ -1104,7 +1193,7 @@
             $('#selected_reviewer').val(reviewer.join());
             $.ajax({
                 type: "GET",
-                url: "{{ url('vmt-getAllChildEmployees') }}" + '?emp_id=' + selReviewer,
+                url: "{{ url('vmt-pmsgetAllEmployees') }}" + '?emp_id=' + selReviewer,
                 //data: $('#kpiTableForm').serialize(),
                 success: function(data) {
                     var optionHtml = "";
@@ -1249,6 +1338,7 @@
                     });
                     $("#sel_reviewer").val(reviewerId.join());
                     $('#selected_reviewer').val(reviewer.join());
+                    $('#select-employees').val(employees.join());
 
                     // $.each($('.reviewer'), function() {
 

@@ -21,15 +21,17 @@ class QuickOnboardLink extends Mailable
     protected $employeeEmpCode;
     protected $employeePassword;
     protected $loginLink;
+    protected $image_view;
 
 
-    public function __construct($employeeName, $employeeEmpCode, $employeePassword , $loginLink)
+    public function __construct($employeeName, $employeeEmpCode, $employeePassword , $loginLink,$image_view)
     {
         //
         $this->employeeName     = $employeeName;
         $this->employeeEmpCode    = $employeeEmpCode;
         $this->employeePassword    = $employeePassword;
         $this->loginLink    = $loginLink;
+        $this->image_view    = $image_view;
     }
 
     /**
@@ -43,6 +45,7 @@ class QuickOnboardLink extends Mailable
                     ->with('employeeName', $this->employeeName)
                     ->with('employeeEmpCode', $this->employeeEmpCode)
                     ->with('employeePassword', $this->employeePassword)
-                    ->with('loginLink', $this->loginLink);
+                    ->with('loginLink', $this->loginLink)
+                    ->with('image_view', $this->image_view);
     }
 }

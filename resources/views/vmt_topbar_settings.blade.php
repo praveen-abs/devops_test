@@ -3,9 +3,27 @@
 
 <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
 <style type="text/css">
-input[type=file] {
-    color: transparent;
+.btn-file {
+    position: relative;
+    overflow: hidden;
 }
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;   
+    cursor: pointer;
+    color: orange;
+    display: block;
+}
+
+
 </style>
 @endsection
 @section('content')
@@ -67,18 +85,18 @@ input[type=file] {
             </div>
 
             <div class="col-md-8 col-xl-8 col-lg-8 ">
-                <div class=" tab-content right-content p-0 mx-3 container-fluid" id="v-pills-tabContent">
+                <div class=" tab-content right-content p-0 mx-1 container-fluid" id="v-pills-tabContent">
                     <!-- general info -->
                     <div class=" p-0  tab-pane fade show active" id="v-general" role="tabpanel"
                         aria-labelledby="v-pills-home-tab">
 
 
-                        <div class="header-content d-flex align-items-center bg-white px-3">
-                            <label class="heading">General Info</label>
-                        </div>
+                       {{--  <div class="header-content form-control d-flex align-items-center bg-white px-3">
+                            <label >General Info</label>
+                        </div> --}}
 
 
-                        <div class="container-fluid p-0 content-body bg-white my-3" id="general-Info">
+                        <div class="container-fluid p-0 content-body bg-white my-1" id="general-Info">
                             <div class="card ">
                                 <div class="card-body">
                                     <div>
@@ -110,11 +128,15 @@ input[type=file] {
                                         <div class="mb-3">
                                             <div class="logo-image d-flex align-items-center">
                                                 <img id="profile_round_image_dist" src="" alt="brand-logo">
-                                                <button class="btn btn-primary mx-2">
-                                                    <i class="ri-attachment-line px-1"></i>
-                                                    <span> Upload</span>
-                                                    <input type='file' id="logo" name="logo" accept=".png,.jpg,.jpeg,.bmp" onchange="readURL(this);" />
-                                                </button>
+                                                <br>
+                                                {{-- <button class="btn btn-outline-warning  mx-2"  > --}}
+                                                    
+      <span class="btn btn-warning btn-file">
+    Browse <input type="file" id="logo" name="logo" accept=".png,.jpg,.jpeg,.bmp" onchange="readURL(this);" style="width:10px;" >
+</span>
+                                                    {{-- <span style="color: black;" >Upload</span> --}}
+
+                                                {{-- </button> --}}
                                             </div>
 
                                         </div>
@@ -139,7 +161,7 @@ input[type=file] {
                                                         alt="brand-logo">
                                                 </div>
                                                 <div class="background-image-pin">
-                                                    <button type="button" class="btn btn-primary mx-2">
+                                                    <button type="button" class="btn btn-warning mx-2">
                                                         <i class="ri-attachment-line px-1"></i>
                                                         <span> Pick different background</span>
                                                         <input type="file" id="background-img" name="background-img" accept=".png,.jpg,.jpeg,.bmp" onchange="readBackgroundURL(this);">
@@ -175,7 +197,7 @@ input[type=file] {
 
                                         <div class="mb-3">
                                             <div class="buttons-container d-flex align-items-center">
-                                                <button class="btn btn-default mx-2">Preview</button>
+                                                {{-- <button class="btn btn-default mx-2">Preview</button> --}}
                                                 <button type="submit" class="btn btn-primary">Save</button>
                                             </div>
 

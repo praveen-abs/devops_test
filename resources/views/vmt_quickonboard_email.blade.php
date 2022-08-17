@@ -60,7 +60,7 @@
                     <tr>
                         <td style="text-align:center;">
                             <a href="https://abshrms.com" title="logo" target="_blank">
-                            <img src="https://demo.abshrms.com/generalinfo/client-logo.png" style="width:140px; height:40px;" alt="">
+                            <img src="{{$image_view}}" style="width:140px; height:40px;" alt="">
                           </a>
                         </td>
                     </tr>

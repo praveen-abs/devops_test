@@ -99,11 +99,14 @@ class VmtPMSModuleController extends Controller
         Returns employees for the given reviewers emp_code list
 
     */
-    public function getEmployeesOfManager($reviewers_emp_code)
+    public function getEmployeesOfManager(Request $request)
     {
+        // dd($request->all());
+         $currentEmpCode = VmtEmployee::whereIn('userid',explode(',', $request->emp_id))->pluck('emp_no');
         $employeesList = User::leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-                         ->whereIn('vmt_employee_office_details.l1_manager_code', $reviewers_emp_code)
+                         ->whereIn('vmt_employee_office_details.l1_manager_code', $currentEmpCode)
                          ->get(['users.name','users.id']);
+                        // dd($currentEmpCode);
 
         return $employeesList;
 
