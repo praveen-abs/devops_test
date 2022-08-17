@@ -61,7 +61,7 @@ class VmtPMSModuleController extends Controller
             $dashboardCountersData['totalSelfReviewCount'] = $totalSelfReviewCount;
 
         //dd($this->getEmployeesOfManager(['EMP100','Vasa102'])->toArray());
-        dd($this->getManagersForEmployees(['2','3','4','5','6'])->toArray());
+        //dd($this->getManagersForEmployees(['2','3','4','5','6'])->toArray());
 
         return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','existingGoals','existingKPIForms','pmsConfig','departments','employees'));
     }
