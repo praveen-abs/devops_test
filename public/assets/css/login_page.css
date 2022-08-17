@@ -174,26 +174,35 @@
 
 
 
-
-@media only screen and (min-width: 1200px) and (max-width: 1400px) {
-    .carousel-item img {
-        height: 400px;  /*580px*/
-    }
-}
-
-@media only screen and (min-width: 770px) and (max-width: 991px) {
+@media only screen and (min-width: 770px) and (max-width: 1099px) {
     .carousel-item img {
         height: 390px;  /*390px*/
     }
 }
 
-
-
-@media only screen and (min-width: 992px) and (max-width: 1099px){
+/* @media only screen and (min-width: 992px) and (max-width: 1099px){
     .carousel-item img {
-        height: 420px;  /*460px*/
+        height: 420px;
+    }
+} */
+
+
+
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {
+    .carousel-item img {
+        height: 400px;  /*580px*/
     }
 }
+
+
+@media only screen and (min-width: 1400px){
+    .carousel-item img {
+        height: 440px;  /*580px*/
+    }
+}
+
+
+
 
 
 /* Extra small devices (phones, 600px and down) */
