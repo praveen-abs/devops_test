@@ -7,7 +7,7 @@ use App\Models\VmtPMS_KPIFormAssignedModel;
 use App\Models\VmtPMS_KPIFormModel;
 use App\Models\VmtEmployee;
 use App\Models\ConfigPms;
-
+use App\Models\VmtEmployeeOfficeDetails;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -50,7 +50,6 @@ class VmtPMSModuleController extends Controller
             )
              ->where('users.is_admin','0')
             ->orderBy('vmt_employee_details.created_at', 'ASC')
-            // ->whereNotNull('emp_no')
             ->get();
             //dd($employees->toArray());
 
@@ -60,6 +59,9 @@ class VmtPMSModuleController extends Controller
             $dashboardCountersData['employeesAssessedCount'] = $employeesAssessedCount;
             $dashboardCountersData['selfReviewCount'] = $selfReviewCount;
             $dashboardCountersData['totalSelfReviewCount'] = $totalSelfReviewCount;
+
+        //dd($this->getEmployeesOfManager(['EMP100','Vasa102'])->toArray());
+        dd($this->getManagersForEmployees(['2','3','4','5','6'])->toArray());
 
         return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','existingGoals','existingKPIForms','pmsConfig','departments','employees'));
     }
@@ -94,21 +96,34 @@ class VmtPMSModuleController extends Controller
     }
 
     /*
-        Returns employees for the given reviewer
+        Returns employees for the given reviewers emp_code list
 
     */
-    public function getEmployeesOfManager($reviewer_id)
+    public function getEmployeesOfManager($reviewers_emp_code)
     {
+        $employeesList = User::leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+                         ->whereIn('vmt_employee_office_details.l1_manager_code', $reviewers_emp_code)
+                         ->get(['users.name','users.id']);
+
+        return $employeesList;
 
     }
 
     /*
-        Returns manager for the given employees
+        Returns manager for the given employees_id list
 
     */
-    public function getManagerForEmployees($employee_id)
+    public function getManagersForEmployees($employees_id)
     {
+        //Fetch all the managers for the given employees_id list
+        $managersList = User::leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+                         ->whereIn('vmt_employee_office_details.user_id', $employees_id)
+                         ->distinct()->get(['vmt_employee_office_details.l1_manager_code'])->toArray();
 
+        //Fetch the manager details from user table
+        $managersDetailList = User::wherein('user_code',$managersList)->get(['id','name']);
+
+        return $managersDetailList;
     }
 
     /*
