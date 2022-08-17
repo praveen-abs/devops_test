@@ -422,7 +422,7 @@ header {
                                                 </select>
                                             </form>
                                             <div class="align-items-center justify-content-end d-flex mt-2 cursor-pointer">
-                                                <a href="{{ route('vmt_pms_kpi_create') }}" target="_blank"><span
+                                                <a href="{{ route('vmt-pms-create-form') }}" target="_blank"><span
                                                         class="plus-sign text-info "><i class="fa fa-plus f-20"></i>Create
                                                         KPI Form</span></a>
                                             </div>

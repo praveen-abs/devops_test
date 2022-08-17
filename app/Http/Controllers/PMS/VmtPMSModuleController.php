@@ -66,6 +66,35 @@ class VmtPMSModuleController extends Controller
         return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','existingGoals','existingKPIForms','pmsConfig','departments','employees'));
     }
 
+    // KPI Form
+
+    public function ShowKpiCreateForm(){
+                $config = ConfigPms::where('user_id', auth()->user()->id)->first();
+        $show['dimension'] = 'true';
+        $show['kpi'] = 'true';
+        $show['operational'] = 'true';
+        $show['measure'] = 'true';
+        $show['frequency'] = 'true';
+        $show['target'] = 'true';
+        $show['stretchTarget'] = 'true';
+        $show['source'] = 'true';
+        $show['kpiWeightage'] = 'true';
+      
+        if ($config) {
+            $config->header = json_decode($config->column_header, true);
+            $show['dimension'] = $config->selected_columns && in_array('dimension', explode(',', $config->selected_columns)) ? 'true': 'false';
+            $show['kpi'] = $config->selected_columns && in_array('kpi', explode(',', $config->selected_columns)) ? 'true': 'false';
+            $show['operational'] = $config->selected_columns && in_array('operational', explode(',', $config->selected_columns)) ? 'true': 'false';
+            $show['measure'] = $config->selected_columns && in_array('measure', explode(',', $config->selected_columns)) ? 'true': 'false';
+            $show['frequency'] = $config->selected_columns && in_array('frequency', explode(',', $config->selected_columns)) ? 'true': 'false';
+            $show['target'] = $config->selected_columns && in_array('target', explode(',', $config->selected_columns)) ? 'true': 'false';
+            $show['stretchTarget'] = $config->selected_columns && in_array('stretchTarget', explode(',', $config->selected_columns)) ? 'true': 'false';
+            $show['source'] = $config->selected_columns && in_array('source', explode(',', $config->selected_columns)) ? 'true': 'false';
+            $show['kpiWeightage'] = $config->selected_columns && in_array('kpiWeightage', explode(',', $config->selected_columns)) ? 'true': 'false';
+        }
+        return view('pms.vmt_pms_kpiform_create',compact('config','show'));
+    } 
+
     public function assignKPIForm($assignees_id, $reviewers_id, $kpi_form_id, $author_id)
     {
 
