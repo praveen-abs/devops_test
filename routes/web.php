@@ -259,5 +259,8 @@ Route::get('exelsheet', 'App\Http\Controllers\PMS\VmtPMSModuleController@KpiSamp
 // kpi strore create kpi 
 Route::get('Pms-Kpi-Create-Store',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'ShowKpiCreateForm'])->name('ShowKpiCreateForm');
 Route::post('Pms-Kpi-Create-Store',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'PmsKpiCreateStore']);
+Route::post('Vmt-pms-save-kpi/save', 'App\Http\Controllers\PMS\VmtPMSModuleController@VmtPmsSaveKpi');
+
+
 //DONT WRITE ANT ROUTES BELOW THIS
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index']);

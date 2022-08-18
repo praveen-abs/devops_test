@@ -100,18 +100,21 @@ class VmtPMSModuleController extends Controller
     public function PmsKpiCreateStore(Request $request){
 
            // dd($request->dimension);
+                     $config = ConfigPms::where('user_id', auth()->user()->id)->first();
+                  //  dd($config->selected_columns);
+                    $kpiTable  = new VmtPMS_KPIFormModel;
+
+                $kpiTable->available_columns        =    $config->selected_columns;
+                $kpiTable->author_id       =    auth::user()->id;
+                $kpiTable->form_name     =    $request->name;
+                $kpiTable->save();
+                 $KpiLAST = $kpiTable->id;
+
           if($request->has('dimension')){
             $totRows  = count($request->dimension);
             for ($i=0; $i < $totRows; $i++) {
-                // code...
-                // if ($request->kpi_id && $request->kpi_id[$i] <> '' && $request->kpi_id[$i] > 0) {
-                //     $kpiRow = VmtKpiFormTable::find($request->kpi_id[$i]);
-                // } else {
                     $kpiRow = new VmtPMS_KPIFormDetailsModel;
-                // }
-                //$inputArry[] = $request->dimension[$i];
-// print_r($i);
-    $kpiRow->vmt_pms_kpiform_id   =    $i;
+    $kpiRow->vmt_pms_kpiform_id   =    $KpiLAST;
     $kpiRow->dimension   =    $request->dimension ? $request->dimension[$i] : '';
     $kpiRow->kpi         =    $request->kpi ? $request->kpi[$i] : '';
     $kpiRow->operational_definition   = $request->operational ? $request->operational[$i]: '' ;
@@ -124,6 +127,9 @@ class VmtPMSModuleController extends Controller
                 // $kpiRow->author_id       =    auth::user()->id;
                 // $kpiRow->author_name     =    str_replace(' ', '_', strtolower($request->name));
                 $kpiRow->save();
+               
+
+          
             }
             return "Question Created Successfully";
         }
@@ -176,6 +182,29 @@ class VmtPMSModuleController extends Controller
    }
 
     
+      public function VmtPmsSaveKpi(Request $request)
+    {
+    $employeeList =$request->employees;
+        foreach ($employeeList as  $value) {
+
+
+          $kpiTable  = new VmtPMS_KPIFormAssignedModel;
+
+                $kpiTable->vmt_pms_kpiform_id        =    $request->kpi_table;
+                $kpiTable->assignee_id       =    $value;
+                $kpiTable->reviewer_id     =    $request->reviewer;
+                $kpiTable->assigner_id     =    auth::user()->id;
+                $kpiTable->calendar_type     =    $request->calendar_type;
+                $kpiTable->year     =    $request->hidden_calendar_year;
+                $kpiTable->frequency     =    $request->frequency;
+                $kpiTable->assignment_period     =    $request->assignment_period_start;
+                $kpiTable->department_id     =    $request->department;
+                
+                $kpiTable->save();
+}
+
+
+    }
 
     public function assignKPIForm($assignees_id, $reviewers_id, $kpi_form_id, $author_id)
     {
@@ -184,7 +213,6 @@ class VmtPMSModuleController extends Controller
 
     public function publishKPIForm()
     {
-
     }
 
     public function showKPIReviewPage_Assignee(Request $request)

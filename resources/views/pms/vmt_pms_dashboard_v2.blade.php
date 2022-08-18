@@ -396,7 +396,7 @@ header {
 
                                     </div>
                                 </div>
-                            </form>
+                            {{-- </form> --}}
                         </div>
                     </div>
                     <div class="card  profile-box p-2 card-left-bar ">
@@ -410,7 +410,7 @@ header {
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="container-fluid mb-1 mt-3 ">
-                                            <form id="kpiTableForm">
+                                            {{-- <form id="kpiTableForm"> --}}
                                                 @csrf
                                                 <label>Select existing form from the Dropdown</label>
                                                 <select name="kpi_table" class="form-control mb-2">
@@ -430,7 +430,7 @@ header {
                                             <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
                                                 <button class="btn btn-primary  mx-2" id="save-table">Save</button>
                                                 <button class="btn btn-primary ml-2" id="publish-goal"
-                                                    disabled>Publish</button>
+                                                    >Publish</button>
                                             </div>
 
                                         </div>
@@ -1283,7 +1283,7 @@ header {
             if (canSaveForm) {
                 $.ajax({
                     type: "POST",
-                    url: "{{ url('vmt-pms-kpi-table/save') }}",
+                   // url: "{{ url('vmt-pms-kpi-table/save') }}",
                     data: $('#kpiTableForm').serialize(),
                     success: function(data) {
 
@@ -1413,10 +1413,10 @@ header {
         $("#publish-goal").click(function(e) {
             e.preventDefault();
 
-            if ($('#kpitable_id').val()) {
+            // if ($('#kpitable_id').val()) {
                 $.ajax({
                     type: "POST",
-                    url: "{{ url('vmt-pms-assign-goals/publish') }}",
+                    url: "{{ url('Vmt-pms-save-kpi/save') }}",
                     data: $('#goalForm').serialize(),
                     success: function(data) {
 
@@ -1436,13 +1436,13 @@ header {
                         $("kpitable_id").val(data.table_id);
                     }
                 })
-            } else {
-                $('#modalBody').html("Please publish table first");
-                $('#modalHeader').html("Failed");
-                $('#modalNot').html("Failed to save Data");
-                $('#notificationModal').show();
-                $('#notificationModal').removeClass('fade');
-            }
+            // } else {
+            //     $('#modalBody').html("Please publish table first");
+            //     $('#modalHeader').html("Failed");
+            //     $('#modalNot').html("Failed to save Data");
+            //     $('#notificationModal').show();
+            //     $('#notificationModal').removeClass('fade');
+            // }
 
         });
     </script>
