@@ -4,15 +4,13 @@
 
 @endsection
 
-
-
 @section('content')
 
 @component('components.crm_breadcrumb')
 @slot('li_1') @endslot
 @endcomponent
 
-<div class="vendor-wrapper bg-white container-fluid p-2 mt-30">
+<div class="vendor-wrapper bg-white container-fluid p-2 mt8-mt15">
     <h6 class="">Vendor List</h6>
     <div class=" text-end mb-2">
         <button class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#newInventry">Create

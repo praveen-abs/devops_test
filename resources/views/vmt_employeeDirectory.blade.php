@@ -16,8 +16,8 @@
 @endcomponent
 
 
-<div class=" directory-wrapper bg-white px-3 pt-3 pb-0 mt-15">
-    <h5 class="fw-bold">Employee Directory</h5>
+<div class=" directory-wrapper bg-white px-3 pt-3 pb-0 mt8-mb25">
+    <h6 class="mb-0">Employee Directory</h6>
     <!-- <div class="row">
         <div class="col-12">
             <div class="row ">
@@ -285,7 +285,7 @@
                             <!-- <div class="d-flex justify-content-center align-items-center"> -->
                             <a href="{{route('pages_impersonate_profile', $employee->userid)}}"
                                 class="btn border-0 outline-none bg-transparent p-0  mx-1">
-                                <i class="ri-pencil-line text-primary fw-bold"></i>
+                                <i class="ri-pencil-line text-orange fw-bold"></i>
                             </a>
 
                             <!-- </div> -->

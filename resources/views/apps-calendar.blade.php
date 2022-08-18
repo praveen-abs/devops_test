@@ -8,7 +8,7 @@
 @slot('li_1') @endslot
 
 @endcomponent
-<div class="calendar-wrapper mt15-mb30">
+<div class="calendar-wrapper mt-8">
     <div class="row">
         <div class="col-12">
             <div class="row">
