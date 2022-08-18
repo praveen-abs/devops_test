@@ -413,7 +413,7 @@ header {
                                             {{-- <form id="kpiTableForm"> --}}
                                                 @csrf
                                                 <label>Select existing form from the Dropdown</label>
-                                                <select name="kpi_table" class="form-control mb-2">
+                                                <select name="selected_kpi_form_id" class="form-control mb-2">
                                                     <option value="">Select KPI Form</option>
                                                     @foreach ($existingKPIForms as $kpiForm)
                                                         <option value="{{ $kpiForm->id }}">{{ $kpiForm->form_name }}
@@ -422,13 +422,12 @@ header {
                                                 </select>
                                             </form>
                                             <div class="align-items-center justify-content-end d-flex mt-2 cursor-pointer">
-                                                <a href="{{ route('vmt-pms-create-form') }}" target="_blank"><span
+                                                <a href="{{ route('showKPICreateForm') }}" target="_blank"><span
                                                         class="plus-sign text-info "><i class="fa fa-plus f-20"></i>Create
                                                         KPI Form</span></a>
                                             </div>
 
                                             <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
-                                                <button class="btn btn-primary  mx-2" id="save-table">Save</button>
                                                 <button class="btn btn-primary ml-2" id="publish-goal"
                                                     >Publish</button>
                                             </div>
@@ -484,7 +483,7 @@ header {
                                     <input type="checkbox" name="reviewer{{ $singleEmployee->id }}"
                                         id="reviewer{{ $singleEmployee->id }}" value="{{ $singleEmployee->id }}"
                                         class="mr-1 reviewer">{{ $singleEmployee->emp_name }}
-                                    <option value="{{ $singleEmployee->id }}">{{ $singleEmployee->name }}</option> 
+                                    <option value="{{ $singleEmployee->id }}">{{ $singleEmployee->name }}</option>
                                 </div>
                             @endforeach --}}
                             <!-- </select> -->
@@ -668,127 +667,6 @@ header {
                 var id = $(this).attr('data-id');
                 $('#' + id).val(val);
             })
-
-            $('#upload-goal').click(function() {
-                // upload a file
-                var form_data = new FormData(document.getElementById("upload_form"));
-                $.ajax({
-                    type: "POST",
-                    url: "{{ route('upload-file') }}",
-                    dataType: "json",
-                    contentType: false,
-                    processData: false,
-                    data: form_data,
-                    success: function(data) {
-                        $('.addition-content').html('');
-                        var length = 1;
-                        var showdimension =
-                            "{{ $pmsConfig['dimension'] == 'true' ? 'block' : 'none' }}";
-                        var showkpi = "{{ $pmsConfig['kpi'] == 'true' ? 'block' : 'none' }}";
-                        var showoperational =
-                            "{{ $pmsConfig['operational'] == 'true' ? 'block' : 'none' }}";
-                        var showmeasure =
-                        "{{ $pmsConfig['measure'] == 'true' ? 'block' : 'none' }}";
-                        var showfrequency =
-                            "{{ $pmsConfig['frequency'] == 'true' ? 'block' : 'none' }}";
-                        var showtarget = "{{ $pmsConfig['target'] == 'true' ? 'block' : 'none' }}";
-                        var showstretchTarget =
-                            "{{ $pmsConfig['stretchTarget'] == 'true' ? 'block' : 'none' }}";
-                        var showsource = "{{ $pmsConfig['source'] == 'true' ? 'block' : 'none' }}";
-                        var showkpiWeightage =
-                            "{{ $pmsConfig['kpiWeightage'] == 'true' ? 'block' : 'none' }}";
-                        // $.each(data,function(k, v) {
-                        $.each(data[0], function(key, value) {
-                            var dimension = '';
-                            var kpi = '';
-                            var operational = '';
-                            var measure = '';
-                            var frequency = '';
-                            var target = '';
-                            var stretchTarget = '';
-                            var source = '';
-                            var kpiWeightage = '';
-                            if (showdimension == 'block') {
-                                dimension =
-                                    '<td class="text-box-td p-1"><textarea name="dimension[]" id="" class="text-box" cols="20" placeholder="type here">' +
-                                    value[0] + '</textarea></td>';
-                            } else {
-                                dimension = '<input type="hidden" name="dimension[]">';
-                            }
-                            if (showkpi == 'block') {
-                                kpi =
-                                    '<td class="text-box-td p-1"><textarea name="kpi[]" id="" class="text-box" cols="20" placeholder="type here">' +
-                                    value[1] + '</textarea></td>';
-                            } else {
-                                kpi = '<input type="hidden" name="kpi[]">';
-                            }
-                            if (showoperational == 'block') {
-                                operational =
-                                    '<td class="text-box-td p-1"><textarea name="operational[]" id="" class="text-box" cols="20" placeholder="type here">' +
-                                    value[2] + '</textarea></td>';
-                            } else {
-                                operational =
-                                    '<input type="hidden" name="operational[]">';
-                            }
-                            if (showmeasure == 'block') {
-                                measure =
-                                    '<td class="text-box-td p-1"><textarea name="measure[]" id="" class="text-box" cols="20" placeholder="type here">' +
-                                    value[3] + '</textarea></td>';
-                            } else {
-                                measure = '<input type="hidden" name="measure[]">';
-                            }
-                            if (showfrequency == 'block') {
-                                frequency =
-                                    '<td class="text-box-td p-1"><textarea name="frequency[]" id="" class="text-box" cols="20" placeholder="type here">' +
-                                    value[4] + '</textarea></td>';
-                            } else {
-                                frequency = '<input type="hidden" name="frequency[]">';
-                            }
-                            if (showtarget == 'block') {
-                                target =
-                                    '<td } class="text-box-td p-1"> <textarea name="target[]" id="" class="text-box" cols="20" placeholder="type here">' +
-                                    value[5] + '</textarea></td>';
-                            } else {
-                                target = '<input type="hidden" name="target[]">';
-                            }
-                            if (showstretchTarget == 'block') {
-                                stretchTarget =
-                                    '<td class="text-box-td p-1"><textarea name="stretchTarget[]" id="" class="text-box" cols="10" placeholder="type here">' +
-                                    value[6] + '</textarea></td>';
-                            } else {
-                                stretchTarget =
-                                    '<input type="hidden" name="stretchTarget[]">';
-                            }
-                            if (showsource == 'block') {
-                                source =
-                                    '<td class="text-box-td p-1"><textarea name="source[]" id="" class="text-box" cols="10" placeholder="type here">' +
-                                    value[7] + '</textarea></td>';
-                            } else {
-                                source = '<input type="hidden" name="source[]">';
-                            }
-                            if (showkpiWeightage == 'block') {
-                                kpiWeightage =
-                                    '<td class="text-box-td p-1"><textarea name="kpiWeightage[]" id="" class="text-box" cols="10" placeholder="type here">' +
-                                    value[8] + '</textarea></td>';
-                            } else {
-                                kpiWeightage =
-                                    '<input type="hidden" name="kpiWeightage[]">';
-                            }
-                            $('.content-container').append(
-                                '<tr class="addition-content cursor-pointer" id="content' +
-                                length +
-                                '"><td class="text-box-td p-1"><span  name="numbers" id="" class="tableInp" >' +
-                                length +
-                                '</span><div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div></td>' +
-                                dimension + kpi + operational + measure +
-                                frequency + target + stretchTarget + source +
-                                kpiWeightage + '</tr>');
-                            length++;
-                        });
-                        // });
-                    }
-                });
-            });
 
             $(document).on('#select-reviewer:open', () => {
                 $('.select2-search__field').focus();
@@ -1045,8 +923,8 @@ header {
                     //  $('#btn_changeManager').html("Edit");
                 }
             });
-            
-             $('#selected_employee').val(employees.join());
+
+            $('#selected_employee').val(employees.join());
             $.ajax({
                 type: "GET",
                 url: "{{ url('vmt-getAllParentReviewer') }}" + '?emp_id=' + employeeSelected,
@@ -1237,73 +1115,6 @@ header {
         })
 
 
-        // publishing tables
-        $('body').on('click', '#save-table', function(e) {
-            // e.preventDefault();
-
-            var isAllFieldsEntered = true;
-            var canSaveForm = true;
-            var kpiWeightageTotal = 0;
-
-            //Validate the input fields
-            $("#kpiTableForm :input").each(function() {
-                var input = $(this);
-                if (input.attr('name') == "kpiWeightage[]" && input.attr('data-show') == 'true') {
-                    kpiWeightageTotal = kpiWeightageTotal + parseInt(input.val().replace('%', ''));
-                }
-                if (input.val().trim().length < 1 && input.attr('data-show') == 'true') {
-                    isAllFieldsEntered = false;
-                }
-
-            });
-            //Validate other fields
-            if ($('#selected_reviewer').val() != "" && $('#selected_employee').val() != "" &&
-                $('#calendar_type').val() != "" &&
-                $("#year option:selected").text() != "Select" &&
-                $('#frequency').val() != "" &&
-                $('#assignment_period_start').val() != "" &&
-                isAllFieldsEntered
-            ) {
-                //Validate KPI Weightage
-                if (kpiWeightageTotal != 100 && $('input[name="kpiWeightage[]"]').attr('data-show') == 'true') {
-                    canSaveForm = false;
-                    alert("KPI Weightage should be exactly 100%. Please validate.");
-                }
-            } else {
-                //alert("Please fill all the fields");
-
-                //var toast = new bootstrap.Toast($('#errorMessageNotif'));
-                setTimeout(() => {
-                    $('#errorMessageNotif_fieldsEmpty').toast('show');
-                }, 0)
-
-                canSaveForm = false;
-            }
-
-            if (canSaveForm) {
-                $.ajax({
-                    type: "POST",
-                   // url: "{{ url('vmt-pms-kpi-table/save') }}",
-                    data: $('#kpiTableForm').serialize(),
-                    success: function(data) {
-
-                        $("#kpiTableForm :input").prop("disabled", true);
-                        $(".table-btn").prop('disabled', true);
-                        $('#notificationModal').show();
-
-                        // alert("Table Saved, Please publish goals");
-                        $('#modalBody').html("Table Saved, Please publish goals.");
-                        $('#notificationModal').show();
-                        $('#notificationModal').removeClass('fade');
-                        $("#kpitable_id").val(data.table_id);
-                        $('#publish-goal').removeAttr('disabled');
-                    }
-                });
-            }
-
-        });
-
-
 
         $('body').on('change', '#department', function() {
             $.ajax({
@@ -1416,7 +1227,7 @@ header {
             // if ($('#kpitable_id').val()) {
                 $.ajax({
                     type: "POST",
-                    url: "{{ url('Vmt-pms-save-kpi/save') }}",
+                    url: "{{ url('publishKPIForm') }}",
                     data: $('#goalForm').serialize(),
                     success: function(data) {
 

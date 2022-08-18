@@ -254,12 +254,12 @@ Route::post('vmt_clientOnboarding', 'App\Http\Controllers\VmtClientController@st
 //PMS v2
 Route::get('/pms',  [App\Http\Controllers\PMS\VmtPMSModuleController::class, 'showPMSDashboard'])->name('pms-dashboard');
 Route::get('vmt-pmsgetAllEmployees', 'App\Http\Controllers\PMS\VmtPMSModuleController@getEmployeesOfManager');
-Route::get('vmt-pms-create-form',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'ShowKpiCreateForm'])->name('vmt-pms-create-form');
+Route::get('pms-createform',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'showKPICreateForm'])->name('showKPICreateForm');
 Route::get('exelsheet', 'App\Http\Controllers\PMS\VmtPMSModuleController@KpiSampleExcelSheet');
-// kpi strore create kpi 
-Route::get('Pms-Kpi-Create-Store',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'ShowKpiCreateForm'])->name('ShowKpiCreateForm');
-Route::post('Pms-Kpi-Create-Store',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'PmsKpiCreateStore']);
-Route::post('Vmt-pms-save-kpi/save', 'App\Http\Controllers\PMS\VmtPMSModuleController@VmtPmsSaveKpi');
+// kpi strore create kpi
+// Route::get('Pms-Kpi-Create-Store',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'showKPICreateForm'])->name('showKPICreateForm');
+Route::post('saveKPIForm',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'saveKPIForm'])->name('saveKPIForm');
+Route::post('publishKPIForm', 'App\Http\Controllers\PMS\VmtPMSModuleController@publishKPIForm')->name('publishKPIForm');
 
 
 //DONT WRITE ANT ROUTES BELOW THIS
