@@ -10,7 +10,7 @@
 @endcomponent
 
 
-    <div class="client-wrapper bg-white container-fluid p-2 mt-15">
+    <div class="client-wrapper bg-white container-fluid p-2 mb-15 mt-8">
         <h6 class="">Client List</h6>
         <div class=" text-end mb-2">
             <button class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#newInventry">Create

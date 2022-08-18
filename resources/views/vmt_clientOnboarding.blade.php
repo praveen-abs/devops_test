@@ -1,7 +1,8 @@
 @extends('layouts.master')
 @section('css')
-    <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/onboarding.css') }}">
+<link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
+<link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/onboarding.css') }}">
+
 @endsection
 
 @section('content')
@@ -10,8 +11,8 @@
         @endslot
     @endcomponent
 
-    <div class="main">
-        <div class="">
+
+        <div class="client-onboard-wrapper mt-8 ">
             <div class="row ">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
 
@@ -170,8 +171,10 @@
 
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mb-2 dashBoard">
                                                 <!-- <label class="" for="product">Product{!! required() !!}</label> -->
+
+
                                                 <select placeholder="Product" name="product" id="product"
-                                                    class="onboard-form form-control" required>
+                                                    class="onboard-form form-control select2_form_without_search" required>
                                                     <option value="">Select Product</option>
                                                     <option value="Recruitment">Recruitment</option>
                                                     <option value="Payroll">Payroll</option>
@@ -187,7 +190,7 @@
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mb-2 dashBoard">
                                                 <!-- <label class="" for="subscription_type">Subscription Type{!! required() !!}</label> -->
                                                 <select placeholder="Subscription Type" name="subscription_type"
-                                                    id="subscription_type" class="onboard-form form-control" required>
+                                                    id="subscription_type" class="onboard-form form-control select2_form_without_search" required>
                                                     <option value="">Select Subscription Type</option>
                                                     <option value="Monthly">Monthly</option>
                                                     <option value="Quarterly">Quarterly</option>
@@ -206,7 +209,7 @@
                                                     style="display:none;" required accept=".doc,.docx,.pdf,image/*" />
                                             </div>
                                             <div class="col-12 text-right">
-                                                <button type="submit" class="btn btn-primary text-center"
+                                                <button type="submit" class="btn btn-orange text-center"
                                                     value="Submit">Submit</button>
                                             </div>
                                         </div>
@@ -222,8 +225,6 @@
             </div>
         </div>
 
-        <!--Main Content-->
-    </div>
 @endsection
 @section('script')
     <!-- ui notifications -->

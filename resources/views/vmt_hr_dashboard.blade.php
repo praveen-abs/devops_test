@@ -4,7 +4,7 @@
 @endsection
 @section('css')
     <link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/dashboard.css') }}">
+    {{-- <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/dashboard.css') }}"> --}}
     <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/holiday.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('/assets/css/calendar-vanila.css') }}">
 
@@ -128,8 +128,8 @@
                                                     <div>
                                                         <ul class="nav sub-topnav">
                                                             <!-- <li class="title active topbarNav fw-bold" id="post_view"><a>View
-                                                                            Post</a>
-                                                                    </li> -->
+                                                                                                            Post</a>
+                                                                                                    </li> -->
                                                             <li class="title  topbarNav fw-bold active" id="post">
                                                                 <a>Post</a>
                                                             </li>
@@ -149,8 +149,7 @@
                                                             <div>
                                                                 <div class="px-22 p-16 row no-gutters scrollBar">
 
-                                                                    <textarea name="post_menu" id="post_menu" class="border-0 outline-none w-100 h-100"
-                                                                        placeholder="Write your Post here"></textarea>
+                                                                    <textarea name="post_menu" id="post_menu" class="border-0 outline-none w-100 h-100" placeholder="Write your Post here"></textarea>
 
                                                                 </div>
                                                                 <div class="post-contents d-flex align-items-center mx-4">
@@ -174,8 +173,7 @@
 
 
                                                                 </div>
-                                                                <button class="btn btn-primary py-1 px-3 f-14 float-end"
-                                                                     type="submit">
+                                                                <button class="btn btn-primary  float-end" type="submit">
                                                                     Create Post
                                                                 </button>
 
@@ -196,44 +194,66 @@
                                                                     <textarea class="form-control placeholder-glow w-100 h-100" placeholder="Details of Announcement"
                                                                         aria-label="default input example" type="text" name="details_data" id="details_data"></textarea>
 
-                                                                    <div class="bottom-content d-flex mx-2">
-                                                                        <div class="form-check mx-2">
-                                                                            <input class="form-check-input check-box me-1"
-                                                                                type="checkbox" value=""
-                                                                                id="notifyEmp">
-                                                                            <label class="form-check-label"
-                                                                                for="notifyEmp">
-                                                                                Notify employees
-                                                                            </label>
-                                                                        </div>
-                                                                        <div class="form-check mx-2">
-                                                                            <input class="form-check-input check-box  me-1"
-                                                                                type="checkbox" value=""
-                                                                                id="requireAcknowledge">
-                                                                            <label class="form-check-label"
-                                                                                for="requireAcknowledge">
-                                                                                Require Acknowledgement
-                                                                            </label>
-                                                                        </div>
-                                                                        <div class="form-check mx-2">
-                                                                            <input class="form-check-input check-box me-1"
-                                                                                type="checkbox" value=""
-                                                                                id="hideAfter">
-                                                                            <label class="form-check-label"
-                                                                                for="hideAfter">
-                                                                                Hide After
-                                                                            </label>
-                                                                        </div>
-                                                                        <div class="form-check mx-2">
-                                                                            <input class="form-control me-1 anounce-date "
-                                                                                type="text" placeholder="Select date"
-                                                                                value="" id="" disabled>
 
+                                                                    <div class="bottom-content d-flex mx-2">
+
+                                                                        <div class="row">
+                                                                            <div
+                                                                                class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                                                <div class="form-check mx-2">
+                                                                                    <input
+                                                                                        class="form-check-input check-box me-1"
+                                                                                        type="checkbox" value=""
+                                                                                        id="notifyEmp">
+                                                                                    <label class="form-check-label"
+                                                                                        for="notifyEmp">
+                                                                                        Notify employees
+                                                                                    </label>
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <div
+                                                                                class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                                                <div class="form-check mx-2">
+                                                                                    <input
+                                                                                        class="form-check-input check-box  me-1"
+                                                                                        type="checkbox" value=""
+                                                                                        id="requireAcknowledge">
+                                                                                    <label class="form-check-label"
+                                                                                        for="requireAcknowledge">
+                                                                                        Require Acknowledgement
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div
+                                                                                class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                                                <div class="form-check mx-2">
+                                                                                    <input
+                                                                                        class="form-check-input check-box me-1"
+                                                                                        type="checkbox" value=""
+                                                                                        id="hideAfter">
+                                                                                    <label class="form-check-label"
+                                                                                        for="hideAfter">
+                                                                                        Hide After
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div
+                                                                                class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                                                <div class="form-check mx-2">
+                                                                                    <input
+                                                                                        class="form-control me-1 anounce-date "
+                                                                                        type="text"
+                                                                                        placeholder="Select date"
+                                                                                        value="" id=""
+                                                                                        disabled>
+
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-
                                                                 </div>
-                                                                <button class="btn btn-primary py-1 px-3 f-14  float-right"
+                                                                <button class="btn btn-primary float-end"
                                                                     id="annon_menu_submit" type="button">
                                                                     Submit
                                                                 </button>
@@ -245,32 +265,32 @@
                                                             <div>
                                                                 <div class="poll-content">
                                                                     <!-- <form action="{{ route('poll_voting') }}" method="POST">
-                                                                                @csrf
-                                                                                <div class="px-20 p-16 row no-gutters scrollBar">
-                                                                                    @if ($polling)
+                                                                                                                @csrf
+                                                                                                                <div class="px-20 p-16 row no-gutters scrollBar">
+                                                                                                                    @if ($polling)
     <h3>{{ $polling->question }}</h3>
-                                                                                    <div class="d-flex align-items-center">
-                                                                                        @foreach (json_decode($polling->options, true) as $key => $option)
+                                                                                                                    <div class="d-flex align-items-center">
+                                                                                                                        @foreach (json_decode($polling->options, true) as $key => $option)
     <div class="mr-2"><input id="polling{{ $key }}"
-                                                                                                type="radio" name="polling"
-                                                                                                value="{{ $option }}" @if ($polling->data && $polling->data == $option) checked @endif>
-                                                                                            <label for="polling{{ $key }}"
-                                                                                                class="m-0 mr-2">{{ $option }}</label>
-                                                                                        </div>
+                                                                                                                                type="radio" name="polling"
+                                                                                                                                value="{{ $option }}" @if ($polling->data && $polling->data == $option) checked @endif>
+                                                                                                                            <label for="polling{{ $key }}"
+                                                                                                                                class="m-0 mr-2">{{ $option }}</label>
+                                                                                                                        </div>
     @endforeach
-                                                                                        <input type="hidden" name="id"
-                                                                                            value="{{ $polling->id }}">
-                                                                                    </div>
+                                                                                                                        <input type="hidden" name="id"
+                                                                                                                            value="{{ $polling->id }}">
+                                                                                                                    </div>
 @else
     <div class="text-center">
-                                                                                        <h4>There is no polling now..!</h4>
-                                                                                    </div>
+                                                                                                                        <h4>There is no polling now..!</h4>
+                                                                                                                    </div>
     @endif
-                                                                                </div>
-                                                                                <button class="btn btn-danger py-1 px-4  float-right">
-                                                                                    Submit
-                                                                                </button>
-                                                                            </form> -->
+                                                                                                                </div>
+                                                                                                                <button class="btn btn-danger py-1 px-4  float-right">
+                                                                                                                    Submit
+                                                                                                                </button>
+                                                                                                            </form> -->
 
                                                                     <input type="text" name="" id=""
                                                                         class="form-control border-0 outline-none"
@@ -278,32 +298,25 @@
                                                                     <hr>
                                                                     <div class="mt-3 d-flex align-items-center">
                                                                         <input type="text" name=""
-                                                                            id="" class="form-control w-50"
+                                                                            id="" class="form-control "
                                                                             placeholder="Add option here">
                                                                         <i
                                                                             class="ri-delete-bin-7-fill mx-2 text-danger"></i>
                                                                     </div>
-
-                                                                    <div class="mt-2 d-flex align-items-center">
-                                                                        <input type="text" name=""
-                                                                            id="" class="form-control w-50"
-                                                                            placeholder="Add option here">
-                                                                        <i
-                                                                            class="ri-delete-bin-7-fill mx-2 text-danger"></i>
-                                                                    </div>
-                                                                    <div class="text-start">
+                                                                    <div class="text-end my-2">
                                                                         <!-- <button class="btn btn-secondary outline-none border-0"><i class=" ri-add-circle-line mr-2">Add More</i></button> -->
                                                                         <button
-                                                                            class="btn btn-light text-secondary px-0 bg-transparent outline-none border-0"><span
-                                                                                class="me-2">+</span> Add
+                                                                            class="btn text-primary p-0 bg-transparent outline-none border-0 f-12"><span
+                                                                                class="me-2 fa fa-plus"></span> Add
                                                                             More</i></button>
                                                                     </div>
 
                                                                     <div
                                                                         class="bottom-content d-flex justify-content-between mx-2">
                                                                         <div class=" mx-2">
-                                                                            <label for="">Poll Expires On</label>
-                                                                            <input class=" me-1 anounce-date "
+                                                                            <label for="">Poll Expires
+                                                                                On</label>
+                                                                            <input class=" me-1 anounce-date form-control "
                                                                                 type="text" placeholder="Select date"
                                                                                 value="" id="" disabled>
 
@@ -328,7 +341,7 @@
                                                                         </div>
 
                                                                     </div>
-                                                                    <div class="mt-3 text-end">
+                                                                    <div class="mt-2 text-end">
                                                                         <button class="btn btn-default">Cancel</button>
                                                                         <button class="btn btn-primary">Post</button>
                                                                     </div>
@@ -343,9 +356,12 @@
 
                                                                         </textarea>
                                                                     </div>
-                                                                    <button class="btn btn-primary py-1 px-4  float-right">
-                                                                        Submit
-                                                                    </button>
+                                                                    <div class="text-end mt-2">
+                                                                        <button
+                                                                            class="btn btn-primary py-1 px-4  float-right">
+                                                                            Submit
+                                                                        </button>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>

@@ -10,7 +10,11 @@
 input {
   width: 100% !important;
   margin-left: 0 !important;
-  height: 2.7em;
+  height: 2.9em;
+}
+#current_address_copy{
+height: 12px !important;
+width:12px !important;
 }
 
 .addfiles

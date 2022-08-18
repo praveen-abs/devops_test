@@ -1,5 +1,5 @@
 {{-- @section('ui-onboarding') --}}
-    <div class="container-fluid">
+    <div class="container-fluid mt-8">
         <div class="">
             <div class="row ">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
@@ -17,8 +17,8 @@
                             <form id="form-1" enctype="multipart/form-data">
                                 @csrf
                                 <div class="card shadow  profile-box card-top-border p-2">
-                                    <div class="card-body justify-content-center align-items-center mb-3">
-                                        <div class="text-primary header-card-text">
+                                    <div class="card-body justify-content-center align-items-center ">
+                                        <div class=" header-card-text">
                                             <h6>Personal Details</h6>
                                         </div>
                                         <div class="form-card">
@@ -208,7 +208,7 @@
                                 <div class="card shadow  profile-box card-top-border p-2">
                                     <div class="card-body justify-content-center align-items-center">
                                         <div class="form-card">
-                                            <div class="text-primary my-2 header-card-text">
+                                            <div class=" header-card-text">
                                                 <h6>Location Details</h6>
                                             </div>
                                             <div class="row mt-1">
@@ -247,7 +247,7 @@
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6 mb-2">
                                                     <!-- <label class="" for="current_address">Current Address{!! required() !!}</label> -->
-                                                                                                            <textarea placeholder="Current Address"
+                                                                                                           <textarea placeholder="Current Address"
                                                         name="current_address" id="current_address"
                                                         class="onboard-form form-control" required  id="" cols="5" rows="3"></textarea>
                                                 </div>
@@ -306,9 +306,9 @@
                                     </div>
                                 </div>
                                 <div class="card shadow  profile-box card-top-border p-2">
-                                    <div class="card-body justify-content-center align-items-center mb-3">
-                                        <div class="text-primary my-2 header-card-text">
-                                            <h5>Official Details</h5>
+                                    <div class="card-body justify-content-center align-items-center ">
+                                        <div class="header-card-text">
+                                            <h6 class="mb-0">Official Details</h6>
                                         </div>
                                         <div class="form-card">
                                             <div class="row mt-1">
@@ -422,9 +422,9 @@
                                     </div>
                                 </div>
                                 <div class="card shadow  profile-box card-top-border p-2">
-                                    <div class="card-body justify-content-center align-items-center mb-3">
-                                        <div class="text-primary my-2 header-card-text">
-                                            <h5>Family Details</h5>
+                                    <div class="card-body justify-content-center align-items-center ">
+                                        <div class="header-card-text">
+                                            <h6 class="mb-0">Family Details</h6>
                                         </div>
                                         <div class="form-card">
                                             <div class="row mt-1">
@@ -488,7 +488,7 @@
                                     </div>
                                 </div>
                                 <div class="card shadow  profile-box card-top-border p-2">
-                                    <div class="card-body justify-content-center align-items-center mb-3">
+                                    <div class="card-body justify-content-center align-items-center">
                                         <div class="text-primary my-2 header-card-text">
                                             <h5>Compensatory</h5></div>
                                         <div class="form-card">
@@ -819,9 +819,9 @@
                                     </div>
                                 </div>
                                 <div class="card shadow  profile-box card-top-border p-2">
-                                    <div class="card-body justify-content-center align-items-center mb-3">
-                                        <div class="text-primary my-2 header-card-text"><h5>Personal Documents</h5></div>
-                                        <div class="form-card mb-4">
+                                    <div class="card-body justify-content-center align-items-center ">
+                                        <div class="header-card-text"><h6 class="mb-0">Personal Documents</h6></div>
+                                        <div class="form-card mb-2">
                                             <div class="row mt-1">
                                                 <!-- <div class="col-12 mb-2">
                                                     <input type="checkbox" placeholder="" name="aadhar_backend"
@@ -888,7 +888,7 @@
                                                         name="dl_file" id="dl_file"
                                                         class="onboard-form form-control files" />
                                                 </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
+                                                <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
                                                     <!-- <label class="" for="education_certificate">Educations Certificate{!! required() !!}</label> -->
                                                     <div class="addfiles form-control" data="#education_certificate"
                                                         id="education_certificate_label"><span class="file_label">Choose
@@ -898,7 +898,7 @@
                                                         name="education_certificate" id="education_certificate"
                                                         class="onboard-form form-control files"  />
                                                 </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
+                                                <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
                                                     <!-- <label class="" for="reliving_letter">Reliving Letter</label> -->
                                                     <div class="addfiles form-control" data="#reliving_letter"
                                                         id="reliving_letter_label"><span class="file_label">Choose
@@ -911,7 +911,6 @@
                                             </div>
                                         </div>
                                         <div class="row">
-
                                             <div class="col-12 text-right"><button type="button" data="row-6"
                                                     next="row-6" placeholder="" name="next" id="submit_button"
                                                     class="btn btn-orange  text-center"
