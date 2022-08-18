@@ -13,7 +13,7 @@
         width: 100%;
         height: 100%;
         z-index: 9999;
-        background: url('{{ URL::asset("assets/images/loader.gif") }}') 
+        background: url('{{ URL::asset("assets/images/loader.gif") }}')
                     50% 50% no-repeat rgb(249,249,249);
         opacity: 0.4;
     }
@@ -187,7 +187,7 @@
                             <?php
                                     $temp =  json_decode($assignedGoals->assignment_period, true);
                                    print_r($temp['year']." - ".strtoupper($temp['assignment_period_start']));
-                                    
+
                                 ?>
                         </td>
                     </tr>
@@ -330,6 +330,7 @@
                                 </tr>
                             </thead>
                             <tbody class="tbody" id="tbody">
+                                {{-- <?php dd($kpiRows) ?> --}}
                                 @foreach($kpiRows as $index => $kpiRow)
                                 <tr>
                                     <th scope="row">
@@ -414,7 +415,7 @@
                                     <td>
                                         @if($assignedGoals->is_employee_submitted && !$reviewCompleted &&
                                         !$assignedGoals->is_manager_submitted && $show['manager'])
-                                        <!-- <textarea name="managerpercetage[{{$kpiRow->id}}]" id="" cols="20" rows="2" 
+                                        <!-- <textarea name="managerpercetage[{{$kpiRow->id}}]" id="" cols="20" rows="2"
                                             placeholder="type here">@if(isset( $kpiRow->manager_kpi_percentage)) {{$kpiRow->manager_kpi_percentage}}@endif</textarea> -->
                                         <input type="number" class="inp-text" name="managerpercetage[{{$kpiRow->id}}]"
                                             placeholder="type here"
@@ -772,7 +773,7 @@ $('#reject_save').click(function(e) {
                     $('#notificationModal').addClass('fade');
                     window.location.reload();
                 },
-                
+
                 error: function(error) {
                     $('.loader').hide();
                 }

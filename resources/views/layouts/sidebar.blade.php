@@ -248,7 +248,9 @@
                                 <a href="{{url('vmt-pms-assigngoals')}}"
                                     class="nav-link sidebar py-1"><span>Dashboard</span></a>
                             </li>
-
+                            <li class="nav-item">
+                                <a href="{{route('vmt_config_pms')}}" class="nav-link"><span>PMS Config</span></a>
+                            </li>
                             @can('360_Degree_Review')
                             <li class="nav-item">
                                 <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>360
@@ -541,9 +543,6 @@
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a href="{{route('view-config-master')}}" class="nav-link"><span>Master Config</span></a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{route('vmt_config_pms')}}" class="nav-link"><span>PMS Config</span></a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{url('vmt_clientOnboarding')}}" class="nav-link"><span> Client

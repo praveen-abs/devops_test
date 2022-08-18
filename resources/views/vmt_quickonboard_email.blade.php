@@ -105,7 +105,7 @@
                                         <p
                                             style="color:#455056; font-size:18px;line-height:20px; margin:0; font-weight: 500;">
                                             <strong
-                                                style="display: block;font-size: 13px; margin: 0 0 4px; color:rgba(0,0,0,.64); font-weight:normal;">{{$employeeEmpCode}}
+                                                style="display: block;font-size: 13px; margin: 0 0 4px; color:rgba(0,0,0,.64); font-weight:normal;">Employee Code</strong>{{$employeeEmpCode}}
                                             <strong
                                                 style="display: block; font-size: 13px; margin: 24px 0 4px 0; font-weight:normal; color:rgba(0,0,0,.64);">Password</strong>{{$employeePassword}}
                                         </p>
