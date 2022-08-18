@@ -6,11 +6,13 @@ use App\Models\Department;
 use App\Models\VmtPMS_KPIFormAssignedModel;
 use App\Models\VmtPMS_KPIFormModel;
 use App\Models\VmtEmployee;
+use App\Models\VmtPMS_KPIFormDetailsModel;
 use App\Models\ConfigPms;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 
 /*
     New PMS Controller
@@ -94,6 +96,86 @@ class VmtPMSModuleController extends Controller
         }
         return view('pms.vmt_pms_kpiform_create',compact('config','show'));
     } 
+    // kpi table form  insert to datatable
+    public function PmsKpiCreateStore(Request $request){
+
+           // dd($request->dimension);
+          if($request->has('dimension')){
+            $totRows  = count($request->dimension);
+            for ($i=0; $i < $totRows; $i++) {
+                // code...
+                // if ($request->kpi_id && $request->kpi_id[$i] <> '' && $request->kpi_id[$i] > 0) {
+                //     $kpiRow = VmtKpiFormTable::find($request->kpi_id[$i]);
+                // } else {
+                    $kpiRow = new VmtPMS_KPIFormDetailsModel;
+                // }
+                //$inputArry[] = $request->dimension[$i];
+// print_r($i);
+    $kpiRow->vmt_pms_kpiform_id   =    $i;
+    $kpiRow->dimension   =    $request->dimension ? $request->dimension[$i] : '';
+    $kpiRow->kpi         =    $request->kpi ? $request->kpi[$i] : '';
+    $kpiRow->operational_definition   = $request->operational ? $request->operational[$i]: '' ;
+    $kpiRow->measure     =    $request->measure ? $request->measure[$i] : '';
+    $kpiRow->frequency   =    $request->frequency ? $request->frequency[$i] : '';
+    $kpiRow->target      =    $request->target ? $request->target[$i] : '';
+    $kpiRow->stretch_target  =    $request->stretchTarget ? $request->stretchTarget[$i] : '';
+    $kpiRow->source          =    $request->source ? $request->source[$i] : '';
+    $kpiRow->kpi_weightage   =    $request->kpiWeightage ? $request->kpiWeightage[$i] : '';
+                // $kpiRow->author_id       =    auth::user()->id;
+                // $kpiRow->author_name     =    str_replace(' ', '_', strtolower($request->name));
+                $kpiRow->save();
+            }
+            return "Question Created Successfully";
+        }
+    }  
+    // sample excel sheet  
+    public function KpiSampleExcelSheet()
+    {
+        $data = ConfigPms::where('user_id', auth()->user()->id)->first();
+         $show['dimension'] = 'true';
+        $show['kpi'] = 'true';
+        $show['operational'] = 'true';
+        $show['measure'] = 'true';
+        $show['frequency'] = 'true';
+        $show['target'] = 'true';
+        $show['stretchTarget'] = 'true';
+        $show['source'] = 'true';
+        $show['kpiWeightage'] = 'true';
+        $q = "jjj";
+        $w = "jjj";
+        $r = "jjj";
+        $t = "jjj";
+        $y = "jjj";
+        $u = "jjj";
+        // dd($data);
+       // $data = DB::table('tbl_customer')->orderBy('CustomerID', 'DESC')->get();
+       $data_array [] = array("CustomerName","Gender","Address","City","PostalCode","Country");
+       foreach($data as $data_item)
+       {
+           $data_array[] = array(
+               'CustomerName' =>$q,
+               'Gender' => $w,
+               'Address' => $r,
+               'City' => $t,
+               'PostalCode' => $y,
+               'Country' =>$u
+           );
+       }
+       $this->ExportExcel($data_array);
+
+
+//          $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('./assets/sample_kpi.xls');
+// $worksheet = $spreadsheet->getSheet(0);
+// $worksheet->getCell('C6')->setValue($q);
+// $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xls');
+// $file_name='result_excel.xlsx';
+// $writer->save($file_name);
+// header('Content-Type: application/vnd.ms-excel');
+// header('Content-Disposition: attachment; filename="'.$file_name.'"');
+// $writer->save("php://output");
+   }
+
+    
 
     public function assignKPIForm($assignees_id, $reviewers_id, $kpi_form_id, $author_id)
     {

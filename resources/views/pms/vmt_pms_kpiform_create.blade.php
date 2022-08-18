@@ -610,7 +610,7 @@ $(function () {
         {
             $.ajax({
                 type: "POST",
-                url: "{{route('vmt_pms_kpi_create')}}",
+                url: "{{route('ShowKpiCreateForm')}}",
                 data: $('#kpiTableForm').serialize(),
                 success: function(data){
                     $("#kpiTableForm :input").prop("disabled", true);
