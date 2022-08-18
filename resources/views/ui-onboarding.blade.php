@@ -489,8 +489,8 @@
                                 </div>
                                 <div class="card shadow  profile-box card-top-border p-2">
                                     <div class="card-body justify-content-center align-items-center">
-                                        <div class="text-primary my-2 header-card-text">
-                                            <h5>Compensatory</h5></div>
+                                        <div class="header-card-text">
+                                            <h6>Compensatory</h6></div>
                                         <div class="form-card">
 
                                             <div class="row">

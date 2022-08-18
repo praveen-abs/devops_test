@@ -205,6 +205,7 @@
 
 
 
+
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
     .carousel-item img {
@@ -264,4 +265,15 @@
     .login-bottom {
         display: none;
     }
+}
+
+
+.login-top-img{
+    height: 100px;
+    width: 150px;
+}
+
+.login-top-img img{
+    height: 100%;
+    width: 100%;
 }

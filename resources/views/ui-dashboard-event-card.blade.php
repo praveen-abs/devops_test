@@ -17,7 +17,7 @@
                                             <div class="px-2 d-flex ">
                                                 <img src="{{ URL::asset('images/' . $employee->avatar) }}"
                                                     alt="" class="img-round">
-                                                <p class=" text-primary f-14 mx-3 mt-3">{{ $employee->name }}</p>
+                                                <p class=" text-primary fw-bold f-12 mx-3 mt-3">{{ $employee->name }}</p>
                                             </div>
                                             <p class="text-danger f-12 fw-bold text-right program-day "
                                                 style="color:#E54E0D;">
@@ -41,16 +41,16 @@
                             <div class="card profile-box flex-fill" style="border-top: 5px solid #037B5A;">
                                 <div class="card-body ">
                                     <div class="wishes-card-wrapper">
-                                        <p class="text-muted  m-0"><i class=" f-12 mr-2 ri-shopping-bag-fill"
+                                        <p class="text-muted f-12   m-0"><i class=" f-12 mr-2 ri-shopping-bag-fill"
                                                 style="color:#037B5A;"></i>
                                             Work Anniversary</p>
                                         <div class="mt-2 ">
                                             <div class="px-2 d-flex ">
                                                 <img src="{{ URL::asset('images/' . $employee->avatar) }}"
                                                     alt="" class="img-round">
-                                                <p class=" text-primary f-12  mx-3 mt-3">{{ $employee->name }}</p>
+                                                <p class=" text-primary f-12 fw-bold mx-3 mt-3">{{ $employee->name }}</p>
                                             </div>
-                                            <p class="fw-bold text-right program-day " style="color:#037B5A;">
+                                            <p class="fw-bold f-12 text-right program-day " style="color:#037B5A;">
                                                 @if ($employee['doj'] == date('Y-m-d'))
                                                     Today
                                                 @else($employee['dob'] == date('Y-m-d'))

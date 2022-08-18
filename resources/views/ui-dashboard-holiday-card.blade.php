@@ -1,4 +1,4 @@
-<div class="card profile-box  flex-fill">
+<div class="card profile-box flex-fill line-0">
     <div class="card-body " style="padding:0px !important">
         <!-- <div class="card-img"> -->
 
@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 @endforeach
-            
+
             <div class="d-flex">
                 <a class="slide-next" onclick="plusSlides(1)"> <i class="ri-arrow-right-s-line text-white"></i> </a>
                 <a class="slide-prev" onclick="plusSlides(-1)"><i class="ri-arrow-left-s-line text-white"></i></a>

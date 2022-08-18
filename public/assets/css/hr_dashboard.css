@@ -124,7 +124,7 @@
 .wishes-card-wrapper img {
     height: 60px !important;
     width: 60px !important;
-    opacity: 0.5;
+    opacity: 0.1;
 }
 
 .card-img {
@@ -844,7 +844,7 @@ input+.slider-checkbox>.slider-checkbox-text:after {
 .emoji-content {
     width: 20px;
     height: 20px;
-    border: 1px solid #68626277;
+    border: 1px solid #6862624a;
     border-radius: 50%;
     position: relative;
     align-items: center;
@@ -854,12 +854,14 @@ input+.slider-checkbox>.slider-checkbox-text:after {
 
 }
 
-.post-contents .img-contents i {
-    position: relative;
-    font-size: 14px;
-    color: #686363c4;
+.form-check-input:checked {
 
+    background-color: #002f56 !important;
 }
+.post-contents {
+    color: #6c757d61;
+}
+
 
 .post-contents .img-contents input {
     position: absolute;
@@ -877,7 +879,8 @@ input+.slider-checkbox>.slider-checkbox-text:after {
 }
 
 .bottom-content .anounce-date {
-    height: 18px !important;
+    padding: 2px 13px;
+    height: 25px !important;
     width: 100px;
     padding: 2px 13px;
 }
@@ -900,11 +903,6 @@ input+.slider-checkbox>.slider-checkbox-text:after {
 
 .poll-content input {
     border: 1px solid #ced4da;
-}
-
-.poll-content i {
-    font-size: 18px;
-    color: #686363;
 }
 
 .action-content {

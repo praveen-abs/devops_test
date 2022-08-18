@@ -47,7 +47,7 @@ header {
     background-color: #555;
 }
 </style>
-<div class="card profile-box wrapper flex-fill card-top-border">
+<div class="card profile-box wrapper flex-fill">
     <h4 class="m-0 title text-center text-primary card-title my-2 fw-bold">My Actions</h4>
     <hr class="m-0">
     <div class="card-body " id="style-4">

@@ -42,7 +42,7 @@
             </div>
         </div>
 
-        <div class="card profile-box flex-fill ">
+        <div class="card flex-fill ">
             <div class="card-body p-2">
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-xl-8 col-lg-8">
@@ -128,8 +128,8 @@
                                                     <div>
                                                         <ul class="nav sub-topnav">
                                                             <!-- <li class="title active topbarNav fw-bold" id="post_view"><a>View
-                                                                                                            Post</a>
-                                                                                                    </li> -->
+                                                                                                                    Post</a>
+                                                                                                            </li> -->
                                                             <li class="title  topbarNav fw-bold active" id="post">
                                                                 <a>Post</a>
                                                             </li>
@@ -166,7 +166,7 @@
                                                                     </div>
 
                                                                     <div class="emoji-content mx-3">
-                                                                        <i class="ri-user-smile-line text-muted"></i>
+                                                                        <i class="ri-user-smile-line "></i>
                                                                         <span class="tooltiptext">Emoji</span>
 
                                                                     </div>
@@ -265,32 +265,32 @@
                                                             <div>
                                                                 <div class="poll-content">
                                                                     <!-- <form action="{{ route('poll_voting') }}" method="POST">
-                                                                                                                @csrf
-                                                                                                                <div class="px-20 p-16 row no-gutters scrollBar">
-                                                                                                                    @if ($polling)
+                                                                                                                        @csrf
+                                                                                                                        <div class="px-20 p-16 row no-gutters scrollBar">
+                                                                                                                            @if ($polling)
     <h3>{{ $polling->question }}</h3>
-                                                                                                                    <div class="d-flex align-items-center">
-                                                                                                                        @foreach (json_decode($polling->options, true) as $key => $option)
+                                                                                                                            <div class="d-flex align-items-center">
+                                                                                                                                @foreach (json_decode($polling->options, true) as $key => $option)
     <div class="mr-2"><input id="polling{{ $key }}"
-                                                                                                                                type="radio" name="polling"
-                                                                                                                                value="{{ $option }}" @if ($polling->data && $polling->data == $option) checked @endif>
-                                                                                                                            <label for="polling{{ $key }}"
-                                                                                                                                class="m-0 mr-2">{{ $option }}</label>
-                                                                                                                        </div>
+                                                                                                                                        type="radio" name="polling"
+                                                                                                                                        value="{{ $option }}" @if ($polling->data && $polling->data == $option) checked @endif>
+                                                                                                                                    <label for="polling{{ $key }}"
+                                                                                                                                        class="m-0 mr-2">{{ $option }}</label>
+                                                                                                                                </div>
     @endforeach
-                                                                                                                        <input type="hidden" name="id"
-                                                                                                                            value="{{ $polling->id }}">
-                                                                                                                    </div>
+                                                                                                                                <input type="hidden" name="id"
+                                                                                                                                    value="{{ $polling->id }}">
+                                                                                                                            </div>
 @else
     <div class="text-center">
-                                                                                                                        <h4>There is no polling now..!</h4>
-                                                                                                                    </div>
+                                                                                                                                <h4>There is no polling now..!</h4>
+                                                                                                                            </div>
     @endif
-                                                                                                                </div>
-                                                                                                                <button class="btn btn-danger py-1 px-4  float-right">
-                                                                                                                    Submit
-                                                                                                                </button>
-                                                                                                            </form> -->
+                                                                                                                        </div>
+                                                                                                                        <button class="btn btn-danger py-1 px-4  float-right">
+                                                                                                                            Submit
+                                                                                                                        </button>
+                                                                                                                    </form> -->
 
                                                                     <input type="text" name="" id=""
                                                                         class="form-control border-0 outline-none"
@@ -306,43 +306,59 @@
                                                                     <div class="text-end my-2">
                                                                         <!-- <button class="btn btn-secondary outline-none border-0"><i class=" ri-add-circle-line mr-2">Add More</i></button> -->
                                                                         <button
-                                                                            class="btn text-primary p-0 bg-transparent outline-none border-0 f-12"><span
-                                                                                class="me-2 fa fa-plus"></span> Add
+                                                                            class="btn text-primary p-0 bg-transparent outline-none border-0 f-12"><i
+                                                                                class="f-12 me-1 fa  fa-plus-circle"
+                                                                                aria-hidden="true"></i>Add
                                                                             More</i></button>
                                                                     </div>
 
-                                                                    <div
-                                                                        class="bottom-content d-flex justify-content-between mx-2">
-                                                                        <div class=" mx-2">
-                                                                            <label for="">Poll Expires
-                                                                                On</label>
-                                                                            <input class=" me-1 anounce-date form-control "
-                                                                                type="text" placeholder="Select date"
-                                                                                value="" id="" disabled>
+                                                                    <div class="bottom-content">
+                                                                        <div class="row">
+                                                                            <div
+                                                                                class="col-sm-6 col-md-6 col-xl-4 col-lg-4 mt-1">
+                                                                                <div class=" d-flex align-items-center">
+                                                                                    <label for=""
+                                                                                        class="me-1 mb-0">Poll
+                                                                                        Expires
+                                                                                        On</label>
+                                                                                    <input
+                                                                                        class=" me-1 anounce-date form-control "
+                                                                                        type="text"
+                                                                                        placeholder="Select date"
+                                                                                        value="" id=""
+                                                                                        disabled>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div
+                                                                                class="col-sm-6 col-md-6 col-xl-4 col-lg-4 mt-1">
 
-                                                                        </div>
-                                                                        <div class=" mx-2">
-                                                                            <input class="form-check-input check-box me-1"
-                                                                                type="checkbox" value=""
-                                                                                id="notifyEmp2">
-                                                                            <label class="form-check-label"
-                                                                                for="notifyEmp2">
-                                                                                Notify employees
-                                                                            </label>
-                                                                        </div>
-                                                                        <div class="mx-2">
-                                                                            <input class="form-check-input check-box me-1"
-                                                                                type="checkbox" value=""
-                                                                                id="anonymous">
-                                                                            <label class="form-check-label"
-                                                                                for="anonymous">
-                                                                                Anonymous Poll
-                                                                            </label>
-                                                                        </div>
+                                                                                    <input
+                                                                                        class="form-check-input check-box me-1"
+                                                                                        type="checkbox" value=""
+                                                                                        id="notifyEmp2">
+                                                                                    <label class="form-check-label"
+                                                                                        for="notifyEmp2">
+                                                                                        Notify employees
+                                                                                    </label>
 
+                                                                            </div>
+                                                                            <div
+                                                                                class="col-sm-6 col-md-6 col-xl-4 col-lg-4 mt-1">
+
+                                                                                    <input
+                                                                                        class="form-check-input check-box me-1"
+                                                                                        type="checkbox" value=""
+                                                                                        id="anonymous">
+                                                                                    <label class="form-check-label"
+                                                                                        for="anonymous">
+                                                                                        Anonymous Poll
+                                                                                    </label>
+
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                     <div class="mt-2 text-end">
-                                                                        <button class="btn btn-default">Cancel</button>
+                                                                        <button class="btn btn-primary">Cancel</button>
                                                                         <button class="btn btn-primary">Post</button>
                                                                     </div>
                                                                 </div>
