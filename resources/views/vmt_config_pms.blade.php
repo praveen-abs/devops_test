@@ -49,7 +49,7 @@
                                             <div class="col-3">
                                                 <input class="mr-1" type="checkbox" name="operational_check"
                                                     id="operational_check"
-                                                    @if ($data && $data->selected_columns && in_array('operational', explode(',', $data->selected_columns))) operational_check @endif>
+                                                    @if ($data && $data->selected_columns && in_array('operational', explode(',', $data->selected_columns))) checked @endif>
                                                 <label for="operational" style="margin-left:2px;">Operational</label>
                                             </div>
                                             <div class="col-3">
