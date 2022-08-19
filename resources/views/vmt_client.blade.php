@@ -25,8 +25,8 @@
             <div class="modal-dialog modal-dialog-scrollable  modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h6 class="modal-title" id="exampleModalLabel">Add Newc</h6>
-                        <button type="button" class="btn modal-close outline-none  border-0" data-bs-dismiss="modal"
+                        <h6 class="modal-title" id="exampleModalLabel">Add New Cient</h6>
+                        <button type="button" class="modal-close outline-none  border-0" data-bs-dismiss="modal"
                             aria-label="Close">&times;</button>
                     </div>
                     <div class="modal-body">
@@ -148,12 +148,12 @@
                 </tbody>
             </table>
 
-            {{-- <div class="no-data-img flex-column d-flex justify-content-center align-items-center"  style="">
+            <div class="no-data-img flex-column d-flex justify-content-center align-items-center"  style="">
                 <img src="{{ URL::asset('assets/images/no-data/nodata.png') }}"
                     alt="" class="" style="height:100px;width:200px" >
                     <span class="f-15 fw-bold mt-2 text-muted">No Data</span>
             </div>
-            <hr class="m-0"> --}}
+            <hr class="m-0">
         </div>
 
 
@@ -164,7 +164,7 @@
                 <div class="modal-content top-line border-0">
                     <div class="modal-header">
                         <h6 class="modal-title mb-0 " id="">Add New Client</h6>
-                        <button type="button" class="btn modal-close outline-none  border-0" data-bs-dismiss="modal"
+                        <button type="button" class="modal-close outline-none  border-0" data-bs-dismiss="modal"
                             aria-label="Close">&times;</button>
                     </div>
                     <div class="modal-body">
@@ -234,12 +234,12 @@
                                     </tbody>
                                 </table>
 
-                                <div class="no-data-img flex-column d-flex justify-content-center align-items-center"
+                                {{-- <div class="no-data-img flex-column d-flex justify-content-center align-items-center"
                                     style="">
                                     <img src="{{ URL::asset('assets/images/no-data/nodata.png') }}" alt=""
                                         class="" style="height:100px;width:200px">
                                     <span class="f-15 fw-bold mt-2 text-muted">No Data</span>
-                                </div>
+                                </div> --}}
 
                             </div>
 

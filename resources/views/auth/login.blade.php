@@ -129,7 +129,7 @@
 
                                         <div class="form-outline mb-1 form-row">
                                             @if (!empty($clientList) && $clientList->count() > 1)
-                                                <div class="form-outline mb-1    form-row">
+
                                                     <select class="form-select" aria-label="Default select example"
                                                         name="client_code">
                                                         <option value="" selected>Choose Client</option>
@@ -138,7 +138,7 @@
                                                                 {{ $singleClient->client_name }}</option>
                                                         @endforeach
                                                     </select>
-                                                </div>
+
                                             @endif
                                             @error('client_code')
                                                 <span class="invalid-feedback" role="">
@@ -159,9 +159,11 @@
                                             <a href="#!" class="f-12 text-orange">Forgot password?</a>
                                         </div>
 
-                                        <button
-                                            class="btn btn-orange btn-md fw-bold sign-in-btn   waves-effect waves-light w-100"
-                                            type="submit">Log-In</button>
+
+                                            <button
+                                            class="btn btn-orange w-100 sign-in-btn   waves-effect waves-light "
+                                            type="submit">Log-In
+                                        </button>
 
 
                                         <div class="divider d-flex align-items-center my-4 px-2 mx-5">

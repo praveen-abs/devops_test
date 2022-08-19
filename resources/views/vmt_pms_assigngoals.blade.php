@@ -7,7 +7,6 @@
 
 <link href="{{ URL::asset('assets/css/assign_goals.css') }}" rel="stylesheet">
 <link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
-<!-- <link href="{{ URL::asset('assets/css/salary.css') }}" rel="stylesheet"> -->
 <link href="{{ URL::asset('assets/css/app.min.css') }}" rel="stylesheet">
 <!-- prem content -->
 
@@ -68,71 +67,61 @@
 @slot('li_1')  @endslot
 @endcomponent
 
-<div class="container-fluid assign-goal-wrapper mt-mb-15">
+<div class="container-fluid assign-goal-wrapper mb-15 mt-8 ">
     <div class="cards-wrapper">
         <div class="row">
             <div class="col-12 col-lg-12 col-md-12 ">
-                <div class="card pms-card">
-
-                <div class="    pms-dashboard-wrapper ">
-                            <!-- <img src="{{ URL::asset('assets/images/performance_bg.png') }}" alt="" class="bg-img"> -->
-
-                    <div class="card-body p-5">
-                        <!-- <div class="row ">
-                            <div class="col-md-4 col-sm-6 col-lg-3 col-xl-3 "> -->
-
-                        <div class="align-items-center justify-content-center d-flex pms-gadget-container">
-
-
-                            <div class="card pms-card m-0 m-3">
+                <div class="card left-line pms-card">
+                    <div class="card-body ">
+                        <div class="">
+                            <div class="row">
+                                <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                            <div class="card card-mini">
                                 <div class="card-body p-0">
                                                                        <div class="d-flex mt-2">
                                     <p class="pl-3 col-auto"><img src="{{ URL::asset('assets/images/employee_goals.png') }}" alt="" class=""></p>
                                         <div class="  d-flex align-items-center mt-3 flex-column">
-                                        <p>Employee Goals</p>
-                                        <h5><b>{{$empCount.'/'.$userCount}}</b></h5>
+                                        <p class="text-muted fw-bold">Employee Goals</p>
+                                        <h6>{{$empCount.'/'.$userCount}}</h6>
 
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
+                        </div>
 
-                            <div class="card pms-card m-0 m-3">
+                        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                            <div class="card card-mini">
                                 <div class="card-body p-0">
-
                                     <div class="d-flex mt-2">
                                     <p class="pl-3 col-auto"><img src="{{ URL::asset('assets/images/self_review.png') }}" alt="" class=""></p>
                                         <div class="  d-flex align-items-center mt-3 flex-column">
-                                        <p>Self Review</p>
+                                        <p class="text-muted fw-bold">Self Review</p>
 
-                                        <h5><b>-/{{$userCount}}</b></h5>
+                                        <h5>-/{{$userCount}}</h5>
 
                                         </div>
                                     </div>
                                 </div>
 
                             </div>
-
-
-                            <div class="card pms-card m-0 m-3">
+                        </div>
+                        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                            <div class="card card-mini">
                                 <div class="card-body p-0">
-                                    <!-- <div class="d-flex align-items-center">
-                                        <img src="{{ URL::asset('/assets/images/employees_assessed.png')}}" class="">
-                                        <p>Employees Assessed</p>
-                                    </div> -->
+
                                     <div class="d-flex mt-2">
                                         <p class="pl-3 col-auto"><img src="{{ URL::asset('assets/images/employees_assessed.png') }}" alt="" class=""></p>
                                         <div class="  d-flex align-items-center mt-3 flex-column">
-                                        <p>Employees Assessed</p>
-                                        <h5><b>{{$subCount.'/'.$userCount}}</b></h5>
-
+                                        <p class="text-muted fw-bold">Employees Assessed</p>
+                                        <h5>{{$subCount.'/'.$userCount}}</h5>
                                         </div>
                                     </div>
                                 </div>
 
                             </div>
-
+                        </div>
+                        </div>
                             <!-- <div class="card pms-card m-0 m-3">
                                 <div class="card-body p-0">
                                     <div class="d-flex align-items-center">

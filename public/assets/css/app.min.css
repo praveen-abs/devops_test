@@ -1656,35 +1656,6 @@ body::-webkit-scrollbar-thumb{
 } */
 
 
-/* for sign-in button */
-
-.sign-in-btn {
-    background-color: #DD571D;
-    border-color: #DD571D;
-}
-
-.divider:after,
-.divider:before {
-    content: "";
-    flex: 1;
-    height: 1px;
-    background: #eee;
-}
-
-.google-btn {
-    background-color: #E64A46;
-}
-
-.linked-in-btn {
-    background-color: #0077B5;
-
-}
-
-.facebook-btn {
-    background-color: #04025a;
-
-}
-
 
 
 
@@ -8125,6 +8096,7 @@ button {
     align-items: 14px;
     background-color: #f0f0f0 !important;
     align-items: center;
+    border-radius: 50%;
     justify-content: center;
 }
 
