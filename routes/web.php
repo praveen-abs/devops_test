@@ -254,12 +254,27 @@ Route::post('vmt_clientOnboarding', 'App\Http\Controllers\VmtClientController@st
 //PMS v2
 Route::get('/pms',  [App\Http\Controllers\PMS\VmtPMSModuleController::class, 'showPMSDashboard'])->name('pms-dashboard');
 Route::get('vmt-pmsgetAllEmployees', 'App\Http\Controllers\PMS\VmtPMSModuleController@getEmployeesOfManager');
-Route::get('pms-createform',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'showKPICreateForm'])->name('showKPICreateForm');
-Route::get('exelsheet', 'App\Http\Controllers\PMS\VmtPMSModuleController@KpiSampleExcelSheet');
-// kpi strore create kpi
-// Route::get('Pms-Kpi-Create-Store',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'showKPICreateForm'])->name('showKPICreateForm');
+Route::get('/pms-createform',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'showKPICreateForm'])->name('showKPICreateForm');
+//Route::get('/pms-modifyform',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'showKPICreateForm'])->name('showKPICreateForm');
 Route::post('saveKPIForm',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'saveKPIForm'])->name('saveKPIForm');
 Route::post('publishKPIForm', 'App\Http\Controllers\PMS\VmtPMSModuleController@publishKPIForm')->name('publishKPIForm');
+
+//Show Review Page
+Route::get('/pms-showAssigneeReviewPage',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'showKPIReviewPage_Assignee'])->name('showKPIReviewPage_Assignee');
+Route::get('/pms-showReviewerReviewPage',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'showKPIReviewPage_Reviewer'])->name('showKPIReviewPage_Reviewer');
+Route::get('/pms-showAssignerReviewPage',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'showKPIReviewPage_Assigner'])->name('showKPIReviewPage_Assigner');
+
+//ACCEPT/REJECT by Employee, Manager
+Route::post('/updateFormApprovalStatus-Assignee',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'updateFormApprovalStatus_Assignee'])->name('updateFormApprovalStatus-Assignee');
+Route::post('/updateFormApprovalStatus-Reviewer',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'updateFormApprovalStatus_Reviewer'])->name('updateFormApprovalStatus-Reviewer');
+
+//Save Reviews
+Route::post('/saveAssigneeReviews',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'saveAssigneeReviews'])->name('saveAssigneeReviews');
+Route::post('/saveReviewerReviews',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'saveReviewerReviews'])->name('saveReviewerReviews');
+Route::post('/saveAssignerReviews',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'saveAssignerReviews'])->name('saveAssignerReviews');
+
+//test
+Route::get('exelsheet', 'App\Http\Controllers\PMS\VmtPMSModuleController@KpiSampleExcelSheet');
 
 
 //DONT WRITE ANT ROUTES BELOW THIS
