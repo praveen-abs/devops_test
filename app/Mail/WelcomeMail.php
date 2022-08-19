@@ -43,7 +43,7 @@ class WelcomeMail extends Mailable
                     ->with('uEmail', $this->uEmail)
                     ->with('uPassowrd', $this->uPassowrd)
                     ->with('loginLink', $this->loginLink)
-                    ->with('loginLink', $this->image_view);
+                    ->with('image_view', $this->image_view);
                     
         //Only for Employee Onboarding
         if($this->filename != "")
