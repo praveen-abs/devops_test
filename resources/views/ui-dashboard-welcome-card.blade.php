@@ -65,27 +65,6 @@
     </div>
 </div>
 
-<!--div class="position-fixed top-0 end-0 p-3" style="z-index: 1080">
-    <div id="toast_notification" class="toast toast-border-success overflow-hidden mt-3" role="alert"
-        aria-live="assertive" aria-atomic="true">
-        <div class="toast-header">
-            <strong class="me-auto">Info</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-
-        <div class="toast-body">
-            <div class="d-flex align-items-center">
-                <div class="flex-shrink-0 me-2">
-                    <i class="ri-alert-line align-middle"></i>
-                </div>
-                <div class="flex-grow-1">
-                    <h6 class="mb-0" id="toast_message">--------</h6>
-                </div>
-            </div>
-        </div>
-    </div>
-</div-->
-
 
 <!-- staticBackdrop Modal -->
 <div class="modal fade" id="modal_checkin_confirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
