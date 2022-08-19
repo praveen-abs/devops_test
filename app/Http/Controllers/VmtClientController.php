@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\VmtClientMaster;
 use App\Mail\WelcomeMail; 
+use App\Models\VmtGeneralInfo;
 
 class VmtClientController extends Controller
 {
@@ -36,6 +37,8 @@ class VmtClientController extends Controller
      */
     public function store(Request $request)
     {
+                 $VmtGeneralInfo = VmtGeneralInfo::where('id','1')->orderBy('created_at', 'DESC')->first();
+
         //
        try
        {
@@ -69,8 +72,8 @@ class VmtClientController extends Controller
             $vmtClient->subscription_type   = $request->subscription_type;
             $vmtClient->save();
         
-
-            if (\Mail::to($request->auth_person_email)->send(new WelcomeMail($request->auth_person_email, '123123123', request()->getSchemeAndHttpHost() ,""))) {
+            $image_view = url('/').$VmtGeneralInfo->logo_img;
+            if (\Mail::to($request->auth_person_email)->send(new WelcomeMail($request->auth_person_email, '123123123', request()->getSchemeAndHttpHost() ,"",$image_view))) {
                 return "Saved";
             } else {
                 return "Error";
