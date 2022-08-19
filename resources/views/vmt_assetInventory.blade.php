@@ -160,12 +160,12 @@ tr:last-child td:last-child {
         <div class="row">
             <div class="col-8">
                 <div class="float-left directory-left d-flex">
-                    <div class="switch-field align-items-center">
+                    {{-- <div class="switch-field align-items-center">
                         <input type="radio" id="radio-one" name="switch-one" value="Active" checked />
                         <label for="radio-one">Active</label>
                         <input type="radio" id="radio-two" name="switch-one" value="Inactive" />
                         <label for="radio-two">Inactive</label>
-                    </div>
+                    </div> --}}
 
                     {{-- <div class="search-content header-item w-50 mx-5">
 
@@ -185,7 +185,7 @@ tr:last-child td:last-child {
                         <i class="ri-add-line fw-bold mx-1"></i>
                         Add New Asset
                     </a>
-                    <a href="{{ route('vmt-assetinventory-bulk-upload') }}"><button class="btn btn-primary mx-2">Import Asset Inventories</button></a>
+                    <a href="{{ route('vmt-assetinventory-bulk-upload') }}"><button class="btn btn-primary mx-2">Bulk Import Assets</button></a>
 
                 </div>
             </div>
@@ -445,7 +445,7 @@ tr:last-child td:last-child {
 <script src="{{ URL::asset('/assets/js/pages/dashboard-projects.init.js') }}"></script>
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -605,9 +605,9 @@ $(document).ready(function() {
             },
             //  ["01", "Jonathan", "jonathan@example.com", "Senior Implementation Architect", "Hauck Inc", "Holy See"],
             //  ["02", "Harold", "harold@example.com", "Forward Creative Coordinator", "Metz Inc", "Iran"],
-            //  ["03", "Shannon", "shannon@example.com", "Legacy Functionality Associate", "Zemlak Group", "South Georgia"], 
-            //  ["04", "Robert", "robert@example.com", "Product Accounts Technician", "Hoeger", "San Marino"], 
-            //  ["05", "Noel", "noel@example.com", "Customer Data Director", "Howell - Rippin", "Germany"], 
+            //  ["03", "Shannon", "shannon@example.com", "Legacy Functionality Associate", "Zemlak Group", "South Georgia"],
+            //  ["04", "Robert", "robert@example.com", "Product Accounts Technician", "Hoeger", "San Marino"],
+            //  ["05", "Noel", "noel@example.com", "Customer Data Director", "Howell - Rippin", "Germany"],
 
         }).render(document.getElementById("table-assets")); // card Table
 
@@ -654,7 +654,7 @@ $(document).ready(function() {
                     window.location.reload();
                 }
                 $('#modal_edit_asset').modal('hide');
-            }, 
+            },
             error: function(data) {
                 console.log(data+'error');
             }
@@ -695,10 +695,10 @@ $(document).ready(function() {
                     window.location.reload();
                 }
                 $('#modal_delete_asset').modal('hide');
-            }, 
+            },
             error: function(data) {
             }
-        }); 
+        });
     });
 
     function DeleteAssetData(column_name, row_id) {
