@@ -202,14 +202,15 @@ class VmtMainDashboardController extends Controller
 
          $message = "Announcement Added By "  ;
                   // code email
-          $hrList =  User::role(['HR','Employee', 'admin', 'Admin'])->get();
-            $hrUsers = $hrList->pluck('id');
-          $officialMailList =   VmtEmployeeOfficeDetails::whereIn('user_id', $hrUsers)->pluck('officical_mail');
+          $employeesList =  User::all()->pluck('id');
+
+          $officialMailList =   VmtEmployeeOfficeDetails::whereIn('user_id', $employeesList)->whereNotNull('officical_mail')->pluck('officical_mail');
+          //dd($officialMailList->toArray());
          $user_emp_name =  $message;
          // var_dump($officialMailList);
-         if($officialMailList !=null){
+         if(!empty($officialMailList)){
 
-       \Mail::to($officialMailList)->send(new PMSReviewCompleted('announcement',$user_emp_name,$title_data,$details_data));
+             \Mail::to($officialMailList)->send(new PMSReviewCompleted('announcement',$user_emp_name,$title_data,$details_data));
          }
          // end email
            Notification::send($notification_user ,new ViewNotification($message.auth()->user()->name));
