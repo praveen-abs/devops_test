@@ -10,7 +10,7 @@
 @component('components.organization_breadcrumb')
 @slot('li_1')  @endslot
 @endcomponent
-<div id="chart-container" class="mt-mb-15" style="overflow: hidden;">
+<div id="chart-container" class="mt-8" style="overflow: hidden;">
 </div>
 
 
@@ -23,7 +23,7 @@
 			  src="https://code.jquery.com/jquery-3.6.0.min.js"
 			  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
 			  crossorigin="anonymous"></script>
-              
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/orgchart/3.1.1/js/jquery.orgchart.min.js" ></script>
 
 <script type="text/javascript">
@@ -101,5 +101,5 @@
     @endif
 });
 </script>
-  
+
 @endsection
