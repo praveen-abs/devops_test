@@ -373,20 +373,19 @@
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mb-2">
                                                     <!-- <label class="" for="l1_manager_code">Reporting Manager Employee Code{!! required() !!}</label> -->
-                                                    <input type="text" placeholder="Reporting Manager Employee Code"
-                                                        name="l1_manager_code" class="onboard-form form-control"
-                                                        required />
+                                                        <select placeholder="ManagerCode" name="l1_manager_code" id="l1_manager_code"
+                                                        class="onboard-form form-control" required>
+                                                        <option value="">Select Reporting Manager</option>
+                                                        @foreach($allEmployeesCode as $e)
+                                                            <option value='{{$e->user_code}}'>{{$e->user_code}} - {{$e->name}}</option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
-                                                <!-- <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mb-2">
-                                                    <input type="text" placeholder="" name="l1_manager_designation" class="onboard-form form-control" required />
-                                                    <label class="" for="l1_manager_designation">Reporting Manager
-                                                        Designation{!! required() !!}</label>
-                                                </div> -->
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mb-2">
                                                     <!-- <label class="" for="l1_manager_name">Reporting Manager Name{!! required() !!}</label> -->
                                                     <input type="text" placeholder="Reporting Manager Name"
-                                                        name="l1_manager_name" class="onboard-form form-control" pattern="name"
-                                                        required />
+                                                        name="l1_manager_name" id="l1_manager_name" class="onboard-form form-control" pattern="name"
+                                                        required readonly/>
                                                     <label class="error star_error l1_manager_name_label" for="l1_manager_name"
                                                         style="display: none;"></label>
                                                 </div>

@@ -78,7 +78,9 @@ class VmtEmployeeController extends Controller
         $emp = VmtEmployeeOfficeDetails::all();
         $bank = Bank::all();
         $department = Department::all();
-        return view('vmt_employeeOnboarding', compact('empNo', 'countries', 'india', 'emp', 'bank', 'department'));
+        $allEmployeesCode = User::where('is_admin',0)->where('active',1)->whereNotNull('user_code')->get(['user_code','name']);
+        //dd($allEmployeesCode);
+        return view('vmt_employeeOnboarding', compact('empNo', 'countries', 'india', 'emp', 'bank', 'department','allEmployeesCode'));
 
     }
     }
