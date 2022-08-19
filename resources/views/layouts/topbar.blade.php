@@ -150,24 +150,20 @@ if ($logoObj) {
                                             @endphp
                                             <div class="text-reset notification-item d-block dropdown-item">
                                                 <div class="d-flex">
-                                                         @php
-                                    preg_match('/(?:\w+\. )?(\w+).*?(\w+)(?: \w+\.)?$/',Auth::user()->name , $result);
-                                    $name = strtoupper($result[1][0].$result[2][0]);
+                                                    <?php
+                                                        $shortName = explode(" ", Auth::user()->name);
+                                                        $finalName = $shortName[0][0] . $shortName[1][0];
+                                                    ?>
+                                                    @if( empty(Auth::user()->avatar) || !file_exists(public_path('images/'. Auth::user()->avatar)) )
+                                                        <span class="rounded-circle user-profile  ml-2">
+                                                            <i id="topbar_username" class="align-middle ">{{ $finalName }}</i>
+                                                        </span>
+                                                    @else
+                                                        <img class="rounded-circle header-profile-user" src=" {{URL::asset('images/'. Auth::user()->avatar)}}" alt="Header Avatar">
+                                                    @endif
 
-                                    if (Auth::user()->avatar == null || Auth::user()->avatar =='' ){
-                                    @endphp
-                                        <span class="rounded-circle user-profile  ml-2"><i
-                                            class="align-middle f-12 fw-bold">{{$name}}</i></span>
-                                    @php
-                                    }else{
-                                    @endphp
-                                    <img src="{{URL::asset('images/'. Auth::user()->avatar)}}"
-                                                        class="me-3 rounded-circle avatar-xs" alt="user-pic">
-                                    @php
-                                    }
-                                    @endphp
-                                        {{-- <img src="{{ URL::asset('assets/images/event1.png') }}"
-                                                        class="me-3 rounded-circle avatar-xs" alt="user-pic"> --}}
+
+                                                        &nbsp;&nbsp;&nbsp;
                                                     <div class="flex-1">
                                                         <div class="fs-13 text-muted">
                                                             <a href="{{url('notifications/'.$notification->id)}}" data-notif-id="{{$notification->id}}" class="text-primary">
@@ -211,7 +207,7 @@ if ($logoObj) {
                                     @php
                                     }
                                     @endphp
-{{-- 
+{{--
                                                     <img src="{{ URL::asset('assets/images/event1.png') }}"
                                                         class="me-3 rounded-circle avatar-xs" alt="user-pic"> --}}
                                                     <div class="flex-1">
