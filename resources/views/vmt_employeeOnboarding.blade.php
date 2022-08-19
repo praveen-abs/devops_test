@@ -94,6 +94,24 @@ $('#l1_manager_code').on('select2:select', function (e) {
     console.log(data);
 });
 
+
+$('#passport_no').change('input', function(){
+    
+    var patt = new RegExp("^[A-PR-WYa-pr-wy][1-9]\\d\\s?\\d{4}[1-9]$");
+    var passno = $("#passport_no").val();
+    if (patt.test(passno)){
+        return true;
+        
+    }
+    else {
+       alert("passport is not valid");
+    }
+    return false;
+   
+})
+
+
+
 $('.select2_form_without_search').each(function() {
     var placeholder = $(this).attr('placeholder')
     placeholder = (placeholder == undefined) ? '' : placeholder;

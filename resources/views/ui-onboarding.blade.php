@@ -120,9 +120,9 @@
                                                 </div>
                                                 <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3 mb-2">
                                                     <!-- <label class="" for="passport_no">Passport Number<span id="passport_no_req">{!! required() !!}</span></label> -->
-                                                    <input type="number" placeholder="Passport Number" name="passport_no"
-                                                        id="passport_no"
-                                                        class="onboard-form form-control not-required validate" />
+                                                    <input type="text" placeholder="Passport Number" name="passport_no"
+                                                        id="passport_no" minlength="8" maxlength="8"
+                                                        class="onboard-form form-control not-required validate"/>
                                                     <label class="error star_error passport_no_label" for="passport_no"
                                                         style="display: none;"></label>
                                                 </div>
