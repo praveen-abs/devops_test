@@ -1,9 +1,4 @@
 
-* {
-    margin: 0;
-    padding: 0
-}
-
 fieldset {
     border: 1px solid !important;
     padding: 0px 10px !important;
@@ -32,15 +27,6 @@ legend span {
 input {
     margin: 5px;
 }
-
-html {
-    height: 100%
-}
-
-p {
-    color: grey
-}
-
 #heading {
     text-transform: uppercase;
     color: #673AB7;
@@ -81,11 +67,14 @@ p {
 
 .select2-container--default .select2-selection--single {
     /* border-radius: 20px !important; */
-    border: 1px solid #002F56 !important;
+    border: 1px solid #ebeef0 !important;
     height: 40px !important;
     padding: 5px 15px 12px 8px !important;
 }
 
+.select2-container--default .select2-selection--single:focus{
+    border: 1px solid #002f56 !important;
+}
 .select2-container--default .select2-selection--single .select2-selection__arrow {
     top: 8px !important;
     right: 12px !important;
@@ -97,7 +86,8 @@ p {
 
 .error {
     color: red;
-    font-size: 15px;
+    font-size: 12px;
+    margin: 0px;
 }
 
 .header-card-text {
@@ -131,27 +121,18 @@ option:hover {
 #msform textarea,
 #msform select, .addfiles {
     /* padding: 12px 15px 12px 15px; */
-    border: 1px solid #2C3E50 !important;
+    /* border: 1px solid #2C3E50 !important; */
     /* border-radius: 20px; */
     margin-top: 2px;
     /* width: 100%; */
-    box-sizing: border-box;
-    
-    color: #2C3E50;
-    font-size: 14px;
-    letter-spacing: 1px;
-    outline: none;
+    /* box-sizing: border-box; */
+    /* color: #2C3E50; */
+    /* font-size: 14px; */
+    /* letter-spacing: 1px; */
+    /* outline: none; */
 }
 
-/* #msform input:focus,
-#msform textarea:focus,
-#msform select:focus {
-    -moz-box-shadow: none !important; 
-    -webkit-box-shadow: none !important; 
-    box-shadow: none !important; 
-    box-shadow: 1px 1px 1px 1px #673AB7 !important; 
-    outline-width: 0; 
-} */
+
 
 #msform input:focus~.fieldlabels {
     top: -9px !important;
@@ -497,6 +478,41 @@ option:hover {
     }
 }
 
+
+/* drop down up arrow and down arrow */
+
+.select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
+    border-color: transparent transparent #002f56 transparent !important;
+    border-width: 0 4px 5px 4px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+    border-color: #dcdcdc transparent transparent !important;
+    border-style: solid;
+    border-width: 6px 6px 0;
+    height: 0;
+    margin-left: -10px;
+    margin-top: -2px;
+    width: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+    border-color:#002f56 transparent transparent transparent !important;
+    border-style: solid;
+    border-width: 5px 4px 0 4px;
+    height: 0;
+    left: 50%;
+    margin-left: -4px;
+    margin-top: -2px;
+    position: absolute;
+    top: 50%;
+    width: 0;
+}
+
+
 /* .select2-container--default .select2-selection--single .select2-selection__rendered{
     color: black !important;
 }
@@ -504,6 +520,10 @@ option:hover {
 .select2-container--default .select2-selection--single{
     color: #cdd1d5 !important;
 } */
+
+.select2-container--default .select2-selection--single {
+    border-radius: 0.375rem !important;
+}
 
 .select2-container--default .select2-selection--single .select2-selection__rendered {
     font-size: 14px !important;
@@ -520,7 +540,7 @@ option:hover {
 } */
 
 .addfiles {
-    padding-left: 3px !important;
+    padding-left: 0px !important;
 }
 
 .addfiles::before {

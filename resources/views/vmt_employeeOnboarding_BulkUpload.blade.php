@@ -7,16 +7,15 @@
 
 @endsection
 @section('content')
-
-<div class="uploadEmployee-wrpper ">
+<div class="uploadEmployee-wrpper mt-8">
 <div class="row">
     <div class="col-xl-12">
-        <div class="card shadow profile-box card-top-border ">
+        <div class="card shadow profile-box ">
             <div class="form-control">
                 <div class="row">
                     <div class="col-md-6 ">
                         <div class="col-form-label">
-                            <h5> Employee Onboarding Bulk Upload</h5>
+                            <h6 Instructions> Employee Onboarding Bulk Upload</h6>
                             <div class="col col-form-label">
                                 <ul class="list-style-numbered list-style-circle p-4">
                                         <li>Download the
@@ -63,8 +62,8 @@
 
                     <div class="col-md-6 ">
                         <div class="col-form-label">
-                            <h5> Upload Instructions</h4>
-                            <div class="alert alert-warning">Read these instructions before uploading the file.</div>
+                            <h6> Upload Instructions</h4>
+                            <div class="alert alert-warning"><i class='fa fa-warning text-warning'></i> Read these instructions before uploading the file.</div>
                             <div>
                             <ul class="list-style-circle"><li> Employee Number, First name, Last name, Display name, Email, Date of joining and Location fields are required to add employees in . </li><li> Either email or mobile number is required while adding employee incase of login with OTP </li><li> Date of Birth is required to show Upcoming birthdays notification in Home page widget, Income tax and Professional Tax calculation. </li><li> Gender is required to validate Statutory leave(Maternity or Paternity Leave) and Professional Tax Calculation. </li><li> PAN number is required to generate Bank Transfer statements for Salary payments. </li><li> Email id should be valid to receive all  notifications such as leave request notifications, Attendance request notification and Timesheet reminder notifications etc. </li><li> Employee email is unique across . So, cannot add same employee in two Organizations with same email. </li><li> Job Title is optional but it will help to identify employees in People picker search results when 2 or more employees have same Name. </li><li> Department is useful to search or filter employees by Department in few reports. </li><li> PAN information(Name on PAN, DOB on Pan, Father name on Pan) and Bank Information(Bank Payment Mode, Bank Name, IFSC code, Account Number, Name on Bank account) are required to generate Bank Transfer statements for Salary payments. </li><li> Provident Fund Information(PF Number, PF Joining date, Name on PF account, UAN), Aadhar Information(Aadhar number, Name on Aadhar, Aadhar enrollment number) are required for PF Monthly Electronic Return(ECR) and Reports. </li><li> ESI Information(ESI number) is required for ESI Reports. </li><li> Please check  email notifications in Junk / Spam / Filtered folders if they are not visible in Inbox. </li><!----></ul>
 

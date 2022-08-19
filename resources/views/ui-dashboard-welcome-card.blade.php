@@ -1,4 +1,4 @@
-<div class="card profile-box flex-fill card-top-border">
+<div class="card profile-box flex-fill ">
     <div class="card-body">
         <div class="d-flex">
             <div class="status-wrapper me-3">
@@ -41,7 +41,7 @@
                     @if ($checked && $checked->checkin_time)
                         @if ($checked->checkout_time)
                             <i class="ri-time-line text-warning f-14 me-2"></i><span id="check_timing"
-                                class="f-12 text-muted ">Last Check Out :
+                                class="f-12 me-2 text-muted ">Last Check Out :
                                 {{ date('H:i:s', strtotime($checked->checkout_time)) }}</span>
                         @else
                             {{-- If not check_out time, then user havent checked-out yet --}}

@@ -1,13 +1,4 @@
-* {
-    margin: 0;
-    padding: 0
-}
-html {
-    height: 100%
-}
-p {
-    color: grey
-}
+
 #heading {
     text-transform: uppercase;
     color: #673AB7;
@@ -54,7 +45,7 @@ input {
     box-sizing: border-box;
     font-family: montserrat;
     color: #2C3E50;
-    font-size: 16px;
+
     letter-spacing: 1px
 }
     #msform input:focus,

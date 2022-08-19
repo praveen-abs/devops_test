@@ -93,12 +93,15 @@
 
                         <!--DROPDOWN CODE WAS HERE-->
                         <div class="dropdown topbar-head-dropdown ms-1 ">
-                            <button type="button" class="btn btn-icon btn-topbar rounded-circle"
+                            <button type="button" class="btn btn-icon bg-transparent outline-none border-0 btn-topbar rounded-circle text-muted"
                                 id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false" style="border: 0px;">
 
                                 <img src="{{ URL::asset('assets/images/bell.png') }}" alt="" class="" style="height:
                                     20px; width: 20px;">
+                                    {{-- <button class="settings-icon bg-transparent outline-none border-0 text-muted"> --}}
+                                        {{-- <i class="fa fa-bell" aria-hidden="true"></i> --}}
+                                    {{-- </button> --}}
                                 @if($User = Auth::user()->unreadNotifications->count() != 0 )
                                 <span
                                     class="badge fs-10 translate-middle  rounded-circle  bg-danger">{{$User = Auth::user()->unreadNotifications->count();}}</span>
@@ -209,10 +212,20 @@
                         </div>
 
 
-                        <a href="" class="ml-2  settings-icon   ">
+                        {{-- <a href="" class="ml-2  settings-icon   ">
                             <img src="{{ URL::asset('assets/images/megaphone.png') }}" class="" alt="user-pic"
                                 style="height:20px;width:20px;">
-                        </a>
+                        </a> --}}
+{{--
+                        <button class="settings-icon bg-transparent outline-none border-0 text-muted">
+                            <i class="fa fa-bullhorn" aria-hidden="true"></i>
+
+                       </button> --}}
+                        <button class="btn btn-icon bg-transparent outline-none border-0 btn-topbar rounded-circle text-muted">
+
+                            <img src="{{ URL::asset('assets/images/megaphone.png') }}" class="" alt="user-pic"
+                                style="height:20px;width:20px;">
+                       </button>
 
                         <div class="dropdown topbar-user ">
                             <button type="button" class="btn border-0 mx-1 py-0" id="page-header-user-dropdown"

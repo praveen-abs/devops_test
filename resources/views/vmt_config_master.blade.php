@@ -2,36 +2,26 @@
 @section('css')
 
 <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
-<style>
-
-.profile-box {
-    border-radius: 12px !important;
-    box-shadow: rgb(60 64 67 / 30%) 0px 1px 2px 0px, rgb(60 64 67 / 15%) 0px 2px 6px 2px !important;
-}
-.profile-box .card-body{
-    padding: 5px !important;
-}
-.card-top-border {
-    border-top: 7px solid #002F56!important;
-}
-
-</style>
 @endsection
 
 @section('content')
 
-<div class="main">
-    <div class="">
+@component('components.configuration_breadcrumb')
+@slot('li_1') @endslot
+@endcomponent
+
+
+    <div class="master-config-wrapper mt-8">
         <div class="row ">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
                     <div class="">
                         <div id="msform">
                             <form id="form_config_master" method="POST" action="{{route('store-config-master')}}" enctype="multipart/form-data">
                                 @csrf
-                                <div class="card shadow  profile-box card-top-border p-2">
+                                <div class="card shadow  profile-box  p-2">
                                     <div class="card-body justify-content-center align-items-center mb-3">
                                         <div class="text-primary my-2 header-card-text">
-                                            <h5>Master Configuration</h5>
+                                            <h6>Master Configuration</h6>
                                         </div>
                                         <div class="form-card">
                                             <h6 class="mt-3">Onboarding : </h6>
@@ -57,7 +47,7 @@
                                                 </div>
                                                 <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
                                                     @if($data['can_send_appointmentletter_after_onboarding'] == "true")
-                                                        <input type="radio" id="true_option" name="can_send_appointmentletter_after_onboarding" value="true" checked="checked">
+                                                        <input type="radio" id="true_option" name="can_send_appointmentletter_after_onboarding" class="" value="true" checked="checked">
                                                         <label for="true_option">Yes</label>
                                                         <input type="radio" id="false_option" name="can_send_appointmentletter_after_onboarding" value="false">
                                                         <label for="false_option">No</label>
@@ -83,9 +73,6 @@
                 </div>
         </div>
     </div>
-
-    <!--Main Content-->
-</div>
 
 
 @endsection

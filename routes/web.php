@@ -259,6 +259,14 @@ Route::post('vmt_clientOnboarding', 'App\Http\Controllers\VmtClientController@st
 
 //PMS v2
 Route::get('/pms',  [App\Http\Controllers\PMS\VmtPMSModuleController::class, 'showPMSDashboard'])->name('pms-dashboard');
+Route::get('vmt-pmsgetAllEmployees', 'App\Http\Controllers\PMS\VmtPMSModuleController@getEmployeesOfManager');
+Route::get('pms-createform',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'showKPICreateForm'])->name('showKPICreateForm');
+Route::get('exelsheet', 'App\Http\Controllers\PMS\VmtPMSModuleController@KpiSampleExcelSheet');
+// kpi strore create kpi
+// Route::get('Pms-Kpi-Create-Store',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'showKPICreateForm'])->name('showKPICreateForm');
+Route::post('saveKPIForm',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'saveKPIForm'])->name('saveKPIForm');
+Route::post('publishKPIForm', 'App\Http\Controllers\PMS\VmtPMSModuleController@publishKPIForm')->name('publishKPIForm');
+
 
 //DONT WRITE ANT ROUTES BELOW THIS
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index']);

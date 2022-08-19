@@ -17,6 +17,7 @@ use App\Imports\VmtEmployeeImport;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtClientMaster;
 use App\Models\VmtMasterConfig;
+use App\Models\VmtGeneralInfo;
 use App\Models\Compensatory;
 use App\Models\VmtEmployeePMSGoals;
 use App\Models\VmtAppraisalQuestion;
@@ -38,7 +39,7 @@ class VmtEmployeeController extends Controller
     }
 
     public function employeeOnboarding(Request $request) {
-        // Used for Quick onboarding 
+        // Used for Quick onboarding
         if($request->has('email')){
             $employee  =  User::where('email', $request->email)->first();
             $clientData  = VmtEmployee::where('userid', $employee->id)->first();
@@ -57,14 +58,14 @@ class VmtEmployeeController extends Controller
 
             return view('vmt_employeeOnboarding', compact('empNo','emp_details', 'countries', 'compensatory', 'bank', 'emp','department'));
         }else{
-            $clientData  = VmtClientMaster::first();       
+            $clientData  = VmtClientMaster::first();
             $employee  =  User::orderBy('created_at','DESC')->where('user_code', 'LIKE', '%'.$clientData->client_code.'%')->first();
             if(empty($employee))
             {
                $client_code_series = VmtMasterConfig::where('config_name','=','client_code_series')->first()->value('config_value');
                 $maxId = (int)($client_code_series) + 1;
             }else{
-                $ucode =(int) filter_var($employee->user_code, FILTER_SANITIZE_NUMBER_INT);  
+                $ucode =(int) filter_var($employee->user_code, FILTER_SANITIZE_NUMBER_INT);
                 $maxId  = $ucode+1;
             }
             if ($clientData) {
@@ -148,10 +149,33 @@ class VmtEmployeeController extends Controller
                                 'vmt_employee_office_details.l1_manager_designation'
                             )
                             ->orderBy('created_at', 'DESC')
+                            ->where('users.active','1')
+                            ->where('users.is_admin','0')
                             ->whereNotNull('emp_no')
                             ->get();
 
-        return view('vmt_employeeDirectory', compact('vmtEmployees'));
+        $vmtEmployees_InActive = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')
+        ->leftJoin('vmt_employee_office_details','vmt_employee_office_details.user_id', '=', 'users.id' )
+        ->select(
+            'vmt_employee_details.*',
+            'users.name as emp_name',
+            'users.active as emp_status',
+            'users.email as email_id',
+            'users.id as user_id',
+            'users.avatar as avatar',
+            'vmt_employee_office_details.department_id',
+            'vmt_employee_office_details.designation',
+            'vmt_employee_office_details.l1_manager_code',
+            'vmt_employee_office_details.l1_manager_name',
+            'vmt_employee_office_details.l1_manager_designation'
+        )
+        ->orderBy('created_at', 'DESC')
+        ->where('users.active','0')
+        ->where('users.is_admin','0')
+        ->whereNotNull('emp_no')
+        ->get();
+
+        return view('vmt_employeeDirectory', compact('vmtEmployees','vmtEmployees_InActive'));
     }
 
 
@@ -741,6 +765,8 @@ class VmtEmployeeController extends Controller
 
     // insert the employee to database for quick onboarding
     public function storeQuickOnboardEmployee($data){
+         $VmtGeneralInfo = VmtGeneralInfo::where('id','1')->orderBy('created_at', 'DESC')->first();
+
         $rules = [];
         $returnsuccessMsg = '';
         $returnfailedMsg = '';
@@ -856,7 +882,8 @@ class VmtEmployeeController extends Controller
                     $returnfailedMsg .= "<li>".$empNo." not get added.</li>";
                 }
 
-                \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $empNo, 'Abs@123123', request()->getSchemeAndHttpHost()));
+               $image_view = url('/').$VmtGeneralInfo->logo_img;
+                \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $empNo, 'Abs@123123', request()->getSchemeAndHttpHost(),$image_view));
             } else {
                 $returnfailedMsg .= "<li>".$empNo." not get added because of error ".json_encode($validator->errors()->all());
                 $returnfailedMsg .= "</li>";

@@ -1,227 +1,301 @@
 @extends('layouts.master')
 @section('css')
-<link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
-
+    <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
 @endsection
 
-
-
 @section('content')
+    @component('components.crm_breadcrumb')
+        @slot('li_1')
+        @endslot
+    @endcomponent
 
-@component('components.crm_breadcrumb')
-@slot('li_1') @endslot
-@endcomponent
+    <div class="vendor-wrapper bg-white container-fluid p-2 mt8-mb15">
+        <h6 class="">Vendor List</h6>
+        <div class=" text-end mb-2">
+            <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#newVendor">Create
+                Vendor</button>
+            <button class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#importVendor">
+                Import Vendor
+            </button>
+        </div>
 
-<div class="vendor-wrapper bg-white container-fluid p-2 mt-30">
-    <h6 class="">Vendor List</h6>
-    <div class=" text-end mb-2">
-        <button class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#newInventry">Create
-            Inventry</button>
-        {{-- <button class="btn btn-peimary mx-2" data-bs-toggle="modal" data-bs-target="#importInventry">Import
-            Inventry</button> --}}
-    </div>
+        <div class="modal fade " id="newVendor" tabindex="-1" aria-labelledby="newVendor" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable  modal-lg ">
+                <div class="modal-content border-0">
+                    <div class="modal-header top-line">
+                        <h6 class="modal-title" id="exampleModalLabel">Add New Vendor</h6>
+                        <button type="button" class=" modal-close outline-none rounded-circle border-0"
+                            data-bs-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="mb-3 floating-label">
+                                    <label for="" class="form-label  float-label">Product ID<span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control textbox " id=""
+                                        placeholder="Product ID">
 
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="mb-3 floating-label">
+                                    <label for="" class="form-label  float-label">Product Name<span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control textbox" id=""
+                                        placeholder="Product Name">
 
-    <div class="modal fade" id="newInventry" tabindex="-1" aria-labelledby="newInventry" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable  modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h6 class="modal-title" id="exampleModalLabel">Add New Inventry</h6>
-                    <button type="button" class="btn-close outline-none border-0 " data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                            <div class="mb-3 floating-label">
-                                <label for="" class="form-label  float-label">Product ID<span
-                                        class="text-danger">*</span></label>
-                                <input type="text" class="form-control textbox " id=""
-                                    placeholder="Product ID">
-
+                                </div>
                             </div>
                         </div>
-                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                            <div class="mb-3 floating-label">
-                                <label for="" class="form-label  float-label">Product Name<span
-                                        class="text-danger">*</span></label>
-                                <input type="text" class="form-control textbox" id=""
-                                    placeholder="Product Name">
+                        <hr class="text-muted my-2">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="mb-3 floating-label">
+                                    <label for="" class="form-label  float-label">Inward Quantity<span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control textbox" id="lead-name"
+                                        placeholder="Inward Quantity">
 
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="mb-3 floating-label">
+                                    <label for="" class="form-label  float-label">Outward Quantity</label>
+                                    <input type="text" class="form-control textbox" id="position"
+                                        placeholder="Outward Quantity">
+
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="mb-3 floating-label">
+                                    <label for="" class="form-label  float-label">Stock in Quantity</label>
+                                    <input type="text" class="form-control textbox" id="lead-email"
+                                        placeholder="Stock in Quantity">
+
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="mb-3 floating-label">
+
+                                    <label for="" class="form-label  float-label">Rate</label>
+                                    <input type="text" class="form-control textbox" id="" placeholder="Rate">
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                <div class="mb-3 floating-label">
+                                    <label for="" class="form-label float-label">Amount</label>
+                                    <input type="text" class="form-control textbox" id="lead-email" placeholder="Amount">
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                <div class="mb-3 floating-label">
+                                    <label for="" class="form-label float-label">Reorder Level</label>
+                                    <input type="text" class="form-control textbox" id="lead-email"
+                                        placeholder="Reorder Level">
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                <div class="">
+                                    <label for="floatingSelect" class="form-label float-label">Reorder</label>
+                                    <select class="form-select" id="floatingSelect"
+                                        aria-label="Floating label select example">
+                                        <option value="1" selected>Reorder</option>
+                                        <option value="2">Out of stock</option>
+                                    </select>
+
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <hr class="text-muted my-2">
-                    <div class="row">
-                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                            <div class="mb-3 floating-label">
-                                <label for="" class="form-label  float-label">Inward Quantity<span
-                                        class="text-danger">*</span></label>
-                                <input type="text" class="form-control textbox" id="lead-name"
-                                    placeholder="Inward Quantity">
-
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                            <div class="mb-3 floating-label">
-                                <label for="" class="form-label  float-label">Outward Quantity</label>
-                                <input type="text" class="form-control textbox" id="position"
-                                    placeholder="Outward Quantity">
-
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                            <div class="mb-3 floating-label">
-                                <label for="" class="form-label  float-label">Stock in Quantity</label>
-                                <input type="text" class="form-control textbox" id="lead-email"
-                                    placeholder="Stock in Quantity">
-
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                            <div class="mb-3 floating-label">
-
-                                <label for="" class="form-label  float-label">Rate</label>
-                                <input type="text" class="form-control textbox" id="" placeholder="Rate">
-
-                            </div>
-                        </div>
-                        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                            <div class="mb-3 floating-label">
-                                <label for="" class="form-label float-label">Amount</label>
-                                <input type="text" class="form-control textbox" id="lead-email" placeholder="Amount">
-
-                            </div>
-                        </div>
-                        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                            <div class="mb-3 floating-label">
-                                <label for="" class="form-label float-label">Reorder Level</label>
-                                <input type="text" class="form-control textbox" id="lead-email"
-                                    placeholder="Reorder Level">
-
-                            </div>
-                        </div>
-                        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                            <div class="">
-                                {{-- <label for="floatingSelect" class="form-label float-label">Status</label> --}}
-                                <select class="form-select" id="floatingSelect"
-                                    aria-label="Floating label select example">
-                                    <option value="1" selected>Reorder</option>
-                                    <option value="2">Out of stock</option>
-                                </select>
-
-                            </div>
-                        </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-border-primary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save</button>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-border-primary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save</button>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="table-responsive">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Product ID</th>
-                    <th>Product Name</th>
-                    <th>Inward Quantity</th>
-                    <th>Outward Quantity</th>
-                    <th>Quantity In Stock</th>
-                    <th>Rate</th>
-                    <th>Amount</th>
-                    <th>Reorder Level</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>AP-000001</td>
-                    <td>Pentium Silver N5030 15.6"</td>
-                    <td>100</td>
-                    <td>50</td>
-                    <td>50</td>
-                    <td>1500</td>
-                    <td>27500</td>
-                    <td>25</td>
-                    <td><span class="badge text-bg-info">Reorder</span></td>
-                    <td class="action-td">
-                        <p class="mb-0">
-                            <button class="btn outline-none border-0 text-muted py-0 card-clickable" aria-expanded="false"
-                                >
-                                <i class="fa fa-ellipsis-v card-clickable" aria-hidden="true"></i>
-                            </button>
-                        </p>
-                        {{-- <div id="action-div">
-                            <div class="card card-clickable" *ngIf="showCard">
-                                <div class="card-body d-flex flex-column align-items-start p-3" style="width: auto;">
-                                    <i class="fa fa-eye py-2 text-muted" aria-hidden="true">
-                                        <span class="px-3">View</span>
-                                    </i>
-                                    <i class="fa fa-pencil py-2 text-muted" aria-hidden="true">
-                                        <span class="px-3">Edit</span>
-                                    </i>
-                                    <i class="fa fa-trash py-2 text-muted" aria-hidden="true">
-                                        <span class="px-3">Delete</span>
-                                    </i>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Supplier ID</th>
+                        <th>Name</th>
+                        <th>Contact</th>
+                        <th>Email</th>
+                        <th>Company Name</th>
+                        <th>Vendor Category</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td colspan="10" class="">
+
+
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+            </table>
+
+            <div class="no-data-img flex-column d-flex justify-content-center align-items-center" style="">
+                <img src="{{ URL::asset('assets/images/no-data/nodata.png') }}" alt="" class=""
+                    style="height:100px;width:200px">
+                <span class="f-15 fw-bold mt-2 text-muted">No Data</span>
+            </div>
+            <hr class="m-0">
+        </div>
+
+
+
+
+        <!-- modal for import  -->
+        <div class="modal fade" id="importVendor" tabindex="-1" aria-labelledby="newLead" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-lg modal-md">
+                <div class="modal-content border-0">
+                    <div class="modal-header top-line">
+                        <h6 class="modal-title mb-0 " id="">Import New Vendor</h6>
+                        <button type="button" class=" modal-close outline-none rounded-circle border-0"
+                            data-bs-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="import-contents px-2">
+
+                            <div class="text-end my-3">
+                                <button class="btn btn-orange "><i class="fa fa-download mx-2"></i>Download
+                                    Sample</button>
+                            </div>
+                            <!-- <hr class=""> -->
+
+                            <div class="instructions ">
+                                <ul class="my-2  list-style-numbered list-style-circle">
+                                    <li class="list-item"> Your CSV data should be in the format below. The first line of
+                                        your CSV file
+                                        should
+                                        be
+                                        the column headers as in the table example. Also make sure that your file is UTF-8
+                                        to avoid
+                                        unnecessary
+                                        encoding problems.</li>
+                                    <li class="list-item">If the column you are trying to import is date make sure that is
+                                        formatted in
+                                        format
+                                        Y-m-d (2022-08-13).</li>
+                                    <li class="list-item"> Based on your leads <span class="text-danger"> unique
+                                            validation</span>
+                                        configured
+                                        <a href="" class="text-info">options</a> , the lead won't be
+                                        imported
+                                        if:
+                                    </li>
+
+                                </ul>
+                            </div>
+                            <p class="text-end text-muted">- Lead email already exists</p>
+                            <p class="text-start mb-1 text-muted">If you still want to yimport all leads, uncheck all
+                                unique
+                                validation field</p>
+
+                            <!-- import lead table -->
+
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Supplier ID</th>
+                                            <th>Name</th>
+                                            <th>Contact</th>
+                                            <th>Email</th>
+                                            <th>Company Name</th>
+                                            <th>Vendor Category</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="10" class="">
+
+                                            </td>
+
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
+                                    {{-- <div class="no-data-img flex-column d-flex justify-content-center align-items-center"
+                                        style="">
+                                        <img src="{{ URL::asset('assets/images/no-data/nodata.png') }}" alt=""
+                                            class="" style="height:100px;width:200px">
+                                        <span class="f-15 fw-bold mt-2 text-muted">No Data</span>
+                                    </div>
+                                    <hr class="m-0"> --}}
+                            </div>
+
+
+                            {{-- <div class="upload-wrapper mt-2">
+                        <p class="mb-2">Choose CSV File<span class="text-danger">*</span></p>
+                        <div
+                            class="upload-content d-flex justify-content-center align-items-center flex-column py-2">
+
+                            <i class="bi bi-upload"></i>
+                            <P class="mb-0">Drag & drop any file here</P>
+                            <p class="mb-0 ">Or</p>
+                            <p class="mb-0">No file chosen <button
+                                    class="btn outline-none border-0 bg-transparent p-0 browse-btn ">browse
+                                    file</button>
+                                from device</p>
+
+                        </div>
+                    </div> --}}
+
+                            <div class="d-flex justify-content-between align-items-center my-2">
+                                <div class="d-flex align-items-center ">
+                                    <input type="file" name="upload_file" id="upload_file" accept=".xls,.xlsx"
+                                        class="form-control w-50 me-2" required>
+
+                                    <button class="btn btn-orange "><i class="fa fa-upload mx-2"></i>Upload</button>
+                                </div>
+                                <div>
+                                    <button type="button" class="btn btn-orange" data-bs-dismiss="modal">
+                                        Import
+                                    </button>
                                 </div>
                             </div>
-                        </div> --}}
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>AP-000002</td>
-                    <td>Celeron Silver N5030 15.6"</td>
-                    <td>100</td>
-                    <td>50</td>
-                    <td>50</td>
-                    <td>1500</td>
-                    <td>27500</td>
-                    <td>25</td>
-                    <td><span class="badge text-bg-success">In Stock</span></td>
-                    <td>
-                        <p class="mb-0">
-                            <button class="btn outline-none border-0 text-muted py-0 card-clickable" aria-expanded="false"
-                                >
-                                <i class="fa fa-ellipsis-v card-clickable" aria-hidden="true"></i>
-                            </button>
-                        </p>
-                    </td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>AP-000003</td>
-                    <td>Inspiron 15 3510 Intel Celeron</td>
-                    <td>100</td>
-                    <td>50</td>
-                    <td>50</td>
-                    <td>1500</td>
-                    <td>27500</td>
-                    <td>25</td>
-                    <td><span class="badge text-bg-warning">Low Stock</span></td>
-                    <td>
-                        <p class="mb-0">
-                            <button class="btn outline-none border-0 text-muted py-0 card-clickable" aria-expanded="false"
-                                >
-                                <i class="fa fa-ellipsis-v card-clickable" aria-hidden="true"></i>
-                            </button>
-                        </p>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-border-primary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save</button>
+
+
+
+                            {{-- <button type="button" class="btn btn-primary">Simulate Import</button> --}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+
+
+
     </div>
-
-</div>
-
 @endsection
 @section('script')
-
 @endsection
