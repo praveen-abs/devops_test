@@ -185,6 +185,7 @@ tr:last-child td:last-child {
                         <i class="ri-add-line fw-bold mx-1"></i>
                         Add New Asset
                     </a>
+                    <a href="{{ route('vmt-assetinventory-bulk-upload') }}"><button class="btn btn-primary mx-2">Import Asset Inventories</button></a>
 
                 </div>
             </div>
