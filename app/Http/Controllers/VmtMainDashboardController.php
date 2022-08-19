@@ -86,8 +86,9 @@ class VmtMainDashboardController extends Controller
         }
 
         $dashboardpost  =  vmt_dashboard_posts::all();
-        $holidays = vmtHolidays::orderBy('holiday_date', 'ASC')->get();
-        //dd($holidays);
+        // $holidays = vmtHolidays::orderBy('holiday_date', 'ASC')->get();
+        $todayDate = date('Y-m-d');
+        $holidays = vmtHolidays::whereDate('holiday_date', '>=', $todayDate)->orderBy('holiday_date', 'ASC')->get();
         $polling = Polling::first();
         if ($polling) {
             $selectedPoll = PollVoting::where('user_id', auth()->user()->id)->where('polling_id', $polling->id)->first();
