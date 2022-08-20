@@ -882,7 +882,8 @@ input+.slider-checkbox>.slider-checkbox-text:after {
     padding: 2px 13px;
     height: 25px !important;
     width: 100px;
-    padding: 2px 13px;
+    /*padding: 2px 13px;*/
+    padding: 2px 6px;
 }
 
 .announcement-content hr,

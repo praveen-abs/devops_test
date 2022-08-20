@@ -182,83 +182,80 @@
                                                         <div class="topbarContent emp-announcement "
                                                             style="display:none;">
                                                             <div>
+                                                                <form id="announcement-form-submit">
+                                                                    <div class="announcement-content scrollBar">
 
-                                                                <div class="announcement-content scrollBar">
-
-                                                                    <input class="form-control   w-100 h-100"
-                                                                        aria-label="default input example"
-                                                                        placeholder="Title of the Announcement"
-                                                                        type="text" id="title_data" name="title_data">
-                                                                    <hr>
-                                                                    <!-- <input class="form-control" type="text" placeholder="Default input" aria-label="default input example"> -->
-                                                                    <textarea class="form-control placeholder-glow w-100 h-100" placeholder="Details of Announcement"
-                                                                        aria-label="default input example" type="text" name="details_data" id="details_data"></textarea>
+                                                                        <input class="form-control   w-100 h-100"
+                                                                            aria-label="default input example"
+                                                                            placeholder="Title of the Announcement"
+                                                                            type="text" id="title_data" name="title_data" required>
+                                                                        <hr>
+                                                                        <!-- <input class="form-control" type="text" placeholder="Default input" aria-label="default input example"> -->
+                                                                        <textarea class="form-control placeholder-glow w-100 h-100" placeholder="Details of Announcement"
+                                                                            aria-label="default input example" type="text" name="details_data" id="details_data" required></textarea>
 
 
-                                                                    <div class="bottom-content d-flex mx-2">
+                                                                        <div class="bottom-content d-flex mx-2">
 
-                                                                        <div class="row">
-                                                                            <div
-                                                                                class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                                                                                <div class="form-check mx-2">
-                                                                                    <input
-                                                                                        class="form-check-input check-box me-1"
-                                                                                        type="checkbox" value=""
-                                                                                        id="notifyEmp">
-                                                                                    <label class="form-check-label"
-                                                                                        for="notifyEmp">
-                                                                                        Notify employees
-                                                                                    </label>
+                                                                            <div class="row">
+                                                                                <div
+                                                                                    class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                                                    <div class="form-check mx-2">
+                                                                                        <input
+                                                                                            class="form-check-input check-box me-1"
+                                                                                            type="checkbox" value="1"
+                                                                                            id="notifyEmp" name="notify_employees">
+                                                                                        <label class="form-check-label"
+                                                                                            for="notifyEmp">
+                                                                                            Notify employees
+                                                                                        </label>
 
+                                                                                    </div>
                                                                                 </div>
-                                                                            </div>
-                                                                            <div
-                                                                                class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                                                                                <div class="form-check mx-2">
-                                                                                    <input
-                                                                                        class="form-check-input check-box  me-1"
-                                                                                        type="checkbox" value=""
-                                                                                        id="requireAcknowledge">
-                                                                                    <label class="form-check-label"
-                                                                                        for="requireAcknowledge">
-                                                                                        Require Acknowledgement
-                                                                                    </label>
+                                                                                <div
+                                                                                    class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                                                    <div class="form-check mx-2">
+                                                                                        <input
+                                                                                            class="form-check-input check-box  me-1"
+                                                                                            type="checkbox" value="1"
+                                                                                            id="requireAcknowledge" name="require_acknowledgement">
+                                                                                        <label class="form-check-label"
+                                                                                            for="requireAcknowledge">
+                                                                                            Require Acknowledgement
+                                                                                        </label>
+                                                                                    </div>
                                                                                 </div>
-                                                                            </div>
-                                                                            <div
-                                                                                class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                                                                                <div class="form-check mx-2">
-                                                                                    <input
-                                                                                        class="form-check-input check-box me-1"
-                                                                                        type="checkbox" value=""
-                                                                                        id="hideAfter">
-                                                                                    <label class="form-check-label"
-                                                                                        for="hideAfter">
-                                                                                        Hide After
-                                                                                    </label>
+                                                                                <div
+                                                                                    class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                                                    <div class="form-check mx-2">
+                                                                                        <input
+                                                                                            class="form-check-input check-box me-1"
+                                                                                            type="checkbox" value="1"
+                                                                                            id="hideAfter" name="hide_after">
+                                                                                        <label class="form-check-label"
+                                                                                            for="hideAfter">
+                                                                                            Hide After
+                                                                                        </label>
+                                                                                    </div>
                                                                                 </div>
-                                                                            </div>
-                                                                            <div
-                                                                                class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                                                                                <div class="form-check mx-2">
-                                                                                    <input
-                                                                                        class="form-control me-1 anounce-date "
-                                                                                        type="text"
-                                                                                        placeholder="Select date"
-                                                                                        value="" id=""
-                                                                                        disabled>
-
+                                                                                <div
+                                                                                    class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                                                    <div class="form-check mx-2">
+                                                                                        <input
+                                                                                            class="form-control me-1 anounce-date "
+                                                                                            type="date" name="date"
+                                                                                            placeholder="Select date" id=""
+                                                                                            required style="background-color:#e9ecef">
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <button class="btn btn-primary float-end"
-                                                                    id="annon_menu_submit" type="button">
-                                                                    Submit
-                                                                </button>
-
-
+                                                                    <button class="btn btn-primary float-end"
+                                                                        id="annon_menu_submit" type="submit">
+                                                                        Submit
+                                                                    </button>
+                                                                </form>
                                                             </div>
                                                         </div>
                                                         <div class="topbarContent emp-poll" style="display:none;">
@@ -291,94 +288,98 @@
                                                                                                                             Submit
                                                                                                                         </button>
                                                                                                                     </form> -->
-
-                                                                    <input type="text" name="" id=""
-                                                                        class="form-control border-0 outline-none"
-                                                                        placeholder="What this poll is about">
-                                                                    <hr>
-                                                                    <div class="mt-3 d-flex align-items-center">
-                                                                        <input type="text" name=""
-                                                                            id="" class="form-control "
-                                                                            placeholder="Add option here">
-                                                                        <i
-                                                                            class="ri-delete-bin-7-fill mx-2 text-danger"></i>
-                                                                    </div>
-                                                                    <div class="text-end my-2">
-                                                                        <!-- <button class="btn btn-secondary outline-none border-0"><i class=" ri-add-circle-line mr-2">Add More</i></button> -->
-                                                                        <button
-                                                                            class="btn text-primary p-0 bg-transparent outline-none border-0 f-12"><i
-                                                                                class="f-12 me-1 fa  fa-plus-circle"
-                                                                                aria-hidden="true"></i>Add
-                                                                            More</i></button>
-                                                                    </div>
-
-                                                                    <div class="bottom-content">
-                                                                        <div class="row">
-                                                                            <div
-                                                                                class="col-sm-6 col-md-6 col-xl-4 col-lg-4 mt-1">
-                                                                                <div class=" d-flex align-items-center">
-                                                                                    <label for=""
-                                                                                        class="me-1 mb-0">Poll
-                                                                                        Expires
-                                                                                        On</label>
-                                                                                    <input
-                                                                                        class=" me-1 anounce-date form-control "
-                                                                                        type="text"
-                                                                                        placeholder="Select date"
-                                                                                        value="" id=""
-                                                                                        disabled>
-                                                                                </div>
+                                                                    <form id="polling-questions-form-submit">
+                                                                        <input type="text" name="question" id=""
+                                                                            class="form-control border-0 outline-none"
+                                                                            placeholder="What this poll is about" required>
+                                                                        <hr>
+                                                                        <div class="content-container">
+                                                                            <div class="mt-3 d-flex align-items-center">
+                                                                                <input type="text" name="options[]"
+                                                                                    id="" class="form-control "
+                                                                                    placeholder="Add option here" required>
                                                                             </div>
-                                                                            <div
-                                                                                class="col-sm-6 col-md-6 col-xl-4 col-lg-4 mt-1">
-
-                                                                                    <input
-                                                                                        class="form-check-input check-box me-1"
-                                                                                        type="checkbox" value=""
-                                                                                        id="notifyEmp2">
-                                                                                    <label class="form-check-label"
-                                                                                        for="notifyEmp2">
-                                                                                        Notify employees
-                                                                                    </label>
-
-                                                                            </div>
-                                                                            <div
-                                                                                class="col-sm-6 col-md-6 col-xl-4 col-lg-4 mt-1">
-
-                                                                                    <input
-                                                                                        class="form-check-input check-box me-1"
-                                                                                        type="checkbox" value=""
-                                                                                        id="anonymous">
-                                                                                    <label class="form-check-label"
-                                                                                        for="anonymous">
-                                                                                        Anonymous Poll
-                                                                                    </label>
-
+                                                                            <div class="mt-3 d-flex align-items-center">
+                                                                                <input type="text" name="options[]"
+                                                                                    id="" class="form-control "
+                                                                                    placeholder="Add option here" required>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="mt-2 text-end">
-                                                                        <button class="btn btn-primary">Cancel</button>
-                                                                        <button class="btn btn-primary">Post</button>
-                                                                    </div>
+                                                                        <div class="text-end my-2">
+                                                                            <!-- <button class="btn btn-secondary outline-none border-0"><i class=" ri-add-circle-line mr-2">Add More</i></button> -->
+                                                                            <button
+                                                                                class="btn text-primary p-0 bg-transparent outline-none border-0 f-12 plus-sign" type="button"><i
+                                                                                    class="f-12 me-1 fa  fa-plus-circle"
+                                                                                    aria-hidden="true"></i>Add
+                                                                                More</i></button>
+                                                                        </div>
+
+                                                                        <div class="bottom-content">
+                                                                            <div class="row">
+                                                                                <div
+                                                                                    class="col-sm-6 col-md-6 col-xl-4 col-lg-4 mt-1">
+                                                                                    <div class=" d-flex align-items-center">
+                                                                                        <label for=""
+                                                                                            class="me-1 mb-0">Poll
+                                                                                            Expires
+                                                                                            On</label>
+                                                                                        <input
+                                                                                            class=" me-1 anounce-date form-control" name="date" type="date"
+                                                                                            placeholder="Select date" id=""
+                                                                                            required style="background-color:#e9ecef">
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-sm-6 col-md-6 col-xl-4 col-lg-4 mt-1">
+
+                                                                                        <input
+                                                                                            class="form-check-input check-box me-1"
+                                                                                            type="checkbox" name="notify_employees"
+                                                                                            id="notifyEmp2" value="1">
+                                                                                        <label class="form-check-label"
+                                                                                            for="notifyEmp2">
+                                                                                            Notify employees
+                                                                                        </label>
+
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-sm-6 col-md-6 col-xl-4 col-lg-4 mt-1">
+
+                                                                                        <input
+                                                                                            class="form-check-input check-box me-1"
+                                                                                            type="checkbox" name="anonymous_poll" value="1"
+                                                                                            id="anonymous">
+                                                                                        <label class="form-check-label"
+                                                                                            for="anonymous">
+                                                                                            Anonymous Poll
+                                                                                        </label>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="mt-2 text-end">
+                                                                            <button class="btn btn-primary" id="polling-cancel-btn" type="button">Cancel</button>
+                                                                            <button class="btn btn-primary" id="polling-submit-btn" type="submit">Post</button>
+                                                                        </div>
+                                                                    </form>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="topbarContent emp-praise" style="display:none;">
                                                             <div>
-                                                                <div>
-                                                                    <div class="px-20 p-16 row no-gutters scrollBar">
-                                                                        <textarea name="" id="" cols="30" rows="3" class="border-0 outline-none w-100">
-
-                                                                        </textarea>
+                                                                <form id="praise-form-submit">
+                                                                    <div>
+                                                                        <div class="px-20 p-16 row no-gutters scrollBar">
+                                                                            <textarea name="praise_data" id="" cols="30" rows="3" class="border-0 outline-none w-100" required></textarea>
+                                                                        </div>
+                                                                        <div class="text-end mt-2">
+                                                                            <button id="praise-submit-btn" type="submit"
+                                                                                class="btn btn-primary py-1 px-4  float-right">
+                                                                                Submit
+                                                                            </button>
+                                                                        </div>
                                                                     </div>
-                                                                    <div class="text-end mt-2">
-                                                                        <button
-                                                                            class="btn btn-primary py-1 px-4  float-right">
-                                                                            Submit
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
+                                                                </form>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -470,6 +471,15 @@
 
     <script>
         $(document).ready(function() {
+
+        $('body').on('click', '.plus-sign', function() {
+            $('.content-container').append('<div class="mt-3 d-flex align-items-center"><input type="text" name="options[]"id="" class="form-control" placeholder="Add option here" required><i class="delete-row ri-delete-bin-7-fill mx-2 text-danger"></i></div>');
+        });
+
+        $('body').on('click', '.delete-row', function() {
+            $(this).parent().remove();
+        });
+        
             $(function() {
                 $("[data-toggle=popover]").popover({
                     html: true,
@@ -492,29 +502,122 @@
                 $('.emp-' + id).css("display", "block");
             });
 
-
-            $('#annon_menu_submit').click(function(e) {
+            // Announcement Submit Form through Ajax starts
+            $('#announcement-form-submit').on('submit', function(e) {
                 e.preventDefault();
-                var image = $('#image_src').val();
-                //alert(image);
-                var title_data = $('#title_data').val();
-                var details_data = $('#details_data').val();
-                var user_ref_id = "{{ Auth::user()->id }}";
-                $.ajax({
-                    type: "POST",
-                    url: "{{ url('vmt-dashboard-announcement') }}",
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        title_data: title_data,
-                        user_ref_id: user_ref_id,
-                        details_data: details_data,
-                    },
-                    success: function(data) {
-                        // alert(data);
-                        location.reload();
-                    }
-                })
+                if ($('#announcement-form-submit').is(':valid')) {
+                    var announcementFormData = new FormData(document.getElementById("announcement-form-submit"));
+                    console.log(announcementFormData);
+
+                    $.ajax({
+                        url: "{{ url('vmt-dashboard-announcement') }}",
+                        type: "POST",
+                        processData: false,
+                        contentType: false,
+                        data: announcementFormData,
+                        beforeSend : function(){
+                            $("#annon_menu_submit").attr("disabled", true);
+                        },
+                        success: function(data) {
+                            swal("Success!", "Announcement added successfully", "success");
+                            document.getElementById("announcement-form-submit").reset();
+                            $("#annon_menu_submit").attr("disabled", false);
+                        }
+                    });
+
+                }
             });
+            // Announcement Submit Form through Ajax ends
+
+            // Polling Submit Form through Ajax starts
+            $('#polling-questions-form-submit').on('submit', function(e) {
+                e.preventDefault();
+                if ($('#polling-questions-form-submit').is(':valid')) {
+                    var pollingFormData = new FormData(document.getElementById("polling-questions-form-submit"));
+                    console.log(pollingFormData);
+
+                    $.ajax({
+                        url: "{{ url('vmt-dashboard-polling-question') }}",
+                        type: "POST",
+                        processData: false,
+                        contentType: false,
+                        data: pollingFormData,
+                        beforeSend : function(){
+                            $("#polling-submit-btn").attr("disabled", true);
+                        },
+                        success: function(data) {
+                            if(data.status == true){
+                                swal("Success!", data.message, "success");
+                                $('.delete-row').parent().remove();
+                            }else{
+                                swal("Error!", data.message, "error");
+                            }
+                            document.getElementById("polling-questions-form-submit").reset();
+                            $("#polling-submit-btn").attr("disabled", false);
+                        }
+                    });
+
+                }
+            });
+
+            $('#polling-cancel-btn').on('click', function(e) {
+                document.getElementById("polling-questions-form-submit").reset();
+            });
+            // Polling Submit Form through Ajax ends
+
+            // Praise Submit Form through Ajax starts
+            $('#praise-form-submit').on('submit', function(e) {
+                e.preventDefault();
+                if ($('#praise-form-submit').is(':valid')) {
+                    var praiseFormData = new FormData(document.getElementById("praise-form-submit"));
+                    console.log(praiseFormData);
+
+                    $.ajax({
+                        url: "{{ url('vmt-dashboard-praise') }}",
+                        type: "POST",
+                        processData: false,
+                        contentType: false,
+                        data: praiseFormData,
+                        beforeSend : function(){
+                            $("#praise-submit-btn").attr("disabled", true);
+                        },
+                        success: function(data) {
+                            if(data.status == true){
+                                swal("Success!", data.message, "success");
+                            }else{
+                                swal("Error!", data.message, "error");
+                            }
+                            document.getElementById("praise-form-submit").reset();
+                            $("#praise-submit-btn").attr("disabled", false);
+                        }
+                    });
+
+                }
+            });
+            // Praise Submit Form through Ajax Ends
+
+            // $('#annon_menu_submit').click(function(e) {
+            //     e.preventDefault();
+            //     var image = $('#image_src').val();
+            //     //alert(image);
+            //     var title_data = $('#title_data').val();
+            //     var details_data = $('#details_data').val();
+            //     var user_ref_id = "{{ Auth::user()->id }}";
+            //     $.ajax({
+            //         type: "POST",
+            //         url: "{{ url('vmt-dashboard-announcement') }}",
+            //         data: {
+            //             "_token": "{{ csrf_token() }}",
+            //             title_data: title_data,
+            //             user_ref_id: user_ref_id,
+            //             details_data: details_data,
+            //         },
+            //         success: function(data) {
+            //             // alert(data);
+            //             location.reload();
+            //         }
+            //     })
+            // });
 
 
             // for number increament
