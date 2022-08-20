@@ -49,7 +49,6 @@ border-radius: 2px;
     <!--Page Wrapper-->
 
 
-    <script src="http://thecodeplayer.com/uploads/js/jquery-1.9.1.min.js" type="text/javascript"></script><!-- -->
     <!-- jQuery easing plugin -->
     <script src="http://thecodeplayer.com/uploads/js/jquery.easing.min.js" type="text/javascript"></script>
 
@@ -349,7 +348,6 @@ if ($('#nationality').val() == 'indian') {
 // });
 
 
-$('#nationality').val('indian');
 $('#passport_no_req').hide();
 $('#passport_exp_req').hide();
 $('#permanent_district').val('IN').trigger('change');
