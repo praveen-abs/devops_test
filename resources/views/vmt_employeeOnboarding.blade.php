@@ -337,16 +337,16 @@ if ($('#nationality').val() == 'indian') {
 }
 });
 
-$('#vmt_aadhar').on('input', function() {
-    var aadharno = new RegExp("^[2-9]{1}[0-9]{3}\s{1}[0-9]{4}\s{1}[0-9]{4}$");
-    var aadhartes = $("#vmt_aadhar").val();
-    if (aadharno.test(aadhartes)) {
-        return true;
-    } else {
-        alert("Please Enter Valid Aadhar Number");
-    }
-    return false;
-});
+// $('#vmt_aadhar').on('input', function() {
+//     var aadharno = new RegExp("^[2-9]{1}[0-9]{3}\s{1}[0-9]{4}\s{1}[0-9]{4}$");
+//     var aadhartes = $("#vmt_aadhar").val();
+//     if (aadharno.test(aadhartes)) {
+//         return true;
+//     } else {
+//         alert("Please Enter Valid Aadhar Number");
+//     }
+//     return false;
+// });
 
 
 $('#nationality').val('indian');
@@ -423,10 +423,7 @@ var flag = false;
     var txtIFSCNo = $("#bank_ifsc").val();
     var ifsc = '^[A-Z]{4}0[A-Z0-9]{6}$';
     var dl_pat = '/^(([A-Z]{2}[0-9]{2})( )|([A-Z]{2}-[0-9]{2}))((19|20)[0-9][0-9])[0-9]{7}$/';
-    if(txtPANCard.match(regex)){
-        //alert("done ");
-        console.log("Pan card correct");
-    }else if(textDLno.match(dl_pat)){
+    if(textDLno.match(dl_pat)){
         //alert("dl no done");
         console.log("DL No correct");
 
