@@ -4,10 +4,9 @@
 <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('assets/libs/swiper/swiper.min.css')}}" rel="stylesheet" type="text/css" />
 
-
 <link href="{{ URL::asset('assets/css/assign_goals.css') }}" rel="stylesheet">
-<link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
-<link href="{{ URL::asset('assets/css/app.min.css') }}" rel="stylesheet">
+{{-- <link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet"> --}}
+
 <!-- prem content -->
 
 <!--Custom style.css-->
@@ -98,7 +97,7 @@
                                         <div class="  d-flex align-items-center mt-3 flex-column">
                                         <p class="text-muted fw-bold">Self Review</p>
 
-                                        <h5>-/{{$userCount}}</h5>
+                                        <h6>-/{{$userCount}}</h6>
 
                                         </div>
                                     </div>
@@ -114,7 +113,7 @@
                                         <p class="pl-3 col-auto"><img src="{{ URL::asset('assets/images/employees_assessed.png') }}" alt="" class=""></p>
                                         <div class="  d-flex align-items-center mt-3 flex-column">
                                         <p class="text-muted fw-bold">Employees Assessed</p>
-                                        <h5>{{$subCount.'/'.$userCount}}</h5>
+                                        <h6>{{$subCount.'/'.$userCount}}</h6>
                                         </div>
                                     </div>
                                 </div>
@@ -187,30 +186,33 @@
                 </div>
             </div>
         </div>
+        <div class="card">
+            <div class="card-body">
         @if(count($empGoals) == 0)
         <div class="" id="initial-section">
             <div class="row justify-content-center">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center p-0 ">
-                    <div class="p-3"><img src="{{ URL::asset('assets/images/assign_goals.png') }}" style="width:200px;height:200px;"></div>
-                    <h4><b>Assign Goals for your employees</b></h4>
-                    <div class="mt-4">
-                        <button id="add-goals" class="btn btn-primary">
-                            <h6 class="m-0 text-white p-2">
-                                <i class="text-white fa fa-plus mx-1"></i>
-                                <b>Add</b>
-                            </h6>
-                        </button>
+                    <div class="p-3" style="width:auto;height:200px;"><img src="{{ URL::asset('assets/images/assign_goals.png') }}" class="h-100 " style="width:200px;"></div>
+                    <h6>Assign Goals for your employees</h6>
+                    <div class="mt-1">
+                        <button id="add-goals" class="btn btn-orange">
+             <i class="text-white fa fa-user-plus me-1"></i>
+                                                       Add
+
+                                               </button>
                     </div>
                 </div>
             </div>
         </div>
+</div>
         @else
 
 
 <div class="table-responsive">
 
         <div class="container-fluid px-2 bg-white" style="position:relative;">
-        <button id="add-goals" class="text-white py-1 px-3 btn btn-primary add-goals" ><i class="text-white fa fa-plus mx-1"></i>Add Goals</button>
+
+            <button id="add-goals" class="btn btn-primary add-goals" ><i class="text-white fa fa-plus-circle me-1"></i>Add Goals</button>
 
     <table id='empTable' class=' table table-borderd  mb-0'>
         <thead class="table-light">
@@ -345,7 +347,7 @@
         </tbody>
     </table>
 </div>
-
+</div>
         </div>
         @endif
     </div>
@@ -540,16 +542,16 @@
 
 <div id="add-goals-modal" class="modal custom-modal fade" role="dialog">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-xl" role="document">
-            <div class="modal-content">
-                <div class="modal-header py-3 new-role-header d-flex align-items-center">
-                    <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
-             New Assign Goals</h5>
-                    <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
+            <div class="modal-content profile-box ">
+                <div class="modal-header border-0">
+                    <h6 class="" >
+             New Assign Goals</h6>
+                    <button type="button" class="close outline-none  border-0" data-bs-dismiss="modal" aria-label="Close">
+                        &times;
                     </button>
                 </div>
                 <div class="modal-body">
-              <div class="card card-md profile-box p-2 card-left-bar">
+              <div class="card card-md left-line">
                 <div class="card-body">
 
                     <form id="goalForm">
@@ -565,7 +567,7 @@
 
                                     <label class="" for="calendar_type">Calendar Type</label>
                                     <select name="calendar_type" id="calendar_type" class="form-control">
-                                        <option value="">Select</option>
+                                        <option value="" hidden selected disabled>Select Type</option>
                                         <option name="financial_year" value="financial_year">Financial Year</option>
                                         <option name="calendar_year" value="calendar_year">Calendar Year</option>
                                     </select>
@@ -577,7 +579,7 @@
                                     <input type="hidden" name="hidden_calendar_year" id="hidden_calendar_year" value="" >
 
                                     <select name="year" id="year" disabled class="form-control">
-                                        <option value="">Select</option>
+                                        <option value="" hidden selected disabled>Select Year</option>
                                         <option value="Jan-Dec">January - <?php echo date("Y"); ?> to December - <?= date("Y")?> </option>
                                         <option value="Apr-Mar">April - <?php echo date("Y"); ?> to March - <?= date("Y")+1?></option>
                                     </select>
@@ -587,7 +589,7 @@
 
                                     <label class="" for="frequency">Frequency</label>
                                     <select name="frequency" id="frequency" class="form-control">
-                                        <option value="">Select</option>
+                                        <option value="" hidden selected disabled>Select Frequency</option>
                                         <option value="monthly">Monthly</option>
                                         <option value="quarterly">Quarterly</option>
                                         <option value="halfYearly">Half Yearly</option>
@@ -599,7 +601,9 @@
 
                                     <label class="" for="assignment_period_start">Assignment Period</label>
                                     <select name="assignment_period_start" id="assignment_period_start" class="form-control">
+                                        <option value="" hidden selected disabled>Select Period</option>
                                     </select>
+
                                 </div>
 
                         </div>
@@ -607,21 +611,27 @@
                             <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
                                 <label class="" for="department">Department</label>
                                 <select name="department" id="department"  class="form-control">
-                                    <option value="">Select Department</option>
+                                    <option value="" hidden selected disabled>Select Department</option>
                                     @foreach($department as $dept)
                                     <option value="{{$dept->id}}">{{$dept->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3 ">
+                                <div class="employee-ass-wrapper">
                                 <label class="" for="">Employees</label>
+                                <!-- <input type="text" name="" id="selected_employee" target="#changeEmployee" class="form-control  increment-input" placeholder="Employees">
+                                <button id="" class="btn  btn-orange increment-btn  chnageButton">+</button> -->
                                 <input type="text" name="" id="selected_employee" target="#changeEmployee" class="form-control  increment-input" placeholder="Employees">
-                                <button type="button" id="" class="btn btn-primary increment-btn py-1 px-2 chnageButton">+</button>
+                                <button type="button" id="" class="btn  btn-orange increment-btn  chnageButton">+</button>
+                                </div>
                             </div>
                             <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
+                                <div class="manager-ass-wrapper">
                                 <label class="" for="">Reviewer</label>
                                 <input type="text" name="" id="selected_reviewer" class="form-control increment-input" placeholder="Reviewer">
-                                <button type="button" id="" target="#createEmployee" class="btn py-1 px-3 btn-primary increment-btn reviewerButton">Select</button>
+                                <button type="button" id="" target="#createEmployee" class="btn btn-orange increment-btn  increment-btn reviewerButton">Select</button>
+                            </div>
                             </div>
                         </div>
                         <div class="row mt-3">
@@ -684,12 +694,12 @@
                     </form>
                 </div>
               </div>
-              <div class="card  profile-box p-2 card-left-bar ">
+              <div class="card  left-line">
                 <div class="card-body ">
-                <div class="table-wrapper m-2">
+                <div class="table-wrapper">
     <div class="row">
         <div class="col-12">
-            <h5>Goals / Areas of development</h5>
+            <h6>Goals / Areas of development</h6>
         </div>
     </div>
     <div class="row">
@@ -715,12 +725,12 @@
             </form>
         </div> --}}
         <div class="col-12">
-            <div class="container-fluid mb-1 mt-3 ">
+            <div class="">
                 <form id="kpiTableForm">
                     @csrf
                     <label>Select existing form from the Dropdown</label>
                     <select name="kpi_table" class="form-control mb-2">
-                        <option value="">Select KPI Form</option>
+                        <option value="" disabled selected hidden>Select KPI Form</option>
                         @foreach($kpiForms as $kpiForm)
                         <option value="{{$kpiForm->author_name}}">{{$kpiForm->name}}</option>
                         @endforeach
@@ -818,14 +828,23 @@
                         </table>
                     </div> -->
                 </form>
-                <div class="align-items-center justify-content-end d-flex mt-2 cursor-pointer">
-                <a href="{{route('vmt_pms_kpi_create')}}" target="_blank"><span class="plus-sign text-info "><i class="fa fa-plus f-20"></i>Create KPI Form</span></a>
-                </div>
+                {{-- <div class="align-items-center justify-content-end d-flex mt-2 cursor-pointer">
+                <a href="{{route('vmt_pms_kpi_create')}}" target="_blank" class="text-primary"><i class="fa fa-plus plus-sign  f-20"></i>Create KPI Form</a>
+                </div> --}}
 
-                <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
+                {{-- <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
                     <button class="btn btn-primary  mx-2" id="save-table">Save</button>
                     <button class="btn btn-primary ml-2" id="publish-goal" disabled>Publish</button>
-                </div>
+                </div> --}}
+
+                <div class="align-items-center justify-content-between d-flex">
+                    <a href="{{route('vmt_pms_kpi_create')}}" target="_blank" class="text-primary f-12 float-start" ><i class="f-12 me-1 fa  fa-plus-circle"></i>Create KPI Form</a>
+                    <span class="float-end">
+                        <button class="btn btn-orange me-2" id="save-table">Save</button>
+                        <button class="btn btn-orange " id="publish-goal" disabled>Publish</button>
+                    </span>
+                    </div>
+
 
             </div>
 
@@ -842,26 +861,29 @@
 
 <!-- Change Reviewr window -->
 
-<div class="modal fade" id="createEmployee" role="dialog" aria-hidden="true" style="opacity:1; display:none;background:#00000073;">
-    <div class="modal-dialog modal-md" id="" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2">
-        <div class="modal-content">
-            <div class="modal-header py-2 bg-primary">
 
-                <div class="w-100 modal-header-content d-flex align-items-center py-2">
-                    <h5 class="modal-title text-white" id="exampleModalToggleLabel2">Change Reviewer
-                    </h5>
+
+
+<div class="modal custom-modal fade" id="createEmployee" role="dialog" aria-hidden="true" style="opacity: 1; background: rgba(0, 0, 0, 0.45); display: block;">
+    <div class="modal-dialog modal-dialog-centered modal-md" id="" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2">
+        <div class="modal-content top-line  ">
+            <div class="modal-header border-0">
+
+                    <h6 class="modal-title  " id="exampleModalToggleLabel2">Change Reviewer
+                    </h6>
                     <button
                         type="button"
-                        class="btn-close btn-close-white close-reviewerButton" data-bs-dismiss="modal"
+                        class="close border-0 outline-none  close-reviewerButton" data-bs-dismiss="modal"
                         aria-label="Close"
                     >
+                    &times;
                     </button>
-                </div>
+
             </div>
             <div class="modal-body">
                 <form id="form_selectReviewer" method="POST" >
                     @csrf
-                    <label for="FormSelectDefault" class="form-label text-muted">Reviewer</label>
+                    <h6 for="FormSelectDefault" class="form-label text-muted">Reviewer</h6>
                     <div class="mb-3 row" id="select-reviewer">
                     <!-- <select class="form-select mb-3" aria-label="Default select example" name="reviewer[]" multiple id="select-reviewer" > -->
                         @foreach($users as $index => $user)
@@ -872,15 +894,15 @@
                         @endforeach
                     <!-- </select> -->
                     </div>
-                    <div class="content-footer mt-3">
+                    <div class="content-footer">
                         <div class="row">
                             <div class="col-12 ">
                                 <div class="d-flex">
-                                    <ul class="nav nav-pills w-100 mb-4" id="pills-tab"
+                                    <ul class="nav nav-pills w-100 " id="pills-tab"
                                         role="tablist">
                                         <li class="nav-item d-flex w-100 align-items-center justify-content-end" role="presentation">
 
-                                            <button class="btn btn-primary waves-effect waves-light" type="submit">
+                                            <button class="btn btn-orange waves-effect waves-light" type="submit">
                                                 Save
                                             </button>
 
@@ -929,23 +951,22 @@
 </div>
 
 <!-- Select Employees window -->
-<div class="modal fade" id="changeEmployee" style="opacity:1; display:none;background:#00000073;">
-    <div class="modal-dialog modal-md" id="" aria-hidden="true"
+<div class="modal fade custom-modal" id="changeEmployee" style="opacity:1; display:none;background:#00000073;">
+    <div class="modal-dialog modal-dialog-centered modal-md" id="" aria-hidden="true"
         aria-labelledby="exampleModalToggleLabel2">
 
-        <div class="modal-content">
-            <div class="modal-header py-2 bg-primary">
-
-                <div class="w-100 modal-header-content d-flex align-items-center py-2">
-                    <h5 class="modal-title text-white" id="exampleModalToggleLabel2">Select Employees
-                    </h5>
+        <div class="modal-content top-line">
+            <div class="modal-header  border-0">
+                    <h6 class="modal-title" id="exampleModalToggleLabel2">Select Employees
+                    </h6>
                     <button
                         type="button"
-                        class="btn-close btn-close-white close-changeEmployee" data-bs-dismiss="modal"
+                        class="close border-0 close-changeEmployee" data-bs-dismiss="modal"
                         aria-label="Close"
                     >
+                    &times;
                     </button>
-                </div>
+
             </div>
             <div class="modal-body">
 
@@ -962,9 +983,9 @@
                         <div class="row">
                             <div class="col-12 ">
                                 <div class="d-flex">
-                                    <ul class="nav nav-pills w-100 mb-4" id="pills-tab"
+                                    <ul class="nav nav-pills w-100 " id="pills-tab"
                                         role="tablist">
-                                        <li class="nav-item d-flex w-100 align-items-center justify-content-end "
+                                        <li class="nav-item d-flex w-100 align-items-center justify-content-end"
                                             role="presentation">
 
                                             <button class="btn btn-primary waves-effect waves-light"

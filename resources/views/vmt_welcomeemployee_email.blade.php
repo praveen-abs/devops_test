@@ -60,7 +60,7 @@
                     <tr>
                         <td style="text-align:center;">
                             <a href="https://abshrms.com" title="logo" target="_blank">
-                            <img src="https://demo.abshrms.com/generalinfo/client-logo.png" style="width:140px; height:40px;" alt="">
+                            <img src="{{$image_view}}" style="width:140px; height:40px;" alt="">
                           </a>
                         </td>
                     </tr>
@@ -105,7 +105,7 @@
                                         <p
                                             style="color:#455056; font-size:18px;line-height:20px; margin:0; font-weight: 500;">
                                             <strong
-                                                style="display: block;font-size: 13px; margin: 0 0 4px; color:rgba(0,0,0,.64); font-weight:normal;">Username</strong>{{$uEmail}}
+                                                style="display: block;font-size: 13px; margin: 0 0 4px; color:rgba(0,0,0,.64); font-weight:normal;">Employee Code</strong>{{$uEmail}}
                                             <strong
                                                 style="display: block; font-size: 13px; margin: 24px 0 4px 0; font-weight:normal; color:rgba(0,0,0,.64);">Password</strong>{{$uPassowrd}}
                                         </p>

@@ -78,7 +78,9 @@ class VmtEmployeeController extends Controller
         $emp = VmtEmployeeOfficeDetails::all();
         $bank = Bank::all();
         $department = Department::all();
-        return view('vmt_employeeOnboarding', compact('empNo', 'countries', 'india', 'emp', 'bank', 'department'));
+        $allEmployeesCode = User::where('is_admin',0)->where('active',1)->whereNotNull('user_code')->get(['user_code','name']);
+        //dd($allEmployeesCode);
+        return view('vmt_employeeOnboarding', compact('empNo', 'countries', 'india', 'emp', 'bank', 'department','allEmployeesCode'));
 
     }
     }
@@ -708,6 +710,7 @@ class VmtEmployeeController extends Controller
     // Generate Employee Apoinment PDF after onboarding
     public function attachApoinmentPdf($employeeData){
         //dd($employeeData);
+        $VmtGeneralInfo = VmtGeneralInfo::where('id','1')->orderBy('created_at', 'DESC')->first();
         $empNameString  = $employeeData['employee_name'];
         $filename = 'appoinment_letter_'.$empNameString.'_'.time().'.pdf';
         $data = $employeeData;
@@ -741,7 +744,8 @@ class VmtEmployeeController extends Controller
         \File::put(public_path('/').$filename, $docUploads);
         $fileAttr  = file_get_contents(public_path('/').$filename);
         $appoinmentPath = public_path('/').$filename;
-        $isSent    = \Mail::to($employeeData['email'])->send(new WelcomeMail($employeeData['email'], 'Abs@123123', request()->getSchemeAndHttpHost() ,  $appoinmentPath));
+         $image_view = url('/').$VmtGeneralInfo->logo_img;
+        $isSent    = \Mail::to($employeeData['email'])->send(new WelcomeMail($employeeData['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost() ,  $appoinmentPath ,$image_view));
         return $isSent;
     }
 

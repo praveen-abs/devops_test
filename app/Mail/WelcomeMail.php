@@ -20,14 +20,16 @@ class WelcomeMail extends Mailable
     protected $uPassowrd;
     protected $loginLink;
     protected $filename;
+    protected $image_view;
 
-    public function __construct($uEmail, $uPassowrd, $loginLink, $filename )
+    public function __construct($uEmail, $uPassowrd, $loginLink, $filename , $image_view )
     {
         //
         $this->uEmail  = $uEmail;
         $this->uPassowrd  = $uPassowrd;
         $this->loginLink  = $loginLink;
         $this->filename   = $filename;
+        $this->image_view   = $image_view;
     }
 
     /**
@@ -40,7 +42,8 @@ class WelcomeMail extends Mailable
         $output = $this->view('vmt_welcomeemployee_email')
                     ->with('uEmail', $this->uEmail)
                     ->with('uPassowrd', $this->uPassowrd)
-                    ->with('loginLink', $this->loginLink);
+                    ->with('loginLink', $this->loginLink)
+                    ->with('image_view', $this->image_view);
                     
         //Only for Employee Onboarding
         if($this->filename != "")

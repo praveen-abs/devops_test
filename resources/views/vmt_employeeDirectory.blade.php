@@ -2,12 +2,8 @@
 @section('title') @lang('translation.projects') @endsection
 @section('css')
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/employee-directory.css') }}">
-<link rel="stylesheet" href="{{ URL::asset('/assets/css/app.min.css') }}">
-<!--Font Awesome-->
-<link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/fontawesome-all.min.css') }}">
-<link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/fontawesome.css') }}">
-@endsection
 
+@endsection
 
 
 @section('content')

@@ -27,7 +27,7 @@ class VmtPMSModuleController extends Controller
     {
 
         //Check whether the current user has any KPI forms
-        $existingGoals = VmtPMS_KPIFormAssignedModel::where('assignee_id', auth::user()->id)->get();
+        $existingGoals = VmtPMS_KPIFormAssignedModel::WhereIn('assignee_id', [auth::user()->id])->get();
 
         // $users = User::select('users.id', 'users.name')->join('vmt_employee_details',  'vmt_employee_details.userid', '=', 'users.id')->where('active', 1)->get();
         $departments = Department::where('status', 'A')->get();
@@ -116,27 +116,26 @@ class VmtPMSModuleController extends Controller
         $kpiTable->save();
         $KpiLAST = $kpiTable->id;
 
-        if($request->has('dimension')){
-            $totRows  = count($request->dimension);
-            for ($i=0; $i < $totRows; $i++) {
-                    $kpiRow = new VmtPMS_KPIFormDetailsModel;
-                    $kpiRow->vmt_pms_kpiform_id   =    $KpiLAST;
-                    $kpiRow->dimension   =    $request->dimension ? $request->dimension[$i] : '';
-                    $kpiRow->kpi         =    $request->kpi ? $request->kpi[$i] : '';
-                    $kpiRow->operational_definition   = $request->operational ? $request->operational[$i]: '' ;
-                    $kpiRow->measure     =    $request->measure ? $request->measure[$i] : '';
-                    $kpiRow->frequency   =    $request->frequency ? $request->frequency[$i] : '';
-                    $kpiRow->target      =    $request->target ? $request->target[$i] : '';
-                    $kpiRow->stretch_target  =    $request->stretchTarget ? $request->stretchTarget[$i] : '';
-                    $kpiRow->source          =    $request->source ? $request->source[$i] : '';
-                    $kpiRow->kpi_weightage   =    $request->kpiWeightage ? $request->kpiWeightage[$i] : '';
-                    // $kpiRow->author_id       =    auth::user()->id;
-                    // $kpiRow->author_name     =    str_replace(' ', '_', strtolower($request->name));
-                    $kpiRow->save();
+        $totRows  = count($request->dimension);
+        for ($i=0; $i < $totRows; $i++) {
+                $kpiRow = new VmtPMS_KPIFormDetailsModel;
+                $kpiRow->vmt_pms_kpiform_id   =    $KpiLAST;
+                $kpiRow->dimension   =    $request->dimension ? $request->dimension[$i] : '';
+                $kpiRow->kpi         =    $request->kpi ? $request->kpi[$i] : '';
+                $kpiRow->operational_definition   = $request->operational ? $request->operational[$i]: '' ;
+                $kpiRow->measure     =    $request->measure ? $request->measure[$i] : '';
+                $kpiRow->frequency   =    $request->frequency ? $request->frequency[$i] : '';
+                $kpiRow->target      =    $request->target ? $request->target[$i] : '';
+                $kpiRow->stretch_target  =    $request->stretchTarget ? $request->stretchTarget[$i] : '';
+                $kpiRow->source          =    $request->source ? $request->source[$i] : '';
+                $kpiRow->kpi_weightage   =    $request->kpiWeightage ? $request->kpiWeightage[$i] : '';
+                // $kpiRow->author_id       =    auth::user()->id;
+                // $kpiRow->author_name     =    str_replace(' ', '_', strtolower($request->name));
+                $kpiRow->save();
 
-            }
-            return "Question Created Successfully";
         }
+        return "Question Created Successfully";
+
     }
 
     /*
@@ -219,7 +218,43 @@ class VmtPMSModuleController extends Controller
 
     }
 
+    /*
+        Show Reviewers page.
+    */
     public function showKPIReviewPage_Reviewer(Request $request)
+    {
+
+    }
+
+    /*
+
+    */
+    public function showKPIReviewPage_Assigner(Request $request)
+    {
+
+    }
+
+    public function saveAssigneeReviews(Request $request)
+    {
+
+    }
+
+    public function saveReviewerReviews(Request $request)
+    {
+
+    }
+
+    public function saveAssignerReviews(Request $request)
+    {
+
+    }
+
+    public function updateFormApprovalStatus_Assignee(Request $request)
+    {
+
+    }
+
+    public function updateFormApprovalStatus_Reviewer(Request $request)
     {
 
     }
