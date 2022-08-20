@@ -29,7 +29,7 @@ body {
 }
 
 .content {
-    background-image: url("assets/images/email/Background.jpg");
+    background-image: '{{url("assets/images/email/Background.jpg")}}';
 }
 
 .banner {
@@ -60,7 +60,7 @@ body {
 .brand {
     width: 100%;
     height: 332px;
-    background-image: url('assets/images/email/team.jpg');
+    background-image:"{{url('assets/images/email/team.jpg')}}";
     background-size: cover;
     text-align: center;
     position: relative;
@@ -351,7 +351,7 @@ ul {
                 <li><a href="
                     https://www.ardens.in/"><img src="{{url('assets/images/email/google.png')}}" width="30px" height="30px" ></a></li>
                 <li><a href="https://www.facebook.com/ArdensHR"><img src="{{url('assets/images/email/facebook-logo-2019.png')}}" width="30px" height="30px" ></a></li>
-                <li><a href="https://www.linkedin.com/company/ardenshr-services-private-limited/"><img src="{{url('assets/images/email/linkedin (1).png')}}" width="30px" height="30px" ></a></li>
+                <li><a href="https://www.linkedin.com/company/ardenshr-services-private-limited/"><img src="{{url('assets/images/email/linkedin.png')}}" width="30px" height="30px" ></a></li>
                 <li><a href="https://twitter.com/HrArdens"><img src="{{url('assets/images/email/twitter.png')}}" width="30px" height="30px" ></a></li>
                 <li><a href="https://www.youtube.com/channel/UCgZ7XpBoJvcWWvaiBS5GxHg"><img src="{{url('assets/images/email/movie.png')}}" width="30px" height="30px" ></a></li>
                 <li><a href="https://www.instagram.com/ardenshr/"><img src="{{url('assets/images/email/instagram.png')}}" width="30px" height="30px" ></a></li>
