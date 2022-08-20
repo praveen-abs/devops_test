@@ -29,7 +29,7 @@ body {
 }
 
 .content {
-    background-image: '{{url("assets/images/email/Background.jpg")}}';
+    background-image: url("https://demo.abshrms.com/assets/images/email/Background.jpg");
 }
 
 .banner {
@@ -60,7 +60,7 @@ body {
 .brand {
     width: 100%;
     height: 332px;
-    background-image:"{{url('assets/images/email/team.jpg')}}";
+    background-image:url('https://demo.abshrms.com/assets/images/email/team.jpg');
     background-size: cover;
     text-align: center;
     position: relative;
@@ -268,11 +268,7 @@ ul {
 
 
 </style>
- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-</head>
+ </head>
 
 <body>
 
@@ -289,7 +285,7 @@ ul {
             <div class="overlay"></div>
 
 
-            <!-- <img src="/Images/aerial-view-business-team.jpg" alt=""> -->
+            <img src="{{url('assets/images/email/aerial-view-business-team.jpg')}}" alt="">
 
             <div class="brand-content">
                 <h2 class="text-white">Get Started</h2>
@@ -351,7 +347,7 @@ ul {
                 <li><a href="
                     https://www.ardens.in/"><img src="{{url('assets/images/email/google.png')}}" width="30px" height="30px" ></a></li>
                 <li><a href="https://www.facebook.com/ArdensHR"><img src="{{url('assets/images/email/facebook-logo-2019.png')}}" width="30px" height="30px" ></a></li>
-                <li><a href="https://www.linkedin.com/company/ardenshr-services-private-limited/"><img src="{{url('assets/images/email/linkedin.png')}}" width="30px" height="30px" ></a></li>
+                <li><a href="https://www.linkedin.com/company/ardenshr-services-private-limited/"><img src="{{url('assets/images/email/linkedin (1).png')}}" width="30px" height="30px" ></a></li>
                 <li><a href="https://twitter.com/HrArdens"><img src="{{url('assets/images/email/twitter.png')}}" width="30px" height="30px" ></a></li>
                 <li><a href="https://www.youtube.com/channel/UCgZ7XpBoJvcWWvaiBS5GxHg"><img src="{{url('assets/images/email/movie.png')}}" width="30px" height="30px" ></a></li>
                 <li><a href="https://www.instagram.com/ardenshr/"><img src="{{url('assets/images/email/instagram.png')}}" width="30px" height="30px" ></a></li>
@@ -360,15 +356,8 @@ ul {
 
 
         </div>
-
-
-
-
-
-
-
-
-
+<script src="{{ URL::asset('/assets/js/js/bootstrap.min.js') }}"></script>
+<script src="{{ URL::asset('/assets/js/js/jquery.min.js') }}"></script>
        <!--  <script src="./Assets/js/bootstrap.min.js"></script>
         <script src="./Assets/js/jquery.min.js"></script> -->
 </body>
