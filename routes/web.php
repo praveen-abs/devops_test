@@ -278,7 +278,9 @@ Route::post('/updateFormApprovalStatus-Reviewer',[App\Http\Controllers\PMS\VmtPM
 Route::post('/saveAssigneeReviews',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'saveAssigneeReviews'])->name('saveAssigneeReviews');
 Route::post('/saveReviewerReviews',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'saveReviewerReviews'])->name('saveReviewerReviews');
 Route::post('/saveAssignerReviews',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'saveAssignerReviews'])->name('saveAssignerReviews');
-
+// hr apprasial review
+Route::get('vmt-pms-appraisal-review', 'App\Http\Controllers\PMS\VmtPMSModuleController@showKPIReviewPage_Assignee');
+Route::post('vmt-pms-appraisal-review', 'App\Http\Controllers\VmtApraisalController@storeEmployeeApraisalReview');
 //test
 Route::get('exelsheet', 'App\Http\Controllers\PMS\VmtPMSModuleController@KpiSampleExcelSheet');
 

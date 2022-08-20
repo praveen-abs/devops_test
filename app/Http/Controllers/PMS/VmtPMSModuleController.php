@@ -28,7 +28,7 @@ class VmtPMSModuleController extends Controller
 
         //Check whether the current user has any KPI forms
         $existingGoals = VmtPMS_KPIFormAssignedModel::WhereIn('assignee_id', [auth::user()->id])->get();
-
+        // dd([auth::user()->id]);
         // $users = User::select('users.id', 'users.name')->join('vmt_employee_details',  'vmt_employee_details.userid', '=', 'users.id')->where('active', 1)->get();
         $departments = Department::where('status', 'A')->get();
 
@@ -63,10 +63,72 @@ class VmtPMSModuleController extends Controller
             $dashboardCountersData['selfReviewCount'] = $selfReviewCount;
             $dashboardCountersData['totalSelfReviewCount'] = $totalSelfReviewCount;
 
+             if(auth::user()->hasRole(['HR','Admin']) ){
+            $empGoals = VmtEmployee::leftJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
+                            ->leftJoin('vmt_employee_office_details', 'vmt_employee_details.id','=', 'vmt_employee_office_details.emp_id' )
+                            ->join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.employee_id', '=', 'users.id')
+                            ->select(
+                                'vmt_employee_details.*',
+                                'users.id as emp_id',
+                                'users.name as emp_name',
+                                'users.email as email_id',
+                                'users.avatar as avatar',
+                                'vmt_employee_office_details.department_id',
+                                'vmt_employee_office_details.designation',
+                                'vmt_employee_office_details.l1_manager_code',
+                                'vmt_employee_office_details.l1_manager_name',
+                                'vmt_employee_office_details.l1_manager_designation',
+                                'vmt_employee_pms_goals_table.assignment_period',
+                                'vmt_employee_pms_goals_table.kpi_table_id',
+                                'vmt_employee_pms_goals_table.is_manager_approved',
+                                'vmt_employee_pms_goals_table.is_manager_submitted',
+                                'vmt_employee_pms_goals_table.is_employee_submitted',
+                                'vmt_employee_pms_goals_table.is_employee_accepted',
+                                'vmt_employee_pms_goals_table.reviewer_id as reviewer_id',
+                                'vmt_employee_pms_goals_table.author_id',
+                                'vmt_employee_pms_goals_table.hr_kpi_percentage',
+                            )
+                            ->orderBy('created_at', 'DESC')
+                            ->whereNotNull('emp_no')->get();
+
+        } else {
+            // $empId = VmtEmployee::where('userid', auth()->user()->id)->first();
+            $empGoals = VmtEmployee::leftJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
+            ->join('vmt_employee_office_details', 'vmt_employee_details.id','=', 'vmt_employee_office_details.emp_id' )
+            ->join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.employee_id', '=', 'users.id')
+            ->select(
+                'vmt_employee_details.*',
+                'users.id as emp_id',
+                'users.name as emp_name',
+                'users.email as email_id',
+                'users.avatar as avatar',
+                'vmt_employee_office_details.department_id',
+                'vmt_employee_office_details.designation',
+                'vmt_employee_office_details.l1_manager_code',
+                'vmt_employee_office_details.l1_manager_name',
+                'vmt_employee_office_details.l1_manager_designation',
+                'vmt_employee_pms_goals_table.assignment_period',
+                'vmt_employee_pms_goals_table.kpi_table_id',
+                'vmt_employee_pms_goals_table.is_manager_approved',
+                'vmt_employee_pms_goals_table.is_manager_submitted',
+                'vmt_employee_pms_goals_table.is_employee_submitted',
+                'vmt_employee_pms_goals_table.is_employee_accepted',
+                'vmt_employee_pms_goals_table.reviewer_id as reviewer_id',
+                'vmt_employee_pms_goals_table.author_id',
+                'vmt_employee_pms_goals_table.hr_kpi_percentage',
+            )
+            ->orderBy('created_at', 'DESC')
+            // ->where('vmt_employee_pms_goals_table.author_id', auth()->user()->id)
+            ->orWhere('vmt_employee_pms_goals_table.employee_id', auth()->user()->id)
+            ->orWhereRaw("find_in_set(".auth()->user()->id.", vmt_employee_pms_goals_table.reviewer_id)")
+            ->whereNotNull('emp_no')->get();
+        }
+        $users = User::select('users.id', 'users.name')->join('vmt_employee_details',  'vmt_employee_details.userid', '=', 'users.id')->where('active', 1)->get();
+
         //dd($this->getEmployeesOfManager(['EMP100','Vasa102'])->toArray());
         //dd($this->getManagersForEmployees(['2','3','4','5','6'])->toArray());
 
-        return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','existingGoals','existingKPIForms','pmsConfig','departments','employees'));
+        return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','existingGoals','existingKPIForms','pmsConfig','departments','employees','empGoals','users'));
     }
 
     // KPI Form
@@ -215,6 +277,56 @@ class VmtPMSModuleController extends Controller
 
     public function showKPIReviewPage_Assignee(Request $request)
     {
+
+        //dd($request->all());
+        // $empGoals = VmtPMS_KPIFormReviewsModel::leftJoin('vmt_pms_kpiform_assigned_id','=', 'vmt_pms_kpiform_assigned.vmt_pms_kpiform_id')
+        //     ->join('vmt_pms_kpiform_assigned', 'vmt_pms_kpiform_assigned.vmt_pms_kpiform_id','=','8' )
+
+
+        //     ->join('vmt_pms_kpiform_details',  'vmt_employee_pms_goals_table.employee_id', '=', 'users.id')
+
+        // vmt_pms_kpiform_assigned 
+        // $vmtpmskpiformdetails = VmtPMS_KPIFormAssignedModel::where('vmt_pms_kpiform_id','8')
+        // ->whereIn('assignee_id','1')
+        // ->get();
+        // //vmt_pms_kpiform_reviews
+
+        // $kpiformreviews =  VmtPMS_KPIFormReviewsModel::where('vmt_pms_kpiform_assigned_id','8')->first();
+        // // vmt_pms_kpiform_details 
+
+        // $vmtpmskpiformdetails = VmtPMS_KPIFormDetailsModel::where('vmt_pms_kpiform_id','8')->first();
+        //dd($request->all());
+$review  =  VmtPMS_KPIFormAssignedModel::join('vmt_pms_kpiform_reviews','vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id','=','vmt_pms_kpiform_assigned.vmt_pms_kpi_form_id')
+        ->join('vmt_pms_kpiform_details','vmt_pms_kpiform_details.vmt_pms_kpiform_id','=','vmt_pms_kpiform_assigned.vmt_pms_kpi_form_id')
+        ->whereRaw("vmt_pms_kpiform_assigned.assignee_id IN($request->assignee_id)")
+        ->get();
+        foreach($review as $ff){
+      print_r(explode(',', $ff->dimension));
+
+        
+        $assignersName = User::whereRaw("id IN($ff->reviewer_id)")->pluck('name')->toArray();
+            if ($assignersName) {
+                $assignersName = implode(',', $assignersName);
+            }
+       // dd($assignersName);
+            if($ff->reviewer_kpi_review != null){
+                $reviewArray = (json_decode($ff->reviewer_kpi_review, true)) ? (json_decode($ff->reviewer_kpi_review, true)) : [];
+                $percentArray = (json_decode($ff->reviewer_kpi_percentage, true)) ? (json_decode($ff->reviewer_kpi_percentage, true)) : [];
+                $commentArray = (json_decode($ff->reviewer_kpi_comments, true)) ? (json_decode($ff->reviewer_kpi_comments, true)) : [];
+              
+            }
+        
+
+        }
+
+        $assignedEmployee_Userdata = User::where('id',  $request->assignee_id)->first();
+        $assignedEmployeeOfficeDetails = VmtEmployeeOfficeDetails::where('user_id', $request->assignee_id)->first();
+        $empSelected = true;
+        $employeeData = VmtEmployee::where('userid', $request->assignee_id)->first();
+
+
+         return view('pms.vmt_pms_kpiappraisal_review_hr', compact('review','assignedEmployee_Userdata','assignedEmployeeOfficeDetails','empSelected','employeeData','assignersName','kpiRows'));
+
 
     }
 
