@@ -66,12 +66,6 @@
                     <form id="upload_form" enctype="multipart/form-data">
 
                             <div class="row">
-                                <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12">
-                                    <div class="d-flex align-items-center">
-                                        <p for="name">Enter the name of the form:</p>
-                                        <input type="text" class="form-control" name="name" id="name" required>
-                                    </div>
-                                </div>
                                 @csrf
                                 <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12">
                                     <div class="d-flex align-items-center">
@@ -97,14 +91,14 @@
                 <div class="col-12">
                     <div class="container-fluid mb-1 mt-3 ">
                         <form id="kpiTableForm">
-                            {{-- <div class="row mb-3 d-flex align-items-center">
+                            <div class="row mb-3 d-flex align-items-center">
                                 <div class="col-auto">
                                     <label for="name">Enter the name of the form:</label>
                                 </div>
                                 <div class="col">
                                     <input type="text" class="form-control" name="name" id="name" required>
                                 </div>
-                            </div> --}}
+                            </div>
                             <div class="table-responsive">
                                 <table id='kpiTable' class="table table-borderd align-middle mb-0" data-paging="true"
                                     data-paging-size="10" data-paging-limit="3" data-paging-container="#paging-ui-container"
@@ -697,6 +691,7 @@
             }
 
             if (canSaveForm) {
+                //console.log($('#name').val());
                 $.ajax({
                     type: "POST",
                     url: "{{ route('vmt_pms_kpi_create') }}",
