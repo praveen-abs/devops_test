@@ -15,6 +15,7 @@ use App\Imports\VmtEmployeeManagerImport;
 use Illuminate\Support\Facades\Auth;
 use App\Imports\VmtEmployeeImport;
 use App\Models\VmtEmployeeOfficeDetails;
+use App\Models\VmtEmployeeStatutoryDetails;
 use App\Models\VmtClientMaster;
 use App\Models\VmtMasterConfig;
 use App\Models\VmtGeneralInfo;
@@ -339,9 +340,15 @@ class VmtEmployeeController extends Controller
         return null;
     }
 
-    //
+    /*
+        Save employee onboarding details
+        -Normal Onboarding, Quick
+
+
+    */
     public function employeeOnboard(Request $request)
     {
+        dd("asdf");
         // code...
         try
         {
@@ -370,9 +377,9 @@ class VmtEmployeeController extends Controller
             $newEmployee->pan_number   =  isset( $row["pan_no"] ) ? ($row["pan_no"]) : "";
             $newEmployee->pan_ack   =    $row["pan_ack"];
             $newEmployee->aadhar_number = $row["aadhar"];
-            //$newEmployee->uan = $row["uan"];
-            //$newEmployee->epf_number = $row["epf_number"];
-            //$newEmployee->esic_number = $row["esic_number"];
+            $newEmployee->epf_number = $row["epf_number"];
+
+            $newEmployee->esic_number = $row["esic_number"];
             $newEmployee->marrital_status = $row["marital_status"];
 
             $newEmployee->mobile_number  = $row["mobile_no"];
@@ -405,8 +412,20 @@ class VmtEmployeeController extends Controller
 
             $newEmployee->save();
 
-
             if($newEmployee){
+
+                //Statutory Details
+                $newEmployee_statutoryDetails = new VmtEmployeeStatutoryDetails;
+                $newEmployee_statutoryDetails->user_id = $user->id;
+                $newEmployee_statutoryDetails->uan_number = $row["uan_number"];
+                $newEmployee_statutoryDetails->pf_applicable = $row["pf_applicable"];
+                $newEmployee_statutoryDetails->esic_applicable = $row["esic_applicable"];
+                $newEmployee_statutoryDetails->ptax_location = $row["ptax_location"];
+                $newEmployee_statutoryDetails->tax_regime = $row["tax_regime"];
+                $newEmployee_statutoryDetails->lwf_location = $row["lwf_location"];
+                $newEmployee_statutoryDetails->save();
+
+                //Create Employee Details
                 $empOffice  = new VmtEmployeeOfficeDetails;
                 $empOffice->emp_id = $newEmployee->id; // Need to remove this in future
                 $empOffice->user_id = $newEmployee->userid; //Link between USERS and VmtEmployeeOfficeDetails table
@@ -578,6 +597,7 @@ class VmtEmployeeController extends Controller
                 'esic_employee' => 'required|numeric',
                 'professional_tax' => 'required|numeric',
                 'labour_welfare_fund' => 'required|numeric',
+
             ];
             $messages = [
                 'required' => 'The :attribute field is required.',
@@ -650,6 +670,18 @@ class VmtEmployeeController extends Controller
                 }
 
                 if ($empOffice) {
+
+                    //Statutory Details
+                    $newEmployee_statutoryDetails = new VmtEmployeeStatutoryDetails;
+                    $newEmployee_statutoryDetails->user_id = $user->id;
+                    $newEmployee_statutoryDetails->uan_number = $row["uan_number"];
+                    $newEmployee_statutoryDetails->pf_applicable = $row["pf_applicable"];
+                    $newEmployee_statutoryDetails->esic_applicable = $row["esic_applicable"];
+                    $newEmployee_statutoryDetails->ptax_location = $row["ptax_location"];
+                    $newEmployee_statutoryDetails->tax_regime = $row["tax_regime"];
+                    $newEmployee_statutoryDetails->lwf_location = $row["lwf_location"];
+                    $newEmployee_statutoryDetails->save();
+
                     $compensatory = new Compensatory;
                     $compensatory->user_id = $newEmployee->userid;
                     $compensatory->basic = $row["basic"];
@@ -992,6 +1024,14 @@ class VmtEmployeeController extends Controller
             }
 
             if ($empOffice) {
+
+                $newEmployee_statutoryDetails->uan_number = $row["uan_number"];
+                $newEmployee_statutoryDetails->pf_applicable = $row["pf_applicable"];
+                $newEmployee_statutoryDetails->esic_applicable = $row["esic_applicable"];
+                $newEmployee_statutoryDetails->ptax_location = $row["ptax_location"];
+                $newEmployee_statutoryDetails->tax_regime = $row["tax_regime"];
+                $newEmployee_statutoryDetails->lwf_location = $row["lwf_location"];
+
                 $compensatory = new Compensatory;
                 $compensatory->user_id = $newEmployee->userid;
                 $compensatory->basic = $row["basic"];

@@ -96,21 +96,22 @@ $('#l1_manager_code').on('select2:select', function (e) {
 
 
 $('#passport_no').change('input', function(){
-    
+
     var patt = new RegExp("^[A-PR-WYa-pr-wy][1-9]\\d\\s?\\d{4}[1-9]$");
     var passno = $("#passport_no").val();
     if (patt.test(passno)){
         return true;
-        
+
     }
     else {
        alert("passport is not valid");
     }
     return false;
-   
+
 })
 
 
+$('#employee_name').css('text-transform', 'capitalize');
 
 $('.select2_form_without_search').each(function() {
     var placeholder = $(this).attr('placeholder')
@@ -161,12 +162,20 @@ $('#cic').val(gross + cic);
 $('#net_income').val(gross - cic + net);
 });
 
+$('#bank_names').select2({
+    width: '100%',
+    placeholder: "Select Bank Name",
+});
+
+
 $('#bank_name').change(function() {
 var min = $('#bank_name option:selected').attr('min-data');
 var max = $('#bank_name option:selected').attr('max-data');
 $('#account_no').attr('minlength', min);
 $('#account_no').attr('maxlength', min);
 })
+
+
 
 $('body').on('click', '.close-modal', function() {
 $('#notificationModal').hide();
@@ -177,6 +186,18 @@ $('.onboard-form').keyup(function() {
     this.value = this.value.toLowerCase();
     this.value = this.value.charAt(0).toUpperCase() + this.value.slice(1);
 }).trigger('keyup');
+
+
+$("#pan_num").change(function() {
+    var inputvalues = $(this).val();
+    var regex = /[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+    if (!regex.test(inputvalues)) {
+        $("#pan_num").val("");
+        alert("invalid PAN no");
+        return regex.test(inputvalues);
+    }
+});
+
 
 $('#pan_ack').keyup(function() {
 if ($('#pan_ack').val() == '') {
@@ -255,6 +276,28 @@ if ($('#marital_status').val() == 'single') {
 }
 });
 
+$('#current_state').select2({
+    width: '100%',
+    placeholder: "Select State",
+});
+
+$('#permanent_state').select2({
+    width: '100%',
+    placeholder: "Select State",
+});
+
+$('#current_country').select2({
+    width: '100%',
+    placeholder: "Select Country",
+});
+
+$('#permanent_country').select2({
+    width: '100%',
+    placeholder: "Select Country",
+});
+
+
+
 $('#nationality').change(function() {
 if ($('#nationality').val() == 'indian') {
     $('#passport_no').removeAttr('required');
@@ -294,6 +337,18 @@ if ($('#nationality').val() == 'indian') {
 }
 });
 
+$('#vmt_aadhar').on('input', function() {
+    var aadharno = new RegExp("^[2-9]{1}[0-9]{3}\s{1}[0-9]{4}\s{1}[0-9]{4}$");
+    var aadhartes = $("#vmt_aadhar").val();
+    if (aadharno.test(aadhartes)) {
+        return true;
+    } else {
+        alert("Please Enter Valid Aadhar Number");
+    }
+    return false;
+});
+
+
 $('#nationality').val('indian');
 $('#passport_no_req').hide();
 $('#passport_exp_req').hide();
@@ -301,6 +356,9 @@ $('#permanent_district').val('IN').trigger('change');
 $('#current_district').val('IN').trigger('change');
 stateFunction('IN', '#current_state');
 stateFunction('IN', '#permanent_state');
+stateFunction('IN', '#ptax_location');
+stateFunction('IN', '#lwf_location');
+stateFunction('IN', '#holiday_location');
 
 $('#current_address_copy').change(function() {
 if ($('#current_address_copy').is(':checked')) {

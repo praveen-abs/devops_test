@@ -32,7 +32,7 @@
                                                <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                     <!-- <label class="" for="employee_name">Employee Name as per Aadhar{!! required() !!}</label> -->
                                                     <input type="text" placeholder="Employee Name as per Aadhar"
-                                                        name="employee_name" class="onboard-form form-control"
+                                                        name="employee_name" id="employee_name" class="onboard-form form-control"
                                                         pattern="name" required />
                                                     <label class="error star_error employee_name_label" for="employee_name"
                                                         style="display: none;"></label>
@@ -91,28 +91,28 @@
                                                <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                     <!-- <label class="" for="aadhar">Aadhaar Number<span id="aadhar_req">{!! required() !!}</span></label> -->
                                                     <input type="number" placeholder="Aadhaar Number" name="aadhar"
-                                                        id="aadhar" pattern="aadhar" class="onboard-form form-control"
+                                                        id="vmt_aadhar" pattern="aadhar" class="onboard-form form-control" minlength="12" maxlength="12"
                                                         required />
-                                                    <label class="error star_error aadhar_label" for="aadhar"
-                                                        style="display: none;"></label>
+                                                    {{-- <label class="error star_error aadhar_label" for="aadhar"
+                                                        style="display: none;"></label> --}}
                                                 </div>
                                                <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                     <!-- <label class="" for="pan_no">Pan Card Number<span id="pan_no_req">{!! required() !!}</span></label> -->
                                                     <input type="text" placeholder="Pan Card Number" name="pan_no"
-                                                        id="pan_no" class=" form-control pan" pattern="pan"
+                                                        id="pan_num" class=" form-control pan" pattern="pan" minlength="10" maxlength="10"
                                                         required />
                                                     <label class="error star_error pan_no_label" id="pan_no_label" for="pan_no"
                                                         style="display: none;"></label>
                                                 </div>
                                                <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                     <!-- <label class="" for="pan_ack">Pan Acknowlegement<span id="pan_ack_req">{!! required() !!}</span></label> -->
-                                                    <input type="text" placeholder="Pan Acknowlegement" name="pan_ack" pattern="alp-num"
+                                                    <input type="text" placeholder="Pan Acknowlegement" name="pan_ack" pattern="alp-num"  minlength="15" maxlength="15"
                                                         id="pan_ack"
                                                         class="onboard-form form-control not-required validate" />
                                                 </div>
                                                <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                     <!-- <label class="" for="444">DL Number</label> -->
-                                                    <input type="text" placeholder="DL Number" name="dl_no" id="dl_no"
+                                                    <input type="text" placeholder="DL Number" name="dl_no" id="dl_no" minlength="15" maxlength="15"
                                                         class=" form-control not-required validate"
                                                         pattern="dl" />
                                                     <label class="error star_error dl_no_label" for="dl_no"
@@ -151,17 +151,12 @@
                                                         <option value="" hidden selected disabled>Select Blood Group</option>
                                                         <option value="a-positive">A Positive</option>
                                                         <option value="a-negative">A Negative</option>
-                                                        <option value="a-unknown">A Unknown</option>
                                                         <option value="b-positive">B Positive</option>
                                                         <option value="b-negative">B Negative</option>
-                                                        <option value="b-unknown">B Unknown</option>
                                                         <option value="ab-positive">AB Positive</option>
                                                         <option value="ab-negative">AB Negative</option>
-                                                        <option value="ab-unknown">AB Unknown</option>
                                                         <option value="o-positive">O Positive</option>
                                                         <option value="o-negative">O Negative</option>
-                                                        <option value="o-unknown">O Unknown</option>
-                                                        <option value="unknown">Unknown</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -177,7 +172,7 @@
                                                 </div>
                                                <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                     <!-- <label class="" for="bank_name">Bank Name</label> -->
-                                                    <select placeholder="Bank Name" name="bank_name" id="bank_name"
+                                                    <select placeholder="Bank Name" name="bank_name" id="bank_names"
                                                         class="onboard-form form-control select2_form_without_search"
                                                         required>
                                                         <option value="" hidden selected disabled>Select Bank Name</option>
@@ -215,69 +210,71 @@
                                             </div>
                                             <div class="row ">
                                                <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                                                <select placeholder="PF Applicable" name="current_state"
-                                                        id=""
+                                                <select placeholder="PF Applicable" name="pf_applicable"
+                                                        id="pf_applicable"
                                                         class="onboard-form form-control select2_form_without_search"
                                                         required>
                                                         <option value="" hidden selected disabled>PF Applicable</option>
-                                                        <option value="">YEs</option>
-                                                        <option value="">No</option>
+                                                        <option value="Yes">Yes</option>
+                                                        <option value="No">No</option>
                                                     </select>
 
                                                 </div>
                                                <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                                                <input type="text" placeholder="PF Number"
-                                                name="current_pincode" id=""
-                                                class="onboard-form form-control" required />
+                                                    <input type="text" placeholder="EPF Number" name="epf_number" id="epf_number"
+                                                                class="onboard-form form-control" required />
                                                 </div>
                                                <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                     <!-- <label class="" for="current_pincode">Current Pincode{!! required() !!}</label> -->
                                                     <input type="text" placeholder="UAN Number"
-                                                        name="current_pincode" id=""
+                                                        name="uan_number" id="uan_number"
                                                         class="onboard-form form-control" required />
                                                 </div>
-                                               <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                                                <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                                                    <select placeholder="ESIC Applicable" name="esic_applicable"
+                                                            id="esic_applicable"
+                                                            class="onboard-form form-control select2_form_without_search"
+                                                            required>
+                                                            <option value="" hidden selected disabled>ESIC Applicable</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                    </select>
 
-                                                <input type="text" placeholder="ESIC Applicable"
-                                                name="current_pincode" id=""
-                                                class="onboard-form form-control" required />
-                                            </div>
+                                                </div>
+
 
                                                 <div class="col-md-6 col-sm-6 col-xs-6 col-lg-3 col-xl-3 mb-2">
-                                                    <input type="text" placeholder="ESI Number"
-                                                    name="current_pincode" id=""
+                                                    <input type="text" placeholder="ESIC Number"
+                                                    name="esic_number" id="esic_number"
                                                     class="onboard-form form-control" required />
                                                 </div>
 
 
                                                 <div class="col-md-6 col-sm-6 col-xs-6 col-lg-3 col-xl-3 mb-2">
-                                                                                                        <select placeholder="Ptax Location" name="current_state"
-                                                    id=""
-                                                    class="onboard-form form-control select2_form_without_search"
-                                                    required>
-                                                    <option value="" hidden selected disabled>Ptax Location</option>
-                                                </select>
+                                                    <select placeholder="Ptax Location" name="ptax_location"
+                                                        id="ptax_location"
+                                                        class="onboard-form form-control select2_form_without_search"
+                                                        required>
+                                                        <option value="" hidden selected disabled>Ptax Location</option>
+                                                    </select>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-6 col-lg-3 col-xl-3 mb-2">
                                                     <input type="text" placeholder="TAX Regime"
-                                                    name="current_pincode" id=""
+                                                    name="tax_regime" id="tax_regime"
                                                     class="onboard-form form-control" required />
                                                 </div>
                                                 <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                                                    <select placeholder="LWF Location" name="current_state"
-                                                            id=""
+                                                    <select placeholder="LWF Location" name="lwf_location"
+                                                            id="lwf_location"
                                                             class="onboard-form form-control select2_form_without_search"
                                                             required>
                                                             <option value="" hidden selected disabled>LWF Location</option>
-                                                            <option value="">YEs</option>
-                                                            <option value="">No</option>
-                                                        </select>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                    </select>
 
-                                                    </div>
-
-
+                                                </div>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
@@ -289,7 +286,7 @@
                                     <div class="card-body justify-content-center align-items-center">
                                         <div class="form-card">
                                             <div class=" header-card-text">
-                                                <h6>Location Details</h6>
+                                                <h6>Address</h6>
                                             </div>
                                             <div class="row mt-1">
 
@@ -317,7 +314,7 @@
                                                     <!-- <input type="text" placeholder="" name="curent_district" class="onboard-form form-control" required /> -->
                                                     <!-- <label class="" for="curent_district">Country{!! required() !!}</label> -->
                                                     <select placeholder="Country" name="current_district"
-                                                        id="current_district"
+                                                        id="current_country"
                                                         class="onboard-form form-control select2_form_without_search"
                                                         required>
                                                         <option value="" hidden selected disabled>Select Country</option>
@@ -367,7 +364,7 @@
                                                     <!-- <input type="text" placeholder="" name="permanent_district" class="onboard-form form-control" required /> -->
                                                     <!-- <label class="" for="permanent_district">Permanent Country{!! required() !!}</label> -->
                                                     <select placeholder="Permanent Country" name="permanent_district"
-                                                        id="permanent_district"
+                                                        id="permanent_country"
                                                         class="onboard-form form-control select2_form_without_search"
                                                         required>
                                                         <option value="" hidden selected disabled>Select Country</option>
@@ -474,12 +471,13 @@
                                                         style="display: none;"></label>
                                                 </div>
                                                <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                                                    <!-- <label class="" for="holiday_location">Holiday Location{!! required() !!}</label> -->
-                                                    <input type="text" placeholder="Holiday Location"
-                                                        name="holiday_location" class="onboard-form form-control" pattern="alpha"
-                                                        required />
-                                                    <label class="error star_error holiday_location_label" for="holiday_location"
-                                                        style="display: none;"></label>
+
+                                                        <select placeholder="Holiday Location" name="holiday_location"
+                                                            id="holiday_location"
+                                                            class="onboard-form form-control select2_form_without_search"
+                                                            required>
+                                                        <option value="" hidden selected disabled>Holiday Location</option>
+                                                    </select>
                                                 </div>
                                                <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                     <!-- <label class="" for="officical_mail">Official E-Mail Id{!! required() !!}</label> -->
