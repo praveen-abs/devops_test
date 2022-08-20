@@ -965,7 +965,7 @@
                                             <ul class="nav nav-pills w-100 mb-4" id="pills-tab" role="tablist">
                                                 <li class="nav-item d-flex w-100 align-items-center justify-content-end "
                                                     role="presentation">
-                                                    <button class="btn btn-primary mx-2 p-6" id="pills-profile-tab"
+                                                    <button class="btn btn-orange mx-2 p-6" id="pills-profile-tab"
                                                         data-bs-toggle="pill" data-bs-target="#pills-work-details"
                                                         type="button" role="tab" aria-controls="pills-profile"
                                                         aria-selected="false">
