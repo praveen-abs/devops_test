@@ -81,6 +81,7 @@
                                                     <!-- <label class="" for="mobile_no">Mobile Number{!! required() !!}</label> -->
                                                     <input type="number" placeholder="Mobile Number" name="mobile_no"
                                                         minlength="10" maxlength="10" class="onboard-form form-control"
+
                                                         required />
                                                 </div>
                                                <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -501,9 +502,9 @@
 
                                                 <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                     <input type="text" max="9999-12-31" placeholder="Date of confirmation"
-name="dow" class="onboard-form form-control"
-onfocus="(this.type='date')" required />
-</div>
+                                                    name="dow" class="onboard-form form-control"
+                                                    onfocus="(this.type='date')" required />
+                                                    </div>
                                             </div>
                                         </div>
                                     </div>
@@ -522,26 +523,26 @@ onfocus="(this.type='date')" required />
                                                     <input type="text" placeholder="Father Name" name="father_name" pattern="name" class="onboard-form form-control" required />
                                                 </div>
                                                 <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                                                                                                            <input type="text" max="9999-12-31" placeholder="Date of Birth"
-                                                        name="dow" class="onboard-form form-control"
+                                                <input type="text" max="9999-12-31" placeholder="Date of Birth"
+                                                        name="dob_father" class="onboard-form form-control"
                                                         onfocus="(this.type='date')" required />
                                                 </div>
 
                                                 <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
 
-<select placeholder="Gender" name="father_gender"
-id="father_gender"
-class="onboard-form form-control  select2_form_without_search"
-required>
-<option value="" hidden selected disabled>Gender</option>
-<option value="male">Male</option>
-<option value="female">Female</option>
+                                                    <select placeholder="Gender" name="father_gender"
+                                                    id="father_gender"
+                                                    class="onboard-form form-control  select2_form_without_search"
+                                                    required>
+                                                    <option value="" hidden selected disabled>Gender</option>
+                                                    <option value="male">Male</option>
+                                                    <option value="female">Female</option>
 
-</select>
+                                                    </select>
                                                 </div>
                                                 <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                     <!-- <label class="" for="father_name">Father Name{!! required() !!}</label> -->
-                                                    <input type="text" placeholder="Age" name="father_name" pattern="name" class="onboard-form form-control" required />
+                                                    <input type="number" placeholder="Age" name="father_age" class="onboard-form form-control" minlength="2" maxlength="3" required />
                                                 </div>
 
 
@@ -553,26 +554,26 @@ required>
 
                                                 <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                     <input type="text" max="9999-12-31" placeholder="Date of Birth"
-name="dow" class="onboard-form form-control"
-onfocus="(this.type='date')" required />
-</div>
+                                                        name="dob_mother" class="onboard-form form-control"
+                                                        onfocus="(this.type='date')" required />
+                                                        </div>
 
-<div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                                                        <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
 
-<select placeholder="Gender" name="spouse_gender"
-id="mother_gender"
-class="onboard-form form-control  select2_form_without_search"
-required>
-<option value="" hidden selected disabled>Gender</option>
-<option value="male">Male</option>
-<option value="female">Female</option>
+                                                        <select placeholder="Gender" name="mother_gender"
+                                                        id="mother_gender"
+                                                        class="onboard-form form-control  select2_form_without_search"
+                                                        required>
+                                                        <option value="" hidden selected disabled>Gender</option>
+                                                        <option value="male">Male</option>
+                                                        <option value="female">Female</option>
 
-</select>
-</div>
-<div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-<!-- <label class="" for="father_name">Father Name{!! required() !!}</label> -->
-<input type="text" placeholder="Age" name="father_name" pattern="name" class="onboard-form form-control" required />
-</div>
+                                                        </select>
+                                                </div>
+                                                <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                                                         <!-- <label class="" for="father_name">Father Name{!! required() !!}</label> -->
+                                                         <input type="number" placeholder="Age" name="mother_age"  class="onboard-form form-control" minlength="2" maxlength="3"  required />
+                                                </div>
 
 
 
@@ -608,8 +609,8 @@ required>
                                                 </div>
                                                <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                     <!-- <label class="" for="no_child">Number of Children<span id="no_child_req">{!! required() !!}</span></label> -->
-                                                    <select placeholder="Number of Children" name="no_child"
-                                                        id="no_child"
+                                                    <select placeholder="Number of Children" name="no_of_child"
+                                                        id="no_of_child"
                                                         class="onboard-form form-control spouse_data select2_form_without_search"
                                                         required>
                                                         <option value="" hidden selected disabled>Select Number of Children</option>

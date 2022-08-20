@@ -6,6 +6,17 @@
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/onboarding.css') }}">
 
 <style>
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
 
 input {
   width: 100% !important;
@@ -71,7 +82,17 @@ border-radius: 2px;
 
     <script>
 
+function onlyNumberKey(evt) {
+
+		// Only ASCII character in that range allowed
+		var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+		if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+			return false;
+		return true;
+	}
 $(document).ready(function() {
+
+$("input[type='number']").attr("onkeypress","return onlyNumberKey(event)");
 
 $('#process').select2({
     width: '100%',
@@ -406,6 +427,8 @@ $('#current_district').change(function() {
 var id = $(this).val();
 stateFunction(id, '#current_state');
 });
+
+
 
 
 $('#submit_button').on('click', function(e) {
