@@ -206,6 +206,85 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="card shadow  profile-box card-top-border p-2">
+                                    <div class="card-body justify-content-center align-items-center">
+                                        <div class="form-card">
+                                            <div class=" header-card-text">
+                                                <h6>Statutory Details</h6>
+                                            </div>
+                                            <div class="row ">
+                                               <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                                                <select placeholder="PF Applicable" name="current_state"
+                                                        id=""
+                                                        class="onboard-form form-control select2_form_without_search"
+                                                        required>
+                                                        <option value="" hidden selected disabled>PF Applicable</option>
+                                                        <option value="">YEs</option>
+                                                        <option value="">No</option>
+                                                    </select>
+
+                                                </div>
+                                               <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                                                <input type="text" placeholder="PF Number"
+                                                name="current_pincode" id=""
+                                                class="onboard-form form-control" required />
+                                                </div>
+                                               <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                                                    <!-- <label class="" for="current_pincode">Current Pincode{!! required() !!}</label> -->
+                                                    <input type="text" placeholder="UAN Number"
+                                                        name="current_pincode" id=""
+                                                        class="onboard-form form-control" required />
+                                                </div>
+                                               <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+
+                                                <input type="text" placeholder="ESIC Applicable"
+                                                name="current_pincode" id=""
+                                                class="onboard-form form-control" required />
+                                            </div>
+
+                                                <div class="col-md-6 col-sm-6 col-xs-6 col-lg-3 col-xl-3 mb-2">
+                                                    <input type="text" placeholder="ESI Number"
+                                                    name="current_pincode" id=""
+                                                    class="onboard-form form-control" required />
+                                                </div>
+
+
+                                                <div class="col-md-6 col-sm-6 col-xs-6 col-lg-3 col-xl-3 mb-2">
+                                                                                                        <select placeholder="Ptax Location" name="current_state"
+                                                    id=""
+                                                    class="onboard-form form-control select2_form_without_search"
+                                                    required>
+                                                    <option value="" hidden selected disabled>Ptax Location</option>
+                                                </select>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6 col-xs-6 col-lg-3 col-xl-3 mb-2">
+                                                    <input type="text" placeholder="TAX Regime"
+                                                    name="current_pincode" id=""
+                                                    class="onboard-form form-control" required />
+                                                </div>
+                                                <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                                                    <select placeholder="LWF Location" name="current_state"
+                                                            id=""
+                                                            class="onboard-form form-control select2_form_without_search"
+                                                            required>
+                                                            <option value="" hidden selected disabled>LWF Location</option>
+                                                            <option value="">YEs</option>
+                                                            <option value="">No</option>
+                                                        </select>
+
+                                                    </div>
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
                                 <div class="card shadow  profile-box card-top-border p-2">
                                     <div class="card-body justify-content-center align-items-center">
                                         <div class="form-card">
@@ -421,10 +500,18 @@
                                                     <input type="number" placeholder="Employee Notice Period Days"
                                                         name="emp_notice" class="onboard-form form-control" required />
                                                 </div>
+
+                                                <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                                                    <input type="text" max="9999-12-31" placeholder="Date of confirmation"
+name="dow" class="onboard-form form-control"
+onfocus="(this.type='date')" required />
+</div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
+
                                 <div class="card shadow  profile-box card-top-border p-2">
                                     <div class="card-body justify-content-center align-items-center ">
                                         <div class="header-card-text">
@@ -436,11 +523,62 @@
                                                     <!-- <label class="" for="father_name">Father Name{!! required() !!}</label> -->
                                                     <input type="text" placeholder="Father Name" name="father_name" pattern="name" class="onboard-form form-control" required />
                                                 </div>
+                                                <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                                                                                                            <input type="text" max="9999-12-31" placeholder="Date of Birth"
+                                                        name="dow" class="onboard-form form-control"
+                                                        onfocus="(this.type='date')" required />
+                                                </div>
+
+                                                <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+
+<select placeholder="Gender" name="father_gender"
+id="father_gender"
+class="onboard-form form-control  select2_form_without_search"
+required>
+<option value="" hidden selected disabled>Gender</option>
+<option value="male">Male</option>
+<option value="female">Female</option>
+
+</select>
+                                                </div>
+                                                <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                                                    <!-- <label class="" for="father_name">Father Name{!! required() !!}</label> -->
+                                                    <input type="text" placeholder="Age" name="father_name" pattern="name" class="onboard-form form-control" required />
+                                                </div>
+
+
                                                <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                     <!-- <label class="" for="mother_name">Mother Name{!! required() !!}</label> -->
                                                     <input type="text" placeholder="Mother Name" name="mother_name" pattern="name"
                                                         class="onboard-form form-control" required />
                                                 </div>
+
+                                                <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                                                    <input type="text" max="9999-12-31" placeholder="Date of Birth"
+name="dow" class="onboard-form form-control"
+onfocus="(this.type='date')" required />
+</div>
+
+<div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+
+<select placeholder="Gender" name="spouse_gender"
+id="mother_gender"
+class="onboard-form form-control  select2_form_without_search"
+required>
+<option value="" hidden selected disabled>Gender</option>
+<option value="male">Male</option>
+<option value="female">Female</option>
+
+</select>
+</div>
+<div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+<!-- <label class="" for="father_name">Father Name{!! required() !!}</label> -->
+<input type="text" placeholder="Age" name="father_name" pattern="name" class="onboard-form form-control" required />
+</div>
+
+
+
+
                                                <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                     <!-- <label class="" for="dow">Date of Wedding<span id="dow_req">{!! required() !!}</span></label> -->
                                                     <input type="text" max="9999-12-31" placeholder="Date of Wedding"

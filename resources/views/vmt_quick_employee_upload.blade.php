@@ -14,7 +14,7 @@
         <div class="card shadow profile-box card-top-border border-0">
             <div class="form-control">
                 <div class="row">
-                    <div class="col-md-6 ">
+                    <div class="col-md-12 col-xl-12 col-sm-12 col-xl-12">
                         <h6> Quick Employee Onboarding Bulk Upload</h6>
                         <div class="col col-form-label">
                             <ul class="list-style-numbered list-style-circle ">
@@ -35,25 +35,31 @@
                                         enctype="multipart/form-data">
                                         @csrf
                                         <div>
-                                            <label>Please Upload the employees details excel-sheet.</label>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <div class="col-md-10">
+                                            <span>Please Upload the employees details excel-sheet.</span>
+                                            <span class="choose-file ms-1">
                                                 <input name="file" type="file" required>
-                                            </div>
-                                        </div>
-                                        <div class="row mt-2">
-                                            <div class="text-end col-xl-12">
-                                                <button type="submit" class="btn btn-primary">Upload</button>
-                                            </div>
+                                                <i class="fa fa-file" aria-hidden="true"></i>
+                                                Choose file
+                                            </span>
                                         </div>
 
-                                        <div class="row mt-4">
-                                            <div class="col-xl-12">
+                                            {{-- <div class="col-md-10">
+                                                <input name="file" type="file" required>
+                                            </div> --}}
+
+
+
+
+                                            <div class="text-end">
+                                                <button type="submit" class="btn btn-orange">Upload</button>
+                                            </div>
+
+                                        <div class="">
+
                                                 <p id="success-msg"></p>
                                                 <p id="error-msg"></p>
 
-                                            </div>
+
                                         </div>
                                     </form>
                                 </li>
