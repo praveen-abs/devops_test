@@ -276,8 +276,7 @@ input {
 
 @media only screen and (width:768px) and (orientation : portrait) {
     .header {
-      margin-left: 0 !important;
-      margin-right: 0 !important;
+      
     }
 }
 
