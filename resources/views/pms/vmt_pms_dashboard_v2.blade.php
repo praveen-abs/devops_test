@@ -2,7 +2,6 @@
 @section('css')
     <link href="{{ URL::asset('assets/css/assign_goals.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
-    <link href="{{ URL::asset('assets/css/app.min.css') }}" rel="stylesheet">
 
     <!--Font Awesome-->
     <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/fontawesome-all.min.css') }}">
@@ -14,8 +13,6 @@
 
 
     <!-- calendar -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 
     <link href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css' rel='stylesheet' type='text/css'>
