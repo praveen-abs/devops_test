@@ -10,6 +10,7 @@ use App\Models\VmtPMS_KPIFormDetailsModel;
 use App\Models\ConfigPms;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Http\Controllers\Controller;
+use App\Models\VmtPMS_KPIFormReviewsModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,9 +22,59 @@ use Illuminate\Support\Facades\Auth;
 
 class VmtPMSModuleController extends Controller
 {
-
-
     public function showPMSDashboard()
+    {
+        //Check whether the current user has any KPI forms
+        $existingGoals = VmtPMS_KPIFormAssignedModel::Where('assigner_id', auth::user()->id)->get();
+
+        //Get existing KPI forms
+        $existingKPIForms = VmtPMS_KPIFormModel::where('author_id', auth::user()->id)->get(['id','form_name']);
+
+        // get Departments data
+        $departments = Department::where('status', 'A')->get();
+
+        //Dashboard vars
+        $employeesGoalsSetCount = 0;
+        $totalEmployeesCount = User::where('active',1)->where('is_admin',0)->count();
+        $employeesAssessedCount = 0;
+        $selfReviewCount = 0;
+        $totalSelfReviewCount = 0;
+        $employees = VmtEmployee::rightJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
+            ->select(
+                'users.name as emp_name',
+                'users.id as id',
+                'users.avatar as avatar',
+            )
+            ->where('users.active','1')
+            ->where('users.is_admin','0')
+            ->orderBy('vmt_employee_details.created_at', 'ASC')
+            ->get();
+        $dashboardCountersData = [];
+        $dashboardCountersData['employeesGoalsSetCount'] = $employeesGoalsSetCount;
+        $dashboardCountersData['totalEmployeesCount'] = $totalEmployeesCount;
+        $dashboardCountersData['employeesAssessedCount'] = $employeesAssessedCount;
+        $dashboardCountersData['selfReviewCount'] = $selfReviewCount;
+        $dashboardCountersData['totalSelfReviewCount'] = $totalSelfReviewCount;
+        if(auth::user()->hasRole(['HR','Admin']) ){
+            $pmsKpiAssignee = VmtPMS_KPIFormAssignedModel::Where('assigner_id', auth::user()->id)->orderBy('id','DESC')->get();
+        }else{
+            $assignedForms = VmtPMS_KPIFormAssignedModel::orderBy('id','DESC')->get();
+            $pmsKpiAssignee = [];
+            if(count($assignedForms) > 0){
+                foreach($assignedForms as $emp){
+                    $explodedAssignee = explode(',',$emp->assignee_id);
+                    if(in_array(auth::id(),$explodedAssignee)){
+                        array_push($pmsKpiAssignee,$emp);
+                    }
+                }
+            }
+        }
+        $users = User::select('users.id', 'users.name')->join('vmt_employee_details',  'vmt_employee_details.userid', '=', 'users.id')->where('active', 1)->get();
+
+        return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','existingGoals','existingKPIForms','departments','employees','pmsKpiAssignee','users'));
+    }
+
+    public function showPMSDashboardOld()
     {
 
         //Check whether the current user has any KPI forms
@@ -256,7 +307,6 @@ class VmtPMSModuleController extends Controller
    */
     public function publishKPIForm(Request $request)
     {
-
         //dd($request->selected_kpi_form_id);
         $kpi_AssignedTable  = new VmtPMS_KPIFormAssignedModel;
 
@@ -271,6 +321,25 @@ class VmtPMSModuleController extends Controller
         $kpi_AssignedTable->department_id     =    $request->department;
 
         $kpi_AssignedTable->save();
+
+        //Based on assignee count, you create records in review table
+        $assigneeIdsAll = explode(',',$kpi_AssignedTable->assignee_id );
+        if(count($assigneeIdsAll) > 0){
+            foreach($assigneeIdsAll as $assignee){
+                $assigneeReview = new VmtPMS_KPIFormReviewsModel();
+                $assigneeReview->vmt_pms_kpiform_assigned_id = $request->selected_kpi_form_id;
+                $assigneeReview->assignee_id = $assignee;
+                $assigneeReview->assignee_kpi_status = '0';
+                $assigneeReview->reviewer_kpi_status = '0';
+                $assigneeReview->is_assignee_submitted = '0';
+                $assigneeReview->is_assignee_accepted = '0';
+                $assigneeReview->is_reviewer_submitted = '0';
+                $assigneeReview->is_reviewer_accepted = '0';
+                $assigneeReview->save();
+            }
+        }
+        //Create review record with some default values for :
+        //status of assignee,assigner,reviewer ("Pending")
 
         return "KPI Published Successfully";
     }

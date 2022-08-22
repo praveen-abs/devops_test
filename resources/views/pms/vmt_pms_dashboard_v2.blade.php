@@ -175,7 +175,7 @@ header {
                     </div>
                 </div>
             </div>
-            @if (!empty($existingGoals) && count($existingGoals) == 0)
+            @if(count($pmsKpiAssignee) == 0)
                 <div class="mt-2 p-5" id="initial-section">
                     <div class="row justify-content-center">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center p-0 mt-3 mb-2 p-5">
@@ -203,6 +203,7 @@ header {
                         <table id='empTable' class=' table table-borderd  mb-0'>
                             <thead class="table-light">
                                 <tr>
+                                    <td class="d-none">Serial No</td>
                                     <th scope="col">Employee Name</th>
                                     <th scope="col">Employee ID</th>
 
@@ -217,51 +218,69 @@ header {
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($empGoals as $emp)
+                                @foreach ($pmsKpiAssignee as $key1 => $emp)
+                                    @php 
+                                    if(Auth::user()->hasRole(['HR','Admin']) ){
+                                        $explodedAssignerId = explode(',',$emp->assignee_id); 
+                                    }else{
+                                        $explodedAssignerId = array(Auth::id());
+                                    }
+                                    @endphp
+                                    @foreach($explodedAssignerId as $key => $assigneeId)
                                     <tr>
-                                        <td class="">{{ $emp->emp_name }}</td>
-                                        <td class="">{{ $emp->emp_no }}</td>
+                                        <td class="d-none">{{ $key1 }}</td>
+                                        <td class="">{{ $emp->getUserDetails($assigneeId)['userNames'] }}</td>
+                                        <td class="">{{ $emp->getUserDetails($assigneeId)['userEmpIds'] }}</td>
 
 
                                         <td class="">
                                             {{ $users[0]->name }}
                                         </td>
                                         <td class="">
-                                            {{ json_decode($emp->assignment_period, true) ? json_decode($emp->assignment_period, true)['assignment_period_start'] : $emp->assignment_period }}
+                                            {{ $emp->assignment_period }}
                                         </td>
                                         <td class="">
                                             <!-- Employee status -->
-
-
                                             @if (auth()->user()->hasrole('Employee'))
                                                 <!-- If employee sets the KPI -->
-                                                @if (auth::user()->id == $emp->author_id)
-                                                    {{ $emp->is_employee_submitted ? 'Submitted' : 'Not yet submitted' }}
-                                                @else
-                                                    {{ $emp->is_employee_submitted ? 'Submitted' : 'Not yet submitted' }}
-                                                @endif
+                                                    @if($emp->getAsisgnedKpiFormReviewDetails($assigneeId,$emp->vmt_pms_kpiform_id)->is_assignee_submitted == '1')
+                                                        Submitted
+                                                    @else
+                                                        Not yet submitted
+                                                    @endif
                                             @endif
                                             @if (auth()->user()->hasrole('Manager'))
-                                                {{ $emp->is_employee_submitted ? 'Submitted' : 'Not yet submitted' }}
+                                                @if($emp->getAsisgnedKpiFormReviewDetails($assigneeId,$emp->vmt_pms_kpiform_id)->is_assignee_submitted == '1')
+                                                    Submitted
+                                                @else
+                                                    Not yet submitted
+                                                @endif
                                             @endif
 
                                             @if (auth()->user()->hasrole(['Admin', 'HR']))
-                                                @if ($emp->is_employee_accepted)
-                                                    {{ $emp->is_employee_submitted ? 'Submitted' : 'Accepted, Not yet submitted' }}
+                                            
+                                                @if ($emp->is_assignee_accepted)
+                                                    @if($emp->getAsisgnedKpiFormReviewDetails($assigneeId,$emp->vmt_pms_kpiform_id)->is_assignee_submitted == '1')
+                                                        Submitted
+                                                    @else
+                                                        Accepted, Not yet submitted
+                                                    @endif
                                                 @else
-                                                    {{ 'Not yet accepted' }}
+                                                    Not yet accepted
                                                 @endif
                                             @endif
-
-
                                         </td>
                                         <td class="">
                                             <!-- Manager status -->
                                             @if (auth()->user()->hasrole('Employee'))
-                                                {{ $emp->is_manager_submitted ? 'Reviewed' : 'Not yet reviewed' }}
+                                                @if($emp->getAsisgnedKpiFormReviewDetails($assigneeId,$emp->vmt_pms_kpiform_id)->is_reviewer_submitted == '1')
+                                                    Reviewed
+                                                @else
+                                                    Not yet reviewed
+                                                @endif
                                             @endif
                                             @if (auth()->user()->hasrole('Manager'))
-                                                @if ($emp->is_manager_submitted)
+                                                @if ($emp->getAsisgnedKpiFormReviewDetails($assigneeId,$emp->vmt_pms_kpiform_id)->is_reviewer_submitted == '1')
                                                     Reviewed
                                                 @else
                                                     Not yet Reviewed
@@ -269,18 +288,28 @@ header {
                                             @endif
 
                                             @if (auth()->user()->hasrole(['Admin', 'HR']))
-                                                {{ $emp->is_manager_submitted ? 'Reviewed' : 'Not yet Reviewed' }}
+                                                @if ($emp->getAsisgnedKpiFormReviewDetails($assigneeId,$emp->vmt_pms_kpiform_id)->is_reviewer_submitted == '1')
+                                                    Reviewed
+                                                @else
+                                                    Not yet Reviewed
+                                                @endif
                                             @endif
                                         </td>
                                         <td class="">{{ $emp['ranking'] }}</td>
                                         <td>
                                             <a target="_blank"
-                                                href="{{ url('vmt-pmsappraisal-review?id=' . $emp->kpi_table_id . '&user_id=' . $emp->userid) }}"><button
+                                                href="{{ url('vmt-pmsappraisal-review?id=' . $emp->id . '&user_id=' . $assigneeId) }}"><button
                                                     class="btn btn-orange py-0 px-2 "> <span class="mr-10 icon"></span>
-
-                                                    Review</button></a>
+                                                        @if($assigneeId == auth()->user()->id)
+                                                        Self-Review
+                                                        @else
+                                                        Review
+                                                        @endif
+                                                    </button></a>
                                         </td>
                                     </tr>
+                                    
+                                    @endforeach
                                 @endforeach
                             </tbody>
                         </table>
