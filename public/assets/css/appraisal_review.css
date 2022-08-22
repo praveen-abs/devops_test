@@ -2,7 +2,7 @@
     height: 90px !important;
     width: 90px !important; 
 }
-.appraisal-right-content{
+.appraisal-right-content,.appraisal-left-content {
     background-color: #c1d3e3 !important;
     margin: 28px 0px 0px;
 }
