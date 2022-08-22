@@ -12,7 +12,7 @@
 <div class="container-fluid bg-white salary-details-wrapper mt30-mb15">
     <div class="fill salary-header nav-tab-header">
         <div>
-            <ul class="nav nav-pills mb-3 nav-tabs-dashed" id="pills-tab" role="tablist">
+            <ul class="nav nav-pills    nav-tabs-dashed" id="pills-tab" role="tablist">
                 <li class="nav-item active ember-view mx-4" role="presentation">
                     <a class="nav-link active ember-view" id="pills-home-tab" data-bs-toggle="pill" href=""
                         data-bs-target="#salary-structure" role="tab" aria-controls="pills-home" aria-selected="true">
@@ -39,7 +39,7 @@
 
     </div>
 
-    <div class="tab-content mt-4 mx-5" id="pills-tabContent">
+    <div class="tab-content " id="pills-tabContent">
         <div class="tab-pane fade show active" id="salary-structure" role="tabpanel" aria-labelledby="pills-home-tab">
             <div class="zp-container nav-tab-body-top">
                 <div class="fill body scroll-x scroll-y scrollbox">
@@ -200,14 +200,14 @@
                             <table class="table zp-table paystub-table">
                                 <thead class="fw-bold text-muted h5">
                                     <tr>
-                                        <th width="20%">Month</th>
-                                        <th width="15%">Gross Pay</th>
-                                        <th width="15%">Reimbursements</th>
-                                        <th width="12%">Deductions</th>
-                                        <th width="15%">Take Home</th>
-                                        <th width="10%" class="text-capitalize">payslip</th>
-                                        <th width="13%">Tax Worksheet</th>
-                                        <th width="15%">Action</th>
+                                        <th width="">Month</th>
+                                        <th width="">Gross Pay</th>
+                                        <th width="">Reimbursements</th>
+                                        <th width="">Deductions</th>
+                                        <th width="">Take Home</th>
+                                        <th width="" class="text-capitalize">payslip</th>
+                                        <th width="">Tax Worksheet</th>
+                                        <th width="">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -230,13 +230,13 @@
                                         <td>₹{{$d->NET_TAKE_HOME}}</td>
                                         <td>
                                             <div data="{{$d->PAYROLL_MONTH}}" data-url="{{route('vmt_employee_payslip')}}"
-                                                class="ember-view cursor-pointer paySlipView" style="color:#009DFF;">
+                                                class="ember-view cursor-pointer paySlipView text-info">
                                                 View
                                             </div>
                                         </td>
                                         <td>
                                             <a href="#/salary-details/payslips/335214000001040001/details?isPayslip=false"
-                                                id="ember134" class="ember-view">
+                                                id="ember134" class="ember-view" class="text-info">
                                                 View
                                             </a>
                                         </td>
@@ -244,7 +244,7 @@
                                             @php
                                                 $selectedPaySlipMonth = $d->PAYROLL_MONTH;
                                             @endphp
-                                            <a href="{{ url('pdfview/'. $selectedPaySlipMonth) }}">Download</a>
+                                            <a href="{{ url('pdfview/'. $selectedPaySlipMonth) }}" class="text-info">Download</a>
 
                                         </td>
                                     </tr>
@@ -255,9 +255,6 @@
 
                     </div>
                 </div>
-                <div id="slipAfterView"></div>
-                <!---->
-
             </div>
         </div>
         <div class="tab-pane " id="annual-earnings" role="tabpanel" aria-labelledby="annual-earnings-tab">
@@ -802,6 +799,11 @@
 
                             </div>
                         </div>
+
+
+
+
+
                     </div>
                 </div>
                 <!---->
@@ -812,6 +814,29 @@
 
 
 </div>
+
+<div id="payslipModal" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content profile-box">
+            <div class="modal-header py-3 new-role-header d-flex align-items-center">
+                <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Edit Asset
+                </h4>
+                <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="slipAfterView">
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 @endsection
 @section('script')
 
@@ -822,27 +847,25 @@
 <!-- apexcharts -->
 
 <!-- dashboard init -->
-<script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script>
-$(document).ready(function() {
-    $(function() {
-        $('.paySlipView').on('click',  function(){
-            var url = $(this).attr('data-url');
-            var t_paySlipMonth = $(this).attr('data');
-            $.ajax({
-                type: "GET",
-                url: url,
-                data: {selectedPaySlipMonth: t_paySlipMonth},
-                success: function(data)
-                {
-                    var content = '<div class="row pr-3" style="padding-right:2.5rem;"><div class="col-3"><div class="fill body payslip-filter-container "> <i class="icon icon-blue icon-xlg vertical-align-text-bottom text-secondary ri-filter-2-fill"> </i> <div class="dropdown cursor-pointer payslip-dropdown"><div id="ember127" class="ember-view"><div class="dropdown-toggle" data-toggle="dropdown"><span>Financial Year : </span><span class="font-semibold fw-bold text-dark h5">2022 - 23</span><span class="caret "></span></div><ul class="dropdown-menu dropdown-menu-right"><li data-ember-action="" data-ember-action-129="129"><a>2022 - 23</a></li> </ul></div></div></div></div><div class="col-9">'+data+'</div></div>'
-                    $("#slipAfterView").html(content);
-                }
+    $(document).ready(function() {
+            $('.paySlipView').on('click',  function(){
+                var url = $(this).attr('data-url');
+                var t_paySlipMonth = $(this).attr('data');
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    data: {selectedPaySlipMonth: t_paySlipMonth},
+                    success: function(data)
+                    {
+                        var content = '<div class="row pr-3" style="padding-right:2.5rem;"><div class="col-3"><div class="fill body payslip-filter-container "> <i class="icon icon-blue icon-xlg vertical-align-text-bottom text-secondary ri-filter-2-fill"> </i> <div class="dropdown cursor-pointer payslip-dropdown"><div id="ember127" class="ember-view"><div class="dropdown-toggle" data-toggle="dropdown"><span>Financial Year : </span><span class="font-semibold fw-bold text-dark h5">2022 - 23</span><span class="caret "></span></div><ul class="dropdown-menu dropdown-menu-right"><li data-ember-action="" data-ember-action-129="129"><a>2022 - 23</a></li> </ul></div></div></div></div><div class="col-9">'+data+'</div></div>';
+                        $("#slipAfterView").html(content);
+                        $('#payslipModal').modal('show');
+                        console.log("Clicked View ");
+                    }
+                })
+                ;
             });
         });
-    });
-});
 </script>
 @endsection

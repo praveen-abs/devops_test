@@ -25,7 +25,6 @@
 
 
 <!-- calendar -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 
 <link href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css' rel='stylesheet' type='text/css'>
@@ -864,7 +863,7 @@
 
 
 
-<div class="modal custom-modal fade" id="createEmployee" role="dialog" aria-hidden="true" style="opacity: 1; background: rgba(0, 0, 0, 0.45); display: block;">
+<div class="modal custom-modal fade" id="createEmployee" role="dialog" aria-hidden="true" style="opacity: 1; background: rgba(0, 0, 0, 0.45); display: ;">
     <div class="modal-dialog modal-dialog-centered modal-md" id="" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2">
         <div class="modal-content top-line  ">
             <div class="modal-header border-0">
@@ -1038,16 +1037,12 @@
 <script src="{{ URL::asset('/assets/premassets/js/maps/jquery-jvectormap-2.0.2.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/premassets/js/maps/jquery-jvectormap-world-mill-en.js') }}"></script>
 <script src="{{ URL::asset('/assets/premassets/js/maps/jvector-maps.js') }}"></script>
-<!--Bootstrap Calendar JS-->
-<!-- <script src="{{ URL::asset('/assets/premassets/js/calendar/bootstrap_calendar.js') }}"></script>
-    <script src="{{ URL::asset('/assets/premassets/js/calendar/demo.js') }}"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+
 <!--Nice select-->
 <script src="{{ URL::asset('/assets/premassets/js/jquery.nice-select.min.js') }}"></script>
 
 <!--Custom Js Script-->
 <script src="{{ URL::asset('/assets/premassets/js/custom.js') }}"></script>
-<script src="{{ URL::asset('/assets/premassets/js/dashboard.js') }}"></script>
 <script src="{{ URL::asset('/assets/premassets/js/footable.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/premassets/css/footable.bootstrap.min.css') }}"></script>
 
@@ -1055,12 +1050,9 @@
 <!-- Prem assets ends -->
 
 <!-- apexcharts -->
-<script src="{{ URL::asset('/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/libs/jsvectormap/jsvectormap.min.js') }}"></script>
 <script src="{{ URL::asset('assets/libs/swiper/swiper.min.js')}}"></script>
 
-<!-- for date and time -->
-<script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
 
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>

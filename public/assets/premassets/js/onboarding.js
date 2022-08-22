@@ -8,7 +8,7 @@ $(document).ready(function() {
         //   c--;
         // }
         // this.setSelectionRange(c, c)
-        
+
         var inputvalues = $(this).val();
         var data = $(this).attr('name');
         if ($(this).attr('maxlength')) {
@@ -16,7 +16,7 @@ $(document).ready(function() {
             var val = parseInt($(this).attr('maxlength'));
             if(dtl>val){
                 $(this).val($(this).val().substr(0,val));
-            } 
+            }
         }
         if ($(this).attr('pattern') != undefined && $(this).attr('pattern') != '' && inputvalues !=
             '') {
@@ -59,7 +59,7 @@ $(document).ready(function() {
             var val = parseInt($(this).attr('maxlength'));
             if(dtl>val){
                 $(this).val($(this).val().substr(0,val));
-            } 
+            }
         }
         if ($(this).attr('pattern') != undefined && $(this).attr('pattern') != '' && inputvalues !=
             '') {
@@ -116,7 +116,7 @@ $(document).ready(function() {
     // });
 
 
-    // $('.addfiles').on('click', function() { 
+    // $('.addfiles').on('click', function() {
     //     var attr = $(this).attr('data');
     //     $(attr).click();
     //     return false;
@@ -236,7 +236,7 @@ $(document).ready(function() {
     //     return false;
     // });
 
-   
+
 
 
 });
@@ -246,7 +246,7 @@ $(function(){
     // Wrap your File input in a wrapper <div>
     var wrapper = $('<div/>').css({height:0,width:0,'overflow':'hidden'});
     var fileInput = $(':file').wrap(wrapper);
- 
+
     // When your file input changes, update the text for your button
     fileInput.change(function(){
         $this = $(this);
@@ -267,11 +267,11 @@ $(function(){
         var file = $this[0].files[0];
         //transfer the file to the MVC/API controller via FormData.
     })
-        
+
     //get the file.
     // var file = $this[0].files[0];
     //transfer the file to the MVC/API controller via FormData.
- 
+
     // When your fake button is clicked, simulate a click of the file button
     $('.addfiles').click(function(){
         var data = $(this).attr('data');

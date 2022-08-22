@@ -19225,5 +19225,55 @@ ul.list-style-circle li {
     box-shadow: rgb(60 64 67 / 30%) 0px 1px 2px 0px, rgb(60 64 67 / 15%) 0px 2px 6px 2px;
 }
 
+/* floating label */
 
-/*  */
+.floating {
+    position: relative;
+}
+
+.floating .float-label {
+    position: absolute;
+    padding: 0px 2px;
+    top: 8px;
+    left: 15px;
+    cursor: text;
+    color: #375775;
+    pointer-events: none;
+    transition:0.3s;
+
+}
+
+.textbox::placeholder {
+    opacity: 0;
+    color: transparent;
+    visibility: hidden;
+}
+.textbox:-moz-placeholder,.textbox::-moz-placeholder,.textbox:-ms-input-placeholder
+{
+    visibility: hidden;
+    opacity: 0;
+    color: transparent;
+}
+
+.textbox:focus~.float-label, .textbox:not(:placeholder-shown)~.float-label {
+    top: -9px;
+    left: 11px;
+    font-size: 11px;
+    background-color: #fff;
+    color: #375775;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+}
+
+
+ /* .textbox:focus~.float-label,
+ .textbox:valid~.float-label{
+    top: -9px;
+    left: 11px;
+    font-size: 11px;
+    background-color: #fff;
+    color: #375775;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+ }
+ */
