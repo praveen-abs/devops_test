@@ -242,7 +242,7 @@ class VmtPMSModuleController extends Controller
 
     public function showKPIReviewPage_Assignee(Request $request)
     {
-          $config = ConfigPms::where('user_id', auth()->user()->id)->first();
+        $config = ConfigPms::where('user_id', auth()->user()->id)->first();
         $show['dimension'] = 'true';
         $show['kpi'] = 'true';
         $show['operational'] = 'true';
@@ -267,7 +267,8 @@ class VmtPMSModuleController extends Controller
             $show['source'] = $config->selected_columns && in_array('source', explode(',', $config->selected_columns)) ? 'true': 'false';
             $show['kpiWeightage'] = $config->selected_columns && in_array('kpiWeightage', explode(',', $config->selected_columns)) ? 'true': 'false';
         }
-$review  =  VmtPMS_KPIFormAssignedModel::join('vmt_pms_kpiform_reviews','vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id','=','vmt_pms_kpiform_assigned.vmt_pms_kpi_form_id')
+
+        $review  =  VmtPMS_KPIFormAssignedModel::join('vmt_pms_kpiform_reviews','vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id','=','vmt_pms_kpiform_assigned.vmt_pms_kpi_form_id')
         ->join('vmt_pms_kpiform_details','vmt_pms_kpiform_details.vmt_pms_kpiform_id','=','vmt_pms_kpiform_assigned.vmt_pms_kpi_form_id')
         ->whereRaw("vmt_pms_kpiform_assigned.assignee_id IN($request->assignee_id)")
         ->get();
@@ -279,7 +280,7 @@ $review  =  VmtPMS_KPIFormAssignedModel::join('vmt_pms_kpiform_reviews','vmt_pms
             if($ff->reviewer_kpi_review != null){
                 $reviewArray = (json_decode($ff->reviewer_kpi_review, true)) ? (json_decode($ff->reviewer_kpi_review, true)) : [];
                 $percentArray = (json_decode($ff->reviewer_kpi_percentage, true)) ? (json_decode($ff->reviewer_kpi_percentage, true)) : [];
-                $commentArray = (json_decode($ff->reviewer_kpi_comments, true)) ? (json_decode($ff->reviewer_kpi_comments, true)) : []; 
+                $commentArray = (json_decode($ff->reviewer_kpi_comments, true)) ? (json_decode($ff->reviewer_kpi_comments, true)) : [];
             }
         }
         $kpiRowsId = $review;

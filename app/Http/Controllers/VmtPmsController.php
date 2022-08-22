@@ -630,6 +630,7 @@ class VmtPmsController extends Controller
         return "Saved as draft";
     }
 
+
     public function storeHRApraisalReview(Request $request){
         //dd($request->all());
         $kpiData  = VmtEmployeePMSGoals::find($request->goal_id);
@@ -677,7 +678,10 @@ class VmtPmsController extends Controller
                 $managerOfficeDetails =  VmtEmployeeOfficeDetails::where('user_id', $kpiData->reviewer_id)->first();
                 $currentUser_empDetails = VmtEmployeeOfficeDetails::where('user_id', auth::user()->id)->first();
 
-                \Mail::to($managerOfficeDetails->officical_mail)->send(new NotifyPMSManager(auth::user()->name, $currentUser_empDetails->designation, $reviewManager->name ));
+                $currentReviewPeriod = json_decode($kpiData->assignment_period);
+                //dd($currentReviewPeriod->year);
+
+                \Mail::to($managerOfficeDetails->officical_mail)->send(new NotifyPMSManager(auth::user()->name, $currentUser_empDetails->designation, $reviewManager->name,$currentReviewPeriod->year ));
                 $message = "Employee has submitted KPI Assessment.  ";
                     Notification::send($notification_user ,new ViewNotification($message.auth()->user()->name));
                 return "Published Review successfully.Sent mail to manager ".$managerOfficeDetails->officical_mail;

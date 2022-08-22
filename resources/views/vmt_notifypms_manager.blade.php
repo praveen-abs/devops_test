@@ -11,20 +11,19 @@
 	<br/> Please login to view.</p> --}}
 
 	<p>
-		Dear {{$employeeName}},</p>	
-		<p>																								
-Greetings from the HR Team!!!</p>
-<p>																									
-This is the inform you that your manager has approved the submitted KRA/KPI in the HRMS Portal.																									
-Please find few tips which needs to be taken care throughout this year.	</p>																				<p>					
-Take note of your achievement throughout the year.																									
-Be Specific and use numbers to your advantage																									
-Provide evidence to back up and statements of the results.																									</p><p>
-Reference your job description to account for the company objectives.</p>																					<p>				
-If you have any questions or concerns, don’t hesitate to reach out your reporting manager or the HR team.</p>
-<p>																									
-Regards		
-																							
+		Dear {{$recipientName}},</p>
+		<p>
+            This mail is to inform you <b>{{$employeeName}}</b> has updated his/ her respective KRA's/goals for this year <b>{{$reviewPeriod}}</b> and the same has been uploaded in your HRMS Dashboard.
+
+            Kindly go through your KRA/KPI and approve the same by login through your HRMS portal.
+
+            May all of you achieve your goals this year.
+
+            If you have any questions or concerns, don’t hesitate to reach out your reporting manager or the HR team.
+
+        <p>
+        Regards
+
 	</p>
 
 </body>

@@ -17,12 +17,13 @@ class NotifyPMSManager extends Mailable
      * @return void
      */
     protected $empName;
-    public function __construct($empName, $empDesignation, $recipientName)
+    public function __construct($empName, $empDesignation, $recipientName, $reviewPeriod)
     {
         //
         $this->empName  = $empName;
         $this->recipientName = $recipientName;
         $this->empDesignation = $empDesignation; //fetched from vmt_employee_office_details table
+        $this->reviewPeriod = $reviewPeriod;
     }
 
     /**
@@ -35,7 +36,8 @@ class NotifyPMSManager extends Mailable
         return $this->view('vmt_notifypms_manager')
                         ->with('employeeName' , $this->empName)
                         ->with('empDesignation' , $this->empDesignation)
-                        ->with('recipientName' , $this->recipientName);                        
-                        
+                        ->with('reviewPeriod' , $this->reviewPeriod)
+                        ->with('recipientName' , $this->recipientName);
+
     }
 }
