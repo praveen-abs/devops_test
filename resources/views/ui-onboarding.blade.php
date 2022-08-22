@@ -26,7 +26,7 @@
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="employee_code">Employee Code{!! required() !!}</label> -->
                                                 <div class="floating">
-                                                    <input type="text" placeholder="Employee Code" name="employee_code" class="onboard-form form-control textbox" value="{{$empNo}}" required readonly />
+                                                    <input type="text" placeholder="Employee Code" name="employee_code" class="onboard-form form-control textbox" value="{{$empNo}}" required />
                                                     <label for="" class="float-label">Employee Code</label>
                                                 </div>
                                             </div>
