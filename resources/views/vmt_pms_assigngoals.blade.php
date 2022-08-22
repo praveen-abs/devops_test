@@ -29,6 +29,17 @@
 
 <link href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css' rel='stylesheet' type='text/css'>
 <style>
+    .loader {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url('{{ URL::asset("assets/images/loader.gif") }}') 50% 50% no-repeat rgb(249, 249, 249);
+        opacity: 0.4;
+    }
+
     .output {
         font: 1rem 'Fira Sans', sans-serif;
     }
@@ -61,6 +72,8 @@
 
 
 @section('content')
+<div class="loader" style="display:none;"></div>
+
 @component('components.performance_breadcrumb')
 @slot('li_1')  @endslot
 @endcomponent
@@ -326,7 +339,7 @@
                 </td>
                 <td class="">{{$emp['ranking']}}</td>
                 <td>
-                    <a target="_blank" href="{{url('vmt-pmsappraisal-review?id='.$emp->kpi_table_id.'&user_id='.$emp->userid)}}">
+                    <a href="{{url('vmt-pmsappraisal-review?id='.$emp->kpi_table_id.'&user_id='.$emp->userid)}}">
                         <button class="btn btn-orange py-0 px-2 ">
                              <span class="mr-10 icon"></span>
 
@@ -839,8 +852,7 @@
                 <div class="align-items-center justify-content-between d-flex">
                     <a href="{{route('vmt_pms_kpi_create')}}" target="_blank" class="text-primary f-12 float-start" ><i class="f-12 me-1 fa  fa-plus-circle"></i>Create KPI Form</a>
                     <span class="float-end">
-                        <button class="btn btn-orange me-2" id="save-table">Save</button>
-                        <button class="btn btn-orange " id="publish-goal" disabled>Publish</button>
+                        <button class="btn btn-orange " id="publish-goal" >Publish</button>
                     </span>
                     </div>
 
@@ -1749,7 +1761,8 @@ function changeEmployee1(employees) {
 $("#publish-goal").click(function(e){
     e.preventDefault();
 
-    if($('#kpitable_id').val()){
+        $('.loader').show();
+
         $.ajax({
             type: "POST",
             url: "{{url('vmt-pms-assign-goals/publish')}}",
@@ -1770,16 +1783,13 @@ $("#publish-goal").click(function(e){
                 @endif
 
                 $("kpitable_id").val(data.table_id);
+            
+                  $('.loader').hide();
+            },
+            error: function(error) {
+                $('.loader').hide();
             }
         })
-    }else{
-        $('#modalBody').html("Please publish table first");
-        $('#modalHeader').html("Failed");
-        $('#modalNot').html("Failed to save Data");
-        $('#notificationModal').show();
-        $('#notificationModal').removeClass('fade');
-    }
-
 });
 
 

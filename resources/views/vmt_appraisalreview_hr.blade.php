@@ -330,6 +330,7 @@
                                             @for($i=1; $i<=$show['managerCount']; $i++) <th scope="col" data-name='kpiManagerAchivement' data-filterable="false" data-visible="true">Manager KPI Achievement % - {{$i}}</th>
                                                 @endfor
                                                 @endif
+
                                                 <th scope="col" data-name='kpiHrReview' data-filterable="false" data-visible="{{(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin')) ? 'true': 'false'}}">KPI - Achievement (HR Review)</th>
                                                 <th scope="col" data-name='kpiHrAchivement' data-filterable="false" data-visible="{{(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin')) ? 'true': 'false'}}">HR KPI Achievement %</th>
                                 </tr>
@@ -400,58 +401,53 @@
                                         <div>{{$kpiRow->self_kpi_comments}}</div>
                                         @endif
                                     </td>
-                                    @if (!$assignedGoals->is_hr_submitted))
-                                    <td>
-                                        @if($assignedGoals->is_employee_submitted && !$reviewCompleted &&
-                                        !$assignedGoals->is_manager_submitted && $show['manager'])
+                                        @if (!$assignedGoals->is_hr_submitted )
+                                            <td>
+                                                @if($assignedGoals->is_employee_submitted && !$reviewCompleted &&
+                                                !$assignedGoals->is_manager_submitted && $show['manager'])
 
-                                        <textarea name="managereview[{{$kpiRow->id}}]" id="" cols="20" rows="8" placeholder="type here">@if(isset( $kpiRow->manager_kpi_review)){{$kpiRow->manager_kpi_review}}@endif</textarea>
+                                                <textarea name="managereview[{{$kpiRow->id}}]" id="" cols="20" rows="8" placeholder="type here">@if(isset( $kpiRow->manager_kpi_review)){{$kpiRow->manager_kpi_review}}@endif</textarea>
+                                                @else
+                                                <div>{{$kpiRow->manager_kpi_review}}</div>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if($assignedGoals->is_employee_submitted && !$reviewCompleted &&
+                                                !$assignedGoals->is_manager_submitted && $show['manager'])
+                                                <!-- <textarea name="managerpercetage[{{$kpiRow->id}}]" id="" cols="20" rows="2"
+                                                    placeholder="type here">@if(isset( $kpiRow->manager_kpi_percentage)) {{$kpiRow->manager_kpi_percentage}}@endif</textarea> -->
+                                                <input type="number" class="inp-text" name="managerpercetage[{{$kpiRow->id}}]" placeholder="type here" value="@if(isset( $kpiRow->manager_kpi_percentage)){{$kpiRow->manager_kpi_percentage}}@endif">
+                                                @else
+                                                <div>{{$kpiRow->manager_kpi_percentage}}</div>
+                                                @endif
+                                            </td>
                                         @else
-                                        <div>{{$kpiRow->manager_kpi_review}}</div>
+                                        @foreach($kpiRow->manager_kpi_review as $key => $mgr)
+                                        <td>
+                                            <div>{{$mgr[$kpiRow['id']]}}</div>
+                                        </td>
+                                        @endforeach
+                                        @foreach($kpiRow->manager_kpi_percentage as $key => $mgr)
+                                        <td>
+                                            <div>{{$mgr[$kpiRow['id']]}}</div>
+                                        </td>
+                                        @endforeach
                                         @endif
-                                    </td>
-                                    <td>
-                                        @if($assignedGoals->is_employee_submitted && !$reviewCompleted &&
-                                        !$assignedGoals->is_manager_submitted && $show['manager'])
-                                        <!-- <textarea name="managerpercetage[{{$kpiRow->id}}]" id="" cols="20" rows="2"
-                                            placeholder="type here">@if(isset( $kpiRow->manager_kpi_percentage)) {{$kpiRow->manager_kpi_percentage}}@endif</textarea> -->
-                                        <input type="number" class="inp-text" name="managerpercetage[{{$kpiRow->id}}]" placeholder="type here" value="@if(isset( $kpiRow->manager_kpi_percentage)){{$kpiRow->manager_kpi_percentage}}@endif">
-                                        @else
-                                        <div>{{$kpiRow->manager_kpi_percentage}}</div>
-                                        @endif
-                                    </td>
-                                    @else
-                                    @foreach($kpiRow->manager_kpi_review as $key => $mgr)
-                                    <td>
-                                        <div>{{$mgr[$kpiRow['id']]}}</div>
-                                    </td>
-                                    @endforeach
-                                    @foreach($kpiRow->manager_kpi_percentage as $key => $mgr)
-                                    <td>
-                                        <div>{{$mgr[$kpiRow['id']]}}</div>
-                                    </td>
-                                    @endforeach
-                                    @endif
-                                    <!-- @if(($reviewCompleted && $show['appraiser']) || !$show['appraiser'])
-                                    @endif -->
-                                    <td>
-                                        @if(!$assignedGoals->is_hr_submitted && $assignedGoals->is_manager_submitted)
-                                        <textarea name="hreview[{{$kpiRow->id}}]" id="" cols="20" rows="8" placeholder="type here">@if(isset( $kpiRow->hr_kpi_review)){{$kpiRow->hr_kpi_review}}@endif</textarea>
-                                        @else
-                                        <div>{{$kpiRow->hr_kpi_review}}</div>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if(!$assignedGoals->is_hr_submitted && $assignedGoals->is_manager_submitted)
-                                        <!-- <textarea name="hrpercetage[{{$kpiRow->id}}]" id="" cols="20" rows="2" placeholder="type here">@if(isset( $kpiRow->hr_kpi_percentage)){{$kpiRow->hr_kpi_percentage}}@endif</textarea> -->
-                                        <input type="number" class="inp-text" name="hrpercetage[{{$kpiRow->id}}]" placeholder="type here" value="@if(isset( $kpiRow->hr_kpi_percentage)){{$kpiRow->hr_kpi_percentage}}@endif">
-                                        @else
-                                        <div>{{$kpiRow->hr_kpi_percentage}}</div>
-                                        @endif
-                                    </td>
-                                    <!-- @if((auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin')) && $reviewCompleted) -->
-                                    <!-- @endif -->
-
+                                        <td>
+                                                @if(!$assignedGoals->is_hr_submitted && $assignedGoals->is_manager_submitted)
+                                                <textarea name="hreview[{{$kpiRow->id}}]" id="" cols="20" rows="8" placeholder="type here">@if(isset( $kpiRow->hr_kpi_review)){{$kpiRow->hr_kpi_review}}@endif</textarea>
+                                                @else
+                                                <div>{{$kpiRow->hr_kpi_review}}</div>
+                                                @endif
+                                        </td>
+                                        <td>
+                                            @if(!$assignedGoals->is_hr_submitted && $assignedGoals->is_manager_submitted)
+                                            <!-- <textarea name="hrpercetage[{{$kpiRow->id}}]" id="" cols="20" rows="2" placeholder="type here">@if(isset( $kpiRow->hr_kpi_percentage)){{$kpiRow->hr_kpi_percentage}}@endif</textarea> -->
+                                            <input type="number" class="inp-text" name="hrpercetage[{{$kpiRow->id}}]" placeholder="type here" value="@if(isset( $kpiRow->hr_kpi_percentage)){{$kpiRow->hr_kpi_percentage}}@endif">
+                                            @else
+                                            <div>{{$kpiRow->hr_kpi_percentage}}</div>
+                                            @endif
+                                        </td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -463,16 +459,16 @@
                 @if($show['appraiser'])
                 <div class="buttons d-flex align-items-center justify-content-end ">
                     @if(!$assignedGoals->is_employee_accepted)
-                    <button class="btn btn-primary" id="approve">Accept<i class="fa fa-save"></i></button>
+                    <button class="btn btn-primary" id="approve">Accept</button>
                     &nbsp;&nbsp;
-                    <button class="btn btn-primary" id="reject">Reject<i class="fa fa-save"></i></button>
+                    <button class="btn btn-primary" id="reject">Reject</button>
                     &nbsp;&nbsp;
                     @else
                     @if(!$reviewCompleted && !$assignedGoals->is_employee_submitted &&
                     $assignedGoals->is_manager_approved )
-                    <button class="btn btn-primary" id="save_table">Save<i class="fa fa-save"></i></button>
+                    <button class="btn btn-primary" id="save_table">Save</button>
                     &nbsp;&nbsp;
-                    <button class="btn btn-primary" id="publish_table">Submit<i class="fa fa-save"></i></button>
+                    <button class="btn btn-primary" id="publish_table">Submit</button>
                     @endif
 
                     @endif
@@ -486,23 +482,23 @@
                     <button class="btn btn-primary" id="reject">Reject<i class="fa fa-save"></i></button>
                     &nbsp;&nbsp;
                     @elseif(!$reviewCompleted && $assignedGoals->is_employee_submitted)
-                    <button class="btn btn-primary" id="save_table">Save<i class="fa fa-save"></i></button>
+                    <button class="btn btn-primary" id="save_table">Save</button>
                     &nbsp;&nbsp;
-                    <button class="btn btn-primary" id="publish_table">Publish<i class="fa fa-save"></i></button>
+                    <button class="btn btn-primary" id="publish_table">Publish</button>
                     @endif
                     @if(!$assignedGoals->is_employee_submitted)
-                    <h4>Employee has not yet submitted this review.</h4>
+                    <h6>Employee has not yet submitted this review.</h6>
                     @endif
                 </div>
                 @endif
                 @if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin'))
-                <div class="buttons d-flex align-items-center justify-content-end ">
-                    @if($assignedGoals->is_manager_submitted && !$assignedGoals->is_hr_submitted )
-                    <button class="btn btn-primary" id="save_table">Save<i class="fa fa-save"></i></button>
-                    &nbsp;&nbsp;
-                    <button class="btn btn-primary" id="publish_table">Submit<i class="fa fa-save"></i></button>
-                    @endif
-                </div>
+                        <div class="buttons d-flex align-items-center justify-content-end ">
+                            @if($assignedGoals->is_manager_submitted && !$assignedGoals->is_hr_submitted )
+                            <button class="btn btn-primary" id="save_table">Save</i></button>
+                            &nbsp;&nbsp;
+                            <button class="btn btn-primary" id="publish_table">Submit</button>
+                            @endif
+                        </div>
                 @endif
                 @else
                 <h4>Goals Not Assigned</h4>

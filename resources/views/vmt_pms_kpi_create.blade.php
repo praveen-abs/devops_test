@@ -331,6 +331,30 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal zoomIn" id="Modal_TableSaved">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Info</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <b id="info_message">Kpi Form Table Saved.</b>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" id="closeTab" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>        
     </div>
     <!--  -->
 @endsection
@@ -623,6 +647,10 @@
             $(this).parent().parent().remove();
         });
 
+        $('#closeTab').on('click', function() {
+            window.close();
+        });        
+
         $('body').on('click', '.close-modal', function() {
             $('#notificationModal').hide();
             $('#notificationModal').addClass('fade');
@@ -701,9 +729,10 @@
                         $(".table-btn").prop('disabled', true);
                         //$('#notificationModal').show();
 
-                        $('#modalBody').html("Kpi Form Table Saved.");
-                        $('#info_message').html("Kpi Form Table Saved.");
-                        $('#Modal_Message').modal('show');
+                        //$('#modalBody').html("Kpi Form Table Saved.");
+                        //$('#info_message').html("Kpi Form Table Saved.");
+                        $('#Modal_TableSaved').modal('show');
+
                     }
                 });
             } else {
@@ -714,5 +743,6 @@
             }
 
         });
+
     </script>
 @endsection

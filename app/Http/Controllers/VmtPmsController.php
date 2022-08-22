@@ -442,6 +442,8 @@ class VmtPmsController extends Controller
         $kpiRowsId = '';
 
         $config = ConfigPms::where('user_id', auth()->user()->id)->first();
+        $finalScoreBasedOn = $config->selected_head;
+
         $show['dimension'] = 'true';
         $show['kpi'] = 'true';
         $show['operational'] = 'true';
@@ -498,6 +500,7 @@ class VmtPmsController extends Controller
             if($assignedGoals->manager_kpi_review != null){
                 $reviewArrayManager = (json_decode($assignedGoals->manager_kpi_review, true));
                 $percentArrayManager = (json_decode($assignedGoals->manager_kpi_percentage, true));
+
                 if (count($reviewArrayManager) > $show['managerCount']) {
                     $show['managerCount'] = count($reviewArrayManager);
                 }
@@ -519,7 +522,9 @@ class VmtPmsController extends Controller
                     //$kpiRows[$index]['self_kpi_comments'] = $commentArray[$value->id];
                 }
             }
+
             $reviewCompleted = false;
+
             //
             if($assignedGoals->hr_kpi_review != null){
                 $reviewHrArray = (json_decode($assignedGoals->hr_kpi_review, true)) ? (json_decode($assignedGoals->hr_kpi_review, true)) : [];
@@ -536,9 +541,22 @@ class VmtPmsController extends Controller
 
                 $reviewCompleted = true;
             }
+
             $empSelected = true;
             $ratingDetail = [];
+
+            // if($finalScoreBasedOn == "hr")
+            //     $per = json_decode($assignedGoals->hr_kpi_percentage, true) ? json_decode($assignedGoals->hr_kpi_percentage, true) : [];
+            // else
+            // {
+            //     //get the first Manager id for this KPI form
+
+
+            //     $per = json_decode($kpiRows[0]['manager_kpi_percentage'], true) ? json_decode($assignedGoals->hr_kpi_percentage, true) : [];
+            // }
+
             $per = json_decode($assignedGoals->hr_kpi_percentage, true) ? json_decode($assignedGoals->hr_kpi_percentage, true) : [];
+
             if (count($per) > 0) {
                 $ratingDetail['rating'] = array_sum($per)/count($per);
                 if ($ratingDetail['rating'] < 60) {
@@ -578,12 +596,12 @@ class VmtPmsController extends Controller
             if (in_array(auth()->user()->id, explode(',', $assignedGoals->reviewer_id))) {
                 $show['manager'] = true;
             }
-            return view('vmt_appraisalreview_hr', compact( 'employeeData','assignedEmployee_Userdata','assignedEmp_manager_name','assignedEmployeeOfficeDetails', 'assignedGoals', 'kpiRows', 'empSelected', 'reviewCompleted', 'ratingDetail', 'kpiRowsId', 'assigners', 'assignersName', 'config', 'show'));
+            return view('vmt_appraisalreview_hr', compact( 'employeeData','assignedEmployee_Userdata','assignedEmp_manager_name','assignedEmployeeOfficeDetails', 'assignedGoals', 'kpiRows', 'empSelected', 'reviewCompleted', 'ratingDetail', 'kpiRowsId', 'assigners', 'assignersName', 'config', 'show','finalScoreBasedOn'));
         }
         $kpiRows = [];
         $empSelected = false;
         $reviewCompleted = false;
-        return view('vmt_appraisalreview_hr', compact('pmsGoalList', 'kpiRows', 'empSelected', 'reviewCompleted', 'kpiRowsId', 'config', 'show'));
+        return view('vmt_appraisalreview_hr', compact('pmsGoalList', 'kpiRows', 'empSelected', 'reviewCompleted', 'kpiRowsId', 'config', 'show','finalScoreBasedOn'));
     }
 
     public function saveKPItableDraft_HR(Request $request){
