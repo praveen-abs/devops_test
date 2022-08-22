@@ -270,8 +270,8 @@
                             <div class="row pull-right mb-3">
                                 @csrf
                                 <div class="col">
-                                    <a href="{{route('download-file', $kpiRowsId)}}" class="btn btn-primary pull-right"
-                                        id="download-excel">Download</a>
+                                  {{--   <a href="{{route('download-file', $kpiRowsId)}}" class="btn btn-primary pull-right"
+                                        id="download-excel">Download</a> --}}
                                 </div>
                                 <div class="col-auto p-0">
                                     <input type="file" name="upload_file" id="upload_file" accept=".xls,.xlsx"
@@ -401,7 +401,7 @@
                                         <div>{{$kpiRow->self_kpi_comments}}</div>
                                         @endif
                                     </td>
-                                    @if (!$assignedGoals->is_hr_submitted))
+                                    @if (!$assignedGoals->is_hr_submitted)
                                     <td>
                                         @if($assignedGoals->is_employee_submitted && !$reviewCompleted &&
                                         !$assignedGoals->is_manager_submitted && $show['manager'])
