@@ -670,6 +670,9 @@ class VmtPmsController extends Controller
                 $kpiData->is_hr_submitted = 1;//true
             }
             $kpiData->save();
+
+
+            $currentReviewPeriod = json_decode($kpiData->assignment_period);
             if ($kpiData->employee_id == auth()->user()->id) {
 
                 $notification_user = User::where('id',auth::user()->id)->first();
@@ -678,7 +681,6 @@ class VmtPmsController extends Controller
                 $managerOfficeDetails =  VmtEmployeeOfficeDetails::where('user_id', $kpiData->reviewer_id)->first();
                 $currentUser_empDetails = VmtEmployeeOfficeDetails::where('user_id', auth::user()->id)->first();
 
-                $currentReviewPeriod = json_decode($kpiData->assignment_period);
                 //dd($currentReviewPeriod->year);
 
                 \Mail::to($managerOfficeDetails->officical_mail)->send(new NotifyPMSManager(auth::user()->name, $currentUser_empDetails->designation, $reviewManager->name,$currentReviewPeriod->year ));
@@ -696,7 +698,7 @@ class VmtPmsController extends Controller
 
                 $notification_user = User::where('id',auth::user()->id)->first();
                 //dd($officialMailList);
-                \Mail::to($officialMailList)->send(new NotifyPMSManager(auth::user()->name,  $currentUser_empDetails->designation,$hrReview->name));
+                \Mail::to($officialMailList)->send(new NotifyPMSManager(auth::user()->name,  $currentUser_empDetails->designation,$hrReview->name,$currentReviewPeriod->year ));
                 $message = "Employee has submitted KPI Assessment.  ";
                     Notification::send($notification_user ,new ViewNotification($message.auth()->user()->name));
                 return "Published Review successfully. Sent mail to HR ".$officialMailList;
