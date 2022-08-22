@@ -21,7 +21,7 @@
 
 
 <?php
-$logoObj = \DB::table('vmt_general_info')->first();
+$logoObj =\DB::table('vmt_general_info')->first();
 if ($logoObj) {
     $logoSrc = $logoObj->logo_img;
 } else {
@@ -55,22 +55,18 @@ if ($logoObj) {
                         </span>
                     </a>
                 </div>
-
-
                 <!-- disable setting icon for employee -->
-
-
                 <div class="d-flex justify-content-between align-items-center w-100">
                     <div class="d-flex w-50">
-                        <button type="button" class="btn btn-sm fs-16 vertical-menu-btn topnav-hamburger"
-                            id="topnav-hamburger-icon" style="border: 0px;">
+                        <button type="button" class="btn btn-sm fs-16 vertical-menu-btn topnav-hamburger border-0 outline-none"
+                            id="topnav-hamburger-icon" >
                             <span class="hamburger-icon open">
                                 <span></span>
                                 <span></span>
                                 <span></span>
                             </span>
                         </button>
-                        <div class="topbar-logo mx-2" style="width:100px">
+                        <div class="topbar-logo mx-2">
                             <img src="{{ URL::asset($logoSrc) }}" alt="" class="w-100 h-100">
                             <!-- <img src="{{ URL::asset('assets/images/vasa.jpg') }}" alt="" class="w-100 h-100"> -->
                         </div>
