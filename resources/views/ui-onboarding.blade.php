@@ -36,6 +36,8 @@
                                                     <input type="text" placeholder="Employee Name as per Aadhar" name="employee_name" id="employee_name" class="onboard-form form-control textbox" pattern="name" required />
                                                     <label class="error star_error employee_name_label" for="employee_name" style="display: none;"></label>
                                                     <label for="" class="float-label">Employee Name as per Aadhar</label>
+                                                    <label class="error star_error employee_name_label" for="employee_name"
+                                                        style="display: none;"></label>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -94,6 +96,7 @@
                                                     <input type="email" pattern="email" placeholder="Email ID" name="email" value="{{request()->has('email')? request()->email : ''}}" class="onboard-form textbox form-control " @if(request()->has('email')) readonly @endif required />
                                                     <label for="" class="float-label">Email</label>
                                                 </div>
+<<<<<<< Updated upstream
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="aadhar">Aadhaar Number<span id="aadhar_req">{!! required() !!}</span></label> -->
@@ -103,6 +106,8 @@
                                                         style="display: none;"></label> --}}
                                                     <label for="" class="float-label">Aadhaar Number</label>
                                                 </div>
+                                                <span class="error" id="error_vmt_aadhar"></span>
+
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 co l-lg-3 col-xl-3 mb-2">
 
@@ -111,6 +116,7 @@
                                                     <input type="text" placeholder="Pan Card Number" name="pan_no" id="pan_num" class=" form-control textbox pan" pattern="pan" minlength="10" maxlength="10" required />
                                                     <label class="error star_error pan_no_label" id="pan_no_label" for="pan_no" style="display: none;"></label>
                                                     <label for="" class="float-label">Pan Card Number</label>
+                                                    <span class="error" id="error_pan_no"></span>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -126,6 +132,7 @@
                                                     <input type="text" placeholder="DL Number" name="dl_no" id="dl_no" minlength="15" maxlength="15" class=" form-control textbox not-required validate" pattern="dl" />
                                                     <label class="error star_error dl_no_label" for="dl_no" style="display: none;"></label>
                                                     <label for="" class="float-label">DL Number</label>
+                                                    <span class="error" id="error_dl_no"></span>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -134,6 +141,7 @@
                                                     <input type="text" placeholder="Passport Number" name="passport_no" id="passport_no" minlength="8" maxlength="8" class="onboard-form form-control textbox not-required validate" />
                                                     <label class="error star_error passport_no_label" for="passport_no" style="display: none;"></label>
                                                     <label for="" class="float-label">Passport Number</label>
+                                                    <span class="error" id="error_passport_no"></span>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -235,8 +243,9 @@
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <div class="floating">
-                                                    <input type="text" placeholder="EPF Number" name="epf_number" id="epf_number" class="onboard-form form-control textbox" required />
+                                                    <input type="text" placeholder="EPF Number" name="epf_number" id="epf_number" minlength="25" maxlength="25" class="onboard-form form-control textbox" required />
                                                     <label for="" class="float-label">EPF Number</label>
+                                                    <span class="error" id="error_epf_number"></span>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -256,11 +265,12 @@
                                                     <label for="" class="float-label">ESIC Applicable</label>
                                                 </div>
                                             </div>
-
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-lg-3 col-xl-3 mb-2">
                                                 <div class="floating">
-                                                    <input type="text" placeholder="ESIC Number" name="esic_number" id="esic_number" class="onboard-form form-control textbox" required />
+                                                    <input type="text" placeholder="ESIC Number" name="esic_number" id="esic_number" minlength="21"
+                                                    maxlength="21" class="onboard-form form-control textbox" required />
                                                     <label for="" class="float-label">ESIC Number</label>
+                                                    <span class="error" id="error_esic_number"></span>
                                                 </div>
                                             </div>
 

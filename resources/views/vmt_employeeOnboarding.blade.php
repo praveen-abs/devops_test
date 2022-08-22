@@ -115,23 +115,31 @@ $('#l1_manager_code').on('select2:select', function (e) {
 });
 
 
-$('#passport_no').change('input', function(){
+$('#passport_no').on('input', function(){
 
     var patt = new RegExp("^[A-PR-WYa-pr-wy][1-9]\\d\\s?\\d{4}[1-9]$");
-    var passno = $("#passport_no").val();
-    if (patt.test(passno)){
+    var txtValue = $(this).val();
+    var maxLength = $(this).attr('maxlength');
+
+    if ( txtValue.trim().length == maxLength)
+    {
+        if( patt.test(txtValue)){
+            return true;
+        }
+        else {
+            $('#error_passport_no').html("Passport is not valid");
+            return false;
+        }
+    }
+    else
+    {
+        $('#error_passport_no').html("");
         return true;
-
     }
-    else {
-       alert("passport is not valid");
-    }
-    return false;
-
-})
+});
 
 
-$('#employee_name').css('text-transform', 'capitalize');
+// $('#employee_name').css('text-transform', 'capitalize');
 
 $('.select2_form_without_search').each(function() {
     var placeholder = $(this).attr('placeholder')
@@ -208,16 +216,139 @@ $('.onboard-form').keyup(function() {
 }).trigger('keyup');
 
 
-$("#pan_num").change(function() {
-    var inputvalues = $(this).val();
-    var regex = /[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
-    if (!regex.test(inputvalues)) {
-        $("#pan_num").val("");
-        alert("invalid PAN no");
-        return regex.test(inputvalues);
+$('#pan_num').on('input', function(){
+
+    var patt = /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/;
+    var txtValue = $(this).val();
+    var maxLength = $(this).attr('maxlength');
+
+    if ( txtValue.trim().length == maxLength)
+    {
+        if( patt.test(txtValue)){
+            return true;
+        }
+        else {
+            $('#error_pan_no').html("PAN number is not valid");
+            return false;
+        }
+    }
+    else
+    {
+        $('#error_pan_no').html("");
+        return true;
     }
 });
 
+
+// $('#vmt_aadhar').on('input', function() {
+//     var aadharno = new RegExp("^[2-9]{1}[0-9]{3}\s{1}[0-9]{4}\s{1}[0-9]{4}$");
+//     var aadhartes = $("#vmt_aadhar").val();
+//     if (aadharno.test(aadhartes)) {
+//         return true;
+//     } else {
+//         alert("Please Enter Valid Aadhar Number");
+//     }
+//     return false;
+// });
+
+$('#epf_number').on('input', function(){
+
+//Sample Data :  TN MAS 054110 000 0054321
+
+    var patt = /^([A-Z]{2}\s)([A-Z]{3}\s)([0-9]{1,7}\s)([0-9]{3}\s)?([0-9]{1,7})$/;
+    var txtValue = $(this).val();
+    var maxLength = $(this).attr('maxlength');
+
+    if ( txtValue.trim().length == maxLength)
+    {
+        if( patt.test(txtValue)){
+            return true;
+        }
+        else {
+            $('#error_epf_number').html("EPF number is not valid");
+            return false;
+        }
+    }
+    else
+    {
+        $('#error_epf_number').html("");
+        return true;
+    }
+});
+
+
+$('#esic_number').on('input', function(){
+
+    //Sample Data :  31–00–123456–000–0000
+
+    var patt = /^(\d{2})[-–\s]?(\d{2})[-–\s]?(\d{1,6})[-–\s]?(\d{3})[-–\s]?(\d{4})$/;
+    var txtValue = $(this).val();
+    var maxLength = $(this).attr('maxlength');
+
+    if ( txtValue.trim().length == maxLength)
+    {
+        if( patt.test(txtValue)){
+            return true;
+        }
+        else {
+            $('#error_esic_number').html("ESIC number is not valid");
+            return false;
+        }
+    }
+    else
+    {
+        $('#error_esic_number').html("");
+        return true;
+    }
+});
+
+$('#vmt_aadhar').on('input', function(){
+
+    var patt = /^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$/;
+    var txtValue = $(this).val();
+    var maxLength = $(this).attr('maxlength');
+
+    if ( txtValue.trim().length == maxLength)
+    {
+        if( patt.test(txtValue)){
+            return true;
+        }
+        else {
+            $('#error_vmt_aadhar').html("Aadhar number is not valid");
+            return false;
+        }
+    }
+    else
+    {
+        $('#error_vmt_aadhar').html("");
+        return true;
+    }
+});
+
+
+
+$('#dl_no').on('input', function(){
+
+    var patt = /^([A-Z]{2})(\d{2}|\d{3})[a-zA-Z]{0,1}(\d{4})(\d{7})$/;
+    var txtValue = $(this).val();
+    var maxLength = $(this).attr('maxlength');
+
+    if ( txtValue.trim().length == maxLength)
+    {
+        if( patt.test(txtValue)){
+            return true;
+        }
+        else {
+            $('#error_dl_no').html("DL number is not valid");
+            return false;
+        }
+    }
+    else
+    {
+        $('#error_dl_no').html("");
+        return true;
+    }
+});
 
 $('#pan_ack').keyup(function() {
 if ($('#pan_ack').val() == '') {
@@ -323,7 +454,7 @@ if ($('#nationality').val() == 'indian') {
     $('#passport_no').removeAttr('required');
     $('#passport_no_req').hide();
     if ($('#passport_no').val() == '') {
-        $('.passport_no_label').hide();
+        // $('.passport_no_label').hide();
     }
     $('#passport_no').addClass('not-required validate');
     $('#passport_exp').addClass('not-required validate');
@@ -444,6 +575,7 @@ var flag = false;
     var txtIFSCNo = $("#bank_ifsc").val();
     var ifsc = '^[A-Z]{4}0[A-Z0-9]{6}$';
     var dl_pat = '/^(([A-Z]{2}[0-9]{2})( )|([A-Z]{2}-[0-9]{2}))((19|20)[0-9][0-9])[0-9]{7}$/';
+
     if(textDLno.match(dl_pat)){
         //alert("dl no done");
         console.log("DL No correct");
