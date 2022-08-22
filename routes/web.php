@@ -282,7 +282,7 @@ Route::post('/saveAssignerReviews',[App\Http\Controllers\PMS\VmtPMSModuleControl
 Route::get('vmt-pms-appraisal-review', 'App\Http\Controllers\PMS\VmtPMSModuleController@showKPIReviewPage_Assignee');
 Route::post('vmt-pms-appraisal-review', 'App\Http\Controllers\VmtApraisalController@storeEmployeeApraisalReview');
 //test
-Route::get('exelsheet', 'App\Http\Controllers\PMS\VmtPMSModuleController@KpiSampleExcelSheet');
+Route::get('/excelsheet', 'App\Http\Controllers\PMS\VmtPMSModuleController@generateSampleKPIExcelSheet');
 
 
 //DONT WRITE ANT ROUTES BELOW THIS

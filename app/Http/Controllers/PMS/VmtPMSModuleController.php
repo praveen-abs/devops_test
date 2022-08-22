@@ -12,8 +12,9 @@ use App\Models\VmtEmployeeOfficeDetails;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Exports\SampleKPIFormExport;
 
-
+// use Maatwebsite\Excel\Facades\Excel;
 /*
     New PMS Controller
 
@@ -207,48 +208,11 @@ class VmtPMSModuleController extends Controller
     */
     public function generateSampleKPIExcelSheet()
     {
-        $data = ConfigPms::where('user_id', auth()->user()->id)->first();
-        $show['dimension'] = 'true';
-        $show['kpi'] = 'true';
-        $show['operational'] = 'true';
-        $show['measure'] = 'true';
-        $show['frequency'] = 'true';
-        $show['target'] = 'true';
-        $show['stretchTarget'] = 'true';
-        $show['source'] = 'true';
-        $show['kpiWeightage'] = 'true';
-        $q = "jjj";
-        $w = "jjj";
-        $r = "jjj";
-        $t = "jjj";
-        $y = "jjj";
-        $u = "jjj";
-        // dd($data);
-       // $data = DB::table('tbl_customer')->orderBy('CustomerID', 'DESC')->get();
-       $data_array [] = array("CustomerName","Gender","Address","City","PostalCode","Country");
-       foreach($data as $data_item)
-       {
-           $data_array[] = array(
-               'CustomerName' =>$q,
-               'Gender' => $w,
-               'Address' => $r,
-               'City' => $t,
-               'PostalCode' => $y,
-               'Country' =>$u
-           );
-       }
-       $this->ExportExcel($data_array);
+        $data = ConfigPms::where('user_id', auth()->user()->id)->pluck('selected_columns');
+        $array_selectedKPIColumns = str_getcsv($data['0']);
 
+        return \Excel::download(new SampleKPIFormExport($array_selectedKPIColumns), 'Template_SampleKPIForm.xlsx');
 
-//          $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('./assets/sample_kpi.xls');
-// $worksheet = $spreadsheet->getSheet(0);
-// $worksheet->getCell('C6')->setValue($q);
-// $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xls');
-// $file_name='result_excel.xlsx';
-// $writer->save($file_name);
-// header('Content-Type: application/vnd.ms-excel');
-// header('Content-Disposition: attachment; filename="'.$file_name.'"');
-// $writer->save("php://output");
    }
 
    /*
@@ -285,14 +249,14 @@ class VmtPMSModuleController extends Controller
 
         //     ->join('vmt_pms_kpiform_details',  'vmt_employee_pms_goals_table.employee_id', '=', 'users.id')
 
-        // vmt_pms_kpiform_assigned 
+        // vmt_pms_kpiform_assigned
         // $vmtpmskpiformdetails = VmtPMS_KPIFormAssignedModel::where('vmt_pms_kpiform_id','8')
         // ->whereIn('assignee_id','1')
         // ->get();
         // //vmt_pms_kpiform_reviews
 
         // $kpiformreviews =  VmtPMS_KPIFormReviewsModel::where('vmt_pms_kpiform_assigned_id','8')->first();
-        // // vmt_pms_kpiform_details 
+        // // vmt_pms_kpiform_details
 
         // $vmtpmskpiformdetails = VmtPMS_KPIFormDetailsModel::where('vmt_pms_kpiform_id','8')->first();
         //dd($request->all());
@@ -303,7 +267,7 @@ $review  =  VmtPMS_KPIFormAssignedModel::join('vmt_pms_kpiform_reviews','vmt_pms
         foreach($review as $ff){
       print_r(explode(',', $ff->dimension));
 
-        
+
         $assignersName = User::whereRaw("id IN($ff->reviewer_id)")->pluck('name')->toArray();
             if ($assignersName) {
                 $assignersName = implode(',', $assignersName);
@@ -313,9 +277,9 @@ $review  =  VmtPMS_KPIFormAssignedModel::join('vmt_pms_kpiform_reviews','vmt_pms
                 $reviewArray = (json_decode($ff->reviewer_kpi_review, true)) ? (json_decode($ff->reviewer_kpi_review, true)) : [];
                 $percentArray = (json_decode($ff->reviewer_kpi_percentage, true)) ? (json_decode($ff->reviewer_kpi_percentage, true)) : [];
                 $commentArray = (json_decode($ff->reviewer_kpi_comments, true)) ? (json_decode($ff->reviewer_kpi_comments, true)) : [];
-              
+
             }
-        
+
 
         }
 
