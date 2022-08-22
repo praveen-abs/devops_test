@@ -96,7 +96,6 @@
                                                     <input type="email" pattern="email" placeholder="Email ID" name="email" value="{{request()->has('email')? request()->email : ''}}" class="onboard-form textbox form-control " @if(request()->has('email')) readonly @endif required />
                                                     <label for="" class="float-label">Email</label>
                                                 </div>
-<<<<<<< Updated upstream
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="aadhar">Aadhaar Number<span id="aadhar_req">{!! required() !!}</span></label> -->
