@@ -4,7 +4,7 @@
 }
 .appraisal-right-content,.appraisal-left-content {
     background-color: #c1d3e3 !important;
-    margin: 28px 0px 0px;
+    /* margin: 10px 0px 0px; */
 }
 .appraisal-right-content .input-wrap{
     width: 100%;
@@ -27,7 +27,7 @@
 }
 
 .left-content ul li{
-    margin-bottom: 15px !important;
+    margin-bottom: 12px ;
 }
 
 .e-table>:not(caption)>*>* {

@@ -49,41 +49,43 @@
                         <div class="col-md-6 col-sm-12 col-lg-6 col-xl-6">
                             <!-- <hr> -->
                             <div class="card  appraisal-left-content">
-                                @if($empSelected)
-                                <div class="appraisal-info left-content">
-                                    <ul class="personal-info">
-                                        <li>
-                                            <p class="title">Employee Name</p>
-                                            <p class="text">{{$assignedEmployee_Userdata->name}}</p>
-                                        </li>
-                                        <li>
-                                            <p class="title"> Employee ID</p>
-                                            <p class="text">{{$employeeData->emp_no}}</p>
-                                        </li>
-                                        <li>
-                                            <p class="title">Job Title/Designation</p>
-                                            <p class="text">{{$assignedEmployeeOfficeDetails->designation}}</p>
-                                        </li>
-                                        <li>
-                                            <p class="title">Business Unit/Process/Function</p>
-                                            <p class="text">{{$assignedEmployeeOfficeDetails->department}}</p>
-                                        </li>
-                                        <li>
-                                            <p class="title">Reporting Manager</p>
-                                            <p class="text">{{$assignersName}}</p>
-                                        </li>
-                                        <li>
-                                            <p class="title">Review Period</p>
-                                            <p class="text"><?php
-                                                            $temp =  json_decode($assignedGoals->assignment_period, true);
-                                                            print_r($temp['year'] . " - " . strtoupper($temp['assignment_period_start']));
-                                                            //dd($temp);
-                                                            ?></p>
-                                        </li>
-                                    </ul>
+                                <div class="card-body">
+                                    @if($empSelected)
+                                    <div class="appraisal-info left-content">
+                                        <ul class="personal-info">
+                                            <li>
+                                                <p class="title h5">Employee Name</p>
+                                                <p class="text">{{$assignedEmployee_Userdata->name}}</p>
+                                            </li>
+                                            <li>
+                                                <p class="title h5"> Employee ID</p>
+                                                <p class="text">{{$employeeData->emp_no}}</p>
+                                            </li>
+                                            <li>
+                                                <p class="title h5">Job Title/Designation</p>
+                                                <p class="text">{{$assignedEmployeeOfficeDetails->designation}}</p>
+                                            </li>
+                                            <li>
+                                                <p class="title h5">Business Unit/Process/Function</p>
+                                                <p class="text">{{$assignedEmployeeOfficeDetails->department}}</p>
+                                            </li>
+                                            <li>
+                                                <p class="title h5">Reporting Manager</p>
+                                                <p class="text">{{$assignersName}}</p>
+                                            </li>
+                                            <li>
+                                                <p class="title h5">Review Period</p>
+                                                <p class="text"><?php
+                                                                $temp =  json_decode($assignedGoals->assignment_period, true);
+                                                                print_r($temp['year'] . " - " . strtoupper($temp['assignment_period_start']));
+                                                                //dd($temp);
+                                                                ?></p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    @endif
                                 </div>
                             </div>
-                            @endif
                         </div>
                         <div class="col-md-6 col-sm-12 col-lg-6 col-xl-6">
                             <div class="card  appraisal-right-content">
@@ -288,7 +290,7 @@
                     @csrf
                     <input type="hidden" name="goal_id" value="{{$assignedGoals->id}}">
                     <div class="table-content mb-4">
-                        <table id="table_review" style="width:130%;" class="table align-middle mb-0 table-bordered  responsive" data-paging="true" data-paging-size="10" data-paging-limit="3" data-paging-container="#paging-ui-container" data-paging-count-format="{PF} to {PL}" data-sorting="true" data-filtering="false" data-empty="No Results" data-filter-container="#filter-form-container" data-editing-add-text="Add New">
+                        <table id="table_review" class="table align-middle mb-0 table-bordered  responsive" data-paging="true" data-paging-size="10" data-paging-limit="3" data-paging-container="#paging-ui-container" data-paging-count-format="{PF} to {PL}" data-sorting="true" data-filtering="false" data-empty="No Results" data-filter-container="#filter-form-container" data-editing-add-text="Add New">
                             <thead class="thead" id="tHead">
                                 <tr>
                                     <th scope="col" data-name='dimension' data-filterable="false" data-visible="{{$show['dimension']}}">@if($config && $config->header)
@@ -401,53 +403,53 @@
                                         <div>{{$kpiRow->self_kpi_comments}}</div>
                                         @endif
                                     </td>
-                                        @if (!$assignedGoals->is_hr_submitted )
-                                            <td>
-                                                @if($assignedGoals->is_employee_submitted && !$reviewCompleted &&
-                                                !$assignedGoals->is_manager_submitted && $show['manager'])
+                                    @if (!$assignedGoals->is_hr_submitted )
+                                    <td>
+                                        @if($assignedGoals->is_employee_submitted && !$reviewCompleted &&
+                                        !$assignedGoals->is_manager_submitted && $show['manager'])
 
-                                                <textarea name="managereview[{{$kpiRow->id}}]" id="" cols="20" rows="8" placeholder="type here">@if(isset( $kpiRow->manager_kpi_review)){{$kpiRow->manager_kpi_review}}@endif</textarea>
-                                                @else
-                                                <div>{{$kpiRow->manager_kpi_review}}</div>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if($assignedGoals->is_employee_submitted && !$reviewCompleted &&
-                                                !$assignedGoals->is_manager_submitted && $show['manager'])
-                                                <!-- <textarea name="managerpercetage[{{$kpiRow->id}}]" id="" cols="20" rows="2"
-                                                    placeholder="type here">@if(isset( $kpiRow->manager_kpi_percentage)) {{$kpiRow->manager_kpi_percentage}}@endif</textarea> -->
-                                                <input type="number" class="inp-text" name="managerpercetage[{{$kpiRow->id}}]" placeholder="type here" value="@if(isset( $kpiRow->manager_kpi_percentage)){{$kpiRow->manager_kpi_percentage}}@endif">
-                                                @else
-                                                <div>{{$kpiRow->manager_kpi_percentage}}</div>
-                                                @endif
-                                            </td>
+                                        <textarea name="managereview[{{$kpiRow->id}}]" id="" cols="20" rows="8" placeholder="type here">@if(isset( $kpiRow->manager_kpi_review)){{$kpiRow->manager_kpi_review}}@endif</textarea>
                                         @else
-                                        @foreach($kpiRow->manager_kpi_review as $key => $mgr)
-                                        <td>
-                                            <div>{{$mgr[$kpiRow['id']]}}</div>
-                                        </td>
-                                        @endforeach
-                                        @foreach($kpiRow->manager_kpi_percentage as $key => $mgr)
-                                        <td>
-                                            <div>{{$mgr[$kpiRow['id']]}}</div>
-                                        </td>
-                                        @endforeach
+                                        <div>{{$kpiRow->manager_kpi_review}}</div>
                                         @endif
-                                        <td>
-                                                @if(!$assignedGoals->is_hr_submitted && $assignedGoals->is_manager_submitted)
-                                                <textarea name="hreview[{{$kpiRow->id}}]" id="" cols="20" rows="8" placeholder="type here">@if(isset( $kpiRow->hr_kpi_review)){{$kpiRow->hr_kpi_review}}@endif</textarea>
-                                                @else
-                                                <div>{{$kpiRow->hr_kpi_review}}</div>
-                                                @endif
-                                        </td>
-                                        <td>
-                                            @if(!$assignedGoals->is_hr_submitted && $assignedGoals->is_manager_submitted)
-                                            <!-- <textarea name="hrpercetage[{{$kpiRow->id}}]" id="" cols="20" rows="2" placeholder="type here">@if(isset( $kpiRow->hr_kpi_percentage)){{$kpiRow->hr_kpi_percentage}}@endif</textarea> -->
-                                            <input type="number" class="inp-text" name="hrpercetage[{{$kpiRow->id}}]" placeholder="type here" value="@if(isset( $kpiRow->hr_kpi_percentage)){{$kpiRow->hr_kpi_percentage}}@endif">
-                                            @else
-                                            <div>{{$kpiRow->hr_kpi_percentage}}</div>
-                                            @endif
-                                        </td>
+                                    </td>
+                                    <td>
+                                        @if($assignedGoals->is_employee_submitted && !$reviewCompleted &&
+                                        !$assignedGoals->is_manager_submitted && $show['manager'])
+                                        <!-- <textarea name="managerpercetage[{{$kpiRow->id}}]" id="" cols="20" rows="2"
+                                                    placeholder="type here">@if(isset( $kpiRow->manager_kpi_percentage)) {{$kpiRow->manager_kpi_percentage}}@endif</textarea> -->
+                                        <input type="number" class="inp-text" name="managerpercetage[{{$kpiRow->id}}]" placeholder="type here" value="@if(isset( $kpiRow->manager_kpi_percentage)){{$kpiRow->manager_kpi_percentage}}@endif">
+                                        @else
+                                        <div>{{$kpiRow->manager_kpi_percentage}}</div>
+                                        @endif
+                                    </td>
+                                    @else
+                                    @foreach($kpiRow->manager_kpi_review as $key => $mgr)
+                                    <td>
+                                        <div>{{$mgr[$kpiRow['id']]}}</div>
+                                    </td>
+                                    @endforeach
+                                    @foreach($kpiRow->manager_kpi_percentage as $key => $mgr)
+                                    <td>
+                                        <div>{{$mgr[$kpiRow['id']]}}</div>
+                                    </td>
+                                    @endforeach
+                                    @endif
+                                    <td>
+                                        @if(!$assignedGoals->is_hr_submitted && $assignedGoals->is_manager_submitted)
+                                        <textarea name="hreview[{{$kpiRow->id}}]" id="" cols="20" rows="8" placeholder="type here">@if(isset( $kpiRow->hr_kpi_review)){{$kpiRow->hr_kpi_review}}@endif</textarea>
+                                        @else
+                                        <div>{{$kpiRow->hr_kpi_review}}</div>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if(!$assignedGoals->is_hr_submitted && $assignedGoals->is_manager_submitted)
+                                        <!-- <textarea name="hrpercetage[{{$kpiRow->id}}]" id="" cols="20" rows="2" placeholder="type here">@if(isset( $kpiRow->hr_kpi_percentage)){{$kpiRow->hr_kpi_percentage}}@endif</textarea> -->
+                                        <input type="number" class="inp-text" name="hrpercetage[{{$kpiRow->id}}]" placeholder="type here" value="@if(isset( $kpiRow->hr_kpi_percentage)){{$kpiRow->hr_kpi_percentage}}@endif">
+                                        @else
+                                        <div>{{$kpiRow->hr_kpi_percentage}}</div>
+                                        @endif
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -492,13 +494,13 @@
                 </div>
                 @endif
                 @if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin'))
-                        <div class="buttons d-flex align-items-center justify-content-end ">
-                            @if($assignedGoals->is_manager_submitted && !$assignedGoals->is_hr_submitted )
-                            <button class="btn btn-primary" id="save_table">Save</i></button>
-                            &nbsp;&nbsp;
-                            <button class="btn btn-primary" id="publish_table">Submit</button>
-                            @endif
-                        </div>
+                <div class="buttons d-flex align-items-center justify-content-end ">
+                    @if($assignedGoals->is_manager_submitted && !$assignedGoals->is_hr_submitted )
+                    <button class="btn btn-primary" id="save_table">Save</i></button>
+                    &nbsp;&nbsp;
+                    <button class="btn btn-primary" id="publish_table">Submit</button>
+                    @endif
+                </div>
                 @endif
                 @else
                 <h4>Goals Not Assigned</h4>

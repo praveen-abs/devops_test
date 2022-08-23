@@ -1625,16 +1625,17 @@ body::-webkit-scrollbar-thumb{
 
 .table-content table th {
     background: var(--vz-header-bg-dark);
-    width: 250px;
+    /* width: 250px; */
     color: #fff;
 
 }
 
 .table-content table td div {
-    max-height: 300px;
+    /* max-height: 300px;
     min-height: 150px;
     max-width: 600px;
-    min-width: 400px;
+    min-width: 400px; */
+    width: 150px;
 
 }
 
