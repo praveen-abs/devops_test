@@ -964,6 +964,7 @@
     <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2">
         <div class="modal-content">
             <div class="modal-header py-2 bg-primary">
+
                 <div class="w-100 modal-header-content d-flex align-items-center py-2">
                     <h5 class="modal-title text-white" id="modalHeader">Failed
                     </h5>
@@ -1092,6 +1093,13 @@
 <script src="{{ URL::asset('/assets/libs/jsvectormap/jsvectormap.min.js') }}"></script>
 <script src="{{ URL::asset('assets/libs/swiper/swiper.min.js')}}"></script>
 
+{{-- swall  --}}
+
+   {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css"> --}}
+    {{-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.all.min.js"></script>
+
 
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -1105,7 +1113,7 @@ $(document).ready(function(){
     // $('#select-reviewer').select2({
     //     dropdownParent: '#createEmployee',
     //     minimumResultsForSearch: Infinity,
-	// 	width: '100%'
+    //  width: '100%'
     // });
 
     ft = FooTable.init('#kpiTable', {
@@ -1788,78 +1796,56 @@ function changeEmployee1(employees) {
 $("#publish-goal").click(function(e){
     e.preventDefault();
 
-        var isInputFieldsEntered = true;
-        var errorList = [];
 
-        var calendar_type = $('#calendar_type').val();
+var calendar_type = $('#calendar_type').val();
+var calendaryear = $('#hidden_calendar_year').val();
+var frequency = $('#frequency').val();
+var assignmentperiodstart = $('#assignment_period_start').val();
 
-        if(calendar_type=="" ||  calendar_type ==null){
-            errorList.push("<li>Calendar</li>");
-        }
-        var calendaryear = $('#hidden_calendar_year').val();
-        if(calendaryear=="" ||  calendaryear ==null){
-            errorList.push("<li>Calendar Year</li>");
+if(calendar_type=="" ||  calendar_type ==null){ 
+   swal.fire("Error!", 'Please Select Calendar Type', "error");
+}else if(calendaryear=="" ||  calendaryear ==null){
+       swal.fire("Error!", 'Please Select Calendar Year', "error");
+}else if(frequency=="" ||  frequency ==null){
+       swal.fire("Error!", 'Please Select Frequency Type', "error");
+}else if(assignmentperiodstart=="" ||  assignmentperiodstart ==null){
+       swal.fire("Error!", 'Please Select Assignment Period', "error");
+}else{
+// var department = $('#department').val();
+// var selectedemployee = $('#selected_employee').val();
+// var selectedreviewer = $('#selected_reviewer').val();
+        $('.loader').show();
+// alert(calendaryear);
+        $.ajax({
+            type: "POST",
+            url: "{{url('vmt-pms-assign-goals/publish')}}",
+            data: $('#goalForm').serialize(),
+            success: function(data){
 
-        }
-        var frequency = $('#frequency').val();
-        if(frequency=="" ||  frequency ==null){
-            errorList.push("<li>Frequency</li>");
+                $("#kpiTableForm :input").prop("disabled", true);
+                $(".table-btn").prop('disabled', true);
 
-        }
-        var assignmentperiodstart = $('#assignment_period_start').val();
-        if(assignmentperiodstart=="" ||  assignmentperiodstart ==null){
-            errorList.push("<li>Assignment Period</li>");
-
-        }
-
-        if(errorList.length == 0)
-             isInputFieldsEntered = true;
-        else
-            isInputFieldsEntered = false;
-
-        if(isInputFieldsEntered)
-        {
-            $('.loader').show();
-
-            $.ajax({
-                type: "POST",
-                url: "{{url('vmt-pms-assign-goals/publish')}}",
-                data: $('#goalForm').serialize(),
-                success: function(data){
-
-                    $("#kpiTableForm :input").prop("disabled", true);
-                    $(".table-btn").prop('disabled', true);
-
-                    @if(auth()->user()->hasrole('Employee'))
-                        $('#modalBody').html("Goals published. Email Sent to your Manager");
-                        $('#notificationModal').show();
-                        $('#notificationModal').removeClass('fade');
-                    @else
-                        $('#modalBody').html("Goals published. Email Sent to your Employees");
-                        $('#notificationModal').show();
-                        $('#notificationModal').removeClass('fade');
-                    @endif
+                @if(auth()->user()->hasrole('Employee'))
+                    $('#modalBody').html("Goals published. Email Sent to your Manager");
+                    $('#notificationModal').show();
+                    $('#notificationModal').removeClass('fade');
+                @else
+                    $('#modalBody').html("Goals published. Email Sent to your Employees");
+                    $('#notificationModal').show();
+                    $('#notificationModal').removeClass('fade');
+                @endif
 
 
-                    $("kpitable_id").val(data.table_id);
-
-                    $('.loader').hide();
-                },
-                error: function(error) {
-                    $('.loader').hide();
-                }
-            })
-        }
-        else
-        {
-            $('#modalBodyError').html("Please fill all the fields.<br/><ul>"+errorList.toString().replace(',','')+"</ul>");
-                            $('#notificationModalError').show();
-                            $('#notificationModalError').removeClass('fade');
-
-            console.log(errorList.toString());
-            errorList = [];
-
-        }
+                $("kpitable_id").val(data.table_id);
+            
+                  $('.loader').hide();
+            },
+            error: function(error) {
+                $('.loader').hide();
+            }
+        })
+    }
+    
 });
 
 
