@@ -578,7 +578,7 @@
                         <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
 
                                     <label class="" for="calendar_type">Calendar Type</label>
-                                    <select name="calendar_type" id="calendar_type" class="form-control">
+                                    <select name="calendar_type" id="calendar_type" class="form-control" required>
                                         <option value="" hidden selected disabled>Select Type</option>
                                         <option name="financial_year" value="financial_year">Financial Year</option>
                                         <option name="calendar_year" value="calendar_year">Calendar Year</option>
@@ -588,7 +588,7 @@
                             <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
 
                                     <label class="" for="year">Year</label>
-                                    <input type="hidden" name="hidden_calendar_year" id="hidden_calendar_year" value="" >
+                                    <input type="hidden" name="hidden_calendar_year" id="hidden_calendar_year" value="" required >
 
                                     <select name="year" id="year" disabled class="form-control">
                                         <option value="" hidden selected disabled>Select Year</option>
@@ -952,6 +952,34 @@
                 <div class="mt-4">
                     <h4 class="mb-3" id="modalNot">Data Saved Successfully!</h4>
                     <p class="text-muted mb-4" id="modalBody"> Table Saved, Please publish goals.</p>
+                    <div class="hstack gap-2 justify-content-center">
+                        <button type="button" class="btn btn-light close-modal" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="notificationModalError" role="dialog" aria-hidden="true" style="opacity:1; display:none;background:#00000073;">
+    <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2">
+        <div class="modal-content">
+            <div class="modal-header py-2 bg-primary">
+
+                <div class="w-100 modal-header-content d-flex align-items-center py-2">
+                    <h5 class="modal-title text-white" id="modalHeader">Failed
+                    </h5>
+                    <button
+                        type="button"
+                        class="btn-close btn-close-white close-modal" data-bs-dismiss="modal"
+                        aria-label="Close"
+                    >
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="mt-4">
+                    <h4 class="mb-3" id="modalNot">Data Not  Saved!</h4>
+                    <p class="text-muted mb-4" id="modalBodyError"> Table Not Saved, Please Fill the Values.</p>
                     <div class="hstack gap-2 justify-content-center">
                         <button type="button" class="btn btn-light close-modal" data-bs-dismiss="modal">Close</button>
                     </div>
@@ -1761,8 +1789,37 @@ function changeEmployee1(employees) {
 $("#publish-goal").click(function(e){
     e.preventDefault();
 
-        $('.loader').show();
 
+var calendar_type = $('#calendar_type').val();
+
+if(calendar_type=="" ||  calendar_type ==null){
+   $('#modalBodyError').html("Please Select Calendar Type.");
+                    $('#notificationModalError').show();
+                    $('#notificationModalError').removeClass('fade');
+}
+var calendaryear = $('#hidden_calendar_year').val();
+if(calendaryear=="" ||  calendaryear ==null){
+   $('#modalBodyError').html("Please Select Calendar Year.");
+                    $('#notificationModalError').show();
+                    $('#notificationModalError').removeClass('fade');
+}
+var frequency = $('#frequency').val();
+if(frequency=="" ||  frequency ==null){
+   $('#modalBodyError').html("Please Select Frequency Type.");
+                    $('#notificationModalError').show();
+                    $('#notificationModalError').removeClass('fade');
+}
+var assignmentperiodstart = $('#assignment_period_start').val();
+if(assignmentperiodstart=="" ||  assignmentperiodstart ==null){
+   $('#modalBodyError').html("Please Select Assignment Period.");
+                    $('#notificationModalError').show();
+                    $('#notificationModalError').removeClass('fade');
+}
+// var department = $('#department').val();
+// var selectedemployee = $('#selected_employee').val();
+// var selectedreviewer = $('#selected_reviewer').val();
+        $('.loader').show();
+// alert(calendaryear);
         $.ajax({
             type: "POST",
             url: "{{url('vmt-pms-assign-goals/publish')}}",
@@ -1781,6 +1838,7 @@ $("#publish-goal").click(function(e){
                     $('#notificationModal').show();
                     $('#notificationModal').removeClass('fade');
                 @endif
+           
 
                 $("kpitable_id").val(data.table_id);
             
@@ -1790,6 +1848,7 @@ $("#publish-goal").click(function(e){
                 $('.loader').hide();
             }
         })
+    
 });
 
 
