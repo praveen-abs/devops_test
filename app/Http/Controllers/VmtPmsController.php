@@ -30,7 +30,7 @@ class VmtPmsController extends Controller
     // assign goals forms
     public function vmtAssignGoals(Request $request){
 
-        app('App\Http\Controllers\ConfigPMSController')->checkConfigPms();
+        ConfigPMSController::checkConfigPms();
 
         if(auth::user()->hasRole(['HR','Admin']) ){
             $empGoals = VmtEmployee::leftJoin('users', 'users.id', '=', 'vmt_employee_details.userid')

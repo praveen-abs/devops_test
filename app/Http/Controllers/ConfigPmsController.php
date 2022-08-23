@@ -78,7 +78,7 @@ class ConfigPmsController extends Controller
     /*
         Called In PMS Dashboard
     */
-    public function checkConfigPms(){
+    public static function checkConfigPms(){
 
         $config = ConfigPms::first();
 
