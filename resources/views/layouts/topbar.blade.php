@@ -34,8 +34,12 @@
                             </span>
                         </button>
                         <div class="topbar-logo mx-2">
-                            @if( file_exists(public_path('generalinfo/client-logo.png')) )
-                                <img src=" {{URL::asset('generalinfo/client-logo.png')}}"  alt="" class="w-100 h-100">
+                            @php
+                                $client_logo =  App\Models\VmtGeneralInfo::first()->logo_img;
+                            @endphp
+
+                            @if( file_exists(public_path($client_logo)) )
+                                <img src=" {{URL::asset($client_logo)}}"  alt="" class="w-100 h-100">
                             @endif
                         </div>
 

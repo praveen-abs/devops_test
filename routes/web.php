@@ -53,10 +53,6 @@ Route::get('pages-profile', [App\Http\Controllers\HomeController::class, 'showPr
 Route::get('pages-impersonate-profile/{id}', [App\Http\Controllers\HomeController::class, 'showImpersonateProfile'])->name('pages_impersonate_profile');
 // Route::get('pages-profile-settings', [App\Http\Controllers\HomeController::class, 'showProfilePage'])->name('pages-profile-settings');
 
-Route::get('/settings-user', function(){
-    return view('vmt_topbar_settings');
-})->name('settings-user');
-
 Route::get('test-email', 'App\Http\Controllers\HomeController@testEmail');
 
 // General Settings
