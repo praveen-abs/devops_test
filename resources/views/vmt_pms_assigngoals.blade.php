@@ -86,7 +86,7 @@
                     <div class="card-body ">
                         <div class="">
                             <div class="row">
-                                <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
                             <div class="card card-mini">
                                 <div class="card-body p-0">
                                                                        <div class="d-flex mt-2">
@@ -101,7 +101,7 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
                             <div class="card card-mini">
                                 <div class="card-body p-0">
                                     <div class="d-flex mt-2">
@@ -117,7 +117,7 @@
 
                             </div>
                         </div>
-                        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
                             <div class="card card-mini">
                                 <div class="card-body p-0">
 
