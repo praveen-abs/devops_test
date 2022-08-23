@@ -18,43 +18,10 @@
 </style>
 
 @endsection
-
-
-<?php
-$logoObj =\DB::table('vmt_general_info')->first();
-if ($logoObj) {
-    $logoSrc = $logoObj->logo_img;
-} else {
-    $logoSrc = 'assets/images/vasa.jpg';
-}
-// dd($logoSrc);
-
-?>
-
 <header id="page-topbar">
     <div class="layout-width">
         <div class="navbar-header">
             <div class="d-flex container-fluid">
-                <!-- LOGO -->
-                <div class="navbar-brand-box horizontal-logo">
-                    <a href="index" class="logo logo-dark">
-                        <span class="logo-sm">
-                            <img src="{{ URL::asset('assets/images/logo-sm.png') }}" alt="" height="22">
-                        </span>
-                        <span class="logo-lg">
-                            <img src="{{ URL::asset('assets/images/logo-dark.png') }}" alt="" height="17">
-                        </span>
-                    </a>
-
-                    <a href="index" class="logo logo-light">
-                        <span class="logo-sm">
-                            <img src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="">
-                        </span>
-                        <span class="logo-lg">
-                            <img src="{{ URL::asset('assets/images/abs logo.png') }}" alt="" class="">
-                        </span>
-                    </a>
-                </div>
                 <!-- disable setting icon for employee -->
                 <div class="d-flex justify-content-between align-items-center w-100">
                     <div class="d-flex w-50">
@@ -67,8 +34,9 @@ if ($logoObj) {
                             </span>
                         </button>
                         <div class="topbar-logo mx-2">
-                            <img src="{{ URL::asset($logoSrc) }}" alt="" class="w-100 h-100">
-                            <!-- <img src="{{ URL::asset('assets/images/vasa.jpg') }}" alt="" class="w-100 h-100"> -->
+                            @if( file_exists(public_path('generalinfo/client-logo.png')) )
+                                <img src=" {{URL::asset('generalinfo/client-logo.png')}}"  alt="" class="w-100 h-100">
+                            @endif
                         </div>
 
                         <div class="topbar-search-bar search-content d-flex  align-items-center w-50 "
