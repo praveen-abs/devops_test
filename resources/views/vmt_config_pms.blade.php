@@ -108,6 +108,7 @@
                             </div>
                             <h6 class="mt-3">Change column name as per your preference</h6>
                             <div class="row mt-1">
+                                 @if ($data && $data->selected_columns && in_array('dimension', explode(',', $data->selected_columns)))
                                 <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
                                     <label class="" for="selected_head">Dimension</label>
                                 </div>
@@ -116,8 +117,11 @@
                                         value="{{ $data && $data->header && $data->header['dimension'] ? $data->header['dimension'] : 'Dimension' }}"
                                         class="onboard-form form-control" required>
                                 </div>
+                                @else
+                                @endif
                             </div>
                             <div class="row mt-1">
+                                 @if ($data && $data->selected_columns && in_array('kpi', explode(',', $data->selected_columns)))
                                 <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
                                     <label class="" for="selected_head">KPI</label>
                                 </div>
@@ -126,8 +130,11 @@
                                         value="{{ $data && $data->header && $data->header['kpi'] ? $data->header['kpi'] : 'KPI' }}"
                                         class="onboard-form form-control" required>
                                 </div>
+                                @else
+                                @endif
                             </div>
                             <div class="row mt-1">
+                                 @if ($data && $data->selected_columns && in_array('operational', explode(',', $data->selected_columns)))
                                 <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
                                     <label class="" for="selected_head">Operational Definition</label>
                                 </div>
@@ -136,8 +143,11 @@
                                         value="{{ $data && $data->header && $data->header['operational'] ? $data->header['operational'] : 'Operational Definition' }}"
                                         class="onboard-form form-control" required>
                                 </div>
+                                @else
+                                @endif
                             </div>
                             <div class="row mt-1">
+                                 @if ($data && $data->selected_columns && in_array('measure', explode(',', $data->selected_columns)))
                                 <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
                                     <label class="" for="selected_head">Measure</label>
                                 </div>
@@ -146,8 +156,11 @@
                                         value="{{ $data && $data->header && $data->header['measure'] ? $data->header['measure'] : 'Measure' }}"
                                         class="onboard-form form-control" required>
                                 </div>
+                                @else
+                                @endif
                             </div>
                             <div class="row mt-1">
+                                  @if ($data && $data->selected_columns && in_array('frequency', explode(',', $data->selected_columns)))
                                 <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
                                     <label class="" for="selected_head">Frequency</label>
                                 </div>
@@ -156,8 +169,11 @@
                                         value="{{ $data && $data->header && $data->header['frequency'] ? $data->header['frequency'] : 'Frequency' }}"
                                         class="onboard-form form-control" required>
                                 </div>
+                                @else
+                                @endif
                             </div>
                             <div class="row mt-1">
+                                @if ($data && $data->selected_columns && in_array('target', explode(',', $data->selected_columns)))
                                 <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
                                     <label class="" for="selected_head">Target</label>
                                 </div>
@@ -166,8 +182,11 @@
                                         value="{{ $data && $data->header && $data->header['target'] ? $data->header['target'] : 'Target' }}"
                                         class="onboard-form form-control" required>
                                 </div>
+                                @else
+                                @endif
                             </div>
                             <div class="row mt-1">
+                               @if ($data && $data->selected_columns && in_array('stretchTarget', explode(',', $data->selected_columns)))
                                 <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
                                     <label class="" for="selected_head">Stretch Target</label>
                                 </div>
@@ -176,8 +195,11 @@
                                         value="{{ $data && $data->header && $data->header['stretchTarget'] ? $data->header['stretchTarget'] : 'Stretch Target' }}"
                                         class="onboard-form form-control" required>
                                 </div>
+                                @else
+                                @endif
                             </div>
                             <div class="row mt-1">
+                                @if ($data && $data->selected_columns && in_array('source', explode(',', $data->selected_columns)))
                                 <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
                                     <label class="" for="selected_head">Source</label>
                                 </div>
@@ -186,8 +208,11 @@
                                         value="{{ $data && $data->header && $data->header['source'] ? $data->header['source'] : 'Source' }}"
                                         class="onboard-form form-control" required>
                                 </div>
+                                @else
+                                @endif
                             </div>
                             <div class="row mt-1">
+                                @if ($data && $data->selected_columns && in_array('kpiWeightage', explode(',', $data->selected_columns)))
                                 <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
                                     <label class="" for="selected_head">KPI Weightage</label>
                                 </div>
@@ -196,6 +221,8 @@
                                         value="{{ $data && $data->header && $data->header['kpiWeightage'] ? $data->header['kpiWeightage'] : 'KPI Weightage ( % )' }}"
                                         class="onboard-form form-control" required>
                                 </div>
+                                @else
+                                @endif
                             </div>
 
                             <div class="text-end mt-3">

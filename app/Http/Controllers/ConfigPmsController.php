@@ -4,11 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ConfigPms;
+use App\Models\User;
+
 use Session as Ses;
 
 class ConfigPmsController extends Controller
 {
     public function index(Request $request) {
+
+        $this->checkConfigPms();
+
         $data = ConfigPms::where('user_id', auth()->user()->id)->first();
         if ($data) {
             $data->header = json_decode($data->column_header, true);
@@ -56,11 +61,9 @@ class ConfigPmsController extends Controller
         if ($request->input('kpiWeightage_check')) {
             array_push($selectedColumn, 'kpiWeightage');
         }
-        if ($request->id) {
-            $config = ConfigPms::find($request->id);
-        } else {
-            $config = new ConfigPms;
-        }
+
+        $config = ConfigPms::first();
+
         $config->selected_columns = implode(',',$selectedColumn);
         $config->selected_head = $request->input('selected_head');
         $config->column_header = $json;
@@ -69,5 +72,25 @@ class ConfigPmsController extends Controller
         Ses::flash('message', 'PMS Config Updated successfully!');
         Ses::flash('alert-class', 'alert-success');
         return redirect()->back();
+    }
+
+
+    /*
+        Called In PMS Dashboard
+    */
+    public function checkConfigPms(){
+
+        $config = ConfigPms::first();
+
+        if (!$config)
+        {
+            $createConfig = new ConfigPms;
+            $createConfig->selected_columns = "dimension,kpi,operational,measure,frequency,target,stretchTarget,source,kpiWeightage";
+            $createConfig->selected_head = "hr";
+            $createConfig->column_header = '{"dimension":null,"kpi":null,"operational":null,"measure":null,"frequency":null,"target":null,"stretchTarget":null,"source":null,"kpiWeightage":null}';
+            $createConfig->user_id = auth()->user()->id;
+            $createConfig->save();
+        }
+
     }
 }

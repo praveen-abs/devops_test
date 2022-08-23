@@ -36,6 +36,9 @@ class VmtPMSModuleController extends Controller
 
     public function showPMSDashboard()
     {
+
+        // checkConfigPms();
+
         //Check whether the current user has any KPI forms
         $existingGoals = VmtPMS_KPIFormAssignedModel::Where('assigner_id', auth::user()->id)->get();
 

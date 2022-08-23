@@ -578,7 +578,7 @@
                         <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
 
                                     <label class="" for="calendar_type">Calendar Type</label>
-                                    <select name="calendar_type" id="calendar_type" class="form-control">
+                                    <select name="calendar_type" id="calendar_type" class="form-control" required>
                                         <option value="" hidden selected disabled>Select Type</option>
                                         <option name="financial_year" value="financial_year">Financial Year</option>
                                         <option name="calendar_year" value="calendar_year">Calendar Year</option>
@@ -588,7 +588,7 @@
                             <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
 
                                     <label class="" for="year">Year</label>
-                                    <input type="hidden" name="hidden_calendar_year" id="hidden_calendar_year" value="" >
+                                    <input type="hidden" name="hidden_calendar_year" id="hidden_calendar_year" value="" required >
 
                                     <select name="year" id="year" disabled class="form-control">
                                         <option value="" hidden selected disabled>Select Year</option>
@@ -960,6 +960,34 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="notificationModalError" role="dialog" aria-hidden="true" style="opacity:1; display:none;background:#00000073;">
+    <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2">
+        <div class="modal-content">
+            <div class="modal-header py-2 bg-primary">
+
+                <div class="w-100 modal-header-content d-flex align-items-center py-2">
+                    <h5 class="modal-title text-white" id="modalHeader">Failed
+                    </h5>
+                    <button
+                        type="button"
+                        class="btn-close btn-close-white close-modal" data-bs-dismiss="modal"
+                        aria-label="Close"
+                    >
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="mt-4">
+                    <h4 class="mb-3" id="modalNot">Data Not  Saved!</h4>
+                    <p class="text-muted mb-4" id="modalBodyError"> Table Not Saved, Please Fill the Values.</p>
+                    <div class="hstack gap-2 justify-content-center">
+                        <button type="button" class="btn btn-light close-modal" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Select Employees window -->
 <div class="modal fade custom-modal" id="changeEmployee" style="opacity:1; display:none;background:#00000073;">
@@ -1065,6 +1093,13 @@
 <script src="{{ URL::asset('/assets/libs/jsvectormap/jsvectormap.min.js') }}"></script>
 <script src="{{ URL::asset('assets/libs/swiper/swiper.min.js')}}"></script>
 
+{{-- swall  --}}
+
+   {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css"> --}}
+    {{-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.all.min.js"></script>
+
 
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -1078,7 +1113,7 @@ $(document).ready(function(){
     // $('#select-reviewer').select2({
     //     dropdownParent: '#createEmployee',
     //     minimumResultsForSearch: Infinity,
-	// 	width: '100%'
+    //  width: '100%'
     // });
 
     ft = FooTable.init('#kpiTable', {
@@ -1761,8 +1796,26 @@ function changeEmployee1(employees) {
 $("#publish-goal").click(function(e){
     e.preventDefault();
 
-        $('.loader').show();
 
+var calendar_type = $('#calendar_type').val();
+var calendaryear = $('#hidden_calendar_year').val();
+var frequency = $('#frequency').val();
+var assignmentperiodstart = $('#assignment_period_start').val();
+
+if(calendar_type=="" ||  calendar_type ==null){ 
+   swal.fire("Error!", 'Please Select Calendar Type', "error");
+}else if(calendaryear=="" ||  calendaryear ==null){
+       swal.fire("Error!", 'Please Select Calendar Year', "error");
+}else if(frequency=="" ||  frequency ==null){
+       swal.fire("Error!", 'Please Select Frequency Type', "error");
+}else if(assignmentperiodstart=="" ||  assignmentperiodstart ==null){
+       swal.fire("Error!", 'Please Select Assignment Period', "error");
+}else{
+// var department = $('#department').val();
+// var selectedemployee = $('#selected_employee').val();
+// var selectedreviewer = $('#selected_reviewer').val();
+        $('.loader').show();
+// alert(calendaryear);
         $.ajax({
             type: "POST",
             url: "{{url('vmt-pms-assign-goals/publish')}}",
@@ -1782,6 +1835,7 @@ $("#publish-goal").click(function(e){
                     $('#notificationModal').removeClass('fade');
                 @endif
 
+
                 $("kpitable_id").val(data.table_id);
             
                   $('.loader').hide();
@@ -1790,6 +1844,8 @@ $("#publish-goal").click(function(e){
                 $('.loader').hide();
             }
         })
+    }
+    
 });
 
 
