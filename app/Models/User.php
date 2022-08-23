@@ -45,4 +45,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // get employee details by userid
+    public function getEmployeeDetails() {
+        return $this->hasOne(VmtEmployee::class,'userid');
+    }
+
+    // get employee Office details by user_id
+    public function getEmployeeOfficeDetails() {
+        return $this->hasOne(VmtEmployeeOfficeDetails::class,'user_id');
+    }
 }

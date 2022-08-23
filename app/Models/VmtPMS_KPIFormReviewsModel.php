@@ -11,4 +11,7 @@ class VmtPMS_KPIFormReviewsModel extends Model
 
     protected $table = 'vmt_pms_kpiform_reviews';
 
+    function getPmsKpiFormAssigned(){
+        return $this->belongsTo(VmtPMS_KPIFormAssignedModel::class,'vmt_pms_kpiform_assigned_id');
+    }
 }

@@ -27,27 +27,8 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-12 col-lg-12 col-xl-12">
-                    <!-- <div class="d-flex align-items-center justify-content-start">
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6">
-                                <div class=" appraisal-user">
-                                    <img src="{{ URL::asset('images/' . Auth::user()->avatar) }}"
-                                        class="soc-det-img profile-img-round w-100 h-100">
-                                </div>
-                            </div>
-                            <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6">
-                                <div class="d-flex flex-column justify-content-center mx-1 my-3 ">
-                                    <h4 class="fw-bold">{{$assignedEmployee_Userdata->name}}</h5>
-                                    <p class="text-muted">{{$assignedEmployeeOfficeDetails->designation}}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div> -->
-
                     <div class="row">
                         <div class="col-md-6 col-sm-12 col-lg-6 col-xl-6">
-                            <!-- <hr> -->
                             <div class="card  appraisal-left-content">
                                 <div class="card-body">
                                     @if($empSelected)
@@ -55,31 +36,35 @@
                                         <ul class="personal-info">
                                             <li>
                                                 <p class="title h5">Employee Name</p>
-                                                <p class="text">{{$assignedEmployee_Userdata->name}}</p>
+                                                <p class="text">{{$assignedUserDetails->name}}</p>
                                             </li>
+                                            @if(isset($assignedUserDetails->getEmployeeDetails))
                                             <li>
                                                 <p class="title h5"> Employee ID</p>
-                                                <p class="text">{{$employeeData->emp_no}}</p>
+                                                <p class="text">{{$assignedUserDetails->getEmployeeDetails->emp_no}}</p>
                                             </li>
+                                            @endif
+                                            @if(isset($assignedUserDetails->getEmployeeOfficeDetails))
                                             <li>
                                                 <p class="title h5">Job Title/Designation</p>
-                                                <p class="text">{{$assignedEmployeeOfficeDetails->designation}}</p>
+                                                <p class="text">{{$assignedUserDetails->getEmployeeOfficeDetails->designation}}</p>
                                             </li>
+                                            @endif
+                                            @if(isset($assignedUserDetails->getEmployeeOfficeDetails))
                                             <li>
                                                 <p class="title h5">Business Unit/Process/Function</p>
-                                                <p class="text">{{$assignedEmployeeOfficeDetails->department}}</p>
+                                                <p class="text">{{$assignedUserDetails->getEmployeeOfficeDetails->department}}</p>
                                             </li>
+                                            @endif
                                             <li>
                                                 <p class="title h5">Reporting Manager</p>
                                                 <p class="text">{{$assignersName}}</p>
                                             </li>
                                             <li class="mb-0">
                                                 <p class="title h5">Review Period</p>
-                                                <p class="text"><?php
-                                                                $temp =  json_decode($assignedGoals->assignment_period, true);
-                                                                print_r($temp['year'] . " - " . strtoupper($temp['assignment_period_start']));
-                                                                //dd($temp);
-                                                                ?></p>
+                                                <p class="text">
+                                                    {{  $assignedGoals->year }} - {{ strtoupper($assignedGoals->assignment_period) }}
+                                                </p>
                                             </li>
                                         </ul>
                                     </div>
@@ -124,146 +109,8 @@
     </div>
 </div>
 
-
-
 <div class="row">
     <div class="col-xl-12">
-        <!-- <div class="card">
-
-            @if($empSelected)
-            <table class="table e-table align-middle table-nowrap mb-0 " style="border: none;">
-
-                <tbody>
-                    <tr style="border: none;">
-                        <td class=" text-left">
-                            <b>Employee Name: </b>
-                        </td>
-                        <td class="text-left">
-                            {{$assignedEmployee_Userdata->name}}
-                        </td>
-                    </tr>
-                    <tr style="border: none;">
-                        <td class="text-left">
-                            <b>Employee ID:
-                        </td>
-                        <td class="text-left">
-                            {{$employeeData->emp_no}}
-                        </td>
-                    </tr>
-                    <tr style="border: none;">
-                        <td class="col-xl-6 text-left">
-                            <b>Job Title / Designation:</b>
-                        </td>
-                        <td class="col-xl-6 text-left">
-                            {{$assignedEmployeeOfficeDetails->designation}}
-                        </td>
-                    </tr>
-                    <tr style="border: none;">
-                        <td class="col-xl-6 text-left">
-                            <b>Business Unit/Process/Function:</b>
-                        </td>
-                        <td class="col-xl-6 text-left">
-                            {{$assignedEmployeeOfficeDetails->department}}
-                        </td>
-                    </tr>
-                    <tr style="border: none;">
-                        <td class="col-xl-6 text-left">
-                            <b>Reporting Manager :</b>
-                        </td>
-                        <td class="col-xl-6 text-left">
-                            {{$assignedEmployeeOfficeDetails->l1_manager_name}}
-                        </td>
-                    </tr>
-                    {{-- <tr style="border: none;">
-                            <td class="col-xl-6 text-left">
-                                <b>Managers Manager :</b>
-                            </td>
-                            <td class="col-xl-6 text-left">
-                                Kumar
-                            </td>
-                        </tr> --}}
-                    <tr style="border: none;">
-                        <td class="col-xl-6 text-left">
-                            <b>Review Period: </b>
-                        </td>
-                        <td class="col-xl-6 text-left">
-                            <?php
-                            $temp =  json_decode($assignedGoals->assignment_period, true);
-                            print_r($temp['year'] . " - " . strtoupper($temp['assignment_period_start']));
-
-                            ?>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            @endif
-
-        </div> -->
-
-        <!-- <div class="card">
-
-            <table class="table e-table align-middle table-nowrap mb-0 " style="border: none;">
-
-                <tbody>
-                    <tr style="border: none;">
-                        <td class=" text-left">
-                            <b>Overall Annual Score: </b>
-                        </td>
-                        <td class="text-left">
-                            @if($ratingDetail){{$ratingDetail['rating']}}@else - @endif
-                        </td>
-                    </tr>
-                    <tr style="border: none;">
-                        <td class="text-left">
-                            <b>Corresponding ANNUAL PERFORMANCE Rating:</b>
-                        </td>
-                        <td class="text-left">
-                            @if($ratingDetail){{$ratingDetail['performance']}}@else - @endif
-                        </td>
-                    </tr>
-                    <tr style="border: none;">
-                        <td class="col-xl-6 text-left">
-                            <b>Ranking:</b>
-                        </td>
-                        <td class="col-xl-6 text-left">
-                            @if($ratingDetail){{$ratingDetail['ranking']}}@else - @endif
-                        </td>
-                    </tr>
-                    <tr style="border: none;">
-                        <td class="col-xl-6 text-left">
-                            <b> Action:</b>
-                        </td>
-                        <td class="col-xl-6 text-left">
-                            @if($ratingDetail){{$ratingDetail['action']}}@else - @endif
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-        </div> -->
-
-        <!-- @can('L1_Review')
-                            <th style=" background-color: #405189;">
-                                <h6 style="color:white;">Reporting Manger Review's (L1)<br /><br /> Comments
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Score
-                                </h6>
-                            </th>
-                            @endcan
-
-                            @can('L2_Review')
-                            <th class="r" style=" background-color: #405189;">
-                                <h6 style="color:white;"> Managers Manager (L2)<br /><br /> Comments
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Score</h6>
-                            </th>
-                            @endcan
-
-                            @can('Final_Review')
-                            <th class="r" style=" background-color: #405189;">
-                                <h6 style="color:white;"> Final Review <br />( HR or Head Of the Department)</h6>
-                            </th>
-                            @endcan -->
-
-
         <!-- appraisal table -->
         <div class="card">
             <div class="card-body pb-2">
@@ -289,7 +136,9 @@
                 @if(count($kpiRows) > 0)
                 <form id="employee_self_review" method="POST">
                     @csrf
+                    <input type="hidden" value="" name="formSubmitType" id="formSubmitType">
                     <input type="hidden" name="goal_id" value="{{$assignedGoals->id}}">
+                    <input type="hidden" name="kpiReviewId" value="{{$assignedGoals->id}}">
                     <div class="table-content mb-4">
                         <table id="table_review"  class="table align-middle mb-0 table-bordered  responsive" data-paging="true" data-paging-size="10" data-paging-limit="3" data-paging-container="#paging-ui-container" data-paging-count-format="{PF} to {PL}" data-sorting="true" data-filtering="false" data-empty="No Results" data-filter-container="#filter-form-container" data-editing-add-text="Add New">
                             <thead class="thead" id="tHead">
@@ -324,20 +173,10 @@
                                     <th scope="col" data-name='kpiSelfReview' data-filterable="false" data-visible="true">KPI - Achievement (Self Review)</th>
                                     <th scope="col" data-name='kpiSelfAchivement' data-filterable="false" data-visible="true">Self KPI Achievement %</th>
                                     <th scope="col" data-name='comments' data-filterable="false" data-visible="true">Comments</th>
-                                    @if (!$assignedGoals->is_hr_submitted || $show['managerCount'] < 2) <th scope="col" data-name='kpiManagerReview' data-filterable="false" data-visible="{{(($reviewCompleted && $assignedGoals->is_hr_submitted) || $show['manager']) ? 'true' :'false' }}">KPI - Achievement (Manager Review)</th>
-                                        <th scope="col" data-name='kpiManagerAchivement' data-filterable="false" data-visible="{{(($reviewCompleted && $assignedGoals->is_hr_submitted) || $show['manager']) ? 'true' :'false' }}">Manager KPI Achievement %</th>
-                                        @else
-                                        @for($i=1; $i<=$show['managerCount']; $i++) <th scope="col" data-name='kpiManagerReview' data-filterable="false" data-visible="true">KPI - Achievement (Manager Review) - {{$i}}</th>
-                                            @endfor
-                                            @for($i=1; $i<=$show['managerCount']; $i++) <th scope="col" data-name='kpiManagerAchivement' data-filterable="false" data-visible="true">Manager KPI Achievement % - {{$i}}</th>
-                                                @endfor
-                                                @endif
-                                                <th scope="col" data-name='kpiHrReview' data-filterable="false" data-visible="{{(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin')) ? 'true': 'false'}}">KPI - Achievement (HR Review)</th>
-                                                <th scope="col" data-name='kpiHrAchivement' data-filterable="false" data-visible="{{(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin')) ? 'true': 'false'}}">HR KPI Achievement %</th>
+                                    
                                 </tr>
                             </thead>
                             <tbody class="tbody" id="tbody">
-                                {{-- <?php dd($kpiRows) ?> --}}
                                 @foreach($kpiRows as $index => $kpiRow)
                                 <tr>
                                     <th scope="row">
@@ -367,93 +206,35 @@
                                     <td>
                                         <div>{{$kpiRow->kpi_weightage}}</div>
                                     </td>
-
                                     <td>
-                                        @if($assignedGoals->is_manager_approved &&
-                                        !$assignedGoals->is_employee_submitted && $show['appraiser'])
+                                        @if($assignedGoals->is_assignee_submitted == 0)
                                         <div>
-                                            <textarea name="selfreview[{{$kpiRow->id}}]" id="selfreview{{$index}}" cols="40" rows="8" placeholder="type here">@if(isset($kpiRow->self_kpi_review)) {{$kpiRow->self_kpi_review}} @endif</textarea>
+                                            <textarea name="assignee_kpi_review[{{$kpiRow->id}}]" id="assignee_kpi_review{{$index}}" cols="40" rows="8" placeholder="type here">@if(isset(json_decode($assignedGoals->assignee_kpi_review,true)[$kpiRow->id])) {{json_decode($assignedGoals->assignee_kpi_review,true)[$kpiRow->id]}} @endif</textarea>
                                         </div>
                                         @else
                                         <div>
-                                            {{$kpiRow->self_kpi_review}}
+                                            {{json_decode($assignedGoals->assignee_kpi_review,true)[$kpiRow->id]}}
                                         </div>
                                         @endif
                                     </td>
                                     <td>
-                                        @if($assignedGoals->is_manager_approved &&
-                                        !$assignedGoals->is_employee_submitted && $show['appraiser'])
+                                        @if($assignedGoals->is_assignee_submitted == 0)
                                         <div>
-                                            <!-- <textarea name="selfkpiachievement[{{$kpiRow->id}}]" id="" cols="40" rows="8"
-                                                placeholder="type here">@if(isset($kpiRow->self_kpi_percentage)) {{$kpiRow->self_kpi_percentage}} @endif</textarea> -->
-                                            <input type="number" class="inp-text" id="selfkpiachievement{{$index}}" name="selfkpiachievement[{{$kpiRow->id}}]" placeholder="type here" value="@if(isset( $kpiRow->self_kpi_percentage)){{$kpiRow->self_kpi_percentage}}@endif">
+                                            <input type="number" class="inp-text" id="assignee_kpi_percentage{{$index}}" name="assignee_kpi_percentage[{{$kpiRow->id}}]" placeholder="type here" value="@if(isset( json_decode($assignedGoals->assignee_kpi_percentage,true)[$kpiRow->id])){{json_decode($assignedGoals->assignee_kpi_percentage,true)[$kpiRow->id]}}@endif">
                                         </div>
                                         @else
-                                        <div> {{$kpiRow->self_kpi_percentage}}</div>
+                                        <div> {{json_decode($assignedGoals->assignee_kpi_percentage,true)[$kpiRow->id]}}</div>
                                         @endif
                                     </td>
                                     <td>
-                                        @if($assignedGoals->is_manager_approved &&
-                                        !$assignedGoals->is_employee_submitted && $show['appraiser'])
+                                        @if($assignedGoals->is_assignee_submitted == 0)
                                         <div>
-                                            <textarea name="selfcomments[{{$kpiRow->id}}]" id="selfcomments{{$index}}" cols="40" rows="8" placeholder="type here"> @if(isset($kpiRow->self_kpi_comments)) {{$kpiRow->self_kpi_comments}} @endif</textarea>
+                                            <textarea name="assignee_kpi_comments[{{$kpiRow->id}}]" id="assignee_kpi_comments{{$index}}" cols="40" rows="8" placeholder="type here"> @if(isset(json_decode($assignedGoals->assignee_kpi_comments,true)[$kpiRow->id])) {{json_decode($assignedGoals->assignee_kpi_comments,true)[$kpiRow->id]}} @endif</textarea>
                                         </div>
                                         @else
-                                        <div>{{$kpiRow->self_kpi_comments}}</div>
+                                        <div>{{json_decode($assignedGoals->assignee_kpi_comments,true)[$kpiRow->id]}}</div>
                                         @endif
                                     </td>
-                                    @if (!$assignedGoals->is_hr_submitted)
-                                    <td>
-                                        @if($assignedGoals->is_employee_submitted && !$reviewCompleted &&
-                                        !$assignedGoals->is_manager_submitted && $show['manager'])
-
-                                        <textarea name="managereview[{{$kpiRow->id}}]" id="" cols="20" rows="8" placeholder="type here">@if(isset( $kpiRow->manager_kpi_review)){{$kpiRow->manager_kpi_review}}@endif</textarea>
-                                        @else
-                                        <div>{{$kpiRow->manager_kpi_review}}</div>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if($assignedGoals->is_employee_submitted && !$reviewCompleted &&
-                                        !$assignedGoals->is_manager_submitted && $show['manager'])
-                                        <!-- <textarea name="managerpercetage[{{$kpiRow->id}}]" id="" cols="20" rows="2"
-                                            placeholder="type here">@if(isset( $kpiRow->manager_kpi_percentage)) {{$kpiRow->manager_kpi_percentage}}@endif</textarea> -->
-                                        <input type="number" class="inp-text" name="managerpercetage[{{$kpiRow->id}}]" placeholder="type here" value="@if(isset( $kpiRow->manager_kpi_percentage)){{$kpiRow->manager_kpi_percentage}}@endif">
-                                        @else
-                                        <div>{{$kpiRow->manager_kpi_percentage}}</div>
-                                        @endif
-                                    </td>
-                                    @else
-                                    @foreach($kpiRow->manager_kpi_review as $key => $mgr)
-                                    <td>
-                                        <div>{{$mgr[$kpiRow['id']]}}</div>
-                                    </td>
-                                    @endforeach
-                                    @foreach($kpiRow->manager_kpi_percentage as $key => $mgr)
-                                    <td>
-                                        <div>{{$mgr[$kpiRow['id']]}}</div>
-                                    </td>
-                                    @endforeach
-                                    @endif
-                                    <!-- @if(($reviewCompleted && $show['appraiser']) || !$show['appraiser'])
-                                    @endif -->
-                                    <td>
-                                        @if(!$assignedGoals->is_hr_submitted && $assignedGoals->is_manager_submitted)
-                                        <textarea name="hreview[{{$kpiRow->id}}]" id="" cols="20" rows="8" placeholder="type here">@if(isset( $kpiRow->hr_kpi_review)){{$kpiRow->hr_kpi_review}}@endif</textarea>
-                                        @else
-                                        <div>{{$kpiRow->hr_kpi_review}}</div>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if(!$assignedGoals->is_hr_submitted && $assignedGoals->is_manager_submitted)
-                                        <!-- <textarea name="hrpercetage[{{$kpiRow->id}}]" id="" cols="20" rows="2" placeholder="type here">@if(isset( $kpiRow->hr_kpi_percentage)){{$kpiRow->hr_kpi_percentage}}@endif</textarea> -->
-                                        <input type="number" class="inp-text" name="hrpercetage[{{$kpiRow->id}}]" placeholder="type here" value="@if(isset( $kpiRow->hr_kpi_percentage)){{$kpiRow->hr_kpi_percentage}}@endif">
-                                        @else
-                                        <div>{{$kpiRow->hr_kpi_percentage}}</div>
-                                        @endif
-                                    </td>
-                                    <!-- @if((auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin')) && $reviewCompleted) -->
-                                    <!-- @endif -->
-
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -462,50 +243,12 @@
 
                     </div>
                 </form>
-                @if($show['appraiser'])
                 <div class="buttons d-flex align-items-center justify-content-end ">
-                    @if(!$assignedGoals->is_employee_accepted)
-                    <button class="btn btn-primary" id="approve">Accept<i class="fa fa-save"></i></button>
+                    <button class="btn btn-primary" id="save_table" @if($assignedGoals->is_assignee_submitted == '1') disabled @endif>
+                    @if($assignedGoals->is_assignee_submitted == '') Save @else Edit @endif <i class="fa fa-save"></i></button>
                     &nbsp;&nbsp;
-                    <button class="btn btn-primary" id="reject">Reject<i class="fa fa-save"></i></button>
-                    &nbsp;&nbsp;
-                    @else
-                    @if(!$reviewCompleted && !$assignedGoals->is_employee_submitted &&
-                    $assignedGoals->is_manager_approved )
-                    <button class="btn btn-primary" id="save_table">Save<i class="fa fa-save"></i></button>
-                    &nbsp;&nbsp;
-                    <button class="btn btn-primary" id="publish_table">Submit<i class="fa fa-save"></i></button>
-                    @endif
-
-                    @endif
+                    <button class="btn btn-primary" id="publish_table" @if($assignedGoals->is_assignee_submitted == '' || $assignedGoals->is_assignee_submitted == '1') disabled @endif>Submit<i class="fa fa-save"></i></button>
                 </div>
-                @endif
-                @if($show['manager'])
-                <div class="buttons d-flex align-items-center justify-content-end ">
-                    @if(!$assignedGoals->is_manager_approved)
-                    <button class="btn btn-primary" id="approve">Approve<i class="fa fa-save"></i></button>
-                    &nbsp;&nbsp;
-                    <button class="btn btn-primary" id="reject">Reject<i class="fa fa-save"></i></button>
-                    &nbsp;&nbsp;
-                    @elseif(!$reviewCompleted && $assignedGoals->is_employee_submitted)
-                    <button class="btn btn-primary" id="save_table">Save<i class="fa fa-save"></i></button>
-                    &nbsp;&nbsp;
-                    <button class="btn btn-primary" id="publish_table">Publish<i class="fa fa-save"></i></button>
-                    @endif
-                    @if(!$assignedGoals->is_employee_submitted)
-                    <h4>Employee has not yet submitted this review.</h4>
-                    @endif
-                </div>
-                @endif
-                @if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin'))
-                <div class="buttons d-flex align-items-center justify-content-end ">
-                    @if($assignedGoals->is_manager_submitted && !$assignedGoals->is_hr_submitted )
-                    <button class="btn btn-primary" id="save_table">Save<i class="fa fa-save"></i></button>
-                    &nbsp;&nbsp;
-                    <button class="btn btn-primary" id="publish_table">Submit<i class="fa fa-save"></i></button>
-                    @endif
-                </div>
-                @endif
                 @else
                 <h4>Goals Not Assigned</h4>
                 @endif
@@ -514,7 +257,6 @@
     </div>
 
     @if($reviewCompleted && $assignedGoals->is_hr_submitted)
-
     <div class="row mt-3">
         <div class="col-lg-12">
             <label class="form-label">
@@ -527,9 +269,7 @@
     </div>
     @endif
 
-
     @if($reviewCompleted && $assignedGoals->is_hr_submitted)
-
     <div class="card">
         <div class="card-header">
             <h5>Best People Rating Grid</h5>
@@ -650,8 +390,11 @@
 
 @endsection
 @section('script')
-<!-- apexcharts -->
+<!--Sweet alert JS-->
+<script src="{{ URL::asset('/assets/premassets/js/sweetalert.js') }}"></script>
+<script src="{{ URL::asset('/assets/premassets/js/progressbar.min.js') }}"></script>
 
+<!-- apexcharts -->
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
@@ -694,95 +437,25 @@
         });
     });
 
+ 
+    // Save/Draft Assignee Reviews
     $('#save_table').click(function(e) {
         e.preventDefault();
+        $('#formSubmitType').val(0);
         // console.log("save trigger");
         // console.log($('#employee_self_review').serialize());
         $('.loader').show();
         $.ajax({
             type: "POST",
-            url: "{{url('vmt-pms-saveKPItableDraft_HR')}}",
+            url: "{{ route('saveAssigneeReviews') }}",
             data: $('#employee_self_review').serialize(),
             success: function(data) {
-                alert(data);
+                if(data.status == true){
+                    swal("Success!", data.message, "success");
+                }else{
+                    swal("Error!", data.message, "error");
+                }
                 $('.loader').hide();
-            },
-            error: function(error) {
-                $('.loader').hide();
-            }
-        });
-    });
-
-
-    $('body').on('click', '.close-modal', function() {
-        $('#notificationModal').hide();
-        $('#notificationModal').addClass('fade');
-        window.location.reload();
-    });
-
-    $('body').on("keyup", '#reject_content', function() {
-        if ($(this).val() == '') {
-            $('#reject_save').attr('disabled', true);
-        } else {
-            $('#reject_save').removeAttr('disabled');
-        }
-    });
-
-    $('#reject_save').click(function(e) {
-        e.preventDefault();
-        var goal_id = "{{\Request::get('id')}}";
-        var user_id = "{{\Request::get('user_id')}}";
-        var approve_flag = "rejected";
-        var content = $('#reject_content').val();
-        $('.loader').show();
-        $.ajax({
-            type: "POST",
-            url: "{{url('vmt-approvereject-command')}}",
-            data: {
-                "_token": "{{ csrf_token() }}",
-                content: content,
-                goal_id: goal_id,
-                user_id: user_id,
-            },
-            success: function(data) {
-                e.preventDefault();
-                var goal_id = "{{\Request::get('id')}}";
-                var user_id = "{{\Request::get('user_id')}}";
-                var approve_flag = "rejected";
-                var command = $('#reject_content').val();
-                $.ajax({
-                    type: "GET",
-                    url: "{{url('vmt-approvereject-kpitable')}}?goal_id=" + goal_id +
-                        "&user_id=" + user_id + "&approve_flag=" + approve_flag + "&command=" +
-                        command,
-                    success: function(data) {
-                        $('#notificationModal').hide();
-                        $('#notificationModal').addClass('fade');
-                        window.location.reload();
-                    },
-
-                    error: function(error) {
-                        $('.loader').hide();
-                    }
-                });
-            }
-        });
-    });
-
-
-    $('#approve').click(function(e) {
-        e.preventDefault();
-        //goal_id=26&user_id=4
-        var goal_id = "{{\Request::get('id')}}";
-        var user_id = "{{\Request::get('user_id')}}";
-        var approve_flag = "approved";
-        $('.loader').show();
-        $.ajax({
-            type: "GET",
-            url: "{{url('vmt-approvereject-kpitable')}}?goal_id=" + goal_id + "&user_id=" + user_id +
-                "&approve_flag=" + approve_flag,
-            success: function(data) {
-                alert(data);
                 window.location.reload();
             },
             error: function(error) {
@@ -791,28 +464,24 @@
         });
     });
 
-
-
-    $('#reject').click(function(e) {
-        $('#modalHeader').html("Rejected");
-        $('#modalNot').html(
-            "Are you sure you want to reject this Kpi. If yes, please entered the reason in the below command box:"
-        );
-        $('#notificationModal').show('modal');
-    });
-
-
+    // Publish/Confirm Assignee Reviews
     $('#publish_table').click(function(e) {
         e.preventDefault();
+        $('#formSubmitType').val(1);
         console.log("save trigger");
         console.log($('#employee_self_review').serialize());
         $('.loader').show();
         $.ajax({
             type: "POST",
-            url: "{{url('vmt-pmsappraisal-hrreview')}}",
+            url: "{{ route('saveAssigneeReviews') }}",
             data: $('#employee_self_review').serialize(),
             success: function(data) {
-                alert(data);
+                if(data.status == true){
+                    swal("Success!", data.message, "success");
+                }else{
+                    swal("Error!", data.message, "error");
+                }
+                $('.loader').hide();
                 window.location.reload();
             },
             error: function(error) {
