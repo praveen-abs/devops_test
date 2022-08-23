@@ -964,7 +964,6 @@
     <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2">
         <div class="modal-content">
             <div class="modal-header py-2 bg-primary">
-
                 <div class="w-100 modal-header-content d-flex align-items-center py-2">
                     <h5 class="modal-title text-white" id="modalHeader">Failed
                     </h5>
@@ -1789,66 +1788,78 @@ function changeEmployee1(employees) {
 $("#publish-goal").click(function(e){
     e.preventDefault();
 
+        var isInputFieldsEntered = true;
+        var errorList = [];
 
-var calendar_type = $('#calendar_type').val();
+        var calendar_type = $('#calendar_type').val();
 
-if(calendar_type=="" ||  calendar_type ==null){
-   $('#modalBodyError').html("Please Select Calendar Type.");
-                    $('#notificationModalError').show();
-                    $('#notificationModalError').removeClass('fade');
-}
-var calendaryear = $('#hidden_calendar_year').val();
-if(calendaryear=="" ||  calendaryear ==null){
-   $('#modalBodyError').html("Please Select Calendar Year.");
-                    $('#notificationModalError').show();
-                    $('#notificationModalError').removeClass('fade');
-}
-var frequency = $('#frequency').val();
-if(frequency=="" ||  frequency ==null){
-   $('#modalBodyError').html("Please Select Frequency Type.");
-                    $('#notificationModalError').show();
-                    $('#notificationModalError').removeClass('fade');
-}
-var assignmentperiodstart = $('#assignment_period_start').val();
-if(assignmentperiodstart=="" ||  assignmentperiodstart ==null){
-   $('#modalBodyError').html("Please Select Assignment Period.");
-                    $('#notificationModalError').show();
-                    $('#notificationModalError').removeClass('fade');
-}
-// var department = $('#department').val();
-// var selectedemployee = $('#selected_employee').val();
-// var selectedreviewer = $('#selected_reviewer').val();
-        $('.loader').show();
-// alert(calendaryear);
-        $.ajax({
-            type: "POST",
-            url: "{{url('vmt-pms-assign-goals/publish')}}",
-            data: $('#goalForm').serialize(),
-            success: function(data){
+        if(calendar_type=="" ||  calendar_type ==null){
+            errorList.push("<li>Calendar</li>");
+        }
+        var calendaryear = $('#hidden_calendar_year').val();
+        if(calendaryear=="" ||  calendaryear ==null){
+            errorList.push("<li>Calendar Year</li>");
 
-                $("#kpiTableForm :input").prop("disabled", true);
-                $(".table-btn").prop('disabled', true);
+        }
+        var frequency = $('#frequency').val();
+        if(frequency=="" ||  frequency ==null){
+            errorList.push("<li>Frequency</li>");
 
-                @if(auth()->user()->hasrole('Employee'))
-                    $('#modalBody').html("Goals published. Email Sent to your Manager");
-                    $('#notificationModal').show();
-                    $('#notificationModal').removeClass('fade');
-                @else
-                    $('#modalBody').html("Goals published. Email Sent to your Employees");
-                    $('#notificationModal').show();
-                    $('#notificationModal').removeClass('fade');
-                @endif
-           
+        }
+        var assignmentperiodstart = $('#assignment_period_start').val();
+        if(assignmentperiodstart=="" ||  assignmentperiodstart ==null){
+            errorList.push("<li>Assignment Period</li>");
 
-                $("kpitable_id").val(data.table_id);
-            
-                  $('.loader').hide();
-            },
-            error: function(error) {
-                $('.loader').hide();
-            }
-        })
-    
+        }
+
+        if(errorList.length == 0)
+             isInputFieldsEntered = true;
+        else
+            isInputFieldsEntered = false;
+
+        if(isInputFieldsEntered)
+        {
+            $('.loader').show();
+
+            $.ajax({
+                type: "POST",
+                url: "{{url('vmt-pms-assign-goals/publish')}}",
+                data: $('#goalForm').serialize(),
+                success: function(data){
+
+                    $("#kpiTableForm :input").prop("disabled", true);
+                    $(".table-btn").prop('disabled', true);
+
+                    @if(auth()->user()->hasrole('Employee'))
+                        $('#modalBody').html("Goals published. Email Sent to your Manager");
+                        $('#notificationModal').show();
+                        $('#notificationModal').removeClass('fade');
+                    @else
+                        $('#modalBody').html("Goals published. Email Sent to your Employees");
+                        $('#notificationModal').show();
+                        $('#notificationModal').removeClass('fade');
+                    @endif
+
+
+                    $("kpitable_id").val(data.table_id);
+
+                    $('.loader').hide();
+                },
+                error: function(error) {
+                    $('.loader').hide();
+                }
+            })
+        }
+        else
+        {
+            $('#modalBodyError').html("Please fill all the fields.<br/><ul>"+errorList.toString().replace(',','')+"</ul>");
+                            $('#notificationModalError').show();
+                            $('#notificationModalError').removeClass('fade');
+
+            console.log(errorList.toString());
+            errorList = [];
+
+        }
 });
 
 
