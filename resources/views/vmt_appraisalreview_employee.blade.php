@@ -277,16 +277,16 @@
                 </form>
                 <div class="buttons d-flex align-items-center justify-content-end ">
                     @if(!$assignedGoals->is_employee_accepted)
-                    <button class="btn btn-primary" id="approve">Accept<i class="fa fa-save"></i></button>
+                    <button class="btn btn-primary" id="approve">Accept</button>
                     &nbsp;&nbsp;
-                    <button class="btn btn-primary" id="reject">Reject<i class="fa fa-save"></i></button>
+                    <button class="btn btn-primary" id="reject">Reject</button>
                     &nbsp;&nbsp;
                     @else
                     @if(!$reviewCompleted && !$assignedGoals->is_employee_submitted &&
                     $assignedGoals->is_manager_approved )
-                    <button class="btn btn-primary" id="save_table">Save<i class="fa fa-save"></i></button>
+                    <button class="btn btn-primary" id="save_table">Save</button>
                     &nbsp;&nbsp;
-                    <button class="btn btn-primary" id="publish_table">Submit<i class="fa fa-save"></i></button>
+                    <button class="btn btn-primary" id="publish_table">Submit</button>
                     @endif
 
                     @endif

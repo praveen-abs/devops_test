@@ -26,7 +26,7 @@
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="employee_code">Employee Code{!! required() !!}</label> -->
                                                 <div class="floating">
-                                                    <input type="text" placeholder="Employee Code" name="employee_code" class="onboard-form form-control textbox" value="{{$empNo}}" required readonly />
+                                                    <input type="text" placeholder="Employee Code" name="employee_code" class="onboard-form form-control textbox" value="{{$empNo}}" required />
                                                     <label for="" class="float-label">Employee Code</label>
                                                 </div>
                                             </div>
@@ -242,7 +242,7 @@
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <div class="floating">
-                                                    <input type="text" placeholder="EPF Number" name="epf_number" id="epf_number" minlength="25" maxlength="25" class="onboard-form form-control textbox" required />
+                                                    <input type="text" placeholder="EPF Number" name="epf_number" id="epf_number" minlength="10" maxlength="10" class="onboard-form form-control textbox" required />
                                                     <label for="" class="float-label">EPF Number</label>
                                                     <span class="error" id="error_epf_number"></span>
                                                 </div>
@@ -250,7 +250,7 @@
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="current_pincode">Current Pincode{!! required() !!}</label> -->
                                                 <div class="floating">
-                                                    <input type="text" placeholder="UAN Number" name="uan_number" id="uan_number" class="onboard-form form-control textbox" required />
+                                                    <input type="text" placeholder="UAN Number" name="uan_number" id="uan_number" minlength="10" maxlength="10" class="onboard-form form-control textbox" required />
                                                     <label for="" class="float-label">UAN Number</label>
                                                 </div>
                                             </div>

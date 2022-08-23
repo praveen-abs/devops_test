@@ -133,16 +133,13 @@
                             <div class="row pull-right mb-3">
                                 @csrf
                                 <div class="col">
-                                    <a href="{{route('download-file', $kpiRowsId)}}" class="btn btn-primary pull-right"
-                                        id="download-excel">Download</a>
+                                    <a href="{{route('download-file', $kpiRowsId)}}" class="btn btn-primary pull-right" id="download-excel">Download</a>
                                 </div>
                                 <div class="col-auto p-0">
-                                    <input type="file" name="upload_file" id="upload_file" accept=".xls,.xlsx"
-                                        class="form-control" required>
+                                    <input type="file" name="upload_file" id="upload_file" accept=".xls,.xlsx" class="form-control" required>
                                 </div>
                                 <div class="col">
-                                    <button type="button" class="btn btn-primary pull-right" id="upload-goal"
-                                        disabled>Upload</button>
+                                    <button type="button" class="btn btn-primary pull-right" id="upload-goal" disabled>Upload</button>
                                 </div>
                             </div>
                         </form>
@@ -153,127 +150,122 @@
                     @csrf
                     <input type="hidden" name="goal_id" value="{{$assignedGoals->id}}">
                     <div class="table-content mb-4">
-
-                    <table id='table' style="width:130%;" class="table align-middle mb-0 table-bordered  responsive" data-paging="true" data-paging-size="10" data-paging-limit="3" data-paging-container="#paging-ui-container" data-paging-count-format="{PF} to {PL}" data-sorting="true" data-filtering="false" data-empty="No Results" data-filter-container="#filter-form-container" data-editing-add-text="Add New">
-                        <thead class="thead" id="tHead">
-                            <tr>
-                                <th scope="col" data-name='dimension' data-filterable="false" data-visible="true">Dimension</th>
-                                <th scope="col" data-name='kpi' data-filterable="false" data-visible="true">KPI</th>
-                                <th scope="col" data-name='operational' data-filterable="false" data-visible="true">Operational Definition</th>
-                                <th scope="col" data-name='measure' data-filterable="false" data-visible="true">Measure</th>
-                                <th scope="col" data-name='frequency' data-filterable="false" data-visible="true">Frequency</th>
-                                <th scope="col" data-name='target' data-filterable="false" data-visible="true">Target</th>
-                                <th scope="col" data-name='stretchTarget' data-filterable="false" data-visible="true">Stretch Target</th>
-                                <th scope="col" data-name='source' data-filterable="false" data-visible="true">Source</th>
-                                <th scope="col" data-name='kpiWeightage' data-filterable="false" data-visible="true">KPI Weightage</th>
-                                <th scope="col" data-name='kpiSelfReview' data-filterable="false" data-visible="true">KPI - Achievement (Self Review)</th>
-                                <th scope="col" data-name='kpiSelfAchivement' data-filterable="false" data-visible="true">Self KPI Achievement %</th>
-                                <th scope="col" data-name='comments' data-filterable="false" data-visible="true">Comments</th>
-                                @if($reviewCompleted)
-                                <th scope="col" data-name='kpiManagerReview' data-filterable="false" data-visible="true">KPI - Achievement (Manager Review)</th>
-                                <th scope="col" data-name='kpiManagerAchivement' data-filterable="false" data-visible="true">Manager KPI Achievement %</th>
-                                <th scope="col" data-name='kpiHrReview' data-filterable="false" data-visible="true">KPI - Achievement (HR Review)</th>
-                                <th scope="col" data-name='kpiHrAchivement' data-filterable="false" data-visible="true">HR KPI Achievement %
-                                </th>
-                                    @endif
-                                </tr>
-                            </thead>
-                            <tbody class="tbody" id="tbody">
-                                @foreach($kpiRows as $index => $kpiRow)
-                                <tr>
-                                    <th scope="row">{{$kpiRow->dimension}}</th>
-                                    <td width="10%">
-                                        <div>{{$kpiRow->kpi}}</div>
-                                    </td>
-                                    <td>
-                                        <div> {{$kpiRow->operational_definition}} </div>
-                                    </td>
-                                    <td>
-                                        <div>{{$kpiRow->measure}} </div>
-                                    </td>
-                                    <td>
-                                        <div> {{$kpiRow->frequency}}</div>
-                                    </td>
-                                    <td>
-                                        <div>{{$kpiRow->target}}</div>
-                                    </td>
-                                    <td>
-                                        <div>{{$kpiRow->stretch_target}}</div>
-                                    </td>
-                                    <td>
-                                        <div>{{$kpiRow->source}}</div>
-                                    </td>
-                                    <td>
-                                        <div>{{$kpiRow->kpi_weightage}}</div>
-                                    </td>
-                                    <td>
-                                        @if($assignedGoals->is_employee_submitted)
-                                        {{$kpiRow->self_kpi_review}}
-                                        @else
-                                        <div>
-                                            @if($assignedGoals->is_manager_approved &&
-                                            !$assignedGoals->is_employee_submitted)
-                                            <textarea name="selfreview[{{$kpiRow->id}}]" id="selfreview{{$index}}"
-                                                cols="40" rows="8"
-                                                placeholder="type here">@if(isset($kpiRow->self_kpi_review)) {{$kpiRow->self_kpi_review}} @endif</textarea>
-                                            @endif
-                                        </div>
+                        <div class="table-responsive">
+                            <table id='table' class="table align-middle mb-0 table-bordered" data-paging="true" data-paging-size="10" data-paging-limit="3" data-paging-container="#paging-ui-container" data-paging-count-format="{PF} to {PL}" data-sorting="true" data-filtering="false" data-empty="No Results" data-filter-container="#filter-form-container" data-editing-add-text="Add New">
+                                <thead class="thead" id="tHead">
+                                    <tr>
+                                        <th scope="col" data-name='dimension' data-filterable="false" data-visible="true">Dimension</th>
+                                        <th scope="col" data-name='kpi' data-filterable="false" data-visible="true">KPI</th>
+                                        <th scope="col" data-name='operational' data-filterable="false" data-visible="true">Operational Definition</th>
+                                        <th scope="col" data-name='measure' data-filterable="false" data-visible="true">Measure</th>
+                                        <th scope="col" data-name='frequency' data-filterable="false" data-visible="true">Frequency</th>
+                                        <th scope="col" data-name='target' data-filterable="false" data-visible="true">Target</th>
+                                        <th scope="col" data-name='stretchTarget' data-filterable="false" data-visible="true">Stretch Target</th>
+                                        <th scope="col" data-name='source' data-filterable="false" data-visible="true">Source</th>
+                                        <th scope="col" data-name='kpiWeightage' data-filterable="false" data-visible="true">KPI Weightage</th>
+                                        <th scope="col" data-name='kpiSelfReview' data-filterable="false" data-visible="true">KPI - Achievement (Self Review)</th>
+                                        <th scope="col" data-name='kpiSelfAchivement' data-filterable="false" data-visible="true">Self KPI Achievement %</th>
+                                        <th scope="col" data-name='comments' data-filterable="false" data-visible="true">Comments</th>
+                                        @if($reviewCompleted)
+                                        <th scope="col" data-name='kpiManagerReview' data-filterable="false" data-visible="true">KPI - Achievement (Manager Review)</th>
+                                        <th scope="col" data-name='kpiManagerAchivement' data-filterable="false" data-visible="true">Manager KPI Achievement %</th>
+                                        <th scope="col" data-name='kpiHrReview' data-filterable="false" data-visible="true">KPI - Achievement (HR Review)</th>
+                                        <th scope="col" data-name='kpiHrAchivement' data-filterable="false" data-visible="true">HR KPI Achievement %
+                                        </th>
                                         @endif
-                                    </td>
-                                    <td>
-                                        @if($assignedGoals->is_employee_submitted)
-                                        {{$kpiRow->self_kpi_percentage}}
-                                        @else
-                                        <div>
-                                            @if($assignedGoals->is_manager_approved &&
-                                            !$assignedGoals->is_employee_submitted)
-                                            <!-- <textarea name="selfkpiachievement[{{$kpiRow->id}}]" id="" cols="40" rows="8"
+                                    </tr>
+                                </thead>
+                                <tbody class="tbody" id="tbody">
+                                    @foreach($kpiRows as $index => $kpiRow)
+                                    <tr>
+                                        <th scope="row">{{$kpiRow->dimension}}</th>
+                                        <td width="10%">
+                                            <div>{{$kpiRow->kpi}}</div>
+                                        </td>
+                                        <td>
+                                            <div> {{$kpiRow->operational_definition}} </div>
+                                        </td>
+                                        <td>
+                                            <div>{{$kpiRow->measure}} </div>
+                                        </td>
+                                        <td>
+                                            <div> {{$kpiRow->frequency}}</div>
+                                        </td>
+                                        <td>
+                                            <div>{{$kpiRow->target}}</div>
+                                        </td>
+                                        <td>
+                                            <div>{{$kpiRow->stretch_target}}</div>
+                                        </td>
+                                        <td>
+                                            <div>{{$kpiRow->source}}</div>
+                                        </td>
+                                        <td>
+                                            <div>{{$kpiRow->kpi_weightage}}</div>
+                                        </td>
+                                        <td>
+                                            @if($assignedGoals->is_employee_submitted)
+                                            {{$kpiRow->self_kpi_review}}
+                                            @else
+                                            <div>
+                                                @if($assignedGoals->is_manager_approved &&
+                                                !$assignedGoals->is_employee_submitted)
+                                                <textarea name="selfreview[{{$kpiRow->id}}]" id="selfreview{{$index}}" cols="40" rows="8" placeholder="type here">@if(isset($kpiRow->self_kpi_review)) {{$kpiRow->self_kpi_review}} @endif</textarea>
+                                                @endif
+                                            </div>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($assignedGoals->is_employee_submitted)
+                                            {{$kpiRow->self_kpi_percentage}}
+                                            @else
+                                            <div>
+                                                @if($assignedGoals->is_manager_approved &&
+                                                !$assignedGoals->is_employee_submitted)
+                                                <!-- <textarea name="selfkpiachievement[{{$kpiRow->id}}]" id="" cols="40" rows="8"
                                                 placeholder="type here">@if(isset($kpiRow->self_kpi_percentage)) {{$kpiRow->self_kpi_percentage}} @endif</textarea> -->
-                                            <input type="number" class="inp-text" id="selfkpiachievement{{$index}}"
-                                                name="selfkpiachievement[{{$kpiRow->id}}]" placeholder="type here"
-                                                value="@if(isset( $kpiRow->self_kpi_percentage)){{$kpiRow->self_kpi_percentage}}@endif">
+                                                <input type="number" class="inp-text" id="selfkpiachievement{{$index}}" name="selfkpiachievement[{{$kpiRow->id}}]" placeholder="type here" value="@if(isset( $kpiRow->self_kpi_percentage)){{$kpiRow->self_kpi_percentage}}@endif">
+                                                @endif
+                                            </div>
                                             @endif
-                                        </div>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if($assignedGoals->is_employee_submitted)
-                                        {{$kpiRow->self_kpi_comments}}
-                                        @else
-                                        <div>
-                                            @if($assignedGoals->is_manager_approved &&
-                                            !$assignedGoals->is_employee_submitted)
-                                            <textarea name="selfcomments[{{$kpiRow->id}}]" id="selfcomments{{$index}}"
-                                                cols="40" rows="8"
-                                                placeholder="type here"> @if(isset($kpiRow->self_kpi_comments)) {{$kpiRow->self_kpi_comments}} @endif</textarea>
+                                        </td>
+                                        <td>
+                                            @if($assignedGoals->is_employee_submitted)
+                                            {{$kpiRow->self_kpi_comments}}
+                                            @else
+                                            <div>
+                                                @if($assignedGoals->is_manager_approved &&
+                                                !$assignedGoals->is_employee_submitted)
+                                                <textarea name="selfcomments[{{$kpiRow->id}}]" id="selfcomments{{$index}}" cols="40" rows="8" placeholder="type here"> @if(isset($kpiRow->self_kpi_comments)) {{$kpiRow->self_kpi_comments}} @endif</textarea>
+                                                @endif
+                                            </div>
                                             @endif
-                                        </div>
+                                        </td>
+                                        @if($reviewCompleted)
+
+                                        <td>
+                                            {{$kpiRow->manager_kpi_review}}
+                                        </td>
+                                        <td>
+                                            {{$kpiRow->manager_kpi_percentage}}
+                                        </td>
+                                        <td>
+                                            {{$kpiRow->hr_kpi_review}}
+                                        </td>
+                                        <td>
+                                            {{$kpiRow->hr_kpi_percentage}}
+
+                                        </td>
                                         @endif
-                                    </td>
-                                    @if($reviewCompleted)
 
-                                    <td>
-                                        {{$kpiRow->manager_kpi_review}}
-                                    </td>
-                                    <td>
-                                        {{$kpiRow->manager_kpi_percentage}}
-                                    </td>
-                                    <td>
-                                        {{$kpiRow->hr_kpi_review}}
-                                    </td>
-                                    <td>
-                                        {{$kpiRow->hr_kpi_percentage}}
+                                    </tr>
+                                    @endforeach
+                                </tbody>
 
-                                    </td>
-                                    @endif
+                            </table>
+                            <div class="table-responsive"></div>
 
-                                </tr>
-                                @endforeach
-                            </tbody>
-
-                        </table>
-
-                    </div>
+                        </div>
                 </form>
                 <div class="buttons d-flex align-items-center justify-content-end ">
                     @if(!$assignedGoals->is_employee_accepted)
@@ -305,9 +297,7 @@
                 Appraiser Feedback:
             </label>
             <div class="my-2">
-                <textarea class="form-control" placeholder="" id="gen-info-description-input" name="performance"
-                    rows="4"
-                    readonly>@if(isset( $assignedGoals->appraiser_comment)){{$assignedGoals->appraiser_comment}}@endif</textarea>
+                <textarea class="form-control" placeholder="" id="gen-info-description-input" name="performance" rows="4" readonly>@if(isset( $assignedGoals->appraiser_comment)){{$assignedGoals->appraiser_comment}}@endif</textarea>
             </div>
         </div>
     </div>
@@ -382,8 +372,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body p-5 text-center">
-                    <lord-icon src="https://cdn.lordicon.com/gsqxdxog.json" trigger="loop"
-                        colors="primary:#405189,secondary:#f06548" style="width:90px;height:90px"></lord-icon>
+                    <lord-icon src="https://cdn.lordicon.com/gsqxdxog.json" trigger="loop" colors="primary:#405189,secondary:#f06548" style="width:90px;height:90px"></lord-icon>
                     <div class="mt-4 text-center">
                         <h4>You are about to delete a order ?</h4>
 
@@ -391,8 +380,7 @@
                             all of
                             your information from our database.</p>
                         <div class="hstack gap-2 justify-content-center remove">
-                            <button class="btn btn-link link-success fw-medium text-decoration-none"
-                                data-bs-dismiss="modal"><i class="ri-close-line me-1 align-middle"></i>
+                            <button class="btn btn-link link-success fw-medium text-decoration-none" data-bs-dismiss="modal"><i class="ri-close-line me-1 align-middle"></i>
                                 Close</button>
                             <button class="btn btn-danger" id="delete-record">Yes,
                                 Delete It</button>
@@ -408,18 +396,15 @@
 
 </div><!-- end row -->
 
-<div class="modal fade" id="notificationModal" role="dialog" aria-hidden="true"
-    style="opacity:1; display:none;background:#00000073;">
-    <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true"
-        aria-labelledby="exampleModalToggleLabel2">
+<div class="modal fade" id="notificationModal" role="dialog" aria-hidden="true" style="opacity:1; display:none;background:#00000073;">
+    <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2">
         <div class="modal-content">
             <div class="modal-header py-2 bg-primary">
 
                 <div class="w-100 modal-header-content d-flex align-items-center py-2">
                     <h5 class="modal-title text-white" id="modalHeader">Rejected
                     </h5>
-                    <button type="button" class="btn-close btn-close-white close-modal" data-bs-dismiss="modal"
-                        aria-label="Close">
+                    <button type="button" class="btn-close btn-close-white close-modal" data-bs-dismiss="modal" aria-label="Close">
                     </button>
                 </div>
             </div>
@@ -445,153 +430,153 @@
 <script src="{{ URL::asset('/assets/premassets/js/footable.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/premassets/css/footable.bootstrap.min.css') }}"></script>
 <script type="text/javascript">
-//$('#prizePopup').modal('show');
-/* var showPopup = "{{$showModal}}";
- if(showPopup){
-     console.log('accept-goals');
+    //$('#prizePopup').modal('show');
+    /* var showPopup = "{{$showModal}}";
+     if(showPopup){
+         console.log('accept-goals');
 
-     $('#acceptPMS').modal('show');
- }*/
-$('#upload_file').change(function() {
-    if ($(this).is(':valid')) {
-        $('#upload-goal').removeAttr('disabled');
-    } else {
-        $('#upload-goal').attr('disabled', true);
-    }
-});
-
-$('#upload-goal').click(function() {
-    var form_data = new FormData(document.getElementById("upload_form"));
-    $.ajax({
-        type: "POST",
-        url: "{{route('upload-file-review')}}",
-        dataType: "json",
-        contentType: false,
-        processData: false,
-        data: form_data,
-        success: function(data) {
-            // $('.addition-content').html('');
-            $.each(data[0], function(key, value) {
-                $('#selfreview' + key).val(value[9]);
-                $('#selfkpiachievement' + key).val(value[10]);
-                $('#selfcomments' + key).val(value[11]);
-            });
+         $('#acceptPMS').modal('show');
+     }*/
+    $('#upload_file').change(function() {
+        if ($(this).is(':valid')) {
+            $('#upload-goal').removeAttr('disabled');
+        } else {
+            $('#upload-goal').attr('disabled', true);
         }
     });
-});
 
-$('#save_table').click(function(e) {
-    e.preventDefault();
-    console.log("save trigger");
-    console.log($('#employee_self_review').serialize());
+    $('#upload-goal').click(function() {
+        var form_data = new FormData(document.getElementById("upload_form"));
+        $.ajax({
+            type: "POST",
+            url: "{{route('upload-file-review')}}",
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            data: form_data,
+            success: function(data) {
+                // $('.addition-content').html('');
+                $.each(data[0], function(key, value) {
+                    $('#selfreview' + key).val(value[9]);
+                    $('#selfkpiachievement' + key).val(value[10]);
+                    $('#selfcomments' + key).val(value[11]);
+                });
+            }
+        });
+    });
 
-    $.ajax({
-        type: "POST",
-        url: "{{url('vmt-pms-saveKPItableDraft_Employee')}}",
-        data: $('#employee_self_review').serialize(),
-        success: function(data) {
-            alert(data);
+    $('#save_table').click(function(e) {
+        e.preventDefault();
+        console.log("save trigger");
+        console.log($('#employee_self_review').serialize());
+
+        $.ajax({
+            type: "POST",
+            url: "{{url('vmt-pms-saveKPItableDraft_Employee')}}",
+            data: $('#employee_self_review').serialize(),
+            success: function(data) {
+                alert(data);
+            }
+        })
+    });
+
+    ft = FooTable.init('#kpiTable', {});
+
+    $('#publish_table').click(function(e) {
+        e.preventDefault();
+        console.log("save trigger");
+        console.log($('#employee_self_review').serialize());
+
+        $.ajax({
+            type: "POST",
+            url: "{{url('vmt-pmsappraisal-review')}}",
+            data: $('#employee_self_review').serialize(),
+            success: function(data) {
+                alert(data);
+                window.location.reload();
+            }
+        })
+    });
+
+    $('#approve').click(function(e) {
+        e.preventDefault();
+        //goal_id=26&user_id=4
+        var goal_id = "{{\Request::get('id')}}";
+        var user_id = "{{Auth::user()->id}}";
+        var approve_flag = "approved";
+
+        $.ajax({
+            type: "GET",
+            url: "{{url('vmt-approvereject-kpitable')}}?goal_id=" + goal_id + "&user_id=" + user_id +
+                "&approve_flag=" + approve_flag,
+            success: function(data) {
+                alert(data);
+                location.reload();
+            }
+        })
+    });
+
+    $('body').on("keyup", '#reject_content', function() {
+        if ($(this).val() == '') {
+            $('#reject_save').attr('disabled', true);
+        } else {
+            $('#reject_save').removeAttr('disabled');
         }
-    })
-});
+    });
 
-ft = FooTable.init('#kpiTable', {});
+    $('#reject_save').click(function(e) {
+        e.preventDefault();
+        var goal_id = "{{\Request::get('id')}}";
+        var user_id = "{{auth::user()->id}}";
+        var approve_flag = "rejected";
+        var content = $('#reject_content').val();
 
-$('#publish_table').click(function(e) {
-    e.preventDefault();
-    console.log("save trigger");
-    console.log($('#employee_self_review').serialize());
-
-    $.ajax({
-        type: "POST",
-        url: "{{url('vmt-pmsappraisal-review')}}",
-        data: $('#employee_self_review').serialize(),
-        success: function(data) {
-            alert(data);
-            window.location.reload();
-        }
-    })
-});
-
-$('#approve').click(function(e) {
-    e.preventDefault();
-    //goal_id=26&user_id=4
-    var goal_id = "{{\Request::get('id')}}";
-    var user_id = "{{Auth::user()->id}}";
-    var approve_flag = "approved";
-
-    $.ajax({
-        type: "GET",
-        url: "{{url('vmt-approvereject-kpitable')}}?goal_id=" + goal_id + "&user_id=" + user_id +
-            "&approve_flag=" + approve_flag,
-        success: function(data) {
-            alert(data);
-            location.reload();
-        }
-    })
-});
-
-$('body').on("keyup", '#reject_content', function() {
-    if ($(this).val() == '') {
-        $('#reject_save').attr('disabled', true);
-    } else {
-        $('#reject_save').removeAttr('disabled');
-    }
-});
-
-$('#reject_save').click(function(e) {
-    e.preventDefault();
-    var goal_id = "{{\Request::get('id')}}";
-    var user_id = "{{auth::user()->id}}";
-    var approve_flag = "rejected";
-    var content = $('#reject_content').val();
-
-    $.ajax({
-        type: "POST",
-        url: "{{url('vmt-approvereject-command')}}",
-        data: {
-            "_token": "{{ csrf_token() }}",
-            content: content,
-            goal_id: goal_id,
-            user_id: user_id,
-        },
-        success: function(data) {
-            e.preventDefault();
-            var goal_id = "{{\Request::get('id')}}";
-            var user_id = "{{auth::user()->id}}";
-            var approve_flag = "rejected";
-            var command = $('#reject_content').val();
-            $.ajax({
-                type: "GET",
-                url: "{{url('vmt-approvereject-kpitable')}}?goal_id=" + goal_id +
-                    "&user_id=" + user_id + "&approve_flag=" + approve_flag + "&command=" +
-                    command,
-                success: function(data) {
-                    $('#notificationModal').hide();
-                    $('#notificationModal').addClass('fade');
-                    window.location.reload();
-                }
-            });
-        }
-    })
-});
+        $.ajax({
+            type: "POST",
+            url: "{{url('vmt-approvereject-command')}}",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                content: content,
+                goal_id: goal_id,
+                user_id: user_id,
+            },
+            success: function(data) {
+                e.preventDefault();
+                var goal_id = "{{\Request::get('id')}}";
+                var user_id = "{{auth::user()->id}}";
+                var approve_flag = "rejected";
+                var command = $('#reject_content').val();
+                $.ajax({
+                    type: "GET",
+                    url: "{{url('vmt-approvereject-kpitable')}}?goal_id=" + goal_id +
+                        "&user_id=" + user_id + "&approve_flag=" + approve_flag + "&command=" +
+                        command,
+                    success: function(data) {
+                        $('#notificationModal').hide();
+                        $('#notificationModal').addClass('fade');
+                        window.location.reload();
+                    }
+                });
+            }
+        })
+    });
 
 
-$('#reject').click(function(e) {
-    e.preventDefault();
-    $('#modalHeader').html("Rejected");
-    $('#modalNot').html(
-        "Are you sure you want to reject this Kpi. If yes, please entered the reason in the below command box:"
-    );
-    $('#notificationModal').show();
-    $('#notificationModal').removeClass('fade');
-});
+    $('#reject').click(function(e) {
+        e.preventDefault();
+        $('#modalHeader').html("Rejected");
+        $('#modalNot').html(
+            "Are you sure you want to reject this Kpi. If yes, please entered the reason in the below command box:"
+        );
+        $('#notificationModal').show();
+        $('#notificationModal').removeClass('fade');
+    });
 
 
-$('body').on('click', '.close-modal', function() {
-    $('#notificationModal').hide();
-    $('#notificationModal').addClass('fade');
-    window.location.reload();
-});
+    $('body').on('click', '.close-modal', function() {
+        $('#notificationModal').hide();
+        $('#notificationModal').addClass('fade');
+        window.location.reload();
+    });
 </script>
 @endsection
