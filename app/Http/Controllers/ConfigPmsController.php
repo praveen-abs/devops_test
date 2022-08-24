@@ -14,7 +14,8 @@ class ConfigPmsController extends Controller
 
         $this->checkConfigPms();
 
-        $data = ConfigPms::where('user_id', auth()->user()->id)->first();
+        $data = ConfigPms::first();
+
         if ($data) {
             $data->header = json_decode($data->column_header, true);
         }
