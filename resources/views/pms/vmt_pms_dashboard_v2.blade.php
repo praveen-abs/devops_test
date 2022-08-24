@@ -17,6 +17,7 @@
 
     <link href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css' rel='stylesheet' type='text/css'>
     <style>
+
         .output {
             font: 1rem 'Fira Sans', sans-serif;
         }
@@ -63,6 +64,10 @@ header {
     text-align: center;
     width: 500px;
     margin: auto;
+}
+
+.td_content_center {
+    text-align: center;
 }
 
 /*
@@ -231,36 +236,41 @@ header {
                                         $kpiFormAssigneeReview = getReviewKpiFormDetails($pmsKpiAssignee->id,$assigneeId);?>
                                         <tr>
                                             <td class="d-none">{{ $key1 }}</td>
-                                            <td class="">{{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</td>
-                                            <td class="">{{ $pmsKpiAssignee->getUserDetails($assigneeId)['userEmpIds'] }}</td>
+                                            <td class=""> <div class="td_content_center">{{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</div></td>
+                                            <td class=""> <div class="td_content_center">{{ $pmsKpiAssignee->getUserDetails($assigneeId)['userEmpIds'] }}</div></td>
                                             <td class="">
                                                 @foreach($pmsKpiAssigneeData['reviewersIds'] as $reviewer)
                                                     @if(($pmsKpiAssigneeData['currentLoggedUserRole'] == 'reviewer' && $reviewer == Auth::id()) || $pmsKpiAssigneeData['currentLoggedUserRole'] != 'reviewer')
-                                                        {{ getUserDetailsById($reviewer) }}<br>
+                                                        <div class="td_content_center">{{ getUserDetailsById($reviewer) }}</div><br>
                                                     @endif
                                                 @endforeach
-                                                
+
                                             </td>
                                             <td class="">
-                                                {{ strtoupper($pmsKpiAssignee->assignment_period) }}
+                                                <div class="td_content_center">{{ strtoupper($pmsKpiAssignee->assignment_period) }}</div>
                                             </td>
                                             <td class="">
-                                                
-                                                @if(isset($kpiFormAssigneeReview->is_assignee_submitted) && $kpiFormAssigneeReview->is_assignee_submitted == '1')
-                                                    Submitted
-                                                @else
-                                                    Not yet submitted
-                                                @endif
+                                                <div class="td_content_center">
+                                                    @if(isset($kpiFormAssigneeReview->is_assignee_submitted) && $kpiFormAssigneeReview->is_assignee_submitted == '1')
+                                                        Submitted
+                                                    @else
+                                                        Not yet submitted
+                                                    @endif
+                                                </div>
                                             </td>
                                             <td class="">
-                                            
-                                                <?php echo checkCurrentLoggedUserReviewerOrNot($pmsKpiAssigneeData['reviewersIds'],$pmsKpiAssigneeData['currentLoggedUserRole'],$kpiFormAssigneeReview); ?>
-                                                
+
+                                                <div class="td_content_center">
+                                                    <?php echo checkCurrentLoggedUserReviewerOrNot($pmsKpiAssigneeData['reviewersIds'],$pmsKpiAssigneeData['currentLoggedUserRole'],$kpiFormAssigneeReview); ?>
+                                                </div>
                                             </td>
                                             <td class="">
-                                                @php echo calculateOverallReviewRatings($pmsKpiAssignee->id,$assigneeId); @endphp
+                                                <div class="td_content_center">
+                                                    @php echo calculateOverallReviewRatings($pmsKpiAssignee->id,$assigneeId); @endphp
+                                                </div>
                                             </td>
                                             <td>
+                                                <div class="td_content_center">
                                                 <a target="_blank"
                                                     href="{{ url('pms-showAssigneeReviewPage?assignedFormid=' . $pmsKpiAssignee->id . '&assigneeId=' . $assigneeId) }}"><button
                                                         class="btn btn-orange py-0 px-2 "> <span class="mr-10 icon"></span>
@@ -270,6 +280,7 @@ header {
                                                             Review
                                                             @endif
                                                         </button></a>
+                                                </div>
                                             </td>
                                         </tr>
                                         @endif
