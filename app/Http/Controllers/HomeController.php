@@ -346,6 +346,7 @@ class HomeController extends Controller
     }
 
     public function vmt_topbar_settings(Request $request){
+
         return view('vmt_topbar_settings');
     }
 
@@ -378,7 +379,7 @@ class HomeController extends Controller
         //$vmtGeneralInfo->short_name  = ;
         if ($request->file('logo')) {
             $avatar = $request->file('logo');
-            $avatarName = 'client-logo.png';
+            $avatarName = 'client-logo-'.date("Y-m-d_h_i_sa").'.png';
             $avatarPath = public_path('/generalinfo/');
             $avatar->move($avatarPath, $avatarName);
             $vmtGeneralInfo->logo_img =  '/generalinfo/'.$avatarName;

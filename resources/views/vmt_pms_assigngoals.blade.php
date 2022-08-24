@@ -703,7 +703,7 @@
                                 </div> -->
                             </div>
                         </div>
-                    </form>
+                    
                 </div>
               </div>
               <div class="card  left-line">
@@ -738,15 +738,16 @@
         </div> --}}
         <div class="col-12">
             <div class="">
-                <form id="kpiTableForm">
+                {{-- <form id="kpiTableForm"> --}}
                     @csrf
                     <label>Select existing form from the Dropdown</label>
-                    <select name="kpi_table" class="form-control mb-2">
+                    <select name="kpi_table" id="kpi_table" class="form-control mb-2">
                         <option value="" disabled selected hidden>Select KPI Form</option>
                         @foreach($kpiForms as $kpiForm)
                         <option value="{{$kpiForm->author_name}}">{{$kpiForm->name}}</option>
                         @endforeach
                     </select>
+                    </form>
                     <!-- <div class="table-responsive">
                         <table id='kpiTable' class="table table-borderd align-middle mb-0" data-paging="true"
                             data-paging-size="10" data-paging-limit="3" data-paging-container="#paging-ui-container"
@@ -839,7 +840,7 @@
                             </tbody>
                         </table>
                     </div> -->
-                </form>
+                {{-- </form> --}}
                 {{-- <div class="align-items-center justify-content-end d-flex mt-2 cursor-pointer">
                 <a href="{{route('vmt_pms_kpi_create')}}" target="_blank" class="text-primary"><i class="fa fa-plus plus-sign  f-20"></i>Create KPI Form</a>
                 </div> --}}
@@ -1801,27 +1802,23 @@ var calendar_type = $('#calendar_type').val();
 var calendaryear = $('#hidden_calendar_year').val();
 var frequency = $('#frequency').val();
 var assignmentperiodstart = $('#assignment_period_start').val();
+var kpi_tab_author_name = $('#kpi_table option:selected').text();
+ var isAllFieldsEntered = true;
+    var canSaveForm = true;
+    var kpiWeightageTotal = 0;
 
-if(calendar_type=="" ||  calendar_type ==null){ 
-   swal.fire("Error!", 'Please Select Calendar Type', "error");
-}else if(calendaryear=="" ||  calendaryear ==null){
-       swal.fire("Error!", 'Please Select Calendar Year', "error");
-}else if(frequency=="" ||  frequency ==null){
-       swal.fire("Error!", 'Please Select Frequency Type', "error");
-}else if(assignmentperiodstart=="" ||  assignmentperiodstart ==null){
-       swal.fire("Error!", 'Please Select Assignment Period', "error");
+if(calendar_type=="" ||  calendar_type ==null || calendaryear=="" ||  calendaryear ==null || frequency=="" ||  frequency ==null || assignmentperiodstart=="" ||  assignmentperiodstart ==null){ 
+   swal.fire("Error!", 'Please Fill the Tables.', "error");
 }else{
 // var department = $('#department').val();
 // var selectedemployee = $('#selected_employee').val();
 // var selectedreviewer = $('#selected_reviewer').val();
-        $('.loader').show();
-// alert(calendaryear);
+     $('.loader').show();
         $.ajax({
             type: "POST",
             url: "{{url('vmt-pms-assign-goals/publish')}}",
             data: $('#goalForm').serialize(),
             success: function(data){
-
                 $("#kpiTableForm :input").prop("disabled", true);
                 $(".table-btn").prop('disabled', true);
 
@@ -1839,13 +1836,15 @@ if(calendar_type=="" ||  calendar_type ==null){
                 $("kpitable_id").val(data.table_id);
             
                   $('.loader').hide();
+
             },
             error: function(error) {
                 $('.loader').hide();
             }
         })
-    }
     
+
+    }
 });
 
 

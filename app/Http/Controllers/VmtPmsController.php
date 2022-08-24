@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\ConfigPMSController;
+use App\Http\Controllers\ConfigPmsController;
 use App\Imports\ApraisalQuestion;
 use App\Imports\ApraisalQuestionReview;
 use App\Models\VmtAppraisalQuestion;
@@ -30,7 +30,7 @@ class VmtPmsController extends Controller
     // assign goals forms
     public function vmtAssignGoals(Request $request){
 
-        app('App\Http\Controllers\ConfigPMSController')->checkConfigPms();
+        ConfigPmsController::checkConfigPms();
 
         if(auth::user()->hasRole(['HR','Admin']) ){
             $empGoals = VmtEmployee::leftJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
@@ -365,7 +365,57 @@ class VmtPmsController extends Controller
 
     // publish goals
     public function vmtPublishGoals(Request $request) {
-        //dd($request->all());
+      //  dd($request->all());
+       // dd($request->has('kpi_table'));
+        // save button function datas
+         if ($request->kpi_table) {
+            $kpiTable = VmtKpiFormTable::where('author_name', $request->kpi_table)->get();
+            $totRows  = count($kpiTable);
+            $kpiRows = [];
+            //dd($kpiTable);
+            foreach ($kpiTable as $kpi) {
+                // code...
+                // if ($kpi->kpi_id && $kpi->kpi_id[$i] <> '' && $kpi->kpi_id[$i] > 0) {
+                //     $kpiRow = VmtAppraisalQuestion::find($kpi->kpi_id[$i]);
+                // } else {
+                    $kpiRow = new VmtAppraisalQuestion;
+                // }
+                //$inputArry[] = $kpi->dimension[$i];
+
+                $kpiRow->dimension   =    $kpi->dimension ? $kpi->dimension : '';
+                $kpiRow->kpi         =    $kpi->kpi ? $kpi->kpi : '';
+                $kpiRow->operational_definition   = $kpi->operational_definition ? $kpi->operational_definition : '' ;
+                $kpiRow->measure     =    $kpi->measure ? $kpi->measure : '';
+                $kpiRow->frequency   =    $kpi->frequency ? $kpi->frequency : '';
+                $kpiRow->target      =    $kpi->target ? $kpi->target : '';
+                $kpiRow->stretch_target  =    $kpi->stretch_target ? $kpi->stretch_target : '';
+                $kpiRow->source          =    $kpi->source ? $kpi->source : '';
+                $kpiRow->kpi_weightage   =    $kpi->kpi_weightage ? $kpi->kpi_weightage : '';
+                $kpiRow->author_id       =    auth::user()->id;
+                $kpiRow->author_name     =    auth::user()->name;
+                //dd($kpi->operational_definition);
+
+                $kpiRow->save();
+                $kpiRows[] = $kpiRow->id;
+            }
+            if(count($kpiRows) > 0){
+                if ($kpi->kpi_table_id && $kpi->kpi_table_id <> '' && $kpi->kpi_table_id > 0) {
+                    $kpiTable  = VmtKPITable::find($kpi->kpi_table_id);
+                } else {
+                    $kpiTable  = new VmtKPITable;
+                }
+                $kpiTable->kpi_rows        =    implode(',', $kpiRows);
+                $kpiTable->author_id       =    auth::user()->id;
+                $kpiTable->author_name     =    auth::user()->name;
+                $kpiTable->save();
+
+             // array_push($a,);
+            }
+        }
+// dd($kpiTable->id);
+// dd('hello');
+
+        // end datas ...
         if($request->has("employees")){
             $employeeList  = explode(',', $request->employees[0]);
             $mailingEmpList  = VmtEmployee::join('vmt_employee_office_details',  'user_id', '=', 'vmt_employee_details.userid')->whereIn('userid', $employeeList)->pluck('officical_mail','userid');
@@ -381,7 +431,7 @@ class VmtPmsController extends Controller
                 } else {
                     $empPmsGoal = new VmtEmployeePMSGoals;
                 }
-                $empPmsGoal->kpi_table_id   = $request->kpitable_id;
+                $empPmsGoal->kpi_table_id   = $kpiTable->id;
                 $empPmsGoal->assignment_period = json_encode(['calendar_type'=>$request->calendar_type, 'year'=>$request->hidden_calendar_year, 'frequency'=>$request->frequency, 'assignment_period_start'=>$request->assignment_period_start]);
                 $empPmsGoal->coverage     = $request->coverage;
                 $empPmsGoal->reviewer_id  = $request->reviewer;
@@ -445,7 +495,8 @@ class VmtPmsController extends Controller
         $kpiRows = [];
         $kpiRowsId = '';
 
-        $config = ConfigPms::where('user_id', auth()->user()->id)->first();
+        //$config = ConfigPms::where('user_id', auth()->user()->id)->first();
+        $config = ConfigPms::first();
         $finalScoreBasedOn = $config->selected_head;
 
         $show['dimension'] = 'true';
