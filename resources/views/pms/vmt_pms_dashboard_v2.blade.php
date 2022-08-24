@@ -220,15 +220,11 @@ header {
                             <tbody>
                                 @foreach ($pmsKpiAssignee as $key1 => $emp)
                                     @php 
-                                    if(Auth::user()->hasRole(['HR','Admin']) ){
-                                        $explodedAssignerId = explode(',',$emp->assignee_id); 
-                                    }else{
-                                        $explodedAssignerId = array(Auth::id());
-                                    }
+                                    
                                     $checkRoleExists = '';
                                     $reviewersIds = explode(',',$emp->reviewer_id);
                                     $assigneesIds = explode(',',$emp->assignee_id);
-
+                                    $explodedAssignerId = $assigneesIds;
                                     if(in_array(Auth::id(),$reviewersIds)){
                                         $checkRoleExists = 'reviewer';
                                     }
@@ -238,65 +234,81 @@ header {
                                     if(Auth::id() == $emp->assigner_id){
                                         $checkRoleExists = 'assigner';
                                     }
-                                    
                                     @endphp
                                     @foreach($explodedAssignerId as $key => $assigneeId)
-                                    @foreach($emp->getPmsKpiFormReviews as $kpiFormAssigneeReview)
-                                    @if($kpiFormAssigneeReview->assignee_id == $assigneeId)
-                                    <tr>
-                                        <td class="d-none">{{ $key1 }}</td>
-                                        <td class="">{{ $emp->getUserDetails($assigneeId)['userNames'] }}</td>
-                                        <td class="">{{ $emp->getUserDetails($assigneeId)['userEmpIds'] }}</td>
+                                    @if(($checkRoleExists=='assignee' && $assigneeId==Auth::id()) || ($checkRoleExists=='assigner') || ($checkRoleExists=='reviewer'))
+                                   <?php  $kpiFormAssigneeReview = getReviewKpiFormDetails($emp->id,$assigneeId);?>
+                                        <tr>
+                                            <td class="d-none">{{ $key1 }}</td>
+                                            <td class="">{{ $emp->getUserDetails($assigneeId)['userNames'] }}</td>
+                                            <td class="">{{ $emp->getUserDetails($assigneeId)['userEmpIds'] }}</td>
 
 
-                                        <td class="">
-                                            @if($checkRoleExists == 'assigner')
-                                                @foreach($reviewersIds as $reviewer)
-                                                    {{ getUserDetailsById($reviewer) }}<br>
-                                                @endforeach
-                                            @elseif($checkRoleExists == 'assignee')
-                                                {{ getUserDetailsById($emp->assigner_id) }}
-                                            @elseif($checkRoleExists == 'reviewer')
-                                                @foreach($reviewersIds as $reviewer)
-                                                    @if($reviewer == Auth::id())
-                                                        {{ getUserDetailsById($reviewer) }}
-                                                    @endif
-                                                @endforeach
-                                            @endif
-                                        </td>
-                                        <td class="">
-                                            {{ $emp->assignment_period }}
-                                        </td>
-                                        <td class="">
-                                            @if($kpiFormAssigneeReview->is_assignee_submitted == '1')
-                                                Submitted
-                                            @else
-                                                Not yet submitted
-                                            @endif
-                                        </td>
-                                        <td class="">
-                                            
-                                            @if($kpiFormAssigneeReview->is_reviewer_submitted == '1')
-                                                Reviewed
-                                            @else
-                                                Not yet reviewed
-                                            @endif
-                                        </td>
-                                        <td class="">{{ $emp['ranking'] }}</td>
-                                        <td>
-                                            <a target="_blank"
-                                                href="{{ url('pms-showAssigneeReviewPage?assignedFormid=' . $emp->id . '&assigneeId=' . $assigneeId) }}"><button
-                                                    class="btn btn-orange py-0 px-2 "> <span class="mr-10 icon"></span>
-                                                        @if($assigneeId == auth()->user()->id)
-                                                        Self-Review
-                                                        @else
-                                                        Review
+                                            <td class="">
+                                                @if($checkRoleExists == 'reviewer')
+                                                    @foreach($reviewersIds as $reviewer)
+                                                        @if($reviewer == Auth::id())
+                                                            {{ getUserDetailsById($reviewer) }}
                                                         @endif
-                                                    </button></a>
-                                        </td>
-                                    </tr>
-                                    @endif
-                                    @endforeach
+                                                    @endforeach
+                                                @else
+                                                    @foreach($reviewersIds as $reviewer)
+                                                        {{ getUserDetailsById($reviewer) }}<br>
+                                                    @endforeach
+                                                @endif
+                                            </td>
+                                            <td class="">
+                                                {{ $emp->assignment_period }}
+                                            </td>
+                                            <td class="">
+                                                
+                                                @if($kpiFormAssigneeReview->is_assignee_submitted == '1')
+                                                    Submitted
+                                                @else
+                                                    Not yet submitted
+                                                @endif
+                                            </td>
+                                            <td class="">
+                                            <?php
+                                                    $decodedReviewSubmitted = json_decode($kpiFormAssigneeReview->is_reviewer_submitted,true);
+                                                ?>
+                                                
+                                                    @foreach($reviewersIds as $singleReviewerSubmittedStatus)
+                                                        @if($checkRoleExists == 'reviewer')
+                                                            @if($singleReviewerSubmittedStatus == Auth::id())
+                                                                @if(isset($decodedReviewSubmitted[$singleReviewerSubmittedStatus]) && $decodedReviewSubmitted[$singleReviewerSubmittedStatus] == '1')
+                                                                    Reviewed<br>
+                                                                @else
+                                                                    Not yet reviewed<br>
+                                                                
+                                                                @endif
+                                                            @endif
+                                                        @else
+                                                            @if(isset($decodedReviewSubmitted[$singleReviewerSubmittedStatus]) && $decodedReviewSubmitted[$singleReviewerSubmittedStatus] == '1')
+                                                                Reviewed<br>
+                                                            @else
+                                                                Not yet reviewed<br>
+                                                            
+                                                            @endif
+                                                        @endif
+                                                    @endforeach
+                                               
+                                               
+                                            </td>
+                                            <td class="">{{ $emp['ranking'] }}</td>
+                                            <td>
+                                                <a target="_blank"
+                                                    href="{{ url('pms-showAssigneeReviewPage?assignedFormid=' . $emp->id . '&assigneeId=' . $assigneeId) }}"><button
+                                                        class="btn btn-orange py-0 px-2 "> <span class="mr-10 icon"></span>
+                                                            @if($assigneeId == auth()->user()->id)
+                                                            Self-Review
+                                                            @else
+                                                            Review
+                                                            @endif
+                                                        </button></a>
+                                            </td>
+                                        </tr>
+                                        @endif
                                     @endforeach
                                 @endforeach
                             </tbody>
