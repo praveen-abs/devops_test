@@ -242,7 +242,7 @@
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <div class="floating">
-                                                    <input type="text" placeholder="EPF Number" name="epf_number" id="epf_number" minlength="10" maxlength="10" class="onboard-form form-control textbox" required />
+                                                    <input type="text" placeholder="EPF Number" name="epf_number" id="epf_number" class="onboard-form form-control textbox" required />
                                                     <label for="" class="float-label">EPF Number</label>
                                                     <span class="error" id="error_epf_number"></span>
                                                 </div>
@@ -266,8 +266,8 @@
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-lg-3 col-xl-3 mb-2">
                                                 <div class="floating">
-                                                    <input type="text" placeholder="ESIC Number" name="esic_number" id="esic_number" minlength="21"
-                                                    maxlength="21" class="onboard-form form-control textbox" required />
+                                                    <input type="text" placeholder="ESIC Number" name="esic_number" id="esic_number" minlength="10"
+                                                    maxlength="10" class="onboard-form form-control textbox" required />
                                                     <label for="" class="float-label">ESIC Number</label>
                                                     <span class="error" id="error_esic_number"></span>
                                                 </div>

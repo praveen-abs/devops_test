@@ -251,56 +251,56 @@ $('#pan_num').on('input', function(){
 //     return false;
 // });
 
-$('#epf_number').on('input', function(){
+// $('#epf_number').on('input', function(){
 
-//Sample Data :  TN MAS 054110 000 0054321
+// //Sample Data :  TN MAS 054110 000 0054321
 
-    var patt = /^([A-Z]{2}\s)([A-Z]{3}\s)([0-9]{1,7}\s)([0-9]{3}\s)?([0-9]{1,7})$/;
-    var txtValue = $(this).val();
-    var maxLength = $(this).attr('maxlength');
+//     var patt = /^([A-Z]{2}\s)([A-Z]{3}\s)([0-9]{1,7}\s)([0-9]{3}\s)?([0-9]{1,7})$/;
+//     var txtValue = $(this).val();
+//     var maxLength = $(this).attr('maxlength');
 
-    if ( txtValue.trim().length == maxLength)
-    {
-        if( patt.test(txtValue)){
-            return true;
-        }
-        else {
-            $('#error_epf_number').html("EPF number is not valid");
-            return false;
-        }
-    }
-    else
-    {
-        $('#error_epf_number').html("");
-        return true;
-    }
-});
+//     if ( txtValue.trim().length == maxLength)
+//     {
+//         if( patt.test(txtValue)){
+//             return true;
+//         }
+//         else {
+//             $('#error_epf_number').html("EPF number is not valid");
+//             return false;
+//         }
+//     }
+//     else
+//     {
+//         $('#error_epf_number').html("");
+//         return true;
+//     }
+// });
 
 
-$('#esic_number').on('input', function(){
+// $('#esic_number').on('input', function(){
 
-    //Sample Data :  31–00–123456–000–0000
+//     //Sample Data :  31–00–123456–000–0000
 
-    var patt = /^(\d{2})[-–\s]?(\d{2})[-–\s]?(\d{1,6})[-–\s]?(\d{3})[-–\s]?(\d{4})$/;
-    var txtValue = $(this).val();
-    var maxLength = $(this).attr('maxlength');
+//     var patt = /^(\d{2})[-–\s]?(\d{2})[-–\s]?(\d{1,6})[-–\s]?(\d{3})[-–\s]?(\d{4})$/;
+//     var txtValue = $(this).val();
+//     var maxLength = $(this).attr('maxlength');
 
-    if ( txtValue.trim().length == maxLength)
-    {
-        if( patt.test(txtValue)){
-            return true;
-        }
-        else {
-            $('#error_esic_number').html("ESIC number is not valid");
-            return false;
-        }
-    }
-    else
-    {
-        $('#error_esic_number').html("");
-        return true;
-    }
-});
+//     if ( txtValue.trim().length == maxLength)
+//     {
+//         if( patt.test(txtValue)){
+//             return true;
+//         }
+//         else {
+//             $('#error_esic_number').html("ESIC number is not valid");
+//             return false;
+//         }
+//     }
+//     else
+//     {
+//         $('#error_esic_number').html("");
+//         return true;
+//     }
+// });
 
 $('#vmt_aadhar').on('input', function(){
 
