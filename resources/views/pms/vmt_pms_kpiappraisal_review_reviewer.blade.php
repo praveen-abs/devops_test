@@ -243,7 +243,7 @@
                                         ?>
                                         @foreach($reviewersId as $rewviewerReview)
                                         <td>
-                                            @if($assignedGoals->is_assignee_submitted == '1' && $rewviewerReview == Auth::id() && ($decodedKpiReviewSubmiteedStatus[$rewviewerReview] == '' || $decodedKpiReviewSubmiteedStatus[$rewviewerReview] == '0'))
+                                            @if(isset($assignedGoals->is_assignee_submitted) && $assignedGoals->is_assignee_submitted == '1' && $rewviewerReview == Auth::id() && ($decodedKpiReviewSubmiteedStatus[$rewviewerReview] == '' || $decodedKpiReviewSubmiteedStatus[$rewviewerReview] == '0'))
                                             <textarea name="reviewer_kpi_review[{{$rewviewerReview}}][{{$kpiRow->id}}]" id="" cols="20" rows="8" placeholder="type here">@if(isset( $decodedKpiReview[$rewviewerReview])){{$decodedKpiReview[$rewviewerReview][$kpiRow->id]}}@endif</textarea>
                                             @else
                                             <div>@if(isset( $decodedKpiReview[$rewviewerReview])){{$decodedKpiReview[$rewviewerReview][$kpiRow->id]}}@endif</div>
