@@ -209,7 +209,7 @@
                                     <td>
                                         @if($assignedGoals->is_assignee_submitted == 0)
                                         <div>
-                                            <textarea name="assignee_kpi_review[{{$kpiRow->id}}]" id="assignee_kpi_review{{$index}}" cols="40" rows="8" placeholder="type here">@if(isset(json_decode($assignedGoals->assignee_kpi_review,true)[$kpiRow->id])) {{json_decode($assignedGoals->assignee_kpi_review,true)[$kpiRow->id]}} @endif</textarea>
+                                            <textarea style="width: 100%;" name="assignee_kpi_review[{{$kpiRow->id}}]" id="assignee_kpi_review{{$index}}" cols="40" rows="8" placeholder="type here">@if(isset(json_decode($assignedGoals->assignee_kpi_review,true)[$kpiRow->id])) {{json_decode($assignedGoals->assignee_kpi_review,true)[$kpiRow->id]}} @endif</textarea>
                                         </div>
                                         @else
                                         <div>
@@ -229,7 +229,7 @@
                                     <td>
                                         @if($assignedGoals->is_assignee_submitted == 0)
                                         <div>
-                                            <textarea name="assignee_kpi_comments[{{$kpiRow->id}}]" id="assignee_kpi_comments{{$index}}" cols="40" rows="8" placeholder="type here"> @if(isset(json_decode($assignedGoals->assignee_kpi_comments,true)[$kpiRow->id])) {{json_decode($assignedGoals->assignee_kpi_comments,true)[$kpiRow->id]}} @endif</textarea>
+                                            <textarea style="width: 100%;" name="assignee_kpi_comments[{{$kpiRow->id}}]" id="assignee_kpi_comments{{$index}}" cols="40" rows="8" placeholder="type here"> @if(isset(json_decode($assignedGoals->assignee_kpi_comments,true)[$kpiRow->id])) {{json_decode($assignedGoals->assignee_kpi_comments,true)[$kpiRow->id]}} @endif</textarea>
                                         </div>
                                         @else
                                         <div>{{json_decode($assignedGoals->assignee_kpi_comments,true)[$kpiRow->id]}}</div>
