@@ -175,7 +175,7 @@ header {
                     </div>
                 </div>
             </div>
-            @if(count($pmsKpiAssignee) == 0)
+            @if(count($pmsKpiAssigneeDetails) == 0)
                 <div class="mt-2 p-5" id="initial-section">
                     <div class="row justify-content-center">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center p-0 mt-3 mb-2 p-5">
@@ -218,95 +218,53 @@ header {
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($pmsKpiAssignee as $key1 => $emp)
-                                    @php 
-                                    
-                                    $checkRoleExists = '';
-                                    $reviewersIds = explode(',',$emp->reviewer_id);
-                                    $assigneesIds = explode(',',$emp->assignee_id);
-                                    $explodedAssignerId = $assigneesIds;
-                                    if(in_array(Auth::id(),$reviewersIds)){
-                                        $checkRoleExists = 'reviewer';
-                                    }
-                                    if(in_array(Auth::id(),$assigneesIds)){
-                                        $checkRoleExists = 'assignee';
-                                    }
-                                    if(Auth::id() == $emp->assigner_id){
-                                        $checkRoleExists = 'assigner';
-                                    }
-                                    @endphp
-                                    @foreach($explodedAssignerId as $key => $assigneeId)
-                                    @if(($checkRoleExists=='assignee' && $assigneeId==Auth::id()) || ($checkRoleExists=='assigner') || ($checkRoleExists=='reviewer'))
+                                <!-- pms kpi assigned details foreach  -->
+                                @foreach ($pmsKpiAssigneeDetails as $key1 => $pmsKpiAssignee)
+                                    <!-- gte kpi pms assignee details like currentLoggedUserRole, $decoded assigneeIds and reviewersIds -->
+                                    @php $pmsKpiAssigneeData = getPmsKpiAssigneeDetails($pmsKpiAssignee->id); @endphp
+                                    <!-- pms kpi assigned details assignees ids foreach  -->
+                                    @foreach($pmsKpiAssigneeData['assigneesIds'] as $key => $assigneeId)
+                                    <!-- check if Role is Assignee then check Own assignee id otherwise will show all Assignees -->
+                                    @if(($pmsKpiAssigneeData['currentLoggedUserRole'] == 'assignee' && $assigneeId==Auth::id()) || $pmsKpiAssigneeData['currentLoggedUserRole'] != 'assignee')
                                    <?php
-                                        $kpiFormAssigneeReview = getReviewKpiFormDetails($emp->id,$assigneeId);?>
+                                        // get KpiPmsReview Details
+                                        $kpiFormAssigneeReview = getReviewKpiFormDetails($pmsKpiAssignee->id,$assigneeId);?>
                                         <tr>
                                             <td class="d-none">{{ $key1 }}</td>
-                                            <td class="">{{ $emp->getUserDetails($assigneeId)['userNames'] }}</td>
-                                            <td class="">{{ $emp->getUserDetails($assigneeId)['userEmpIds'] }}</td>
-
-
+                                            <td class="">{{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</td>
+                                            <td class="">{{ $pmsKpiAssignee->getUserDetails($assigneeId)['userEmpIds'] }}</td>
                                             <td class="">
-                                                @if($checkRoleExists == 'reviewer')
-                                                    @foreach($reviewersIds as $reviewer)
-                                                        @if($reviewer == Auth::id())
-                                                            {{ getUserDetailsById($reviewer) }}
-                                                        @endif
-                                                    @endforeach
-                                                @else
-                                                    @foreach($reviewersIds as $reviewer)
+                                                @foreach($pmsKpiAssigneeData['reviewersIds'] as $reviewer)
+                                                    @if(($pmsKpiAssigneeData['currentLoggedUserRole'] == 'reviewer' && $reviewer == Auth::id()) || $pmsKpiAssigneeData['currentLoggedUserRole'] != 'reviewer')
                                                         {{ getUserDetailsById($reviewer) }}<br>
-                                                    @endforeach
-                                                @endif
+                                                    @endif
+                                                @endforeach
+                                                
                                             </td>
                                             <td class="">
-                                                {{ strtoupper($emp->assignment_period) }}
+                                                {{ strtoupper($pmsKpiAssignee->assignment_period) }}
                                             </td>
                                             <td class="">
                                                 
-                                                @if($kpiFormAssigneeReview->is_assignee_submitted == '1')
+                                                @if(isset($kpiFormAssigneeReview->is_assignee_submitted) && $kpiFormAssigneeReview->is_assignee_submitted == '1')
                                                     Submitted
                                                 @else
                                                     Not yet submitted
                                                 @endif
                                             </td>
                                             <td class="">
-                                            <?php
-                                                    $decodedReviewSubmitted = json_decode($kpiFormAssigneeReview->is_reviewer_submitted,true);
-                                                ?>
+                                            
+                                                <?php echo checkCurrentLoggedUserReviewerOrNot($pmsKpiAssigneeData['reviewersIds'],$pmsKpiAssigneeData['currentLoggedUserRole'],$kpiFormAssigneeReview); ?>
                                                 
-                                                    @foreach($reviewersIds as $singleReviewerSubmittedStatus)
-                                                        @if($checkRoleExists == 'reviewer')
-                                                            @if($singleReviewerSubmittedStatus == Auth::id())
-                                                                @if(isset($decodedReviewSubmitted[$singleReviewerSubmittedStatus]) && $decodedReviewSubmitted[$singleReviewerSubmittedStatus] == '1')
-                                                                    Reviewed<br>
-                                                                @else
-                                                                    Not yet reviewed<br>
-                                                                
-                                                                @endif
-                                                            @endif
-                                                        @else
-                                                            @if(isset($decodedReviewSubmitted[$singleReviewerSubmittedStatus]) && $decodedReviewSubmitted[$singleReviewerSubmittedStatus] == '1')
-                                                                Reviewed<br>
-                                                            @else
-                                                                Not yet reviewed<br>
-                                                            
-                                                            @endif
-                                                        @endif
-                                                    @endforeach
                                             </td>
                                             <td class="">
-                                                <?php
-                                                
-                                                $pmsVmtV2 = new App\Http\Controllers\PMS\VmtPMSModuleController();
-                                                $finalAverageRating = $pmsVmtV2->calculateOverallReviewRatings($emp->id,$assigneeId);
-                                                echo $finalAverageRating;
-                                                ?>
+                                                @php echo calculateOverallReviewRatings($pmsKpiAssignee->id,$assigneeId); @endphp
                                             </td>
                                             <td>
                                                 <a target="_blank"
-                                                    href="{{ url('pms-showAssigneeReviewPage?assignedFormid=' . $emp->id . '&assigneeId=' . $assigneeId) }}"><button
+                                                    href="{{ url('pms-showAssigneeReviewPage?assignedFormid=' . $pmsKpiAssignee->id . '&assigneeId=' . $assigneeId) }}"><button
                                                         class="btn btn-orange py-0 px-2 "> <span class="mr-10 icon"></span>
-                                                            @if($checkRoleExists=='assignee')
+                                                            @if($pmsKpiAssigneeData['currentLoggedUserRole']=='assignee')
                                                             Self-Review
                                                             @else
                                                             Review

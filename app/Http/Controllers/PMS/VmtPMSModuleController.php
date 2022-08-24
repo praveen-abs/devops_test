@@ -68,9 +68,9 @@ class VmtPMSModuleController extends Controller
         $dashboardCountersData['selfReviewCount'] = $selfReviewCount;
         $dashboardCountersData['totalSelfReviewCount'] = $totalSelfReviewCount;
     
-            $pmsKpiAssignee = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')->WhereRaw("find_in_set(".auth()->user()->id.", reviewer_id)")->orWhereRaw("find_in_set(".auth()->user()->id.", assignee_id)")->orWhere('assigner_id',auth()->user()->id)->orderBy('id','DESC')->get();
+            $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')->WhereRaw("find_in_set(".auth()->user()->id.", reviewer_id)")->orWhereRaw("find_in_set(".auth()->user()->id.", assignee_id)")->orWhere('assigner_id',auth()->user()->id)->orderBy('id','DESC')->get();
 
-        return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','existingKPIForms','departments','employees','pmsKpiAssignee'));
+        return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','existingKPIForms','departments','employees','pmsKpiAssigneeDetails'));
     }
 
     // public function showPMSDashboardOld()
@@ -570,38 +570,6 @@ class VmtPMSModuleController extends Controller
 
     public function updateFormApprovalStatus_Reviewer(Request $request)
     {
-
-    }
-
-    public function calculateOverallReviewRatings($assigneeReviewTableId=null,$assigneeId)
-    {
-        $assigneeReviewDetails = VmtPMS_KPIFormAssignedModel::where('id',$assigneeReviewTableId)->first();
-        $decodedReviewsId = explode(',',$assigneeReviewDetails->reviewer_id);
-        // dd($decodedReviewsId);
-        $asisgenReveiwrReview = VmtPMS_KPIFormReviewsModel::where('assignee_id',$assigneeId)->where('vmt_pms_kpiform_assigned_id',$assigneeReviewTableId)->first();
-        // dD($asisgenReveiwrReview->reviewer_kpi_percentage);
-        $firstReviewRating = [];
-        if(json_decode($asisgenReveiwrReview->reviewer_kpi_percentage,true)!='' && isset(json_decode($asisgenReveiwrReview->reviewer_kpi_percentage,true)[$decodedReviewsId[0]])){
-            $firstReviewRating = json_decode($asisgenReveiwrReview->reviewer_kpi_percentage,true)[$decodedReviewsId[0]];
-        }
-        $finalRating = 0;
-        if (count($firstReviewRating) > 0) {
-            $ratingCheck = array_sum($firstReviewRating)/count($firstReviewRating);
-            if ($ratingCheck < 60) {
-                $finalRating = 1;
-            } elseif ($ratingCheck >= 60 && $ratingCheck < 70) {
-                $finalRating = 2;
-            } elseif ($ratingCheck >= 70 && $ratingCheck < 80) {
-                $finalRating = 3;
-            } elseif ($ratingCheck >= 80 && $ratingCheck < 90) {
-                $finalRating = 4;
-            } elseif ($ratingCheck >= 90) {
-                $finalRating = 5;
-            } else{
-                $finalRating = 0;
-            }
-        }
-        return $finalRating;
 
     }
 
