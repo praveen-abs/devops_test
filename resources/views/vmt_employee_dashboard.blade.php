@@ -146,13 +146,15 @@
 
                                                     <div class="announcement-content scrollBar">
 
-                                                        <input class="form-control   w-100 h-100"
+                                                    @include('ui-dashboard-announcement-employee')
+                                                    
+                                                        <!-- <input class="form-control   w-100 h-100"
                                                             aria-label="default input example"
                                                             placeholder="Title of the Announcement" type="text"
                                                             id="title_data" name="title_data">
-                                                        <hr>
+                                                        <hr> -->
                                                         <!-- <input class="form-control" type="text" placeholder="Default input" aria-label="default input example"> -->
-                                                        <textarea class="form-control placeholder-glow w-100 h-100"
+                                                        <!-- <textarea class="form-control placeholder-glow w-100 h-100"
                                                             placeholder="Details of Announcement"
                                                             aria-label="default input example" type="text"
                                                             name="details_data" id="details_data"></textarea>
@@ -188,13 +190,13 @@
                                                                     disabled>
 
                                                             </div>
-                                                        </div>
+                                                        </div> -->
 
                                                     </div>
-                                                    <button class="btn btn-primary py-1 px-4  float-right"
+                                                    <!-- <button class="btn btn-primary py-1 px-4  float-right"
                                                         id="annon_menu_submit" type="button">
                                                         Submit
-                                                    </button>
+                                                    </button> -->
 
 
                                                 </div>
@@ -285,7 +287,8 @@
                                                 </div>
                                             </div>
                                             <div class="topbarContent emp-praise" style="display:none;">
-                                                <div>
+                                                @include('ui-dashboard-praise-employee')
+                                                <!-- <div>
                                                     <div>
                                                         <div class="px-20 p-16 row no-gutters scrollBar">
                                                             <textarea name="" id="" cols="30" rows="3"
@@ -300,7 +303,7 @@
                                                             Submit
                                                         </button>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                     </div>

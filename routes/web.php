@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PMS\VmtPMSModuleController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 /*
@@ -95,6 +96,8 @@ Route::post('vmt-apraisal-question/save', 'App\Http\Controllers\VmtApraisalContr
 // dashboard post task
 Route::post('vmt-dashboard-post', 'App\Http\Controllers\VmtMainDashboardController@DashBoardPost');
 Route::post('vmt-dashboard-announcement', 'App\Http\Controllers\VmtMainDashboardController@DashBoardAnnouncement');
+Route::post('vmt-dashboard-polling-question', 'App\Http\Controllers\VmtMainDashboardController@DashBoardPollingQuestions');
+Route::post('vmt-dashboard-praise', 'App\Http\Controllers\VmtMainDashboardController@DashBoardPraise');
 
 
 // assign pms goals
@@ -271,9 +274,9 @@ Route::post('/updateFormApprovalStatus-Assignee',[App\Http\Controllers\PMS\VmtPM
 Route::post('/updateFormApprovalStatus-Reviewer',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'updateFormApprovalStatus_Reviewer'])->name('updateFormApprovalStatus-Reviewer');
 
 //Save Reviews
-Route::post('/saveAssigneeReviews',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'saveAssigneeReviews'])->name('saveAssigneeReviews');
-Route::post('/saveReviewerReviews',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'saveReviewerReviews'])->name('saveReviewerReviews');
-Route::post('/saveAssignerReviews',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'saveAssignerReviews'])->name('saveAssignerReviews');
+Route::post('/saveAssigneeReviews',[VmtPMSModuleController::class, 'saveAssigneeReviews'])->name('saveAssigneeReviews');
+Route::post('/saveReviewerReviews',[VmtPMSModuleController::class, 'saveReviewerReviews'])->name('saveReviewerReviews');
+Route::post('/saveAssignerReviews',[VmtPMSModuleController::class, 'saveAssignerReviews'])->name('saveAssignerReviews');
 // hr apprasial review
 Route::get('vmt-pms-appraisal-review', 'App\Http\Controllers\PMS\VmtPMSModuleController@showKPIReviewPage_Assignee');
 Route::post('vmt-pms-appraisal-review', 'App\Http\Controllers\VmtApraisalController@storeEmployeeApraisalReview');

@@ -7,26 +7,26 @@
                     aria-label="Close"></button>
             </div>
             <div class="modal-body">
-            <div class="table-responsive">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Festival</th>
-                    <th>Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if(count($holidays) > 0)
-                @foreach($holidays as $holidayList)
-                <tr>
-                    <td>{{ $holidayList->holiday_name }}</td>
-                    <td>{{ date('d-m-Y', strtotime($holidayList->holiday_date)) }}</td>
-                </tr>
-                @endforeach
-                @endif
-            </tbody>
-        </table>
-    </div>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Festival</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if(count($holidays) > 0)
+                            @foreach($holidays as $holidayList)
+                            <tr>
+                                <td>{{ $holidayList->holiday_name }}</td>
+                                <td>{{ date('d-m-Y', strtotime($holidayList->holiday_date)) }}</td>
+                            </tr>
+                            @endforeach
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-border-primary" data-bs-dismiss="modal">Close</button>

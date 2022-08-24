@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\DashboardAnnouncementMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\App;
@@ -25,7 +26,10 @@ use App\Mail\VmtAssignGoals;
 use App\Mail\NotifyPMSManager;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Mail\PMSReviewCompleted;
+use App\Models\VmtPraise;
+use Exception;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
 
 class VmtMainDashboardController extends Controller
 {
@@ -37,7 +41,6 @@ class VmtMainDashboardController extends Controller
 
     public function index()
     {
-
         $employeesEventDetails = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
                                 ->join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
                                 ->select(
@@ -131,6 +134,12 @@ class VmtMainDashboardController extends Controller
 
         $json_dashboardCountersData = json_encode($dashboardCountersData);
 
+        // get announcement data
+        $announcementData = VmtAnnouncement::orderBy('created_at','DESC')->where('notify_employees','1')->get();
+        
+        // get praise data
+        $praiseData = VmtPraise::orderBy('created_at','DESC')->get();
+        
         if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin')) {
             return view('vmt_hr_dashboard', compact( 'dashboardEmployeeEventsData', 'checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData'));
         }
@@ -142,7 +151,7 @@ class VmtMainDashboardController extends Controller
         else
         if(auth()->user()->hasrole('Employee'))
         {
-            return view('vmt_employee_dashboard', compact( 'dashboardEmployeeEventsData','checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData'));
+            return view('vmt_employee_dashboard', compact( 'dashboardEmployeeEventsData','checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData','announcementData','praiseData'));
         }
 
     }
@@ -190,32 +199,78 @@ class VmtMainDashboardController extends Controller
 
      public function DashBoardAnnouncement(Request $request){
         $Announcement_data = new VmtAnnouncement;
-         $id = auth()->user()->id;
-         $details_data = $request->input('details_data');
-         $title_data =$request->input('title_data');
+        $id = auth()->user()->id;
+        $details_data = $request->input('details_data');
+        $title_data =$request->input('title_data');
         $Announcement_data->title_data = $request->input('title_data');
-        $Announcement_data->ann_author_id = $request->input('user_ref_id');
+        $Announcement_data->ann_author_id = $id;
         $Announcement_data->details_data = $request->input('details_data');
-         $Announcement_data->save();
+        $Announcement_data->date = $request->input('date');
+        $Announcement_data->notify_employees = isset($request->notify_employees) ? $request->input('notify_employees') : '0';
+        $Announcement_data->require_acknowledgement = isset($request->require_acknowledgement) ? $request->input('require_acknowledgement') : '0';
+        $Announcement_data->hide_after = isset($request->hide_after) ? $request->input('hide_after') : '0';
+        $Announcement_data->save();
          // dd($Announcement_data);
          $notification_user = User::where('id',auth::user()->id)->first();
 
          $message = "Announcement Added By "  ;
                   // code email
+
           $employeesList =  User::all()->pluck('id');
 
-          $officialMailList =   VmtEmployeeOfficeDetails::whereIn('user_id', $employeesList)->whereNotNull('officical_mail')->pluck('officical_mail');
+          $officialMailList =   VmtEmployeeOfficeDetails::whereIn('user_id', $employeesList)->where('officical_mail','!=',null)->whereNotNull('officical_mail')->pluck('officical_mail');
           //dd($officialMailList->toArray());
-         $user_emp_name =  $message;
+         $user_emp_name =  $message.auth()->user()->name;
          // var_dump($officialMailList);
-         if(!empty($officialMailList)){
+         if(!empty($officialMailList) && $Announcement_data->notify_employees == '1'){
+            \Mail::to($officialMailList)->send(new DashboardAnnouncementMail($user_emp_name,$title_data,$details_data));
 
-             \Mail::to($officialMailList)->send(new PMSReviewCompleted('announcement',$user_emp_name,$title_data,$details_data));
          }
          // end email
            Notification::send($notification_user ,new ViewNotification($message.auth()->user()->name));
         $dashboardannoun  =  VmtAnnouncement::where('ann_author_id', $id)->pluck('title_data','ann_author_id','details_data');
         return $dashboardannoun;
+    }
+
+    // function used for store dashboard polling questions section
+    public function DashBoardPollingQuestions(Request $request){
+        try{
+            $id = auth()->user()->id;
+            $encodedOptions = json_encode($request->options);
+            $pollingQuestionAdd = new Polling;
+            $pollingQuestionAdd->poll_author_id = $id;
+            $pollingQuestionAdd->question = $request->question;
+            $pollingQuestionAdd->options = $encodedOptions;
+            $pollingQuestionAdd->date = $request->date;
+            $pollingQuestionAdd->notify_employees = isset($request->notify_employees) ? $request->notify_employees : '0';
+            $pollingQuestionAdd->anonymous_poll = isset($request->anonymous_poll) ? $request->anonymous_poll : '0';
+            $pollingQuestionAdd->save();
+            if($pollingQuestionAdd){
+                return response()->json(['status'=>true,'message'=>'Pooling Question added successfully']);
+            }
+            return response()->json(['status'=>false,'message'=>'Pooling Question not added']);
+        }catch(Exception $e){
+            Log::info('dashboard polling question added error: '.$e->getMessage());
+            return response()->json(['status'=>false,'message'=>$e->getMessage()]);
+        }
+    }
+
+    public function DashBoardPraise(Request $request){
+        try{
+            $id = auth()->user()->id;
+            $praiseAdd = new VmtPraise();
+            $praiseAdd->praise_data = $request->praise_data;
+            $praiseAdd->praise_author_id = $id;
+            $praiseAdd->save();
+            if($praiseAdd){
+                return response()->json(['status'=>true,'message'=>'Praise added successfully']);
+            }
+            return response()->json(['status'=>false,'message'=>'Praise not added']);
+        }catch(Exception $e){
+            Log::info('dashboard praise added error: '.$e->getMessage());
+            return response()->json(['status'=>false,'message'=>$e->getMessage()]);
+        }
+
     }
 
 

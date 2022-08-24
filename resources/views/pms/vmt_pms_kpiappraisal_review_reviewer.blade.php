@@ -174,6 +174,20 @@
                                     <th scope="col" data-name='kpiSelfAchivement' data-filterable="false" data-visible="true">Self KPI Achievement %</th>
                                     <th scope="col" data-name='comments' data-filterable="false" data-visible="true">Comments</th>
                                     
+                                    <?php $i=1; 
+                                    $j=1;
+                                    ?>
+                                    @foreach($reviewersId as $rewviewerReview)
+                                        <th scope="col" data-name='kpiManagerReview' data-filterable="false" data-visible= true>KPI - Achievement (Manager Review) {{$i}}</th>
+                                        <?php $i++; ?>
+                                    @endforeach
+                                    @foreach($reviewersId as $rewviewerReview)
+                                        
+                                        <th scope="col" data-name='kpiManagerAchivement' data-filterable="false" data-visible="true">Manager KPI Achievement % - {{$j}}</th>
+                                        <?php $j++; ?>
+                                    @endforeach
+                                    
+                                              
                                 </tr>
                             </thead>
                             <tbody class="tbody" id="tbody">
@@ -207,34 +221,51 @@
                                         <div>{{$kpiRow->kpi_weightage}}</div>
                                     </td>
                                     <td>
-                                        @if($assignedGoals->is_assignee_submitted == 0)
-                                        <div>
-                                            <textarea style="width: 100%;" name="assignee_kpi_review[{{$kpiRow->id}}]" id="assignee_kpi_review{{$index}}" cols="40" rows="8" placeholder="type here">@if(isset(json_decode($assignedGoals->assignee_kpi_review,true)[$kpiRow->id])) {{json_decode($assignedGoals->assignee_kpi_review,true)[$kpiRow->id]}} @endif</textarea>
-                                        </div>
-                                        @else
+                                        @if(isset($assignedGoals->is_assignee_submitted) && $assignedGoals->is_assignee_submitted == '1')
                                         <div>
                                             {{json_decode($assignedGoals->assignee_kpi_review,true)[$kpiRow->id]}}
                                         </div>
                                         @endif
                                     </td>
                                     <td>
-                                        @if($assignedGoals->is_assignee_submitted == 0)
-                                        <div>
-                                            <input type="number" class="inp-text" id="assignee_kpi_percentage{{$index}}" name="assignee_kpi_percentage[{{$kpiRow->id}}]" placeholder="type here" value="@if(isset( json_decode($assignedGoals->assignee_kpi_percentage,true)[$kpiRow->id])){{json_decode($assignedGoals->assignee_kpi_percentage,true)[$kpiRow->id]}}@endif">
-                                        </div>
-                                        @else
+                                        @if(isset($assignedGoals->is_assignee_submitted) && $assignedGoals->is_assignee_submitted == '1')
                                         <div> {{json_decode($assignedGoals->assignee_kpi_percentage,true)[$kpiRow->id]}}</div>
                                         @endif
                                     </td>
                                     <td>
-                                        @if($assignedGoals->is_assignee_submitted == 0)
-                                        <div>
-                                            <textarea style="width: 100%;" name="assignee_kpi_comments[{{$kpiRow->id}}]" id="assignee_kpi_comments{{$index}}" cols="40" rows="8" placeholder="type here"> @if(isset(json_decode($assignedGoals->assignee_kpi_comments,true)[$kpiRow->id])) {{json_decode($assignedGoals->assignee_kpi_comments,true)[$kpiRow->id]}} @endif</textarea>
-                                        </div>
-                                        @else
+                                        @if(isset($assignedGoals->is_assignee_submitted) && $assignedGoals->is_assignee_submitted == '1')
                                         <div>{{json_decode($assignedGoals->assignee_kpi_comments,true)[$kpiRow->id]}}</div>
                                         @endif
                                     </td>
+                                        <?php
+                                        $decodedKpiReview = json_decode($assignedGoals->reviewer_kpi_review,true);
+                                        $decodedKpiReviewSubmiteedStatus = json_decode($assignedGoals->is_reviewer_submitted,true);
+                                        ?>
+                                        @foreach($reviewersId as $rewviewerReview)
+                                        <td>
+                                            @if($assignedGoals->is_assignee_submitted == '1' && $rewviewerReview == Auth::id() && ($decodedKpiReviewSubmiteedStatus[$rewviewerReview] == '' || $decodedKpiReviewSubmiteedStatus[$rewviewerReview] == '0'))
+                                            <textarea name="reviewer_kpi_review[{{$rewviewerReview}}][{{$kpiRow->id}}]" id="" cols="20" rows="8" placeholder="type here">@if(isset( $decodedKpiReview[$rewviewerReview])){{$decodedKpiReview[$rewviewerReview][$kpiRow->id]}}@endif</textarea>
+                                            @else
+                                            <div>@if(isset( $decodedKpiReview[$rewviewerReview])){{$decodedKpiReview[$rewviewerReview][$kpiRow->id]}}@endif</div>
+                                            @endif
+                                        
+                                        </td>
+                                        @endforeach                                   
+                                    <?php
+                                        $decodedKpiReviewPerc = json_decode($assignedGoals->reviewer_kpi_percentage,true);
+                                        ?>
+                                        @foreach($reviewersId as $rewviewerReview)
+                                    <td>
+                                            @if($assignedGoals->is_assignee_submitted == '1' && $rewviewerReview == Auth::id() && ($decodedKpiReviewSubmiteedStatus[$rewviewerReview] == '' || $decodedKpiReviewSubmiteedStatus[$rewviewerReview] == '0'))
+                                            <input type="number" class="inp-text" name="reviewer_kpi_percentage[{{$rewviewerReview}}][{{$kpiRow->id}}]" placeholder="type here" value="@if(isset( $decodedKpiReviewPerc[$rewviewerReview])){{$decodedKpiReviewPerc[$rewviewerReview][$kpiRow->id]}}@endif">
+
+                                            @else
+                                            <div>@if(isset( $decodedKpiReviewPerc[$rewviewerReview])){{$decodedKpiReviewPerc[$rewviewerReview][$kpiRow->id]}}@endif</div>
+                                            @endif
+                                        
+                                            
+                                        </td>
+                                        @endforeach
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -243,12 +274,16 @@
 
                     </div>
                 </form>
+                @if($assignedGoals->is_assignee_submitted == '1')
                 <div class="buttons d-flex align-items-center justify-content-end ">
-                    <button class="btn btn-primary" id="save_table" @if($assignedGoals->is_assignee_submitted == '1') disabled @endif>
-                    @if($assignedGoals->is_assignee_submitted == '') Save @else Edit @endif <i class="fa fa-save"></i></button>
+                    <button class="btn btn-primary" id="save_table" @if($decodedKpiReviewSubmiteedStatus[Auth::id()] == '1') disabled @endif>
+                    @if($decodedKpiReviewSubmiteedStatus[Auth::id()] == '') Save @else Edit @endif <i class="fa fa-save"></i></button>
                     &nbsp;&nbsp;
-                    <button class="btn btn-primary" id="publish_table" @if($assignedGoals->is_assignee_submitted == '' || $assignedGoals->is_assignee_submitted == '1') disabled @endif>Submit<i class="fa fa-save"></i></button>
+                    <button class="btn btn-primary" id="publish_table" @if($decodedKpiReviewSubmiteedStatus[Auth::id()] == '' || $decodedKpiReviewSubmiteedStatus[Auth::id()] == '1') disabled @endif>Submit<i class="fa fa-save"></i></button>
                 </div>
+                @else
+                <h6>Employee has not yet submitted this review.</h6>
+                @endif
                 @else
                 <h4>Goals Not Assigned</h4>
                 @endif
@@ -447,7 +482,7 @@
         $('.loader').show();
         $.ajax({
             type: "POST",
-            url: "{{ route('saveAssigneeReviews') }}",
+            url: "{{ route('saveReviewerReviews') }}",
             data: $('#employee_self_review').serialize(),
             success: function(data) {
                 if(data.status == true){
@@ -473,7 +508,7 @@
         $('.loader').show();
         $.ajax({
             type: "POST",
-            url: "{{ route('saveAssigneeReviews') }}",
+            url: "{{ route('saveReviewerReviews') }}",
             data: $('#employee_self_review').serialize(),
             success: function(data) {
                 if(data.status == true){
