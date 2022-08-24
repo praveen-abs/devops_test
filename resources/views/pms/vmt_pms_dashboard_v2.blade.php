@@ -237,7 +237,8 @@ header {
                                     @endphp
                                     @foreach($explodedAssignerId as $key => $assigneeId)
                                     @if(($checkRoleExists=='assignee' && $assigneeId==Auth::id()) || ($checkRoleExists=='assigner') || ($checkRoleExists=='reviewer'))
-                                   <?php  $kpiFormAssigneeReview = getReviewKpiFormDetails($emp->id,$assigneeId);?>
+                                   <?php
+                                        $kpiFormAssigneeReview = getReviewKpiFormDetails($emp->id,$assigneeId);?>
                                         <tr>
                                             <td class="d-none">{{ $key1 }}</td>
                                             <td class="">{{ $emp->getUserDetails($assigneeId)['userNames'] }}</td>
@@ -258,7 +259,7 @@ header {
                                                 @endif
                                             </td>
                                             <td class="">
-                                                {{ $emp->assignment_period }}
+                                                {{ strtoupper($emp->assignment_period) }}
                                             </td>
                                             <td class="">
                                                 
@@ -292,15 +293,20 @@ header {
                                                             @endif
                                                         @endif
                                                     @endforeach
-                                               
-                                               
                                             </td>
-                                            <td class="">{{ $emp['ranking'] }}</td>
+                                            <td class="">
+                                                <?php
+                                                
+                                                $pmsVmtV2 = new App\Http\Controllers\PMS\VmtPMSModuleController();
+                                                $finalAverageRating = $pmsVmtV2->calculateOverallReviewRatings($emp->id,$assigneeId);
+                                                echo $finalAverageRating;
+                                                ?>
+                                            </td>
                                             <td>
                                                 <a target="_blank"
                                                     href="{{ url('pms-showAssigneeReviewPage?assignedFormid=' . $emp->id . '&assigneeId=' . $assigneeId) }}"><button
                                                         class="btn btn-orange py-0 px-2 "> <span class="mr-10 icon"></span>
-                                                            @if($assigneeId == auth()->user()->id)
+                                                            @if($checkRoleExists=='assignee')
                                                             Self-Review
                                                             @else
                                                             Review

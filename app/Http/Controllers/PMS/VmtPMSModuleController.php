@@ -39,9 +39,6 @@ class VmtPMSModuleController extends Controller
 
         // checkConfigPms();
 
-        //Check whether the current user has any KPI forms
-        $existingGoals = VmtPMS_KPIFormAssignedModel::Where('assigner_id', auth::user()->id)->get();
-
         //Get existing KPI forms
         $existingKPIForms = VmtPMS_KPIFormModel::where('author_id', auth::user()->id)->get(['id','form_name']);
 
@@ -70,41 +67,10 @@ class VmtPMSModuleController extends Controller
         $dashboardCountersData['employeesAssessedCount'] = $employeesAssessedCount;
         $dashboardCountersData['selfReviewCount'] = $selfReviewCount;
         $dashboardCountersData['totalSelfReviewCount'] = $totalSelfReviewCount;
-        // if(auth::user()->hasRole(['HR','Admin']) ){ // Assigner
-        //     $pmsKpiAssignee = VmtPMS_KPIFormAssignedModel::Where('assigner_id', auth::user()->id)->with('getPmsKpiFormReviews')->orderBy('id','DESC')->get();
-        // }else{ 
-            
-            $assignedForms = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')->orderBy('id','DESC')->get();
-            $pmsKpiAssignee = [];
-            if(count($assignedForms) > 0){
-                foreach($assignedForms as $emp){
-                    if($emp->assigner_id == auth::id()){
-                        array_push($pmsKpiAssignee,$emp);
-                    }
-                    $explodedAssignee = explode(',',$emp->assignee_id);
-                    $explodedReviewers = explode(',',$emp->reviewer_id);
-                    // Assignees
-                    if(in_array(auth::id(),$explodedAssignee)){
-                        if(!in_array($emp,$pmsKpiAssignee)){
-                            array_push($pmsKpiAssignee,$emp);
-                        }
-                    }
-                    // reviewers
-                    if(in_array(auth::id(),$explodedReviewers)){
-                        if(!in_array($emp,$pmsKpiAssignee)){
-                            array_push($pmsKpiAssignee,$emp);
-                        }
-                    }
-                    
-                }
-            }
-            // check logged in user is reveiwer or not
-        // }
-        $users = User::select('users.id', 'users.name')->join('vmt_employee_details',  'vmt_employee_details.userid', '=', 'users.id')->where('active', 1)->get();
-        
-// dD($pmsKpiAssignee);
+    
+            $pmsKpiAssignee = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')->WhereRaw("find_in_set(".auth()->user()->id.", reviewer_id)")->orWhereRaw("find_in_set(".auth()->user()->id.", assignee_id)")->orWhere('assigner_id',auth()->user()->id)->orderBy('id','DESC')->get();
 
-        return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','existingGoals','existingKPIForms','departments','employees','pmsKpiAssignee','users'));
+        return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','existingKPIForms','departments','employees','pmsKpiAssignee'));
     }
 
     // public function showPMSDashboardOld()
@@ -539,6 +505,7 @@ class VmtPMSModuleController extends Controller
         }
     }
 
+    // Save and Submit Review by Reviewer
     public function saveReviewerReviews(Request $request)
     {
         try{
@@ -606,8 +573,35 @@ class VmtPMSModuleController extends Controller
 
     }
 
-    public function calculateOverallReviewRatings()
+    public function calculateOverallReviewRatings($assigneeReviewTableId=null,$assigneeId)
     {
+        $assigneeReviewDetails = VmtPMS_KPIFormAssignedModel::where('id',$assigneeReviewTableId)->first();
+        $decodedReviewsId = explode(',',$assigneeReviewDetails->reviewer_id);
+        // dd($decodedReviewsId);
+        $asisgenReveiwrReview = VmtPMS_KPIFormReviewsModel::where('assignee_id',$assigneeId)->where('vmt_pms_kpiform_assigned_id',$assigneeReviewTableId)->first();
+        // dD($asisgenReveiwrReview->reviewer_kpi_percentage);
+        $firstReviewRating = [];
+        if(json_decode($asisgenReveiwrReview->reviewer_kpi_percentage,true)!='' && isset(json_decode($asisgenReveiwrReview->reviewer_kpi_percentage,true)[$decodedReviewsId[0]])){
+            $firstReviewRating = json_decode($asisgenReveiwrReview->reviewer_kpi_percentage,true)[$decodedReviewsId[0]];
+        }
+        $finalRating = 0;
+        if (count($firstReviewRating) > 0) {
+            $ratingCheck = array_sum($firstReviewRating)/count($firstReviewRating);
+            if ($ratingCheck < 60) {
+                $finalRating = 1;
+            } elseif ($ratingCheck >= 60 && $ratingCheck < 70) {
+                $finalRating = 2;
+            } elseif ($ratingCheck >= 70 && $ratingCheck < 80) {
+                $finalRating = 3;
+            } elseif ($ratingCheck >= 80 && $ratingCheck < 90) {
+                $finalRating = 4;
+            } elseif ($ratingCheck >= 90) {
+                $finalRating = 5;
+            } else{
+                $finalRating = 0;
+            }
+        }
+        return $finalRating;
 
     }
 
