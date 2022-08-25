@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\PMS;
+
+use App\Exports\PMSV2ReviewFormExport;
 use App\Models\User;
 use App\Models\Department;
 use App\Models\VmtPMS_KPIFormAssignedModel;
@@ -21,6 +23,7 @@ use App\Notifications\ViewNotification;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
+use Maatwebsite\Excel\Facades\Excel;
 
 // use Maatwebsite\Excel\Facades\Excel;
 /*
@@ -324,7 +327,7 @@ class VmtPMSModuleController extends Controller
 
     public function showKPIReviewPage_Assignee(Request $request)
     {
-        // Flow 1 HR creates Form and Asisgn
+        // Flow 1 HR creates Form and Assignee
         $kpiFormAssignedDetails = VmtPMS_KPIFormAssignedModel::findorfail($request->assignedFormid);
         $config = VmtPMS_KPIFormModel::findorfail($kpiFormAssignedDetails->vmt_pms_kpiform_id);
         $show['dimension'] = 'true';
@@ -453,7 +456,7 @@ class VmtPMSModuleController extends Controller
         if(in_array(Auth::id(),$reviewersId)){
             return view('pms.vmt_pms_kpiappraisal_review_reviewer', compact('review','assignedUserDetails','assignedGoals','empSelected','assignersName','config','show','ratingDetail','kpiRowsId','kpiRows','reviewCompleted','reviewersId'));
         }
-        dD("Reviewer's reviewe page is pending");
+        dD("Assigner's review page is pending");
 
 
     }
@@ -494,7 +497,7 @@ class VmtPMSModuleController extends Controller
                 $kpiReviewCheck->is_assignee_submitted =  '1';
                 $kpiReviewCheck->update();
 
-                // get reviewr ids from vmt_pms_kpiform_assigned table
+                // get reviewer ids from vmt_pms_kpiform_assigned table
                 $kpiFormAssignedReviewers = [];
                 $kpiFormAssignedReviewersOfficialMails = [];
                 if(isset($kpiReviewCheck->getPmsKpiFormAssigned)){
@@ -687,4 +690,28 @@ class VmtPMSModuleController extends Controller
         return $config;
     }
 
+    /*
+    * function used for download excel sheet from review form
+    */
+    public function downloadExcelReviewForm($kpiAssignedId,$assigneeId){
+        try{    
+            $assignedKpiFormDetails = VmtPMS_KPIFormAssignedModel::where('id',$kpiAssignedId)->with('getPmsKpiFormColumnDetails.getPmsKpiFormDetails')->first();
+            $finalDownlededResult = [];  
+            if(isset($assignedKpiFormDetails->getPmsKpiFormColumnDetails)){
+                if(isset($assignedKpiFormDetails->getPmsKpiFormColumnDetails->getPmsKpiFormDetails)){
+                  $vmtKpiForm = $assignedKpiFormDetails->getPmsKpiFormColumnDetails;  
+                  $finalDownlededResult = VmtPMS_KPIFormDetailsModel::where('vmt_pms_kpiform_id',$vmtKpiForm->id)->select('dimension', 'kpi', 'operational_definition', 'measure', 'frequency', 'target', 'stretch_target', 'source', 'kpi_weightage')->get();
+                }
+
+            }
+            if(count($finalDownlededResult)){
+                return Excel::download(new PMSV2ReviewFormExport($finalDownlededResult), 'review-page-sheet.xlsx');
+            }
+            // $assignedKpiFormReviews = VmtPMS_KPIFormReviewsModel::where('vmt_pms_kpiform_assigned_id',$kpiAssignedId)->where('assignee_id',$assigneeId)->first();
+            // dd($assignedKpiFormDetails, $assignedKpiFormReviews);
+        }catch(Exception $e){
+            Log::info('excel sheet download form review page pms v2: '.$e->getMessage());
+            return '';
+        }
+    }
 }
