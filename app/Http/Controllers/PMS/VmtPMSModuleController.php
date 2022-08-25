@@ -327,7 +327,7 @@ class VmtPMSModuleController extends Controller
 
     public function showKPIReviewPage_Assignee(Request $request)
     {
-        // Flow 1 HR creates Form and Asisgn
+        // Flow 1 HR creates Form and Assignee
         $kpiFormAssignedDetails = VmtPMS_KPIFormAssignedModel::findorfail($request->assignedFormid);
         $config = VmtPMS_KPIFormModel::findorfail($kpiFormAssignedDetails->vmt_pms_kpiform_id);
         $show['dimension'] = 'true';
@@ -456,7 +456,7 @@ class VmtPMSModuleController extends Controller
         if(in_array(Auth::id(),$reviewersId)){
             return view('pms.vmt_pms_kpiappraisal_review_reviewer', compact('review','assignedUserDetails','assignedGoals','empSelected','assignersName','config','show','ratingDetail','kpiRowsId','kpiRows','reviewCompleted','reviewersId'));
         }
-        dD("Reviewer's reviewe page is pending");
+        dD("Assigner's review page is pending");
 
 
     }
@@ -497,7 +497,7 @@ class VmtPMSModuleController extends Controller
                 $kpiReviewCheck->is_assignee_submitted =  '1';
                 $kpiReviewCheck->update();
 
-                // get reviewr ids from vmt_pms_kpiform_assigned table
+                // get reviewer ids from vmt_pms_kpiform_assigned table
                 $kpiFormAssignedReviewers = [];
                 $kpiFormAssignedReviewersOfficialMails = [];
                 if(isset($kpiReviewCheck->getPmsKpiFormAssigned)){

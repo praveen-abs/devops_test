@@ -48,10 +48,10 @@ function getPmsKpiAssigneeDetails($pmsKpiAssigneeId){
 }
 
 // check current logged user is Reviewer or Not and Add reviewd or not yet reviewed
-function checkCurrentLoggedUserReviewerOrNot($reviewersIds,$currentLoggedUserRole,$kpiAssigneReviewDetails){
+function checkCurrentLoggedUserReviewerOrNot($reviewersIds,$currentLoggedUserRole,$kpiAssigneeReviewDetails){
     try{
         $result = '';
-        $decodedReviewSubmitted = isset($kpiAssigneReviewDetails->is_reviewer_submitted) ? json_decode($kpiAssigneReviewDetails->is_reviewer_submitted,true) : '';
+        $decodedReviewSubmitted = isset($kpiAssigneeReviewDetails->is_reviewer_submitted) ? json_decode($kpiAssigneeReviewDetails->is_reviewer_submitted,true) : '';
         foreach($reviewersIds as $singleReviewerSubmittedStatus)
         {
             if($currentLoggedUserRole == 'reviewer')
@@ -89,11 +89,11 @@ function calculateOverallReviewRatings($assigneeReviewTableId=null,$assigneeId)
         $finalRating = 0;
         if(!empty($assigneeReviewDetails)){
             $decodedReviewsId = explode(',',$assigneeReviewDetails->reviewer_id);
-            $asisgenReveiwrReview = VmtPMS_KPIFormReviewsModel::where('assignee_id',$assigneeId)->where('vmt_pms_kpiform_assigned_id',$assigneeReviewTableId)->first();
-            if(!empty($asisgenReveiwrReview)){
+            $assigneeReviewerReview = VmtPMS_KPIFormReviewsModel::where('assignee_id',$assigneeId)->where('vmt_pms_kpiform_assigned_id',$assigneeReviewTableId)->first();
+            if(!empty($assigneeReviewerReview)){
                 $firstReviewRating = [];
-                if(json_decode($asisgenReveiwrReview->reviewer_kpi_percentage,true)!='' && isset(json_decode($asisgenReveiwrReview->reviewer_kpi_percentage,true)[$decodedReviewsId[0]])){
-                    $firstReviewRating = json_decode($asisgenReveiwrReview->reviewer_kpi_percentage,true)[$decodedReviewsId[0]];
+                if(json_decode($assigneeReviewerReview->reviewer_kpi_percentage,true)!='' && isset(json_decode($assigneeReviewerReview->reviewer_kpi_percentage,true)[$decodedReviewsId[0]])){
+                    $firstReviewRating = json_decode($assigneeReviewerReview->reviewer_kpi_percentage,true)[$decodedReviewsId[0]];
                 }
                 
                 if (count($firstReviewRating) > 0) {

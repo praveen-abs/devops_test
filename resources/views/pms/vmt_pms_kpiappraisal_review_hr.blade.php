@@ -248,12 +248,12 @@
                                             $decodedKpiReviewerReview = json_decode($assignedGoals->reviewer_kpi_review,true);
                                             $decodedKpiReviewerPerc = json_decode($assignedGoals->reviewer_kpi_percentage,true);
                                         ?>
-                                        @foreach($reviewersId as $rewviewerReview)
+                                        @foreach($reviewersId as $reviewersReview)
                                         <td>
-                                            <div>@if(isset( $decodedKpiReviewerReview[$rewviewerReview])){{$decodedKpiReviewerReview[$rewviewerReview][$kpiRow->id]}}@endif</div>                                        
+                                            <div>@if(isset( $decodedKpiReviewerReview[$reviewersReview])){{$decodedKpiReviewerReview[$reviewersReview][$kpiRow->id]}}@endif</div>                                        
                                         </td>
                                         <td>
-                                            <div>@if(isset( $decodedKpiReviewerPerc[$rewviewerReview])){{$decodedKpiReviewerPerc[$rewviewerReview][$kpiRow->id]}}@endif</div>
+                                            <div>@if(isset( $decodedKpiReviewerPerc[$reviewersReview])){{$decodedKpiReviewerPerc[$reviewersReview][$kpiRow->id]}}@endif</div>
                                         </td>
                                         @endforeach
                                     @endif
