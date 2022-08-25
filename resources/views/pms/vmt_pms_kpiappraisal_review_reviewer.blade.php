@@ -492,7 +492,9 @@
             data: $('#employee_self_review').serialize(),
             success: function(data) {
                 if(data.status == true){
-                    swal("Success!", data.message, "success");
+                    swal("Success!", data.message, "success").then(function(){
+                        location.reload();
+                    });
                 }else{
                     swal("Error!", data.message, "error");
                 }
@@ -518,7 +520,9 @@
             data: $('#employee_self_review').serialize(),
             success: function(data) {
                 if(data.status == true){
-                    swal("Success!", data.message, "success");
+                    swal("Success!", data.message, "success").then(function(){
+                        location.reload();
+                    });
                 }else{
                     swal("Error!", data.message, "error");
                 }

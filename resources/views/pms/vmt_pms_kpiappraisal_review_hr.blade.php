@@ -123,12 +123,14 @@
                                     <a href="{{route('download.excelsheet.pmsv2.review.form', [$assignedGoals->vmt_pms_kpiform_assigned_id,$assignedGoals->assignee_id])}}" class="btn btn-orange pull-right"
                                     id="download-excel">Download</a>
                                 </div>
+                                @if(!isset($assignedGoals->is_assignee_submitted) && $assignedGoals->is_assignee_submitted != '1')
                                 <div class="col-auto p-0">
                                     <input type="file" name="upload_file" id="upload_file" accept=".xls,.xlsx" class="form-control" required>
                                 </div>
                                 <div class="col">
                                     <button type="button" class="btn btn-orange pull-right" id="upload-goal" disabled>Upload</button>
                                 </div>
+                                @endif
                             </div>
                         </form>
                     </div>
@@ -449,9 +451,9 @@
             success: function(data) {
                 // $('.addition-content').html('');
                 $.each(data[0], function(key, value) {
-                    $('#selfreview' + key).val(value[9]);
-                    $('#selfkpiachievement' + key).val(value[10]);
-                    $('#selfcomments' + key).val(value[11]);
+                    $('#assignee_kpi_review' + key).val(value[9]);
+                    $('#assignee_kpi_percentage' + key).val(value[10]);
+                    $('#assignee_kpi_comments' + key).val(value[11]);
                 });
                 $('.loader').hide();
             },
@@ -475,7 +477,9 @@
             data: $('#employee_self_review').serialize(),
             success: function(data) {
                 if(data.status == true){
-                    swal("Success!", data.message, "success");
+                    swal("Success!", data.message, "success").then(function(){
+                        location.reload();
+                    });
                 }else{
                     swal("Error!", data.message, "error");
                 }
@@ -501,7 +505,9 @@
             data: $('#employee_self_review').serialize(),
             success: function(data) {
                 if(data.status == true){
-                    swal("Success!", data.message, "success");
+                    swal("Success!", data.message, "success").then(function(){
+                        location.reload();
+                    });
                 }else{
                     swal("Error!", data.message, "error");
                 }
