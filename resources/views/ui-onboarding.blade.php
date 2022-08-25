@@ -27,7 +27,7 @@
                                                 <!-- <label class="" for="employee_code">Employee Code{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <input type="text" placeholder="Employee Code" name="employee_code" class="onboard-form form-control textbox" value="{{$empNo}}" required />
-                                                    <label for="" class="float-label">Employee Code</label>
+                                                    {{-- <label for="" class="float-label" placeholder></label> --}}
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -61,7 +61,7 @@
                                                         <option value="separated">Separated</option>
                                                         <option value="divorced">Divorced</option>
                                                     </select>
-                                                    <label for="" class="float-label">Marital Status</label>
+                                                    {{-- <label for="" class="float-label">Marital Status</label> --}}
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -80,7 +80,7 @@
                                                         <option value="female">Female</option>
                                                         <option value="other">Other</option>
                                                     </select>
-                                                    <label for="" class="float-label">Gender</label>
+                                                    {{-- <label for="" class="float-label">Gender</label> --}}
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -153,12 +153,12 @@
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="nationality">Nationality{!! required() !!}</label> -->
                                                 <div class="floating">
-                                                    <select placeholder="Nationality" name="nationality" id="nationality" class="onboard-form form-control textbox select2_form_without_search" required>
+                                                    <select placeholder="Choose nationality" name="nationality" id="nationality" class="onboard-form form-control textbox select2_form_without_search" required>
                                                         <option value="" hidden selected disabled>Choose nationality</option>
                                                         <option value="indian">Indian</option>
                                                         <option value="other_country">Other Nationality</option>
                                                     </select>
-                                                    <label for="" class="float-label">Choose nationality</label>
+                                                    {{-- <label for="" class="float-label">Choose nationality</label> --}}
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -175,7 +175,7 @@
                                                         <option value="o-positive">O Positive</option>
                                                         <option value="o-negative">O Negative</option>
                                                     </select>
-                                                    <label for="" class="float-label">Blood Group</label>
+                                                    {{-- <label for="" class="float-label">Blood Group</label> --}}
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -186,7 +186,7 @@
                                                         <option value="yes">Yes</option>
                                                         <option value="no">No</option>
                                                     </select>
-                                                    <label for="" class="float-label">Physically Challenged</label>
+                                                    {{-- <label for="" class="float-label">Physically Challenged</label> --}}
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -199,7 +199,7 @@
                                                         <option value="{{$b->bank_name}}" min-data="{{$b->min_length}}" max-data="{{$b->max_length}}">{{$b->bank_name}}</option>
                                                         @endforeach
                                                     </select>
-                                                    <label for="" class="float-label">Bank Name</label>
+                                                    {{-- <label for="" class="float-label">Bank Name</label> --}}
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -237,7 +237,7 @@
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                     </select>
-                                                    <label for="" class="float-label">PF Applicable</label>
+                                                    {{-- <label for="" class="float-label">PF Applicable</label> --}}
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -261,7 +261,7 @@
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                     </select>
-                                                    <label for="" class="float-label">ESIC Applicable</label>
+                                                    {{-- <label for="" class="float-label">ESIC Applicable</label> --}}
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-lg-3 col-xl-3 mb-2">
@@ -278,7 +278,7 @@
                                                     <select placeholder="Ptax Location" name="ptax_location" id="ptax_location" class="onboard-form form-control textbox select2_form_without_search" required>
                                                         <option value="" hidden selected disabled>Ptax Location</option>
                                                     </select>
-                                                    <label for="" class="float-label">Ptax Location</label>
+                                                    {{-- <label for="" class="float-label">Ptax Location</label> --}}
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-lg-3 col-xl-3 mb-2">
@@ -294,7 +294,7 @@
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                     </select>
-                                                    <label for="" class="float-label">LWF Location</label>
+                                                    {{-- <label for="" class="float-label">LWF Location</label> --}}
                                                 </div>
                                             </div>
                                         </div>
@@ -325,7 +325,7 @@
                                                     <select placeholder="Current State" name="current_state" id="current_state" class="onboard-form form-control textbox select2_form_without_search" required>
                                                         <option value="" hidden selected disabled>Select State</option>
                                                     </select>
-                                                    <label for="" class="float-label">Select State</label>
+                                                    {{-- <label for="" class="float-label">Select State</label> --}}
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -346,7 +346,7 @@
                                                         </option>
                                                         @endforeach
                                                     </select>
-                                                    <label for="" class="float-label">Country</label>
+                                                    {{-- <label for="" class="float-label">Country</label> --}}
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6 mb-2">
@@ -379,7 +379,7 @@
                                                     <select placeholder="Permanent State" name="permanent_state" id="permanent_state" class="onboard-form form-control textbox select2_form_without_search" required>
                                                         <option value="" hidden selected disabled>Permanent State</option>
                                                     </select>
-                                                    <label for="" class="float-label">Permanent State</label>
+                                                    {{-- <label for="" class="float-label">Permanent State</label> --}}
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -400,7 +400,7 @@
                                                         </option>
                                                         @endforeach
                                                     </select>
-                                                    <label for="" class="float-label">Select Country</label>
+                                                    {{-- <label for="" class="float-label">Select Country</label> --}}
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6 mb-2">
@@ -431,7 +431,7 @@
                                                         <option value="{{$e->name}}">{{$e->name}}</option>
                                                         @endforeach
                                                     </select>
-                                                    <label for="" class="float-label">Select Department</label>
+                                                    {{-- <label for="" class="float-label">Select Department</label> --}}
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -443,7 +443,7 @@
                                                         <option value="{{$e->process}}">{{$e->process}}</option>
                                                         @endforeach
                                                     </select>
-                                                    <label for="" class="float-label">Select Process</label>
+                                                    {{-- <label for="" class="float-label">Select Process</label> --}}
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -479,7 +479,7 @@
                                                         <option value="11">11 Month</option>
                                                         <option value="12">12 Month</option>
                                                     </select>
-                                                    <label for="" class="float-label">Cost Center</label>
+                                                    {{-- <label for="" class="float-label">Cost Center</label> --}}
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -499,7 +499,7 @@
                                                         <option value='{{$e->user_code}}'>{{$e->user_code}} - {{$e->name}}</option>
                                                         @endforeach
                                                     </select>
-                                                    <label for="" class="float-label">Reporting Manager</label>
+                                                    {{-- <label for="" class="float-label">Reporting Manager</label> --}}
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -515,7 +515,7 @@
                                                     <select placeholder="Holiday Location" name="holiday_location" id="holiday_location" class="onboard-form form-control textbox select2_form_without_search" required>
                                                         <option value="" hidden selected disabled>Holiday Location</option>
                                                     </select>
-                                                    <label for="" class="float-label">Holiday Location</label>
+                                                    {{-- <label for="" class="float-label">Holiday Location</label> --}}
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -582,7 +582,7 @@
                                                         <option value="female">Female</option>
 
                                                     </select>
-                                                    <label for="" class="float-label">Gender</label>
+                                                    <label for="" class="float-label"></label>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -615,7 +615,7 @@
                                                         <option value="male">Male</option>
                                                         <option value="female">Female</option>
                                                     </select>
-                                                    <label for="" class="float-label">Gender</label>
+                                                    <label for="" class="float-label"></label>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -651,7 +651,7 @@
                                                         <option value="female">Female</option>
                                                         <option value="other">Other</option>
                                                     </select>
-                                                    <label for="" class="float-label">Gender</label>
+                                                    {{-- <label for="" class="float-label">Gender</label> --}}
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -664,7 +664,7 @@
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="no_child">Number of Children<span id="no_child_req">{!! required() !!}</span></label> -->
                                                 <div class="floating">
-                                                    <select placeholder="Number of Children" name="no_of_child" id="no_of_child" class="onboard-form form-control textbox spouse_data select2_form_without_search" required>
+                                                    <select  name="no_of_child" id="no_of_child" class="onboard-form form-control textbox spouse_data select2_form_without_search" required>
                                                         <option value="" hidden selected disabled>Select Number of Children</option>
                                                         <option value="0">0</option>
                                                         <option value="1">1</option>
