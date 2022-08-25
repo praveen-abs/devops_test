@@ -275,11 +275,9 @@ header {
                                                 <a target="_blank"
                                                     href="{{ url('pms-showAssigneeReviewPage?assignedFormid=' . $pmsKpiAssignee->id . '&assigneeId=' . $assigneeId) }}"><button
                                                         class="btn btn-orange py-0 px-2 "> <span class="mr-10 icon"></span>
-                                                            @if($pmsKpiAssigneeData['currentLoggedUserRole']=='assignee')
-                                                            Self-Review
-                                                            @else
-                                                            Review
-                                                            @endif
+                                                        <?php  
+                                                        echo checkViewReviewText($pmsKpiAssigneeData['currentLoggedUserRole'],$kpiFormAssigneeReview);
+                                                        ?>
                                                         </button></a>
                                                 </div>
                                             </td>

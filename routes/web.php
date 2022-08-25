@@ -281,7 +281,7 @@ Route::post('/saveAssignerReviews',[VmtPMSModuleController::class, 'saveAssigner
 Route::get('vmt-pms-appraisal-review', 'App\Http\Controllers\PMS\VmtPMSModuleController@showKPIReviewPage_Assignee');
 Route::post('vmt-pms-appraisal-review', 'App\Http\Controllers\VmtApraisalController@storeEmployeeApraisalReview');
 //test
-Route::get('/excelsheet', 'App\Http\Controllers\PMS\VmtPMSModuleController@generateSampleKPIExcelSheet');
+Route::get('/generateSampleKPIExcelSheet', [VmtPMSModuleController::class, 'generateSampleKPIExcelSheet'])->name('generate.sample.KPI.excel.sheet');
 
 // route for download excel sheet from review pgae
 Route::get('/downloadExcelReviewForm/{kpiAssignedId}/{assigneeId}', [VmtPMSModuleController::class, 'downloadExcelReviewForm'])->name('download.excelsheet.pmsv2.review.form');

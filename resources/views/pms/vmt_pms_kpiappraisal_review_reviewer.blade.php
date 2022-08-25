@@ -217,18 +217,28 @@
                                     <td>
                                         @if(isset($assignedGoals->is_assignee_submitted) && $assignedGoals->is_assignee_submitted == '1')
                                         <div>
-                                            {{json_decode($assignedGoals->assignee_kpi_review,true)[$kpiRow->id]}}
+                                            @if(isset($assignedGoals->assignee_kpi_review))
+                                                {{json_decode($assignedGoals->assignee_kpi_review,true)[$kpiRow->id]}}
+                                            @endif
                                         </div>
                                         @endif
                                     </td>
                                     <td>
                                         @if(isset($assignedGoals->is_assignee_submitted) && $assignedGoals->is_assignee_submitted == '1')
-                                        <div> {{json_decode($assignedGoals->assignee_kpi_percentage,true)[$kpiRow->id]}}</div>
+                                        <div> 
+                                        @if(isset($assignedGoals->assignee_kpi_percentage))
+                                            {{json_decode($assignedGoals->assignee_kpi_percentage,true)[$kpiRow->id]}}
+                                        @endif
+                                        </div>
                                         @endif
                                     </td>
                                     <td>
                                         @if(isset($assignedGoals->is_assignee_submitted) && $assignedGoals->is_assignee_submitted == '1')
-                                        <div>{{json_decode($assignedGoals->assignee_kpi_comments,true)[$kpiRow->id]}}</div>
+                                        <div>
+                                        @if(isset($assignedGoals->assignee_kpi_comments))
+                                            {{json_decode($assignedGoals->assignee_kpi_comments,true)[$kpiRow->id]}}
+                                        @endif
+                                        </div>
                                         @endif
                                     </td>
                                         <?php

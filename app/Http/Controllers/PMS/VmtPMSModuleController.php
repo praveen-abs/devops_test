@@ -261,10 +261,16 @@ class VmtPMSModuleController extends Controller
     */
     public function generateSampleKPIExcelSheet()
     {
-        $data = ConfigPms::where('user_id', auth()->user()->id)->pluck('selected_columns');
-        $array_selectedKPIColumns = str_getcsv($data['0']);
-
-        return \Excel::download(new SampleKPIFormExport($array_selectedKPIColumns), 'Template_SampleKPIForm.xlsx');
+        $data = ConfigPms::first(['selected_columns']);
+        $array_selectedKPIColumns = [];
+        if(!empty($data)){
+            $array_selectedKPIColumns = str_getcsv($data->selected_columns);
+        }
+        if(count($array_selectedKPIColumns) > 0){
+            return \Excel::download(new SampleKPIFormExport($array_selectedKPIColumns), 'Template_SampleKPIForm.xlsx');
+        }else{
+            return '';
+        }
 
    }
 

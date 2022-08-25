@@ -120,6 +120,35 @@ function calculateOverallReviewRatings($assigneeReviewTableId=null,$assigneeId)
         return 0;
     }
 
+    
+}
+
+// function for get View, Review and Self Review Text Change of Kpi Pms Form
+function checkViewReviewText($loggedUserRole,$kpiFormReviewDetails){
+    // dD("S");
+    try{
+        $result = '';
+        if($loggedUserRole == 'assignee'){
+            if(isset($kpiFormReviewDetails->is_assignee_submitted) && $kpiFormReviewDetails->is_assignee_submitted == '1') {
+                $result = 'View';
+            }else{
+                $result = 'Self-Review';
+            }
+        }elseif($loggedUserRole == 'reviewer' || $loggedUserRole == 'assigner'){
+            $decodedReview = isset($kpiFormReviewDetails->is_reviewer_submitted) ? json_decode($kpiFormReviewDetails->is_reviewer_submitted,true) : [];
+            if(isset($decodedReview[Auth::id()]) && $decodedReview[Auth::id()] == '1'){
+                    $result = 'View';        
+            }else{
+                $result = 'Review';
+                
+            }
+        }
+        return $result;
+    }catch(Exception $e){
+        Log::info('get View, Review and Self Review Text Change of Kpi Pms Form helper error: '.$e->getMessage());
+        return 'Review';
+    }
+    
 }
 
 ?>
