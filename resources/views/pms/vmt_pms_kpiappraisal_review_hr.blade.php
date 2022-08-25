@@ -295,7 +295,7 @@
     </div>
     @endif
 
-    @if($reviewCompleted && $assignedGoals->is_hr_submitted)
+    @if($isAllReviewersSubmittedOrNot)
     <div class="card">
         <div class="card-header">
             <h5>Best People Rating Grid</h5>
