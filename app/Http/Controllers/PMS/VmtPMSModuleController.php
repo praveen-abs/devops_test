@@ -417,10 +417,21 @@ class VmtPMSModuleController extends Controller
         $employeeData = VmtEmployee::where('userid', $request->assigneeId)->first();
 
         $reviewersId = explode(',',$assignedGoals->reviewer_id);
+
+        $isAllReviewersSubmittedOrNot = false;
+        if(isset($assignedGoals->is_reviewer_submitted)){
+            $isAllReviewersSubmittedData = json_decode($assignedGoals->is_reviewer_submitted,true);
+            if(!in_array('0',$isAllReviewersSubmittedData) && !in_array(null,$isAllReviewersSubmittedData)){
+                $isAllReviewersSubmittedOrNot = true;
+            }
+        }
+
         // check if logged in user is assignee or not
         if($request->assigneeId == auth()->user()->id){
-            return view('pms.vmt_pms_kpiappraisal_review_hr', compact('review','assignedUserDetails','assignedGoals','empSelected','assignersName','config','show','ratingDetail','kpiRowsId','kpiRows','reviewCompleted'));
+            return view('pms.vmt_pms_kpiappraisal_review_hr', compact('review','assignedUserDetails','assignedGoals','empSelected','assignersName','config','show','ratingDetail','kpiRowsId','kpiRows','reviewCompleted','isAllReviewersSubmittedOrNot','reviewersId'));
         }
+
+        // check if logged in user is reviewer or not
         if(in_array(Auth::id(),$reviewersId)){
             return view('pms.vmt_pms_kpiappraisal_review_reviewer', compact('review','assignedUserDetails','assignedGoals','empSelected','assignersName','config','show','ratingDetail','kpiRowsId','kpiRows','reviewCompleted','reviewersId'));
         }

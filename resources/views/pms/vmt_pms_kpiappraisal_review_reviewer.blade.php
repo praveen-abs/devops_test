@@ -179,15 +179,9 @@
                                     ?>
                                     @foreach($reviewersId as $rewviewerReview)
                                         <th scope="col" data-name='kpiManagerReview' data-filterable="false" data-visible= true>KPI - Achievement (Manager Review) {{$i}}</th>
+                                        <th scope="col" data-name='kpiManagerAchivement' data-filterable="false" data-visible="true">Manager KPI Achievement % - {{$i}}</th>
                                         <?php $i++; ?>
-                                    @endforeach
-                                    @foreach($reviewersId as $rewviewerReview)
-                                        
-                                        <th scope="col" data-name='kpiManagerAchivement' data-filterable="false" data-visible="true">Manager KPI Achievement % - {{$j}}</th>
-                                        <?php $j++; ?>
-                                    @endforeach
-                                    
-                                              
+                                    @endforeach                 
                                 </tr>
                             </thead>
                             <tbody class="tbody" id="tbody">

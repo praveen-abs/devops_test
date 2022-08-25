@@ -173,7 +173,14 @@
                                     <th scope="col" data-name='kpiSelfReview' data-filterable="false" data-visible="true">KPI - Achievement (Self Review)</th>
                                     <th scope="col" data-name='kpiSelfAchivement' data-filterable="false" data-visible="true">Self KPI Achievement %</th>
                                     <th scope="col" data-name='comments' data-filterable="false" data-visible="true">Comments</th>
-                                    
+                                    @if($isAllReviewersSubmittedOrNot)
+                                    <?php $i = 1; ?>
+                                    @foreach($reviewersId as $reviewerCheck)
+                                        <th scope="col" data-name='kpiManagerReview' data-filterable="false" data-visible= true>KPI - Achievement (Manager Review) {{$i}}</th>
+                                        <th scope="col" data-name='kpiManagerAchivement' data-filterable="false" data-visible="true">Manager KPI Achievement % - {{$i}}</th>
+                                        <?php $i++; ?>
+                                    @endforeach
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody class="tbody" id="tbody">
@@ -235,6 +242,21 @@
                                         <div>{{json_decode($assignedGoals->assignee_kpi_comments,true)[$kpiRow->id]}}</div>
                                         @endif
                                     </td>
+                                    @if($isAllReviewersSubmittedOrNot)
+                                        <?php
+                                            $i = 1;
+                                            $decodedKpiReviewerReview = json_decode($assignedGoals->reviewer_kpi_review,true);
+                                            $decodedKpiReviewerPerc = json_decode($assignedGoals->reviewer_kpi_percentage,true);
+                                        ?>
+                                        @foreach($reviewersId as $rewviewerReview)
+                                        <td>
+                                            <div>@if(isset( $decodedKpiReviewerReview[$rewviewerReview])){{$decodedKpiReviewerReview[$rewviewerReview][$kpiRow->id]}}@endif</div>                                        
+                                        </td>
+                                        <td>
+                                            <div>@if(isset( $decodedKpiReviewerPerc[$rewviewerReview])){{$decodedKpiReviewerPerc[$rewviewerReview][$kpiRow->id]}}@endif</div>
+                                        </td>
+                                        @endforeach
+                                    @endif
                                 </tr>
                                 @endforeach
                             </tbody>
