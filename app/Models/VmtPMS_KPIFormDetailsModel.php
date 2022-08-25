@@ -11,4 +11,7 @@ class VmtPMS_KPIFormDetailsModel extends Model
 
     protected $table = 'vmt_pms_kpiform_details';
 
+    function getPmsKpiFormColumnDetails(){
+        return $this->belongsTo(VmtPMS_KPIFormModel::class);
+    }
 }

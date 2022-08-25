@@ -15,6 +15,11 @@ class VmtPMS_KPIFormAssignedModel extends Model
         return $this->hasMany(VmtPMS_KPIFormReviewsModel::class,'vmt_pms_kpiform_assigned_id');
     }
 
+    function getPmsKpiFormColumnDetails(){
+        return $this->belongsTo(VmtPMS_KPIFormModel::class,'vmt_pms_kpiform_id');
+    }
+
+
     function getUserDetails($assignersId){
         $userEmpNames = [];
         $userEmpNos = [];

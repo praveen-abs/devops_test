@@ -283,6 +283,8 @@ Route::post('vmt-pms-appraisal-review', 'App\Http\Controllers\VmtApraisalControl
 //test
 Route::get('/excelsheet', 'App\Http\Controllers\PMS\VmtPMSModuleController@generateSampleKPIExcelSheet');
 
+// route for download excel sheet from review pgae
+Route::get('/downloadExcelReviewForm/{kpiAssignedId}/{assigneeId}', [VmtPMSModuleController::class, 'downloadExcelReviewForm'])->name('download.excelsheet.pmsv2.review.form');
 
 //DONT WRITE ANT ROUTES BELOW THIS
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index']);

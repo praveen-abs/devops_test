@@ -120,8 +120,8 @@
                             <div class="row pull-right mb-3">
                                 @csrf
                                 <div class="col">
-                                    {{-- <a href="{{route('download-file', $kpiRowsId)}}" class="btn btn-orange pull-right"
-                                    id="download-excel">Download</a> --}}
+                                    <a href="{{route('download.excelsheet.pmsv2.review.form', [$assignedGoals->vmt_pms_kpiform_assigned_id,$assignedGoals->assignee_id])}}" class="btn btn-orange pull-right"
+                                    id="download-excel">Download</a>
                                 </div>
                                 <div class="col-auto p-0">
                                     <input type="file" name="upload_file" id="upload_file" accept=".xls,.xlsx" class="form-control" required>

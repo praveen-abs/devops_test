@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\PMS;
+
+use App\Exports\PMSV2ReviewFormExport;
 use App\Models\User;
 use App\Models\Department;
 use App\Models\VmtPMS_KPIFormAssignedModel;
@@ -21,6 +23,7 @@ use App\Notifications\ViewNotification;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
+use Maatwebsite\Excel\Facades\Excel;
 
 // use Maatwebsite\Excel\Facades\Excel;
 /*
@@ -687,4 +690,28 @@ class VmtPMSModuleController extends Controller
         return $config;
     }
 
+    /*
+    * function used for download excel sheet from review form
+    */
+    public function downloadExcelReviewForm($kpiAssignedId,$assigneeId){
+        try{    
+            $assignedKpiFormDetails = VmtPMS_KPIFormAssignedModel::where('id',$kpiAssignedId)->with('getPmsKpiFormColumnDetails.getPmsKpiFormDetails')->first();
+            $finalDownlededResult = [];  
+            if(isset($assignedKpiFormDetails->getPmsKpiFormColumnDetails)){
+                if(isset($assignedKpiFormDetails->getPmsKpiFormColumnDetails->getPmsKpiFormDetails)){
+                  $vmtKpiForm = $assignedKpiFormDetails->getPmsKpiFormColumnDetails;  
+                  $finalDownlededResult = VmtPMS_KPIFormDetailsModel::where('vmt_pms_kpiform_id',$vmtKpiForm->id)->select('dimension', 'kpi', 'operational_definition', 'measure', 'frequency', 'target', 'stretch_target', 'source', 'kpi_weightage')->get();
+                }
+
+            }
+            if(count($finalDownlededResult)){
+                return Excel::download(new PMSV2ReviewFormExport($finalDownlededResult), 'review-page-sheet.xlsx');
+            }
+            // $assignedKpiFormReviews = VmtPMS_KPIFormReviewsModel::where('vmt_pms_kpiform_assigned_id',$kpiAssignedId)->where('assignee_id',$assigneeId)->first();
+            // dd($assignedKpiFormDetails, $assignedKpiFormReviews);
+        }catch(Exception $e){
+            Log::info('excel sheet download form review page pms v2: '.$e->getMessage());
+            return '';
+        }
+    }
 }
