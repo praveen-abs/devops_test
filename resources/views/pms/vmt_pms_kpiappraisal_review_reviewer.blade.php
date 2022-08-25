@@ -94,7 +94,7 @@
                                     </div>
                                     <div class=" input-wrap">
                                         <p>Action</p>
-                                        <div class="appraisal-box btn bg-danger text-white">
+                                        <div class="appraisal-box btn bg-success text-white">
                                             @if($ratingDetail){{$ratingDetail['action']}}@else - @endif</div>
                                     </div>
 
@@ -173,15 +173,15 @@
                                     <th scope="col" data-name='kpiSelfReview' data-filterable="false" data-visible="true">KPI - Achievement (Self Review)</th>
                                     <th scope="col" data-name='kpiSelfAchivement' data-filterable="false" data-visible="true">Self KPI Achievement %</th>
                                     <th scope="col" data-name='comments' data-filterable="false" data-visible="true">Comments</th>
-                                    
-                                    <?php $i=1; 
+
+                                    <?php $i=1;
                                     $j=1;
                                     ?>
                                     @foreach($reviewersId as $reviewersReview)
                                         <th scope="col" data-name='kpiManagerReview' data-filterable="false" data-visible= true>KPI - Achievement (Manager Review) {{$i}}</th>
                                         <th scope="col" data-name='kpiManagerAchivement' data-filterable="false" data-visible="true">Manager KPI Achievement % - {{$i}}</th>
                                         <?php $i++; ?>
-                                    @endforeach                 
+                                    @endforeach
                                 </tr>
                             </thead>
                             <tbody class="tbody" id="tbody">
@@ -225,7 +225,7 @@
                                     </td>
                                     <td>
                                         @if(isset($assignedGoals->is_assignee_submitted) && $assignedGoals->is_assignee_submitted == '1')
-                                        <div> 
+                                        <div>
                                         @if(isset($assignedGoals->assignee_kpi_percentage))
                                             {{json_decode($assignedGoals->assignee_kpi_percentage,true)[$kpiRow->id]}}
                                         @endif
@@ -252,9 +252,9 @@
                                             @else
                                             <div>@if(isset( $decodedKpiReview[$reviewersReview])){{$decodedKpiReview[$reviewersReview][$kpiRow->id]}}@endif</div>
                                             @endif
-                                        
+
                                         </td>
-                                        @endforeach                                   
+                                        @endforeach
                                     <?php
                                         $decodedKpiReviewPerc = json_decode($assignedGoals->reviewer_kpi_percentage,true);
                                         ?>
@@ -266,8 +266,8 @@
                                             @else
                                             <div>@if(isset( $decodedKpiReviewPerc[$reviewersReview])){{$decodedKpiReviewPerc[$reviewersReview][$kpiRow->id]}}@endif</div>
                                             @endif
-                                        
-                                            
+
+
                                         </td>
                                         @endforeach
                                 </tr>
@@ -478,7 +478,7 @@
         });
     });
 
- 
+
     // Save/Draft Assignee Reviews
     $('#save_table').click(function(e) {
         e.preventDefault();

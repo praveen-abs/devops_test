@@ -94,7 +94,7 @@
                                     </div>
                                     <div class=" input-wrap">
                                         <p>Action</p>
-                                        <div class="appraisal-box btn bg-danger text-white">
+                                        <div class="appraisal-box btn bg-success text-white">
                                             @if($isAllReviewersSubmittedOrNot) @if($ratingDetail){{$ratingDetail['action']}}@else - @endif @else - @endif</div>
                                     </div>
 
@@ -252,7 +252,7 @@
                                         ?>
                                         @foreach($reviewersId as $reviewersReview)
                                         <td>
-                                            <div>@if(isset( $decodedKpiReviewerReview[$reviewersReview])){{$decodedKpiReviewerReview[$reviewersReview][$kpiRow->id]}}@endif</div>                                        
+                                            <div>@if(isset( $decodedKpiReviewerReview[$reviewersReview])){{$decodedKpiReviewerReview[$reviewersReview][$kpiRow->id]}}@endif</div>
                                         </td>
                                         <td>
                                             <div>@if(isset( $decodedKpiReviewerPerc[$reviewersReview])){{$decodedKpiReviewerPerc[$reviewersReview][$kpiRow->id]}}@endif</div>
@@ -463,7 +463,7 @@
         });
     });
 
- 
+
     // Save/Draft Assignee Reviews
     $('#save_table').click(function(e) {
         e.preventDefault();
