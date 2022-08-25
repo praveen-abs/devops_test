@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en" >
 <head>
   <meta charset="UTF-8">
   <title>ABShrms - New Account Email </title>
-  
+
 
 </head>
 <body>
@@ -31,9 +32,9 @@
   outline: none;
   color: orange;
   background-color: orange;
-  
+
   border-radius: 15px;
-  
+
 }
 
 .button:hover {background-color: #3e8e41}
@@ -43,16 +44,24 @@
   box-shadow: 0 5px #666;
   transform: translateY(4px);
 }
+
+.bgimage {
+  background-image: url("https://demo.abshrms.com/assets/images/email/Background.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+}
+
     </style>
 </head>
-
-<body marginheight="0" topmargin="0" marginwidth="0" style="margin: 0px; background-color: #f2f3f8;" leftmargin="0">
+<body marginheight="0" topmargin="0" marginwidth="0" leftmargin="0">
+    <div class="bgimage">
     <!-- 100% body table -->
-    <table cellspacing="0" border="0" cellpadding="0" width="100%" bgcolor="#f2f3f8"
+    <table cellspacing="0" border="0" cellpadding="0" width="100%" bgcolor=""
         style="@import url(https://fonts.googleapis.com/css?family=Rubik:300,400,500,700|Open+Sans:300,400,600,700); font-family: 'Open Sans', sans-serif;">
         <tr>
             <td>
-                <table style="background-color: #f2f3f8; max-width:670px; margin:0 auto;" width="100%" border="0"
+                <table style="background-color: #0f30d800; max-width:670px; margin:0 auto;" width="100%" border="0"
                     align="center" cellpadding="0" cellspacing="0">
                     <tr>
                         <td style="height:80px;">&nbsp;</td>
@@ -69,22 +78,27 @@
                     </tr>
                     <tr>
                         <td>
-                            <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" class="brand-content"
-                                style="max-width:670px; background:#212529; border-radius:3px; text-align:center;-webkit-box-shadow:0 6px 18px 0 rgba(0,0,0,.06);-moz-box-shadow:0 6px 18px 0 rgba(0,0,0,.06);box-shadow:0 6px 18px 0 rgba(0,0,0,.06);">
+                            <table cellpadding="0" cellspacing="0" class="brand-content"
+                                style=" width: 100%;
+                                height: 332px;
+                                background-image:url('https://demo.abshrms.com/assets/images/email/team.jpg');
+                                background-size: cover;
+                                text-align: center;
+                                position: relative;">
                                 <tr>
                                     <td style="height:40px;">&nbsp;</td>
                                 </tr>
                                 <tr>
                                     <td style="padding:0 35px;">
-                                        <h1 style="color:#fff; font-weight:500; margin:0;font-size:32px;font-family:'Rubik',sans-serif;">Get started
+                                        <h1  style="color: #fff;">Get started
                                         </h1>
-                                        <p style="font-size:15px; color:#fff; margin:8px 0 0; line-height:24px;">
+                                        <p style="color: #fff;" >
                                             ABShrms would like to invite you to join our organisation's employee portal. Using the portal you can access all your payroll related information. You can: <br><strong>Please change
                                                 the password immediately after login</strong>.</p>
                                        <br>
                                          <button class="button" style="color:#fff;">Get in touch</button>
 
-                                        
+
                                     </td>
                                 </tr>
                                 <tr>
@@ -99,7 +113,7 @@
                                 </tr>
                                 <tr>
                                     <td style="padding:0 35px;">
-                                      
+
                                       <h5 class="card-title fw-bold text-center m-3">Login to your account</h5>
                 <p class="text-start ">Please change the password immediately when you login </p>
                                         <p
@@ -127,50 +141,18 @@
                         <td style="text-align:center;">
                            <p class="text-muted"> This e-mail was generated from ABShrms If you think this is SPAM, please do report to
                 <a href="info@abshrms.com">info@abshrms.com</a>
-            </p> 
+            </p>
             <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" integrity="sha384-3AB7yXWz4OeoZcPbieVW64vVXEwADiYyAEhwilzWsLw+9FgqpyjjStpPnpBO8o8S" crossorigin="anonymous">
 
-            <!-- Facebook -->
-<i class="fab fa-facebook-f" style="width: 30px ; height:30px; width:30px; height:30px;"></i>
+                <i><a href="
+                    https://www.ardens.in/"><img src="{{url('assets/images/email/google.png')}}" width="30px" height="30px" ></a></i>
+                <i><a href="https://www.facebook.com/ArdensHR"><img src="{{url('assets/images/email/facebook-logo-2019.png')}}" width="30px" height="30px" ></a></i>
+                <i><a href="https://www.linkedin.com/company/ardenshr-services-private-limited/"><img src="{{url('assets/images/email/linkedin (1).png')}}" width="30px" height="30px" ></a></i>
+                <i><a href="https://twitter.com/HrArdens"><img src="{{url('assets/images/email/twitter.png')}}" width="30px" height="30px" ></a></i>
+                <i><a href="https://www.youtube.com/channel/UCgZ7XpBoJvcWWvaiBS5GxHg"><img src="{{url('assets/images/email/movie.png')}}" width="30px" height="30px" ></a></i>
+                <i><a href="https://www.instagram.com/ardenshr/"><img src="{{url('assets/images/email/instagram.png')}}" width="30px" height="30px" ></a></i>
 
-<!-- Twitter -->
-<i class="fab fa-twitter"style="width: 30px ; height:30px; width:30px; height:30px;"></i>
 
-<!-- Google -->
- <a href="https://www.ardens.in/" class="fab fa-google"style="width: 30px ; height:30px; width:30px; height:30px;"></a>
-
-<!-- Instagram -->
-<i class="fab fa-instagram"style="width: 30px ; height:30px; width:30px; height:30px;"></i>
-
-<!-- Linkedin -->
-<i class="fab fa-linkedin-in"style="width: 30px ; height:30px; width:30px; height:30px;"></i>
-
-<!-- Pinterest -->
-<i class="fab fa-pinterest"style="width: 30px ; height:30px; width:30px; height:30px;"></i>
-
-<!-- Vkontakte -->
-<i class="fab fa-vk"style="width: 30px ; height:30px; width:30px; height:30px;"></i>
-
-<!-- Stack overflow -->
-<i class="fab fa-stack-overflow"style="width: 30px ; height:30px; width:30px; height:30px;"></i>
-
-<!-- Youtube -->
-<i class="fab fa-youtube"style="width: 30px ; height:30px; width:30px; height:30px;"></i>
-
-<!-- Slack -->
-<i class="fab fa-slack-hash"style="width: 30px ; height:30px; width:30px; height:30px;"></i>
-
-<!-- Github -->
-<i class="fab fa-github"style="width: 30px ; height:30px; width:30px; height:30px;"></i>
-
-<!-- Dribbble -->
-<i class="fab fa-dribbble"style="width: 30px ; height:30px; width:30px; height:30px;"></i>
-
-<!-- Reddit -->
-<i class="fab fa-reddit-alien"style="width: 30px ; height:30px; width:30px; height:30px;"></i>
-
-<!-- Whatsapp -->
-<i class="fab fa-whatsapp"style="width: 30px ; height:30px; width:30px; height:30px;"></i>
                         </td>
                     </tr>
                     <tr>
@@ -181,13 +163,18 @@
             </td>
         </tr>
     </table>
+</div>
     <!--/100% body table-->
+    <script src="{{ URL::asset('/assets/js/js/bootstrap.min.js') }}"></script>
+<script src="{{ URL::asset('/assets/js/js/jquery.min.js') }}"></script>
+       <!--  <script src="./Assets/js/bootstrap.min.js"></script>
+        <script src="./Assets/js/jquery.min.js"></script> -->
 </body>
 
 </html>
 <!-- partial -->
-  
+
 </body>
 </html>
 
-  
+
