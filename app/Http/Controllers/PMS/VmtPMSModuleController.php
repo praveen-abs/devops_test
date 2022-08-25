@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Exports\SampleKPIFormExport;
 use App\Mail\NotifyPMSManager;
+use App\Mail\VmtAssignGoals;
 use App\Notifications\ViewNotification;
 use Exception;
 use Illuminate\Support\Facades\Log;
@@ -306,6 +307,13 @@ class VmtPMSModuleController extends Controller
                 $assigneeReview->is_reviewer_submitted = json_encode($reviewerSubmittedData);
                 $assigneeReview->is_reviewer_accepted = json_encode($reviewerAcceptedData);
                 $assigneeReview->save();
+
+                $assigneeMailId  = VmtEmployee::join('vmt_employee_office_details',  'user_id', '=', 'vmt_employee_details.userid')->where('userid', $assignee)->pluck('officical_mail','userid')->first();
+                $assigneeName = User::where('id',$assignee)->pluck('name')->first();
+                $assignerName = User::where('id',auth::user()->id)->pluck('name')->first();
+                $command_emp = '';
+
+                \Mail::to($assigneeMailId)->send(new VmtAssignGoals("none", $assigneeName,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$assignerName,$command_emp));
             }
         }
         //Create review record with some default values for :

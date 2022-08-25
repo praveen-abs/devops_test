@@ -4,6 +4,7 @@ use App\Models\User;
 use App\Models\VmtPMS_KPIFormAssignedModel;
 use App\Models\VmtPMS_KPIFormReviewsModel;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 // Get User Name by User ID
 function getUserDetailsById($userId){
@@ -48,14 +49,23 @@ function getPmsKpiAssigneeDetails($pmsKpiAssigneeId){
 
 // check current logged user is Reviewer or Not and Add reviewd or not yet reviewed
 function checkCurrentLoggedUserReviewerOrNot($reviewersIds,$currentLoggedUserRole,$kpiAssigneReviewDetails){
-    $result = '';
-    $decodedReviewSubmitted = isset($kpiAssigneReviewDetails->is_reviewer_submitted) ? json_decode($kpiAssigneReviewDetails->is_reviewer_submitted,true) : '';
-    foreach($reviewersIds as $singleReviewerSubmittedStatus)
-    {
-        if($currentLoggedUserRole == 'reviewer')
+    try{
+        $result = '';
+        $decodedReviewSubmitted = isset($kpiAssigneReviewDetails->is_reviewer_submitted) ? json_decode($kpiAssigneReviewDetails->is_reviewer_submitted,true) : '';
+        foreach($reviewersIds as $singleReviewerSubmittedStatus)
         {
-            if($singleReviewerSubmittedStatus == Auth::id())
+            if($currentLoggedUserRole == 'reviewer')
             {
+                if($singleReviewerSubmittedStatus == Auth::id())
+                {
+                    if(isset($decodedReviewSubmitted[$singleReviewerSubmittedStatus]) && $decodedReviewSubmitted[$singleReviewerSubmittedStatus] == '1')
+                    {
+                        $result .= 'Reviewed<br>';
+                    }else{
+                        $result .= 'Not yet reviewed<br>';
+                    }
+                }
+            }else{
                 if(isset($decodedReviewSubmitted[$singleReviewerSubmittedStatus]) && $decodedReviewSubmitted[$singleReviewerSubmittedStatus] == '1')
                 {
                     $result .= 'Reviewed<br>';
@@ -63,46 +73,52 @@ function checkCurrentLoggedUserReviewerOrNot($reviewersIds,$currentLoggedUserRol
                     $result .= 'Not yet reviewed<br>';
                 }
             }
-        }else{
-            if(isset($decodedReviewSubmitted[$singleReviewerSubmittedStatus]) && $decodedReviewSubmitted[$singleReviewerSubmittedStatus] == '1')
-            {
-                $result .= 'Reviewed<br>';
-            }else{
-                $result .= 'Not yet reviewed<br>';
-            }
         }
+        return $result;
+    }catch(Exception $e){
+        Log::info('check Current Logged User Reviewer Or Not helper error: '.$e->getMessage());
+        return '';
     }
-    return $result;
 }
 
 // get Average rating of particular Review and First Reveiwer of that Kpi Form
 function calculateOverallReviewRatings($assigneeReviewTableId=null,$assigneeId)
 {
-    $assigneeReviewDetails = VmtPMS_KPIFormAssignedModel::where('id',$assigneeReviewTableId)->first();
-    $decodedReviewsId = explode(',',$assigneeReviewDetails->reviewer_id);
-    $asisgenReveiwrReview = VmtPMS_KPIFormReviewsModel::where('assignee_id',$assigneeId)->where('vmt_pms_kpiform_assigned_id',$assigneeReviewTableId)->first();
-    $firstReviewRating = [];
-    if(json_decode($asisgenReveiwrReview->reviewer_kpi_percentage,true)!='' && isset(json_decode($asisgenReveiwrReview->reviewer_kpi_percentage,true)[$decodedReviewsId[0]])){
-        $firstReviewRating = json_decode($asisgenReveiwrReview->reviewer_kpi_percentage,true)[$decodedReviewsId[0]];
-    }
-    $finalRating = 0;
-    if (count($firstReviewRating) > 0) {
-        $ratingCheck = array_sum($firstReviewRating)/count($firstReviewRating);
-        if ($ratingCheck < 60) {
-            $finalRating = 1;
-        } elseif ($ratingCheck >= 60 && $ratingCheck < 70) {
-            $finalRating = 2;
-        } elseif ($ratingCheck >= 70 && $ratingCheck < 80) {
-            $finalRating = 3;
-        } elseif ($ratingCheck >= 80 && $ratingCheck < 90) {
-            $finalRating = 4;
-        } elseif ($ratingCheck >= 90) {
-            $finalRating = 5;
-        } else{
-            $finalRating = 0;
+    try{
+        $assigneeReviewDetails = VmtPMS_KPIFormAssignedModel::where('id',$assigneeReviewTableId)->first();
+        $finalRating = 0;
+        if(!empty($assigneeReviewDetails)){
+            $decodedReviewsId = explode(',',$assigneeReviewDetails->reviewer_id);
+            $asisgenReveiwrReview = VmtPMS_KPIFormReviewsModel::where('assignee_id',$assigneeId)->where('vmt_pms_kpiform_assigned_id',$assigneeReviewTableId)->first();
+            if(!empty($asisgenReveiwrReview)){
+                $firstReviewRating = [];
+                if(json_decode($asisgenReveiwrReview->reviewer_kpi_percentage,true)!='' && isset(json_decode($asisgenReveiwrReview->reviewer_kpi_percentage,true)[$decodedReviewsId[0]])){
+                    $firstReviewRating = json_decode($asisgenReveiwrReview->reviewer_kpi_percentage,true)[$decodedReviewsId[0]];
+                }
+                
+                if (count($firstReviewRating) > 0) {
+                    $ratingCheck = array_sum($firstReviewRating)/count($firstReviewRating);
+                    if ($ratingCheck < 60) {
+                        $finalRating = 1;
+                    } elseif ($ratingCheck >= 60 && $ratingCheck < 70) {
+                        $finalRating = 2;
+                    } elseif ($ratingCheck >= 70 && $ratingCheck < 80) {
+                        $finalRating = 3;
+                    } elseif ($ratingCheck >= 80 && $ratingCheck < 90) {
+                        $finalRating = 4;
+                    } elseif ($ratingCheck >= 90) {
+                        $finalRating = 5;
+                    } else{
+                        $finalRating = 0;
+                    }
+                }
+            }
         }
+        return $finalRating;
+    }catch(Exception $e){
+        Log::info('calculation average rating helper error: '.$e->getMessage());
+        return 0;
     }
-    return $finalRating;
 
 }
 

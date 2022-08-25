@@ -231,9 +231,10 @@ header {
                                     @foreach($pmsKpiAssigneeData['assigneesIds'] as $key => $assigneeId)
                                     <!-- check if Role is Assignee then check Own assignee id otherwise will show all Assignees -->
                                     @if(($pmsKpiAssigneeData['currentLoggedUserRole'] == 'assignee' && $assigneeId==Auth::id()) || $pmsKpiAssigneeData['currentLoggedUserRole'] != 'assignee')
-                                   <?php
-                                        // get KpiPmsReview Details
-                                        $kpiFormAssigneeReview = getReviewKpiFormDetails($pmsKpiAssignee->id,$assigneeId);?>
+                                        <?php
+                                            // get KpiPmsReview Details
+                                            $kpiFormAssigneeReview = getReviewKpiFormDetails($pmsKpiAssignee->id,$assigneeId);
+                                        ?>
                                         <tr>
                                             <td class="d-none">{{ $key1 }}</td>
                                             <td class=""> <div class="td_content_center">{{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</div></td>
@@ -266,7 +267,7 @@ header {
                                             </td>
                                             <td class="">
                                                 <div class="td_content_center">
-                                                    @php echo calculateOverallReviewRatings($pmsKpiAssignee->id,$assigneeId); @endphp
+                                                    <?php echo calculateOverallReviewRatings($pmsKpiAssignee->id,$assigneeId); ?>
                                                 </div>
                                             </td>
                                             <td>
