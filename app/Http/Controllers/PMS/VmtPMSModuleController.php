@@ -376,18 +376,27 @@ class VmtPMSModuleController extends Controller
         // Get assigned Details
         $assignedGoals  = VmtPMS_KPIFormAssignedModel::where('vmt_pms_kpiform_assigned.id',$request->assignedFormid)->where('vmt_pms_kpiform_reviews.assignee_id',$request->assigneeId)->join('vmt_pms_kpiform_reviews','vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id','=','vmt_pms_kpiform_assigned.id')->first();
 
-        // Will done after Review So this is Pending
         // rating details
-        $ratingDetail['performance'] = "Below Expectations";
-        $ratingDetail['ranking'] = 2;
-        $ratingDetail['action'] = 'PIP';
-        $ratingDetail['rating'] = 0;
+        $ratingDetail['performance'] ='-';
+        $ratingDetail['ranking'] = '-';
+        $ratingDetail['action'] = '-';
+        $ratingDetail['rating'] = '-';
         if($assignedGoals!=''){
 
-        $ratingDetail = [];
-            $per = json_decode($assignedGoals->hr_kpi_percentage, true) ? json_decode($assignedGoals->hr_kpi_percentage, true) : [];
-            if (count($per) > 0) {
-                $ratingDetail['rating'] = array_sum($per)/count($per);
+        // Calculation and check All Reviewers Rating
+            // dD($assignedGoals->reviewer_kpi_percentage);
+            $percentageVal = 0;
+            $howManyPercCount = 0;
+            $allReviewerPercentages = isset($assignedGoals->reviewer_kpi_percentage) ? json_decode($assignedGoals->reviewer_kpi_percentage, true) : [];
+            if(count($allReviewerPercentages) > 0){
+                foreach($allReviewerPercentages as $percentage){
+                    $arraySumPercentage = array_sum($percentage);
+                    $percentageVal += $arraySumPercentage;
+                    $howManyPercCount += count($percentage);
+                }
+            }
+            if ($howManyPercCount > 0) {
+                $ratingDetail['rating'] = $percentageVal / $howManyPercCount;
                 if ($ratingDetail['rating'] < 60) {
                     $ratingDetail['performance'] = "Needs Action";
                     $ratingDetail['ranking'] = 1;
@@ -416,7 +425,6 @@ class VmtPMSModuleController extends Controller
                 }
             }
         }
-       
 
         $assignedUserDetails = User::where('id',$request->assigneeId)->with('getEmployeeDetails','getEmployeeOfficeDetails')->first();
         $assignedEmployee_Userdata = User::where('id',  $request->assigneeId)->first();
@@ -426,6 +434,7 @@ class VmtPMSModuleController extends Controller
 
         $reviewersId = explode(',',$assignedGoals->reviewer_id);
 
+        // check if all reviewers has submitted the review or not
         $isAllReviewersSubmittedOrNot = false;
         if(isset($assignedGoals->is_reviewer_submitted)){
             $isAllReviewersSubmittedData = json_decode($assignedGoals->is_reviewer_submitted,true);
@@ -433,6 +442,7 @@ class VmtPMSModuleController extends Controller
                 $isAllReviewersSubmittedOrNot = true;
             }
         }
+
 
         // check if logged in user is assignee or not
         if($request->assigneeId == auth()->user()->id){

@@ -269,12 +269,14 @@
                     </div>
                 </form>
                 @if($assignedGoals->is_assignee_submitted == '1')
-                <div class="buttons d-flex align-items-center justify-content-end ">
-                    <button class="btn btn-primary" id="save_table" @if($decodedKpiReviewSubmiteedStatus[Auth::id()] == '1') disabled @endif>
-                    @if($decodedKpiReviewSubmiteedStatus[Auth::id()] == '') Save @else Edit @endif <i class="fa fa-save"></i></button>
-                    &nbsp;&nbsp;
-                    <button class="btn btn-primary" id="publish_table" @if($decodedKpiReviewSubmiteedStatus[Auth::id()] == '' || $decodedKpiReviewSubmiteedStatus[Auth::id()] == '1') disabled @endif>Submit<i class="fa fa-save"></i></button>
-                </div>
+                    @if($decodedKpiReviewSubmiteedStatus[Auth::id()] != '1')
+                    <div class="buttons d-flex align-items-center justify-content-end ">
+                        <button class="btn btn-primary" id="save_table" >
+                        @if($decodedKpiReviewSubmiteedStatus[Auth::id()] == '') Save @else Edit @endif <i class="fa fa-save"></i></button>
+                        &nbsp;&nbsp;
+                        <button class="btn btn-primary" id="publish_table" @if($decodedKpiReviewSubmiteedStatus[Auth::id()] == '') disabled @endif>Submit<i class="fa fa-save"></i></button>
+                    </div>
+                    @endif
                 @else
                 <h6>Employee has not yet submitted this review.</h6>
                 @endif
@@ -485,7 +487,7 @@
                     swal("Error!", data.message, "error");
                 }
                 $('.loader').hide();
-                window.location.reload();
+                // window.location.reload();
             },
             error: function(error) {
                 $('.loader').hide();
@@ -511,7 +513,7 @@
                     swal("Error!", data.message, "error");
                 }
                 $('.loader').hide();
-                window.location.reload();
+                // window.location.reload();
             },
             error: function(error) {
                 $('.loader').hide();
