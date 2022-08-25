@@ -70,8 +70,7 @@
                 <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 text-end">
                     {{-- <div class=" d-flex align-items-center"> --}}
                     <span>Download the </span>
-                    <!-- <a href="{{ url('/assets/sample_kpi.xls') }}" target="_blank" class="btn btn-orange mx-2"><i class="ri-file-download-fill mx-1"></i> -->
-                    <a href="{{ route('generate.sample.KPI.excel.sheet') }}" target="_blank" class="btn btn-orange mx-2"><i class="ri-file-download-fill mx-1"></i>
+                    <a href="{{ url('/assets/sample_kpi.xls') }}" target="_blank" class="btn btn-orange mx-2"><i class="ri-file-download-fill mx-1"></i>
                         Sample File
                     </a>
                     {{-- </div> --}}
