@@ -114,27 +114,29 @@
         <!-- appraisal table -->
         <div class="card">
             <div class="card-body pb-2">
+                @if(!isset($assignedGoals->is_assignee_submitted) && $assignedGoals->is_assignee_submitted != '1')
                 <div class="row">
                     <div class="col-12 mt-3">
                         <form id="upload_form" enctype="multipart/form-data">
                             <div class="row pull-right mb-3">
                                 @csrf
                                 <div class="col">
-                                    <a href="{{route('download.excelsheet.pmsv2.review.form', [$assignedGoals->vmt_pms_kpiform_assigned_id,$assignedGoals->assignee_id])}}" class="btn btn-orange pull-right"
+                                    <a href="{{route('download.excelsheet.pmsv2.review.form', [$assignedGoals->vmt_pms_kpiform_assigned_id,'1'])}}" class="btn btn-orange pull-right"
                                     id="download-excel">Download</a>
                                 </div>
-                                @if(!isset($assignedGoals->is_assignee_submitted) && $assignedGoals->is_assignee_submitted != '1')
+                                
                                 <div class="col-auto p-0">
                                     <input type="file" name="upload_file" id="upload_file" accept=".xls,.xlsx" class="form-control" required>
                                 </div>
                                 <div class="col">
                                     <button type="button" class="btn btn-orange pull-right" id="upload-goal" disabled>Upload</button>
                                 </div>
-                                @endif
+                                
                             </div>
                         </form>
                     </div>
                 </div>
+                @endif
                 @if(count($kpiRows) > 0)
                 <form id="employee_self_review" method="POST">
                     @csrf
