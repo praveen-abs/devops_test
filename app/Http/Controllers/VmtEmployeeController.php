@@ -530,6 +530,7 @@ class VmtEmployeeController extends Controller
     }
 
     public function uploadEmployee($data) {
+      //  dd($data);
         $rules = [];
         $returnsuccessMsg = '';
         $returnfailedMsg = '';
@@ -782,7 +783,7 @@ class VmtEmployeeController extends Controller
         $fileAttr  = file_get_contents(public_path('/').$filename);
         $appoinmentPath = public_path('/').$filename;
          $image_view = url('/').$VmtGeneralInfo->logo_img;
-        $isSent    = \Mail::to($employeeData['email'])->send(new WelcomeMail($employeeData['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost() ,  $appoinmentPath ,$image_view));
+        $isSent    = \Mail::to($employeeData['email'])->send(new WelcomeMail($employeeData['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost()  ,$image_view));
         return $isSent;
     }
 
