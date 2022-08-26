@@ -44,7 +44,7 @@ class WelcomeMail extends Mailable
                     ->with('uPassowrd', $this->uPassowrd)
                     ->with('loginLink', $this->loginLink)
                     ->with('image_view', $this->image_view);
-                    
+
         //Only for Employee Onboarding
         if($this->filename != "")
             $output->attach($this->filename);

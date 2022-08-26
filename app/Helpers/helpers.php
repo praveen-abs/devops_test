@@ -1,4 +1,5 @@
 <?php
+use App\Models\VmtMasterConfig;
 
 function required()
 {
@@ -6,3 +7,8 @@ function required()
   return $required;
 }
 
+function fetchMasterConfigValue($config_name)
+{
+    return VmtMasterConfig::where('config_name','=',$config_name)->first()->value('config_value');
+
+}
