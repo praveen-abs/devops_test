@@ -262,13 +262,21 @@ class VmtPMSModuleController extends Controller
     */
     public function generateSampleKPIExcelSheet()
     {
-        $data = ConfigPms::first(['selected_columns']);
-        $array_selectedKPIColumns = [];
+        $data = ConfigPms::first();
+        $array_selectedKPIColumnsHeader = [];
         if(!empty($data)){
             $array_selectedKPIColumns = str_getcsv($data->selected_columns);
+            if(count($array_selectedKPIColumns) > 0){
+                foreach($array_selectedKPIColumns as $kpiColumnName){
+                    $decodedColumnHeader = isset($data->column_header) ? json_decode($data->column_header,true) : '';
+                    if($decodedColumnHeader != ''){
+                        $array_selectedKPIColumnsHeader[] = isset($decodedColumnHeader[$kpiColumnName]) ? $decodedColumnHeader[$kpiColumnName] : '';
+                    }
+                }
+            }
         }
-        if(count($array_selectedKPIColumns) > 0){
-            return \Excel::download(new SampleKPIFormExport($array_selectedKPIColumns), 'Template_SampleKPIForm.xlsx');
+        if(count($array_selectedKPIColumnsHeader) > 0){
+            return \Excel::download(new SampleKPIFormExport($array_selectedKPIColumnsHeader), 'Template_SampleKPIForm.xlsx');
         }else{
             return '';
         }
