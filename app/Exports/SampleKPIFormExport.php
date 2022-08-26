@@ -4,8 +4,8 @@ namespace App\Exports;
 use App\Models\User;
 
 use Maatwebsite\Excel\Concerns\FromArray;
-
-class SampleKPIFormExport implements FromArray
+use Maatwebsite\Excel\Concerns\WithHeadings;
+class SampleKPIFormExport implements FromArray, WithHeadings
 {
 
     protected $selected_kpi_columns;
@@ -14,6 +14,16 @@ class SampleKPIFormExport implements FromArray
     {
         $this->selected_kpi_columns = $t_selected_kpi_columns;
     }
+
+    public function headings():array{
+        $data = [
+            'GREAT CONVERSATIONS - KPI Form (2018 - 2018)',
+        ];
+        $data1 = [
+            'KPIs',
+        ];
+        return [$data,$data1];
+    } 
 
     /**
     * @return \Illuminate\Support\Collection
