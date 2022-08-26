@@ -466,8 +466,8 @@ if ($('#nationality').val() == 'indian') {
     $('#aadhar').removeClass('not-required validate');
     $('#permanent_pincode').attr('type', 'number');
     $('#current_pincode').attr('type', 'number');
-    $('#current_district').val('IN').trigger('change');
-    stateFunction('IN', '#current_state');
+    $('#current_country').val('IN').trigger('change');
+    stateFunction('IN', '#current_country');
 } else {
     $('#passport_no').attr('required', true);
     $('#passport_no_req').show();
@@ -483,7 +483,7 @@ if ($('#nationality').val() == 'indian') {
     $('#current_pincode').attr('type', 'text');
     $('#aadhar').addClass('not-required validate');
     $('#aadhar_req').hide();
-    $('#current_district').val('AF').trigger('change');
+    $('#current_state').val('AF').trigger('change');
     stateFunction('AF', '#current_state');
 }
 });
@@ -502,8 +502,10 @@ if ($('#nationality').val() == 'indian') {
 
 $('#passport_no_req').hide();
 $('#passport_exp_req').hide();
-$('#permanent_district').val('IN').trigger('change');
-$('#current_district').val('IN').trigger('change');
+$('#permanent_country').val('IN').trigger('change');
+$('#current_country').val('IN').trigger('change');
+$('#current_state').val('IN').trigger('change');
+$('#permanent_state').val('IN').trigger('change');
 stateFunction('IN', '#current_state');
 stateFunction('IN', '#permanent_state');
 stateFunction('IN', '#ptax_location');
@@ -512,9 +514,10 @@ stateFunction('IN', '#holiday_location');
 
 $('#current_address_copy').change(function() {
 if ($('#current_address_copy').is(':checked')) {
-    stateFunction($('#current_district').val(), '#permanent_state', true);
+   // stateFunction($('#current_district').val(), '#permanent_state', true);
+   $('#permanent_state').val($('#current_state').val()).trigger('change');
     $('#permanent_pincode').val($('#current_pincode').val());
-    $('#permanent_district').val($('#current_district').val()).trigger('change');
+    $('#permanent_country').val($('#current_country').val()).trigger('change');
     $('#permanent_state').val($('#current_state').val());
     $('#permanent_city').val($('#current_city').val());
     $('#permanent_address').val($('#current_address').val());
@@ -549,15 +552,15 @@ $.ajax({
 });
 }
 
-$('#permanent_district').change(function() {
-var id = $(this).val();
-stateFunction(id, '#permanent_state');
-});
+// $('#permanent_district').change(function() {
+// var id = $(this).val();
+// stateFunction(id, '#permanent_state');
+// });
 
-$('#current_district').change(function() {
-var id = $(this).val();
-stateFunction(id, '#current_state');
-});
+// $('#current_district').change(function() {
+// var id = $(this).val();
+// stateFunction(id, '#current_state');
+// });
 
 
 
