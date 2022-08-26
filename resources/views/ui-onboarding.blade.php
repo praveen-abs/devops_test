@@ -36,8 +36,8 @@
                                                     <input type="text" placeholder="Employee Name as per Aadhar" name="employee_name" id="employee_name" class="onboard-form form-control " pattern="name" required />
                                                     <label class="error star_error employee_name_label" for="employee_name" style="display: none;"></label>
                                                     {{-- <label for="" class="float-label">Employee Name as per Aadhar</label> --}}
-                                                    <label class="error star_error employee_name_label" for="employee_name"
-                                                        style="display: none;"></label>
+                                                  <!--  <label class="error star_error employee_name_label" for="employee_name"
+                                                        style="display: none;"></label> -->
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
