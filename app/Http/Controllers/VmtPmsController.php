@@ -232,7 +232,7 @@ class VmtPmsController extends Controller
             }
         }
 
-        $kpiForms = VmtKpiFormTable::select('author_name', 'name')->groupBy('author_name')->get();
+        $kpiForms = VmtKPIFormTable::select('author_name', 'name')->groupBy('author_name')->get();
 
         return view('vmt_pms_assigngoals', compact('users', 'employees','empGoals','userCount','empCount','subCount', 'config', 'show', 'department', 'kpiForms','userNames'));
     }
