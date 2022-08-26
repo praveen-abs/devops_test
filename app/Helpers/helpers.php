@@ -9,6 +9,6 @@ function required()
 
 function fetchMasterConfigValue($config_name)
 {
-    return VmtMasterConfig::where('config_name','=',$config_name)->first()->value('config_value');
+    return VmtMasterConfig::where('config_name','=',$config_name)->get()->value('config_value');
 
 }
