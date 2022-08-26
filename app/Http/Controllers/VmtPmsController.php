@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\ConfigPMSController;
+use App\Http\Controllers\ConfigPmsController;
 use App\Imports\ApraisalQuestion;
 use App\Imports\ApraisalQuestionReview;
 use App\Models\VmtAppraisalQuestion;
@@ -30,7 +30,7 @@ class VmtPmsController extends Controller
     // assign goals forms
     public function vmtAssignGoals(Request $request){
 
-        app('App\Http\Controllers\ConfigPMSController')->checkConfigPms();
+        app('App\Http\Controllers\ConfigPmsController')->checkConfigPms();
 
         if(auth::user()->hasRole(['HR','Admin']) ){
             $empGoals = VmtEmployee::leftJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
