@@ -19,16 +19,16 @@ class WelcomeMail extends Mailable
     protected $uEmail;
     protected $uPassowrd;
     protected $loginLink;
-    // protected $filename;
+    protected $filename;
     protected $image_view;
 
-    public function __construct($uEmail, $uPassowrd, $loginLink , $image_view )
+    public function __construct($uEmail, $uPassowrd, $loginLink, $filename , $image_view )
     {
         //
         $this->uEmail  = $uEmail;
         $this->uPassowrd  = $uPassowrd;
         $this->loginLink  = $loginLink;
-        // $this->filename   = $filename;
+        $this->filename   = $filename;
         $this->image_view   = $image_view;
     }
 
@@ -46,8 +46,8 @@ class WelcomeMail extends Mailable
                     ->with('image_view', $this->image_view);
                     
         //Only for Employee Onboarding
-        // if($this->filename != "")
-        //     $output->attach($this->filename);
+        if($this->filename != "")
+            $output->attach($this->filename);
 
         return $output;
     }
