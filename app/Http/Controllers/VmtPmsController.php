@@ -15,7 +15,7 @@ use App\Models\VmtEmployeePMSGoals;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\ConfigPms;
 use App\Models\Department;
-use App\Models\VmtKpiFormTable;
+use App\Models\VmtKPIFormTable;
 use App\Mail\VmtAssignGoals;
 use App\Mail\NotifyPMSManager;
 use App\Mail\PMSReviewCompleted;
@@ -281,7 +281,7 @@ class VmtPmsController extends Controller
     public function vmtStoreKpiTable(Request $request) {
         //return "Stored";
         if ($request->has('kpi_table')) {
-            $kpiTable = VmtKpiFormTable::where('author_name', $request->kpi_table)->get();
+            $kpiTable = VmtKPIFormTable::where('author_name', $request->kpi_table)->get();
             $totRows  = count($kpiTable);
             $kpiRows = [];
             //dd($kpiTable);
@@ -368,7 +368,7 @@ class VmtPmsController extends Controller
 
           // save button function datas
           if ($request->kpi_table) {
-            $kpiTable = VmtKpiFormTable::where('author_name', $request->kpi_table)->get();
+            $kpiTable = VmtKPIFormTable::where('author_name', $request->kpi_table)->get();
             $totRows  = count($kpiTable);
             $kpiRows = [];
             //dd($kpiTable);
@@ -825,7 +825,7 @@ class VmtPmsController extends Controller
                 // if ($request->kpi_id && $request->kpi_id[$i] <> '' && $request->kpi_id[$i] > 0) {
                 //     $kpiRow = VmtKpiFormTable::find($request->kpi_id[$i]);
                 // } else {
-                    $kpiRow = new VmtKpiFormTable;
+                    $kpiRow = new VmtKPIFormTable;
                 // }
                 //$inputArry[] = $request->dimension[$i];
 
