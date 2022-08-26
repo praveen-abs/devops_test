@@ -90,15 +90,30 @@ header {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
     background-color: #555;
 }
+
+.loader {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url('{{ URL::asset("assets/images/loader.gif") }}') 50% 50% no-repeat rgb(249, 249, 249);
+    opacity: 0.4;
+}
+
 </style>
 @endsection
 
 
 @section('content')
+    <div class="loader" style="display:none;"></div>
     @component('components.performance_breadcrumb')
         @slot('li_1')
         @endslot
     @endcomponent
+
+   
 
     <div class="container-fluid assign-goal-wrapper mt-mb-15">
         <div class="cards-wrapper">
@@ -273,7 +288,7 @@ header {
                                             <td>
                                                 <div class="td_content_center">
                                                 <a target="_blank"
-                                                    href="{{ url('pms-showAssigneeReviewPage?assignedFormid=' . $pmsKpiAssignee->id . '&assigneeId=' . $assigneeId) }}"><button
+                                                    href="{{ url('pms-showReviewPage?assignedFormid=' . $pmsKpiAssignee->id . '&assigneeId=' . $assigneeId) }}"><button
                                                         class="btn btn-orange py-0 px-2 "> <span class="mr-10 icon"></span>
                                                         <?php  
                                                         echo checkViewReviewText($pmsKpiAssigneeData['currentLoggedUserRole'],$kpiFormAssigneeReview);
@@ -1022,6 +1037,7 @@ header {
         $('body').on('click', '.close-modal', function() {
             $('#notificationModal').hide();
             $('#notificationModal').addClass('fade');
+            window.location.reload();
         })
 
 
@@ -1133,14 +1149,14 @@ header {
         //
         $("#publish-goal").click(function(e) {
             e.preventDefault();
-
+            $('.loader').show();
             // if ($('#kpitable_id').val()) {
                 $.ajax({
                     type: "POST",
                     url: "{{ url('publishKPIForm') }}",
                     data: $('#goalForm').serialize(),
                     success: function(data) {
-
+                        $('.loader').hide();
                         $("#kpiTableForm :input").prop("disabled", true);
                         $(".table-btn").prop('disabled', true);
 

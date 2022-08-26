@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\PMS;
 
+use App\Exports\PMSV2ReviewerReviewFormExport;
 use App\Exports\PMSV2ReviewFormExport;
 use App\Models\User;
 use App\Models\Department;
@@ -444,6 +445,7 @@ class VmtPMSModuleController extends Controller
         $reviewersId = explode(',',$assignedGoals->reviewer_id);
 
         // check if all reviewers has submitted the review or not
+        $isAllReviewersSubmittedData = [];
         $isAllReviewersSubmittedOrNot = false;
         if(isset($assignedGoals->is_reviewer_submitted)){
             $isAllReviewersSubmittedData = json_decode($assignedGoals->is_reviewer_submitted,true);
@@ -455,12 +457,12 @@ class VmtPMSModuleController extends Controller
 
         // check if logged in user is assignee or not
         if($request->assigneeId == auth()->user()->id){
-            return view('pms.vmt_pms_kpiappraisal_review_hr', compact('review','assignedUserDetails','assignedGoals','empSelected','assignersName','config','show','ratingDetail','kpiRowsId','kpiRows','reviewCompleted','isAllReviewersSubmittedOrNot','reviewersId'));
+            return view('pms.vmt_pms_kpiappraisal_review_assignee', compact('review','assignedUserDetails','assignedGoals','empSelected','assignersName','config','show','ratingDetail','kpiRowsId','kpiRows','reviewCompleted','isAllReviewersSubmittedOrNot','reviewersId','isAllReviewersSubmittedData'));
         }
 
         // check if logged in user is reviewer or not
         if(in_array(Auth::id(),$reviewersId)){
-            return view('pms.vmt_pms_kpiappraisal_review_reviewer', compact('review','assignedUserDetails','assignedGoals','empSelected','assignersName','config','show','ratingDetail','kpiRowsId','kpiRows','reviewCompleted','reviewersId','isAllReviewersSubmittedOrNot'));
+            return view('pms.vmt_pms_kpiappraisal_review_reviewer', compact('review','assignedUserDetails','assignedGoals','empSelected','assignersName','config','show','ratingDetail','kpiRowsId','kpiRows','reviewCompleted','reviewersId','isAllReviewersSubmittedOrNot','isAllReviewersSubmittedData'));
         }
         dD("Assigner's review page is pending");
 
@@ -699,8 +701,9 @@ class VmtPMSModuleController extends Controller
     /*
     * function used for download excel sheet from review form
     */
-    public function downloadExcelReviewForm($kpiAssignedId,$assigneeId){
+    public function downloadExcelReviewForm($kpiAssignedId,$key){
         try{    
+            // $key => 1 assignee and 2 reviewer
             $assignedKpiFormDetails = VmtPMS_KPIFormAssignedModel::where('id',$kpiAssignedId)->with('getPmsKpiFormColumnDetails.getPmsKpiFormDetails')->first();
             $finalDownlededResult = [];  
             if(isset($assignedKpiFormDetails->getPmsKpiFormColumnDetails)){
@@ -711,7 +714,11 @@ class VmtPMSModuleController extends Controller
 
             }
             if(count($finalDownlededResult)){
-                return Excel::download(new PMSV2ReviewFormExport($finalDownlededResult), 'review-page-sheet.xlsx');
+                if($key =='1'){
+                    return Excel::download(new PMSV2ReviewFormExport($finalDownlededResult), 'review-page-sheet.xlsx');
+                }else{
+                    return Excel::download(new PMSV2ReviewerReviewFormExport($finalDownlededResult), 'review-page-sheet.xlsx');
+                }
             }
             // $assignedKpiFormReviews = VmtPMS_KPIFormReviewsModel::where('vmt_pms_kpiform_assigned_id',$kpiAssignedId)->where('assignee_id',$assigneeId)->first();
             // dd($assignedKpiFormDetails, $assignedKpiFormReviews);

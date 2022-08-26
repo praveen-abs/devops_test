@@ -5,13 +5,13 @@ namespace App\Exports;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class PMSV2ReviewFormExport implements FromCollection, WithHeadings
+class PMSV2ReviewerReviewFormExport implements FromCollection, WithHeadings
 {
     /**
     * @return \Illuminate\Support\Collection
     */
 
-    // used for download excel sheet from assignee review form
+    // used for download excel sheet from reviewer review form
     protected $id;
 
     function __construct($assignedKpiFormDetails) {
@@ -29,9 +29,8 @@ class PMSV2ReviewFormExport implements FromCollection, WithHeadings
             'Stretch Target',
             'Source',
             'KPI Weightage',
-            'KPI-Achievement (Self Review)',
-            'Self KPI Achievement %',
-            'Comments',
+            'KPI - Achievement (Manager Review)',
+            'Manager KPI Achievement %',
         ];
     } 
 

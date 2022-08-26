@@ -79,23 +79,23 @@
                                     <div class="mb-3 input-wrap">
                                         <p>Overall Annual Score</p>
                                         <div class="appraisal-box  btn bg-success text-white ">
-                                            @if($ratingDetail){{$ratingDetail['rating']}}@else - @endif</div>
+                                        @if($isAllReviewersSubmittedOrNot) @if($ratingDetail){{$ratingDetail['rating']}}@else - @endif @else - @endif</div>
 
                                     </div>
                                     <div class="mb-3 input-wrap">
                                         <p>Corresponding ANNUAL PERFORMANCE Rating</p>
                                         <div class="appraisal-box  btn bg-success  text-white">
-                                            @if($ratingDetail){{$ratingDetail['performance']}}@else - @endif</div>
+                                        @if($isAllReviewersSubmittedOrNot) @if($ratingDetail){{$ratingDetail['performance']}}@else - @endif @else - @endif</div>
                                     </div>
                                     <div class="mb-3 input-wrap">
                                         <p>Ranking</p>
                                         <div class="appraisal-box   btn bg-success text-white ">
-                                            @if($ratingDetail){{$ratingDetail['ranking']}}@else - @endif</div>
+                                        @if($isAllReviewersSubmittedOrNot) @if($ratingDetail){{$ratingDetail['ranking']}}@else - @endif @else - @endif</div>
                                     </div>
                                     <div class=" input-wrap">
                                         <p>Action</p>
                                         <div class="appraisal-box btn bg-success text-white">
-                                            @if($ratingDetail){{$ratingDetail['action']}}@else - @endif</div>
+                                        @if($isAllReviewersSubmittedOrNot) @if($ratingDetail){{$ratingDetail['action']}}@else - @endif @else - @endif</div>
                                     </div>
 
                                 </div>
@@ -114,13 +114,14 @@
         <!-- appraisal table -->
         <div class="card">
             <div class="card-body pb-2">
+                @if(isset($isAllReviewersSubmittedData) && count($isAllReviewersSubmittedData) > 0 && isset($isAllReviewersSubmittedData[Auth::id()]) && $isAllReviewersSubmittedData[Auth::id()] != '1')
                 <div class="row">
                     <div class="col-12 mt-3">
                         <form id="upload_form" enctype="multipart/form-data">
                             <div class="row pull-right mb-3">
                                 @csrf
                                 <div class="col">
-                                    <a href="{{route('download.excelsheet.pmsv2.review.form', [$assignedGoals->vmt_pms_kpiform_assigned_id,$assignedGoals->assignee_id])}}" class="btn btn-orange pull-right"
+                                    <a href="{{route('download.excelsheet.pmsv2.review.form', [$assignedGoals->vmt_pms_kpiform_assigned_id,'2'])}}" class="btn btn-orange pull-right"
                                     id="download-excel">Download</a>
                                 </div>
                                 <div class="col-auto p-0">
@@ -133,6 +134,7 @@
                         </form>
                     </div>
                 </div>
+                @endif
                 @if(count($kpiRows) > 0)
                 <form id="employee_self_review" method="POST">
                     @csrf
@@ -170,10 +172,7 @@
                                     <th scope="col" data-name='kpiWeightage' data-filterable="false" data-visible="{{$show['kpiWeightage']}}">@if($config && $config->header)
                                         {{$config->header['kpiWeightage']}} @else KPI Weightage @endif
                                     </th>
-                                    <th scope="col" data-name='kpiSelfReview' data-filterable="false" data-visible="true">KPI - Achievement (Self Review)</th>
-                                    <th scope="col" data-name='kpiSelfAchivement' data-filterable="false" data-visible="true">Self KPI Achievement %</th>
-                                    <th scope="col" data-name='comments' data-filterable="false" data-visible="true">Comments</th>
-
+                                    
                                     <?php $i=1;
                                     $j=1;
                                     ?>
@@ -214,33 +213,7 @@
                                     <td>
                                         <div>{{$kpiRow->kpi_weightage}}</div>
                                     </td>
-                                    <td>
-                                        @if(isset($assignedGoals->is_assignee_submitted) && $assignedGoals->is_assignee_submitted == '1')
-                                        <div>
-                                            @if(isset($assignedGoals->assignee_kpi_review))
-                                                {{json_decode($assignedGoals->assignee_kpi_review,true)[$kpiRow->id]}}
-                                            @endif
-                                        </div>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if(isset($assignedGoals->is_assignee_submitted) && $assignedGoals->is_assignee_submitted == '1')
-                                        <div>
-                                        @if(isset($assignedGoals->assignee_kpi_percentage))
-                                            {{json_decode($assignedGoals->assignee_kpi_percentage,true)[$kpiRow->id]}}
-                                        @endif
-                                        </div>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if(isset($assignedGoals->is_assignee_submitted) && $assignedGoals->is_assignee_submitted == '1')
-                                        <div>
-                                        @if(isset($assignedGoals->assignee_kpi_comments))
-                                            {{json_decode($assignedGoals->assignee_kpi_comments,true)[$kpiRow->id]}}
-                                        @endif
-                                        </div>
-                                        @endif
-                                    </td>
+                                 
                                         <?php
                                         $decodedKpiReview = json_decode($assignedGoals->reviewer_kpi_review,true);
                                         $decodedKpiReviewSubmittedStatus = json_decode($assignedGoals->is_reviewer_submitted,true);
@@ -248,7 +221,7 @@
                                         @foreach($reviewersId as $reviewersReview)
                                         <td>
                                             @if(isset($assignedGoals->is_assignee_submitted) && $assignedGoals->is_assignee_submitted == '1' && $reviewersReview == Auth::id() && ($decodedKpiReviewSubmittedStatus[$reviewersReview] == '' || $decodedKpiReviewSubmittedStatus[$reviewersReview] == '0'))
-                                            <textarea name="reviewer_kpi_review[{{$reviewersReview}}][{{$kpiRow->id}}]" id="" cols="20" rows="8" placeholder="type here">@if(isset( $decodedKpiReview[$reviewersReview])){{$decodedKpiReview[$reviewersReview][$kpiRow->id]}}@endif</textarea>
+                                            <textarea name="reviewer_kpi_review[{{$reviewersReview}}][{{$kpiRow->id}}]" id="reviewer_kpi_review{{$index}}-{{$reviewersReview}}" cols="20" rows="8" placeholder="type here">@if(isset( $decodedKpiReview[$reviewersReview])){{$decodedKpiReview[$reviewersReview][$kpiRow->id]}}@endif</textarea>
                                             @else
                                             <div>@if(isset( $decodedKpiReview[$reviewersReview])){{$decodedKpiReview[$reviewersReview][$kpiRow->id]}}@endif</div>
                                             @endif
@@ -261,7 +234,7 @@
                                         @foreach($reviewersId as $reviewersReview)
                                     <td>
                                             @if($assignedGoals->is_assignee_submitted == '1' && $reviewersReview == Auth::id() && ($decodedKpiReviewSubmittedStatus[$reviewersReview] == '' || $decodedKpiReviewSubmittedStatus[$reviewersReview] == '0'))
-                                            <input type="number" class="inp-text" name="reviewer_kpi_percentage[{{$reviewersReview}}][{{$kpiRow->id}}]" placeholder="type here" value="@if(isset( $decodedKpiReviewPerc[$reviewersReview])){{$decodedKpiReviewPerc[$reviewersReview][$kpiRow->id]}}@endif">
+                                            <input type="number" class="inp-text" name="reviewer_kpi_percentage[{{$reviewersReview}}][{{$kpiRow->id}}]" id="reviewer_kpi_percentage{{$index}}-{{$reviewersReview}}" placeholder="type here" value="@if(isset( $decodedKpiReviewPerc[$reviewersReview])){{$decodedKpiReviewPerc[$reviewersReview][$kpiRow->id]}}@endif">
 
                                             @else
                                             <div>@if(isset( $decodedKpiReviewPerc[$reviewersReview])){{$decodedKpiReviewPerc[$reviewersReview][$kpiRow->id]}}@endif</div>
@@ -454,6 +427,7 @@
     ft = FooTable.init('#table_review');
 
     $('#upload-goal').click(function() {
+        var loggedUserId = {{Auth::id()}};
         var form_data = new FormData(document.getElementById("upload_form"));
         $('.loader').show();
         $.ajax({
@@ -466,9 +440,8 @@
             success: function(data) {
                 // $('.addition-content').html('');
                 $.each(data[0], function(key, value) {
-                    $('#selfreview' + key).val(value[9]);
-                    $('#selfkpiachievement' + key).val(value[10]);
-                    $('#selfcomments' + key).val(value[11]);
+                    $('#reviewer_kpi_review' + key+'-'+loggedUserId).val(value[9]);
+                    $('#reviewer_kpi_percentage' + key+'-'+loggedUserId).val(value[10]);
                 });
                 $('.loader').hide();
             },
