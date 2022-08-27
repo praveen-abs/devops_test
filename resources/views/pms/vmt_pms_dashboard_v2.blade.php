@@ -257,9 +257,10 @@ header {
                                             <td class=""> <div class="td_content_center">{{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</div></td>
                                             <td class=""> <div class="td_content_center">{{ $pmsKpiAssignee->getUserDetails($assigneeId)['userEmpIds'] }}</div></td>
                                             <td class="">
-                                                @foreach($pmsKpiAssigneeData['reviewersIds'] as $reviewer)
+                                                @foreach($pmsKpiAssigneeData['reviewersIds'] as $keyCheck => $reviewer)
+                                                    @if($keyCheck != 0)<br>@endif
                                                     @if(($pmsKpiAssigneeData['currentLoggedUserRole'] == 'reviewer' && $reviewer == Auth::id()) || $pmsKpiAssigneeData['currentLoggedUserRole'] != 'reviewer')
-                                                        <div class="td_content_center">{{ getUserDetailsById($reviewer) }}</div><br>
+                                                        <div class="td_content_center">{{ getUserDetailsById($reviewer) }}</div>
                                                     @endif
                                                 @endforeach
 

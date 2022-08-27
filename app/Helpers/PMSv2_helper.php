@@ -52,8 +52,9 @@ function checkCurrentLoggedUserReviewerOrNot($reviewersIds,$currentLoggedUserRol
     try{
         $result = '';
         $decodedReviewSubmitted = isset($kpiAssigneeReviewDetails->is_reviewer_submitted) ? json_decode($kpiAssigneeReviewDetails->is_reviewer_submitted,true) : '';
-        foreach($reviewersIds as $singleReviewerSubmittedStatus)
+        foreach($reviewersIds as $keyCheck => $singleReviewerSubmittedStatus)
         {
+            if($keyCheck != 0) $result .= '<br>'; 
             if($currentLoggedUserRole == 'reviewer')
             {
                 if($singleReviewerSubmittedStatus == Auth::id())
