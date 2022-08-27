@@ -87,16 +87,17 @@
                                 class="col-md-6 col-sm-12 col-xs-12 col-xl-5 col-lg-5 d-flex align-items-center right-content">
                                 <div class="card-body te1xt-black login-card px-5 py-0">
                                     <form action="{{ route('login') }}" method="POST" class="login-form">
-                                        <div class="d-flex align-items-center justify-content-center mb-1 ">
+                                        <div class="d-flex align-items-center justify-content-center mb-3 ">
                                             <div class="login-top-img">
                                                 <img src="{{ URL::asset($generalInfo->logo_img) }}" alt=""
                                                     class="">
+                                                    <!-- <img src="{{ URL::asset('assets/images/vasa.jpg') }}" alt="" class="w-100 h-100"> -->
                                             </div>
                                         </div>
-                                        <p class="m-0   h5 fw-bold log">Login <span class="me-1">to</span><span
+                                        <!-- <p class="m-0   h5 fw-bold log">Login <span class="me-1">to</span><span
                                                 class="m-0 fw-bold h4 me-1">ABS</span><small
-                                                class="text-orange fw-bold f-10">hrms</small></p>
-                                        <p class="text-muted f-10 mb-2">Login to run your business together</p>
+                                                class="text-orange fw-bold f-10">hrms</small></p> -->
+                                        <p class="text-muted f-12 mb-3 fw-bold">Login to run your business together</p>
 
 
                                         @csrf
