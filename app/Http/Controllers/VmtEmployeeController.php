@@ -182,7 +182,7 @@ class VmtEmployeeController extends Controller
     }
 
 
-    public function getThreeLevelOrgTree($id, Request $request)
+    public function getTwoLevelOrgTree($id, Request $request)
     {
         $levels = 3; //tree level for current user
         $data = [];
@@ -192,18 +192,23 @@ class VmtEmployeeController extends Controller
         $data['name'] = $queryData->value('name');
         $data['user_code'] = $queryData->value('user_code');
         $data['designation'] =  VmtEmployeeOfficeDetails::where('user_id',$id)->value('designation');
-
         $data['children'] =$this->getChildrenForUser( $data['user_code'])['children'];
+        $data['children_count'] = count($data['children']);
+
 
         //dd($data['children']->toArray());
         //dd($this->getChildrenForUser('IMA0013')['children']->toArray());
 
 
-        // foreach($data['children'] as $child)
-        // {
-        //     $child['children'] = $this->getChildrenForUser($child['user_code'])['children'];
-        //     //dd($child['user_code']);
-        // }
+        foreach($data['children'] as $child)
+        {
+            $t_children = $this->getChildrenForUser($child['user_code'])['children'];
+            $child['children_count'] = count($t_children);
+             //count($child['children']->toArray() ));
+        }
+
+        //2nd level 1st node's children count
+        //dd( $data['children'][0]['children_count']);
 
 
         //dd(json_encode($data));
