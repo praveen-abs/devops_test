@@ -535,22 +535,29 @@ class VmtEmployeeController extends Controller
         $returnfailedMsg = '';
         $addedCount = 0;
         $failedCount = 0;
+        $empNo=0;
         foreach($data[0] as $key => $row) {
-            // $clientData  = VmtClientMaster::first();
-            // $maxId  = VmtEmployee::max('id')+1;
-            // if ($clientData) {
-            //     $empNo = $clientData->client_code.$maxId;
-            // } else {
-            //     $empNo = $maxId;
-            // }
-            $row['employee_code'] = $row['employee_code'];
-            $row['doj'] = date('Y-m-d', $row['doj']);
-            $row['dob'] = date('Y-m-d', $row['dob']);
-            $row['spouse_dob'] = date('Y-m-d', $row['spouse_dob']);
-            $row['confirmation_period'] = date('Y-m-d', $row['confirmation_period']);
+            if( isset($row['employee_code']))
+            {
+                $empNo = $row['employee_code'];
+            }
+            else
+            {
+                $clientData  = VmtClientMaster::first();
+                $maxId  = VmtEmployee::max('id')+1;
+                if ($clientData) {
+                    $empNo = $clientData->client_code.$maxId;
+                } else {
+                    $empNo = $maxId;
+                }
+            }
+
+            $row['doj'] = date('Y-m-d', strtotime($row['doj']));
+            $row['dob'] = date('Y-m-d', strtotime($row['dob']));
+            $row['spouse_dob'] = date('Y-m-d', strtotime($row['spouse_dob']));
+            $row['confirmation_period'] = date('Y-m-d', strtotime($row['confirmation_period']));
             $row['mobile_no'] = (int)$row['mobile_no'];
             $rules = [
-                'employee_code' => 'required',
                 'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'email' => 'required|email',
                 'gender' => 'required|in:male,female,other',
@@ -666,8 +673,8 @@ class VmtEmployeeController extends Controller
                     $empOffice->cost_center = $row["cost_center"];
                     $empOffice->confirmation_period  = $row["confirmation_period"];
                     $empOffice->holiday_location  = $row["holiday_location"];
-                    $empOffice->l1_manager_code  = $row["lm_id"];
-                    $empOffice->l1_manager_name  = $row["lm_name"];
+                    $empOffice->l1_manager_code  = $row["l1_manager_code"];
+                    $empOffice->l1_manager_name  = $row["l1_manager_name"];
                     $empOffice->work_location  = $row["work_location"];
                     $empOffice->officical_mail  = $row["official_mail"];
                     $empOffice->official_mobile  = $row["official_mobile"];
