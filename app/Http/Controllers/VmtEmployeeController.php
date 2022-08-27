@@ -535,19 +535,27 @@ class VmtEmployeeController extends Controller
         $returnfailedMsg = '';
         $addedCount = 0;
         $failedCount = 0;
+        $empNo=0;
         foreach($data[0] as $key => $row) {
-            $clientData  = VmtClientMaster::first();
-            $maxId  = VmtEmployee::max('id')+1;
-            if ($clientData) {
-                $empNo = $clientData->client_code.$maxId;
-            } else {
-                $empNo = $maxId;
+            if( isset($row['employee_code']))
+            {
+                $empNo = $row['employee_code'];
             }
-            $row['employee_code'] = $empNo;
-            $row['doj'] = date('Y-m-d', $row['doj']);
-            $row['dob'] = date('Y-m-d', $row['dob']);
-            $row['spouse_dob'] = date('Y-m-d', $row['spouse_dob']);
-            $row['confirmation_period'] = date('Y-m-d', $row['confirmation_period']);
+            else
+            {
+                $clientData  = VmtClientMaster::first();
+                $maxId  = VmtEmployee::max('id')+1;
+                if ($clientData) {
+                    $empNo = $clientData->client_code.$maxId;
+                } else {
+                    $empNo = $maxId;
+                }
+            }
+
+            $row['doj'] = date('Y-m-d', strtotime($row['doj']));
+            $row['dob'] = date('Y-m-d', strtotime($row['dob']));
+            $row['spouse_dob'] = date('Y-m-d', strtotime($row['spouse_dob']));
+            $row['confirmation_period'] = date('Y-m-d', strtotime($row['confirmation_period']));
             $row['mobile_no'] = (int)$row['mobile_no'];
             $rules = [
                 'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
