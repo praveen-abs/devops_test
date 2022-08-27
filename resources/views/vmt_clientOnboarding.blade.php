@@ -181,7 +181,7 @@
                             <div class="col-md-6 col-sm-12 col-xs-12 col-xl-3 col-lg-3 mb-2 dashBoard">
                                 <!-- <label class="" for="product">Product{!! required() !!}</label> -->
                                 <div class="floating">
-                                    <select placeholder="Product" name="product" id="product" class="onboard-form form-control textbox select2_form_without_search" required>
+                                    <select placeholder="Product" name="product" id="product" class="form-select onboard-form form-control textbox select2_form_without_search" required>
                                         <option value="" hidden selected disabled>Select Product</option>
                                         <option value="Recruitment">Recruitment</option>
                                         <option value="Payroll">Payroll</option>
@@ -199,7 +199,7 @@
                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mb-2 dashBoard">
                                 <!-- <label class="" for="subscription_type">Subscription Type{!! required() !!}</label> -->
                                 <div class="floating">
-                                    <select placeholder="Subscription Type" name="subscription_type" id="subscription_type" class="onboard-form form-control textbox select2_form_without_search" required>
+                                    <select placeholder="Subscription Type" name="subscription_type" id="subscription_type" class="form-select onboard-form form-control textbox select2_form_without_search" required>
                                         <option value="" disabled selected hidden>Select Subscription Type</option>
                                         <option value="Monthly">Monthly</option>
                                         <option value="Quarterly">Quarterly</option>
