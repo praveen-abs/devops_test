@@ -184,24 +184,26 @@ class VmtEmployeeController extends Controller
 
     public function getThreeLevelOrgTree($id, Request $request)
     {
-        $levels = 2; //tree level for current user
+        $levels = 3; //tree level for current user
         $data = [];
         //get the given node's username,designation
-        $data['name'] = User::where('id',$id)->value('name');
+        $queryData = User::where('id',$id)->where('is_admin','0');
 
-        $data['emp_no'] = VmtEmployee::where('userid',$id)->value('emp_no');
+        $data['name'] = $queryData->value('name');
+        $data['user_code'] = $queryData->value('user_code');
         $data['designation'] =  VmtEmployeeOfficeDetails::where('user_id',$id)->value('designation');
 
-        $data['children'] =$this->getChildrenForUser( $data['emp_no'])['children'];
+        $data['children'] =$this->getChildrenForUser( $data['user_code'])['children'];
 
-        for($i=0; $i<2 ; $i++)
-        {
-            foreach($data['children'] as $child)
-            {
-                $child['children'] = $this->getChildrenForUser($child['emp_no'])['children'];
-                //dd($child['children']);
-            }
-        }
+        //dd($data['children']->toArray());
+        //dd($this->getChildrenForUser('IMA0013')['children']->toArray());
+
+
+        // foreach($data['children'] as $child)
+        // {
+        //     $child['children'] = $this->getChildrenForUser($child['user_code'])['children'];
+        //     //dd($child['user_code']);
+        // }
 
 
         //dd(json_encode($data));
@@ -210,16 +212,17 @@ class VmtEmployeeController extends Controller
 
 
     //
-    public function getChildrenForUser($emp_no){
-
+    public function getChildrenForUser($user_code){
+        //dd($emp_no->toArray());
         $data =array();
 
 
         //get the child nodes of the given parent node
         $data['children'] = User::leftJoin('vmt_employee_office_details','users.id','=','vmt_employee_office_details.user_id')
                             ->leftJoin('vmt_employee_details','users.id','=','vmt_employee_details.userid')
-                            ->where('l1_manager_code',$emp_no)
-                            ->select('users.name','users.id','vmt_employee_details.emp_no','vmt_employee_office_details.designation')
+                            ->where('users.is_admin','0')
+                            ->where('vmt_employee_office_details.l1_manager_code',$user_code)
+                            ->select('users.name','users.id','users.user_code','vmt_employee_office_details.designation')
                             ->get();
 
         //Add empty children attributes
@@ -580,14 +583,14 @@ class VmtEmployeeController extends Controller
                 'spouse_dob' => 'required_unless:marital_status,single|date',
                 'child_name' => 'nullable|regex:/(^(,?[a-zA-z. ])$)/u',
                 'child_dob' => 'nullable|regex:/(^(,?([0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$)/u',
-                'department' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'process' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'designation' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                //'department' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                //'process' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                //'designation' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'cost_center' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'confirmation_period' => 'required|date',
                 'holiday_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'l1_manager_code' => 'required|regex:/(^([a-zA-z0-9.]+)(\d+)?$)/u',
-                'l1_manager_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                //'l1_manager_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'official_mail' => 'required|email',
                 'official_mobile' => 'required|regex:/^([0-9]{10})?$/u|numeric',
@@ -673,7 +676,12 @@ class VmtEmployeeController extends Controller
                     $empOffice->cost_center = $row["cost_center"];
                     $empOffice->confirmation_period  = $row["confirmation_period"];
                     $empOffice->holiday_location  = $row["holiday_location"];
-                    $empOffice->l1_manager_code  = $row["l1_manager_code"];
+
+                    if($row["l1_manager_code"] !=  $empNo)
+                        $empOffice->l1_manager_code  = $row["l1_manager_code"];
+                    else
+                        $empOffice->l1_manager_code  = "";
+
                     $empOffice->l1_manager_name  = $row["l1_manager_name"];
                     $empOffice->work_location  = $row["work_location"];
                     $empOffice->officical_mail  = $row["official_mail"];
@@ -724,25 +732,16 @@ class VmtEmployeeController extends Controller
 
                 if ($newEmployee && $empOffice) {
                     $addedCount++;
-                    $returnsuccessMsg .= $empNo." get added";
+                    $returnsuccessMsg .= $empNo." get added<br/>";
                 } else {
                     $failedCount++;
-                    $returnfailedMsg .= $empNo." not get added";
+                    $returnfailedMsg .= $empNo." not get added<br/>";
                 }
-               // \Mail::to($row["email"])->send(new WelcomeMail($row["email"], 'Abs@123123', 'http://vasagroup.abshrms.com',''));
 
-                // sent welcome email along with appointment Letter
-                //dd($row);
-                $isEmailSent  = $this->attachApoinmentPdf($row);
-
-                // if ($isEmailSent) {
-                //     return "Saved";
-                // } else {
-                //     return "Error";
-                // }
+                //$isEmailSent  = $this->attachApoinmentPdf($row);
 
             } else {
-                $returnfailedMsg .= $empNo." not get added because of error ".json_encode($validator->errors()->all());
+                $returnfailedMsg .= $empNo." not get added because of error ".json_encode($validator->errors()->all())." <br/>";
                 $failedCount++;
             }
         }
@@ -755,7 +754,7 @@ class VmtEmployeeController extends Controller
     // Generate Employee Apoinment PDF after onboarding
     public function attachApoinmentPdf($employeeData){
         //dd($employeeData);
-        $VmtGeneralInfo = VmtGeneralInfo::where('id','1')->orderBy('created_at', 'DESC')->first();
+        $VmtGeneralInfo = VmtGeneralInfo::first();
         $empNameString  = $employeeData['employee_name'];
         $filename = 'appoinment_letter_'.$empNameString.'_'.time().'.pdf';
         $data = $employeeData;

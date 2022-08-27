@@ -17,6 +17,10 @@
 
 @endsection
 @section('script')
+<script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script type="module" src="https://html2canvas.hertzen.com/dist/html2canvas.min.js">
+    import html2canvas from 'html2canvas';
+</script>
 
 
 <script
@@ -27,6 +31,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/orgchart/3.1.1/js/jquery.orgchart.min.js" ></script>
 
 <script type="text/javascript">
+
 
     $(document).ready(function() {
 
@@ -87,14 +92,18 @@
                 "title": "department manager"
                 }
             ]
-    };
 
-    @if(Auth::user()->is_admin != 1)
+        };
+
+        @if(Auth::user()->is_admin != 1)
         $('#chart-container').orgchart({
         'data' : '{{ route('vmt-emphierarchy-getChildForUser',['id' => Auth::user()->id ]) }}',
         'pan' : true,
         'zoom' : true,
-        'nodeContent': 'designation'
+        'nodeContent': 'designation',
+        'exportButton': true,
+        'exportFilename': 'OrgChartImage',
+        'exportFileextension':'pdf'
         });
     @else
         $('#chart-container').html('<h4> Not available for Super Admin</h4>');
