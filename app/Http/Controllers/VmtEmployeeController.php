@@ -536,20 +536,21 @@ class VmtEmployeeController extends Controller
         $addedCount = 0;
         $failedCount = 0;
         foreach($data[0] as $key => $row) {
-            $clientData  = VmtClientMaster::first();
-            $maxId  = VmtEmployee::max('id')+1;
-            if ($clientData) {
-                $empNo = $clientData->client_code.$maxId;
-            } else {
-                $empNo = $maxId;
-            }
-            $row['employee_code'] = $empNo;
+            // $clientData  = VmtClientMaster::first();
+            // $maxId  = VmtEmployee::max('id')+1;
+            // if ($clientData) {
+            //     $empNo = $clientData->client_code.$maxId;
+            // } else {
+            //     $empNo = $maxId;
+            // }
+            $row['employee_code'] = $row['employee_code'];
             $row['doj'] = date('Y-m-d', $row['doj']);
             $row['dob'] = date('Y-m-d', $row['dob']);
             $row['spouse_dob'] = date('Y-m-d', $row['spouse_dob']);
             $row['confirmation_period'] = date('Y-m-d', $row['confirmation_period']);
             $row['mobile_no'] = (int)$row['mobile_no'];
             $rules = [
+                'employee_code' => 'required',
                 'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'email' => 'required|email',
                 'gender' => 'required|in:male,female,other',
