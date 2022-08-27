@@ -11,6 +11,7 @@
     <!--Map-->
     <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/jquery-jvectormap-2.0.2.css') }}">
 
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
     <!-- calendar -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
@@ -220,6 +221,7 @@ header {
                         <button id="add-goals" class="text-white py-1 px-3 btn btn-primary add-goals"><i
                                 class="text-white fa fa-plus mx-1"></i>Add Goals</button>
 
+
                         <table id='empTable' class=' table table-borderd  mb-0'>
                             <thead class="table-light">
                                 <tr>
@@ -327,8 +329,9 @@ header {
                             <form id="goalForm">
                                 <input type="hidden" name="goal_id" id="goal_id">
                                 @csrf
+                                <input type="hidden" name="flowCheck" id="flowCheck" value="{{ $flowCheck }}">
                                 <input type="hidden" name="kpitable_id" id="kpitable_id">
-                                <input type="hidden" name="employees[]" id="sel_employees">
+                                
                                 <input type="hidden" name="reviewer" id="sel_reviewer">
                                 <input type="hidden" name="assignment_period_year" id="assignment_period_year"
                                     value="<?php echo date('Y'); ?>">
@@ -390,6 +393,30 @@ header {
                                             @endforeach
                                         </select>
                                     </div>
+                                    @if(isset($loggedManagerEmployees) && count($loggedManagerEmployees) > 0)
+                                    <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3 ">
+                                        <label class="" for="">Employees</label>
+                                        <select class="select-employee-dropdown form-control" name="employees[]" multiple="multiple">
+                                            @foreach($loggedManagerEmployees as $employeesSelection)
+                                                <option selected value="{{ $employeesSelection->id }}">{{ $employeesSelection->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
+                                        <label class="" for="">Reviewer</label>
+                                        @if(isset($getSameLevelManagers) && count($getSameLevelManagers) > 0)
+                                            <select class="select-reviewer-dropdown form-control" name="reviewer">
+                                            @foreach($getSameLevelManagers as $sameLevelManager)
+                                                <option @if($sameLevelManager->id == Auth::id()) selected @endif value="{{ $sameLevelManager->id }}">{{ $sameLevelManager->name }}</option>
+                                            @endforeach
+                                            </select>
+                                        @else
+                                            <input type="hidden" name="reviewer" value="{{ $loggedUserDetails->id }}">
+                                            <input type="text" disabled class="form-control increment-input" placeholder="Reviewer" value="{{ $loggedUserDetails->name }}">
+                                        @endif
+                                    </div>
+                                    @else
+                                    <input type="hidden" name="employees[]" id="sel_employees">
                                     <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3 ">
                                         <label class="" for="">Employees</label>
                                         <input type="text" name="" id="selected_employee"
@@ -405,6 +432,7 @@ header {
                                         <button type="button" id="" target="#createEmployee"
                                             class="btn py-1 px-3 btn-primary increment-btn reviewerButton">Select</button>
                                     </div>
+                                    @endif
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-4 mt-3 mb-3 d-flex ml-5">
@@ -419,7 +447,7 @@ header {
                             <div class="table-wrapper m-2">
                                 <div class="row">
                                     <div class="col-12">
-                                        <h5>Goals / Areas of development</h5>
+                                        <h5>Goals / Areas of devel  opment</h5>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -663,9 +691,23 @@ header {
     <!-- Prem assets ends -->
 
     <!-- for date and time -->
-    < <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    <script>
+        $(document).ready(function() {
+            $('.select-employee-dropdown').select2({
+                dropdownParent: $("#add-goals-modal"),
+                minimumResultsForSearch: Infinity,
+                width: '100%'
+            });
+            $('.select-reviewer-dropdown').select2({
+                dropdownParent: $("#add-goals-modal"),
+                width: '100%'
+            });
+            
+        });
+    </script>
     <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {

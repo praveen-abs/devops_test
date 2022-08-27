@@ -75,9 +75,69 @@ class VmtPMSModuleController extends Controller
     
             $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')->WhereRaw("find_in_set(".auth()->user()->id.", reviewer_id)")->orWhereRaw("find_in_set(".auth()->user()->id.", assignee_id)")->orWhere('assigner_id',auth()->user()->id)->orderBy('id','DESC')->get();
 
-        return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','existingKPIForms','departments','employees','pmsKpiAssigneeDetails'));
+        $flowCheck = 1;
+
+        return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','existingKPIForms','departments','employees','pmsKpiAssigneeDetails','flowCheck'));
     }
 
+    public function showPMSDashboardForManager()
+    {
+        $loggedUserId = Auth::id();
+        $loggedUserDetails = User::findorfail($loggedUserId);
+        $existingKPIForms = VmtPMS_KPIFormModel::where('author_id', $loggedUserId)->get(['id','form_name']);
+
+        // get Departments data
+        $departments = Department::where('status', 'A')->get();
+
+        //Dashboard vars
+        $employeesGoalsSetCount = 0;
+        $totalEmployeesCount = User::where('active',1)->where('is_admin',0)->count();
+        $employeesAssessedCount = 0;
+        $selfReviewCount = 0;
+        $totalSelfReviewCount = 0;
+        $employees = VmtEmployee::rightJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
+            ->select(
+                'users.name as emp_name',
+                'users.id as id',
+                'users.avatar as avatar',
+            )
+            ->where('users.active','1')
+            ->where('users.is_admin','0')
+            ->orderBy('vmt_employee_details.created_at', 'ASC')
+            ->get();
+
+        // Get logged in user Employee deatils 
+        $loggedUserManagerNumber = VmtEmployee::where('userid',$loggedUserId)->value('emp_no');
+        // Get logged in Manager Employees List 
+        $loggedManagerEmployees = User::leftJoin('vmt_employee_office_details','users.id','=','vmt_employee_office_details.user_id')
+            ->leftJoin('vmt_employee_details','users.id','=','vmt_employee_details.userid')
+            ->where('l1_manager_code',$loggedUserManagerNumber)
+            ->select('users.name','users.id','vmt_employee_details.emp_no','vmt_employee_office_details.designation')
+            ->get();
+
+        // Get logged in user office deatils and its parent code
+        $loggedUserManagerOfficeDetails = VmtEmployeeOfficeDetails::where('user_id',$loggedUserId)->value('l1_manager_code');
+        // From its parent code can get childs (same level managers of loggedIn Manager)
+        $getSameLevelManagers = [];
+        if(!empty($loggedUserManagerOfficeDetails)){
+            $getSameLevelManagers = VmtEmployeeOfficeDetails::where('l1_manager_code',$loggedUserManagerOfficeDetails)
+                                    ->leftJoin('users','vmt_employee_office_details.user_id','=','users.id')
+                                    ->select('users.name','users.id','vmt_employee_office_details.designation')
+                                    ->get();
+        }
+
+        $dashboardCountersData = [];
+        $dashboardCountersData['employeesGoalsSetCount'] = $employeesGoalsSetCount;
+        $dashboardCountersData['totalEmployeesCount'] = $totalEmployeesCount;
+        $dashboardCountersData['employeesAssessedCount'] = $employeesAssessedCount;
+        $dashboardCountersData['selfReviewCount'] = $selfReviewCount;
+        $dashboardCountersData['totalSelfReviewCount'] = $totalSelfReviewCount;
+    
+            $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')->WhereRaw("find_in_set(".$loggedUserId.", reviewer_id)")->orWhereRaw("find_in_set(".$loggedUserId.", assignee_id)")->orWhere('assigner_id',$loggedUserId)->orderBy('id','DESC')->get();
+
+        $flowCheck = 1;
+        return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','existingKPIForms','departments','employees','pmsKpiAssigneeDetails','loggedManagerEmployees','loggedUserDetails','getSameLevelManagers','flowCheck'));
+    }
     // public function showPMSDashboardOld()
     // {
 
@@ -321,7 +381,12 @@ class VmtPMSModuleController extends Controller
                 $assigneeReview->assignee_kpi_status = null;
                 $assigneeReview->reviewer_kpi_status = null;
                 $assigneeReview->is_assignee_submitted = null;
-                $assigneeReview->is_assignee_accepted = '1';
+                if(isset($flowCheck) && $flowCheck==1)
+                {
+                    $assigneeReview->is_assignee_accepted = '1';
+                }else{
+                    $assigneeReview->is_assignee_accepted = null;
+                }
                 $assigneeReview->is_reviewer_submitted = json_encode($reviewerSubmittedData);
                 $assigneeReview->is_reviewer_accepted = json_encode($reviewerAcceptedData);
                 $assigneeReview->save();
@@ -734,5 +799,55 @@ class VmtPMSModuleController extends Controller
             Log::info('excel sheet download form review page pms v2: '.$e->getMessage());
             return '';
         }
+    }
+
+    /*
+    * function used for Accept/Reject review By Assignee
+    */
+    public function acceptRejectAssigneeReview(Request $request){
+        try{
+            $vmtAssignedFormReview = VmtPMS_KPIFormReviewsModel::where('id',$request->assigneeGoalId)->with('getPmsKpiFormAssigned')->first();
+            if(empty($vmtAssignedFormReview)){
+                return response()->json(['status'=>false,'message'=>"Assigned Form Review is not Available"]); 
+            }
+            $isApproveOrReject = $request->isApproveOrReject; // 1 => Accept & 0 => Reject
+            $vmtAssignedFormReview->is_assignee_accepted = $isApproveOrReject;
+            $vmtAssignedFormReview->update();
+            if(isset($vmtAssignedFormReview->getPmsKpiFormAssigned)){
+                $command_emp = '';
+                $vmtAssignedDetails = $vmtAssignedFormReview->getPmsKpiFormAssigned;
+                $mailingList = VmtEmployeeOfficeDetails::where('user_id', $vmtAssignedDetails->reviewer_id)->pluck('officical_mail');
+                $assignedUserDetails = User::where('id',$vmtAssignedFormReview->assignee_id)->first();
+                $reviewerUserDetails = User::where('id',$vmtAssignedDetails->reviewer_id)->first();
+                if($vmtAssignedFormReview->is_assignee_accepted == "1")
+                {
+                    \Mail::to($mailingList)->send(new VmtAssignGoals( "approved",$assignedUserDetails->name,$vmtAssignedDetails->year." - ".strtoupper($vmtAssignedDetails->assignment_period),$reviewerUserDetails->name,$command_emp));
+                    $returnMsg = 'KPI has been accepted. Mail notification sent';
+                    $message = "KPI has been accepted.  ";
+                    Notification::send($assignedUserDetails ,new ViewNotification($message.auth()->user()->name));
+                    return response()->json(['status'=>true,'message'=>$returnMsg]);
+                }
+                elseif($vmtAssignedFormReview->is_assignee_accepted == "0")
+                {
+                    if(isset($request->reject_comment) && $request->reject_comment != ''){
+                        $vmtAssignedFormReview->assignee_rejection_comments = $request->reject_comment;
+                        $vmtAssignedFormReview->update();
+                        $command_emp = $vmtAssignedFormReview->assignee_rejection_comments;
+                    }
+
+                    \Mail::to($mailingList)->send(new VmtAssignGoals( "rejected",$assignedUserDetails->name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$reviewerUserDetails->name,$command_emp));
+                    $returnMsg = 'KPI has been rejected. Mail notification sent';
+                    $message = "KPI has been rejected.  ";
+                    Notification::send($assignedUserDetails ,new ViewNotification($message.auth()->user()->name));
+                    return response()->json(['status'=>true,'message'=>$returnMsg]);
+                }
+            }
+            return response()->json(['status'=>false,'message'=>'Something Went Wrong!']);
+ 
+        }catch(Exception $e){
+            Log::info('accept/reject review by assignee error: '.$e->getMessage());
+            return response()->json(['status'=>false,'message'=>$e->getMessage()]); 
+        }
+
     }
 }

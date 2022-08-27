@@ -258,6 +258,9 @@ Route::post('vmt_clientOnboarding', 'App\Http\Controllers\VmtClientController@st
 
 //PMS v2
 Route::get('/pms',  [App\Http\Controllers\PMS\VmtPMSModuleController::class, 'showPMSDashboard'])->name('pms-dashboard');
+// flow 2 starts
+Route::get('team-appraisal',  [VmtPMSModuleController::class, 'showPMSDashboardForManager'])->name('team-appraisal-pms-dashboard');
+// flow 2 ends
 Route::get('vmt-pmsgetAllEmployees', 'App\Http\Controllers\PMS\VmtPMSModuleController@getEmployeesOfManager');
 Route::get('/pms-createform',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'showKPICreateForm'])->name('showKPICreateForm');
 //Route::get('/pms-modifyform',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'showKPICreateForm'])->name('showKPICreateForm');
@@ -285,6 +288,9 @@ Route::get('/generateSampleKPIExcelSheet', [VmtPMSModuleController::class, 'gene
 
 // route for download excel sheet from review pgae
 Route::get('/downloadExcelReviewForm/{kpiAssignedId}/{key}', [VmtPMSModuleController::class, 'downloadExcelReviewForm'])->name('download.excelsheet.pmsv2.review.form');
+
+// routes for accept/reject review by Assignee
+Route::post('acceptRejectAssigneeReview', [VmtPMSModuleController::class,'acceptRejectAssigneeReview'])->name('acceptRejectAssigneeReview');
 
 //DONT WRITE ANT ROUTES BELOW THIS
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index']);
