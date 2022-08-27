@@ -743,7 +743,9 @@ class VmtEmployeeController extends Controller
                     $returnfailedMsg .= $empNo." not get added<br/>";
                 }
 
-                //$isEmailSent  = $this->attachApoinmentPdf($row);
+                if(fetchMasterConfigValue("can_send_appointmentmail_after_onboarding") == "true") {
+                    $isEmailSent  = $this->attachApoinmentPdf($row);
+                }
 
             } else {
                 $returnfailedMsg .= $empNo." not get added because of error ".json_encode($validator->errors()->all())." <br/>";
