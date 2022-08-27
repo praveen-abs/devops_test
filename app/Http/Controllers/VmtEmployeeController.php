@@ -666,8 +666,8 @@ class VmtEmployeeController extends Controller
                     $empOffice->cost_center = $row["cost_center"];
                     $empOffice->confirmation_period  = $row["confirmation_period"];
                     $empOffice->holiday_location  = $row["holiday_location"];
-                    $empOffice->l1_manager_code  = $row["lm_id"];
-                    $empOffice->l1_manager_name  = $row["lm_name"];
+                    $empOffice->l1_manager_code  = $row["l1_manager_code"];
+                    $empOffice->l1_manager_name  = $row["l1_manager_name"];
                     $empOffice->work_location  = $row["work_location"];
                     $empOffice->officical_mail  = $row["official_mail"];
                     $empOffice->official_mobile  = $row["official_mobile"];
