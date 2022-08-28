@@ -22,7 +22,7 @@
 
 /* floating label */
 
-.floating {
+/* .floating {
     position: relative;
 }
 
@@ -38,24 +38,24 @@
     transition: 0.2s ease all;
     -moz-transition: 0.2s ease all;
     -webkit-transition: 0.2s ease all;
-}
+} */
 /* .floating .textbox::placeholder,.floating .textbox:-moz-placeholder,.floating .textbox:-ms-input-placeholder,.text::-webkit-input-placeholder {
     opacity: 0;
     color: transparent;
     visibility: hidden;
 } */
 
-.textbox::placeholder,
+/* .textbox::placeholder,
 .textbox::-webkit-input-placeholder {
     opacity: 0;
     color: transparent;
     visibility: hidden;
-}
+} */
 
 /* .textbox:not(:-moz-placeholder) ~ .float-label,
 .textbox:not(:-ms-input-placeholder) ~ .float-label,
 .textbox:not(::-webkit-input-placeholder) ~ .float-label  */
-
+/* 
 .textbox:focus ~ .float-label,
 .textbox:not(:placeholder-shown) ~ .float-label {
     top: -9px;
@@ -76,4 +76,4 @@
     color: #375775;
     font-weight: 600;
     letter-spacing: 0.1em;
-}
+} */
