@@ -32,78 +32,104 @@
 
 <script type="text/javascript">
 
+$(document).ready(function() {
 
-    $(document).ready(function() {
-
-        var mydata ={
-            "name": "Lao Lao",
-            "title": "general manager",
+    var mydata ={
+        "name": "Lao Lao",
+        "title": "general manager",
+        "children": [
+            {
+            "name": "Bo Miao",
+            "title": "department manager"
+            },
+            {
+            "name": "Su Miao",
+            "title": "department manager",
             "children": [
                 {
-                "name": "Bo Miao",
-                "title": "department manager"
+                "name": "Tie Hua",
+                "title": "senior engineer"
                 },
                 {
-                "name": "Su Miao",
-                "title": "department manager",
+                "name": "Hei Hei",
+                "title": "senior engineer",
                 "children": [
                     {
-                    "name": "Tie Hua",
-                    "title": "senior engineer"
+                    "name": "Pang Pang",
+                    "title": "engineer"
                     },
                     {
-                    "name": "Hei Hei",
-                    "title": "senior engineer",
-                    "children": [
-                        {
-                        "name": "Pang Pang",
-                        "title": "engineer"
-                        },
-                        {
-                        "name": "Xiang Xiang",
-                        "title": "UE engineer"
-                        }
-                    ]
+                    "name": "Xiang Xiang",
+                    "title": "UE engineer"
                     }
                 ]
-                },
-                {
-                "name": "Yu Jie",
-                "title": "department manager"
-                },
-                {
-                "name": "Yu Li",
-                "title": "department manager"
-                },
-                {
-                "name": "Hong Miao",
-                "title": "department manager"
-                },
-                {
-                "name": "Yu Wei",
-                "title": "department manager"
-                },
-                {
-                "name": "Chun Miao",
-                "title": "department manager"
-                },
-                {
-                "name": "Yu Tie",
-                "title": "department manager"
                 }
             ]
+            },
+            {
+            "name": "Yu Jie",
+            "title": "department manager"
+            },
+            {
+            "name": "Yu Li",
+            "title": "department manager"
+            },
+            {
+            "name": "Hong Miao",
+            "title": "department manager"
+            },
+            {
+            "name": "Yu Wei",
+            "title": "department manager"
+            },
+            {
+            "name": "Chun Miao",
+            "title": "department manager"
+            },
+            {
+            "name": "Yu Tie",
+            "title": "department manager"
+            }
+        ]
 
-        };
+    };
 
-        @if(Auth::user()->is_admin != 1)
+
+
+
+    var ajaxURLs = {
+            'children': function(nodeData) {
+                //console.log(nodeData.user_code);
+                var url = "{{ route('getChildrenForUser','') }}"+"/"+nodeData.user_code;
+
+                return url;
+            },
+            'parent': '/orgchart/parent/',
+            'siblings': function(nodeData) {
+                return '/orgchart/siblings/' + nodeData.id;
+            },
+            'families': function(nodeData) {
+                return '/orgchart/families/' + nodeData.id;
+            }
+    };
+
+    @if(Auth::user()->is_admin == 0)
         $('#chart-container').orgchart({
-        'data' : '{{ route('vmt-emphierarchy-getChildForUser',['id' => Auth::user()->id ]) }}',
-        'pan' : true,
-        'zoom' : true,
-        'nodeContent': 'designation',
-        'exportButton': true,
-        'exportFilename': 'OrgChartImage',
-        'exportFileextension':'pdf'
+            'data' : '{{ route('getTwoLevelOrgTree',['user_code' => Auth::user()->user_code ]) }}',
+            'ajaxURL' : ajaxURLs,
+            'pan' : true,
+            'zoom' : true,
+            'zoominLimit' : 2,
+            'zoomoutLimit' : 0.7,
+            'nodeContent': 'designation',
+            'verticalLevel': 4,
+            'exportButton': true,
+            'exportFilename': 'OrgChartImage',
+            'exportFileextension':'png',
+            'createNode' : function($node,data)
+            {
+                return $node;
+            }
         });
     @else
         $('#chart-container').html('<h4> Not available for Super Admin</h4>');

@@ -33,11 +33,6 @@ use PDF;
 
 class VmtEmployeeController extends Controller
 {
-    //
-    public function index(Request $request){
-        $users  = User::all();
-        return view('vmt_view_employee_hierarchy', compact('users'));
-    }
 
     public function employeeOnboarding(Request $request) {
         // Used for Quick onboarding
@@ -181,66 +176,6 @@ class VmtEmployeeController extends Controller
         return view('vmt_employeeDirectory', compact('vmtEmployees','vmtEmployees_InActive'));
     }
 
-
-    public function getTwoLevelOrgTree($id, Request $request)
-    {
-        $levels = 3; //tree level for current user
-        $data = [];
-        //get the given node's username,designation
-        $queryData = User::where('id',$id)->where('is_admin','0');
-
-        $data['name'] = $queryData->value('name');
-        $data['user_code'] = $queryData->value('user_code');
-        $data['designation'] =  VmtEmployeeOfficeDetails::where('user_id',$id)->value('designation');
-        $data['children'] =$this->getChildrenForUser( $data['user_code'])['children'];
-        $data['children_count'] = count($data['children']);
-
-
-        //dd($data['children']->toArray());
-        //dd($this->getChildrenForUser('IMA0013')['children']->toArray());
-
-
-        foreach($data['children'] as $child)
-        {
-            $t_children = $this->getChildrenForUser($child['user_code'])['children'];
-            $child['children_count'] = count($t_children);
-             //count($child['children']->toArray() ));
-        }
-
-        //2nd level 1st node's children count
-        //dd( $data['children'][0]['children_count']);
-
-
-        //dd(json_encode($data));
-        return $data;
-    }
-
-
-    //
-    public function getChildrenForUser($user_code){
-        //dd($emp_no->toArray());
-        $data =array();
-
-
-        //get the child nodes of the given parent node
-        $data['children'] = User::leftJoin('vmt_employee_office_details','users.id','=','vmt_employee_office_details.user_id')
-                            ->leftJoin('vmt_employee_details','users.id','=','vmt_employee_details.userid')
-                            ->where('users.is_admin','0')
-                            ->where('vmt_employee_office_details.l1_manager_code',$user_code)
-                            ->select('users.name','users.id','users.user_code','vmt_employee_office_details.designation')
-                            ->get();
-
-        //Add empty children attributes
-        foreach($data['children'] as $temp)
-        {
-            $temp['children'] ='';
-        }
-
-
-       //dd(json_encode($data));
-
-       return $data;
-    }
 
     //
     public function create(){
