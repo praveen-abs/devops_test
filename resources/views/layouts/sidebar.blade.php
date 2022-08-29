@@ -133,7 +133,7 @@
                                 <a href="{{url('vmt-employess/directory')}}" id="tds" class="nav-link sidebar py-1"><span>Directory </span></a>
                             </li>
                             <li class="nav-item ">
-                                <a href="{{url('vmt-employee-hierarchy')}}" id="tds" class="nav-link sidebar py-1"><span>ORG
+                                <a href="{{route('showOrgTree')}}" id="tds" class="nav-link sidebar py-1"><span>ORG
                                         structure</span></a>
                             </li>
 

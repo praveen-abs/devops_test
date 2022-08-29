@@ -19,7 +19,8 @@ class MasterConfigSeeder extends Seeder
         //Add new configs here
         $config_settings = [
             "client_code_series" => "100",
-            "can_send_appointmentletter_after_onboarding"=>"true"
+            "can_send_appointmentletter_after_onboarding"=>"true",
+            "can_send_appointmentmail_after_onboarding"=>"true"
         ];
 
         $existingConfigs = VmtMasterConfig::whereIn('config_name', array_keys($config_settings))->pluck('config_name');
@@ -32,7 +33,7 @@ class MasterConfigSeeder extends Seeder
 
         //dd($config_settings);
 
-        //Insert missing configs
+        //Insert only missing configs
         $newConfigsCount = 0;
         foreach($config_settings as $key => $value)
         {

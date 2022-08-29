@@ -3,6 +3,7 @@
 use App\Http\Controllers\PMS\VmtPMSModuleController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -143,21 +144,15 @@ Route::post('vmt-360-forms/delete', 'App\Http\Controllers\Review360ModuleControl
 
 Route::get('vmt_360review', 'App\Http\Controllers\Review360ModuleController@viewAssignUserForm' );
 
-//
-Route::get('vmt-employee-hierarchy', 'App\Http\Controllers\VmtEmployeeController@index');
-Route::get('vmt-employee-hierarchy/get-all', 'App\Http\Controllers\VmtEmployeeController@getChildrenList');
+////Employee Hierarchy routes
+Route::get('employee-hierarchy', 'App\Http\Controllers\VmtOrgTreeController@index')->name('showOrgTree');
 
-Route::get('vmt-employee-hierarchy/create', 'App\Http\Controllers\VmtEmployeeController@create');
+    //AJAX parts
+    Route::get('employee-hierarchy/{user_code}', 'App\Http\Controllers\VmtOrgTreeController@getTwoLevelOrgTree')->name('getTwoLevelOrgTree');
+    Route::get('employee-hierarchy/getParentForUser/{user_code}', 'App\Http\Controllers\VmtOrgTreeController@getParentForUser')->name('getParentForUser');
+    Route::get('employee-hierarchy/getChildrenForUser/{user_code}', 'App\Http\Controllers\VmtOrgTreeController@getChildrenForUser')->name('getChildrenForUser');
+    Route::get('employee-hierarchy/getSiblingsForUser/{user_code}', 'App\Http\Controllers\VmtOrgTreeController@getSiblingsForUser')->name('getSiblingsForUser');
 
-Route::get('vmt-employee-hierarchy/{id}/view', 'App\Http\Controllers\VmtEmployeeController@viewHierarchy');
-
-Route::get('vmt-employee-hierarchy/{id}', 'App\Http\Controllers\VmtEmployeeController@getThreeLevelOrgTree')->name('vmt-emphierarchy-getChildForUser');
-
-
-Route::post('vmt-employee-hierarchy/store', 'App\Http\Controllers\VmtEmployeeController@store');
-
-
-Route::get('vmt-employee-hierarchy/modify', 'App\Http\Controllers\VmtEmployeeController@edit');
 
 // store employee
 Route::post('vmt-employee-store', 'App\Http\Controllers\VmtEmployeeController@storeEmployeeData');

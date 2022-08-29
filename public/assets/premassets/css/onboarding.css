@@ -20,13 +20,7 @@ legend {
     padding: 5px 10px;
 }
 
-legend span {
-    background-color: white;
-}
 
-input {
-    margin: 5px;
-}
 #heading {
     text-transform: uppercase;
     color: #673AB7;

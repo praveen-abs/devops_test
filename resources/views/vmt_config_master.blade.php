@@ -43,7 +43,7 @@
                                             </div>
                                             <div class="row mt-1">
                                                 <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
-                                                    <label class="" for="selected_head">Send Appointment Letter after Onboard form submit?</label>
+                                                    <label class="" for="selected_head">Can send <b>Appointment Letter PDF</b> after Onboard form submit?</label>
                                                 </div>
                                                 <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
                                                     @if($data['can_send_appointmentletter_after_onboarding'] == "true")
@@ -55,6 +55,24 @@
                                                         <input type="radio" id="true_option" name="can_send_appointmentletter_after_onboarding" value="true">
                                                         <label for="true_option">Yes</label>
                                                         <input type="radio" id="false_option" name="can_send_appointmentletter_after_onboarding" value="false" checked="checked">
+                                                        <label for="false_option">No</label>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <div class="row mt-1">
+                                                <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
+                                                    <label class="" for="selected_head">Can send <b>Appointment Mail</b> after Onboard form submit?</label>
+                                                </div>
+                                                <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
+                                                    @if($data['can_send_appointmentmail_after_onboarding'] == "true")
+                                                        <input type="radio" id="true_option" name="can_send_appointmentmail_after_onboarding" class="" value="true" checked="checked">
+                                                        <label for="true_option">Yes</label>
+                                                        <input type="radio" id="false_option" name="can_send_appointmentmail_after_onboarding" value="false">
+                                                        <label for="false_option">No</label>
+                                                    @else
+                                                        <input type="radio" id="true_option" name="can_send_appointmentmail_after_onboarding" value="true">
+                                                        <label for="true_option">Yes</label>
+                                                        <input type="radio" id="false_option" name="can_send_appointmentmail_after_onboarding" value="false" checked="checked">
                                                         <label for="false_option">No</label>
                                                     @endif
                                                 </div>
