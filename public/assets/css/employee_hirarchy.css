@@ -6,36 +6,49 @@
     background: #fff;
     border-radius: 6px;
     border-top: 5px solid #002f56;
+    overflow: hidden;
+    height: 100px;
+    height: 100%;
+
+    min-height: 500px;
 }
 
 .orgchart {
     background: rgba(255, 255, 255, 0);
+
+    height: 500px;
+    width: 100;
+    width: auto;
+
 }
-.orgchart .hierarchy::before{
+
+.orgchart .hierarchy::before {
     background-color: #002f56 !important;
     border-top: 2px solid #002f56 !important;
 }
 
 .orgchart .node:not(:only-child)::after {
     background-color: #002f56 !important;
-    }
-
-.orgchart .node .title{
-    background-color: #002f56 !important; 
 }
+
+.orgchart .node .title {
+    background-color: #002f56 !important;
+}
+
 .orgchart ul li .node:hover {
     background-color: rgb(0 47 86 / 22%) !important;
     border-radius: 3px !important;
 }
 
-.orgchart .node .content{
+.orgchart .node .content {
     border: 1px solid #002f56 !important;
 }
+
 .orgchart .edge:hover::before {
     border-color: #ff4d00 !important;
 }
 
-.orgchart .node.focused{
+.orgchart .node.focused {
     background-color: rgb(0 47 86 / 22%) !important;
 }
 

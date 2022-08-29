@@ -523,7 +523,7 @@ if ($('#current_address_copy').is(':checked')) {
     $('#permanent_address').val($('#current_address').val());
 } else {
     $('#permanent_pincode').val('');
-    $('#permanent_district').val('').trigger('change');
+    $('#permanent_country').val('').trigger('change');
     $('#permanent_state').val('');
     $('#permanent_city').val('');
     $('#permanent_address').val('');

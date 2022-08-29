@@ -9,14 +9,71 @@
     border: 0px;
 }
 
-.line-0{
+.line-0 {
     border: 0px !important;
 }
 
-.top-line{
+.top-line {
     border-top: 5px solid #002f56;
 }
-.left-line{
+.left-line {
     border-left: 5px solid #002f56;
 }
 
+/* floating label */
+
+/* .floating {
+    position: relative;
+}
+
+.floating .float-label {
+    position: absolute;
+    padding: 0px 2px;
+    top: 8px;
+    left: 15px;
+    cursor: text;
+    color: #375775;
+    pointer-events: none;
+
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+} */
+/* .floating .textbox::placeholder,.floating .textbox:-moz-placeholder,.floating .textbox:-ms-input-placeholder,.text::-webkit-input-placeholder {
+    opacity: 0;
+    color: transparent;
+    visibility: hidden;
+} */
+
+/* .textbox::placeholder,
+.textbox::-webkit-input-placeholder {
+    opacity: 0;
+    color: transparent;
+    visibility: hidden;
+} */
+
+/* .textbox:not(:-moz-placeholder) ~ .float-label,
+.textbox:not(:-ms-input-placeholder) ~ .float-label,
+.textbox:not(::-webkit-input-placeholder) ~ .float-label  */
+/* 
+.textbox:focus ~ .float-label,
+.textbox:not(:placeholder-shown) ~ .float-label {
+    top: -9px;
+    left: 11px;
+    font-size: 11px;
+    background-color: #fff;
+    color: #375775;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+}
+
+.textbox:focus ~ .float-label,
+.textbox:valid ~ .float-label {
+    top: -9px;
+    left: 11px;
+    font-size: 11px;
+    background-color: #fff;
+    color: #375775;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+} */

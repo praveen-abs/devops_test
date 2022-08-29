@@ -1,0 +1,164 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\User;
+use App\Models\VmtEmployeeOfficeDetails;
+
+use Illuminate\Http\Request;
+
+class VmtOrgTreeController extends Controller
+{
+
+    public function index()
+    {
+        return view('vmt_view_employee_hierarchy');
+    }
+
+    public function getTwoLevelOrgTree($user_code, Request $request)
+    {
+
+        $data = $this->getUserNodeDetails($user_code);
+
+        //add children
+        if($this->hasChildNodes($user_code))
+            $data['children'] =$this->getChildrenForUser( $data['user_code'])['children'];
+
+
+        //dd($data);
+
+        return $data;
+    }
+
+    public function getParentForUser($user_code)
+    {
+
+    }
+
+    public function getSiblingsForUser($user_code)
+    {
+
+    }
+
+    public function getChildrenForUser($user_code){
+
+        $childnode_array['children'] =[];
+
+        if($this->hasChildNodes($user_code))
+        {
+            //get the child nodes of the given parent node
+            $db_childNodes = $this->fetch_childrenForGivenUser($user_code);
+
+            $i = 0;
+            $t_array = [];
+            //Convert each db obj to node structure
+            foreach($db_childNodes as $singleDBChild)
+            {
+                //dd($singleDBChild->id);
+                $t_array[$i] = $this->getUserNodeDetails($singleDBChild->user_code);
+                $i++;
+            }
+
+            $childnode_array['children']  = $t_array;
+            //dd($childnode_array);
+        }
+
+       //dd(json_encode($data));
+
+       return $childnode_array;
+    }
+
+
+    /*
+         Return a tree node data for a given user_code
+
+    */
+    private function getUserNodeDetails($user_code)
+    {
+        $data = array();
+
+        $t_data['relationship']=['0','0','0']; //parent,sibling,child
+
+        //get the given node's username,designation
+        $user_data = User::where('user_code',$user_code)->where('is_admin','0')->get();
+        $data['name'] = $user_data->value('name');
+        $data['user_code'] = $user_data->value('user_code');
+        $data['designation'] =  VmtEmployeeOfficeDetails::where('user_id',$user_data->value('id'))->value('designation');
+
+        ////Check if it has any parent,sibling,child nodes and relationship node
+
+            //check parent node
+            $this->hasParentNode($user_code) ? $t_data['relationship'][0]='1' : '';
+
+            //check siblings node
+            $this->hasSiblingsNode($user_code) ? $t_data['relationship'][1]='1' : '';
+
+            //check child nodes
+            $this->hasChildNodes($user_code) ? $t_data['relationship'][2]='1' : '';
+
+        $data['relationship'] = implode($t_data['relationship']);
+
+        return $data;
+    }
+
+
+    private function hasParentNode($user_code)
+    {
+        if(count ( $this->fetch_parentForGivenUser($user_code)) > 0)
+            return true;
+        else
+            return false;
+    }
+
+    private function hasSiblingsNode($user_code)
+    {
+        if(count ( $this->fetch_siblingsForGivenUser($user_code)) > 0)
+            return true;
+        else
+            return false;
+    }
+
+    private function hasChildNodes($user_code)
+    {
+        if(count ( $this->fetch_childrenForGivenUser($user_code)) > 0)
+            return true;
+        else
+            return false;
+    }
+
+    ///// DB related methods /////
+
+    private function fetch_childrenForGivenUser($user_code)
+    {
+        $children = User::leftJoin('vmt_employee_office_details','users.id','=','vmt_employee_office_details.user_id')
+                            ->leftJoin('vmt_employee_details','users.id','=','vmt_employee_details.userid')
+                            ->where('users.is_admin','0')
+                            ->where('vmt_employee_office_details.l1_manager_code',$user_code)
+                            ->select('users.name','users.id','users.user_code','vmt_employee_office_details.designation')
+                            ->get();
+
+        return $children;
+    }
+
+    private function fetch_parentForGivenUser($user_code)
+    {
+        $userid = User::where('user_code',$user_code)->value('id');
+        $parent_user_code = VmtEmployeeOfficeDetails::where('user_id',$userid)->value('l1_manager_code');
+
+        $parent = User::where('user_code',$parent_user_code)->get();
+
+        return $parent;
+    }
+
+    private function fetch_siblingsForGivenUser($user_code)
+    {
+        $userid = User::where('user_code',$user_code)->value('id');
+        $parent_user_code = VmtEmployeeOfficeDetails::where('user_id',$userid)->value('l1_manager_code');
+
+        $siblings = $this->fetch_childrenForGivenUser($parent_user_code);
+
+        return $siblings;
+    }
+
+
+}
