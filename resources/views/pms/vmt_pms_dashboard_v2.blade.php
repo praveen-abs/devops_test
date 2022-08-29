@@ -417,21 +417,34 @@ header {
                                         @endif
                                     </div>
                                     @else
-                                    <input type="hidden" name="employees[]" id="sel_employees">
+                                    
+                                    <!-- <input type="hidden" name="employees[]" id="sel_employees"> -->
                                     <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3 ">
                                         <label class="" for="">Employees</label>
-                                        <input type="text" name="" id="selected_employee"
+                                        <select class="select-employee-dropdown form-control" id="selectedEmployeeDropdownId" name="employees[]" multiple="multiple">
+                                            @foreach($allEmployeesList as $employeeList)
+                                                <option value="{{ $employeeList->id }}">{{ $employeeList->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        <!-- <input type="text" name="" id="selected_employee"
                                             target="#changeEmployee" class="form-control  increment-input"
                                             placeholder="Employees">
                                         <button type="button" id=""
-                                            class="btn btn-primary increment-btn py-1 px-2 chnageButton">+</button>
+                                            class="btn btn-primary increment-btn py-1 px-2 chnageButton">+</button> -->
                                     </div>
                                     <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
                                         <label class="" for="">Reviewer</label>
-                                        <input type="text" name="" id="selected_reviewer"
+                                        <input type="hidden" name="reviewer" id="selectedReviewIds">
+                                        <input readonly type="text" id="reviewersAccordingAssignee"
+                                            target="" class="form-control  increment-input"
+                                            placeholder="Reviewer">
+                                        
+                                        <button type="button" id="" target="#reviewerReplaceSameLevel"
+                                            class="btn py-1 px-3 btn-primary increment-btn reviewerReplace">Select</button>
+                                        <!-- <input type="text" name="" id="selected_reviewer"
                                             class="form-control increment-input" placeholder="Reviewer">
                                         <button type="button" id="" target="#createEmployee"
-                                            class="btn py-1 px-3 btn-primary increment-btn reviewerButton">Select</button>
+                                            class="btn py-1 px-3 btn-primary increment-btn reviewerButton">Select</button> -->
                                     </div>
                                     @endif
                                 </div>
@@ -491,7 +504,7 @@ header {
 
     <!-- Change Reviewer window -->
 
-    <div class="modal fade" id="createEmployee" role="dialog" aria-hidden="true"
+    <div class="modal fade" id="reviewerReplaceSameLevel" role="dialog" aria-hidden="true"
         style="opacity:1; display:none;background:#00000073;">
         <div class="modal-dialog modal-md" id="" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2">
             <div class="modal-content">
@@ -506,31 +519,23 @@ header {
                     </div>
                 </div>
                 <div class="modal-body">
-                    <form id="form_selectReviewer" method="POST">
+                    <form id="changeReviewForm" action="{{ route('changeReviewerSelection') }}" method="POST">
                         @csrf
                         <label for="FormSelectDefault" class="form-label text-muted">Reviewer</label>
-                        <div class="mb-3 row scrollbar" id="select-reviewer">
-                            <!-- <select class="form-select mb-3" aria-label="Default select example" name="reviewer[]" multiple id="select-reviewer" > -->
-                                <ul>
-                                    <li>
-                                        @foreach ($employees as $singleEmployee)
-                               {{--  <div class="col-3"> --}}
-                        <input type="checkbox" name="reviewer{{ $singleEmployee->id }}" id="reviewer{{ $singleEmployee->id }}" value="{{ $singleEmployee->id }}" class="mr-1 reviewer">&nbsp;{{ $singleEmployee->emp_name }}
-                    </br>
-                        {{-- <option value="{{ $singleEmployee->id }}">  {{ $singleEmployee->name }}</option> --}}
-                                {{-- </div> --}}
-                            @endforeach
-                                    </li>
-                                </ul>
-                            {{-- @foreach ($employees as $singleEmployee)
-                                <div class="col-3">
-                                    <input type="checkbox" name="reviewer{{ $singleEmployee->id }}"
-                                        id="reviewer{{ $singleEmployee->id }}" value="{{ $singleEmployee->id }}"
-                                        class="mr-1 reviewer">{{ $singleEmployee->emp_name }}
-                                    <option value="{{ $singleEmployee->id }}">{{ $singleEmployee->name }}</option>
-                                </div>
-                            @endforeach --}}
-                            <!-- </select> -->
+                        <div class="mb-3 row scrollbar">
+                            <div class="col-12 col-md-12 col-lg-12 ">
+                                <label class="" for="">Existing Reviewer</label>
+                                <select class="change-exiting-reviewer form-control" name="oldReviewerName">
+                                    
+                                </select>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-12 ">
+                                <label class="" for="">New Reviewer</label>
+                                <select class="with-new-reviewer form-control" name="newReviewerName">
+                                    
+                                </select>
+                                <span style="color: red;" id="reviewerChangeError"></span>
+                            </div>
                         </div>
                         <div class="content-footer mt-3">
                             <div class="row">
@@ -588,69 +593,7 @@ header {
         </div>
     </div>
 
-    <!-- Select Employees window -->
-    <div class="modal fade" id="changeEmployee" style="opacity:1; display:none;background:#00000073;">
-        <div class="modal-dialog modal-md" id="" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2">
-
-            <div class="modal-content">
-                <div class="modal-header py-2 bg-primary">
-
-                    <div class="w-100 modal-header-content d-flex align-items-center py-2">
-                        <h5 class="modal-title text-white" id="exampleModalToggleLabel2">Select Employees
-                        </h5>
-                        <button type="button" class="btn-close btn-close-white close-changeEmployee"
-                            data-bs-dismiss="modal" aria-label="Close">
-                        </button>
-                    </div>
-                </div>
-                <div class="modal-body">
-
-                    <form id="changeEmployeeForm" method="POST">
-                        @csrf
-                        <label for="FormSelectDefault" class="form-label text-muted">Employees</label>
-                        <div class="mb-3 row" id="select-employees">
-                            <!-- <select class="form-select mb-3" aria-label="Default select example" name="employees[]" id="select-employees" multiple>
-
-                        </select> -->
-                         <ul>
-                                    <li>
-                                        @foreach ($employees as $singleEmployee)
-                               {{--  <div class="col-3"> --}}
-                        <input type="checkbox" name="emp{{ $singleEmployee->id }}" id="emp{{ $singleEmployee->id }}" value="{{ $singleEmployee->id }}" class="mr-1 emp">&nbsp;{{ $singleEmployee->emp_name }}
-                    </br>
-                        {{-- <option value="{{ $singleEmployee->id }}">  {{ $singleEmployee->name }}</option> --}}
-                                {{-- </div> --}}
-                            @endforeach
-                                    </li>
-                                </ul>
-                        </div>
-
-                        <div class="content-footer">
-                            <div class="row">
-                                <div class="col-12 ">
-                                    <div class="d-flex">
-                                        <ul class="nav nav-pills w-100 mb-4" id="pills-tab" role="tablist">
-                                            <li class="nav-item d-flex w-100 align-items-center justify-content-end "
-                                                role="presentation">
-
-                                                <button class="btn btn-primary waves-effect waves-light" type="submit">
-                                                    Save
-                                                </button>
-
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-
-                </div>
-            </div>
-        </div>
-        <!-- add employee  Modal-->
-    </div>
-
+    
 
     <!-- Error Message Notification -->
 
@@ -689,6 +632,11 @@ header {
     <script src="{{ URL::asset('/assets/premassets/css/footable.bootstrap.min.css') }}"></script>
 
 
+    <!--Sweet alert JS-->
+    <script src="{{ URL::asset('/assets/premassets/js/sweetalert.js') }}"></script>
+
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+
     <!-- Prem assets ends -->
 
     <!-- for date and time -->
@@ -697,6 +645,8 @@ header {
 
     <script>
         $(document).ready(function() {
+            $("#reviewersAccordingAssignee").val('{{$loggedInUser->name}}');
+            $("#selectedReviewIds").val('{{$loggedInUser->id}}');
             $('.select-employee-dropdown').select2({
                 dropdownParent: $("#add-goals-modal"),
                 minimumResultsForSearch: Infinity,
@@ -706,8 +656,39 @@ header {
                 dropdownParent: $("#add-goals-modal"),
                 width: '100%'
             });
+            $('.change-exiting-reviewer').select2({
+                dropdownParent: $("#reviewerReplaceSameLevel"),
+                width: '100%'
+            });
+            $('.with-new-reviewer').select2({
+                dropdownParent: $("#reviewerReplaceSameLevel"),
+                width: '100%'
+            });
             
         });
+
+        $('.select-employee-dropdown').change(function(){
+            var selectedEmployeeId = $(this).val();
+            $.ajax({
+                type: "POST",
+                url: "{{ route('getReviewerOfSelectedEmployee') }}",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    selectedEmployeeId : selectedEmployeeId,
+                },
+                success: function(data) {
+                    $.each(data.result.removeSelectedEmployee, function(i, value) {
+                        $(".select-employee-dropdown option[value="+value+"]").remove();
+                    });
+
+                    $("#reviewersAccordingAssignee").val(data.result.reviewerNames.join(","));
+                    $("#selectedReviewIds").val(data.result.reviewerIds.join(","));
+                },
+                error: function(error) {
+                    console.log('something went wrong');
+                }
+            });
+        })
     </script>
     <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript">
@@ -842,240 +823,21 @@ header {
         // $("#select-reviewer").select2({
         //     dropdownParent: $("#createEmployee")
         // });
-        $('.reviewerButton').click(function() {
-            $('#createEmployee').show();
-            $('#createEmployee').removeClass('fade');
-        });
+        // $('.reviewerButton').click(function() {
+        //     $('#createEmployee').show();
+        //     $('#createEmployee').removeClass('fade');
+        // });
         $('.close-reviewerButton').click(function() {
-            $('#createEmployee').hide();
-            $('#createEmployee').addClass('fade');
+            $('#reviewerReplaceSameLevel').hide();
+            $('#reviewerReplaceSameLevel').addClass('fade');
         });
-        $('.chnageButton').click(function() {
-            $('#changeEmployee').show();
-            $('#changeEmployee').removeClass('fade');
-        });
-        $('.close-changeEmployee').click(function() {
-            $('#changeEmployee').hide();
-            $('#changeEmployee').addClass('fade');
-        });
+       
+      
         $('#add-goals').click(function() {
             $('#add-goals-modal').modal('show');
         });
 
-        $('#changeEmployeeForm').on('submit', function(e) {
-            e.preventDefault();
-            changeEmployee();
-        });
-
-        $('#changeEmployeeForm').on('submit', function(e) {
-            e.preventDefault();
-             var userList = {!! json_encode($employees) !!};
-            var employeeSelected = [];
-            $.each($('.emp'), function() {
-                // if ($(this).is(':checked')) {
-                //     employeeSelected.push($(this).val());
-                // }
-                 if ($(this).is(':checked')) {
-                    employeeSelected.push(parseInt($(this).val()));
-                }
-            });
-             var employees = [];
-            $("#sel_employees").val(employeeSelected);
-            $.each(userList, function(i, data) {
-                if ($.inArray(parseInt(data.id), employeeSelected) > -1) {
-                    // if(data.id == $('#select-employees').val()){
-                    employees.push(data.emp_name);
-                    // $('#reviewer-name').html(data.name);
-                    // $('#reviewer-email').html(data.email);
-
-                    //  $('#btn_changeManager').html("Edit");
-                }
-            });
-
-            $('#selected_employee').val(employees.join());
-            $.ajax({
-                type: "GET",
-                url: "{{ url('vmt-getAllParentReviewer') }}" + '?emp_id=' + employeeSelected,
-                success: function(data) {
-                    var reviewerId = [];
-                    var reviewer = [];
-                    $.each(data, function(i, tempdata) {
-                        reviewer.push(tempdata.name);
-                        reviewerId.push(tempdata.id);
-                    });
-                    var rev = {!! json_encode($employees) !!};
-
-                    var optionHtml = "";
-                    $.each(rev, function(i, tempdata) {
-                        if ($.inArray(parseInt(tempdata.id), reviewerId) > -1 && !$.inArray((
-                                tempdata.id).toString(), employeeSelected) > -1) {
-                            optionHtml = optionHtml +
-                                "<div class='col-3'><input type='checkbox' name='reviewer" +
-                                tempdata.id + "' id='reviewer" + tempdata.id + "' value=" +
-                                tempdata.id + " class='reviewer mr-1' checked>" + tempdata
-                                .emp_name + "</div>";
-                        } else {
-                            optionHtml = optionHtml +
-                                "<div class='col-3'><input type='checkbox' name='reviewer" +
-                                tempdata.id + "' id='reviewer" + tempdata.id + "' value=" +
-                                tempdata.id + " class='reviewer mr-1'>" + tempdata.emp_name +
-                                "</div>";
-                        }
-                    });
-
-                    $('#select-reviewer').html(optionHtml);
-
-                    $.each($('.reviewer'), function() {
-                        if($.inArray(parseInt($(this).val()), reviewerId) > -1){
-                            $(this).attr('checked', true);
-                        } else {
-                            $(this).removeAttr('checked');
-                        }
-                    });
-                    $('#select-reviewer').val(reviewerId).trigger('change');
-                    $("#sel_reviewer").val(reviewerId.join());
-                    $('#selected_reviewer').val(reviewer.join());
-
-                }
-            });
-            changeReviewer();
-          //  changeEmployee();
-        });
-
-        function changeReviewer() {
-            var reviewerSelected = $('#select-reviewer').val();
-            var reviewerSelected = [];
-
-            $.each($('.reviewer'), function() {
-                if ($(this).is(':checked')) {
-                    reviewerSelected.push($(this).val());
-                }
-            });
-            var reviewers = {!! json_encode($employees) !!};
-
-            var reviewerArray = [];
-            $("#sel_reviewer").val(reviewerSelected);
-            $.each(reviewers, function(i, data) {
-                if ($.inArray(data.id.toString(), reviewerSelected) > -1) {
-                    reviewerArray.push(data.emp_name);
-                }
-            });
-            $('#selected_reviewer').val(reviewerArray.join());
-        }
-
-
-
-        function changeEmployee() {
-            var employeeSelected = $('#select-employees').val();
-            var employeeSelected = [];
-            var employees = {!! json_encode($employees) !!};
-
-            var employeeArray = [];
-            $.each($('.employee'), function() {
-                if ($(this).is(':checked')) {
-                    employeeSelected.push($(this).val());
-                }
-            });
-            $("#sel_employees").val(employeeSelected);
-            // var imgHtml ="";
-            // var count = 0;
-            $.each(employees, function(i, data) {
-                if (data.id && $.inArray(data.id.toString(), employeeSelected) > -1) {
-                    employeeArray.push(data.emp_name);
-                    // if (count < 4) {
-                    //     imgHtml = imgHtml+"<a class='avatar'><img src='assets/images/"+data.avatar+"' alt='' class='rounded-circle p-0'></a>";
-                    // }
-                    // count++;
-                }
-            });
-            // if (count > 4) {
-            //     imgHtml = imgHtml+"<span class='img-addition' style='background-color: rgb(134, 192, 106);width: 30px;height: 30px;font-size:12px;'> +"+count-3+" </span><div class='mt-1 message-content align-items-start d-flex flex-column  mx-2'><span id='group-employee'></span></div>";
-            // }
-            //Change button text based on employee selection count
-            // if(count > 0)
-            // {
-            //     $('#btn_selectEmployees').html("Edit");
-            // }
-            // else
-            // {
-            //     $('#btn_selectEmployees').html("Add");
-            // }
-            $.each($('.employee'), function(i, data) {
-                if ($.inArray($(this).val().toString(), employeeSelected) > -1) {
-                    $(this).attr('checked', true);
-                } else {
-                    $(this).removeAttr('checked');
-                }
-            });
-            $('#selected_employee').val(employeeArray.join());
-            $('#group-employee').html(employeeArray.join());
-            $('#changeEmployee').css('display', 'none');
-            // $('.avatar-group-item').html(imgHtml);
-        }
-
-        // select reviewer
-        $('#form_selectReviewer').on('submit', function(e) {
-            e.preventDefault();
-            var userList = {!! json_encode($employees) !!};
-            var selReviewer = [];
-            $.each($('.reviewer'), function() {
-                if ($(this).is(':checked')) {
-                    selReviewer.push(parseInt($(this).val()));
-                }
-            });
-            // var selReviewer = $('#select-reviewer').val();
-            var reviewer = [];
-            $("#sel_reviewer").val(selReviewer);
-            $.each(userList, function(i, data) {
-                if ($.inArray(parseInt(data.id), selReviewer) > -1) {
-                    // if(data.id == $('#select-reviewer').val()){
-                    reviewer.push(data.emp_name);
-                    // $('#reviewer-name').html(data.name);
-                    // $('#reviewer-email').html(data.email);
-
-                    //  $('#btn_changeManager').html("Edit");
-                }
-            });
-            $('#selected_reviewer').val(reviewer.join());
-            $.ajax({
-                type: "GET",
-                url: "{{ url('vmt-pmsgetAllEmployees') }}" + '?emp_id=' + selReviewer,
-                //data: $('#kpiTableForm').serialize(),
-                success: function(data) {
-                    var optionHtml = "";
-                    $.each(data, function(i, tempdata) {
-                        if ($.inArray(tempdata.id, selReviewer) > -1) {
-                            // optionHtml = optionHtml+"<option value="+tempdata.id+" selected>"+tempdata.name+"</option>";
-                            optionHtml = optionHtml +
-                                "<div class='col-3'><input type='checkbox' name='employees" +
-                                tempdata.id + "' id='employees" + tempdata.id + "' value=" +
-                                tempdata.id + " class='employee mr-1'>" + tempdata.name +
-                                "</div>";
-                        } else {
-                            optionHtml = optionHtml +
-                                "<div class='col-3'><input type='checkbox' name='employees" +
-                                tempdata.id + "' id='employees" + tempdata.id + "' value=" +
-                                tempdata.id + " class='employee mr-1' checked>" + tempdata
-                                .name + "</div>";
-                        }
-                        //if(tempdata.id == $('#select-employees').val()){
-                        //        $('#reviewer-name').html(tempdata.name);
-                        //        $('#reviewer-email').html(tempdata.email);
-                        //}
-                    });
-
-                    $('#select-employees').html(optionHtml);
-                    // $("#kpiTableForm :input").prop("disabled", true);
-                    // $(".table-btn").prop('disabled', true);
-                    //alert("Table Saved, Please publish goals");
-                    // $("#kpitable_id").val(data.table_id);
-                    changeEmployee();
-                }
-            });
-
-
-            $('#createEmployee').css('display', 'none');
-        });
+       
 
         $('body').on('click', '.close-modal', function() {
             $('#notificationModal').hide();
@@ -1084,6 +846,52 @@ header {
         })
 
 
+        $('.reviewerReplace').click(function(){
+            var selectedReviewersNames = $('#reviewersAccordingAssignee').val();
+            var selectedReviewersIds = $('#selectedReviewIds').val();
+            if(selectedReviewersIds != null && selectedReviewersIds != ''){
+                var result = '';
+                var selectedReviewersIds = selectedReviewersIds.split(',');
+                var selectedReviewersNames = selectedReviewersNames.split(',');
+                $.each(selectedReviewersIds, function(key, value){
+                    if(value != {{Auth::id()}}){
+                        result += '<option value="'+value+'">'+selectedReviewersNames[key]+'</option>';
+                    }
+                });
+    
+                $('.change-exiting-reviewer').html(result);
+                $('#reviewerReplaceSameLevel').show();
+                $('#reviewerReplaceSameLevel').removeClass('fade');
+                changeExitingReviewer();
+            }
+        })
+
+        $('.change-exiting-reviewer').change(function(){
+            changeExitingReviewer();
+        })
+        function changeExitingReviewer(){
+            $('#reviewerChangeError').html('');
+            var reviewerId = $('.change-exiting-reviewer').val();
+            $.ajax({
+                type: "POST",
+                url: "{{ route('getSameLevelOfReviewer') }}",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    'reviewerId': reviewerId,
+                },
+                success: function(data) {
+                    if(data.status == true){
+                        var result = '';
+                        $.each(data.result.getSameLevelManagers, function(key, value){
+                            result += '<option value="'+value.id+'">'+value.name+'</option>';
+                        });
+                        $('.with-new-reviewer').html(result);
+                    }else{
+                        $('#reviewerChangeError').html(data.message);
+                    }
+                }
+            });
+        }
 
         $('body').on('change', '#department', function() {
             $.ajax({
@@ -1225,5 +1033,66 @@ header {
             // }
 
         });
+    </script>
+    <script>
+        if ($("#changeReviewForm").length > 0) {
+            $('#changeReviewForm').validate({
+                rules: {
+                    oldReviewerName : {
+                        required : true
+                    },
+                    newReviewerName : {
+                        required : true
+                    },
+                },
+                messages: {
+                    oldReviewerName : {
+                        required: "Existing Reviewer Name is required",
+                    },
+                    newReviewerName : {
+                        required: "New Reviewer Name is required",
+                    },
+                }
+            });
+        }
+
+        $("#changeReviewForm").submit(function(e) {
+            var reviewersName =$("#reviewersAccordingAssignee").val();
+            var reviewersIds =$("#selectedReviewIds").val();
+            if ($("#changeReviewForm").valid()) {
+                e.preventDefault();
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                var formData = new FormData(this);
+
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: $(this).attr('method'),
+                    data:  $('#changeReviewForm').serialize() + "&reviewersName="+reviewersName+"&reviewersIds="+reviewersIds,
+                    beforeSend: function() {
+                        $('.loader').show();
+                    },
+                    success: function(response) {
+                        $('.loader').hide();
+                        if(response.status == true){
+                            $("#reviewersAccordingAssignee").val(response.data.existingReviewerNames);
+                            $("#selectedReviewIds").val(response.data.existingReviewerIds);
+                            $('#reviewerReplaceSameLevel').hide();
+                            $('#reviewerReplaceSameLevel').addClass('fade');
+                        }else{
+                            swal("Wrong!", response.message, "error");
+                        }
+                    },
+                    error: function(response) {
+                        swal("Wrong!", 'Something went wrong', "error");
+                        $('.loader').hide();
+                    },
+                });
+            }
+        })
     </script>
 @endsection

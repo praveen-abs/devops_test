@@ -77,7 +77,15 @@ class VmtPMSModuleController extends Controller
 
         $flowCheck = 1;
 
-        return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','existingKPIForms','departments','employees','pmsKpiAssigneeDetails','flowCheck'));
+        $allEmployeesList = User::leftJoin('vmt_employee_office_details','users.id','=','vmt_employee_office_details.user_id')
+            ->leftJoin('vmt_employee_details','users.id','=','vmt_employee_details.userid')
+            ->where('users.id','!=',Auth::id())
+            ->select('users.name','users.id','vmt_employee_details.emp_no','vmt_employee_office_details.designation')
+            ->get();
+
+        $loggedInUser = Auth::user();
+
+        return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','existingKPIForms','departments','employees','pmsKpiAssigneeDetails','flowCheck','allEmployeesList','loggedInUser'));
     }
 
     public function showPMSDashboardForManager()
@@ -135,8 +143,10 @@ class VmtPMSModuleController extends Controller
     
             $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')->WhereRaw("find_in_set(".$loggedUserId.", reviewer_id)")->orWhereRaw("find_in_set(".$loggedUserId.", assignee_id)")->orWhere('assigner_id',$loggedUserId)->orderBy('id','DESC')->get();
 
-        $flowCheck = 1;
-        return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','existingKPIForms','departments','employees','pmsKpiAssigneeDetails','loggedManagerEmployees','loggedUserDetails','getSameLevelManagers','flowCheck'));
+        $loggedInUser = Auth::user();
+
+        $flowCheck = 2;
+        return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','existingKPIForms','departments','employees','pmsKpiAssigneeDetails','loggedManagerEmployees','loggedUserDetails','getSameLevelManagers','flowCheck','loggedInUser'));
     }
     // public function showPMSDashboardOld()
     // {
@@ -848,6 +858,116 @@ class VmtPMSModuleController extends Controller
             Log::info('accept/reject review by assignee error: '.$e->getMessage());
             return response()->json(['status'=>false,'message'=>$e->getMessage()]); 
         }
+    }
 
+    public function getReviewerOfSelectedEmployee(Request $request){
+        try{
+            if(isset($request->selectedEmployeeId) && count($request->selectedEmployeeId) > 0){
+             
+                $authDetails = Auth::user();
+                $currentEmpCode = VmtEmployeeOfficeDetails::whereIn('user_id',$request->selectedEmployeeId)
+                                    ->select('l1_manager_code')
+                                    ->groupBy('l1_manager_code')
+                                    ->pluck('l1_manager_code');
+                $users = VmtEmployee::leftJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
+                                    ->select(
+                                        'users.name',
+                                        'users.id as id',
+                                        'vmt_employee_details.emp_no as code',
+                                    )
+                                    ->orderBy('users.name', 'ASC')
+                                    ->whereIn('emp_no', $currentEmpCode);
+
+                $reviewerNames = $users->pluck('name');
+                $reviewerIds = $users->pluck('id')->toArray();
+                if(!in_array($authDetails->id,$reviewerIds)){
+                    $reviewerIds[] = $authDetails->id;
+                    $reviewerNames[] = $authDetails->name;
+                }
+                                        
+                $removeSelectedEmployee = [];
+                foreach($request->selectedEmployeeId as $employeeExistsCheck)
+                {
+                    if(in_array($employeeExistsCheck,$reviewerIds)){
+                        array_push($removeSelectedEmployee, $employeeExistsCheck);
+                    }
+                }
+                // dd($removeSelectedEmployee);
+                $result = [
+                    'reviewerNames' => $reviewerNames,
+                    'reviewerIds' => $reviewerIds,
+                    'removeSelectedEmployee' => $removeSelectedEmployee
+                ];
+                return response()->json(['status'=>true,'message'=>'Get Reviewers Details Done','result'=>$result]); 
+            }
+            return response()->json(['status'=>false,'message'=>'Something went wrong!']); 
+        }catch(Exception $e){
+            Log::info('Get Reviewer Of Selected Employee flow 1 HR PMS V2 error: '.$e->getMessage());
+            return response()->json(['status'=>false,'message'=>$e->getMessage()]); 
+        }
+    }
+    public function getSameLevelOfReviewer(Request $request){
+        try{
+            if(isset($request->reviewerId)){
+                $currentEmpCode = VmtEmployeeOfficeDetails::where('user_id',$request->reviewerId)->pluck('l1_manager_code')->first();
+                if(empty($currentEmpCode)){
+                    return response()->json(['status'=>false,'message'=> 'Reviewer Not Exists']); 
+                }
+                                    
+                $getSameLevelManagers = VmtEmployeeOfficeDetails::where('l1_manager_code',$currentEmpCode)
+                                    ->leftJoin('users','vmt_employee_office_details.user_id','=','users.id')
+                                    ->select('users.name','users.id','vmt_employee_office_details.designation')
+                                    ->where('users.id','!=',$request->reviewerId)
+                                    ->get()
+                                    ->toArray();
+
+                                    // dd($getSameLevelManagers);
+                $result = [
+                    'getSameLevelManagers' => $getSameLevelManagers,
+                ];
+                Log::info('Get Reviewers Of Same level flow 1 HR PMS V2 error: Something Went Wrong=> '.$request->reviewerId);
+                return response()->json(['status'=>true,'message'=>'','result'=>$result]); 
+            }
+            return response()->json(['status'=>false,'message'=>'']); 
+        }catch(Exception $e){
+            Log::info('Get Reviewers Of Same level flow 1 HR PMS V2 error: '.$e->getMessage());
+            return response()->json(['status'=>false,'message'=>$e->getMessage()]); 
+        }
+    }
+    
+    public function changeReviewerSelection(Request $request){
+        try{
+            // get new and old reviewer details, id and name
+            $newReviwerName =  User::findorfail($request->newReviewerName);
+            $oldReviewerName = User::findorfail($request->oldReviewerName);
+
+            $reviewersIds = explode(',',$request->reviewersIds);
+            $reviewersName = explode(',',$request->reviewersName);
+            $existingReviewerIds = [];
+            
+            foreach($reviewersIds as $reviewerId){
+                // checking old reviewer and remove from array
+                if($reviewerId != $request->oldReviewerName  && isset($request->oldReviewerName)){
+                    array_push($existingReviewerIds, $reviewerId);
+                }
+                
+                // checking new reviewer and add in array
+                if(!in_array($request->newReviewerName, $existingReviewerIds) && isset($request->newReviewerName)){
+                    array_push($existingReviewerIds, $request->newReviewerName);
+                }
+            }
+
+
+            $existingReviewerNames = User::whereIn('id',$existingReviewerIds)->pluck('name')->toArray();
+
+            $result = [
+                'existingReviewerIds' => implode(',',$existingReviewerIds),
+                'existingReviewerNames' => implode(',',$existingReviewerNames),
+            ];
+            return response()->json(['status'=>true,'message'=>'','data'=>$result]); 
+        }catch(Exception $e){
+            Log::info('Change Reviewer Selection flow 1 HR PMS V2 error: '.$e->getMessage());
+            return response()->json(['status'=>false,'message'=>$e->getMessage()]); 
+        }
     }
 }
