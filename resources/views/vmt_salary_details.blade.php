@@ -14,7 +14,7 @@
         <div>
             <ul class="nav nav-pills    nav-tabs-dashed" id="pills-tab" role="tablist">
                 <li class="nav-item active ember-view mx-4" role="presentation">
-                    <a class="nav-link active ember-view" id="pills-home-tab" data-bs-toggle="pill" href=""
+                    <a class="nav-link active ember-view " id="pills-home-tab" data-bs-toggle="pill" href=""
                         data-bs-target="#salary-structure" role="tab" aria-controls="pills-home" aria-selected="true">
                         Salary Structure</a>
                 </li>
@@ -236,7 +236,7 @@
                                         </td>
                                         <td>
                                             <a href="#/salary-details/payslips/335214000001040001/details?isPayslip=false"
-                                                id="ember134" class="ember-view" class="text-info">
+                                                id="ember134" class="ember-view text-info">
                                                 View
                                             </a>
                                         </td>
@@ -816,10 +816,10 @@
 </div>
 
 <div id="payslipModal" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl" role="document">
         <div class="modal-content profile-box">
-            <div class="modal-header py-3 new-role-header d-flex align-items-center">
-                <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Edit Asset
+            <div class="modal-header  ">
+                <h4 class="modal-title m-0 p-0   text-primary" >Pay Slip
                 </h4>
                 <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
@@ -858,7 +858,7 @@
                     data: {selectedPaySlipMonth: t_paySlipMonth},
                     success: function(data)
                     {
-                        var content = '<div class="row pr-3" style="padding-right:2.5rem;"><div class="col-3"><div class="fill body payslip-filter-container "> <i class="icon icon-blue icon-xlg vertical-align-text-bottom text-secondary ri-filter-2-fill"> </i> <div class="dropdown cursor-pointer payslip-dropdown"><div id="ember127" class="ember-view"><div class="dropdown-toggle" data-toggle="dropdown"><span>Financial Year : </span><span class="font-semibold fw-bold text-dark h5">2022 - 23</span><span class="caret "></span></div><ul class="dropdown-menu dropdown-menu-right"><li data-ember-action="" data-ember-action-129="129"><a>2022 - 23</a></li> </ul></div></div></div></div><div class="col-9">'+data+'</div></div>';
+                        var content = '<div class="row " style=""><div class=""><div class="fill body payslip-filter-pdf mb-4"> <i class="icon icon-blue icon-xlg vertical-align-text-bottom text-secondary ri-filter-2-fill"> </i> <div class="dropdown cursor-pointer payslip-dropdown"><div id="ember127" class="ember-view"><div class="dropdown-toggle" data-toggle="dropdown"><span>Financial Year : </span><span class="font-semibold fw-bold text-dark h5">2022 - 23</span><span class="caret "></span></div><ul class="dropdown-menu dropdown-menu-right"><li data-ember-action="" data-ember-action-129="129"><a>2022 - 23</a></li> </ul></div></div></div></div><div class="">'+data+'</div></div>';
                         $("#slipAfterView").html(content);
                         $('#payslipModal').modal('show');
                         console.log("Clicked View ");

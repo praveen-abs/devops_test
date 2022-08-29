@@ -1,1463 +1,485 @@
 <?php
 $employee = \DB::table('vmt_employee_payslip')->first();
 $general_info = \DB::table('vmt_general_info')->first();
-$client_logo = request()->getSchemeAndHttpHost()."".$general_info->logo_img;
+$client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
 // dd(request()->getSchemeAndHttpHost()."".$general_info->logo_img);
 ?>
 <html>
+
 <head>
 
     <meta content="text/html; charset=UTF-8" http-equiv="content-type">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style type="text/css">
-    div.page {
-        position: absolute;
-        top: 0px bottom: 0px;
-        left: 0px;
-        right: 0px;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        page-break-before: always;
-    }
-
-    div.page:first-child {
-        page-break-before: avoid;
-    }
-
-    @page {
-        margin: 0;
-    }
-
-    @import url('https://themes.googleusercontent.com/fonts/css?kit=fpjTOVmNbO4Lz34iLyptLQ1sPDLn3JuDNay4yiy2_As5BpxnPiOl8iQ3pkkf0_oT96xlbbE5D7Gw2o7jubnkMA');
-
-    ol {
-        margin: 0;
-        padding: 0
-    }
-
-    table td,
-    table th {
-        padding: 0
-    }
-
-    .c6 {
-        border-right-style: solid;
-        padding: 0pt 5.8pt 0pt 5.8pt;
-        border-bottom-color: #B225A0;
-        border-top-width: 1.5pt;
-        border-right-width: 1.5pt;
-        border-left-color: #B225A0;
-        vertical-align: middle;
-        border-right-color: #B225A0;
-        border-left-width: 1.5pt;
-        border-top-style: solid;
-        background-color: ##f8f8f8;
-        border-left-style: solid;
-        border-bottom-width: 1.5pt;
-        width: 92.2pt;
-        border-top-color: #B225A0;
-        border-bottom-style: solid
-    }
-
-    .c8 {
-        border-right-style: solid;
-        padding: 0pt 5.8pt 0pt 5.8pt;
-        border-bottom-color: #B225A0;
-        border-top-width: 1.5pt;
-        border-right-width: 1.5pt;
-        border-left-color: #B225A0;
-        vertical-align: middle;
-        border-right-color: #B225A0;
-        border-left-width: 1.5pt;
-        border-top-style: solid;
-        background-color: #f8f8f8;
-        border-left-style: solid;
-        border-bottom-width: 1.5pt;
-        width: 92.2pt;
-        border-top-color: #B225A0;
-        border-bottom-style: solid
-    }
-
-    .c21 {
-        border-right-style: solid;
-        padding: 0pt 5.8pt 0pt 5.8pt;
-        border-bottom-color: #B225A0;
-        border-top-width: 1.5pt;
-        border-right-width: 1.5pt;
-        border-left-color: #B225A0;
-        vertical-align: middle;
-        border-right-color: #B225A0;
-        border-left-width: 1.5pt;
-        border-top-style: solid;
-        background-color: #d9d9d9;
-        border-left-style: solid;
-        border-bottom-width: 1.5pt;
-        width: 46pt;
-        border-top-color: #B225A0;
-        border-bottom-style: solid
-    }
-
-    .c12 {
-        border-right-style: solid;
-        padding: 0pt 5.8pt 0pt 5.8pt;
-        border-bottom-color: #B225A0;
-        border-top-width: 1.5pt;
-        border-right-width: 1.5pt;
-        border-left-color: #B225A0;
-        vertical-align: middle;
-        border-right-color: #B225A0;
-        border-left-width: 1.5pt;
-        border-top-style: solid;
-        background-color: #d9d9d9;
-        border-left-style: solid;
-        border-bottom-width: 1.5pt;
-        width: 32.4pt;
-        border-top-color: #B225A0;
-        border-bottom-style: solid
-    }
-
-    .c33 {
-        border-right-style: solid;
-        padding: 0pt 5.8pt 0pt 5.8pt;
-        border-bottom-color: #B225A0;
-        border-top-width: 1.5pt;
-        border-right-width: 1.5pt;
-        border-left-color: #B225A0;
-        vertical-align: middle;
-        border-right-color: #B225A0;
-        border-left-width: 1.5pt;
-        border-top-style: solid;
-        background-color: #f8f8f8;
-        border-left-style: solid;
-        border-bottom-width: 1.5pt;
-        width: 105.9pt;
-        border-top-color: #B225A0;
-        border-bottom-style: solid
-    }
-
-    .c5 {
-        border-right-style: solid;
-        padding: 0pt 5.8pt 0pt 5.8pt;
-        border-bottom-color: #B225A0;
-        border-top-width: 1.5pt;
-        border-right-width: 1.5pt;
-        border-left-color: #B225A0;
-        vertical-align: middle;
-        border-right-color: #B225A0;
-        border-left-width: 1.5pt;
-        border-top-style: solid;
-        background-color: #d9d9d9;
-        border-left-style: solid;
-        border-bottom-width: 1.5pt;
-        width: 46.1pt;
-        border-top-color: #B225A0;
-        border-bottom-style: solid
-    }
-
-    .c4 {
-        border-right-style: solid;
-        padding: 0pt 5.8pt 0pt 5.8pt;
-        border-bottom-color: #B225A0;
-        border-top-width: 1.5pt;
-        border-right-width: 1.5pt;
-        border-left-color: #B225A0;
-        vertical-align: middle;
-        border-right-color: #B225A0;
-        border-left-width: 1.5pt;
-        border-top-style: solid;
-        background-color: #f8f8f8;
-        border-left-style: solid;
-        border-bottom-width: 1.5pt;
-        width: 92.1pt;
-        border-top-color: #B225A0;
-        border-bottom-style: solid
-    }
-
-    .c32 {
-        border-right-style: solid;
-        padding: 0pt 5.8pt 0pt 5.8pt;
-        border-bottom-color: #B225A0;
-        border-top-width: 1.5pt;
-        border-right-width: 1.5pt;
-        border-left-color: #B225A0;
-        vertical-align: middle;
-        border-right-color: #B225A0;
-        border-left-width: 1.5pt;
-        border-top-style: solid;
-        background-color: #ffffff;
-        border-left-style: solid;
-        border-bottom-width: 1.5pt;
-        width: 553pt;
-        border-top-color: #B225A0;
-        border-bottom-style: solid
-    }
-
-    .c7 {
-        border-right-style: solid;
-        padding: 0pt 5.8pt 0pt 5.8pt;
-        border-bottom-color: #B225A0;
-        border-top-width: 1.5pt;
-        border-right-width: 1.5pt;
-        border-left-color: #B225A0;
-        vertical-align: middle;
-        border-right-color: #B225A0;
-        border-left-width: 1.5pt;
-        border-top-style: solid;
-        background-color: #ffffff;
-        border-left-style: solid;
-        border-bottom-width: 1.5pt;
-        width: 92.2pt;
-        border-top-color: #B225A0;
-        border-bottom-style: solid
-    }
-
-    .c20 {
-        border-right-style: solid;
-        padding: 0pt 5.8pt 0pt 5.8pt;
-        border-bottom-color: #B225A0;
-        border-top-width: 1.5pt;
-        border-right-width: 1.5pt;
-        border-left-color: #B225A0;
-        vertical-align: middle;
-        border-right-color: #B225A0;
-        border-left-width: 1.5pt;
-        border-top-style: solid;
-        background-color: #f8f8f8;
-        border-left-style: solid;
-        border-bottom-width: 1.5pt;
-        width: 92.1pt;
-        border-top-color: #B225A0;
-        border-bottom-style: solid
-    }
-
-    .c47 {
-        border-right-style: solid;
-        padding: 0pt 5.8pt 0pt 5.8pt;
-        border-bottom-color: #B225A0;
-        border-top-width: 1.5pt;
-        border-right-width: 1.5pt;
-        border-left-color: #B225A0;
-        vertical-align: bottom;
-        border-right-color: #B225A0;
-        border-left-width: 1.5pt;
-        border-top-style: solid;
-        border-left-style: solid;
-        border-bottom-width: 1.5pt;
-        width: 553pt;
-        border-top-color: #B225A0;
-        border-bottom-style: solid
-    }
-
-    .c26 {
-        border-right-style: solid;
-        padding: 0pt 5.8pt 0pt 5.8pt;
-        border-bottom-color: #B225A0;
-        border-top-width: 1.5pt;
-        border-right-width: 1.5pt;
-        border-left-color: #B225A0;
-        vertical-align: bottom;
-        border-right-color: #B225A0;
-        border-left-width: 1.5pt;
-        border-top-style: solid;
-        border-left-style: solid;
-        border-bottom-width: 1.5pt;
-        width: 46pt;
-        border-top-color: #B225A0;
-        border-bottom-style: solid
-    }
-
-    .c51 {
-        border-right-style: solid;
-        padding: 0pt 5.8pt 0pt 5.8pt;
-        border-bottom-color: #B225A0;
-        border-top-width: 1.5pt;
-        border-right-width: 1.5pt;
-        border-left-color: #B225A0;
-        vertical-align: middle;
-        border-right-color: #B225A0;
-        border-left-width: 1.5pt;
-        border-top-style: solid;
-        border-left-style: solid;
-        border-bottom-width: 1.5pt;
-        width: 276.5pt;
-        border-top-color: #B225A0;
-        border-bottom-style: solid
-    }
-
-    .c22 {
-        border-right-style: solid;
-        padding: 0pt 5.8pt 0pt 5.8pt;
-        border-bottom-color: #B225A0;
-        border-top-width: 1.5pt;
-        border-right-width: 1.5pt;
-        border-left-color: #B225A0;
-        vertical-align: middle;
-        border-right-color: #B225A0;
-        border-left-width: 1.5pt;
-        border-top-style: solid;
-        border-left-style: solid;
-        border-bottom-width: 1.5pt;
-        width: 138.2pt;
-        border-top-color: #B225A0;
-        border-bottom-style: solid
-    }
-
-    .c36 {
-        border-right-style: solid;
-        padding: 0pt 5.8pt 0pt 5.8pt;
-        border-bottom-color: #B225A0;
-        border-top-width: 1.5pt;
-        border-right-width: 1.5pt;
-        border-left-color: #B225A0;
-        vertical-align: middle;
-        border-right-color: #B225A0;
-        border-left-width: 1.5pt;
-        border-top-style: solid;
-        border-left-style: solid;
-        border-bottom-width: 1.5pt;
-        width: 184.3pt;
-        border-top-color: #B225A0;
-        border-bottom-style: solid
-    }
-
-    .c39 {
-        border-right-style: solid;
-        padding: 0pt 5.8pt 0pt 5.8pt;
-        border-bottom-color: #B225A0;
-        border-top-width: 1.5pt;
-        border-right-width: 1.5pt;
-        border-left-color: #B225A0;
-        vertical-align: bottom;
-        border-right-color: #B225A0;
-        border-left-width: 1.5pt;
-        border-top-style: solid;
-        border-left-style: solid;
-        border-bottom-width: 1.5pt;
-        width: 13.7pt;
-        border-top-color: #B225A0;
-        border-bottom-style: solid
-    }
-
-    .c38 {
-        border-right-style: solid;
-        padding: 0pt 5.8pt 0pt 5.8pt;
-        border-bottom-color: #B225A0;
-        border-top-width: 1.5pt;
-        border-right-width: 1.5pt;
-        border-left-color: #B225A0;
-        vertical-align: bottom;
-        border-right-color: #B225A0;
-        border-left-width: 1.5pt;
-        border-top-style: solid;
-        border-left-style: solid;
-        border-bottom-width: 1.5pt;
-        width: 46.1pt;
-        border-top-color: #B225A0;
-        border-bottom-style: solid
-    }
-
-    .c40 {
-        border-right-style: solid;
-        padding: 0pt 5.8pt 0pt 5.8pt;
-        border-bottom-color: #B225A0;
-        border-top-width: 1.5pt;
-        border-right-width: 1.5pt;
-        border-left-color: #B225A0;
-        vertical-align: middle;
-        border-right-color: #B225A0;
-        border-left-width: 1.5pt;
-        border-top-style: solid;
-        border-left-style: solid;
-        border-bottom-width: 1.5pt;
-        width: 184.4pt;
-        border-top-color: #B225A0;
-        border-bottom-style: solid
-    }
-
-    .c28 {
-        border-right-style: solid;
-        padding: 0pt 5.8pt 0pt 5.8pt;
-        border-bottom-color: #B225A0;
-        border-top-width: 1.5pt;
-        border-right-width: 1.5pt;
-        border-left-color: #B225A0;
-        vertical-align: middle;
-        border-right-color: #B225A0;
-        border-left-width: 1.5pt;
-        border-top-style: solid;
-        border-left-style: solid;
-        border-bottom-width: 1.5pt;
-        width: 13.7pt;
-        border-top-color: #B225A0;
-        border-bottom-style: solid
-    }
-
-    .c35 {
-        border-right-style: solid;
-        padding: 0pt 5.8pt 0pt 5.8pt;
-        border-bottom-color: #B225A0;
-        border-top-width: 1.5pt;
-        border-right-width: 1.5pt;
-        border-left-color: #B225A0;
-        vertical-align: middle;
-        border-right-color: #B225A0;
-        border-left-width: 1.5pt;
-        border-top-style: solid;
-        border-left-style: solid;
-        border-bottom-width: 1.5pt;
-        width: 46.1pt;
-        border-top-color: #B225A0;
-        border-bottom-style: solid
-    }
-
-    .c29 {
-        border-right-style: solid;
-        padding: 0pt 5.8pt 0pt 5.8pt;
-        border-bottom-color: #B225A0;
-        border-top-width: 1.5pt;
-        border-right-width: 1.5pt;
-        border-left-color: #B225A0;
-        vertical-align: middle !important;
-        border-right-color: #B225A0;
-        border-left-width: 1.5pt;
-        border-top-style: solid;
-        border-left-style: solid;
-        border-bottom-width: 1.5pt;
-        width: 92.1pt;
-        border-top-color: #B225A0;
-        border-bottom-style: solid
-    }
-
-    .c27 {
-        border-right-style: solid;
-        padding: 0pt 5.8pt 0pt 5.8pt;
-        border-bottom-color: #B225A0;
-        border-top-width: 1.5pt;
-        border-right-width: 1.5pt;
-        border-left-color: #B225A0;
-        vertical-align: middle;
-        border-right-color: #B225A0;
-        border-left-width: 1.5pt;
-        border-top-style: solid;
-        border-left-style: solid;
-        border-bottom-width: 1.5pt;
-        width: 32.4pt;
-        border-top-color: #B225A0;
-        border-bottom-style: solid
-    }
-
-    .c25 {
-        border-right-style: solid;
-        padding: 0pt 5.8pt 0pt 5.8pt;
-        border-bottom-color: #B225A0;
-        border-top-width: 1.5pt;
-        border-right-width: 1.5pt;
-        border-left-color: #B225A0;
-        vertical-align: middle;
-        border-right-color: #B225A0;
-        border-left-width: 1.5pt;
-        border-top-style: solid;
-        border-left-style: solid;
-        border-bottom-width: 1.5pt;
-        width: 46pt;
-        border-top-color: #B225A0;
-        border-bottom-style: solid
-    }
-
-    .c15 {
-        border-right-style: solid;
-        padding: 0pt 5.8pt 0pt 5.8pt;
-        border-bottom-color: #B225A0;
-        border-top-width: 1.5pt;
-        border-right-width: 1.5pt;
-        border-left-color: #B225A0;
-        vertical-align: bottom;
-        border-right-color: #B225A0;
-        border-left-width: 1.5pt;
-        border-top-style: solid;
-        border-left-style: solid;
-        border-bottom-width: 1.5pt;
-        width: 92.2pt;
-        border-top-color: #B225A0;
-        border-bottom-style: solid
-    }
-
-    .c50 {
-        border-right-style: solid;
-        padding: 0pt 5.8pt 0pt 5.8pt;
-        border-bottom-color: #B225A0;
-        border-top-width: 1.5pt;
-        border-right-width: 1.5pt;
-        border-left-color: #B225A0;
-        vertical-align: middle;
-        border-right-color: #B225A0;
-        border-left-width: 1.5pt;
-        border-top-style: solid;
-        border-left-style: solid;
-        border-bottom-width: 1.5pt;
-        width: 553pt;
-        border-top-color: #B225A0;
-        border-bottom-style: solid
-    }
-
-    .c17 {
-        border-right-style: solid;
-        padding: 0pt 5.8pt 0pt 5.8pt;
-        border-bottom-color: #B225A0;
-        border-top-width: 1.5pt;
-        border-right-width: 1.5pt;
-        border-left-color: #B225A0;
-        vertical-align: middle;
-        border-right-color: #B225A0;
-        border-left-width: 1.5pt;
-        border-top-style: solid;
-        border-left-style: solid;
-        border-bottom-width: 1.5pt;
-        width: 92.2pt;
-        border-top-color: #B225A0;
-        border-bottom-style: solid
-    }
-
-    .c52 {
-        border-right-style: solid;
-        padding: 0pt 5.8pt 0pt 5.8pt;
-        border-bottom-color: #B225A0;
-        border-top-width: 1.5pt;
-        border-right-width: 1.5pt;
-        border-left-color: #B225A0;
-        vertical-align: bottom;
-        border-right-color: #B225A0;
-        border-left-width: 1.5pt;
-        border-top-style: solid;
-        border-left-style: solid;
-        border-bottom-width: 1.5pt;
-        width: 32.4pt;
-        border-top-color: #B225A0;
-        border-bottom-style: solid
-    }
-
-    .c62 {
-        border-right-style: solid;
-        padding: 0pt 5.8pt 0pt 5.8pt;
-        border-bottom-color: #B225A0;
-        border-top-width: 1.5pt;
-        border-right-width: 1.5pt;
-        border-left-color: #B225A0;
-        vertical-align: middle;
-        border-right-color: #B225A0;
-        border-left-width: 1.5pt;
-        border-top-style: solid;
-        border-left-style: solid;
-        border-bottom-width: 1.5pt;
-        width: 447.1pt;
-        border-top-color: #B225A0;
-        border-bottom-style: solid
-    }
-
-    .c18 {
-        background-color: #ffffff;
-        color: #6e6e6e;
-        font-weight: 400;
-        text-decoration: none;
-        vertical-align: baseline;
-        font-size: 10.5pt;
-        font-family: "Arial";
-        font-style: normal
-    }
-
-    .c16 {
-        color: #000000;
-        font-weight: 400;
-        text-decoration: none;
-        vertical-align: baseline;
-        font-size: 10.5pt;
-        font-family: "Calibri";
-        font-style: normal
-    }
-
-    .c30 {
-        color: #000000;
-        font-weight: 400;
-        text-decoration: none;
-        vertical-align: baseline;
-        font-size: 11pt;
-        font-family: "Arial";
-        font-style: normal
-    }
-
-    .c31 {
-        color: #b225a0;
-        font-weight: 700;
-        text-decoration: none;
-        vertical-align: baseline;
-        font-size: 10.5pt;
-        font-family: "Calibri";
-        font-style: italic
-    }
-
-    .c44 {
-        color: #000000;
-        font-weight: 700;
-        text-decoration: none;
-        vertical-align: baseline;
-        font-size: 8pt;
-        font-family: "Calibri";
-        font-style: normal
-    }
-
-    .c2 {
-        color: #000000;
-        font-weight: 700;
-        text-decoration: none;
-        vertical-align: baseline;
-        font-size: 11pt;
-        font-family: "Calibri";
-        font-style: normal
-    }
-
-    .c19 {
-        color: #000000;
-        font-weight: 400;
-        text-decoration: none;
-        vertical-align: baseline;
-        font-size: 12pt;
-        font-family: "Calibri";
-        font-style: normal
-    }
-
-    .c43 {
-        color: #000000;
-        font-weight: 400;
-        text-decoration: none;
-        vertical-align: baseline;
-        font-size: 12PX;
-        font-family: "Times New Roman";
-        font-style: normal
-    }
-
-    .c9 {
-        color: #000000;
-        font-weight: 400;
-        text-decoration: none;
-        vertical-align: baseline !important;
-        font-size: 8pt;
-        font-family: "Calibri";
-        font-style: normal
-    }
-
-    .c57 {
-        color: #000000;
-        font-weight: 400;
-        text-decoration: none;
-        vertical-align: baseline;
-        font-size: 10pt;
-        font-family: "Calibri";
-        font-style: normal
-    }
-
-    .c34 {
-        color: #000000;
-        font-weight: 700;
-        text-decoration: none;
-        vertical-align: baseline;
-        font-size: 9.5pt;
-        font-family: "Tahoma";
-        font-style: normal
-    }
-
-    .c1 {
-        color: #3457A9;
-        font-weight: 700;
-        text-decoration: none;
-        vertical-align: baseline;
-        font-size: 12PX;
-        font-family: "Calibri";
-        font-style: normal
-    }
-
-    .c55 {
-        color: #000000;
-        font-weight: 400;
-        text-decoration: none;
-        vertical-align: baseline;
-        font-size: 11pt;
-        font-family: "Times New Roman";
-        font-style: normal
-    }
-
-    .c0 {
-        padding-top: 0pt;
-        padding-bottom: 0pt;
-        line-height: 1.0;
-        orphans: 2;
-        widows: 2;
-        text-align: left
-    }
-
-    .c3 {
-        padding-top: 0pt;
-        padding-bottom: 0pt;
-        line-height: 1.0;
-        orphans: 2;
-        widows: 2;
-        text-align: center
-    }
-
-    .c60 {
-        padding-top: 0pt;
-        padding-bottom: 0pt;
-        line-height: 0.06;
-        orphans: 2;
-        widows: 2;
-        text-align: left
-    }
-
-    .c14 {
-        padding-top: 0pt;
-        padding-bottom: 0pt;
-        line-height: 1.0;
-        orphans: 2;
-        widows: 2;
-        text-align: right
-    }
-
-    .c13 {
-        padding-top: 0pt;
-        padding-bottom: 0pt;
-        line-height: 1.15;
-        text-align: left;
-        height: 12pt
-    }
-
-    .c11 {
-        font-size: 11pt;
-        font-family: "Calibri";
-        color: #000000;
-        font-weight: 400
-    }
-
-    .c59 {
-        color: #000000;
-        text-decoration: none;
-        vertical-align: baseline;
-        font-style: normal
-    }
-
-    .c41 {
-        /*margin-left:-5.8pt*/
-        width: 100%;
-        border-spacing: 0;
-        border-collapse: collapse;
-        margin-right: auto
-    }
-
-    .c46 {
-        padding-top: 0pt;
-        padding-bottom: 0pt;
-        line-height: 1.1500000000000001;
-        text-align: left
-    }
-
-    .c37 {
-        background-color: #ffffff;
-        /*max-width:451.3pt;*/
-        padding: 32pt 32pt 32pt 32pt
-    }
-
-    .c53 {
-        font-size: 9.5pt;
-        font-family: "Tahoma";
-        font-weight: 400
-    }
-
-    .c54 {
-        font-size: 11pt;
-        font-family: "Tahoma";
-        font-weight: 700
-    }
-
-    .c58 {
-        height: 21.6pt
-    }
-
-    .c49 {
-        height: 14.3pt
-    }
-
-    .c61 {
-        vertical-align: super
-    }
-
-    .c10 {
-        height: 20.6pt
-    }
-
-    .c45 {
-        background-color: #ffffff
-    }
-
-    .c42 {
-        height: 55.7pt
-    }
-
-    .c24 {
-        background-color: #d9d9d930;
-    }
-
-    .c56 {
-        margin-left: 144pt
-    }
-
-    .c48 {
-        background-color: #d0cece
-    }
-
-    .c63 {
-        height: 6.3pt
-    }
-
-    .c23 {
-        height: 12pt
-    }
-
-    .title {
-        padding-top: 24pt;
-        color: #000000;
-        font-weight: 700;
-        font-size: 36pt;
-        padding-bottom: 6pt;
-        font-family: "Times New Roman";
-        line-height: 1.0;
-        page-break-after: avoid;
-        orphans: 2;
-        widows: 2;
-        text-align: left
-    }
-
-    .subtitle {
-        padding-top: 18pt;
-        color: #666666;
-        font-size: 24pt;
-        padding-bottom: 4pt;
-        font-family: "Georgia";
-        line-height: 1.0;
-        page-break-after: avoid;
-        font-style: italic;
-        orphans: 2;
-        widows: 2;
-        text-align: left
-    }
-
-    li {
-        color: #000000;
-        font-size: 12pt;
-        font-family: "Times New Roman"
-    }
-
-    p {
-        margin: 0;
-        color: #000000;
-        font-size: 12pt;
-        font-family: "Times New Roman"
-    }
-
-    h1 {
-        padding-top: 24pt;
-        color: #000000;
-        font-weight: 700;
-        font-size: 24pt;
-        padding-bottom: 6pt;
-        font-family: "Times New Roman";
-        line-height: 1.0;
-        page-break-after: avoid;
-        orphans: 2;
-        widows: 2;
-        text-align: left
-    }
-
-    h2 {
-        padding-top: 18pt;
-        color: #000000;
-        font-weight: 700;
-        font-size: 18pt;
-        padding-bottom: 4pt;
-        font-family: "Times New Roman";
-        line-height: 1.0;
-        page-break-after: avoid;
-        orphans: 2;
-        widows: 2;
-        text-align: left
-    }
-
-    h3 {
-        padding-top: 14pt;
-        color: #000000;
-        font-weight: 700;
-        font-size: 14pt;
-        padding-bottom: 4pt;
-        font-family: "Times New Roman";
-        line-height: 1.0;
-        page-break-after: avoid;
-        orphans: 2;
-        widows: 2;
-        text-align: left
-    }
-
-    h4 {
-        padding-top: 12pt;
-        color: #000000;
-        font-weight: 700;
-        font-size: 12pt;
-        padding-bottom: 2pt;
-        font-family: "Times New Roman";
-        line-height: 1.0;
-        page-break-after: avoid;
-        orphans: 2;
-        widows: 2;
-        text-align: left
-    }
-
-    h5 {
-        padding-top: 11pt;
-        color: #000000;
-        font-weight: 700;
-        font-size: 11pt;
-        padding-bottom: 2pt;
-        font-family: "Times New Roman";
-        line-height: 1.0;
-        page-break-after: avoid;
-        orphans: 2;
-        widows: 2;
-        text-align: left
-    }
-
-    h6 {
-        padding-top: 10pt;
-        color: #000000;
-        font-weight: 700;
-        font-size: 10pt;
-        padding-bottom: 2pt;
-        font-family: "Times New Roman";
-        line-height: 1.0;
-        page-break-after: avoid;
-        orphans: 2;
-        widows: 2;
-        text-align: left
-    }
-
-    tr td p {
-        margin-bottom: 0px;
-        text-align: start !important;
-    }
+
+    <style>
+        .main-page {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 10mm auto;
+            background: white;
+            box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+        }
+
+        .sub-page {
+            padding: 1cm;
+            height: 297mm;
+        }
+
+        @media print {
+            .main-page {
+                page-break-after: always;
+            }
+        }
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        @media print {
+
+            html,
+            body {
+                width: 210mm;
+                height: 297mm;
+            }
+
+            .main-page {
+                margin: 0;
+                border: initial;
+                border-radius: initial;
+                width: initial;
+                min-height: initial;
+                box-shadow: initial;
+                background: initial;
+                page-break-after: always;
+            }
+        }
+
+        p {
+            text-align: justify;
+        }
+
+        /* p {
+  text-align: justify;
+
+}
+
+
+.appointment-letter {
+  padding: 30px 50px;
+}
+
+.appointment-letter td {
+  padding: 5px 10px;
+}
+
+.appointment-letter table {
+  width: 100%;
+}
+
+.div.titlepage {
+  page: blank;
+}
+
+@media screen {
+  div .divFooter {
+    display: none;
+  }
+}
+
+@media print {
+  div.divFooter {
+    position: fixed;
+    bottom: 0;
+  }
+}
+
+footer {
+  font-size: 9px;
+  color: #f00;
+  text-align: center;
+}
+
+.page {
+  size: A4;
+  margin: 11mm 17mm 17mm 17mm;
+}
+
+@media print {
+  footer {
+    position: Center;
+    bottom: 0;
+  }
+
+  .content-block, p {
+    page-break-inside: avoid;
+  }
+
+  html, body {
+    width: 210mm;
+    height: 297mm;
+  }
+}
+
+body {
+  background: rgb(204, 204, 204);
+}
+
+page {
+  background: white;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 0.5cm;
+  box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+}
+
+page[size="A4"] {
+  width: 21cm;
+  height: 29.7cm;
+}
+
+page[size="A4"][layout="landscape"] {
+  width: 29.7cm;
+  height: 21cm;
+}
+
+page[size="A3"] {
+  width: 29.7cm;
+  height: 42cm;
+}
+
+page[size="A3"][layout="landscape"] {
+  width: 42cm;
+  height: 29.7cm;
+}
+
+page[size="A5"] {
+  width: 14.8cm;
+  height: 21cm;
+}
+
+page[size="A5"][layout="landscape"] {
+  width: 21cm;
+  height: 14.8cm;
+}
+
+@media print {
+  body, page {
+    margin: 0;
+    box-shadow: 0;
+  }
+}
+
+@media print {
+  pre, blockquote {
+    page-break-inside: avoid;
+  }
+} */
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        table td p {
+            padding: 0px;
+            margin: 0px;
+            font-size: 15px;
+        }
+
+        table,
+        th,
+        td {
+            line-height: 16px;
+            border: 1px solid #af1888;
+            height: 27px;
+        }
+
+        .t-0 {
+            border-top: 0px;
+        }
+
+        table .row-full p {
+            font-size: 14px;
+            text-align: center !important;
+            font-weight: 600;
+            margin: 5px 0px;
+        }
+
+        table .row-full {
+            background-color: #dfdfdf;
+            border-top: 0px;
+        }
+
+        .body-content {
+            border-top: 0px;
+        }
+
+        .body-content .tl p {
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .body-content .tr p {
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .td-md p {
+            width: auto;
+        }
+
+        .header-td {
+            border-bottom: 0px;
+        }
+
+        table .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0px 5px 15px 5px;
+            height: auto;
+        }
+
+        .header-content .left-header h5 {
+            font-weight: 600;
+            font-size: 15px;
+            margin: 0px;
+        }
+
+        .header-content .left-header p {
+            margin: 2px;
+        }
+
+        .header-content .right-header .img-wrap {
+            height: 45px;
+            width: 180px;
+        }
+
+        .header-content .right-header img {
+            height: 100%;
+            width: 100%;
+        }
+
+        .body-content {
+            width: 100%;
+        }
+
+        .body-content .body-header {}
+
+
+        .tr-md .td-md {
+            border-top: 0px;
+        }
     </style>
+
 </head>
 
-<body class="c37">
-    <a id="t.0e2b524f6165b05bbdb6f4fbd7e769650e7816db"></a>
-    <a id="t.0"></a>
-    <table width="100%">
-        <tr class="">
-            <td class="">
-                <div class="">
-                    <div class="">
-                        <p class="c0 mb-2">
-                            <span class="c54">Ardens Business Solutions Private Limited</span>
-                        </p>
+<body>
+    <!-- partial:index.partial.html -->
+    <div class="main-page">
+        <div class="sub-page" style="font-size: 15px;">
+            <!-- <page size="A4"> -->
 
-                        <p class="c0 mb-2">
-                            <span class="c34">&ldquo;SHALOM BUILDING&rdquo; </span>
-                        </p>
-                        <p class="c0 mb-1">
-                            <span class="c53">1</span><span class="c53 c61">st</span><span class="c53 c59">&nbsp;Floor,
-                                Office No.20, No.04, Mannar Street, </span>
-                        </p>
-                        <p class="c0 mb-1"><span class="c59 c53">T Nagar, Chennai, Tamil Nadu, India &ndash; 600
-                                017</span></p>
-                        <p class="c14 c23"><span class="c18"></span></p>
-                    </div>
-                </div>
-            </td>
-            <td align ="right" >
-                        <span style="transform: rotate(0.00rad) translateZ(0px);">
-                            <img src={{$client_logo}}
-                                style="width: 140px; height: 70px;" title="">
 
-                        </span>
-            </td>
-        </tr>
-    </table>
-    <table class="c41">
-        <tr class="c10">
-            <td class="c50 c24" colspan="9" rowspan="1">
-                <p class="c3 text-center"><span class="c1">PAYSLIP FOR THE MONTH OF &ndash;
-                        {{$employee->PAYROLL_MONTH}}</span></p>
-            </td>
-        </tr>
-        <tr class="c10">
-            <td class="c22 c24" colspan="3" rowspan="1">
-                <p class="c0"><span class="c1">EMPLOYEE NAME</span></p>
-            </td>
-            <td class="c22" colspan="2" rowspan="1">
-                <p class="c3"><span class="c9">{{$employee->EMP_NAME}}</span></p>
-            </td>
-            <td class="c22 c24" colspan="2" rowspan="1">
-                <p class="c0"><span class="c1">EMPLOYEE CODE</span></p>
-            </td>
-            <td class="c22" colspan="2" rowspan="1">
-                <p class="c3"><span class="c9">{{$employee->EMP_NO}}</span></p>
-            </td>
-        </tr>
-        <tr class="c10">
-            <td class="c22 c24" colspan="3" rowspan="1">
-                <p class="c0"><span class="c1">DATE OF BIRTH</span></p>
-            </td>
-            <td class="c22" colspan="2" rowspan="1">
-                <p class="c3"><span class="c9">{{$employee->DOB}}</span></p>
-            </td>
-            <td class="c22 c24" colspan="2" rowspan="1">
-                <p class="c0"><span class="c1">DATE OF JOINING</span></p>
-            </td>
-            <td class="c22" colspan="2" rowspan="1">
-                <p class="c3"><span class="c9">{{$employee->DOJ}}</span></p>
-            </td>
-        </tr>
-        <tr class="c10">
-            <td class="c22 c24" colspan="3" rowspan="1">
-                <p class="c0"><span class="c1">DESIGNATION</span></p>
-            </td>
-            <td class="c22" colspan="2" rowspan="1">
-                <p class="c3"><span class="c9">{{$employee->DESIGNATION}}</span></p>
-            </td>
-            <td class="c22 c24" colspan="2" rowspan="1">
-                <p class="c0"><span class="c1">LOCATION</span></p>
-            </td>
-            <td class="c22" colspan="2" rowspan="1">
-                <p class="c3"><span class="c9">{{$employee->LOCATION}}</span></p>
-            </td>
-        </tr>
-        <tr class="c10">
-            <td class="c22 c24" colspan="3" rowspan="1">
-                <p class="c0"><span class="c1">EPF NUMBER</span></p>
-            </td>
-            <td class="c22" colspan="2" rowspan="1">
-                <p class="c3"><span class="c9">{{$employee->EPF_Number}}</span></p>
-            </td>
-            <td class="c22 c24" colspan="2" rowspan="1">
-                <p class="c0"><span class="c1">ESIC NUMBER</span></p>
-            </td>
-            <td class="c22" colspan="2" rowspan="1">
-                <p class="c3"><span class="c9">{{$employee->ESIC_Number}}</span></p>
-            </td>
-        </tr>
-        <tr class="c10">
-            <td class="c22 c24" colspan="3" rowspan="1">
-                <p class="c0"><span class="c1">UAN</span></p>
-            </td>
-            <td class="c22" colspan="2" rowspan="1">
-                <p class="c3"><span class="c9">{{$employee->UAN}}</span></p>
-            </td>
-            <td class="c22 c24" colspan="2" rowspan="1">
-                <p class="c0"><span class="c1">PAN</span></p>
-            </td>
-            <td class="c22" colspan="2" rowspan="1">
-                <p class="c3"><span class="c9">{{$employee->PAN_Number}}</span></p>
-            </td>
-        </tr>
-        <tr class="c10">
-            <td class="c24 c36" colspan="4" rowspan="1">
-                <p class="c3"><span class="c1">BANK NAME</span></p>
-            </td>
-            <td class="c40 c24" colspan="2" rowspan="1">
-                <p class="c3"><span class="c1">ACCOUNT NUMBER</span></p>
-            </td>
-            <td class="c40 c24" colspan="3" rowspan="1">
-                <p class="c3"><span class="c1">IFSC CODE</span></p>
-            </td>
-        </tr>
-        <tr class="c10">
-            <td class="c36" colspan="4" rowspan="1">
-                <p class="c3"><span class="c9">{{$employee->Bank_Name}}</span></p>
-            </td>
-            <td class="c40" colspan="2" rowspan="1">
-                <p class="c3"><span class="c9">{{$employee->Account_Number}}</span></p>
-            </td>
-            <td class="c40" colspan="3" rowspan="1">
-                <p class="c3"><span class="c9">{{$employee->Bank_IFSC_Code}}</span></p>
-            </td>
-        </tr>
-        <tr class="c10">
-            <td class="c22 c24" colspan="3" rowspan="1">
-                <p class="c3"><span class="c1">MONTH DAYS</span></p>
-            </td>
-            <td class="c22 c24" colspan="2" rowspan="1">
-                <p class="c3"><span class="c1">WORKED DAYS</span></p>
-            </td>
-            <td class="c22 c24" colspan="2" rowspan="1">
-                <p class="c3"><span class="c1">LOSS OF PAY</span></p>
-            </td>
-            <td class="c22 c24" colspan="2" rowspan="1">
-                <p class="c3"><span class="c1">ARREAR DAYS</span></p>
-            </td>
-        </tr>
-        <tr class="c10">
-            <td class="c22" colspan="3" rowspan="1">
-                <p class="c3"><span class="c9">{{$employee->MONTH_DAYS}}</span></p>
-            </td>
-            <td class="c22" colspan="2" rowspan="1">
-                <p class="c3">
-                    <span class="c9">{{$employee->Worked_Days}}</span>
-                </p>
-            </td>
-            <td class="c22" colspan="2" rowspan="1">
-                <p class="c3">
-                    <span class="c9">{{$employee->LOP}}</span>
-                </p>
-            </td>
-            <td class="c22" colspan="2" rowspan="1">
-                <p class="c3">
-                    <span class="c9">{{$employee->Arrears_Days}}
-                    </span>
-                </p>
-            </td>
-        </tr>
-        <tr class="c10">
-            <td class="c6" colspan="1" rowspan="1">
-                <p class="c0"><span class="c1">SL Open Balance</span></p>
-            </td>
-            <td class="c4" colspan="3" rowspan="1">
-                <p class="c3"><span class="c1">CL Open Balance</span></p>
-            </td>
-            <td class="c6" colspan="1" rowspan="1">
-                <p class="c3"><span class="c1">Availed SL</span></p>
-            </td>
-            <td class="c6" colspan="1" rowspan="1">
-                <p class="c3"><span class="c1">Availed CL</span></p>
-            </td>
-            <td class="c6" colspan="1" rowspan="1">
-                <p class="c3"><span class="c1">Balance SL</span></p>
-            </td>
-            <td class="c6" colspan="2" rowspan="1">
-                <p class="c0"><span class="c1">Balance CL</span></p>
-            </td>
-        </tr>
-        <tr class="c10">
-            <td class="c7" colspan="1" rowspan="1">
-                <p class="c3"><span class="c9">-</span></p>
-            </td>
-            <td class="c29 c45" colspan="3" rowspan="1">
-                <p class="c3"><span class="c9">-</span></p>
-            </td>
-            <td class="c7" colspan="1" rowspan="1">
-                <p class="c3"><span class="c9">-</span></p>
-            </td>
-            <td class="c7" colspan="1" rowspan="1">
-                <p class="c3"><span class="c9">-</span></p>
-            </td>
-            <td class="c7" colspan="1" rowspan="1">
-                <p class="c3"><span class="c9">-</span></p>
-            </td>
-            <td class="c7" colspan="2" rowspan="1">
-                <p class="c3"><span class="c9">-</span></p>
-            </td>
-        </tr>
-        <tr class="c63">
-            <td class="c32" colspan="9" rowspan="1">
-                <p class="c3 c23"><span class="c1"></span></p>
-            </td>
-        </tr>
-        <tr class="c10">
-            <td class="c8" colspan="1" rowspan="1">
-                <p class="c3"><span class="c1">DESCRIPTION</span></p>
-            </td>
-            <td class="c20" colspan="3" rowspan="1">
-                <p class="c3"><span class="c1">AMOUNT</span></p>
-            </td>
-            <td class="c8" colspan="1" rowspan="1">
-                <p class="c0"><span class="c1">ARREAR AMOUNT</span></p>
-            </td>
-            <td class="c8" colspan="1" rowspan="1">
-                <p class="c3"><span class="c1">EARNED AMOUNT</span></p>
-            </td>
-            <td class="c8" colspan="1" rowspan="1">
-                <p class="c3"><span class="c1">DEDUCTION</span></p>
-            </td>
-            <td class="c8" colspan="2" rowspan="1">
-                <p class="c3"><span class="c1">AMOUNT</span></p>
-            </td>
-        </tr>
-        <tr class="c10">
-            <td class="c17" colspan="1" rowspan="1">
-                <p class="c0"><span class="c1">BASIC</span></p>
-            </td>
-            <td class="c29" colspan="3" rowspan="1">
-                <p class="c14"><span class="c9"> <span
-                            style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>{{$employee->BASIC}}</span></p>
-            </td>
-            <td class="c17" colspan="1" rowspan="1">
-                <p class="c14">
-                    <span class="c9"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> </span>
-                    <span class="c9">0</span>
-                </p>
-            </td>
-            <td class="c17" colspan="1" rowspan="1">
-                <p class="c14"><span class="c11"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>
-                    </span><span class="c9">4560</span></p>
-            </td>
-            <td class="c17" colspan="1" rowspan="1">
-                <p class="c0"><span class="c1">EPF</span></p>
-            </td>
-            <td class="c17" colspan="2" rowspan="1">
-                <p class="c14"><span class="c9"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>
-                        638</span></p>
-            </td>
-        </tr>
-        <tr class="c10">
-            <td class="c17" colspan="1" rowspan="1">
-                <p class="c0"><span class="c1">HRA</span></p>
-            </td>
-            <td class="c29" colspan="3" rowspan="1">
-                <p class="c14"><span class="c9"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>
-                        {{$employee->HRA}}</span></p>
-            </td>
-            <td class="c17" colspan="1" rowspan="1">
-                <p class="c14">
-                    <span class="c9"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> </span>
-                    <span class="c9">0</span>
-                </p>
-            </td>
-            <td class="c17" colspan="1" rowspan="1">
-                <p class="c14">
-                    <span class="c9"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span> </span>
-                    <span class="c9">2280</span>
-                </p>
-            </td>
-            <td class="c17" colspan="1" rowspan="1">
-                <p class="c0"><span class="c1">ESIC</span></p>
-            </td>
-            <td class="c17" colspan="2" rowspan="1">
-                <p class="c14"><span class="c9"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>
-                        58</span></p>
-            </td>
-        </tr>
-        <tr class="c10">
-            <td class="c17" colspan="1" rowspan="1">
-                <p class="c0"><span class="c1">SPECIAL ALLOW</span></p>
-            </td>
-            <td class="c29" colspan="3" rowspan="1">
-                <p class="c14"><span class="c9"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>
-                        {{$employee->SPL_ALW}}</span></p>
-            </td>
-            <td class="c17" colspan="1" rowspan="1">
-                <p class="c14"><span class="c9"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>
-                        0</span></p>
-            </td>
-            <td class="c17" colspan="1" rowspan="1">
-                <p class="c14"><span class="c9"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>
-                        760</span></p>
-            </td>
-            <td class="c17" colspan="1" rowspan="1">
-                <p class="c0"><span class="c1">PT</span></p>
-            </td>
-            <td class="c17" colspan="2" rowspan="1">
-                <p class="c14"><span class="c9"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>
-                        {{$employee->PROF_TAX}}</span></p>
-            </td>
-        </tr>
-        <tr class="c10">
-            <td class="c17" colspan="1" rowspan="1">
-                <p class="c0"><span class="c1">OVERTIME</span></p>
-            </td>
-            <td class="c29" colspan="3" rowspan="1">
-                <p class="c14 c23"><span class="c9"></span></p>
-            </td>
-            <td class="c17" colspan="1" rowspan="1">
-                <p class="c14 c23"><span class="c16"></span></p>
-            </td>
-            <td class="c17" colspan="1" rowspan="1">
-                <p class="c14">
-                    <span class="c9"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>
-                        {{$employee->Overtime}}
-                    </span>
-                </p>
-            </td>
-            <td class="c17" colspan="1" rowspan="1">
-                <p class="c0"><span class="c1">TDS</span></p>
-            </td>
-            <td class="c17" colspan="2" rowspan="1">
-                <p class="c14"><span class="c9"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>
-                        {{$employee->TDS}}</span></p>
-            </td>
-        </tr>
-        <tr class="c10">
-            <td class="c17" colspan="1" rowspan="1">
-                <p class="c0 c23"><span class="c2"></span></p>
-            </td>
-            <td class="c29" colspan="3" rowspan="1">
-                <p class="c14 c23"><span class="c9"></span></p>
-            </td>
-            <td class="c17" colspan="1" rowspan="1">
-                <p class="c14 c23"><span class="c16"></span></p>
-            </td>
-            <td class="c17" colspan="1" rowspan="1">
-                <p class="c14 c23"><span class="c16"></span></p>
-            </td>
-            <td class="c17" colspan="1" rowspan="1">
-                <p class="c0"><span class="c1">CANT-DEDUCTION</span></p>
-            </td>
-            <td class="c17" colspan="2" rowspan="1">
-                <p class="c14"><span class="c9"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>
-                        {{$employee->CANTEEN_DEDN}}</span></p>
-            </td>
-        </tr>
-        <tr class="c10">
-            <td class="c17" colspan="1" rowspan="1">
-                <p class="c0 c23"><span class="c2"></span></p>
-            </td>
-            <td class="c29" colspan="3" rowspan="1">
-                <p class="c14 c23"><span class="c9"></span></p>
-            </td>
-            <td class="c17" colspan="1" rowspan="1">
-                <p class="c14 c23"><span class="c16"></span></p>
-            </td>
-            <td class="c17" colspan="1" rowspan="1">
-                <p class="c14 c23"><span class="c16"></span></p>
-            </td>
-            <td class="c17" colspan="1" rowspan="1">
-                <p class="c0">
-                    <span class="c1">SALARY ADVANCE</span>
-                </p>
-            </td>
-            <td class="c17" colspan="2" rowspan="1">
-                <p class="c14"><span class="c9"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>
-                        {{$employee->SAL_ADV}}</span></p>
-            </td>
-        </tr>
-        <tr class="c10">
-            <td class="c17" colspan="1" rowspan="1">
-                <p class="c0 c23"><span class="c2"></span></p>
-            </td>
-            <td class="c29" colspan="3" rowspan="1">
-                <p class="c14 c23"><span class="c9"></span></p>
-            </td>
-            <td class="c17" colspan="1" rowspan="1">
-                <p class="c14 c23"><span class="c16"></span></p>
-            </td>
-            <td class="c17" colspan="1" rowspan="1">
-                <p class="c14 c23"><span class="c16"></span></p>
-            </td>
-            <td class="c17" colspan="1" rowspan="1">
-                <p class="c0"><span class="c1">OTHER DEDUCTIONS</span></p>
-            </td>
-            <td class="c17" colspan="2" rowspan="1">
-                <p class="c14"><span class="c9"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>
-                        {{$employee->OTHER_DEDUC}}</span></p>
-            </td>
-        </tr>
-        <tr class="c10">
-            <td class="c8" colspan="1" rowspan="1">
-                <p class="c0"><span class="c1">TOTAL EARNINGS</span></p>
-            </td>
-            <td class="c20" colspan="3" rowspan="1">
-                <p class="c14"><span class="c1"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>
-                    </span><span class="c1">{{$employee->TOTAL_EARNED_GROSS}}</span></p>
-            </td>
-            <td class="c8" colspan="1" rowspan="1">
-                <p class="c14 c23"><span class="c1"></span></p>
-            </td>
-            <td class="c8" colspan="1" rowspan="1">
-                <p class="c14"><span class="c11"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>
-                    </span><span class="c1">7666</span></p>
-            </td>
-            <td class="c8" colspan="1" rowspan="1">
-                <p class="c0"><span class="c1">TOTAL DEDUCTION</span></p>
-            </td>
-            <td class="c8" colspan="2" rowspan="1">
-                <p class="c14"><span class="c1"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>
-                    </span><span class="c1">{{$employee->TOTAL_DEDUCTIONS}}</span></p>
-            </td>
-        </tr>
-        <tr class="c49">
-            <td class="c47" colspan="9" rowspan="1">
-                <p class="c3"><span class="c16">&nbsp;</span></p>
-            </td>
-        </tr>
-        <tr class="c10">
-            <td class="c24 c51" colspan="5" rowspan="1">
-                <p class="c0"><span class="c1">NET PAY</span></p>
-            </td>
-            <td class="c51" colspan="4" rowspan="1">
-                <p class="c3"><span class="c11"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>
-                    </span><span class="c1">{{$employee->NET_TAKE_HOME}}</span></p>
-            </td>
-        </tr>
-        <tr class="c10">
-            <td class="c33" colspan="2" rowspan="1">
-                <p class="c0"><span class="c1">NET PAY IN WORDS</span></p>
-            </td>
-            <td class="c62" colspan="7" rowspan="1">
-                <p class="c3"><span class="c1">{{$employee->Rupees}}</span></p>
-            </td>
-        </tr>
-        <tr class="c49">
-            <td class="c47" colspan="9" rowspan="1">
-                <p class="c3"><span class="c16">&nbsp;</span></p>
-            </td>
-        </tr>
-        <tr class="c10">
-            <td class="c22 c24" colspan="3" rowspan="1">
-                <p class="c3"><span class="c1">TRANSACTION ID</span></p>
-            </td>
-            <td class="c22" colspan="2" rowspan="1">
-                <p class="c3 c23"><span class="c16"></span></p>
-            </td>
-            <td class="c22 c24" colspan="2" rowspan="1">
-                <p class="c3"><span class="c1">Paid Date</span></p>
-            </td>
-            <td class="c22" colspan="2" rowspan="1">
-                <p class="c3"><span class="c9">11-MAY-2022</span></p>
-            </td>
-        </tr>
-        <tr class="c49">
-            <td class="c47" colspan="9" rowspan="1">
-                <p class="c3"><span class="c16">&nbsp;</span></p>
-            </td>
-        </tr>
-        <tr class="c58">
-            <td class="c50" colspan="9" rowspan="1">
-                <p class="c3 text-center"><span class="c31">This is a computer-generated slip does not require signature</span></p>
-            </td>
-        </tr>
-    </table>
-
-    <table width="100%">
+            <!-- <table>
         <tr>
-            <td>
-                <div>
-                    <span class="c57">Please reach out to us for any payroll queries at -payroll@ardens.in</span>
-                </div>
-            </td>
-            <td align="right">
-                <div class="c44 ml-5 ">
-                    {{-- <span class="c44 ml-5 pl-5">Powered By</span>
+          <div class="header-content">
+            <div class="left-header">
+              <h5>Ardens Business Solutions Private Limited</h5>
+              <h5>“SHALOM BUILDING”</h5>
+              <p>1st Floor, Office No.20, No.04, Mannar Street,</p>
+              <p>T Nagar, Chennai,Tamil Nadu, India – 600 017</p>
+            </div>
+            <div class="right-header">
 
-                    <img alt="Logo Description automatically generated"
-                        src="data:image/png;base64,{{base64_encode(file_get_contents(public_path('assets/images/images/')))}}"
-                        style="width: 160.94px; height: 90.54px;"
-                        title="" /> --}}
-
-                        <div
-                        class="">
-                            <span class="text-muted " style="font-size: 13px" >Powered by</span>
-                            <img src="{{ URL::asset('assets/images/logo-dark.png') }}" alt=""
-                                class="" style="height: 30px;width:100px">
-
-                    </div>
-
-                </div>
-            </td>
+            </div>
+          </div>
         </tr>
-    </table>
+      </table> -->
+
+            <table width="100%">
+                <tr class="">
+                    <td class="header-td">
+                        <div class="header-content">
+                            <div class="left-header">
+                                <h5 class="">
+                                    <span class="">Ardens Business Solutions Private Limited</span>
+                                </h5>
+
+                                <h5 class="">
+                                    <span class="4">&ldquo;SHALOM BUILDING&rdquo; </span>
+                                </h5>
+                                <p class="">
+                                    <span class="c53">1</span><span class="c53 c61">st</span><span class="c53 c59">&nbsp;Floor,
+                                        Office No.20, No.04, Mannar Street, </span>
+                                </p>
+                                <p class=""><span class="c59 c53">T Nagar, Chennai, Tamil Nadu, India &ndash; 600
+                                        017</span></p>
+                                <p class="4 c23"><span class="8"></span></p>
+                            </div>
+                            <div class="right-header">
+                                <div class="img-wrap" style="transform: rotate(0.00rad) translateZ(0px);">
+                                    <!-- <img src={{$client_logo}} style="width: 140px; height: 70px;" title=""> -->
+                                    <!-- <img src="" alt=""> -->
+                                    <img src="{{ URL::asset('assets/images/brand_avatar.png') }}" alt="" class="">
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <table class="body-content">
+                <tr class="body-header">
+                    <td class="row-full" colspan="12" rowspan="1">
+                        <p class=" "><span class="">PAYSLIP FOR THE
+                                MONTH OF &ndash;
+                                {{$employee->PAYROLL_MONTH}}</span></p>
+                    </td>
+                </tr>
+                <tr class="">
+                    <td class="td-sm tl" colspan="0" rowspan="1">
+                        <p class=""><span class="">EMPLOYEE NAME</span></p>
+                    </td>
+                    <td class="td-sm tr" colspan="0" rowspan="1">
+                        <p class=""><span class="">{{$employee->EMP_NAME}}</span></p>
+                    </td>
+                    <td class="td-sm tl " colspan="0" rowspan="1">
+                        <p class=""><span class="">EMPLOYEE CODE</span></p>
+                    </td>
+                    <td class="td-sm tr" colspan="0" rowspan="1">
+                        <p class=""><span class="">{{$employee->EMP_NO}}</span></p>
+                    </td>
+                </tr>
+                <tr class="">
+                    <td class="td-sm tl " colspan="0" rowspan="1">
+                        <p class=""><span class="">DATE OF BIRTH</span></p>
+                    </td>
+                    <td class="td-sm tr " colspan="0" rowspan="1">
+                        <p class=""><span class="">{{$employee->DOB}}</span></p>
+                    </td>
+                    <td class="td-sm tl " colspan="0" rowspan="1">
+                        <p class=""><span class="">DATE OF JOINING</span></p>
+                    </td>
+                    <td class="td-sm tr" colspan="0" rowspan="1">
+                        <p class=""><span class="">{{$employee->DOJ}}</span></p>
+                    </td>
+                </tr>
+                <tr class="">
+                    <td class="td-sm tl " colspan="0" rowspan="1">
+                        <p class=""><span class="">DESIGNATION</span></p>
+                    </td>
+                    <td class="td-sm tr" colspan="0" rowspan="1">
+                        <p class=""><span class="">{{$employee->DESIGNATION}}</span></p>
+                    </td>
+                    <td class="td-sm tl " colspan="0" rowspan="1">
+                        <p class=""><span class="">LOCATION</span></p>
+                    </td>
+                    <td class="td-sm tr" colspan="0" rowspan="1">
+                        <p class=""><span class="">{{$employee->LOCATION}}</span></p>
+                    </td>
+                </tr>
+                <tr class="">
+                    <td class="td-sm tl " colspan="0" rowspan="1">
+                        <p class=""><span class="">EPF NUMBER</span></p>
+                    </td>
+                    <td class="td-sm tr" colspan="0" rowspan="1">
+                        <p class=""><span class="">{{$employee->EPF_Number}}</span></p>
+                    </td>
+                    <td class="td-sm tl " colspan="0" rowspan="1">
+                        <p class=""><span class="">ESIC NUMBER</span></p>
+                    </td>
+                    <td class="td-sm tr" colspan="0" rowspan="1">
+                        <p class=""><span class="">{{$employee->ESIC_Number}}</span></p>
+                    </td>
+                </tr>
+                <tr class="">
+                    <td class="td-sm tl " colspan="0" rowspan="1">
+                        <p class=""><span class="">UAN</span></p>
+                    </td>
+                    <td class="td-sm tr" colspan="0" rowspan="1">
+                        <p class=""><span class="">{{$employee->UAN}}</span></p>
+                    </td>
+                    <td class=" td-sm tl" colspan="0" rowspan="1">
+                        <p class=""><span class="">PAN</span></p>
+                    </td>
+                    <td class="td-sm tr" colspan="0" rowspan="1">
+                        <p class=""><span class="">{{$employee->PAN_Number}}</span></p>
+                    </td>
+                </tr>
+
+
+            </table>
+            <table class="row-full t-0">
+
+                <tr class="tr-md row-full">
+                    <td class="td-md th" colspan="" rowspan="1">
+                        <p class=""><span class="">BANK NAME</span></p>
+                    </td>
+                    <td class="td-md th " colspan="" rowspan="1">
+                        <p class=""><span class="">ACCOUNT NUMBER</span></p>
+                    </td>
+                    <td class="td-md th" colspan="" rowspan="1">
+                        <p class=""><span class="">IFSC CODE</span></p>
+                    </td>
+                </tr>
+                <tr class="tr-md">
+                    <td class=" td-md th" colspan="0" rowspan="1">
+                        <p class=""><span class="">{{$employee->Bank_Name}}</span></p>
+                    </td>
+                    <td class=" td-md th" colspan="0" rowspan="1">
+                        <p class=""><span class="">{{$employee->Account_Number}}</span></p>
+                    </td>
+                    <td class=" td-md th" colspan="0" rowspan="1">
+                        <p class=""><span class="">{{$employee->Bank_IFSC_Code}}</span></p>
+                    </td>
+
+                </tr>
+            </table>
+            <table class="row-full t-0">
+
+                <tr class="">
+                    <td class="td-sm t-0" colspan="0" rowspan="1">
+                        <p class=""><span class="">MONTH DAYS</span></p>
+                    </td>
+                    <td class="td-sm t-0" colspan="0" rowspan="1">
+                        <p class=""><span class="">WORKED DAYS</span></p>
+                    </td>
+                    <td class="td-sm t-0" colspan="0" rowspan="1">
+                        <p class=""><span class="">LOSS OF PAY</span></p>
+                    </td>
+                    <td class="td-sm t-0" colspan="0" rowspan="1">
+                        <p class=""><span class="">ARREAR DAYS</span></p>
+                    </td>
+                </tr>
+                <tr class="">
+                    <td class="td-sm" colspan="0" rowspan="1">
+                        <p class=""><span class="">{{$employee->MONTH_DAYS}}</span></p>
+                    </td>
+                    <td class="td-sm" colspan="0" rowspan="1">
+                        <p class="td-sm">
+                            <span class="">{{$employee->Worked_Days}}</span>
+                        </p>
+                    </td>
+                    <td class="td-sm" colspan="0" rowspan="1">
+                        <p class="">
+                            <span class="">{{$employee->LOP}}</span>
+                        </p>
+                    </td>
+                    <td class="td-sm" colspan="0" rowspan="1">
+                        <p class="">
+                            <span class="">{{$employee->Arrears_Days}}
+                            </span>
+                        </p>
+                    </td>
+                </tr>
+            </table>
+
+
+        </div>
+    </div>
+
 </body>
 
 </html>
