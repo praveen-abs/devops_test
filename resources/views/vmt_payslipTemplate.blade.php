@@ -1,6 +1,8 @@
 <?php
 $employee = \DB::table('vmt_employee_payslip')->first();
-$generalInfo = \DB::table('vmt_general_info')->first();
+$general_info = \DB::table('vmt_general_info')->first();
+$client_logo = request()->getSchemeAndHttpHost()."".$general_info->logo_img;
+// dd(request()->getSchemeAndHttpHost()."".$general_info->logo_img);
 ?>
 <html>
 <head>
@@ -978,7 +980,7 @@ $generalInfo = \DB::table('vmt_general_info')->first();
             </td>
             <td align ="right" >
                         <span style="transform: rotate(0.00rad) translateZ(0px);">
-                            <img src="data:image/png;base64,{{base64_encode(file_get_contents(public_path('/generalinfo/client-logo.png')))}}"
+                            <img src={{$client_logo}}
                                 style="width: 140px; height: 70px;" title="">
 
                         </span>
