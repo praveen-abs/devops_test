@@ -7,30 +7,30 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\VmtEmployee;
 use App\Models\VmtEmployeeOfficeDetails;
-use App\Models\VmtPMS_KPIFormAssignedModel; 
+use App\Models\VmtPMS_KPIFormAssignedModel;
 use App\Models\VmtPMS_KPIFormDetailsModel;
 use App\Models\VmtPMS_KPIFormReviewsModel;
 use App\Models\VmtPMS_KPIFormModel;
 
 class VmtAPIPMSModuleController extends Controller
 {
-    
-    public function showEmployeeApraisalReviewList(){
-         
+
+    public function showEmployeeApraisalReviewList(Request $request){
+
         $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')
             ->WhereRaw("find_in_set(".auth()->user()->id.", reviewer_id)")
             ->orWhereRaw("find_in_set(".auth()->user()->id.", assignee_id)")
             ->orWhere('assigner_id',auth()->user()->id)
             ->orderBy('id','DESC')->get();
-       
+
         return response()->json([
             'status' => true,
-            'message'=> '', 
-            'data'   => $pmsKpiAssigneeDetails
-        ]); 
+            'message'=> '',
+            'data'   => $pmsKpiAssigneeDetaifls
+        ]);
     }
 
-    public function showEmployeeApraisalReview(Request $request){
+    public function getAssigneeReviews(Request $request){
         // Flow 1 HR creates Form and Assignee
         $kpiFormAssignedDetails = VmtPMS_KPIFormAssignedModel::where('id', $request->assignedFormid)
             ->with('getPmsKpiFormReviews')
@@ -96,7 +96,7 @@ class VmtAPIPMSModuleController extends Controller
         if(count($review ) > 0){
             $kpiRowsId = implode(',',$kpiRowsId);
         }
-        
+
 
         // Get assigned Details
         $assignedGoals  = VmtPMS_KPIFormAssignedModel::where('vmt_pms_kpiform_assigned.id',$request->assignedFormid)->where('vmt_pms_kpiform_reviews.assignee_id', $request->assigneeId)->join('vmt_pms_kpiform_reviews','vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id','=','vmt_pms_kpiform_assigned.id')->first();
@@ -156,11 +156,11 @@ class VmtAPIPMSModuleController extends Controller
         $assignedEmployeeOfficeDetails = VmtEmployeeOfficeDetails::where('user_id', auth::user()->id)->first();
         $empSelected = true;
         $employeeData = VmtEmployee::where('userid', auth::user()->id)->first();
-        
+
         if($assignedGoals!=''){
             $reviewersId = explode(',',$assignedGoals->reviewer_id);
         }else{
-            $reviewersId = []; 
+            $reviewersId = [];
         }
 
         // check if all reviewers has submitted the review or not
@@ -189,17 +189,34 @@ class VmtAPIPMSModuleController extends Controller
 
         return response()->json([
             'status' => true,
-            'message'=> '', 
+            'message'=> '',
             'data'   => $responseData
-        ]); 
+        ]);
     }
 
 
     //
-    public function saveEmployeeApraisalReview(Request $request){
-       
+    public function saveAssigneeReviews(Request $request){
+
         return response()->json(['status'=>true,
             'message'=> '']);
         //}
     }
+
+    /*
+        Get all the KPI forms assigned for the given user.
+
+            DB Table : vmt_pms_kpiform_assigned
+            Input params : assignee_id
+
+        Logic : Using assignee_id, we will search the assignee_id, reviewer_id
+
+
+    */
+    public function getAssignedKPIForms(Request $request)
+    {
+
+    }
+
+
 }
