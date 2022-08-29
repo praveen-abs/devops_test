@@ -10,7 +10,6 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
 
     <meta content="text/html; charset=UTF-8" http-equiv="content-type">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <style>
         .main-page {
             width: 210mm;
@@ -56,9 +55,9 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
             }
         }
 
-        p {
-            text-align: justify;
-        }
+
+
+
 
         /* p {
   text-align: justify;
@@ -185,7 +184,7 @@ page[size="A5"][layout="landscape"] {
         table td p {
             padding: 0px;
             margin: 0px;
-            font-size: 15px;
+            font-size: 14px;
         }
 
         table,
@@ -201,10 +200,14 @@ page[size="A5"][layout="landscape"] {
         }
 
         table .row-full p {
-            font-size: 14px;
-            text-align: center !important;
+            font-size: 13px;
+            /* text-align: center !important; */
             font-weight: 600;
             margin: 5px 0px;
+        }
+
+        .row-full .center {
+            text-align: center;
         }
 
         table .row-full {
@@ -221,8 +224,8 @@ page[size="A5"][layout="landscape"] {
             font-size: 13px;
         }
 
-        .body-content .tr p {
-            font-weight: 600;
+        .body-content .tr p span {
+            /* font-weight: 600; */
             font-size: 12px;
         }
 
@@ -234,7 +237,7 @@ page[size="A5"][layout="landscape"] {
             border-bottom: 0px;
         }
 
-        table .header-content {
+        .header-content {
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -252,9 +255,20 @@ page[size="A5"][layout="landscape"] {
             margin: 2px;
         }
 
+        .header-content .left-header {
+            width: 100%;
+        }
+
+        .header-content .right-header {
+            width: 100%;
+            text-align: end;
+            clear: both;
+        }
+
         .header-content .right-header .img-wrap {
             height: 45px;
             width: 180px;
+            float: right;
         }
 
         .header-content .right-header img {
@@ -273,7 +287,6 @@ page[size="A5"][layout="landscape"] {
             border-top: 0px;
         }
     </style>
-
 </head>
 
 <body>
@@ -312,17 +325,17 @@ page[size="A5"][layout="landscape"] {
                                     <span class="4">&ldquo;SHALOM BUILDING&rdquo; </span>
                                 </h5>
                                 <p class="">
-                                    <span class="c53">1</span><span class="c53 c61">st</span><span class="c53 c59">&nbsp;Floor,
+                                    <span class="3">1</span><span class="3 ">st</span><span class="3 9">&nbsp;Floor,
                                         Office No.20, No.04, Mannar Street, </span>
                                 </p>
-                                <p class=""><span class="c59 c53">T Nagar, Chennai, Tamil Nadu, India &ndash; 600
+                                <p class=""><span class="9 3">T Nagar, Chennai, Tamil Nadu, India &ndash; 600
                                         017</span></p>
-                                <p class="4 c23"><span class="8"></span></p>
+                                <p class="4 "><span class="8"></span></p>
                             </div>
                             <div class="right-header">
                                 <div class="img-wrap" style="transform: rotate(0.00rad) translateZ(0px);">
                                     <!-- <img src={{$client_logo}} style="width: 140px; height: 70px;" title=""> -->
-                                    <!-- <img src="" alt=""> -->
+                                    <!-- <img src="../images/brandavatarlogo.png" alt=""> -->
                                     <img src="{{ URL::asset('assets/images/brand_avatar.png') }}" alt="" class="">
                                 </div>
                             </div>
@@ -333,7 +346,7 @@ page[size="A5"][layout="landscape"] {
             <table class="body-content">
                 <tr class="body-header">
                     <td class="row-full" colspan="12" rowspan="1">
-                        <p class=" "><span class="">PAYSLIP FOR THE
+                        <p class="center"><span class="">PAYSLIP FOR THE
                                 MONTH OF &ndash;
                                 {{$employee->PAYROLL_MONTH}}</span></p>
                     </td>
@@ -415,68 +428,396 @@ page[size="A5"][layout="landscape"] {
 
                 <tr class="tr-md row-full">
                     <td class="td-md th" colspan="" rowspan="1">
-                        <p class=""><span class="">BANK NAME</span></p>
+                        <p class="center"><span class="">BANK NAME</span></p>
                     </td>
                     <td class="td-md th " colspan="" rowspan="1">
-                        <p class=""><span class="">ACCOUNT NUMBER</span></p>
+                        <p class="center"><span class="">ACCOUNT NUMBER</span></p>
                     </td>
                     <td class="td-md th" colspan="" rowspan="1">
-                        <p class=""><span class="">IFSC CODE</span></p>
+                        <p class="center"><span class="">IFSC CODE</span></p>
                     </td>
                 </tr>
                 <tr class="tr-md">
                     <td class=" td-md th" colspan="0" rowspan="1">
-                        <p class=""><span class="">{{$employee->Bank_Name}}</span></p>
+                        <p class="center"><span class="">{{$employee->Bank_Name}}</span></p>
                     </td>
                     <td class=" td-md th" colspan="0" rowspan="1">
-                        <p class=""><span class="">{{$employee->Account_Number}}</span></p>
+                        <p class="center"><span class="">{{$employee->Account_Number}}</span></p>
                     </td>
                     <td class=" td-md th" colspan="0" rowspan="1">
-                        <p class=""><span class="">{{$employee->Bank_IFSC_Code}}</span></p>
+                        <p class="center"><span class="">{{$employee->Bank_IFSC_Code}}</span></p>
                     </td>
 
                 </tr>
             </table>
-            <table class="row-full t-0">
+            <table class="t-0">
 
-                <tr class="">
-                    <td class="td-sm t-0" colspan="0" rowspan="1">
-                        <p class=""><span class="">MONTH DAYS</span></p>
+                <tr class="row-full  t-0">
+                    <td class="td-sm t-0 " colspan="0" rowspan="1">
+                        <p class="center"><span class="">MONTH DAYS</span></p>
                     </td>
                     <td class="td-sm t-0" colspan="0" rowspan="1">
-                        <p class=""><span class="">WORKED DAYS</span></p>
+                        <p class="center"><span class="">WORKED DAYS</span></p>
                     </td>
                     <td class="td-sm t-0" colspan="0" rowspan="1">
-                        <p class=""><span class="">LOSS OF PAY</span></p>
+                        <p class="center"><span class="">LOSS OF PAY</span></p>
                     </td>
                     <td class="td-sm t-0" colspan="0" rowspan="1">
-                        <p class=""><span class="">ARREAR DAYS</span></p>
+                        <p class="center"><span class="">ARREAR DAYS</span></p>
                     </td>
                 </tr>
                 <tr class="">
                     <td class="td-sm" colspan="0" rowspan="1">
-                        <p class=""><span class="">{{$employee->MONTH_DAYS}}</span></p>
+                        <p class="center"><span class="">{{$employee->MONTH_DAYS}}</span></p>
                     </td>
                     <td class="td-sm" colspan="0" rowspan="1">
-                        <p class="td-sm">
+                        <p class="center">
                             <span class="">{{$employee->Worked_Days}}</span>
                         </p>
                     </td>
                     <td class="td-sm" colspan="0" rowspan="1">
-                        <p class="">
+                        <p class="center">
                             <span class="">{{$employee->LOP}}</span>
                         </p>
                     </td>
                     <td class="td-sm" colspan="0" rowspan="1">
-                        <p class="">
+                        <p class="center">
                             <span class="">{{$employee->Arrears_Days}}
                             </span>
                         </p>
                     </td>
                 </tr>
             </table>
+            <table class="t-0">
+                <tr class="">
+                    <td class="row-full  t-0" colspan="1" rowspan="1">
+                        <p class="center"><span class="">SL Open Balance</span></p>
+                    </td>
+                    <td class="row-full  t-0" colspan="3" rowspan="1">
+                        <p class="center"><span class="">CL Open Balance</span></p>
+                    </td>
+                    <td class="row-full  t-0" colspan="1" rowspan="1">
+                        <p class="center"><span class="">Availed SL</span></p>
+                    </td>
+                    <td class="row-full  t-0" colspan="1" rowspan="1">
+                        <p class="center"><span class="">Availed CL</span></p>
+                    </td>
+                    <td class="row-full  t-0" colspan="1" rowspan="1">
+                        <p class="center"><span class="">Balance SL</span></p>
+                    </td>
+                    <td class="row-full  t-0" colspan="2" rowspan="1">
+                        <p class="center"><span class="">Balance CL</span></p>
+                    </td>
+                </tr>
+                <tr class="">
+                    <td class="" colspan="1" rowspan="1">
+                        <p class="center"><span class="">-</span></p>
+                    </td>
+                    <td class=" " colspan="3" rowspan="1">
+                        <p class="center"><span class="">-</span></p>
+                    </td>
+                    <td class="" colspan="1" rowspan="1">
+                        <p class="center"><span class="">-</span></p>
+                    </td>
+                    <td class="" colspan="1" rowspan="1">
+                        <p class="center"><span class="">-</span></p>
+                    </td>
+                    <td class="" colspan="1" rowspan="1">
+                        <p class="center"><span class="">-</span></p>
+                    </td>
+                    <td class="" colspan="2" rowspan="1">
+                        <p class="center"><span class="">-</span></p>
+                    </td>
+                </tr>
+                <tr class="">
+                    <td colspan="8"></td>
+                </tr>
 
 
+            </table>
+            <table class="t-0">
+
+                <tr class="row-full">
+                    <td class="t-0" colspan="1" rowspan="1">
+                        <p class=""><span class="">DESCRIPTION</span></p>
+                    </td>
+                    <td class="t-0" colspan="3" rowspan="1">
+                        <p class=""><span class="">AMOUNT</span></p>
+                    </td>
+                    <td class="t-0" colspan="1" rowspan="1">
+                        <p class=""><span class="">ARREAR AMOUNT</span></p>
+                    </td>
+                    <td class="t-0" colspan="1" rowspan="1">
+                        <p class=""><span class="">EARNED AMOUNT</span></p>
+                    </td>
+                    <td class="t-0" colspan="1" rowspan="1">
+                        <p class=""><span class="">DEDUCTION</span></p>
+                    </td>
+                    <td class="t-0" colspan="2" rowspan="1">
+                        <p class=""><span class="">AMOUNT</span></p>
+                    </td>
+                </tr>
+                <tr class="0">
+                    <td class="7" colspan="1" rowspan="1">
+                        <p class=""><b>BASIC</b> </p>
+                    </td>
+                    <td class="" colspan="3" rowspan="1">
+                        <p class="4"><span class=""> <span>&#8377;</span>{{$employee->BASIC}}</span></p>
+                    </td>
+                    <td class="7" colspan="1" rowspan="1">
+                        <p class="4">
+                            <span class=""><span>&#8377;</span> </span>
+                            <span class="">0</span>
+                        </p>
+                    </td>
+                    <td class="7" colspan="1" rowspan="1">
+                        <p class="4"><span class="1"><span>&#8377;</span>
+                            </span><span class="">4560</span></p>
+                    </td>
+                    <td class="7" colspan="1" rowspan="1">
+                        <p class=""><b class="">EPF</b></p>
+                    </td>
+                    <td class="7" colspan="2" rowspan="1">
+                        <p class="4"><span class=""><span>&#8377;</span>
+                                638</span></p>
+                    </td>
+                </tr>
+                <tr class="0">
+                    <td class="7" colspan="1" rowspan="1">
+                        <p class=""><b class="">HRA</b></p>
+                    </td>
+                    <td class="" colspan="3" rowspan="1">
+                        <p class="4"><span class=""><span>&#8377;</span>
+                                {{$employee->HRA}}</span></p>
+                    </td>
+                    <td class="7" colspan="1" rowspan="1">
+                        <p class="4">
+                            <span class=""><span>&#8377;</span> </span>
+                            <span class="">0</span>
+                        </p>
+                    </td>
+                    <td class="7" colspan="1" rowspan="1">
+                        <p class="4">
+                            <span class=""><span>&#8377;</span> </span>
+                            <span class="">2280</span>
+                        </p>
+                    </td>
+                    <td class="7" colspan="1" rowspan="1">
+                        <p class=""><b class="">ESIC</span></p>
+                    </td>
+                    <td class="7" colspan="2" rowspan="1">
+                        <p class="4"><span class=""><span>&#8377;</span>
+                                58</span></p>
+                    </td>
+                </tr>
+                <tr class="0">
+                    <td class="7" colspan="1" rowspan="1">
+                        <p class=""><b class="">SPECIAL ALLOW</b></p>
+                    </td>
+                    <td class="" colspan="3" rowspan="1">
+                        <p class="4"><span class=""><span>&#8377;</span>
+                                {{$employee->SPL_ALW}}</span></p>
+                    </td>
+                    <td class="7" colspan="1" rowspan="1">
+                        <p class="4"><span class=""><span>&#8377;</span>
+                                0</span></p>
+                    </td>
+                    <td class="7" colspan="1" rowspan="1">
+                        <p class="4"><span class=""><span>&#8377;</span>
+                                760</span></p>
+                    </td>
+                    <td class="7" colspan="1" rowspan="1">
+                        <p class=""><b class="">PT</b></p>
+                    </td>
+                    <td class="7" colspan="2" rowspan="1">
+                        <p class="4"><span class=""><span>&#8377;</span>
+                                {{$employee->PROF_TAX}}</span></p>
+                    </td>
+                </tr>
+                <tr class="0">
+                    <td class="7" colspan="1" rowspan="1">
+                        <p class=""><b class="">OVERTIME</b></p>
+                    </td>
+                    <td class="" colspan="3" rowspan="1">
+                        <p class="4 "><span class=""></span></p>
+                    </td>
+                    <td class="7" colspan="1" rowspan="1">
+                        <p class="4 "><span class="6"></span></p>
+                    </td>
+                    <td class="7" colspan="1" rowspan="1">
+                        <p class="4">
+                            <span class=""><span>&#8377;</span>
+                                {{$employee->Overtime}}
+                            </span>
+                        </p>
+                    </td>
+                    <td class="7" colspan="" rowspan="1">
+                        <p class=""><b class="">TDS</b></p>
+                    </td>
+                    <td class="7" colspan="" rowspan="1">
+                        <p class="4"><span class=""><span>&#8377;</span>
+                                {{$employee->TDS}}</span></p>
+                    </td>
+                </tr>
+                <tr class="0">
+                    <td class="7" colspan="1" rowspan="1">
+                        <p class=" "><span class="c2"></span></p>
+                    </td>
+                    <td class="" colspan="3" rowspan="1">
+                        <p class="4 "><span class=""></span></p>
+                    </td>
+                    <td class="7" colspan="1" rowspan="1">
+                        <p class="4 "><span class="6"></span></p>
+                    </td>
+                    <td class="7" colspan="1" rowspan="1">
+                        <p class="4 "><span class="6"></span></p>
+                    </td>
+                    <td class="7" colspan="1" rowspan="1">
+                        <p class=""><b class="">CANT-DEDUCTION</b></p>
+                    </td>
+                    <td class="7" colspan="2" rowspan="1">
+                        <p class="4"><span class=""><span>&#8377;</span>
+                                {{$employee->CANTEEN_DEDN}}</span></p>
+                    </td>
+                </tr>
+                <tr class="0">
+                    <td class="7" colspan="1" rowspan="1">
+                        <p class=" "><span class="c2"></span></p>
+                    </td>
+                    <td class="" colspan="3" rowspan="1">
+                        <p class="4 "><span class=""></span></p>
+                    </td>
+                    <td class="7" colspan="1" rowspan="1">
+                        <p class="4 "><span class="6"></span></p>
+                    </td>
+                    <td class="7" colspan="1" rowspan="1">
+                        <p class="4 "><span class="6"></span></p>
+                    </td>
+                    <td class="7" colspan="1" rowspan="1">
+                        <p class="">
+                            <b class="">SALARY ADVANCE</b>
+                        </p>
+                    </td>
+                    <td class="7" colspan="2" rowspan="1">
+                        <p class="4"><span class=""><span>&#8377;</span>
+                                {{$employee->SAL_ADV}}</span></p>
+                    </td>
+                </tr>
+                <tr class="0">
+                    <td class="7" colspan="1" rowspan="1">
+                        <p class=" "><span class="c2"></span></p>
+                    </td>
+                    <td class="" colspan="3" rowspan="1">
+                        <p class="4 "><span class=""></span></p>
+                    </td>
+                    <td class="7" colspan="1" rowspan="1">
+                        <p class="4 "><span class="6"></span></p>
+                    </td>
+                    <td class="7" colspan="1" rowspan="1">
+                        <p class="4 "><span class="6"></span></p>
+                    </td>
+                    <td class="7" colspan="1" rowspan="1">
+                        <p class=""><b class="">OTHER DEDUCTIONS</b></p>
+                    </td>
+                    <td class="7" colspan="2" rowspan="1">
+                        <p class="4"><span class=""><span>&#8377;</span>
+                                {{$employee->OTHER_DEDUC}}</span></p>
+                    </td>
+                </tr>
+                <tr class="row-full">
+                    <td class="" colspan="1" rowspan="1">
+                        <p class=""><b class="">TOTAL EARNINGS</b></p>
+                    </td>
+                    <td class="" colspan="3" rowspan="1">
+                        <p class="4"><span class=""><span>&#8377;</span>
+                            </span><b class="">{{$employee->TOTAL_EARNED_GROSS}}</b></p>
+                    </td>
+                    <td class="" colspan="1" rowspan="1">
+                        <p class="4 "><span class=""></span></p>
+                    </td>
+                    <td class="" colspan="1" rowspan="1">
+                        <p class="4"><span class="1"><span>&#8377;</span>
+                            </span><b class="">7666</b></p>
+                    </td>
+                    <td class="" colspan="1" rowspan="1">
+                        <p class=""><b class="">TOTAL DEDUCTION</b></p>
+                    </td>
+                    <td class="" colspan="2" rowspan="1">
+                        <p class="4"><span class=""><span>&#8377;</span>
+                            </span><b class="">{{$employee->TOTAL_DEDUCTIONS}}</b></p>
+                    </td>
+                </tr>
+
+
+                <tr class="">
+                    <td colspan="8"></td>
+                </tr>
+                <tr class="">
+                    <td class="row-full" colspan="5" rowspan="1">
+                        <p class=""><span class="">NET PAY</span></p>
+                    </td>
+                    <td class="1" colspan="4" rowspan="1">
+                        <p class="center"><span class="1"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>
+                            </span><span class="">{{$employee->NET_TAKE_HOME}}</span></p>
+                    </td>
+                </tr>
+                <tr class="">
+                    <td class="row-full" colspan="2" rowspan="1">
+                        <p class=""><span class="">NET PAY IN WORDS</span></p>
+                    </td>
+                    <td class="" colspan="7" rowspan="1">
+                        <p class="center"><span class="">{{$employee->Rupees}}</span></p>
+                    </td>
+                </tr>
+                <tr class="">
+                    <td class="" colspan="9" rowspan="1">
+                        <p class=""><span class="6">&nbsp;</span></p>
+                    </td>
+                </tr>
+                <tr class="">
+                    <td class="row-full" colspan="3" rowspan="1">
+                        <p class=""><span class="">TRANSACTION ID</span></p>
+                    </td>
+                    <td class="" colspan="2" rowspan="1">
+                        <p class=" "><span class="6"></span></p>
+                    </td>
+                    <td class="row-full" colspan="2" rowspan="1">
+                        <p class=""><span class="">Paid Date</span></p>
+                    </td>
+                    <td class="" colspan="2" rowspan="1">
+                        <p class=""><span class="c9">11-MAY-2022</span></p>
+                    </td>
+                </tr>
+                <tr class="">
+                    <td class="" colspan="9" rowspan="1">
+                        <p class=""><span class="6">&nbsp;</span></p>
+                    </td>
+                </tr>
+                <tr class="8">
+                    <td class="0" colspan="9" rowspan="1">
+                        <p class="center" style="font-weight: 600;"><span class="1">This is a computer-generated slip does not require signature</span></p>
+                    </td>
+                </tr>
+
+
+                <table style="border: 0px;">
+                    <tfoot>
+                        <tr style="border: 0px;">
+                            <td style="border: 0px;">
+                                <div style="height:100px; display:flex;align-items:center;justify-content:space-between;">
+                                    <span>Please reach out to us for any payroll queries at -payroll@ardens.inPowered By</span>
+                                    <div style="height: 30px; width:150px;display:flex;align-items:center;">
+                                        <span style="width: 100%;">Powered By</span>
+                                        <img src="{{ URL::asset('assets/images/brand_avatar.png') }}" alt="" class="" style="width:100%;height:100%;">
+                                    </div>
+
+                                </div>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+            </table>
         </div>
     </div>
 

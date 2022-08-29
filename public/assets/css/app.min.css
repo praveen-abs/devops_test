@@ -17530,7 +17530,7 @@ p {
 }
 
 .font-moderate {
-    font-size: 18px;
+    font-size: 15px;
 }
 
 .payslip-details-card .nav-pills.nav-tabs-dashed li a.active {
@@ -17924,6 +17924,7 @@ a.ember-view {
 .zp-table.table.salary-details-table td {
     vertical-align: middle;
     padding-top: 12px;
+    text-align: left;
     padding-bottom: 12px;
 }
 
@@ -17943,6 +17944,7 @@ a.ember-view {
 .zp-table.table.salary-details-table tr > td:last-of-type,
 .zp-table.table.salary-details-table tr > th:last-of-type {
     padding-right: 55px;
+    text-align: left;
 }
 
 /* investment */
