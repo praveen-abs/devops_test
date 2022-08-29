@@ -17768,6 +17768,8 @@ a.ember-view {
 
 .salary-header.nav-tab-header .nav-pills.nav-tabs-dashed li a.active {
     border-bottom-color: #002f56;
+    border-radius: 0px;
+    border-top-left-radius: 0px;
 }
 
 .salary-header.nav-tab-header .nav-pills.nav-tabs-dashed li a {
@@ -18544,7 +18546,13 @@ table > tbody > tr > td > img,
 /* media query for login */
 @media only screen and (max-width: 800px) {
 }
-
+[data-layout="vertical"][data-sidebar-size="lg"] .navbar-header .topnav-hamburger{
+    margin-left: 8px;
+}
+[data-layout="vertical"][data-sidebar-size="sm"] .navbar-header .topnav-hamburger{
+    margin-left: 20px;
+    
+}
 [data-layout="vertical"][data-sidebar-size="sm"] .navbar-menu .navbar-nav .nav-link span {
     display: none;
     /* flex-wrap: wrap; */

@@ -327,28 +327,28 @@ $('#vmt_aadhar').on('input', function(){
 
 
 
-$('#dl_no').on('input', function(){
+// $('#dl_no').on('input', function(){
 
-    var patt = /^([A-Z]{2})(\d{2}|\d{3})[a-zA-Z]{0,1}(\d{4})(\d{7})$/;
-    var txtValue = $(this).val();
-    var maxLength = $(this).attr('maxlength');
+//     var patt = /^([A-Z]{2})(\d{2}|\d{3})[a-zA-Z]{0,1}(\d{4})(\d{7})$/;
+//     var txtValue = $(this).val();
+//     var maxLength = $(this).attr('maxlength');
 
-    if ( txtValue.trim().length == maxLength)
-    {
-        if( patt.test(txtValue)){
-            return true;
-        }
-        else {
-            $('#error_dl_no').html("DL number is not valid");
-            return false;
-        }
-    }
-    else
-    {
-        $('#error_dl_no').html("");
-        return true;
-    }
-});
+//     if ( txtValue.trim().length == maxLength)
+//     {
+//         if( patt.test(txtValue)){
+//             return true;
+//         }
+//         else {
+//             $('#error_dl_no').html("DL number is not valid");
+//             return false;
+//         }
+//     }
+//     else
+//     {
+//         $('#error_dl_no').html("");
+//         return true;
+//     }
+// });
 
 $('#pan_ack').keyup(function() {
 if ($('#pan_ack').val() == '') {
