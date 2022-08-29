@@ -381,7 +381,7 @@ class VmtPMSModuleController extends Controller
                 $assigneeReview->assignee_kpi_status = null;
                 $assigneeReview->reviewer_kpi_status = null;
                 $assigneeReview->is_assignee_submitted = null;
-                if(isset($flowCheck) && $flowCheck==1)
+                if(isset($request->flowCheck) && $request->flowCheck==1)
                 {
                     $assigneeReview->is_assignee_accepted = '1';
                 }else{
