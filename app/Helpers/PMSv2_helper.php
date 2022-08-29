@@ -136,12 +136,15 @@ function checkViewReviewText($loggedUserRole,$kpiFormReviewDetails){
                 $result = 'Self-Review';
             }
         }elseif($loggedUserRole == 'reviewer' || $loggedUserRole == 'assigner'){
-            $decodedReview = isset($kpiFormReviewDetails->is_reviewer_submitted) ? json_decode($kpiFormReviewDetails->is_reviewer_submitted,true) : [];
-            if(isset($decodedReview[Auth::id()]) && $decodedReview[Auth::id()] == '1'){
-                    $result = 'View';        
+            if(isset($kpiFormReviewDetails) && $kpiFormReviewDetails->is_assignee_accepted == '0'){
+                $result = 'Edit'; 
             }else{
-                $result = 'Review';
-                
+                $decodedReview = isset($kpiFormReviewDetails->is_reviewer_submitted) ? json_decode($kpiFormReviewDetails->is_reviewer_submitted,true) : [];
+                if(isset($decodedReview[Auth::id()]) && $decodedReview[Auth::id()] == '1'){
+                        $result = 'View';        
+                }else{
+                    $result = 'Review';
+                }
             }
         }
         return $result;

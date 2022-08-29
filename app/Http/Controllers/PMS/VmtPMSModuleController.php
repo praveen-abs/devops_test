@@ -260,7 +260,7 @@ class VmtPMSModuleController extends Controller
 
     public function showKPICreateForm(){
 
-        $config = ConfigPms::where('user_id', auth()->user()->id)->first();
+        $config = ConfigPms::first();
         $show['dimension'] = 'true';
         $show['kpi'] = 'true';
         $show['operational'] = 'true';
@@ -293,7 +293,7 @@ class VmtPMSModuleController extends Controller
     public function saveKPIForm(Request $request){
 
         // dd($request->dimension);
-        $config = ConfigPms::where('user_id', auth()->user()->id)->first();
+        $config = ConfigPms::first();
         //  dd($config->selected_columns);
         $kpiTable  = new VmtPMS_KPIFormModel;
 
@@ -755,7 +755,7 @@ class VmtPMSModuleController extends Controller
     */
     public function getUserPMSConfig($user_id)
     {
-        $config = ConfigPms::where('user_id', $user_id)->first();
+        $config = ConfigPms::first();
         $show['dimension'] = 'true';
         $show['kpi'] = 'true';
         $show['operational'] = 'true';
@@ -969,5 +969,80 @@ class VmtPMSModuleController extends Controller
             Log::info('Change Reviewer Selection flow 1 HR PMS V2 error: '.$e->getMessage());
             return response()->json(['status'=>false,'message'=>$e->getMessage()]); 
         }
+    }
+
+    public function republishForm($kpiAssignedId){
+        $kpiAssignedDetails = VmtPMS_KPIFormAssignedModel::where('id',$kpiAssignedId)->with('getPmsKpiFormColumnDetails.getPmsKpiFormDetails')->first();
+        // dD($kpiAssignedDetails);
+
+        $configDetails = ConfigPms::first();
+        // dD($configDetails);
+        $configHeader = $kpiAssignedDetails->getPmsKpiFormColumnDetails->available_columns;
+        // dD($configHeader);
+        $configHeaderFormName = $kpiAssignedDetails->getPmsKpiFormColumnDetails->form_name;
+        $configHeader = explode(',',$configHeader);
+
+        // dd(json_decode($configDetails->column_header));
+        $columnHeader = [];
+        if(count($configHeader) > 0){
+
+            foreach($configHeader as $header){
+                $decodedColumnHeader = json_decode($configDetails->column_header,true);
+                $decodedColumnHeaderValueCheck = explode(',', $configDetails->selected_columns);
+                if(in_array($header,$decodedColumnHeaderValueCheck)){
+                    $columnHeader[$header] = $decodedColumnHeader[$header];
+                }
+            }
+        }
+        $data = $kpiAssignedDetails->getPmsKpiFormColumnDetails->getPmsKpiFormDetails;
+        return view('pms.vmt_pms_kpiform__reviewer_republish',compact('columnHeader','configHeaderFormName','data','kpiAssignedId'));
+    }
+
+    public function republishFormEdited(Request $request){
+        // dd($request->all());
+        $kpiAssignedDetails = VmtPMS_KPIFormAssignedModel::where('id',$request->kpiAssignedId)->with('getPmsKpiFormColumnDetails.getPmsKpiFormDetails')->first();
+
+        $formDetails  = $kpiAssignedDetails->getPmsKpiFormColumnDetails->getPmsKpiFormDetails;
+        foreach($formDetails as $key => $form){
+            if(isset($request->dimension) && $request->dimension[$key]){
+                $form->dimension =  $request->dimension[$key];
+            }
+            if(isset($request->kpi) && $request->kpi[$key]){
+                $form->kpi =  $request->kpi[$key];
+            }
+            if(isset($request->operational) && $request->operational[$key]){
+                $form->operational_definition =  $request->operational[$key];
+            }
+            if(isset($request->measure) && $request->measure[$key]){
+                $form->measure =  $request->measure[$key];
+            }
+            if(isset($request->frequency) && $request->frequency[$key]){
+                $form->frequency =  $request->frequency[$key];
+            }
+            if(isset($request->target) && $request->target[$key]){
+                $form->target =  $request->target[$key];
+            }
+            if(isset($request->stretchTarget) && $request->stretchTarget[$key]){
+                $form->stretch_target =  $request->stretchTarget[$key];
+            }
+            if(isset($request->source) && $request->source[$key]){
+                $form->source =  $request->source[$key];
+            }
+            if(isset($request->kpiWeightage) && $request->kpiWeightage[$key]){
+                $form->kpi_weightage =  $request->kpiWeightage[$key];
+            }
+            $form->update();
+        }
+// dD($request->kpiAssignedId);
+        $reviewDetails = VmtPMS_KPIFormReviewsModel::where('vmt_pms_kpiform_assigned_id',$request->kpiAssignedId)->get();
+        if(count($reviewDetails) > 0){
+            foreach($reviewDetails as $review){
+                if($review->is_assignee_accepted == '0'){
+                    $review->is_assignee_accepted = null;
+                    $review->update();
+                }
+            }
+        }
+        return true;
     }
 }

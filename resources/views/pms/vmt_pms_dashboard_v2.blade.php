@@ -289,12 +289,14 @@ header {
                                                 </div>
                                             </td>
                                             <td>
+                                                <?php
+                                                $checkViewReviewText = checkViewReviewText($pmsKpiAssigneeData['currentLoggedUserRole'],$kpiFormAssigneeReview);
+                                                ?>
                                                 <div class="td_content_center">
-                                                <a target="_blank"
-                                                    href="{{ url('pms-showReviewPage?assignedFormid=' . $pmsKpiAssignee->id . '&assigneeId=' . $assigneeId) }}"><button
+                                                <a target="_blank" @if($checkViewReviewText == 'Edit') href="{{ route('republishForm',$pmsKpiAssignee->id) }}" @else href="{{ url('pms-showReviewPage?assignedFormid=' . $pmsKpiAssignee->id . '&assigneeId=' . $assigneeId) }}" @endif><button
                                                         class="btn btn-orange py-0 px-2 "> <span class="mr-10 icon"></span>
                                                         <?php  
-                                                        echo checkViewReviewText($pmsKpiAssigneeData['currentLoggedUserRole'],$kpiFormAssigneeReview);
+                                                        echo $checkViewReviewText;
                                                         ?>
                                                         </button></a>
                                                 </div>
@@ -461,7 +463,7 @@ header {
                             <div class="table-wrapper m-2">
                                 <div class="row">
                                     <div class="col-12">
-                                        <h5>Goals / Areas of devel  opment</h5>
+                                        <h5>Goals / Areas of development</h5>
                                     </div>
                                 </div>
                                 <div class="row">

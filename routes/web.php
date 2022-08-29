@@ -287,6 +287,10 @@ Route::get('/downloadExcelReviewForm/{kpiAssignedId}/{key}', [VmtPMSModuleContro
 // routes for accept/reject review by Assignee
 Route::post('acceptRejectAssigneeReview', [VmtPMSModuleController::class,'acceptRejectAssigneeReview'])->name('acceptRejectAssigneeReview');
 
+// republish form flow 2
+Route::get('/republishForm/{kpiAssignedId}',[VmtPMSModuleController::class, 'republishForm'])->name('republishForm');
+Route::post('/republishFormEdited',[VmtPMSModuleController::class, 'republishFormEdited'])->name('republishFormEdited');
+
 // routes for get related manager of employee in Flow 1 
 Route::post('getReviewerOfSelectedEmployee', [VmtPMSModuleController::class,'getReviewerOfSelectedEmployee'])->name('getReviewerOfSelectedEmployee');
 Route::post('getSameLevelOfReviewer', [VmtPMSModuleController::class,'getSameLevelOfReviewer'])->name('getSameLevelOfReviewer');
@@ -294,3 +298,5 @@ Route::post('changeReviewerSelection', [VmtPMSModuleController::class,'changeRev
 
 //DONT WRITE ANT ROUTES BELOW THIS
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index']);
+
+
