@@ -137,7 +137,7 @@
                                                 </div> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Pan Acknowlegement</label>
-                                                    <input type="text" placeholder="Pan Acknowlegement " name="pan_ack" id="pan_ack" pattern="alp-num" minlength="15" maxlength="15" class="onboard-form form-control textbox  " pattern="name" required />
+                                                    <input type="text" placeholder="Pan Acknowlegement " name="pan_ack" id="pan_ack" pattern="alp-num" minlength="15" maxlength="15" class="onboard-form form-control textbox " pattern="name" not-required />
                                                     <label class="error star_error employee_name_label" for="employee_name" style="display: none;"></label>
 
 
