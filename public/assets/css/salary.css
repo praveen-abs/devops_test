@@ -287,3 +287,54 @@ circle {
         stroke-dasharray: 0, 90, 10, 0;
     }
 }
+
+
+.force-overflow {
+    height: 69px;
+    overflow-y: hidden;
+}
+
+.force-overflow:hover {
+    overflow-y: scroll;
+}
+
+.force-overflow::-webkit-scrollbar {
+    width: 5px;
+}
+
+.force-overflow::-webkit-scrollbar-track {
+    /* width: 5px; */
+    box-shadow: inset 0 0 5px #cacaca;
+}
+
+.force-overflow::-ms-thumb,
+.force-overflow::-moz-range-thumb,
+.force-overflow::-webkit-scrollbar-thumb {
+    background-color: #405189;
+    border-radius: 5px;
+
+}
+
+
+.force-overflow::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px #cacaca;
+}
+
+.currency{
+    position: relative;
+}
+.currency p,h6{
+z-index: 10;
+}
+.currency-bg{
+    position: absolute;
+    /* content: ''; */
+    /* height: 100px; */
+    opacity: 0.2;
+    /* width: 50px; */
+    font-size: 60px !important;
+    /* background-color: #495057; */
+    z-index: 1;
+    right: 0px;
+    color: #ff5a38;
+}
