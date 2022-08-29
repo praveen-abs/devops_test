@@ -218,32 +218,38 @@
                                         <div>{{$kpiRow->kpi_weightage}}</div>
                                     </td>
                                     <td>
-                                        @if($assignedGoals->is_assignee_submitted == 0)
-                                        <div>
-                                            <textarea style="width: 100%;" name="assignee_kpi_review[{{$kpiRow->id}}]" id="assignee_kpi_review{{$index}}" cols="40" rows="8" placeholder="type here">@if(isset(json_decode($assignedGoals->assignee_kpi_review,true)[$kpiRow->id])) {{json_decode($assignedGoals->assignee_kpi_review,true)[$kpiRow->id]}} @endif</textarea>
-                                        </div>
-                                        @else
-                                        <div>
-                                            {{json_decode($assignedGoals->assignee_kpi_review,true)[$kpiRow->id]}}
-                                        </div>
+                                        @if($assignedGoals->is_assignee_accepted == '1')
+                                            @if($assignedGoals->is_assignee_submitted == 0)
+                                            <div>
+                                                <textarea style="width: 100%;" name="assignee_kpi_review[{{$kpiRow->id}}]" id="assignee_kpi_review{{$index}}" cols="40" rows="8" placeholder="type here">@if(isset(json_decode($assignedGoals->assignee_kpi_review,true)[$kpiRow->id])) {{json_decode($assignedGoals->assignee_kpi_review,true)[$kpiRow->id]}} @endif</textarea>
+                                            </div>
+                                            @else
+                                            <div>
+                                                {{json_decode($assignedGoals->assignee_kpi_review,true)[$kpiRow->id]}}
+                                            </div>
+                                            @endif
                                         @endif
                                     </td>
                                     <td>
-                                        @if($assignedGoals->is_assignee_submitted == 0)
-                                        <div>
-                                            <input type="number" class="inp-text" id="assignee_kpi_percentage{{$index}}" name="assignee_kpi_percentage[{{$kpiRow->id}}]" placeholder="type here" value="@if(isset( json_decode($assignedGoals->assignee_kpi_percentage,true)[$kpiRow->id])){{json_decode($assignedGoals->assignee_kpi_percentage,true)[$kpiRow->id]}}@endif">
-                                        </div>
-                                        @else
-                                        <div> {{json_decode($assignedGoals->assignee_kpi_percentage,true)[$kpiRow->id]}}</div>
+                                        @if($assignedGoals->is_assignee_accepted == '1')
+                                            @if($assignedGoals->is_assignee_submitted == 0)
+                                            <div>
+                                                <input type="number" class="inp-text" id="assignee_kpi_percentage{{$index}}" name="assignee_kpi_percentage[{{$kpiRow->id}}]" placeholder="type here" value="@if(isset( json_decode($assignedGoals->assignee_kpi_percentage,true)[$kpiRow->id])){{json_decode($assignedGoals->assignee_kpi_percentage,true)[$kpiRow->id]}}@endif">
+                                            </div>
+                                            @else
+                                            <div> {{json_decode($assignedGoals->assignee_kpi_percentage,true)[$kpiRow->id]}}</div>
+                                            @endif
                                         @endif
                                     </td>
                                     <td>
-                                        @if($assignedGoals->is_assignee_submitted == 0)
-                                        <div>
-                                            <textarea style="width: 100%;" name="assignee_kpi_comments[{{$kpiRow->id}}]" id="assignee_kpi_comments{{$index}}" cols="40" rows="8" placeholder="type here"> @if(isset(json_decode($assignedGoals->assignee_kpi_comments,true)[$kpiRow->id])) {{json_decode($assignedGoals->assignee_kpi_comments,true)[$kpiRow->id]}} @endif</textarea>
-                                        </div>
-                                        @else
-                                        <div>{{json_decode($assignedGoals->assignee_kpi_comments,true)[$kpiRow->id]}}</div>
+                                        @if($assignedGoals->is_assignee_accepted == '1')
+                                            @if($assignedGoals->is_assignee_submitted == 0)
+                                            <div>
+                                                <textarea style="width: 100%;" name="assignee_kpi_comments[{{$kpiRow->id}}]" id="assignee_kpi_comments{{$index}}" cols="40" rows="8" placeholder="type here"> @if(isset(json_decode($assignedGoals->assignee_kpi_comments,true)[$kpiRow->id])) {{json_decode($assignedGoals->assignee_kpi_comments,true)[$kpiRow->id]}} @endif</textarea>
+                                            </div>
+                                            @else
+                                            <div>{{json_decode($assignedGoals->assignee_kpi_comments,true)[$kpiRow->id]}}</div>
+                                            @endif
                                         @endif
                                     </td>
                                     @if($isAllReviewersSubmittedOrNot)
@@ -269,13 +275,24 @@
 
                     </div>
                 </form>
-                @if($assignedGoals->is_assignee_submitted != '1')
-                <div class="buttons d-flex align-items-center justify-content-end ">
-                    <button class="btn btn-primary" id="save_table">
-                    @if($assignedGoals->is_assignee_submitted == '') Save @else Edit @endif <i class="fa fa-save"></i></button>
-                    &nbsp;&nbsp;
-                    <button class="btn btn-primary" id="publish_table" @if($assignedGoals->is_assignee_submitted == '') disabled @endif>Submit<i class="fa fa-save"></i></button>
-                </div>
+                @if(isset($assignedGoals) && $assignedGoals->is_assignee_submitted != '1')
+                    @if($assignedGoals->is_assignee_accepted == '1')
+                    <div class="buttons d-flex align-items-center justify-content-end ">
+                        <button class="btn btn-primary" id="save_table">
+                        @if($assignedGoals->is_assignee_submitted == '') Save @else Edit @endif <i class="fa fa-save"></i></button>
+                        &nbsp;&nbsp;
+                        <button class="btn btn-primary" id="publish_table" @if($assignedGoals->is_assignee_submitted == '') disabled @endif>Submit<i class="fa fa-save"></i></button>
+                    </div>
+                    @elseif($assignedGoals->is_assignee_accepted == null)
+                    <div class="buttons d-flex align-items-center justify-content-end ">
+                        <button class="btn btn-primary" id="accept_review">
+                        Accept <i class="fa fa-save"></i></button>
+                        &nbsp;&nbsp;
+                        <button class="btn btn-primary" id="reject_review">Reject<i class="fa fa-save"></i></button>
+                    </div>
+                    @elseif($assignedGoals->is_assignee_accepted == '0')
+                    <h6>You have Already Rejected this review.</h6>
+                    @endif
                 @endif
                 @else
                 <h4>Goals Not Assigned</h4>
@@ -284,19 +301,7 @@
         </div>
     </div>
 
-    @if($reviewCompleted && $assignedGoals->is_hr_submitted)
-    <div class="row mt-3">
-        <div class="col-lg-12">
-            <label class="form-label">
-                Appraiser Feedback:
-            </label>
-            <div class="my-2">
-                <textarea class="form-control" placeholder="" id="gen-info-description-input" name="performance" rows="4" readonly>@if(isset( $assignedGoals->appraiser_comment)){{$assignedGoals->appraiser_comment}}@endif</textarea>
-            </div>
-        </div>
-    </div>
-    @endif
-
+    <!-- Rating grid after submitted review by All Reviewers -->
     @if($isAllReviewersSubmittedOrNot)
     <div class="card">
         <div class="card-header">
@@ -359,8 +364,8 @@
     </div>
     @endif
 
-
-    <div class="modal fade" id="notificationModal" role="dialog" aria-hidden="true" style="opacity:1; display:none;background:#00000073;">
+    <!-- Rejection Modal Starts -->
+    <div class="modal fade" id="rejectionCommentModal" role="dialog" aria-hidden="true" style="opacity:1; display:none;background:#00000073;">
         <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2">
             <div class="modal-content">
                 <div class="modal-header py-2 bg-primary">
@@ -375,9 +380,9 @@
                 <div class="modal-body">
                     <div class="mt-4">
                         <h4 class="mb-3" id="modalNot"></h4>
-                        <textarea name="reject_content" id="reject_content" class="form-control mb-3"></textarea>
+                        <textarea name="reject_comment" id="reject_comment" class="form-control mb-3"></textarea>
                         <div class="hstack gap-2 justify-content-center">
-                            <button type="button" class="btn btn-primary" id="reject_save" disabled>Save</button>
+                            <button type="button" class="btn btn-primary" id="rejection_submit" disabled>Save</button>
                             <button type="button" class="btn btn-light close-modal" data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
@@ -385,34 +390,7 @@
             </div>
         </div>
     </div>
-
-    <!-- Modal -->
-    <div class="modal fade flip" id="acceptPMS" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body p-5 text-center">
-                    <lord-icon src="https://cdn.lordicon.com/gsqxdxog.json" trigger="loop" colors="primary:#405189,secondary:#f06548" style="width:90px;height:90px"></lord-icon>
-                    <div class="mt-4 text-center">
-                        <h4>You are about to delete a order ?</h4>
-
-                        <p class="text-muted fs-15 mb-4">Deleting your order will remove
-                            all of
-                            your information from our database.</p>
-                        <div class="hstack gap-2 justify-content-center remove">
-                            <button class="btn btn-link link-success fw-medium text-decoration-none" data-bs-dismiss="modal"><i class="ri-close-line me-1 align-middle"></i>
-                                Close</button>
-                            <button class="btn btn-danger" id="delete-record">Yes,
-                                Delete It</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--end modal -->
-
-
-
+    <!-- Rejection Modal Ends -->
 </div>
 
 
@@ -430,6 +408,7 @@
 <script src="{{ URL::asset('/assets/premassets/js/footable.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/premassets/css/footable.bootstrap.min.css') }}"></script>
 <script type="text/javascript">
+    // Upload file enable upload button
     $('#upload_file').change(function() {
         if ($(this).is(':valid')) {
             $('#upload-goal').removeAttr('disabled');
@@ -440,6 +419,7 @@
 
     ft = FooTable.init('#table_review');
 
+    // Upload file using ajax
     $('#upload-goal').click(function() {
         var form_data = new FormData(document.getElementById("upload_form"));
         $('.loader').show();
@@ -470,8 +450,6 @@
     $('#save_table').click(function(e) {
         e.preventDefault();
         $('#formSubmitType').val(0);
-        // console.log("save trigger");
-        // console.log($('#employee_self_review').serialize());
         $('.loader').show();
         $.ajax({
             type: "POST",
@@ -486,7 +464,6 @@
                     swal("Error!", data.message, "error");
                 }
                 $('.loader').hide();
-                // window.location.reload();
             },
             error: function(error) {
                 $('.loader').hide();
@@ -514,10 +491,114 @@
                     swal("Error!", data.message, "error");
                 }
                 $('.loader').hide();
-                // window.location.reload();
             },
             error: function(error) {
                 $('.loader').hide();
+            }
+        });
+    });
+
+    // Accept Review
+    $('#accept_review').click(function(e) {
+        e.preventDefault();
+        swal({
+        title: 'Are you sure?',
+        text: 'You want to Accept!',
+        icon: 'warning',
+        buttons: ["Cancel", "Yes!"],
+        }).then(function(value) {
+            if (value) {
+                var assigneeGoalId = "{{ $assignedGoals->id }}";
+                var isApproveOrReject = '1';
+                $('.loader').show();
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('acceptRejectAssigneeReview') }}",
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        assigneeGoalId: assigneeGoalId,
+                        isApproveOrReject: isApproveOrReject,
+
+                    },
+                    success: function(data) {
+                        if(data.status == true){
+                            swal("Success!", data.message, "success").then(function(){
+                                location.reload();
+                            });
+                        }else{
+                            swal("Error!", data.message, "error");
+                        }
+                        $('.loader').hide();
+                    },
+                    error: function(error) {
+                        $('.loader').hide();
+                    }
+                });
+            }
+        });
+    });
+
+    // On click reject Rejection Comments modal should show 
+    $('#reject_review').click(function(e) {
+        $('#modalHeader').html("Rejected");
+        $('#modalNot').html(
+            "Are you sure you want to reject this Kpi. If yes, please entered the reason in the below command box:"
+        );
+        $('#rejectionCommentModal').show('modal');
+    });
+
+    // close Rejection Comments modal 
+    $('body').on('click', '.close-modal', function() {
+        $('#rejectionCommentModal').hide();
+        $('#rejectionCommentModal').addClass('fade');
+    });
+
+    // close Rejection Comments modal 
+    $('body').on("keyup", '#reject_comment', function() {
+        if ($(this).val() == '') {
+            $('#rejection_submit').attr('disabled', true);
+        } else {
+            $('#rejection_submit').removeAttr('disabled');
+        }
+    });
+    
+    // Accept Review
+    $('#rejection_submit').click(function(e) {
+        e.preventDefault();
+        swal({
+        title: 'Are you sure?',
+        text: 'You want to Reject!',
+        icon: 'warning',
+        buttons: ["Cancel", "Yes!"],
+        }).then(function(value) {
+            if (value) {
+                var assigneeGoalId = "{{ $assignedGoals->id }}";
+                var isApproveOrReject = '0';
+                var reject_comment = $('#reject_comment').val();
+                $('.loader').show();
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('acceptRejectAssigneeReview') }}",
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        assigneeGoalId: assigneeGoalId,
+                        isApproveOrReject: isApproveOrReject,
+                        reject_comment: reject_comment,
+                    },
+                    success: function(data) {
+                        if(data.status == true){
+                            swal("Success!", data.message, "success").then(function(){
+                                location.reload();
+                            });
+                        }else{
+                            swal("Error!", data.message, "error");
+                        }
+                        $('.loader').hide();
+                    },
+                    error: function(error) {
+                        $('.loader').hide();
+                    }
+                });
             }
         });
     });

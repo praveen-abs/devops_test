@@ -179,6 +179,9 @@
                                 <a href="{{url('vmt-pms-assigngoals')}}" class="nav-link sidebar py-1"><span>Dashboard</span></a>
                             </li>
                             <li class="nav-item">
+                                <a href="{{ route('team-appraisal-pms-dashboard') }}" class="nav-link"><span>Team Appraisal</span></a>
+                            </li>
+                                                        <li class="nav-item">
                                 <a href="{{route('vmt_config_pms')}}" class="nav-link"><span>PMS Config</span></a>
                             </li>
                             @can('360_Degree_Review')

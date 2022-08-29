@@ -321,6 +321,8 @@
 var isKPIFormSaved = false;
 
 $(document).ready(function(){
+
+    
     // $('#select-reviewer').select2({
     //     dropdownParent: '#createEmployee',
     //     minimumResultsForSearch: Infinity,
@@ -350,6 +352,64 @@ $(document).ready(function(){
 
     $('#upload-goal').click(function() {
         // upload a file
+
+        var showdimension = "{{$show['dimension']}}";
+        var showkpi = "{{$show['kpi']}}";
+        var showoperational = "{{$show['operational']}}";
+        var showmeasure = "{{$show['measure']}}";
+        var showfrequency = "{{$show['frequency']}}";
+        var showtarget = "{{$show['target']}}";
+        var showstretchTarget = "{{$show['stretchTarget']}}";
+        var showsource = "{{$show['source']}}";
+        var showkpiWeightage = "{{$show['kpiWeightage']}}";
+        var availableValues = [];
+        var nonAvailableValues = []
+        if(showdimension == 'true'){
+            availableValues.push('dimension[]');
+        }else{
+            nonAvailableValues.push('dimension[]');
+        }
+        if(showkpi == 'true'){
+            availableValues.push('kpi[]');
+        }else{
+            nonAvailableValues.push('dimension[]');
+        }
+        if(showoperational == 'true'){
+            availableValues.push('operational[]');
+        }else{
+            nonAvailableValues.push('operational[]');
+        }
+        if(showmeasure == 'true'){
+            availableValues.push('measure[]');
+        }else{
+            nonAvailableValues.push('measure[]');
+        }
+        if(showfrequency == 'true'){
+            availableValues.push('frequency[]');
+        }else{
+            nonAvailableValues.push('frequency[]');
+        }
+        if(showtarget == 'true'){
+            availableValues.push('target[]');
+        }else{
+            nonAvailableValues.push('target[]');
+        }
+        if(showstretchTarget == 'true'){
+            availableValues.push('stretchTarget[]');
+        }else{
+            nonAvailableValues.push('stretchTarget[]');
+        }
+        if(showsource == 'true'){
+            availableValues.push('source[]');
+        }else{
+            nonAvailableValues.push('source[]');
+        }
+        if(showkpiWeightage == 'true'){
+            availableValues.push('kpiWeightage[]');
+        }else{
+            nonAvailableValues.push('kpiWeightage[]');
+        }
+
         var form_data = new FormData(document.getElementById("upload_form"));
         $.ajax({
             type: "POST",
@@ -359,76 +419,100 @@ $(document).ready(function(){
             processData: false,
             data: form_data,
             success: function(data){
+                console.log(data);
                 $('.addition-content').html('');
+                var values = [];
+                var dataResultNotAvailableColumns =  '';
                 var length = 1;
-                var showdimension = "{{$show['dimension'] == 'true' ? 'block' : 'none'}}";
-                var showkpi = "{{$show['kpi'] == 'true' ? 'block' : 'none'}}";
-                var showoperational = "{{$show['operational'] == 'true' ? 'block' : 'none'}}";
-                var showmeasure = "{{$show['measure'] == 'true' ? 'block' : 'none'}}";
-                var showfrequency = "{{$show['frequency'] == 'true' ? 'block' : 'none'}}";
-                var showtarget = "{{$show['target'] == 'true' ? 'block' : 'none'}}";
-                var showstretchTarget = "{{$show['stretchTarget'] == 'true' ? 'block' : 'none'}}";
-                var showsource = "{{$show['source'] == 'true' ? 'block' : 'none'}}";
-                var showkpiWeightage = "{{$show['kpiWeightage'] == 'true' ? 'block' : 'none'}}";
-                // $.each(data,function(k, v) {
-                    $.each(data[0],function(key, value) {
-                        var dimension = '';
-                        var kpi = '';
-                        var operational = '';
-                        var measure = '';
-                        var frequency = '';
-                        var target = '';
-                        var stretchTarget = '';
-                        var source = '';
-                        var kpiWeightage = '';
-                        if (showdimension == 'block') {
-                            dimension = '<td class="text-box-td p-1"><textarea name="dimension[]" data-show="true" id="" class="text-box" cols="20" placeholder="type here">'+value[0]+'</textarea></td>';
-                        } else {
-                            dimension = '<input type="hidden" name="dimension[]">';
-                        }
-                        if (showkpi == 'block') {
-                            kpi = '<td class="text-box-td p-1"><textarea name="kpi[]" data-show="true" id="" class="text-box" cols="20" placeholder="type here">'+value[1]+'</textarea></td>';
-                        } else {
-                            kpi = '<input type="hidden" name="kpi[]">';
-                        }
-                        if (showoperational == 'block') {
-                            operational = '<td class="text-box-td p-1"><textarea name="operational[]" data-show="true" id="" class="text-box" cols="20" placeholder="type here">'+value[2]+'</textarea></td>';
-                        } else {
-                            operational = '<input type="hidden" name="operational[]">';
-                        }
-                        if (showmeasure == 'block') {
-                            measure = '<td class="text-box-td p-1"><textarea name="measure[]" data-show="true" id="" class="text-box" cols="20" placeholder="type here">'+value[3]+'</textarea></td>';
-                        } else {
-                            measure = '<input type="hidden" name="measure[]">';
-                        }
-                        if (showfrequency == 'block') {
-                            frequency = '<td class="text-box-td p-1"><textarea name="frequency[]" data-show="true" id="" class="text-box" cols="20" placeholder="type here">'+value[4]+'</textarea></td>';
-                        } else {
-                            frequency = '<input type="hidden" name="frequency[]">';
-                        }
-                        if (showtarget == 'block') {
-                            target = '<td } class="text-box-td p-1"> <textarea name="target[]" data-show="true" id="" class="text-box" cols="20" placeholder="type here">'+value[5]+'</textarea></td>';
-                        } else {
-                            target = '<input type="hidden" name="target[]">';
-                        }
-                        if (showstretchTarget == 'block') {
-                            stretchTarget = '<td class="text-box-td p-1"><textarea name="stretchTarget[]" data-show="true" id="" class="text-box" cols="10" placeholder="type here">'+value[6]+'</textarea></td>';
-                        } else {
-                            stretchTarget = '<input type="hidden" name="stretchTarget[]">';
-                        }
-                        if (showsource == 'block') {
-                            source = '<td class="text-box-td p-1"><textarea name="source[]" data-show="true" id="" class="text-box" cols="10" placeholder="type here">'+value[7]+'</textarea></td>';
-                        } else {
-                            source = '<input type="hidden" name="source[]">';
-                        }
-                        if (showkpiWeightage == 'block') {
-                            kpiWeightage = '<td class="text-box-td p-1"><textarea name="kpiWeightage[]" data-show="true" id="" class="text-box" cols="10" placeholder="type here">'+value[8]+'</textarea></td>';
-                        } else {
-                            kpiWeightage = '<input type="hidden" name="kpiWeightage[]">';
-                        }
-                        $('.content-container').append('<tr class="addition-content cursor-pointer" id="content'+length+'"><td class="text-box-td p-1"><span  name="numbers" id="" class="tableInp" >'+length+'</span><div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div></td>'+dimension+kpi+operational+measure+frequency+target+stretchTarget+source+kpiWeightage+'</tr>');
-                        length++;
+                $.each(data[0],function(key, value) {
+                    var dataResult =  '';
+                    var increment = 0;
+                    $.each(availableValues,function(keyAvailable, valueAvailable) {  
+                        var test = '<td class="text-box-td p-1"><textarea name="'+valueAvailable+'" data-show="true" id="" class="text-box" cols="20" placeholder="type here">'+value[increment]+'</textarea></td>';
+                        dataResult += test;
+                        increment++;
                     });
+                    $.each(nonAvailableValues,function(keyNotAvailable, valueNotAvailable) {   
+                        var test = '<input type="hidden" name="'+valueNotAvailable+'">';
+                        dataResult += test;
+                    });
+                    $('.content-container').append('<tr class="addition-content cursor-pointer" id="content'+length+'"><td class="text-box-td p-1"><span  name="numbers" id="" class="tableInp" >'+length+'</span><div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div></td>'+dataResult+'</tr>');
+                            length++;
+                });
+                // var getAvaibleColumnHeader = getAvailableColumns();
+                // getAvailableColumns();
+                
+                // var length = 1;
+                // var showdimension = "{{$show['dimension'] == 'true' ? 'block' : 'none'}}";
+                // var showkpi = "{{$show['kpi'] == 'true' ? 'block' : 'none'}}";
+                // var showoperational = "{{$show['operational'] == 'true' ? 'block' : 'none'}}";
+                // var showmeasure = "{{$show['measure'] == 'true' ? 'block' : 'none'}}";
+                // var showfrequency = "{{$show['frequency'] == 'true' ? 'block' : 'none'}}";
+                // var showtarget = "{{$show['target'] == 'true' ? 'block' : 'none'}}";
+                // var showstretchTarget = "{{$show['stretchTarget'] == 'true' ? 'block' : 'none'}}";
+                // var showsource = "{{$show['source'] == 'true' ? 'block' : 'none'}}";
+                // var showkpiWeightage = "{{$show['kpiWeightage'] == 'true' ? 'block' : 'none'}}";
+                // $.each(data,function(k, v) {
+                    // $.each(data[0],function(key, value) {
+                    //     console.log(key);
+                    //     console.log(value);
+                    //     var dimension = '';
+                    //     var kpi = '';
+                    //     var operational = '';
+                    //     var measure = '';
+                    //     var frequency = '';
+                    //     var target = '';
+                    //     var stretchTarget = '';
+                    //     var source = '';
+                    //     var kpiWeightage = '';
+                    //     if (showdimension == 'block') {
+                    //         dimension = '<td class="text-box-td p-1"><textarea name="dimension[]" data-show="true" id="" class="text-box" cols="20" placeholder="type here">'+value[0]+'</textarea></td>';
+                    //     } else {
+                    //         dimension = '<input type="hidden" name="dimension[]">';
+                    //     }
+                    //     if (showkpi == 'block') {
+                    //         kpi = '<td class="text-box-td p-1"><textarea name="kpi[]" data-show="true" id="" class="text-box" cols="20" placeholder="type here">'+value[1]+'</textarea></td>';
+                    //     } else {
+                    //         kpi = '<input type="hidden" name="kpi[]">';
+                    //     }
+                    //     if (showoperational == 'block') {
+                    //         operational = '<td class="text-box-td p-1"><textarea name="operational[]" data-show="true" id="" class="text-box" cols="20" placeholder="type here">'+value[2]+'</textarea></td>';
+                    //     } else {
+                    //         operational = '<input type="hidden" name="operational[]">';
+                    //     }
+                    //     if (showmeasure == 'block') {
+                    //         measure = '<td class="text-box-td p-1"><textarea name="measure[]" data-show="true" id="" class="text-box" cols="20" placeholder="type here">'+value[3]+'</textarea></td>';
+                    //     } else {
+                    //         measure = '<input type="hidden" name="measure[]">';
+                    //     }
+                    //     if (showfrequency == 'block') {
+                    //         frequency = '<td class="text-box-td p-1"><textarea name="frequency[]" data-show="true" id="" class="text-box" cols="20" placeholder="type here">'+value[4]+'</textarea></td>';
+                    //     } else {
+                    //         frequency = '<input type="hidden" name="frequency[]">';
+                    //     }
+                    //     if (showtarget == 'block') {
+                    //         target = '<td } class="text-box-td p-1"> <textarea name="target[]" data-show="true" id="" class="text-box" cols="20" placeholder="type here">'+value[5]+'</textarea></td>';
+                    //     } else {
+                    //         target = '<input type="hidden" name="target[]">';
+                    //     }
+                    //     if (showstretchTarget == 'block') {
+                    //         stretchTarget = '<td class="text-box-td p-1"><textarea name="stretchTarget[]" data-show="true" id="" class="text-box" cols="10" placeholder="type here">'+value[6]+'</textarea></td>';
+                    //     } else {
+                    //         stretchTarget = '<input type="hidden" name="stretchTarget[]">';
+                    //     }
+                    //     if (showsource == 'block') {
+                    //         source = '<td class="text-box-td p-1"><textarea name="source[]" data-show="true" id="" class="text-box" cols="10" placeholder="type here">'+value[7]+'</textarea></td>';
+                    //     } else {
+                    //         source = '<input type="hidden" name="source[]">';
+                    //     }
+                    //     if (showkpiWeightage == 'block') {
+                    //         kpiWeightage = '<td class="text-box-td p-1"><textarea name="kpiWeightage[]" data-show="true" id="" class="text-box" cols="10" placeholder="type here">'+value[8]+'</textarea></td>';
+                    //     } else {
+                    //         kpiWeightage = '<input type="hidden" name="kpiWeightage[]">';
+                    //     }
+                    //     $('.content-container').append('<tr class="addition-content cursor-pointer" id="content'+length+'"><td class="text-box-td p-1"><span  name="numbers" id="" class="tableInp" >'+length+'</span><div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div></td>'+dimension+kpi+operational+measure+frequency+target+stretchTarget+source+kpiWeightage+'</tr>');
+                    //     length++;
+                    // });
                 // });
             }
         });
