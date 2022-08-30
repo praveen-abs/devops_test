@@ -270,10 +270,14 @@ header {
                                             </td>
                                             <td class="">
                                                 <div class="td_content_center">
-                                                    @if(isset($kpiFormAssigneeReview->is_assignee_submitted) && $kpiFormAssigneeReview->is_assignee_submitted == '1')
-                                                        Submitted
+                                                    @if(isset($kpiFormAssigneeReview) && $kpiFormAssigneeReview->is_assignee_accepted == '0')
+                                                        Rejected
                                                     @else
-                                                        Not yet submitted
+                                                        @if(isset($kpiFormAssigneeReview) && $kpiFormAssigneeReview->is_assignee_submitted == '1')
+                                                            Submitted
+                                                        @else
+                                                            Not yet submitted
+                                                        @endif
                                                     @endif
                                                 </div>
                                             </td>

@@ -70,7 +70,7 @@
                     <input type="hidden" name="kpiAssignedId" value="{{ $kpiAssignedId }}">
                     <div class="row mb-3 d-flex align-items-center">
                         <div class="col-auto">
-                            <label for="name">Enter the name of the form:</label>
+                            <label for="name">Form Name:</label>
                         </div>
                         <div class="col">
                             <input type="text"  disabled class="form-control" value="{{ $configHeaderFormName }}" required>
