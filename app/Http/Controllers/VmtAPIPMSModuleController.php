@@ -215,8 +215,41 @@ class VmtAPIPMSModuleController extends Controller
     */
     public function getAssignedKPIForms(Request $request)
     {
+        $userId  = auth::user()->id; 
+        $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::join('vmt_pms_kpiform_reviews', 
+                'vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id', '=', 'vmt_pms_kpiform_assigned.id')
+            ->leftJoin('users', 'users.id', '=', 'vmt_pms_kpiform_reviews.assignee_id')
+            ->WhereRaw("find_in_set(".$userId.", vmt_pms_kpiform_assigned.reviewer_id)")
+            ->orWhere('vmt_pms_kpiform_reviews.assignee_id', $userId)
+            ->orWhere('assigner_id',auth()->user()->id)
+            ->select('vmt_pms_kpiform_reviews.assignee_kpi_review',
+                'vmt_pms_kpiform_reviews.assignee_kpi_percentage',
+                'vmt_pms_kpiform_reviews.assignee_kpi_comments',
+                'vmt_pms_kpiform_reviews.reviewer_kpi_review',
+                'vmt_pms_kpiform_reviews.reviewer_kpi_percentage',
+                'vmt_pms_kpiform_reviews.reviewer_kpi_comments',
+                'vmt_pms_kpiform_reviews.reviewer_appraisal_comments', 
+                'vmt_pms_kpiform_reviews.assigner_kpi_review',
+                'vmt_pms_kpiform_reviews.assigner_kpi_percentage',
+                'vmt_pms_kpiform_reviews.assigner_kpi_comments',
+                'vmt_pms_kpiform_reviews.assignee_kpi_status',
+                'vmt_pms_kpiform_reviews.is_assignee_submitted',
+                'vmt_pms_kpiform_reviews.is_assignee_accepted', 
+                'vmt_pms_kpiform_reviews.reviewer_kpi_status', 
+                'vmt_pms_kpiform_reviews.is_reviewer_submitted', 
+                'vmt_pms_kpiform_reviews.is_reviewer_accepted',
+                'vmt_pms_kpiform_reviews.assignee_rejection_comments',
+                'vmt_pms_kpiform_reviews.reviewer_rejection_comments',
+                'vmt_pms_kpiform_reviews.overall_score',
+                'vmt_pms_kpiform_assigned.*', 
+                'users.name as assignee_name', 
+                'users.user_code as assignee_code'
+            )->orderBy('id','DESC')->get();
 
+        return response()->json([
+            'status' => true,
+            'message'=> '',
+            'data'   => $pmsKpiAssigneeDetails
+        ]);
     }
-
-
 }
