@@ -58,28 +58,29 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
         <div class="sub-page">
             <table cellpadding="0" cellspacing="0" style="border-collapse:collapse; float:left;">
                 <tbody>
-                    <tr style="height:66.7pt;">
-                        <td colspan="9" style="width:542.2pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <div class="header-cotent" style="display:flex ;align-items: center;">
-                                <div style="width:50%; height:55.7pt; display:inline-block; overflow:visible;">
-                                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;"><strong><span style="font-family:Tahoma;">Ardens Business Solutions Private
-                                                Limited</span></strong></p>
-                                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:9.5pt;"><strong><span style="font-family:Tahoma;">&ldquo;SHALOM
-                                                BUILDING&rdquo;&nbsp;</span></strong></p>
-                                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:9.5pt;"><span style="font-family:Tahoma;">1</span><span style="font-family:Tahoma; font-size:6.33pt;"><sup>st</sup></span><span style="font-family:Tahoma;">&nbsp;Floor, Office No.20, No.04, Mannar
-                                            Street,&nbsp;</span></p>
-                                    <p style="margin-top:0pt; margin-bottom:0pt; font-size:9.5pt;"><span style="font-family:Tahoma;">T Nagar, Chennai, Tamil Nadu, India &ndash; 600
-                                            017</span></p>
-                                </div>
-                                <div style="width:50%">
-                                    <!-- <img src="{{ URL::asset('assets/images/footer_logo.png') }}" alt="" class=""> -->
-                                    <div class="header-img" style="height: 40px;width:180px;float:right;">
-                                        <img src={{$client_logo}} style="height:100%;width:100%;" title="">
-                                        <!-- <img src="/brandavatar-appointementletter/images/brandavatarlogo.png" alt=""
+                    <tr style="height:66.7pt; border:1.5pt solid #af1888;">
+                        <td colspan="7" style=" padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
+                            <div class="header-cotent" style="">
+                                <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;"><strong><span style="font-family:Tahoma;">Ardens Business Solutions Private
+                                            Limited</span></strong></p>
+                                <p style="margin-top:0pt; margin-bottom:0pt; font-size:9.5pt;"><strong><span style="font-family:Tahoma;">&ldquo;SHALOM
+                                            BUILDING&rdquo;&nbsp;</span></strong></p>
+                                <p style="margin-top:0pt; margin-bottom:0pt; font-size:9.5pt;"><span style="font-family:Tahoma;">1</span><span style="font-family:Tahoma; font-size:6.33pt;"><sup>st</sup></span><span style="font-family:Tahoma;">&nbsp;Floor, Office No.20, No.04, Mannar
+                                        Street,&nbsp;</span></p>
+                                <p style="margin-top:0pt; margin-bottom:0pt; font-size:9.5pt;"><span style="font-family:Tahoma;">T Nagar, Chennai, Tamil Nadu, India &ndash; 600
+                                        017</span></p>
+                            </div>
+                        </td>
+                        <td colspan="4">
+                            <div style="">
+                                <!-- <img src="{{ URL::asset('assets/images/footer_logo.png') }}" alt="" class=""> -->
+                                <div class="header-img" style="height: 40px;width:180px;">
+                                    <img src={{$client_logo}} style="height:100%;width:100%;" title="">
+                                    <!-- <img src="/brandavatar-appointementletter/images/brandavatarlogo.png" alt=""
                                         style="height:100%;width:100%;"> -->
-                                    </div>
                                 </div>
                             </div>
+
                         </td>
                     </tr>
                     <tr style="height:20.55pt;">
@@ -280,19 +281,19 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
                             <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;"><strong><span style="font-family:Calibri;">BASIC</span></strong></p>
                         </td>
                         <td colspan="3" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left    ; font-size:11pt;"><span style="font-family:Calibri;">₹ {{$employee->BASIC}}</span></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left    ; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{$employee->BASIC}}</span></p>
                         </td>
                         <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">₹&nbsp;</span><span style="font-family:Calibri; font-size:10.5pt;">0</span></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; </span><span style="font-family:Calibri; font-size:10.5pt;">0</span></p>
                         </td>
                         <td style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">₹&nbsp;</span><span style="font-family:Calibri; font-size:10.5pt;">4560</span></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; </span><span style="font-family:Calibri; font-size:10.5pt;">4560</span></p>
                         </td>
                         <td colspan="2" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
                             <p style="margin-top:0pt; margin-bottom:0pt; font-size:10.5pt;"><strong><span style="font-family:Calibri;">EPF</span></strong></p>
                         </td>
                         <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">₹ 638</span></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; 638</span></p>
                         </td>
                     </tr>
                     <tr style="height:20.55pt;">
@@ -300,19 +301,19 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
                             <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;"><strong><span style="font-family:Calibri;">HRA</span></strong></p>
                         </td>
                         <td colspan="3" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">₹ {{$employee->HRA}}</span></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{$employee->HRA}}</span></p>
                         </td>
                         <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">₹&nbsp;</span><span style="font-family:Calibri; font-size:10.5pt;">0</span></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; </span><span style="font-family:Calibri; font-size:10.5pt;">0</span></p>
                         </td>
                         <td style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">₹&nbsp;</span><span style="font-family:Calibri; font-size:10.5pt;">2280</span></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; </span><span style="font-family:Calibri; font-size:10.5pt;">2280</span></p>
                         </td>
                         <td colspan="2" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
                             <p style="margin-top:0pt; margin-bottom:0pt; font-size:10.5pt;"><strong><span style="font-family:Calibri;">ESIC</span></strong></p>
                         </td>
                         <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">₹ 58</span></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; 58</span></p>
                         </td>
                     </tr>
                     <tr style="height:20.55pt;">
@@ -320,19 +321,19 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
                             <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;"><strong><span style="font-family:Calibri;">SPECIAL ALLOW</span></strong></p>
                         </td>
                         <td colspan="3" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">₹{{$employee->SPL_ALW}}</span></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{$employee->SPL_ALW}}</span></p>
                         </td>
                         <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">₹ 0</span></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; 0</span></p>
                         </td>
                         <td style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">₹ 760</span></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; 760</span></p>
                         </td>
                         <td colspan="2" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
                             <p style="margin-top:0pt; margin-bottom:0pt; font-size:10.5pt;"><strong><span style="font-family:Calibri;">PT</span></strong></p>
                         </td>
                         <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">₹{{$employee->PROF_TAX}}</span></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{$employee->PROF_TAX}}</span></p>
                         </td>
                     </tr>
                     <tr style="height:20.55pt;">
@@ -346,13 +347,13 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
                             <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:10.5pt;"><span style="font-family:Calibri;">&nbsp;</span></p>
                         </td>
                         <td style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">₹ {{$employee->Overtime}}</span></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{$employee->Overtime}}</span></p>
                         </td>
                         <td colspan="2" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
                             <p style="margin-top:0pt; margin-bottom:0pt; font-size:10.5pt;"><strong><span style="font-family:Calibri;">TDS</span></strong></p>
                         </td>
                         <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">₹{{$employee->TDS}}</span></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{$employee->TDS}}</span></p>
                         </td>
                     </tr>
                     <tr style="height:20.55pt;">
@@ -372,7 +373,7 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
                             <p style="margin-top:0pt; margin-bottom:0pt; font-size:10.5pt;"><strong><span style="font-family:Calibri;">CANT-DEDUCTION</span></strong></p>
                         </td>
                         <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">₹{{$employee->CANTEEN_DEDN}}</span></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{$employee->CANTEEN_DEDN}}</span></p>
                         </td>
                     </tr>
                     <tr style="height:20.55pt;">
@@ -392,7 +393,7 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
                             <p style="margin-top:0pt; margin-bottom:0pt; font-size:10.5pt;"><strong><span style="font-family:Calibri;">SALARY ADVANCE</span></strong></p>
                         </td>
                         <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">₹{{$employee->SAL_ADV}}</span></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{$employee->SAL_ADV}}</span></p>
                         </td>
                     </tr>
                     <tr style="height:20.55pt;">
@@ -412,7 +413,7 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
                             <p style="margin-top:0pt; margin-bottom:0pt; font-size:10.5pt;"><strong><span style="font-family:Calibri;">OTHER DEDUCTIONS</span></strong></p>
                         </td>
                         <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">₹{{$employee->OTHER_DEDUC}}</span></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{$employee->OTHER_DEDUC}}</span></p>
                         </td>
                     </tr>
                     <tr style="height:20.55pt;">
@@ -420,19 +421,19 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
                             <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;"><strong><span style="font-family:Calibri;">TOTAL EARNINGS</span></strong></p>
                         </td>
                         <td colspan="3" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">₹&nbsp;</span><strong><span style="font-family:Calibri;">8000</span></strong></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; </span><strong><span style="font-family:Calibri;">8000</span></strong></p>
                         </td>
                         <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
                             <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:10.5pt;"><strong><span style="font-family:Calibri;">&nbsp;</span></strong></p>
                         </td>
                         <td style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">₹&nbsp;</span><strong><span style="font-family:Calibri; font-size:10.5pt;">7666</span></strong></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; </span><strong><span style="font-family:Calibri; font-size:10.5pt;">7666</span></strong></p>
                         </td>
                         <td colspan="2" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
                             <p style="margin-top:0pt; margin-bottom:0pt; font-size:10.5pt;"><strong><span style="font-family:Calibri;">TOTAL DEDUCTION</span></strong></p>
                         </td>
                         <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">₹&nbsp;</span><strong><span style="font-family:Calibri;">{{$employee->TOTAL_DEDUCTIONS}}</span></strong></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; </span><strong><span style="font-family:Calibri;">{{$employee->TOTAL_DEDUCTIONS}}</span></strong></p>
                         </td>
                     </tr>
                     <tr style="height:14.35pt;">
@@ -445,7 +446,7 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
                             <p style="margin-top:0pt; margin-bottom:0pt; font-size:10.5pt;"><strong><span style="font-family:Calibri;">NET PAY</span></strong></p>
                         </td>
                         <td colspan="4" style="width:265.7pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:11pt;"><span style="font-family:Calibri;">₹&nbsp;</span><strong><span style="font-family:Calibri; font-size:10.5pt;">6665</span></strong></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; </span><strong><span style="font-family:Calibri; font-size:10.5pt;">6665</span></strong></p>
                         </td>
                     </tr>
                     <tr style="height:20.55pt;">
@@ -499,24 +500,21 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
                         <td style="width:46.05pt;"><br></td>
                         <td style="width:92.2pt;"><br></td>
                     </tr>
+                    <tr style="height:66.7pt; border:0;">
+                        <td colspan="6" style=" padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
+
+                            <span style="margin-top:0pt; margin-bottom:0pt;"><span style="font-family:Calibri; font-size:10pt;margin-left: 13px;    padding-top: 15px;">Please
+                                    reach out to us for any payroll queries at -payroll@ardens.in</span>
+                        </td>
+                        <td colspan="6">
+                            <p style="font-family:'Calibri Light'; font-size:8pt;display:flex;align-items:center;"><span>Powered By</span> 
+                                <img src="{{ URL::asset('assets/images/logo.png') }}" alt="" class="" style="height: 45px;width:130px;">
+                            </p>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
-            <p style="margin-top:0pt; margin-left:144pt; margin-bottom:0pt; text-align:right;">&nbsp;</p>
-            <div style="clear:both;">
-                <span style="margin-top:0pt; margin-bottom:0pt;display: inline-flex;"><span style="font-family:Calibri; font-size:10pt;margin-left: 13px;    padding-top: 15px;">Please
-                        reach out to us for any payroll queries at -payroll@ardens.in</span>&nbsp; &nbsp; &nbsp;
-                    &nbsp;&nbsp; &nbsp; &nbsp;
-                    <strong><span style="font-family:'Calibri Light'; font-size:8pt;display: flex;margin-left: 100px;align-items: center;">Powered
-                            By <div class="" style="height: 45px;width:130px;">
-                                <!-- <img src={{$client_logo}}  style="height:100%;width:100%;" title=""> -->
-                                <img src="{{ URL::asset('assets/images/logo.png') }}" alt="" class="" style="width:100%;height:100%;">
-                            </div></span></strong><span style="font-family:'Calibri Light';">&nbsp;</span>
 
-                    <!-- <img src="{{ URL::asset('assets/images/footer_logo.png') }}" alt="" class=""> -->
-
-
-                </span>
-            </div>
         </div>
     </div>
 </body>
