@@ -24,15 +24,15 @@ class ConfigPmsController extends Controller
 
     public function store(Request $request) {
         $json = json_encode([
-            'dimension' => $request->input('dimension'),
-            'kpi' => $request->input('kpi'),
-            'operational' => $request->input('operational'),
-            'measure' => $request->input('measure'),
-            'frequency' => $request->input('frequency'),
-            'target' => $request->input('target'),
-            'stretchTarget' => $request->input('stretchTarget'),
-            'source' => $request->input('source'),
-            'kpiWeightage' => $request->input('kpiWeightage')
+            'dimension' => $request->input('dimension') != '' ? $request->input('dimension') : 'Dimension',
+            'kpi' => $request->input('kpi') != '' ? $request->input('kpi') : 'KPI',
+            'operational' => $request->input('operational') != '' ? $request->input('operational') : 'Operational Definition',
+            'measure' => $request->input('measure') != '' ? $request->input('measure') : 'Measure',
+            'frequency' => $request->input('frequency') != '' ? $request->input('frequency') : 'Frequency',
+            'target' => $request->input('target') != '' ? $request->input('target') : 'Target',
+            'stretchTarget' => $request->input('stretchTarget') != '' ? $request->input('stretchTarget') : 'Stretch Target',
+            'source' => $request->input('source') != '' ? $request->input('source') : 'Source',
+            'kpiWeightage' => $request->input('kpiWeightage') != '' ? $request->input('kpiWeightage') : 'KPI Weightage ( % )',
         ]);
         $selectedColumn = [];
         if ($request->input('dimension_check')) {

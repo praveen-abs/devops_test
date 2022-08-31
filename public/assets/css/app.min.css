@@ -36,8 +36,8 @@
 } */
 
 body {
-    background: url(../images/bg_full.jpg);
-    background-size: cover;
+    background: url(../images/background.jpg);
+    /* background-size: cover; */
 }
 
 :root {
@@ -691,9 +691,15 @@ select {
     bottom: 0;
     padding: 5px 0.75rem;
     right: 0;
+    height: 32px;
+    align-items: center;
+    justify-content: flex;
     color: var(--vz-footer-color);
-    left: 200px;
+    /* left: 200px; */
     background-color: var(--vz-footer-bg);
+    align-items: center;
+    display: flex;
+    justify-content: end;
 }
 
 @media (max-width: 991.98px) {
@@ -709,7 +715,7 @@ select {
 
 [data-layout="vertical"][data-sidebar-size="lg-hover"] .footer,
 [data-layout="vertical"][data-sidebar-size="lg"] .footer {
-    left: 200px;
+    left: 0px;
 }
 
 /* [data-layout=vertical][data-sidebar-size=sm] .navbar-menu .navbar-nav .nav-link i {
@@ -17530,7 +17536,7 @@ p {
 }
 
 .font-moderate {
-    font-size: 18px;
+    font-size: 15px;
 }
 
 .payslip-details-card .nav-pills.nav-tabs-dashed li a.active {
@@ -17768,10 +17774,12 @@ a.ember-view {
 
 .salary-header.nav-tab-header .nav-pills.nav-tabs-dashed li a.active {
     border-bottom-color: #002f56;
+    border-radius: 0px;
+    border-top-left-radius: 0px;
 }
 
 .salary-header.nav-tab-header .nav-pills.nav-tabs-dashed li a {
-    font-size: 18px;
+    font-size: 15px;
     color: #454351;
 }
 
@@ -17779,6 +17787,7 @@ a.ember-view {
     border-bottom: 3px solid;
     background-color: inherit;
     color: #3b3944;
+    font-weight: 600;
 }
 
 .nav-pills.nav-tabs-dashed li > a {
@@ -17921,6 +17930,7 @@ a.ember-view {
 .zp-table.table.salary-details-table td {
     vertical-align: middle;
     padding-top: 12px;
+    text-align: left;
     padding-bottom: 12px;
 }
 
@@ -17940,6 +17950,7 @@ a.ember-view {
 .zp-table.table.salary-details-table tr > td:last-of-type,
 .zp-table.table.salary-details-table tr > th:last-of-type {
     padding-right: 55px;
+    text-align: left;
 }
 
 /* investment */
@@ -18544,7 +18555,13 @@ table > tbody > tr > td > img,
 /* media query for login */
 @media only screen and (max-width: 800px) {
 }
-
+[data-layout="vertical"][data-sidebar-size="lg"] .navbar-header .topnav-hamburger{
+    margin-left: 8px;
+}
+[data-layout="vertical"][data-sidebar-size="sm"] .navbar-header .topnav-hamburger{
+    margin-left: 20px;
+    
+}
 [data-layout="vertical"][data-sidebar-size="sm"] .navbar-menu .navbar-nav .nav-link span {
     display: none;
     /* flex-wrap: wrap; */
@@ -18659,7 +18676,7 @@ table > tbody > tr > td > img,
 }
 
 .footer-img-wrapper img {
-    height: 15px;
+    height: 26px;
     width: auto;
 }
 
@@ -18687,23 +18704,15 @@ table > tbody > tr > td > img,
     background-color: #e63b1f87 !important;
 }
 
-.mt30-mb15,
-.mt-30,
-.mt-15,
-.mb-15,
-.mt15-mb30,
-.mt-mb-15,
-.mt15-mb15,
-.mb-mt-30,
-.mt-8,
-.mt8-mt15 {
-    position: relative;
-}
+
 
 .mb15 {
     margin-bottom: 15px !important;
 }
 
+.mt-30{
+    margin-top: -30px;
+}
 .mt8-mb25 {
     margin: -8px 0px 25px 0px;
 }
@@ -18747,7 +18756,7 @@ table > tbody > tr > td > img,
 }
 
 .mt-30 {
-    margin: -30px 0px;
+    margin-top: -30px;
 }
 
 .mt15-mb30 {

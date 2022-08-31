@@ -41,7 +41,7 @@
 </style>
 @endsection
 @section('content')
-<div class="settings-wrapper mb-mt-30">
+<div class="settings-wrapper    mt-30">
     <div class="text-start">
         <!-- href for dashboard -->
 

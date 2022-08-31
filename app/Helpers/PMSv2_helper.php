@@ -52,8 +52,9 @@ function checkCurrentLoggedUserReviewerOrNot($reviewersIds,$currentLoggedUserRol
     try{
         $result = '';
         $decodedReviewSubmitted = isset($kpiAssigneeReviewDetails->is_reviewer_submitted) ? json_decode($kpiAssigneeReviewDetails->is_reviewer_submitted,true) : '';
-        foreach($reviewersIds as $singleReviewerSubmittedStatus)
+        foreach($reviewersIds as $keyCheck => $singleReviewerSubmittedStatus)
         {
+            if($keyCheck != 0) $result .= '<br>'; 
             if($currentLoggedUserRole == 'reviewer')
             {
                 if($singleReviewerSubmittedStatus == Auth::id())
@@ -135,12 +136,15 @@ function checkViewReviewText($loggedUserRole,$kpiFormReviewDetails){
                 $result = 'Self-Review';
             }
         }elseif($loggedUserRole == 'reviewer' || $loggedUserRole == 'assigner'){
-            $decodedReview = isset($kpiFormReviewDetails->is_reviewer_submitted) ? json_decode($kpiFormReviewDetails->is_reviewer_submitted,true) : [];
-            if(isset($decodedReview[Auth::id()]) && $decodedReview[Auth::id()] == '1'){
-                    $result = 'View';        
+            if(isset($kpiFormReviewDetails) && $kpiFormReviewDetails->is_assignee_accepted == '0'){
+                $result = 'Edit'; 
             }else{
-                $result = 'Review';
-                
+                $decodedReview = isset($kpiFormReviewDetails->is_reviewer_submitted) ? json_decode($kpiFormReviewDetails->is_reviewer_submitted,true) : [];
+                if(isset($decodedReview[Auth::id()]) && $decodedReview[Auth::id()] == '1'){
+                        $result = 'View';        
+                }else{
+                    $result = 'Review';
+                }
             }
         }
         return $result;

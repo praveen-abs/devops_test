@@ -1,9 +1,9 @@
 <footer class="footer">
     <div class="d-flex align-items-center p-1 justify-content-end">
         <div class="footer-img-wrapper d-flex align-items-center">
-            <p class="f-12 me-2">Powered By
+            <p class="f-12 me-2 mb-0">Powered By
             </p>
-            <img src="{{ URL::asset('assets/images/footer_logo.png') }}" alt="" class="">
+            <img src="{{ URL::asset('assets/images/logo.png') }}" alt="" class="">
         </div>
         <a href="{{ url('vmt_privacy_policy') }}" class="text-secondary f-12 privacy-policy" role="button">
             Privacy Policy
