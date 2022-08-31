@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 
     <link href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css' rel='stylesheet' type='text/css'>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.15/tailwind.min.css" rel="stylesheet" />
     <style>
 
         .output {
@@ -103,6 +104,44 @@ header {
     opacity: 0.4;
 }
 
+    .employees-profile{
+        display: flex;
+        align-items: center;
+    }
+
+    .employees-profile img{
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 1px solid #fff;
+    }
+
+    .employees-profile img:not(:first-child){
+        margin-left: -13px;
+    }
+    .employees-card{
+        background-color: #fff;
+        border-radius: 20px;
+        padding: 8px 5px;
+    }
+
+    .employees-profile.counting{
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 1px solid #fff;
+        background-color: deeppink;
+    }
+    .employees-profile.editProfile{
+        width: 60px;
+        height: 40px;
+        object-fit: cover;
+        border-radius: 30%;
+        border: 1px solid #fff;
+        background-color: deeppink;
+    }
 </style>
 @endsection
 
@@ -400,14 +439,21 @@ header {
                                             @endforeach
                                         </select>
                                     </div>
+                                    
                                     @if(isset($loggedManagerEmployees) && count($loggedManagerEmployees) > 0)
                                     <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3 ">
                                         <label class="" for="">Employees</label>
-                                        <select class="select-employee-dropdown form-control" name="employees[]" multiple="multiple">
+                                        <div class="employee-selection-section">
+
+                                        </div>
+                                        <input type="hidden" name="employees" id="employeesSelectedValues">
+                                        <!-- <span class="employees-profile editProfile employeeEditButton">Edit</span> -->
+                                        
+                                        <!-- <select class="select-employee-dropdown form-control" name="employees[]" multiple="multiple">
                                             @foreach($loggedManagerEmployees as $employeesSelection)
                                                 <option selected value="{{ $employeesSelection->id }}">{{ $employeesSelection->name }}</option>
                                             @endforeach
-                                        </select>
+                                        </select> -->
                                     </div>
                                     <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
                                         <label class="" for="">Reviewer</label>
@@ -599,7 +645,42 @@ header {
         </div>
     </div>
 
-    
+    <!-- emplyee edit modal starts -->
+    @if(isset($loggedManagerEmployees) && count($loggedManagerEmployees) > 0)
+    <div class="modal fade" id="employeeSelectionModal" role="dialog" aria-hidden="true"
+        style="opacity:1; display:none;background:#00000073;">
+        <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true"
+            aria-labelledby="exampleModalToggleLabel2">
+            <div class="modal-content">
+                <div class="modal-header py-2 bg-primary">
+
+                    <div class="w-100 modal-header-content d-flex align-items-center py-2">
+                        <h5 class="modal-title text-white" id="modalHeader">Edit Employees
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white close-modal-employee" data-bs-dismiss="modal"
+                            aria-label="Close">
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="mt-12">
+                        <select class="select-employee-dropdown form-control" name="employees[]" multiple="multiple">
+                            @foreach($loggedManagerEmployees as $employeesSelection)
+                                <option selected value="{{ $employeesSelection->id }}">{{ $employeesSelection->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
+                        <button class="btn btn-primary ml-2" id="edit-employee"
+                            >Edit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+    <!-- emplyee edit modal ends -->
+
 
     <!-- Error Message Notification -->
 
@@ -650,11 +731,56 @@ header {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script>
+        var selectedEmployeesId = $('.select-employee-dropdown').val();
+        changeAssigneeProfilePicOnSelection(selectedEmployeesId);
+
+        function changeAssigneeProfilePicOnSelection(selectedEmployeesId){
+            var selectedEmployeesId = selectedEmployeesId;
+            $.ajax({
+                type: "POST",
+                url: "{{ route('changeEmployeeProfileIconsOnEdit') }}",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    selectedEmployeesId : selectedEmployeesId,
+                },
+                success: function(data) {
+                    if(data.status == true){
+                        $('.employee-selection-section').html(data.html);
+                        $('#employeeSelectionModal').hide();
+                        $('#employeeSelectionModal').addClass('fade');
+                        $('#employeesSelectedValues').val(selectedEmployeesId);
+                    }
+                    // $.each(data.result.removeSelectedEmployee, function(i, value) {
+                    //     $(".select-employee-dropdown option[value="+value+"]").remove();
+                    // });
+
+                    // $("#reviewersAccordingAssignee").val(data.result.reviewerNames.join(","));
+                    // $("#selectedReviewIds").val(data.result.reviewerIds.join(","));
+                },
+                error: function(error) {
+                    console.log('something went wrong');
+                }
+            });
+        }
+
+        $(document).on("click",".employeeEditButton",function() {
+            $('#employeeSelectionModal').show();
+            $('#employeeSelectionModal').removeClass('fade');
+        })
+
+        $('#edit-employee').click(function(){
+            var selectedEmployeesId = $('.select-employee-dropdown').val();
+            changeAssigneeProfilePicOnSelection(selectedEmployeesId);
+        })
+
+    </script>
+
+    <script>
         $(document).ready(function() {
             $("#reviewersAccordingAssignee").val('{{$loggedInUser->name}}');
             $("#selectedReviewIds").val('{{$loggedInUser->id}}');
             $('.select-employee-dropdown').select2({
-                dropdownParent: $("#add-goals-modal"),
+                dropdownParent: $("#employeeSelectionModal"),
                 minimumResultsForSearch: Infinity,
                 width: '100%'
             });
@@ -849,6 +975,11 @@ header {
             $('#notificationModal').hide();
             $('#notificationModal').addClass('fade');
             window.location.reload();
+        })
+
+        $('body').on('click', '.close-modal-employee', function() {
+            $('#employeeSelectionModal').hide();
+            $('#employeeSelectionModal').addClass('fade');
         })
 
 
