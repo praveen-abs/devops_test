@@ -64,8 +64,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('saveAssigneeReviews', 'App\Http\Controllers\VmtAPIPMSModuleController@saveAssigneeReviews');
 
 
-    //Route::get('getReviewerReviews', 'App\Http\Controllers\VmtAPIPMSModuleController@getReviewerReviews');
-    //Route::post('saveReviewerReviews', 'App\Http\Controllers\VmtAPIPMSModuleController@saveReviewerReviews');
+    Route::get('getReviewerReviews', 'App\Http\Controllers\VmtAPIPMSModuleController@getReviewerReviews');
+    Route::post('saveReviewerReviews', 'App\Http\Controllers\VmtAPIPMSModuleController@saveReviewerReviews');
 
 
 
