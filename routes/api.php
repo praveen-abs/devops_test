@@ -33,14 +33,39 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     //Route::get('viewAssigneeReviewList', 'App\Http\Controllers\VmtAPIPMSModuleController@showEmployeeApraisalReviewList');
 
-    Route::get('getAssigneeReviews', 'App\Http\Controllers\VmtAPIPMSModuleController@getAssigneeReviews');
-    Route::post('saveAssigneeReviews', 'App\Http\Controllers\VmtAPIPMSModuleController@saveAssigneeReviews');
 
-    //TODO:
+    /*
+        getAssignedKPIForms():
+        Input : assignee_id
+        DB Table : vmt_pms_kpiform_assigned
+        Output : JSON containing the list of all forms assigned to the given assignee_id
+
+    */
     Route::get('getAssignedKPIForms', 'App\Http\Controllers\VmtAPIPMSModuleController@getAssignedKPIForms');
 
-    //Route::get('getReviewerReviews', 'App\Http\Controllers\VmtAPIPMSModuleController@getReviewerReviews');
-    //Route::post('saveReviewerReviews', 'App\Http\Controllers\VmtAPIPMSModuleController@saveReviewerReviews');
+    /*
+        getAssigneeReviews():
+        Input : assignee_id, vmt_pms_kpiform_assigned_id
+        DB Table : vmt_pms_kpiform_reviews
+        Output : JSON containing kpi review of the form assigned to the given assignee id.
+
+    */
+    Route::get('getAssigneeReviews', 'App\Http\Controllers\VmtAPIPMSModuleController@getAssigneeReviews');
+
+
+
+    /*
+        saveAssigneeReviews():
+        Input : assignee_id, assigned form id, JSON data of KPI reviews.
+        DB Table : vmt_pms_kpiform_reviews
+        Output : success/failure response.
+
+    */
+    Route::post('saveAssigneeReviews', 'App\Http\Controllers\VmtAPIPMSModuleController@saveAssigneeReviews');
+
+
+    Route::get('getReviewerReviews', 'App\Http\Controllers\VmtAPIPMSModuleController@getReviewerReviews');
+    Route::post('saveReviewerReviews', 'App\Http\Controllers\VmtAPIPMSModuleController@saveReviewerReviews');
 
 
 
