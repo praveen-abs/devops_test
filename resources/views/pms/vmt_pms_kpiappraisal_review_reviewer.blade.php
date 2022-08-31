@@ -145,37 +145,34 @@
                         <table id="table_review"  class="table align-middle mb-0 table-bordered  responsive" data-paging="true" data-paging-size="10" data-paging-limit="3" data-paging-container="#paging-ui-container" data-paging-count-format="{PF} to {PL}" data-sorting="true" data-filtering="false" data-empty="No Results" data-filter-container="#filter-form-container" data-editing-add-text="Add New">
                             <thead class="thead" id="tHead">
                                 <tr>
-                                    <th scope="col" data-name='dimension' data-filterable="false" data-visible="{{$show['dimension']}}">@if($config && $config->header)
-                                        {{$config->header['dimension']}} @else Dimension @endif
+                                    <th scope="col" data-name='dimension' data-filterable="false" data-visible="{{$show['dimension']}}">
+                                        @if($config && $config->header) {{$config->header['dimension']}} @else Dimension @endif
                                     </th>
-                                    <th scope="col" data-name='kpi' data-filterable="false" data-visible="{{$show['kpi']}}">@if($config && $config->header)
-                                        {{$config->header['kpi']}} @else KPI @endif
+                                    <th scope="col" data-name='kpi' data-filterable="false" data-visible="{{$show['kpi']}}">
+                                        @if($config && $config->header) {{$config->header['kpi']}} @else KPI @endif
                                     </th>
-                                    <th scope="col" data-name='operational' data-filterable="false" data-visible="{{$show['operational']}}">@if($config && $config->header)
-                                        {{$config->header['operational']}} @else Operational Definition @endif
+                                    <th scope="col" data-name='operational' data-filterable="false" data-visible="{{$show['operational']}}">
+                                        @if($config && $config->header) {{$config->header['operational']}} @else Operational Definition @endif
                                     </th>
-                                    <th scope="col" data-name='measure' data-filterable="false" data-visible="{{$show['measure']}}">@if($config && $config->header)
-                                        {{$config->header['measure']}} @else Measure @endif
+                                    <th scope="col" data-name='measure' data-filterable="false" data-visible="{{$show['measure']}}">
+                                        @if($config && $config->header) {{$config->header['measure']}} @else Measure @endif
                                     </th>
-                                    <th scope="col" data-name='frequency' data-filterable="false" data-visible="{{$show['frequency']}}">@if($config && $config->header)
-                                        {{$config->header['frequency']}} @else Frequency @endif
+                                    <th scope="col" data-name='frequency' data-filterable="false" data-visible="{{$show['frequency']}}">
+                                        @if($config && $config->header) {{$config->header['frequency']}} @else Frequency @endif
                                     </th>
-                                    <th scope="col" data-name='target' data-filterable="false" data-visible="{{$show['target']}}">@if($config && $config->header)
-                                        {{$config->header['target']}} @else Target @endif
+                                    <th scope="col" data-name='target' data-filterable="false" data-visible="{{$show['target']}}">
+                                        @if($config && $config->header) {{$config->header['target']}} @else Target @endif
                                     </th>
-                                    <th scope="col" data-name='stretchTarget' data-filterable="false" data-visible="{{$show['stretchTarget']}}">@if($config && $config->header)
-                                        {{$config->header['stretchTarget']}} @else Stretch Target @endif
+                                    <th scope="col" data-name='stretchTarget' data-filterable="false" data-visible="{{$show['stretchTarget']}}">
+                                        @if($config && $config->header) {{$config->header['stretchTarget']}} @else Stretch Target @endif
                                     </th>
-                                    <th scope="col" data-name='source' data-filterable="false" data-visible="{{$show['source']}}">@if($config && $config->header)
-                                        {{$config->header['source']}} @else Source @endif
+                                    <th scope="col" data-name='source' data-filterable="false" data-visible="{{$show['source']}}">
+                                        @if($config && $config->header) {{$config->header['source']}} @else Source @endif
                                     </th>
-                                    <th scope="col" data-name='kpiWeightage' data-filterable="false" data-visible="{{$show['kpiWeightage']}}">@if($config && $config->header)
-                                        {{$config->header['kpiWeightage']}} @else KPI Weightage @endif
+                                    <th scope="col" data-name='kpiWeightage' data-filterable="false" data-visible="{{$show['kpiWeightage']}}">
+                                        @if($config && $config->header) {{$config->header['kpiWeightage']}} @else KPI Weightage @endif
                                     </th>
-                                    
-                                    <?php $i=1;
-                                    $j=1;
-                                    ?>
+                                    <?php $i=1; ?>
                                     @foreach($reviewersId as $reviewersReview)
                                         <th scope="col" data-name='kpiManagerReview' data-filterable="false" data-visible= true>KPI - Achievement (Manager Review) {{$i}}</th>
                                         <th scope="col" data-name='kpiManagerAchivement' data-filterable="false" data-visible="true">Manager KPI Achievement % - {{$i}}</th>
@@ -213,42 +210,35 @@
                                     <td>
                                         <div>{{$kpiRow->kpi_weightage}}</div>
                                     </td>
-                                 
-                                        <?php
+                                    <?php
                                         $decodedKpiReview = json_decode($assignedGoals->reviewer_kpi_review,true);
                                         $decodedKpiReviewSubmittedStatus = json_decode($assignedGoals->is_reviewer_submitted,true);
-                                        ?>
-                                        @foreach($reviewersId as $reviewersReview)
-                                        <td>
-                                            @if(isset($assignedGoals->is_assignee_submitted) && $assignedGoals->is_assignee_submitted == '1' && $reviewersReview == Auth::id() && ($decodedKpiReviewSubmittedStatus[$reviewersReview] == '' || $decodedKpiReviewSubmittedStatus[$reviewersReview] == '0'))
-                                            <textarea name="reviewer_kpi_review[{{$reviewersReview}}][{{$kpiRow->id}}]" id="reviewer_kpi_review{{$index}}-{{$reviewersReview}}" cols="20" rows="8" placeholder="type here">@if(isset( $decodedKpiReview[$reviewersReview])){{$decodedKpiReview[$reviewersReview][$kpiRow->id]}}@endif</textarea>
-                                            @else
-                                            <div>@if(isset( $decodedKpiReview[$reviewersReview])){{$decodedKpiReview[$reviewersReview][$kpiRow->id]}}@endif</div>
-                                            @endif
-
-                                        </td>
-                                        @endforeach
-                                    <?php
-                                        $decodedKpiReviewPerc = json_decode($assignedGoals->reviewer_kpi_percentage,true);
-                                        ?>
-                                        @foreach($reviewersId as $reviewersReview)
+                                    ?>
+                                    @foreach($reviewersId as $reviewersReview)
                                     <td>
-                                            @if($assignedGoals->is_assignee_submitted == '1' && $reviewersReview == Auth::id() && ($decodedKpiReviewSubmittedStatus[$reviewersReview] == '' || $decodedKpiReviewSubmittedStatus[$reviewersReview] == '0'))
-                                            <input type="number" class="inp-text" name="reviewer_kpi_percentage[{{$reviewersReview}}][{{$kpiRow->id}}]" id="reviewer_kpi_percentage{{$index}}-{{$reviewersReview}}" placeholder="type here" value="@if(isset( $decodedKpiReviewPerc[$reviewersReview])){{$decodedKpiReviewPerc[$reviewersReview][$kpiRow->id]}}@endif">
+                                        @if(isset($assignedGoals->is_assignee_submitted) && $assignedGoals->is_assignee_submitted == '1' && $reviewersReview == Auth::id() && ($decodedKpiReviewSubmittedStatus[$reviewersReview] == '' || $decodedKpiReviewSubmittedStatus[$reviewersReview] == '0'))
+                                        <textarea name="reviewer_kpi_review[{{$reviewersReview}}][{{$kpiRow->id}}]" id="reviewer_kpi_review{{$index}}-{{$reviewersReview}}" cols="20" rows="8" placeholder="type here">@if(isset( $decodedKpiReview[$reviewersReview])){{$decodedKpiReview[$reviewersReview][$kpiRow->id]}}@endif</textarea>
+                                        @else
+                                        <div>@if(isset( $decodedKpiReview[$reviewersReview])){{$decodedKpiReview[$reviewersReview][$kpiRow->id]}}@endif</div>
+                                        @endif
 
-                                            @else
-                                            <div>@if(isset( $decodedKpiReviewPerc[$reviewersReview])){{$decodedKpiReviewPerc[$reviewersReview][$kpiRow->id]}}@endif</div>
-                                            @endif
+                                    </td>
+                                    @endforeach
+                                    <?php $decodedKpiReviewPerc = json_decode($assignedGoals->reviewer_kpi_percentage,true); ?>
+                                    @foreach($reviewersId as $reviewersReview)
+                                    <td>
+                                        @if($assignedGoals->is_assignee_submitted == '1' && $reviewersReview == Auth::id() && ($decodedKpiReviewSubmittedStatus[$reviewersReview] == '' || $decodedKpiReviewSubmittedStatus[$reviewersReview] == '0'))
+                                        <input type="number" class="inp-text" name="reviewer_kpi_percentage[{{$reviewersReview}}][{{$kpiRow->id}}]" id="reviewer_kpi_percentage{{$index}}-{{$reviewersReview}}" placeholder="type here" value="@if(isset( $decodedKpiReviewPerc[$reviewersReview])){{$decodedKpiReviewPerc[$reviewersReview][$kpiRow->id]}}@endif">
 
-
-                                        </td>
-                                        @endforeach
+                                        @else
+                                        <div>@if(isset( $decodedKpiReviewPerc[$reviewersReview])){{$decodedKpiReviewPerc[$reviewersReview][$kpiRow->id]}}@endif</div>
+                                        @endif
+                                    </td>
+                                    @endforeach
                                 </tr>
                                 @endforeach
                             </tbody>
-
                         </table>
-
                     </div>
                 </form>
                 @if($assignedGoals->is_assignee_submitted == '1')
