@@ -771,8 +771,8 @@
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl" role="document">
         <div class="modal-content profile-box">
             <div class="modal-header  ">
-                <h4 class="modal-title m-0 p-0   text-primary">Pay Slip
-                </h4>
+                <h6 class="modal-title m-0 p-0   text-primary">Pay Slip
+                </h6>
                 <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>

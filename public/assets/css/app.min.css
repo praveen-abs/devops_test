@@ -691,9 +691,15 @@ select {
     bottom: 0;
     padding: 5px 0.75rem;
     right: 0;
+    height: 32px;
+    align-items: center;
+    justify-content: flex;
     color: var(--vz-footer-color);
     /* left: 200px; */
     background-color: var(--vz-footer-bg);
+    align-items: center;
+    display: flex;
+    justify-content: end;
 }
 
 @media (max-width: 991.98px) {
@@ -18670,7 +18676,7 @@ table > tbody > tr > td > img,
 }
 
 .footer-img-wrapper img {
-    height: 35px;
+    height: 26px;
     width: auto;
 }
 
