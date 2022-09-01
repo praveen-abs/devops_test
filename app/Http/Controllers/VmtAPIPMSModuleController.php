@@ -337,15 +337,12 @@ class VmtAPIPMSModuleController extends Controller
             return sendError($validation->errors()->first());
         }
         $userId  = auth::user()->id;
-        if($request->assigneeId != $userId){
+        if($request->assignee_id != $userId){
             return sendError('Unauthorized');
         }
 
         // check user id in Assignee, Assigner and Reviewer
-        $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews.getUserAssigneeDetails.getEmployeeDetails')->orWhereRaw("find_in_set(".$userId.", assignee_id)")
-                                ->orderBy('id','DESC')
-                                ->get();
-
+        $pmsKpiAssigneeDetails = [];
         $result = [];    
         // display assigned kpi details
         foreach($pmsKpiAssigneeDetails as $key => $assignedDetails){
