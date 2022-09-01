@@ -120,7 +120,7 @@ class VmtPMSModuleController extends Controller
         $loggedManagerEmployees = User::leftJoin('vmt_employee_office_details','users.id','=','vmt_employee_office_details.user_id')
             ->leftJoin('vmt_employee_details','users.id','=','vmt_employee_details.userid')
             ->where('l1_manager_code',$loggedUserManagerNumber)
-            ->select('users.name','users.id','vmt_employee_details.emp_no','vmt_employee_office_details.designation')
+            ->select('users.name','users.id','vmt_employee_details.emp_no','vmt_employee_office_details.designation','users.avatar as avatar')
             ->get();
 
         // Get logged in user office deatils and its parent code
@@ -1044,5 +1044,35 @@ class VmtPMSModuleController extends Controller
             }
         }
         return true;
+    }
+
+    public function changeEmployeeProfileIconsOnEdit(Request $request){
+        if(isset($request->selectedEmployeesId) && count($request->selectedEmployeesId) > 0){
+            $employeesList = User::whereIn('id',$request->selectedEmployeesId)->select('id','name','avatar')->get()->toArray();
+            $html = '';
+            
+            $html .= '<div class="employees-card"><div class="employees-profile">';
+            foreach($employeesList as $key => $employeeAvatar){
+                if($key < 2){
+                    $avatarProfilePic = \URL::asset('images/'. $employeeAvatar['avatar']);
+                    $defaultProfilePic = \URL::asset('default/default_profile.jpg');
+                    if(!empty($employeeAvatar['avatar']) && file_exists(public_path('images/'.$employeeAvatar['avatar']))){
+                        $html .= '<img title="'. $employeeAvatar['name'] .'" src="'.$avatarProfilePic.'" alt="'. $employeeAvatar['name'] .'">';
+                    }else{
+                        $html .= '<img title="'. $employeeAvatar['name'] .'" src="'.$defaultProfilePic.'" alt="'.$employeeAvatar['name'] .'">';
+                    }
+                }
+            }
+            if(count( $employeesList) > 0){
+                if(count($employeesList) > 2){
+                    $html .= '<span class="employees-profile counting">+ '. count($employeeAvatar) - 2 .'</span>';
+                }
+            }else{
+                $html .= '<span class="employees-profile counting">0</span>';
+            }
+            // <span class="employees-profile editProfile employeeEditButton">Edit</span>
+            $html .= '<span class="employees-profile editProfile employeeEditButton">Edit</span></div></div>';
+            return response()->json(['status'=>true,'html'=>$html]);
+        }
     }
 }
