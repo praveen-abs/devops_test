@@ -148,6 +148,10 @@ header {
         align-items: center;
         justify-content: center;
     }
+
+    .mr-10{
+        margin-right: 0px !important;
+    }
 </style>
 @endsection
 
