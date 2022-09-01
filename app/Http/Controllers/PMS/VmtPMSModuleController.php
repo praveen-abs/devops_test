@@ -1047,11 +1047,11 @@ class VmtPMSModuleController extends Controller
     }
 
     public function changeEmployeeProfileIconsOnEdit(Request $request){
+        $html = '';
+        $html .= '<div class="employees-card"><div class="employees-profile">';
+        $employeesList = [];
         if(isset($request->selectedEmployeesId) && count($request->selectedEmployeesId) > 0){
             $employeesList = User::whereIn('id',$request->selectedEmployeesId)->select('id','name','avatar')->get()->toArray();
-            $html = '';
-            
-            $html .= '<div class="employees-card"><div class="employees-profile">';
             foreach($employeesList as $key => $employeeAvatar){
                 if($key < 2){
                     $avatarProfilePic = \URL::asset('images/'. $employeeAvatar['avatar']);
@@ -1063,16 +1063,19 @@ class VmtPMSModuleController extends Controller
                     }
                 }
             }
-            if(count( $employeesList) > 0){
-                if(count($employeesList) > 2){
-                    $html .= '<span class="employees-profile counting">+ '. count($employeeAvatar) - 2 .'</span>';
-                }
-            }else{
-                $html .= '<span class="employees-profile counting">0</span>';
-            }
+            
             // <span class="employees-profile editProfile employeeEditButton">Edit</span>
-            $html .= '<span class="employees-profile editProfile employeeEditButton">Edit</span></div></div>';
-            return response()->json(['status'=>true,'html'=>$html]);
         }
+        if(count( $employeesList) > 0){
+            if(count($employeesList) > 2){
+                $html .= '<span class="employees-profile counting">+ '. count($employeesList) - 2 .'</span>';
+            }else{
+                $html .= '<span class="employees-profile counting">'. count($employeesList) .'</span>';
+            }
+        }else{
+            $html .= '<span class="employees-profile counting">0</span>';
+        }
+        $html .= '<span class="employees-profile editProfile employeeEditButton">Edit</span></div></div>';
+        return response()->json(['status'=>true,'html'=>$html]);
     }
 }

@@ -55,4 +55,8 @@ class User extends Authenticatable
     public function getEmployeeOfficeDetails() {
         return $this->hasOne(VmtEmployeeOfficeDetails::class,'user_id');
     }
+
+    function getKpiAssignedFormReview(){
+        return $this->hasMany(VmtPMS_KPIFormReviewsModel::class,'assignee_id');
+    }
 }
