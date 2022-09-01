@@ -14,4 +14,8 @@ class VmtPMS_KPIFormReviewsModel extends Model
     function getPmsKpiFormAssigned(){
         return $this->belongsTo(VmtPMS_KPIFormAssignedModel::class,'vmt_pms_kpiform_assigned_id');
     }
+
+    function getUserAssigneeDetails(){
+        return $this->belongsTo(User::class,'assignee_id');
+    }
 }
