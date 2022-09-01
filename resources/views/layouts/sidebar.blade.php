@@ -176,7 +176,8 @@
                     <div class="collapse menu-dropdown" id="PerformanceDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{url('vmt-pms-assigngoals')}}" class="nav-link sidebar py-1"><span>Dashboard</span></a>
+                                <!-- <a href="{{url('vmt-pms-assigngoals')}}" class="nav-link sidebar py-1"><span>Dashboard</span></a> -->
+                                <a href="{{ route('pms-dashboard') }}" class="nav-link sidebar py-1"><span>Dashboard</span></a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('team-appraisal-pms-dashboard') }}" class="nav-link"><span>Team Appraisal</span></a>
