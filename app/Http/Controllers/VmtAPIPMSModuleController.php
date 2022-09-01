@@ -29,7 +29,7 @@ class VmtAPIPMSModuleController extends Controller
         return response()->json([
             'status' => true,
             'message'=> '',
-            'data'   => $pmsKpiAssigneeDetaifls
+            'data'   => $pmsKpiAssigneeDetails
         ]);
     }
 
@@ -218,8 +218,8 @@ class VmtAPIPMSModuleController extends Controller
     */
     public function getAssignedKPIForms(Request $request)
     {
-        $userId  = auth::user()->id; 
-        $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::join('vmt_pms_kpiform_reviews', 
+        $userId  = auth::user()->id;
+        $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::join('vmt_pms_kpiform_reviews',
                 'vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id', '=', 'vmt_pms_kpiform_assigned.id')
             ->leftJoin('users', 'users.id', '=', 'vmt_pms_kpiform_reviews.assignee_id')
             ->WhereRaw("find_in_set(".$userId.", vmt_pms_kpiform_assigned.reviewer_id)")
@@ -231,22 +231,22 @@ class VmtAPIPMSModuleController extends Controller
                 'vmt_pms_kpiform_reviews.reviewer_kpi_review',
                 'vmt_pms_kpiform_reviews.reviewer_kpi_percentage',
                 'vmt_pms_kpiform_reviews.reviewer_kpi_comments',
-                'vmt_pms_kpiform_reviews.reviewer_appraisal_comments', 
+                'vmt_pms_kpiform_reviews.reviewer_appraisal_comments',
                 'vmt_pms_kpiform_reviews.assigner_kpi_review',
                 'vmt_pms_kpiform_reviews.assigner_kpi_percentage',
                 'vmt_pms_kpiform_reviews.assigner_kpi_comments',
                 'vmt_pms_kpiform_reviews.assignee_kpi_status',
                 'vmt_pms_kpiform_reviews.is_assignee_submitted',
-                'vmt_pms_kpiform_reviews.is_assignee_accepted', 
-                'vmt_pms_kpiform_reviews.reviewer_kpi_status', 
-                'vmt_pms_kpiform_reviews.is_reviewer_submitted', 
+                'vmt_pms_kpiform_reviews.is_assignee_accepted',
+                'vmt_pms_kpiform_reviews.reviewer_kpi_status',
+                'vmt_pms_kpiform_reviews.is_reviewer_submitted',
                 'vmt_pms_kpiform_reviews.is_reviewer_accepted',
                 'vmt_pms_kpiform_reviews.assignee_rejection_comments',
                 'vmt_pms_kpiform_reviews.reviewer_rejection_comments',
                 'vmt_pms_kpiform_reviews.overall_score',
                 'vmt_pms_kpiform_reviews.id as review_kpiform_id',
-                'vmt_pms_kpiform_assigned.*', 
-                'users.name as assignee_name', 
+                'vmt_pms_kpiform_assigned.*',
+                'users.name as assignee_name',
                 'users.user_code as assignee_code'
             )->orderBy('id','DESC')->get();
 
@@ -267,9 +267,9 @@ class VmtAPIPMSModuleController extends Controller
 
     */
     public function getReviewerReviews(Request $request){
-        $userId = auth::user()->id; 
+        $userId = auth::user()->id;
         $kpiReviewFormId = $request->review_kpiform_id;
-        $data  =  VmtPMS_KPIFormAssignedModel::join('vmt_pms_kpiform_reviews', 
+        $data  =  VmtPMS_KPIFormAssignedModel::join('vmt_pms_kpiform_reviews',
                 'vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id', '=', 'vmt_pms_kpiform_assigned.id')
                 ->leftJoin('users', 'users.id', '=', 'vmt_pms_kpiform_reviews.assignee_id')
                 ->where('vmt_pms_kpiform_reviews.id', $kpiReviewFormId)
@@ -279,22 +279,22 @@ class VmtAPIPMSModuleController extends Controller
                     'vmt_pms_kpiform_reviews.reviewer_kpi_review',
                     'vmt_pms_kpiform_reviews.reviewer_kpi_percentage',
                     'vmt_pms_kpiform_reviews.reviewer_kpi_comments',
-                    'vmt_pms_kpiform_reviews.reviewer_appraisal_comments', 
+                    'vmt_pms_kpiform_reviews.reviewer_appraisal_comments',
                     'vmt_pms_kpiform_reviews.assigner_kpi_review',
                     'vmt_pms_kpiform_reviews.assigner_kpi_percentage',
                     'vmt_pms_kpiform_reviews.assigner_kpi_comments',
                     'vmt_pms_kpiform_reviews.assignee_kpi_status',
                     'vmt_pms_kpiform_reviews.is_assignee_submitted',
-                    'vmt_pms_kpiform_reviews.is_assignee_accepted', 
-                    'vmt_pms_kpiform_reviews.reviewer_kpi_status', 
-                    'vmt_pms_kpiform_reviews.is_reviewer_submitted', 
+                    'vmt_pms_kpiform_reviews.is_assignee_accepted',
+                    'vmt_pms_kpiform_reviews.reviewer_kpi_status',
+                    'vmt_pms_kpiform_reviews.is_reviewer_submitted',
                     'vmt_pms_kpiform_reviews.is_reviewer_accepted',
                     'vmt_pms_kpiform_reviews.assignee_rejection_comments',
                     'vmt_pms_kpiform_reviews.reviewer_rejection_comments',
                     'vmt_pms_kpiform_reviews.overall_score',
                     'vmt_pms_kpiform_reviews.assignee_id as assignee_user_id',
-                    'vmt_pms_kpiform_assigned.*', 
-                    'users.name as assignee_name', 
+                    'vmt_pms_kpiform_assigned.*',
+                    'users.name as assignee_name',
                     'users.user_code as assignee_code'
                 )->orderBy('id','DESC')->first();
 
@@ -317,7 +317,7 @@ class VmtAPIPMSModuleController extends Controller
 
         $kpiRowsId  = '';
         if($data){
-            $config = VmtPMS_KPIFormModel::findorfail($data->vmt_pms_kpiform_id);        
+            $config = VmtPMS_KPIFormModel::findorfail($data->vmt_pms_kpiform_id);
             if ($config) {
                 $config->header = json_decode($config->column_header, true);
                 $show['dimension'] = $config->available_columns && in_array('dimension', explode(',', $config->available_columns)) ? 'true': 'false';
@@ -347,7 +347,7 @@ class VmtAPIPMSModuleController extends Controller
                 "source",
                 "kpi_weightage",
             )->where('vmt_pms_kpiform_id', $data->vmt_pms_kpiform_id)->first();
-            
+
             $assigneeEmployeeOfficeDetails = VmtEmployeeOfficeDetails::select('department_id', 'process', 'designation', 'user_id')->where('user_id', $data->assignee_user_id)->first();
         }
 
@@ -357,15 +357,15 @@ class VmtAPIPMSModuleController extends Controller
             'status' => true,
             'message'=> '',
             'data'   => [
-                            "review" => $data, 
-                            "show" => $show, 
+                            "review" => $data,
+                            "show" => $show,
                             "kpiFormDetails" => $kpiFormDetails,
                             "assignersName"  => $assignersName,
                             "ratingDetail"   => $ratingDetail,
                             "assigneeEmployeeOfficeDetails" => $assigneeEmployeeOfficeDetails
                         ]
         ]);
-   
+
     }
 
 
@@ -375,7 +375,7 @@ class VmtAPIPMSModuleController extends Controller
             Input params : review_kpiform_id, 'reviewer_kpi_review', 'reviewer_kpi_percentage', formSubmitType
 
             formSubmitType == 0 ? "Save Review" : "Publish Review"
-            
+
         Logic : Using review_kpiform_id, we will get the details of assigned kpi form and will store the reviews in the vmt_pms_kpiform_reviews table
 
     */
@@ -391,15 +391,15 @@ class VmtAPIPMSModuleController extends Controller
 
             $decodedKpiReviwerReview[Auth::id()] = $request->reviewer_kpi_review;
             $decodedKpiReviwerPerc[Auth::id()] = $request->reviewer_kpi_percentage;
-            
+
             $kpiReviewCheck->reviewer_kpi_review = $decodedKpiReviwerReview;
             $kpiReviewCheck->reviewer_kpi_percentage = $decodedKpiReviwerPerc;
-            
+
             if($request->formSubmitType == 0){
                 $decodedIsKpiReviwerSubmitted[Auth::id()] = '0';
                 $kpiReviewCheck->is_reviewer_submitted = $decodedIsKpiReviwerSubmitted;
                 $kpiReviewCheck->update();
-                return response()->json(['status'=>true,'message'=>'Saved as draft']);    
+                return response()->json(['status'=>true,'message'=>'Saved as draft']);
             }else{
                 $decodedIsKpiReviwerSubmitted[Auth::id()] = '1';
                 $kpiReviewCheck->is_reviewer_submitted = $decodedIsKpiReviwerSubmitted;
@@ -421,7 +421,7 @@ class VmtAPIPMSModuleController extends Controller
                 $message = "Employee has submitted KPI Assessment.  ";
                     Notification::send($notification_user ,new ViewNotification($message.auth()->user()->name));
 
-                return response()->json(['status'=>true,'message'=>"Published Review successfully. Sent mail to HR ".$officialMailList]); 
+                return response()->json(['status'=>true,'message'=>"Published Review successfully. Sent mail to HR ".$officialMailList]);
             }
 
         }catch(Exception $e){
