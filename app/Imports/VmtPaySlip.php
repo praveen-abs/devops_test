@@ -7,7 +7,7 @@ use Maatwebsite\Excel\Concerns\ToModel;
 
 use App\Models\VmtEmployeePaySlip;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-
+use PhpOffice\PhpSpreadsheet\Shared;
 
 class VmtPaySlip implements ToModel,  WithHeadingRow
 {
@@ -24,6 +24,7 @@ class VmtPaySlip implements ToModel,  WithHeadingRow
         //}
     public function model(array $row)
     {
+        
         $errorMessage = "";
         if($row['emp_no'] != null){
             if (!isset($row['emp_no'])) {
@@ -36,9 +37,9 @@ class VmtPaySlip implements ToModel,  WithHeadingRow
             "Gender" => $row['gender'],
             "DESIGNATION" => $row['designation'],
             "DEPARTMENT" => $row['department'],
-            "DOJ" => $row['doj'],
+            "DOJ" => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d'),
             "LOCATION" => $row['location'],
-            "DOB" => $row['dob'],
+            "DOB" => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['dob'])->format('Y-m-d'),
             "Father_Name" => $row['father_name'],
             "PAN_Number" => $row['pan_number'],
             "Aadhar_Number" => $row['aadhar_number'],
