@@ -647,34 +647,87 @@ class VmtAPIPMSModuleController extends Controller
 
     */
     public function saveReviewerReviews(Request $request){
+        $validation = Validator::make($request->all(), [
+            'assignedFormId' => 'required',
+            'reviewer_id' => 'required',
+            'assignee_id' => 'required',
+            'reviewer_kpi_review' => 'required',
+            'reviewer_kpi_percentage' => 'required',
+            'formSubmitType' => 'required',
+        ],[
+            'assignedFormId.required' => 'Assigned Form Id is Required',
+            'reviewer_id.required' => 'Reviewer Id is Required',
+            'assignee_id.required' => 'Assignee Id is Required',
+            'reviewer_kpi_review.required' => 'Reviewer KPI Review is Required',
+            'reviewer_kpi_percentage.required' => 'Reviewer KPI Percentage is Required',
+            'formSubmitType.required' => 'Form Submit Type is Required, 0 & 1',
+        ]);
+
+        if ($validation->fails()) {
+            return sendError($validation->errors()->first());
+        }
          try{
-            $kpiReviewCheck = VmtPMS_KPIFormReviewsModel::where('id',$request->review_kpiform_id)->first();
-            if(empty($kpiReviewCheck)){
-                return response()->json(['status'=>false,'message'=>'Review Data Not Found']);
+            $currentLoggedUser = Auth::user();
+            // check logged user id and reviewer_id
+            if($currentLoggedUser->id != $request->reviewer_id){
+                return sendError('Assignee Id is not your Id');
             }
-            $decodedKpiReviwerReview = json_decode($kpiReviewCheck->reviewer_kpi_review,true);
-            $decodedKpiReviwerPerc = json_decode($kpiReviewCheck->reviewer_kpi_percentage,true);
-            $decodedIsKpiReviwerSubmitted = json_decode($kpiReviewCheck->is_reviewer_submitted,true);
 
-            $decodedKpiReviwerReview[Auth::id()] = $request->reviewer_kpi_review;
-            $decodedKpiReviwerPerc[Auth::id()] = $request->reviewer_kpi_percentage;
+            // check assigned KPI Form exists or not
+            $assignedKpiForm = VmtPMS_KPIFormAssignedModel::findorfail($request->assignedFormId);
+            if(empty($assignedKpiForm)){
+                return sendError('Assigned Form data not found');
+            }
 
-            $kpiReviewCheck->reviewer_kpi_review = $decodedKpiReviwerReview;
-            $kpiReviewCheck->reviewer_kpi_percentage = $decodedKpiReviwerPerc;
+            // check reviewer or not
+            $decodedReviewersId = explode(',',$assignedKpiForm->reviewer_id);
+            if(!in_array($currentLoggedUser->id,$decodedReviewersId)){
+                return sendError('Your are not reviewer for this KPI Form');
+            }
 
+            // check review available or not
+            $assignedReviewCheck = VmtPMS_KPIFormReviewsModel::where('vmt_pms_kpiform_assigned_id',$request->assignedFormId)->where('assignee_id',$request->assignee_id)->with('getPmsKpiFormAssigned')->first();
+            if(empty($assignedReviewCheck)){
+                return sendError('Review Data Not Found');
+            }
+            
+            // check assignee has Accepted kpi form or not
+            if($assignedReviewCheck->is_assignee_accepted == '0'){
+                return sendError('Assignee have rejected KPI Form!');
+            }
+
+            // check assignee has Already submitted or not kpi form or not
+            if($assignedReviewCheck->is_assignee_submitted != '1'){
+                return sendError('Assignee has not submitted KPI Form Yet!');
+            }
+
+            $decodedKpiReviewerReview = json_decode($assignedReviewCheck->reviewer_kpi_review,true);
+            $decodedKpiReviewerPerc = json_decode($assignedReviewCheck->reviewer_kpi_percentage,true);
+            $decodedIsKpiReviewerSubmitted = json_decode($assignedReviewCheck->is_reviewer_submitted,true);
+            $decodedIsKpiReviewerAccepted = json_decode($assignedReviewCheck->is_reviewer_accepted,true);
+
+            if($decodedIsKpiReviewerAccepted[$currentLoggedUser->id] != '1'){
+                return sendError('You have not accepted KPI form Yet!');
+            }
+
+            $decodedKpiReviewerReview[Auth::id()] = json_decode($request->reviewer_kpi_review,true);
+            $decodedKpiReviewerPerc[Auth::id()] = json_decode($request->reviewer_kpi_percentage);
+            
+            // dD(json_encode($decodedKpiReviewerReview));
+            $assignedReviewCheck->reviewer_kpi_review = $decodedKpiReviewerReview;
+            $assignedReviewCheck->reviewer_kpi_percentage = $decodedKpiReviewerPerc;
             if($request->formSubmitType == 0){
-                $decodedIsKpiReviwerSubmitted[Auth::id()] = '0';
-                $kpiReviewCheck->is_reviewer_submitted = $decodedIsKpiReviwerSubmitted;
-                $kpiReviewCheck->update();
+                $decodedIsKpiReviewerSubmitted[Auth::id()] = '0';
+                $assignedReviewCheck->is_reviewer_submitted = $decodedIsKpiReviewerSubmitted;
+                $assignedReviewCheck->update();
                 return response()->json(['status'=>true,'message'=>'Saved as draft']);
             }else{
-                $decodedIsKpiReviwerSubmitted[Auth::id()] = '1';
-                $kpiReviewCheck->is_reviewer_submitted = $decodedIsKpiReviwerSubmitted;
-                $kpiReviewCheck->update();
+                $decodedIsKpiReviewerSubmitted[Auth::id()] = '1';
+                $assignedReviewCheck->is_reviewer_submitted = $decodedIsKpiReviewerSubmitted;
+                $assignedReviewCheck->update();
 
-                $kpiForAssignedDetails = VmtPMS_KPIFormAssignedModel::where('id',$kpiReviewCheck->vmt_pms_kpiform_assigned_id)->first();
                 // dD($kpiForAssignedDetails);
-                $hrReview = User::find($kpiForAssignedDetails->assigner_id);
+                $hrReview = User::find($assignedKpiForm->assigner_id);
 
                 $currentUser_empDetails = VmtEmployeeOfficeDetails::where('user_id', auth::user()->id)->first();
 
@@ -684,7 +737,7 @@ class VmtAPIPMSModuleController extends Controller
 
                 $notification_user = User::where('id',auth::user()->id)->first();
                 //dd($officialMailList);
-                \Mail::to($officialMailList)->send(new NotifyPMSManager(auth::user()->name,  $currentUser_empDetails->designation,$hrReview->name,$kpiReviewCheck->year ));
+                \Mail::to($officialMailList)->send(new NotifyPMSManager(auth::user()->name,  $currentUser_empDetails->designation,$hrReview->name,$assignedReviewCheck->year ));
                 $message = "Employee has submitted KPI Assessment.  ";
                     Notification::send($notification_user ,new ViewNotification($message.auth()->user()->name));
 
