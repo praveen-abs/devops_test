@@ -369,6 +369,10 @@ class VmtAPIPMSModuleController extends Controller
             // check assigned kpi details reviews
             if(isset($assignedDetails->getPmsKpiFormReviews) && count($assignedDetails->getPmsKpiFormReviews)){
                 foreach($assignedDetails->getPmsKpiFormReviews as $reviews){
+
+                    $rating = $this->calculateOverallReviewRatings($reviews->vmt_pms_kpiform_assigned_id,$userId);
+                    // dD($rating);
+
                     // assignee details of only Logged In User
                     if($reviews->assignee_id == $userId){
                         $result[$key]['assigned_kpi_form_review_details']['id'] = $reviews->id;
@@ -378,6 +382,7 @@ class VmtAPIPMSModuleController extends Controller
                         // Get Assignee name and emp_no
                         $result[$key]['assigned_kpi_form_review_details']['assignee_name'] = isset($reviews->getUserAssigneeDetails) ? (String)$reviews->getUserAssigneeDetails->name : '';
                         $result[$key]['assigned_kpi_form_review_details']['assignee_emp_no'] = isset($reviews->getUserAssigneeDetails) && isset($reviews->getUserAssigneeDetails->getEmployeeDetails) ? (String)$reviews->getUserAssigneeDetails->getEmployeeDetails->emp_no : '';
+                        $result[$key]['assigned_kpi_form_review_details']['reviewer_rating'] = $rating;
 
                         $result[$key]['assigned_kpi_form_review_details']['assignee_kpi_review'] = (string)$reviews->assignee_kpi_review;
                         $result[$key]['assigned_kpi_form_review_details']['assignee_kpi_percentage'] = (string)$reviews->assignee_kpi_percentage;
@@ -616,6 +621,49 @@ class VmtAPIPMSModuleController extends Controller
         }catch(Exception $e){
             Log::info('save or submit reviewer review API error: '.$e->getMessage());
             return response()->json(['status'=>false,'message'=>$e->getMessage()]);
+        }
+    }
+
+
+    // function use for calculating overall rating
+
+    public function calculateOverallReviewRatings($assigneeReviewTableId=null,$assigneeId){
+        try{
+            $assigneeReviewDetails = VmtPMS_KPIFormAssignedModel::where('id',$assigneeReviewTableId)->first();
+            $finalRating = 0;
+
+            if(!empty($assigneeReviewDetails)){
+                $decodedReviewsId = explode(',',$assigneeReviewDetails->reviewer_id);
+                $assigneeReviewerReview = VmtPMS_KPIFormReviewsModel::where('assignee_id',$assigneeId)->where('vmt_pms_kpiform_assigned_id',$assigneeReviewTableId)->first();
+                if(!empty($assigneeReviewerReview)){
+                    $firstReviewRating = [];
+                    if(json_decode($assigneeReviewerReview->reviewer_kpi_percentage,true)!='' && isset(json_decode($assigneeReviewerReview->reviewer_kpi_percentage,true)[$decodedReviewsId[0]])){
+                        $firstReviewRating = json_decode($assigneeReviewerReview->reviewer_kpi_percentage,true)[$decodedReviewsId[0]];
+                    }
+
+                    if (count($firstReviewRating) > 0) {
+                        $ratingCheck = array_sum($firstReviewRating)/count($firstReviewRating);
+                        if ($ratingCheck < 60) {
+                            $finalRating = 1;
+                        } elseif ($ratingCheck >= 60 && $ratingCheck < 70) {
+                            $finalRating = 2;
+                        } elseif ($ratingCheck >= 70 && $ratingCheck < 80) {
+                            $finalRating = 3;
+                        } elseif ($ratingCheck >= 80 && $ratingCheck < 90) {
+                            $finalRating = 4;
+                        } elseif ($ratingCheck >= 90) {
+                            $finalRating = 5;
+                        } else{
+                            $finalRating = 0;
+                        }
+                    }
+                }
+            }
+            return $finalRating;
+        }catch(Exception $e){
+            dD($e);
+            Log::info('calculation average rating helper error: '.$e->getMessage());
+            return 0;
         }
     }
 }
