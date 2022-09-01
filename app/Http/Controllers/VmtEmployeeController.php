@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Mail\WelcomeMail;
 use App\Mail\QuickOnboardLink;
 use Validator;
-
+use PhpOffice\PhpSpreadsheet\Shared;
 use Dompdf\Options;
 use Dompdf\Dompdf;
 use PDF;
@@ -378,7 +378,7 @@ class VmtEmployeeController extends Controller
                 $empOffice->process = $row["process"];// => "k"
                 $empOffice->designation = $row["designation"];// => "k"
                 $empOffice->cost_center = $row["cost_center"];// => "k"
-                $empOffice->confirmation_period  = $row["confirmation_period"];// => "k"
+                $empOffice->confirmation_period  = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['confirmation_period'])->format('Y-m-d');// => "k"
                 $empOffice->holiday_location  = $row["holiday_location"];// => "k"
                 $empOffice->l1_manager_code  = $row["l1_manager_code"];// => "k"
                 // $empOffice->l1_manager_designation  = $row["l1_manager_designation"];// => "k"
@@ -473,6 +473,7 @@ class VmtEmployeeController extends Controller
     }
 
     public function uploadEmployee($data) {
+      
         $rules = [];
         $returnsuccessMsg = '';
         $returnfailedMsg = '';
@@ -480,7 +481,7 @@ class VmtEmployeeController extends Controller
         $failedCount = 0;
         $empNo=0;
         foreach($data[0] as $key => $row) {
-            if( isset($row['employee_code']))
+            if(isset($row['employee_code']))
             {
                 $empNo = $row['employee_code'];
             }
@@ -494,19 +495,19 @@ class VmtEmployeeController extends Controller
                     $empNo = $maxId;
                 }
             }
-
-            $row['doj'] = date('Y-m-d', strtotime($row['doj']));
-            $row['dob'] = date('Y-m-d', strtotime($row['dob']));
+            //dd($row['confirmation_period'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['confirmation_period'])->format('Y-m-d'));
+            //$row['doj'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d');
+            //$row['dob'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['dob'])->format('Y-m-d');
             $row['spouse_dob'] = date('Y-m-d', strtotime($row['spouse_dob']));
-            $row['confirmation_period'] = date('Y-m-d', strtotime($row['confirmation_period']));
+            $row['confirmation_period'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['confirmation_period'])->format('Y-m-d');
             $row['mobile_no'] = (int)$row['mobile_no'];
             $rules = [
                 'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'email' => 'required|email',
                 'gender' => 'required|in:male,female,other',
-                'doj' => 'required|date',
+               // 'doj' => 'required|date',
                 'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'dob' => 'required|date|before:-18 years',
+               // 'dob' => 'required|date|before:-18 years',
                 'father_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'pan_no' => 'required|regex:/(^([A-Z]){3}P([A-Z]){1}([0-9]){4}([A-Z]){1}$)/u',
                 'pan_ack' => 'required_if:pan_no,==,""',
@@ -527,7 +528,7 @@ class VmtEmployeeController extends Controller
                 //'process' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 //'designation' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'cost_center' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'confirmation_period' => 'required|date',
+                //'confirmation_period' => 'required|date',
                 'holiday_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'l1_manager_code' => 'required|regex:/(^([a-zA-z0-9.]+)(\d+)?$)/u',
                 //'l1_manager_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
@@ -580,10 +581,10 @@ class VmtEmployeeController extends Controller
                 $newEmployee->userid = $user->id;
                 $newEmployee->emp_no   =    $empNo;
                 $newEmployee->gender   =    $row["gender"];
-                $newEmployee->doj   =    $row["doj"];
-                $newEmployee->dol   =    $row["doj"];
+                $newEmployee->doj   =    \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d');
+                $newEmployee->dol   =    \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d');
                 $newEmployee->location   =    $row["work_location"];
-                $newEmployee->dob   =    $row["dob"];
+                $newEmployee->dob   =    \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['dob'])->format('Y-m-d');
                 $newEmployee->father_name   =  $row["father_name"];
                 $newEmployee->pan_number   =  isset( $row["pan_no"] ) ? ($row["pan_no"]) : "";
                 $newEmployee->pan_ack   =    $row["pan_ack"];
@@ -614,7 +615,7 @@ class VmtEmployeeController extends Controller
                     $empOffice->process = $row["process"];
                     $empOffice->designation = $row["designation"];
                     $empOffice->cost_center = $row["cost_center"];
-                    $empOffice->confirmation_period  = $row["confirmation_period"];
+                    $empOffice->confirmation_period  = $row['confirmation_period'];
                     $empOffice->holiday_location  = $row["holiday_location"];
 
                     if($row["l1_manager_code"] !=  $empNo)
@@ -780,12 +781,12 @@ class VmtEmployeeController extends Controller
             } else {
                 $empNo = $maxId;
             }
-            $row['doj'] = date('Y-m-d', $row['doj']);
+           // $row['doj'] = date('Y-m-d', $row['doj']);
             $row['mobile_no'] = (int)$row['mobile_no'];
             $rules = [
                 'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'email' => 'required|email| unique:users,email',
-                'doj' => 'required|date',
+                //'doj' => 'required|date',
                 'mobile_no' => 'required|regex:/^([0-9]{10})?$/u|numeric',
                 'designation' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'basic' => 'required|numeric',
@@ -810,7 +811,7 @@ class VmtEmployeeController extends Controller
                 'max' => 'The :attribute field should be not more than :max character.',
                 'numeric' => 'The :attribute field sould contain only numbers.',
                 'email' => 'The :attribute field email is not valid.',
-                'date' => 'The :attribute field date is not valid.',
+                //'date' => 'The :attribute field date is not valid.',
                 'in' => 'The :attribute field date is not valid. the option should be like :in',
                 'regex' => 'The :attribute field is not valid.',
                 'unique' => 'The :attribute field should be unique',
@@ -839,8 +840,8 @@ class VmtEmployeeController extends Controller
                 $newEmployee->userid = $user->id;
                 $newEmployee->emp_no   =    $empNo;
                 //$newEmployee->gender   =    $row["gender"];
-                $newEmployee->doj   =    $row["doj"];
-                $newEmployee->dol   =    $row["doj"];
+                $newEmployee->doj   =    \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d');
+                $newEmployee->dol   =    \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d');
                 $newEmployee->save();
 
                 if($newEmployee){
@@ -901,6 +902,7 @@ class VmtEmployeeController extends Controller
 
     // Store quick onboard employee data to Database
     public function storeQuickOnboardFormEmployee(Request $request){
+        dd($request->all());
         // code...
         try
         {
@@ -916,10 +918,10 @@ class VmtEmployeeController extends Controller
             //$newEmployee->designation   =    $row["designation"];
             //$newEmployee->department   =    $row["department"];
             //$newEmployee->status   =    $row["status"];
-            $newEmployee->doj   =    $row["doj"];
-            $newEmployee->dol   =    $row["doj"];
+            $newEmployee->doj   =   \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d');
+            $newEmployee->dol   =   \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d');
             $newEmployee->location   =    $row["work_location"];
-            $newEmployee->dob   =    $row["dob"];
+            $newEmployee->dob   =    \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['dob'])->format('Y-m-d');
             $newEmployee->father_name   =  $row["father_name"];
             $newEmployee->pan_number   =  isset( $row["pan_no"] ) ? ($row["pan_no"]) : "";
             $newEmployee->pan_ack   =    $row["pan_ack"];
@@ -968,7 +970,7 @@ class VmtEmployeeController extends Controller
                 $empOffice->process = $row["process"];// => "k"
                 $empOffice->designation = $row["designation"];// => "k"
                 $empOffice->cost_center = $row["cost_center"];// => "k"
-                $empOffice->confirmation_period  = $row["confirmation_period"];// => "k"
+                $empOffice->confirmation_period  = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['confirmation_period'])->format('Y-m-d');// => "k"
                 $empOffice->holiday_location  = $row["holiday_location"];// => "k"
                 $empOffice->l1_manager_code  = $row["l1_manager_code"];// => "k"
                 // $empOffice->l1_manager_designation  = $row["l1_manager_designation"];// => "k"

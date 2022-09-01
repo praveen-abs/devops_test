@@ -208,8 +208,7 @@
                                                 <!---->
                                             </span>
                                         </td>
-                                        <td>
-                                            ₹{{$d->TOTAL_EARNED_GROSS}}
+                                        <td>₹{{$d->TOTAL_EARNED_GROSS}}
                                         </td>
                                         <td>₹0.00</td>
                                         <td>₹{{$d->TOTAL_DEDUCTIONS}}</td>
@@ -226,9 +225,10 @@
                                         </td>
                                         <td>
                                             @php
+
                                             $selectedPaySlipMonth = $d->PAYROLL_MONTH;
                                             @endphp
-                                            <a href="{{ url('pdfview/'. $selectedPaySlipMonth) }}" class="text-info">Download</a>
+                                            <a href="{{ url('pdfview/'.strtoupper($d->EMP_NO).'_'.'PAYSLIP'.'_'.strtoupper($selectedPaySlipMonth)) }}" class="text-info">Download</a>
 
                                         </td>
                                     </tr>
