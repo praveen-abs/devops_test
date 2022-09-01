@@ -6,6 +6,8 @@ use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToModel;
 
 use App\Models\VmtEmployeePaySlip;
+use App\Models\User;
+
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use PhpOffice\PhpSpreadsheet\Shared;
 
@@ -20,20 +22,23 @@ class VmtPaySlip implements ToModel,  WithHeadingRow
         //dd($collection);
         //foreach ($collection as $key => $value) {
             // code...
-            
+
         //}
     public function model(array $row)
     {
-        
+
         $errorMessage = "";
-        if($row['emp_no'] != null){
-            if (!isset($row['emp_no'])) {
+       
+            $user_id = User::where('user_code',$row['emp_no'])->value('id');
+
+            if (!isset($row['emp_no']) && $user_id) {
+
                 $errorMessage .=$row['emp_name'];
                 return $errorMessage;
             }else{
             return new VmtEmployeePaySlip([
             "EMP_NO" => $row['emp_no'],
-            "EMP_NAME" => $row['emp_name'],
+            "user_id" => $user_id,
             "Gender" => $row['gender'],
             "DESIGNATION" => $row['designation'],
             "DEPARTMENT" => $row['department'],
@@ -70,7 +75,6 @@ class VmtPaySlip implements ToModel,  WithHeadingRow
             "Overtime" => $row["overtime"],
             "TOTAL_EARNED_GROSS" => $row["total_earned_gross"],
             "PF_WAGES" => $row["pf_wages"],
-
             "PF_WAGES_ARREAR_EPFR" => $row["pf_wages_arrear"],
             "EPFR" => $row["epfr"],
             "EPFR_ARREAR"   => $row["epfr_arrear"],
@@ -99,10 +103,9 @@ class VmtPaySlip implements ToModel,  WithHeadingRow
             "Rename" => $row['rename'],
             "Email" => $row['email'],
             "Greetings" => $row['greetings']
-        ]);    
+        ]);
         }
     }
-        
+
     }
     //}
-}
