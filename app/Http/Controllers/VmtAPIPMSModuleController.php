@@ -219,42 +219,99 @@ class VmtAPIPMSModuleController extends Controller
     public function getAssignedKPIForms(Request $request)
     {
         $userId  = auth::user()->id;
-        $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::join('vmt_pms_kpiform_reviews',
-                'vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id', '=', 'vmt_pms_kpiform_assigned.id')
-            ->leftJoin('users', 'users.id', '=', 'vmt_pms_kpiform_reviews.assignee_id')
-            ->WhereRaw("find_in_set(".$userId.", vmt_pms_kpiform_assigned.reviewer_id)")
-            ->orWhere('vmt_pms_kpiform_reviews.assignee_id', $userId)
-            ->orWhere('assigner_id', auth()->user()->id)
-            ->select('vmt_pms_kpiform_reviews.assignee_kpi_review',
-                'vmt_pms_kpiform_reviews.assignee_kpi_percentage',
-                'vmt_pms_kpiform_reviews.assignee_kpi_comments',
-                'vmt_pms_kpiform_reviews.reviewer_kpi_review',
-                'vmt_pms_kpiform_reviews.reviewer_kpi_percentage',
-                'vmt_pms_kpiform_reviews.reviewer_kpi_comments',
-                'vmt_pms_kpiform_reviews.reviewer_appraisal_comments',
-                'vmt_pms_kpiform_reviews.assigner_kpi_review',
-                'vmt_pms_kpiform_reviews.assigner_kpi_percentage',
-                'vmt_pms_kpiform_reviews.assigner_kpi_comments',
-                'vmt_pms_kpiform_reviews.assignee_kpi_status',
-                'vmt_pms_kpiform_reviews.is_assignee_submitted',
-                'vmt_pms_kpiform_reviews.is_assignee_accepted',
-                'vmt_pms_kpiform_reviews.reviewer_kpi_status',
-                'vmt_pms_kpiform_reviews.is_reviewer_submitted',
-                'vmt_pms_kpiform_reviews.is_reviewer_accepted',
-                'vmt_pms_kpiform_reviews.assignee_rejection_comments',
-                'vmt_pms_kpiform_reviews.reviewer_rejection_comments',
-                'vmt_pms_kpiform_reviews.overall_score',
-                'vmt_pms_kpiform_reviews.id as review_kpiform_id',
-                'vmt_pms_kpiform_assigned.*',
-                'users.name as assignee_name',
-                'users.user_code as assignee_code'
-            )->orderBy('id','DESC')->get();
+        // check user id in Assignee, Assigner and Reviewer
+        $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews.getUserAssigneeDetails.getEmployeeDetails')
+                                ->WhereRaw("find_in_set(".$userId.", reviewer_id)")
+                                ->orWhereRaw("find_in_set(".$userId.", assignee_id)")
+                                ->orWhere('assigner_id',$userId)
+                                ->orderBy('id','DESC')
+                                ->get();
+
+        $result = [];    
+        // display assigned kpi details
+        foreach($pmsKpiAssigneeDetails as $key => $assignedDetails){
+            $result[$key]['id'] = $assignedDetails->id;
+            $result[$key]['vmt_pms_kpiform_id'] = $assignedDetails->vmt_pms_kpiform_id;
+            $result[$key]['assignee_id'] = $assignedDetails->assignee_id;
+            $result[$key]['reviewer_id'] = $assignedDetails->reviewer_id;
+            $result[$key]['assigner_id'] = $assignedDetails->assigner_id;
+            $result[$key]['calendar_type'] = $assignedDetails->calendar_type;
+            $result[$key]['year'] = $assignedDetails->year;
+            $result[$key]['frequency'] = $assignedDetails->frequency;
+            $result[$key]['assignment_period'] = $assignedDetails->assignment_period;
+            $result[$key]['department_id'] = $assignedDetails->department_id;
+            $result[$key]['assigned_kpi_form_review_details'] = [];
+            // check assigned kpi details reviews
+            if(isset($assignedDetails->getPmsKpiFormReviews) && count($assignedDetails->getPmsKpiFormReviews)){
+                foreach($assignedDetails->getPmsKpiFormReviews as $reviewKey => $reviews){
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['id'] = $reviews->id;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['vmt_pms_kpiform_assigned_id'] = (string)$reviews->vmt_pms_kpiform_assigned_id;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['assignee_id'] = $reviews->assignee_id;
+
+                    // Get Assignee name and emp_no
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['assignee_name'] = isset($reviews->getUserAssigneeDetails) ? (String)$reviews->getUserAssigneeDetails->name : '';
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['assignee_emp_no'] = isset($reviews->getUserAssigneeDetails) && isset($reviews->getUserAssigneeDetails->getEmployeeDetails) ? (String)$reviews->getUserAssigneeDetails->getEmployeeDetails->emp_no : '';
+
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['assignee_kpi_review'] = (string)$reviews->assignee_kpi_review;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['assignee_kpi_percentage'] = (string)$reviews->assignee_kpi_percentage;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['assignee_kpi_comments'] = (string)$reviews->assignee_kpi_comments;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['reviewer_kpi_review'] = (string)$reviews->reviewer_kpi_review;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['reviewer_kpi_percentage'] = (string)$reviews->reviewer_kpi_percentage;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['reviewer_kpi_comments'] = (string)$reviews->reviewer_kpi_comments;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['reviewer_appraisal_comments'] = (string)$reviews->reviewer_appraisal_comments;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['assigner_kpi_review'] = (string)$reviews->assigner_kpi_review;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['assigner_kpi_percentage'] = (string)$reviews->assigner_kpi_percentage;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['assigner_kpi_comments'] = (string)$reviews->assigner_kpi_comments;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['assignee_kpi_status'] = (string)$reviews->assignee_kpi_status;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['is_assignee_submitted'] = (string)$reviews->is_assignee_submitted;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['is_assignee_accepted'] = (string)$reviews->is_assignee_accepted;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['reviewer_kpi_status'] = (string)$reviews->reviewer_kpi_status;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['is_reviewer_submitted'] = $reviews->is_reviewer_submitted;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['is_reviewer_accepted'] = $reviews->is_reviewer_accepted;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['assignee_rejection_comments'] = (string)$reviews->assignee_rejection_comments;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['reviewer_rejection_comments'] = (string)$reviews->reviewer_rejection_comments;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['overall_score'] = (string)$reviews->overall_score;
+                    
+                }
+            }
+        }
 
         return response()->json([
             'status' => true,
             'message'=> '',
-            'data'   => $pmsKpiAssigneeDetails
+            'data'   => $result
         ]);
+
+        // $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::join('vmt_pms_kpiform_reviews',
+        //         'vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id', '=', 'vmt_pms_kpiform_assigned.id')
+        //     ->leftJoin('users', 'users.id', '=', 'vmt_pms_kpiform_reviews.assignee_id')
+        //     ->WhereRaw("find_in_set(".$userId.", vmt_pms_kpiform_assigned.reviewer_id)")
+        //     ->orWhere('vmt_pms_kpiform_reviews.assignee_id', $userId)
+        //     ->orWhere('assigner_id', auth()->user()->id)
+        //     ->select('vmt_pms_kpiform_reviews.assignee_kpi_review',
+        //         'vmt_pms_kpiform_reviews.assignee_kpi_percentage',
+        //         'vmt_pms_kpiform_reviews.assignee_kpi_comments',
+        //         'vmt_pms_kpiform_reviews.reviewer_kpi_review',
+        //         'vmt_pms_kpiform_reviews.reviewer_kpi_percentage',
+        //         'vmt_pms_kpiform_reviews.reviewer_kpi_comments',
+        //         'vmt_pms_kpiform_reviews.reviewer_appraisal_comments',
+        //         'vmt_pms_kpiform_reviews.assigner_kpi_review',
+        //         'vmt_pms_kpiform_reviews.assigner_kpi_percentage',
+        //         'vmt_pms_kpiform_reviews.assigner_kpi_comments',
+        //         'vmt_pms_kpiform_reviews.assignee_kpi_status',
+        //         'vmt_pms_kpiform_reviews.is_assignee_submitted',
+        //         'vmt_pms_kpiform_reviews.is_assignee_accepted',
+        //         'vmt_pms_kpiform_reviews.reviewer_kpi_status',
+        //         'vmt_pms_kpiform_reviews.is_reviewer_submitted',
+        //         'vmt_pms_kpiform_reviews.is_reviewer_accepted',
+        //         'vmt_pms_kpiform_reviews.assignee_rejection_comments',
+        //         'vmt_pms_kpiform_reviews.reviewer_rejection_comments',
+        //         'vmt_pms_kpiform_reviews.overall_score',
+        //         'vmt_pms_kpiform_reviews.id as review_kpiform_id',
+        //         'vmt_pms_kpiform_assigned.*',
+        //         'users.name as assignee_name',
+        //         'users.user_code as assignee_code'
+        //     )->orderBy('id','DESC')->get();
     }
 
     /*
