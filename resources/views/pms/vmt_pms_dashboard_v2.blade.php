@@ -132,7 +132,10 @@ header {
         object-fit: cover;
         border-radius: 50%;
         border: 1px solid #fff;
-        background-color: deeppink;
+        background-color: #ff4d00;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     .employees-profile.editProfile{
         width: 60px;
@@ -140,7 +143,10 @@ header {
         object-fit: cover;
         border-radius: 30%;
         border: 1px solid #fff;
-        background-color: deeppink;
+        background-color: #ff4d00;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 </style>
 @endsection
@@ -440,7 +446,7 @@ header {
                                         </select>
                                     </div>
                                     
-                                    @if(isset($loggedManagerEmployees) && count($loggedManagerEmployees) > 0)
+                                    
                                     <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3 ">
                                         <label class="" for="">Employees</label>
                                         <div class="employee-selection-section">
@@ -449,12 +455,9 @@ header {
                                         <input type="hidden" name="employees" id="employeesSelectedValues">
                                         <!-- <span class="employees-profile editProfile employeeEditButton">Edit</span> -->
                                         
-                                        <!-- <select class="select-employee-dropdown form-control" name="employees[]" multiple="multiple">
-                                            @foreach($loggedManagerEmployees as $employeesSelection)
-                                                <option selected value="{{ $employeesSelection->id }}">{{ $employeesSelection->name }}</option>
-                                            @endforeach
-                                        </select> -->
+                                     
                                     </div>
+                                    @if(isset($loggedManagerEmployees) && count($loggedManagerEmployees) > 0)
                                     <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
                                         <label class="" for="">Reviewer</label>
                                         @if(isset($getSameLevelManagers) && count($getSameLevelManagers) > 0)
@@ -469,21 +472,20 @@ header {
                                         @endif
                                     </div>
                                     @else
-                                    
                                     <!-- <input type="hidden" name="employees[]" id="sel_employees"> -->
-                                    <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3 ">
-                                        <label class="" for="">Employees</label>
-                                        <select class="select-employee-dropdown form-control" id="selectedEmployeeDropdownId" name="employees[]" multiple="multiple">
+                                    <!-- <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3 ">
+                                        <label class="" for="">Employees</label> -->
+                                        <!-- <select class="select-employee-dropdown form-control" id="selectedEmployeeDropdownId" name="employees[]" multiple="multiple">
                                             @foreach($allEmployeesList as $employeeList)
                                                 <option value="{{ $employeeList->id }}">{{ $employeeList->name }}</option>
                                             @endforeach
-                                        </select>
+                                        </select> -->
                                         <!-- <input type="text" name="" id="selected_employee"
                                             target="#changeEmployee" class="form-control  increment-input"
                                             placeholder="Employees">
                                         <button type="button" id=""
                                             class="btn btn-primary increment-btn py-1 px-2 chnageButton">+</button> -->
-                                    </div>
+                                    <!-- </div> -->
                                     <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
                                         <label class="" for="">Reviewer</label>
                                         <input type="hidden" name="reviewer" id="selectedReviewIds">
@@ -492,7 +494,7 @@ header {
                                             placeholder="Reviewer">
                                         
                                         <button type="button" id="" target="#reviewerReplaceSameLevel"
-                                            class="btn py-1 px-3 btn-primary increment-btn reviewerReplace">Select</button>
+                                            class="btn py-1 px-3 btn-primary increment-btn reviewerReplace">Change</button>
                                         <!-- <input type="text" name="" id="selected_reviewer"
                                             class="form-control increment-input" placeholder="Reviewer">
                                         <button type="button" id="" target="#createEmployee"
@@ -646,7 +648,7 @@ header {
     </div>
 
     <!-- emplyee edit modal starts -->
-    @if(isset($loggedManagerEmployees) && count($loggedManagerEmployees) > 0)
+    
     <div class="modal fade" id="employeeSelectionModal" role="dialog" aria-hidden="true"
         style="opacity:1; display:none;background:#00000073;">
         <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true"
@@ -664,21 +666,35 @@ header {
                 </div>
                 <div class="modal-body">
                     <div class="mt-12">
+                        @if(isset($loggedManagerEmployees) && count($loggedManagerEmployees) > 0)
                         <select class="select-employee-dropdown form-control" name="employees[]" multiple="multiple">
                             @foreach($loggedManagerEmployees as $employeesSelection)
                                 <option selected value="{{ $employeesSelection->id }}">{{ $employeesSelection->name }}</option>
                             @endforeach
                         </select>
+                        @else
+                        <select class="select-employee-dropdown form-control" id="selectedEmployeeDropdownId" name="employees[]" multiple="multiple">
+                            @foreach($allEmployeesList as $employeeList)
+                                <option value="{{ $employeeList->id }}">{{ $employeeList->name }}</option>
+                            @endforeach
+                        </select> 
+                        @endif
                     </div>
+                    @if(isset($loggedManagerEmployees) && count($loggedManagerEmployees) > 0)
                     <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
                         <button class="btn btn-primary ml-2" id="edit-employee"
                             >Edit</button>
                     </div>
+                    @else
+                    <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
+                        <button class="btn btn-primary ml-2" id="edit-employee-based-on-reviewer"
+                            >Edit</button>
+                    </div>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
-    @endif
     <!-- emplyee edit modal ends -->
 
 
@@ -750,12 +766,6 @@ header {
                         $('#employeeSelectionModal').addClass('fade');
                         $('#employeesSelectedValues').val(selectedEmployeesId);
                     }
-                    // $.each(data.result.removeSelectedEmployee, function(i, value) {
-                    //     $(".select-employee-dropdown option[value="+value+"]").remove();
-                    // });
-
-                    // $("#reviewersAccordingAssignee").val(data.result.reviewerNames.join(","));
-                    // $("#selectedReviewIds").val(data.result.reviewerIds.join(","));
                 },
                 error: function(error) {
                     console.log('something went wrong');
@@ -770,7 +780,13 @@ header {
 
         $('#edit-employee').click(function(){
             var selectedEmployeesId = $('.select-employee-dropdown').val();
+            // getReviewerOfSelectedEmployee(selectedEmployeesId);
             changeAssigneeProfilePicOnSelection(selectedEmployeesId);
+        })
+        $('#edit-employee-based-on-reviewer').click(function(){
+            var selectedEmployeesId = $('.select-employee-dropdown').val();
+            getReviewerOfSelectedEmployee(selectedEmployeesId);
+            
         })
 
     </script>
@@ -799,8 +815,9 @@ header {
             
         });
 
-        $('.select-employee-dropdown').change(function(){
-            var selectedEmployeeId = $(this).val();
+        // $('.select-employee-dropdown').change(function(){
+        function getReviewerOfSelectedEmployee(selectedEmployeeId){
+            var selectedEmployeeId = selectedEmployeeId;
             $.ajax({
                 type: "POST",
                 url: "{{ route('getReviewerOfSelectedEmployee') }}",
@@ -809,18 +826,21 @@ header {
                     selectedEmployeeId : selectedEmployeeId,
                 },
                 success: function(data) {
+                    console.log("aaasadasdasdasdasd");
                     $.each(data.result.removeSelectedEmployee, function(i, value) {
                         $(".select-employee-dropdown option[value="+value+"]").remove();
                     });
 
                     $("#reviewersAccordingAssignee").val(data.result.reviewerNames.join(","));
                     $("#selectedReviewIds").val(data.result.reviewerIds.join(","));
+                    var afterUpdateEmployee = $('.select-employee-dropdown').val();
+                    changeAssigneeProfilePicOnSelection(afterUpdateEmployee);
                 },
                 error: function(error) {
                     console.log('something went wrong');
                 }
             });
-        })
+        }
     </script>
     <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript">
