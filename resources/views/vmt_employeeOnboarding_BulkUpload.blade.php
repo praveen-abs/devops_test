@@ -24,7 +24,7 @@
                                                 <span class="text-link" style=" color: blue;">Sample File</span></a> --}}
 
                                         <a class="choose-file ms-1"
-                                            href="{{ url('/assets/sample_employeeBulkOnboarding.xlsx') }}" target="_blank">
+                                            href="{{ url('/assets/sample_employeeBulkOnboarding.xls') }}" target="_blank">
 
                                             <i class="fa fa-file" aria-hidden="true"></i>
                                             Sample file
