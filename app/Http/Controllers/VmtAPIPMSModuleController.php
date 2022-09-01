@@ -342,7 +342,10 @@ class VmtAPIPMSModuleController extends Controller
         }
 
         // check user id in Assignee, Assigner and Reviewer
-        $pmsKpiAssigneeDetails = [];
+        $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews.getUserAssigneeDetails.getEmployeeDetails')->orWhereRaw("find_in_set(".$userId.", assignee_id)")
+                                ->orderBy('id','DESC')
+                                ->get();
+
         $result = [];    
         // display assigned kpi details
         foreach($pmsKpiAssigneeDetails as $key => $assignedDetails){
