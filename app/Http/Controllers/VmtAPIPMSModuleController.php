@@ -14,6 +14,9 @@ use App\Models\VmtPMS_KPIFormModel;
 use App\Mail\NotifyPMSManager;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\ViewNotification;
+use Exception;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class VmtAPIPMSModuleController extends Controller
 {
@@ -198,12 +201,118 @@ class VmtAPIPMSModuleController extends Controller
     }
 
 
-    //
-    public function saveAssigneeReviews(Request $request){
+    /*
+        Save Assignees Review for KPI Form Assigned
 
-        return response()->json(['status'=>true,
-            'message'=> '']);
-        //}
+            DB Table : vmt_pms_kpiform_assigned (check form assigned ID)
+            DB Table : vmt_pms_kpiform_reviews (add reviews for particular assignee)
+            Input params : assignedFormId, assigneeId
+
+            formSubmitType == 0 ? "Save Review" : "Publish Review"
+            
+        Logic : Using assignedFormId & assigneeId, we will check review details for that assignee and update
+
+    */
+    public function saveAssigneeReviews(Request $request){
+        $validation = Validator::make($request->all(), [
+            'assignedFormId' => 'required',
+            'assigneeId' => 'required',
+            'assignee_kpi_review' => 'required',
+            'assignee_kpi_percentage' => 'required',
+            'assignee_kpi_comments' => 'required',
+            'formSubmitType' => 'required',
+        ],[
+            'assignedFormId.required' => 'Assigned Form Id is Required',
+            'assigneeId.required' => 'Assignee Id is Required',
+            'assignee_kpi_review.required' => 'Assignee KPI Review is Required',
+            'assignee_kpi_percentage.required' => 'Assignee KPI Percentage is Required',
+            'assignee_kpi_comments.required' => 'Assignee KPI Comment is Required',
+            'formSubmitType.required' => 'Form Submit Type is Required, 0 & 1',
+        ]);
+
+        if ($validation->fails()) {
+            return sendError($validation->errors()->first());
+        }
+
+        try{
+            // check logged user id and assigneeId
+            if(Auth::id() != $request->assigneeId){
+                return sendError('Assignee Id is not your Id');
+            }
+
+            // check review available or not
+            $assignedReviewCheck = VmtPMS_KPIFormReviewsModel::where('vmt_pms_kpiform_assigned_id',$request->assignedFormId)->where('assignee_id',$request->assigneeId)->with('getPmsKpiFormAssigned')->first();
+            if(empty($assignedReviewCheck)){
+                return sendError('Review Data Not Found');
+            }
+
+            // check assignee has rejected kpi form or not
+            if($assignedReviewCheck->is_assignee_accepted == '0'){
+                return sendError('You have Rejected KPI Form!');
+            }
+
+            // check assignee has Accepted kpi form or not
+            if($assignedReviewCheck->is_assignee_accepted == null){
+                return sendError('You have Not Accepted KPI Form Yet!');
+            }
+
+            // check assignee has Already submitted or not kpi form or not
+            if($assignedReviewCheck->is_assignee_submitted == '1'){
+                return sendError('You have Already This Submitted KPI Form!');
+            }
+
+            $assignedReviewCheck->assignee_kpi_review = $request->assignee_kpi_review;
+            $assignedReviewCheck->assignee_kpi_percentage = $request->assignee_kpi_percentage;
+            $assignedReviewCheck->assignee_kpi_comments = $request->assignee_kpi_comments;
+            
+            if($request->formSubmitType == 0){
+                $assignedReviewCheck->is_assignee_submitted =  '0';
+                $assignedReviewCheck->update();
+                return response()->json(['status'=>true,'message'=>'Saved as draft']);    
+            }
+            else{
+                $assignedReviewCheck->is_assignee_submitted =  '1';
+                $assignedReviewCheck->update();
+
+                $kpiFormAssignedReviewers = [];
+                $kpiFormAssignedReviewersOfficialMails = [];
+                if(isset($assignedReviewCheck->getPmsKpiFormAssigned)){
+                    $kpiFormAssignedReviewers = explode(',',$assignedReviewCheck->getPmsKpiFormAssigned->reviewer_id);
+                }
+                
+                $assigneeDetails = User::findorfail($request->assigneeId);
+
+                // check Multiple Reviewers
+                if(count($kpiFormAssignedReviewers) > 0){
+                    foreach($kpiFormAssignedReviewers as $reviewer){
+                        $userEmployeeDetails = User::where('id',$reviewer)->with('getEmployeeOfficeDetails')->first();
+                        if(isset($userEmployeeDetails->getEmployeeOfficeDetails) && !empty($userEmployeeDetails->getEmployeeOfficeDetails->officical_mail)){
+
+                            // office details of assignee employee
+                            $currentUser_empDetails = VmtEmployeeOfficeDetails::where('user_id', $assigneeDetails->id)->first();
+                            array_push($kpiFormAssignedReviewersOfficialMails,$userEmployeeDetails->getEmployeeOfficeDetails->officical_mail);
+                            
+                            // Send mail to All Reviewers
+                            \Mail::to($userEmployeeDetails->getEmployeeOfficeDetails->officical_mail)->send(new NotifyPMSManager($assigneeDetails->name, $currentUser_empDetails->designation, $userEmployeeDetails->name,$assignedReviewCheck->year ));
+                            $message = "Employee has submitted KPI Assessment.  ";
+                            // Send notification to All Revie
+                                Notification::send($assigneeDetails ,new ViewNotification($message.$assigneeDetails->name));
+                        }
+
+                    }
+                }
+                // all reviewers office mails
+                $kpiFormAssignedReviewersOfficialMails = implode(',',$kpiFormAssignedReviewersOfficialMails);
+                if(!empty($kpiFormAssignedReviewersOfficialMails)){
+                    return response()->json(['status'=>true,'message'=>"Published Review successfully.Sent mail to manager ".$kpiFormAssignedReviewersOfficialMails]);    
+                }
+                return response()->json(['status'=>true,'message'=>'Published Review successfully']);    
+            }
+            
+        }catch(Exception $e){
+            Log::info('saveAssigneeReviews API Error: '.$e->getMessage());
+            return sendError($e->getMessage());
+        }
     }
 
     /*
@@ -482,7 +591,7 @@ class VmtAPIPMSModuleController extends Controller
             }
 
         }catch(Exception $e){
-            Log::info('save or submit reviewer review error: '.$e->getMessage());
+            Log::info('save or submit reviewer review API error: '.$e->getMessage());
             return response()->json(['status'=>false,'message'=>$e->getMessage()]);
         }
     }

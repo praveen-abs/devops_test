@@ -152,7 +152,31 @@ function checkViewReviewText($loggedUserRole,$kpiFormReviewDetails){
         Log::info('get View, Review and Self Review Text Change of Kpi Pms Form helper error: '.$e->getMessage());
         return 'Review';
     }
+  
+    
     
 }
 
+
+// PMS V2 API Responses
+    //function showing success response....
+    function sendResponse($result, $message)
+    {
+        $response = [
+            'status'  => true,
+            'data'    => $result,
+            'message' => $message,
+        ];
+        return response()->json($response);
+    }
+
+    //function showing error showing....
+    function sendError($errorMessages = [], $code = false)
+    {
+        $response = [
+            'status' => false,
+            'message' => $errorMessages,
+        ];
+        return response()->json($response);
+    }
 ?>
