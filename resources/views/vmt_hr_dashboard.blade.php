@@ -28,7 +28,7 @@
 @endsection
 
 @section('content')
-    <div class="hr-dashboar-wrpper mt30-mb15">
+    <div class="hr-dashboar-wrpper mt-30">
         <!-- Content Row -->
         <div class="row">
             <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4">
