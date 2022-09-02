@@ -338,7 +338,7 @@ class VmtAPIPMSModuleController extends Controller
         }
         $userId  = auth::user()->id;
         if($request->assignee_id != $userId){
-            return sendError('Unauthorized');
+            return sendError('Assignee Id is not matched');
         }
 
         // check user id in Assignee, Assigner and Reviewer
@@ -441,7 +441,7 @@ class VmtAPIPMSModuleController extends Controller
         }
         $userId  = auth::user()->id;
         if($request->reviewer_id != $userId){
-            return sendError('Unauthorized');
+            return sendError('Reviewer Id is not matched');
         }
 
         // check user id in Assignee, Assigner and Reviewer
