@@ -298,6 +298,7 @@ Route::post('/republishFormEdited',[VmtPMSModuleController::class, 'republishFor
 Route::post('getReviewerOfSelectedEmployee', [VmtPMSModuleController::class,'getReviewerOfSelectedEmployee'])->name('getReviewerOfSelectedEmployee');
 Route::post('getSameLevelOfReviewer', [VmtPMSModuleController::class,'getSameLevelOfReviewer'])->name('getSameLevelOfReviewer');
 Route::post('changeReviewerSelection', [VmtPMSModuleController::class,'changeReviewerSelection'])->name('changeReviewerSelection');
+Route::post('getEmployeesOfReviewer', [VmtPMSModuleController::class,'getEmployeesOfReviewer'])->name('getEmployeesOfReviewer');
 
 // route for change employee profile icons on edit
 Route::post('changeEmployeeProfileIconsOnEdit', [VmtPMSModuleController::class,'changeEmployeeProfileIconsOnEdit'])->name('changeEmployeeProfileIconsOnEdit');
