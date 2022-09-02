@@ -480,6 +480,7 @@ class VmtPMSModuleController extends Controller
             // dD($assignedGoals->reviewer_kpi_percentage);
             $percentageVal = 0;
             $howManyPercCount = 0;
+            // dd(json_decode($assignedGoals->reviewer_kpi_percentage, true));
             $allReviewerPercentages = isset($assignedGoals->reviewer_kpi_percentage) ? json_decode($assignedGoals->reviewer_kpi_percentage, true) : [];
             if(count($allReviewerPercentages) > 0){
                 foreach($allReviewerPercentages as $percentage){
@@ -636,24 +637,24 @@ class VmtPMSModuleController extends Controller
             if(empty($kpiReviewCheck)){
                 return response()->json(['status'=>false,'message'=>'Review Data Not Found']);
             }
-            $decodedKpiReviwerReview = json_decode($kpiReviewCheck->reviewer_kpi_review,true);
-            $decodedKpiReviwerPerc = json_decode($kpiReviewCheck->reviewer_kpi_percentage,true);
-            $decodedIsKpiReviwerSubmitted = json_decode($kpiReviewCheck->is_reviewer_submitted,true);
+            $decodedKpiReviewerReview = json_decode($kpiReviewCheck->reviewer_kpi_review,true);
+            $decodedKpiReviewerPerc = json_decode($kpiReviewCheck->reviewer_kpi_percentage,true);
+            $decodedIsKpiReviewerSubmitted = json_decode($kpiReviewCheck->is_reviewer_submitted,true);
 
-            $decodedKpiReviwerReview[Auth::id()] = $request->reviewer_kpi_review[Auth::id()];
-            $decodedKpiReviwerPerc[Auth::id()] = $request->reviewer_kpi_percentage[Auth::id()];
+            $decodedKpiReviewerReview[Auth::id()] = $request->reviewer_kpi_review[Auth::id()];
+            $decodedKpiReviewerPerc[Auth::id()] = $request->reviewer_kpi_percentage[Auth::id()];
             
-            $kpiReviewCheck->reviewer_kpi_review = $decodedKpiReviwerReview;
-            $kpiReviewCheck->reviewer_kpi_percentage = $decodedKpiReviwerPerc;
+            $kpiReviewCheck->reviewer_kpi_review = $decodedKpiReviewerReview;
+            $kpiReviewCheck->reviewer_kpi_percentage = $decodedKpiReviewerPerc;
             
             if($request->formSubmitType == 0){
-                $decodedIsKpiReviwerSubmitted[Auth::id()] = '0';
-                $kpiReviewCheck->is_reviewer_submitted = $decodedIsKpiReviwerSubmitted;
+                $decodedIsKpiReviewerSubmitted[Auth::id()] = '0';
+                $kpiReviewCheck->is_reviewer_submitted = $decodedIsKpiReviewerSubmitted;
                 $kpiReviewCheck->update();
                 return response()->json(['status'=>true,'message'=>'Saved as draft']);    
             }else{
-                $decodedIsKpiReviwerSubmitted[Auth::id()] = '1';
-                $kpiReviewCheck->is_reviewer_submitted = $decodedIsKpiReviwerSubmitted;
+                $decodedIsKpiReviewerSubmitted[Auth::id()] = '1';
+                $kpiReviewCheck->is_reviewer_submitted = $decodedIsKpiReviewerSubmitted;
                 $kpiReviewCheck->update();
 
                 $kpiForAssignedDetails = VmtPMS_KPIFormAssignedModel::where('id',$kpiReviewCheck->vmt_pms_kpiform_assigned_id)->first();

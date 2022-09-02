@@ -338,7 +338,7 @@ class VmtAPIPMSModuleController extends Controller
         }
         $userId  = auth::user()->id;
         if($request->assignee_id != $userId){
-            return sendError('Unauthorized');
+            return sendError('Assignee Id is not matched');
         }
 
         // check user id in Assignee, Assigner and Reviewer
@@ -349,7 +349,7 @@ class VmtAPIPMSModuleController extends Controller
         $result = [];    
         // display assigned kpi details
         foreach($pmsKpiAssigneeDetails as $key => $assignedDetails){
-            $explodedReviewerId = explode(',',$assignedDetails->reviewer_id,true);
+            $explodedReviewerId = explode(',',$assignedDetails->reviewer_id);
             $result[$key]['id'] = $assignedDetails->id;
             $result[$key]['vmt_pms_kpiform_id'] = $assignedDetails->vmt_pms_kpiform_id;
             $result[$key]['assignee_id'] = $assignedDetails->assignee_id;
@@ -401,7 +401,7 @@ class VmtAPIPMSModuleController extends Controller
 
                         $explodedReviewerSubmittedDetails = json_decode($reviews->is_reviewer_submitted,true);
                         foreach($explodedReviewerSubmittedDetails as $reviewerKey => $reviewer){
-                            $result[$key]['assigned_kpi_form_review_details']['is_reviewer_submitted'][$reviewerKey] = $reviewer;
+                            $result[$key]['assigned_kpi_form_review_details']['is_reviewer_submitted'][$reviewerKey] = (String)$reviewer;
                         }
             
                         $result[$key]['assigned_kpi_form_review_details']['is_reviewer_accepted'] = $reviews->is_reviewer_accepted;
@@ -412,43 +412,116 @@ class VmtAPIPMSModuleController extends Controller
                 }
             }
         }
+        return response()->json([
+            'status' => true,
+            'message'=> '',
+            'data'   => $result
+        ]);
+    }
+    /*
+        Get all the KPI forms reviewer by given user.
+
+            DB Table : vmt_pms_kpiform_assigned
+            Input params : reviewer_id
+
+        Logic : Using reviewer_id, we will search the reviewer_id, reviewer_id
+
+
+    */
+    public function getReviewerKPIForms(Request $request)
+    {
+        $validation = Validator::make($request->all(), [
+            'reviewer_id' => 'required',
+        ],[
+            'reviewer_id.required' => 'Reviewer Id is Required',
+        ]);
+
+        if ($validation->fails()) {
+            return sendError($validation->errors()->first());
+        }
+        $userId  = auth::user()->id;
+        if($request->reviewer_id != $userId){
+            return sendError('Reviewer Id is not matched');
+        }
+
+        // check user id in Assignee, Assigner and Reviewer
+        $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews.getUserAssigneeDetails.getEmployeeDetails')->orWhereRaw("find_in_set(".$userId.", reviewer_id)")
+                                ->orderBy('id','DESC')
+                                ->get();
+
+        $result = [];    
+        // display assigned kpi details
+        foreach($pmsKpiAssigneeDetails as $key => $assignedDetails){
+            $explodedReviewerId = explode(',',$assignedDetails->reviewer_id);
+            $result[$key]['id'] = $assignedDetails->id;
+            $result[$key]['vmt_pms_kpiform_id'] = $assignedDetails->vmt_pms_kpiform_id;
+            $result[$key]['assignee_id'] = $assignedDetails->assignee_id;
+            foreach($explodedReviewerId as $reviewerKey => $reviewer){
+                if($reviewer == $userId){
+                    $reviewerUserDetail = User::findorfail($reviewer);
+                    $result[$key]['reviewer']['reviewer_id'] = $reviewer;
+                    $result[$key]['reviewer']['reviewer_name'] = isset($reviewerUserDetail) ?  $reviewerUserDetail->name : '';
+                }
+            }
+            $result[$key]['assigner_id'] = $assignedDetails->assigner_id;
+            $result[$key]['calendar_type'] = $assignedDetails->calendar_type;
+            $result[$key]['year'] = $assignedDetails->year;
+            $result[$key]['frequency'] = $assignedDetails->frequency;
+            $result[$key]['assignment_period'] = $assignedDetails->assignment_period;
+            $result[$key]['department_id'] = $assignedDetails->department_id;
+            $result[$key]['assigned_kpi_form_review_details'] = [];
+
+            // check assigned kpi details reviews
+            if(isset($assignedDetails->getPmsKpiFormReviews) && count($assignedDetails->getPmsKpiFormReviews)){
+                foreach($assignedDetails->getPmsKpiFormReviews as $reviewKey => $reviews){
+
+                    $rating = $this->calculateOverallReviewRatings($reviews->vmt_pms_kpiform_assigned_id,$reviews->assignee_id);
+
+                    // assignee details of only Logged In User
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['id'] = $reviews->id;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['vmt_pms_kpiform_assigned_id'] = (string)$reviews->vmt_pms_kpiform_assigned_id;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['assignee_id'] = $reviews->assignee_id;
+
+                    // Get Assignee name and emp_no
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['assignee_name'] = isset($reviews->getUserAssigneeDetails) ? (String)$reviews->getUserAssigneeDetails->name : '';
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['assignee_emp_no'] = isset($reviews->getUserAssigneeDetails) && isset($reviews->getUserAssigneeDetails->getEmployeeDetails) ? (String)$reviews->getUserAssigneeDetails->getEmployeeDetails->emp_no : '';
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['reviewer_rating'] = $rating;
+
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['assignee_kpi_review'] = (string)$reviews->assignee_kpi_review;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['assignee_kpi_percentage'] = (string)$reviews->assignee_kpi_percentage;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['assignee_kpi_comments'] = (string)$reviews->assignee_kpi_comments;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['reviewer_kpi_review'] = (string)$reviews->reviewer_kpi_review;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['reviewer_kpi_percentage'] = (string)$reviews->reviewer_kpi_percentage;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['reviewer_kpi_comments'] = (string)$reviews->reviewer_kpi_comments;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['reviewer_appraisal_comments'] = (string)$reviews->reviewer_appraisal_comments;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['assigner_kpi_review'] = (string)$reviews->assigner_kpi_review;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['assigner_kpi_percentage'] = (string)$reviews->assigner_kpi_percentage;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['assigner_kpi_comments'] = (string)$reviews->assigner_kpi_comments;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['assignee_kpi_status'] = (string)$reviews->assignee_kpi_status;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['is_assignee_submitted'] = (string)$reviews->is_assignee_submitted;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['is_assignee_accepted'] = (string)$reviews->is_assignee_accepted;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['reviewer_kpi_status'] = (string)$reviews->reviewer_kpi_status;
+
+                    $explodedReviewerSubmittedDetails = json_decode($reviews->is_reviewer_submitted,true);
+                    foreach($explodedReviewerSubmittedDetails as $reviewerKey => $reviewer){
+                        if($reviewerKey == $userId){
+                            $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['is_reviewer_submitted'] =  (String)$reviewer;
+                        }
+                    }
+        
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['is_reviewer_accepted'] = $reviews->is_reviewer_accepted;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['assignee_rejection_comments'] = (string)$reviews->assignee_rejection_comments;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['reviewer_rejection_comments'] = (string)$reviews->reviewer_rejection_comments;
+                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['overall_score'] = (string)$reviews->overall_score;
+                }
+            }
+        }
 
         return response()->json([
             'status' => true,
             'message'=> '',
             'data'   => $result
         ]);
-
-        // $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::join('vmt_pms_kpiform_reviews',
-        //         'vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id', '=', 'vmt_pms_kpiform_assigned.id')
-        //     ->leftJoin('users', 'users.id', '=', 'vmt_pms_kpiform_reviews.assignee_id')
-        //     ->WhereRaw("find_in_set(".$userId.", vmt_pms_kpiform_assigned.reviewer_id)")
-        //     ->orWhere('vmt_pms_kpiform_reviews.assignee_id', $userId)
-        //     ->orWhere('assigner_id', auth()->user()->id)
-        //     ->select('vmt_pms_kpiform_reviews.assignee_kpi_review',
-        //         'vmt_pms_kpiform_reviews.assignee_kpi_percentage',
-        //         'vmt_pms_kpiform_reviews.assignee_kpi_comments',
-        //         'vmt_pms_kpiform_reviews.reviewer_kpi_review',
-        //         'vmt_pms_kpiform_reviews.reviewer_kpi_percentage',
-        //         'vmt_pms_kpiform_reviews.reviewer_kpi_comments',
-        //         'vmt_pms_kpiform_reviews.reviewer_appraisal_comments',
-        //         'vmt_pms_kpiform_reviews.assigner_kpi_review',
-        //         'vmt_pms_kpiform_reviews.assigner_kpi_percentage',
-        //         'vmt_pms_kpiform_reviews.assigner_kpi_comments',
-        //         'vmt_pms_kpiform_reviews.assignee_kpi_status',
-        //         'vmt_pms_kpiform_reviews.is_assignee_submitted',
-        //         'vmt_pms_kpiform_reviews.is_assignee_accepted',
-        //         'vmt_pms_kpiform_reviews.reviewer_kpi_status',
-        //         'vmt_pms_kpiform_reviews.is_reviewer_submitted',
-        //         'vmt_pms_kpiform_reviews.is_reviewer_accepted',
-        //         'vmt_pms_kpiform_reviews.assignee_rejection_comments',
-        //         'vmt_pms_kpiform_reviews.reviewer_rejection_comments',
-        //         'vmt_pms_kpiform_reviews.overall_score',
-        //         'vmt_pms_kpiform_reviews.id as review_kpiform_id',
-        //         'vmt_pms_kpiform_assigned.*',
-        //         'users.name as assignee_name',
-        //         'users.user_code as assignee_code'
-        //     )->orderBy('id','DESC')->get();
     }
 
     /*
@@ -574,34 +647,87 @@ class VmtAPIPMSModuleController extends Controller
 
     */
     public function saveReviewerReviews(Request $request){
+        $validation = Validator::make($request->all(), [
+            'assignedFormId' => 'required',
+            'reviewer_id' => 'required',
+            'assignee_id' => 'required',
+            'reviewer_kpi_review' => 'required',
+            'reviewer_kpi_percentage' => 'required',
+            'formSubmitType' => 'required',
+        ],[
+            'assignedFormId.required' => 'Assigned Form Id is Required',
+            'reviewer_id.required' => 'Reviewer Id is Required',
+            'assignee_id.required' => 'Assignee Id is Required',
+            'reviewer_kpi_review.required' => 'Reviewer KPI Review is Required',
+            'reviewer_kpi_percentage.required' => 'Reviewer KPI Percentage is Required',
+            'formSubmitType.required' => 'Form Submit Type is Required, 0 & 1',
+        ]);
+
+        if ($validation->fails()) {
+            return sendError($validation->errors()->first());
+        }
          try{
-            $kpiReviewCheck = VmtPMS_KPIFormReviewsModel::where('id',$request->review_kpiform_id)->first();
-            if(empty($kpiReviewCheck)){
-                return response()->json(['status'=>false,'message'=>'Review Data Not Found']);
+            $currentLoggedUser = Auth::user();
+            // check logged user id and reviewer_id
+            if($currentLoggedUser->id != $request->reviewer_id){
+                return sendError('Assignee Id is not your Id');
             }
-            $decodedKpiReviwerReview = json_decode($kpiReviewCheck->reviewer_kpi_review,true);
-            $decodedKpiReviwerPerc = json_decode($kpiReviewCheck->reviewer_kpi_percentage,true);
-            $decodedIsKpiReviwerSubmitted = json_decode($kpiReviewCheck->is_reviewer_submitted,true);
 
-            $decodedKpiReviwerReview[Auth::id()] = $request->reviewer_kpi_review;
-            $decodedKpiReviwerPerc[Auth::id()] = $request->reviewer_kpi_percentage;
+            // check assigned KPI Form exists or not
+            $assignedKpiForm = VmtPMS_KPIFormAssignedModel::findorfail($request->assignedFormId);
+            if(empty($assignedKpiForm)){
+                return sendError('Assigned Form data not found');
+            }
 
-            $kpiReviewCheck->reviewer_kpi_review = $decodedKpiReviwerReview;
-            $kpiReviewCheck->reviewer_kpi_percentage = $decodedKpiReviwerPerc;
+            // check reviewer or not
+            $decodedReviewersId = explode(',',$assignedKpiForm->reviewer_id);
+            if(!in_array($currentLoggedUser->id,$decodedReviewersId)){
+                return sendError('Your are not reviewer for this KPI Form');
+            }
 
+            // check review available or not
+            $assignedReviewCheck = VmtPMS_KPIFormReviewsModel::where('vmt_pms_kpiform_assigned_id',$request->assignedFormId)->where('assignee_id',$request->assignee_id)->with('getPmsKpiFormAssigned')->first();
+            if(empty($assignedReviewCheck)){
+                return sendError('Review Data Not Found');
+            }
+            
+            // check assignee has Accepted kpi form or not
+            if($assignedReviewCheck->is_assignee_accepted == '0'){
+                return sendError('Assignee have rejected KPI Form!');
+            }
+
+            // check assignee has Already submitted or not kpi form or not
+            if($assignedReviewCheck->is_assignee_submitted != '1'){
+                return sendError('Assignee has not submitted KPI Form Yet!');
+            }
+
+            $decodedKpiReviewerReview = json_decode($assignedReviewCheck->reviewer_kpi_review,true);
+            $decodedKpiReviewerPerc = json_decode($assignedReviewCheck->reviewer_kpi_percentage,true);
+            $decodedIsKpiReviewerSubmitted = json_decode($assignedReviewCheck->is_reviewer_submitted,true);
+            $decodedIsKpiReviewerAccepted = json_decode($assignedReviewCheck->is_reviewer_accepted,true);
+
+            if($decodedIsKpiReviewerAccepted[$currentLoggedUser->id] != '1'){
+                return sendError('You have not accepted KPI form Yet!');
+            }
+
+            $decodedKpiReviewerReview[Auth::id()] = json_decode($request->reviewer_kpi_review,true);
+            $decodedKpiReviewerPerc[Auth::id()] = json_decode($request->reviewer_kpi_percentage);
+            
+            // dD(json_encode($decodedKpiReviewerReview));
+            $assignedReviewCheck->reviewer_kpi_review = $decodedKpiReviewerReview;
+            $assignedReviewCheck->reviewer_kpi_percentage = $decodedKpiReviewerPerc;
             if($request->formSubmitType == 0){
-                $decodedIsKpiReviwerSubmitted[Auth::id()] = '0';
-                $kpiReviewCheck->is_reviewer_submitted = $decodedIsKpiReviwerSubmitted;
-                $kpiReviewCheck->update();
+                $decodedIsKpiReviewerSubmitted[Auth::id()] = '0';
+                $assignedReviewCheck->is_reviewer_submitted = $decodedIsKpiReviewerSubmitted;
+                $assignedReviewCheck->update();
                 return response()->json(['status'=>true,'message'=>'Saved as draft']);
             }else{
-                $decodedIsKpiReviwerSubmitted[Auth::id()] = '1';
-                $kpiReviewCheck->is_reviewer_submitted = $decodedIsKpiReviwerSubmitted;
-                $kpiReviewCheck->update();
+                $decodedIsKpiReviewerSubmitted[Auth::id()] = '1';
+                $assignedReviewCheck->is_reviewer_submitted = $decodedIsKpiReviewerSubmitted;
+                $assignedReviewCheck->update();
 
-                $kpiForAssignedDetails = VmtPMS_KPIFormAssignedModel::where('id',$kpiReviewCheck->vmt_pms_kpiform_assigned_id)->first();
                 // dD($kpiForAssignedDetails);
-                $hrReview = User::find($kpiForAssignedDetails->assigner_id);
+                $hrReview = User::find($assignedKpiForm->assigner_id);
 
                 $currentUser_empDetails = VmtEmployeeOfficeDetails::where('user_id', auth::user()->id)->first();
 
@@ -611,7 +737,7 @@ class VmtAPIPMSModuleController extends Controller
 
                 $notification_user = User::where('id',auth::user()->id)->first();
                 //dd($officialMailList);
-                \Mail::to($officialMailList)->send(new NotifyPMSManager(auth::user()->name,  $currentUser_empDetails->designation,$hrReview->name,$kpiReviewCheck->year ));
+                \Mail::to($officialMailList)->send(new NotifyPMSManager(auth::user()->name,  $currentUser_empDetails->designation,$hrReview->name,$assignedReviewCheck->year ));
                 $message = "Employee has submitted KPI Assessment.  ";
                     Notification::send($notification_user ,new ViewNotification($message.auth()->user()->name));
 
@@ -661,7 +787,6 @@ class VmtAPIPMSModuleController extends Controller
             }
             return $finalRating;
         }catch(Exception $e){
-            dD($e);
             Log::info('calculation average rating helper error: '.$e->getMessage());
             return 0;
         }
