@@ -88,7 +88,7 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
 <body>
     <table cellspacing="0" cellpadding="0" class="payslip_table">
         <tr class="header-row">
-            <td colspan="10" class="border-less">
+            <td colspan="8" class="border-less">
                 <div class="header-cotent">
                     <h6 class="margin-0">Ardens Business Solutions Private Limited</h6>
                     <h6 class="margin-0">“SHALOM BUILDING”</h6>
@@ -96,12 +96,12 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
                     <p>T Nagar, Chennai,Tamil Nadu, India – 600 017</p>
                 </div>
             </td>
-            <td colspan="2" class="border-less">
-                <div style="">
-                    <div class="header-img" style="height: 40px;width:180px;max-height:100%;">
+            <td colspan="4" class="border-less">
+
+                    <div class="header-img txt-right" style="height: 40px;width:180px;max-height:100%;">
                         <img src={{$client_logo}} style="height:100%;width:100%;" title="">
                     </div>
-                </div>
+
 
             </td>
         </tr>
