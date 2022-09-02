@@ -106,6 +106,20 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="row mt-1">
+                                <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
+                                    <label class="" for="selected_head">Maximum Line Manager levels for Appraisal Review</label>
+                                </div>
+                                <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
+                                    <select placeholder="Select Review Levels" name="selected_reviewlevels" id="selected_reviewlevels"
+                                        class="onboard-form form-control select2_form_without_search" required>
+                                        <option value="">Select Review Levels</option>
+                                        <option value="L1" >L1</option>
+                                        <option value="L2" >L2</option>
+                                        <option value="L3" >L3</option>
+                                    </select>
+                                </div>
+                            </div>
                             <h6 class="mt-3">Change column name as per your preference</h6>
                             <div class="row mt-1">
                                  @if ($data && $data->selected_columns && in_array('dimension', explode(',', $data->selected_columns)))
