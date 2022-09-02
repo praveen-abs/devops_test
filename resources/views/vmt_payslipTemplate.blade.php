@@ -87,7 +87,7 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
                         <td colspan="9" style="width:542.2pt; border-top:1.5pt solid #af1888; border-right:1.5pt solid #af1888; border-left:1.5pt solid #af1888; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
                             <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:10.5pt;"><strong><span style="font-family:Calibri;">PAYSLIP FOR THE
                                         MONTH OF &ndash;
-                                        {{$employee->PAYROLL_MONTH}}</span></strong></p>
+                                        {{strtoupper($employee->PAYROLL_MONTH)}}</span></strong></p>
                         </td>
                     </tr>
                     <tr style="height:20.55pt;">
@@ -281,19 +281,19 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
                             <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;"><strong><span style="font-family:Calibri;">BASIC</span></strong></p>
                         </td>
                         <td colspan="3" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left    ; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{$employee->BASIC}}</span></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left    ; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{number_format(round($employee->BASIC),2)}}</span></p>
                         </td>
                         <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
                             <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; </span><span style="font-family:Calibri; font-size:10.5pt;">0</span></p>
                         </td>
                         <td style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; </span><span style="font-family:Calibri; font-size:10.5pt;">4560</span></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; </span><span style="font-family:Calibri; font-size:10.5pt;">4560.00</span></p>
                         </td>
                         <td colspan="2" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
                             <p style="margin-top:0pt; margin-bottom:0pt; font-size:10.5pt;"><strong><span style="font-family:Calibri;">EPF</span></strong></p>
                         </td>
                         <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; 638</span></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; 638.00</span></p>
                         </td>
                     </tr>
                     <tr style="height:20.55pt;">
@@ -301,19 +301,19 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
                             <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;"><strong><span style="font-family:Calibri;">HRA</span></strong></p>
                         </td>
                         <td colspan="3" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{$employee->HRA}}</span></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{number_format(round($employee->HRA),2)}}</span></p>
                         </td>
                         <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
                             <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; </span><span style="font-family:Calibri; font-size:10.5pt;">0</span></p>
                         </td>
                         <td style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; </span><span style="font-family:Calibri; font-size:10.5pt;">2280</span></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; </span><span style="font-family:Calibri; font-size:10.5pt;">2280.00</span></p>
                         </td>
                         <td colspan="2" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
                             <p style="margin-top:0pt; margin-bottom:0pt; font-size:10.5pt;"><strong><span style="font-family:Calibri;">ESIC</span></strong></p>
                         </td>
                         <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; 58</span></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; 58.00</span></p>
                         </td>
                     </tr>
                     <tr style="height:20.55pt;">
@@ -321,19 +321,19 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
                             <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;"><strong><span style="font-family:Calibri;">SPECIAL ALLOW</span></strong></p>
                         </td>
                         <td colspan="3" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{$employee->SPL_ALW}}</span></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{number_format(round($employee->SPL_ALW),2)}}</span></p>
                         </td>
                         <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
                             <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; 0</span></p>
                         </td>
                         <td style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; 760</span></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; 760.00</span></p>
                         </td>
                         <td colspan="2" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
                             <p style="margin-top:0pt; margin-bottom:0pt; font-size:10.5pt;"><strong><span style="font-family:Calibri;">PT</span></strong></p>
                         </td>
                         <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{$employee->PROF_TAX}}</span></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{number_format(round($employee->PROF_TAX),2)}}</span></p>
                         </td>
                     </tr>
                     <tr style="height:20.55pt;">
@@ -347,13 +347,13 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
                             <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:10.5pt;"><span style="font-family:Calibri;">&nbsp;</span></p>
                         </td>
                         <td style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{$employee->Overtime}}</span></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{number_format(round($employee->Overtime),2)}}</span></p>
                         </td>
                         <td colspan="2" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
                             <p style="margin-top:0pt; margin-bottom:0pt; font-size:10.5pt;"><strong><span style="font-family:Calibri;">TDS</span></strong></p>
                         </td>
                         <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{$employee->TDS}}</span></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{number_format(round($employee->TDS),2)}}</span></p>
                         </td>
                     </tr>
                     <tr style="height:20.55pt;">
@@ -373,7 +373,7 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
                             <p style="margin-top:0pt; margin-bottom:0pt; font-size:10.5pt;"><strong><span style="font-family:Calibri;">CANT-DEDUCTION</span></strong></p>
                         </td>
                         <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{$employee->CANTEEN_DEDN}}</span></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{number_format(round($employee->CANTEEN_DEDN),2)}}</span></p>
                         </td>
                     </tr>
                     <tr style="height:20.55pt;">
@@ -393,7 +393,7 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
                             <p style="margin-top:0pt; margin-bottom:0pt; font-size:10.5pt;"><strong><span style="font-family:Calibri;">SALARY ADVANCE</span></strong></p>
                         </td>
                         <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{$employee->SAL_ADV}}</span></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{number_format(round($employee->SAL_ADV),2)}}</span></p>
                         </td>
                     </tr>
                     <tr style="height:20.55pt;">
@@ -413,7 +413,7 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
                             <p style="margin-top:0pt; margin-bottom:0pt; font-size:10.5pt;"><strong><span style="font-family:Calibri;">OTHER DEDUCTIONS</span></strong></p>
                         </td>
                         <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{$employee->OTHER_DEDUC}}</span></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{number_format(round($employee->OTHER_DEDUC),2)}}</span></p>
                         </td>
                     </tr>
                     <tr style="height:20.55pt;">
@@ -421,19 +421,19 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
                             <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;"><strong><span style="font-family:Calibri;">TOTAL EARNINGS</span></strong></p>
                         </td>
                         <td colspan="3" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; </span><strong><span style="font-family:Calibri;">8000</span></strong></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; </span><strong><span style="font-family:Calibri;">8000.00</span></strong></p>
                         </td>
                         <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
                             <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:10.5pt;"><strong><span style="font-family:Calibri;">&nbsp;</span></strong></p>
                         </td>
                         <td style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; </span><strong><span style="font-family:Calibri; font-size:10.5pt;">7666</span></strong></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; </span><strong><span style="font-family:Calibri; font-size:10.5pt;">7666.00</span></strong></p>
                         </td>
                         <td colspan="2" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
                             <p style="margin-top:0pt; margin-bottom:0pt; font-size:10.5pt;"><strong><span style="font-family:Calibri;">TOTAL DEDUCTION</span></strong></p>
                         </td>
                         <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; </span><strong><span style="font-family:Calibri;">{{$employee->TOTAL_DEDUCTIONS}}</span></strong></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; </span><strong><span style="font-family:Calibri;">{{number_format(round($employee->TOTAL_DEDUCTIONS),2)}}</span></strong></p>
                         </td>
                     </tr>
                     <tr style="height:14.35pt;">
@@ -446,7 +446,7 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
                             <p style="margin-top:0pt; margin-bottom:0pt; font-size:10.5pt;"><strong><span style="font-family:Calibri;">NET PAY</span></strong></p>
                         </td>
                         <td colspan="4" style="width:265.7pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; </span><strong><span style="font-family:Calibri; font-size:10.5pt;">6665</span></strong></p>
+                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; </span><strong><span style="font-family:Calibri; font-size:10.5pt;">{{number_format(round($employee->NET_TAKE_HOME),2)}}</span></strong></p>
                         </td>
                     </tr>
                     <tr style="height:20.55pt;">

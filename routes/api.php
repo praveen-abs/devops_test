@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Mobile\VmtMobileMainDashboardController;
+use App\Http\Controllers\VmtAPIPMSModuleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,13 +36,21 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 
     /*
-        getAssignedKPIForms():
-        Input : assignee_id
+        getAssigneeKPIForms():
         DB Table : vmt_pms_kpiform_assigned
-        Output : JSON containing the list of all forms assigned to the given assignee_id
+        Input : assignee_id
+        Output : JSON containing the list of all forms assigned to the given LoggedInUserId
 
     */
-    Route::get('getAssignedKPIForms', 'App\Http\Controllers\VmtAPIPMSModuleController@getAssignedKPIForms');
+    Route::post('getAssigneeKPIForms', [VmtAPIPMSModuleController::class,'getAssigneeKPIForms']);
+    /*
+        getReviewerKPIForms():
+        DB Table : vmt_pms_kpiform_assigned
+        Input : assignee_id
+        Output : JSON containing the list of all forms which reviewed by given LoggedInUserId
+
+    */
+    Route::post('getReviewerKPIForms', [VmtAPIPMSModuleController::class,'getReviewerKPIForms']);
 
     /*
         getAssigneeReviews():
