@@ -466,8 +466,8 @@ if ($('#nationality').val() == 'indian') {
     $('#aadhar').removeClass('not-required validate');
     $('#permanent_pincode').attr('type', 'number');
     $('#current_pincode').attr('type', 'number');
-    $('#current_country').val('IN').trigger('change');
-    stateFunction('IN', '#current_country');
+    // $('#current_country').val('IN').trigger('change');
+    //stateFunction('IN', '#current_country');
 } else {
     $('#passport_no').attr('required', true);
     $('#passport_no_req').show();
@@ -488,7 +488,7 @@ if ($('#nationality').val() == 'indian') {
 }
 });
 
-// $('#vmt_aadhar').on('input', function() {
+// $('#vmt_aadhar').on('input', function() {s
 //     var aadharno = new RegExp("^[2-9]{1}[0-9]{3}\s{1}[0-9]{4}\s{1}[0-9]{4}$");
 //     var aadhartes = $("#vmt_aadhar").val();
 //     if (aadharno.test(aadhartes)) {
@@ -502,8 +502,8 @@ if ($('#nationality').val() == 'indian') {
 
 $('#passport_no_req').hide();
 $('#passport_exp_req').hide();
-$('#permanent_country').val('IN').trigger('change');
 $('#current_country').val('IN').trigger('change');
+$('#permanent_country').val('IN').trigger('change');
 $('#current_state').val('IN').trigger('change');
 $('#permanent_state').val('IN').trigger('change');
 stateFunction('IN', '#current_state');
@@ -524,7 +524,7 @@ if ($('#current_address_copy').is(':checked')) {
 } else {
     $('#permanent_pincode').val('');
     $('#permanent_country').val('').trigger('change');
-    $('#permanent_state').val('');
+    $('#permanent_state').val('').trigger('change');
     $('#permanent_city').val('');
     $('#permanent_address').val('');
 }
