@@ -106,6 +106,20 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="row mt-1">
+                                <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
+                                    <label class="" for="selected_head">Maximum Line Manager levels for Appraisal Review</label>
+                                </div>
+                                <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
+                                    <select placeholder="Select Review Levels" name="selected_reviewlevels" id="selected_reviewlevels"
+                                        class="onboard-form form-control select2_form_without_search" required>
+                                        <option value="">Select Review Levels</option>
+                                        <option value="L1" >L1</option>
+                                        <option value="L2" >L2</option>
+                                        <option value="L3" >L3</option>
+                                    </select>
+                                </div>
+                            </div>
                             <h6 class="mt-3">Change column name as per your preference</h6>
                             <div class="row mt-1">
                                  @if ($data && $data->selected_columns && in_array('dimension', explode(',', $data->selected_columns)))
@@ -225,6 +239,59 @@
                                 @endif
                             </div>
 
+                                    <div class="table-content mb-1">
+                                        <h6>Appraisee's Annual Score & Rating</h6>
+                                        <table class="table align-middle mb-0 table-bordered  table-striped" id="table">
+
+                                            <thead class="thead" id="tHead">
+                                                <tr>
+                                                    <th scope="col">Overall Annual Score</th>
+                                                    <th scope="col">Less than 60</th>
+                                                    <th scope="col">60-70</th>
+                                                    <th scope="col">70-80</th>
+                                                    <th scope="col">80-90</th>
+                                                    <th scope="col">90-100</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="tbody" id="tbody">
+                                                <tr>
+
+                                                    <td class="">
+                                                        Corresponding ANNUAL PERFORMANCE Rating
+
+                                                    </td>
+                                                    <td class="">Needs Action</td>
+                                                    <td class="">Below Expectations</td>
+                                                    <td class="">Meet Expectations</td>
+                                                    <td class="">Exceeds Expectations </td>
+                                                    <td class="">Exceptionally Exceeds Expectations</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td class="">
+                                                        Ranking
+                                                    </td>
+                                                    <td class="">1</td>
+                                                    <td class="">2</td>
+                                                    <td class="">3</td>
+                                                    <td class="">4</td>
+                                                    <td class="">5</td>
+                                                </tr>
+                                                <tr>
+
+                                                    <td class="">
+                                                        Action
+                                                    </td>
+                                                    <td class="">Exit</td>
+                                                    <td class="">PIP</td>
+                                                    <td class="">10%</td>
+                                                    <td class="">15%</td>
+                                                    <td class="">20%</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
                             <div class="text-end mt-3">
                                 <button type="submit" data="row-6" next="row-6" placeholder="" name="next"
                                     class="btn btn-orange " value="Submit">Submit</button>
@@ -233,6 +300,9 @@
                     </div>
                 </div>
             </div>
+
+
+
             </form>
 
         </div>
