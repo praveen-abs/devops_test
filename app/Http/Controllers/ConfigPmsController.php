@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ConfigPms;
+use App\Models\VmtPMSRating;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 use Session as Ses;
 
@@ -70,8 +72,10 @@ class ConfigPmsController extends Controller
         $config->column_header = $json;
         $config->user_id = auth()->user()->id;
         $config->save();
-        Ses::flash('message', 'PMS Config Updated successfully!');
-        Ses::flash('alert-class', 'alert-success');
+
+        //Store the PMS Rating
+
+
         return redirect()->back();
     }
 
@@ -92,6 +96,19 @@ class ConfigPmsController extends Controller
             $createConfig->user_id = auth()->user()->id;
             $createConfig->save();
         }
+
+    }
+
+
+    private function storePMSRating(Request $request)
+    {
+       // DB::table('vmt_pms_rating')->insert([
+
+    }
+
+    public function getPMSRating(Request $request)
+    {
+        return VmtPMSRating::all();
 
     }
 }

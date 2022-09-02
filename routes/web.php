@@ -251,6 +251,9 @@ Route::get('/vmt_clientOnboarding', function () {
 //
 Route::post('vmt_clientOnboarding', 'App\Http\Controllers\VmtClientController@store');
 
+
+Route::get('/getPMSRatingJSON',  [App\Http\Controllers\ConfigPmsController::class, 'getPMSRating'])->name('getPMSRatingJSON');
+
 //PMS v2
 Route::get('/pms',  [App\Http\Controllers\PMS\VmtPMSModuleController::class, 'showPMSDashboard'])->name('pms-dashboard');
 // flow 2 starts
@@ -291,7 +294,7 @@ Route::post('acceptRejectAssigneeReview', [VmtPMSModuleController::class,'accept
 Route::get('/republishForm/{kpiAssignedId}',[VmtPMSModuleController::class, 'republishForm'])->name('republishForm');
 Route::post('/republishFormEdited',[VmtPMSModuleController::class, 'republishFormEdited'])->name('republishFormEdited');
 
-// routes for get related manager of employee in Flow 1 
+// routes for get related manager of employee in Flow 1
 Route::post('getReviewerOfSelectedEmployee', [VmtPMSModuleController::class,'getReviewerOfSelectedEmployee'])->name('getReviewerOfSelectedEmployee');
 Route::post('getSameLevelOfReviewer', [VmtPMSModuleController::class,'getSameLevelOfReviewer'])->name('getSameLevelOfReviewer');
 Route::post('changeReviewerSelection', [VmtPMSModuleController::class,'changeReviewerSelection'])->name('changeReviewerSelection');
