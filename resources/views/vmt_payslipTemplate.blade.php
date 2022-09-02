@@ -1,523 +1,548 @@
-<?php
-$employee = \DB::table('vmt_employee_payslip')->first();
-$general_info = \DB::table('vmt_general_info')->first();
-$client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
-// dd(request()->getSchemeAndHttpHost()."".$general_info->logo_img);
-?>
 <html>
 
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <style>
-        .main-page {
-            width: 210mm;
-            min-height: 297mm;
-            margin: 10mm auto;
-            background: white;
-            box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+        table {
+            width: 100%;
+            vertical-align: middle;
+            font-family: sans-serif;
         }
 
-        .sub-page {
-            padding: 1cm;
-            height: 297mm;
+        .payslip_table tr,
+        td {
+            border: 1.5pt solid #af1888;
+
         }
 
-        @page {
-            size: A4;
-            margin: 0;
+        table td:last-child {}
+
+        .border-less {
+            border: 0px !important;
         }
 
-        @media print {
+        tr {
+            height: 12.55pt;
+        }
 
-            html,
-            body {
-                width: 210mm;
-                height: 297mm;
-            }
+        td {
+            width: 81.35pt
+        }
 
-            .main-page {
-                margin: 0;
-                border: initial;
-                border-radius: initial;
-                width: initial;
-                min-height: initial;
-                box-shadow: initial;
-                background: initial;
-                page-break-after: always;
-            }
+        .padding-md {
+            /* padding: 2pt 0pt; */
+        }
+
+        .margin-0 {
+            margin: 0px;
+        }
+
+        p {
+            font-size: 9pt;
+            margin-top: 3pt;
+            margin-bottom: 3pt;
+            padding: 0px 5px;
+        }
+
+
+        .sm {}
+
+        .md {}
+
+        .lg {}
+
+        .txt-left {
+            text-align: left;
+        }
+
+        .txt-right {
+            text-align: right;
+        }
+
+        .txt-center {
+            text-align: center;
+        }
+
+        .text-strong {
+            font-weight: 600;
+        }
+
+        .header-row {
+            height: 50px;
+        }
+
+        td.bg-ash {
+            background-color: #c1c1c1;
         }
     </style>
-
 </head>
 
 <body>
-    <div class="main-page">
-        <div class="sub-page">
-            <table cellpadding="0" cellspacing="0" style="border-collapse:collapse; float:left;">
-                <tbody>
-                    <tr style="height:66.7pt; border:1.5pt solid #af1888;">
-                        <td colspan="7" style=" padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <div class="header-cotent" style="">
-                                <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;"><strong><span style="font-family:Tahoma;">Ardens Business Solutions Private
-                                            Limited</span></strong></p>
-                                <p style="margin-top:0pt; margin-bottom:0pt; font-size:9.5pt;"><strong><span style="font-family:Tahoma;">&ldquo;SHALOM
-                                            BUILDING&rdquo;&nbsp;</span></strong></p>
-                                <p style="margin-top:0pt; margin-bottom:0pt; font-size:9.5pt;"><span style="font-family:Tahoma;">1</span><span style="font-family:Tahoma; font-size:6.33pt;"><sup>st</sup></span><span style="font-family:Tahoma;">&nbsp;Floor, Office No.20, No.04, Mannar
-                                        Street,&nbsp;</span></p>
-                                <p style="margin-top:0pt; margin-bottom:0pt; font-size:9.5pt;"><span style="font-family:Tahoma;">T Nagar, Chennai, Tamil Nadu, India &ndash; 600
-                                        017</span></p>
-                            </div>
-                        </td>
-                        <td colspan="4">
-                            <div style="">
-                                <!-- <img src="{{ URL::asset('assets/images/footer_logo.png') }}" alt="" class=""> -->
-                                <div class="header-img" style="height: 40px;width:180px;">
-                                    <img src={{$client_logo}} style="height:100%;width:100%;" title="">
-                                    <!-- <img src="/brandavatar-appointementletter/images/brandavatarlogo.png" alt=""
-                                        style="height:100%;width:100%;"> -->
-                                </div>
-                            </div>
+    <table cellspacing="0" cellpadding="0" class="payslip_table">
+        <tr class="header-row">
+            <td colspan="7" class="border-less">
+                <div class="header-cotent">
+                    <h6 class="margin-0">Ardens Business Solutions Private Limited</h6>
+                    <h6 class="margin-0">“SHALOM BUILDING”</h6>
+                    <p>1st Floor, Office No.20, No.04, Mannar Street,</p>
+                    <p>T Nagar, Chennai,Tamil Nadu, India – 600 017</p>
+                </div>
+            </td>
+            <td colspan="5" class="border-less">
+                <div style="">
+                    <div class="header-img" style="height: 40px;width:180px;max-height:100%;">
+                        <img src={{$client_logo}} style="height:100%;width:100%;" title="">
+                    </div>
+                </div>
 
-                        </td>
-                    </tr>
-                    <tr style="height:20.55pt;">
-                        <td colspan="9" style="width:542.2pt; border-top:1.5pt solid #af1888; border-right:1.5pt solid #af1888; border-left:1.5pt solid #af1888; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:10.5pt;"><strong><span style="font-family:Calibri;">PAYSLIP FOR THE
-                                        MONTH OF &ndash;
-                                        {{strtoupper($employee->PAYROLL_MONTH)}}</span></strong></p>
-                        </td>
-                    </tr>
-                    <tr style="height:20.55pt;">
-                        <td colspan="3" style="width:127.45pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;"><strong><span style="font-family:Calibri;">EMPLOYEE NAME</span></strong></p>
-                        </td>
-                        <td colspan="2" style="width:127.45pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:10.5pt;"><span style="font-family:Calibri;">{{$employee->EMP_NAME}}</span></p>
-                        </td>
-                        <td colspan="2" style="width:127.45pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; font-size:10.5pt;"><strong><span style="font-family:Calibri;">Employee CODE</span></strong></p>
-                        </td>
-                        <td colspan="2" style="width:127.45pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">{{$employee->EMP_NO}}</span></p>
-                        </td>
-                    </tr>
-                    <tr style="height:20.55pt;">
-                        <td colspan="3" style="width:127.45pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;"><strong><span style="font-family:Calibri;">DATE OF BIRTH</span></strong></p>
-                        </td>
-                        <td colspan="2" style="width:127.45pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                           
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:10.5pt;"><span style="font-family:Calibri;">{{date("d-m-Y", strtotime($employee->DOB))}}</span></p>
-                        </td>
-                        <td colspan="2" style="width:127.45pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; font-size:10.5pt;"><strong><span style="font-family:Calibri;">DATE OF JOINING</span></strong></p>
-                        </td>
-                        <td colspan="2" style="width:127.45pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">{{date("d-m-Y", strtotime($employee->DOJ))}}</span></p>
-                        </td>
-                    </tr>
-                    <tr style="height:20.55pt;">
-                        <td colspan="3" style="width:127.45pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;"><strong><span style="font-family:Calibri;">DESIGNATION</span></strong></p>
-                        </td>
-                        <td colspan="2" style="width:127.45pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:10.5pt;"><span style="font-family:Calibri;">{{$employee->DESIGNATION}}</span></p>
-                        </td>
-                        <td colspan="2" style="width:127.45pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; font-size:10.5pt;"><strong><span style="font-family:Calibri;">LOCATION</span></strong></p>
-                        </td>
-                        <td colspan="2" style="width:127.45pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">{{$employee->LOCATION}}</span></p>
-                        </td>
-                    </tr>
-                    <tr style="height:20.55pt;">
-                        <td colspan="3" style="width:127.45pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;"><strong><span style="font-family:Calibri;">EPF NUMBER</span></strong></p>
-                        </td>
-                        <td colspan="2" style="width:127.45pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:10.5pt;"><span style="font-family:Calibri;">{{$employee->EPF_Number}}</span></p>
-                        </td>
-                        <td colspan="2" style="width:127.45pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; font-size:10.5pt;"><strong><span style="font-family:Calibri;">ESIC NUMBER</span></strong></p>
-                        </td>
-                        <td colspan="2" style="width:127.45pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">{{$employee->ESIC_Number}}</span></p>
-                        </td>
-                    </tr>
-                    <tr style="height:20.55pt;">
-                        <td colspan="3" style="width:127.45pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;"><strong><span style="font-family:Calibri;">UAN</span></strong></p>
-                        </td>
-                        <td colspan="2" style="width:127.45pt; border-top:1.5pt solid #af1888; border-right:1.5pt solid #af1888; border-left:1.5pt solid #af1888; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:10.5pt;"><span style="font-family:Calibri;">{{$employee->UAN}}</span></p>
-                        </td>
-                        <td colspan="2" style="width:127.45pt; border-top:1.5pt solid #af1888; border-right:1.5pt solid #af1888; border-left:1.5pt solid #af1888; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; font-size:10.5pt;"><strong><span style="font-family:Calibri;">PAN</span></strong></p>
-                        </td>
-                        <td colspan="2" style="width:127.45pt; border-top:1.5pt solid #af1888; border-right:1.5pt solid #af1888; border-left:1.5pt solid #af1888; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:>; font-size:11pt;"><span style="font-family:Calibri;">{{$employee->PAN_Number}}</span></p>
+            </td>
+        </tr>
 
-                        </td>
-                    </tr>
-                    <tr style="height:20.55pt;">
-                        <td colspan="4" style="width:173.5pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:11pt;"><strong><span style="font-family:Calibri;">BANK NAME</span></strong></p>
-                        </td>
-                        <td colspan="2" style="width:173.55pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:10.5pt;"><strong><span style="font-family:Calibri;">ACCOUNT NUMBER</span></strong></p>
-                        </td>
-                        <td colspan="3" style="width:173.55pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:11pt;"><strong><span style="font-family:Calibri;">IFSC CODE</span></strong></p>
-                        </td>
-                    </tr>
-                    <tr style="height:20.55pt;">
-                        <td colspan="4" style="width:173.5pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:11pt;"><span style="font-family:Calibri;">{{$employee->Bank_Name}}</span></p>
-                        </td>
-                        <td colspan="2" style="width:173.55pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:10.5pt;"><span style="font-family:Calibri;">{{$employee->Account_Number}}</span></p>
-                        </td>
-                        <td colspan="3" style="width:173.55pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:11pt;"><span style="font-family:Calibri;">{{$employee->Bank_IFSC_Code}}</span></p>
-                        </td>
-                    </tr>
-                    <tr style="height:20.55pt;">
-                        <td colspan="3" style="width:127.45pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:11pt;"><strong><span style="font-family:Calibri;">MONTH DAYS</span></strong></p>
-                        </td>
-                        <td colspan="2" style="width:127.45pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:10.5pt;"><strong><span style="font-family:Calibri;">WORKED DAYS</span></strong></p>
-                        </td>
-                        <td colspan="2" style="width:127.45pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:10.5pt;"><strong><span style="font-family:Calibri;">LOSS OF PAY</span></strong></p>
-                        </td>
-                        <td colspan="2" style="width:127.45pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:11pt;"><strong><span style="font-family:Calibri;">ARREAR DAYS</span></strong></p>
-                        </td>
-                    </tr>
-                    <tr style="height:20.55pt;">
-                        <td colspan="3" style="width:127.45pt; border-top:1.5pt solid #af1888; border-right:1.5pt solid #af1888; border-left:1.5pt solid #af1888; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:11pt;"><span style="font-family:Calibri;">{{$employee->MONTH_DAYS}}</span></p>
-                        </td>
-                        <td colspan="2" style="width:127.45pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:10.5pt;"><span style="font-family:Calibri;">{{$employee->Worked_Days}}</span></p>
-                        </td>
-                        <td colspan="2" style="width:127.45pt; border-top:1.5pt solid #af1888; border-right:1.5pt solid #af1888; border-left:1.5pt solid #af1888; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:10.5pt;"><span style="font-family:Calibri;">{{$employee->LOP}}</span></p>
-                        </td>
-                        <td colspan="2" style="width:127.45pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:11pt;"><span style="font-family:Calibri;">{{$employee->Arrears_Days}}</span></p>
-                        </td>
-                    </tr>
-                    <tr style="height:20.55pt;">
-                        <td style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d0cece;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;"><strong><span style="font-family:Calibri;">SL Open Balance</span></strong></p>
-                        </td>
-                        <td colspan="3" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d0cece;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:11pt;"><strong><span style="font-family:Calibri;">CL Open Balance</span></strong></p>
-                        </td>
-                        <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d0cece;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:10.5pt;"><strong><span style="font-family:Calibri;">Availed SL</span></strong></p>
-                        </td>
-                        <td style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d0cece;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:10.5pt;"><strong><span style="font-family:Calibri;">Availed CL</span></strong></p>
-                        </td>
-                        <td colspan="2" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d0cece;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:10.5pt;"><strong><span style="font-family:Calibri;">Balance SL</span></strong></p>
-                        </td>
-                        <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d0cece;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;"><strong><span style="font-family:Calibri;">Balance CL</span></strong></p>
-                        </td>
-                    </tr>
-                    <tr style="height:20.55pt;">
-                        <td style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#ffffff;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:11pt;"><strong><span style="font-family:Calibri;">-</span></strong></p>
-                        </td>
-                        <td colspan="3" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#ffffff;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:11pt;"><span style="font-family:Calibri;">-</span></p>
-                        </td>
-                        <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#ffffff;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:10.5pt;"><strong><span style="font-family:Calibri;">-</span></strong></p>
-                        </td>
-                        <td style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#ffffff;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:10.5pt;"><strong><span style="font-family:Calibri;">-</span></strong></p>
-                        </td>
-                        <td colspan="2" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#ffffff;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:10.5pt;"><strong><span style="font-family:Calibri;">-</span></strong></p>
-                        </td>
-                        <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#ffffff;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:11pt;"><strong><span style="font-family:Calibri;">-</span></strong></p>
-                        </td>
-                    </tr>
-                    <tr style="height:6.3pt;">
-                        <td colspan="9" style="width:542.2pt; border-top-style:solid; border-top-width:0.75pt; border-right:1.5pt solid #af1888; border-left:1.5pt solid #af1888; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#ffffff;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:10.5pt;"><strong><span style="font-family:Calibri;">&nbsp;</span></strong></p>
-                        </td>
-                    </tr>
-                    <tr style="height:20.55pt;">
-                        <td style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:10.5pt;"><strong><span style="font-family:Calibri;">DESCRIPTION</span></strong></p>
-                        </td>
-                        <td colspan="3" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:10.5pt;"><strong><span style="font-family:Calibri;">AMOUNT</span></strong></p>
-                        </td>
-                        <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; font-size:10.5pt;"><strong><span style="font-family:Calibri;">ARREAR AMOUNT</span></strong></p>
-                        </td>
-                        <td style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:10.5pt;"><strong><span style="font-family:Calibri;">EARNED AMOUNT</span></strong></p>
-                        </td>
-                        <td colspan="2" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:10.5pt;"><strong><span style="font-family:Calibri;">DEDUCTION</span></strong></p>
-                        </td>
-                        <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:10.5pt;"><strong><span style="font-family:Calibri;">AMOUNT</span></strong></p>
-                        </td>
-                    </tr>
-                    <tr style="height:20.55pt;">
-                        <td style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;"><strong><span style="font-family:Calibri;">BASIC</span></strong></p>
-                        </td>
-                        <td colspan="3" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left    ; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{number_format(round($employee->BASIC),2)}}</span></p>
-                        </td>
-                        <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; </span><span style="font-family:Calibri; font-size:10.5pt;">{{number_format(round($employee->BASIC_ARREAR),2)}}</span></p>
-                        </td>
-                        <td style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; </span><span style="font-family:Calibri; font-size:10.5pt;">{{number_format(round($employee->Earned_BASIC),2)}}</span></p>
-                        </td>
-                        <td colspan="2" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; font-size:10.5pt;"><strong><span style="font-family:Calibri;">EPF</span></strong></p>
-                        </td>
-                        <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; 638.00</span></p>
-                        </td>
-                    </tr>
-                    <tr style="height:20.55pt;">
-                        <td style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;"><strong><span style="font-family:Calibri;">HRA</span></strong></p>
-                        </td>
-                        <td colspan="3" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{number_format(round($employee->HRA),2)}}</span></p>
-                        </td>
-                        <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; </span><span style="font-family:Calibri; font-size:10.5pt;">{{number_format(round($employee->HRA_ARREAR),2)}}</span></p>
-                        </td>
-                        <td style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; </span><span style="font-family:Calibri; font-size:10.5pt;">2280.00</span></p>
-                        </td>
-                        <td colspan="2" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; font-size:10.5pt;"><strong><span style="font-family:Calibri;">ESIC</span></strong></p>
-                        </td>
-                        <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; 58.00</span></p>
-                        </td>
-                    </tr>
-                    <tr style="height:20.55pt;">
-                        <td style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;"><strong><span style="font-family:Calibri;">SPECIAL ALLOW</span></strong></p>
-                        </td>
-                        <td colspan="3" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{number_format(round($employee->SPL_ALW),2)}}</span></p>
-                        </td>
-                        <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{number_format(round($employee->SPL_ALW_ARREAR),2)}}</span></p>
-                        </td>
-                        <td style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{number_format(round($employee->Earned_SPL_ALW),2)}}</span></p>
-                        </td>
-                        <td colspan="2" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; font-size:10.5pt;"><strong><span style="font-family:Calibri;">PT</span></strong></p>
-                        </td>
-                        <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{number_format(round($employee->PROF_TAX),2)}}</span></p>
-                        </td>
-                    </tr>
-                    <tr style="height:20.55pt;">
-                        <td style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;"><strong><span style="font-family:Calibri;">OVERTIME</span></strong></p>
-                        </td>
-                        <td colspan="3" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&nbsp;{{number_format(round($employee->Overtime),2)}}</span></p>
-                        </td>
-                        <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:10.5pt;"><span style="font-family:Calibri;">&nbsp;</span></p>
-                        </td>
-                        <td style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{number_format(round($employee->Overtime),2)}}</span></p>
-                        </td>
-                        <td colspan="2" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; font-size:10.5pt;"><strong><span style="font-family:Calibri;">TDS</span></strong></p>
-                        </td>
-                        <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{number_format(round($employee->TDS),2)}}</span></p>
-                        </td>
-                    </tr>
-                    <tr style="height:20.55pt;">
-                        <td style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;"><strong><span style="font-family:Calibri;">&nbsp;</span></strong></p>
-                        </td>
-                        <td colspan="3" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:right; font-size:11pt;"><span style="font-family:Calibri;">&nbsp;</span></p>
-                        </td>
-                        <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:right; font-size:10.5pt;"><span style="font-family:Calibri;">&nbsp;</span></p>
-                        </td>
-                        <td style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:right; font-size:10.5pt;"><span style="font-family:Calibri;">&nbsp;</span></p>
-                        </td>
-                        <td colspan="2" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; font-size:10.5pt;"><strong><span style="font-family:Calibri;">CANT-DEDUCTION</span></strong></p>
-                        </td>
-                        <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{number_format(round($employee->CANTEEN_DEDN),2)}}</span></p>
-                        </td>
-                    </tr>
-                    <tr style="height:20.55pt;">
-                        <td style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;"><strong><span style="font-family:Calibri;">&nbsp;</span></strong></p>
-                        </td>
-                        <td colspan="3" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:right; font-size:11pt;"><span style="font-family:Calibri;">&nbsp;</span></p>
-                        </td>
-                        <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:right; font-size:10.5pt;"><span style="font-family:Calibri;">&nbsp;</span></p>
-                        </td>
-                        <td style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:right; font-size:10.5pt;"><span style="font-family:Calibri;">&nbsp;</span></p>
-                        </td>
-                        <td colspan="2" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; font-size:10.5pt;"><strong><span style="font-family:Calibri;">SALARY ADVANCE</span></strong></p>
-                        </td>
-                        <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{number_format(round($employee->SAL_ADV),2)}}</span></p>
-                        </td>
-                    </tr>
-                    <tr style="height:20.55pt;">
-                        <td style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;"><strong><span style="font-family:Calibri;">&nbsp;</span></strong></p>
-                        </td>
-                        <td colspan="3" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&nbsp;</span></p>
-                        </td>
-                        <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:10.5pt;"><span style="font-family:Calibri;">&nbsp;</span></p>
-                        </td>
-                        <td style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:right; font-size:10.5pt;"><span style="font-family:Calibri;">&nbsp;</span></p>
-                        </td>
-                        <td colspan="2" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; font-size:10.5pt;"><strong><span style="font-family:Calibri;">OTHER DEDUCTIONS</span></strong></p>
-                        </td>
-                        <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; {{number_format(round($employee->OTHER_DEDUC),2)}}</span></p>
-                        </td>
-                    </tr>
-                    <tr style="height:20.55pt;">
-                        <td style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;"><strong><span style="font-family:Calibri;">TOTAL EARNINGS</span></strong></p>
-                        </td>
-                        <td colspan="3" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; </span><strong><span style="font-family:Calibri;">{{number_format(round($employee->TOTAL_EARNED_GROSS),2)}}</span></strong></p>
-                        </td>
-                        <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:10.5pt;"><strong><span style="font-family:Calibri;">&nbsp;</span></strong></p>
-                        </td>
-                        <td style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; </span><strong><span style="font-family:Calibri; font-size:10.5pt;">7666.00</span></strong></p>
-                        </td>
-                        <td colspan="2" style="width:81.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; font-size:10.5pt;"><strong><span style="font-family:Calibri;">TOTAL DEDUCTION</span></strong></p>
-                        </td>
-                        <td style="width:81.4pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:left; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; </span><strong><span style="font-family:Calibri;">{{number_format(round($employee->TOTAL_DEDUCTIONS),2)}}</span></strong></p>
-                        </td>
-                    </tr>
-                    <tr style="height:14.35pt;">
-                        <td colspan="9" style="width:542.2pt; border-top-style:solid; border-top-width:0.75pt; border-right:1.5pt solid #af1888; border-left:1.5pt solid #af1888; border-bottom:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:bottom;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:10.5pt;"><span style="font-family:Calibri;">&nbsp;</span></p>
-                        </td>
-                    </tr>
-                    <tr style="height:20.55pt;">
-                        <td colspan="5" style="width:265.7pt; border-top:1.5pt solid #af1888; border-right:1.5pt solid #af1888; border-left:1.5pt solid #af1888; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; font-size:10.5pt;"><strong><span style="font-family:Calibri;">NET PAY</span></strong></p>
-                        </td>
-                        <td colspan="4" style="width:265.7pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:11pt;"><span style="font-family:Calibri;">&#x20B9; </span><strong><span style="font-family:Calibri; font-size:10.5pt;">{{number_format(round($employee->NET_TAKE_HOME),2)}}</span></strong></p>
-                        </td>
-                    </tr>
-                    <tr style="height:20.55pt;">
-                        <td colspan="2" style="width:95.05pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d0cece;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; font-size:11pt;"><strong><span style="font-family:Calibri;">NET PAY IN WORDS</span></strong></p>
-                        </td>
-                        <td colspan="7" style="width:436.35pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:10.5pt;"><strong><span style="font-family:Calibri;">{{$employee->Rupees}}</span></strong></p>
-                        </td>
-                    </tr>
-                    <tr style="height:14.35pt;">
-                        <td colspan="9" style="width:542.2pt; border-top-style:solid; border-top-width:0.75pt; border-right:1.5pt solid #af1888; border-left:1.5pt solid #af1888; border-bottom-style:solid; border-bottom-width:0.75pt; padding-right:4.65pt; padding-left:4.65pt; vertical-align:bottom;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:10.5pt;"><span style="font-family:Calibri;">&nbsp;</span></p>
-                        </td>
-                    </tr>
-                    <tr style="height:20.55pt;">
-                        <td colspan="3" style="width:127.45pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:11pt;"><strong><span style="font-family:Calibri;">TRANSACTION ID</span></strong></p>
-                        </td>
-                        <td colspan="2" style="width:127.45pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:10.5pt;"><span style="font-family:Calibri;">&nbsp;</span></p>
-                        </td>
-                        <td colspan="2" style="width:127.45pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle; background-color:#d9d9d9;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:10.5pt;"><strong><span style="font-family:Calibri;">Paid Date</span></strong></p>
-                        </td>
-                        <td colspan="2" style="width:127.45pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:11pt;"><span style="font-family:Calibri;">11-MAY-2022</span></p>
-                        </td>
-                    </tr>
-                    <tr style="height:14.35pt;">
-                        <td colspan="9" style="width:542.2pt; border-top-style:solid; border-top-width:0.75pt; border-right:1.5pt solid #af1888; border-left:1.5pt solid #af1888; border-bottom:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:bottom;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:10.5pt;"><span style="font-family:Calibri;">&nbsp;</span></p>
-                        </td>
-                    </tr>
-                    <tr style="height:21.55pt;">
-                        <td colspan="9" style="width:542.2pt; border:1.5pt solid #af1888; padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
-                            <p style="margin-top:0pt; margin-bottom:0pt; text-align:center; font-size:10.5pt;">
-                                <strong><em><span style="font-family:Calibri;">This is a computer-generated slip does not
-                                            require signature</span></em></strong>
-                            </p>
-                        </td>
-                    </tr>
-                    <tr style="height:0pt;">
-                        <td style="width:92.15pt;"><br></td>
-                        <td style="width:13.7pt;"><br></td>
-                        <td style="width:32.4pt;"><br></td>
-                        <td style="width:46.05pt;"><br></td>
-                        <td style="width:92.2pt;"><br></td>
-                        <td style="width:92.15pt;"><br></td>
-                        <td style="width:46.1pt;"><br></td>
-                        <td style="width:46.05pt;"><br></td>
-                        <td style="width:92.2pt;"><br></td>
-                    </tr>
-                    <tr style="height:66.7pt; border:0;">
-                        <td colspan="6" style=" padding-right:4.65pt; padding-left:4.65pt; vertical-align:middle;">
 
-                            <span style="margin-top:0pt; margin-bottom:0pt;"><span style="font-family:Calibri; font-size:10pt;margin-left: 13px;    padding-top: 15px;">Please
-                                    reach out to us for any payroll queries at -payroll@ardens.in</span>
-                        </td>
-                        <td colspan="6">
-                            <p style="font-family:'Calibri Light'; font-size:8pt;display:flex;align-items:center;"><span>Powered By</span> 
-                                <img src="{{ URL::asset('assets/images/logo.png') }}" alt="" class="" style="height: 45px;width:130px;">
-                            </p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <tr>
+            <td colspan="12">
+                <p class="sub-header txt-center bg-ash text-strong">PAYSLIP FOR THE MONTH OF &ndash; {{strtoupper($employee->PAYROLL_MONTH)}}</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" class="bg-ash text-strong">
+                <p>EMPLOYEE NAME</p>
+            </td>
+            <td colspan="3">
+                <p>{{$employee->EMP_NAME}}</p>
+            </td>
+            <td colspan="3" class="bg-ash text-strong">
+                <p>EMPLOYEE CODE</p>
+            </td>
+            <td colspan="3">
+                <p>{{$employee->EMP_NO}}</p>
+            </td>
 
-        </div>
-    </div>
+        </tr>
+        <tr>
+            <td colspan="3" class="bg-ash text-strong">
+                <p>DATE OF BIRTH</p>
+            </td>
+            <td colspan="3">
+                <p>{{date("d-m-Y", strtotime($employee->DOB))}}</p>
+            </td>
+            <td colspan="3" class="bg-ash text-strong">
+                <p>DATE OF JOINING</p>
+            </td>
+            <td colspan="3">
+                <p>{{date("d-m-Y", strtotime($employee->DOJ))}}</p>
+            </td>
+
+        </tr>
+        <tr>
+            <td colspan="3" class="bg-ash text-strong">
+                <p>DESIGNATION</p>
+            </td>
+            <td colspan="3">
+                <p>{{$employee->DESIGNATION}}</p>
+            </td>
+            <td colspan="3" class="bg-ash text-strong">
+                <p>LOCATION</p>
+            </td>
+            <td colspan="3">
+                <p>{{$employee->LOCATION}}</p>
+            </td>
+
+        </tr>
+        <tr>
+            <td colspan="3" class="bg-ash text-strong">
+                <p>EPF NUMBER</p>
+            </td>
+            <td colspan="3">
+                <p>{{$employee->EPF_Number}}</p>
+            </td>
+            <td colspan="3" class="bg-ash text-strong">
+                <p>ESIC NUMBER</p>
+            </td>
+            <td colspan="3">
+                <p>{{$employee->ESIC_Number}}</p>
+            </td>
+
+        </tr>
+        <tr>
+            <td colspan="3" class="bg-ash text-strong">
+                <p>UAN</p>
+            </td>
+            <td colspan="3">
+                <p>{{$employee->UAN}}</p>
+            </td>
+            <td colspan="3" class="bg-ash text-strong">
+                <p>PAN</p>
+            </td>
+            <td colspan="3">
+                <p>{{$employee->PAN_Number}}</p>
+            </td>
+
+        </tr>
+        <tr>
+            <td colspan="4" class="bg-ash ">
+                <p class="text-strong txt-center">BANK NAME</p>
+            </td>
+
+            <td colspan="4" class="bg-ash ">
+                <p class="text-strong txt-center">ACCOUNT NUMBER</p>
+            </td>
+            <td colspan="4" class="bg-ash ">
+                <p class="text-strong txt-center">IFSC CODE</p>
+            </td>
+
+        </tr>
+        <tr>
+            <td colspan="4" class="">
+                <p class="txt-center">{{$employee->Bank_Name}}</p>
+            </td>
+            <td colspan="4" class="">
+                <p class="txt-center">{{$employee->Account_Number}}</p>
+            </td>
+            <td colspan="4" class="">
+                <p class="txt-center">{{$employee->Bank_IFSC_Code}}</p>
+            </td>
+
+
+        </tr>
+
+        <tr>
+            <td colspan="3" class="bg-ash ">
+                <p class="text-strong txt-center">MONTH DAYS</p>
+            </td>
+
+            <td colspan="3" class="bg-ash ">
+                <p class="text-strong txt-center">WORKED DAYS</p>
+            </td>
+            <td colspan="3" class="bg-ash ">
+                <p class="text-strong txt-center">LOSS OF PAY</p>
+            </td>
+            <td colspan="3" class="bg-ash ">
+                <p class="text-strong txt-center">ARREAR DAYS</p>
+            </td>
+
+        </tr>
+        <tr>
+            <td colspan="3" class="">
+                <p class="txt-center">{{$employee->MONTH_DAYS}}</p>
+            </td>
+            <td colspan="3" class="">
+                <p class="txt-center">{{$employee->Worked_Days}}</p>
+            </td>
+            <td colspan="3" class="">
+                <p class="txt-center">{{$employee->LOP}}</p>
+            </td>
+            <td colspan="3" class="">
+                <p class="txt-center">{{$employee->Arrears_Days}}</p>
+            </td>
+        </tr>
+        <tr>
+
+            <td colspan="2" class="bg-ash text-strong ">
+                <p class="txt-center">SL OpenBalance</p>
+            </td>
+            <td colspan="2" class="bg-ash text-strong">
+                <p class="txt-center">CL OpenBalance</p>
+            </td>
+            <td colspan="2" class="bg-ash text-strong">
+                <p class="txt-center">Availed SL</p>
+            </td>
+            <td colspan="2" class="bg-ash text-strong">
+                <p class="txt-center">Availed CL</p>
+            </td>
+            <td colspan="2" class="bg-ash text-strong">
+                <p class="txt-center">Balance SL</p>
+            </td>
+            <td colspan="2" class="bg-ash text-strong">
+                <p class="txt-center">Balance CL</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="">
+                <p class="txt-center">-</p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-center">-</p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-center">-</p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-center">-</p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-center">-</p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-center">-</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="12">
+                <p class="padding-md">&nbsp; </p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="bg-ash">
+                <p class="txt-center text-strong">DESCRIPTION</p>
+            </td>
+            <td colspan="2" class="bg-ash">
+                <p class="txt-center text-strong">AMOUNT</p>
+            </td>
+            <td colspan="2" class="bg-ash">
+                <p class="txt-center text-strong">ARREAR AMOUNT</p>
+            </td>
+            <td colspan="2" class="bg-ash">
+                <p class="txt-center text-strong">EARNED AMOUNT</p>
+            </td>
+            <td colspan="2" class="bg-ash">
+                <p class="txt-center text-strong">DEDUCTION</p>
+            </td>
+            <td colspan="2" class="bg-ash">
+                <p class="txt-center text-strong">AMOUNT</p>
+            </td>
+
+        </tr>
+        <tr>
+            <td colspan="2" class="">
+                <p class="txt-left text-strong">BASIC</p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-right">{{number_format(round($employee->BASIC),2)}}</p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-right">{{number_format(round($employee->BASIC_ARREAR),2)}}</p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-right">{{number_format(round($employee->Earned_BASIC),2)}}</p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-left text-strong">EPF</p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-right">638.00</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="">
+                <p class="txt-left text-strong">HRA</p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-right">{{number_format(round($employee->HRA),2)}}</p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-right">{{number_format(round($employee->HRA_ARREAR),2)}}</p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-right">2280.00</p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-left text-strong">ESIC</p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-right">58.00</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="">
+                <p class="txt-left text-strong">SPECIAL ALLOW</p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-right">{{number_format(round($employee->SPL_ALW),2)}}</p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-right">{{number_format(round($employee->SPL_ALW_ARREAR),2)}}</p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-right">{{number_format(round($employee->Earned_SPL_ALW),2)}}</p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-left text-strong">PT</p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-right">{{number_format(round($employee->PROF_TAX),2)}}</p>
+            </td>
+
+
+        </tr>
+
+        <tr>
+            <td colspan="2" class="">
+                <p class="txt-left text-strong"> OVERTIME</p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-right"></p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-right"></p>
+            </td>
+
+            <td colspan="2" class="">
+                <p class="txt-right">{{number_format(round($employee->Overtime),2)}}</p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-left text-strong">TDS</p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-right">{{number_format(round($employee->TDS),2)}}</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="">
+                <p class="txt-left text-strong"> </p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-right"></p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-right"></p>
+            </td>
+
+            <td colspan="2" class="">
+                <p class="txt-right"></p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-left text-strong">CANT-DEDUCTION</p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-right"> {{number_format(round($employee->CANTEEN_DEDN),2)}}</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="">
+                <p class="txt-left text-strong"> </p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-right"></p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-right"></p>
+            </td>
+
+            <td colspan="2" class="">
+                <p class="txt-right"></p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-left text-strong">SALARY ADVANCE</p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-right"> {{number_format(round($employee->SAL_ADV),2)}}</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="">
+                <p class="txt-left text-strong"> </p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-right"></p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-right"></p>
+            </td>
+
+            <td colspan="2" class="">
+                <p class="txt-right"></p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-left text-strong">OTHER DEDUCTIONS</p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-right">{{number_format(round($employee->OTHER_DEDUC),2)}}</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="">
+                <p class="txt-left text-strong">TOTAL EARNINGS</p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-right">{{number_format(round($employee->TOTAL_EARNED_GROSS),2)}}</p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-right"></p>
+            </td>
+
+            <td colspan="2" class="">
+                <p class="txt-right">7666.00</p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-left text-strong">TOTAL DEDUCTION</p>
+            </td>
+            <td colspan="2" class="">
+                <p class="txt-right">{{number_format(round($employee->TOTAL_DEDUCTIONS),2)}}</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="12">
+                <p class="padding-md">&nbsp; </p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="6" class="bg-ash">
+                <p class="txt-left text-strong">NET PAY</p>
+            </td>
+            <td colspan="6" class="">
+                <p class="txt-center ">{{number_format(round($employee->NET_TAKE_HOME),2)}}</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="5" class="bg-ash">
+                <p class="txt-left text-strong">NET PAY IN WORDS</p>
+            </td>
+            <td colspan="7" class="">
+                <p class="txt-center ">{{$employee->Rupees}}</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="12">
+                <p class="padding-md">&nbsp; </p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" class="bg-ash">
+                <p class="txt-center text-strong">TRANSACTION ID</p>
+            </td>
+            <td colspan="3" class="">
+                <p class="txt-center"></p>
+            </td>
+            <td colspan="3" class="bg-ash">
+                <p class="txt-center text-strong">Paid Date</p>
+            </td>
+            <td colspan="3" class="">
+                <p class="txt-center">11-MAY-2022</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="12">
+                <p class="padding-md">&nbsp; </p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="12">
+                <p class="txt-center">This is a computer-generated slip does not require signature</p>
+            </td>
+        </tr>
+
+        <tr class="border-less">
+            <td colspan="8" class="border-less">
+                <p class="txt-left">Please
+                    reach out to us for any payroll queries at -payroll@ardens.in</p>
+            </td>
+            <td colspan="2" class="border-less txt-right">
+                <p>Powered By</p>
+
+
+            </td>
+            <td colspan="2" class="border-less">
+                <img src="{{ URL::asset('assets/images/logo.png') }}" alt="" class="" style="height: 40px;width:120px;">
+            </td>
+        </tr>
+
+    </table>
+
+
+
 </body>
 
 </html>
