@@ -768,7 +768,7 @@
 </div>
 
 <div id="payslipModal" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl" role="document">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
         <div class="modal-content profile-box">
             <div class="modal-header  ">
                 <h6 class="modal-title m-0 p-0   text-primary">Pay Slip
