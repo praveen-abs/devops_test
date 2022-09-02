@@ -172,6 +172,11 @@
                                     <th scope="col" data-name='kpiWeightage' data-filterable="false" data-visible="{{$show['kpiWeightage']}}">
                                         @if($config && $config->header) {{$config->header['kpiWeightage']}} @else KPI Weightage @endif
                                     </th>
+                                    @if(isset($assignedGoals) && $assignedGoals->is_assignee_submitted == '1')
+                                        <th scope="col" data-name='kpiSelfReview' data-filterable="false" data-visible="true">Employee KPI - Achievement</th>
+                                        <th scope="col" data-name='kpiSelfAchivement' data-filterable="false" data-visible="true">Employee KPI Achievement %</th>
+                                        <th scope="col" data-name='comments' data-filterable="false" data-visible="true">Employee Comments</th> 
+                                    @endif
                                     <?php $i=1; ?>
                                     @foreach($reviewersId as $reviewersReview)
                                         <th scope="col" data-name='kpiManagerReview' data-filterable="false" data-visible= true>KPI - Achievement (Manager Review) {{$i}}</th>
@@ -210,6 +215,22 @@
                                     <td>
                                         <div>{{$kpiRow->kpi_weightage}}</div>
                                     </td>
+                                    @if(isset($assignedGoals) && $assignedGoals->is_assignee_submitted == '1')
+                                    <?php 
+                                        $assigneeKPIReview = json_decode($assignedGoals->assignee_kpi_review,true);
+                                        $assigneeKPIPerc = json_decode($assignedGoals->assignee_kpi_percentage,true);
+                                        $assigneeKPIComments = json_decode($assignedGoals->assignee_kpi_comments,true);
+                                    ?>
+                                    <td>
+                                        <div>@if(isset($assigneeKPIReview) && isset($assigneeKPIReview[$kpiRow->id])) {{ $assigneeKPIReview[$kpiRow->id] }} @endif</div>
+                                    </td>
+                                    <td>
+                                        <div>@if(isset($assigneeKPIPerc) && isset($assigneeKPIPerc[$kpiRow->id])) {{ $assigneeKPIPerc[$kpiRow->id] }} @endif</div>
+                                    </td>
+                                    <td>
+                                        <div>@if(isset($assigneeKPIComments) && isset($assigneeKPIComments[$kpiRow->id])) {{ $assigneeKPIComments[$kpiRow->id] }} @endif</div>
+                                    </td>
+                                    @endif
                                     <?php
                                         $decodedKpiReview = json_decode($assignedGoals->reviewer_kpi_review,true);
                                         $decodedKpiReviewSubmittedStatus = json_decode($assignedGoals->is_reviewer_submitted,true);
