@@ -13,16 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vmt_config_pms', function (Blueprint $table) {
-            $table->id();
-            $table->string('user_id');
-            $table->text('selected_columns')->nullable();
-            $table->text('selected_head')->nullable();
-            $table->text('column_header')->nullable();
+        Schema::table('vmt_config_pms', function (Blueprint $table) {
             $table->text('selected_reviewlevel')->nullable();
-            $table->timestamps('created_at');
-            $table->string('updated_at');
-           
         });
     }
 
@@ -33,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::drop('vmt_config_pms');
+        Schema::table('vmt_config_pms', function (Blueprint $table) {
+            //
+        });
     }
 };
