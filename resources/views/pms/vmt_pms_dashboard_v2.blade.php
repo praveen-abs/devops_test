@@ -411,10 +411,8 @@ header {
 
                                         <select name="year" id="year" disabled class="form-control">
                                             <option value="">Select</option>
-                                            <option value="Jan-Dec">January - <?php echo date('Y'); ?> to December -
-                                                <?= date('Y') ?> </option>
-                                            <option value="Apr-Mar">April - <?php echo date('Y'); ?> to March -
-                                                <?= date('Y') + 1 ?></option>
+                                            <option value="Jan-Dec">January - <?php echo date('Y'); ?> to December - <?= date('Y') ?> </option>
+                                            <option value="Apr-Mar">April - <?php echo date('Y'); ?> to March - <?= date('Y') + 1 ?></option>
                                         </select>
 
                                     </div>
@@ -545,7 +543,9 @@ header {
                                                 </select>
                                             </form>
                                             <div class="align-items-center justify-content-end d-flex mt-2 cursor-pointer">
-                                                <a href="{{ route('showKPICreateForm') }}" target="_blank"><span
+                                                <!-- <a href="{{ route('showKPICreateForm') }}" target="_blank"> -->
+                                                <a class="createKpiFromOnClick" target="_blank">
+                                                    <span
                                                         class="plus-sign text-info "><i class="fa fa-plus f-20"></i>Create
                                                         KPI Form</span></a>
                                             </div>
@@ -761,6 +761,20 @@ header {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script>
+        $('.createKpiFromOnClick').click(function(){
+            var assignmentPeriod = $('#assignment_period_start').val();
+            var year = $('#year').val();
+            if(assignmentPeriod != '' && year != ''){
+                var YearText = $("#year option:selected").text(); 
+                var url = '{{ route("showKPICreateForm", ":year") }}';
+                url = url.replace(':year', YearText);
+                // alert(url);
+                window.open(url);
+                return false;
+            }
+
+        })
+
         var selectedEmployeesId = $('.select-employee-dropdown').val();
         changeAssigneeProfilePicOnSelection(selectedEmployeesId);
 

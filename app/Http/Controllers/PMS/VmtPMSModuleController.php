@@ -258,7 +258,8 @@ class VmtPMSModuleController extends Controller
 
     // KPI Form
 
-    public function showKPICreateForm(){
+    public function showKPICreateForm($year = null){
+        $selectedYear = isset($year) ? $year : null;
 
         $config = ConfigPms::first();
         $show['dimension'] = 'true';
@@ -283,7 +284,7 @@ class VmtPMSModuleController extends Controller
             $show['source'] = $config->selected_columns && in_array('source', explode(',', $config->selected_columns)) ? 'true': 'false';
             $show['kpiWeightage'] = $config->selected_columns && in_array('kpiWeightage', explode(',', $config->selected_columns)) ? 'true': 'false';
         }
-        return view('pms.vmt_pms_kpiform_create',compact('config','show'));
+        return view('pms.vmt_pms_kpiform_create',compact('config','show','selectedYear'));
     }
 
     /*
@@ -330,8 +331,9 @@ class VmtPMSModuleController extends Controller
         enabled in the ConfigPMS table
 
     */
-    public function generateSampleKPIExcelSheet()
+    public function generateSampleKPIExcelSheet($selectedYear = null)
     {
+        // dD($selectedYear);
         $data = ConfigPms::first();
         $array_selectedKPIColumnsHeader = [];
         if(!empty($data)){
@@ -345,8 +347,9 @@ class VmtPMSModuleController extends Controller
                 }
             }
         }
+
         if(count($array_selectedKPIColumnsHeader) > 0){
-            return \Excel::download(new SampleKPIFormExport($array_selectedKPIColumnsHeader), 'Template_SampleKPIForm.xlsx');
+            return \Excel::download(new SampleKPIFormExport($array_selectedKPIColumnsHeader,$selectedYear), 'Template_SampleKPIForm.xlsx');
         }else{
             return '';
         }
