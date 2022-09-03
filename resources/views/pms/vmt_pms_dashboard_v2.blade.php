@@ -913,13 +913,19 @@ header {
                     selectedEmployeeId : selectedEmployeeId,
                 },
                 success: function(data) {
-                    $.each(data.result.removeSelectedEmployee, function(i, value) {
-                        $(".select-employee-dropdown option[value="+value+"]").remove();
-                    });
-
-                    $("#reviewersAccordingAssignee").val(data.result.reviewerNames.join(","));
-                    $("#selectedReviewIds").val(data.result.reviewerIds.join(","));
-                    var afterUpdateEmployee = $('.select-employee-dropdown').val();
+                    console.log(data);
+                    if(data.status == true ){
+                        $.each(data.result.removeSelectedEmployee, function(i, value) {
+                            $(".select-employee-dropdown option[value="+value+"]").remove();
+                        });
+                        $(".select-multiple-reviewer").val(data.result.reviewerIds);
+                        $('.select-multiple-reviewer').trigger('change.select2');
+                        
+    
+                        $("#reviewersAccordingAssignee").val(data.result.reviewerNames.join(","));
+                        $("#selectedReviewIds").val(data.result.reviewerIds.join(","));
+                        var afterUpdateEmployee = $('.select-employee-dropdown').val();
+                    }
                     changeAssigneeProfilePicOnSelection(afterUpdateEmployee);
                 },
                 error: function(error) {

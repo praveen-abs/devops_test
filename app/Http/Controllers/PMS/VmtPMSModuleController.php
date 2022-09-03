@@ -868,33 +868,52 @@ class VmtPMSModuleController extends Controller
         try{
             if(isset($request->selectedEmployeeId) && count($request->selectedEmployeeId) > 0){
              
+                $pmsConfigData = ConfigPms::first();
+                $selectedReviewLevel = '';
+                if(isset($pmsConfigData) && isset($pmsConfigData->selected_reviewlevel)){
+                    $selectedReviewLevel = $pmsConfigData->selected_reviewlevel;
+                }
                 $authDetails = Auth::user();
+                // Level 1
                 $employeeManagerDetail = getEmployeeManager($request->selectedEmployeeId);
                 $reviewerNames = $employeeManagerDetail->pluck('name')->toArray();
                 $reviewerIds = $employeeManagerDetail->pluck('id')->toArray();
-                // dD($reviewerIds,$reviewerNames);
-                // if(!in_array($authDetails->id,$reviewerIds)){
-                //     $reviewerIds[] = $authDetails->id;
-                //     $reviewerNames[] = $authDetails->name;
-                // }
-                // dD($reviewerNames,$reviewerIds);
-                foreach($reviewerIds as $reviewerId){
-                    $reviewerManagerDetail = getEmployeeManager([$reviewerId]);
-                    // dD($reviewerManagerDetail);
-                    $reviewerName = $reviewerManagerDetail->pluck('name')->first();
-                    $reviewerId = $reviewerManagerDetail->pluck('id')->first();
-                    // dD($reviewerName,$reviewerId);
-                    // dD(in_array($reviewerName,$reviewerNames));
-                    if(!empty($reviewerName) && !empty($reviewerId)){
-                        if(!in_array($reviewerName,$reviewerNames)){
-                            array_push($reviewerNames,$reviewerName);
-                        }
-                        if(!in_array($reviewerId,$reviewerIds)){
-                            array_push($reviewerIds,$reviewerId);
+                
+                // Level 2
+                if($selectedReviewLevel == '' || $selectedReviewLevel == 'L2' || $selectedReviewLevel == 'L3'){
+                    foreach($reviewerIds as $reviewerId){
+                        $reviewerManagerDetail = getEmployeeManager([$reviewerId]);
+                        $reviewerName = $reviewerManagerDetail->pluck('name')->first();
+                        $reviewerId = $reviewerManagerDetail->pluck('id')->first();
+                        if(!empty($reviewerName) && !empty($reviewerId)){
+                            if(!in_array($reviewerName,$reviewerNames)){
+                                array_push($reviewerNames,$reviewerName);
+                            }
+                            if(!in_array($reviewerId,$reviewerIds)){
+                                array_push($reviewerIds,$reviewerId);
+                            }
                         }
                     }
                 }
-                // dD($reviewerIds,$reviewerNames);
+
+                // Level 3
+                if($selectedReviewLevel == '' || $selectedReviewLevel == 'L3'){
+                    foreach($reviewerIds as $reviewerId){
+                        $reviewerManagerDetail = getEmployeeManager([$reviewerId]);
+                        $reviewerName = $reviewerManagerDetail->pluck('name')->first();
+                        $reviewerId = $reviewerManagerDetail->pluck('id')->first();
+                        
+                        if(!empty($reviewerName) && !empty($reviewerId)){
+                            if(!in_array($reviewerName,$reviewerNames)){
+                                array_push($reviewerNames,$reviewerName);
+                            }
+                            if(!in_array($reviewerId,$reviewerIds)){
+                                array_push($reviewerIds,$reviewerId);
+                            }
+                        }
+                    }
+                }
+
                 $removeSelectedEmployee = [];
                 foreach($request->selectedEmployeeId as $employeeExistsCheck)
                 {
