@@ -229,10 +229,10 @@ Route::get('/vmt_salary_details',  [App\Http\Controllers\VmtPaySlipController::c
 Route::get('/vmt_home',  [App\Http\Controllers\VmtPayCheckController::class, 'index']);
 Route::get('/vmt_employee_payslip',  [App\Http\Controllers\VmtPaySlipController::class, 'payslipPdfView'])->name('vmt_employee_payslip');
 Route::get('/pdfview/{selectedPaySlipMonth}',[App\Http\Controllers\VmtPaySlipController::class, 'pdfview'])->name('pdfview');
-// testing template 
-Route::get('/test',[App\Http\Controllers\VmtTestingController::class, 'index'])->name('pdfview');
+// testing template
+Route::get('/testingController',[App\Http\Controllers\VmtTestingController::class, 'index'])->name('pdfview');
 
-// end 
+// end
 
 Route::get('/vmt-config-pms',[App\Http\Controllers\ConfigPmsController::class, 'index'])->name('vmt_config_pms');
 Route::post('/vmt-config-pms/{id?}',[App\Http\Controllers\ConfigPmsController::class, 'store'])->name('store_config_pms');
