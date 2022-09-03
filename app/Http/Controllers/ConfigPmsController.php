@@ -17,11 +17,12 @@ class ConfigPmsController extends Controller
         $this->checkConfigPms();
 
         $data = ConfigPms::first();
-
+        $config_data = VmtPMSRating::all();
+        
         if ($data) {
             $data->header = json_decode($data->column_header, true);
         }
-        return view('vmt_config_pms', compact('data'));
+        return view('vmt_config_pms', compact('data','config_data'));
     }
 
     public function store(Request $request) {
@@ -98,10 +99,27 @@ class ConfigPmsController extends Controller
         }
 
     }
+   // protected $fillabel = ['$request->name','$request->value'];
 
 
-    private function storePMSRating(Request $request)
+    public function storePMSRating(Request $request)
     {
+       // dd($request->name .$request->value . $request->pk);
+        if ($request->ajax()) {
+
+            // VmtPMSRating::find($request->pk)
+
+            //     ->update([
+
+            //         $request->name => $request->value
+
+            //     ]);
+            DB::table('vmt_pms_rating')->where('id', $request->pk)->update(array($request->name => $request->value));
+                
+
+            return response()->json(['success' => true]);
+
+        }
        // DB::table('vmt_pms_rating')->insert([
 
     }
