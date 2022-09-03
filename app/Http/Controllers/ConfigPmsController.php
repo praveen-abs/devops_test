@@ -26,6 +26,7 @@ class ConfigPmsController extends Controller
     }
 
     public function store(Request $request) {
+       
         $json = json_encode([
             'dimension' => $request->input('dimension') != '' ? $request->input('dimension') : 'Dimension',
             'kpi' => $request->input('kpi') != '' ? $request->input('kpi') : 'KPI',
@@ -70,6 +71,7 @@ class ConfigPmsController extends Controller
 
         $config->selected_columns = implode(',',$selectedColumn);
         $config->selected_head = $request->input('selected_head');
+        $config->selected_reviewlevel = $request->input('selected_reviewlevels');
         $config->column_header = $json;
         $config->user_id = auth()->user()->id;
         $config->save();

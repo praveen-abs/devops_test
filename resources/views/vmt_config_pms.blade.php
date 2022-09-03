@@ -114,9 +114,15 @@
                                     <select placeholder="Select Review Levels" name="selected_reviewlevels" id="selected_reviewlevels"
                                         class="onboard-form form-control select2_form_without_search" required>
                                         <option value="">Select Review Levels</option>
-                                        <option value="L1" >L1</option>
+                                        <option value="L1" @if ($data && $data->selected_reviewlevel && 'L1' == $data->selected_reviewlevel) selected @endif>
+                                            L1</option>
+                                        <option value="L2" @if ($data && $data->selected_reviewlevel && 'L2' == $data->selected_reviewlevel) selected @endif>L2
+                                        </option>
+                                        <option value="L3" @if ($data && $data->selected_reviewlevel && 'L3' == $data->selected_reviewlevel) selected @endif>L3
+                                        </option>
+                                        {{-- <option value="L1" >L1</option>
                                         <option value="L2" >L2</option>
-                                        <option value="L3" >L3</option>
+                                        <option value="L3" >L3</option> --}}
                                     </select>
                                 </div>
                             </div>
