@@ -388,7 +388,7 @@ header {
                                 <input type="hidden" name="flowCheck" id="flowCheck" value="{{ $flowCheck }}">
                                 <input type="hidden" name="kpitable_id" id="kpitable_id">
                                 
-                                <input type="hidden" name="reviewer" id="sel_reviewer">
+                                <!-- <input type="hidden" name="reviewer" id="sel_reviewer"> -->
                                 <input type="hidden" name="assignment_period_year" id="assignment_period_year"
                                     value="<?php echo date('Y'); ?>">
 
@@ -462,6 +462,7 @@ header {
                                      
                                     </div>
                                     @if(isset($loggedManagerEmployees) && count($loggedManagerEmployees) > 0)
+                                    <!-- flow 2 -->
                                     <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
                                         <label class="" for="">Reviewer</label>
                                         @if(isset($getSameLevelManagers) && count($getSameLevelManagers) > 0)
@@ -490,12 +491,19 @@ header {
                                         <button type="button" id=""
                                             class="btn btn-primary increment-btn py-1 px-2 chnageButton">+</button> -->
                                     <!-- </div> -->
+                                    
+                                    <!-- flow 1 -->
                                     <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
                                         <label class="" for="">Reviewer</label>
-                                        <input type="hidden" name="reviewer" id="selectedReviewIds">
-                                        <input readonly type="text" id="reviewersAccordingAssignee"
+                                        <!-- <input type="hidden" name="reviewer" id="selectedReviewIds"> -->
+                                        <select class="select-multiple-reviewer form-control" name="reviewer[]" multiple="multiple">
+                                            @foreach($allEmployeesList as $employeeData)
+                                                <option value="{{ $employeeData->id }}">{{ $employeeData->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        <!-- <input readonly type="text" id="reviewersAccordingAssignee"
                                             target="" class="form-control  increment-input"
-                                            placeholder="Reviewer">
+                                            placeholder="Reviewer"> -->
                                         
                                         <button type="button" id="" target="#reviewerReplaceSameLevel"
                                             class="btn py-1 px-3 btn-primary increment-btn reviewerReplace">Change</button>
@@ -671,12 +679,14 @@ header {
                 <div class="modal-body">
                     <div class="mt-12">
                         @if(isset($loggedManagerEmployees) && count($loggedManagerEmployees) > 0)
+                        <!-- flow 2 -->
                         <select class="select-employee-dropdown form-control" name="employees[]" multiple="multiple">
                             @foreach($loggedManagerEmployees as $employeesSelection)
                                 <option selected value="{{ $employeesSelection->id }}">{{ $employeesSelection->name }}</option>
                             @endforeach
                         </select>
                         @else
+                        <!-- flow 1 -->
                         <select class="select-employee-dropdown form-control" id="selectedEmployeeDropdownId" name="employees[]" multiple="multiple">
                             @foreach($allEmployeesList as $employeeList)
                                 <option value="{{ $employeeList->id }}">{{ $employeeList->name }}</option>
@@ -797,8 +807,6 @@ header {
 
     <script>
         $(document).ready(function() {
-            $("#reviewersAccordingAssignee").val('{{$loggedInUser->name}}');
-            $("#selectedReviewIds").val('{{$loggedInUser->id}}');
             $('.select-employee-dropdown').select2({
                 dropdownParent: $("#employeeSelectionModal"),
                 minimumResultsForSearch: Infinity,
@@ -816,8 +824,69 @@ header {
                 dropdownParent: $("#reviewerReplaceSameLevel"),
                 width: '100%'
             });
+
+            $('.select-multiple-reviewer').select2({
+                dropdownParent: $("#add-goals-modal"),
+                width: '100%'
+            });
+
+            
             
         });
+        
+        var prevReviewerCount = '';
+        var prevReviewerList = [];
+        var currentReviewerCount = $('.select-multiple-reviewer').val().length;
+        var currentReviewerList = $('.select-multiple-reviewer').val();
+        
+        // $(".select-multiple-reviewer").on("select2:select", function (e) { 
+        //     // var select_val = $(e.currentTarget).val();
+        //     var selected_element = $(e.currentTarget);
+        //     var select_val = selected_element.val();
+        //     alert(select_val);
+        // });
+        $('.select-multiple-reviewer').change(function(e){
+            console.log(e);
+            prevReviewerCount = currentReviewerCount;
+            prevReviewerList = currentReviewerList;
+            currentReviewerCount = $(this).val().length;
+            currentReviewerList = $(this).val();
+
+            var latest_value = $(this).val();
+            if(currentReviewerCount > prevReviewerCount){
+                
+                var selectedReviewer = '';
+
+                $.each(currentReviewerList, function(key, val) {
+                    if ($.inArray(val, prevReviewerList) <= -1) {
+                        selectedReviewer = val;
+                    }
+                });
+
+                $.ajax({
+                type: "POST",
+                url: "{{ route('getEmployeesOfReviewer') }}",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    selectedReviewer : selectedReviewer,
+                },
+                success: function(data) {
+                   
+                   $.each(data.result, function(i, value) {
+                        var existingEmployeesId = $('#selectedEmployeeDropdownId').val();
+                        existingEmployeesId.push(value.id);
+                        $('#selectedEmployeeDropdownId').val(existingEmployeesId);
+                        $('#selectedEmployeeDropdownId').trigger('change'); 
+                    });
+                    var selectedEmployeesId = $('#selectedEmployeeDropdownId').val();
+                    changeAssigneeProfilePicOnSelection(selectedEmployeesId);
+                },
+                error: function(error) {
+                    console.log('something went wrong');
+                }
+            });
+            }
+        })
 
         // $('.select-employee-dropdown').change(function(){
         function getReviewerOfSelectedEmployee(selectedEmployeeId){
@@ -830,7 +899,6 @@ header {
                     selectedEmployeeId : selectedEmployeeId,
                 },
                 success: function(data) {
-                    console.log("aaasadasdasdasdasd");
                     $.each(data.result.removeSelectedEmployee, function(i, value) {
                         $(".select-employee-dropdown option[value="+value+"]").remove();
                     });
@@ -1008,23 +1076,34 @@ header {
 
 
         $('.reviewerReplace').click(function(){
-            var selectedReviewersNames = $('#reviewersAccordingAssignee').val();
-            var selectedReviewersIds = $('#selectedReviewIds').val();
-            if(selectedReviewersIds != null && selectedReviewersIds != ''){
-                var result = '';
-                var selectedReviewersIds = selectedReviewersIds.split(',');
-                var selectedReviewersNames = selectedReviewersNames.split(',');
-                $.each(selectedReviewersIds, function(key, value){
-                    if(value != {{Auth::id()}}){
-                        result += '<option value="'+value+'">'+selectedReviewersNames[key]+'</option>';
-                    }
-                });
+            var result = '';
+            $.each ($(".select-multiple-reviewer option:selected"), function(){              
+                result += '<option value="'+$(this).val()+'">'+$(this).text()+'</option>';
+            });
+
+            $('.change-exiting-reviewer').html(result);
+            $('#reviewerReplaceSameLevel').show();
+            $('#reviewerReplaceSameLevel').removeClass('fade');
+            changeExitingReviewer();
+
+            // var selectedReviewersNames = $('#reviewersAccordingAssignee').val();
+            // var selectedReviewersIds = $('#selectedReviewIds').val();
+            // alert(selectedReviewersNames+' - '+selectedReviewersIds);
+            // if(selectedReviewersIds != null && selectedReviewersIds != ''){
+            //     var result = '';
+            //     var selectedReviewersIds = selectedReviewersIds.split(',');
+            //     var selectedReviewersNames = selectedReviewersNames.split(',');
+            //     $.each(selectedReviewersIds, function(key, value){
+            //         if(value != {{Auth::id()}}){
+            //             result += '<option value="'+value+'">'+selectedReviewersNames[key]+'</option>';
+            //         }
+            //     });
     
-                $('.change-exiting-reviewer').html(result);
-                $('#reviewerReplaceSameLevel').show();
-                $('#reviewerReplaceSameLevel').removeClass('fade');
-                changeExitingReviewer();
-            }
+            //     $('.change-exiting-reviewer').html(result);
+            //     $('#reviewerReplaceSameLevel').show();
+            //     $('#reviewerReplaceSameLevel').removeClass('fade');
+            //     changeExitingReviewer();
+            // }
         })
 
         $('.change-exiting-reviewer').change(function(){

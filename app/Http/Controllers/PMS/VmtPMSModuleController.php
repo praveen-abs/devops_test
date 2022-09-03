@@ -866,26 +866,32 @@ class VmtPMSModuleController extends Controller
             if(isset($request->selectedEmployeeId) && count($request->selectedEmployeeId) > 0){
              
                 $authDetails = Auth::user();
-                $currentEmpCode = VmtEmployeeOfficeDetails::whereIn('user_id',$request->selectedEmployeeId)
-                                    ->select('l1_manager_code')
-                                    ->groupBy('l1_manager_code')
-                                    ->pluck('l1_manager_code');
-                $users = VmtEmployee::leftJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
-                                    ->select(
-                                        'users.name',
-                                        'users.id as id',
-                                        'vmt_employee_details.emp_no as code',
-                                    )
-                                    ->orderBy('users.name', 'ASC')
-                                    ->whereIn('emp_no', $currentEmpCode);
-
-                $reviewerNames = $users->pluck('name');
-                $reviewerIds = $users->pluck('id')->toArray();
-                if(!in_array($authDetails->id,$reviewerIds)){
-                    $reviewerIds[] = $authDetails->id;
-                    $reviewerNames[] = $authDetails->name;
+                $employeeManagerDetail = getEmployeeManager($request->selectedEmployeeId);
+                $reviewerNames = $employeeManagerDetail->pluck('name')->toArray();
+                $reviewerIds = $employeeManagerDetail->pluck('id')->toArray();
+                // dD($reviewerIds,$reviewerNames);
+                // if(!in_array($authDetails->id,$reviewerIds)){
+                //     $reviewerIds[] = $authDetails->id;
+                //     $reviewerNames[] = $authDetails->name;
+                // }
+                // dD($reviewerNames,$reviewerIds);
+                foreach($reviewerIds as $reviewerId){
+                    $reviewerManagerDetail = getEmployeeManager([$reviewerId]);
+                    // dD($reviewerManagerDetail);
+                    $reviewerName = $reviewerManagerDetail->pluck('name')->first();
+                    $reviewerId = $reviewerManagerDetail->pluck('id')->first();
+                    // dD($reviewerName,$reviewerId);
+                    // dD(in_array($reviewerName,$reviewerNames));
+                    if(!empty($reviewerName) && !empty($reviewerId)){
+                        if(!in_array($reviewerName,$reviewerNames)){
+                            array_push($reviewerNames,$reviewerName);
+                        }
+                        if(!in_array($reviewerId,$reviewerIds)){
+                            array_push($reviewerIds,$reviewerId);
+                        }
+                    }
                 }
-                                        
+                // dD($reviewerIds,$reviewerNames);
                 $removeSelectedEmployee = [];
                 foreach($request->selectedEmployeeId as $employeeExistsCheck)
                 {
@@ -893,7 +899,7 @@ class VmtPMSModuleController extends Controller
                         array_push($removeSelectedEmployee, $employeeExistsCheck);
                     }
                 }
-                // dd($removeSelectedEmployee);
+
                 $result = [
                     'reviewerNames' => $reviewerNames,
                     'reviewerIds' => $reviewerIds,
@@ -1078,5 +1084,29 @@ class VmtPMSModuleController extends Controller
         }
         $html .= '<span class="employees-profile editProfile employeeEditButton">Edit</span></div></div>';
         return response()->json(['status'=>true,'html'=>$html]);
+    }
+
+
+    public function getEmployeesOfReviewer(Request $request){
+        try{
+// dd($request->selectedReviewer);
+            if(isset($request->selectedReviewer)){
+                $reviewerEmpNo = VmtEmployee::where('userid',$request->selectedReviewer)->pluck('emp_no')->first();
+                if(!empty($reviewerEmpNo)){
+                    $employees = User::leftJoin('vmt_employee_office_details','users.id','=','vmt_employee_office_details.user_id')
+                                ->leftJoin('vmt_employee_details','users.id','=','vmt_employee_details.userid')
+                                ->where('users.is_admin','0')
+                                ->where('vmt_employee_office_details.l1_manager_code',$reviewerEmpNo)
+                                ->select('users.name','users.id','users.user_code','vmt_employee_office_details.designation')
+                                ->get()
+                                ->toArray();
+    
+                    return response()->json(['status'=>false,'message' => '','result' => $employees]);
+                }
+            }
+            return response()->json(['status'=>false,'message' => 'Reviewer not found!']);
+        }catch(Exception $e){
+            return response()->json(['status'=>false,'message' => $e->getMessage()]);
+        }
     }
 }
