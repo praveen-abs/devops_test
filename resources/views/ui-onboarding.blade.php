@@ -187,7 +187,7 @@
                                                 </div> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Passport Exp Date</label>
-                                                    <input type="text" max="9999-12-31" placeholder="Date of Joining" name="doj" class="onboard-form  form-control textbox " onfocus="(this.type='date')" required />
+                                                    <input type="text" max="9999-12-31" placeholder="Date of Joining" name="exp" class="onboard-form  form-control textbox " onfocus="(this.type='date')" required />
                                                     <!-- <label for="" class="float-label">Passport Exp Date</label> -->
                                                 </div>
                                             </div>
@@ -292,7 +292,7 @@
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <div class="floating">
                                                     <label for="" class="float-label">EPF Number</label>
-                                                    <input type="text" placeholder="EPF Number" name="epf_number" id="epf_number" class="onboard-form form-control textbox " required />
+                                                    <input type="text" placeholder="EPF Number" name="epf_number" id="epf_number" class="onboard-form form-control textbox " />
 
                                                     <span class="error" id="error_epf_number"></span>
                                                 </div>
@@ -301,7 +301,7 @@
                                                 <!-- <label class="" for="current_pincode">Current Pincode{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">UAN Number</label>
-                                                    <input type="text" placeholder="UAN Number" name="uan_number" id="uan_number" minlength="10" maxlength="10" class="onboard-form form-control textbox " required />
+                                                    <input type="text" placeholder="UAN Number" name="uan_number" id="uan_number" minlength="10" maxlength="10" class="onboard-form form-control textbox "/>
 
                                                 </div>
                                             </div>
@@ -319,7 +319,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">ESIC Number</label>
 
-                                                    <input type="text" placeholder="ESIC Number" name="esic_number" id="esic_number" minlength="10" maxlength="10" class="onboard-form form-control textbox " required />
+                                                    <input type="text" placeholder="ESIC Number" name="esic_number" id="esic_number" minlength="10" maxlength="10" class="onboard-form form-control textbox "/>
                                                     <span class="error" id="error_esic_number"></span>
                                                 </div>
                                             </div>
@@ -328,7 +328,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Ptax Location</label>
 
-                                                    <select placeholder="Ptax Location" name="ptax_location" id="ptax_location" class="onboard-form form-control textbox  select2_form_without_search" required>
+                                                    <select placeholder="Ptax Location" name="ptax_location" id="ptax_location" class="onboard-form form-control textbox  select2_form_without_search">
                                                         <option value="" hidden selected disabled>Ptax Location</option>
 
                                                     </select>
@@ -337,13 +337,13 @@
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-lg-3 col-xl-3 mb-2">
                                                 <div class="floating">
                                                     <label for="" class="float-label">TAX Regime</label>
-                                                    <input type="text" placeholder="TAX Regime" name="tax_regime" id="tax_regime" class="onboard-form form-control textbox " required />
+                                                    <input type="text" placeholder="TAX Regime" name="tax_regime" id="tax_regime" class="onboard-form form-control textbox " />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <div class="floating">
                                                     <label for="" class="float-label">LWF Location</label>
-                                                    <select placeholder="LWF Location" name="lwf_location" id="lwf_location" class="onboard-form form-control textbox  select2_form_without_search" required>
+                                                    <select placeholder="LWF Location" name="lwf_location" id="lwf_location" class="onboard-form form-control textbox  select2_form_without_search">
                                                         <option value="" hidden selected disabled>LWF Location</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
@@ -490,7 +490,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Select Department</label>
 
-                                                    <select placeholder="Department" name="department" id="department" class="onboard-form form-control textbox  " required>
+                                                    <select placeholder="Department" name="department" id="department" class="onboard-form form-control textbox">
                                                         <option value="" hidden selected disabled>Select Department</option>
                                                         @foreach($department as $e)
                                                         <option value="{{$e->name}}">{{$e->name}}</option>
@@ -503,7 +503,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Select Process</label>
 
-                                                    <select placeholder="Process" name="process" id="process" class="onboard-form form-control  textbox " required>
+                                                    <select placeholder="Process" name="process" id="process" class="onboard-form form-control  textbox ">
                                                         <option value="" hidden selected disabled>Select Process</option>
                                                         @foreach($emp as $e)
                                                         <option value="{{$e->process}}">{{$e->process}}</option>
@@ -525,13 +525,13 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Cost Center</label>
 
-                                                    <input type="number" placeholder="Cost Center" name="cost_center" class="onboard-form form-control textbox " required />
+                                                    <input type="number" placeholder="Cost Center" name="cost_center" class="onboard-form form-control textbox "/>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="confirmation_period">Probabition Period{!! required() !!}</label> -->
                                                 <div class="floating">
-                                                    <label for="" class="float-label">Cost Center</label>
+                                                    <label for="" class="float-label">Probabition Period</label>
 
                                                     <select placeholder="Probabition Period" name="confirmation_period" class="onboard-form form-control textbox  not-required validate select2_form_without_search">
                                                         <option value="" hidden selected disabled>Select Probabition Period</option>
@@ -592,7 +592,7 @@
                                                 <!-- <label class="" for="officical_mail">Official E-Mail Id{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Official Email </label>
-                                                    <input type="email" placeholder="Official E-Mail Id" name="officical_mail" class="textbox  onboard-form form-control " required pattern="email" />
+                                                    <input type="email" placeholder="Official E-Mail Id" name="officical_mail" class="textbox  onboard-form form-control " pattern="email" />
                                                     <label class="error star_error officical_mail_label" for="officical_mail" style="display: none;"></label>
                                                 </div>
                                             </div>
@@ -600,14 +600,14 @@
                                                 <!-- <label class="" for="official_mobile">Official Mobile{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Official Mobile</label>
-                                                    <input type="number" minlength="10" maxlength="10" placeholder="Official Mobile" name="official_mobile" class="textbox  onboard-form form-control " required />
+                                                    <input type="number" minlength="10" maxlength="10" placeholder="Official Mobile" name="official_mobile" class="textbox  onboard-form form-control "/>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="emp_notice">Employee Notice Period Days{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Employee Notice Period Days</label>
-                                                    <input type="number" placeholder="Employee Notice Period Days" name="emp_notice" class="onboard-form form-control textbox " required />
+                                                    <input type="number" placeholder="Employee Notice Period Days" name="emp_notice" class="onboard-form form-control textbox "/>
                                                 </div>
                                             </div>
 
@@ -719,7 +719,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Date of Wedding</label>
 
-                                                    <input type="text" max="9999-12-31" placeholder="Date of Wedding" name="dow" class="textbox  onboard-form form-control  spouse_data" onfocus="(this.type='date')" required />
+                                                    <input type="text" max="9999-12-31" placeholder="Date of Wedding" name="dow" class="textbox  onboard-form form-control  spouse_data" onfocus="(this.type='date')"/>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -749,7 +749,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Number of Children</label>
 
-                                                    <select placeholder="Number of Children" name="no_of_child" id="no_of_child" class="textbox onboard-form form-control  spouse_data select2_form_without_search" required>
+                                                    <select placeholder="Number of Children" name="no_of_child" id="no_of_child" class="textbox onboard-form form-control  spouse_data select2_form_without_search">
                                                         <option value="" hidden selected disabled>Select Number of Children</option>
                                                         <option value="0">0</option>
                                                         <option value="1">1</option>
@@ -803,12 +803,12 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">HRA</label>
 
-                                                    <input type="number" placeholder="HRA" name="hra" value="{{$compensatory->hra? $compensatory->hra : ''}}" class="onboard-form form-control textbox   calculation_data gross_data " step="0.01" required />
+                                                    <input type="number" placeholder="HRA" name="hra" value="{{$compensatory->hra? $compensatory->hra : ''}}" class="onboard-form form-control textbox   calculation_data gross_data " step="0.01" />
                                                 </div>
                                                 @php }else{ @endphp
                                                 <div class="floating">
                                                     <label for="" class="float-label">HRA</label>
-                                                    <input type="number" placeholder="HRA" name="hra" class="textbox  onboard-form form-control textbox    calculation_data gross_data" step="0.01" required />
+                                                    <input type="number" placeholder="HRA" name="hra" class="textbox  onboard-form form-control textbox    calculation_data gross_data" step="0.01"/>
                                                     @php } @endphp
                                                 </div>
                                             </div>
@@ -821,12 +821,12 @@
                                                 @endphp
                                                 <div class="floating">
                                                     <label for="" class="float-label">Statutory Bonus</label>
-                                                    <input type="number" placeholder="Statutory Bonus" name="statutory_bonus" value="{{$compensatory->Statutory_bonus? $compensatory->Statutory_bonus : ''}}" class="onboard-form form-control textbox   calculation_data gross_data" step="0.01" required />
+                                                    <input type="number" placeholder="Statutory Bonus" name="statutory_bonus" value="{{$compensatory->Statutory_bonus? $compensatory->Statutory_bonus : ''}}" class="onboard-form form-control textbox   calculation_data gross_data" step="0.01"/>
                                                 </div>
                                                 @php }else{ @endphp
                                                 <div class="floating">
                                                     <label for="" class="float-label">Statutory Bonus</label>
-                                                    <input type="number" placeholder="Statutory Bonus" name="statutory_bonus" class="textbox onboard-form form-control  calculation_data gross_data" step="0.01" required />
+                                                    <input type="number" placeholder="Statutory Bonus" name="statutory_bonus" class="textbox onboard-form form-control  calculation_data gross_data" step="0.01"/>
                                                 </div>
                                                 @php } @endphp
 
@@ -840,12 +840,12 @@
                                                 @endphp
                                                 <div class="floating">
                                                     <label for="" class="float-label">Child Education Allowance</label>
-                                                    <input type="number" placeholder="Child Education Allowance" name="child_education_allowance" value="{{$compensatory->child_education_allowance? $compensatory->child_education_allowance : ''}}" class="onboard-form form-control textbox   calculation_data gross_data" step="0.01" required />
+                                                    <input type="number" placeholder="Child Education Allowance" name="child_education_allowance" value="{{$compensatory->child_education_allowance? $compensatory->child_education_allowance : ''}}" class="onboard-form form-control textbox   calculation_data gross_data" step="0.01"/>
                                                 </div>
                                                 @php }else{ @endphp
                                                 <div class="floating">
                                                     <label for="" class="float-label">Child Education Allowance</label>
-                                                    <input type="number" placeholder="Child Education Allowance" name="child_education_allowance" class="onboard-form form-control  calculation_data textbox  gross_data" step="0.01" required />
+                                                    <input type="number" placeholder="Child Education Allowance" name="child_education_allowance" class="onboard-form form-control  calculation_data textbox  gross_data" step="0.01"/>
                                                 </div>
                                                 @php } @endphp
 
@@ -860,12 +860,12 @@
                                                 @endphp
                                                 <div class="floating">
                                                     <label for="" class="float-label">Food Coupon</label>
-                                                    <input type="number" placeholder="Food Coupon" name="food_coupon" value="{{$compensatory->food_coupon? $compensatory->food_coupon : ''}}" class="onboard-form form-control textbox  calculation_data gross_data" step="0.01" required />
+                                                    <input type="number" placeholder="Food Coupon" name="food_coupon" value="{{$compensatory->food_coupon? $compensatory->food_coupon : ''}}" class="onboard-form form-control textbox  calculation_data gross_data" step="0.01"/>
                                                 </div>
                                                 @php }else{ @endphp
                                                 <div class="floating">
                                                     <label for="" class="float-label">Food Coupon</label>
-                                                    <input type="number" placeholder="Food Coupon" name="food_coupon" class="textbox  onboard-form form-control  calculation_data gross_data" step="0.01" required />
+                                                    <input type="number" placeholder="Food Coupon" name="food_coupon" class="textbox  onboard-form form-control  calculation_data gross_data" step="0.01" />
                                                 </div>
                                                 @php } @endphp
 
@@ -879,12 +879,12 @@
                                                 @endphp
                                                 <div class="floating">
                                                     <label for="" class="float-label">LTA</label>
-                                                    <input type="number" placeholder="LTA" name="lta" value="{{$compensatory->lta? $compensatory->lta : ''}}" class="textbox onboard-form form-control     calculation_data gross_data" step="0.01" required />
+                                                    <input type="number" placeholder="LTA" name="lta" value="{{$compensatory->lta? $compensatory->lta : ''}}" class="textbox onboard-form form-control     calculation_data gross_data" step="0.01"/>
                                                 </div>
                                                 @php }else{ @endphp
                                                 <div class="floating">
                                                     <label for="" class="float-label">LTA</label>
-                                                    <input type="number" placeholder="LTA" name="lta" class="onboard-form form-control textbox   calculation_data gross_data" step="0.01" required />
+                                                    <input type="number" placeholder="LTA" name="lta" class="onboard-form form-control textbox   calculation_data gross_data" step="0.01"/>
                                                 </div>
                                                 @php } @endphp
 
@@ -898,12 +898,12 @@
                                                 @endphp
                                                 <div class="floating">
                                                     <label for="" class="float-label">Special Allowance</label>
-                                                    <input type="number" placeholder="Special Allowance" name="special_allowance" value="{{$compensatory->special_allowance? $compensatory->special_allowance : ''}}" class="onboard-form form-control textbox   calculation_data gross_data" step="0.01" required />
+                                                    <input type="number" placeholder="Special Allowance" name="special_allowance" value="{{$compensatory->special_allowance? $compensatory->special_allowance : ''}}" class="onboard-form form-control textbox   calculation_data gross_data" step="0.01" />
                                                 </div>
                                                 @php }else{ @endphp
                                                 <div class="floating">
                                                     <label for="" class="float-label">Special Allowance</label>
-                                                    <input type="number" placeholder="Special Allowance" name="special_allowance" class="textbox  onboard-form form-control  calculation_data gross_data" step="0.01" required />
+                                                    <input type="number" placeholder="Special Allowance" name="special_allowance" class="textbox  onboard-form form-control  calculation_data gross_data" step="0.01"/>
                                                 </div>
                                                 @php } @endphp
 
@@ -918,12 +918,12 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Other Allowance</label>
 
-                                                    <input type="number" placeholder="Other Allowance" name="other_allowance" value="{{$compensatory->other_allowance? $compensatory->other_allowance : ''}}" class="textbox  onboard-form form-control  calculation_data gross_data" step="0.01" required />
+                                                    <input type="number" placeholder="Other Allowance" name="other_allowance" value="{{$compensatory->other_allowance? $compensatory->other_allowance : ''}}" class="textbox  onboard-form form-control  calculation_data gross_data" step="0.01"/>
                                                 </div>
                                                 @php }else{ @endphp
                                                 <div class="floating">
                                                     <label for="" class="float-label">Other Allowance</label>
-                                                    <input type="number" placeholder="Other Allowance" name="other_allowance" class="textbox  onboard-form form-control  calculation_data gross_data" step="0.01" required />
+                                                    <input type="number" placeholder="Other Allowance" name="other_allowance" class="textbox  onboard-form form-control  calculation_data gross_data" step="0.01"/>
                                                 </div>
                                                 @php } @endphp
 
@@ -959,12 +959,12 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">EPF employer contribution</label>
 
-                                                    <input type="number" placeholder="EPF employer contribution" name="epf_employer_contribution" value="{{$compensatory->epf_employer_contribution? $compensatory->epf_employer_contribution : ''}}" class="textbox   onboard-form form-control  calculation_data cic_data" step="0.01" required />
+                                                    <input type="number" placeholder="EPF employer contribution" name="epf_employer_contribution" value="{{$compensatory->epf_employer_contribution? $compensatory->epf_employer_contribution : ''}}" class="textbox   onboard-form form-control  calculation_data cic_data" step="0.01"/>
                                                 </div>
                                                 @php }else{ @endphp
                                                 <div class="floating">
                                                     <label for="" class="float-label">EPF employer contribution</label>
-                                                    <input type="number" placeholder="EPF employer contribution" name="epf_employer_contribution" class="onboard-form form-control  calculation_data cic_data textbox " step="0.01" required />
+                                                    <input type="number" placeholder="EPF employer contribution" name="epf_employer_contribution" class="onboard-form form-control  calculation_data cic_data textbox " step="0.01" />
                                                 </div>
                                                 @php } @endphp
 
@@ -979,12 +979,12 @@
                                                 @endphp
                                                 <div class="floating">
                                                     <label for="" class="float-label">ESIC employer contribution</label>
-                                                    <input type="number" placeholder="ESIC employer contribution" name="esic_employer_contribution" value="{{$compensatory->esic_employer_contribution? $compensatory->esic_employer_contribution : ''}}" class="onboard-form form-control textbox   calculation_data cic_data" step="0.01" required />
+                                                    <input type="number" placeholder="ESIC employer contribution" name="esic_employer_contribution" value="{{$compensatory->esic_employer_contribution? $compensatory->esic_employer_contribution : ''}}" class="onboard-form form-control textbox   calculation_data cic_data" step="0.01" />
                                                 </div>
                                                 @php }else{ @endphp
                                                 <div class="floating">
                                                     <label for="" class="float-label">ESIC employer contribution</label>
-                                                    <input type="number" placeholder="ESIC employer contribution" name="esic_employer_contribution" class="onboard-form form-control textbox  calculation_data cic_data" step="0.01" required />
+                                                    <input type="number" placeholder="ESIC employer contribution" name="esic_employer_contribution" class="onboard-form form-control textbox  calculation_data cic_data" step="0.01"/>
                                                 </div>
                                                 @php } @endphp
 
@@ -998,12 +998,12 @@
                                                 @endphp
                                                 <div class="floating">
                                                     <label for="" class="float-label">Insurance</label>
-                                                    <input type="number" placeholder="Insurance" name="insurance" value="{{$compensatory->insurance? $compensatory->insurance : ''}}" class="onboard-form form-control textbox   calculation_data cic_data" step="0.01" required />
+                                                    <input type="number" placeholder="Insurance" name="insurance" value="{{$compensatory->insurance? $compensatory->insurance : ''}}" class="onboard-form form-control textbox   calculation_data cic_data" step="0.01" />
                                                 </div>
                                                 @php }else{ @endphp
                                                 <div class="floating">
                                                     <label for="" class="float-label">Insurance</label>
-                                                    <input type="number" placeholder="Insurance" name="insurance" class="onboard-form form-control textbox  calculation_data cic_data" step="0.01" required />
+                                                    <input type="number" placeholder="Insurance" name="insurance" class="onboard-form form-control textbox  calculation_data cic_data" step="0.01"/>
                                                 </div>
                                                 @php } @endphp
 
@@ -1017,12 +1017,12 @@
                                                 @endphp
                                                 <div class="floating">
                                                     <label for="" class="float-label">Graduity</label>
-                                                    <input type="number" placeholder="Graduity" name="graduity" value="{{$compensatory->graduity? $compensatory->graduity : ''}}" class="onboard-form form-control textbox   calculation_data cic_data" step="0.01" required />
+                                                    <input type="number" placeholder="Graduity" name="graduity" value="{{$compensatory->graduity? $compensatory->graduity : ''}}" class="onboard-form form-control textbox   calculation_data cic_data" step="0.01"/>
                                                 </div>
                                                 @php }else{ @endphp
                                                 <div class="floating">
                                                     <label for="" class="float-label">Graduity</label>
-                                                    <input type="number" placeholder="Graduity" name="graduity" class="onboard-form form-control textbox   calculation_data cic_data" step="0.01" required />
+                                                    <input type="number" placeholder="Graduity" name="graduity" class="onboard-form form-control textbox   calculation_data cic_data" step="0.01"/>
                                                 </div>
                                                 @php } @endphp
 
@@ -1058,13 +1058,13 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">EPF Employee</label>
 
-                                                    <input type="number" placeholder="EPF Employee" name="epf_employee" value="{{$compensatory->epf_employee? $compensatory->epf_employee : ''}}" class="onboard-form form-control  calculation_data net_data textbox " step="0.01" required />
+                                                    <input type="number" placeholder="EPF Employee" name="epf_employee" value="{{$compensatory->epf_employee? $compensatory->epf_employee : ''}}" class="onboard-form form-control  calculation_data net_data textbox " step="0.01" />
                                                 </div>
                                                 @php }else{ @endphp
                                                 <div class="floating">
                                                     <label for="" class="float-label">EPF Employee</label>
 
-                                                    <input type="number" placeholder="EPF Employee" name="epf_employee" class="onboard-form form-control  calculation_data net_data textbox " step="0.01" required />
+                                                    <input type="number" placeholder="EPF Employee" name="epf_employee" class="onboard-form form-control  calculation_data net_data textbox " step="0.01" />
                                                 </div>
                                                 @php } @endphp
 
@@ -1079,13 +1079,13 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">ESIC Employee</label>
 
-                                                    <input type="number" placeholder="ESIC Employee" name="esic_employee" value="{{$compensatory->esic_employee? $compensatory->esic_employee : ''}}" class="textbox  onboard-form form-control  calculation_data net_data" step="0.01" required />
+                                                    <input type="number" placeholder="ESIC Employee" name="esic_employee" value="{{$compensatory->esic_employee? $compensatory->esic_employee : ''}}" class="textbox  onboard-form form-control  calculation_data net_data" step="0.01" />
                                                 </div>
                                                 @php }else{ @endphp
                                                 <div class="floating">
                                                     <label for="" class="float-label">ESIC Employee</label>
 
-                                                    <input type="number" placeholder="ESIC Employee" name="esic_employee" class="textbox  onboard-form form-control  calculation_data net_data" step="0.01" required />
+                                                    <input type="number" placeholder="ESIC Employee" name="esic_employee" class="textbox  onboard-form form-control  calculation_data net_data" step="0.01" />
                                                 </div>
                                                 @php } @endphp
 
@@ -1100,13 +1100,13 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Professional Tax</label>
 
-                                                    <input type="number" placeholder="Professional Tax" name="professional_tax" value="{{$compensatory->professional_tax? $compensatory->professional_tax : ''}}" class="textbox  onboard-form form-control  calculation_data net_data " step="0.01" required />
+                                                    <input type="number" placeholder="Professional Tax" name="professional_tax" value="{{$compensatory->professional_tax? $compensatory->professional_tax : ''}}" class="textbox  onboard-form form-control  calculation_data net_data " step="0.01" />
                                                 </div>
                                                 @php }else{ @endphp
                                                 <div class="floating">
                                                     <label for="" class="float-label">Professional Tax</label>
 
-                                                    <input type="number" placeholder="Professional Tax" name="professional_tax" class="textbox  onboard-form form-control calculation_data net_data " step="0.01" required />
+                                                    <input type="number" placeholder="Professional Tax" name="professional_tax" class="textbox  onboard-form form-control calculation_data net_data " step="0.01" />
                                                     @php } @endphp
 
                                                 </div>
@@ -1121,13 +1121,13 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">labour welfare fund</label>
 
-                                                    <input type="number" placeholder="labour welfare fund" name="labour_welfare_fund" value="{{$compensatory->labour_welfare_fund? $compensatory->labour_welfare_fund : ''}}" class="onboard-form form-control calculation_data net_data textbox " step="0.01" required />
+                                                    <input type="number" placeholder="labour welfare fund" name="labour_welfare_fund" value="{{$compensatory->labour_welfare_fund? $compensatory->labour_welfare_fund : ''}}" class="onboard-form form-control calculation_data net_data textbox " step="0.01" />
                                                 </div>
                                                 @php }else{ @endphp
                                                 <div class="floating">
                                                     <label for="" class="float-label">labour welfare fund</label>
 
-                                                    <input type="number" placeholder="labour welfare fund" name="labour_welfare_fund" class="onboard-form form-control calculation_data net_data textbox  " step="0.01" required />
+                                                    <input type="number" placeholder="labour welfare fund" name="labour_welfare_fund" class="onboard-form form-control calculation_data net_data textbox  " step="0.01" />
                                                 </div>
                                                 @php } @endphp
 
