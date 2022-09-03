@@ -1,3 +1,9 @@
+<?php
+$employee = \DB::table('vmt_employee_payslip')->first();
+$general_info = \DB::table('vmt_general_info')->first();
+$client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
+// dd(request()->getSchemeAndHttpHost()."".$general_info->logo_img);
+?>
 <html>
 
 <head>
@@ -82,7 +88,7 @@
 <body>
     <table cellspacing="0" cellpadding="0" class="payslip_table">
         <tr class="header-row">
-            <td colspan="7" class="border-less">
+            <td colspan="8" class="border-less">
                 <div class="header-cotent">
                     <h6 class="margin-0">Ardens Business Solutions Private Limited</h6>
                     <h6 class="margin-0">“SHALOM BUILDING”</h6>
@@ -90,12 +96,12 @@
                     <p>T Nagar, Chennai,Tamil Nadu, India – 600 017</p>
                 </div>
             </td>
-            <td colspan="5" class="border-less">
-                <div style="">
-                    <div class="header-img" style="height: 40px;width:180px;max-height:100%;">
+            <td colspan="4" class="border-less">
+
+                    <div class="header-img txt-right" style="height: 40px;width:180px;max-height:100%;">
                         <img src={{$client_logo}} style="height:100%;width:100%;" title="">
                     </div>
-                </div>
+
 
             </td>
         </tr>
@@ -479,18 +485,18 @@
             </td>
         </tr>
         <tr>
-            <td colspan="6" class="bg-ash">
+            <td colspan="4" class="bg-ash">
                 <p class="txt-left text-strong">NET PAY</p>
             </td>
-            <td colspan="6" class="">
+            <td colspan="8" class="">
                 <p class="txt-center ">{{number_format(round($employee->NET_TAKE_HOME),2)}}</p>
             </td>
         </tr>
         <tr>
-            <td colspan="5" class="bg-ash">
+            <td colspan="4" class="bg-ash">
                 <p class="txt-left text-strong">NET PAY IN WORDS</p>
             </td>
-            <td colspan="7" class="">
+            <td colspan="8" class="">
                 <p class="txt-center ">{{$employee->Rupees}}</p>
             </td>
         </tr>
