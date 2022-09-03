@@ -232,6 +232,7 @@ Route::get('/pdfview/{selectedPaySlipMonth}',[App\Http\Controllers\VmtPaySlipCon
 
 Route::get('/vmt-config-pms',[App\Http\Controllers\ConfigPmsController::class, 'index'])->name('vmt_config_pms');
 Route::post('/vmt-config-pms/{id?}',[App\Http\Controllers\ConfigPmsController::class, 'store'])->name('store_config_pms');
+Route::post('/config-pms-rating',[App\Http\Controllers\ConfigPmsController::class, 'storePMSRating'])->name('store_config_pms_rating');
 
 
 Route::get('/vmt-config-master',[App\Http\Controllers\VmtMasterConfigController::class, 'index'])->name('view-config-master');
@@ -298,6 +299,7 @@ Route::post('/republishFormEdited',[VmtPMSModuleController::class, 'republishFor
 Route::post('getReviewerOfSelectedEmployee', [VmtPMSModuleController::class,'getReviewerOfSelectedEmployee'])->name('getReviewerOfSelectedEmployee');
 Route::post('getSameLevelOfReviewer', [VmtPMSModuleController::class,'getSameLevelOfReviewer'])->name('getSameLevelOfReviewer');
 Route::post('changeReviewerSelection', [VmtPMSModuleController::class,'changeReviewerSelection'])->name('changeReviewerSelection');
+Route::post('getEmployeesOfReviewer', [VmtPMSModuleController::class,'getEmployeesOfReviewer'])->name('getEmployeesOfReviewer');
 
 // route for change employee profile icons on edit
 Route::post('changeEmployeeProfileIconsOnEdit', [VmtPMSModuleController::class,'changeEmployeeProfileIconsOnEdit'])->name('changeEmployeeProfileIconsOnEdit');

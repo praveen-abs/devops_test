@@ -1,6 +1,8 @@
 <?php
 
 use App\Models\User;
+use App\Models\VmtEmployee;
+use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtPMS_KPIFormAssignedModel;
 use App\Models\VmtPMS_KPIFormReviewsModel;
 use Illuminate\Support\Facades\Auth;
@@ -157,6 +159,21 @@ function checkViewReviewText($loggedUserRole,$kpiFormReviewDetails){
     
 }
 
+function getEmployeeManager($selectedEmployeeId){
+    $currentEmpCode = VmtEmployeeOfficeDetails::whereIn('user_id',$selectedEmployeeId)
+                        ->select('l1_manager_code')
+                        ->groupBy('l1_manager_code')
+                        ->pluck('l1_manager_code');
+    $users = VmtEmployee::leftJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
+                ->select(
+                    'users.name',
+                    'users.id as id',
+                    'vmt_employee_details.emp_no as code',
+                )
+                ->orderBy('users.name', 'ASC')
+                ->whereIn('emp_no', $currentEmpCode);
+    return $users;
+}
 
 // PMS V2 API Responses
     //function showing success response....
