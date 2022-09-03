@@ -257,7 +257,7 @@
                                                     <th scope="col">Performance Rating</th>
                                                     <th scope="col">Ranking</th>
                                                     <th scope="col">Action</th>
-                                                    <th scope="col">Sort Order</th>
+                                                    {{-- <th scope="col">Sort Order</th> --}}
                                                    
 
                                                   
@@ -267,12 +267,12 @@
                                             <tbody class="tbody" id="tbody">
                                                 @foreach ($config_data as $iteem)
                                                 <tr>
-                                                    <td>    <a href="" class="update" data-name="score_range" data-type="text" data-pk="{{ $iteem->id }}" data-title="Enter name">{{ $iteem->score_range }}</a>
+                                                    <td>{{ $iteem->score_range }}
                                                 </td>
-                                                <td > <a href="" class="update" data-name="performance_rating" data-type="text" data-pk="{{ $iteem->id }}" data-title="Enter name">{{ $iteem->performance_rating }}</a></td>
-                                                <td ><a href="" class="update" data-name="ranking" data-type="text" data-pk="{{ $iteem->id }}" data-title="Enter name">{{ $iteem->ranking }}</a></td>
-                                                <td ><a href="" class="update" data-name="action" data-type="text" data-pk="{{ $iteem->id }}" data-title="Enter name">{{ $iteem->action }}</a></td>
-                                                <td ><a href="" class="update" data-name="sort_order" data-type="text" data-pk="{{ $iteem->id }}" data-title="Enter name">{{ $iteem->sort_order }}</a></td>
+                                                <td > <a  class="update" data-name="performance_rating" data-type="text" data-pk="{{ $iteem->id }}" data-title="Enter name">{{ $iteem->performance_rating }}</a></td>
+                                                <td >{{ $iteem->ranking }}</td>
+                                                <td ><a  class="update" data-name="action" data-type="text" data-pk="{{ $iteem->id }}" data-title="Enter name">{{ $iteem->action }}</a></td>
+                                                {{-- <td ><a  class="update" data-name="sort_order" data-type="text" data-pk="{{ $iteem->id }}" data-title="Enter name">{{ $iteem->sort_order }}</a></td> --}}
                                              
                                                 @endforeach
                                                 </tr>
