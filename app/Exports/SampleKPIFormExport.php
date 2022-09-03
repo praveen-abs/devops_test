@@ -15,14 +15,19 @@ class SampleKPIFormExport implements FromArray, WithHeadings, WithStyles, WithEv
 
     protected $selected_kpi_columns;
 
-    public function __construct(array $t_selected_kpi_columns)
+    public function __construct(array $t_selected_kpi_columns,$selectedYear)
     {
+        $this->selected_year = $selectedYear;
         $this->selected_kpi_columns = $t_selected_kpi_columns;
     }
 
     public function headings():array{
+        $firstTile = 'GREAT CONVERSATIONS - KPI Form (2018 - 2018)';
+        if(isset($this->selected_year) && !empty($this->selected_year)){
+            $firstTile = 'GREAT CONVERSATIONS - KPI Form ('.$this->selected_year.')';
+        }
         $data = [
-            'GREAT CONVERSATIONS - KPI Form (2018 - 2018)',
+            $firstTile,
         ];
         $data1 = [
             'KPIs',

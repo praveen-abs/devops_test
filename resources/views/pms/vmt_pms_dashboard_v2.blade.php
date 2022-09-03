@@ -163,7 +163,7 @@ header {
         @endslot
     @endcomponent
 
-   
+
 
     <div class="container-fluid assign-goal-wrapper mt-mb-15">
         <div class="cards-wrapper">
@@ -348,7 +348,7 @@ header {
                                                 <div class="td_content_center">
                                                 <a target="_blank" @if($checkViewReviewText == 'Edit') href="{{ route('republishForm',$pmsKpiAssignee->id) }}" @else href="{{ url('pms-showReviewPage?assignedFormid=' . $pmsKpiAssignee->id . '&assigneeId=' . $assigneeId) }}" @endif><button
                                                         class="btn btn-orange py-0 px-2 "> <span class="mr-10 icon"></span>
-                                                        <?php  
+                                                        <?php
                                                         echo $checkViewReviewText;
                                                         ?>
                                                         </button></a>
@@ -387,8 +387,8 @@ header {
                                 @csrf
                                 <input type="hidden" name="flowCheck" id="flowCheck" value="{{ $flowCheck }}">
                                 <input type="hidden" name="kpitable_id" id="kpitable_id">
-                                
-                                <input type="hidden" name="reviewer" id="sel_reviewer">
+
+                                <!-- <input type="hidden" name="reviewer" id="sel_reviewer"> -->
                                 <input type="hidden" name="assignment_period_year" id="assignment_period_year"
                                     value="<?php echo date('Y'); ?>">
 
@@ -411,10 +411,8 @@ header {
 
                                         <select name="year" id="year" disabled class="form-control">
                                             <option value="">Select</option>
-                                            <option value="Jan-Dec">January - <?php echo date('Y'); ?> to December -
-                                                <?= date('Y') ?> </option>
-                                            <option value="Apr-Mar">April - <?php echo date('Y'); ?> to March -
-                                                <?= date('Y') + 1 ?></option>
+                                            <option value="Jan-Dec">January - <?php echo date('Y'); ?> to December - <?= date('Y') ?> </option>
+                                            <option value="Apr-Mar">April - <?php echo date('Y'); ?> to March - <?= date('Y') + 1 ?></option>
                                         </select>
 
                                     </div>
@@ -449,8 +447,8 @@ header {
                                             @endforeach
                                         </select>
                                     </div>
-                                    
-                                    
+
+
                                     <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3 ">
                                         <label class="" for="">Employees</label>
                                         <div class="employee-selection-section">
@@ -458,10 +456,11 @@ header {
                                         </div>
                                         <input type="hidden" name="employees" id="employeesSelectedValues">
                                         <!-- <span class="employees-profile editProfile employeeEditButton">Edit</span> -->
-                                        
-                                     
+
+
                                     </div>
                                     @if(isset($loggedManagerEmployees) && count($loggedManagerEmployees) > 0)
+                                    <!-- flow 2 -->
                                     <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
                                         <label class="" for="">Reviewer</label>
                                         @if(isset($getSameLevelManagers) && count($getSameLevelManagers) > 0)
@@ -490,13 +489,20 @@ header {
                                         <button type="button" id=""
                                             class="btn btn-primary increment-btn py-1 px-2 chnageButton">+</button> -->
                                     <!-- </div> -->
+
+                                    <!-- flow 1 -->
                                     <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
                                         <label class="" for="">Reviewer</label>
-                                        <input type="hidden" name="reviewer" id="selectedReviewIds">
-                                        <input readonly type="text" id="reviewersAccordingAssignee"
+                                        <!-- <input type="hidden" name="reviewer" id="selectedReviewIds"> -->
+                                        <select class="select-multiple-reviewer form-control" name="reviewer[]" multiple="multiple">
+                                            @foreach($allEmployeesList as $employeeData)
+                                                <option value="{{ $employeeData->id }}">{{ $employeeData->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        <!-- <input readonly type="text" id="reviewersAccordingAssignee"
                                             target="" class="form-control  increment-input"
-                                            placeholder="Reviewer">
-                                        
+                                            placeholder="Reviewer"> -->
+
                                         <button type="button" id="" target="#reviewerReplaceSameLevel"
                                             class="btn py-1 px-3 btn-primary increment-btn reviewerReplace">Change</button>
                                         <!-- <input type="text" name="" id="selected_reviewer"
@@ -537,7 +543,9 @@ header {
                                                 </select>
                                             </form>
                                             <div class="align-items-center justify-content-end d-flex mt-2 cursor-pointer">
-                                                <a href="{{ route('showKPICreateForm') }}" target="_blank"><span
+                                                <!-- <a href="{{ route('showKPICreateForm') }}" target="_blank"> -->
+                                                <a class="createKpiFromOnClick" target="_blank">
+                                                    <span
                                                         class="plus-sign text-info "><i class="fa fa-plus f-20"></i>Create
                                                         KPI Form</span></a>
                                             </div>
@@ -584,13 +592,13 @@ header {
                             <div class="col-12 col-md-12 col-lg-12 ">
                                 <label class="" for="">Existing Reviewer</label>
                                 <select class="change-exiting-reviewer form-control" name="oldReviewerName">
-                                    
+
                                 </select>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12 ">
                                 <label class="" for="">New Reviewer</label>
                                 <select class="with-new-reviewer form-control" name="newReviewerName">
-                                    
+
                                 </select>
                                 <span style="color: red;" id="reviewerChangeError"></span>
                             </div>
@@ -652,7 +660,7 @@ header {
     </div>
 
     <!-- emplyee edit modal starts -->
-    
+
     <div class="modal fade" id="employeeSelectionModal" role="dialog" aria-hidden="true"
         style="opacity:1; display:none;background:#00000073;">
         <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true"
@@ -671,17 +679,19 @@ header {
                 <div class="modal-body">
                     <div class="mt-12">
                         @if(isset($loggedManagerEmployees) && count($loggedManagerEmployees) > 0)
+                        <!-- flow 2 -->
                         <select class="select-employee-dropdown form-control" name="employees[]" multiple="multiple">
                             @foreach($loggedManagerEmployees as $employeesSelection)
                                 <option selected value="{{ $employeesSelection->id }}">{{ $employeesSelection->name }}</option>
                             @endforeach
                         </select>
                         @else
+                        <!-- flow 1 -->
                         <select class="select-employee-dropdown form-control" id="selectedEmployeeDropdownId" name="employees[]" multiple="multiple">
                             @foreach($allEmployeesList as $employeeList)
                                 <option value="{{ $employeeList->id }}">{{ $employeeList->name }}</option>
                             @endforeach
-                        </select> 
+                        </select>
                         @endif
                     </div>
                     @if(isset($loggedManagerEmployees) && count($loggedManagerEmployees) > 0)
@@ -747,10 +757,12 @@ header {
     <!-- Prem assets ends -->
 
     <!-- for date and time -->
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script>
+
+
         var selectedEmployeesId = $('.select-employee-dropdown').val();
         changeAssigneeProfilePicOnSelection(selectedEmployeesId);
 
@@ -790,15 +802,36 @@ header {
         $('#edit-employee-based-on-reviewer').click(function(){
             var selectedEmployeesId = $('.select-employee-dropdown').val();
             getReviewerOfSelectedEmployee(selectedEmployeesId);
-            
+
         })
 
     </script>
 
     <script>
         $(document).ready(function() {
-            $("#reviewersAccordingAssignee").val('{{$loggedInUser->name}}');
-            $("#selectedReviewIds").val('{{$loggedInUser->id}}');
+
+
+            $('.createKpiFromOnClick').click(function(){
+                console.log("Create KPI button clicked");
+
+            var assignmentPeriod = $('#assignment_period_start').val();
+            var year = $('#year').val();
+            if(assignmentPeriod != '' && year != ''){
+                var YearText = $("#year option:selected").text();
+                var url = '{{ route("showKPICreateForm", ":year") }}';
+                url = url.replace(':year', YearText);
+                // alert(url);
+                window.open(url);
+                return false;
+            }
+            else
+            {
+                alert("Please enter Assignment Period and Year ");
+            }
+
+        });
+
+
             $('.select-employee-dropdown').select2({
                 dropdownParent: $("#employeeSelectionModal"),
                 minimumResultsForSearch: Infinity,
@@ -816,8 +849,69 @@ header {
                 dropdownParent: $("#reviewerReplaceSameLevel"),
                 width: '100%'
             });
-            
+
+            $('.select-multiple-reviewer').select2({
+                dropdownParent: $("#add-goals-modal"),
+                width: '100%'
+            });
+
+
+
         });
+
+        var prevReviewerCount = '';
+        var prevReviewerList = [];
+        var currentReviewerCount = $('.select-multiple-reviewer').val().length;
+        var currentReviewerList = $('.select-multiple-reviewer').val();
+
+        // $(".select-multiple-reviewer").on("select2:select", function (e) {
+        //     // var select_val = $(e.currentTarget).val();
+        //     var selected_element = $(e.currentTarget);
+        //     var select_val = selected_element.val();
+        //     alert(select_val);
+        // });
+        $('.select-multiple-reviewer').change(function(e){
+            console.log(e);
+            prevReviewerCount = currentReviewerCount;
+            prevReviewerList = currentReviewerList;
+            currentReviewerCount = $(this).val().length;
+            currentReviewerList = $(this).val();
+
+            var latest_value = $(this).val();
+            if(currentReviewerCount > prevReviewerCount){
+
+                var selectedReviewer = '';
+
+                $.each(currentReviewerList, function(key, val) {
+                    if ($.inArray(val, prevReviewerList) <= -1) {
+                        selectedReviewer = val;
+                    }
+                });
+
+                $.ajax({
+                type: "POST",
+                url: "{{ route('getEmployeesOfReviewer') }}",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    selectedReviewer : selectedReviewer,
+                },
+                success: function(data) {
+
+                   $.each(data.result, function(i, value) {
+                        var existingEmployeesId = $('#selectedEmployeeDropdownId').val();
+                        existingEmployeesId.push(value.id);
+                        $('#selectedEmployeeDropdownId').val(existingEmployeesId);
+                        $('#selectedEmployeeDropdownId').trigger('change');
+                    });
+                    var selectedEmployeesId = $('#selectedEmployeeDropdownId').val();
+                    changeAssigneeProfilePicOnSelection(selectedEmployeesId);
+                },
+                error: function(error) {
+                    console.log('something went wrong');
+                }
+            });
+            }
+        })
 
         // $('.select-employee-dropdown').change(function(){
         function getReviewerOfSelectedEmployee(selectedEmployeeId){
@@ -830,14 +924,19 @@ header {
                     selectedEmployeeId : selectedEmployeeId,
                 },
                 success: function(data) {
-                    console.log("aaasadasdasdasdasd");
-                    $.each(data.result.removeSelectedEmployee, function(i, value) {
-                        $(".select-employee-dropdown option[value="+value+"]").remove();
-                    });
+                    console.log(data);
+                    if(data.status == true ){
+                        $.each(data.result.removeSelectedEmployee, function(i, value) {
+                            $(".select-employee-dropdown option[value="+value+"]").remove();
+                        });
+                        $(".select-multiple-reviewer").val(data.result.reviewerIds);
+                        $('.select-multiple-reviewer').trigger('change.select2');
 
-                    $("#reviewersAccordingAssignee").val(data.result.reviewerNames.join(","));
-                    $("#selectedReviewIds").val(data.result.reviewerIds.join(","));
-                    var afterUpdateEmployee = $('.select-employee-dropdown').val();
+
+                        $("#reviewersAccordingAssignee").val(data.result.reviewerNames.join(","));
+                        $("#selectedReviewIds").val(data.result.reviewerIds.join(","));
+                        var afterUpdateEmployee = $('.select-employee-dropdown').val();
+                    }
                     changeAssigneeProfilePicOnSelection(afterUpdateEmployee);
                 },
                 error: function(error) {
@@ -987,13 +1086,13 @@ header {
             $('#reviewerReplaceSameLevel').hide();
             $('#reviewerReplaceSameLevel').addClass('fade');
         });
-       
-      
+
+
         $('#add-goals').click(function() {
             $('#add-goals-modal').modal('show');
         });
 
-       
+
 
         $('body').on('click', '.close-modal', function() {
             $('#notificationModal').hide();
@@ -1008,23 +1107,34 @@ header {
 
 
         $('.reviewerReplace').click(function(){
-            var selectedReviewersNames = $('#reviewersAccordingAssignee').val();
-            var selectedReviewersIds = $('#selectedReviewIds').val();
-            if(selectedReviewersIds != null && selectedReviewersIds != ''){
-                var result = '';
-                var selectedReviewersIds = selectedReviewersIds.split(',');
-                var selectedReviewersNames = selectedReviewersNames.split(',');
-                $.each(selectedReviewersIds, function(key, value){
-                    if(value != {{Auth::id()}}){
-                        result += '<option value="'+value+'">'+selectedReviewersNames[key]+'</option>';
-                    }
-                });
-    
-                $('.change-exiting-reviewer').html(result);
-                $('#reviewerReplaceSameLevel').show();
-                $('#reviewerReplaceSameLevel').removeClass('fade');
-                changeExitingReviewer();
-            }
+            var result = '';
+            $.each ($(".select-multiple-reviewer option:selected"), function(){
+                result += '<option value="'+$(this).val()+'">'+$(this).text()+'</option>';
+            });
+
+            $('.change-exiting-reviewer').html(result);
+            $('#reviewerReplaceSameLevel').show();
+            $('#reviewerReplaceSameLevel').removeClass('fade');
+            changeExitingReviewer();
+
+            // var selectedReviewersNames = $('#reviewersAccordingAssignee').val();
+            // var selectedReviewersIds = $('#selectedReviewIds').val();
+            // alert(selectedReviewersNames+' - '+selectedReviewersIds);
+            // if(selectedReviewersIds != null && selectedReviewersIds != ''){
+            //     var result = '';
+            //     var selectedReviewersIds = selectedReviewersIds.split(',');
+            //     var selectedReviewersNames = selectedReviewersNames.split(',');
+            //     $.each(selectedReviewersIds, function(key, value){
+            //         if(value != {{Auth::id()}}){
+            //             result += '<option value="'+value+'">'+selectedReviewersNames[key]+'</option>';
+            //         }
+            //     });
+
+            //     $('.change-exiting-reviewer').html(result);
+            //     $('#reviewerReplaceSameLevel').show();
+            //     $('#reviewerReplaceSameLevel').removeClass('fade');
+            //     changeExitingReviewer();
+            // }
         })
 
         $('.change-exiting-reviewer').change(function(){

@@ -122,7 +122,6 @@ $(document).ready(function() {
             'zoominLimit' : 2,
             'zoomoutLimit' : 0.7,
             'nodeContent': 'designation',
-            'verticalLevel': 4,
             'exportButton': true,
             'exportFilename': 'OrgChartImage',
             'exportFileextension':'png',

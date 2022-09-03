@@ -114,9 +114,15 @@
                                     <select placeholder="Select Review Levels" name="selected_reviewlevels" id="selected_reviewlevels"
                                         class="onboard-form form-control select2_form_without_search" required>
                                         <option value="">Select Review Levels</option>
-                                        <option value="L1" >L1</option>
+                                        <option value="L1" @if ($data && $data->selected_reviewlevel && 'L1' == $data->selected_reviewlevel) selected @endif>
+                                            L1</option>
+                                        <option value="L2" @if ($data && $data->selected_reviewlevel && 'L2' == $data->selected_reviewlevel) selected @endif>L2
+                                        </option>
+                                        <option value="L3" @if ($data && $data->selected_reviewlevel && 'L3' == $data->selected_reviewlevel) selected @endif>L3
+                                        </option>
+                                        {{-- <option value="L1" >L1</option>
                                         <option value="L2" >L2</option>
-                                        <option value="L3" >L3</option>
+                                        <option value="L3" >L3</option> --}}
                                     </select>
                                 </div>
                             </div>
@@ -238,72 +244,58 @@
                                 @else
                                 @endif
                             </div>
+                            <div class="table-content mb-1">
+                                <h6>Appraisee's Annual Score & Rating</h6>
 
-                                    <div class="table-content mb-1">
-                                        <h6>Appraisee's Annual Score & Rating</h6>
-                                        <table class="table align-middle mb-0 table-bordered  table-striped" id="table">
+                                <table class="table align-middle mb-0 table-bordered  table-striped data-table" id="table">
 
-                                            <thead class="thead" id="tHead">
-                                                <tr>
-                                                    <th scope="col">Overall Annual Score</th>
-                                                    <th scope="col">Less than 60</th>
-                                                    <th scope="col">60-70</th>
-                                                    <th scope="col">70-80</th>
-                                                    <th scope="col">80-90</th>
-                                                    <th scope="col">90-100</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="tbody" id="tbody">
-                                                <tr>
+                                    <thead class="thead" id="tHead">
+                                        <tr>
 
-                                                    <td class="">
-                                                        Corresponding ANNUAL PERFORMANCE Rating
+                                            <th scope="col">Score Range</th>
+                                            <th scope="col">Performance Rating</th>
+                                            <th scope="col">Ranking</th>
+                                            <th scope="col">Action</th>
+                                            {{-- <th scope="col">Sort Order</th> --}}
 
-                                                    </td>
-                                                    <td class="">Needs Action</td>
-                                                    <td class="">Below Expectations</td>
-                                                    <td class="">Meet Expectations</td>
-                                                    <td class="">Exceeds Expectations </td>
-                                                    <td class="">Exceptionally Exceeds Expectations</td>
-                                                </tr>
 
-                                                <tr>
-                                                    <td class="">
-                                                        Ranking
-                                                    </td>
-                                                    <td class="">1</td>
-                                                    <td class="">2</td>
-                                                    <td class="">3</td>
-                                                    <td class="">4</td>
-                                                    <td class="">5</td>
-                                                </tr>
-                                                <tr>
 
-                                                    <td class="">
-                                                        Action
-                                                    </td>
-                                                    <td class="">Exit</td>
-                                                    <td class="">PIP</td>
-                                                    <td class="">10%</td>
-                                                    <td class="">15%</td>
-                                                    <td class="">20%</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody class="tbody" id="tbody">
+                                        @foreach ($config_data as $iteem)
+                                        <tr>
+                                            <td>{{ $iteem->score_range }}
+                                        </td>
+                                        <td > <a  class="update" data-name="performance_rating" data-type="text" data-pk="{{ $iteem->id }}" data-title="Enter name">{{ $iteem->performance_rating }}</a></td>
+                                        <td >{{ $iteem->ranking }}</td>
+                                        <td ><a  class="update" data-name="action" data-type="text" data-pk="{{ $iteem->id }}" data-title="Enter name">{{ $iteem->action }}</a></td>
+                                        {{-- <td ><a  class="update" data-name="sort_order" data-type="text" data-pk="{{ $iteem->id }}" data-title="Enter name">{{ $iteem->sort_order }}</a></td> --}}
+
+                                        @endforeach
+                                        </tr>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            {{-- <div class="text-end mt-3">
+                                <button type="button" data="row-6" next="row-6" placeholder="" name="next"
+                                    class="btn btn-orange " onclick="update_config()">Submit</button>
+                            </div>  --}}
 
                             <div class="text-end mt-3">
                                 <button type="submit" data="row-6" next="row-6" placeholder="" name="next"
                                     class="btn btn-orange " value="Submit">Submit</button>
                             </div>
+                        </form>
+
+
+
                         </div>
                     </div>
                 </div>
             </div>
-
-
-
-            </form>
 
         </div>
     </div>
@@ -318,17 +310,59 @@
     <!-- apexcharts -->
 
     <!-- for validating -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jquery-editable/css/jquery-editable.css" rel="stylesheet"/>
+
+    <script>$.fn.poshytip={defaults:null}</script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jquery-editable/js/jquery-editable-poshytip.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
 
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script type="text/javascript">
 
+        $.fn.editable.defaults.mode = 'inline';
+
+
+        $.ajaxSetup({
+
+            headers: {
+
+                'X-CSRF-TOKEN': '{{csrf_token()}}'
+
+            }
+
+        });
+
+
+
+        $('.update').editable({
+
+
+              url: "{{ route('store_config_pms_rating') }}",
+
+               type: 'text',
+
+               pk: 1,
+
+               name: 'name',
+
+               title: 'Enter name'
+
+        });
+
+    </script>
     <script>
         $(document).ready(function() {
             $('.select2_form_without_search').each(function() {
                 var placeholder = $(this).attr('placeholder')
                 placeholder = (placeholder == undefined) ? '' : placeholder;
-
                 $(this).select2({
                     width: '100%',
                     minimumResultsForSearch: Infinity,
@@ -336,5 +370,29 @@
                 });
             });
         });
+
+
+        // function update_config(){
+        //     var ref_id = $('#id').val();
+        //     var performance = $('#performance_rating').val();
+        //     alert(ref_id);
+        //        $.ajax({
+        //   //  url: "{{route('updateUserAccountStatus')}}",
+        //     type: "POST",
+        //     data: {
+        //         _token: "{{ csrf_token() }}",
+        //         "status": status,
+        //         "id": id,
+        //     },
+        //     success: function(data) {
+        //         //window.location.reload();
+        //         $('#tr_'+id).remove();
+        //         console.log("Deleting TR "+'#tr_'+id);
+        //         //console.log(data);
+        //     }
+        // });
+        // }
     </script>
+
+
 @endsection

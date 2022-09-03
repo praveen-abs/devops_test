@@ -258,7 +258,8 @@ class VmtPMSModuleController extends Controller
 
     // KPI Form
 
-    public function showKPICreateForm(){
+    public function showKPICreateForm($year = null){
+        $selectedYear = isset($year) ? $year : null;
 
         $config = ConfigPms::first();
         $show['dimension'] = 'true';
@@ -283,7 +284,7 @@ class VmtPMSModuleController extends Controller
             $show['source'] = $config->selected_columns && in_array('source', explode(',', $config->selected_columns)) ? 'true': 'false';
             $show['kpiWeightage'] = $config->selected_columns && in_array('kpiWeightage', explode(',', $config->selected_columns)) ? 'true': 'false';
         }
-        return view('pms.vmt_pms_kpiform_create',compact('config','show'));
+        return view('pms.vmt_pms_kpiform_create',compact('config','show','selectedYear'));
     }
 
     /*
@@ -330,8 +331,9 @@ class VmtPMSModuleController extends Controller
         enabled in the ConfigPMS table
 
     */
-    public function generateSampleKPIExcelSheet()
+    public function generateSampleKPIExcelSheet($selectedYear = null)
     {
+        // dD($selectedYear);
         $data = ConfigPms::first();
         $array_selectedKPIColumnsHeader = [];
         if(!empty($data)){
@@ -345,8 +347,9 @@ class VmtPMSModuleController extends Controller
                 }
             }
         }
+
         if(count($array_selectedKPIColumnsHeader) > 0){
-            return \Excel::download(new SampleKPIFormExport($array_selectedKPIColumnsHeader), 'Template_SampleKPIForm.xlsx');
+            return \Excel::download(new SampleKPIFormExport($array_selectedKPIColumnsHeader,$selectedYear), 'Template_SampleKPIForm.xlsx');
         }else{
             return '';
         }
@@ -865,27 +868,52 @@ class VmtPMSModuleController extends Controller
         try{
             if(isset($request->selectedEmployeeId) && count($request->selectedEmployeeId) > 0){
              
-                $authDetails = Auth::user();
-                $currentEmpCode = VmtEmployeeOfficeDetails::whereIn('user_id',$request->selectedEmployeeId)
-                                    ->select('l1_manager_code')
-                                    ->groupBy('l1_manager_code')
-                                    ->pluck('l1_manager_code');
-                $users = VmtEmployee::leftJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
-                                    ->select(
-                                        'users.name',
-                                        'users.id as id',
-                                        'vmt_employee_details.emp_no as code',
-                                    )
-                                    ->orderBy('users.name', 'ASC')
-                                    ->whereIn('emp_no', $currentEmpCode);
-
-                $reviewerNames = $users->pluck('name');
-                $reviewerIds = $users->pluck('id')->toArray();
-                if(!in_array($authDetails->id,$reviewerIds)){
-                    $reviewerIds[] = $authDetails->id;
-                    $reviewerNames[] = $authDetails->name;
+                $pmsConfigData = ConfigPms::first();
+                $selectedReviewLevel = '';
+                if(isset($pmsConfigData) && isset($pmsConfigData->selected_reviewlevel)){
+                    $selectedReviewLevel = $pmsConfigData->selected_reviewlevel;
                 }
-                                        
+                $authDetails = Auth::user();
+                // Level 1
+                $employeeManagerDetail = getEmployeeManager($request->selectedEmployeeId);
+                $reviewerNames = $employeeManagerDetail->pluck('name')->toArray();
+                $reviewerIds = $employeeManagerDetail->pluck('id')->toArray();
+                
+                // Level 2
+                if($selectedReviewLevel == '' || $selectedReviewLevel == 'L2' || $selectedReviewLevel == 'L3'){
+                    foreach($reviewerIds as $reviewerId){
+                        $reviewerManagerDetail = getEmployeeManager([$reviewerId]);
+                        $reviewerName = $reviewerManagerDetail->pluck('name')->first();
+                        $reviewerId = $reviewerManagerDetail->pluck('id')->first();
+                        if(!empty($reviewerName) && !empty($reviewerId)){
+                            if(!in_array($reviewerName,$reviewerNames)){
+                                array_push($reviewerNames,$reviewerName);
+                            }
+                            if(!in_array($reviewerId,$reviewerIds)){
+                                array_push($reviewerIds,$reviewerId);
+                            }
+                        }
+                    }
+                }
+
+                // Level 3
+                if($selectedReviewLevel == '' || $selectedReviewLevel == 'L3'){
+                    foreach($reviewerIds as $reviewerId){
+                        $reviewerManagerDetail = getEmployeeManager([$reviewerId]);
+                        $reviewerName = $reviewerManagerDetail->pluck('name')->first();
+                        $reviewerId = $reviewerManagerDetail->pluck('id')->first();
+                        
+                        if(!empty($reviewerName) && !empty($reviewerId)){
+                            if(!in_array($reviewerName,$reviewerNames)){
+                                array_push($reviewerNames,$reviewerName);
+                            }
+                            if(!in_array($reviewerId,$reviewerIds)){
+                                array_push($reviewerIds,$reviewerId);
+                            }
+                        }
+                    }
+                }
+
                 $removeSelectedEmployee = [];
                 foreach($request->selectedEmployeeId as $employeeExistsCheck)
                 {
@@ -893,7 +921,7 @@ class VmtPMSModuleController extends Controller
                         array_push($removeSelectedEmployee, $employeeExistsCheck);
                     }
                 }
-                // dd($removeSelectedEmployee);
+
                 $result = [
                     'reviewerNames' => $reviewerNames,
                     'reviewerIds' => $reviewerIds,
@@ -1078,5 +1106,29 @@ class VmtPMSModuleController extends Controller
         }
         $html .= '<span class="employees-profile editProfile employeeEditButton">Edit</span></div></div>';
         return response()->json(['status'=>true,'html'=>$html]);
+    }
+
+
+    public function getEmployeesOfReviewer(Request $request){
+        try{
+// dd($request->selectedReviewer);
+            if(isset($request->selectedReviewer)){
+                $reviewerEmpNo = VmtEmployee::where('userid',$request->selectedReviewer)->pluck('emp_no')->first();
+                if(!empty($reviewerEmpNo)){
+                    $employees = User::leftJoin('vmt_employee_office_details','users.id','=','vmt_employee_office_details.user_id')
+                                ->leftJoin('vmt_employee_details','users.id','=','vmt_employee_details.userid')
+                                ->where('users.is_admin','0')
+                                ->where('vmt_employee_office_details.l1_manager_code',$reviewerEmpNo)
+                                ->select('users.name','users.id','users.user_code','vmt_employee_office_details.designation')
+                                ->get()
+                                ->toArray();
+    
+                    return response()->json(['status'=>false,'message' => '','result' => $employees]);
+                }
+            }
+            return response()->json(['status'=>false,'message' => 'Reviewer not found!']);
+        }catch(Exception $e){
+            return response()->json(['status'=>false,'message' => $e->getMessage()]);
+        }
     }
 }
