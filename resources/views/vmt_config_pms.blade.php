@@ -244,61 +244,58 @@
                                 @else
                                 @endif
                             </div>
+                            <div class="table-content mb-1">
+                                <h6>Appraisee's Annual Score & Rating</h6>
+
+                                <table class="table align-middle mb-0 table-bordered  table-striped data-table" id="table">
+
+                                    <thead class="thead" id="tHead">
+                                        <tr>
+
+                                            <th scope="col">Score Range</th>
+                                            <th scope="col">Performance Rating</th>
+                                            <th scope="col">Ranking</th>
+                                            <th scope="col">Action</th>
+                                            {{-- <th scope="col">Sort Order</th> --}}
+
+
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody class="tbody" id="tbody">
+                                        @foreach ($config_data as $iteem)
+                                        <tr>
+                                            <td>{{ $iteem->score_range }}
+                                        </td>
+                                        <td > <a  class="update" data-name="performance_rating" data-type="text" data-pk="{{ $iteem->id }}" data-title="Enter name">{{ $iteem->performance_rating }}</a></td>
+                                        <td >{{ $iteem->ranking }}</td>
+                                        <td ><a  class="update" data-name="action" data-type="text" data-pk="{{ $iteem->id }}" data-title="Enter name">{{ $iteem->action }}</a></td>
+                                        {{-- <td ><a  class="update" data-name="sort_order" data-type="text" data-pk="{{ $iteem->id }}" data-title="Enter name">{{ $iteem->sort_order }}</a></td> --}}
+
+                                        @endforeach
+                                        </tr>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            {{-- <div class="text-end mt-3">
+                                <button type="button" data="row-6" next="row-6" placeholder="" name="next"
+                                    class="btn btn-orange " onclick="update_config()">Submit</button>
+                            </div>  --}}
+
                             <div class="text-end mt-3">
                                 <button type="submit" data="row-6" next="row-6" placeholder="" name="next"
                                     class="btn btn-orange " value="Submit">Submit</button>
                             </div>
                         </form>
-                         
-                            
-                                    <div class="table-content mb-1">
-                                        <h6>Appraisee's Annual Score & Rating</h6>
-                                       
-                                        <table class="table align-middle mb-0 table-bordered  table-striped data-table" id="table">
 
-                                            <thead class="thead" id="tHead">
-                                                <tr>
-                                                   
-                                                    <th scope="col">Score Range</th>
-                                                    <th scope="col">Performance Rating</th>
-                                                    <th scope="col">Ranking</th>
-                                                    <th scope="col">Action</th>
-                                                    {{-- <th scope="col">Sort Order</th> --}}
-                                                   
 
-                                                  
 
-                                                </tr>
-                                            </thead>
-                                            <tbody class="tbody" id="tbody">
-                                                @foreach ($config_data as $iteem)
-                                                <tr>
-                                                    <td>{{ $iteem->score_range }}
-                                                </td>
-                                                <td > <a  class="update" data-name="performance_rating" data-type="text" data-pk="{{ $iteem->id }}" data-title="Enter name">{{ $iteem->performance_rating }}</a></td>
-                                                <td >{{ $iteem->ranking }}</td>
-                                                <td ><a  class="update" data-name="action" data-type="text" data-pk="{{ $iteem->id }}" data-title="Enter name">{{ $iteem->action }}</a></td>
-                                                {{-- <td ><a  class="update" data-name="sort_order" data-type="text" data-pk="{{ $iteem->id }}" data-title="Enter name">{{ $iteem->sort_order }}</a></td> --}}
-                                             
-                                                @endforeach
-                                                </tr>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    {{-- <div class="text-end mt-3">
-                                        <button type="button" data="row-6" next="row-6" placeholder="" name="next"
-                                            class="btn btn-orange " onclick="update_config()">Submit</button>
-                                    </div>  --}}
-                       
                         </div>
                     </div>
                 </div>
             </div>
-
-
-
-           
 
         </div>
     </div>
@@ -331,35 +328,35 @@
     <script type="text/javascript">
 
         $.fn.editable.defaults.mode = 'inline';
-    
-      
+
+
         $.ajaxSetup({
-    
+
             headers: {
-    
+
                 'X-CSRF-TOKEN': '{{csrf_token()}}'
-    
+
             }
-    
-        }); 
-    
-      
-    
-        $('.update').editable({
-           
-    
-              url: "{{ route('store_config_pms_rating') }}",
-    
-               type: 'text',
-    
-               pk: 1,
-    
-               name: 'name',
-    
-               title: 'Enter name'
-    
+
         });
-    
+
+
+
+        $('.update').editable({
+
+
+              url: "{{ route('store_config_pms_rating') }}",
+
+               type: 'text',
+
+               pk: 1,
+
+               name: 'name',
+
+               title: 'Enter name'
+
+        });
+
     </script>
     <script>
         $(document).ready(function() {
