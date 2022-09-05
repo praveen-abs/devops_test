@@ -593,7 +593,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Official Email </label>
                                                     <input type="email" placeholder="Official E-Mail Id" name="officical_mail" class="textbox  onboard-form form-control " pattern="email" />
-                                                    <label class="error star_error officical_mail_label" for="officical_mail" style="display: none;"></label>
+                                                  <!--  <label class="error star_error officical_mail_label" for="officical_mail" style="display: none;"></label> -->
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">

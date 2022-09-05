@@ -135,16 +135,16 @@
 
             $('#employee_name').css('text-transform', 'capitalize');
 
-            // $('.select2_form_without_search').each(function() {
-            //     var placeholder = $(this).attr('placeholder')
-            //     placeholder = (placeholder == undefined) ? '' : placeholder;
+              $('.select2_form_without_search').each(function() {
+                  var placeholder = $(this).attr('placeholder')
+                    placeholder = (placeholder == undefined) ? '' : placeholder;
 
-            //     $(this).select2({
-            //         width: '100%',
-            //         minimumResultsForSearch: Infinity,
-            //         placeholder: placeholder,
-            //     });
-            // });
+                   $(this).select2({
+                       width: '100%',
+                       minimumResultsForSearch: Infinity,
+                       placeholder: placeholder,
+                   });
+              });
 
 
             $('#aadhar_backend').click(function() {
@@ -266,10 +266,22 @@
                     } else if (mygender == "Female") {
                         $('#spouse_gender').val('male');
                     }
+                } else if ($('#marital_status').val('single')) {
+                    
+                    if (mygender == "Male"){
+                        $('#spouse_gender').val('');
+                    }
+                    else if (mygender == "Female") {
+                        $('#spouse_gender').val('');                       
+                    }
+
+                    
+
                 }
 
-
                 // else if($('marital_status').val('widowed'))
+
+                
 
 
             })
@@ -427,9 +439,10 @@
                         }
                         $(this).attr('disabled', true);
                         $(this).removeAttr('required');
-                        $(this).addClass('not-required validate');
+                        $(this).addClass('not-required validate'); 
                         $('#spouse_gender').val('');
                         $('#' + name + '_req').hide();
+                        
                     });
                 } else {
                     $.each($('.spouse_data'), function(value) {
@@ -478,6 +491,23 @@
                 width: '100%',
                 placeholder: "Select Country",
             });
+
+            $('#ptax_location').select2({
+                width: '100%',
+                placeholder: "Select location",
+            });
+
+            $('#lwf_location').select2({
+                width: '100%',
+                placeholder: "Select location",
+            });
+
+            $('#holiday_location').select2({
+                width: '100%',
+                placeholder: "Select location",
+            });
+
+            
 
 
 
