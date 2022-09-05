@@ -266,9 +266,22 @@
                     } else if (mygender == "Female") {
                         $('#spouse_gender').val('male');
                     }
-                } 
+                } else if ($('#marital_status').val('single')) {
+                    
+                    if (mygender == "Male"){
+                        $('#spouse_gender').val('');
+                    }
+                    else if (mygender == "Female") {
+                        $('#spouse_gender').val('');                       
+                    }
+
+                    
+
+                }
 
                 // else if($('marital_status').val('widowed'))
+
+                
 
 
             })
@@ -427,8 +440,6 @@
                         $(this).attr('disabled', true);
                         $(this).removeAttr('required');
                         $(this).addClass('not-required validate'); 
-                        $(this).css("color", "grey")
-                     //   $("#spouse_gender").css("background-color", "yellow");
                         $('#spouse_gender').val('');
                         $('#' + name + '_req').hide();
                         
