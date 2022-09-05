@@ -420,11 +420,7 @@ header {
 
                                         <label class="" for="frequency">Frequency</label>
                                         <select name="frequency" id="frequency" class="form-control">
-                                            <option value="">Select</option>
-                                            <option value="monthly">Monthly</option>
-                                            <option value="quarterly">Quarterly</option>
-                                            <option value="halfYearly">Half Yearly</option>
-                                            <option value="yearly">Yearly</option>
+                                            
                                         </select>
 
                                     </div>
@@ -671,9 +667,9 @@ header {
                     <div class="w-100 modal-header-content d-flex align-items-center py-2">
                         <h5 class="modal-title text-white" id="modalHeader">Edit Employees
                         </h5>
-                        <button type="button" class="btn-close btn-close-white close-modal-employee" data-bs-dismiss="modal"
+                        <!-- <button type="button" class="btn-close btn-close-white close-modal-employee" data-bs-dismiss="modal"
                             aria-label="Close">
-                        </button>
+                        </button> -->
                     </div>
                 </div>
                 <div class="modal-body">
@@ -688,7 +684,7 @@ header {
                         @else
                         <!-- flow 1 -->
                         <select class="select-employee-dropdown form-control" id="selectedEmployeeDropdownId" name="employees[]" multiple="multiple">
-                            @foreach($allEmployeesList as $employeeList)
+                            @foreach($allEmployeesWithoutLoggedUserList as $employeeList)
                                 <option value="{{ $employeeList->id }}">{{ $employeeList->name }}</option>
                             @endforeach
                         </select>
@@ -992,7 +988,16 @@ header {
                     $('#year').val('');
                 }
                 $('#hidden_calendar_year').val($("#year option:selected").text())
+                if ($('#calendar_type').val() != ''){
+                    var frequencyDataResult = '<option value="">Select</option><option value="monthly">Monthly</option><option value="quarterly">Quarterly</option><option value="halfYearly">Half Yearly</option><option value="yearly">Yearly</option>';
+                    $('#frequency').html(frequencyDataResult);
+                }else{
+                    var frequencyDataResult = '<option value="">Select</option>';
+                    $('#frequency').html(frequencyDataResult);
+                    $('#frequency').val('');
+                }
                 frequencyChange();
+
             });
 
             $('#frequency').change(function() {
@@ -1109,9 +1114,11 @@ header {
         $('.reviewerReplace').click(function(){
             var result = '';
             $.each ($(".select-multiple-reviewer option:selected"), function(){
-                result += '<option value="'+$(this).val()+'">'+$(this).text()+'</option>';
+                if($(this).val() != '{{ $loggedInUser->id }}'){
+                    result += '<option value="'+$(this).val()+'">'+$(this).text()+'</option>';
+                }
             });
-
+          
             $('.change-exiting-reviewer').html(result);
             $('#reviewerReplaceSameLevel').show();
             $('#reviewerReplaceSameLevel').removeClass('fade');
@@ -1328,42 +1335,64 @@ header {
         }
 
         $("#changeReviewForm").submit(function(e) {
-            var reviewersName =$("#reviewersAccordingAssignee").val();
-            var reviewersIds =$("#selectedReviewIds").val();
-            if ($("#changeReviewForm").valid()) {
-                e.preventDefault();
+            // var reviewersName =$("#reviewersAccordingAssignee").val();
+            // var reviewersIds =$("#selectedReviewIds").val();
 
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                var formData = new FormData(this);
+            e.preventDefault();
+            var oldReviewerId = $('.change-exiting-reviewer').val();
+            var newReviewerId = $('.with-new-reviewer').val();
+            console.log(oldReviewerId);
+            console.log(newReviewerId);
 
-                $.ajax({
-                    url: $(this).attr('action'),
-                    type: $(this).attr('method'),
-                    data:  $('#changeReviewForm').serialize() + "&reviewersName="+reviewersName+"&reviewersIds="+reviewersIds,
-                    beforeSend: function() {
-                        $('.loader').show();
-                    },
-                    success: function(response) {
-                        $('.loader').hide();
-                        if(response.status == true){
-                            $("#reviewersAccordingAssignee").val(response.data.existingReviewerNames);
-                            $("#selectedReviewIds").val(response.data.existingReviewerIds);
-                            $('#reviewerReplaceSameLevel').hide();
-                            $('#reviewerReplaceSameLevel').addClass('fade');
-                        }else{
-                            swal("Wrong!", response.message, "error");
-                        }
-                    },
-                    error: function(response) {
-                        swal("Wrong!", 'Something went wrong', "error");
-                        $('.loader').hide();
-                    },
-                });
-            }
+            var existingValues = $(".select-multiple-reviewer").val();
+            console.log(existingValues);
+
+            var result = existingValues.filter(function(elem){
+                return elem != oldReviewerId; 
+            });
+            
+            result.push(newReviewerId);
+
+            $('.select-multiple-reviewer').val(null).trigger('change');
+            $(".select-multiple-reviewer").val(result);
+            $('.select-multiple-reviewer').trigger('change.select2');
+
+            $('#reviewerReplaceSameLevel').hide();
+            $('#reviewerReplaceSameLevel').addClass('fade');
+            // if ($("#changeReviewForm").valid()) {
+
+            //     $.ajaxSetup({
+            //         headers: {
+            //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //         }
+            //     });
+            //     var formData = new FormData(this);
+                
+
+            //     $.ajax({
+            //         url: $(this).attr('action'),
+            //         type: $(this).attr('method'),
+            //         data:  $('#changeReviewForm').serialize() + "&reviewersName="+reviewersName+"&reviewersIds="+reviewersIds,
+            //         beforeSend: function() {
+            //             $('.loader').show();
+            //         },
+            //         success: function(response) {
+            //             $('.loader').hide();
+            //             if(response.status == true){
+            //                 $("#reviewersAccordingAssignee").val(response.data.existingReviewerNames);
+            //                 $("#selectedReviewIds").val(response.data.existingReviewerIds);
+            //                 $('#reviewerReplaceSameLevel').hide();
+            //                 $('#reviewerReplaceSameLevel').addClass('fade');
+            //             }else{
+            //                 swal("Wrong!", response.message, "error");
+            //             }
+            //         },
+            //         error: function(response) {
+            //             swal("Wrong!", 'Something went wrong', "error");
+            //             $('.loader').hide();
+            //         },
+            //     });
+            // }
         })
     </script>
 @endsection

@@ -79,13 +79,17 @@ class VmtPMSModuleController extends Controller
 
         $allEmployeesList = User::leftJoin('vmt_employee_office_details','users.id','=','vmt_employee_office_details.user_id')
             ->leftJoin('vmt_employee_details','users.id','=','vmt_employee_details.userid')
+            ->select('users.name','users.id','vmt_employee_details.emp_no','vmt_employee_office_details.designation')
+            ->get();
+        $allEmployeesWithoutLoggedUserList = User::leftJoin('vmt_employee_office_details','users.id','=','vmt_employee_office_details.user_id')
+            ->leftJoin('vmt_employee_details','users.id','=','vmt_employee_details.userid')
             ->where('users.id','!=',Auth::id())
             ->select('users.name','users.id','vmt_employee_details.emp_no','vmt_employee_office_details.designation')
             ->get();
 
         $loggedInUser = Auth::user();
 
-        return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','existingKPIForms','departments','employees','pmsKpiAssigneeDetails','flowCheck','allEmployeesList','loggedInUser'));
+        return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','existingKPIForms','departments','employees','pmsKpiAssigneeDetails','flowCheck','allEmployeesList','allEmployeesWithoutLoggedUserList','loggedInUser'));
     }
 
     public function showPMSDashboardForManager()
@@ -971,6 +975,7 @@ class VmtPMSModuleController extends Controller
             $oldReviewerName = User::findorfail($request->oldReviewerName);
 
             $reviewersIds = explode(',',$request->reviewersIds);
+            dD($request->all());
             $reviewersName = explode(',',$request->reviewersName);
             $existingReviewerIds = [];
             
@@ -1082,7 +1087,7 @@ class VmtPMSModuleController extends Controller
         if(isset($request->selectedEmployeesId) && count($request->selectedEmployeesId) > 0){
             $employeesList = User::whereIn('id',$request->selectedEmployeesId)->select('id','name','avatar')->get()->toArray();
             foreach($employeesList as $key => $employeeAvatar){
-                if($key < 2){
+                if($key < 4){
                     $avatarProfilePic = \URL::asset('images/'. $employeeAvatar['avatar']);
                     $defaultProfilePic = \URL::asset('default/default_profile.jpg');
                     if(!empty($employeeAvatar['avatar']) && file_exists(public_path('images/'.$employeeAvatar['avatar']))){
@@ -1095,16 +1100,14 @@ class VmtPMSModuleController extends Controller
             
             // <span class="employees-profile editProfile employeeEditButton">Edit</span>
         }
+        $editSaveText = 'Add';
         if(count( $employeesList) > 0){
-            if(count($employeesList) > 2){
-                $html .= '<span class="employees-profile counting">+ '. count($employeesList) - 2 .'</span>';
-            }else{
-                $html .= '<span class="employees-profile counting">'. count($employeesList) .'</span>';
+            if(count($employeesList) > 4){
+                $html .= '<span class="employees-profile counting">+ '. count($employeesList) - 4 .'</span>';
             }
-        }else{
-            $html .= '<span class="employees-profile counting">0</span>';
+            $editSaveText = 'Edit';
         }
-        $html .= '<span class="employees-profile editProfile employeeEditButton">Edit</span></div></div>';
+        $html .= '<span class="employees-profile editProfile employeeEditButton">'.$editSaveText.'</span></div></div>';
         return response()->json(['status'=>true,'html'=>$html]);
     }
 
