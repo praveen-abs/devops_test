@@ -306,6 +306,8 @@
 <!-- apexcharts -->
 <script src="{{ URL::asset('assets/libs/swiper/swiper.min.js')}}"></script>
 
+<!--Sweet alert JS-->
+<script src="{{ URL::asset('/assets/premassets/js/sweetalert.js') }}"></script>
 
 <!-- for date and time -->
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
@@ -419,26 +421,32 @@ $(document).ready(function(){
             processData: false,
             data: form_data,
             success: function(data){
-                console.log(data);
-                $('.addition-content').html('');
-                var values = [];
-                var dataResultNotAvailableColumns =  '';
-                var length = 1;
-                $.each(data[0],function(key, value) {
-                    var dataResult =  '';
-                    var increment = 0;
-                    $.each(availableValues,function(keyAvailable, valueAvailable) {  
-                        var test = '<td class="text-box-td p-1"><textarea name="'+valueAvailable+'" data-show="true" id="" class="text-box" cols="20" placeholder="type here">'+value[increment]+'</textarea></td>';
-                        dataResult += test;
-                        increment++;
-                    });
-                    $.each(nonAvailableValues,function(keyNotAvailable, valueNotAvailable) {   
-                        var test = '<input type="hidden" name="'+valueNotAvailable+'">';
-                        dataResult += test;
-                    });
-                    $('.content-container').append('<tr class="addition-content cursor-pointer" id="content'+length+'"><td class="text-box-td p-1"><span  name="numbers" id="" class="tableInp" >'+length+'</span><div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div></td>'+dataResult+'</tr>');
+                if(data.status == true){
+                    console.log(data);
+                    $('.addition-content').html('');
+                    var values = [];
+                    var dataResultNotAvailableColumns =  '';
+                    var length = 1;
+                    $.each(data.result,function(key, value) {
+                        console.log(key+" KEY");
+                        console.log(value+" VALUE");
+                        var dataResult =  '';
+                        var increment = 0;
+                        $.each(availableValues,function(keyAvailable, valueAvailable) {  
+                            var test = '<td class="text-box-td p-1"><textarea name="'+valueAvailable+'" data-show="true" id="" class="text-box" cols="20" placeholder="type here">'+value[increment]+'</textarea></td>';
+                            dataResult += test;
+                            increment++;
+                        });
+                        $.each(nonAvailableValues,function(keyNotAvailable, valueNotAvailable) {   
+                            var test = '<input type="hidden" name="'+valueNotAvailable+'">';
+                            dataResult += test;
+                        });
+                        $('.content-container').append('<tr class="addition-content cursor-pointer" id="content'+length+'"><td class="text-box-td p-1"><span  name="numbers" id="" class="tableInp" >'+length+'</span><div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div></td>'+dataResult+'</tr>');
                             length++;
-                });
+                    });
+                }else{
+                    swal("Wrong!", data.message, "error");
+                }
                 // var getAvaibleColumnHeader = getAvailableColumns();
                 // getAvailableColumns();
                 
