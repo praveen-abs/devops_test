@@ -221,7 +221,7 @@
                                         @if($assignedGoals->is_assignee_accepted == '1')
                                             @if($assignedGoals->is_assignee_submitted == 0)
                                             <div>
-                                                <textarea style="width: 100%;" name="assignee_kpi_review[{{$kpiRow->id}}]" id="assignee_kpi_review{{$index}}" cols="40" rows="8" placeholder="type here">@if(isset(json_decode($assignedGoals->assignee_kpi_review,true)[$kpiRow->id])) {{json_decode($assignedGoals->assignee_kpi_review,true)[$kpiRow->id]}} @endif</textarea>
+                                                <textarea style="width: 100%;" name="assignee_kpi_review[{{$kpiRow->id}}]" data-index="{{$index}}" data-targetval="{{$kpiRow->target}}" data-kpiweightageval="{{$kpiRow->kpi_weightage}}" id="assignee_kpi_review{{$index}}" cols="40" rows="8" @if(is_numeric($kpiRow->target))  onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46' class="calculateSelfKPIPercentage" placeholder="type numbers only" @else placeholder="type here" @endif>@if(isset(json_decode($assignedGoals->assignee_kpi_review,true)[$kpiRow->id])) {{json_decode($assignedGoals->assignee_kpi_review,true)[$kpiRow->id]}} @endif</textarea>
                                             </div>
                                             @else
                                             <div>
@@ -234,7 +234,7 @@
                                         @if($assignedGoals->is_assignee_accepted == '1')
                                             @if($assignedGoals->is_assignee_submitted == 0)
                                             <div>
-                                                <input type="number" class="inp-text" id="assignee_kpi_percentage{{$index}}" name="assignee_kpi_percentage[{{$kpiRow->id}}]" placeholder="type here" value="@if(isset( json_decode($assignedGoals->assignee_kpi_percentage,true)[$kpiRow->id])){{json_decode($assignedGoals->assignee_kpi_percentage,true)[$kpiRow->id]}}@endif">
+                                                <input type="number" class="inp-text" id="assignee_kpi_percentage{{$index}}" name="assignee_kpi_percentage[{{$kpiRow->id}}]" placeholder="type here" value="@if(isset( json_decode($assignedGoals->assignee_kpi_percentage,true)[$kpiRow->id])){{json_decode($assignedGoals->assignee_kpi_percentage,true)[$kpiRow->id]}}@endif" @if(is_numeric($kpiRow->target)) readonly @endif>
                                             </div>
                                             @else
                                             <div> {{json_decode($assignedGoals->assignee_kpi_percentage,true)[$kpiRow->id]}}</div>
@@ -408,6 +408,36 @@
 <script src="{{ URL::asset('/assets/premassets/js/footable.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/premassets/css/footable.bootstrap.min.css') }}"></script>
 <script type="text/javascript">
+
+    /*
+    * for calculating Self KPI Achievement % If Target is Number
+    * formula :-
+    * Self KPI Achievement %' = (KPI - Achievement Self-Review (this) / Target (targetVal)) * KPI Weightage (kpiWeightageVal);	
+    */
+    $(document).on('keyup','.calculateSelfKPIPercentage',function(){
+        var kpiPercentageVal = $(this).val();
+        var index = $(this).data("index");
+        var targetVal = $(this).data("targetval");
+        var kpiWeightageVal = $(this).data("kpiweightageval");
+        
+        kpiWeightageVal = kpiWeightageVal.replace('%', '');
+
+        if(kpiPercentageVal != ''){
+            console.log(kpiPercentageVal);
+            console.log(targetVal);
+            console.log(kpiWeightageVal);
+            console.log(kpiPercentageVal/targetVal);
+            var result = (kpiPercentageVal/targetVal) * kpiWeightageVal;
+            console.log(result);
+            $('#assignee_kpi_percentage'+index).val(result);
+        }else{
+            $('#assignee_kpi_percentage'+index).val('');
+        }
+
+    })
+        
+
+
     // Upload file enable upload button
     $('#upload_file').change(function() {
         if ($(this).is(':valid')) {
