@@ -728,7 +728,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Gender</label>
 
-                                                    <select placeholder="Spouse Gender" name="spouse_gender" id="spouse_gender" class="textbox  onboard-form form-control  spouse_data select2_form_without_search" required>
+                                                    <select placeholder="Spouse Gender" name="spouse_gender" id="spouse_gender" class="textbox  onboard-form form-control  spouse_data" required>
                                                         <option value="" hidden selected disabled>Select Spouse Gender</option>
                                                         <option value="male">Male</option>
                                                         <option value="female">Female</option>
