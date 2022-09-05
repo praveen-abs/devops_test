@@ -723,22 +723,18 @@ class VmtEmployeeController extends Controller
         $data['net_take_home_yearly'] = intval($employeeData["net_income"]) * 12;
         // download PDF file with download method
         $pdf = new Dompdf();
-        $html =  view('vmt_appoinment_letterPdf', compact('data'));
+        $html =  view('testing', compact('data'));
         $pdf->loadHtml($html, 'UTF-8');
         $pdf->setPaper('A4', 'portrait');
         $pdf->render();
         $docUploads =  $pdf->output();
         \File::put(public_path('/').$filename, $docUploads);
         $fileAttr  = file_get_contents(public_path('/').$filename);
-
         $image_view = url('/').$VmtGeneralInfo->logo_img;
-
         $appoinmentPath = "";
-
         if(fetchMasterConfigValue("can_send_appointmentletter_after_onboarding") == "true") {
             $appoinmentPath = public_path('/').$filename;
         }
-
         $isSent    = \Mail::to($employeeData['email'])->send(new WelcomeMail($employeeData['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost() ,  $appoinmentPath ,$image_view));
 
         return $isSent;
