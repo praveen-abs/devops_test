@@ -21,6 +21,8 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ApraisalQuestionExport;
 use Session;
 use App\Notifications\ViewNotification;
+use Exception;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 
 class VmtApraisalController extends Controller
@@ -67,8 +69,43 @@ class VmtApraisalController extends Controller
     }
     
     public function uploadFile(Request $request) {
-        $importDataArry = \Excel::toArray(new ApraisalQuestion, request()->file('upload_file'));
-        return response()->json($importDataArry);
+        try{
+            $importDataArry = \Excel::toArray(new ApraisalQuestion, request()->file('upload_file'));
+
+            $data = ConfigPms::first();
+            $array_selectedKPIColumnsHeader = [];
+            if(!empty($data)){
+                $array_selectedKPIColumns = str_getcsv($data->selected_columns);
+                if(count($array_selectedKPIColumns) > 0){
+                    foreach($array_selectedKPIColumns as $kpiColumnName){
+                        $decodedColumnHeader = isset($data->column_header) ? json_decode($data->column_header,true) : '';
+                        if($decodedColumnHeader != ''){
+                            $array_selectedKPIColumnsHeader[] = isset($decodedColumnHeader[$kpiColumnName]) ? $decodedColumnHeader[$kpiColumnName] : '';
+                        }
+                    }
+                }
+            }
+            if(count($array_selectedKPIColumnsHeader) > 0 && isset($importDataArry[0]) && isset($importDataArry[0][0])){
+                foreach($array_selectedKPIColumnsHeader as $key => $headerColumn){
+                    if($headerColumn != $importDataArry[0][0][$key]){
+                        return response()->json(['status' => false, 'message' => 'Columns doesnt match with system']);
+                    }
+                }
+            }
+            
+            $result = [];
+            foreach($importDataArry[0] as $keyCells => $importData){
+                if($keyCells > 0){
+                    array_push($result, $importData);
+                }
+            }
+            return response()->json(['status' => true, 'result' => $result]);
+        }catch(Exception $e){
+            Log::info('Import sample kpi form PMS V2 Error: '.$e->getMessage());
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+        
+        // return response()->json($importDataArry);
     }
 
     public function downloadFile(Request $request) {
