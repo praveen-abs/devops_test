@@ -73,7 +73,7 @@ class VmtPMSModuleController extends Controller
         $dashboardCountersData['selfReviewCount'] = $selfReviewCount;
         $dashboardCountersData['totalSelfReviewCount'] = $totalSelfReviewCount;
     
-            $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')->WhereRaw("find_in_set(".auth()->user()->id.", reviewer_id)")->orWhereRaw("find_in_set(".auth()->user()->id.", assignee_id)")->orWhere('assigner_id',auth()->user()->id)->orderBy('id','DESC')->get();
+            $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')->WhereRaw("find_in_set(".auth()->user()->id.", reviewer_id)")->orWhereRaw("find_in_set(".auth()->user()->id.", assignee_id)")->orderBy('id','DESC')->get();
 
         $flowCheck = 1;
 
@@ -145,7 +145,7 @@ class VmtPMSModuleController extends Controller
         $dashboardCountersData['selfReviewCount'] = $selfReviewCount;
         $dashboardCountersData['totalSelfReviewCount'] = $totalSelfReviewCount;
     
-            $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')->WhereRaw("find_in_set(".$loggedUserId.", reviewer_id)")->orWhereRaw("find_in_set(".$loggedUserId.", assignee_id)")->orWhere('assigner_id',$loggedUserId)->orderBy('id','DESC')->get();
+            $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')->WhereRaw("find_in_set(".$loggedUserId.", reviewer_id)")->orWhereRaw("find_in_set(".$loggedUserId.", assignee_id)")->orderBy('id','DESC')->get();
 
         $loggedInUser = Auth::user();
 
@@ -312,15 +312,15 @@ class VmtPMSModuleController extends Controller
         for ($i=0; $i < $totRows; $i++) {
                 $kpiRow = new VmtPMS_KPIFormDetailsModel;
                 $kpiRow->vmt_pms_kpiform_id   =    $KpiLAST;
-                $kpiRow->dimension   =    $request->dimension ? $request->dimension[$i] : '';
-                $kpiRow->kpi         =    $request->kpi ? $request->kpi[$i] : '';
-                $kpiRow->operational_definition   = $request->operational ? $request->operational[$i]: '' ;
-                $kpiRow->measure     =    $request->measure ? $request->measure[$i] : '';
-                $kpiRow->frequency   =    $request->frequency ? $request->frequency[$i] : '';
-                $kpiRow->target      =    $request->target ? $request->target[$i] : '';
-                $kpiRow->stretch_target  =    $request->stretchTarget ? $request->stretchTarget[$i] : '';
-                $kpiRow->source          =    $request->source ? $request->source[$i] : '';
-                $kpiRow->kpi_weightage   =    $request->kpiWeightage ? $request->kpiWeightage[$i] : '';
+                $kpiRow->dimension   =    isset($request->dimension) && isset($request->dimension[$i]) ? $request->dimension[$i] : '';
+                $kpiRow->kpi         =    isset($request->kpi) && isset($request->kpi[$i]) ? $request->kpi[$i] : '';
+                $kpiRow->operational_definition   = isset($request->operational) && isset($request->operational[$i]) ? $request->operational[$i]: '' ;
+                $kpiRow->measure     =    isset($request->measure) && isset($request->measure[$i]) ? $request->measure[$i] : '';
+                $kpiRow->frequency   =    isset($request->frequency) && isset($request->frequency[$i]) ? $request->frequency[$i] : '';
+                $kpiRow->target      =    isset($request->target) && isset($request->target[$i]) ? $request->target[$i] : '';
+                $kpiRow->stretch_target  =    isset($request->stretchTarget) && isset($request->stretchTarget[$i]) ? $request->stretchTarget[$i] : '';
+                $kpiRow->source          =    isset($request->source) && isset($request->source[$i]) ? $request->source[$i] : '';
+                $kpiRow->kpi_weightage   =    isset($request->kpiWeightage) && isset($request->kpiWeightage[$i]) ? $request->kpiWeightage[$i] : '';
                 // $kpiRow->author_id       =    auth::user()->id;
                 // $kpiRow->author_name     =    str_replace(' ', '_', strtolower($request->name));
                 $kpiRow->save();

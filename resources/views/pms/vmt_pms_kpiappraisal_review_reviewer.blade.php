@@ -78,24 +78,24 @@
 
                                     <div class="mb-3 input-wrap">
                                         <p>Overall Annual Score</p>
-                                        <div class="appraisal-box  btn bg-success text-white ">
-                                        @if($isAllReviewersSubmittedOrNot) @if($ratingDetail){{$ratingDetail['rating']}}@else - @endif @else - @endif</div>
+                                        <div class="appraisal-box  btn bg-success text-white "><small>
+                                        @if($isAllReviewersSubmittedOrNot) @if($ratingDetail){{$ratingDetail['rating']}}@else - @endif @else - @endif</small></div>
 
                                     </div>
                                     <div class="mb-3 input-wrap">
                                         <p>Corresponding ANNUAL PERFORMANCE Rating</p>
-                                        <div class="appraisal-box  btn bg-success  text-white">
-                                        @if($isAllReviewersSubmittedOrNot) @if($ratingDetail){{$ratingDetail['performance']}}@else - @endif @else - @endif</div>
+                                        <div class="appraisal-box  btn bg-success  text-white"><small>
+                                        @if($isAllReviewersSubmittedOrNot) @if($ratingDetail){{$ratingDetail['performance']}}@else - @endif @else - @endif</small></div>
                                     </div>
                                     <div class="mb-3 input-wrap">
                                         <p>Ranking</p>
-                                        <div class="appraisal-box   btn bg-success text-white ">
-                                        @if($isAllReviewersSubmittedOrNot) @if($ratingDetail){{$ratingDetail['ranking']}}@else - @endif @else - @endif</div>
+                                        <div class="appraisal-box   btn bg-success text-white "><small>
+                                        @if($isAllReviewersSubmittedOrNot) @if($ratingDetail){{$ratingDetail['ranking']}}@else - @endif @else - @endif</small></div>
                                     </div>
                                     <div class=" input-wrap">
                                         <p>Action</p>
-                                        <div class="appraisal-box btn bg-success text-white">
-                                        @if($isAllReviewersSubmittedOrNot) @if($ratingDetail){{$ratingDetail['action']}}@else - @endif @else - @endif</div>
+                                        <div class="appraisal-box btn bg-success text-white"><small>
+                                        @if($isAllReviewersSubmittedOrNot) @if($ratingDetail){{$ratingDetail['action']}}@else - @endif @else - @endif</small></div>
                                     </div>
 
                                 </div>
@@ -114,7 +114,7 @@
         <!-- appraisal table -->
         <div class="card">
             <div class="card-body pb-2">
-                @if(isset($isAllReviewersSubmittedData) && count($isAllReviewersSubmittedData) > 0 && isset($isAllReviewersSubmittedData[Auth::id()]) && $isAllReviewersSubmittedData[Auth::id()] != '1')
+                @if(isset($isAllReviewersSubmittedData) && count($isAllReviewersSubmittedData) > 0 && $isAllReviewersSubmittedData[Auth::id()] != '1')
                 <div class="row">
                     <div class="col-12 mt-3">
                         <form id="upload_form" enctype="multipart/form-data">
@@ -266,9 +266,9 @@
                     @if($decodedKpiReviewSubmittedStatus[Auth::id()] != '1')
                     <div class="buttons d-flex align-items-center justify-content-end ">
                         <button class="btn btn-primary" id="save_table" >
-                        @if($decodedKpiReviewSubmittedStatus[Auth::id()] == '') Save @else Edit @endif <i class="fa fa-save"></i></button>
+                        @if($decodedKpiReviewSubmittedStatus[Auth::id()] == '') Save @else Edit @endif </button>
                         &nbsp;&nbsp;
-                        <button class="btn btn-primary" id="publish_table" @if($decodedKpiReviewSubmittedStatus[Auth::id()] == '') disabled @endif>Submit<i class="fa fa-save"></i></button>
+                        <button class="btn btn-primary" id="publish_table" @if($decodedKpiReviewSubmittedStatus[Auth::id()] == '') disabled @endif>Submit</button>
                     </div>
                     @endif
                 @else

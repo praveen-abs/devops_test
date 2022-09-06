@@ -78,24 +78,24 @@
 
                                     <div class="mb-3 input-wrap">
                                         <p>Overall Annual Score</p>
-                                        <div class="appraisal-box  btn bg-success text-white ">
-                                            @if($isAllReviewersSubmittedOrNot) @if($ratingDetail){{$ratingDetail['rating']}}@else - @endif @else - @endif</div>
+                                        <div class="appraisal-box  btn bg-success text-white "><small>
+                                            @if($isAllReviewersSubmittedOrNot) @if($ratingDetail){{$ratingDetail['rating']}}@else - @endif @else - @endif</small></div>
 
                                     </div>
                                     <div class="mb-3 input-wrap">
                                         <p>Corresponding ANNUAL PERFORMANCE Rating</p>
-                                        <div class="appraisal-box  btn bg-success  text-white">
-                                            @if($isAllReviewersSubmittedOrNot) @if($ratingDetail){{$ratingDetail['performance']}}@else - @endif @else - @endif</div>
+                                        <div class="appraisal-box  btn bg-success  text-white"><small>
+                                            @if($isAllReviewersSubmittedOrNot) @if($ratingDetail){{$ratingDetail['performance']}}@else - @endif @else - @endif</small></div>
                                     </div>
                                     <div class="mb-3 input-wrap">
                                         <p>Ranking</p>
-                                        <div class="appraisal-box   btn bg-success text-white ">
-                                            @if($isAllReviewersSubmittedOrNot) @if($ratingDetail){{$ratingDetail['ranking']}}@else - @endif @else - @endif</div>
+                                        <div class="appraisal-box   btn bg-success text-white "><small>
+                                            @if($isAllReviewersSubmittedOrNot) @if($ratingDetail){{$ratingDetail['ranking']}}@else - @endif @else - @endif</small></div>
                                     </div>
                                     <div class=" input-wrap">
                                         <p>Action</p>
-                                        <div class="appraisal-box btn bg-success text-white">
-                                            @if($isAllReviewersSubmittedOrNot) @if($ratingDetail){{$ratingDetail['action']}}@else - @endif @else - @endif</div>
+                                        <div class="appraisal-box btn bg-success text-white"><small>
+                                            @if($isAllReviewersSubmittedOrNot) @if($ratingDetail){{$ratingDetail['action']}}@else - @endif @else - @endif</small></div>
                                     </div>
 
                                 </div>
@@ -279,16 +279,16 @@
                     @if($assignedGoals->is_assignee_accepted == '1')
                     <div class="buttons d-flex align-items-center justify-content-end ">
                         <button class="btn btn-primary" id="save_table">
-                        @if($assignedGoals->is_assignee_submitted == '') Save @else Edit @endif <i class="fa fa-save"></i></button>
+                        @if($assignedGoals->is_assignee_submitted == '') Save @else Edit @endif </button>
                         &nbsp;&nbsp;
-                        <button class="btn btn-primary" id="publish_table" @if($assignedGoals->is_assignee_submitted == '') disabled @endif>Submit<i class="fa fa-save"></i></button>
+                        <button class="btn btn-primary" id="publish_table" @if($assignedGoals->is_assignee_submitted == '') disabled @endif>Submit</button>
                     </div>
                     @elseif($assignedGoals->is_assignee_accepted == null)
                     <div class="buttons d-flex align-items-center justify-content-end ">
                         <button class="btn btn-primary" id="accept_review">
-                        Accept <i class="fa fa-save"></i></button>
+                        Accept </button>
                         &nbsp;&nbsp;
-                        <button class="btn btn-primary" id="reject_review">Reject<i class="fa fa-save"></i></button>
+                        <button class="btn btn-primary" id="reject_review">Reject</button>
                     </div>
                     @elseif($assignedGoals->is_assignee_accepted == '0')
                     <h6>You have Already Rejected this review.</h6>

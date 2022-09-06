@@ -698,7 +698,7 @@ header {
                     @else
                     <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
                         <button class="btn btn-primary ml-2" id="edit-employee-based-on-reviewer"
-                            >Edit</button>
+                            >Save</button>
                     </div>
                     @endif
                 </div>
