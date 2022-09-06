@@ -471,29 +471,20 @@ header {
                                         @endif
                                     </div>
                                     @else
-                                    <!-- <input type="hidden" name="employees[]" id="sel_employees"> -->
-                                    <!-- <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3 ">
-                                        <label class="" for="">Employees</label> -->
-                                        <!-- <select class="select-employee-dropdown form-control" id="selectedEmployeeDropdownId" name="employees[]" multiple="multiple">
-                                            @foreach($allEmployeesList as $employeeList)
-                                                <option value="{{ $employeeList->id }}">{{ $employeeList->name }}</option>
-                                            @endforeach
-                                        </select> -->
-                                        <!-- <input type="text" name="" id="selected_employee"
-                                            target="#changeEmployee" class="form-control  increment-input"
-                                            placeholder="Employees">
-                                        <button type="button" id=""
-                                            class="btn btn-primary increment-btn py-1 px-2 chnageButton">+</button> -->
-                                    <!-- </div> -->
+                                  
 
                                     <!-- flow 1 -->
                                     <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
                                         <label class="" for="">Reviewer</label>
                                         <!-- <input type="hidden" name="reviewer" id="selectedReviewIds"> -->
                                         <select class="select-multiple-reviewer form-control" name="reviewer[]" multiple="multiple">
-                                            @foreach($allEmployeesList as $employeeData)
-                                                <option value="{{ $employeeData->id }}">{{ $employeeData->name }}</option>
-                                            @endforeach
+                                            @if(isset($allEmployeesList) && count($allEmployeesList) > 0)
+                                                @foreach($allEmployeesList as $employeeData)
+                                                    <option value="{{ $employeeData->id }}">{{ $employeeData->name }}</option>
+                                                @endforeach
+                                            @else
+                                                <option value="">Select Reviewer</option>
+                                            @endif
                                         </select>
                                         <!-- <input readonly type="text" id="reviewersAccordingAssignee"
                                             target="" class="form-control  increment-input"
