@@ -471,20 +471,7 @@ header {
                                         @endif
                                     </div>
                                     @else
-                                    <!-- <input type="hidden" name="employees[]" id="sel_employees"> -->
-                                    <!-- <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3 ">
-                                        <label class="" for="">Employees</label> -->
-                                        <!-- <select class="select-employee-dropdown form-control" id="selectedEmployeeDropdownId" name="employees[]" multiple="multiple">
-                                            @foreach($allEmployeesList as $employeeList)
-                                                <option value="{{ $employeeList->id }}">{{ $employeeList->name }}</option>
-                                            @endforeach
-                                        </select> -->
-                                        <!-- <input type="text" name="" id="selected_employee"
-                                            target="#changeEmployee" class="form-control  increment-input"
-                                            placeholder="Employees">
-                                        <button type="button" id=""
-                                            class="btn btn-primary increment-btn py-1 px-2 chnageButton">+</button> -->
-                                    <!-- </div> -->
+                                  
 
                                     <!-- flow 1 -->
                                     <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
