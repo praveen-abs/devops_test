@@ -1,5 +1,5 @@
 <div class="event-wrapper">
-    <div class="card profile-box">
+    <div class="card profile-box border-0">
         <div class="card-body">
             <h6 class="text-primary">Events</h6>
             <div class="row">
