@@ -4,6 +4,19 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/orgchart/3.1.1/css/jquery.orgchart.min.css" rel="stylesheet">
     <link href="{{ URL::asset('assets/css/employee_hirarchy.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('assets/css/app.min.css') }}" rel="stylesheet">
+    <style type="text/css">
+        .orgchart .dept-level .title{
+            padding-right: 4px;
+            background-color: #009933 !important;
+        }
+        .orgchart .dept-level .content{
+            height: 0;
+            border: none !important;
+        }
+        .orgchart .dept-level .title .symbol{
+            display: none;
+        }
+    </style>
 
 @endsection
 @section('content')
@@ -11,6 +24,9 @@
 @slot('li_1')  @endslot
 @endcomponent
 <div id="chart-container" class="mt-8" style="overflow: hidden;">
+</div>
+<div class="">
+    <input type="checkbox" name="department" id="department-wise" >Department
 </div>
 
 
@@ -95,13 +111,16 @@ $(document).ready(function() {
     };
 
 
-
-
     var ajaxURLs = {
+
             'children': function(nodeData) {
+                //console.log($('input[name="department"]:checked'));
                 //console.log(nodeData.user_code);
                 var url = "{{ route('getChildrenForUser','') }}"+"/"+nodeData.user_code;
 
+                if($('input[name="department"]:checked').val()){
+                    return url + '?department=true';
+                }
                 return url;
             },
             'parent': '/orgchart/parent/',
@@ -114,7 +133,8 @@ $(document).ready(function() {
     };
 
     @if(Auth::user()->is_admin == 0)
-        $('#chart-container').orgchart({
+        
+        var ocOption  = {
             'data' : '{{ route('getTwoLevelOrgTree',['user_code' => Auth::user()->user_code ]) }}',
             'ajaxURL' : ajaxURLs,
             'pan' : true,
@@ -129,7 +149,45 @@ $(document).ready(function() {
             {
                 return $node;
             }
+        };
+
+        var orgContainer  = $('#chart-container').orgchart(ocOption);
+
+        /*{
+            'data' : '{{ route('getTwoLevelOrgTree',['user_code' => Auth::user()->user_code ]) }}',
+            'ajaxURL' : ajaxURLs,
+            'pan' : true,
+            'zoom' : true,
+            'zoominLimit' : 2,
+            'zoomoutLimit' : 0.7,
+            'nodeContent': 'designation',
+            'exportButton': true,
+            'exportFilename': 'OrgChartImage',
+            'exportFileextension':'png',
+            'createNode' : function($node,data)
+            {
+                return $node;
+            }
+        });*/
+
+
+        // refresh organisation chart on click department checkbox
+        $('input[name="department"]').on('click', function(e){
+            console.log(orgContainer);
+
+            if($('input[name="department"]:checked').val()){
+                //return url + '?department=true';
+                ocOption.data = '{{ route('getTwoLevelOrgTree',['user_code' => Auth::user()->user_code ]) }}?department=true';
+            }else{
+                ocOption.data = '{{ route('getTwoLevelOrgTree',['user_code' => Auth::user()->user_code ]) }}';
+            }
+            orgContainer.init(ocOption);
         });
+
+
+
+
+
     @else
         $('#chart-container').html('<h4> Not available for Super Admin</h4>');
     @endif

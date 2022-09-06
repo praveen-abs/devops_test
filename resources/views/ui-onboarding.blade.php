@@ -147,7 +147,7 @@
                                                 <!-- <label class="" for="444">DL Number</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">DL Number</label>
-                                                    <input type="text" placeholder="DL Number" name="dl_no" id="dl_no" minlength="16" maxlength="16" class="onboard-form form-control textbox " style='text-transform:uppercase' required />
+                                                    <input type="text" placeholder="DL Number" name="dl_no" id="dl_no" minlength="16" maxlength="16" class="onboard-form form-control textbox " style='text-transform:uppercase' />
                                                     <label class="error star_error dl_no_label" for="dl_no" style="display: none;"></label>
 
                                                     <span class="error" id="error_dl_no"></span>
@@ -187,7 +187,7 @@
                                                 </div> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Passport Exp Date</label>
-                                                    <input type="text" max="9999-12-31" placeholder="Date of Joining" name="exp" class="onboard-form  form-control textbox " onfocus="(this.type='date')" required />
+                                                    <input type="text" max="9999-12-31" placeholder="Date of Joining"  name="exp" class="onboard-form  form-control textbox " id="passdate" onfocus="(this.type='date')" required />
                                                     <!-- <label for="" class="float-label">Passport Exp Date</label> -->
                                                 </div>
                                             </div>

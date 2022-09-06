@@ -135,16 +135,16 @@
 
             $('#employee_name').css('text-transform', 'capitalize');
 
-              $('.select2_form_without_search').each(function() {
-                  var placeholder = $(this).attr('placeholder')
-                    placeholder = (placeholder == undefined) ? '' : placeholder;
+            $('.select2_form_without_search').each(function() {
+                var placeholder = $(this).attr('placeholder')
+                placeholder = (placeholder == undefined) ? '' : placeholder;
 
-                   $(this).select2({
-                       width: '100%',
-                       minimumResultsForSearch: Infinity,
-                       placeholder: placeholder,
-                   });
-              });
+                $(this).select2({
+                    width: '100%',
+                    minimumResultsForSearch: Infinity,
+                    placeholder: placeholder,
+                });
+            });
 
 
             $('#aadhar_backend').click(function() {
@@ -267,26 +267,26 @@
                         $('#spouse_gender').val('male');
                     }
                 } else if ($('#marital_status').val('single')) {
-                    
-                    if (mygender == "Male"){
+
+                    if (mygender == "Male") {
+                        $('#spouse_gender').val('');
+                    } else if (mygender == "Female") {
                         $('#spouse_gender').val('');
                     }
-                    else if (mygender == "Female") {
-                        $('#spouse_gender').val('');                       
-                    }
 
-                    
+
 
                 }
-
-                // else if($('marital_status').val('widowed'))
-
-                
-
-
             })
-
             //End Employee Gender Populate
+
+
+
+         
+
+            //PAN Validation
+
+            //End Pan Validation
 
             // $('#vmt_aadhar').on('input', function() {
             //     var aadharno = new RegExp("^[2-9]{1}[0-9]{3}\s{1}[0-9]{4}\s{1}[0-9]{4}$");
@@ -439,10 +439,10 @@
                         }
                         $(this).attr('disabled', true);
                         $(this).removeAttr('required');
-                        $(this).addClass('not-required validate'); 
+                        $(this).addClass('not-required validate');
                         $('#spouse_gender').val('');
                         $('#' + name + '_req').hide();
-                        
+
                     });
                 } else {
                     $.each($('.spouse_data'), function(value) {
@@ -507,7 +507,7 @@
                 placeholder: "Select location",
             });
 
-            
+
 
 
 
@@ -562,17 +562,7 @@
             // });
 
 
-            $('#passport_no_req').hide();
-            $('#passport_exp_req').hide();
-            $('#current_country').val('IN').trigger('change');
-            $('#permanent_country').val('IN').trigger('change');
-            $('#current_state').val('IN').trigger('change');
-            $('#permanent_state').val('IN').trigger('change');
-            stateFunction('IN', '#current_state');
-            stateFunction('IN', '#permanent_state');
-            stateFunction('IN', '#ptax_location');
-            stateFunction('IN', '#lwf_location');
-            stateFunction('IN', '#holiday_location');
+                       $('#passport_no_req').hide(); $('#passport_exp_req').hide(); $('#current_country').val('IN').trigger('change'); $('#permanent_country').val('IN').trigger('change'); $('#current_state').val('IN').trigger('change'); $('#permanent_state').val('IN').trigger('change'); stateFunction('IN', '#current_state'); stateFunction('IN', '#permanent_state'); stateFunction('IN', '#ptax_location'); stateFunction('IN', '#lwf_location'); stateFunction('IN', '#holiday_location');
 
             $('#current_address_copy').change(function() {
                 if ($('#current_address_copy').is(':checked')) {
