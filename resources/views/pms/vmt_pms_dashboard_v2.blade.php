@@ -478,7 +478,7 @@ header {
                                         <label class="" for="">Reviewer</label>
                                         <!-- <input type="hidden" name="reviewer" id="selectedReviewIds"> -->
                                         <select class="select-multiple-reviewer form-control" name="reviewer[]" multiple="multiple">
-                                            @if(count($allEmployeesList) > 0)
+                                            @if(isset($allEmployeesList) && count($allEmployeesList) > 0)
                                                 @foreach($allEmployeesList as $employeeData)
                                                     <option value="{{ $employeeData->id }}">{{ $employeeData->name }}</option>
                                                 @endforeach
