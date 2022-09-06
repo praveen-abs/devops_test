@@ -20,10 +20,31 @@ class VmtOrgTreeController extends Controller
 
         $data = $this->getUserNodeDetails($user_code);
 
-        //add children
+        //dd($user_code);
+        
         if($this->hasChildNodes($user_code))
             $data['children'] =$this->getChildrenForUser( $data['user_code'])['children'];
 
+
+        /* 
+         * Grouping the node based on the department wise if department filter is set on 
+         * request
+        */
+        if(request()->get('department')){
+            $childNodeObj       =  collect($data['children']);
+            $db_departmentNodes =  $childNodeObj->groupBy('department')->all();
+            $dArray  = [];
+            // convert each db obj to node structure
+            foreach($db_departmentNodes as $key => $deptNodes ){
+                $j= 0;
+                foreach ($deptNodes as $nodeKey => $value) {
+                    // code...
+                    $dArray[$j] = $value;
+                    $j++;
+                }   
+            }
+            $data['children']  = $dArray;
+        }
 
         //dd($data);
 
@@ -48,19 +69,43 @@ class VmtOrgTreeController extends Controller
         {
             //get the child nodes of the given parent node
             $db_childNodes = $this->fetch_childrenForGivenUser($user_code);
+            
 
-            $i = 0;
-            $t_array = [];
-            //Convert each db obj to node structure
-            foreach($db_childNodes as $singleDBChild)
-            {
-                //dd($singleDBChild->id);
-                $t_array[$i] = $this->getUserNodeDetails($singleDBChild->user_code);
-                $i++;
+            /* 
+             * Grouping the node based on the department wise if department filter is set on 
+             * request
+            */
+            if(request()->get('department')){
+                
+                $j = 0;
+
+                // grouping children based on the department
+                $db_departmentNodes =  $db_childNodes->groupBy('department_id')->all();
+                $dArray  = [];
+
+                foreach($db_departmentNodes as $key => $deptNodes ){
+                    $depArray  = []; 
+                    // convert each db obj to node structure
+                    foreach ($deptNodes as $value) {
+                        // code...
+                        $depArray[] = $this->getUserNodeDetails($value->user_code);
+                    }
+                    $dArray[$j] = array("name" => $key, "className" => "dept-level","relationship" => "111","children" => $depArray);
+                    $j++;
+                }
+                $childnode_array['children']  = $dArray;
+            }            
+            else{
+                $i = 0;
+                $t_array = [];
+                //Convert each db obj to node structure
+                foreach($db_childNodes as $singleDBChild)
+                {
+                    $t_array[$i] = $this->getUserNodeDetails($singleDBChild->user_code);
+                    $i++;
+                }
+                $childnode_array['children']  = $t_array;
             }
-
-            $childnode_array['children']  = $t_array;
-            //dd($childnode_array);
         }
 
        //dd(json_encode($data));
@@ -84,6 +129,8 @@ class VmtOrgTreeController extends Controller
         $data['name'] = $user_data->value('name');
         $data['user_code'] = $user_data->value('user_code');
         $data['designation'] =  VmtEmployeeOfficeDetails::where('user_id',$user_data->value('id'))->value('designation');
+
+        $data['department'] =  VmtEmployeeOfficeDetails::where('user_id',$user_data->value('id'))->value('department_id');
 
         ////Check if it has any parent,sibling,child nodes and relationship node
 
@@ -134,7 +181,7 @@ class VmtOrgTreeController extends Controller
                             ->leftJoin('vmt_employee_details','users.id','=','vmt_employee_details.userid')
                             ->where('users.is_admin','0')
                             ->where('vmt_employee_office_details.l1_manager_code',$user_code)
-                            ->select('users.name','users.id','users.user_code','vmt_employee_office_details.designation')
+                            ->select('users.name','users.id','users.user_code','vmt_employee_office_details.designation', 'vmt_employee_office_details.department_id')
                             ->get();
 
         return $children;
