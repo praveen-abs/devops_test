@@ -304,6 +304,7 @@ Route::post('getReviewerOfSelectedEmployee', [VmtPMSModuleController::class,'get
 Route::post('getSameLevelOfReviewer', [VmtPMSModuleController::class,'getSameLevelOfReviewer'])->name('getSameLevelOfReviewer');
 Route::post('changeReviewerSelection', [VmtPMSModuleController::class,'changeReviewerSelection'])->name('changeReviewerSelection');
 Route::post('getEmployeesOfReviewer', [VmtPMSModuleController::class,'getEmployeesOfReviewer'])->name('getEmployeesOfReviewer');
+Route::get('getKPIFormNameInDropdown', [VmtPMSModuleController::class,'getKPIFormNameInDropdown'])->name('getKPIFormNameInDropdown');
 
 // route for change employee profile icons on edit
 Route::post('changeEmployeeProfileIconsOnEdit', [VmtPMSModuleController::class,'changeEmployeeProfileIconsOnEdit'])->name('changeEmployeeProfileIconsOnEdit');

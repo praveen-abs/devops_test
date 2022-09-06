@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Exports\SampleKPIFormExport;
 use App\Mail\NotifyPMSManager;
 use App\Mail\VmtAssignGoals;
+use App\Models\VmtPMSRating;
 use App\Notifications\ViewNotification;
 use Exception;
 use Illuminate\Support\Facades\Log;
@@ -90,6 +91,16 @@ class VmtPMSModuleController extends Controller
         $loggedInUser = Auth::user();
 
         return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','existingKPIForms','departments','employees','pmsKpiAssigneeDetails','flowCheck','allEmployeesList','allEmployeesWithoutLoggedUserList','loggedInUser'));
+    }
+
+    // function uised for get KPI Form Names in Dashboard Dropdown  through AJAX
+    public function getKPIFormNameInDropdown(){
+        try{
+            $existingKPIForms = VmtPMS_KPIFormModel::where('author_id', auth::user()->id)->get(['id','form_name']);
+            return response()->json(['status' => true, 'message' => 'Get Form Data Successfully','result' => $existingKPIForms]);
+        }catch(Exception $e){
+            return response()->json(['status' => true, 'message' => $e->getMessage()]);
+        }
     }
 
     public function showPMSDashboardForManager()
@@ -545,15 +556,17 @@ class VmtPMSModuleController extends Controller
             }
         }
 
+        $pmsRatingDetails = VmtPMSRating::orderBy('sort_order')->get();
+        // dD($pmsRatingDetails);
 
         // check if logged in user is assignee or not
         if($request->assigneeId == auth()->user()->id){
-            return view('pms.vmt_pms_kpiappraisal_review_assignee', compact('review','assignedUserDetails','assignedGoals','empSelected','assignersName','config','show','ratingDetail','kpiRowsId','kpiRows','reviewCompleted','isAllReviewersSubmittedOrNot','reviewersId','isAllReviewersSubmittedData'));
+            return view('pms.vmt_pms_kpiappraisal_review_assignee', compact('review','assignedUserDetails','assignedGoals','empSelected','assignersName','config','show','ratingDetail','kpiRowsId','kpiRows','reviewCompleted','isAllReviewersSubmittedOrNot','reviewersId','isAllReviewersSubmittedData','pmsRatingDetails'));
         }
 
         // check if logged in user is reviewer or not
         if(in_array(Auth::id(),$reviewersId)){
-            return view('pms.vmt_pms_kpiappraisal_review_reviewer', compact('review','assignedUserDetails','assignedGoals','empSelected','assignersName','config','show','ratingDetail','kpiRowsId','kpiRows','reviewCompleted','reviewersId','isAllReviewersSubmittedOrNot','isAllReviewersSubmittedData'));
+            return view('pms.vmt_pms_kpiappraisal_review_reviewer', compact('review','assignedUserDetails','assignedGoals','empSelected','assignersName','config','show','ratingDetail','kpiRowsId','kpiRows','reviewCompleted','reviewersId','isAllReviewersSubmittedOrNot','isAllReviewersSubmittedData','pmsRatingDetails'));
         }
         dD("Assigner's review page is pending");
 

@@ -302,7 +302,7 @@
     </div>
 
     <!-- Rating grid after submitted review by All Reviewers -->
-    @if($isAllReviewersSubmittedOrNot)
+    @if($isAllReviewersSubmittedOrNot && count($pmsRatingDetails) > 0)
     <div class="card">
         <div class="card-header">
             <h5>Best People Rating Grid</h5>
@@ -315,11 +315,9 @@
                     <thead class="thead" id="tHead">
                         <tr>
                             <th scope="col">Overall Annual Score</th>
-                            <th scope="col">Less than 60</th>
-                            <th scope="col">60-70</th>
-                            <th scope="col">70-80</th>
-                            <th scope="col">80-90</th>
-                            <th scope="col">90-100</th>
+                            @foreach($pmsRatingDetails as $ratingDetails)
+                                <th scope="col">{{ $ratingDetails->score_range }}</th>
+                            @endforeach
                         </tr>
                     </thead>
                     <tbody class="tbody" id="tbody">
@@ -329,33 +327,27 @@
                                 Corresponding ANNUAL PERFORMANCE Rating
 
                             </td>
-                            <td class="">Needs Action</td>
-                            <td class="">Below Expectations</td>
-                            <td class="">Meet Expectations</td>
-                            <td class="">Exceeds Expectations </td>
-                            <td class="">Exceptionally Exceeds Expectations</td>
+                            @foreach($pmsRatingDetails as $ratingDetails)
+                                <td class="">{{ $ratingDetails->performance_rating }}</td>
+                            @endforeach
                         </tr>
 
                         <tr>
                             <td class="">
                                 Ranking
                             </td>
-                            <td class="">1</td>
-                            <td class="">2</td>
-                            <td class="">3</td>
-                            <td class="">4</td>
-                            <td class="">5</td>
+                            @foreach($pmsRatingDetails as $ratingDetails)
+                                <td class="">{{ $ratingDetails->ranking }}</td>
+                            @endforeach
                         </tr>
                         <tr>
 
                             <td class="">
                                 Action
                             </td>
-                            <td class="">Exit</td>
-                            <td class="">PIP</td>
-                            <td class="">10%</td>
-                            <td class="">15%</td>
-                            <td class="">20%</td>
+                            @foreach($pmsRatingDetails as $ratingDetails)
+                                <td class="">{{ $ratingDetails->action }}</td>
+                            @endforeach
                         </tr>
                     </tbody>
                 </table>

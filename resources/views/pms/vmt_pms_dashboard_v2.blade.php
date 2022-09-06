@@ -530,13 +530,11 @@ header {
                                             {{-- <form id="kpiTableForm"> --}}
                                                 @csrf
                                                 <label>Select existing form from the Dropdown</label>
-                                                <select name="selected_kpi_form_id" class="form-control mb-2">
-                                                    <option value="">Select KPI Form</option>
-                                                    @foreach ($existingKPIForms as $kpiForm)
-                                                        <option value="{{ $kpiForm->id }}">{{ $kpiForm->form_name }}
-                                                        </option>
-                                                    @endforeach
+                                                <select name="selected_kpi_form_id" class="selectedKpiFormClass form-control mb-2">
+                                                    
                                                 </select>
+                                                <i class="fa fa-refresh	refreshKPIFormDetails" aria-hidden="true"></i>
+
                                             </form>
                                             <div class="align-items-center justify-content-end d-flex mt-2 cursor-pointer">
                                                 <!-- <a href="{{ route('showKPICreateForm') }}" target="_blank"> -->
@@ -584,7 +582,7 @@ header {
                     <form id="changeReviewForm" action="{{ route('changeReviewerSelection') }}" method="POST">
                         @csrf
                         <label for="FormSelectDefault" class="form-label text-muted">Reviewer</label>
-                        <div class="mb-3 row scrollbar">
+                        <div class="mb-3 row">
                             <div class="col-12 col-md-12 col-lg-12 ">
                                 <label class="" for="">Existing Reviewer</label>
                                 <select class="change-exiting-reviewer form-control" name="oldReviewerName">
@@ -757,7 +755,34 @@ header {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script>
+        $('.refreshKPIFormDetails').click(function(){
+            $('.loader').show();
+            getKPIFormDetails();
+        })
 
+        getKPIFormDetails();
+        function getKPIFormDetails(){
+            $.ajax({
+                type: "GET",
+                url: "{{ route('getKPIFormNameInDropdown') }}",
+                success: function(data) {
+                    if(data.status == true){
+                        var finalResult = '<option value="">Select KPI Form</option>'
+                        $.each(data.result, function(key, val){
+                            finalResult += '<option value="'+val.id+'">'+val.form_name+'</option>';
+                        })
+                        $('.selectedKpiFormClass').html(finalResult);
+                    }else{
+                        swal('Wrong!',data.message,'error');
+                    }
+                    $('.loader').hide();
+                },
+                error: function(error) {
+                    console.log('somethig went wrong');
+                    $('.loader').hide();
+                }
+            });
+        }
 
         var selectedEmployeesId = $('.select-employee-dropdown').val();
         changeAssigneeProfilePicOnSelection(selectedEmployeesId);
@@ -806,6 +831,7 @@ header {
     <script>
         $(document).ready(function() {
 
+            $('.reviewerReplace').hide();
 
             $('.createKpiFromOnClick').click(function(){
                 console.log("Create KPI button clicked");
@@ -828,6 +854,10 @@ header {
         });
 
 
+            $('.selectedKpiFormClass').select2({
+                dropdownParent: $("#add-goals-modal"),
+                width: '98%'
+            });
             $('.select-employee-dropdown').select2({
                 dropdownParent: $("#employeeSelectionModal"),
                 minimumResultsForSearch: Infinity,
@@ -874,6 +904,7 @@ header {
             currentReviewerList = $(this).val();
 
             var latest_value = $(this).val();
+            checkReviewersExistOrNot();
             if(currentReviewerCount > prevReviewerCount){
 
                 var selectedReviewer = '';
@@ -901,6 +932,7 @@ header {
                     });
                     var selectedEmployeesId = $('#selectedEmployeeDropdownId').val();
                     changeAssigneeProfilePicOnSelection(selectedEmployeesId);
+                    
                 },
                 error: function(error) {
                     console.log('something went wrong');
@@ -933,6 +965,7 @@ header {
                         $("#selectedReviewIds").val(data.result.reviewerIds.join(","));
                         var afterUpdateEmployee = $('.select-employee-dropdown').val();
                     }
+                    checkReviewersExistOrNot();
                     changeAssigneeProfilePicOnSelection(afterUpdateEmployee);
                 },
                 error: function(error) {
@@ -1110,6 +1143,23 @@ header {
             $('#employeeSelectionModal').addClass('fade');
         })
 
+        // check reviewers are exists or not in reviewers textbox except logged in user
+        function checkReviewersExistOrNot(){
+            var values = [];
+            var selectedReviewersVal = $(".select-multiple-reviewer").val();
+            console.log(selectedReviewersVal);
+            $.each (selectedReviewersVal, function(key,val){
+                console.log(key);
+                if('{{ $loggedInUser->id }}' != val){
+                    values.push(val);
+                }
+            });
+            if(values.length > 0){
+                $('.reviewerReplace').show();
+            }else{
+                $('.reviewerReplace').hide();
+            }
+        }
 
         $('.reviewerReplace').click(function(){
             var result = '';
