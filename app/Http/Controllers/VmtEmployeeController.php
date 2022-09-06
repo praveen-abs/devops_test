@@ -760,7 +760,7 @@ class VmtEmployeeController extends Controller
 
     // insert the employee to database for quick onboarding
     public function storeQuickOnboardEmployee($data){
-         $VmtGeneralInfo = VmtGeneralInfo::where('id','1')->orderBy('created_at', 'DESC')->first();
+         $VmtGeneralInfo = VmtGeneralInfo::first();
 
         $rules = [];
         $returnsuccessMsg = '';
