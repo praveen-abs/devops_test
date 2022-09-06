@@ -147,31 +147,31 @@
                             <thead class="thead" id="tHead">
                                 <tr>
                                     <th scope="col" data-name='dimension' data-filterable="false" data-visible="{{$show['dimension']}}">
-                                        @if($config && $config->header) {{$config->header['dimension']}} @else Dimension @endif
+                                        @if(count($headerColumnsDynamic) > 0 && isset($headerColumnsDynamic['dimension'])) {{ $headerColumnsDynamic['dimension'] }} @else Dimension @endif
                                     </th>
                                     <th scope="col" data-name='kpi' data-filterable="false" data-visible="{{$show['kpi']}}">
-                                        @if($config && $config->header) {{$config->header['kpi']}} @else KPI @endif
+                                        @if(count($headerColumnsDynamic) > 0 && isset($headerColumnsDynamic['kpi'])) {{ $headerColumnsDynamic['kpi'] }} @else KPI @endif
                                     </th>
                                     <th scope="col" data-name='operational' data-filterable="false" data-visible="{{$show['operational']}}">
-                                        @if($config && $config->header) {{$config->header['operational']}} @else Operational Definition @endif
+                                        @if(count($headerColumnsDynamic) > 0 && isset($headerColumnsDynamic['operational'])) {{ $headerColumnsDynamic['operational'] }} @else Operational Definition @endif
                                     </th>
                                     <th scope="col" data-name='measure' data-filterable="false" data-visible="{{$show['measure']}}">
-                                        @if($config && $config->header) {{$config->header['measure']}} @else Measure @endif
+                                        @if(count($headerColumnsDynamic) > 0 && isset($headerColumnsDynamic['measure'])) {{ $headerColumnsDynamic['measure'] }} @else Measure @endif
                                     </th>
                                     <th scope="col" data-name='frequency' data-filterable="false" data-visible="{{$show['frequency']}}">
-                                        @if($config && $config->header) {{$config->header['frequency']}} @else Frequency @endif
+                                        @if(count($headerColumnsDynamic) > 0 && isset($headerColumnsDynamic['frequency'])) {{ $headerColumnsDynamic['frequency'] }} @else Frequency @endif
                                     </th>
                                     <th scope="col" data-name='target' data-filterable="false" data-visible="{{$show['target']}}">
-                                        @if($config && $config->header) {{$config->header['target']}} @else Target @endif
+                                        @if(count($headerColumnsDynamic) > 0 && isset($headerColumnsDynamic['target'])) {{ $headerColumnsDynamic['target'] }} @else Target @endif
                                     </th>
                                     <th scope="col" data-name='stretchTarget' data-filterable="false" data-visible="{{$show['stretchTarget']}}">
-                                        @if($config && $config->header) {{$config->header['stretchTarget']}} @else Stretch Target @endif
+                                        @if(count($headerColumnsDynamic) > 0 && isset($headerColumnsDynamic['stretchTarget'])) {{ $headerColumnsDynamic['stretchTarget'] }} @else Stretch Target @endif
                                     </th>
                                     <th scope="col" data-name='source' data-filterable="false" data-visible="{{$show['source']}}">
-                                        @if($config && $config->header) {{$config->header['source']}} @else Source @endif
+                                        @if(count($headerColumnsDynamic) > 0 && isset($headerColumnsDynamic['source'])) {{ $headerColumnsDynamic['source'] }} @else Source @endif
                                     </th>
                                     <th scope="col" data-name='kpiWeightage' data-filterable="false" data-visible="{{$show['kpiWeightage']}}">
-                                        @if($config && $config->header) {{$config->header['kpiWeightage']}} @else KPI Weightage @endif
+                                        @if(count($headerColumnsDynamic) > 0 && isset($headerColumnsDynamic['kpiWeightage'])) {{ $headerColumnsDynamic['kpiWeightage'] }} @else KPI Weightage @endif
                                     </th>
                                     @if(isset($assignedGoals) && $assignedGoals->is_assignee_submitted == '1')
                                         <th scope="col" data-name='kpiSelfReview' data-filterable="false" data-visible="true">Employee KPI - Achievement</th>

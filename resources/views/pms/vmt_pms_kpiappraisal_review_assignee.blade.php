@@ -149,32 +149,34 @@
                         <table id="table_review"  class="table align-middle mb-0 table-bordered  responsive" data-paging="true" data-paging-size="10" data-paging-limit="3" data-paging-container="#paging-ui-container" data-paging-count-format="{PF} to {PL}" data-sorting="true" data-filtering="false" data-empty="No Results" data-filter-container="#filter-form-container" data-editing-add-text="Add New">
                             <thead class="thead" id="tHead">
                                 <tr>
-                                    <th scope="col" data-name='dimension' data-filterable="false" data-visible="{{$show['dimension']}}">@if($config && $config->header)
-                                        {{$config->header['dimension']}} @else Dimension @endif
+                                    <th scope="col" data-name='dimension' data-filterable="false" data-visible="{{$show['dimension']}}">@if(count($headerColumnsDynamic) > 0 && isset($headerColumnsDynamic['dimension']))
+                                        {{ $headerColumnsDynamic['dimension'] }} @else Dimension @endif
                                     </th>
-                                    <th scope="col" data-name='kpi' data-filterable="false" data-visible="{{$show['kpi']}}">@if($config && $config->header)
-                                        {{$config->header['kpi']}} @else KPI @endif
+                                    <th scope="col" data-name='kpi' data-filterable="false" data-visible="{{$show['kpi']}}">@if(count($headerColumnsDynamic) > 0 && isset($headerColumnsDynamic['kpi']))
+                                        {{ $headerColumnsDynamic['kpi'] }} @else KPI @endif
                                     </th>
-                                    <th scope="col" data-name='operational' data-filterable="false" data-visible="{{$show['operational']}}">@if($config && $config->header)
-                                        {{$config->header['operational']}} @else Operational Definition @endif
+                                    <th scope="col" data-name='operational' data-filterable="false" data-visible="{{$show['operational']}}">@if(count($headerColumnsDynamic) > 0 && isset($headerColumnsDynamic['operational']))
+                                        {{ $headerColumnsDynamic['operational'] }} @else Operational Definition @endif
                                     </th>
-                                    <th scope="col" data-name='measure' data-filterable="false" data-visible="{{$show['measure']}}">@if($config && $config->header)
-                                        {{$config->header['measure']}} @else Measure @endif
+                                    <th scope="col" data-name='measure' data-filterable="false" data-visible="{{$show['measure']}}">@if(count($headerColumnsDynamic) > 0 && isset($headerColumnsDynamic['measure']))
+                                        {{ $headerColumnsDynamic['measure'] }} @else Measure @endif
                                     </th>
-                                    <th scope="col" data-name='frequency' data-filterable="false" data-visible="{{$show['frequency']}}">@if($config && $config->header)
-                                        {{$config->header['frequency']}} @else Frequency @endif
+                                    <th scope="col" data-name='frequency' data-filterable="false" data-visible="{{$show['frequency']}}">@if(count($headerColumnsDynamic) > 0 && isset($headerColumnsDynamic['frequency']))
+                                        {{ $headerColumnsDynamic['frequency'] }} @else Frequency @endif
                                     </th>
-                                    <th scope="col" data-name='target' data-filterable="false" data-visible="{{$show['target']}}">@if($config && $config->header)
-                                        {{$config->header['target']}} @else Target @endif
+                                    <th scope="col" data-name='target' data-filterable="false" data-visible="{{$show['target']}}">@if(count($headerColumnsDynamic) > 0 && isset($headerColumnsDynamic['target']))
+                                        {{ $headerColumnsDynamic['target'] }} @else Target @endif
                                     </th>
-                                    <th scope="col" data-name='stretchTarget' data-filterable="false" data-visible="{{$show['stretchTarget']}}">@if($config && $config->header)
-                                        {{$config->header['stretchTarget']}} @else Stretch Target @endif
+                                    <th scope="col" data-name='stretchTarget' data-filterable="false" data-visible="{{$show['stretchTarget']}}">@if(count($headerColumnsDynamic) > 0 && isset($headerColumnsDynamic['stretchTarget']))
+                                        {{ $headerColumnsDynamic['stretchTarget'] }} @else Stretch Target @endif
                                     </th>
-                                    <th scope="col" data-name='source' data-filterable="false" data-visible="{{$show['source']}}">@if($config && $config->header)
-                                        {{$config->header['source']}} @else Source @endif
+                                    <th scope="col" data-name='source' data-filterable="false" data-visible="{{$show['source']}}">@if(count($headerColumnsDynamic) > 0 && isset($headerColumnsDynamic['source']))
+                                        {{ $headerColumnsDynamic['source'] }} @else Source @endif
                                     </th>
-                                    <th scope="col" data-name='kpiWeightage' data-filterable="false" data-visible="{{$show['kpiWeightage']}}">@if($config && $config->header)
-                                        {{$config->header['kpiWeightage']}} @else KPI Weightage @endif
+                                    <th scope="col" data-name='kpiWeightage' data-filterable="false" data-visible="{{$show['kpiWeightage']}}">
+                                        @if(count($headerColumnsDynamic) > 0 && isset($headerColumnsDynamic['kpiWeightage']))
+                                        {{ $headerColumnsDynamic['kpiWeightage'] }}
+                                        @else KPI Weightage @endif
                                     </th>
                                     <th scope="col" data-name='kpiSelfReview' data-filterable="false" data-visible="true">KPI - Achievement (Self Review)</th>
                                     <th scope="col" data-name='kpiSelfAchivement' data-filterable="false" data-visible="true">Self KPI Achievement %</th>
@@ -182,8 +184,8 @@
                                     @if($isAllReviewersSubmittedOrNot)
                                     <?php $i = 1; ?>
                                     @foreach($reviewersId as $reviewerCheck)
-                                        <th scope="col" data-name='kpiManagerReview' data-filterable="false" data-visible= true>KPI - Achievement (Manager Review) {{$i}}</th>
-                                        <th scope="col" data-name='kpiManagerAchivement' data-filterable="false" data-visible="true">Manager KPI Achievement % - {{$i}}</th>
+                                        <th scope="col" data-name='kpiManagerReview' data-filterable="false" data-visible= true>KPI - Achievement (Manager Review) L{{$i}}</th>
+                                        <th scope="col" data-name='kpiManagerAchivement' data-filterable="false" data-visible="true">Manager KPI Achievement % - L{{$i}} Manager</th>
                                         <?php $i++; ?>
                                     @endforeach
                                     @endif
@@ -237,7 +239,7 @@
                                         @if($assignedGoals->is_assignee_accepted == '1')
                                             @if($assignedGoals->is_assignee_submitted == 0)
                                             <div>
-                                                <input type="number" class="inp-text" id="assignee_kpi_percentage{{$index}}" name="assignee_kpi_percentage[{{$kpiRow->id}}]" placeholder="type here" value="@if(isset( json_decode($assignedGoals->assignee_kpi_percentage,true)[$kpiRow->id])){{json_decode($assignedGoals->assignee_kpi_percentage,true)[$kpiRow->id]}}@endif" @if(is_numeric($kpiRow->target)) readonly @endif>
+                                                <input type="number" class="inp-text" id="assignee_kpi_percentage{{$index}}" name="assignee_kpi_percentage[{{$kpiRow->id}}]" value="@if(isset( json_decode($assignedGoals->assignee_kpi_percentage,true)[$kpiRow->id])){{json_decode($assignedGoals->assignee_kpi_percentage,true)[$kpiRow->id]}}@endif" @if(is_numeric($kpiRow->target)) readonly @else placeholder="type here" @endif>
                                             </div>
                                             @else
                                             <div> {{json_decode($assignedGoals->assignee_kpi_percentage,true)[$kpiRow->id]}}</div>
@@ -248,7 +250,7 @@
                                         @if($assignedGoals->is_assignee_accepted == '1')
                                             @if($assignedGoals->is_assignee_submitted == 0)
                                             <div>
-                                                <textarea style="width: 100%;" name="assignee_kpi_comments[{{$kpiRow->id}}]" id="assignee_kpi_comments{{$index}}" cols="40" rows="8" placeholder="type here"> @if(isset(json_decode($assignedGoals->assignee_kpi_comments,true)[$kpiRow->id])) {{json_decode($assignedGoals->assignee_kpi_comments,true)[$kpiRow->id]}} @endif</textarea>
+                                                <textarea style="width: 100%;" name="assignee_kpi_comments[{{$kpiRow->id}}]" id="assignee_kpi_comments{{$index}}" cols="40" rows="8" placeholder="type here">@if(isset(json_decode($assignedGoals->assignee_kpi_comments,true)[$kpiRow->id])) {{json_decode($assignedGoals->assignee_kpi_comments,true)[$kpiRow->id]}} @endif</textarea>
                                             </div>
                                             @else
                                             <div>{{json_decode($assignedGoals->assignee_kpi_comments,true)[$kpiRow->id]}}</div>
@@ -410,28 +412,24 @@
     * Self KPI Achievement %' = (KPI - Achievement Self-Review (this) / Target (targetVal)) * KPI Weightage (kpiWeightageVal);	
     */
     $(document).on('keyup','.calculateSelfKPIPercentage',function(){
-        var kpiPercentageVal = $(this).val();
-        var index = $(this).data("index");
-        var targetVal = $(this).data("targetval");
-        var kpiWeightageVal = $(this).data("kpiweightageval");
-        
-        kpiWeightageVal = kpiWeightageVal.replace('%', '');
+        getCalculationResult($(this));
+    })
 
-        if(kpiPercentageVal != ''){
-            console.log(kpiPercentageVal);
-            console.log(targetVal);
-            console.log(kpiWeightageVal);
-            console.log(kpiPercentageVal/targetVal);
-            var result = (kpiPercentageVal/targetVal) * kpiWeightageVal;
-            console.log(result);
+    function getCalculationResult(idValue){
+        var kpiAchievementSelfReview = idValue.val();
+        var index = idValue.data("index");
+        var targetVal = idValue.data("targetval");
+        var kpiWeightageVal = idValue.data("kpiweightageval");
+        kpiWeightageVal = kpiWeightageVal.replace('%', '');
+        kpiWeightageVal = kpiWeightageVal/100;
+
+        if(kpiAchievementSelfReview != ''){
+            var result = (kpiAchievementSelfReview/targetVal) * kpiWeightageVal;
             $('#assignee_kpi_percentage'+index).val(result);
         }else{
             $('#assignee_kpi_percentage'+index).val('');
         }
-
-    })
-        
-
+    }
 
     // Upload file enable upload button
     $('#upload_file').change(function() {
@@ -460,9 +458,22 @@
                 if(data.status == true){
                     $.each(data.result, function(key, value) {
                         var countIndex = data.countStart;
-                        $('#assignee_kpi_review' + key).val(value[countIndex]);
-                        $('#assignee_kpi_percentage' + key).val(value[countIndex+1]);
+                        var targetVal = $('#assignee_kpi_review' + key).data("targetval");
+                        if($.isNumeric( targetVal ) == true){
+                            if($.isNumeric( value[countIndex] ) == true){
+                                $('#assignee_kpi_review' + key).val(value[countIndex]);
+
+                                getCalculationResult($('#assignee_kpi_review' + key));  
+                            }else{
+                                $('#assignee_kpi_review' + key).val('');
+                                console.log('only numbers are allowed when target is number');
+                            }
+                        }else{
+                            $('#assignee_kpi_review' + key).val(value[countIndex]);
+                            $('#assignee_kpi_percentage' + key).val(value[countIndex+1]);
+                        }
                         $('#assignee_kpi_comments' + key).val(value[countIndex+2]);
+                          
                         
                     });
                 }else{

@@ -70,6 +70,7 @@ class VmtApraisalController extends Controller
             
             $assignedKpiFormDetails = VmtPMS_KPIFormAssignedModel::where('id',$request->kpiFormAssignedId)->with('getPmsKpiFormColumnDetails.getPmsKpiFormDetails')->first();
             
+            // check exact columns are available on uploaded sheet sam as downloaded sheet
             if(isset($assignedKpiFormDetails->getPmsKpiFormColumnDetails)){
                 if(isset($assignedKpiFormDetails->getPmsKpiFormColumnDetails->getPmsKpiFormDetails)){
                     $vmtKpiForm = $assignedKpiFormDetails->getPmsKpiFormColumnDetails;  

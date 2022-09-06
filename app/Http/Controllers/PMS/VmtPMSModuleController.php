@@ -510,32 +510,61 @@ class VmtPMSModuleController extends Controller
             }
             if ($howManyPercCount > 0) {
                 $ratingDetail['rating'] = $percentageVal / $howManyPercCount;
-                if ($ratingDetail['rating'] < 60) {
-                    $ratingDetail['performance'] = "Needs Action";
-                    $ratingDetail['ranking'] = 1;
-                    $ratingDetail['action'] = 'Exit';
-                } elseif ($ratingDetail['rating'] >= 60 && $ratingDetail['rating'] < 70) {
-                    $ratingDetail['performance'] = "Below Expectations";
-                    $ratingDetail['ranking'] = 2;
-                    $ratingDetail['action'] = 'PIP';
-                } elseif ($ratingDetail['rating'] >= 70 && $ratingDetail['rating'] < 80) {
-                    $ratingDetail['performance'] = "Meet Expectations";
-                    $ratingDetail['ranking'] = 3;
-                    $ratingDetail['action'] = '10%';
-                } elseif ($ratingDetail['rating'] >= 80 && $ratingDetail['rating'] < 90) {
-                    $ratingDetail['performance'] = "Exceeds Expectations";
-                    $ratingDetail['ranking'] = 4;
-                    $ratingDetail['action'] = '15%';
-                } elseif ($ratingDetail['rating'] >= 90) {
-                    $ratingDetail['performance'] = "Exceptionally Exceeds Expectations";
-                    $ratingDetail['ranking'] = 5;
-                    $ratingDetail['action'] = '20%';
+                // calculate Rating Based on Table Dynamic Data
+                $pmsConfigRatingDetails = VmtPMSRating::orderBy('sort_order','DESC')->get();
+                if(count($pmsConfigRatingDetails) > 0){
+                    foreach($pmsConfigRatingDetails as $ratings){
+                        
+                        $rangeCheck = explode('-',$ratings->score_range);
+                        if($ratingDetail['rating'] >= $rangeCheck[0] && $ratingDetail['rating'] <= $rangeCheck[1]){
+                            $ratingDetail['performance'] = $ratings->performance_rating;
+                            $ratingDetail['ranking'] = $ratings->ranking;
+                            $ratingDetail['action'] = $ratings->action;
+                        }elseif($ratingDetail['rating'] >= 100){
+                            if($ratings->score_range == '90 - 100'){
+                                $ratingDetail['performance'] = $ratings->performance_rating;
+                                $ratingDetail['ranking'] = $ratings->ranking;
+                                $ratingDetail['action'] = $ratings->action;
+                            }else{
+                                $ratingDetail['performance'] = "Exceptionally Exceeds Expectations";
+                                $ratingDetail['ranking'] = 5;
+                                $ratingDetail['action'] = '20%';
+                            }
+                        }else{
+                            $ratingDetail['performance'] = "error";
+                            $ratingDetail['ranking'] = 000;
+                            $ratingDetail['action'] = '0000%';
+                        }
+                    }
                 }
-                else{
-                    $ratingDetail['performance'] = "error";
-                    $ratingDetail['ranking'] = 000;
-                    $ratingDetail['action'] = '0000%';
-                }
+
+                
+                // if ($ratingDetail['rating'] < 60) {
+                //     $ratingDetail['performance'] = "Needs Action";
+                //     $ratingDetail['ranking'] = 1;
+                //     $ratingDetail['action'] = 'Exit';
+                // } elseif ($ratingDetail['rating'] >= 60 && $ratingDetail['rating'] < 70) {
+                //     $ratingDetail['performance'] = "Below Expectations";
+                //     $ratingDetail['ranking'] = 2;
+                //     $ratingDetail['action'] = 'PIP';
+                // } elseif ($ratingDetail['rating'] >= 70 && $ratingDetail['rating'] < 80) {
+                //     $ratingDetail['performance'] = "Meet Expectations";
+                //     $ratingDetail['ranking'] = 3;
+                //     $ratingDetail['action'] = '10%';
+                // } elseif ($ratingDetail['rating'] >= 80 && $ratingDetail['rating'] < 90) {
+                //     $ratingDetail['performance'] = "Exceeds Expectations";
+                //     $ratingDetail['ranking'] = 4;
+                //     $ratingDetail['action'] = '15%';
+                // } elseif ($ratingDetail['rating'] >= 90) {
+                //     $ratingDetail['performance'] = "Exceptionally Exceeds Expectations";
+                //     $ratingDetail['ranking'] = 5;
+                //     $ratingDetail['action'] = '20%';
+                // }
+                // else{
+                //     $ratingDetail['performance'] = "error";
+                //     $ratingDetail['ranking'] = 000;
+                //     $ratingDetail['action'] = '0000%';
+                // }
             }
         }
 
@@ -557,17 +586,25 @@ class VmtPMSModuleController extends Controller
             }
         }
 
+        // VMS Pms Ratings get from vmt_pms_rating table
         $pmsRatingDetails = VmtPMSRating::orderBy('sort_order')->get();
-        // dD($pmsRatingDetails);
+
+        // config pms data for header columns dynamic
+        $pmsConfigData = ConfigPms::first();
+        $headerColumnsDynamic = [];
+        if(!empty($pmsConfigData)){
+            $headerColumnsDynamic = json_decode($pmsConfigData->column_header,true);
+        }
+        // dD($headerColumnsDynamic);
 
         // check if logged in user is assignee or not
         if($request->assigneeId == auth()->user()->id){
-            return view('pms.vmt_pms_kpiappraisal_review_assignee', compact('review','assignedUserDetails','assignedGoals','empSelected','assignersName','config','show','ratingDetail','kpiRowsId','kpiRows','reviewCompleted','isAllReviewersSubmittedOrNot','reviewersId','isAllReviewersSubmittedData','pmsRatingDetails','kpiFormAssignedDetails'));
+            return view('pms.vmt_pms_kpiappraisal_review_assignee', compact('review','assignedUserDetails','assignedGoals','empSelected','assignersName','config','show','ratingDetail','kpiRowsId','kpiRows','reviewCompleted','isAllReviewersSubmittedOrNot','reviewersId','isAllReviewersSubmittedData','pmsRatingDetails','kpiFormAssignedDetails','headerColumnsDynamic'));
         }
 
         // check if logged in user is reviewer or not
         if(in_array(Auth::id(),$reviewersId)){
-            return view('pms.vmt_pms_kpiappraisal_review_reviewer', compact('review','assignedUserDetails','assignedGoals','empSelected','assignersName','config','show','ratingDetail','kpiRowsId','kpiRows','reviewCompleted','reviewersId','isAllReviewersSubmittedOrNot','isAllReviewersSubmittedData','pmsRatingDetails','kpiFormAssignedDetails'));
+            return view('pms.vmt_pms_kpiappraisal_review_reviewer', compact('review','assignedUserDetails','assignedGoals','empSelected','assignersName','config','show','ratingDetail','kpiRowsId','kpiRows','reviewCompleted','reviewersId','isAllReviewersSubmittedOrNot','isAllReviewersSubmittedData','pmsRatingDetails','kpiFormAssignedDetails','headerColumnsDynamic'));
         }
         dD("Assigner's review page is pending");
 

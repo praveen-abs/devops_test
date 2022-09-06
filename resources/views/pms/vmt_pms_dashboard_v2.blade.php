@@ -691,7 +691,7 @@ header {
                     @if(isset($loggedManagerEmployees) && count($loggedManagerEmployees) > 0)
                     <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
                         <button class="btn btn-primary ml-2" id="edit-employee"
-                            >Edit</button>
+                            >Save</button>
                     </div>
                     @else
                     <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
