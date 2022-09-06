@@ -473,7 +473,7 @@ class VmtEmployeeController extends Controller
     }
 
     public function uploadEmployee($data) {
-      
+
         $rules = [];
         $returnsuccessMsg = '';
         $returnfailedMsg = '';
@@ -767,15 +767,23 @@ class VmtEmployeeController extends Controller
         $returnfailedMsg = '';
         $addedCount = 0;
         $failedCount = 0;
+        $empNo=0;
+
         //dd($data[0]);
         foreach($data[0] as $key => $row) {
-            //dd($row);
-            $clientData  = VmtClientMaster::first();
-            $maxId  = VmtEmployee::max('id')+1;
-            if ($clientData) {
-                $empNo = $clientData->client_code.$maxId;
-            } else {
-                $empNo = $maxId;
+            if(isset($row['employee_code']))
+            {
+                $empNo = $row['employee_code'];
+            }
+            else
+            {
+                $clientData  = VmtClientMaster::first();
+                $maxId  = VmtEmployee::max('id')+1;
+                if ($clientData) {
+                    $empNo = $clientData->client_code.$maxId;
+                } else {
+                    $empNo = $maxId;
+                }
             }
            // $row['doj'] = date('Y-m-d', $row['doj']);
             $row['mobile_no'] = (int)$row['mobile_no'];
