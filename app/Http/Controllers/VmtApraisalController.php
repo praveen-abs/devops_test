@@ -19,6 +19,7 @@ use App\Mail\NotifyPMSManager;
 use App\Mail\PMSReviewCompleted;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ApraisalQuestionExport;
+use App\Models\VmtPMS_KPIFormAssignedModel;
 use Session;
 use App\Notifications\ViewNotification;
 use Exception;
@@ -64,7 +65,74 @@ class VmtApraisalController extends Controller
     }
 
     public function uploadFileReview(Request $request) {
-        $importDataArry = \Excel::toArray(new ApraisalQuestionReview, request()->file('upload_file'));
+        try{
+            $importDataArry = \Excel::toArray(new ApraisalQuestionReview, request()->file('upload_file'));
+            
+            $assignedKpiFormDetails = VmtPMS_KPIFormAssignedModel::where('id',$request->kpiFormAssignedId)->with('getPmsKpiFormColumnDetails.getPmsKpiFormDetails')->first();
+            
+            if(isset($assignedKpiFormDetails->getPmsKpiFormColumnDetails)){
+                if(isset($assignedKpiFormDetails->getPmsKpiFormColumnDetails->getPmsKpiFormDetails)){
+                    $vmtKpiForm = $assignedKpiFormDetails->getPmsKpiFormColumnDetails;  
+                    $getAvailableColumns = str_getcsv($vmtKpiForm->available_columns);
+                    
+                                
+                    $dynamicTableCoumns = [];
+                    $headerColumnsInSheet = [];
+                    $configPmsData = ConfigPms::first();
+                    $decodedColumnHeader = [];
+                    if(!empty($configPmsData)){
+                        $decodedColumnHeader = (json_decode($configPmsData->column_header,true));
+                    }
+
+                    $show['dimension'] = $getAvailableColumns && in_array('dimension', $getAvailableColumns) ? array_push($dynamicTableCoumns,'dimension'): '';
+                    $show['kpi'] = $getAvailableColumns && in_array('kpi', $getAvailableColumns) ? array_push($dynamicTableCoumns,'kpi'): '';
+                    $show['operational'] = $getAvailableColumns && in_array('operational', $getAvailableColumns) ? array_push($dynamicTableCoumns,'operational_definition'): '';
+                    $show['measure'] = $getAvailableColumns && in_array('measure', $getAvailableColumns) ? array_push($dynamicTableCoumns,'measure'): '';
+                    $show['frequency'] = $getAvailableColumns && in_array('frequency', $getAvailableColumns) ? array_push($dynamicTableCoumns,'frequency'): '';
+                    $show['target'] = $getAvailableColumns && in_array('target', $getAvailableColumns) ? array_push($dynamicTableCoumns,'target'): '';
+                    $show['stretchTarget'] = $getAvailableColumns && in_array('stretchTarget', $getAvailableColumns) ? array_push($dynamicTableCoumns,'stretch_target'): '';
+                    $show['source'] = $getAvailableColumns && in_array('source', $getAvailableColumns) ? array_push($dynamicTableCoumns,'source'): '';
+                    $show['kpiWeightage'] = $getAvailableColumns && in_array('kpiWeightage', $getAvailableColumns) ? array_push($dynamicTableCoumns,'kpi_weightage'): '';
+
+                    foreach($show as $columnKey => $columnsCheck){
+                        if($columnsCheck != ''){
+                            if(isset($decodedColumnHeader[$columnKey])){
+                                array_push($headerColumnsInSheet, $decodedColumnHeader[$columnKey]);
+                            }else{
+                                array_push($headerColumnsInSheet, $columnKey);
+
+                            }
+                        }
+                    }
+                    // dD($headerColumnsInSheet, $importDataArry[0][0]);
+
+
+                    if(count($headerColumnsInSheet) > 0 && isset($importDataArry[0]) && isset($importDataArry[0][0])){
+                        foreach($headerColumnsInSheet as $key => $headerColumn){
+                            
+                            if($headerColumn != $importDataArry[0][0][$key]){
+                                return response()->json(['status' => false, 'message' => 'Columns doesnt match with system']);
+                            }
+                        }
+                    }
+                }
+            }
+            
+            $result = [];
+            foreach($importDataArry[0] as $keyCells => $importData){
+                if($keyCells > 0){
+                    array_push($result, $importData);
+                }
+            }
+            
+            $countStart = count($headerColumnsInSheet);
+
+            return response()->json(['status' => true, 'result' => $result, 'countStart' => $countStart]);
+    
+        }catch(Exception $e){
+            Log::info('Import sample kpi form PMS V2 Error: '.$e->getMessage());
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
         return response()->json($importDataArry);
     }
     

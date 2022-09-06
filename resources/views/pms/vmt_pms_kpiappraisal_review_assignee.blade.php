@@ -114,14 +114,16 @@
         <!-- appraisal table -->
         <div class="card">
             <div class="card-body pb-2">
+                
                 @if(!isset($assignedGoals->is_assignee_submitted) && $assignedGoals->is_assignee_submitted != '1')
                 <div class="row">
                     <div class="col-12 mt-3">
                         <form id="upload_form" enctype="multipart/form-data">
                             <div class="row pull-right mb-3">
                                 @csrf
+                                <input type="hidden" name="kpiFormAssignedId" value="{{ $kpiFormAssignedDetails->id }}">
                                 <div class="col">
-                                    <a href="{{route('download.excelsheet.pmsv2.review.form', [$assignedGoals->vmt_pms_kpiform_assigned_id,'1'])}}" class="btn btn-orange pull-right"
+                                    <a href="{{route('download.excelsheet.pmsv2.review.form', [$assignedGoals->vmt_pms_kpiform_assigned_id,'1', $assignedGoals->year .'-'. strtoupper($assignedGoals->assignment_period)])}}" class="btn btn-orange pull-right"
                                     id="download-excel">Download</a>
                                 </div>
                                 
@@ -188,6 +190,7 @@
                                 </tr>
                             </thead>
                             <tbody class="tbody" id="tbody">
+                                
                                 @foreach($kpiRows as $index => $kpiRow)
                                 <tr>
                                     <th scope="row">
@@ -454,11 +457,17 @@
             data: form_data,
             success: function(data) {
                 // $('.addition-content').html('');
-                $.each(data[0], function(key, value) {
-                    $('#assignee_kpi_review' + key).val(value[9]);
-                    $('#assignee_kpi_percentage' + key).val(value[10]);
-                    $('#assignee_kpi_comments' + key).val(value[11]);
-                });
+                if(data.status == true){
+                    $.each(data.result, function(key, value) {
+                        var countIndex = data.countStart;
+                        $('#assignee_kpi_review' + key).val(value[countIndex]);
+                        $('#assignee_kpi_percentage' + key).val(value[countIndex+1]);
+                        $('#assignee_kpi_comments' + key).val(value[countIndex+2]);
+                        
+                    });
+                }else{
+                    swal("Error!", data.message, "error");
+                }
                 $('.loader').hide();
             },
             error: function(error) {

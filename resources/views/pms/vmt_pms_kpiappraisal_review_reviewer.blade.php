@@ -120,8 +120,9 @@
                         <form id="upload_form" enctype="multipart/form-data">
                             <div class="row pull-right mb-3">
                                 @csrf
+                                <input type="hidden" name="kpiFormAssignedId" value="{{ $kpiFormAssignedDetails->id }}">
                                 <div class="col">
-                                    <a href="{{route('download.excelsheet.pmsv2.review.form', [$assignedGoals->vmt_pms_kpiform_assigned_id,'2'])}}" class="btn btn-orange pull-right"
+                                    <a href="{{route('download.excelsheet.pmsv2.review.form', [$assignedGoals->vmt_pms_kpiform_assigned_id,'2',$assignedGoals->year .'-'. strtoupper($assignedGoals->assignment_period)])}}" class="btn btn-orange pull-right"
                                     id="download-excel">Download</a>
                                 </div>
                                 <div class="col-auto p-0">
@@ -439,11 +440,16 @@
             processData: false,
             data: form_data,
             success: function(data) {
+                if(data.status == true){
                 // $('.addition-content').html('');
-                $.each(data[0], function(key, value) {
-                    $('#reviewer_kpi_review' + key+'-'+loggedUserId).val(value[9]);
-                    $('#reviewer_kpi_percentage' + key+'-'+loggedUserId).val(value[10]);
-                });
+                    $.each(data.result, function(key, value) {
+                        var countIndex = data.countStart;
+                        $('#reviewer_kpi_review' + key+'-'+loggedUserId).val(value[countIndex]);
+                        $('#reviewer_kpi_percentage' + key+'-'+loggedUserId).val(value[countIndex+1]);
+                    });
+                }else{
+                    swal("Error!", data.message, "error");
+                }
                 $('.loader').hide();
             },
             error: function(error) {
