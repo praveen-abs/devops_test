@@ -187,7 +187,7 @@
                                                 </div> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Passport Exp Date</label>
-                                                    <input type="text" max="9999-12-31" placeholder="Date of Joining"  name="exp" class="onboard-form  form-control textbox " id="passdate" onfocus="(this.type='date')" required />
+                                                    <input type="text" max="9999-12-31" placeholder="Date of Joining"  name="exp" class="onboard-form  form-control textbox " id="passdate" onfocus="(this.type='date')" required/>
                                                     <!-- <label for="" class="float-label">Passport Exp Date</label> -->
                                                 </div>
                                             </div>

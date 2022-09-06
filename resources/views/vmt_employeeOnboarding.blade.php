@@ -280,9 +280,26 @@
             })
             //End Employee Gender Populate
 
+             //Nationality Validation
+
+             $('#nationality').change(function() {
+                            var nationality = $(this).val();
+                            var mynationality = $('#nationality :selected').text();
+
+                            if ($('nationality').val('indian')) {
+
+                                $("#passport_no").removeAttr("required", true);
+                                $('#passdate').removeAttr("required", true);               
+                            }
+                            else if ($('nationality').val('other_country')){
+                                $("#passport_no").attr("required", true);
+                                $("#passdate").attr("required", true);
+                            }
+                        });
+
+            //End Nationality Validation
 
 
-         
 
             //PAN Validation
 
@@ -562,7 +579,17 @@
             // });
 
 
-                       $('#passport_no_req').hide(); $('#passport_exp_req').hide(); $('#current_country').val('IN').trigger('change'); $('#permanent_country').val('IN').trigger('change'); $('#current_state').val('IN').trigger('change'); $('#permanent_state').val('IN').trigger('change'); stateFunction('IN', '#current_state'); stateFunction('IN', '#permanent_state'); stateFunction('IN', '#ptax_location'); stateFunction('IN', '#lwf_location'); stateFunction('IN', '#holiday_location');
+            $('#passport_no_req').hide();
+            $('#passport_exp_req').hide();
+            $('#current_country').val('IN').trigger('change');
+            $('#permanent_country').val('IN').trigger('change');
+            $('#current_state').val('IN').trigger('change');
+            $('#permanent_state').val('IN').trigger('change');
+            stateFunction('IN', '#current_state');
+            stateFunction('IN', '#permanent_state');
+            stateFunction('IN', '#ptax_location');
+            stateFunction('IN', '#lwf_location');
+            stateFunction('IN', '#holiday_location');
 
             $('#current_address_copy').change(function() {
                 if ($('#current_address_copy').is(':checked')) {
@@ -631,66 +658,69 @@
                 var ifsc = '^[A-Z]{4}0[A-Z0-9]{6}$';
                 var dl_pat = '/^(([A-Z]{2}[0-9]{2})( )|([A-Z]{2}-[0-9]{2}))((19|20)[0-9][0-9])[0-9]{7}$/';
 
-                if (textDLno.match(dl_pat)) {
-                    //alert("dl no done");
-                    console.log("DL No correct");
+                // if (textDLno.match(dl_pat)) {
+                //     //alert("dl no done");
+                //     console.log("DL No correct");
 
-                } else if (txtIFSCNo.match(ifsc)) {
-                    // alert("done ifsc");
-                    console.log("IFSC correct");
+                // } 
 
-                } else {
+                // if (txtIFSCNo.match(ifsc)) {
+                //     // alert("done ifsc");
+                //     console.log("IFSC correct");
 
-                    if ($('#form-1').valid() && !flag) {
-                        //alert("1 st one");
-                        var form_data1 = new FormData(document.getElementById("form-1"));
-                        var txtPANCard = $("#pan_no").val();
+                // } 
 
-                        $.ajax({
-                            url: "{{url('vmt-employee-onboard')}}",
-                            type: "POST",
-                            dataType: "json",
-                            data: form_data1,
-                            contentType: false,
-                            processData: false,
-                            success: function(data) {
-                                if (data.responseText == "Saved") {
-                                    $('#modalHeader').html(data);
-                                    $('#modalNot').html("Employee Onboarding success");
-                                    $('#modalBody').html("Mail notification sent.");
-                                    $('#notificationModal').show();
-                                    $('#notificationModal').removeClass('fade');
-                                } else {
-                                    $('#modalHeader').html(data);
-                                    $('#modalNot').html("Failed to save Data");
-                                    //$('#modalBody').html("Request to the server failed");
-                                    $('#notificationModal').show();
-                                    $('#notificationModal').removeClass('fade');
-                                }
-                                console.log(data);
+                if ($('#form-1').valid() && !flag) {
 
-                                //alert(data);
-                            },
-                            error: function(data) { //NEED TO FIX IT
-                                // console.log('error');
-                                if (data.responseText == "Saved") {
-                                    $('#modalHeader').html(data);
-                                    $('#modalNot').html("Employee Onboarding success");
-                                    $('#modalBody').html("Mail notification sent.");
-                                    $('#notificationModal').show();
-                                    $('#notificationModal').removeClass('fade');
-                                } else {
+                    //alert("1 st one");
+                    var form_data1 = new FormData(document.getElementById("form-1"));
+                    var txtPANCard = $("#pan_no").val();
 
-                                    $('#modalHeader').html(data);
-                                    $('#modalNot').html("Failed to save Data");
-                                    //$('#modalBody').html("Request to the server failed");
-                                    $('#notificationModal').show();
-                                    $('#notificationModal').removeClass('fade');
-                                }
-
+                    $.ajax({
+                        url: "{{url('vmt-employee-onboard')}}",
+                        type: "POST",
+                        dataType: "json",
+                        data: form_data1,
+                        contentType: false,
+                        processData: false,
+                        success: function(data) {
+                            if (data.responseText == "Saved") {
+                                $('#modalHeader').html(data);
+                                $('#modalNot').html("Employee Onboarding success");
+                                $('#modalBody').html("Mail notification sent.");
+                                $('#notificationModal').show();
+                                $('#notificationModal').removeClass('fade');
+                            } else {
+                                $('#modalHeader').html(data);
+                                $('#modalNot').html("Failed to save Data");
+                                //$('#modalBody').html("Request to the server failed");
+                                $('#notificationModal').show();
+                                $('#notificationModal').removeClass('fade');
                             }
-                        });
-                    }
+                            console.log(data);
+
+                            //alert(data);
+                        },
+                        error: function(data) { //NEED TO FIX IT
+                            // console.log('error');
+                            if (data.responseText == "Saved") {
+                                $('#modalHeader').html(data);
+                                $('#modalNot').html("Employee Onboarding success");
+                                $('#modalBody').html("Mail notification sent.");
+                                $('#notificationModal').show();
+                                $('#notificationModal').removeClass('fade');
+                            } else {
+
+                                $('#modalHeader').html(data);
+                                $('#modalNot').html("Failed to save Data");
+                                //$('#modalBody').html("Request to the server failed");
+                                $('#notificationModal').show();
+                                $('#notificationModal').removeClass('fade');
+                            }
+
+                        }
+                    });
+
                 }
             });
 
