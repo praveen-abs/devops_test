@@ -30,15 +30,16 @@
     border: 0;
     text-align: center;
     vertical-align: top;
+    width: 40px;
 }
 
-._date-picker.selected {
+._date-picker.selected span{
     font-weight: bold;
     background: transparent;
     border-radius: 50px;
-    height: 25px;
-    width: 30px;
-    padding: 3px;
+    /* height: 25px; */
+    /* width: 125px; */
+    padding: 7px 11px;
     box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
 }
 
