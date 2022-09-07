@@ -804,6 +804,7 @@ header {
         }
 
         $(document).on("click",".employeeEditButton",function() {
+            $("#add-goals-modal").modal('hide');
             $('#employeeSelectionModal').show();
             $('#employeeSelectionModal').removeClass('fade');
         })
@@ -811,6 +812,7 @@ header {
         $('#edit-employee').click(function(){
             var selectedEmployeesId = $('.select-employee-dropdown').val();
             // getReviewerOfSelectedEmployee(selectedEmployeesId);
+            $('#add-goals-modal').modal('show');
             changeAssigneeProfilePicOnSelection(selectedEmployeesId);
         })
         $('#edit-employee-based-on-reviewer').click(function(){
@@ -853,7 +855,7 @@ header {
             });
             $('.select-employee-dropdown').select2({
                 dropdownParent: $("#employeeSelectionModal"),
-                minimumResultsForSearch: Infinity,
+                
                 width: '100%'
             });
             $('.select-reviewer-dropdown').select2({
@@ -958,6 +960,7 @@ header {
                         $("#selectedReviewIds").val(data.result.reviewerIds.join(","));
                         var afterUpdateEmployee = $('.select-employee-dropdown').val();
                     }
+                    $('#add-goals-modal').modal('show');
                     checkReviewersExistOrNot();
                     changeAssigneeProfilePicOnSelection(afterUpdateEmployee);
                 },
@@ -1402,40 +1405,8 @@ header {
 
             $('#reviewerReplaceSameLevel').hide();
             $('#reviewerReplaceSameLevel').addClass('fade');
-            // if ($("#changeReviewForm").valid()) {
-
-            //     $.ajaxSetup({
-            //         headers: {
-            //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            //         }
-            //     });
-            //     var formData = new FormData(this);
-
-
-            //     $.ajax({
-            //         url: $(this).attr('action'),
-            //         type: $(this).attr('method'),
-            //         data:  $('#changeReviewForm').serialize() + "&reviewersName="+reviewersName+"&reviewersIds="+reviewersIds,
-            //         beforeSend: function() {
-            //             $('.loader').show();
-            //         },
-            //         success: function(response) {
-            //             $('.loader').hide();
-            //             if(response.status == true){
-            //                 $("#reviewersAccordingAssignee").val(response.data.existingReviewerNames);
-            //                 $("#selectedReviewIds").val(response.data.existingReviewerIds);
-            //                 $('#reviewerReplaceSameLevel').hide();
-            //                 $('#reviewerReplaceSameLevel').addClass('fade');
-            //             }else{
-            //                 swal("Wrong!", response.message, "error");
-            //             }
-            //         },
-            //         error: function(response) {
-            //             swal("Wrong!", 'Something went wrong', "error");
-            //             $('.loader').hide();
-            //         },
-            //     });
-            // }
+            
+            checkReviewersExistOrNot();
         })
     </script>
 @endsection
