@@ -90,7 +90,7 @@
                     <div class="collapse menu-dropdown" id="attendanceDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{url('vmt.page404')}}" class="nav-link sidebar py-1">
+                                <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1">
                                     <span> Leave</span>
                                 </a>
                             </li>
@@ -130,7 +130,7 @@
                         <ul class="nav nav-sm flex-column">
 
                             <li class="nav-item ">
-                                <a href="{{url('vmt-employess/directory')}}" id="tds" class="nav-link sidebar py-1"><span>Directory </span></a>
+                                <a href="{{url('employeesDirectory')}}" id="tds" class="nav-link sidebar py-1"><span>Directory </span></a>
                             </li>
                             <li class="nav-item ">
                                 <a href="{{route('showOrgTree')}}" id="tds" class="nav-link sidebar py-1"><span>ORG
@@ -138,13 +138,13 @@
                             </li>
 
                             <li class="nav-item ">
-                                <a href="{{url('vmt_employeeOnboarding')}}" id="" class="nav-link sidebar py-1" aria-expanded="false"><span>Onboarding</span> </a>
+                                <a href="{{url('employeeOnboarding')}}" id="" class="nav-link sidebar py-1" aria-expanded="false"><span>Onboarding</span> </a>
                             </li>
                             <li class="nav-item ">
-                                <a href="{{route('emp-bulk-upload')}}" id="" class="nav-link sidebar py-1" aria-expanded="false"><span>Onboarding Bulk Upload</span> </a>
+                                <a href="{{route('bulkEmployeeOnboarding')}}" id="" class="nav-link sidebar py-1" aria-expanded="false"><span>Onboarding Bulk Upload</span> </a>
                             </li>
                             <li class="nav-item ">
-                                <a href="{{route('emp-quick-upload')}}" id="" class="nav-link sidebar py-1" aria-expanded="false"><span>Onboarding Quick Upload</span> </a>
+                                <a href="{{route('quickEmployeeOnboarding')}}" id="" class="nav-link sidebar py-1" aria-expanded="false"><span>Onboarding Quick Upload</span> </a>
                             </li>
                             <li class="nav-item ">
                                 <a href="{{route('page-not-found')}}" id="tds" class="nav-link sidebar py-1"><span>Exit</span></a>
@@ -153,7 +153,7 @@
                                 <a href="{{route('page-not-found')}}" id="tds" class="nav-link sidebar py-1"><span>Documents</span></a>
                             </li>
                             <li class="nav-item ">
-                                <a href="{{route('vmt-assetinventory-index')}}" id="tds" class="nav-link sidebar py-1"><span>Assets</span></a>
+                                <a href="{{route('assetinventory-index')}}" id="tds" class="nav-link sidebar py-1"><span>Assets</span></a>
                             </li>
 
                         </ul>
@@ -263,7 +263,7 @@
                         <ul class="nav nav-sm flex-column">
 
                             <li class="nav-item">
-                                <a href="{{url('vmt-payslip')}}" class="nav-link sidebar py-1" role="button"><span>Pay
+                                <a href="{{route('payRun')}}" class="nav-link sidebar py-1" role="button"><span>Pay
                                         Run</span></a>
                             </li>
 
@@ -284,7 +284,7 @@
                     <div class="collapse menu-dropdown" id="paycheckDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{url('vmt_home')}}" class="nav-link sidebar py-1" role="button"><span>Dashboard</span></a>
+                                <a href="{{route('paycheckDashboard')}}" class="nav-link sidebar py-1" role="button"><span>Dashboard</span></a>
                             </li>
                             @can('Team')
                             <li class="nav-item">
@@ -294,12 +294,12 @@
                             @endcan
                             @can('ORG')
                             <li class="nav-item">
-                                <a href="{{url('vmt_investments')}}" class="nav-link sidebar py-1" role="button"><span>Investments</span></a>
+                                <a href="{{route('vmt-investments-route')}}" class="nav-link sidebar py-1" role="button"><span>Investments</span></a>
                             </li>
                             @endcan
                             @can('360_Degree_Review')
                             <li class="nav-item">
-                                <a href="{{url('vmt_form16')}}" class="nav-link sidebar py-1" role="button"><span>
+                                <a href="{{route('vmt-form16-route')}}" class="nav-link sidebar py-1" role="button"><span>
                                         Form 16</span></a>
                             </li>
                             @endcan
@@ -440,7 +440,7 @@
                                 <a href="{{route('view-config-master')}}" class="nav-link"><span>Master Config</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt_clientOnboarding')}}" class="nav-link"><span> Client
+                                <a href="{{route('vmt_clientOnboarding-route')}}" class="nav-link"><span> Client
                                         Onboarding</span></a>
                             </li>
                         </ul>

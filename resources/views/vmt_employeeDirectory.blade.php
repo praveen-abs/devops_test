@@ -214,7 +214,7 @@
                     <div class="btn border-0 outline-none mx-2 ">
                         <i class="ri-menu-add-line fw-bold"></i>
                     </div>
-                    <a href="{{route('vmt_employeeOnboarding')}}" class="btn   btn-orange  fw-bold ">
+                    <a href="{{route('employeeOnboarding')}}" class="btn   btn-orange  fw-bold ">
                         <i class="ri-add-line fw-bold mx-1"></i>
                         Onboard Employee
                     </a>
@@ -318,7 +318,7 @@
             <h6 class="mb-0">Active Employees</h6>
 
             <div class="d-flex flex-row-reverse">
-                <button class="btn btn-primary py-1 fw-bold"><a href="{{route('vmt_employeeOnboarding')}}" class=" text-white">
+                <button class="btn btn-primary py-1 fw-bold"><a href="{{route('employeeOnboarding')}}" class=" text-white">
                     <i class="ri-add-line fw-bold mx-1"></i>
                     Onboard Employee
                 </a></button>

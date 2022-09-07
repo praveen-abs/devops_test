@@ -27,7 +27,7 @@ Route::get('/',  [App\Http\Controllers\VmtMainDashboardController::class, 'index
 
 //404 error page
 Route::get('/page-not-found', function () {
-    return view('vmt.page404');
+    return view('page404');
 })->name('page-not-found');
 
 //Update User Details
@@ -44,7 +44,7 @@ Route::post('/update-experience-info/{id}', [App\Http\Controllers\HomeController
 Route::post('/update-emergency-info/{id}', [App\Http\Controllers\HomeController::class, 'updtaeEmergencyInfo'])->name('updtaeEmergencyInfo');
 Route::post('/update-family-info/{id}', [App\Http\Controllers\HomeController::class, 'updtaeFamilyInfo'])->name('updtaeFamilyInfo');
 Route::post('/update-checkin', [App\Http\Controllers\HomeController::class, 'updateCheckin'])->name('updateCheckin');
-Route::get('/vmt-topbar-settings', [App\Http\Controllers\HomeController::class, 'vmt_topbar_settings'])->name('vmt_topbar_settings');
+Route::get('/topbar-settings', [App\Http\Controllers\HomeController::class, 'vmt_topbar_settings'])->name('vmt_topbar_settings');
 // notifications
 Route::get('/notifications/{id}', [App\Http\Controllers\HomeController::class, 'delete'])->name('delete');
 
@@ -164,23 +164,23 @@ Route::post('vmt-employee-store', 'App\Http\Controllers\VmtEmployeeController@st
 
 Route::post('vmt-employee-onboard', 'App\Http\Controllers\VmtEmployeeController@employeeOnboard');
 
-Route::get('vmt-employess/bulk-upload', 'App\Http\Controllers\VmtEmployeeController@bulkUploadEmployee')->name('emp-bulk-upload');
+Route::get('bulkEmployeeOnboarding', 'App\Http\Controllers\VmtEmployeeController@bulkUploadEmployee')->name('bulkEmployeeOnboarding');
 Route::post('vmt-employess/bulk-upload', 'App\Http\Controllers\VmtEmployeeController@storeBulkEmployee');
 
 
 // Bulk upload employees for quick Onboarding
-Route::get('vmt-employess/quick-onboarding/upload', 'App\Http\Controllers\VmtEmployeeController@bulkUploadEmployeeForQuickOnboarding')->name('emp-quick-upload');
+Route::get('quickEmployeeOnboarding', 'App\Http\Controllers\VmtEmployeeController@bulkUploadEmployeeForQuickOnboarding')->name('quickEmployeeOnboarding');
 Route::post('vmt-employess/quick-onboarding/upload', 'App\Http\Controllers\VmtEmployeeController@storeEmployeeForQuickOnboarding');
 Route::get('vmt-employee/complete-onboarding', 'App\Http\Controllers\VmtEmployeeController@employeeOnboarding');
 Route::post('vmt-employee/complete-onboarding', 'App\Http\Controllers\VmtEmployeeController@storeQuickOnboardFormEmployee');
 
 
-Route::get('vmt-employess/directory', 'App\Http\Controllers\VmtEmployeeController@showEmployeeDirectory');
+Route::get('employeesDirectory', 'App\Http\Controllers\VmtEmployeeController@showEmployeeDirectory');
 Route::post('vmt-kpi/data', 'App\Http\Controllers\VmtEmployeeController@showKpiData')->name('kpi-data');
 Route::post('vmt-employess/status', 'App\Http\Controllers\VmtEmployeeController@updateUserAccountStatus')->name('updateUserAccountStatus');
 
 //Asset Inventory
-Route::get('vmt-assetinventory-index', 'App\Http\Controllers\VmtAssetInventoryController@index')->name('vmt-assetinventory-index');
+Route::get('assetinventory-index', 'App\Http\Controllers\VmtAssetInventoryController@index')->name('assetinventory-index');
 
 // asset investory bulk upload starts
 Route::get('vmt-assetinventory-bulk-upload', 'App\Http\Controllers\VmtAssetInventoryController@bulkUploadAsset')->name('vmt-assetinventory-bulk-upload');
@@ -196,7 +196,7 @@ Route::post('department', 'App\Http\Controllers\VmtPmsController@department')->n
 
 // pay slip
 
-Route::get('vmt-payslip', 'App\Http\Controllers\VmtPaySlipController@uploadPaySlipView');
+Route::get('payRun', 'App\Http\Controllers\VmtPaySlipController@uploadPaySlipView')->name('payRun');
 Route::post('vmt-payslip', 'App\Http\Controllers\VmtPaySlipController@uploadPaySlip');
 Route::get('vmt-employee-payslip', 'App\Http\Controllers\VmtPaySlipController@payslipView');
 Route::get('vmt-payslip-pdf', 'App\Http\Controllers\VmtPaySlipController@payslipPdf');
@@ -225,13 +225,22 @@ Route::post('vmt-pmsappraisal-hrreview', 'App\Http\Controllers\VmtPmsController@
 
 
 
-Route::get('/vmt_employeeOnboarding',  [App\Http\Controllers\VmtEmployeeController::class, 'employeeOnboarding'])->name('vmt_employeeOnboarding');
+Route::get('/employeeOnboarding',  [App\Http\Controllers\VmtEmployeeController::class, 'employeeOnboarding'])->name('employeeOnboarding');
 Route::post('/upload_file',  [App\Http\Controllers\VmtApraisalController::class, 'uploadFile'])->name('upload-file');
 Route::post('/upload_file_review',  [App\Http\Controllers\VmtApraisalController::class, 'uploadFileReview'])->name('upload-file-review');
 Route::get('/download_file/{id}',  [App\Http\Controllers\VmtApraisalController::class, 'downloadFile'])->name('download-file');
 Route::post('/state',  [App\Http\Controllers\VmtEmployeeController::class, 'getState'])->name('state');
 Route::get('/salary_details',  [App\Http\Controllers\VmtPaySlipController::class, 'paySlipIndex'])->name('vmt_salary_details');
-Route::get('/vmt_home',  [App\Http\Controllers\VmtPayCheckController::class, 'index']);
+Route::get('/paycheckDashboard',  [App\Http\Controllers\VmtPayCheckController::class, 'index'])->name('paycheckDashboard');
+
+Route::get('/form16', function () {
+    return view('vmt_form16');
+})->name('vmt-form16-route');
+
+Route::get('/investments', function () {
+    return view('vmt_investments');
+})->name('vmt-investments-route');
+
 Route::get('/vmt_employee_payslip',  [App\Http\Controllers\VmtPaySlipController::class, 'payslipPdfView'])->name('vmt_employee_payslip');
 Route::get('/pdfview/{selectedPaySlipMonth}',[App\Http\Controllers\VmtPaySlipController::class, 'pdfview'])->name('pdfview');
 // testing template
@@ -239,12 +248,12 @@ Route::get('/testingController',[App\Http\Controllers\VmtTestingController::clas
 
 // end
 
-Route::get('/vmt-config-pms',[App\Http\Controllers\ConfigPmsController::class, 'index'])->name('vmt_config_pms');
+Route::get('/config-pms',[App\Http\Controllers\ConfigPmsController::class, 'index'])->name('vmt_config_pms');
 Route::post('/vmt-config-pms/{id?}',[App\Http\Controllers\ConfigPmsController::class, 'store'])->name('store_config_pms');
 Route::post('/config-pms-rating',[App\Http\Controllers\ConfigPmsController::class, 'storePMSRating'])->name('store_config_pms_rating');
 
 
-Route::get('/vmt-config-master',[App\Http\Controllers\VmtMasterConfigController::class, 'index'])->name('view-config-master');
+Route::get('/config-master',[App\Http\Controllers\VmtMasterConfigController::class, 'index'])->name('view-config-master');
 Route::post('/vmt-config-master',[App\Http\Controllers\VmtMasterConfigController::class, 'store'])->name('store-config-master');
 
 Route::get('/vmt-pms-kpi',[App\Http\Controllers\VmtPmsController::class, 'vmt_pms_kpi'])->name('vmt_pms_kpi');
@@ -254,9 +263,9 @@ Route::post('/vmt-pms-kpi-create',[App\Http\Controllers\VmtPmsController::class,
 
 //Onboarding pages
 
-Route::get('/vmt_clientOnboarding', function () {
+Route::get('/clientOnboarding', function () {
     return view('vmt_clientOnboarding');
-});
+})->name('vmt_clientOnboarding-route');
 
 //
 Route::post('vmt_clientOnboarding', 'App\Http\Controllers\VmtClientController@store');
