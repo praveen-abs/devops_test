@@ -420,7 +420,7 @@ header {
 
                                         <label class="" for="frequency">Frequency</label>
                                         <select name="frequency" id="frequency" class="form-control">
-                                            
+
                                         </select>
 
                                     </div>
@@ -471,7 +471,7 @@ header {
                                         @endif
                                     </div>
                                     @else
-                                  
+
 
                                     <!-- flow 1 -->
                                     <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
@@ -675,9 +675,11 @@ header {
                         @else
                         <!-- flow 1 -->
                         <select class="select-employee-dropdown form-control" id="selectedEmployeeDropdownId" name="employees[]" multiple="multiple">
-                            @foreach($allEmployeesWithoutLoggedUserList as $employeeList)
-                                <option value="{{ $employeeList->id }}">{{ $employeeList->name }}</option>
-                            @endforeach
+                            @if(isset($allEmployeesWithoutLoggedUserList) && count($allEmployeesWithoutLoggedUserList) > 0)
+                                @foreach($allEmployeesWithoutLoggedUserList as $employeeList)
+                                    <option value="{{ $employeeList->id }}">{{ $employeeList->name }}</option>
+                                @endforeach
+                            @endif
                         </select>
                         @endif
                     </div>
@@ -1109,7 +1111,7 @@ header {
                     result += '<option value="'+$(this).val()+'">'+$(this).text()+'</option>';
                 }
             });
-          
+
             $('.change-exiting-reviewer').html(result);
             $('#reviewerReplaceSameLevel').show();
             $('#reviewerReplaceSameLevel').removeClass('fade');
@@ -1339,9 +1341,9 @@ header {
             console.log(existingValues);
 
             var result = existingValues.filter(function(elem){
-                return elem != oldReviewerId; 
+                return elem != oldReviewerId;
             });
-            
+
             result.push(newReviewerId);
 
             $('.select-multiple-reviewer').val(null).trigger('change');
@@ -1358,7 +1360,7 @@ header {
             //         }
             //     });
             //     var formData = new FormData(this);
-                
+
 
             //     $.ajax({
             //         url: $(this).attr('action'),
