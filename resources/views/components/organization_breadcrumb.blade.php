@@ -11,14 +11,14 @@
             <div class="page-title-right">
                 <ol class="breadcrumb m-0  fw-bold ">
 
-                    <li class="crumb-item"><a href="{{url('vmt-employess/directory')}}" class="text-muted">Directory</a></li>
-                    <li class="crumb-item"><a href="{{url('vmt-employee-hierarchy')}}" class="text-muted">ORG
+                    <li class="crumb-item"><a href="{{url('employeesDirectory')}}" class="text-muted">Directory</a></li>
+                    <li class="crumb-item"><a href="{{url('employee-hierarchy')}}" class="text-muted">ORG
                             structure</a></li>
-                    <li class="crumb-item"><a href="{{url('vmt_employeeOnboarding')}}" class="text-muted">Onboarding</a></li>
-                    <li class="crumb-item"><a  href="{{route('emp-bulk-upload')}}" class="text-muted">Onboarding Bulk Upload</a></li>
+                <li class="crumb-item"><a href="{{route('employeeOnboarding')}}" class="text-muted">Onboarding</a></li>
+                    <li class="crumb-item"><a  href="{{route('bulkEmployeeOnboarding')}}" class="text-muted">Onboarding Bulk Upload</a></li>
                     <li class="crumb-item"><a href="{{route('page-not-found')}}" class="text-muted">Exit</a></li>
                     <li class="crumb-item"><a href="{{route('page-not-found')}}" class="text-muted">Documents</a></li>
-                    <li class="crumb-item"><a href="{{route('vmt-assetinventory-index')}}" class="text-muted">Assets</a></li>
+                    <li class="crumb-item"><a href="{{route('assetinventory-index')}}" class="text-muted">Assets</a></li>
 
                 </ol>
             </div>

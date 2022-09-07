@@ -501,75 +501,81 @@ class VmtEmployeeController extends Controller
                     $empNo = $maxId;
                 }
             }
+            
             //dd($row['confirmation_period'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['confirmation_period'])->format('Y-m-d'));
-            //$row['doj'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d');
-            //$row['dob'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['dob'])->format('Y-m-d');
-            $row['spouse_dob'] = date('Y-m-d', strtotime($row['spouse_dob']));
-            $row['confirmation_period'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['confirmation_period'])->format('Y-m-d');
-            $row['mobile_no'] = (int)$row['mobile_no'];
+           
+            // $row['doj'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d');
+            // $row['dob'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['dob'])->format('Y-m-d');
+            // $row['father_dob'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['father_dob'])->format('Y-m-d');
+            // $row['mother_dob'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['mother_dob'])->format('Y-m-d');
+
+            // $row['spouse_dob'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['spouse_dob'])->format('Y-m-d');
+         
+            // $row['confirmation_period'] = $row['confirmation_period'];
+            // $row['mobile_no'] = (int)$row['mobile_no'];
             $rules = [
-                'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'email' => 'required|email|unique:users,email',
-                'gender' => 'required|in:male,female,other',
-               // 'doj' => 'required|date',
-                'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-               // 'dob' => 'required|date|before:-18 years',
-                'father_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'pan_no' => 'required|regex:/(^([A-Z]){3}P([A-Z]){1}([0-9]){4}([A-Z]){1}$)/u',
-                'pan_ack' => 'required_if:pan_no,==,""',
-                'aadhar' => 'required|regex:/(^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$)/u',
-                'marital_status' => 'required|in:single,married,widowed,separated,divorced',
-                'mobile_no' => 'required|regex:/^([0-9]{10})?$/u|numeric',
-                'bank_name' => 'required|regex:/(^([a-zA-z]+)(\d+)?$)/u',
-                'bank_ifsc' => 'required|regex:/(^([A-Z]){4}0([A-Z0-9]){6}?$)/u',
-                'account_no' => 'required|regex:/^([0-9]{9,18})?$/u|numeric',
-                'current_address' => 'required',
-                'permanent_address' => 'required',
-                'mother_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'spouse_name' => 'required_unless:marital_status,single|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'spouse_dob' => 'required_unless:marital_status,single|date',
-                'child_name' => 'nullable|regex:/(^(,?[a-zA-z. ])$)/u',
-                'child_dob' => 'nullable|regex:/(^(,?([0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$)/u',
-                //'department' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                //'process' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                //'designation' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'cost_center' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                //'confirmation_period' => 'required|date',
-                'holiday_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'l1_manager_code' => 'required|regex:/(^([a-zA-z0-9.]+)(\d+)?$)/u',
-                //'l1_manager_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'official_mail' => 'required|email',
-                'official_mobile' => 'required|regex:/^([0-9]{10})?$/u|numeric',
-                'emp_notice' => 'required|numeric',
-                'basic' => 'required|numeric',
-                'hra' => 'required|numeric',
-                'statutory_bonus' => 'required|numeric',
-                'child_education_allowance' => 'required|numeric',
-                'food_coupon' => 'required|numeric',
-                'lta' => 'required|numeric',
-                'special_allowance' => 'required|numeric',
-                'other_allowance' => 'required|numeric',
-                'epf_employer_contribution' => 'required|numeric',
-                'insurance' => 'required|numeric',
-                'graduity' => 'required|numeric',
-                'epf_employee' => 'required|numeric',
-                'esic_employee' => 'required|numeric',
-                'professional_tax' => 'required|numeric',
-                'labour_welfare_fund' => 'required|numeric',
+            //     'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+            //     'email' => 'required|email|unique:users,email',
+            //     'gender' => 'required|in:male,female,other',
+            //    // 'doj' => 'required|date',
+            //     'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+            //    // 'dob' => 'required|date|before:-18 years',
+            //     'father_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+            //     'pan_no' => 'required|regex:/(^([A-Z]){3}P([A-Z]){1}([0-9]){4}([A-Z]){1}$)/u',
+            //     'pan_ack' => 'required_if:pan_no,==,""',
+            //     'aadhar' => 'required|regex:/(^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$)/u',
+            //     'marital_status' => 'required|in:single,married,widowed,separated,divorced',
+            //     'mobile_no' => 'required|regex:/^([0-9]{10})?$/u|numeric',
+            //     'bank_name' => 'required|regex:/(^([a-zA-z]+)(\d+)?$)/u',
+            //     'bank_ifsc' => 'required|regex:/(^([A-Z]){4}0([A-Z0-9]){6}?$)/u',
+            //     'account_no' => 'required|regex:/^([0-9]{9,18})?$/u|numeric',
+            //     'current_address' => 'required',
+            //     'permanent_address' => 'required',
+            //     'mother_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+            //     'spouse_name' => 'required_unless:marital_status,single|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+            //    // 'spouse_dob' => 'required_unless:marital_status,single|date',
+            //     'child_name' => 'nullable|regex:/(^(,?[a-zA-z. ])$)/u',
+            //     'child_dob' => 'nullable|regex:/(^(,?([0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$)/u',
+            //     //'department' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+            //     //'process' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+            //     //'designation' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+            //     'cost_center' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+            //     //'confirmation_period' => 'required|date',
+            //     'holiday_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+            //     'l1_manager_code' => 'required|regex:/(^([a-zA-z0-9.]+)(\d+)?$)/u',
+            //     //'l1_manager_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+            //     'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+            //     'official_mail' => 'required|email',
+            //     'official_mobile' => 'required|regex:/^([0-9]{10})?$/u|numeric',
+            //     'emp_notice' => 'required|numeric',
+            //     'basic' => 'required|numeric',
+            //     'hra' => 'required|numeric',
+            //     'statutory_bonus' => 'required|numeric',
+            //     'child_education_allowance' => 'required|numeric',
+            //     'food_coupon' => 'required|numeric',
+            //     'lta' => 'required|numeric',
+            //     'special_allowance' => 'required|numeric',
+            //     'other_allowance' => 'required|numeric',
+            //     'epf_employer_contribution' => 'required|numeric',
+            //     'insurance' => 'required|numeric',
+            //     'graduity' => 'required|numeric',
+            //     'epf_employee' => 'required|numeric',
+            //     'esic_employee' => 'required|numeric',
+            //     'professional_tax' => 'required|numeric',
+            //     'labour_welfare_fund' => 'required|numeric',
 
             ];
             $messages = [
-                'required' => 'The :attribute field is required.',
-                'min' => 'The :attribute field should be atleast :min character.',
-                'max' => 'The :attribute field should be not more than :max character.',
-                'numeric' => 'The :attribute field sould contain only numbers.',
-                'email' => 'The :attribute field email is not valid.',
-                'date' => 'The :attribute field date is not valid.',
-                'in' => 'The :attribute field date is not valid. the option should be like :in',
-                'unique' => 'The :attribute should be unique',
-                'regex' => 'The :attribute field is not valid.',
-                'before' => 'The :attribute should be above 18 years.',
+                // 'required' => 'The :attribute field is required.',
+                // 'min' => 'The :attribute field should be atleast :min character.',
+                // 'max' => 'The :attribute field should be not more than :max character.',
+                // 'numeric' => 'The :attribute field sould contain only numbers.',
+                // 'email' => 'The :attribute field email is not valid.',
+                // 'date' => 'The :attribute field date is not valid.',
+                // 'in' => 'The :attribute field date is not valid. the option should be like :in',
+                // 'unique' => 'The :attribute should be unique',
+                // 'regex' => 'The :attribute field is not valid.',
+                // 'before' => 'The :attribute should be above 18 years.',
             ];
             $validator = Validator::make($row, $rules, $messages);
             if ($validator->passes()) {
@@ -590,11 +596,14 @@ class VmtEmployeeController extends Controller
                     $newEmployee->userid = $user->id;
                     $newEmployee->emp_no   =    $empNo;
                     $newEmployee->gender   =    $row["gender"];
-                    $newEmployee->doj   =    \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d');
-                    $newEmployee->dol   =    \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d');
+                    $newEmployee->doj   =   \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d');
+                    $newEmployee->dol   =   \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d');
                     $newEmployee->location   =    $row["work_location"];
-                    $newEmployee->dob   =    \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['dob'])->format('Y-m-d');
+                    $newEmployee->dob   =   \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d');
                     $newEmployee->father_name   =  $row["father_name"];
+                    $newEmployee->father_gender   =  $row["father_gender"];
+                    $newEmployee->father_dob   =  \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d');
+
                     $newEmployee->pan_number   =  isset( $row["pan_no"] ) ? ($row["pan_no"]) : "";
                     $newEmployee->pan_ack   =    $row["pan_ack"];
                     $newEmployee->aadhar_number = $row["aadhar"];
@@ -606,6 +615,8 @@ class VmtEmployeeController extends Controller
                     $newEmployee->present_address   = $row["current_address"];
                     $newEmployee->permanent_address   = $row["permanent_address"];
                     $newEmployee->mother_name   = $row["mother_name"];
+                    $newEmployee->mother_gender   = $row["mother_gender"];
+                    $newEmployee->mother_dob   = $row["mother_dob"];
                     if ($row['marital_status'] <> 'single') {
                         $newEmployee->spouse_name   = $row["spouse_name"];
                         $newEmployee->spouse_age   = $row["spouse_dob"];

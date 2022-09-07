@@ -214,7 +214,7 @@
                     <div class="btn border-0 outline-none mx-2 ">
                         <i class="ri-menu-add-line fw-bold"></i>
                     </div>
-                    <a href="{{route('vmt_employeeOnboarding')}}" class="btn   btn-orange  fw-bold ">
+                    <a href="{{route('employeeOnboarding')}}" class="btn   btn-orange  fw-bold ">
                         <i class="ri-add-line fw-bold mx-1"></i>
                         Onboard Employee
                     </a>
@@ -252,10 +252,13 @@
                                 <div class="mx-2 d-flex justify-content-center align-items-center profile-name-icon">
                                     @if( empty($employee->avatar) || !file_exists(public_path('images/'. $employee->avatar)) )
                                         @php
-                                        preg_match('/(?:\w+\. )?(\w+).*?(\w+)(?: \w+\.)?$/',$employee->emp_name , $result);
-                                        $name = strtoupper($result[1][0].$result[2][0]);
+                                            $splitArray = explode(" ",$employee->emp_name);
+                                            if(count($splitArray) == 1)
+                                                $name = strtoupper($splitArray[0][0].$splitArray[0][1]);
+                                            else
+                                                $name = strtoupper($splitArray[0][0].$splitArray[1][0]);
+
                                         @endphp
-                                        <!--span class="badge rounded-circle h-10 w-10   badge-primary ms-2"-->
                                         <span class="align-middle fw-bold text-white">{{$name}}</span><!--/span-->
                                     @else
                                         <img src="{{ URL::asset('images/'.$employee->avatar) }}" alt="" class="h-100 w-100" />
@@ -315,7 +318,7 @@
             <h6 class="mb-0">Active Employees</h6>
 
             <div class="d-flex flex-row-reverse">
-                <button class="btn btn-primary py-1 fw-bold"><a href="{{route('vmt_employeeOnboarding')}}" class=" text-white">
+                <button class="btn btn-primary py-1 fw-bold"><a href="{{route('employeeOnboarding')}}" class=" text-white">
                     <i class="ri-add-line fw-bold mx-1"></i>
                     Onboard Employee
                 </a></button>
@@ -345,8 +348,12 @@
                                 <div class="mx-2 d-flex justify-content-center align-items-center profile-name-icon">
                                     @if( empty($employee->avatar) || !file_exists(public_path('images/'. $employee->avatar)) )
                                         @php
-                                        preg_match('/(?:\w+\. )?(\w+).*?(\w+)(?: \w+\.)?$/',$employee->emp_name , $result);
-                                        $name = strtoupper($result[1][0].$result[2][0]);
+                                            $splitArray = explode(" ",$employee->emp_name);
+                                            if(count($splitArray) == 1)
+                                                $name = strtoupper($splitArray[0][0].$splitArray[0][1]);
+                                            else
+                                                $name = strtoupper($splitArray[0][0].$splitArray[1][0]);
+
                                         @endphp
                                         <!--span class="badge rounded-circle h-10 w-10   badge-primary ms-2"-->
                                         <span class="align-middle fw-bold text-white">{{$name}}</span><!--/span-->

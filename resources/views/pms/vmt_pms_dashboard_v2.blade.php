@@ -1117,6 +1117,8 @@ header {
         //     $('#createEmployee').removeClass('fade');
         // });
         $('.close-reviewerButton').click(function() {
+            $('#add-goals-modal').modal('show');
+
             $('#reviewerReplaceSameLevel').hide();
             $('#reviewerReplaceSameLevel').addClass('fade');
         });
@@ -1143,6 +1145,7 @@ header {
         function checkReviewersExistOrNot(){
             var values = [];
             var selectedReviewersVal = $(".select-multiple-reviewer").val();
+            
             console.log(selectedReviewersVal);
             $.each (selectedReviewersVal, function(key,val){
                 console.log(key);
@@ -1166,6 +1169,9 @@ header {
             });
 
             $('.change-exiting-reviewer').html(result);
+
+            $('#add-goals-modal').modal('hide');
+
             $('#reviewerReplaceSameLevel').show();
             $('#reviewerReplaceSameLevel').removeClass('fade');
             changeExitingReviewer();
@@ -1332,20 +1338,24 @@ header {
                     data: $('#goalForm').serialize(),
                     success: function(data) {
                         $('.loader').hide();
-                        $("#kpiTableForm :input").prop("disabled", true);
-                        $(".table-btn").prop('disabled', true);
+                        if(data.status == true){
+                            $("#kpiTableForm :input").prop("disabled", true);
+                            $(".table-btn").prop('disabled', true);
 
-                        @if (auth()->user()->hasrole('Employee'))
-                            $('#modalBody').html("Goals published. Email Sent to your Manager");
-                            $('#notificationModal').show();
-                            $('#notificationModal').removeClass('fade');
-                        @else
-                            $('#modalBody').html("Goals published. Email Sent to your Employees");
-                            $('#notificationModal').show();
-                            $('#notificationModal').removeClass('fade');
-                        @endif
+                            @if (auth()->user()->hasrole('Employee'))
+                                $('#modalBody').html("Goals published. Email Sent to your Manager");
+                                $('#notificationModal').show();
+                                $('#notificationModal').removeClass('fade');
+                            @else
+                                $('#modalBody').html("Goals published. Email Sent to your Employees");
+                                $('#notificationModal').show();
+                                $('#notificationModal').removeClass('fade');
+                            @endif
 
-                        $("kpitable_id").val(data.table_id);
+                            $("kpitable_id").val(data.table_id);
+                        }else{
+                            swal('Wrong!',data.message,'error');
+                        }
                     }
                 })
             // } else {
@@ -1381,6 +1391,7 @@ header {
         }
 
         $("#changeReviewForm").submit(function(e) {
+            
             // var reviewersName =$("#reviewersAccordingAssignee").val();
             // var reviewersIds =$("#selectedReviewIds").val();
 
@@ -1403,9 +1414,11 @@ header {
             $(".select-multiple-reviewer").val(result);
             $('.select-multiple-reviewer').trigger('change.select2');
 
+            
             $('#reviewerReplaceSameLevel').hide();
             $('#reviewerReplaceSameLevel').addClass('fade');
             
+            $('#add-goals-modal').modal('show');
             checkReviewersExistOrNot();
         })
     </script>

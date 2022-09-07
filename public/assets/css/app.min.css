@@ -17494,7 +17494,7 @@ p {
     border-color: #002f56 !important;
 }
 
-/* for vmt_home */
+/* for paycheckDashboard */
 
 .payslip-details-card {
     margin: 0 0 30px;
@@ -18560,7 +18560,7 @@ table > tbody > tr > td > img,
 }
 [data-layout="vertical"][data-sidebar-size="sm"] .navbar-header .topnav-hamburger{
     margin-left: 20px;
-    
+
 }
 [data-layout="vertical"][data-sidebar-size="sm"] .navbar-menu .navbar-nav .nav-link span {
     display: none;

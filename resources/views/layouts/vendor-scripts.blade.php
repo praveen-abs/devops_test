@@ -40,6 +40,24 @@
             }
         }
     });
+
+    function generateProfileShortName_VendorScript(element_id)
+    {
+        var username = '{{auth()->user()->name ?? ''}}';
+        const splitArray = username.split(" ");
+        var finalname ="empty111";
+
+        if( splitArray.length == 1)
+        {
+            finalname = splitArray[0][0] +""+ splitArray[0][1];
+        }else
+        {
+            finalname = splitArray[0][0] +""+ splitArray[0][1];
+        }
+
+        var a = $('#'+element_id).text(finalname);
+    }
+
 </script>
 @yield('script')
 @yield('script-bottom')

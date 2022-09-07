@@ -347,11 +347,11 @@
                                         <button id="_next" onclick="next()" class="next"><i class="fa fa-chevron-right"></i></button>
                                     </div>
                                     <table class="_table-calendar" id="_calendar" data-lang="en">
-                                        
-                                    
+
+
                                         <thead id="_thead-month"></thead>
                                         <tbody id="_calendar-body">
-                                            
+
                                         </tbody>
                                     </table>
 
