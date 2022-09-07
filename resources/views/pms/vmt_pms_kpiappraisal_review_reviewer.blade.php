@@ -179,10 +179,14 @@
                                         <th scope="col" data-name='comments' data-filterable="false" data-visible="true">Employee Comments</th> 
                                     @endif
                                     <?php $i=1; ?>
+                                    <?php $j=1; ?>
                                     @foreach($reviewersId as $reviewersReview)
-                                        <th scope="col" data-name='kpiManagerReview' data-filterable="false" data-visible= true>KPI - Achievement (Manager Review) {{$i}}</th>
-                                        <th scope="col" data-name='kpiManagerAchivement' data-filterable="false" data-visible="true">Manager KPI Achievement % - {{$i}}</th>
-                                        <?php $i++; ?>
+                                        <th scope="col" data-name='kpiManagerReview' data-filterable="false" data-visible= true> KPI - Achievement (L{{$i}} Manager Review) </th>
+                                    <?php $i++; ?>
+                                    @endforeach
+                                    @foreach($reviewersId as $reviewersReview)
+                                        <th scope="col" data-name='kpiManagerAchivement' data-filterable="false" data-visible="true">Manager KPI Achievement % - L{{$j}} Manager </th>
+                                    <?php $j++; ?>
                                     @endforeach
                                 </tr>
                             </thead>
