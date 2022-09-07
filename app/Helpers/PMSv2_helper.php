@@ -5,6 +5,7 @@ use App\Models\VmtEmployee;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtPMS_KPIFormAssignedModel;
 use App\Models\VmtPMS_KPIFormReviewsModel;
+use App\Models\VmtPMSRating;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -99,21 +100,37 @@ function calculateOverallReviewRatings($assigneeReviewTableId=null,$assigneeId)
                     $firstReviewRating = json_decode($assigneeReviewerReview->reviewer_kpi_percentage,true)[$decodedReviewsId[0]];
                 }
                 
+                // calculate Rating Based on Table Dynamic Data
                 if (count($firstReviewRating) > 0) {
                     $ratingCheck = array_sum($firstReviewRating)/count($firstReviewRating);
-                    if ($ratingCheck < 60) {
-                        $finalRating = 1;
-                    } elseif ($ratingCheck >= 60 && $ratingCheck < 70) {
-                        $finalRating = 2;
-                    } elseif ($ratingCheck >= 70 && $ratingCheck < 80) {
-                        $finalRating = 3;
-                    } elseif ($ratingCheck >= 80 && $ratingCheck < 90) {
-                        $finalRating = 4;
-                    } elseif ($ratingCheck >= 90) {
-                        $finalRating = 5;
-                    } else{
-                        $finalRating = 0;
+
+                    $pmsConfigRatingDetails = VmtPMSRating::orderBy('sort_order','DESC')->get();
+                    if(count($pmsConfigRatingDetails) > 0){
+                        foreach($pmsConfigRatingDetails as $ratings){
+                            $rangeCheck = explode('-',$ratings->score_range);
+                            if($ratingCheck >= $rangeCheck[0] && $ratingCheck <= $rangeCheck[1]){
+                                $finalRating = $ratings->ranking;
+                            }elseif($ratingCheck >= 100){
+                                if($ratings->score_range == '90 - 100'){
+                                    $finalRating = $ratings->ranking;
+                                }
+                            }
+                        }
                     }
+
+                    // if ($ratingCheck < 60) {
+                    //     $finalRating = 1;
+                    // } elseif ($ratingCheck >= 60 && $ratingCheck < 70) {
+                    //     $finalRating = 2;
+                    // } elseif ($ratingCheck >= 70 && $ratingCheck < 80) {
+                    //     $finalRating = 3;
+                    // } elseif ($ratingCheck >= 80 && $ratingCheck < 90) {
+                    //     $finalRating = 4;
+                    // } elseif ($ratingCheck >= 90) {
+                    //     $finalRating = 5;
+                    // } else{
+                    //     $finalRating = 0;
+                    // }
                 }
             }
         }
