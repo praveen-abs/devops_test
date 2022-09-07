@@ -782,7 +782,7 @@
                                     </div>
                                 </div>
                                 <div class="submit-section">
-                                    <button class="btn btn-primary submit-btn" type="submit">Save</button>
+                                    <button class="btn btn-orange submit-btn" type="submit">Save</button>
                                 </div>
                             </form>
                         </div>
@@ -962,7 +962,7 @@
                                     </div>
                                 </div>
                                 <div class="submit-section">
-                                    <button class="btn btn-primary submit-btn">Submit</button>
+                                    <button class="btn btn-orange submit-btn">Submit</button>
                                 </div>
                             </form>
                         </div>
@@ -1058,7 +1058,7 @@
                                     </div>
                                 </div>
                                 <div class="submit-section">
-                                    <button class="btn btn-primary submit-btn">Submit</button>
+                                    <button class="btn btn-orange submit-btn">Submit</button>
                                 </div>
                             </form>
                         </div>
@@ -1142,7 +1142,7 @@
                                     </div>
                                 </div>
                                 <div class="submit-section">
-                                    <button class="btn btn-primary submit-btn">Submit</button>
+                                    <button class="btn btn-orange submit-btn">Submit</button>
                                 </div>
                             </form>
                         </div>
@@ -1239,7 +1239,7 @@
                                     </div>
                                 </div>
                                 <div class="submit-section">
-                                    <button class="btn btn-primary submit-btn">Submit</button>
+                                    <button class="btn btn-orange submit-btn">Submit</button>
                                 </div>
                             </form>
                         </div>
@@ -1392,7 +1392,7 @@
                                     </div>
                                 </div>
                                 <div class="submit-section">
-                                    <button class="btn btn-primary submit-btn">Submit</button>
+                                    <button class="btn btn-orange submit-btn">Submit</button>
                                 </div>
                             </form>
                         </div>
@@ -1537,7 +1537,7 @@
                                     </div>
                                 </div>
                                 <div class="submit-section">
-                                    <button class="btn btn-primary submit-btn">Submit</button>
+                                    <button class="btn btn-orange submit-btn">Submit</button>
                                 </div>
                             </form>
                         </div>

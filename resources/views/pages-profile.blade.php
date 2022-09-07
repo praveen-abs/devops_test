@@ -45,7 +45,7 @@
                                             <p class="text-muted text-end f-12 fw-bold">{{ $profileCompletenessValue}}%</p>
                                         </div>
                                                             <div class="progress progress-bar-content mb-2">
-                                            <div class="progress-bar " role="progressbar" style="width: {{ $profileCompletenessValue}}%"
+                                            <div class="progress-bar " role="progressbar" style="width:{{ $profileCompletenessValue}}%"
                                                 aria-valuenow="{{ $profileCompletenessValue}}" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                             <p class="text-muted f-12 fw-bold">Your profile is completed</p>
@@ -793,7 +793,7 @@
                                     }else{
                                     @endphp
                                     <img id="profile_round_image_dist1" class="rounded-circle header-profile-user"
-                                        src="{{URL::asset('images/'. Auth::user()->avatar)}}" alt="Header Avatar">
+                                        src="{{URL::asset('images/'. Auth::user()->avatar)}}" alt="">
 
 
                                     @php
@@ -924,7 +924,7 @@
                                     <div class="profile-img-wrap edit-img">
                                     <img id="profile_round_image_dist" class="rounded-circle header-profile-user"
                                         src="@if (!empty($user->avatar)){{ URL::asset('images/' . $user->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"
-                                        alt="Header Avatar">
+                                        alt="">
                                     <div class="fileupload btn">
                                         <span class="btn-text">edit</span>
                                         <input type='file' name="profilePic" class="upload"  accept="image/*" onchange="readURL(this);" />
@@ -936,7 +936,7 @@
 
                         <div class="col-12">
                         <div class="text-right">
-                            <button class="btn btn-primary submit-btn">Submit</button>
+                            <button class="btn btn-orange submit-btn">Submit</button>
                         </div>
                         </div>
                     </form>
