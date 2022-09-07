@@ -36,7 +36,9 @@ class VmtEmployeeController extends Controller
 
     public function employeeOnboarding(Request $request) {
         // Used for Quick onboarding
+        //dd($request->email);
         if($request->has('email')){
+
             $employee  =  User::where('email', $request->email)->first();
             $clientData  = VmtEmployee::where('userid', $employee->id)->first();
             $empNo = '';
@@ -51,8 +53,9 @@ class VmtEmployeeController extends Controller
              // dd($emp);
             $department = Department::all();
             $bank = Bank::all();
+            $allEmployeesCode = User::where('is_admin',0)->where('active',1)->whereNotNull('user_code')->get(['user_code','name']);
 
-            return view('vmt_employeeOnboarding', compact('empNo','emp_details', 'countries', 'compensatory', 'bank', 'emp','department'));
+            return view('vmt_employeeOnboarding', compact('empNo','emp_details', 'countries', 'compensatory', 'bank', 'emp','department','allEmployeesCode'));
         }else{
             $clientData  = VmtClientMaster::first();
             $employee  =  User::orderBy('created_at','DESC')->where('user_code', 'LIKE', '%'.$clientData->client_code.'%')->first();
@@ -459,10 +462,10 @@ class VmtEmployeeController extends Controller
 
     // store employeess from excel sheet to database
     public function storeBulkEmployee(Request $request){
-        
+
         $validator =    Validator::make(
-                            $request->all(), 
-                            ['file' => 'required|file|mimes:xls,xlsx'], 
+                            $request->all(),
+                            ['file' => 'required|file|mimes:xls,xlsx'],
                             ['required' => 'The :attribute is required.']
                         );
 
@@ -501,16 +504,16 @@ class VmtEmployeeController extends Controller
                     $empNo = $maxId;
                 }
             }
-            
+
             //dd($row['confirmation_period'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['confirmation_period'])->format('Y-m-d'));
-           
+
             // $row['doj'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d');
             // $row['dob'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['dob'])->format('Y-m-d');
             // $row['father_dob'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['father_dob'])->format('Y-m-d');
             // $row['mother_dob'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['mother_dob'])->format('Y-m-d');
 
             // $row['spouse_dob'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['spouse_dob'])->format('Y-m-d');
-         
+
             // $row['confirmation_period'] = $row['confirmation_period'];
             // $row['mobile_no'] = (int)$row['mobile_no'];
             $rules = [
@@ -707,7 +710,7 @@ class VmtEmployeeController extends Controller
 
                 } catch (\Exception $e) {
                     $returnfailedMsg .= $empNo." not get added because of error ".$e->getMessage()." <br/>";
-                    $failedCount++;   
+                    $failedCount++;
                 }
 
             } else {
