@@ -25,6 +25,11 @@ Route::get('/',  [App\Http\Controllers\VmtMainDashboardController::class, 'index
 
 // Route::get('/index',  [App\Http\Controllers\VmtMainDashboardController::class, 'index'])->name('main');
 
+//404 error page
+Route::get('/page-not-found', function () {
+    return view('vmt.page404');
+})->name('page-not-found');
+
 //Update User Details
 Route::get('/profile-completeness/{id}', [App\Http\Controllers\HomeController::class, 'calculateProfileCompleteness'])->name('calculateProfileCompleteness');
 
@@ -225,7 +230,7 @@ Route::post('/upload_file',  [App\Http\Controllers\VmtApraisalController::class,
 Route::post('/upload_file_review',  [App\Http\Controllers\VmtApraisalController::class, 'uploadFileReview'])->name('upload-file-review');
 Route::get('/download_file/{id}',  [App\Http\Controllers\VmtApraisalController::class, 'downloadFile'])->name('download-file');
 Route::post('/state',  [App\Http\Controllers\VmtEmployeeController::class, 'getState'])->name('state');
-Route::get('/vmt_salary_details',  [App\Http\Controllers\VmtPaySlipController::class, 'paySlipIndex']);
+Route::get('/salary_details',  [App\Http\Controllers\VmtPaySlipController::class, 'paySlipIndex'])->name('vmt_salary_details');
 Route::get('/vmt_home',  [App\Http\Controllers\VmtPayCheckController::class, 'index']);
 Route::get('/vmt_employee_payslip',  [App\Http\Controllers\VmtPaySlipController::class, 'payslipPdfView'])->name('vmt_employee_payslip');
 Route::get('/pdfview/{selectedPaySlipMonth}',[App\Http\Controllers\VmtPaySlipController::class, 'pdfview'])->name('pdfview');
