@@ -288,14 +288,19 @@
 
                             if ($('nationality').val('indian')) {
 
-                                $("#passport_no").removeAttr("required", true);
-                                $('#passdate').removeAttr("required", true);               
+                                $("#passport_no").removeAttr("required");
+                                $('#passdate').removeAttr("required");               
                             }
                             else if ($('nationality').val('other_country')){
-                                $("#passport_no").attr("required", true);
-                                $("#passdate").attr("required", true);
+                                $("#passport_no").attr("required");
+                                $("#passdate").attr("required");
+                                
                             }
                         });
+
+            
+
+
 
             //End Nationality Validation
 
