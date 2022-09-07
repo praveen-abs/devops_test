@@ -305,7 +305,9 @@ class VmtEmployeeController extends Controller
                 'password' => Hash::make('Abs@123123'),
                 'avatar' =>  $row['employee_name'].'_avatar.jpg',
                 'user_code' =>  $row['employee_code'],
-                'active' => '0'
+                'active' => '0',
+                'is_onboarded' => '1',
+                'is_admin' => '0'
             ]);
             $user->assignRole("Employee");
 
@@ -590,7 +592,9 @@ class VmtEmployeeController extends Controller
                         'password' => Hash::make('Abs@123123'),
                         'avatar' =>  $row['employee_name'].'_avatar.jpg',
                         'user_code' =>  $empNo,
-                        'active' => '0'
+                        'active' => '0',
+                        'is_onboarded' => '1'
+
 
                     ]);
                     $user->assignRole("Employee");
@@ -852,12 +856,12 @@ class VmtEmployeeController extends Controller
                         'password' => Hash::make('Abs@123123'),
                         'avatar' =>  $row['employee_name'].'_avatar.jpg',
                         'user_code' =>  $empNo,
-                        'active' => '0'
+                        'active' => '1',
+                        'is_onboarded' => '0',
+                        'is_admin' => '0'
 
                     ]);
 
-                    $user->active = 0;
-                    $user->is_admin = 0;
                     $user->save();
                     $user->assignRole("Employee");
 
