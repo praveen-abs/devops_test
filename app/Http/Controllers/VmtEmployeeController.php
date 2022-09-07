@@ -573,121 +573,130 @@ class VmtEmployeeController extends Controller
             ];
             $validator = Validator::make($row, $rules, $messages);
             if ($validator->passes()) {
-                $user =  User::create([
-                    'name' => $row['employee_name'],
-                    'email' => $row["email"],
-                    'password' => Hash::make('Abs@123123'),
-                    'avatar' =>  $row['employee_name'].'_avatar.jpg',
-                    'user_code' =>  $empNo,
-                    'active' => '0'
 
-                ]);
-                $user->assignRole("Employee");
+                try {
+                    $user =  User::create([
+                        'name' => $row['employee_name'],
+                        'email' => $row["email"],
+                        'password' => Hash::make('Abs@123123'),
+                        'avatar' =>  $row['employee_name'].'_avatar.jpg',
+                        'user_code' =>  $empNo,
+                        'active' => '0'
 
-                $newEmployee = new VmtEmployee;
-                $newEmployee->userid = $user->id;
-                $newEmployee->emp_no   =    $empNo;
-                $newEmployee->gender   =    $row["gender"];
-                $newEmployee->doj   =    \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d');
-                $newEmployee->dol   =    \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d');
-                $newEmployee->location   =    $row["work_location"];
-                $newEmployee->dob   =    \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['dob'])->format('Y-m-d');
-                $newEmployee->father_name   =  $row["father_name"];
-                $newEmployee->pan_number   =  isset( $row["pan_no"] ) ? ($row["pan_no"]) : "";
-                $newEmployee->pan_ack   =    $row["pan_ack"];
-                $newEmployee->aadhar_number = $row["aadhar"];
-                $newEmployee->marrital_status = $row["marital_status"];
-                $newEmployee->mobile_number  = $row["mobile_no"];
-                $newEmployee->bank_name   = $row["bank_name"];
-                $newEmployee->bank_ifsc_code  = $row["bank_ifsc"];
-                $newEmployee->bank_account_number  = $row["account_no"];
-                $newEmployee->present_address   = $row["current_address"];
-                $newEmployee->permanent_address   = $row["permanent_address"];
-                $newEmployee->mother_name   = $row["mother_name"];
-                if ($row['marital_status'] <> 'single') {
-                    $newEmployee->spouse_name   = $row["spouse_name"];
-                    $newEmployee->spouse_age   = $row["spouse_dob"];
-                    if ($row['no_child'] > 0) {
-                        $newEmployee->kid_name   = json_encode($row["child_name"]);
-                        $newEmployee->kid_age  = json_encode($row["child_dob"]);
+                    ]);
+                    $user->assignRole("Employee");
+
+                    $newEmployee = new VmtEmployee;
+                    $newEmployee->userid = $user->id;
+                    $newEmployee->emp_no   =    $empNo;
+                    $newEmployee->gender   =    $row["gender"];
+                    $newEmployee->doj   =    \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d');
+                    $newEmployee->dol   =    \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d');
+                    $newEmployee->location   =    $row["work_location"];
+                    $newEmployee->dob   =    \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['dob'])->format('Y-m-d');
+                    $newEmployee->father_name   =  $row["father_name"];
+                    $newEmployee->pan_number   =  isset( $row["pan_no"] ) ? ($row["pan_no"]) : "";
+                    $newEmployee->pan_ack   =    $row["pan_ack"];
+                    $newEmployee->aadhar_number = $row["aadhar"];
+                    $newEmployee->marrital_status = $row["marital_status"];
+                    $newEmployee->mobile_number  = $row["mobile_no"];
+                    $newEmployee->bank_name   = $row["bank_name"];
+                    $newEmployee->bank_ifsc_code  = $row["bank_ifsc"];
+                    $newEmployee->bank_account_number  = $row["account_no"];
+                    $newEmployee->present_address   = $row["current_address"];
+                    $newEmployee->permanent_address   = $row["permanent_address"];
+                    $newEmployee->mother_name   = $row["mother_name"];
+                    if ($row['marital_status'] <> 'single') {
+                        $newEmployee->spouse_name   = $row["spouse_name"];
+                        $newEmployee->spouse_age   = $row["spouse_dob"];
+                        if ($row['no_child'] > 0) {
+                            $newEmployee->kid_name   = json_encode($row["child_name"]);
+                            $newEmployee->kid_age  = json_encode($row["child_dob"]);
+                        }
                     }
-                }
-                $newEmployee->save();
+                    $newEmployee->save();
 
-                if($newEmployee){
-                    $empOffice  = new VmtEmployeeOfficeDetails;
-                    $empOffice->emp_id = $newEmployee->id;
-                    $empOffice->user_id = $newEmployee->userid;
-                    $empOffice->department_id = $row["department"];
-                    $empOffice->process = $row["process"];
-                    $empOffice->designation = $row["designation"];
-                    $empOffice->cost_center = $row["cost_center"];
-                    $empOffice->confirmation_period  = $row['confirmation_period'];
-                    $empOffice->holiday_location  = $row["holiday_location"];
+                    if($newEmployee){
+                        $empOffice  = new VmtEmployeeOfficeDetails;
+                        $empOffice->emp_id = $newEmployee->id;
+                        $empOffice->user_id = $newEmployee->userid;
+                        $empOffice->department_id = $row["department"];
+                        $empOffice->process = $row["process"];
+                        $empOffice->designation = $row["designation"];
+                        $empOffice->cost_center = $row["cost_center"];
+                        $empOffice->confirmation_period  = $row['confirmation_period'];
+                        $empOffice->holiday_location  = $row["holiday_location"];
 
-                    if($row["l1_manager_code"] !=  $empNo)
-                        $empOffice->l1_manager_code  = $row["l1_manager_code"];
-                    else
-                        $empOffice->l1_manager_code  = "";
+                        if($row["l1_manager_code"] !=  $empNo)
+                            $empOffice->l1_manager_code  = $row["l1_manager_code"];
+                        else
+                            $empOffice->l1_manager_code  = "";
 
-                    $empOffice->l1_manager_name  = $row["l1_manager_name"];
-                    $empOffice->work_location  = $row["work_location"];
-                    $empOffice->officical_mail  = $row["official_mail"];
-                    $empOffice->official_mobile  = $row["official_mobile"];
-                    $empOffice->emp_notice  = $row["emp_notice"];
-                    $empOffice->save();
-                }
+                        $empOffice->l1_manager_name  = $row["l1_manager_name"];
+                        $empOffice->work_location  = $row["work_location"];
+                        $empOffice->officical_mail  = $row["official_mail"];
+                        $empOffice->official_mobile  = $row["official_mobile"];
+                        $empOffice->emp_notice  = $row["emp_notice"];
+                        $empOffice->save();
+                    }
 
-                if ($empOffice) {
+                    if ($empOffice) {
 
-                    //Statutory Details
-                    $newEmployee_statutoryDetails = new VmtEmployeeStatutoryDetails;
-                    $newEmployee_statutoryDetails->user_id = $user->id;
-                    $newEmployee_statutoryDetails->uan_number = $row["uan_number"];
-                    $newEmployee_statutoryDetails->pf_applicable = $row["pf_applicable"];
-                    $newEmployee_statutoryDetails->esic_applicable = $row["esic_applicable"];
-                    $newEmployee_statutoryDetails->ptax_location = $row["ptax_location"];
-                    $newEmployee_statutoryDetails->tax_regime = $row["tax_regime"];
-                    $newEmployee_statutoryDetails->lwf_location = $row["lwf_location"];
-                    $newEmployee_statutoryDetails->save();
+                        //Statutory Details
+                        $newEmployee_statutoryDetails = new VmtEmployeeStatutoryDetails;
+                        $newEmployee_statutoryDetails->user_id = $user->id;
+                        $newEmployee_statutoryDetails->uan_number = $row["uan_number"];
+                        $newEmployee_statutoryDetails->pf_applicable = $row["pf_applicable"];
+                        $newEmployee_statutoryDetails->esic_applicable = $row["esic_applicable"];
+                        $newEmployee_statutoryDetails->ptax_location = $row["ptax_location"];
+                        $newEmployee_statutoryDetails->tax_regime = $row["tax_regime"];
+                        $newEmployee_statutoryDetails->lwf_location = $row["lwf_location"];
+                        $newEmployee_statutoryDetails->save();
 
-                    $compensatory = new Compensatory;
-                    $compensatory->user_id = $newEmployee->userid;
-                    $compensatory->basic = $row["basic"];
-                    $compensatory->hra = $row["hra"];
-                    $compensatory->Statutory_bonus = $row["statutory_bonus"];
-                    $compensatory->child_education_allowance = $row["child_education_allowance"];
-                    $compensatory->food_coupon = $row["food_coupon"];
-                    $compensatory->lta = $row["lta"];
-                    $compensatory->special_allowance = $row["special_allowance"];
-                    $compensatory->other_allowance = $row["other_allowance"];
-                    $compensatory->gross = $row["basic"] + $row["hra"] + $row["statutory_bonus"] + $row["child_education_allowance"] + $row["food_coupon"] + $row["lta"] + $row["special_allowance"] + $row["other_allowance"];
-                    $compensatory->epf_employer_contribution = $row["epf_employer_contribution"];
-                    $compensatory->esic_employer_contribution = $row["esic_employer_contribution"];
-                    $compensatory->insurance = $row["insurance"];
-                    $compensatory->graduity = $row["graduity"];
-                    $compensatory->cic = $compensatory->gross + $row["epf_employer_contribution"] + $row["esic_employer_contribution"] + $row["insurance"] + $row["graduity"];
-                    $compensatory->epf_employee = $row["epf_employee"];
-                    $compensatory->esic_employee = $row["esic_employee"];
-                    $compensatory->professional_tax = $row["professional_tax"];
-                    $compensatory->labour_welfare_fund = $row["labour_welfare_fund"];
-                    $compensatory->net_income = $compensatory->gross + $row["epf_employee"] + $row["esic_employee"] + $row["professional_tax"] + $row["labour_welfare_fund"] - ($row["epf_employer_contribution"] - $row["esic_employer_contribution"] - $row["insurance"] - $row["graduity"]);
-                    $compensatory->save();
-                }
+                        $compensatory = new Compensatory;
+                        $compensatory->user_id = $newEmployee->userid;
+                        $compensatory->basic = $row["basic"];
+                        $compensatory->hra = $row["hra"];
+                        $compensatory->Statutory_bonus = $row["statutory_bonus"];
+                        $compensatory->child_education_allowance = $row["child_education_allowance"];
+                        $compensatory->food_coupon = $row["food_coupon"];
+                        $compensatory->lta = $row["lta"];
+                        $compensatory->special_allowance = $row["special_allowance"];
+                        $compensatory->other_allowance = $row["other_allowance"];
+                        $compensatory->gross = $row["basic"] + $row["hra"] + $row["statutory_bonus"] + $row["child_education_allowance"] + $row["food_coupon"] + $row["lta"] + $row["special_allowance"] + $row["other_allowance"];
+                        $compensatory->epf_employer_contribution = $row["epf_employer_contribution"];
+                        $compensatory->esic_employer_contribution = $row["esic_employer_contribution"];
+                        $compensatory->insurance = $row["insurance"];
+                        $compensatory->graduity = $row["graduity"];
+                        $compensatory->cic = $compensatory->gross + $row["epf_employer_contribution"] + $row["esic_employer_contribution"] + $row["insurance"] + $row["graduity"];
+                        $compensatory->epf_employee = $row["epf_employee"];
+                        $compensatory->esic_employee = $row["esic_employee"];
+                        $compensatory->professional_tax = $row["professional_tax"];
+                        $compensatory->labour_welfare_fund = $row["labour_welfare_fund"];
+                        $compensatory->net_income = $compensatory->gross + $row["epf_employee"] + $row["esic_employee"] + $row["professional_tax"] + $row["labour_welfare_fund"] - ($row["epf_employer_contribution"] - $row["esic_employer_contribution"] - $row["insurance"] - $row["graduity"]);
+                        $compensatory->save();
+                    }
 
-                //Add new items into $row
-                $row['net_income'] = $compensatory->gross + $row["epf_employee"] + $row["esic_employee"] + $row["professional_tax"] + $row["labour_welfare_fund"] - ($row["epf_employer_contribution"] - $row["esic_employer_contribution"] - $row["insurance"] - $row["graduity"]);
+                    //Add new items into $row
+                    $row['net_income'] = $compensatory->gross + $row["epf_employee"] + $row["esic_employee"] + $row["professional_tax"] + $row["labour_welfare_fund"] - ($row["epf_employer_contribution"] - $row["esic_employer_contribution"] - $row["insurance"] - $row["graduity"]);
 
-                if ($newEmployee && $empOffice) {
-                    $addedCount++;
-                    $returnsuccessMsg .= $empNo." get added<br/>";
-                } else {
-                    $failedCount++;
-                    $returnfailedMsg .= $empNo." not get added<br/>";
-                }
+                    if ($newEmployee && $empOffice) {
+                        $addedCount++;
+                        $returnsuccessMsg .= $empNo." get added<br/>";
+                    } else {
+                        $failedCount++;
+                        $returnfailedMsg .= $empNo." not get added<br/>";
+                    }
 
-                if(fetchMasterConfigValue("can_send_appointmentmail_after_onboarding") == "true") {
-                    $isEmailSent  = $this->attachApoinmentPdf($row);
+                    if(fetchMasterConfigValue("can_send_appointmentmail_after_onboarding") == "true") {
+                        $isEmailSent  = $this->attachApoinmentPdf($row);
+                    }
+
+
+
+                } catch (\Exception $e) {
+                    $returnfailedMsg .= $empNo." not get added because of error ".$e->getMessage()." <br/>";
+                    $failedCount++;   
                 }
 
             } else {
