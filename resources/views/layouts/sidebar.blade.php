@@ -416,10 +416,10 @@
                                 <a href="{{route('page-not-found')}}" class="nav-link sidebar  py-1"><span>Calendar</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="apps-chat" class="nav-link sidebar py-1"><span>Chat</span></a>
+                                <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1"><span>Chat</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="apps-mailbox" class="nav-link sidebar py-1"><span>Mail-Box</span></a>
+                                <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1"><span>Mail-Box</span></a>
                             </li>
                         </ul>
                     </div>
