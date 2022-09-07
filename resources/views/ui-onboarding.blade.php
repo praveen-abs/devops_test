@@ -164,7 +164,7 @@
                                                 <div class="floating">
                                                     <!-- <label class="" for="passport_no">Passport Number<span id="passport_no_req">{!! required() !!}</span></label> -->
                                                     <label for="" class="float-label">Passport Number</label>
-                                                    <input type="text" placeholder="Passport Number" name="passport_no" id="passport_no" minlength="8" maxlength="8" class="onboard-form form-control textbox  " required />
+                                                    <input type="text" placeholder="Passport Number" name="passport_no" id="passport_no" minlength="8" maxlength="8" class="onboard-form form-control textbox" required/>
                                                     <label class="error star_error passport_no_label" for="passport_no" style="display: none;"></label>
 
                                                     <span class="error" id="error_passport_no"></span>
