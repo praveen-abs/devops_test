@@ -185,7 +185,7 @@
                                     <?php $i = 1; ?>
                                     @foreach($reviewersId as $reviewerCheck)
                                         <th scope="col" data-name='kpiManagerReview' data-filterable="false" data-visible= true>KPI - Achievement (L{{$i}} Manager Review)</th>
-                                        <th scope="col" data-name='kpiManagerAchivement' data-filterable="false" data-visible="true">Manager KPI Achievement % - L{{$i}} Manager</th>
+                                        <th scope="col" data-name='kpiManagerAchivement' data-filterable="false" data-visible="true">L{{$i}} Manager KPI Achievement %</th>
                                         <?php $i++; ?>
                                     @endforeach
                                     @endif

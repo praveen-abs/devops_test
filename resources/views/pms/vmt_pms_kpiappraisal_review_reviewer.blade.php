@@ -178,15 +178,12 @@
                                         <th scope="col" data-name='kpiSelfAchivement' data-filterable="false" data-visible="true">Employee KPI Achievement %</th>
                                         <th scope="col" data-name='comments' data-filterable="false" data-visible="true">Employee Comments</th> 
                                     @endif
-                                    <?php $i=1; ?>
-                                    <?php $j=1; ?>
+
                                     @foreach($reviewersId as $reviewersReview)
-                                        <th scope="col" data-name='kpiManagerReview' data-filterable="false" data-visible= true> KPI - Achievement (L{{$i}} Manager Review) </th>
-                                    <?php $i++; ?>
-                                    @endforeach
-                                    @foreach($reviewersId as $reviewersReview)
-                                        <th scope="col" data-name='kpiManagerAchivement' data-filterable="false" data-visible="true">Manager KPI Achievement % - L{{$j}} Manager </th>
-                                    <?php $j++; ?>
+                                        @if($reviewersReview == Auth::id())
+                                            <th scope="col" data-name='kpiManagerReview' data-filterable="false" data-visible= true> KPI - Achievement Manager Review</th>
+                                            <th scope="col" data-name='kpiManagerAchivement' data-filterable="false" data-visible="true">Manager KPI Achievement % </th>
+                                        @endif
                                     @endforeach
                                 </tr>
                             </thead>
@@ -239,27 +236,27 @@
                                     <?php
                                         $decodedKpiReview = json_decode($assignedGoals->reviewer_kpi_review,true);
                                         $decodedKpiReviewSubmittedStatus = json_decode($assignedGoals->is_reviewer_submitted,true);
+                                        $decodedKpiReviewPerc = json_decode($assignedGoals->reviewer_kpi_percentage,true);
                                     ?>
                                     @foreach($reviewersId as $reviewersReview)
-                                    <td>
-                                        @if(isset($assignedGoals->is_assignee_submitted) && $assignedGoals->is_assignee_submitted == '1' && $reviewersReview == Auth::id() && ($decodedKpiReviewSubmittedStatus[$reviewersReview] == '' || $decodedKpiReviewSubmittedStatus[$reviewersReview] == '0'))
-                                        <textarea name="reviewer_kpi_review[{{$reviewersReview}}][{{$kpiRow->id}}]" id="reviewer_kpi_review{{$index}}-{{$reviewersReview}}" cols="20" rows="8" placeholder="type here">@if(isset( $decodedKpiReview[$reviewersReview])){{$decodedKpiReview[$reviewersReview][$kpiRow->id]}}@endif</textarea>
-                                        @else
-                                        <div>@if(isset( $decodedKpiReview[$reviewersReview])){{$decodedKpiReview[$reviewersReview][$kpiRow->id]}}@endif</div>
-                                        @endif
+                                        @if($reviewersReview == Auth::id())
+                                        <td>
+                                            @if(isset($assignedGoals->is_assignee_submitted) && $assignedGoals->is_assignee_submitted == '1' && $reviewersReview == Auth::id() && ($decodedKpiReviewSubmittedStatus[$reviewersReview] == '' || $decodedKpiReviewSubmittedStatus[$reviewersReview] == '0'))
+                                            <textarea name="reviewer_kpi_review[{{$reviewersReview}}][{{$kpiRow->id}}]" id="reviewer_kpi_review{{$index}}-{{$reviewersReview}}" cols="20" rows="8" placeholder="type here">@if(isset( $decodedKpiReview[$reviewersReview])){{$decodedKpiReview[$reviewersReview][$kpiRow->id]}}@endif</textarea>
+                                            @else
+                                            <div>@if(isset( $decodedKpiReview[$reviewersReview])){{$decodedKpiReview[$reviewersReview][$kpiRow->id]}}@endif</div>
+                                            @endif
 
-                                    </td>
-                                    @endforeach
-                                    <?php $decodedKpiReviewPerc = json_decode($assignedGoals->reviewer_kpi_percentage,true); ?>
-                                    @foreach($reviewersId as $reviewersReview)
-                                    <td>
-                                        @if($assignedGoals->is_assignee_submitted == '1' && $reviewersReview == Auth::id() && ($decodedKpiReviewSubmittedStatus[$reviewersReview] == '' || $decodedKpiReviewSubmittedStatus[$reviewersReview] == '0'))
-                                        <input type="number" class="inp-text" name="reviewer_kpi_percentage[{{$reviewersReview}}][{{$kpiRow->id}}]" id="reviewer_kpi_percentage{{$index}}-{{$reviewersReview}}" placeholder="type here" value="@if(isset( $decodedKpiReviewPerc[$reviewersReview])){{$decodedKpiReviewPerc[$reviewersReview][$kpiRow->id]}}@endif">
+                                        </td>
+                                        <td>
+                                            @if($assignedGoals->is_assignee_submitted == '1' && $reviewersReview == Auth::id() && ($decodedKpiReviewSubmittedStatus[$reviewersReview] == '' || $decodedKpiReviewSubmittedStatus[$reviewersReview] == '0'))
+                                            <input type="number" class="inp-text" name="reviewer_kpi_percentage[{{$reviewersReview}}][{{$kpiRow->id}}]" id="reviewer_kpi_percentage{{$index}}-{{$reviewersReview}}" placeholder="type here" value="@if(isset( $decodedKpiReviewPerc[$reviewersReview])){{$decodedKpiReviewPerc[$reviewersReview][$kpiRow->id]}}@endif">
 
-                                        @else
-                                        <div>@if(isset( $decodedKpiReviewPerc[$reviewersReview])){{$decodedKpiReviewPerc[$reviewersReview][$kpiRow->id]}}@endif</div>
+                                            @else
+                                            <div>@if(isset( $decodedKpiReviewPerc[$reviewersReview])){{$decodedKpiReviewPerc[$reviewersReview][$kpiRow->id]}}@endif</div>
+                                            @endif
+                                        </td>
                                         @endif
-                                    </td>
                                     @endforeach
                                 </tr>
                                 @endforeach
