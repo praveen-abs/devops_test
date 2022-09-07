@@ -78,24 +78,24 @@
 
                                     <div class="mb-3 input-wrap">
                                         <p>Overall Annual Score</p>
-                                        <div class="appraisal-box  btn bg-success text-white ">
-                                        @if($isAllReviewersSubmittedOrNot) @if($ratingDetail){{$ratingDetail['rating']}}@else - @endif @else - @endif</div>
+                                        <div class="appraisal-box  btn bg-success text-white "><small>
+                                        @if($isAllReviewersSubmittedOrNot) @if($ratingDetail){{$ratingDetail['rating']}}@else - @endif @else - @endif</small></div>
 
                                     </div>
                                     <div class="mb-3 input-wrap">
                                         <p>Corresponding ANNUAL PERFORMANCE Rating</p>
-                                        <div class="appraisal-box  btn bg-success  text-white">
-                                        @if($isAllReviewersSubmittedOrNot) @if($ratingDetail){{$ratingDetail['performance']}}@else - @endif @else - @endif</div>
+                                        <div class="appraisal-box  btn bg-success  text-white"><small>
+                                        @if($isAllReviewersSubmittedOrNot) @if($ratingDetail){{$ratingDetail['performance']}}@else - @endif @else - @endif</small></div>
                                     </div>
                                     <div class="mb-3 input-wrap">
                                         <p>Ranking</p>
-                                        <div class="appraisal-box   btn bg-success text-white ">
-                                        @if($isAllReviewersSubmittedOrNot) @if($ratingDetail){{$ratingDetail['ranking']}}@else - @endif @else - @endif</div>
+                                        <div class="appraisal-box   btn bg-success text-white "><small>
+                                        @if($isAllReviewersSubmittedOrNot) @if($ratingDetail){{$ratingDetail['ranking']}}@else - @endif @else - @endif</small></div>
                                     </div>
                                     <div class=" input-wrap">
                                         <p>Action</p>
-                                        <div class="appraisal-box btn bg-success text-white">
-                                        @if($isAllReviewersSubmittedOrNot) @if($ratingDetail){{$ratingDetail['action']}}@else - @endif @else - @endif</div>
+                                        <div class="appraisal-box btn bg-success text-white"><small>
+                                        @if($isAllReviewersSubmittedOrNot) @if($ratingDetail){{$ratingDetail['action']}}@else - @endif @else - @endif</small></div>
                                     </div>
 
                                 </div>
@@ -114,14 +114,15 @@
         <!-- appraisal table -->
         <div class="card">
             <div class="card-body pb-2">
-                @if(isset($isAllReviewersSubmittedData) && count($isAllReviewersSubmittedData) > 0 && isset($isAllReviewersSubmittedData[Auth::id()]) && $isAllReviewersSubmittedData[Auth::id()] != '1')
+                @if(isset($isAllReviewersSubmittedData) && count($isAllReviewersSubmittedData) > 0 && $isAllReviewersSubmittedData[Auth::id()] != '1')
                 <div class="row">
                     <div class="col-12 mt-3">
                         <form id="upload_form" enctype="multipart/form-data">
                             <div class="row pull-right mb-3">
                                 @csrf
+                                <input type="hidden" name="kpiFormAssignedId" value="{{ $kpiFormAssignedDetails->id }}">
                                 <div class="col">
-                                    <a href="{{route('download.excelsheet.pmsv2.review.form', [$assignedGoals->vmt_pms_kpiform_assigned_id,'2'])}}" class="btn btn-orange pull-right"
+                                    <a href="{{route('download.excelsheet.pmsv2.review.form', [$assignedGoals->vmt_pms_kpiform_assigned_id,'2',$assignedGoals->year .'-'. strtoupper($assignedGoals->assignment_period)])}}" class="btn btn-orange pull-right"
                                     id="download-excel">Download</a>
                                 </div>
                                 <div class="col-auto p-0">
@@ -146,31 +147,31 @@
                             <thead class="thead" id="tHead">
                                 <tr>
                                     <th scope="col" data-name='dimension' data-filterable="false" data-visible="{{$show['dimension']}}">
-                                        @if($config && $config->header) {{$config->header['dimension']}} @else Dimension @endif
+                                        @if(count($headerColumnsDynamic) > 0 && isset($headerColumnsDynamic['dimension'])) {{ $headerColumnsDynamic['dimension'] }} @else Dimension @endif
                                     </th>
                                     <th scope="col" data-name='kpi' data-filterable="false" data-visible="{{$show['kpi']}}">
-                                        @if($config && $config->header) {{$config->header['kpi']}} @else KPI @endif
+                                        @if(count($headerColumnsDynamic) > 0 && isset($headerColumnsDynamic['kpi'])) {{ $headerColumnsDynamic['kpi'] }} @else KPI @endif
                                     </th>
                                     <th scope="col" data-name='operational' data-filterable="false" data-visible="{{$show['operational']}}">
-                                        @if($config && $config->header) {{$config->header['operational']}} @else Operational Definition @endif
+                                        @if(count($headerColumnsDynamic) > 0 && isset($headerColumnsDynamic['operational'])) {{ $headerColumnsDynamic['operational'] }} @else Operational Definition @endif
                                     </th>
                                     <th scope="col" data-name='measure' data-filterable="false" data-visible="{{$show['measure']}}">
-                                        @if($config && $config->header) {{$config->header['measure']}} @else Measure @endif
+                                        @if(count($headerColumnsDynamic) > 0 && isset($headerColumnsDynamic['measure'])) {{ $headerColumnsDynamic['measure'] }} @else Measure @endif
                                     </th>
                                     <th scope="col" data-name='frequency' data-filterable="false" data-visible="{{$show['frequency']}}">
-                                        @if($config && $config->header) {{$config->header['frequency']}} @else Frequency @endif
+                                        @if(count($headerColumnsDynamic) > 0 && isset($headerColumnsDynamic['frequency'])) {{ $headerColumnsDynamic['frequency'] }} @else Frequency @endif
                                     </th>
                                     <th scope="col" data-name='target' data-filterable="false" data-visible="{{$show['target']}}">
-                                        @if($config && $config->header) {{$config->header['target']}} @else Target @endif
+                                        @if(count($headerColumnsDynamic) > 0 && isset($headerColumnsDynamic['target'])) {{ $headerColumnsDynamic['target'] }} @else Target @endif
                                     </th>
                                     <th scope="col" data-name='stretchTarget' data-filterable="false" data-visible="{{$show['stretchTarget']}}">
-                                        @if($config && $config->header) {{$config->header['stretchTarget']}} @else Stretch Target @endif
+                                        @if(count($headerColumnsDynamic) > 0 && isset($headerColumnsDynamic['stretchTarget'])) {{ $headerColumnsDynamic['stretchTarget'] }} @else Stretch Target @endif
                                     </th>
                                     <th scope="col" data-name='source' data-filterable="false" data-visible="{{$show['source']}}">
-                                        @if($config && $config->header) {{$config->header['source']}} @else Source @endif
+                                        @if(count($headerColumnsDynamic) > 0 && isset($headerColumnsDynamic['source'])) {{ $headerColumnsDynamic['source'] }} @else Source @endif
                                     </th>
                                     <th scope="col" data-name='kpiWeightage' data-filterable="false" data-visible="{{$show['kpiWeightage']}}">
-                                        @if($config && $config->header) {{$config->header['kpiWeightage']}} @else KPI Weightage @endif
+                                        @if(count($headerColumnsDynamic) > 0 && isset($headerColumnsDynamic['kpiWeightage'])) {{ $headerColumnsDynamic['kpiWeightage'] }} @else KPI Weightage @endif
                                     </th>
                                     @if(isset($assignedGoals) && $assignedGoals->is_assignee_submitted == '1')
                                         <th scope="col" data-name='kpiSelfReview' data-filterable="false" data-visible="true">Employee KPI - Achievement</th>
@@ -266,9 +267,9 @@
                     @if($decodedKpiReviewSubmittedStatus[Auth::id()] != '1')
                     <div class="buttons d-flex align-items-center justify-content-end ">
                         <button class="btn btn-primary" id="save_table" >
-                        @if($decodedKpiReviewSubmittedStatus[Auth::id()] == '') Save @else Edit @endif <i class="fa fa-save"></i></button>
+                        @if($decodedKpiReviewSubmittedStatus[Auth::id()] == '') Save @else Edit @endif </button>
                         &nbsp;&nbsp;
-                        <button class="btn btn-primary" id="publish_table" @if($decodedKpiReviewSubmittedStatus[Auth::id()] == '') disabled @endif>Submit<i class="fa fa-save"></i></button>
+                        <button class="btn btn-primary" id="publish_table" @if($decodedKpiReviewSubmittedStatus[Auth::id()] == '') disabled @endif>Submit</button>
                     </div>
                     @endif
                 @else
@@ -294,7 +295,7 @@
     </div>
     @endif
 
-    @if($isAllReviewersSubmittedOrNot)
+    @if($isAllReviewersSubmittedOrNot && count($pmsRatingDetails) > 0)
     <div class="card">
         <div class="card-header">
             <h5>Best People Rating Grid</h5>
@@ -307,47 +308,37 @@
                     <thead class="thead" id="tHead">
                         <tr>
                             <th scope="col">Overall Annual Score</th>
-                            <th scope="col">Less than 60</th>
-                            <th scope="col">60-70</th>
-                            <th scope="col">70-80</th>
-                            <th scope="col">80-90</th>
-                            <th scope="col">90-100</th>
+                            @foreach($pmsRatingDetails as $ratingDetails)
+                                <th scope="col">{{ $ratingDetails->score_range }}</th>
+                            @endforeach
                         </tr>
                     </thead>
                     <tbody class="tbody" id="tbody">
                         <tr>
-
                             <td class="">
                                 Corresponding ANNUAL PERFORMANCE Rating
-
                             </td>
-                            <td class="">Needs Action</td>
-                            <td class="">Below Expectations</td>
-                            <td class="">Meet Expectations</td>
-                            <td class="">Exceeds Expectations </td>
-                            <td class="">Exceptionally Exceeds Expectations</td>
+                            @foreach($pmsRatingDetails as $ratingDetails)
+                                <td class="">{{ $ratingDetails->performance_rating }}</td>
+                            @endforeach
                         </tr>
 
                         <tr>
                             <td class="">
                                 Ranking
                             </td>
-                            <td class="">1</td>
-                            <td class="">2</td>
-                            <td class="">3</td>
-                            <td class="">4</td>
-                            <td class="">5</td>
+                            @foreach($pmsRatingDetails as $ratingDetails)
+                                <td class="">{{ $ratingDetails->ranking }}</td>
+                            @endforeach
                         </tr>
                         <tr>
 
                             <td class="">
                                 Action
                             </td>
-                            <td class="">Exit</td>
-                            <td class="">PIP</td>
-                            <td class="">10%</td>
-                            <td class="">15%</td>
-                            <td class="">20%</td>
+                            @foreach($pmsRatingDetails as $ratingDetails)
+                                <td class="">{{ $ratingDetails->action }}</td>
+                            @endforeach
                         </tr>
                     </tbody>
                 </table>
@@ -449,11 +440,16 @@
             processData: false,
             data: form_data,
             success: function(data) {
+                if(data.status == true){
                 // $('.addition-content').html('');
-                $.each(data[0], function(key, value) {
-                    $('#reviewer_kpi_review' + key+'-'+loggedUserId).val(value[9]);
-                    $('#reviewer_kpi_percentage' + key+'-'+loggedUserId).val(value[10]);
-                });
+                    $.each(data.result, function(key, value) {
+                        var countIndex = data.countStart;
+                        $('#reviewer_kpi_review' + key+'-'+loggedUserId).val(value[countIndex]);
+                        $('#reviewer_kpi_percentage' + key+'-'+loggedUserId).val(value[countIndex+1]);
+                    });
+                }else{
+                    swal("Error!", data.message, "error");
+                }
                 $('.loader').hide();
             },
             error: function(error) {

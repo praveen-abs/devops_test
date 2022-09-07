@@ -17,24 +17,13 @@ class PMSV2ReviewerReviewFormExport implements FromCollection, WithHeadings, Wit
     // used for download excel sheet from reviewer review form
     protected $id;
 
-    function __construct($assignedKpiFormDetails) {
+    function __construct($assignedKpiFormDetails, $finalColumns) {
         $this->assignedKpiFormDetails = $assignedKpiFormDetails;
+        $this->finalColumns = $finalColumns;
     }
 
     public function headings():array{
-        return[
-            'Dimension',
-            'kpi',
-            'Operational Definition',
-            'Measure',
-            'Frequency',
-            'Target',
-            'Stretch Target',
-            'Source',
-            'KPI Weightage',
-            'KPI - Achievement (Manager Review)',
-            'Manager KPI Achievement %',
-        ];
+        return $this->finalColumns;
     } 
 
     public function columnWidths(): array

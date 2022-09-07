@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Exports\SampleKPIFormExport;
 use App\Mail\NotifyPMSManager;
 use App\Mail\VmtAssignGoals;
+use App\Models\VmtPMSRating;
 use App\Notifications\ViewNotification;
 use Exception;
 use Illuminate\Support\Facades\Log;
@@ -73,7 +74,7 @@ class VmtPMSModuleController extends Controller
         $dashboardCountersData['selfReviewCount'] = $selfReviewCount;
         $dashboardCountersData['totalSelfReviewCount'] = $totalSelfReviewCount;
     
-            $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')->WhereRaw("find_in_set(".auth()->user()->id.", reviewer_id)")->orWhereRaw("find_in_set(".auth()->user()->id.", assignee_id)")->orWhere('assigner_id',auth()->user()->id)->orderBy('id','DESC')->get();
+            $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')->WhereRaw("find_in_set(".auth()->user()->id.", reviewer_id)")->orWhereRaw("find_in_set(".auth()->user()->id.", assignee_id)")->orderBy('id','DESC')->get();
 
         $flowCheck = 1;
 
@@ -90,6 +91,16 @@ class VmtPMSModuleController extends Controller
         $loggedInUser = Auth::user();
 
         return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','existingKPIForms','departments','employees','pmsKpiAssigneeDetails','flowCheck','allEmployeesList','allEmployeesWithoutLoggedUserList','loggedInUser'));
+    }
+
+    // function uised for get KPI Form Names in Dashboard Dropdown  through AJAX
+    public function getKPIFormNameInDropdown(){
+        try{
+            $existingKPIForms = VmtPMS_KPIFormModel::where('author_id', auth::user()->id)->get(['id','form_name']);
+            return response()->json(['status' => true, 'message' => 'Get Form Data Successfully','result' => $existingKPIForms]);
+        }catch(Exception $e){
+            return response()->json(['status' => true, 'message' => $e->getMessage()]);
+        }
     }
 
     public function showPMSDashboardForManager()
@@ -145,7 +156,7 @@ class VmtPMSModuleController extends Controller
         $dashboardCountersData['selfReviewCount'] = $selfReviewCount;
         $dashboardCountersData['totalSelfReviewCount'] = $totalSelfReviewCount;
     
-            $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')->WhereRaw("find_in_set(".$loggedUserId.", reviewer_id)")->orWhereRaw("find_in_set(".$loggedUserId.", assignee_id)")->orWhere('assigner_id',$loggedUserId)->orderBy('id','DESC')->get();
+            $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')->WhereRaw("find_in_set(".$loggedUserId.", reviewer_id)")->orWhereRaw("find_in_set(".$loggedUserId.", assignee_id)")->orderBy('id','DESC')->get();
 
         $loggedInUser = Auth::user();
 
@@ -312,15 +323,15 @@ class VmtPMSModuleController extends Controller
         for ($i=0; $i < $totRows; $i++) {
                 $kpiRow = new VmtPMS_KPIFormDetailsModel;
                 $kpiRow->vmt_pms_kpiform_id   =    $KpiLAST;
-                $kpiRow->dimension   =    $request->dimension ? $request->dimension[$i] : '';
-                $kpiRow->kpi         =    $request->kpi ? $request->kpi[$i] : '';
-                $kpiRow->operational_definition   = $request->operational ? $request->operational[$i]: '' ;
-                $kpiRow->measure     =    $request->measure ? $request->measure[$i] : '';
-                $kpiRow->frequency   =    $request->frequency ? $request->frequency[$i] : '';
-                $kpiRow->target      =    $request->target ? $request->target[$i] : '';
-                $kpiRow->stretch_target  =    $request->stretchTarget ? $request->stretchTarget[$i] : '';
-                $kpiRow->source          =    $request->source ? $request->source[$i] : '';
-                $kpiRow->kpi_weightage   =    $request->kpiWeightage ? $request->kpiWeightage[$i] : '';
+                $kpiRow->dimension   =    isset($request->dimension) && isset($request->dimension[$i]) ? $request->dimension[$i] : '';
+                $kpiRow->kpi         =    isset($request->kpi) && isset($request->kpi[$i]) ? $request->kpi[$i] : '';
+                $kpiRow->operational_definition   = isset($request->operational) && isset($request->operational[$i]) ? $request->operational[$i]: '' ;
+                $kpiRow->measure     =    isset($request->measure) && isset($request->measure[$i]) ? $request->measure[$i] : '';
+                $kpiRow->frequency   =    isset($request->frequency) && isset($request->frequency[$i]) ? $request->frequency[$i] : '';
+                $kpiRow->target      =    isset($request->target) && isset($request->target[$i]) ? $request->target[$i] : '';
+                $kpiRow->stretch_target  =    isset($request->stretchTarget) && isset($request->stretchTarget[$i]) ? $request->stretchTarget[$i] : '';
+                $kpiRow->source          =    isset($request->source) && isset($request->source[$i]) ? $request->source[$i] : '';
+                $kpiRow->kpi_weightage   =    isset($request->kpiWeightage) && isset($request->kpiWeightage[$i]) ? $request->kpiWeightage[$i] : '';
                 // $kpiRow->author_id       =    auth::user()->id;
                 // $kpiRow->author_name     =    str_replace(' ', '_', strtolower($request->name));
                 $kpiRow->save();
@@ -426,6 +437,7 @@ class VmtPMSModuleController extends Controller
     {
         // Flow 1 HR creates Form and Assignee
         $kpiFormAssignedDetails = VmtPMS_KPIFormAssignedModel::findorfail($request->assignedFormid);
+        
         $config = VmtPMS_KPIFormModel::findorfail($kpiFormAssignedDetails->vmt_pms_kpiform_id);
         $show['dimension'] = 'true';
         $show['kpi'] = 'true';
@@ -468,11 +480,11 @@ class VmtPMSModuleController extends Controller
                 $commentArray = (json_decode($ff->reviewer_kpi_comments, true)) ? (json_decode($ff->reviewer_kpi_comments, true)) : [];
             }
         }
-        $kpiRows      =  VmtPMS_KPIFormDetailsModel::where('vmt_pms_kpiform_id', $ff->vmt_pms_kpiform_id)->get();
+        $kpiRows      =  VmtPMS_KPIFormDetailsModel::where('vmt_pms_kpiform_id', $kpiFormAssignedDetails->vmt_pms_kpiform_id)->get();
         $reviewCompleted = false;
-        $kpiRowsId = VmtPMS_KPIFormDetailsModel::where('vmt_pms_kpiform_id', $ff->vmt_pms_kpiform_id)->pluck('id')->toArray();
+        $kpiRowsId = VmtPMS_KPIFormDetailsModel::where('vmt_pms_kpiform_id', $kpiFormAssignedDetails->vmt_pms_kpiform_id)->pluck('id')->toArray();
         $kpiRowsId = implode(',',$kpiRowsId);
-
+       
         // Get assigned Details
         $assignedGoals  = VmtPMS_KPIFormAssignedModel::where('vmt_pms_kpiform_assigned.id',$request->assignedFormid)->where('vmt_pms_kpiform_reviews.assignee_id',$request->assigneeId)->join('vmt_pms_kpiform_reviews','vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id','=','vmt_pms_kpiform_assigned.id')->first();
 
@@ -498,32 +510,61 @@ class VmtPMSModuleController extends Controller
             }
             if ($howManyPercCount > 0) {
                 $ratingDetail['rating'] = $percentageVal / $howManyPercCount;
-                if ($ratingDetail['rating'] < 60) {
-                    $ratingDetail['performance'] = "Needs Action";
-                    $ratingDetail['ranking'] = 1;
-                    $ratingDetail['action'] = 'Exit';
-                } elseif ($ratingDetail['rating'] >= 60 && $ratingDetail['rating'] < 70) {
-                    $ratingDetail['performance'] = "Below Expectations";
-                    $ratingDetail['ranking'] = 2;
-                    $ratingDetail['action'] = 'PIP';
-                } elseif ($ratingDetail['rating'] >= 70 && $ratingDetail['rating'] < 80) {
-                    $ratingDetail['performance'] = "Meet Expectations";
-                    $ratingDetail['ranking'] = 3;
-                    $ratingDetail['action'] = '10%';
-                } elseif ($ratingDetail['rating'] >= 80 && $ratingDetail['rating'] < 90) {
-                    $ratingDetail['performance'] = "Exceeds Expectations";
-                    $ratingDetail['ranking'] = 4;
-                    $ratingDetail['action'] = '15%';
-                } elseif ($ratingDetail['rating'] >= 90) {
-                    $ratingDetail['performance'] = "Exceptionally Exceeds Expectations";
-                    $ratingDetail['ranking'] = 5;
-                    $ratingDetail['action'] = '20%';
+                // calculate Rating Based on Table Dynamic Data
+                $pmsConfigRatingDetails = VmtPMSRating::orderBy('sort_order','DESC')->get();
+                if(count($pmsConfigRatingDetails) > 0){
+                    foreach($pmsConfigRatingDetails as $ratings){
+                        
+                        $rangeCheck = explode('-',$ratings->score_range);
+                        if($ratingDetail['rating'] >= $rangeCheck[0] && $ratingDetail['rating'] <= $rangeCheck[1]){
+                            $ratingDetail['performance'] = $ratings->performance_rating;
+                            $ratingDetail['ranking'] = $ratings->ranking;
+                            $ratingDetail['action'] = $ratings->action;
+                        }elseif($ratingDetail['rating'] >= 100){
+                            if($ratings->score_range == '90 - 100'){
+                                $ratingDetail['performance'] = $ratings->performance_rating;
+                                $ratingDetail['ranking'] = $ratings->ranking;
+                                $ratingDetail['action'] = $ratings->action;
+                            }else{
+                                $ratingDetail['performance'] = "Exceptionally Exceeds Expectations";
+                                $ratingDetail['ranking'] = 5;
+                                $ratingDetail['action'] = '20%';
+                            }
+                        }else{
+                            $ratingDetail['performance'] = "error";
+                            $ratingDetail['ranking'] = 000;
+                            $ratingDetail['action'] = '0000%';
+                        }
+                    }
                 }
-                else{
-                    $ratingDetail['performance'] = "error";
-                    $ratingDetail['ranking'] = 000;
-                    $ratingDetail['action'] = '0000%';
-                }
+
+                
+                // if ($ratingDetail['rating'] < 60) {
+                //     $ratingDetail['performance'] = "Needs Action";
+                //     $ratingDetail['ranking'] = 1;
+                //     $ratingDetail['action'] = 'Exit';
+                // } elseif ($ratingDetail['rating'] >= 60 && $ratingDetail['rating'] < 70) {
+                //     $ratingDetail['performance'] = "Below Expectations";
+                //     $ratingDetail['ranking'] = 2;
+                //     $ratingDetail['action'] = 'PIP';
+                // } elseif ($ratingDetail['rating'] >= 70 && $ratingDetail['rating'] < 80) {
+                //     $ratingDetail['performance'] = "Meet Expectations";
+                //     $ratingDetail['ranking'] = 3;
+                //     $ratingDetail['action'] = '10%';
+                // } elseif ($ratingDetail['rating'] >= 80 && $ratingDetail['rating'] < 90) {
+                //     $ratingDetail['performance'] = "Exceeds Expectations";
+                //     $ratingDetail['ranking'] = 4;
+                //     $ratingDetail['action'] = '15%';
+                // } elseif ($ratingDetail['rating'] >= 90) {
+                //     $ratingDetail['performance'] = "Exceptionally Exceeds Expectations";
+                //     $ratingDetail['ranking'] = 5;
+                //     $ratingDetail['action'] = '20%';
+                // }
+                // else{
+                //     $ratingDetail['performance'] = "error";
+                //     $ratingDetail['ranking'] = 000;
+                //     $ratingDetail['action'] = '0000%';
+                // }
             }
         }
 
@@ -545,15 +586,25 @@ class VmtPMSModuleController extends Controller
             }
         }
 
+        // VMS Pms Ratings get from vmt_pms_rating table
+        $pmsRatingDetails = VmtPMSRating::orderBy('sort_order')->get();
+
+        // config pms data for header columns dynamic
+        $pmsConfigData = ConfigPms::first();
+        $headerColumnsDynamic = [];
+        if(!empty($pmsConfigData)){
+            $headerColumnsDynamic = json_decode($pmsConfigData->column_header,true);
+        }
+        // dD($headerColumnsDynamic);
 
         // check if logged in user is assignee or not
         if($request->assigneeId == auth()->user()->id){
-            return view('pms.vmt_pms_kpiappraisal_review_assignee', compact('review','assignedUserDetails','assignedGoals','empSelected','assignersName','config','show','ratingDetail','kpiRowsId','kpiRows','reviewCompleted','isAllReviewersSubmittedOrNot','reviewersId','isAllReviewersSubmittedData'));
+            return view('pms.vmt_pms_kpiappraisal_review_assignee', compact('review','assignedUserDetails','assignedGoals','empSelected','assignersName','config','show','ratingDetail','kpiRowsId','kpiRows','reviewCompleted','isAllReviewersSubmittedOrNot','reviewersId','isAllReviewersSubmittedData','pmsRatingDetails','kpiFormAssignedDetails','headerColumnsDynamic'));
         }
 
         // check if logged in user is reviewer or not
         if(in_array(Auth::id(),$reviewersId)){
-            return view('pms.vmt_pms_kpiappraisal_review_reviewer', compact('review','assignedUserDetails','assignedGoals','empSelected','assignersName','config','show','ratingDetail','kpiRowsId','kpiRows','reviewCompleted','reviewersId','isAllReviewersSubmittedOrNot','isAllReviewersSubmittedData'));
+            return view('pms.vmt_pms_kpiappraisal_review_reviewer', compact('review','assignedUserDetails','assignedGoals','empSelected','assignersName','config','show','ratingDetail','kpiRowsId','kpiRows','reviewCompleted','reviewersId','isAllReviewersSubmittedOrNot','isAllReviewersSubmittedData','pmsRatingDetails','kpiFormAssignedDetails','headerColumnsDynamic'));
         }
         dD("Assigner's review page is pending");
 
@@ -792,28 +843,85 @@ class VmtPMSModuleController extends Controller
     /*
     * function used for download excel sheet from review form
     */
-    public function downloadExcelReviewForm($kpiAssignedId,$key){
+    public function downloadExcelReviewForm($kpiAssignedId,$key,$yearAssignmentPeriod = null){
         try{    
+
+            $sheetName = 'review-page-sheet.xlsx';
+            if(isset($yearAssignmentPeriod)){
+                $yearAssignmentPeriod = preg_replace('/[\t\n\r\0\x0B]/', '', $yearAssignmentPeriod);
+                $yearAssignmentPeriod = preg_replace('/([\s])\1+/', ' ', $yearAssignmentPeriod);
+                $yearAssignmentPeriod = trim($yearAssignmentPeriod);
+
+                $sheetName = 'review-page-'.$yearAssignmentPeriod.'.xlsx';
+            }
+            
             // $key => 1 assignee and 2 reviewer
             $assignedKpiFormDetails = VmtPMS_KPIFormAssignedModel::where('id',$kpiAssignedId)->with('getPmsKpiFormColumnDetails.getPmsKpiFormDetails')->first();
-            $finalDownlededResult = [];  
+            
+            $finalDownloadedResult = [];  
             if(isset($assignedKpiFormDetails->getPmsKpiFormColumnDetails)){
                 if(isset($assignedKpiFormDetails->getPmsKpiFormColumnDetails->getPmsKpiFormDetails)){
-                  $vmtKpiForm = $assignedKpiFormDetails->getPmsKpiFormColumnDetails;  
-                  $finalDownlededResult = VmtPMS_KPIFormDetailsModel::where('vmt_pms_kpiform_id',$vmtKpiForm->id)->select('dimension', 'kpi', 'operational_definition', 'measure', 'frequency', 'target', 'stretch_target', 'source', 'kpi_weightage')->get();
+                    $vmtKpiForm = $assignedKpiFormDetails->getPmsKpiFormColumnDetails;  
+                    $getAvailableColumns = str_getcsv($vmtKpiForm->available_columns);
+                    
+                    $dynamicTableCoumns = [];
+                    $headerColumnsInSheet = [];
+                    $configPmsData = ConfigPms::first();
+                    $decodedColumnHeader = [];
+                    if(!empty($configPmsData)){
+                        $decodedColumnHeader = (json_decode($configPmsData->column_header,true));
+                    }
+
+                    $show['dimension'] = $getAvailableColumns && in_array('dimension', $getAvailableColumns) ? array_push($dynamicTableCoumns,'dimension'): '';
+                    $show['kpi'] = $getAvailableColumns && in_array('kpi', $getAvailableColumns) ? array_push($dynamicTableCoumns,'kpi'): '';
+                    $show['operational'] = $getAvailableColumns && in_array('operational', $getAvailableColumns) ? array_push($dynamicTableCoumns,'operational_definition'): '';
+                    $show['measure'] = $getAvailableColumns && in_array('measure', $getAvailableColumns) ? array_push($dynamicTableCoumns,'measure'): '';
+                    $show['frequency'] = $getAvailableColumns && in_array('frequency', $getAvailableColumns) ? array_push($dynamicTableCoumns,'frequency'): '';
+                    $show['target'] = $getAvailableColumns && in_array('target', $getAvailableColumns) ? array_push($dynamicTableCoumns,'target'): '';
+                    $show['stretchTarget'] = $getAvailableColumns && in_array('stretchTarget', $getAvailableColumns) ? array_push($dynamicTableCoumns,'stretch_target'): '';
+                    $show['source'] = $getAvailableColumns && in_array('source', $getAvailableColumns) ? array_push($dynamicTableCoumns,'source'): '';
+                    $show['kpiWeightage'] = $getAvailableColumns && in_array('kpiWeightage', $getAvailableColumns) ? array_push($dynamicTableCoumns,'kpi_weightage'): '';
+                    
+                    foreach($show as $columnKey => $columnsCheck){
+                        if($columnsCheck != ''){
+                            if(isset($decodedColumnHeader[$columnKey])){
+                                array_push($headerColumnsInSheet, $decodedColumnHeader[$columnKey]);
+                            }else{
+                                array_push($headerColumnsInSheet, $columnKey);
+
+                            }
+                        }
+                    }
+                    
+
+                    $finalDownloadedResult = VmtPMS_KPIFormDetailsModel::where('vmt_pms_kpiform_id',$vmtKpiForm->id)->select($dynamicTableCoumns)->get();
                 }
 
             }
-            if(count($finalDownlededResult)){
+            
+            if(count($finalDownloadedResult) > 0){
                 if($key =='1'){
-                    return Excel::download(new PMSV2ReviewFormExport($finalDownlededResult), 'review-page-sheet.xlsx');
+                    $assigneeReviewColumns = [
+                        'KPI-Achievement (Self Review)',
+                        'Self KPI Achievement %',
+                        'Comments',
+                    ];
+                    $finalColumns = array_merge($headerColumnsInSheet, $assigneeReviewColumns);
+                    // dd($finalDownloadedResult);
+                    return Excel::download(new PMSV2ReviewFormExport($finalDownloadedResult, $finalColumns), $sheetName);
                 }else{
-                    return Excel::download(new PMSV2ReviewerReviewFormExport($finalDownlededResult), 'review-page-sheet.xlsx');
+                    $reviewerReviewColumns = [
+                        'KPI - Achievement (Manager Review)',
+                        'Manager KPI Achievement %',
+                    ];
+                    $finalColumns = array_merge($headerColumnsInSheet, $reviewerReviewColumns);
+                    return Excel::download(new PMSV2ReviewerReviewFormExport($finalDownloadedResult, $finalColumns), $sheetName);
                 }
             }
             // $assignedKpiFormReviews = VmtPMS_KPIFormReviewsModel::where('vmt_pms_kpiform_assigned_id',$kpiAssignedId)->where('assignee_id',$assigneeId)->first();
             // dd($assignedKpiFormDetails, $assignedKpiFormReviews);
         }catch(Exception $e){
+            
             Log::info('excel sheet download form review page pms v2: '.$e->getMessage());
             return '';
         }
