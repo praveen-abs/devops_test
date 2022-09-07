@@ -420,7 +420,7 @@ header {
 
                                         <label class="" for="frequency">Frequency</label>
                                         <select name="frequency" id="frequency" class="form-control">
-                                            
+
                                         </select>
 
                                     </div>
@@ -471,29 +471,20 @@ header {
                                         @endif
                                     </div>
                                     @else
-                                    <!-- <input type="hidden" name="employees[]" id="sel_employees"> -->
-                                    <!-- <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3 ">
-                                        <label class="" for="">Employees</label> -->
-                                        <!-- <select class="select-employee-dropdown form-control" id="selectedEmployeeDropdownId" name="employees[]" multiple="multiple">
-                                            @foreach($allEmployeesList as $employeeList)
-                                                <option value="{{ $employeeList->id }}">{{ $employeeList->name }}</option>
-                                            @endforeach
-                                        </select> -->
-                                        <!-- <input type="text" name="" id="selected_employee"
-                                            target="#changeEmployee" class="form-control  increment-input"
-                                            placeholder="Employees">
-                                        <button type="button" id=""
-                                            class="btn btn-primary increment-btn py-1 px-2 chnageButton">+</button> -->
-                                    <!-- </div> -->
+
 
                                     <!-- flow 1 -->
                                     <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
                                         <label class="" for="">Reviewer</label>
                                         <!-- <input type="hidden" name="reviewer" id="selectedReviewIds"> -->
                                         <select class="select-multiple-reviewer form-control" name="reviewer[]" multiple="multiple">
-                                            @foreach($allEmployeesList as $employeeData)
-                                                <option value="{{ $employeeData->id }}">{{ $employeeData->name }}</option>
-                                            @endforeach
+                                            @if(isset($allEmployeesList) && count($allEmployeesList) > 0)
+                                                @foreach($allEmployeesList as $employeeData)
+                                                    <option value="{{ $employeeData->id }}">{{ $employeeData->name }}</option>
+                                                @endforeach
+                                            @else
+                                                <option value="">Select Reviewer</option>
+                                            @endif
                                         </select>
                                         <!-- <input readonly type="text" id="reviewersAccordingAssignee"
                                             target="" class="form-control  increment-input"
@@ -684,9 +675,11 @@ header {
                         @else
                         <!-- flow 1 -->
                         <select class="select-employee-dropdown form-control" id="selectedEmployeeDropdownId" name="employees[]" multiple="multiple">
-                            @foreach($allEmployeesWithoutLoggedUserList as $employeeList)
-                                <option value="{{ $employeeList->id }}">{{ $employeeList->name }}</option>
-                            @endforeach
+                            @if(isset($allEmployeesWithoutLoggedUserList) && count($allEmployeesWithoutLoggedUserList) > 0)
+                                @foreach($allEmployeesWithoutLoggedUserList as $employeeList)
+                                    <option value="{{ $employeeList->id }}">{{ $employeeList->name }}</option>
+                                @endforeach
+                            @endif
                         </select>
                         @endif
                     </div>
@@ -1118,7 +1111,7 @@ header {
                     result += '<option value="'+$(this).val()+'">'+$(this).text()+'</option>';
                 }
             });
-          
+
             $('.change-exiting-reviewer').html(result);
             $('#reviewerReplaceSameLevel').show();
             $('#reviewerReplaceSameLevel').removeClass('fade');
@@ -1348,9 +1341,9 @@ header {
             console.log(existingValues);
 
             var result = existingValues.filter(function(elem){
-                return elem != oldReviewerId; 
+                return elem != oldReviewerId;
             });
-            
+
             result.push(newReviewerId);
 
             $('.select-multiple-reviewer').val(null).trigger('change');
@@ -1367,7 +1360,7 @@ header {
             //         }
             //     });
             //     var formData = new FormData(this);
-                
+
 
             //     $.ajax({
             //         url: $(this).attr('action'),

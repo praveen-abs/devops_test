@@ -3,6 +3,8 @@
     <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('assets/css/employee_bulk.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
+    <style type="text/css">
+    </style>
 @endsection
 @section('content')
     @component('components.organization_breadcrumb')
@@ -1008,7 +1010,8 @@
         <script type="text/javascript">
             $('#role-form').on('submit', function(e) {
                 e.preventDefault();
-
+                $('#error-msg').html('');
+                $('#success-msg').html('');
                 //var formData = new FormData(this);
                 var roleUri = $('#role-form').attr('action');
                 console.log(roleUri);
@@ -1021,9 +1024,16 @@
                     processData: false,
                     contentType: false,
                     success: function(data) {
-                        console.log('success', data);
-                        $('#success-msg').html(data.success);
-                        $('#error-msg').html(data.failed);
+                        if(data.success_count > 0){
+                            $('#success-msg').html('<p>Upload Info :</p><ul><li>' + data.success + '<li></ul>');     
+                        }
+                       
+                        if(data.failed_count > 0){
+                            $('#error-msg').html('<br/><ul><li>' +data.failed+ '</li></ul>');
+                        }else{
+                            $('#error-msg').html('');
+                        }
+                        
 
 
                         //var toastLiveExample3 = document.getElementById("borderedToast2");
