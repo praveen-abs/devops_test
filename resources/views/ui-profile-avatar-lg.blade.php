@@ -10,18 +10,28 @@
 @section('script-profile-avatar')
 
 <script>
-    $(document).ready(function() {
+    // $(document).ready(function() {
 
-        generateProfileShortName();
-    });
+        generateProfileShortName_VendorScript('profileShortNameLargeCircle-profile');
+    // });
 
-    function generateProfileShortName()
-    {
-        var username = '{{auth()->user()->name}}';
-        const myArray = username.split(" ");
-        var a = $('#profileShortNameLargeCircle-profile').text(myArray[0][0]+""+myArray[1][0]);
-        console.log(a);
-    }
+    // function generateProfileShortName()
+    // {
+    //     var username = '{{auth()->user()->name}}';
+    //     const splitArray = username.split(" ");
+    //     var finalname ="empty";
+
+    //     if( splitArray.length == 1)
+    //     {
+    //         finalname = splitArray[0][0] +""+ splitArray[0][1];
+    //     }else
+    //     {
+    //         finalname = splitArray[0][0] +""+ splitArray[1][0];
+    //     }
+
+    //     var a = $('#profileShortNameLargeCircle-profile').text(finalname);
+    //     console.log(a);
+    // }
 
 </script>
 @endsection

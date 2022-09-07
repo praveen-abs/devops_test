@@ -110,7 +110,7 @@
                                         <div data-simplebar style="max-height: 300px;" class="pe-2">
                                             @php
                                             $currentUser = Auth::user();
-                                            $User = Auth::user()->unreadNotifications  ->count();
+                                            $User = Auth::user()->unreadNotifications->count();
                                            // $read_id= Auth::user()->notifications()->where('id', $id)->first();
                                                 // var_dump($currentUser->notifications);
                                             foreach ($currentUser->unreadNotifications  as $notification) {
@@ -124,7 +124,7 @@
                                                     ?>
                                                     @if( empty(Auth::user()->avatar) || !file_exists(public_path('images/'. Auth::user()->avatar)) )
                                                         <span class="rounded-circle user-profile  ml-2">
-                                                            <i id="topbar_username" class="align-middle ">{{ $finalName }}</i>
+                                                            <i class="align-middle ">{{ $finalName }}</i>
                                                         </span>
                                                     @else
                                                         <img class="rounded-circle header-profile-user" src=" {{URL::asset('images/'. Auth::user()->avatar)}}" alt="Header Avatar">
@@ -175,9 +175,6 @@
                                     @php
                                     }
                                     @endphp
-{{--
-                                                    <img src="{{ URL::asset('assets/images/event1.png') }}"
-                                                        class="me-3 rounded-circle avatar-xs" alt="user-pic"> --}}
                                                     <div class="flex-1">
                                                         <div class="fs-13 text-muted">
                                                             <a  href="{{url('notifications/'.$notification->id)}}" data-notif-id="{{$notification->id}}">
@@ -226,13 +223,9 @@
                             <button type="button" class="btn border-0 mx-1 py-0" id="page-header-user-dropdown"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <div class="d-flex align-items-center page-header-user-dropdown">
-                                    <?php
-                                        $shortName = explode(" ", Auth::user()->name);
-                                        $finalName = $shortName[0][0] . $shortName[1][0];
-                                    ?>
-                                    @if( empty(Auth::user()->avatar) || !file_exists(public_path('images/'. Auth::user()->avatar)) )
+                                     @if( empty(Auth::user()->avatar) || !file_exists(public_path('images/'. Auth::user()->avatar)) )
                                         <span class="rounded-circle user-profile  ml-2">
-                                            <i id="topbar_username" class="align-middle ">{{ $finalName }}</i>
+                                            <i id="topbar_username" class="align-middle "></i>
                                         </span>
                                     @else
                                         <img class="rounded-circle header-profile-user" src=" {{URL::asset('images/'. Auth::user()->avatar)}}" alt="Header Avatar">
@@ -278,5 +271,32 @@
         </div>
     </div>
 </header>
+<!-- added jquery script temporarily here since Jquery plugin is not loaded at this point -->
+<script
+			  src="https://code.jquery.com/jquery-3.6.0.min.js"
+			  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+			  crossorigin="anonymous"></script>
 
+<script>
+
+    function generateProfileShortName_Topbar()
+    {
+        var username = '{{auth()->user()->name}}';
+        const splitArray = username.split(" ");
+        var finalname ="empty111";
+
+        if( splitArray.length == 1)
+        {
+            finalname = splitArray[0][0] +""+ splitArray[0][1];
+        }else
+        {
+            finalname = splitArray[0][0] +""+ splitArray[0][1];
+        }
+
+        var a = $('#topbar_username').text(finalname);
+    }
+
+    generateProfileShortName_Topbar();
+
+</script>
 
