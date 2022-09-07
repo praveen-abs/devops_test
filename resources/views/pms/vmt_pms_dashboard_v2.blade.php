@@ -455,7 +455,7 @@ header {
 
 
                                     </div>
-                                    @if(isset($loggedManagerEmployees) && count($loggedManagerEmployees) > 0)
+                                    @if(isset($loggedManagerEmployees))
                                     <!-- flow 2 -->
                                     <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
                                         <label class="" for="">Reviewer</label>
@@ -665,7 +665,7 @@ header {
                 </div>
                 <div class="modal-body">
                     <div class="mt-12">
-                        @if(isset($loggedManagerEmployees) && count($loggedManagerEmployees) > 0)
+                        @if(isset($loggedManagerEmployees))
                         <!-- flow 2 -->
                         <select class="select-employee-dropdown form-control" name="employees[]" multiple="multiple">
                             @foreach($loggedManagerEmployees as $employeesSelection)
@@ -683,7 +683,7 @@ header {
                         </select>
                         @endif
                     </div>
-                    @if(isset($loggedManagerEmployees) && count($loggedManagerEmployees) > 0)
+                    @if(isset($loggedManagerEmployees))
                     <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
                         <button class="btn btn-primary ml-2" id="edit-employee"
                             >Edit</button>
