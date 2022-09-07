@@ -6,16 +6,16 @@
 
             <div class="page-title-right">
                 <ol class="breadcrumb m-0  fw-bold ">
-                    <li class="crumb-item"><a href="{{url('vmt_noData')}}" class="text-muted">Summary</a></li>
-                    <li class="crumb-item"><a href="{{url('vmt_noData')}}" class="text-muted">Leave</a></li>
-                    <li class="crumb-item"><a href="{{url('vmt_noData')}}" class="text-muted">Attendance</a></li>
-                    <li class="crumb-item"><a href="{{url('vmt_noData')}}" class="text-muted">Expenses & Trevel</a>
+                    <li class="crumb-item"><a href="{{route('page-not-found')}}" class="text-muted">Summary</a></li>
+                    <li class="crumb-item"><a href="{{route('page-not-found')}}" class="text-muted">Leave</a></li>
+                    <li class="crumb-item"><a href="{{route('page-not-found')}}" class="text-muted">Attendance</a></li>
+                    <li class="crumb-item"><a href="{{route('page-not-found')}}" class="text-muted">Expenses & Trevel</a>
                     </li>
-                    <li class="crumb-item"><a href="{{url('vmt_noData')}}" class="text-muted">Timesheet</a></li>
-                    <li class="crumb-item"><a href="{{url('vmt_noData')}}" class="text-muted">Exit</a></li>
-                    <li class="crumb-item"><a href="{{url('vmt_noData')}}" class="text-muted">Salary on hold</a>
+                    <li class="crumb-item"><a href="{{route('page-not-found')}}" class="text-muted">Timesheet</a></li>
+                    <li class="crumb-item"><a href="{{route('page-not-found')}}" class="text-muted">Exit</a></li>
+                    <li class="crumb-item"><a href="{{route('page-not-found')}}" class="text-muted">Salary on hold</a>
                     </li>
-                    <li class="crumb-item"><a href="{{url('vmt_noData')}}" class="text-muted">Performance</a></li>
+                    <li class="crumb-item"><a href="{{route('page-not-found')}}" class="text-muted">Performance</a></li>
 
                 </ol>
             </div>

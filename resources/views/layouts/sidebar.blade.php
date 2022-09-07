@@ -90,7 +90,7 @@
                     <div class="collapse menu-dropdown" id="attendanceDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1">
+                                <a href="{{url('vmt.page404')}}" class="nav-link sidebar py-1">
                                     <span> Leave</span>
                                 </a>
                             </li>
@@ -101,11 +101,11 @@
                             </li>
                             <li class="nav-item">
 
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>Timesheet</span></a>
+                                <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button"><span>Timesheet</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>Expenses &
-                                        Trevel</span></a>
+                                <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button"><span>Expenses &
+                                        Travel</span></a>
                             </li>
 
 
@@ -147,10 +147,10 @@
                                 <a href="{{route('emp-quick-upload')}}" id="" class="nav-link sidebar py-1" aria-expanded="false"><span>Onboarding Quick Upload</span> </a>
                             </li>
                             <li class="nav-item ">
-                                <a href="{{url('vmt_noData')}}" id="tds" class="nav-link sidebar py-1"><span>Exit</span></a>
+                                <a href="{{route('page-not-found')}}" id="tds" class="nav-link sidebar py-1"><span>Exit</span></a>
                             </li>
                             <li class="nav-item ">
-                                <a href="{{url('vmt_noData')}}" id="tds" class="nav-link sidebar py-1"><span>Documents</span></a>
+                                <a href="{{route('page-not-found')}}" id="tds" class="nav-link sidebar py-1"><span>Documents</span></a>
                             </li>
                             <li class="nav-item ">
                                 <a href="{{route('vmt-assetinventory-index')}}" id="tds" class="nav-link sidebar py-1"><span>Assets</span></a>
@@ -187,7 +187,7 @@
                             </li>
                             @can('360_Degree_Review')
                             <li class="nav-item">
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>360
+                                <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button"><span>360
                                         Degree
                                         Review</span></a>
                             </li>
@@ -212,31 +212,31 @@
                     <div class="collapse menu-dropdown" id="teamDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1"><span>Summary</span></a>
+                                <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1"><span>Summary</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>Leave</span></a>
+                                <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button"><span>Leave</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>Attendance</span></a>
+                                <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button"><span>Attendance</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>Expenses & Trevel</span></a>
+                                <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button"><span>Expenses & Trevel</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>Timesheet</span></a>
+                                <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button"><span>Timesheet</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>Profile
+                                <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button"><span>Profile
                                         change</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>Salary
+                                <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button"><span>Salary
                                         on
                                         hold</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>Performance</span></a>
+                                <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button"><span>Performance</span></a>
                             </li>
                         </ul>
                     </div>
@@ -288,7 +288,7 @@
                             </li>
                             @can('Team')
                             <li class="nav-item">
-                                <a href="{{url('vmt_salary_details')}}" class="nav-link sidebar py-1" role="button"><span>Salary
+                                <a href="{{route('vmt_salary_details')}}" class="nav-link sidebar py-1" role="button"><span>Salary
                                         Details</span></a>
                             </li>
                             @endcan
@@ -383,12 +383,12 @@
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
 
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>Leave
+                                <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button"><span>Leave
                                         Report</span></a>
                             </li>
                             <li class="nav-item">
 
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar py-1" role="button"><span>Attendance
+                                <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button"><span>Attendance
                                         Report</span></a>
                             </li>
                         </ul>
@@ -413,7 +413,7 @@
                     <div class="collapse menu-dropdown" id="helpDeskDrop-down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{url('vmt_noData')}}" class="nav-link sidebar  py-1"><span>Calendar</span></a>
+                                <a href="{{route('page-not-found')}}" class="nav-link sidebar  py-1"><span>Calendar</span></a>
                             </li>
                             <li class="nav-item">
                                 <a href="apps-chat" class="nav-link sidebar py-1"><span>Chat</span></a>
@@ -460,12 +460,12 @@
                     <div class="collapse menu-dropdown" id="exitDrop-down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item ">
-                                <a href="{{url('vmt_noData')}}" id="" class="nav-link sidebar py-1"><span> Resignation
+                                <a href="{{route('page-not-found')}}" id="" class="nav-link sidebar py-1"><span> Resignation
                                         Entry
                                     </span> </a>
                             </li>
                             <li class="nav-item ">
-                                <a href="{{url('vmt_noData')}}" id="tds" class="nav-link sidebar py-1"><span>Resignation
+                                <a href="{{route('page-not-found')}}" id="tds" class="nav-link sidebar py-1"><span>Resignation
                                         Status
                                     </span></a>
                             </li>

@@ -25,6 +25,11 @@ Route::get('/',  [App\Http\Controllers\VmtMainDashboardController::class, 'index
 
 // Route::get('/index',  [App\Http\Controllers\VmtMainDashboardController::class, 'index'])->name('main');
 
+//404 error page
+Route::get('/page-not-found', function () {
+    return view('vmt.page404');
+})->name('page-not-found');
+
 //Update User Details
 Route::get('/profile-completeness/{id}', [App\Http\Controllers\HomeController::class, 'calculateProfileCompleteness'])->name('calculateProfileCompleteness');
 
@@ -225,7 +230,7 @@ Route::post('/upload_file',  [App\Http\Controllers\VmtApraisalController::class,
 Route::post('/upload_file_review',  [App\Http\Controllers\VmtApraisalController::class, 'uploadFileReview'])->name('upload-file-review');
 Route::get('/download_file/{id}',  [App\Http\Controllers\VmtApraisalController::class, 'downloadFile'])->name('download-file');
 Route::post('/state',  [App\Http\Controllers\VmtEmployeeController::class, 'getState'])->name('state');
-Route::get('/vmt_salary_details',  [App\Http\Controllers\VmtPaySlipController::class, 'paySlipIndex']);
+Route::get('/salary_details',  [App\Http\Controllers\VmtPaySlipController::class, 'paySlipIndex'])->name('vmt_salary_details');
 Route::get('/vmt_home',  [App\Http\Controllers\VmtPayCheckController::class, 'index']);
 Route::get('/vmt_employee_payslip',  [App\Http\Controllers\VmtPaySlipController::class, 'payslipPdfView'])->name('vmt_employee_payslip');
 Route::get('/pdfview/{selectedPaySlipMonth}',[App\Http\Controllers\VmtPaySlipController::class, 'pdfview'])->name('pdfview');
@@ -290,7 +295,7 @@ Route::post('vmt-pms-appraisal-review', 'App\Http\Controllers\VmtApraisalControl
 Route::get('/generateSampleKPIExcelSheet/{selectedYear?}', [VmtPMSModuleController::class, 'generateSampleKPIExcelSheet'])->name('generate.sample.KPI.excel.sheet');
 
 // route for download excel sheet from review pgae
-Route::get('/downloadExcelReviewForm/{kpiAssignedId}/{key}', [VmtPMSModuleController::class, 'downloadExcelReviewForm'])->name('download.excelsheet.pmsv2.review.form');
+Route::get('/downloadExcelReviewForm/{kpiAssignedId}/{key}/{yearAssignmentPeriod?}', [VmtPMSModuleController::class, 'downloadExcelReviewForm'])->name('download.excelsheet.pmsv2.review.form');
 
 // routes for accept/reject review by Assignee
 Route::post('acceptRejectAssigneeReview', [VmtPMSModuleController::class,'acceptRejectAssigneeReview'])->name('acceptRejectAssigneeReview');
@@ -304,6 +309,7 @@ Route::post('getReviewerOfSelectedEmployee', [VmtPMSModuleController::class,'get
 Route::post('getSameLevelOfReviewer', [VmtPMSModuleController::class,'getSameLevelOfReviewer'])->name('getSameLevelOfReviewer');
 Route::post('changeReviewerSelection', [VmtPMSModuleController::class,'changeReviewerSelection'])->name('changeReviewerSelection');
 Route::post('getEmployeesOfReviewer', [VmtPMSModuleController::class,'getEmployeesOfReviewer'])->name('getEmployeesOfReviewer');
+Route::get('getKPIFormNameInDropdown', [VmtPMSModuleController::class,'getKPIFormNameInDropdown'])->name('getKPIFormNameInDropdown');
 
 // route for change employee profile icons on edit
 Route::post('changeEmployeeProfileIconsOnEdit', [VmtPMSModuleController::class,'changeEmployeeProfileIconsOnEdit'])->name('changeEmployeeProfileIconsOnEdit');
