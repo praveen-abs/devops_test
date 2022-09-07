@@ -67,6 +67,15 @@ Route::get('vmt-general-settings', [App\Http\Controllers\HomeController::class, 
 Route::post('vmt-general-settings', [App\Http\Controllers\HomeController::class, 'storeGeneralSettings']);
 
 
+
+Route::get('/vendor', function () {
+    return view('vmt_vendor');
+})->name('vmt-vendor-route');
+
+
+Route::get('clients', 'App\Http\Controllers\VmtClientController@showAllClients')->name('vmt-clients-route');;
+Route::get('clients-fetchAll', 'App\Http\Controllers\VmtClientController@fetchAllClients')->name('vmt-clients-fetchall');
+
 // Permission Roles Routing
 Route::get('vmt-roles', 'App\Http\Controllers\RolesController@create');
 

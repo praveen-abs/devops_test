@@ -2,6 +2,146 @@
 @section('css')
     <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('assets/css/crm.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ URL::asset('assets/libs/gridjs/gridjs.min.css') }}">
+
+    <style>
+        .project-wrapper{
+    position: relative;
+    top:-20px;
+        }
+    table {
+       box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px !important;
+    }
+    table th {
+        color: #5265a7;
+        background-color: #ccd6f7;
+        padding: 15px 10px !important;
+        font-size: 13px;
+    }
+
+    tbody {
+        background-color: #fff;
+    }
+
+    tbody tr:hover {
+        background-color: #f3f3f9;
+
+    }
+
+    td {
+        border: solid 1px #000;
+        border-style: none solid solid none;
+        padding: 10px;
+        /* font-weight: 600; */
+        color: #878aa5;
+
+    }
+
+    td .btn i {
+        font-size: 16px;
+    }
+
+
+    tr:first-child th:first-child {
+        border-top-left-radius: 6px !important;
+    }
+
+    tr:first-child th:first-child {
+        border-bottom-left-radius: 6px !important;
+    }
+
+
+    tr:last-child td:first-child {
+        border-bottom-left-radius: 6px !important;
+    }
+
+    tr:first-child th:last-child {
+        border-top-right-radius: 6px !important;
+    }
+
+    tr:first-child th:last-child {
+        border-bottom-right-radius: 6px !important;
+    }
+
+
+    tr:last-child td:last-child {
+        border-bottom-right-radius: 6px !important;
+    }
+
+
+    /* for radio button */
+
+
+    .switch-field {
+        display: flex;
+
+    }
+
+    /* .directory-right button {
+        background-color: #b0bff1!important;
+
+    } */
+
+    .switch-field input {
+        position: absolute !important;
+        clip: rect(0, 0, 0, 0);
+        height: 1px;
+        width: 1px;
+        border: 0;
+        overflow: hidden;
+    }
+
+    .switch-field label {
+        background-color: #fff;
+        color: #acb0b0;
+        font-size: 14px;
+        line-height: 1;
+        /* font-weight:600; */
+        text-align: center;
+        padding: 5px 15px;
+        margin-right: -1px;
+        /* border: 1px  solid rgba(0, 0, 0, 0.2); */
+        /* box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1); */
+        transition: all 0.1s ease-in-out;
+        margin-bottom: 0px !important;
+    }
+
+    .switch-field label:hover {
+        cursor: pointer;
+    }
+
+    .switch-field input:checked+label {
+
+        box-shadow: none;
+        color: #002f56;
+        background-color: #B8C4FF !important;
+        font-weight: 600;
+    }
+
+    .switch-field label:first-of-type {
+        border-radius: 4px 0 0 4px;
+    }
+
+    .switch-field label:last-of-type {
+        border-radius: 0 4px 4px 0;
+    }
+
+    .search-content .directory-search-bar {
+        background: #fff !important;
+        padding: 4px 0px !important;
+
+    }
+
+    .form-control:focus {
+        /* border: 2px solid #1c8b8d !important; */
+        border: 1px solid #c1cef9 !important;
+    }
+    </style>
+
+
+
+
+
 @endsection
 
 @section('content')
@@ -123,29 +263,8 @@
 
         <div class="table-responsive">
             <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Client ID</th>
-                        <th>Name</th>
-                        <th>Contact</th>
-                        <th>Email</th>
-                        <th>Company Name</th>
-                        <th>Contact</th>
-                        <th>Customer Type</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td colspan="10" class="">
+                <div id="table-clientlist"></div>
 
-                        </td>
-
-                    </tr>
-
-                </tbody>
             </table>
 
             <div class="no-data-img flex-column d-flex justify-content-center align-items-center"  style="">
@@ -290,4 +409,205 @@
         </div>
     @endsection
     @section('script')
+    <script src="{{ URL::asset('assets/libs/gridjs/gridjs.min.js') }}"></script>
+    <script>
+    $(document).ready(function() {
+
+        (function() {
+            'use strict'
+            const forms = document.querySelectorAll('.requires-validation')
+            Array.from(forms)
+                .forEach(function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+
+        if (document.getElementById("table-clientlist")) {
+            const grid = new gridjs.Grid({
+                columns: [{
+                        id: 'id',
+                        name: 'ID',
+                        hidden:true,
+                    },
+                    {
+                        id: 'client_code',
+                        name: 'Client Code',
+                        formatter: function formatter(cell) {
+                            return gridjs.html( cell );
+                        }
+                    },
+                    {
+                        id: 'client_name',
+                        name: 'Client Name',
+                    },
+                    {
+                        id: 'address',
+                        name: 'Address',
+                    },
+                    {
+                        id: 'contract_start_date',
+                        name: 'Contract Start Date',
+                    },
+                    {
+                        id: 'contract_end_date',
+                        name: 'Contract End Date',
+                    },
+                    {
+                        id: 'cin_number',
+                        name: 'CIN Number',
+                    },
+                    {
+                        id: 'company_tan',
+                        name: 'Company TAN',
+                    },
+                    {
+                        id: 'company_pan',
+                        name: 'Company PAN',
+                    },
+                    {
+                        id: 'gst_no',
+                        name: 'GST No',
+                    },
+                    {
+                        id: 'epf_reg_number',
+                        name: 'EPF',
+                    },
+                    {
+                        id: 'esic_reg_number',
+                        name: 'ESIC',
+                    },
+                    {
+                        id: 'prof_tax_reg_number',
+                        name: 'Prof Tax',
+                    },
+                    {
+                        id: 'lwf_reg_number',
+                        name: 'LWF',
+                    },
+                    {
+                        id: 'authorised_person_name',
+                        name: 'Authorized Person',
+                    },
+                    {
+                        id: 'authorised_person_designation',
+                        name: 'Authorized Person Designation',
+                    },
+                    {
+                        id: 'authorised_person_contact_number',
+                        name: 'Authorized Person Contact No',
+                    },
+                    {
+                        id: 'authorised_person_contact_email',
+                        name: 'Authorized Person Contact Email',
+                    },
+                    {
+                        id: 'billing_address',
+                        name: 'Billing Address',
+                    },
+                    {
+                        id: 'billing_address',
+                        name: 'Billing Address',
+                    },
+                    {
+                        id: 'status',
+                        name: 'Status',
+                        hidden:true,
+                    },
+                    {
+                        id: 'assigned_date',
+                        name: 'Assigned Date',
+                    },
+                    {
+                        id: 'invoice',
+                        name: 'Invoice',
+                        formatter: function formatter(cell) {
+                            var URL = "{{ url('/assets/')}}" + "/" + cell;
+                            return gridjs.html('<a href=' + URL +
+                                ' target="_blank"><span class="text-link" style=" color: blue;"><i class="icon icon-lg text-info  ri-download-2-line text-primary fw-bold"></i></span></a>'
+                            );
+                        }
+                    },
+                    {
+                        id: 'id',
+                        name: 'Edit',
+                        formatter: function formatter(cell) {
+
+                            var htmlcontent =
+                                '<a  class="trigger_asset_edit" ><span class="text-link" style=" color: blue;"><i class="icon icon-lg  ri-pencil-line text-dark fw-bold"></i></span></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
+                            //var html_edit="<button style='font-size:24px' onclick='hello()'>Edit</button>";
+                            //var html_delete = '<a href='+url_delete+' target="_blank"><span class="text-link" style=" color: blue;"><i class="icon icon-lg  ri-delete-bin-line text-primary fw-bold"></i></span></a>';
+
+                            return gridjs.html(htmlcontent);
+                        }
+                    },
+                    {
+                        id: 'delete',
+                        name: 'Delete',
+                        formatter: function formatter(cell) {
+
+
+                            var htmlcontent =
+                                '<a  class="trigger_asset_delete" ><span class="text-link" style=" color: blue;"><i class="icon icon-lg text-danger ri-delete-bin-line text-primary fw-bold"></i></span></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
+                            //var html_edit="<button style='font-size:24px' onclick='hello()'>Edit</button>";
+                            //var html_delete = '<a href='+url_delete+' target="_blank"><span class="text-link" style=" color: blue;"><i class="icon icon-lg  ri-delete-bin-line text-primary fw-bold"></i></span></a>';
+
+                            return gridjs.html(htmlcontent);
+                        }
+                    }
+
+                ],
+                pagination: {
+                    limit: 10
+                },
+                sort: true,
+                search: true,
+                server: {
+                    url: '{{route('vmt-clients-fetchall')}}',
+                    then: data => data.map(
+                        client => [
+                            client.id,
+                            client.client_code,
+                            client.client_name,
+                            client.address,
+                            client.contract_start_date,
+                            client.contract_end_date,
+                            client.cin_number,
+                            client.company_tan,
+                            client.company_pan,
+                            client.gst_no,
+                            client.epf_reg_number,
+                            client.esic_reg_number,
+                            client.prof_tax_reg_number,
+                            client.lwf_reg_number,
+                            client.authorised_person_name,
+                            client.authorised_person_designation,
+                            client.authorised_person_contact_number,
+                            client.authorised_person_contact_email,
+                            client.billing_address,
+                            client.shipping_address,
+                            client.product,
+                            client.subscription_type,
+
+                        ]
+                    )
+                },
+                //  ["01", "Jonathan", "jonathan@example.com", "Senior Implementation Architect", "Hauck Inc", "Holy See"],
+                //  ["02", "Harold", "harold@example.com", "Forward Creative Coordinator", "Metz Inc", "Iran"],
+                //  ["03", "Shannon", "shannon@example.com", "Legacy Functionality Associate", "Zemlak Group", "South Georgia"],
+                //  ["04", "Robert", "robert@example.com", "Product Accounts Technician", "Hoeger", "San Marino"],
+                //  ["05", "Noel", "noel@example.com", "Customer Data Director", "Howell - Rippin", "Germany"],
+
+            }).render(document.getElementById("table-clientlist")); // card Table
+        }
+    });
+
+
+    </script>
     @endsection

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\VmtClientMaster;
-use App\Mail\WelcomeMail; 
+use App\Mail\WelcomeMail;
 use App\Models\VmtGeneralInfo;
 
 class VmtClientController extends Controller
@@ -42,7 +42,7 @@ class VmtClientController extends Controller
         //
        try
        {
-            $vmtClient  =  new VmtClientMaster; 
+            $vmtClient  =  new VmtClientMaster;
             $vmtClient->client_code  = $request->client_code;
             $vmtClient->client_name  = $request->client_name;
             $vmtClient->contract_start_date  = $request->csd;
@@ -71,7 +71,7 @@ class VmtClientController extends Controller
             $vmtClient->product  = $request->product;
             $vmtClient->subscription_type   = $request->subscription_type;
             $vmtClient->save();
-        
+
             $image_view = url('/').$VmtGeneralInfo->logo_img;
             if (\Mail::to($request->auth_person_email)->send(new WelcomeMail($request->auth_person_email, '123123123', request()->getSchemeAndHttpHost() ,"",$image_view))) {
                 return "Saved";
@@ -79,9 +79,19 @@ class VmtClientController extends Controller
                 return "Error";
             }
         }
-        catch (Throwable $e) {        
+        catch (Throwable $e) {
             return "Error";
         }
+    }
+
+    public function showAllClients()
+    {
+        return view('vmt_client');
+    }
+
+    public function fetchAllClients(Request $request)
+    {
+        return json_encode( VmtClientMaster::all());
     }
 
     /**
@@ -92,7 +102,7 @@ class VmtClientController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
