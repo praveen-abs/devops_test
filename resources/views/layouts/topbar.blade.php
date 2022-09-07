@@ -18,6 +18,14 @@
 </style>
 
 @endsection
+@php
+// $currentUser = Auth::user();
+// $User = Auth::user()->unreadNotifications->count();
+// $splitArray = explode(" ",$currentUser->name);
+// dd($splitArray[0][0]);
+
+@endphp
+
 <header id="page-topbar">
     <div class="layout-width">
         <div class="navbar-header">
@@ -109,72 +117,77 @@
                                         aria-labelledby="messages-tab">
                                         <div data-simplebar style="max-height: 300px;" class="pe-2">
                                             @php
-                                            $currentUser = Auth::user();
-                                            $User = Auth::user()->unreadNotifications->count();
-                                           // $read_id= Auth::user()->notifications()->where('id', $id)->first();
-                                                // var_dump($currentUser->notifications);
-                                            foreach ($currentUser->unreadNotifications  as $notification) {
-                                                // if($notification){
+                                                 $currentUser = Auth::user();
+                                                 $User = Auth::user()->unreadNotifications->count();
+                                                 $splitArray = "A";
                                             @endphp
-                                            <div class="text-reset notification-item d-block dropdown-item">
-                                                <div class="d-flex">
-                                                    <?php
-                                                        $shortName = explode(" ", Auth::user()->name);
-                                                        $finalName = $shortName[0][0] . $shortName[1][0];
-                                                    ?>
-                                                    @if( empty(Auth::user()->avatar) || !file_exists(public_path('images/'. Auth::user()->avatar)) )
-                                                        <span class="rounded-circle user-profile  ml-2">
-                                                            <i class="align-middle ">{{ $finalName }}</i>
-                                                        </span>
-                                                    @else
-                                                        <img class="rounded-circle header-profile-user" src=" {{URL::asset('images/'. Auth::user()->avatar)}}" alt="Header Avatar">
-                                                    @endif
+
+                                            @foreach ($currentUser->unreadNotifications  as $notification)
+                                                <div class="text-reset notification-item d-block dropdown-item">
+                                                    <div class="d-flex">
+                                                        @if( empty(Auth::user()->avatar) || !file_exists(public_path('images/'. Auth::user()->avatar)) )
+                                                            @php
+                                                                // $splitArray = explode(" ",$currentUser->emp_name);
+                                                                // // print_r($currentUser->emp_name);
+                                                                // if(count($splitArray) == 1)
+                                                                //     $name = strtoupper($splitArray[0][0].$splitArray[0][1]);
+                                                                // else
+                                                                //     $name = strtoupper($splitArray[0][0].$splitArray[1][0]);
 
 
-                                                        &nbsp;&nbsp;&nbsp;
-                                                    <div class="flex-1">
-                                                        <div class="fs-13 text-muted">
-                                                            <a href="{{url('notifications/'.$notification->id)}}" data-notif-id="{{$notification->id}}" class="text-primary">
+                                                            @endphp
+                                                                <span class="rounded-circle user-profile  ml-2">
+                                                                    <i class="align-middle ">{{ "A" }}</i>
+                                                                </span>
+                                                        @else
+                                                            <img class="rounded-circle header-profile-user" src=" {{URL::asset('images/'. Auth::user()->avatar)}}" alt="Header Avatar">
+                                                        @endif
 
-                                                                {{$notification->data['message']}}
-                                                            </a>
+
+                                                            &nbsp;&nbsp;&nbsp;
+                                                        <div class="flex-1">
+                                                            <div class="fs-13 text-muted">
+                                                                <a href="{{url('notifications/'.$notification->id)}}" data-notif-id="{{$notification->id}}" class="text-primary">
+
+                                                                    {{$notification->data['message']}}
+                                                                </a>
+                                                            </div>
+                                                            <p class="mb-0 f-10 text-end text-muted">
+                                                                <span><i class="mdi mdi-clock-outline"></i> 30 min
+                                                                    ago</span>
+                                                            </p>
                                                         </div>
-                                                        <p class="mb-0 f-10 text-end text-muted">
-                                                            <span><i class="mdi mdi-clock-outline"></i> 30 min
-                                                                ago</span>
-                                                        </p>
+                                                        <!-- <div class="px-2 fs-15">
+                                                            <input class="form-check-input" type="checkbox">
+                                                        </div> -->
                                                     </div>
-                                                    <!-- <div class="px-2 fs-15">
-                                                        <input class="form-check-input" type="checkbox">
-                                                    </div> -->
                                                 </div>
-                                            </div>
-                                            @php
-                                        // }
-                                            }
-                                            @endphp
+                                            @endforeach
                                             @php
                                              foreach ($currentUser->Notifications  as $notification) {
                                                 // if($notification){
                                             @endphp
                                             <div class="text-reset notification-item d-block dropdown-item">
                                                 <div class="d-flex">
-                                                         @php
-                                    preg_match('/(?:\w+\. )?(\w+).*?(\w+)(?: \w+\.)?$/',Auth::user()->name , $result);
-                                    $name = strtoupper($result[1][0].$result[2][0]);
+                                                        @php
+                                                            // $splitArray = explode(" ",$currentUser->emp_name);
 
-                                    if (Auth::user()->avatar == null || Auth::user()->avatar =='' ){
-                                    @endphp
-                                        <span class="rounded-circle user-profile  ml-2"><i
-                                            class="align-middle f-12 fw-bold">{{$name}}</i></span>
-                                    @php
-                                    }else{
-                                    @endphp
-                                    <img src="{{URL::asset('images/'. Auth::user()->avatar)}}"
-                                                        class="me-3 rounded-circle avatar-xs" alt="user-pic">
-                                    @php
-                                    }
-                                    @endphp
+                                                            // if(count($splitArray) == 1)
+                                                            //     $name = strtoupper($splitArray[0][0].$splitArray[0][1]);
+                                                            // else
+                                                            //     $name = strtoupper($splitArray[0][0].$splitArray[1][0]);
+                                                            // if (Auth::user()->avatar == null || Auth::user()->avatar =='' ){
+                                                        @endphp
+                                                            <span class="rounded-circle user-profile  ml-2"><i
+                                                                class="align-middle f-12 fw-bold">A</i></span>
+                                                        @php
+                                                         //   }else{
+                                                        @endphp
+                                                            <img src="{{URL::asset('images/'. Auth::user()->avatar)}}"
+                                                                                class="me-3 rounded-circle avatar-xs" alt="">
+                                                            @php
+                                                         //   }
+                                                        @endphp
                                                     <div class="flex-1">
                                                         <div class="fs-13 text-muted">
                                                             <a  href="{{url('notifications/'.$notification->id)}}" data-notif-id="{{$notification->id}}">
