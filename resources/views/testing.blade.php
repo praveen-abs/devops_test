@@ -91,7 +91,7 @@
         <b>
           <p><b> Commencement</p>
         </b><p>
-        Your employment with the company <b>Brand Avatar LLP</b> will be with effect from <b>16th August 2022.</b> You
+        Your employment with the company <b>Brand Avatar LLP</b> will be with effect from <b>{{$data['doj']}}.</b> You
         shall initially be placed in <b>Chennai.</b> You may however be required to travel and may be positioned or
         deputed outside within India or abroad.
         </p>
