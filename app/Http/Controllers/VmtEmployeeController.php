@@ -459,17 +459,23 @@ class VmtEmployeeController extends Controller
 
     // store employeess from excel sheet to database
     public function storeBulkEmployee(Request $request){
-        $request->validate([
-            'file' => 'required|file|mimes:xls,xlsx'
-        ]);
+        
+        $validator =    Validator::make(
+                            $request->all(), 
+                            ['file' => 'required|file|mimes:xls,xlsx'], 
+                            ['required' => 'The :attribute is required.']
+                        );
 
-        $importDataArry = \Excel::toArray(new VmtEmployeeImport, request()->file('file'));
-
+        if($validator->passes()){
+            $importDataArry = \Excel::toArray(new VmtEmployeeImport, request()->file('file'));
+            $data = $this->uploadEmployee($importDataArry);
+            return response()->json($data);
+        }else{
+            $data['failed'] = $validator->errors()->all();
+            return response()->json($data);
+        }
         // linking Manager To the employees;
         // $linkToManager  = \Excel::import(new VmtEmployeeManagerImport, request()->file('file'));
-
-        $data = $this->uploadEmployee($importDataArry);
-        return response()->json($data);
     }
 
     public function uploadEmployee($data) {
@@ -503,7 +509,7 @@ class VmtEmployeeController extends Controller
             $row['mobile_no'] = (int)$row['mobile_no'];
             $rules = [
                 'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'email' => 'required|email',
+                'email' => 'required|email|unique:users,email',
                 'gender' => 'required|in:male,female,other',
                // 'doj' => 'required|date',
                 'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
@@ -561,6 +567,7 @@ class VmtEmployeeController extends Controller
                 'email' => 'The :attribute field email is not valid.',
                 'date' => 'The :attribute field date is not valid.',
                 'in' => 'The :attribute field date is not valid. the option should be like :in',
+                'unique' => 'The :attribute should be unique',
                 'regex' => 'The :attribute field is not valid.',
                 'before' => 'The :attribute should be above 18 years.',
             ];
