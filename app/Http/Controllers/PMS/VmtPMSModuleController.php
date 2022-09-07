@@ -25,6 +25,7 @@ use App\Notifications\ViewNotification;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 
 // use Maatwebsite\Excel\Facades\Excel;
@@ -376,61 +377,104 @@ class VmtPMSModuleController extends Controller
    */
     public function publishKPIForm(Request $request)
     {
-        // dd($request->all());
-        $kpi_AssignedTable  = new VmtPMS_KPIFormAssignedModel;
-
-        $kpi_AssignedTable->vmt_pms_kpiform_id        =    $request->selected_kpi_form_id;
-        $kpi_AssignedTable->assignee_id       =   is_array($request->employees) ? implode(",",$request->employees) : $request->employees;
-        $kpi_AssignedTable->reviewer_id     =     is_array($request->reviewer) ? implode(",",$request->reviewer) : $request->reviewer;
-        $kpi_AssignedTable->assigner_id     =    auth::user()->id;
-        $kpi_AssignedTable->calendar_type     =    $request->calendar_type;
-        $kpi_AssignedTable->year     =    $request->hidden_calendar_year;
-        $kpi_AssignedTable->frequency     =    $request->frequency;
-        $kpi_AssignedTable->assignment_period     =    $request->assignment_period_start;
-        $kpi_AssignedTable->department_id     =    $request->department;
-
-        $kpi_AssignedTable->save();
-
+        $validator = Validator::make($request->all(), [
+            'calendar_type' => 'required',
+            'hidden_calendar_year' => 'required',
+            'frequency' => 'required',
+            'assignment_period_start' => 'required',
+            'department' => 'required',
+            'employees' => 'required',
+            'reviewer' => 'required',
+            'selected_kpi_form_id' => 'required',
+        ],$messages = [
+            'calendar_type.required' => 'Calendar Type is Required',
+            'hidden_calendar_year.required' => 'Year is Required',
+            'frequency.required' => 'Frequency is Required',
+            'assignment_period_start.required' => 'Assignment Period is Required',
+            'department.required' => 'Department is Required',
+            'employees.required' => 'Employee is Required',
+            'reviewer.required' => 'Reviewer is Required',
+            'selected_kpi_form_id.required' => 'KPI Form is Required',
+        ]);
         
-        //Based on assignee count, you create records in review table
-        $assigneeIdsAll = explode(',',$kpi_AssignedTable->assignee_id );
-        $explodedReviewersIds = explode(',',$kpi_AssignedTable->reviewer_id);
-        $reviewerAcceptedData = [];
-        $reviewerSubmittedData = [];
-        foreach($explodedReviewersIds as $reviewer){
-            $reviewerAcceptedData[$reviewer] = "1";
-            $reviewerSubmittedData[$reviewer] = null;
+        if ($validator->fails())
+        {
+            return response()->json(['status' => false,'message'=>$validator->messages()->first()]);
         }
-        if(count($assigneeIdsAll) > 0){
-            foreach($assigneeIdsAll as $assignee){
-                $assigneeReview = new VmtPMS_KPIFormReviewsModel();
-                $assigneeReview->vmt_pms_kpiform_assigned_id = $kpi_AssignedTable->id;
-                $assigneeReview->assignee_id = $assignee;
-                $assigneeReview->assignee_kpi_status = null;
-                $assigneeReview->reviewer_kpi_status = null;
-                $assigneeReview->is_assignee_submitted = null;
-                if(isset($request->flowCheck) && $request->flowCheck==1)
-                {
-                    $assigneeReview->is_assignee_accepted = '1';
-                }else{
-                    $assigneeReview->is_assignee_accepted = null;
+        try{
+
+            $reviewersList = is_array($request->reviewer) ? $request->reviewer : explode(",",$request->reviewer);
+            $employeesList = is_array($request->employees) ? $request->employees : explode(",",$request->employees);
+
+            // check if employee is available in reviewer list
+            if(count($reviewersList) > 0){
+                foreach($reviewersList as $reviewerCheckAsEmployee){
+                    if(in_array($reviewerCheckAsEmployee, $employeesList)){
+                        return response()->json(['status' => false, 'message' => "Same User Can't be Employee as well as Reviewer"]);
+                    }
                 }
-                $assigneeReview->is_reviewer_submitted = json_encode($reviewerSubmittedData);
-                $assigneeReview->is_reviewer_accepted = json_encode($reviewerAcceptedData);
-                $assigneeReview->save();
-
-                $assigneeMailId  = VmtEmployee::join('vmt_employee_office_details',  'user_id', '=', 'vmt_employee_details.userid')->where('userid', $assignee)->pluck('officical_mail','userid')->first();
-                $assigneeName = User::where('id',$assignee)->pluck('name')->first();
-                $assignerName = User::where('id',auth::user()->id)->pluck('name')->first();
-                $command_emp = '';
-
-                \Mail::to($assigneeMailId)->send(new VmtAssignGoals("none", $assigneeName,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$assignerName,$command_emp));
             }
-        }
-        //Create review record with some default values for :
-        //status of assignee,assigner,reviewer ("Pending")
+            
+            $kpi_AssignedTable  = new VmtPMS_KPIFormAssignedModel;
 
-        return "KPI Published Successfully";
+            $kpi_AssignedTable->vmt_pms_kpiform_id        =    $request->selected_kpi_form_id;
+            $kpi_AssignedTable->assignee_id       =   is_array($request->employees) ? implode(",",$request->employees) : $request->employees;
+            $kpi_AssignedTable->reviewer_id     =     is_array($request->reviewer) ? implode(",",$request->reviewer) : $request->reviewer;
+            $kpi_AssignedTable->assigner_id     =    auth::user()->id;
+            $kpi_AssignedTable->calendar_type     =    $request->calendar_type;
+            $kpi_AssignedTable->year     =    $request->hidden_calendar_year;
+            $kpi_AssignedTable->frequency     =    $request->frequency;
+            $kpi_AssignedTable->assignment_period     =    $request->assignment_period_start;
+            $kpi_AssignedTable->department_id     =    $request->department;
+
+            $kpi_AssignedTable->save();
+
+            
+            //Based on assignee count, you create records in review table
+            $assigneeIdsAll = explode(',',$kpi_AssignedTable->assignee_id );
+            $explodedReviewersIds = explode(',',$kpi_AssignedTable->reviewer_id);
+            $reviewerAcceptedData = [];
+            $reviewerSubmittedData = [];
+            foreach($explodedReviewersIds as $reviewer){
+                $reviewerAcceptedData[$reviewer] = "1";
+                $reviewerSubmittedData[$reviewer] = null;
+            }
+            if(count($assigneeIdsAll) > 0){
+                foreach($assigneeIdsAll as $assignee){
+                    $assigneeReview = new VmtPMS_KPIFormReviewsModel();
+                    $assigneeReview->vmt_pms_kpiform_assigned_id = $kpi_AssignedTable->id;
+                    $assigneeReview->assignee_id = $assignee;
+                    $assigneeReview->assignee_kpi_status = null;
+                    $assigneeReview->reviewer_kpi_status = null;
+                    $assigneeReview->is_assignee_submitted = null;
+                    if(isset($request->flowCheck) && $request->flowCheck==1)
+                    {
+                        $assigneeReview->is_assignee_accepted = '1';
+                    }else{
+                        $assigneeReview->is_assignee_accepted = null;
+                    }
+                    $assigneeReview->is_reviewer_submitted = json_encode($reviewerSubmittedData);
+                    $assigneeReview->is_reviewer_accepted = json_encode($reviewerAcceptedData);
+                    $assigneeReview->save();
+
+                    $assigneeMailId  = VmtEmployee::join('vmt_employee_office_details',  'user_id', '=', 'vmt_employee_details.userid')->where('userid', $assignee)->pluck('officical_mail','userid')->first();
+                    $assigneeName = User::where('id',$assignee)->pluck('name')->first();
+                    $assignerName = User::where('id',auth::user()->id)->pluck('name')->first();
+                    $command_emp = '';
+
+                    if(!empty($assigneeMailId)){
+                        \Mail::to($assigneeMailId)->send(new VmtAssignGoals("none", $assigneeName,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$assignerName,$command_emp));
+                    }
+                }
+            }
+            //Create review record with some default values for :
+            //status of assignee,assigner,reviewer ("Pending")
+            return response()->json(['status' => true, 'message' => "KPI Published Successfully"]);
+            // return "KPI Published Successfully";
+        }catch(Exception $e){
+            Log::info('Publish KPI Form V2 Error: '.$e->getMessage());
+            return response()->json(['status' => false, 'message' => 'Something went wrong!']);
+        }
     }
 
     public function showKPIReviewPage_Assignee(Request $request)
