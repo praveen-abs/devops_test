@@ -6,8 +6,8 @@
 
             <div class="page-title-right">
                 <ol class="breadcrumb m-0  fw-bold ">
-                    <li class="crumb-item"><a href="{{url('vmt_noData')}}" class="text-muted">Transaction</a></li>
-                    <li class="crumb-item"><a href="{{url('vmt_noData')}}" class="text-muted">Reports</a></li>
+                    <li class="crumb-item"><a href="{{route('page-not-found')}}" class="text-muted">Transaction</a></li>
+                    <li class="crumb-item"><a href="{{route('page-not-found')}}" class="text-muted">Reports</a></li>
 
                 </ol>
             </div>

@@ -6,9 +6,9 @@
 
             <div class="page-title-right">
                 <ol class="breadcrumb m-0  fw-bold ">
-                    <li class="crumb-item"><a href="{{url('vmt_noData')}}" class="text-muted">Leave
+                    <li class="crumb-item"><a href="{{route('page-not-found')}}" class="text-muted">Leave
                             Report</a></li>
-                    <li class="crumb-item"><a href="{{url('vmt_noData')}}" class="text-muted">Attendance
+                    <li class="crumb-item"><a href="{{route('page-not-found')}}" class="text-muted">Attendance
                             Report</a></li>
 
                 </ol>
