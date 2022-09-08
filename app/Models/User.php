@@ -26,6 +26,7 @@ class User extends Authenticatable
         'avatar',
         'user_code',
         'is_onboarded',
+        'onboard_type',
         'is_admin'
     ];
 

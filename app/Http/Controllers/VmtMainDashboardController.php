@@ -50,12 +50,21 @@ class VmtMainDashboardController extends Controller
     {
         if(auth()->user()->is_onboarded == '0')
         {
-            $request['email'] = auth()->user()->email;
+            if(auth()->user()->onboard_type == 'quick')
+            {
+                $request['email'] = auth()->user()->email;
 
-            //dd($request->email);
-            $vmtEmpController = new VmtEmployeeController;
+                //dd($request->email);
+                $vmtEmpController = new VmtEmployeeController;
 
-            return $vmtEmpController->employeeOnboarding($request);
+                return $vmtEmpController->employeeOnboarding($request);
+            }
+            else
+            if(auth()->user()->onboard_type == 'bulk')
+            {
+
+                return view('vmt_documents');
+            }
         }
 
         $employeesEventDetails = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
