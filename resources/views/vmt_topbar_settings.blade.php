@@ -114,7 +114,7 @@
                                         @csrf
                                         <div class="mb-3">
                                             <label for="short-name" class="form-label">Short Name</label>
-                                            <input type="text" class="form-control w-25" id="short-name">
+                                            <input type="text" class="form-control w-25" id="short_name" name="short_name">
 
                                         </div>
 
@@ -133,10 +133,17 @@
                                         <div class="mb-3">
                                             <div class="browse-logo-wrapper d-flex align-items-center">
                                                 <div class="logo-img ">
-                                                    <img id="profile_round_image_dist" src="" alt="brand-logo">
+                                                    {{-- <img id="profile_round_image_dist" src="" alt="brand-logo"> --}}
+                @php
+                    $employee = \DB::table('vmt_employee_payslip')->first();
+                    $general_info = \DB::table('vmt_general_info')->first();
+                    $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
+                    // dd(request()->getSchemeAndHttpHost()."".$general_info->logo_img);
+                @endphp
+                <img src="{{request()->getSchemeAndHttpHost()."".$general_info->logo_img}}" >
                                                 </div>
                                                 <div class="logo-img d-flex align-items-center">
-                                                    <button class="btn btn-primary btn-file">
+                                                    <button type="button" class="btn btn-primary btn-file">
                                                         Browse <input type="file" id="logo" name="logo" accept=".png,.jpg,.jpeg,.bmp" onchange="readURL(this);" style="width:20px;height:15px;cursor: pointer;">
                                                     </button>
                                                 </div>
@@ -1715,27 +1722,32 @@
         }
     }
     $('#role-form').on('submit', function(e) {
-        e.preventDefault();
+       
 
         //var formData = new FormData(this);
         var roleUri = $('#role-form').attr('action');
-        console.log(roleUri);
+       // console.log(roleUri);
+        function( e ) {
+            $.ajax({
+                type: "POST",
+                url: roleUri,
+                enctype: 'multipart/form-data',
+                data: new FormData(this),
+                processData: false,
+                contentType: false,
+                success: function(data) {
+                    $('#alert-msg').html(data);
+                    var toastLiveExample3 = document.getElementById("borderedToast2");
+                    var toast = new bootstrap.Toast(toastLiveExample3);
+                    //  toast.show();
 
-        $.ajax({
-            type: "POST",
-            url: roleUri,
-            enctype: 'multipart/form-data',
-            data: new FormData(this),
-            processData: false,
-            contentType: false,
-            success: function(data) {
-                $('#alert-msg').html(data);
-                var toastLiveExample3 = document.getElementById("borderedToast2");
-                var toast = new bootstrap.Toast(toastLiveExample3);
-                toast.show();
-                //alert(data); // show response from the php script.
-            }
-        })
+
+                    //alert(data); // show response from the php script.
+                }
+                e.preventDefault();
+            
+            })
+        }
         //console.log($('#role-form').serialize());
     });
 </script>
