@@ -368,7 +368,6 @@ class HomeController extends Controller
 
     //
     public function storeGeneralInfo(Request $request){
-
         $vmtGeneralInfo = VmtGeneralInfo::first();
         if($vmtGeneralInfo){
 
@@ -396,7 +395,8 @@ class HomeController extends Controller
         $vmtGeneralInfo->login_instruction = $request->login_instructions;
 
         $vmtGeneralInfo->save();
-        return "General Info Saved";
+       // return "General Info Saved";
+        return redirect()->back();
     }
 
     public function updateCheckin(Request $request) {
