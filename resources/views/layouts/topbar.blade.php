@@ -294,7 +294,7 @@
 
     function generateProfileShortName_Topbar()
     {
-        var username = '{{auth()->user()->name}}';
+        var username = '{{auth()->user()->name ?? ''}}';
         const splitArray = username.split(" ");
         var finalname ="empty111";
 
@@ -303,7 +303,10 @@
             finalname = splitArray[0][0] +""+ splitArray[0][1];
         }else
         {
-            finalname = splitArray[0][0] +""+ splitArray[0][1];
+            if(splitArray[0].length == 1)
+                finalname = splitArray[0][0] +""+ splitArray[1][0];
+            else
+                finalname = splitArray[0][0] +""+ splitArray[0][1];
         }
 
         var a = $('#topbar_username').text(finalname);
