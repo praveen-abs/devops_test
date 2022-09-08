@@ -275,16 +275,7 @@ class VmtEmployeeController extends Controller
     }
 
 
-    public function fileUpload($file) {
-        if (request()->has($file)) {
-            $docUploads = request()->file($file);
-            $docUploadsName = 'doc_'.time() . '.' . $docUploads->getClientOriginalExtension();
-            $docUploadsPath = public_path('/images/');
-            $docUploads->move($docUploadsPath, $docUploadsName);
-            return $docUploadsName;
-        }
-        return null;
-    }
+
 
     /*
         Save employee onboarding details
@@ -307,6 +298,7 @@ class VmtEmployeeController extends Controller
                 'user_code' =>  $row['employee_code'],
                 'active' => '0',
                 'is_onboarded' => '1',
+                'onboard_type' => 'normal',
                 'is_admin' => '0'
             ]);
             $user->assignRole("Employee");
@@ -483,6 +475,9 @@ class VmtEmployeeController extends Controller
         // $linkToManager  = \Excel::import(new VmtEmployeeManagerImport, request()->file('file'));
     }
 
+    /*
+        For bulk upload employees
+    */
     public function uploadEmployee($data) {
 
         $rules = [];
@@ -593,7 +588,8 @@ class VmtEmployeeController extends Controller
                         'avatar' =>  $row['employee_name'].'_avatar.jpg',
                         'user_code' =>  $empNo,
                         'active' => '0',
-                        'is_onboarded' => '1'
+                        'is_onboarded' => '1',
+                        'onboard_type' => 'bulk',
 
 
                     ]);
@@ -809,6 +805,10 @@ class VmtEmployeeController extends Controller
             if(isset($row['employee_code']))
             {
                 $empNo = $row['employee_code'];
+              
+                $checking_report_mang = User::where('user_code' ,$row['reporting_manager_code'])->first();
+                if($checking_report_mang !=""){
+
 
             // $row['doj'] = date('Y-m-d', $row['doj']);
                 $row['mobile_no'] = (int)$row['mobile_no'];
@@ -858,6 +858,7 @@ class VmtEmployeeController extends Controller
                         'user_code' =>  $empNo,
                         'active' => '1',
                         'is_onboarded' => '0',
+                        'onboard_type' => 'quick',
                         'is_admin' => '0'
 
                     ]);
@@ -921,6 +922,12 @@ class VmtEmployeeController extends Controller
                     $returnfailedMsg .= "</li>";
                     $failedCount++;
                 }
+                
+            }else{
+                $returnfailedMsg .= "<li>"." Reporting Manager (".$row['reporting_manager_code'] .") is not available ";
+                $returnfailedMsg .= "</li>";
+                $failedCount++;
+            }
             }
         }
 
@@ -928,7 +935,43 @@ class VmtEmployeeController extends Controller
         return $data;
     }
 
+    /*
+        Called when quick onboarded employee submits the documents from their login.
+        After this, the employee is onboarded sucessfully.
+    */
+    public function storeEmployeeDocuments(Request $request)
+    {
 
+        $currentEmployeeDetails = VmtEmployee::where('userid',auth()->user()->id)->first();
+
+        //dd($currentEmployeeDetails->toArray());
+
+        $currentEmployeeDetails->aadhar_card_file = $this->fileUpload('aadhar_card');
+        $currentEmployeeDetails->aadhar_card_backend_file = $this->fileUpload('aadhar_card_backend');
+        $currentEmployeeDetails->pan_card_file = $this->fileUpload('pan_card');
+        $currentEmployeeDetails->passport_file = $this->fileUpload('passport');
+        $currentEmployeeDetails->voters_id_file = $this->fileUpload('voters_id');
+        $currentEmployeeDetails->dl_file = $this->fileUpload('dl_file');
+        $currentEmployeeDetails->education_certificate_file = $this->fileUpload('education_certificate');
+        $currentEmployeeDetails->reliving_letter_file = $this->fileUpload('reliving_letter');
+
+        // //set the onboard status to 1
+
+
+        $currentEmployeeDetails->save();
+        return "Saved";
+    }
+
+    public function fileUpload($file) {
+        if (request()->has($file)) {
+            $docUploads = request()->file($file);
+            $docUploadsName = 'doc_'.$docUploads->getClientOriginalName()."_".time() . '.' . $docUploads->getClientOriginalExtension();
+            $docUploadsPath = public_path('/images/');
+            $docUploads->move($docUploadsPath, $docUploadsName);
+            return $docUploadsName;
+        }
+        return null;
+    }
 
     // Store quick onboard employee data to Database
     public function storeQuickOnboardFormEmployee(Request $request){
