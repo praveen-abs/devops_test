@@ -152,6 +152,10 @@ header {
     .mr-10{
         margin-right: 0px !important;
     }
+
+    .fa-refresh:hover {
+        cursor: pointer;
+    }
 </style>
 @endsection
 
