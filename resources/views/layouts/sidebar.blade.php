@@ -150,7 +150,7 @@
                                 <a href="{{route('page-not-found')}}" id="tds" class="nav-link sidebar py-1"><span>Exit</span></a>
                             </li>
                             <li class="nav-item ">
-                                <a href="{{route('page-not-found')}}" id="tds" class="nav-link sidebar py-1"><span>Documents</span></a>
+                                <a href="{{route('vmt-documents-route')}}" id="tds" class="nav-link sidebar py-1"><span>Documents</span></a>
                             </li>
                             <li class="nav-item ">
                                 <a href="{{route('assetinventory-index')}}" id="tds" class="nav-link sidebar py-1"><span>Assets</span></a>
