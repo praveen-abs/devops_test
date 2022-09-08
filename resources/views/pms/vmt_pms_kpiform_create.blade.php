@@ -179,7 +179,7 @@
                                     </td>
                                     <td class="text-box-td ">
                                         <textarea data-show="{{$show['kpiWeightage']}}" name="kpiWeightage[]" id="" class="text-box" row="2" cols="20"
-                                            placeholder="type here"></textarea>
+                                            placeholder="type number only" onkeypress='return event.charCode >= 48 && event.charCode <= 57'></textarea>
                                     </td>
                                 </tr>
 
@@ -412,6 +412,7 @@ $(document).ready(function(){
             nonAvailableValues.push('kpiWeightage[]');
         }
 
+        var validationCheck = false;
         var form_data = new FormData(document.getElementById("upload_form"));
         $.ajax({
             type: "POST",
@@ -428,17 +429,30 @@ $(document).ready(function(){
                     var dataResultNotAvailableColumns =  '';
                     var length = 1;
                     $.each(data.result,function(key, value) {
-                        // console.log(key+" KEY");
-                        // console.log(value+" VALUE");
                         console.log(availableValues);
                         console.log(nonAvailableValues);
                         var dataResult =  '';
                         var increment = 0;
                         $.each(availableValues,function(keyAvailable, valueAvailable) {  
-                            var test = '<td class="text-box-td p-1"><textarea name="'+valueAvailable+'" data-show="true" id="" class="text-box" cols="20" placeholder="type here">'+value[increment]+'</textarea></td>';
+                            var textAreaVal = value[increment];
+                            var pattern = ''
+                            var label = 'type here';
+                            if(valueAvailable == 'kpiWeightage[]'){
+                                label = 'type number only';
+                                pattern = "return event.charCode >= 48 && event.charCode <= 57";
+                                if($.isNumeric( value[increment] ) == true){
+                                    textAreaVal = value[increment];
+                                }else{
+                                    textAreaVal = '';
+                                    validationCheck = true;
+                                }
+                            }
+                            
+                            var test = '<td class="text-box-td p-1"><textarea name="'+valueAvailable+'" data-show="true" id="" class="text-box" cols="20" placeholder="'+label+'" onkeypress="'+pattern+'">'+textAreaVal+'</textarea></td>';
                             dataResult += test;
                             increment++;
                         });
+                        
                         $.each(nonAvailableValues,function(keyNotAvailable, valueNotAvailable) {   
                             var test = '<input type="hidden" name="'+valueNotAvailable+'">';
                             dataResult += test;
@@ -446,6 +460,9 @@ $(document).ready(function(){
                         $('.content-container').append('<tr class="addition-content cursor-pointer" id="content'+length+'"><td class="text-box-td p-1"><span  name="numbers" id="" class="tableInp" >'+length+'</span><div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div></td>'+dataResult+'</tr>');
                             length++;
                     });
+                    if(validationCheck == true){
+                        swal("Wrong!", "KPI Weightage allows only numbers", "error");
+                    }
                 }else{
                     swal("Wrong!", data.message, "error");
                 }
@@ -614,7 +631,7 @@ $(function () {
             source = '<input type="hidden" name="source[]">';
         }
         if (showkpiWeightage == 'block') {
-            kpiWeightage = '<td class="text-box-td p-1"><textarea name="kpiWeightage[]" data-show="true" id="" class="text-box" cols="10" placeholder="type here"></textarea></td>';
+            kpiWeightage = '<td class="text-box-td p-1"><textarea name="kpiWeightage[]" onkeypress="return event.charCode >= 48 && event.charCode <= 57" data-show="true" id="" class="text-box" cols="10" placeholder="type number only"></textarea></td>';
         } else {
             kpiWeightage = '<input type="hidden" name="kpiWeightage[]">';
         }

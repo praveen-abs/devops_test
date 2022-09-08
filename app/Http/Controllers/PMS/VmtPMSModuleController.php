@@ -332,7 +332,7 @@ class VmtPMSModuleController extends Controller
                 $kpiRow->target      =    isset($request->target) && isset($request->target[$i]) ? $request->target[$i] : '';
                 $kpiRow->stretch_target  =    isset($request->stretchTarget) && isset($request->stretchTarget[$i]) ? $request->stretchTarget[$i] : '';
                 $kpiRow->source          =    isset($request->source) && isset($request->source[$i]) ? $request->source[$i] : '';
-                $kpiRow->kpi_weightage   =    isset($request->kpiWeightage) && isset($request->kpiWeightage[$i]) ? $request->kpiWeightage[$i] : '';
+                $kpiRow->kpi_weightage   =    isset($request->kpiWeightage) && isset($request->kpiWeightage[$i]) ? $request->kpiWeightage[$i].'%' : '';
                 // $kpiRow->author_id       =    auth::user()->id;
                 // $kpiRow->author_name     =    str_replace(' ', '_', strtolower($request->name));
                 $kpiRow->save();

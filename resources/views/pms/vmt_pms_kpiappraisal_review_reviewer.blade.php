@@ -114,7 +114,7 @@
         <!-- appraisal table -->
         <div class="card">
             <div class="card-body pb-2">
-                @if(isset($isAllReviewersSubmittedData) && count($isAllReviewersSubmittedData) > 0 && $isAllReviewersSubmittedData[Auth::id()] != '1')
+                @if(isset($isAllReviewersSubmittedData) && count($isAllReviewersSubmittedData) > 0 && $isAllReviewersSubmittedData[Auth::id()] != '1' && $assignedGoals->is_assignee_submitted == '1')
                 <div class="row">
                     <div class="col-12 mt-3">
                         <form id="upload_form" enctype="multipart/form-data">
