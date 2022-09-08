@@ -185,6 +185,8 @@ Route::post('vmt-employee/complete-onboarding', 'App\Http\Controllers\VmtEmploye
 
 
 Route::get('employeesDirectory', 'App\Http\Controllers\VmtEmployeeController@showEmployeeDirectory');
+Route::get('manageEmployees', 'App\Http\Controllers\VmtEmployeeManagementController@index')->name('manage-employees-page');
+
 Route::post('vmt-kpi/data', 'App\Http\Controllers\VmtEmployeeController@showKpiData')->name('kpi-data');
 Route::post('vmt-employess/status', 'App\Http\Controllers\VmtEmployeeController@updateUserAccountStatus')->name('updateUserAccountStatus');
 
@@ -249,6 +251,8 @@ Route::get('/form16', function () {
 Route::get('/investments', function () {
     return view('vmt_investments');
 })->name('vmt-investments-route');
+
+
 
 Route::get('/vmt_employee_payslip',  [App\Http\Controllers\VmtPaySlipController::class, 'payslipPdfView'])->name('vmt_employee_payslip');
 Route::get('/pdfview/{selectedPaySlipMonth}',[App\Http\Controllers\VmtPaySlipController::class, 'pdfview'])->name('pdfview');
