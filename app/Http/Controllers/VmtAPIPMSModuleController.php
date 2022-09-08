@@ -36,6 +36,7 @@ class VmtAPIPMSModuleController extends Controller
         ]);
     }
 
+   
     public function getAssigneeReviews(Request $request){
         // Flow 1 HR creates Form and Assignee
         $kpiFormAssignedDetails = VmtPMS_KPIFormAssignedModel::where('id', $request->assignedFormid)
@@ -323,7 +324,15 @@ class VmtAPIPMSModuleController extends Controller
 
         Logic : Using assignee_id, we will search the assignee_id, reviewer_id
 
-
+            is_manager_submitted
+            (1 => Submitted else Not Submitted)
+            is_manager_accepted
+            (1 => Accpted, 0=> Rejected, else Not Viewed Yet)
+        &&
+            is_employee_submitted
+            (1 => Submitted else Not Submitted)
+            is_employee_accepted
+            (1 => Accpted, 0=> Rejected, else Not Viewed Yet)
     */
     public function getAssigneeKPIForms(Request $request)
     {
@@ -358,114 +367,36 @@ class VmtAPIPMSModuleController extends Controller
             $result[$key]['vmt_pms_kpiform_assigned_id'] = $kpiAssignee->id;
             $result[$key]['employee_name'] = $assigneeDetails->name;
             $result[$key]['employee_emp_id'] = isset($assigneeDetails->getEmployeeDetails) ? (String)$assigneeDetails->getEmployeeDetails->emp_no : '';
-            $result[$key]['employee_name'] = $assigneeDetails->name;
             foreach($arrayReviewers as $reviewerKey => $reviewer){
                 $reviewerDetails = User::where('id',$reviewer)->with('getEmployeeDetails')->first();
+                $result[$key]['manager'][$reviewerKey]['manager_id'] = $reviewer;
                 $result[$key]['manager'][$reviewerKey]['manager_name'] = $reviewerDetails->name;
                 $result[$key]['manager'][$reviewerKey]['manager_emp_id'] = isset($reviewerDetails->getEmployeeDetails) ? (String)$reviewerDetails->getEmployeeDetails->emp_no : '';
             }
             $result[$key]['assignment_period'] = $kpiAssignee->assignment_period;
+            $isAssigneeAccepted = '';
             $isAssigneeSubmitted = '';
             if(isset($kpiAssignee->getPmsKpiFormReviews)){
                 foreach($kpiAssignee->getPmsKpiFormReviews as $reviewData){
                     if($reviewData->assignee_id == $userId){
-                        $action = 'Self-Review';
-                        if($reviewData->is_assignee_accepted == '0'){
-                            $isAssigneeSubmitted = 'Rejected';
-                        }else{
-                            if($reviewData->is_assignee_submitted == '1'){
-                                $action = 'View';
-                                $isAssigneeSubmitted = 'Submitted';
-                            }else{
-                                $action = 'Self-Review';
-                                $isAssigneeSubmitted = 'Not yet submitted';
-                            }
-                        }
+                        $isAssigneeAccepted = (String)$reviewData->is_assignee_accepted;
+                        $isAssigneeSubmitted = (String)$reviewData->is_assignee_submitted;
+                      
                     }
-                    $isReviewerSubmitted = 'Not yet submitted';
                     $arrayIsReviewerSubmitted = json_decode($reviewData->is_reviewer_submitted,true);
+                    $arrayIsReviewerAccepted = json_decode($reviewData->is_reviewer_accepted,true);
                     $i = 0;
                     foreach($arrayIsReviewerSubmitted as $reviewerId => $isSubmittedStatus){
-                        // dd($reviewerId , $isSubmittedStatus);
-                        if($isSubmittedStatus == '1'){
-                            $isReviewerSubmitted = 'Reviewed';
-                        }else{
-                            $isReviewerSubmitted = 'Not yet reviewed';
-                        }
-                        $result[$key]['manager_status'][$i]['manager_id'] = $reviewerId;
-                        $result[$key]['manager_status'][$i]['status'] = $isReviewerSubmitted;
+                        
+                        $result[$key]['manager'][$i]['is_manager_submitted'] = (String)$isSubmittedStatus;
+                        $result[$key]['manager'][$i]['is_manager_accepted'] = isset($arrayIsReviewerAccepted[$reviewerId]) ? (String)$arrayIsReviewerAccepted[$reviewerId] : '';
                         $i++;
                     }
                 }
             }
-            $result[$key]['assignee_status'] = $isAssigneeSubmitted;
-            $result[$key]['action'] = $action;
+            $result[$key]['is_employee_submitted'] = $isAssigneeSubmitted;
+            $result[$key]['is_employee_accepted'] = $isAssigneeAccepted;
         }
-        // display assigned kpi details
-        // foreach($pmsKpiAssigneeDetails as $key => $assignedDetails){
-        //     $explodedReviewerId = explode(',',$assignedDetails->reviewer_id);
-        //     $result[$key]['id'] = $assignedDetails->id;
-        //     $result[$key]['vmt_pms_kpiform_id'] = $assignedDetails->vmt_pms_kpiform_id;
-        //     $result[$key]['assignee_id'] = $assignedDetails->assignee_id;
-        //     foreach($explodedReviewerId as $reviewerKey => $reviewer){
-        //         $reviewerUserDetail = User::findorfail($reviewer);
-        //         $result[$key]['reviewer'][$reviewerKey]['reviewer_id'] = $assignedDetails->reviewer_id;
-        //         $result[$key]['reviewer'][$reviewerKey]['reviewer_name'] = isset($reviewerUserDetail) ?  $reviewerUserDetail->name : '';
-        //     }
-        //     $result[$key]['assigner_id'] = $assignedDetails->assigner_id;
-        //     $result[$key]['calendar_type'] = $assignedDetails->calendar_type;
-        //     $result[$key]['year'] = $assignedDetails->year;
-        //     $result[$key]['frequency'] = $assignedDetails->frequency;
-        //     $result[$key]['assignment_period'] = $assignedDetails->assignment_period;
-        //     $result[$key]['department_id'] = $assignedDetails->department_id;
-        //     $result[$key]['assigned_kpi_form_review_details'] = [];
-
-        //     // check assigned kpi details reviews
-        //     if(isset($assignedDetails->getPmsKpiFormReviews) && count($assignedDetails->getPmsKpiFormReviews)){
-        //         foreach($assignedDetails->getPmsKpiFormReviews as $reviews){
-
-        //             $rating = $this->calculateOverallReviewRatings($reviews->vmt_pms_kpiform_assigned_id,$userId);
-        //             // dD($rating);
-
-        //             // assignee details of only Logged In User
-        //             if($reviews->assignee_id == $userId){
-        //                 $result[$key]['assigned_kpi_form_review_details']['id'] = $reviews->id;
-        //                 $result[$key]['assigned_kpi_form_review_details']['vmt_pms_kpiform_assigned_id'] = (string)$reviews->vmt_pms_kpiform_assigned_id;
-        //                 $result[$key]['assigned_kpi_form_review_details']['assignee_id'] = $reviews->assignee_id;
-
-        //                 // Get Assignee name and emp_no
-        //                 $result[$key]['assigned_kpi_form_review_details']['assignee_name'] = isset($reviews->getUserAssigneeDetails) ? (String)$reviews->getUserAssigneeDetails->name : '';
-        //                 $result[$key]['assigned_kpi_form_review_details']['assignee_emp_no'] = isset($reviews->getUserAssigneeDetails) && isset($reviews->getUserAssigneeDetails->getEmployeeDetails) ? (String)$reviews->getUserAssigneeDetails->getEmployeeDetails->emp_no : '';
-        //                 $result[$key]['assigned_kpi_form_review_details']['reviewer_rating'] = $rating;
-
-        //                 $result[$key]['assigned_kpi_form_review_details']['assignee_kpi_review'] = (string)$reviews->assignee_kpi_review;
-        //                 $result[$key]['assigned_kpi_form_review_details']['assignee_kpi_percentage'] = (string)$reviews->assignee_kpi_percentage;
-        //                 $result[$key]['assigned_kpi_form_review_details']['assignee_kpi_comments'] = (string)$reviews->assignee_kpi_comments;
-        //                 $result[$key]['assigned_kpi_form_review_details']['reviewer_kpi_review'] = (string)$reviews->reviewer_kpi_review;
-        //                 $result[$key]['assigned_kpi_form_review_details']['reviewer_kpi_percentage'] = (string)$reviews->reviewer_kpi_percentage;
-        //                 $result[$key]['assigned_kpi_form_review_details']['reviewer_kpi_comments'] = (string)$reviews->reviewer_kpi_comments;
-        //                 $result[$key]['assigned_kpi_form_review_details']['reviewer_appraisal_comments'] = (string)$reviews->reviewer_appraisal_comments;
-        //                 $result[$key]['assigned_kpi_form_review_details']['assigner_kpi_review'] = (string)$reviews->assigner_kpi_review;
-        //                 $result[$key]['assigned_kpi_form_review_details']['assigner_kpi_percentage'] = (string)$reviews->assigner_kpi_percentage;
-        //                 $result[$key]['assigned_kpi_form_review_details']['assigner_kpi_comments'] = (string)$reviews->assigner_kpi_comments;
-        //                 $result[$key]['assigned_kpi_form_review_details']['assignee_kpi_status'] = (string)$reviews->assignee_kpi_status;
-        //                 $result[$key]['assigned_kpi_form_review_details']['is_assignee_submitted'] = (string)$reviews->is_assignee_submitted;
-        //                 $result[$key]['assigned_kpi_form_review_details']['is_assignee_accepted'] = (string)$reviews->is_assignee_accepted;
-        //                 $result[$key]['assigned_kpi_form_review_details']['reviewer_kpi_status'] = (string)$reviews->reviewer_kpi_status;
-
-        //                 $explodedReviewerSubmittedDetails = json_decode($reviews->is_reviewer_submitted,true);
-        //                 foreach($explodedReviewerSubmittedDetails as $reviewerKey => $reviewer){
-        //                     $result[$key]['assigned_kpi_form_review_details']['is_reviewer_submitted'][$reviewerKey] = (String)$reviewer;
-        //                 }
-            
-        //                 $result[$key]['assigned_kpi_form_review_details']['is_reviewer_accepted'] = $reviews->is_reviewer_accepted;
-        //                 $result[$key]['assigned_kpi_form_review_details']['assignee_rejection_comments'] = (string)$reviews->assignee_rejection_comments;
-        //                 $result[$key]['assigned_kpi_form_review_details']['reviewer_rejection_comments'] = (string)$reviews->reviewer_rejection_comments;
-        //                 $result[$key]['assigned_kpi_form_review_details']['overall_score'] = (string)$reviews->overall_score;
-        //             }
-        //         }
-        //     }
-        // }
         return response()->json([
             'status' => true,
             'message'=> '',
@@ -480,6 +411,16 @@ class VmtAPIPMSModuleController extends Controller
 
         Logic : Using reviewer_id, we will search the reviewer_id, reviewer_id
 
+
+            is_manager_submitted
+            (1 => Submitted else Not Submitted)
+            is_manager_accepted
+            (1 => Accpted, 0=> Rejected, else Not Viewed Yet)
+        &&
+            is_employee_submitted
+            (1 => Submitted else Not Submitted)
+            is_employee_accepted
+            (1 => Accpted, 0=> Rejected, else Not Viewed Yet)
 
     */
     public function getReviewerKPIForms(Request $request)
@@ -499,78 +440,44 @@ class VmtAPIPMSModuleController extends Controller
         }
 
         // check user id in Assignee, Assigner and Reviewer
-        $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews.getUserAssigneeDetails.getEmployeeDetails')->orWhereRaw("find_in_set(".$userId.", reviewer_id)")
+        $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews.getUserAssigneeDetails.getEmployeeDetails')->WhereRaw("find_in_set(".$userId.", reviewer_id)")
                                 ->orderBy('id','DESC')
                                 ->get();
 
-        $result = [];    
-        // display assigned kpi details
-        foreach($pmsKpiAssigneeDetails as $key => $assignedDetails){
-            $explodedReviewerId = explode(',',$assignedDetails->reviewer_id);
-            $result[$key]['id'] = $assignedDetails->id;
-            $result[$key]['vmt_pms_kpiform_id'] = $assignedDetails->vmt_pms_kpiform_id;
-            $result[$key]['assignee_id'] = $assignedDetails->assignee_id;
-            foreach($explodedReviewerId as $reviewerKey => $reviewer){
-                if($reviewer == $userId){
-                    $reviewerUserDetail = User::findorfail($reviewer);
-                    $result[$key]['reviewer']['reviewer_id'] = $reviewer;
-                    $result[$key]['reviewer']['reviewer_name'] = isset($reviewerUserDetail) ?  $reviewerUserDetail->name : '';
-                }
-            }
-            $result[$key]['assigner_id'] = $assignedDetails->assigner_id;
-            $result[$key]['calendar_type'] = $assignedDetails->calendar_type;
-            $result[$key]['year'] = $assignedDetails->year;
-            $result[$key]['frequency'] = $assignedDetails->frequency;
-            $result[$key]['assignment_period'] = $assignedDetails->assignment_period;
-            $result[$key]['department_id'] = $assignedDetails->department_id;
-            $result[$key]['assigned_kpi_form_review_details'] = [];
+        $reviewerDetails = User::where('id',$userId)->with('getEmployeeDetails')->first();
+        $result = [];   
+        $i = 0;
+        foreach($pmsKpiAssigneeDetails as $key => $kpiAssignee){
+            $arrayAssignees = explode(',',$kpiAssignee->assignee_id);
+            foreach($arrayAssignees as $assigneeKey => $assignee){
+                $assigneeDetails = User::where('id',$assignee)->with('getEmployeeDetails')->first();
 
-            // check assigned kpi details reviews
-            if(isset($assignedDetails->getPmsKpiFormReviews) && count($assignedDetails->getPmsKpiFormReviews)){
-                foreach($assignedDetails->getPmsKpiFormReviews as $reviewKey => $reviews){
+                $result[$i]['vmt_pms_kpiform_assigned_id'] = $kpiAssignee->id;
+                $result[$i]['employee_id'] = $assignee;
+                $result[$i]['employee_name'] = $assigneeDetails->name;
+                $result[$i]['employee_emp_id'] = isset($assigneeDetails->getEmployeeDetails) ? (String)$assigneeDetails->getEmployeeDetails->emp_no : '';
+                
+                $result[$i]['manager_name'] = $reviewerDetails->name;
+                $result[$i]['manager_emp_id'] = isset($reviewerDetails->getEmployeeDetails) ? (String)$reviewerDetails->getEmployeeDetails->emp_no : '';
+                $result[$i]['assignment_period'] = $kpiAssignee->assignment_period;
 
-                    $rating = $this->calculateOverallReviewRatings($reviews->vmt_pms_kpiform_assigned_id,$reviews->assignee_id);
-
-                    // assignee details of only Logged In User
-                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['id'] = $reviews->id;
-                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['vmt_pms_kpiform_assigned_id'] = (string)$reviews->vmt_pms_kpiform_assigned_id;
-                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['assignee_id'] = $reviews->assignee_id;
-
-                    // Get Assignee name and emp_no
-                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['assignee_name'] = isset($reviews->getUserAssigneeDetails) ? (String)$reviews->getUserAssigneeDetails->name : '';
-                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['assignee_emp_no'] = isset($reviews->getUserAssigneeDetails) && isset($reviews->getUserAssigneeDetails->getEmployeeDetails) ? (String)$reviews->getUserAssigneeDetails->getEmployeeDetails->emp_no : '';
-                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['reviewer_rating'] = $rating;
-
-                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['assignee_kpi_review'] = (string)$reviews->assignee_kpi_review;
-                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['assignee_kpi_percentage'] = (string)$reviews->assignee_kpi_percentage;
-                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['assignee_kpi_comments'] = (string)$reviews->assignee_kpi_comments;
-                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['reviewer_kpi_review'] = (string)$reviews->reviewer_kpi_review;
-                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['reviewer_kpi_percentage'] = (string)$reviews->reviewer_kpi_percentage;
-                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['reviewer_kpi_comments'] = (string)$reviews->reviewer_kpi_comments;
-                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['reviewer_appraisal_comments'] = (string)$reviews->reviewer_appraisal_comments;
-                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['assigner_kpi_review'] = (string)$reviews->assigner_kpi_review;
-                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['assigner_kpi_percentage'] = (string)$reviews->assigner_kpi_percentage;
-                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['assigner_kpi_comments'] = (string)$reviews->assigner_kpi_comments;
-                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['assignee_kpi_status'] = (string)$reviews->assignee_kpi_status;
-                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['is_assignee_submitted'] = (string)$reviews->is_assignee_submitted;
-                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['is_assignee_accepted'] = (string)$reviews->is_assignee_accepted;
-                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['reviewer_kpi_status'] = (string)$reviews->reviewer_kpi_status;
-
-                    $explodedReviewerSubmittedDetails = json_decode($reviews->is_reviewer_submitted,true);
-                    foreach($explodedReviewerSubmittedDetails as $reviewerKey => $reviewer){
-                        if($reviewerKey == $userId){
-                            $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['is_reviewer_submitted'] =  (String)$reviewer;
+                foreach($kpiAssignee->getPmsKpiFormReviews as $reviewData){
+                    $arrayIsReviewerSubmitted = json_decode($reviewData->is_reviewer_submitted,true);
+                    $arrayIsReviewerAccepted = json_decode($reviewData->is_reviewer_accepted,true);
+                    foreach($arrayIsReviewerSubmitted as $reviewerId => $reviewerSubmitted){
+                        if($reviewerId == $userId){
+                            $result[$i]['is_manager_submitted'] = (String)$arrayIsReviewerAccepted[$reviewerId];
+                            $result[$i]['is_manager_accepted'] = (String)$reviewerSubmitted;
                         }
                     }
-        
-                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['is_reviewer_accepted'] = $reviews->is_reviewer_accepted;
-                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['assignee_rejection_comments'] = (string)$reviews->assignee_rejection_comments;
-                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['reviewer_rejection_comments'] = (string)$reviews->reviewer_rejection_comments;
-                    $result[$key]['assigned_kpi_form_review_details'][$reviewKey]['overall_score'] = (string)$reviews->overall_score;
+                    if($reviewData->assignee_id == $assignee){
+                        $result[$i]['is_employee_submitted'] = (String)$reviewData->is_assignee_submitted;
+                        $result[$i]['is_employee_accepted'] = (String)$reviewData->is_assignee_accepted;
+                    }
                 }
+                $i++;
             }
         }
-
         return response()->json([
             'status' => true,
             'message'=> '',
