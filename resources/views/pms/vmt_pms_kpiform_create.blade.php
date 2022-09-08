@@ -374,7 +374,7 @@ $(document).ready(function(){
         if(showkpi == 'true'){
             availableValues.push('kpi[]');
         }else{
-            nonAvailableValues.push('dimension[]');
+            nonAvailableValues.push('kpi[]');
         }
         if(showoperational == 'true'){
             availableValues.push('operational[]');
@@ -428,8 +428,10 @@ $(document).ready(function(){
                     var dataResultNotAvailableColumns =  '';
                     var length = 1;
                     $.each(data.result,function(key, value) {
-                        console.log(key+" KEY");
-                        console.log(value+" VALUE");
+                        // console.log(key+" KEY");
+                        // console.log(value+" VALUE");
+                        console.log(availableValues);
+                        console.log(nonAvailableValues);
                         var dataResult =  '';
                         var increment = 0;
                         $.each(availableValues,function(keyAvailable, valueAvailable) {  

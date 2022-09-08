@@ -68,14 +68,14 @@ class VmtPayCheckController extends Controller
                 $result['TOTAL_PF_WAGES'] += $d->PF_WAGES;
             }
 
-            return view('vmt_home' , compact('data', 'result', 'compensatory','json_PayCheck'));
+            return view('paycheckDashboard' , compact('data', 'result', 'compensatory','json_PayCheck'));
 
         }
         else
         {
             //dd("no payslip data");
 
-            return view('vmt_nodata_payCheckDashboard');
+            return view('nodata_payCheckDashboard');
 
         }
 

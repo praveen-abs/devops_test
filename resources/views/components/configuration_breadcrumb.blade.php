@@ -13,7 +13,7 @@
                     Config</a></li>
 
 
-                    <li class="crumb-item"><a href="{{ url('vmt_employeeOnboarding') }}" class="text-muted"> Client
+                    <li class="crumb-item"><a href="{{ url('employeeOnboarding') }}" class="text-muted"> Client
                             Onboarding</a></li>
 
                 </ol>

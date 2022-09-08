@@ -13,21 +13,21 @@
         <div class="col-12">
             <ul class="nav sub-topnav  topnav">
                 <li routerlinkactive="active">
-                    <a routerlink="directory" href="{{url('vmt_home')}}">Dashboard</a>
+                    <a routerlink="directory" href="{{route('paycheckDashboard')}}">Dashboard</a>
                 </li>
                 <li routerlinkactive="active" class="active">
-                    <a routerlink="tree" href="{{url('vmt_salary_details')}}"">Salary
+                    <a routerlink="tree" href="{{route('vmt_salary_details')}}"">Salary
                                         Details</a>
                 </li>
 
                 <li routerlinkactive="active">
                     <a routerlink="directory" href="{{url('vmt_investments')}}">Investments</a>
                 </li>
-                
+
                 <li routerlinkactive="active">
                     <a routerlink="tree" href="{{url('vmt_form16')}}">Form 16</a>
                 </li>
-                
+
 
             </ul>
         </div>

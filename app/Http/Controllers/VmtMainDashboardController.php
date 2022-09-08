@@ -16,6 +16,12 @@ use App\Models\VmtEmployeeAttendance;
 use App\Models\vmtHolidays;
 use App\Models\Polling;
 use App\Models\PollVoting;
+use App\Models\Compensatory;
+use App\Models\VmtEmployeeHierarchy;
+use App\Models\Countries;
+use App\Models\State;
+use App\Models\Department;
+use App\Models\Bank;
 use Session as Ses;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -27,6 +33,7 @@ use App\Mail\NotifyPMSManager;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Mail\PMSReviewCompleted;
 use App\Models\VmtPraise;
+use App\Http\Controllers\VmtEmployeeController;
 use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
@@ -39,8 +46,18 @@ class VmtMainDashboardController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        if(auth()->user()->is_onboarded == '0')
+        {
+            $request['email'] = auth()->user()->email;
+
+            //dd($request->email);
+            $vmtEmpController = new VmtEmployeeController;
+
+            return $vmtEmpController->employeeOnboarding($request);
+        }
+
         $employeesEventDetails = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
                                 ->join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
                                 ->select(
@@ -51,8 +68,7 @@ class VmtMainDashboardController extends Controller
                                     'vmt_employee_details.dob',
                                     'vmt_employee_details.doj'
                                 )
-                                ->where('users.is_admin','<>','1')
-                                ;
+                                ->where('users.is_admin','<>','1');
 
         //Employee events for the current month only
         $dashboardEmployeeEventsData = [];
@@ -136,10 +152,10 @@ class VmtMainDashboardController extends Controller
 
         // get announcement data
         $announcementData = VmtAnnouncement::orderBy('created_at','DESC')->where('notify_employees','1')->get();
-        
+
         // get praise data
         $praiseData = VmtPraise::orderBy('created_at','DESC')->get();
-        
+
         if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin')) {
             return view('vmt_hr_dashboard', compact( 'dashboardEmployeeEventsData', 'checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData'));
         }
@@ -155,8 +171,6 @@ class VmtMainDashboardController extends Controller
         }
 
     }
-
-
 
     public function  DashBoardPost(Request $request){
         $id = auth()->user()->id;

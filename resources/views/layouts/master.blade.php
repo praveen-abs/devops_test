@@ -16,7 +16,7 @@ clearstatcache();
     <style>
 
 
-       
+
 
         .credit {
             font-size: 16px;
@@ -182,7 +182,13 @@ clearstatcache();
 {{-- @yield('loading') --}}
 <div id="layout-wrapper">
     @include('layouts.topbar')
-    @include('layouts.sidebar')
+
+    @if (Auth::user()->is_onboarded == 1)
+        @include('layouts.sidebar')
+    @else
+        @include('layouts.sidebar_dummy')
+    @endif
+
     <!-- ============================================================== -->
     <!-- Start right Content here -->
     <!-- ============================================================== -->
