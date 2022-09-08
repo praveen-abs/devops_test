@@ -41,6 +41,7 @@ class VmtEmployeeController extends Controller
 
             $employee  =  User::where('email', $request->email)->first();
             $clientData  = VmtEmployee::where('userid', $employee->id)->first();
+            // dd($clientData);
             $empNo = '';
             if ($clientData) {
                 $empNo = $clientData->emp_no;
@@ -50,12 +51,12 @@ class VmtEmployeeController extends Controller
             $india = Countries::where('country_code', 'IN')->first();
             $emp = VmtEmployeeOfficeDetails::all();
             $emp_details = VmtEmployeeOfficeDetails::where('emp_id', $clientData->id)->first();
-             // dd($emp);
+            //  dd($clientData);
             $department = Department::all();
             $bank = Bank::all();
             $allEmployeesCode = User::where('is_admin',0)->where('active',1)->whereNotNull('user_code')->get(['user_code','name']);
 
-            return view('vmt_employeeOnboarding', compact('empNo','emp_details', 'countries', 'compensatory', 'bank', 'emp','department','allEmployeesCode'));
+            return view('vmt_employeeOnboarding', compact('empNo','emp_details','employee','clientData', 'countries', 'compensatory', 'bank', 'emp','department','allEmployeesCode'));
         }else{
             $clientData  = VmtClientMaster::first();
             $employee  =  User::orderBy('created_at','DESC')->where('user_code', 'LIKE', '%'.$clientData->client_code.'%')->first();
@@ -79,7 +80,7 @@ class VmtEmployeeController extends Controller
         $department = Department::all();
         $allEmployeesCode = User::where('is_admin',0)->where('active',1)->whereNotNull('user_code')->get(['user_code','name']);
         //dd($allEmployeesCode);
-        return view('vmt_employeeOnboarding', compact('empNo', 'countries', 'india', 'emp', 'bank', 'department','allEmployeesCode'));
+        return view('vmt_employeeOnboarding', compact('empNo', 'countries','clientData', 'employee','india', 'emp', 'bank', 'department','allEmployeesCode'));
 
     }
     }
@@ -872,6 +873,7 @@ class VmtEmployeeController extends Controller
                     //$newEmployee->gender   =    $row["gender"];
                     $newEmployee->doj   =    \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d');
                     $newEmployee->dol   =    \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d');
+                    $newEmployee->mobile_number   =    $row['mobile_no'];
                     $newEmployee->save();
 
                     if($newEmployee){
@@ -975,7 +977,7 @@ class VmtEmployeeController extends Controller
 
     // Store quick onboard employee data to Database
     public function storeQuickOnboardFormEmployee(Request $request){
-        dd($request->all());
+       // dd($request->all());
         // code...
         try
         {
