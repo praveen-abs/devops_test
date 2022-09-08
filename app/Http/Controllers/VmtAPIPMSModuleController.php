@@ -12,6 +12,7 @@ use App\Models\VmtPMS_KPIFormDetailsModel;
 use App\Models\VmtPMS_KPIFormReviewsModel;
 use App\Models\VmtPMS_KPIFormModel;
 use App\Mail\NotifyPMSManager;
+use App\Models\VmtPMSRating;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\ViewNotification;
 use Exception;
@@ -376,26 +377,30 @@ class VmtAPIPMSModuleController extends Controller
             $result[$key]['assignment_period'] = $kpiAssignee->assignment_period;
             $isAssigneeAccepted = '';
             $isAssigneeSubmitted = '';
+            $rating = '';
             if(isset($kpiAssignee->getPmsKpiFormReviews)){
                 foreach($kpiAssignee->getPmsKpiFormReviews as $reviewData){
+                    
                     if($reviewData->assignee_id == $userId){
                         $isAssigneeAccepted = (String)$reviewData->is_assignee_accepted;
                         $isAssigneeSubmitted = (String)$reviewData->is_assignee_submitted;
                       
+                        $arrayIsReviewerSubmitted = json_decode($reviewData->is_reviewer_submitted,true);
+                        $arrayIsReviewerAccepted = json_decode($reviewData->is_reviewer_accepted,true);
+                        $i = 0;
+                        foreach($arrayIsReviewerSubmitted as $reviewerId => $isSubmittedStatus){                            
+                            $result[$key]['manager'][$i]['is_manager_submitted'] = (String)$isSubmittedStatus;
+                            $result[$key]['manager'][$i]['is_manager_accepted'] = isset($arrayIsReviewerAccepted[$reviewerId]) ? (String)$arrayIsReviewerAccepted[$reviewerId] : '';
+                            $i++;
+                        }
                     }
-                    $arrayIsReviewerSubmitted = json_decode($reviewData->is_reviewer_submitted,true);
-                    $arrayIsReviewerAccepted = json_decode($reviewData->is_reviewer_accepted,true);
-                    $i = 0;
-                    foreach($arrayIsReviewerSubmitted as $reviewerId => $isSubmittedStatus){
-                        
-                        $result[$key]['manager'][$i]['is_manager_submitted'] = (String)$isSubmittedStatus;
-                        $result[$key]['manager'][$i]['is_manager_accepted'] = isset($arrayIsReviewerAccepted[$reviewerId]) ? (String)$arrayIsReviewerAccepted[$reviewerId] : '';
-                        $i++;
-                    }
+                    
+                    $rating = calculateOverallReviewRatings($kpiAssignee->id, $userId);
                 }
             }
             $result[$key]['is_employee_submitted'] = $isAssigneeSubmitted;
             $result[$key]['is_employee_accepted'] = $isAssigneeAccepted;
+            $result[$key]['rating'] = $rating;
         }
         return response()->json([
             'status' => true,
@@ -460,21 +465,30 @@ class VmtAPIPMSModuleController extends Controller
                 $result[$i]['manager_name'] = $reviewerDetails->name;
                 $result[$i]['manager_emp_id'] = isset($reviewerDetails->getEmployeeDetails) ? (String)$reviewerDetails->getEmployeeDetails->emp_no : '';
                 $result[$i]['assignment_period'] = $kpiAssignee->assignment_period;
-
+                $rating = '';
+                
                 foreach($kpiAssignee->getPmsKpiFormReviews as $reviewData){
+                    
+
                     $arrayIsReviewerSubmitted = json_decode($reviewData->is_reviewer_submitted,true);
                     $arrayIsReviewerAccepted = json_decode($reviewData->is_reviewer_accepted,true);
                     foreach($arrayIsReviewerSubmitted as $reviewerId => $reviewerSubmitted){
-                        if($reviewerId == $userId){
-                            $result[$i]['is_manager_submitted'] = (String)$arrayIsReviewerAccepted[$reviewerId];
-                            $result[$i]['is_manager_accepted'] = (String)$reviewerSubmitted;
+                        if($reviewerId == $userId && $reviewData->assignee_id == $assignee){
+                            $result[$i]['is_manager_submitted'] = (String)$reviewerSubmitted;
+                            
+                            $result[$i]['is_manager_accepted'] = (String)$arrayIsReviewerAccepted[$reviewerId];
                         }
                     }
                     if($reviewData->assignee_id == $assignee){
                         $result[$i]['is_employee_submitted'] = (String)$reviewData->is_assignee_submitted;
                         $result[$i]['is_employee_accepted'] = (String)$reviewData->is_assignee_accepted;
+
+                        $rating = calculateOverallReviewRatings($kpiAssignee->id, $assignee);
+                        $result[$i]['rating'] = $rating;
+
                     }
                 }
+                
                 $i++;
             }
         }
