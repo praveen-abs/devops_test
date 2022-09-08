@@ -280,7 +280,7 @@ Route::get('/documents', function () {
     return view('vmt_documents');
 })->name('vmt-documents-route');
 
-Route::post('vmt-documents-route', 'App\Http\Controllers\VmtEmployeeController@storeEmployeeDocuments')->name('vmt-documents-route');
+Route::post('vmt-documents-route', 'App\Http\Controllers\VmtEmployeeController@storeEmployeeDocuments')->name('vmt-storedocuments-route');
 
 //
 Route::post('vmt_clientOnboarding', 'App\Http\Controllers\VmtClientController@store');

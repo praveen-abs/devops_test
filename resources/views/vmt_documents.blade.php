@@ -96,7 +96,7 @@
                     var form_data1 = new FormData(document.getElementById("form-1"));
 
                     $.ajax({
-                        url: "{{route('vmt-documents-route')}}",
+                        url: "{{route('vmt-storedocuments-route')}}",
                         type: "POST",
                         dataType: "json",
                         data: form_data1,
