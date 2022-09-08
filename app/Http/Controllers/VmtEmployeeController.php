@@ -873,7 +873,7 @@ class VmtEmployeeController extends Controller
                     //$newEmployee->gender   =    $row["gender"];
                     $newEmployee->doj   =    \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d');
                     $newEmployee->dol   =    \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d');
-                    $newEmployee->emp_no   =    $row['mobile_no'];
+                    $newEmployee->mobile_number   =    $row['mobile_no'];
                     $newEmployee->save();
 
                     if($newEmployee){

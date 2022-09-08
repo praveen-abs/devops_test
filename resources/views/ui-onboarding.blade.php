@@ -26,6 +26,7 @@
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="employee_code">Employee Code{!! required() !!}</label> -->
                                                 <div class="floating">
+                                                   
                                                     <label for="" class="float-label">Employee Code</label>
                                                     <input type="text" placeholder="Employee Code" name="employee_code" class="onboard-form form-control textbox" value="{{$empNo}}" required />
                                                     <!-- <label for="" class="float-label">Employee Code</label> -->
@@ -94,6 +95,7 @@
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="mobile_no">Mobile Number{!! required() !!}</label> -->
                                                 <div class="floating">
+                                                    
                                                     <label for="" class="float-label">Mobile Number</label>
                                                     <input type="number" placeholder="Mobile Number" name="mobile_no" minlength="10" value="{{$clientData->mobile_number? $clientData->mobile_number : ''}}" maxlength="10" class="onboard-form form-control textbox " required />
                                                     <!-- <label for="" class="float-label">Mobile Number</label> -->
@@ -777,8 +779,6 @@
                                                 <!-- <label class="" for="basic">Basic Salary{!! required() !!}</label> -->
                                                 
                                                 @if(isset($compensatory))
-                                                @foreach($compensatory as $jj)
-                                                @endforeach
                                                 
                                                 <div class="floating">
 
@@ -798,9 +798,7 @@
                                                 <!-- <label class="" for="hra">HRA{!! required() !!}</label> -->
                                                
                                                 @if(isset($compensatory))
-                                                @foreach($compensatory as $jj)
-                                                
-                                                @endforeach
+                                              
                                                 <div class="floating">
                                                     <label for="" class="float-label">HRA</label>
 
@@ -810,16 +808,15 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">HRA</label>
                                                     <input type="number" placeholder="HRA" name="hra" class="textbox  onboard-form form-control textbox    calculation_data gross_data" step="0.01"/>
-                                                    @endif
                                                 </div>
+
+                                                    @endif
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="Statutory_bonus">Statutory Bonus{!! required() !!}</label> -->
                                                 
                                                 @if(isset($compensatory))
-                                                @foreach($compensatory as $jj)
-                                                
-                                                @endforeach
+                                              
                                                 <div class="floating">
                                                     <label for="" class="float-label">Statutory Bonus</label>
                                                     <input type="number" placeholder="Statutory Bonus" name="statutory_bonus" value="{{$compensatory->Statutory_bonus? $compensatory->Statutory_bonus : ''}}" class="onboard-form form-control textbox   calculation_data gross_data" step="0.01"/>
@@ -836,9 +833,7 @@
                                                 <!-- <label class="" for="child_education_allowance">Child Education Allowance{!! required() !!}</label> -->
                                                 
                                                 @if(isset($compensatory))
-                                                @foreach($compensatory as $jj)
-                                                
-                                                @endforeach
+                                              
                                                 <div class="floating">
                                                     <label for="" class="float-label">Child Education Allowance</label>
                                                     <input type="number" placeholder="Child Education Allowance" name="child_education_allowance" value="{{$compensatory->child_education_allowance? $compensatory->child_education_allowance : ''}}" class="onboard-form form-control textbox   calculation_data gross_data" step="0.01"/>
@@ -856,9 +851,7 @@
                                                 <!-- <label class="" for="food_coupon">Food Coupon{!! required() !!}</label> -->
                                                 
                                                 @if(isset($compensatory))
-                                                @foreach($compensatory as $jj)
-                                                
-                                                @endforeach
+                                              
                                                 <div class="floating">
                                                     <label for="" class="float-label">Food Coupon</label>
                                                     <input type="number" placeholder="Food Coupon" name="food_coupon" value="{{$compensatory->food_coupon? $compensatory->food_coupon : ''}}" class="onboard-form form-control textbox  calculation_data gross_data" step="0.01"/>
@@ -875,9 +868,7 @@
                                                 <!-- <label class="" for="lta">LTA{!! required() !!}</label> -->
                                                 
                                                 @if(isset($compensatory))
-                                                @foreach($compensatory as $jj)
-                                                
-                                                @endforeach
+                                              
                                                 <div class="floating">
                                                     <label for="" class="float-label">LTA</label>
                                                     <input type="number" placeholder="LTA" name="lta" value="{{$compensatory->lta? $compensatory->lta : ''}}" class="textbox onboard-form form-control     calculation_data gross_data" step="0.01"/>
@@ -894,9 +885,7 @@
                                                 <!-- <label class="" for="special_allowance">Special Allowance{!! required() !!}</label> -->
                                                 
                                                 @if(isset($compensatory))
-                                                @foreach($compensatory as $jj)
-                                                
-                                                @endforeach
+                                              
                                                 <div class="floating">
                                                     <label for="" class="float-label">Special Allowance</label>
                                                     <input type="number" placeholder="Special Allowance" name="special_allowance" value="{{$compensatory->special_allowance? $compensatory->special_allowance : ''}}" class="onboard-form form-control textbox   calculation_data gross_data" step="0.01" />
@@ -913,9 +902,7 @@
                                                 <!-- <label class="" for="other_allowance">Other Allowance{!! required() !!}</label> -->
                                                 
                                                 @if(isset($compensatory))
-                                                @foreach($compensatory as $jj)
-                                                
-                                                @endforeach
+                                              
                                                 <div class="floating">
                                                     <label for="" class="float-label">Other Allowance</label>
 
@@ -933,9 +920,7 @@
                                                 <!-- <label class="" for="gross">Gross Salary{!! required() !!}</label> -->
                                                 
                                                 @if(isset($compensatory))
-                                                @foreach($compensatory as $jj)
-                                                
-                                                @endforeach
+                                              
                                                 <div class="floating">
                                                     <label for="" class="float-label">Gross Salary</label>
 
@@ -954,9 +939,7 @@
                                                 <!-- <label class="" for="epf_employer_contribution">EPF employer contribution{!! required() !!}</label> -->
                                                 
                                                 @if(isset($compensatory))
-                                                @foreach($compensatory as $jj)
-                                                
-                                                @endforeach
+                                              
                                                 <div class="floating">
                                                     <label for="" class="float-label">EPF employer contribution</label>
 
@@ -975,9 +958,7 @@
                                                 <!-- <label class="" for="esic_employer_contribution">ESIC employer contribution{!! required() !!}</label> -->
                                                 
                                                 @if(isset($compensatory))
-                                                @foreach($compensatory as $jj)
-                                                
-                                                @endforeach
+                                              
                                                 <div class="floating">
                                                     <label for="" class="float-label">ESIC employer contribution</label>
                                                     <input type="number" placeholder="ESIC employer contribution" name="esic_employer_contribution" value="{{$compensatory->esic_employer_contribution? $compensatory->esic_employer_contribution : ''}}" class="onboard-form form-control textbox   calculation_data cic_data" step="0.01" />
@@ -994,9 +975,7 @@
                                                 <!-- <label class="" for="insurance">Insurance{!! required() !!}</label> -->
                                                 
                                                 @if(isset($compensatory))
-                                                @foreach($compensatory as $jj)
-                                                
-                                                @endforeach
+                                              
                                                 <div class="floating">
                                                     <label for="" class="float-label">Insurance</label>
                                                     <input type="number" placeholder="Insurance" name="insurance" value="{{$compensatory->insurance? $compensatory->insurance : ''}}" class="onboard-form form-control textbox   calculation_data cic_data" step="0.01" />
@@ -1013,9 +992,7 @@
                                                 <!-- <label class="" for="graduity">Graduity{!! required() !!}</label> -->
                                                 
                                                 @if(isset($compensatory))
-                                                @foreach($compensatory as $jj)
-                                                
-                                                @endforeach
+                                              
                                                 <div class="floating">
                                                     <label for="" class="float-label">Graduity</label>
                                                     <input type="number" placeholder="Graduity" name="graduity" value="{{$compensatory->graduity? $compensatory->graduity : ''}}" class="onboard-form form-control textbox   calculation_data cic_data" step="0.01"/>
@@ -1032,9 +1009,7 @@
                                                 <!-- <label class="" for="cic">Cost of Company{!! required() !!}</label> -->
                                                 
                                                 @if(isset($compensatory))
-                                                @foreach($compensatory as $jj)
-                                                
-                                                @endforeach
+                                              
                                                 <div class="floating">
                                                     <label for="" class="float-label">Cost of Company</label>
 
@@ -1053,9 +1028,7 @@
                                                 <!-- <label class="" for="epf_employee">EPF Employee{!! required() !!}</label> -->
                                                 
                                                 @if(isset($compensatory))
-                                                @foreach($compensatory as $jj)
-                                                
-                                                @endforeach
+                                              
                                                 <div class="floating">
                                                     <label for="" class="float-label">EPF Employee</label>
 
@@ -1074,9 +1047,7 @@
                                                 <!-- <label class="" for="esic_employee">ESIC Employee{!! required() !!}</label> -->
                                                 
                                                 @if(isset($compensatory))
-                                                @foreach($compensatory as $jj)
-                                                
-                                                @endforeach
+                                              
                                                 <div class="floating">
                                                     <label for="" class="float-label">ESIC Employee</label>
 
@@ -1095,9 +1066,7 @@
                                                 <!-- <label class="" for="professional_tax">Professional Tax{!! required() !!}</label> -->
                                                 
                                                 @if(isset($compensatory))
-                                                @foreach($compensatory as $jj)
-                                                
-                                                @endforeach
+                                              
                                                 <div class="floating">
                                                     <label for="" class="float-label">Professional Tax</label>
 
@@ -1108,17 +1077,16 @@
                                                     <label for="" class="float-label">Professional Tax</label>
 
                                                     <input type="number" placeholder="Professional Tax" name="professional_tax" class="textbox  onboard-form form-control calculation_data net_data " step="0.01" />
+                                                </div>
+
                                                     @endif
 
-                                                </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="labour_welfare_fund">labour welfare fund{!! required() !!}</label> -->
                                                 
                                                 @if(isset($compensatory))
-                                                @foreach($compensatory as $jj)
-                                                
-                                                @endforeach
+                                              
                                                 <div class="floating">
                                                     <label for="" class="float-label">labour welfare fund</label>
 
@@ -1137,9 +1105,7 @@
                                                 <!-- <label class="" for="net_income">Net Income{!! required() !!}</label> -->
                                                 
                                                 @if(isset($compensatory))
-                                                @foreach($compensatory as $jj)
-                                                
-                                                @endforeach
+                                              
                                                 <div class="floating">
                                                     <label for="" class="float-label">Net Income</label>
 
