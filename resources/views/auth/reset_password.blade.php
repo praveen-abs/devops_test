@@ -12,6 +12,7 @@
 @section('content')
 
     <?php
+
     $logoObj = \DB::table('vmt_general_info')->first();
 
     if ($logoObj) {
@@ -91,7 +92,7 @@
                             <div
                                 class="col-md-6 col-sm-12 col-xs-12 col-xl-5 col-lg-5 d-flex align-items-center right-content">
                                 <div class="card-body te1xt-black login-card px-5 py-0">
-                                    <form action="{{ route('login') }}" method="POST" class="login-form">
+                                    <form action="#}" method="POST" class="login-form">
                                         <div class="d-flex align-items-center justify-content-center mb-3 ">
                                             <div class="login-top-img">
                                                 <img src="{{ URL::asset($generalInfo->logo_img) }}" alt=""
@@ -102,15 +103,15 @@
                                         <!-- <p class="m-0   h5 fw-bold log">Login <span class="me-1">to</span><span
                                                 class="m-0 fw-bold h4 me-1">ABS</span><small
                                                 class="text-orange fw-bold f-10">hrms</small></p> -->
-                                        <p class="text-muted f-12 mb-3 fw-bold">Login to run your business together</p>
+                                        <p class="text-muted f-12 mb-3 fw-bold">Reset your password</p>
 
 
                                         @csrf
                                         <div class="form-outline mb-3 form-row">
-                                            <label for="" class="">Employee Code</label>
+                                            <label for="" class="">New Password</label>
                                             <input type="text"
                                                 class="form-control textbox  @error('user_code') is-invalid @enderror"
-                                                value="{{ old('user_code', '') }}" id="user_code" name="user_code"
+                                                value="" id="new_password" name="user_code"
                                                 placeholder="Employee Code">
                                             @error('user_code')
                                                 <span class="invalid-feedback" role="alert">
@@ -120,10 +121,10 @@
                                         </div>
 
                                         <div class="form-outline mb-3    form-row">
-                                            <label for="" class="">Password</label>
+                                            <label for="" class="">Confirm Password</label>
                                             <input type="password"
                                                 class="form-control textbox @error('password') is-invalid @enderror"
-                                                name="password" placeholder="Password" id="password-input"
+                                                name="password" placeholder="Password" id="new_password_confirm"
                                                 value="">
                                             @error('password')
                                                 <span class="invalid-feedback" role="alert">
@@ -132,44 +133,13 @@
                                             @enderror
                                         </div>
 
-
-                                        <div class="form-outline mb-1 form-row">
-                                            @if (!empty($clientList) && $clientList->count() > 1)
-
-                                                    <select class="form-select" aria-label="Default select example"
-                                                        name="client_code">
-                                                        <option value="" selected>Choose Client</option>
-                                                        @foreach ($clientList as $singleClient)
-                                                            <option value="{{ $singleClient->client_name }}">
-                                                                {{ $singleClient->client_name }}</option>
-                                                        @endforeach
-                                                    </select>
-
-                                            @endif
-                                            @error('client_code')
-                                                <span class="invalid-feedback" role="">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
+                                        <div class="alert alert-danger display-hide">
+                                            <span style="color: red;" id="error_message"></span>
                                         </div>
 
-                                        @if (count($errors) > 0)
-                                            @foreach ($errors->all() as $message)
-                                                <div class="alert alert-danger display-hide">
-                                                    <span>{{ $message }}</span>
-                                                </div>
-                                            @endforeach
-                                        @endif
-
-                                        <div class="d-flex justify-content-end align-items-center mb-2">
-                                            <a href="{{ route('vmt-resetpassword-page')}}" class="f-12 text-orange">Forgot password?</a>
-                                        </div>
-
-
-                                            <button
+                                        <input type="button"
                                             class="btn btn-orange w-100 sign-in-btn   waves-effect waves-light "
-                                            type="submit">Log-In
-                                        </button>
+                                            type="submit" value="Reset Password" onclick="submitForm()" />
 
 
                                         <div class="divider d-flex align-items-center my-4 px-2 mx-5">
@@ -269,17 +239,6 @@
     <script type="text/javascript">
         $(document).ready(function() {
            // $('#modal_resetPassword').modal('show');
-
-            var temp = '{{ $cacheStatus }}';
-            console.log(temp);
-
-            var allCookies = document.cookie.split(';');
-
-            for (var i = 0; i < allCookies.length; i++)
-                document.cookie = allCookies[i] + "=;expires=" +
-                new Date(0).toUTCString();
-
-            console.log("All cookies cleared");
 
         });
 

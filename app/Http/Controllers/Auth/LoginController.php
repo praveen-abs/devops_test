@@ -80,7 +80,7 @@ class LoginController extends Controller
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        
+
         $request->validate([
             'user_code' => 'required',
             'password' => 'required',
@@ -89,6 +89,7 @@ class LoginController extends Controller
         // Remember token set to false
         $save_credentials = false;
         $user = User::where('user_code', $request->user_code)->where('active', 1)->first();
+        $isDefaultPasswordUpdated = $user->is_default_password_updated;
 
         if($user)
         {
@@ -102,42 +103,64 @@ class LoginController extends Controller
                     // if (Auth::attempt($credentials)) {
                         // Auth::login($user, $save_credentials);
                         if (auth::attempt(['user_code' => $request->user_code, 'password' => $request->password], $save_credentials)) {
-                            return redirect(route('index'));
+
+                            if($isDefaultPasswordUpdated == '1')
+                             {
+
+                                //If User has already updated password, so redirect to dashboard page
+                                return redirect(route('index'));
+                             }
+                             else
+                             {
+                                //If User has to update password, then redirect to reset password page
+                                return redirect(route('vmt-resetpassword-page'));
+
+                             }
+
                         }
                     }
                     else
                     {
                         $errors = ['Invalid credentials provided'];
-                        return redirect()->back()->withErrors($errors);            
+                        return redirect()->back()->withErrors($errors);
                     }
-    
+
                 }
                 else
                 {
                     //Invalid client-code selected
                     $errors = ['Employee is not part of selected Client'];
-                    return redirect()->back()->withErrors($errors);                    
+                    return redirect()->back()->withErrors($errors);
                 }
 
                 // return redirect()->back();
             }
             else
             {
-
                 //If no client_code selected, then perform login based on username and pwd
                 $credentials = $request->only('user_code', 'password');
                 if (Hash::check($request->password, $user->password)) {
-                // if (Auth::attempt($credentials)) {
-                    // Auth::login($user, $save_credentials);
-                    if (auth::attempt(['user_code' => $request->user_code, 'password' => $request->password], $save_credentials)) {
-                        return redirect(route('index'));
+
+                    if (auth::attempt(['user_code' => $request->user_code, 'password' => $request->password], $save_credentials))
+                    {
+                        if($isDefaultPasswordUpdated == "1")
+                        {
+                           //If User has already updated password, so redirect to dashboard page
+                           return redirect(route('index'));
+                        }
+                        else
+                        {
+                           //If User has to update password, then redirect to reset password page
+                           return $this->showResetPasswordPage($request);
+
+                        }
                     }
                 }
                 else
                 {
                     $errors = ['Invalid credentials provided'];
-                    return redirect()->back()->withErrors($errors);            
-                }                
+                    return redirect()->back()->withErrors($errors);
+                }
 
             }
         }
@@ -150,5 +173,12 @@ class LoginController extends Controller
 
         return redirect()->back();
 
+    }
+
+    public function showResetPasswordPage(Request $request)
+    {
+        $generalInfo = VmtGeneralInfo::first();
+
+        return view('auth.reset_password',compact('generalInfo'));
     }
 }

@@ -967,6 +967,28 @@ class VmtEmployeeController extends Controller
         return "Saved";
     }
 
+    public function updatePassword(Request $request)
+    {
+        if(isset($request->password))
+        {
+            $currentUser = User::where('id',auth()->user()->id)->first();
+            $currentUser->password = Hash::make($request->password);
+            $currentUser->save();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Password updated successfully.',
+            ]);
+        }
+        else
+        {
+            return response()->json([
+                'status' => 'failure',
+                'message' => 'Password should not be empty.',
+            ]);
+        }
+    }
+
     public function fileUpload($file) {
         if (request()->has($file)) {
             $docUploads = request()->file($file);
