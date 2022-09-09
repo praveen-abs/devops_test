@@ -490,12 +490,17 @@ header {
                                             target="" class="form-control  increment-input"
                                             placeholder="Reviewer"> -->
 
-                                        <button type="button" id="" target="#reviewerReplaceSameLevel"
-                                            class="btn py-1 px-3 btn-primary increment-btn reviewerReplace">Change</button>
+                                        {{-- <button type="button" id="" target="#reviewerReplaceSameLevel" class="btn py-1 px-3 btn-primary increment-btn reviewerReplace">Change</button> --}}
                                         <!-- <input type="text" name="" id="selected_reviewer"
                                             class="form-control increment-input" placeholder="Reviewer">
                                         <button type="button" id="" target="#createEmployee"
                                             class="btn py-1 px-3 btn-primary increment-btn reviewerButton">Select</button> -->
+                                    </div>
+                                    <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
+                                      
+                                        <br>
+
+                                        <button type="button" id="" target="#reviewerReplaceSameLevel" class="btn py-1 px-3 btn-primary increment-btn reviewerReplace">Change</button>
                                     </div>
                                     @endif
                                 </div>

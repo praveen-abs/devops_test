@@ -283,13 +283,13 @@
 
                         if(data.status == "success")
                         {
-
+                            window.location.href ="/"
 
                         }
                         else
                         if(data.status == "failure")
                         {
-
+                            $('#error_message').html("Password doesnt match!");
                         }
 
                         console.log(data.message);
