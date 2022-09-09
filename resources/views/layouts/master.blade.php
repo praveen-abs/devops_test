@@ -183,10 +183,10 @@ clearstatcache();
 <div id="layout-wrapper">
     @include('layouts.topbar')
 
-    @if (Auth::user()->is_onboarded == 1)
-        @include('layouts.sidebar')
-    @else
+    @if (Auth::user()->is_onboarded == 0 && Auth::user()->onboard_type != "normal")
         @include('layouts.sidebar_dummy')
+    @else
+        @include('layouts.sidebar')
     @endif
 
     <!-- ============================================================== -->

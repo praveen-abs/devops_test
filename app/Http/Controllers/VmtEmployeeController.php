@@ -806,7 +806,7 @@ class VmtEmployeeController extends Controller
             if(isset($row['employee_code']))
             {
                 $empNo = $row['employee_code'];
-              
+
                 $checking_report_mang = User::where('user_code' ,$row['reporting_manager_code'])->first();
                 if($checking_report_mang !=""){
 
@@ -924,7 +924,7 @@ class VmtEmployeeController extends Controller
                     $returnfailedMsg .= "</li>";
                     $failedCount++;
                 }
-                
+
             }else{
                 $returnfailedMsg .= "<li>"." Reporting Manager (".$row['reporting_manager_code'] .") is not available ";
                 $returnfailedMsg .= "</li>";
@@ -957,10 +957,13 @@ class VmtEmployeeController extends Controller
         $currentEmployeeDetails->education_certificate_file = $this->fileUpload('education_certificate');
         $currentEmployeeDetails->reliving_letter_file = $this->fileUpload('reliving_letter');
 
-        // //set the onboard status to 1
-
-
         $currentEmployeeDetails->save();
+
+        // //set the onboard status to 1
+        $currentUser = User::where('id',auth()->user()->id)->first();
+        $currentUser->is_onboarded = '1';
+        $currentUser->save();
+
         return "Saved";
     }
 
