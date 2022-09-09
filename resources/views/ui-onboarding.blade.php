@@ -1233,7 +1233,7 @@
                     <h4 class="mb-3" id="modalNot">Data Saved Successfully!</h4>
                     <p class="text-muted mb-4" id="modalBody"></p>
                     <div class="hstack gap-2 justify-content-center">
-                        <button type="button" class="btn btn-light close-modal" data-bs-dismiss="modal">Close</button>
+                        <button type="button" id="button_close" class="btn btn-light close-modal" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
