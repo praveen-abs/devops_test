@@ -777,11 +777,11 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="d-flex align-items-center justify-content-center">
-                                <div class="profile-img-wrap edit-img">
+                                {{-- <div class="profile-img-wrap edit-img"> --}}
                                   <!--   <img id="profile_round_image_dist1" class="rounded-circle header-profile-user"
                                         src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"
                                         alt="Header Avatar"> -->
-                                         @php
+                                         {{-- @php
                                     preg_match('/(?:\w+\. )?(\w+).*?(\w+)(?: \w+\.)?$/',Auth::user()->name , $result);
                                     $name = strtoupper($result[1][0].$result[2][0]);
 
@@ -798,12 +798,12 @@
 
                                     @php
                                     }
-                                    @endphp
-                                    <div class="fileupload btn">
+                                    @endphp --}}
+                                    {{-- <div class="fileupload btn">
                                         <span class="btn-text">edit</span>
                                         <input type='file' name="profilePic" class="upload"  accept="image/*" onchange="readURL(this);" />
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
@@ -817,14 +817,14 @@
                                             <label>Birth Date</label>
                                             <div class="cal-icon">
                                                 <input class="form-control datetimepicker" type="date" max="9999-12-31"
-                                                    name="dob" value="{{date('Y-m-d', strtotime($details->dob))}}">
+                                                    name="dob" value="{{date('Y-m-d', strtotime($details->dob))}}" readonly>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
                                             <label>Gender</label>
-                                        <select class="form-select form-control" name="gender" aria-label="Default select">
+                                        <select class="form-select form-control" name="gender" aria-label="Default select" disabled>
                                             <option selected>-</option>
                                             <option value="male" @if($details->gender == 'male') selected
                                                 @endif>Male</option>
@@ -838,14 +838,21 @@
                                     </div>
                                     <div class="col-md-6">
                                           <div class="form-group mb-3">
+
                                     <label>Reports To <span class="text-danger">*</span></label>
-                                    <select class="form-select form-control" name="report">
+                                    @if($report_key == 1 || $report_key == '1' )
+                                    <select class="form-select form-control" name="report" disabled>
+                                        @else
+                                        <select class="form-select form-control" name="report" >
+                                        @endif
                                         <option>Select</option>
+                                    
                                         @foreach($code as $c)
                                         <option value="{{$c->emp_no}}" @if($rep && $rep->emp_no == $c->emp_no) selected
                                                 @endif>{{$c->emp_no . ' (' .$c->name. ')'}}</option>
                                         @endforeach
                                     </select>
+
                                 </div>
 
                                     </div>
@@ -890,7 +897,7 @@
                             <div class="col-md-12">
                                 <div class="form-group mb-3">
                                     <label>Address</label>
-                                    <textarea name="" id="" cols="30" rows="3"  class="form-control"  value="{{$details->present_address}}"></textarea>
+                                    <textarea name="address_PI" id="address_PI" cols="30" rows="3"  class="form-control"  value="{{$details->present_address}}">{{ $details->present_address? $details->present_address : ''}}</textarea>
                                 </div>
                             </div>
                         </div>
