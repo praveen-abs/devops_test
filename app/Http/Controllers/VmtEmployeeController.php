@@ -973,6 +973,7 @@ class VmtEmployeeController extends Controller
         {
             $currentUser = User::where('id',auth()->user()->id)->first();
             $currentUser->password = Hash::make($request->password);
+            $currentUser->is_default_password_updated = '1';
             $currentUser->save();
 
             return response()->json([
