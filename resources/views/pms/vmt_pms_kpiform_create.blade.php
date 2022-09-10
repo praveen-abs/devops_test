@@ -179,7 +179,7 @@
                                     </td>
                                     <td class="text-box-td ">
                                         <textarea data-show="{{$show['kpiWeightage']}}" name="kpiWeightage[]" id="" class="text-box" row="2" cols="20"
-                                            placeholder="type here"></textarea>
+                                            placeholder="type percentage value only" onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 37'></textarea>
                                     </td>
                                 </tr>
 
@@ -331,13 +331,15 @@ $(document).ready(function(){
     //  width: '100%'
     // });
 
-
-
+    function closeWindow() {
+        window.close();
+    }
     $('#Modal_Message_CloseBtn').click(function() {
         console.log(isKPIFormSaved);
         if(isKPIFormSaved === true)
         {
-            window.location.href = '/pms'; //relative to domain
+            // window.location.href = '/pms'; //relative to domain
+            closeWindow();
             console.log("Redirecting to PMS dashboard");
         }
         console.log("Closed modal box");
@@ -412,6 +414,7 @@ $(document).ready(function(){
             nonAvailableValues.push('kpiWeightage[]');
         }
 
+        var validationCheck = false;
         var form_data = new FormData(document.getElementById("upload_form"));
         $.ajax({
             type: "POST",
@@ -428,17 +431,28 @@ $(document).ready(function(){
                     var dataResultNotAvailableColumns =  '';
                     var length = 1;
                     $.each(data.result,function(key, value) {
-                        // console.log(key+" KEY");
-                        // console.log(value+" VALUE");
-                        console.log(availableValues);
-                        console.log(nonAvailableValues);
                         var dataResult =  '';
                         var increment = 0;
                         $.each(availableValues,function(keyAvailable, valueAvailable) {  
-                            var test = '<td class="text-box-td p-1"><textarea name="'+valueAvailable+'" data-show="true" id="" class="text-box" cols="20" placeholder="type here">'+value[increment]+'</textarea></td>';
+                            var textAreaVal = value[increment];
+                            var pattern = ''
+                            var label = 'type here';
+                            if(valueAvailable == 'kpiWeightage[]'){
+                                label = 'type percentage value only';
+                                pattern = "return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 37";
+                                if($.isNumeric( value[increment] ) == true){
+                                    textAreaVal = value[increment] * 100;
+                                }else{
+                                    textAreaVal = '';
+                                    validationCheck = true;
+                                }
+                            }
+                            
+                            var test = '<td class="text-box-td p-1"><textarea name="'+valueAvailable+'" data-show="true" id="" class="text-box" cols="20" placeholder="'+label+'" onkeypress="'+pattern+'">'+textAreaVal+'</textarea></td>';
                             dataResult += test;
                             increment++;
                         });
+                        
                         $.each(nonAvailableValues,function(keyNotAvailable, valueNotAvailable) {   
                             var test = '<input type="hidden" name="'+valueNotAvailable+'">';
                             dataResult += test;
@@ -446,6 +460,9 @@ $(document).ready(function(){
                         $('.content-container').append('<tr class="addition-content cursor-pointer" id="content'+length+'"><td class="text-box-td p-1"><span  name="numbers" id="" class="tableInp" >'+length+'</span><div class="text-danger delete-row cursor-pointer"><i class="fa fa-trash f-20"></i></div></td>'+dataResult+'</tr>');
                             length++;
                     });
+                    if(validationCheck == true){
+                        swal("Wrong!", "KPI Weightage allows only percentage value", "error");
+                    }
                 }else{
                     swal("Wrong!", data.message, "error");
                 }
@@ -614,7 +631,7 @@ $(function () {
             source = '<input type="hidden" name="source[]">';
         }
         if (showkpiWeightage == 'block') {
-            kpiWeightage = '<td class="text-box-td p-1"><textarea name="kpiWeightage[]" data-show="true" id="" class="text-box" cols="10" placeholder="type here"></textarea></td>';
+            kpiWeightage = '<td class="text-box-td p-1"><textarea name="kpiWeightage[]" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 37" data-show="true" id="" class="text-box" cols="10" placeholder="type percentage value only"></textarea></td>';
         } else {
             kpiWeightage = '<input type="hidden" name="kpiWeightage[]">';
         }
@@ -636,6 +653,7 @@ $(function () {
     $('body').on('click', '#save-table', function(e){
         // e.preventDefault();
 
+        var isKPIWeightagePerc = true;
         var isAllFieldsEntered = true;
         var canSaveForm = true;
         var kpiWeightageTotal = 0;
@@ -648,6 +666,10 @@ $(function () {
 
             if(input.attr('name') == "kpiWeightage[]" && input.attr('data-show') == 'true')
             {
+                var isKpiPerc = /^\d+(\.\d+)?%$/.test(input.val());
+                if (!isKpiPerc) {
+                    isKPIWeightagePerc = false;
+                }
                 kpiWeightageTotal =kpiWeightageTotal+parseInt(input.val().replace('%', ''));
                 console.log("adding KPI weightage");
             }
@@ -679,6 +701,9 @@ $(function () {
                 errorMessages.push("<li>Please make sure that KPI Weightage is exactly 100%.</li>");
                 //$('#error_message').html("Please make sure that KPI Weightage is exactly 100%.");
                 //$('#errorModal_FillAllFields').modal('show');
+            }else if(!isKPIWeightagePerc && $('textarea[name="kpiWeightage[]"]').attr('data-show') == 'true'){
+                canSaveForm = false;
+                errorMessages.push("<li>Please make sure that KPI Weightage Should be in %.</li>");
             }
 
 
