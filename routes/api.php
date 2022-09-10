@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Mobile\VmtMobileMainDashboardController;
 use App\Http\Controllers\VmtAPIPMSModuleController;
+use App\Http\Controllers\Api\VmtAPIDashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,8 +62,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     */
     Route::get('getAssigneeReviews', 'App\Http\Controllers\VmtAPIPMSModuleController@getAssigneeReviews');
 
-
-
     /*
         saveAssigneeReviews():
         Input : assignee_id, assigned form id, JSON data of KPI reviews.
@@ -76,6 +75,43 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('getReviewerReviews', 'App\Http\Controllers\VmtAPIPMSModuleController@getReviewerReviews');
     Route::post('saveReviewerReviews', 'App\Http\Controllers\VmtAPIPMSModuleController@saveReviewerReviews');
 
+    /*
+        get current day attendance API
+        attendanceGetCurrentDay():
+        Input : date
+        DB Table : vmt_employee_attendance
+        Output : success/failure response.
 
+    */
+    Route::get('attendance_getcurrentday', [VmtAPIDashboardController::class,'getCurrentDayAttendance']);
+    
+    /*
+        attendanceCheckin():
+        Input : date, checkin_time, shift_type
+        DB Table : vmt_employee_attendance
+        Output : success/failure response.
+
+    */
+    Route::post('attendance_checkin', [VmtAPIDashboardController::class,
+        'attendanceCheckin']);
+    
+    /*
+        attendanceCheckout():
+        Input : date, checkout_time, 
+        DB Table : vmt_employee_attendance
+        Output : success/failure response.
+
+    */
+    Route::post('attendance_checkout', [VmtAPIDashboardController::class,
+        'attendanceCheckout']);
+    
+    /*
+        attendanceApplyLeave():
+        Input : date, leave_type_id
+        DB Table : vmt_employee_attendance
+        Output : success/failure response.
+    */
+    Route::post('attendance_applyleave', [VmtAPIDashboardController::class,
+        'attendanceApplyLeave']);
 
 });
