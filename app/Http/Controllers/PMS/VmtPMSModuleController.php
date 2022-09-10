@@ -500,7 +500,7 @@ class VmtPMSModuleController extends Controller
         }
         try{
             $loggedUser = Auth::user();
-            // dd($request->all());
+            
             $reviewersList = is_array($request->reviewer) ? $request->reviewer : explode(",",$request->reviewer);
             $employeesList = is_array($request->employees) ? $request->employees : explode(",",$request->employees);
 
@@ -512,7 +512,12 @@ class VmtPMSModuleController extends Controller
                     }
                 }
             }
-            
+            if(isset($request->hr_id) && !empty($request->hr_id)){
+                if(!in_array($request->hr_id,$reviewersList)){
+                    array_push($reviewersList, $request->hr_id);
+                }
+            }
+
             $kpi_AssignedTable  = new VmtPMS_KPIFormAssignedModel;
 
             $kpi_AssignedTable->vmt_pms_kpiform_id        =    $request->selected_kpi_form_id;

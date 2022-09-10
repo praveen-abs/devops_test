@@ -508,11 +508,21 @@ header {
                                             @endif
                                         </select>
                                     </div>
-                                    <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
-                                      
+                                    <div class="col-3 col-sm-12 col-md-12 col-lg-2 col-xl-1  mb-3">
                                         <br>
-
                                         <button type="button" id="" target="#reviewerReplaceSameLevel" class="btn py-1 px-3 btn-primary increment-btn reviewerReplace">Change</button>
+                                    </div>
+                                    <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-2  mb-3">
+                                    <label class="" for="">Reviewer</label>
+                                        <select class="form-control select-hr-dropdown" name="hr_id">
+                                            @if(isset($allEmployeesList) && count($allEmployeesList) > 0)
+                                                @foreach($allEmployeesList as $employeeData)
+                                                    <option value="{{ $employeeData->id }}">{{ $employeeData->name }}</option>
+                                                @endforeach
+                                            @else
+                                                <option value="">Select Reviewer</option>
+                                            @endif
+                                        </select>
                                     </div>
                                     @endif
                                     <!-- Reviewer Selection Portion Ends -->
@@ -890,6 +900,10 @@ header {
             });
 
             $('.select-multiple-reviewer').select2({
+                dropdownParent: $("#add-goals-modal"),
+                width: '100%'
+            });
+            $('.select-hr-dropdown').select2({
                 dropdownParent: $("#add-goals-modal"),
                 width: '100%'
             });
