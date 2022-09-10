@@ -2,7 +2,9 @@
     <div class="card-body">
         <div class="d-flex">
             <div class="status-wrapper me-3">
-                @include('ui-profile-avatar')
+                @include('ui-profile-avatar',[
+                    'currentUserName' =>  auth()->user()->name,
+                    ])
             </div>
             <div class="greet-wrap ">
                 <div class="d-felx ">
