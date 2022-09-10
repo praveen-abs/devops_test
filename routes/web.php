@@ -306,6 +306,10 @@ Route::get('/pms-createform/{year?}',[App\Http\Controllers\PMS\VmtPMSModuleContr
 Route::post('saveKPIForm',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'saveKPIForm'])->name('saveKPIForm');
 Route::post('publishKPIForm', 'App\Http\Controllers\PMS\VmtPMSModuleController@publishKPIForm')->name('publishKPIForm');
 
+// flow 2 starts
+Route::get('employee-appraisal',  [VmtPMSModuleController::class, 'showPMSDashboardForEmployee'])->name('employee-appraisal-pms-dashboard');
+// flow 2 ends
+
 //Show Review Page
 Route::get('/pms-showReviewPage',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'showKPIReviewPage_Assignee'])->name('showKPIReviewPage_Assignee');
 Route::get('/pms-showReviewerReviewPage',[App\Http\Controllers\PMS\VmtPMSModuleController::class, 'showKPIReviewPage_Reviewer'])->name('showKPIReviewPage_Reviewer');
@@ -330,6 +334,7 @@ Route::get('/downloadExcelReviewForm/{kpiAssignedId}/{key}/{yearAssignmentPeriod
 
 // routes for accept/reject review by Assignee
 Route::post('acceptRejectAssigneeReview', [VmtPMSModuleController::class,'acceptRejectAssigneeReview'])->name('acceptRejectAssigneeReview');
+Route::post('acceptRejectReviewerReview', [VmtPMSModuleController::class,'acceptRejectReviewerReview'])->name('acceptRejectReviewerReview');
 
 // republish form flow 2
 Route::get('/republishForm/{kpiAssignedId}',[VmtPMSModuleController::class, 'republishForm'])->name('republishForm');

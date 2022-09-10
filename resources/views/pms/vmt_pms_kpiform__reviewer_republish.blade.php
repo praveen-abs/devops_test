@@ -101,55 +101,55 @@
                                     </td>
                                     @if(isset($columnHeader['dimension']))
                                     <td class="text-box-td">
-                                        <textarea name="dimension[]" id="dimension" class="text-box" row="2" cols="20"
+                                        <textarea name="dimension[]" id="dimension" class="text-box textAreaValidation" row="2" cols="20"
                                             placeholder="type here">{{ $formData->dimension }}</textarea>
                                     </td>
                                     @endif
                                     @if(isset($columnHeader['kpi']))
                                     <td class="text-box-td">
-                                        <textarea name="kpi[]" id="kpi" class="text-box" row="2" cols="20"
+                                        <textarea name="kpi[]" id="kpi" class="text-box textAreaValidation" row="2" cols="20"
                                             placeholder="type here">{{ $formData->kpi }}</textarea>
                                     </td>
                                     @endif
                                     @if(isset($columnHeader['operational']))
                                     <td class="text-box-td">
-                                        <textarea name="operational[]" id="operational" class="text-box" row="2" cols="20"
+                                        <textarea name="operational[]" id="operational" class="text-box textAreaValidation" row="2" cols="20"
                                             placeholder="type here">{{ $formData->operational_definition }}</textarea>
                                     </td>
                                     @endif
                                     @if(isset($columnHeader['measure']))
                                     <td class="text-box-td">
-                                        <textarea name="measure[]" id="measure" class="text-box" row="2" cols="20"
+                                        <textarea name="measure[]" id="measure" class="text-box textAreaValidation" row="2" cols="20"
                                             placeholder="type here">{{ $formData->measure }}</textarea>
                                     </td>
                                     @endif
                                     @if(isset($columnHeader['frequency']))
                                     <td class="text-box-td">
-                                        <textarea name="frequency[]" id="frequency" class="text-box" row="2" cols="20"
+                                        <textarea name="frequency[]" id="frequency" class="text-box textAreaValidation" row="2" cols="20"
                                             placeholder="type here">{{ $formData->frequency }}</textarea>
                                     </td>
                                     @endif
                                     @if(isset($columnHeader['target']))
                                     <td class="text-box-td">
-                                        <textarea name="target[]" id="target" class="text-box" row="2" cols="20"
+                                        <textarea name="target[]" id="target" class="text-box textAreaValidation" row="2" cols="20"
                                             placeholder="type here">{{ $formData->target }}</textarea>
                                     </td>
                                     @endif
                                     @if(isset($columnHeader['stretchTarget']))
                                     <td class="text-box-td">
-                                        <textarea name="stretchTarget[]" id="stretchTarget" class="text-box" row="2" cols="20"
+                                        <textarea name="stretchTarget[]" id="stretchTarget" class="text-box textAreaValidation" row="2" cols="20"
                                             placeholder="type here">{{ $formData->stretch_target }}</textarea>
                                     </td>
                                     @endif
                                     @if(isset($columnHeader['source']))
                                     <td class="text-box-td">
-                                        <textarea name="source[]" id="source" class="text-box" row="2" cols="20"
+                                        <textarea name="source[]" id="source" class="text-box textAreaValidation" row="2" cols="20"
                                             placeholder="type here">{{ $formData->source }}</textarea>
                                     </td>
                                     @endif
                                     @if(isset($columnHeader['kpiWeightage']))
                                     <td class="text-box-td">
-                                        <textarea name="kpiWeightage[]" id="kpiWeightage" class="text-box" row="2" cols="20"
+                                        <textarea name="kpiWeightage[]" id="kpiWeightage" onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 37' class="text-box textAreaValidation" row="2" cols="20"
                                             placeholder="type here">{{ $formData->kpi_weightage }}</textarea>
                                     </td>
                                     @endif
@@ -160,10 +160,10 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
+                        <button type="submit" class="btn btn-orange table-btn mx-2" id="save-table">Save</button>
+                    </div>
                 </form>
-                <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
-                    <button class="btn btn-orange table-btn mx-2" id="save-table">Save</button>
-                </div>
 
             </div>
 
@@ -288,31 +288,68 @@
 <!--Sweet alert JS-->
 <script src="{{ URL::asset('/assets/premassets/js/sweetalert.js') }}"></script>
 
+<!-- validation script  -->
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.js"></script>
+
+
 <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
 //Accessed when KPI form saved successfully
-var isKPIFormSaved = false;
+var isKPIFormValid = false;
 
 $(document).ready(function(){
-    $('#save-table').click(function() {
-        var form_data = new FormData(document.getElementById("kpiTableForm"));
-        $('.loader').show();
-        $.ajax({
-            type: "POST",
-            url: "{{ route('republishFormEdited') }}",
-            dataType: "json",
-            contentType: false,
-            processData: false,
-            data: form_data,
-            success: function(data) {
-                swal('Success','Form Upadtes Successfully!','success');
-                
-                $('.loader').hide();
-            },
-            error: function(error) {
-                $('.loader').hide();
+    $("#kpiTableForm").submit(function(e){
+        e.preventDefault();
+        var kpiWeightageTotal = 0;
+        var isKPIFormValid = true;
+        var kpiWeightagePerc = true;
+        $.each($('.textAreaValidation'), function(key, textAreaValue){
+            if(textAreaValue.value == ''){
+                isKPIFormValid = false;
             }
-        });
+            if(textAreaValue.name  == 'kpiWeightage[]'){
+                console.log(textAreaValue.value.replace('%', ''));
+                kpiWeightageTotal = kpiWeightageTotal+parseInt(textAreaValue.value.replace('%', ''));
+                var result=/^\d+(\.\d+)?%$/.test(textAreaValue.value);
+                if (!result) {
+                    kpiWeightagePerc = false;
+                }
+
+            }
+
+        })
+        
+        if(isKPIFormValid == true){
+            if(!kpiWeightagePerc){
+                swal('Wrong!','KPI Weightage Values are should be in %.','error');
+            }else{
+                if(kpiWeightageTotal != 100){
+                    swal('Wrong!','Please make sure that KPI Weightage is exactly 100%.','error');
+                }else{
+                    var form_data = new FormData(document.getElementById("kpiTableForm"));
+                    $('.loader').show();
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('republishFormEdited') }}",
+                        dataType: "json",
+                        contentType: false,
+                        processData: false,
+                        data: form_data,
+                        success: function(data) {
+                            swal('Success','Form Upadtes Successfully!','success');
+                            
+                            $('.loader').hide();
+                        },
+                        error: function(error) {
+                            $('.loader').hide();
+                        }
+                    });
+                }
+            }
+        }else{
+            swal('Wrong!','Please fill all the fields in KPI Form.','error');
+        }
     });
 });
 </script>
