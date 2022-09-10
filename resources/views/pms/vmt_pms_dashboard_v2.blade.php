@@ -672,8 +672,7 @@ header {
         </div>
     </div>
 
-    <!-- emplyee edit modal starts -->
-
+    <!-- employee edit modal starts -->
     <div class="modal fade" id="employeeSelectionModal" role="dialog" aria-hidden="true"
         style="opacity:1; display:none;background:#00000073;">
         <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true"
@@ -689,6 +688,7 @@ header {
                         </button> -->
                     </div>
                 </div>
+               
                 <div class="modal-body">
                     <div class="mt-12">
                         @if(isset($loggedManagerEmployees))
@@ -698,6 +698,7 @@ header {
                                 <option selected value="{{ $employeesSelection->id }}">{{ $employeesSelection->name }}</option>
                             @endforeach
                         </select>
+                        <button class="btn btn-orange py-0 px-2" onclick="resetEmployeesList()"><span class="mr-10 icon"></span>Reset Employees</button>
                         @else
                         <!-- flow 1 -->
                         <select class="select-employee-dropdown form-control" id="selectedEmployeeDropdownId" name="employees[]" multiple="multiple">
@@ -774,8 +775,22 @@ header {
     <!-- for date and time -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+    <?php if(isset($loggedManagerEmployeesIDs)){?>
     <script>
+        function resetEmployeesList(){
+            var loggedManagerEmployeesIDs = [<?php echo $loggedManagerEmployeesIDs; ?>];
+            if(loggedManagerEmployeesIDs.length > 0){
+
+                $(".select-employee-dropdown").val(loggedManagerEmployeesIDs);
+                $('.select-employee-dropdown').trigger('change');
+            }
+         }
+    </script>
+    <?php } ?>
+    <script>
+
+       
+
         $('.refreshKPIFormDetails').click(function(){
             $('.loader').show();
             getKPIFormDetails();
@@ -979,7 +994,7 @@ header {
                     selectedEmployeeId : selectedEmployeeId,
                 },
                 success: function(data) {
-                    console.log(data);
+                    console.log(data.result.reviewerIds);
                     if(data.status == true ){
                         $.each(data.result.removeSelectedEmployee, function(i, value) {
                             $(".select-employee-dropdown option[value="+value+"]").remove();
