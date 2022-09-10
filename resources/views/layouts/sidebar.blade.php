@@ -182,6 +182,9 @@
                             <li class="nav-item">
                                 <a href="{{ route('team-appraisal-pms-dashboard') }}" class="nav-link"><span>Team Appraisal</span></a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('employee-appraisal-pms-dashboard') }}" class="nav-link"><span>Employee Appraisal</span></a>
+                            </li>
                                                         <li class="nav-item">
                                 <a href="{{route('vmt_config_pms')}}" class="nav-link"><span>PMS Config</span></a>
                             </li>

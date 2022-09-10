@@ -55,9 +55,10 @@ function checkCurrentLoggedUserReviewerOrNot($reviewersIds,$currentLoggedUserRol
     try{
         $result = '';
         $decodedReviewSubmitted = isset($kpiAssigneeReviewDetails->is_reviewer_submitted) ? json_decode($kpiAssigneeReviewDetails->is_reviewer_submitted,true) : '';
+        $decodedReviewAccepted = isset($kpiAssigneeReviewDetails->is_reviewer_accepted) ? json_decode($kpiAssigneeReviewDetails->is_reviewer_accepted,true) : '';
+
         foreach($reviewersIds as $keyCheck => $singleReviewerSubmittedStatus)
         {
-            if($keyCheck != 0) $result .= '<br>'; 
             if($currentLoggedUserRole == 'reviewer')
             {
                 if($singleReviewerSubmittedStatus == Auth::id())
@@ -65,19 +66,25 @@ function checkCurrentLoggedUserReviewerOrNot($reviewersIds,$currentLoggedUserRol
                     if(isset($decodedReviewSubmitted[$singleReviewerSubmittedStatus]) && $decodedReviewSubmitted[$singleReviewerSubmittedStatus] == '1')
                     {
                         $result .= 'Reviewed<br>';
+                    }elseif($decodedReviewSubmitted[$singleReviewerSubmittedStatus] == '0'){
+                        $result .= 'Rejected<br>';
                     }else{
                         $result .= 'Not yet reviewed<br>';
                     }
                 }
             }else{
+                if($keyCheck != 0) $result .= '<br>'; 
                 if(isset($decodedReviewSubmitted[$singleReviewerSubmittedStatus]) && $decodedReviewSubmitted[$singleReviewerSubmittedStatus] == '1')
                 {
                     $result .= 'Reviewed<br>';
+                }elseif($decodedReviewAccepted[$singleReviewerSubmittedStatus] == '0'){
+                    $result .= 'Rejected<br>';
                 }else{
                     $result .= 'Not yet reviewed<br>';
                 }
             }
         }
+        
         return $result;
     }catch(Exception $e){
         Log::info('check Current Logged User Reviewer Or Not helper error: '.$e->getMessage());
@@ -148,13 +155,27 @@ function checkViewReviewText($loggedUserRole,$kpiFormReviewDetails){
     // dD("S");
     try{
         $result = '';
-        if($loggedUserRole == 'assignee'){
-            if(isset($kpiFormReviewDetails->is_assignee_submitted) && $kpiFormReviewDetails->is_assignee_submitted == '1') {
-                $result = 'View';
-            }else{
-                $result = 'Self-Review';
+        // $arrayReviewerAccepted = isset($kpiFormReviewDetails->is_assignee_accepted) ? json_decode($kpiFormReviewDetails->is_assignee_accepted,true) : [];
+        $isAllReviewersAcceptedData = [];
+        $isAllReviewersAcceptedOrNot = false;
+        if(isset($kpiFormReviewDetails->is_reviewer_accepted)){
+            $isAllReviewersAcceptedData = json_decode($kpiFormReviewDetails->is_reviewer_accepted,true);
+            if(!in_array('0',$isAllReviewersAcceptedData)){
+                $isAllReviewersAcceptedOrNot = true;
             }
-        }elseif($loggedUserRole == 'reviewer' || $loggedUserRole == 'assigner'){
+        }
+        
+        if($loggedUserRole == 'assignee'){
+            if($isAllReviewersAcceptedOrNot == false){
+                $result = 'Edit';
+            }else{
+                if(isset($kpiFormReviewDetails->is_assignee_submitted) && $kpiFormReviewDetails->is_assignee_submitted == '1') {
+                    $result = 'View';
+                }else{
+                    $result = 'Self-Review';
+                }
+            }
+        }elseif($loggedUserRole == 'reviewer'){
             if(isset($kpiFormReviewDetails) && $kpiFormReviewDetails->is_assignee_accepted == '0'){
                 $result = 'Edit'; 
             }else{
@@ -164,6 +185,11 @@ function checkViewReviewText($loggedUserRole,$kpiFormReviewDetails){
                 }else{
                     $result = 'Review';
                 }
+            }
+        }else{
+            $result = 'Review';
+            if($isAllReviewersAcceptedOrNot == false){
+                $result = 'Edit'; 
             }
         }
         return $result;
@@ -177,6 +203,7 @@ function checkViewReviewText($loggedUserRole,$kpiFormReviewDetails){
 }
 
 function getEmployeeManager($selectedEmployeeId){
+    // dD($selectedEmployeeId);
     $currentEmpCode = VmtEmployeeOfficeDetails::whereIn('user_id',$selectedEmployeeId)
                         ->select('l1_manager_code')
                         ->groupBy('l1_manager_code')

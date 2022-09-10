@@ -223,7 +223,7 @@
                                         <div>{{$kpiRow->kpi_weightage}}</div>
                                     </td>
                                     <td>
-                                        @if($assignedGoals->is_assignee_accepted == '1')
+                                        @if($assignedGoals->is_assignee_accepted == '1' && $isAllReviewersAcceptedOrNot == true)
                                             @if($assignedGoals->is_assignee_submitted == 0)
                                             <div>
                                                 <textarea style="width: 100%;" name="assignee_kpi_review[{{$kpiRow->id}}]" data-index="{{$index}}" data-targetval="{{$kpiRow->target}}" data-kpiweightageval="{{$kpiRow->kpi_weightage}}" id="assignee_kpi_review{{$index}}" cols="40" rows="8" @if(is_numeric($kpiRow->target))  onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46' class="calculateSelfKPIPercentage" placeholder="type numbers only" @else placeholder="type here" @endif>@if(isset(json_decode($assignedGoals->assignee_kpi_review,true)[$kpiRow->id])) {{json_decode($assignedGoals->assignee_kpi_review,true)[$kpiRow->id]}} @endif</textarea>
@@ -236,7 +236,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if($assignedGoals->is_assignee_accepted == '1')
+                                        @if($assignedGoals->is_assignee_accepted == '1' && $isAllReviewersAcceptedOrNot == true)
                                             @if($assignedGoals->is_assignee_submitted == 0)
                                             <div>
                                                 <textarea style="width: 100%;" class="inp-text" id="assignee_kpi_percentage{{$index}}" name="assignee_kpi_percentage[{{$kpiRow->id}}]" onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46' @if(is_numeric($kpiRow->target)) readonly placeholder="Calculate based on Target and Self Review" @else placeholder="type number here" @endif>@if(isset( json_decode($assignedGoals->assignee_kpi_percentage,true)[$kpiRow->id])){{json_decode($assignedGoals->assignee_kpi_percentage,true)[$kpiRow->id]}}@endif</textarea>
@@ -248,7 +248,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if($assignedGoals->is_assignee_accepted == '1')
+                                        @if($assignedGoals->is_assignee_accepted == '1' && $isAllReviewersAcceptedOrNot == true)
                                             @if($assignedGoals->is_assignee_submitted == 0)
                                             <div>
                                                 <textarea style="width: 100%;" name="assignee_kpi_comments[{{$kpiRow->id}}]" id="assignee_kpi_comments{{$index}}" cols="40" rows="8" placeholder="type here">@if(isset(json_decode($assignedGoals->assignee_kpi_comments,true)[$kpiRow->id])) {{json_decode($assignedGoals->assignee_kpi_comments,true)[$kpiRow->id]}} @endif</textarea>
@@ -283,12 +283,20 @@
                 </form>
                 @if(isset($assignedGoals) && $assignedGoals->is_assignee_submitted != '1')
                     @if($assignedGoals->is_assignee_accepted == '1')
-                    <div class="buttons d-flex align-items-center justify-content-end ">
-                        <button class="btn btn-primary" id="save_table">
-                        @if($assignedGoals->is_assignee_submitted == '') Save @else Edit @endif </button>
-                        &nbsp;&nbsp;
-                        <button class="btn btn-primary" id="publish_table" @if($assignedGoals->is_assignee_submitted == '') disabled @endif>Submit</button>
-                    </div>
+                        @if($isAllReviewersAcceptedOrNot == true)
+                            <div class="buttons d-flex align-items-center justify-content-end ">
+                                <button class="btn btn-primary" id="save_table">
+                                @if($assignedGoals->is_assignee_submitted == '') Save @else Edit @endif </button>
+                                &nbsp;&nbsp;
+                                <button class="btn btn-primary" id="publish_table" @if($assignedGoals->is_assignee_submitted == '') disabled @endif>Submit</button>
+                            </div>
+                        @else
+                            @if(in_array('0',$isAllReviewersAcceptedData))
+                                <h6>Reviewer has Rejected this review.</h6>
+                            @else
+                                <h6>Reviewer has not yet Accepted this review.</h6>
+                            @endif
+                        @endif
                     @elseif($assignedGoals->is_assignee_accepted == null)
                     <div class="buttons d-flex align-items-center justify-content-end ">
                         <button class="btn btn-primary" id="accept_review">

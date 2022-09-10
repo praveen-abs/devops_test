@@ -311,8 +311,11 @@ header {
                                             <td class=""> <div class="td_content_center">{{ $pmsKpiAssignee->getUserDetails($assigneeId)['userEmpIds'] }}</div></td>
                                             <td class="">
                                                 @foreach($pmsKpiAssigneeData['reviewersIds'] as $keyCheck => $reviewer)
-                                                    @if($keyCheck != 0)<br>@endif
-                                                    @if(($pmsKpiAssigneeData['currentLoggedUserRole'] == 'reviewer' && $reviewer == Auth::id()) || $pmsKpiAssigneeData['currentLoggedUserRole'] != 'reviewer')
+                                                    @if($pmsKpiAssigneeData['currentLoggedUserRole'] == 'reviewer' && $reviewer == Auth::id())
+                                                       
+                                                            <div class="td_content_center">{{ getUserDetailsById($reviewer) }}</div>
+                                                    @elseif($pmsKpiAssigneeData['currentLoggedUserRole'] != 'reviewer')
+                                                        @if($keyCheck != 0)<br>@endif
                                                         <div class="td_content_center">{{ getUserDetailsById($reviewer) }}</div>
                                                     @endif
                                                 @endforeach
@@ -448,18 +451,35 @@ header {
                                         </select>
                                     </div>
 
-
-                                    <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3 ">
-                                        <label class="" for="">Employees</label>
-                                        <div class="employee-selection-section">
-
+                                    <!-- employee Selection portion starts -->
+                                    @if(isset($parentReviewerIds) && isset($parentReviewerNames))
+                                        <!-- flow 1 -->
+                                        <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
+                                            <label class="" for="">Employees</label>
+                                            <input type="hidden" name="employees" value="{{ $loggedInUser->id }}">
+                                            <input type="text" disabled class="form-control increment-input" placeholder="Employee" value="{{ $loggedInUser->name }}">
                                         </div>
-                                        <input type="hidden" name="employees" id="employeesSelectedValues">
-                                        <!-- <span class="employees-profile editProfile employeeEditButton">Edit</span> -->
+                                    @else
+                                        <!-- flow 2 & 3 -->
+                                        <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3 ">
+                                            <label class="" for="">Employees</label>
+                                            <div class="employee-selection-section">
 
+                                            </div>
+                                            <input type="hidden" name="employees" id="employeesSelectedValues">
+                                        </div>
+                                    @endif
+                                    <!-- employee Selection portion Ends -->
 
-                                    </div>
-                                    @if(isset($loggedManagerEmployees))
+                                    <!-- Reviewer Selection Portion Starts -->
+                                    @if(isset($parentReviewerIds) && isset($parentReviewerNames))
+                                    <!-- flow 3 -->
+                                        <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
+                                            <label class="" for="">Reviewer</label>
+                                            <input type="hidden" name="reviewer" value="{{ $parentReviewerIds }}">
+                                            <input type="text" disabled class="form-control increment-input" placeholder="Reviewer" value="{{ $parentReviewerNames }}">
+                                        </div>
+                                    @elseif(isset($loggedManagerEmployees))
                                     <!-- flow 2 -->
                                     <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
                                         <label class="" for="">Reviewer</label>
@@ -475,12 +495,9 @@ header {
                                         @endif
                                     </div>
                                     @else
-
-
                                     <!-- flow 1 -->
                                     <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
                                         <label class="" for="">Reviewer</label>
-                                        <!-- <input type="hidden" name="reviewer" id="selectedReviewIds"> -->
                                         <select class="select-multiple-reviewer form-control" name="reviewer[]" multiple="multiple">
                                             @if(isset($allEmployeesList) && count($allEmployeesList) > 0)
                                                 @foreach($allEmployeesList as $employeeData)
@@ -490,18 +507,11 @@ header {
                                                 <option value="">Select Reviewer</option>
                                             @endif
                                         </select>
-                                        <!-- <input readonly type="text" id="reviewersAccordingAssignee"
-                                            target="" class="form-control  increment-input"
-                                            placeholder="Reviewer"> -->
-
                                         <button type="button" id="" target="#reviewerReplaceSameLevel"
                                             class="btn py-1 px-3 btn-primary increment-btn reviewerReplace">Change</button>
-                                        <!-- <input type="text" name="" id="selected_reviewer"
-                                            class="form-control increment-input" placeholder="Reviewer">
-                                        <button type="button" id="" target="#createEmployee"
-                                            class="btn py-1 px-3 btn-primary increment-btn reviewerButton">Select</button> -->
                                     </div>
                                     @endif
+                                    <!-- Reviewer Selection Portion Ends -->
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-4 mt-3 mb-3 d-flex ml-5">
