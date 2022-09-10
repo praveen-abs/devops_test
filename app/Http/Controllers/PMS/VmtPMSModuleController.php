@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Exports\SampleKPIFormExport;
 use App\Mail\NotifyPMSManager;
+use App\Mail\PMSV2EmployeeAppraisalGoal;
 use App\Mail\VmtAssignGoals;
 use App\Models\VmtPMSRating;
 use App\Notifications\ViewNotification;
@@ -592,7 +593,12 @@ class VmtPMSModuleController extends Controller
                 $command_emp = '';
 
                 if(count($reviewerMailId) > 0){
-                    \Mail::to($reviewerMailId)->send(new VmtAssignGoals("none", $assigneeName,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$assignerName,$command_emp));
+                    foreach($reviewerMailId as $reviewerId => $reviewerMailSend){
+                        $receiverDetails = User::findorfail($reviewerId);
+                        $receiverName = isset($receiverDetails) && !empty($receiverDetails->name) ? $receiverDetails->name : '';
+                        \Mail::to($reviewerMailSend)->send(new PMSV2EmployeeAppraisalGoal("publish", $assigneeName,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$receiverName,$command_emp));
+                    }
+                    // \Mail::to($reviewerMailId)->send(new VmtAssignGoals("none", $assigneeName,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$assignerName,$command_emp));
                 }
             }
             //Create review record with some default values for :
@@ -1178,17 +1184,18 @@ class VmtPMSModuleController extends Controller
             // $vmtAssignedFormReview->is_assignee_accepted = $isApproveOrReject;
             $vmtAssignedFormReview->update();
             if(isset($vmtAssignedFormReview->getPmsKpiFormAssigned)){
-                $command_emp = '';
+                $rejectedReason = '';
                 $vmtAssignedDetails = $vmtAssignedFormReview->getPmsKpiFormAssigned;
-                $mailingList = VmtEmployeeOfficeDetails::where('user_id', $vmtAssignedDetails->reviewer_id)->pluck('officical_mail');
-                $assignedUserDetails = User::where('id',$vmtAssignedFormReview->assignee_id)->first();
-                $reviewerUserDetails = Auth::user();
+                $mailingList = VmtEmployeeOfficeDetails::where('user_id', $vmtAssignedDetails->assignee_id)->pluck('officical_mail');
+                $receiverDetails = User::where('id',$vmtAssignedFormReview->assignee_id)->first();
+                $senderDetails = Auth::user();
                 if($isApproveOrReject == "1")
                 {
-                    \Mail::to($mailingList)->send(new VmtAssignGoals( "approved",$assignedUserDetails->name,$vmtAssignedDetails->year." - ".strtoupper($vmtAssignedDetails->assignment_period),$reviewerUserDetails->name,$command_emp));
+                    \Mail::to($mailingList)->send(new PMSV2EmployeeAppraisalGoal("accepted", $senderDetails->name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$receiverDetails->name,$rejectedReason));
+
                     $returnMsg = 'KPI has been accepted. Mail notification sent';
                     $message = "KPI has been accepted.  ";
-                    Notification::send($assignedUserDetails ,new ViewNotification($message.auth()->user()->name));
+                    Notification::send($receiverDetails ,new ViewNotification($message.auth()->user()->name));
                     return response()->json(['status'=>true,'message'=>$returnMsg]);
                 }
                 elseif($isApproveOrReject == "0")
@@ -1196,13 +1203,14 @@ class VmtPMSModuleController extends Controller
                     if(isset($request->reject_comment) && $request->reject_comment != ''){
                         $vmtAssignedFormReview->assignee_rejection_comments = $request->reject_comment;
                         $vmtAssignedFormReview->update();
-                        $command_emp = $vmtAssignedFormReview->assignee_rejection_comments;
+                        $rejectedReason = $vmtAssignedFormReview->assignee_rejection_comments;
                     }
 
-                    \Mail::to($mailingList)->send(new VmtAssignGoals( "rejected",$assignedUserDetails->name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$reviewerUserDetails->name,$command_emp));
+                    \Mail::to($mailingList)->send(new PMSV2EmployeeAppraisalGoal("rejected", $senderDetails->name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$receiverDetails->name,$rejectedReason));
+
                     $returnMsg = 'KPI has been rejected. Mail notification sent';
                     $message = "KPI has been rejected.  ";
-                    Notification::send($assignedUserDetails ,new ViewNotification($message.auth()->user()->name));
+                    Notification::send($receiverDetails ,new ViewNotification($message.auth()->user()->name));
                     return response()->json(['status'=>true,'message'=>$returnMsg]);
                 }
             }
