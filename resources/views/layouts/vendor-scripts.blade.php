@@ -52,7 +52,10 @@
             finalname = splitArray[0][0] +""+ splitArray[0][1];
         }else
         {
-            finalname = splitArray[0][0] +""+ splitArray[0][1];
+            if(splitArray[0].length == 1)
+                finalname = splitArray[0][0] +""+ splitArray[1][0];
+            else
+                finalname = splitArray[0][0] +""+ splitArray[0][1];
         }
 
         var a = $('#'+element_id).text(finalname);

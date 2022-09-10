@@ -507,8 +507,12 @@ header {
                                                 <option value="">Select Reviewer</option>
                                             @endif
                                         </select>
-                                        <button type="button" id="" target="#reviewerReplaceSameLevel"
-                                            class="btn py-1 px-3 btn-primary increment-btn reviewerReplace">Change</button>
+                                    </div>
+                                    <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
+                                      
+                                        <br>
+
+                                        <button type="button" id="" target="#reviewerReplaceSameLevel" class="btn py-1 px-3 btn-primary increment-btn reviewerReplace">Change</button>
                                     </div>
                                     @endif
                                     <!-- Reviewer Selection Portion Ends -->

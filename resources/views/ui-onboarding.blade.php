@@ -26,6 +26,7 @@
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="employee_code">Employee Code{!! required() !!}</label> -->
                                                 <div class="floating">
+                                                   
                                                     <label for="" class="float-label">Employee Code</label>
                                                     <input type="text" placeholder="Employee Code" name="employee_code" class="onboard-form form-control textbox" value="{{$empNo}}" required />
                                                     <!-- <label for="" class="float-label">Employee Code</label> -->
@@ -33,9 +34,10 @@
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="employee_name">Employee Name as per Aadhar{!! required() !!}</label> -->
+                                                
                                                 <div class="floating">
                                                     <label for="" class="float-label">Employee Name as per Aadhar</label>
-                                                    <input type="text" placeholder="Employee Name as per Aadhar " name="employee_name" id="employee_name" class="onboard-form form-control textbox" pattern="name" required />
+                                                    <input type="text" placeholder="Employee Name as per Aadhar " name="employee_name" id="employee_name" value="{{isset($employee->name)? $employee->name : ''}}" class="onboard-form form-control textbox" pattern="name" required />
                                                     <label class="error star_error employee_name_label" for="employee_name" style="display: none;"></label>
                                                     <!-- <label for="" class="float-label">Employee Name as per Aadhar</label> -->
                                                     <!--  <label class="error star_error employee_name_label" for="employee_name"
@@ -49,7 +51,7 @@
                                                 @endphp
                                                 <div class="floating">
                                                     <label for="" class="float-label">Date of Birth</label>
-                                                    <input type="text" placeholder="Date of Birth" name="dob" max="{{$date}}" class="onboard-form form-control textbox" onfocus="(this.type='date')" required />
+                                                    <input type="text" placeholder="Date of Birth" name="dob"  max="{{$date}}" class="onboard-form form-control textbox" onfocus="(this.type='date')" required />
                                                     <!-- <label for="" class="float-label">Date of Birth</label> -->
                                                 </div>
                                             </div>
@@ -73,7 +75,7 @@
                                                 <!-- <label class="" for="doj">Date of Joining{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Date of Joining</label>
-                                                    <input type="text" max="9999-12-31" placeholder="Date of Joining" name="doj" class="onboard-form  form-control textbox " onfocus="(this.type='date')" required />
+                                                    <input type="text" max="9999-12-31" placeholder="Date of Joining" name="doj" value="{{isset($clientData->doj)? $clientData->doj : ''}}" class="onboard-form  form-control textbox " onfocus="(this.type='date')" required />
                                                     <!-- <label for="" class="float-label">Date of Joining</label> -->
                                                 </div>
                                             </div>
@@ -93,8 +95,9 @@
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="mobile_no">Mobile Number{!! required() !!}</label> -->
                                                 <div class="floating">
+                                                    
                                                     <label for="" class="float-label">Mobile Number</label>
-                                                    <input type="number" placeholder="Mobile Number" name="mobile_no" minlength="10" maxlength="10" class="onboard-form form-control textbox " required />
+                                                    <input type="number" placeholder="Mobile Number" name="mobile_no" minlength="10" value="{{$clientData->mobile_number? $clientData->mobile_number : ''}}" maxlength="10" class="onboard-form form-control textbox " required />
                                                     <!-- <label for="" class="float-label">Mobile Number</label> -->
                                                 </div>
                                             </div>
@@ -774,383 +777,347 @@
                                         <div class="row">
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="basic">Basic Salary{!! required() !!}</label> -->
-                                                @php
-                                                if(isset($compensatory)){
-                                                foreach($compensatory as $jj){
-                                                }
-                                                @endphp
+                                                
+                                                @if(isset($compensatory))
+                                                
                                                 <div class="floating">
 
                                                     <label for="" class="float-label">Basic Salary</label>
                                                     <input type="number" placeholder="Basic Salary" name="basic" value="{{$compensatory->basic? $compensatory->basic : ''}}" class="textbox   onboard-form form-control  calculation_data gross_data" step="0.01" required />
                                                 </div>
-                                                @php }else{ @endphp
+                                                @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">Basic Salary</label>
                                                     <input type="number" placeholder="Basic Salary" name="basic" class="onboard-form form-control textbox  calculation_data gross_data  " step="0.01" required />
                                                 </div>
-                                                @php } @endphp
+                                                @endif
 
                                             </div>
 
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="hra">HRA{!! required() !!}</label> -->
-                                                @php
-                                                if(isset($compensatory)){
-                                                foreach($compensatory as $jj){
-                                                }
-                                                @endphp
+                                               
+                                                @if(isset($compensatory))
+                                              
                                                 <div class="floating">
                                                     <label for="" class="float-label">HRA</label>
 
                                                     <input type="number" placeholder="HRA" name="hra" value="{{$compensatory->hra? $compensatory->hra : ''}}" class="onboard-form form-control textbox   calculation_data gross_data " step="0.01" />
                                                 </div>
-                                                @php }else{ @endphp
+                                                @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">HRA</label>
                                                     <input type="number" placeholder="HRA" name="hra" class="textbox  onboard-form form-control textbox    calculation_data gross_data" step="0.01"/>
-                                                    @php } @endphp
                                                 </div>
+
+                                                    @endif
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="Statutory_bonus">Statutory Bonus{!! required() !!}</label> -->
-                                                @php
-                                                if(isset($compensatory)){
-                                                foreach($compensatory as $jj){
-                                                }
-                                                @endphp
+                                                
+                                                @if(isset($compensatory))
+                                              
                                                 <div class="floating">
                                                     <label for="" class="float-label">Statutory Bonus</label>
                                                     <input type="number" placeholder="Statutory Bonus" name="statutory_bonus" value="{{$compensatory->Statutory_bonus? $compensatory->Statutory_bonus : ''}}" class="onboard-form form-control textbox   calculation_data gross_data" step="0.01"/>
                                                 </div>
-                                                @php }else{ @endphp
+                                                @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">Statutory Bonus</label>
                                                     <input type="number" placeholder="Statutory Bonus" name="statutory_bonus" class="textbox onboard-form form-control  calculation_data gross_data" step="0.01"/>
                                                 </div>
-                                                @php } @endphp
+                                                @endif
 
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="child_education_allowance">Child Education Allowance{!! required() !!}</label> -->
-                                                @php
-                                                if(isset($compensatory)){
-                                                foreach($compensatory as $jj){
-                                                }
-                                                @endphp
+                                                
+                                                @if(isset($compensatory))
+                                              
                                                 <div class="floating">
                                                     <label for="" class="float-label">Child Education Allowance</label>
                                                     <input type="number" placeholder="Child Education Allowance" name="child_education_allowance" value="{{$compensatory->child_education_allowance? $compensatory->child_education_allowance : ''}}" class="onboard-form form-control textbox   calculation_data gross_data" step="0.01"/>
                                                 </div>
-                                                @php }else{ @endphp
+                                                @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">Child Education Allowance</label>
                                                     <input type="number" placeholder="Child Education Allowance" name="child_education_allowance" class="onboard-form form-control  calculation_data textbox  gross_data" step="0.01"/>
                                                 </div>
-                                                @php } @endphp
+                                                @endif
 
 
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="food_coupon">Food Coupon{!! required() !!}</label> -->
-                                                @php
-                                                if(isset($compensatory)){
-                                                foreach($compensatory as $jj){
-                                                }
-                                                @endphp
+                                                
+                                                @if(isset($compensatory))
+                                              
                                                 <div class="floating">
                                                     <label for="" class="float-label">Food Coupon</label>
                                                     <input type="number" placeholder="Food Coupon" name="food_coupon" value="{{$compensatory->food_coupon? $compensatory->food_coupon : ''}}" class="onboard-form form-control textbox  calculation_data gross_data" step="0.01"/>
                                                 </div>
-                                                @php }else{ @endphp
+                                                @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">Food Coupon</label>
                                                     <input type="number" placeholder="Food Coupon" name="food_coupon" class="textbox  onboard-form form-control  calculation_data gross_data" step="0.01" />
                                                 </div>
-                                                @php } @endphp
+                                                @endif
 
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="lta">LTA{!! required() !!}</label> -->
-                                                @php
-                                                if(isset($compensatory)){
-                                                foreach($compensatory as $jj){
-                                                }
-                                                @endphp
+                                                
+                                                @if(isset($compensatory))
+                                              
                                                 <div class="floating">
                                                     <label for="" class="float-label">LTA</label>
                                                     <input type="number" placeholder="LTA" name="lta" value="{{$compensatory->lta? $compensatory->lta : ''}}" class="textbox onboard-form form-control     calculation_data gross_data" step="0.01"/>
                                                 </div>
-                                                @php }else{ @endphp
+                                                @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">LTA</label>
                                                     <input type="number" placeholder="LTA" name="lta" class="onboard-form form-control textbox   calculation_data gross_data" step="0.01"/>
                                                 </div>
-                                                @php } @endphp
+                                                @endif
 
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="special_allowance">Special Allowance{!! required() !!}</label> -->
-                                                @php
-                                                if(isset($compensatory)){
-                                                foreach($compensatory as $jj){
-                                                }
-                                                @endphp
+                                                
+                                                @if(isset($compensatory))
+                                              
                                                 <div class="floating">
                                                     <label for="" class="float-label">Special Allowance</label>
                                                     <input type="number" placeholder="Special Allowance" name="special_allowance" value="{{$compensatory->special_allowance? $compensatory->special_allowance : ''}}" class="onboard-form form-control textbox   calculation_data gross_data" step="0.01" />
                                                 </div>
-                                                @php }else{ @endphp
+                                                @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">Special Allowance</label>
                                                     <input type="number" placeholder="Special Allowance" name="special_allowance" class="textbox  onboard-form form-control  calculation_data gross_data" step="0.01"/>
                                                 </div>
-                                                @php } @endphp
+                                                @endif
 
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="other_allowance">Other Allowance{!! required() !!}</label> -->
-                                                @php
-                                                if(isset($compensatory)){
-                                                foreach($compensatory as $jj){
-                                                }
-                                                @endphp
+                                                
+                                                @if(isset($compensatory))
+                                              
                                                 <div class="floating">
                                                     <label for="" class="float-label">Other Allowance</label>
 
                                                     <input type="number" placeholder="Other Allowance" name="other_allowance" value="{{$compensatory->other_allowance? $compensatory->other_allowance : ''}}" class="textbox  onboard-form form-control  calculation_data gross_data" step="0.01"/>
                                                 </div>
-                                                @php }else{ @endphp
+                                                @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">Other Allowance</label>
                                                     <input type="number" placeholder="Other Allowance" name="other_allowance" class="textbox  onboard-form form-control  calculation_data gross_data" step="0.01"/>
                                                 </div>
-                                                @php } @endphp
+                                                @endif
 
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="gross">Gross Salary{!! required() !!}</label> -->
-                                                @php
-                                                if(isset($compensatory)){
-                                                foreach($compensatory as $jj){
-                                                }
-                                                @endphp
+                                                
+                                                @if(isset($compensatory))
+                                              
                                                 <div class="floating">
                                                     <label for="" class="float-label">Gross Salary</label>
 
                                                     <input type="number" placeholder="Gross Salary" name="gross" value="{{$compensatory->gross? $compensatory->gross : ''}}" class="textbox  onboard-form form-control " step="0.01" required readOnly />
                                                 </div>
-                                                @php }else{ @endphp
+                                                @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">Gross Salary</label>
 
                                                     <input type="number" placeholder="Gross Salary" name="gross" id="gross" class="textbox  onboard-form form-control " step="0.01" required readOnly />
                                                 </div>
-                                                @php } @endphp
+                                                @endif
 
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="epf_employer_contribution">EPF employer contribution{!! required() !!}</label> -->
-                                                @php
-                                                if(isset($compensatory)){
-                                                foreach($compensatory as $jj){
-                                                }
-                                                @endphp
+                                                
+                                                @if(isset($compensatory))
+                                              
                                                 <div class="floating">
                                                     <label for="" class="float-label">EPF employer contribution</label>
 
                                                     <input type="number" placeholder="EPF employer contribution" name="epf_employer_contribution" value="{{$compensatory->epf_employer_contribution? $compensatory->epf_employer_contribution : ''}}" class="textbox   onboard-form form-control  calculation_data cic_data" step="0.01"/>
                                                 </div>
-                                                @php }else{ @endphp
+                                                @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">EPF employer contribution</label>
                                                     <input type="number" placeholder="EPF employer contribution" name="epf_employer_contribution" class="onboard-form form-control  calculation_data cic_data textbox " step="0.01" />
                                                 </div>
-                                                @php } @endphp
+                                                @endif
 
 
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="esic_employer_contribution">ESIC employer contribution{!! required() !!}</label> -->
-                                                @php
-                                                if(isset($compensatory)){
-                                                foreach($compensatory as $jj){
-                                                }
-                                                @endphp
+                                                
+                                                @if(isset($compensatory))
+                                              
                                                 <div class="floating">
                                                     <label for="" class="float-label">ESIC employer contribution</label>
                                                     <input type="number" placeholder="ESIC employer contribution" name="esic_employer_contribution" value="{{$compensatory->esic_employer_contribution? $compensatory->esic_employer_contribution : ''}}" class="onboard-form form-control textbox   calculation_data cic_data" step="0.01" />
                                                 </div>
-                                                @php }else{ @endphp
+                                                @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">ESIC employer contribution</label>
                                                     <input type="number" placeholder="ESIC employer contribution" name="esic_employer_contribution" class="onboard-form form-control textbox  calculation_data cic_data" step="0.01"/>
                                                 </div>
-                                                @php } @endphp
+                                                @endif
 
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="insurance">Insurance{!! required() !!}</label> -->
-                                                @php
-                                                if(isset($compensatory)){
-                                                foreach($compensatory as $jj){
-                                                }
-                                                @endphp
+                                                
+                                                @if(isset($compensatory))
+                                              
                                                 <div class="floating">
                                                     <label for="" class="float-label">Insurance</label>
                                                     <input type="number" placeholder="Insurance" name="insurance" value="{{$compensatory->insurance? $compensatory->insurance : ''}}" class="onboard-form form-control textbox   calculation_data cic_data" step="0.01" />
                                                 </div>
-                                                @php }else{ @endphp
+                                                @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">Insurance</label>
                                                     <input type="number" placeholder="Insurance" name="insurance" class="onboard-form form-control textbox  calculation_data cic_data" step="0.01"/>
                                                 </div>
-                                                @php } @endphp
+                                                @endif
 
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="graduity">Graduity{!! required() !!}</label> -->
-                                                @php
-                                                if(isset($compensatory)){
-                                                foreach($compensatory as $jj){
-                                                }
-                                                @endphp
+                                                
+                                                @if(isset($compensatory))
+                                              
                                                 <div class="floating">
                                                     <label for="" class="float-label">Graduity</label>
                                                     <input type="number" placeholder="Graduity" name="graduity" value="{{$compensatory->graduity? $compensatory->graduity : ''}}" class="onboard-form form-control textbox   calculation_data cic_data" step="0.01"/>
                                                 </div>
-                                                @php }else{ @endphp
+                                                @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">Graduity</label>
                                                     <input type="number" placeholder="Graduity" name="graduity" class="onboard-form form-control textbox   calculation_data cic_data" step="0.01"/>
                                                 </div>
-                                                @php } @endphp
+                                                @endif
 
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="cic">Cost of Company{!! required() !!}</label> -->
-                                                @php
-                                                if(isset($compensatory)){
-                                                foreach($compensatory as $jj){
-                                                }
-                                                @endphp
+                                                
+                                                @if(isset($compensatory))
+                                              
                                                 <div class="floating">
                                                     <label for="" class="float-label">Cost of Company</label>
 
                                                     <input type="number" placeholder="Cost of Company" name="cic" value="{{$compensatory->cic? $compensatory->cic : ''}}" id="cic" class="onboard-form form-control textbox " step="0.01" required readOnly />
                                                 </div>
-                                                @php }else{ @endphp
+                                                @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">Cost of Company</label>
 
                                                     <input type="number" placeholder="Cost of Company" name="cic" id="cic" class="onboard-form form-control textbox " step="0.01" required readOnly />
                                                 </div>
-                                                @php } @endphp
+                                                @endif
 
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="epf_employee">EPF Employee{!! required() !!}</label> -->
-                                                @php
-                                                if(isset($compensatory)){
-                                                foreach($compensatory as $jj){
-                                                }
-                                                @endphp
+                                                
+                                                @if(isset($compensatory))
+                                              
                                                 <div class="floating">
                                                     <label for="" class="float-label">EPF Employee</label>
 
                                                     <input type="number" placeholder="EPF Employee" name="epf_employee" value="{{$compensatory->epf_employee? $compensatory->epf_employee : ''}}" class="onboard-form form-control  calculation_data net_data textbox " step="0.01" />
                                                 </div>
-                                                @php }else{ @endphp
+                                                @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">EPF Employee</label>
 
                                                     <input type="number" placeholder="EPF Employee" name="epf_employee" class="onboard-form form-control  calculation_data net_data textbox " step="0.01" />
                                                 </div>
-                                                @php } @endphp
+                                                @endif
 
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="esic_employee">ESIC Employee{!! required() !!}</label> -->
-                                                @php
-                                                if(isset($compensatory)){
-                                                foreach($compensatory as $jj){
-                                                }
-                                                @endphp
+                                                
+                                                @if(isset($compensatory))
+                                              
                                                 <div class="floating">
                                                     <label for="" class="float-label">ESIC Employee</label>
 
                                                     <input type="number" placeholder="ESIC Employee" name="esic_employee" value="{{$compensatory->esic_employee? $compensatory->esic_employee : ''}}" class="textbox  onboard-form form-control  calculation_data net_data" step="0.01" />
                                                 </div>
-                                                @php }else{ @endphp
+                                                @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">ESIC Employee</label>
 
                                                     <input type="number" placeholder="ESIC Employee" name="esic_employee" class="textbox  onboard-form form-control  calculation_data net_data" step="0.01" />
                                                 </div>
-                                                @php } @endphp
+                                                @endif
 
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="professional_tax">Professional Tax{!! required() !!}</label> -->
-                                                @php
-                                                if(isset($compensatory)){
-                                                foreach($compensatory as $jj){
-                                                }
-                                                @endphp
+                                                
+                                                @if(isset($compensatory))
+                                              
                                                 <div class="floating">
                                                     <label for="" class="float-label">Professional Tax</label>
 
                                                     <input type="number" placeholder="Professional Tax" name="professional_tax" value="{{$compensatory->professional_tax? $compensatory->professional_tax : ''}}" class="textbox  onboard-form form-control  calculation_data net_data " step="0.01" />
                                                 </div>
-                                                @php }else{ @endphp
+                                                @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">Professional Tax</label>
 
                                                     <input type="number" placeholder="Professional Tax" name="professional_tax" class="textbox  onboard-form form-control calculation_data net_data " step="0.01" />
-                                                    @php } @endphp
-
                                                 </div>
+
+                                                    @endif
+
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="labour_welfare_fund">labour welfare fund{!! required() !!}</label> -->
-                                                @php
-                                                if(isset($compensatory)){
-                                                foreach($compensatory as $jj){
-                                                }
-                                                @endphp
+                                                
+                                                @if(isset($compensatory))
+                                              
                                                 <div class="floating">
                                                     <label for="" class="float-label">labour welfare fund</label>
 
                                                     <input type="number" placeholder="labour welfare fund" name="labour_welfare_fund" value="{{$compensatory->labour_welfare_fund? $compensatory->labour_welfare_fund : ''}}" class="onboard-form form-control calculation_data net_data textbox " step="0.01" />
                                                 </div>
-                                                @php }else{ @endphp
+                                                @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">labour welfare fund</label>
 
                                                     <input type="number" placeholder="labour welfare fund" name="labour_welfare_fund" class="onboard-form form-control calculation_data net_data textbox  " step="0.01" />
                                                 </div>
-                                                @php } @endphp
+                                                @endif
 
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="net_income">Net Income{!! required() !!}</label> -->
-                                                @php
-                                                if(isset($compensatory)){
-                                                foreach($compensatory as $jj){
-                                                }
-                                                @endphp
+                                                
+                                                @if(isset($compensatory))
+                                              
                                                 <div class="floating">
                                                     <label for="" class="float-label">Net Income</label>
 
                                                     <input type="number" placeholder="Net Income" name="net_income" value="{{$compensatory->net_income? $compensatory->net_income : ''}}" class="onboard-form form-control textbox " step="0.01" required readOnly />
                                                 </div>
-                                                @php }else{ @endphp
+                                                @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">Net Income</label>
 
                                                     <input type="number" placeholder="Net Income" name="net_income" id="net_income" class="onboard-form form-control textbox " step="0.01" required readOnly />
                                                 </div>
-                                                @php } @endphp
+                                                @endif
 
                                             </div>
                                         </div>
@@ -1266,7 +1233,7 @@
                     <h4 class="mb-3" id="modalNot">Data Saved Successfully!</h4>
                     <p class="text-muted mb-4" id="modalBody"></p>
                     <div class="hstack gap-2 justify-content-center">
-                        <button type="button" class="btn btn-light close-modal" data-bs-dismiss="modal">Close</button>
+                        <button type="button" id="button_close" class="btn btn-light close-modal" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>

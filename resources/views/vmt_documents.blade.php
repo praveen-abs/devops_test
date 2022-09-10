@@ -160,6 +160,10 @@
             $("select").on("select2:close", function(e) {
                 $(this).valid();
             });
+
+            $("#button_close").click(function(){
+                window.location.href = "/";
+            });
     </script>
 
 

@@ -41,6 +41,7 @@ class VmtEmployeeController extends Controller
 
             $employee  =  User::where('email', $request->email)->first();
             $clientData  = VmtEmployee::where('userid', $employee->id)->first();
+            // dd($clientData);
             $empNo = '';
             if ($clientData) {
                 $empNo = $clientData->emp_no;
@@ -50,12 +51,12 @@ class VmtEmployeeController extends Controller
             $india = Countries::where('country_code', 'IN')->first();
             $emp = VmtEmployeeOfficeDetails::all();
             $emp_details = VmtEmployeeOfficeDetails::where('emp_id', $clientData->id)->first();
-             // dd($emp);
+            //  dd($clientData);
             $department = Department::all();
             $bank = Bank::all();
             $allEmployeesCode = User::where('is_admin',0)->where('active',1)->whereNotNull('user_code')->get(['user_code','name']);
 
-            return view('vmt_employeeOnboarding', compact('empNo','emp_details', 'countries', 'compensatory', 'bank', 'emp','department','allEmployeesCode'));
+            return view('vmt_employeeOnboarding', compact('empNo','emp_details','employee','clientData', 'countries', 'compensatory', 'bank', 'emp','department','allEmployeesCode'));
         }else{
             $clientData  = VmtClientMaster::first();
             $employee  =  User::orderBy('created_at','DESC')->where('user_code', 'LIKE', '%'.$clientData->client_code.'%')->first();
@@ -79,7 +80,7 @@ class VmtEmployeeController extends Controller
         $department = Department::all();
         $allEmployeesCode = User::where('is_admin',0)->where('active',1)->whereNotNull('user_code')->get(['user_code','name']);
         //dd($allEmployeesCode);
-        return view('vmt_employeeOnboarding', compact('empNo', 'countries', 'india', 'emp', 'bank', 'department','allEmployeesCode'));
+        return view('vmt_employeeOnboarding', compact('empNo', 'countries','clientData', 'employee','india', 'emp', 'bank', 'department','allEmployeesCode'));
 
     }
     }
@@ -805,7 +806,7 @@ class VmtEmployeeController extends Controller
             if(isset($row['employee_code']))
             {
                 $empNo = $row['employee_code'];
-              
+
                 $checking_report_mang = User::where('user_code' ,$row['reporting_manager_code'])->first();
                 if($checking_report_mang !=""){
 
@@ -872,6 +873,7 @@ class VmtEmployeeController extends Controller
                     //$newEmployee->gender   =    $row["gender"];
                     $newEmployee->doj   =    \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d');
                     $newEmployee->dol   =    \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d');
+                    $newEmployee->mobile_number   =    $row['mobile_no'];
                     $newEmployee->save();
 
                     if($newEmployee){
@@ -922,7 +924,7 @@ class VmtEmployeeController extends Controller
                     $returnfailedMsg .= "</li>";
                     $failedCount++;
                 }
-                
+
             }else{
                 $returnfailedMsg .= "<li>"." Reporting Manager (".$row['reporting_manager_code'] .") is not available ";
                 $returnfailedMsg .= "</li>";
@@ -955,11 +957,37 @@ class VmtEmployeeController extends Controller
         $currentEmployeeDetails->education_certificate_file = $this->fileUpload('education_certificate');
         $currentEmployeeDetails->reliving_letter_file = $this->fileUpload('reliving_letter');
 
-        // //set the onboard status to 1
-
-
         $currentEmployeeDetails->save();
+
+        // //set the onboard status to 1
+        $currentUser = User::where('id',auth()->user()->id)->first();
+        $currentUser->is_onboarded = '1';
+        $currentUser->save();
+
         return "Saved";
+    }
+
+    public function updatePassword(Request $request)
+    {
+        if(isset($request->password))
+        {
+            $currentUser = User::where('id',auth()->user()->id)->first();
+            $currentUser->password = Hash::make($request->password);
+            $currentUser->is_default_password_updated = '1';
+            $currentUser->save();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Password updated successfully.',
+            ]);
+        }
+        else
+        {
+            return response()->json([
+                'status' => 'failure',
+                'message' => 'Password should not be empty.',
+            ]);
+        }
     }
 
     public function fileUpload($file) {
@@ -975,7 +1003,7 @@ class VmtEmployeeController extends Controller
 
     // Store quick onboard employee data to Database
     public function storeQuickOnboardFormEmployee(Request $request){
-        dd($request->all());
+       // dd($request->all());
         // code...
         try
         {

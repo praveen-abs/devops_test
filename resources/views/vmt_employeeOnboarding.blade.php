@@ -729,6 +729,8 @@
                 }
             });
 
+        
+
             $('#form-1').validate({
                 errorPlacement: function(error, element) {
                     error.text('* ' + error.text());
@@ -747,6 +749,9 @@
                 $(this).valid();
             });
         });
+        $("#button_close").click(function(){
+                window.location.href = "/employeeOnboarding";
+            });
     </script>
 
 

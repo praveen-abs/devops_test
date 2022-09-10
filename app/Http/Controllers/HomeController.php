@@ -282,7 +282,7 @@ class HomeController extends Controller
 
     //
     public function storePersonalInfo(Request $request) {
-        // dd($request->all());
+       // dd($request->all());
         $file = $request->file('profilePic');
         $user = User::find($request->id);
         $user->name = $request->input('name');
@@ -310,6 +310,7 @@ class HomeController extends Controller
         $details->gender = $request->input('gender');
         $details->present_address = $request->input('present_address');
         $details->mobile_number = $request->input('mobile_number');
+        $details->present_address = $request->input('address_PI');
         $details->save();
         Ses::flash('message', 'User Details Updated successfully!');
         Ses::flash('alert-class', 'alert-success');
@@ -447,8 +448,11 @@ class HomeController extends Controller
         $details['family_info_json'] = json_decode($details['family_info_json'], true);
         if($user->hasrole('Employee')) {
             $employee = VmtEmployee::first();
+            // report for disable for role base 
+            $report_key = 1;
         } else {
             $employee = null;
+            $report_key = 0;
         }
         $bank = Bank::all();
         $exp = Experience::whereIn('id', explode(',', $details->experience_json))->get();
@@ -457,7 +461,7 @@ class HomeController extends Controller
 
         $profileCompletenessValue  = $this->calculateProfileCompleteness($user->id);
 
-        return view('pages-profile', compact( 'employee', 'user', 'details', 'bank', 'exp', 'code', 'rep','profileCompletenessValue'));
+        return view('pages-profile', compact( 'employee', 'user', 'details','report_key', 'bank', 'exp', 'code', 'rep','profileCompletenessValue'));
     }
 
     // Show Impersonate Profile info
@@ -467,9 +471,12 @@ class HomeController extends Controller
         $details['contact_json'] = json_decode($details['contact_json'], true);
         $details['family_info_json'] = json_decode($details['family_info_json'], true);
         if($user->hasrole('Employee')) {
+             // report for disable for role base
             $employee = VmtEmployee::first();
+            $report_key = 1;
         } else {
             $employee = null;
+            $report_key = 0;
         }
         $bank = Bank::all();
         $exp = Experience::whereIn('id', explode(',', $details->experience_json))->get();
@@ -477,7 +484,7 @@ class HomeController extends Controller
         $rep = VmtEmployee::select('emp_no', 'name', 'avatar')->join('vmt_employee_office_details', 'emp_id', '=', 'vmt_employee_details.id')->join('users', 'users.id', '=', 'vmt_employee_details.userid')->where('emp_no', $details->l1_manager_code)->first();
 
         $profileCompletenessValue  = $this->calculateProfileCompleteness($user->id);
-        return view('pages-profile', compact( 'employee', 'user', 'details', 'bank', 'exp', 'code', 'rep','profileCompletenessValue'));
+        return view('pages-profile', compact( 'employee', 'report_key','user', 'details', 'bank', 'exp', 'code', 'rep','profileCompletenessValue'));
     }
 
     public function showProfilePage(Request $request) {
