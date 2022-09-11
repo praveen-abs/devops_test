@@ -89,6 +89,11 @@
                     </a>
                     <div class="collapse menu-dropdown" id="attendanceDrop-Down">
                         <ul class="nav nav-sm flex-column">
+							<li class="nav-item">
+								<a href="{{url('attendance_dashboard')}}" class="nav-link sidebar py-1">
+									<span>Dashboard</span>
+								</a>
+							</li>
                             <li class="nav-item">
                                 <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1">
                                     <span> Leave</span>
