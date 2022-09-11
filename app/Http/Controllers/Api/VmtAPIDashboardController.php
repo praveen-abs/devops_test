@@ -13,14 +13,20 @@ class VmtAPIDashboardController extends HRMSBaseAPIController
 
     public function getDashboardData() {
 
-        //$users = User::all();
-        //return response()->json($users);
+
+        $data = [
+
+            'username'=> auth()->user()->name,
+            'appointments'=> "1",
+            'meetings'=> "2",
+            'visits'=> "4",
+
+        ];
+
         return response()->json([
             'status' => 'success',
             'message'=> 'Not implemented',
-            'data'   => [
-                'username'=> auth()->user()->name,
-            ]
+            'data'   => $data
         ]);
     }
 
