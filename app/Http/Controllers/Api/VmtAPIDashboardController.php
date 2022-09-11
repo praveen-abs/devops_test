@@ -9,10 +9,18 @@ class VmtAPIDashboardController extends Controller
 {
     public function getMainDashboardData(Request $request)
     {
+
         return response()->json([
             'status' => true,
             'message'=> 'Not implemented',
-            'data'   => 'Not implemented'
+            'data'   => [
+                'username'=> auth()->user()->name,
+            ]
         ]);
+    }
+
+    public function getUser()
+    {
+        //User::where
     }
 }

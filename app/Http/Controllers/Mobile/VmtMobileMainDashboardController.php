@@ -9,7 +9,15 @@ use Illuminate\Http\Request;
 class VmtMobileMainDashboardController extends Controller
 {
     public function getDashboarddata() {
-        $users = User::all();
-        return response()->json($users);
+
+        //$users = User::all();
+        //return response()->json($users);
+        return response()->json([
+            'status' => 'success',
+            'message'=> 'Not implemented',
+            'data'   => [
+                'username'=> auth()->user()->name,
+            ]
+        ]);
     }
 }

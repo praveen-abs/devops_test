@@ -28,6 +28,7 @@ Route::post('/auth/login', [AuthController::class, 'loginUser']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/mobiledashboard',[VmtMobileMainDashboardController::class, 'getDashboarddata']);
+    Route::post('/mobiledashboard',[VmtMobileMainDashboardController::class, 'getDashboarddata']);
 });
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
