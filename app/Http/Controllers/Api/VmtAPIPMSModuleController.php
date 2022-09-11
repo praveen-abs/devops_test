@@ -1,7 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
+
+use App\Http\Controllers\api\HRMSBaseAPIController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -19,7 +22,7 @@ use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
-class VmtAPIPMSModuleController extends Controller
+class VmtAPIPMSModuleController extends HRMSBaseAPIController
 {
 
     public function showEmployeeApraisalReviewList(Request $request){
@@ -37,7 +40,7 @@ class VmtAPIPMSModuleController extends Controller
         ]);
     }
 
-   
+
     public function getAssigneeReviews(Request $request){
         // Flow 1 HR creates Form and Assignee
         $kpiFormAssignedDetails = VmtPMS_KPIFormAssignedModel::where('id', $request->assignedFormid)
@@ -211,7 +214,7 @@ class VmtAPIPMSModuleController extends Controller
             Input params : assignedFormId, assigneeId
 
             formSubmitType == 0 ? "Save Review" : "Publish Review"
-            
+
         Logic : Using assignedFormId & assigneeId, we will check review details for that assignee and update
 
     */
@@ -266,11 +269,11 @@ class VmtAPIPMSModuleController extends Controller
             $assignedReviewCheck->assignee_kpi_review = $request->assignee_kpi_review;
             $assignedReviewCheck->assignee_kpi_percentage = $request->assignee_kpi_percentage;
             $assignedReviewCheck->assignee_kpi_comments = $request->assignee_kpi_comments;
-            
+
             if($request->formSubmitType == 0){
                 $assignedReviewCheck->is_assignee_submitted =  '0';
                 $assignedReviewCheck->update();
-                return response()->json(['status'=>true,'message'=>'Saved as draft']);    
+                return response()->json(['status'=>true,'message'=>'Saved as draft']);
             }
             else{
                 $assignedReviewCheck->is_assignee_submitted =  '1';
@@ -281,7 +284,7 @@ class VmtAPIPMSModuleController extends Controller
                 if(isset($assignedReviewCheck->getPmsKpiFormAssigned)){
                     $kpiFormAssignedReviewers = explode(',',$assignedReviewCheck->getPmsKpiFormAssigned->reviewer_id);
                 }
-                
+
                 $assigneeDetails = User::findorfail($request->assigneeId);
 
                 // check Multiple Reviewers
@@ -293,7 +296,7 @@ class VmtAPIPMSModuleController extends Controller
                             // office details of assignee employee
                             $currentUser_empDetails = VmtEmployeeOfficeDetails::where('user_id', $assigneeDetails->id)->first();
                             array_push($kpiFormAssignedReviewersOfficialMails,$userEmployeeDetails->getEmployeeOfficeDetails->officical_mail);
-                            
+
                             // Send mail to All Reviewers
                             \Mail::to($userEmployeeDetails->getEmployeeOfficeDetails->officical_mail)->send(new NotifyPMSManager($assigneeDetails->name, $currentUser_empDetails->designation, $userEmployeeDetails->name,$assignedReviewCheck->year ));
                             $message = "Employee has submitted KPI Assessment.  ";
@@ -306,11 +309,11 @@ class VmtAPIPMSModuleController extends Controller
                 // all reviewers office mails
                 $kpiFormAssignedReviewersOfficialMails = implode(',',$kpiFormAssignedReviewersOfficialMails);
                 if(!empty($kpiFormAssignedReviewersOfficialMails)){
-                    return response()->json(['status'=>true,'message'=>"Published Review successfully.Sent mail to manager ".$kpiFormAssignedReviewersOfficialMails]);    
+                    return response()->json(['status'=>true,'message'=>"Published Review successfully.Sent mail to manager ".$kpiFormAssignedReviewersOfficialMails]);
                 }
-                return response()->json(['status'=>true,'message'=>'Published Review successfully']);    
+                return response()->json(['status'=>true,'message'=>'Published Review successfully']);
             }
-            
+
         }catch(Exception $e){
             Log::info('saveAssigneeReviews API Error: '.$e->getMessage());
             return sendError($e->getMessage());
@@ -352,15 +355,15 @@ class VmtAPIPMSModuleController extends Controller
         }
 
         $assigneeDetails = User::where('id',$userId)->with('getEmployeeDetails')->first();
-        
+
 
         // check user id in Assignee, Assigner and Reviewer
         $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews.getUserAssigneeDetails.getEmployeeDetails')->WhereRaw("find_in_set(".$userId.", assignee_id)")
                                 ->orderBy('id','DESC')
                                 ->get();
 
-        $result = [];   
-        
+        $result = [];
+
         // get necessary details for display in V2 dashboard of assignees data
         foreach($pmsKpiAssigneeDetails as $key => $kpiAssignee){
             $arrayReviewers = explode(',',$kpiAssignee->reviewer_id);
@@ -380,21 +383,21 @@ class VmtAPIPMSModuleController extends Controller
             $rating = '';
             if(isset($kpiAssignee->getPmsKpiFormReviews)){
                 foreach($kpiAssignee->getPmsKpiFormReviews as $reviewData){
-                    
+
                     if($reviewData->assignee_id == $userId){
                         $isAssigneeAccepted = (String)$reviewData->is_assignee_accepted;
                         $isAssigneeSubmitted = (String)$reviewData->is_assignee_submitted;
-                      
+
                         $arrayIsReviewerSubmitted = json_decode($reviewData->is_reviewer_submitted,true);
                         $arrayIsReviewerAccepted = json_decode($reviewData->is_reviewer_accepted,true);
                         $i = 0;
-                        foreach($arrayIsReviewerSubmitted as $reviewerId => $isSubmittedStatus){                            
+                        foreach($arrayIsReviewerSubmitted as $reviewerId => $isSubmittedStatus){
                             $result[$key]['manager'][$i]['is_manager_submitted'] = (String)$isSubmittedStatus;
                             $result[$key]['manager'][$i]['is_manager_accepted'] = isset($arrayIsReviewerAccepted[$reviewerId]) ? (String)$arrayIsReviewerAccepted[$reviewerId] : '';
                             $i++;
                         }
                     }
-                    
+
                     $rating = calculateOverallReviewRatings($kpiAssignee->id, $userId);
                 }
             }
@@ -450,7 +453,7 @@ class VmtAPIPMSModuleController extends Controller
                                 ->get();
 
         $reviewerDetails = User::where('id',$userId)->with('getEmployeeDetails')->first();
-        $result = [];   
+        $result = [];
         $i = 0;
         foreach($pmsKpiAssigneeDetails as $key => $kpiAssignee){
             $arrayAssignees = explode(',',$kpiAssignee->assignee_id);
@@ -461,21 +464,21 @@ class VmtAPIPMSModuleController extends Controller
                 $result[$i]['employee_id'] = $assignee;
                 $result[$i]['employee_name'] = $assigneeDetails->name;
                 $result[$i]['employee_emp_id'] = isset($assigneeDetails->getEmployeeDetails) ? (String)$assigneeDetails->getEmployeeDetails->emp_no : '';
-                
+
                 $result[$i]['manager_name'] = $reviewerDetails->name;
                 $result[$i]['manager_emp_id'] = isset($reviewerDetails->getEmployeeDetails) ? (String)$reviewerDetails->getEmployeeDetails->emp_no : '';
                 $result[$i]['assignment_period'] = $kpiAssignee->assignment_period;
                 $rating = '';
-                
+
                 foreach($kpiAssignee->getPmsKpiFormReviews as $reviewData){
-                    
+
 
                     $arrayIsReviewerSubmitted = json_decode($reviewData->is_reviewer_submitted,true);
                     $arrayIsReviewerAccepted = json_decode($reviewData->is_reviewer_accepted,true);
                     foreach($arrayIsReviewerSubmitted as $reviewerId => $reviewerSubmitted){
                         if($reviewerId == $userId && $reviewData->assignee_id == $assignee){
                             $result[$i]['is_manager_submitted'] = (String)$reviewerSubmitted;
-                            
+
                             $result[$i]['is_manager_accepted'] = (String)$arrayIsReviewerAccepted[$reviewerId];
                         }
                     }
@@ -488,7 +491,7 @@ class VmtAPIPMSModuleController extends Controller
 
                     }
                 }
-                
+
                 $i++;
             }
         }
@@ -665,7 +668,7 @@ class VmtAPIPMSModuleController extends Controller
             if(empty($assignedReviewCheck)){
                 return sendError('Review Data Not Found');
             }
-            
+
             // check assignee has Accepted kpi form or not
             if($assignedReviewCheck->is_assignee_accepted == '0'){
                 return sendError('Assignee have rejected KPI Form!');
@@ -687,7 +690,7 @@ class VmtAPIPMSModuleController extends Controller
 
             $decodedKpiReviewerReview[Auth::id()] = json_decode($request->reviewer_kpi_review,true);
             $decodedKpiReviewerPerc[Auth::id()] = json_decode($request->reviewer_kpi_percentage);
-            
+
             // dD(json_encode($decodedKpiReviewerReview));
             $assignedReviewCheck->reviewer_kpi_review = $decodedKpiReviewerReview;
             $assignedReviewCheck->reviewer_kpi_percentage = $decodedKpiReviewerPerc;

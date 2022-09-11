@@ -1,17 +1,22 @@
 <?php
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+//use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\HRMSBaseAPIController;
 use Illuminate\Http\Request;
+use App\Models\VmtEmployeeAttendance;
+use Illuminate\Support\Facades\Auth;
 
-class VmtAPIDashboardController extends Controller
+class VmtAPIDashboardController extends HRMSBaseAPIController
 {
-    public function getMainDashboardData(Request $request)
-    {
 
+    public function getDashboardData() {
+
+        //$users = User::all();
+        //return response()->json($users);
         return response()->json([
-            'status' => true,
+            'status' => 'success',
             'message'=> 'Not implemented',
             'data'   => [
                 'username'=> auth()->user()->name,
@@ -19,8 +24,4 @@ class VmtAPIDashboardController extends Controller
         ]);
     }
 
-    public function getUser()
-    {
-        //User::where
-    }
 }

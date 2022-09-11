@@ -142,6 +142,12 @@ class VmtPMSModuleController extends Controller
             ->select('users.name','users.id','vmt_employee_details.emp_no','vmt_employee_office_details.designation','users.avatar as avatar')
             ->get();
 
+        $loggedManagerEmployeesIDs = [];
+        if(count($loggedManagerEmployees) > 0){
+            $loggedManagerEmployeesIDs = $loggedManagerEmployees->pluck('id')->toArray();
+        }
+        $loggedManagerEmployeesIDs = implode(',',$loggedManagerEmployeesIDs);
+
         // Get logged in user office deatils and its parent code
         $loggedUserManagerOfficeDetails = VmtEmployeeOfficeDetails::where('user_id',$loggedUserId)->value('l1_manager_code');
         // From its parent code can get childs (same level managers of loggedIn Manager)
@@ -165,7 +171,7 @@ class VmtPMSModuleController extends Controller
         $loggedInUser = Auth::user();
 
         $flowCheck = 2;
-        return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','existingKPIForms','departments','employees','pmsKpiAssigneeDetails','loggedManagerEmployees','loggedUserDetails','getSameLevelManagers','flowCheck','loggedInUser'));
+        return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','existingKPIForms','departments','employees','pmsKpiAssigneeDetails','loggedManagerEmployees','loggedUserDetails','getSameLevelManagers','flowCheck','loggedInUser','loggedManagerEmployeesIDs'));
     }
 
     // flow 3 pms V2
