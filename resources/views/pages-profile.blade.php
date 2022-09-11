@@ -17,7 +17,9 @@
                             <div class="card-body">
                                 <div class="profile-wrapper d-flex w-100 ">
                                     <div class="profile-img d-flex">
-                                        @include('ui-profile-avatar-lg')
+                                        @include('ui-profile-avatar-lg',[
+                                            'currentUserName' => $user->name,
+                                            ])
                                         <span class="personal-edit img-edit"><a href="#" class="edit-icon"
                                             data-bs-toggle="modal" data-bs-target="#personal_info" id="pencil-on-avatar">
                                             <i class="ri-pencil-fill"></i></a></span>
@@ -1530,6 +1532,7 @@
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 <script>
 $( document ).ready(function() {
+    
     console.log( "ready!" );
 });
 
