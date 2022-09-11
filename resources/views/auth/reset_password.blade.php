@@ -109,7 +109,7 @@
                                         @csrf
                                         <div class="form-outline mb-3 form-row">
                                             <label for="" class="">New Password</label>
-                                            <input type="text"
+                                            <input type="password"
                                                 class="form-control textbox  @error('user_code') is-invalid @enderror"
                                                 value="" id="new_password" name="user_code"
                                                 placeholder="Employee Code">
@@ -133,9 +133,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="alert alert-danger display-hide">
                                             <span style="color: red;" id="error_message"></span>
-                                        </div>
 
                                         <input type="button"
                                             class="btn btn-orange w-100 sign-in-btn   waves-effect waves-light "

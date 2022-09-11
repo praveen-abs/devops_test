@@ -114,7 +114,7 @@
         <!-- appraisal table -->
         <div class="card">
             <div class="card-body pb-2">
-                @if(isset($isAllReviewersSubmittedData) && count($isAllReviewersSubmittedData) > 0 && $isAllReviewersSubmittedData[Auth::id()] != '1')
+                @if(isset($isAllReviewersSubmittedData) && count($isAllReviewersSubmittedData) > 0 && $isAllReviewersSubmittedData[Auth::id()] != '1' && $assignedGoals->is_assignee_submitted == '1')
                 <div class="row">
                     <div class="col-12 mt-3">
                         <form id="upload_form" enctype="multipart/form-data">
@@ -274,7 +274,19 @@
                     </div>
                     @endif
                 @else
-                <h6>Employee has not yet submitted this review.</h6>
+
+                    @if(isset($isAllReviewersAcceptedData) && $isAllReviewersAcceptedData[Auth::id()] == null)
+                        <div class="buttons d-flex align-items-center justify-content-end ">
+                            <button class="btn btn-primary" id="accept_review">
+                            Accept </button>
+                            &nbsp;&nbsp;
+                            <button class="btn btn-primary" id="reject_review">Reject</button>
+                        </div>
+                    @elseif($isAllReviewersAcceptedData[Auth::id()] == '0')
+                        <h6>You have Already Rejected this review.</h6>
+                    @else
+                        <h6>Employee has not yet submitted this review.</h6>
+                    @endif
                 @endif
                 @else
                 <h4>Goals Not Assigned</h4>
@@ -400,7 +412,33 @@
     </div>
     <!--end modal -->
 
+     <!-- Rejection Modal Starts -->
+     <div class="modal fade" id="rejectionCommentModal" role="dialog" aria-hidden="true" style="opacity:1; display:none;background:#00000073;">
+        <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2">
+            <div class="modal-content">
+                <div class="modal-header py-2 bg-primary">
 
+                    <div class="w-100 modal-header-content d-flex align-items-center py-2">
+                        <h5 class="modal-title text-white" id="modalHeader">Rejected
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white close-modal" data-bs-dismiss="modal" aria-label="Close">
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="mt-4">
+                        <h4 class="mb-3" id="modalNot"></h4>
+                        <textarea name="reject_comment" id="reject_comment" class="form-control mb-3"></textarea>
+                        <div class="hstack gap-2 justify-content-center">
+                            <button type="button" class="btn btn-primary" id="rejection_submit" disabled>Save</button>
+                            <button type="button" class="btn btn-light close-modal" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Rejection Modal Ends -->
 
 </div>
 
@@ -512,6 +550,112 @@
             },
             error: function(error) {
                 $('.loader').hide();
+            }
+        });
+    });
+
+
+    // Accept Review
+    $('#accept_review').click(function(e) {
+        e.preventDefault();
+        swal({
+        title: 'Are you sure?',
+        text: 'You want to Accept!',
+        icon: 'warning',
+        buttons: ["Cancel", "Yes!"],
+        }).then(function(value) {
+            if (value) {
+                var assigneeGoalId = "{{ $assignedGoals->id }}";
+                var isApproveOrReject = '1';
+                $('.loader').show();
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('acceptRejectReviewerReview') }}",
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        assigneeGoalId: assigneeGoalId,
+                        isApproveOrReject: isApproveOrReject,
+
+                    },
+                    success: function(data) {
+                        if(data.status == true){
+                            swal("Success!", data.message, "success").then(function(){
+                                location.reload();
+                            });
+                        }else{
+                            swal("Error!", data.message, "error");
+                        }
+                        $('.loader').hide();
+                    },
+                    error: function(error) {
+                        $('.loader').hide();
+                    }
+                });
+            }
+        });
+    });
+
+    // On click reject Rejection Comments modal should show 
+    $('#reject_review').click(function(e) {
+        $('#modalHeader').html("Rejected");
+        $('#modalNot').html(
+            "Are you sure you want to reject this Kpi. If yes, please entered the reason in the below command box:"
+        );
+        $('#rejectionCommentModal').show('modal');
+    });
+
+    // close Rejection Comments modal 
+    $('body').on('click', '.close-modal', function() {
+        $('#rejectionCommentModal').hide();
+        $('#rejectionCommentModal').addClass('fade');
+    });
+
+    // close Rejection Comments modal 
+    $('body').on("keyup", '#reject_comment', function() {
+        if ($(this).val() == '') {
+            $('#rejection_submit').attr('disabled', true);
+        } else {
+            $('#rejection_submit').removeAttr('disabled');
+        }
+    });
+    
+    // Accept Review
+    $('#rejection_submit').click(function(e) {
+        e.preventDefault();
+        swal({
+        title: 'Are you sure?',
+        text: 'You want to Reject!',
+        icon: 'warning',
+        buttons: ["Cancel", "Yes!"],
+        }).then(function(value) {
+            if (value) {
+                var assigneeGoalId = "{{ $assignedGoals->id }}";
+                var isApproveOrReject = '0';
+                var reject_comment = $('#reject_comment').val();
+                $('.loader').show();
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('acceptRejectReviewerReview') }}",
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        assigneeGoalId: assigneeGoalId,
+                        isApproveOrReject: isApproveOrReject,
+                        reject_comment: reject_comment,
+                    },
+                    success: function(data) {
+                        if(data.status == true){
+                            swal("Success!", data.message, "success").then(function(){
+                                location.reload();
+                            });
+                        }else{
+                            swal("Error!", data.message, "error");
+                        }
+                        $('.loader').hide();
+                    },
+                    error: function(error) {
+                        $('.loader').hide();
+                    }
+                });
             }
         });
     });

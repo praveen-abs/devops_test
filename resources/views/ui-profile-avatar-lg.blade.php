@@ -12,7 +12,7 @@
 <script>
     // $(document).ready(function() {
 
-        generateProfileShortName_VendorScript('profileShortNameLargeCircle-profile');
+        generateProfileShortName_VendorScript('profileShortNameLargeCircle-profile','{{ $currentUserName }}');
     // });
 
     // function generateProfileShortName()

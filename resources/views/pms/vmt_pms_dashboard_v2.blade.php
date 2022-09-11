@@ -152,6 +152,10 @@ header {
     .mr-10{
         margin-right: 0px !important;
     }
+
+    .fa-refresh:hover {
+        cursor: pointer;
+    }
 </style>
 @endsection
 
@@ -307,8 +311,11 @@ header {
                                             <td class=""> <div class="td_content_center">{{ $pmsKpiAssignee->getUserDetails($assigneeId)['userEmpIds'] }}</div></td>
                                             <td class="">
                                                 @foreach($pmsKpiAssigneeData['reviewersIds'] as $keyCheck => $reviewer)
-                                                    @if($keyCheck != 0)<br>@endif
-                                                    @if(($pmsKpiAssigneeData['currentLoggedUserRole'] == 'reviewer' && $reviewer == Auth::id()) || $pmsKpiAssigneeData['currentLoggedUserRole'] != 'reviewer')
+                                                    @if($pmsKpiAssigneeData['currentLoggedUserRole'] == 'reviewer' && $reviewer == Auth::id())
+                                                       
+                                                            <div class="td_content_center">{{ getUserDetailsById($reviewer) }}</div>
+                                                    @elseif($pmsKpiAssigneeData['currentLoggedUserRole'] != 'reviewer')
+                                                        @if($keyCheck != 0)<br>@endif
                                                         <div class="td_content_center">{{ getUserDetailsById($reviewer) }}</div>
                                                     @endif
                                                 @endforeach
@@ -444,18 +451,35 @@ header {
                                         </select>
                                     </div>
 
-
-                                    <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3 ">
-                                        <label class="" for="">Employees</label>
-                                        <div class="employee-selection-section">
-
+                                    <!-- employee Selection portion starts -->
+                                    @if(isset($parentReviewerIds) && isset($parentReviewerNames))
+                                        <!-- flow 1 -->
+                                        <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
+                                            <label class="" for="">Employees</label>
+                                            <input type="hidden" name="employees" value="{{ $loggedInUser->id }}">
+                                            <input type="text" disabled class="form-control increment-input" placeholder="Employee" value="{{ $loggedInUser->name }}">
                                         </div>
-                                        <input type="hidden" name="employees" id="employeesSelectedValues">
-                                        <!-- <span class="employees-profile editProfile employeeEditButton">Edit</span> -->
+                                    @else
+                                        <!-- flow 2 & 3 -->
+                                        <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3 ">
+                                            <label class="" for="">Employees</label>
+                                            <div class="employee-selection-section">
 
+                                            </div>
+                                            <input type="hidden" name="employees" id="employeesSelectedValues">
+                                        </div>
+                                    @endif
+                                    <!-- employee Selection portion Ends -->
 
-                                    </div>
-                                    @if(isset($loggedManagerEmployees))
+                                    <!-- Reviewer Selection Portion Starts -->
+                                    @if(isset($parentReviewerIds) && isset($parentReviewerNames))
+                                    <!-- flow 3 -->
+                                        <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
+                                            <label class="" for="">Reviewer</label>
+                                            <input type="hidden" name="reviewer" value="{{ $parentReviewerIds }}">
+                                            <input type="text" disabled class="form-control increment-input" placeholder="Reviewer" value="{{ $parentReviewerNames }}">
+                                        </div>
+                                    @elseif(isset($loggedManagerEmployees))
                                     <!-- flow 2 -->
                                     <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
                                         <label class="" for="">Reviewer</label>
@@ -471,12 +495,9 @@ header {
                                         @endif
                                     </div>
                                     @else
-
-
                                     <!-- flow 1 -->
                                     <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
                                         <label class="" for="">Reviewer</label>
-                                        <!-- <input type="hidden" name="reviewer" id="selectedReviewIds"> -->
                                         <select class="select-multiple-reviewer form-control" name="reviewer[]" multiple="multiple">
                                             @if(isset($allEmployeesList) && count($allEmployeesList) > 0)
                                                 @foreach($allEmployeesList as $employeeData)
@@ -486,23 +507,25 @@ header {
                                                 <option value="">Select Reviewer</option>
                                             @endif
                                         </select>
-                                        <!-- <input readonly type="text" id="reviewersAccordingAssignee"
-                                            target="" class="form-control  increment-input"
-                                            placeholder="Reviewer"> -->
-
-                                        {{-- <button type="button" id="" target="#reviewerReplaceSameLevel" class="btn py-1 px-3 btn-primary increment-btn reviewerReplace">Change</button> --}}
-                                        <!-- <input type="text" name="" id="selected_reviewer"
-                                            class="form-control increment-input" placeholder="Reviewer">
-                                        <button type="button" id="" target="#createEmployee"
-                                            class="btn py-1 px-3 btn-primary increment-btn reviewerButton">Select</button> -->
                                     </div>
-                                    <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-3  mb-3">
-                                      
+                                    <div class="col-3 col-sm-12 col-md-12 col-lg-2 col-xl-1  mb-3">
                                         <br>
-
                                         <button type="button" id="" target="#reviewerReplaceSameLevel" class="btn py-1 px-3 btn-primary increment-btn reviewerReplace">Change</button>
                                     </div>
+                                    <div class="col-3 col-sm-12 col-md-12 col-lg-4 col-xl-2  mb-3">
+                                    <label class="" for="">Reviewer</label>
+                                        <select class="form-control select-hr-dropdown" name="hr_id">
+                                            @if(isset($allEmployeesList) && count($allEmployeesList) > 0)
+                                                @foreach($allEmployeesList as $employeeData)
+                                                    <option value="{{ $employeeData->id }}">{{ $employeeData->name }}</option>
+                                                @endforeach
+                                            @else
+                                                <option value="">Select Reviewer</option>
+                                            @endif
+                                        </select>
+                                    </div>
                                     @endif
+                                    <!-- Reviewer Selection Portion Ends -->
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-4 mt-3 mb-3 d-flex ml-5">
@@ -649,8 +672,7 @@ header {
         </div>
     </div>
 
-    <!-- emplyee edit modal starts -->
-
+    <!-- employee edit modal starts -->
     <div class="modal fade" id="employeeSelectionModal" role="dialog" aria-hidden="true"
         style="opacity:1; display:none;background:#00000073;">
         <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true"
@@ -666,6 +688,7 @@ header {
                         </button> -->
                     </div>
                 </div>
+               
                 <div class="modal-body">
                     <div class="mt-12">
                         @if(isset($loggedManagerEmployees))
@@ -675,6 +698,7 @@ header {
                                 <option selected value="{{ $employeesSelection->id }}">{{ $employeesSelection->name }}</option>
                             @endforeach
                         </select>
+                        <button class="btn btn-orange py-0 px-2" onclick="resetEmployeesList()"><span class="mr-10 icon"></span>Reset Employees</button>
                         @else
                         <!-- flow 1 -->
                         <select class="select-employee-dropdown form-control" id="selectedEmployeeDropdownId" name="employees[]" multiple="multiple">
@@ -751,8 +775,22 @@ header {
     <!-- for date and time -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+    <?php if(isset($loggedManagerEmployeesIDs)){?>
     <script>
+        function resetEmployeesList(){
+            var loggedManagerEmployeesIDs = [<?php echo $loggedManagerEmployeesIDs; ?>];
+            if(loggedManagerEmployeesIDs.length > 0){
+
+                $(".select-employee-dropdown").val(loggedManagerEmployeesIDs);
+                $('.select-employee-dropdown').trigger('change');
+            }
+         }
+    </script>
+    <?php } ?>
+    <script>
+
+       
+
         $('.refreshKPIFormDetails').click(function(){
             $('.loader').show();
             getKPIFormDetails();
@@ -880,6 +918,10 @@ header {
                 dropdownParent: $("#add-goals-modal"),
                 width: '100%'
             });
+            $('.select-hr-dropdown').select2({
+                dropdownParent: $("#add-goals-modal"),
+                width: '100%'
+            });
 
 
 
@@ -952,7 +994,7 @@ header {
                     selectedEmployeeId : selectedEmployeeId,
                 },
                 success: function(data) {
-                    console.log(data);
+                    console.log(data.result.reviewerIds);
                     if(data.status == true ){
                         $.each(data.result.removeSelectedEmployee, function(i, value) {
                             $(".select-employee-dropdown option[value="+value+"]").remove();

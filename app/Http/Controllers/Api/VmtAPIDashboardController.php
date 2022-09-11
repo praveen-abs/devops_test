@@ -1,18 +1,33 @@
 <?php
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+//use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\HRMSBaseAPIController;
 use Illuminate\Http\Request;
+use App\Models\VmtEmployeeAttendance;
+use Illuminate\Support\Facades\Auth;
 
-class VmtAPIDashboardController extends Controller
+class VmtAPIDashboardController extends HRMSBaseAPIController
 {
-    public function getMainDashboardData(Request $request)
-    {
+
+    public function getDashboardData() {
+
+
+        $data = [
+
+            'username'=> auth()->user()->name,
+            'appointments'=> "1",
+            'meetings'=> "2",
+            'visits'=> "4",
+
+        ];
+
         return response()->json([
-            'status' => true,
+            'status' => 'success',
             'message'=> 'Not implemented',
-            'data'   => 'Not implemented'
+            'data'   => $data
         ]);
     }
+
 }

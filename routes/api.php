@@ -3,8 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Mobile\VmtMobileMainDashboardController;
-use App\Http\Controllers\VmtAPIPMSModuleController;
+use App\Http\Controllers\Api\VmtAPIPMSModuleController;
+use App\Http\Controllers\Api\VmtAPIDashboardController;
+use App\Http\Controllers\Api\VmtAPIAttendanceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,10 +26,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/auth/register', [AuthController::class, 'createUser']);
 Route::post('/auth/login', [AuthController::class, 'loginUser']);
 
-
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/mobiledashboard',[VmtMobileMainDashboardController::class, 'getDashboarddata']);
-});
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
@@ -59,9 +56,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Output : JSON containing kpi review of the form assigned to the given assignee id.
 
     */
-    Route::get('getAssigneeReviews', 'App\Http\Controllers\VmtAPIPMSModuleController@getAssigneeReviews');
-
-
+    Route::get('getAssigneeReviews', 'App\Http\Controllers\Api\VmtAPIPMSModuleController@getAssigneeReviews');
 
     /*
         saveAssigneeReviews():
@@ -70,12 +65,54 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Output : success/failure response.
 
     */
-    Route::post('saveAssigneeReviews', 'App\Http\Controllers\VmtAPIPMSModuleController@saveAssigneeReviews');
+    Route::post('saveAssigneeReviews', 'App\Http\Controllers\Api\VmtAPIPMSModuleController@saveAssigneeReviews');
 
 
-    Route::get('getReviewerReviews', 'App\Http\Controllers\VmtAPIPMSModuleController@getReviewerReviews');
-    Route::post('saveReviewerReviews', 'App\Http\Controllers\VmtAPIPMSModuleController@saveReviewerReviews');
+    Route::get('getReviewerReviews', 'App\Http\Controllers\Api\VmtAPIPMSModuleController@getReviewerReviews');
+    Route::post('saveReviewerReviews', 'App\Http\Controllers\Api\VmtAPIPMSModuleController@saveReviewerReviews');
 
 
+    //Main Dashboard Module
+    Route::get('getDashboardData',  [VmtAPIDashboardController::class,'getDashboardData']);
+
+
+    /*
+        get current day attendance API
+        attendanceGetCurrentDay():
+        Input : date
+        DB Table : vmt_employee_attendance
+        Output : success/failure response.
+
+    */
+    Route::get('attendance_getcurrentday', [VmtAPIAttendanceController::class,'getCurrentDayAttendance']);
+
+    /*
+        attendanceCheckin():
+        Input : date, checkin_time, shift_type
+        DB Table : vmt_employee_attendance
+        Output : success/failure response.
+
+    */
+    Route::post('attendance_checkin', [VmtAPIAttendanceController::class,
+        'attendanceCheckin']);
+
+    /*
+        attendanceCheckout():
+        Input : date, checkout_time,
+        DB Table : vmt_employee_attendance
+        Output : success/failure response.
+
+    */
+    Route::post('attendance_checkout', [VmtAPIAttendanceController::class,
+        'attendanceCheckout']);
+
+    /*
+        attendanceApplyLeave():
+        Input : date, leave_type_id
+        DB Table : vmt_employee_attendance
+        Output : success/failure response.
+    */
+    Route::post('attendance_applyleave', [VmtAPIAttendanceController::class,
+        'attendanceApplyLeave']);
 
 });
