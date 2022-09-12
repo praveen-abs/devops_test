@@ -210,7 +210,7 @@
                                                 <!-- <label class="" for="blood_group">Blood Group</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Blood Group</label>
-                                                    <select placeholder="Blood Group" name="blood_group" class="onboard-form form-control textbox   select2_form_without_search">
+                                                    <select placeholder="Blood Group" name="blood_group" id="blood_group" class="onboard-form form-control textbox   select2_form_without_search">
                                                         <option value="" hidden selected disabled>Select Blood Group</option>
                                                         <option value="a-positive">A Positive</option>
                                                         <option value="a-negative">A Negative</option>
@@ -255,7 +255,7 @@
                                                     <!-- <label class="" for="account_no">Account Number</label> -->
                                                     <label for="" class="float-label">Account Number</label>
 
-                                                    <input type="number" placeholder="Account Number" name="account_no" id="account_no" class="onboard-form form-control textbox " minlength="10" maxlength="10" required />
+                                                    <input type="number" placeholder="Account Number" name="account_no" id="account_no" class="onboard-form form-control textbox " minlength="10" maxlength="18" required />
                                                     <label class="error star_error account_no_label" for="account_no" style="display: none;"></label>
                                                     <!-- <label for="" class="float-label">Account Number</label> -->
                                                 </div>

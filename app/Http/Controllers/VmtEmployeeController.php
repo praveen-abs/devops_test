@@ -326,6 +326,7 @@ class VmtEmployeeController extends Controller
             $newEmployee->marrital_status = $row["marital_status"];
 
             $newEmployee->mobile_number  = $row["mobile_no"];
+            $newEmployee->blood_group  = $row["blood_group"];
             //$newEmployee->email_id   = $row["email"];
             $newEmployee->bank_name   = $row["bank_name"];
             $newEmployee->bank_ifsc_code  = $row["bank_ifsc"];
