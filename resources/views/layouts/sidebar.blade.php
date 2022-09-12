@@ -89,31 +89,26 @@
                     </a>
                     <div class="collapse menu-dropdown" id="attendanceDrop-Down">
                         <ul class="nav nav-sm flex-column">
-							<li class="nav-item">
+							<li class="nav-item active">
 								<a href="{{url('attendance_dashboard')}}" class="nav-link sidebar py-1">
 									<span>Dashboard</span>
 								</a>
 							</li>
-							<li class="crumb-item">
-								<a href="{{url('attendance_approvals')}}" class="text-muted">Approvals</a>
+							<li class="nav-item">
+								<a href="{{url('attendance_approvals')}}" class="nav-link sidebar py-1">Approvals</a>
 							</li>						
-							<li class="crumb-item">
-								<a href="{{url('attendance_shift_woff_hday')}}" class="text-muted">Shift/WeeklyOffs/Holidays</a>
+							<li class="nav-item">
+								<a href="{{url('attendance_shift_woff_hday')}}" class="nav-link sidebar py-1">Shift/WeeklyOff/Holidays</a>
 							</li>
-							<li class="crumb-item active">
-								<a href="{{url('attendance_tracking')}}" class="text-muted">Tracking</a>
+							<li class="nav-item">
+								<a href="{{url('attendance_tracking')}}"class="nav-link sidebar py-1">Tracking</a>
 							</li>
-							<li class="crumb-item">
-								<a href="{{url('attendance_overtime')}}" class="text-muted">OverTime</a>
+							<li class="nav-item">
+								<a href="{{url('attendance_overtime')}}" class="nav-link sidebar py-1">OverTime</a>
 							</li>						
-							<li class="crumb-item">
-								<a href="{{url('attendance_leave')}}" class="text-muted">Leave</a>
+							<li class="nav-item">
+								<a href="{{url('attendance_leave')}}" class="nav-link sidebar py-1">Leave</a>
 							</li>
-                            <li class="nav-item">
-                                <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1">
-                                    <span> Leave</span>
-                                </a>
-                            </li>
                             <li class="nav-item">
                                 <a href="apps-calendar" class="nav-link sidebar py-1" role="button">
 									<span>Attendance</span>
@@ -127,11 +122,11 @@
 									<span>Expenses & Travel</span>
 								</a>
                             </li>
-							<li class="crumb-item">
-								<a href="{{url('attendance_reports')}}" class="text-muted">Reports</a>
+							<li class="nav-item">
+								<a href="{{url('attendance_reports')}}" class="nav-link sidebar py-1"><span>Reports</span></a>
 							</li>						
-							<li class="crumb-item">
-								<a href="{{url('attendance_settings')}}" class="text-muted">Settings</a>
+							<li class="nav-item">
+								<a href="{{url('attendance_settings')}}" class="nav-link sidebar py-1"><span>Settings</span></a>
 							</li>		
                         </ul>
                     </div>

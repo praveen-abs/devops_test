@@ -15,7 +15,7 @@
                     <li class="crumb-item">
 						<a href="{{url('attendance_shift_woff_hday')}}" class="text-muted">Shift/WeeklyOffs/Holidays</a>
 					</li>
-					<li class="crumb-item active">
+					<li class="crumb-item">
 						<a href="{{url('attendance_tracking')}}" class="text-muted">Tracking</a>
 					</li>
 					<li class="crumb-item">
