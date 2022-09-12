@@ -94,26 +94,45 @@
 									<span>Dashboard</span>
 								</a>
 							</li>
+							<li class="crumb-item">
+								<a href="{{url('attendance_approvals')}}" class="text-muted">Approvals</a>
+							</li>						
+							<li class="crumb-item">
+								<a href="{{url('attendance_shift_woff_hday')}}" class="text-muted">Shift/WeeklyOffs/Holidays</a>
+							</li>
+							<li class="crumb-item active">
+								<a href="{{url('attendance_tracking')}}" class="text-muted">Tracking</a>
+							</li>
+							<li class="crumb-item">
+								<a href="{{url('attendance_overtime')}}" class="text-muted">OverTime</a>
+							</li>						
+							<li class="crumb-item">
+								<a href="{{url('attendance_leave')}}" class="text-muted">Leave</a>
+							</li>
                             <li class="nav-item">
                                 <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1">
                                     <span> Leave</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-
-                                <a href="apps-calendar" class="nav-link sidebar py-1" role="button"><span>Attendance
-                                    </span></a>
+                                <a href="apps-calendar" class="nav-link sidebar py-1" role="button">
+									<span>Attendance</span>
+								</a>
                             </li>
                             <li class="nav-item">
-
                                 <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button"><span>Timesheet</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button"><span>Expenses &
-                                        Travel</span></a>
+                                <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button">
+									<span>Expenses & Travel</span>
+								</a>
                             </li>
-
-
+							<li class="crumb-item">
+								<a href="{{url('attendance_reports')}}" class="text-muted">Reports</a>
+							</li>						
+							<li class="crumb-item">
+								<a href="{{url('attendance_settings')}}" class="text-muted">Settings</a>
+							</li>		
                         </ul>
                     </div>
                 </li>

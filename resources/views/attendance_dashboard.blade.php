@@ -12,10 +12,6 @@
 		position: relative;
 		top:-20px;
     }
-	.nav-tab a:hover
-	{
-		background-color:orange;
-		}
 </style>
 @endsection
 

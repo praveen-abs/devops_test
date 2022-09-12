@@ -6,13 +6,37 @@
             <div class="page-title-right">
 
                 <ol class="breadcrumb m-0  fw-bold ">
-                    <li class="crumb-item active"><a href="{{route('page-not-found')}}" target="_self"
-                            class="text-muted">Leave</a></li>
+					<li class="crumb-item active">
+						<a href="{{url('attendance_dashboard')}}" class="text-muted">Dashboard</a>
+					</li>
+					<li class="crumb-item">
+						<a href="{{url('attendance_approvals')}}" class="text-muted">Approvals</a>
+					</li>						
+                    <li class="crumb-item">
+						<a href="{{url('attendance_shift_woff_hday')}}" class="text-muted">Shift/WeeklyOffs/Holidays</a>
+					</li>
+					<li class="crumb-item active">
+						<a href="{{url('attendance_tracking')}}" class="text-muted">Tracking</a>
+					</li>
+					<li class="crumb-item">
+						<a href="{{url('attendance_overtime')}}" class="text-muted">OverTime</a>
+					</li>						
+                    <li class="crumb-item">
+						<a href="{{url('attendance_leave')}}" class="text-muted">Leave</a>
+					</li>
                     <li class="crumb-item"><a href="apps-calendar" class="text-muted">Attendance</a></li>
                     <li class="crumb-item"><a href="{{route('page-not-found')}}" class="text-muted">Timesheet</a></li>
-                    <li class="crumb-item"><a href="{{route('page-not-found')}}" class="text-muted">Expenses &
-                            Travel</a></li>
-
+                    <li class="crumb-item">
+						<a href="{{route('page-not-found')}}" class="text-muted">
+							Expenses & Travel
+						</a>
+					</li>
+					<li class="crumb-item">
+						<a href="{{url('attendance_reports')}}" class="text-muted">Reports</a>
+					</li>						
+                    <li class="crumb-item">
+						<a href="{{url('attendance_settings')}}" class="text-muted">Settings</a>
+					</li>					
                 </ol>
             </div>
 
