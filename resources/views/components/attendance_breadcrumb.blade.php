@@ -13,7 +13,7 @@
 						<a href="{{url('attendance_approvals')}}" class="text-muted">Approvals</a>
 					</li>						
                     <li class="crumb-item">
-						<a href="{{url('attendance_shift_woff_hday')}}" class="text-muted">Shift/WeeklyOffs/Holidays</a>
+						<a href="{{url('attendance_shift_woff_hday')}}" class="text-muted">Shift/WeeklyOff/Holidays</a>
 					</li>
 					<li class="crumb-item">
 						<a href="{{url('attendance_tracking')}}" class="text-muted">Tracking</a>

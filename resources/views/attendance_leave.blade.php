@@ -22,7 +22,7 @@
 
 <div class="card flex-fill project-wrapper">
 	<div class="card-header">
-	   <h5><span class="text-muted">Attendance &gt;</span> <span class="text-danger">  </span></h5>
+	   <h5><span class="text-muted">Attendance &gt;</span> <span class="text-danger"> Leave </span></h5>
 	</div>
         <div class="card-body p-2">
 
