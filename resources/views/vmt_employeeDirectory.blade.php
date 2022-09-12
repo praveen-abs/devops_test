@@ -369,12 +369,13 @@
                                 </span>
                             </div>
                         </td>
+                       
                         <td> {{$employee->emp_no}}</td>
                         <td>{{$employee->designation}}</td>
                         <td>{{$employee->l1_manager_name }}</td>
                         <td>{{$employee->doj }}</td>
                         <!-- <td><span>{{$employee->email_id }}</span></td> -->
-                        <td>B <sup>+</sup></td>
+                        <td>{{$employee->blood_group? $employee->blood_group : "-" }}</td>
                         <td>70%</td>
                         <td>
                             <!-- <div class="d-flex justify-content-center align-items-center"> -->

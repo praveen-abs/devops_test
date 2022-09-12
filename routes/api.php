@@ -115,4 +115,14 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('attendance_applyleave', [VmtAPIAttendanceController::class,
         'attendanceApplyLeave']);
 
+    
+    /*
+        attendanceMonthlyReport():
+        Input : date
+        DB Table : vmt_employee_attendance
+        Output : success/failure response.
+    */
+    Route::get('attendance_monthlyreport', [VmtAPIAttendanceController::class,
+        'attendanceMonthlyReport']);
+
 });

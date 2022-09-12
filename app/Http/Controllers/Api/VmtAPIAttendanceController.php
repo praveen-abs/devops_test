@@ -103,5 +103,43 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         ]);
     }
 
+    /*
+        attendanceMonthlyReport():
+        Input : date
+        DB Table : vmt_employee_attendance
+        Output : success/failure response.
+    */
+    public function attendanceMonthlyReport(Request $request)
+    {
+        // code...
+        $workingCount = $onTimeCount = $lateCount = $leftTimelyCount = $leftEarlyCount = $onLeaveCount = $absentCount = '0 days';
+        
+        $reportMonth  = $request->has('month') ? $request->month : date('m');
+        
+        $attendanceReport  = VmtEmployeeAttendance::select('id', 'date', 'user_id', 'checkin_time', 'checkout_time', 'leave_type_id', 'shift_type')
+                ->where('user_id', auth::user()->id)
+                ->whereMonth("date", $reportMonth)
+                ->get();
+        
+        $workingCount = $attendanceReport->count() .' days';
+        
+        $onLeaveCount = $attendanceReport->whereNotNull('leave_type_id')->count() .' days'; 
+
+        return response()->json([
+            'status' => true,
+            'message'=> 'Leave success',
+            'data'   => [
+                            "dailyReports"  => $attendanceReport, 
+                            "workingCount"  => $workingCount, 
+                            "onLeaveCount"  => $onLeaveCount, 
+                            "onTimeCount"   => $onTimeCount,
+                            "lateCount"       => $lateCount,
+                            "leftTimelyCount" => $leftTimelyCount,
+                            "leftEarlyCount"  => $leftEarlyCount,
+                            "absentCount"     => $absentCount
+                        ]
+        ]);
+
+    }
 
 }
