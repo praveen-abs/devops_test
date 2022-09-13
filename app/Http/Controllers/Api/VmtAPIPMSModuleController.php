@@ -417,7 +417,7 @@ class VmtAPIPMSModuleController extends HRMSBaseAPIController
             $result[$key]['is_employee_submitted'] = $isAssigneeSubmitted;
             $result[$key]['is_employee_accepted'] = $isAssigneeAccepted;
             $result[$key]['rating'] = (int)$rating;
-            $result[$key]['completed_status'] = 55; //Hard-coded for now.Need to write logic
+            $result[$key]['completion_status'] = 55; //Hard-coded for now.Need to write logic
             foreach($arrayReviewers as $reviewerKey => $reviewer){
                 $reviewerDetails = User::where('id',$reviewer)->with('getEmployeeDetails')->first();
                 $result[$key]['manager'][$reviewerKey]['manager_id'] = $reviewer;
