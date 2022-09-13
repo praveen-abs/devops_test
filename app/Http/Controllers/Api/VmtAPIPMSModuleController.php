@@ -372,14 +372,14 @@ class VmtAPIPMSModuleController extends HRMSBaseAPIController
         $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews.getUserAssigneeDetails.getEmployeeDetails')->WhereRaw("find_in_set(".$userId.", assignee_id)")
                                 ->orderBy('id','DESC')
                                 ->get();
-      
+
 
 //dd($pmsKpiAssigneeDetails);
         $result = [];
 
         // get necessary details for display in V2 dashboard of assignees data
         foreach($pmsKpiAssigneeDetails as $key => $kpiAssignee){
-            $Kpi_form_name = VmtPMS_KPIFormModel::where('id',$kpiAssignee->vmt_pms_kpiform_id)->first();                                
+            $Kpi_form_name = VmtPMS_KPIFormModel::where('id',$kpiAssignee->vmt_pms_kpiform_id)->first();
             $arrayReviewers = explode(',',$kpiAssignee->reviewer_id);
 
             $result[$key]['vmt_pms_kpiform_assigned_id'] = $kpiAssignee->id;
@@ -415,17 +415,18 @@ class VmtAPIPMSModuleController extends HRMSBaseAPIController
             $result[$key]['is_employee_submitted'] = $isAssigneeSubmitted;
             $result[$key]['is_employee_accepted'] = $isAssigneeAccepted;
             $result[$key]['rating'] = (int)$rating;
+            $result[$key]['completed_status'] = 55; //Hard-coded for now.Need to write logic
             foreach($arrayReviewers as $reviewerKey => $reviewer){
                 $reviewerDetails = User::where('id',$reviewer)->with('getEmployeeDetails')->first();
                 $result[$key]['manager'][$reviewerKey]['manager_id'] = $reviewer;
                 $result[$key]['manager'][$reviewerKey]['manager_name'] = $reviewerDetails->name;
                 $result[$key]['manager'][$reviewerKey]['manager_emp_id'] = isset($reviewerDetails->getEmployeeDetails) ? (String)$reviewerDetails->getEmployeeDetails->emp_no : '';
             }
-           
-       
-           
+
+
+
         }
-        
+
         return response()->json([
             'status' => true,
             'message'=> '',
