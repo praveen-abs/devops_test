@@ -368,19 +368,16 @@ class VmtAPIPMSModuleController extends HRMSBaseAPIController
 
         // get necessary details for display in V2 dashboard of assignees data
         foreach($pmsKpiAssigneeDetails as $key => $kpiAssignee){
+            $Kpi_form_name = VmtPMS_KPIFormModel::where('id',$kpiAssignee->vmt_pms_kpiform_id)->first();                                
             $arrayReviewers = explode(',',$kpiAssignee->reviewer_id);
 
             $result[$key]['vmt_pms_kpiform_assigned_id'] = $kpiAssignee->id;
-            $result[$key]['vmt_pms_kpiform_assigned_form_id'] = $kpiAssignee->vmt_pms_kpiform_id;
+            $result[$key]['vmt_pms_kpiform_assigned_form_id'] = (int)$kpiAssignee->vmt_pms_kpiform_id;
+            $result[$key]['assignment_period'] = $kpiAssignee->assignment_period;
+            $result[$key]['kpi_form_name'] = $Kpi_form_name->form_name;
+
             $result[$key]['employee_name'] = $assigneeDetails->name;
             $result[$key]['employee_emp_id'] = isset($assigneeDetails->getEmployeeDetails) ? (String)$assigneeDetails->getEmployeeDetails->emp_no : '';
-            foreach($arrayReviewers as $reviewerKey => $reviewer){
-                $reviewerDetails = User::where('id',$reviewer)->with('getEmployeeDetails')->first();
-                $result[$key]['manager'][$reviewerKey]['manager_id'] = $reviewer;
-                $result[$key]['manager'][$reviewerKey]['manager_name'] = $reviewerDetails->name;
-                $result[$key]['manager'][$reviewerKey]['manager_emp_id'] = isset($reviewerDetails->getEmployeeDetails) ? (String)$reviewerDetails->getEmployeeDetails->emp_no : '';
-            }
-            $result[$key]['assignment_period'] = $kpiAssignee->assignment_period;
             $isAssigneeAccepted = '';
             $isAssigneeSubmitted = '';
             $rating = '';
@@ -407,9 +404,17 @@ class VmtAPIPMSModuleController extends HRMSBaseAPIController
             $result[$key]['is_employee_submitted'] = $isAssigneeSubmitted;
             $result[$key]['is_employee_accepted'] = $isAssigneeAccepted;
             $result[$key]['rating'] = $rating;
+            foreach($arrayReviewers as $reviewerKey => $reviewer){
+                $reviewerDetails = User::where('id',$reviewer)->with('getEmployeeDetails')->first();
+                $result[$key]['manager'][$reviewerKey]['manager_id'] = $reviewer;
+                $result[$key]['manager'][$reviewerKey]['manager_name'] = $reviewerDetails->name;
+                $result[$key]['manager'][$reviewerKey]['manager_emp_id'] = isset($reviewerDetails->getEmployeeDetails) ? (String)$reviewerDetails->getEmployeeDetails->emp_no : '';
+            }
+           
+       
+           
         }
-        $Kpi_form_name = VmtPMS_KPIFormModel::where('id',$kpiAssignee->vmt_pms_kpiform_id)->first('form_name');                                
-        $result[$key]['kpi_form_name'] = $Kpi_form_name;
+        
         return response()->json([
             'status' => true,
             'message'=> '',
