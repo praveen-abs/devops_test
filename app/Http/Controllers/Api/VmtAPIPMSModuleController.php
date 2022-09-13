@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 
-use App\Http\Controllers\api\HRMSBaseAPIController;
+use App\Http\Controllers\Api\HRMSBaseAPIController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -42,11 +42,13 @@ class VmtAPIPMSModuleController extends HRMSBaseAPIController
 
     public function getKPIFormDetails(Request $request){
 
-        $KpiForm = VmtPMS_KPIFormModel::where('id',$request->kpi_form_id)->get();
+        $KpiForm      = VmtPMS_KPIFormModel::where('id',$request->form_id)->get();
+        $formDetails  = VmtPMS_KPIFormDetailsModel::where('vmt_pms_kpiform_id', $request->form_id)->get();
+
         return response()->json([
             'status' => true,
             'message'=> '',
-            'data'   => $KpiForm
+            'data'   => ["form" => $KpiForm, "form_details" => $formDetails]
         ]);
     }
 
