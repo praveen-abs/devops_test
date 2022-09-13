@@ -498,14 +498,14 @@ class VmtAPIPMSModuleController extends HRMSBaseAPIController
                     $arrayIsReviewerAccepted = json_decode($reviewData->is_reviewer_accepted,true);
                     foreach($arrayIsReviewerSubmitted as $reviewerId => $reviewerSubmitted){
                         if($reviewerId == $userId && $reviewData->assignee_id == $assignee){
-                            $result[$i]['is_manager_submitted'] = (String)$reviewerSubmitted;
+                            $result[$i]['is_manager_submitted'] = (int)$reviewerSubmitted;
 
-                            $result[$i]['is_manager_accepted'] = (String)$arrayIsReviewerAccepted[$reviewerId];
+                            $result[$i]['is_manager_accepted'] = (int)$arrayIsReviewerAccepted[$reviewerId];
                         }
                     }
                     if($reviewData->assignee_id == $assignee){
-                        $result[$i]['is_employee_submitted'] = (String)$reviewData->is_assignee_submitted;
-                        $result[$i]['is_employee_accepted'] = (String)$reviewData->is_assignee_accepted;
+                        $result[$i]['is_employee_submitted'] = (int)$reviewData->is_assignee_submitted;
+                        $result[$i]['is_employee_accepted'] = (int)$reviewData->is_assignee_accepted;
 
                         $rating = calculateOverallReviewRatings($kpiAssignee->id, $assignee);
                         $result[$i]['rating'] = $rating;
@@ -518,7 +518,7 @@ class VmtAPIPMSModuleController extends HRMSBaseAPIController
         }
         return response()->json([
             'status' => true,
-            'message'=> '',
+            'message'=> 'Success',
             'data'   => $result
         ]);
     }
