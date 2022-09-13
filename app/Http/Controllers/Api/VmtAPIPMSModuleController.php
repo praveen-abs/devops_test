@@ -374,7 +374,7 @@ class VmtAPIPMSModuleController extends HRMSBaseAPIController
             $result[$key]['vmt_pms_kpiform_assigned_id'] = $kpiAssignee->id;
             $result[$key]['vmt_pms_kpiform_assigned_form_id'] = (int)$kpiAssignee->vmt_pms_kpiform_id;
             $result[$key]['assignment_period'] = $kpiAssignee->assignment_period;
-            $result[$key]['kpi_form_name'] = $Kpi_form_name->form_name;
+            $result[$key]['form_name'] = $Kpi_form_name->form_name;
 
             $result[$key]['employee_name'] = $assigneeDetails->name;
             $result[$key]['employee_emp_id'] = isset($assigneeDetails->getEmployeeDetails) ? (String)$assigneeDetails->getEmployeeDetails->emp_no : '';
@@ -385,15 +385,15 @@ class VmtAPIPMSModuleController extends HRMSBaseAPIController
                 foreach($kpiAssignee->getPmsKpiFormReviews as $reviewData){
 
                     if($reviewData->assignee_id == $userId){
-                        $isAssigneeAccepted = (String)$reviewData->is_assignee_accepted;
-                        $isAssigneeSubmitted = (String)$reviewData->is_assignee_submitted;
+                        $isAssigneeAccepted = (int)$reviewData->is_assignee_accepted;
+                        $isAssigneeSubmitted = (int)$reviewData->is_assignee_submitted;
 
                         $arrayIsReviewerSubmitted = json_decode($reviewData->is_reviewer_submitted,true);
                         $arrayIsReviewerAccepted = json_decode($reviewData->is_reviewer_accepted,true);
                         $i = 0;
                         foreach($arrayIsReviewerSubmitted as $reviewerId => $isSubmittedStatus){
-                            $result[$key]['manager'][$i]['is_manager_submitted'] = (String)$isSubmittedStatus;
-                            $result[$key]['manager'][$i]['is_manager_accepted'] = isset($arrayIsReviewerAccepted[$reviewerId]) ? (String)$arrayIsReviewerAccepted[$reviewerId] : '';
+                            $result[$key]['manager'][$i]['is_manager_submitted'] = (int)$isSubmittedStatus;
+                            $result[$key]['manager'][$i]['is_manager_accepted'] = isset($arrayIsReviewerAccepted[$reviewerId]) ? (int)$arrayIsReviewerAccepted[$reviewerId] : '';
                             $i++;
                         }
                     }
@@ -403,7 +403,7 @@ class VmtAPIPMSModuleController extends HRMSBaseAPIController
             }
             $result[$key]['is_employee_submitted'] = $isAssigneeSubmitted;
             $result[$key]['is_employee_accepted'] = $isAssigneeAccepted;
-            $result[$key]['rating'] = $rating;
+            $result[$key]['rating'] = (int)$rating;
             foreach($arrayReviewers as $reviewerKey => $reviewer){
                 $reviewerDetails = User::where('id',$reviewer)->with('getEmployeeDetails')->first();
                 $result[$key]['manager'][$reviewerKey]['manager_id'] = $reviewer;
