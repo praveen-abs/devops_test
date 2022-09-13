@@ -353,15 +353,15 @@ class VmtAPIPMSModuleController extends HRMSBaseAPIController
     */
     public function getAssigneeKPIForms(Request $request)
     {
-        $validation = Validator::make($request->all(), [
-            'assignee_id' => 'required',
-        ],[
-            'assignee_id.required' => 'Assignee Id is Required',
-        ]);
+        // $validation = Validator::make($request->all(), [
+        //     'assignee_id' => 'required',
+        // ],[
+        //     'assignee_id.required' => 'Assignee Id is Required',
+        // ]);
 
-        if ($validation->fails()) {
-            return sendError($validation->errors()->first());
-        }
+        // if ($validation->fails()) {
+        //     return sendError($validation->errors()->first());
+        // }
         $userId  = auth::user()->id;
         if($request->assignee_id != $userId){
             return sendError('Assignee Id is not matched');
