@@ -363,9 +363,9 @@ class VmtAPIPMSModuleController extends HRMSBaseAPIController
         //     return sendError($validation->errors()->first());
         // }
         $userId  = auth::user()->id;
-        if($request->assignee_id != $userId){
-            return sendError('Assignee Id is not matched');
-        }
+        // if($request->assignee_id != $userId){
+        //     return sendError('Assignee Id is not matched');
+        // }
 
         $assigneeDetails = User::where('id',$userId)->with('getEmployeeDetails')->first();
 
