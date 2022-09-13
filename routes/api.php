@@ -40,6 +40,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     */
     Route::post('getAssigneeKPIForms', [VmtAPIPMSModuleController::class,'getAssigneeKPIForms']);
+       Route::post('getKPIFormDetails', [VmtAPIPMSModuleController::class,'getKPIFormDetails']);
+ 
     /*
         getReviewerKPIForms():
         DB Table : vmt_pms_kpiform_assigned

@@ -40,6 +40,17 @@ class VmtAPIPMSModuleController extends HRMSBaseAPIController
         ]);
     }
 
+    public function getKPIFormDetails(Request $request){
+
+        $KpiForm = VmtPMS_KPIFormModel::where('id',$request->kpi_form_id)->get();
+        return response()->json([
+            'status' => true,
+            'message'=> '',
+            'data'   => $KpiForm
+        ]);
+    }
+
+
 
     public function getAssigneeReviews(Request $request){
         // Flow 1 HR creates Form and Assignee
