@@ -361,7 +361,9 @@ class VmtAPIPMSModuleController extends HRMSBaseAPIController
         $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews.getUserAssigneeDetails.getEmployeeDetails')->WhereRaw("find_in_set(".$userId.", assignee_id)")
                                 ->orderBy('id','DESC')
                                 ->get();
+      
 
+//dd($pmsKpiAssigneeDetails);
         $result = [];
 
         // get necessary details for display in V2 dashboard of assignees data
@@ -369,6 +371,7 @@ class VmtAPIPMSModuleController extends HRMSBaseAPIController
             $arrayReviewers = explode(',',$kpiAssignee->reviewer_id);
 
             $result[$key]['vmt_pms_kpiform_assigned_id'] = $kpiAssignee->id;
+            $result[$key]['vmt_pms_kpiform_assigned_form_id'] = $kpiAssignee->vmt_pms_kpiform_id;
             $result[$key]['employee_name'] = $assigneeDetails->name;
             $result[$key]['employee_emp_id'] = isset($assigneeDetails->getEmployeeDetails) ? (String)$assigneeDetails->getEmployeeDetails->emp_no : '';
             foreach($arrayReviewers as $reviewerKey => $reviewer){
@@ -405,6 +408,8 @@ class VmtAPIPMSModuleController extends HRMSBaseAPIController
             $result[$key]['is_employee_accepted'] = $isAssigneeAccepted;
             $result[$key]['rating'] = $rating;
         }
+        $Kpi_form_name = VmtPMS_KPIFormModel::where('id',$kpiAssignee->vmt_pms_kpiform_id)->first('form_name');                                
+        $result[$key]['kpi_form_name'] = $Kpi_form_name;
         return response()->json([
             'status' => true,
             'message'=> '',
