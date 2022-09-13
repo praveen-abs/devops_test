@@ -42,7 +42,7 @@ class VmtAPIPMSModuleController extends HRMSBaseAPIController
 
     public function getKPIFormDetails(Request $request){
 
-        $KpiForm      = VmtPMS_KPIFormModel::where('id',$request->form_id)->get();
+        $KpiForm      = VmtPMS_KPIFormModel::where('id',$request->form_id)->first();
         $formDetails  = VmtPMS_KPIFormDetailsModel::where('vmt_pms_kpiform_id', $request->form_id)->get();
 
         return response()->json([
