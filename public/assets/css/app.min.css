@@ -18524,7 +18524,7 @@ table > tbody > tr > td > img,
 }
 
 .pms-dashboard-wrapper {
-    background-image: url(../images/performancebg.png);
+    /* background-image: url(../images/performancebg.png); */
     /* height: 400px; */
     background-size: cover;
     background-repeat: no-repeat;
