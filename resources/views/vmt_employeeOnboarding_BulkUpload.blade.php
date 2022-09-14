@@ -1025,7 +1025,7 @@
                     contentType: false,
                     success: function(data) {
                         if(data.success_count > 0){
-                            $('#success-msg').html('<p>Upload Info :</p><ul><li>' + data.success + '<li></ul>');     
+                            $('#success-msg').html('<p>Upload Infoss :</p><ul><li>' + data.success + '</li></ul>');     
                         }
                        
                         if(data.failed_count > 0){

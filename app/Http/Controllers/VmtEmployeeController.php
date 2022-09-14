@@ -506,15 +506,6 @@ class VmtEmployeeController extends Controller
 
             //dd($row['confirmation_period'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['confirmation_period'])->format('Y-m-d'));
 
-            // $row['doj'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d');
-            // $row['dob'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['dob'])->format('Y-m-d');
-            // $row['father_dob'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['father_dob'])->format('Y-m-d');
-            // $row['mother_dob'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['mother_dob'])->format('Y-m-d');
-
-            // $row['spouse_dob'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['spouse_dob'])->format('Y-m-d');
-
-            // $row['confirmation_period'] = $row['confirmation_period'];
-            // $row['mobile_no'] = (int)$row['mobile_no'];
             $rules = [
             //     'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
             //     'email' => 'required|email|unique:users,email',
@@ -596,18 +587,19 @@ class VmtEmployeeController extends Controller
 
                     ]);
                     $user->assignRole("Employee");
-
+                    // var_dump($row['dob']);
+                    //  dd($row['dob'])->format('Y-m-d');
                     $newEmployee = new VmtEmployee;
                     $newEmployee->userid = $user->id;
                     $newEmployee->emp_no   =    $empNo;
                     $newEmployee->gender   =    $row["gender"];
-                    $newEmployee->doj   =   \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d');
-                    $newEmployee->dol   =   \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d');
+                  $newEmployee->doj   =  $this->convertDate($row['doj']);
+                    $newEmployee->dol   =   $this->convertDate($row['doj']);
                     $newEmployee->location   =    $row["work_location"];
-                    $newEmployee->dob   =   \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d');
+                    $newEmployee->dob   =   $this->convertDate($row['dob']);
                     $newEmployee->father_name   =  $row["father_name"];
                     $newEmployee->father_gender   =  $row["father_gender"];
-                    $newEmployee->father_dob   =  \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d');
+                   $newEmployee->father_dob   =  $this->convertDate($row['father_dob']);
 
                     $newEmployee->pan_number   =  isset( $row["pan_no"] ) ? ($row["pan_no"]) : "";
                     $newEmployee->pan_ack   =    $row["pan_ack"];
@@ -725,6 +717,12 @@ class VmtEmployeeController extends Controller
         return $data;
     }
 
+    public function convertDate($date)
+    {
+        //dd("Date is : ".\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($date)->format('m-d-Y') );
+        return \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($date)->format('m-d-Y');
+
+    }
 
     // Generate Employee Apoinment PDF after onboarding
     public function attachApoinmentPdf($employeeData){

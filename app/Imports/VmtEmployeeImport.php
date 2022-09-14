@@ -13,8 +13,9 @@ use App\Models\VmtEmployeeDetails;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtClientMaster;
 use App\Models\Compensatory;
+use PhpOffice\PhpSpreadsheet\Cell\DefaultValueBinder;
 
-class VmtEmployeeImport implements ToModel,  WithHeadingRow
+class VmtEmployeeImport extends DefaultValueBinder implements ToModel,  WithHeadingRow
 {
     
     public function model(array $row)
