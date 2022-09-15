@@ -251,9 +251,9 @@ header {
             </div>
             @if(count($pmsKpiAssigneeDetails) == 0)
                 <div class="mt-2 p-5" id="initial-section">
-                    <div class="row justify-content-center">
+                    <div class="row ">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center p-0 mt-3 mb-2 p-5">
-                            <div class="p-3"><img src="{{ URL::asset('assets/images/assign_goals.png') }}"
+                            <div class="p-3 justify-content-center d-flex align-items-center" ><img src="{{ URL::asset('assets/images/assign_goals.png') }}"
                                     style="width: 37%;height: 74%;"></div>
                             <h4><b>Assign Goals for your employees</b></h4>
                             <div class="mt-4">
