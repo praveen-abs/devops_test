@@ -336,7 +336,7 @@ class VmtEmployeeController extends Controller
             //$newEmployee->father_age   = $row["father_age"];
             $newEmployee->mother_name   = $row["mother_name"];
             //$newEmployee->mother_age  = $row["mother_age"];
-            if ($row['marital_status'] <> 'single') {
+            if ($row['marital_status'] <> 'unmarried') {
                 $newEmployee->spouse_name   = $row["spouse_name"];
                 $newEmployee->spouse_age   = $row["spouse_dob"];
                 if ($row['no_child'] > 0) {
@@ -507,9 +507,9 @@ class VmtEmployeeController extends Controller
             $rules = [
             ];
             $messages = [
-             
+
             ];
-            
+
             $validator = Validator::make($row, $rules, $messages);
             if ($validator->passes()) {
 
@@ -533,13 +533,13 @@ class VmtEmployeeController extends Controller
                     $newEmployee->userid = $user->id;
                     $newEmployee->emp_no   =    $empNo;
                     $newEmployee->gender   =    $row["gender"];
-                  $newEmployee->doj   =  $row['doj'];
+                    $newEmployee->doj   =  $row['doj'];
                     $newEmployee->dol   =   $row['doj'];
                     $newEmployee->location   =    $row["work_location"];
                     $newEmployee->dob   =   $row['dob'];
                     $newEmployee->father_name   =  $row["father_name"];
                     $newEmployee->father_gender   =  $row["father_gender"];
-                   $newEmployee->father_dob   =  $row['father_dob'];
+                    $newEmployee->father_dob   =  $row['father_dob'];
 
                     $newEmployee->pan_number   =  isset( $row["pan_no"] ) ? ($row["pan_no"]) : "";
                     $newEmployee->pan_ack   =    $row["pan_ack"];
@@ -554,8 +554,7 @@ class VmtEmployeeController extends Controller
                     $newEmployee->mother_name   = $row["mother_name"];
                     $newEmployee->mother_gender   = $row["mother_gender"];
                     $newEmployee->mother_dob   = $row["mother_dob"];
-                    $newEmployee->reporting_manager_code   = $row["reporting_manager_code"];
-                    if ($row['marital_status'] <> 'single') {
+                    if ($row['marital_status'] <> 'unmarried') {
                         $newEmployee->spouse_name   = $row["spouse_name"];
                         $newEmployee->spouse_age   = $row["spouse_dob"];
                         if ($row['no_child'] > 0) {
@@ -576,12 +575,10 @@ class VmtEmployeeController extends Controller
                         $empOffice->confirmation_period  = $row['confirmation_period'];
                         $empOffice->holiday_location  = $row["holiday_location"];
 
-                        if($row["l1_manager_code"] !=  $empNo)
+                        if($this->isUserExist( $row["l1_manager_code"]))
                             $empOffice->l1_manager_code  = $row["l1_manager_code"];
-                        else
-                            $empOffice->l1_manager_code  = "";
 
-                        $empOffice->l1_manager_name  = $row["l1_manager_name"];
+                        // $empOffice->l1_manager_name  = $row["l1_manager_name"];
                         $empOffice->work_location  = $row["work_location"];
                         $empOffice->officical_mail  = $row["official_mail"];
                         $empOffice->official_mobile  = $row["official_mobile"];
@@ -663,6 +660,14 @@ class VmtEmployeeController extends Controller
         //dd("Date is : ".$date)->format('m-d-Y') );
         return \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($date)->format('d-m-Y');
 
+    }
+
+    public function isUserExist($t_emp_code)
+    {
+        if(empty(User::where('user_code',$t_emp_code)->where('is_admin','0')->first()))
+          return false;
+        else
+          return true;
     }
 
     // Generate Employee Apoinment PDF after onboarding
@@ -747,14 +752,13 @@ class VmtEmployeeController extends Controller
             {
                 $empNo = $row['employee_code'];
 
-                $checking_report_mang = User::where('user_code' ,$row['reporting_manager_code'])->first();
-                if($checking_report_mang !=""){
+                if($this->isUserExist( $row["l1_manager_code"])){
 
 
             // $row['doj'] = date('Y-m-d', $row['doj']);
                 $row['mobile_no'] = (int)$row['mobile_no'];
                 $rules = [
-                  
+
                 ];
                 $messages = [
                 ];
@@ -785,7 +789,6 @@ class VmtEmployeeController extends Controller
                     $newEmployee->doj   =    $row['doj'];
                     $newEmployee->dol   =    $row['doj'];
                     $newEmployee->mobile_number   =    $row['mobile_no'];
-                     $newEmployee->reporting_manager_code   =   $row["reporting_manager_code"];
                     $newEmployee->save();
 
                     if($newEmployee){
@@ -954,7 +957,7 @@ class VmtEmployeeController extends Controller
             //$newEmployee->father_age   = $row["father_age"];
             $newEmployee->mother_name   = $row["mother_name"];
             //$newEmployee->mother_age  = $row["mother_age"];
-            if ($row['marital_status'] <> 'single') {
+            if ($row['marital_status'] <> 'unmarried') {
                 $newEmployee->spouse_name   = $row["spouse_name"];
                 $newEmployee->spouse_age   = $row["spouse_dob"];
                 if ($row['no_child'] > 0) {
