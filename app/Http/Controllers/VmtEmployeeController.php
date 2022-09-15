@@ -785,6 +785,7 @@ class VmtEmployeeController extends Controller
                     $newEmployee->doj   =    $row['doj'];
                     $newEmployee->dol   =    $row['doj'];
                     $newEmployee->mobile_number   =    $row['mobile_no'];
+                     $newEmployee->reporting_manager_code   =   $row["reporting_manager_code"];
                     $newEmployee->save();
 
                     if($newEmployee){
