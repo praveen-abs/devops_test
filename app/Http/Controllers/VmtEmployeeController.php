@@ -377,7 +377,7 @@ class VmtEmployeeController extends Controller
                 $empOffice->process = $row["process"];// => "k"
                 $empOffice->designation = $row["designation"];// => "k"
                 $empOffice->cost_center = $row["cost_center"];// => "k"
-                $empOffice->confirmation_period  = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['confirmation_period'])->format('Y-m-d');// => "k"
+                $empOffice->confirmation_period  = $row['confirmation_period'];// => "k"
                 $empOffice->holiday_location  = $row["holiday_location"];// => "k"
                 $empOffice->l1_manager_code  = $row["l1_manager_code"];// => "k"
                 // $empOffice->l1_manager_designation  = $row["l1_manager_designation"];// => "k"
@@ -504,72 +504,12 @@ class VmtEmployeeController extends Controller
                 }
             }
 
-            //dd($row['confirmation_period'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['confirmation_period'])->format('Y-m-d'));
-
             $rules = [
-            //     'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-            //     'email' => 'required|email|unique:users,email',
-            //     'gender' => 'required|in:male,female,other',
-            //    // 'doj' => 'required|date',
-            //     'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-            //    // 'dob' => 'required|date|before:-18 years',
-            //     'father_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-            //     'pan_no' => 'required|regex:/(^([A-Z]){3}P([A-Z]){1}([0-9]){4}([A-Z]){1}$)/u',
-            //     'pan_ack' => 'required_if:pan_no,==,""',
-            //     'aadhar' => 'required|regex:/(^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$)/u',
-            //     'marital_status' => 'required|in:single,married,widowed,separated,divorced',
-            //     'mobile_no' => 'required|regex:/^([0-9]{10})?$/u|numeric',
-            //     'bank_name' => 'required|regex:/(^([a-zA-z]+)(\d+)?$)/u',
-            //     'bank_ifsc' => 'required|regex:/(^([A-Z]){4}0([A-Z0-9]){6}?$)/u',
-            //     'account_no' => 'required|regex:/^([0-9]{9,18})?$/u|numeric',
-            //     'current_address' => 'required',
-            //     'permanent_address' => 'required',
-            //     'mother_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-            //     'spouse_name' => 'required_unless:marital_status,single|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-            //    // 'spouse_dob' => 'required_unless:marital_status,single|date',
-            //     'child_name' => 'nullable|regex:/(^(,?[a-zA-z. ])$)/u',
-            //     'child_dob' => 'nullable|regex:/(^(,?([0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$)/u',
-            //     //'department' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-            //     //'process' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-            //     //'designation' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-            //     'cost_center' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-            //     //'confirmation_period' => 'required|date',
-            //     'holiday_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-            //     'l1_manager_code' => 'required|regex:/(^([a-zA-z0-9.]+)(\d+)?$)/u',
-            //     //'l1_manager_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-            //     'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-            //     'official_mail' => 'required|email',
-            //     'official_mobile' => 'required|regex:/^([0-9]{10})?$/u|numeric',
-            //     'emp_notice' => 'required|numeric',
-            //     'basic' => 'required|numeric',
-            //     'hra' => 'required|numeric',
-            //     'statutory_bonus' => 'required|numeric',
-            //     'child_education_allowance' => 'required|numeric',
-            //     'food_coupon' => 'required|numeric',
-            //     'lta' => 'required|numeric',
-            //     'special_allowance' => 'required|numeric',
-            //     'other_allowance' => 'required|numeric',
-            //     'epf_employer_contribution' => 'required|numeric',
-            //     'insurance' => 'required|numeric',
-            //     'graduity' => 'required|numeric',
-            //     'epf_employee' => 'required|numeric',
-            //     'esic_employee' => 'required|numeric',
-            //     'professional_tax' => 'required|numeric',
-            //     'labour_welfare_fund' => 'required|numeric',
-
             ];
             $messages = [
-                // 'required' => 'The :attribute field is required.',
-                // 'min' => 'The :attribute field should be atleast :min character.',
-                // 'max' => 'The :attribute field should be not more than :max character.',
-                // 'numeric' => 'The :attribute field sould contain only numbers.',
-                // 'email' => 'The :attribute field email is not valid.',
-                // 'date' => 'The :attribute field date is not valid.',
-                // 'in' => 'The :attribute field date is not valid. the option should be like :in',
-                // 'unique' => 'The :attribute should be unique',
-                // 'regex' => 'The :attribute field is not valid.',
-                // 'before' => 'The :attribute should be above 18 years.',
+             
             ];
+            
             $validator = Validator::make($row, $rules, $messages);
             if ($validator->passes()) {
 
@@ -588,18 +528,18 @@ class VmtEmployeeController extends Controller
                     ]);
                     $user->assignRole("Employee");
                     // var_dump($row['dob']);
-                    //  dd($row['dob'])->format('Y-m-d');
+                    //  dd($row['dob'];
                     $newEmployee = new VmtEmployee;
                     $newEmployee->userid = $user->id;
                     $newEmployee->emp_no   =    $empNo;
                     $newEmployee->gender   =    $row["gender"];
-                  $newEmployee->doj   =  $this->convertDate($row['doj']);
-                    $newEmployee->dol   =   $this->convertDate($row['doj']);
+                  $newEmployee->doj   =  $row['doj'];
+                    $newEmployee->dol   =   $row['doj'];
                     $newEmployee->location   =    $row["work_location"];
-                    $newEmployee->dob   =   $this->convertDate($row['dob']);
+                    $newEmployee->dob   =   $row['dob'];
                     $newEmployee->father_name   =  $row["father_name"];
                     $newEmployee->father_gender   =  $row["father_gender"];
-                   $newEmployee->father_dob   =  $this->convertDate($row['father_dob']);
+                   $newEmployee->father_dob   =  $row['father_dob'];
 
                     $newEmployee->pan_number   =  isset( $row["pan_no"] ) ? ($row["pan_no"]) : "";
                     $newEmployee->pan_ack   =    $row["pan_ack"];
@@ -614,6 +554,7 @@ class VmtEmployeeController extends Controller
                     $newEmployee->mother_name   = $row["mother_name"];
                     $newEmployee->mother_gender   = $row["mother_gender"];
                     $newEmployee->mother_dob   = $row["mother_dob"];
+                    $newEmployee->reporting_manager_code   = $row["reporting_manager_code"];
                     if ($row['marital_status'] <> 'single') {
                         $newEmployee->spouse_name   = $row["spouse_name"];
                         $newEmployee->spouse_age   = $row["spouse_dob"];
@@ -719,8 +660,8 @@ class VmtEmployeeController extends Controller
 
     public function convertDate($date)
     {
-        //dd("Date is : ".\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($date)->format('m-d-Y') );
-        return \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($date)->format('m-d-Y');
+        //dd("Date is : ".$date)->format('m-d-Y') );
+        return \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($date)->format('d-m-Y');
 
     }
 
@@ -813,38 +754,9 @@ class VmtEmployeeController extends Controller
             // $row['doj'] = date('Y-m-d', $row['doj']);
                 $row['mobile_no'] = (int)$row['mobile_no'];
                 $rules = [
-                    'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                    'email' => 'required|email| unique:users,email',
-                    //'doj' => 'required|date',
-                    'mobile_no' => 'required|regex:/^([0-9]{10})?$/u|numeric',
-                    'designation' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                    'basic' => 'required|numeric',
-                    'hra' => 'required|numeric',
-                    'statutory_bonus' => 'required|numeric',
-                    'child_education_allowance' => 'required|numeric',
-                    'food_coupon' => 'required|numeric',
-                    'lta' => 'required|numeric',
-                    'special_allowance' => 'required|numeric',
-                    'other_allowance' => 'required|numeric',
-                    'epf_employer_contribution' => 'required|numeric',
-                    'insurance' => 'required|numeric',
-                    'graduity' => 'required|numeric',
-                    'epf_employee' => 'required|numeric',
-                    'esic_employee' => 'required|numeric',
-                    'professional_tax' => 'required|numeric',
-                    'labour_welfare_fund' => 'required|numeric',
+                  
                 ];
                 $messages = [
-                    'required' => 'The :attribute field is required.',
-                    'min' => 'The :attribute field should be atleast :min character.',
-                    'max' => 'The :attribute field should be not more than :max character.',
-                    'numeric' => 'The :attribute field sould contain only numbers.',
-                    'email' => 'The :attribute field email is not valid.',
-                    //'date' => 'The :attribute field date is not valid.',
-                    'in' => 'The :attribute field date is not valid. the option should be like :in',
-                    'regex' => 'The :attribute field is not valid.',
-                    'unique' => 'The :attribute field should be unique',
-                    'before' => 'The :attribute should be above 18 years.',
                 ];
                 $validator = Validator::make($row, $rules, $messages);
 
@@ -870,8 +782,8 @@ class VmtEmployeeController extends Controller
                     $newEmployee->userid = $user->id;
                     $newEmployee->emp_no   =    $empNo;
                     //$newEmployee->gender   =    $row["gender"];
-                    $newEmployee->doj   =    \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d');
-                    $newEmployee->dol   =    \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d');
+                    $newEmployee->doj   =    $row['doj'];
+                    $newEmployee->dol   =    $row['doj'];
                     $newEmployee->mobile_number   =    $row['mobile_no'];
                     $newEmployee->save();
 
@@ -1018,10 +930,10 @@ class VmtEmployeeController extends Controller
             //$newEmployee->designation   =    $row["designation"];
             //$newEmployee->department   =    $row["department"];
             //$newEmployee->status   =    $row["status"];
-            $newEmployee->doj   =   \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d');
-            $newEmployee->dol   =   \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d');
+            $newEmployee->doj   =   $row['doj'];
+            $newEmployee->dol   =   $row['doj'];
             $newEmployee->location   =    $row["work_location"];
-            $newEmployee->dob   =    \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['dob'])->format('Y-m-d');
+            $newEmployee->dob   =    $row['dob'];
             $newEmployee->father_name   =  $row["father_name"];
             $newEmployee->pan_number   =  isset( $row["pan_no"] ) ? ($row["pan_no"]) : "";
             $newEmployee->pan_ack   =    $row["pan_ack"];
@@ -1070,7 +982,7 @@ class VmtEmployeeController extends Controller
                 $empOffice->process = $row["process"];// => "k"
                 $empOffice->designation = $row["designation"];// => "k"
                 $empOffice->cost_center = $row["cost_center"];// => "k"
-                $empOffice->confirmation_period  = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['confirmation_period'])->format('Y-m-d');// => "k"
+                $empOffice->confirmation_period  = $row['confirmation_period'];// => "k"
                 $empOffice->holiday_location  = $row["holiday_location"];// => "k"
                 $empOffice->l1_manager_code  = $row["l1_manager_code"];// => "k"
                 // $empOffice->l1_manager_designation  = $row["l1_manager_designation"];// => "k"
