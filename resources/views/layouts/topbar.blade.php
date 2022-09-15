@@ -32,7 +32,7 @@
             <div class="d-flex container-fluid">
                 <!-- disable setting icon for employee -->
                 <div class="d-flex justify-content-between align-items-center w-100">
-                    <div class="d-flex w-50">
+                    <div class="d-flex ">
                         <button type="button" class="btn btn-sm fs-16 vertical-menu-btn topnav-hamburger border-0 outline-none"
                             id="topnav-hamburger-icon" >
                             <span class="hamburger-icon open">
@@ -51,15 +51,14 @@
                             @endif
                         </div>
 
-                        <div class="topbar-search-bar search-content d-flex  align-items-center w-50 "
-                            style="left:60px">
+                        <div class="topbar-search-bar search-content d-flex ms-5 align-items-center"
+                            >
 
                             <i class=" ri-search-line "></i>
-                            <input type="text" class="search-bar form-control  w-100 py-1 rounded-pill"
+                            <input type="text" class="search-bar form-control py-1 rounded-pill"
                                 placeholder="Search">
                         </div>
                     </div>
-
 
                     <div class="notify-content d-flex justify-content-center align-items-center">
                         @hasrole("Employee")

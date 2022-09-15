@@ -341,3 +341,16 @@ h6 {
     right: 0px;
     color: #ff5a38;
 }
+
+/* salary details */
+
+.salary-header {
+    padding: 0;
+    overflow: visible;
+    border-bottom: 1px solid #eee;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 44px;
+    padding-left: 0;
+}

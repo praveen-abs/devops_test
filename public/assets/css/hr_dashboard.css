@@ -6,16 +6,14 @@
     justify-content: center;
     width: 100%;
     height: 200px;
-
 }
 
-.check-in-animate .gliters,.check-in-animate .entry-man  {
+.check-in-animate .gliters,
+.check-in-animate .entry-man {
     position: absolute;
     width: 100%;
     height: 100%;
 }
-
-
 
 .mini-gadget-card {
     height: auto;
@@ -39,7 +37,6 @@
     z-index: 1;
     display: flex;
     justify-content: center;
-
 }
 
 .emoji-content .tooltiptext::after,
@@ -78,7 +75,6 @@
 .f-14 {
     font-size: 14px;
 }
-
 
 .f-15 {
     font-size: 15px;
@@ -139,13 +135,11 @@
     padding: 0px;
     width: 100%;
     height: 100%;
-
 }
 
 .profile-status .status-circle {
     position: absolute;
 }
-
 
 .topbarContent .btn {
     border-bottom-left-radius: 0px;
@@ -179,7 +173,6 @@
 .title {
     color: #002f56;
 }
-
 
 .bg-box-color-pink {
     background: pink;
@@ -229,11 +222,11 @@
     border-radius: 50px;
     background-color: white;
     width: 75px;
-    -webkit-transition: .4s;
+    -webkit-transition: 0.4s;
     height: 22px;
-    box-shadow: inset -5px -5px 9px rgb(255 255 255 / 45%), inset 5px 5px 9px rgb(197 197 197 / 30%), rgb(0 0 0 / 16%) 0px 1px 4px;
-    ;
-    transition: .4s;
+    box-shadow: inset -5px -5px 9px rgb(255 255 255 / 45%), inset 5px 5px 9px rgb(197 197 197 / 30%),
+        rgb(0 0 0 / 16%) 0px 1px 4px;
+    transition: 0.4s;
 }
 
 .slider-checkbox.check-out:before {
@@ -244,13 +237,13 @@
     background-color: green;
 }
 
-input:checked+.slider>.slider-text:after {
-    content: 'Checkout';
+input:checked + .slider > .slider-text:after {
+    content: "Checkout";
     color: red;
 }
 
-input+.slider>.slider-text:after {
-    content: 'Check In';
+input + .slider > .slider-text:after {
+    content: "Check In";
 }
 
 .slider-checkbox:before {
@@ -262,60 +255,58 @@ input+.slider>.slider-text:after {
     bottom: 0px;
     color: #ffffff;
     background-color: #008000;
-    -webkit-transition: .4s;
-    transition: .4s;
-    content: '\f011';
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    content: "\f011";
     font-family: FontAwesome !important;
     padding: 0px 4px 0px 3px;
     font-size: 15px;
 }
 
-input:checked+.slider-checkbox>.slider-checkbox-text {
+input:checked + .slider-checkbox > .slider-checkbox-text {
     left: 2px;
     color: #fff;
 }
 
-
-input:checked+.slider-checkbox.check-out {
+input:checked + .slider-checkbox.check-out {
     background-color: #f0657070;
     color: #ff0000;
 }
 
-input:checked+.slider-checkbox.check-in {
+input:checked + .slider-checkbox.check-in {
     background-color: #f0657070;
     color: #ff0000;
 }
 
-input:focus+.slider-checkbox {
+input:focus + .slider-checkbox {
     box-shadow: 0 0 1px #7cfc00;
 }
 
-input:checked+.slider-checkbox:before {
+input:checked + .slider-checkbox:before {
     -webkit-transform: translateX(65px);
     -ms-transform: translateX(65px);
     transform: translateX(65px);
     left: -13px;
     background-color: #f0f0f6;
-
 }
 
-input:checked+.slider-checkbox.check-out:before {
+input:checked + .slider-checkbox.check-out:before {
     color: white;
     background-color: red;
 }
 
-input:checked+.slider-checkbox.check-in:before {
+input:checked + .slider-checkbox.check-in:before {
     color: white;
     background-color: red;
 }
 
-input:checked+.slider-checkbox>.slider-checkbox-text:after {
-    content: 'Checkout';
+input:checked + .slider-checkbox > .slider-checkbox-text:after {
+    content: "Checkout";
     color: red;
 }
 
-input+.slider-checkbox>.slider-checkbox-text:after {
-    content: 'Check In';
+input + .slider-checkbox > .slider-checkbox-text:after {
+    content: "Check In";
 }
 
 .fc-scroller {
@@ -345,11 +336,11 @@ input+.slider-checkbox>.slider-checkbox-text:after {
     word-spacing: normal;
     white-space: normal;
     line-break: auto;
-    font-size: .875rem;
+    font-size: 0.875rem;
     word-wrap: break-word;
     background-color: #fff;
     background-clip: padding-box;
-    border: 1.1px solid rgba(0, 0, 0, .2);
+    border: 1.1px solid rgba(0, 0, 0, 0.2);
     border-radius: 0.3rem;
     display: block;
     will-change: transform;
@@ -358,7 +349,7 @@ input+.slider-checkbox>.slider-checkbox-text:after {
     transform: translate3d(324px, 179px, 0px);
 }
 
-.bs-popover-auto[x-placement^=right],
+.bs-popover-auto[x-placement^="right"],
 .bs-popover-right {
     margin-left: 0.5rem;
 }
@@ -374,11 +365,10 @@ input+.slider-checkbox>.slider-checkbox-text:after {
     min-width: 480px;
 }
 
-.bs-popover-auto[x-placement^=right],
+.bs-popover-auto[x-placement^="right"],
 .bs-popover-right {
     box-shadow: 1px 3px 4px 0 rgb(0 0 0 / 24%);
 }
-
 
 .p-20 {
     padding: 20px !important;
@@ -401,14 +391,8 @@ input+.slider-checkbox>.slider-checkbox-text:after {
 }
 
 .sub-topnav.nav {
-    background-color: #fff;
-    min-height: 40px;
-}
-
-.sub-topnav.nav {
-    background-color: #fff;
     border-bottom: 1px solid #e2e4e7;
-    min-height: 40px;
+    height: 35px;
 }
 
 .nav {
@@ -432,7 +416,7 @@ input+.slider-checkbox>.slider-checkbox-text:after {
 
 .sub-topnav.nav li a:after {
     position: absolute;
-    -webkit-transition: width .5s ease-in-out, left .2s ease-in-out;
+    -webkit-transition: width 0.5s ease-in-out, left 0.2s ease-in-out;
     content: "";
     width: 0;
     left: 55%;
@@ -442,9 +426,9 @@ input+.slider-checkbox>.slider-checkbox-text:after {
     border-top: 5px solid #f06548;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    bottom: -16px;
-    width: 88%;
-    left: 6%;
+    bottom: -10px;
+    width: 100%;
+    left: 0px;
 }
 
 .emp-job {
@@ -470,16 +454,17 @@ input+.slider-checkbox>.slider-checkbox-text:after {
 }
 
 .card-top-border {
-    border-top: 5px solid #002F56 !important;
+    border-top: 5px solid #002f56 !important;
 }
 
 .orange-top-border {
-    border-top: 5px solid #E54E0D !important;
+    border-top: 5px solid #e54e0d !important;
 }
 
 /* calendar */
 
-.calendar-box {}
+.calendar-box {
+}
 
 .buttons-container {
     cursor: pointer;
@@ -514,7 +499,7 @@ input+.slider-checkbox>.slider-checkbox-text:after {
 }
 
 .day.disabled span {
-    color: #AAA;
+    color: #aaa;
 }
 
 /* vertical highlight */
@@ -551,7 +536,6 @@ input+.slider-checkbox>.slider-checkbox-text:after {
     width: 33.33%;
 }
 
-
 #content {
     margin: auto;
     max-width: 1000px;
@@ -587,14 +571,6 @@ input+.slider-checkbox>.slider-checkbox-text:after {
     /* width: auto !important; */
 }
 
-.calendar-wrapper {
-    width: 100%;
-    max-width: 400px;
-    margin: auto;
-    /* border: 1px solid #eee;
-    padding: 10px; */
-}
-
 #content pre {
     background-color: #eee;
     padding: 8px;
@@ -621,14 +597,13 @@ input+.slider-checkbox>.slider-checkbox-text:after {
     display: -webkit-flex;
     display: flex;
     align-items: center;
-    background: #002F56;
+    background: #002f56;
     /* margin-bottom: 10px; */
     /* padding-bottom: 10px; */
     border-bottom: 1px solid #eee;
 }
 
 .buttons-container .label-container {
-
     -webkit-box-flex: 1;
     -moz-box-flex: 1;
     -webkit-flex: 1;
@@ -697,8 +672,7 @@ input+.slider-checkbox>.slider-checkbox-text:after {
 
 .prev-button:hover h3,
 .next-button:hover h3 {
-    color: #002F56;
-
+    color: #002f56;
 }
 
 .prev-button h3,
@@ -707,7 +681,6 @@ input+.slider-checkbox>.slider-checkbox-text:after {
     font-size: 15px;
     position: absolute;
 }
-
 
 .week {
     /* margin: 10px 0; */
@@ -721,9 +694,8 @@ input+.slider-checkbox>.slider-checkbox-text:after {
     height: 30px;
     font-size: 12px;
     padding: 2px 0px 2px 0px;
-    border-bottom: 3px solid #EED;
+    border-bottom: 3px solid #eed;
 }
-
 
 .week .day.header {
     font-weight: bold;
@@ -745,8 +717,6 @@ input+.slider-checkbox>.slider-checkbox-text:after {
     border-radius: 50%;
     box-shadow: rgb(60 64 67 / 30%) 0px 1px 2px 0px, rgb(60 64 67 / 15%) 0px 2px 6px 2px;
 }
-
-
 
 .day.today span {
     position: relative;
@@ -784,7 +754,8 @@ input+.slider-checkbox>.slider-checkbox-text:after {
     margin: 0 !important;
 }
 
-.week .day {}
+.week .day {
+}
 
 .day.today span::after {
     content: "";
@@ -837,7 +808,6 @@ input+.slider-checkbox>.slider-checkbox-text:after {
 
 /* end calendar */
 
-
 /* for  post  */
 
 .post-contents .img-contents,
@@ -851,17 +821,14 @@ input+.slider-checkbox>.slider-checkbox-text:after {
     display: flex;
     justify-content: center;
     cursor: pointer;
-
 }
 
 .form-check-input:checked {
-
     background-color: #002f56 !important;
 }
 .post-contents {
     color: #6c757d61;
 }
-
 
 .post-contents .img-contents input {
     position: absolute;
@@ -890,7 +857,6 @@ input+.slider-checkbox>.slider-checkbox-text:after {
 .poll-content hr {
     opacity: 0.1;
     margin: 0px 35px !important;
-
 }
 
 .announcement-content textarea {
@@ -912,7 +878,6 @@ input+.slider-checkbox>.slider-checkbox-text:after {
     height: 99px;
     flex-direction: column;
     max-height: 100%;
-
 }
 
 .action-content::-webkit-scrollbar {
