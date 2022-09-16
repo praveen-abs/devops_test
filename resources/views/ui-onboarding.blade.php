@@ -164,6 +164,18 @@
 
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                                                <!-- <label class="" for="nationality">Nationality{!! required() !!}</label> -->
+                                                <div class="floating">
+                                                    <label for="" class="float-label">Choose nationality</label>
+                                                    <select placeholder="Choose nationality" name="nationality" id="nationality" class="onboard-form form-control textbox  select2_form_without_search" required>
+                                                        <option value="" hidden selected disabled>Choose nationality</option>
+                                                        <option value="indian">Indian</option>
+                                                        <option value="other_country">Other Nationality</option>
+                                                    </select>
+                                                    <!-- <label for="" class="float-label">Choose nationality</label> -->
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <div class="floating">
                                                     <!-- <label class="" for="passport_no">Passport Number<span id="passport_no_req">{!! required() !!}</span></label> -->
                                                     <label for="" class="float-label">Passport Number</label>
@@ -194,18 +206,7 @@
                                                     <!-- <label for="" class="float-label">Passport Exp Date</label> -->
                                                 </div>
                                             </div>
-                                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                                                <!-- <label class="" for="nationality">Nationality{!! required() !!}</label> -->
-                                                <div class="floating">
-                                                    <label for="" class="float-label">Choose nationality</label>
-                                                    <select placeholder="Choose nationality" name="nationality" id="nationality" class="onboard-form form-control textbox  select2_form_without_search" required>
-                                                        <option value="" hidden selected disabled>Choose nationality</option>
-                                                        <option value="indian">Indian</option>
-                                                        <option value="other_country">Other Nationality</option>
-                                                    </select>
-                                                    <!-- <label for="" class="float-label">Choose nationality</label> -->
-                                                </div>
-                                            </div>
+                                           
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="blood_group">Blood Group</label> -->
                                                 <div class="floating">
@@ -1139,16 +1140,16 @@
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                                                 <!-- <label class="" for="aadhar_card">Aadhar Card{!! required() !!}</label> -->
                                                 <label for="">Aadhar
-                                                    Card</label>
+                                                    Card Front</label>
                                                 <div class="addfiles form-control md" data="#aadhar_card" id="aadhar_card_label"><span class="file_label">Choose Aadhar
-                                                        Card</span></div>
+                                                        Card Front</span></div>
                                                 <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Aadhar Card" name="aadhar_card" id="aadhar_card" class="onboard-form form-control files" />
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2" id="aadhar_card_backend_content">
                                                 <!-- <label class="" for="aadhar_card_backend">Aadhar Card Backend<span id="aadhar_card_backend_req">{!! required() !!}</span></label> -->
-                                                <label for=""> Aadhar Card Backend</label>
+                                                <label for=""> Aadhar Card Back</label>
                                                 <div class="addfiles form-control" data="#aadhar_card_backend" id="aadhar_card_backend_label"><span class="file_label">Choose
-                                                        Aadhar Card Backend</span></div>
+                                                        Aadhar Card Back</span></div>
                                                 <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Aadhar Card Backend" name="aadhar_card_backend" id="aadhar_card_backend" class="onboard-form form-control files" />
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
