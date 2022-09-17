@@ -463,7 +463,3 @@ table.dataTable.no-footer {
   right: 6px;
 }
 
-#kpiTable th,
-td {
-  text-align: left !important;
-}

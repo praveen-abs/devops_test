@@ -1,3 +1,282 @@
+
+a:hover,
+a:focus,
+input,
+textarea {
+    text-decoration: none;
+    outline: none;
+}
+
+.center {
+    text-align: center;
+}
+
+.left {
+    text-align: left;
+}
+
+.right {
+    text-align: right;
+}
+
+.cp {
+    cursor: pointer;
+}
+
+/* html,
+body {
+    height: 100%;
+} */
+
+p {
+    margin: 0px;
+}
+
+.no-padding {
+    padding: 0px;
+}
+
+.no-margin {
+    margin: 0px;
+}
+
+.hid {
+    display: none;
+}
+
+.top-mar {
+    margin-top: 15px;
+}
+
+.h-100 {
+    height: 100%;
+}
+
+::placeholder {
+    color: #747f8a !important;
+    font-size: 13px;
+    opacity: 0.5 !important;
+}
+
+.container-fluid {
+    padding: 0px;
+}
+
+.session-title {
+    padding: 30px;
+    margin: 0px;
+}
+
+.session-title h2 {
+    width: 100%;
+    text-align: center;
+}
+
+.session-title p {
+    max-width: 850px;
+    text-align: center;
+    float: none;
+    margin: auto;
+}
+
+.session-title span {
+    float: right;
+    font-style: italic;
+}
+
+.inner-title {
+    padding: 20px;
+    padding-left: 0px;
+    margin-bottom: 30px;
+}
+
+.inner-title h2 {
+    width: 100%;
+    text-align: center;
+    font-size: 2rem;
+}
+
+.inner-title p {
+    width: 100%;
+    text-align: center;
+}
+
+.page-nav {
+    padding: 40px;
+    text-align: center;
+    padding-top: 160px;
+}
+
+.page-nav ul {
+    float: none;
+    margin: auto;
+}
+
+.page-nav h2 {
+    font-size: 36px;
+    width: 100%;
+    color: #444;
+}
+
+@media screen and (max-width: 600px) {
+    .page-nav h2 {
+        font-size: 26px;
+    }
+}
+
+.page-nav ul li {
+    float: left;
+    margin-right: 10px;
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+.page-nav ul li i {
+    width: 30px;
+    text-align: center;
+    color: #444;
+}
+
+.page-nav ul li a {
+    color: #444;
+}
+
+.btn-success {
+    background-color: #863dd9;
+    border-color: #863dd9;
+}
+
+.btn-success:hover {
+    background-color: #863dd9 !important;
+    border-color: #863dd9 !important;
+}
+
+.btn-success:active {
+    background-color: #863dd9 !important;
+    border-color: #863dd9 !important;
+}
+
+.btn-success:focus {
+    background-color: #863dd9 !important;
+    border-color: #863dd9 !important;
+    box-shadow: none !important;
+}
+
+.btn-info {
+    background-color: #4f6dcd;
+    border-color: #4f6dcd;
+}
+
+.btn-info:hover {
+    background-color: #4f6dcd !important;
+    border-color: #4f6dcd !important;
+}
+
+.btn-info:active {
+    background-color: transparent !important;
+    border-color: #4f6dcd !important;
+}
+
+.btn-info:focus {
+    background-color: transparent !important;
+    border-color: #4f6dcd !important;
+    box-shadow: none !important;
+}
+
+.text-orange {
+    color: #ff4d00;
+}
+
+.text-primary {
+    color: #002f56;
+}
+
+.btn-border-primary {
+    border: 1px solid #002f56;
+    background-color: #fff;
+    color: #002f56;
+    padding: 5px 8px;
+    font-size: 14px;
+    padding: 5px 8px !important;
+    font-size: 13px !important;
+}
+
+.btn-primary {
+    background-color: #002f56 !important;
+    border-color: #002f56 !important;
+    transition: 0.4s ease-in;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 5px 8px !important;
+    font-size: 13px !important;
+}
+
+.btn-primary:hover {
+    background-color: #002f56;
+    border-color: #002f56;
+    color: #fff;
+}
+
+.btn-primary:active {
+    background-color: #002f56 !important;
+    border-color: #002f56 !important;
+}
+
+.btn-primary:focus {
+    background-color: #002f56;
+    border-color: #002f56;
+    color: #fff;
+}
+
+.btn-orange {
+    background-color: #ff4d00;
+    border-color: #ff4d00;
+    transition: 0.4s ease-in;
+    color: #fff;
+    font-weight: 600;
+    padding: 5px 8px !important;
+    font-size: 13px !important;
+}
+
+.btn-border-orange{
+    border-color:1px solid #ff4d00;
+    background-color: transparent;
+    color:#ff4d00 ;
+    transition: 0.4s ease-in;    
+    font-weight: 600;
+    padding: 5px 8px !important;
+    font-size: 13px !important;
+}
+.btn-border-orange:active{
+    background-color:transparent;
+    border-color: #ff4d00;
+    color:#ff4d00 ;
+}
+.btn-border-orange:hover{
+    background-color:transparent;
+    border-color: #ff4d00;
+    color:#ff4d00 ;
+}
+.btn-orange:hover {
+    background-color: #ff4d00;
+    border-color: #ff4d00;
+    color: #fff;
+}
+
+.btn-orange:active {
+    background-color: #ff4d00 !important;
+    border-color: #ff4d00 !important;
+}
+
+.btn-orange:focus {
+    background-color: #ff4d00;
+    border-color: #ff4d00;
+    color: #fff;
+}
+
+
+
 .card-mini {
     height: 80px;
     width: 220px;
