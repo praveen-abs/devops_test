@@ -34,7 +34,7 @@ use PDF;
 class VmtEmployeeController extends Controller
 {
 
-    public function employeeOnboarding(Request $request) {
+    public function showEmployeeOnboardingPage(Request $request) {
         // Used for Quick onboarding
         //dd($request->email);
         if($request->has('email')){
@@ -445,11 +445,6 @@ class VmtEmployeeController extends Controller
         return VmtEmployeeHierarchy::where('user_id', $id)->get();
     }
 
-    // store employee details in DB
-    public function storeEmployeeData(Request $request){
-        dd($request->all());
-    }
-
 
     // show bulk upload form
     public function bulkUploadEmployee(Request $request){
@@ -483,35 +478,126 @@ class VmtEmployeeController extends Controller
     public function uploadEmployee($data) {
 
         $rules = [];
-        $returnsuccessMsg = '';
-        $returnfailedMsg = '';
-        $addedCount = 0;
-        $failedCount = 0;
         $empNo=0;
-        foreach($data[0] as $key => $row) {
-            if(isset($row['employee_code']))
-            {
-                $empNo = $row['employee_code'];
-            }
-            else
-            {
-                $clientData  = VmtClientMaster::first();
-                $maxId  = VmtEmployee::max('id')+1;
-                if ($clientData) {
-                    $empNo = $clientData->client_code.$maxId;
-                } else {
-                    $empNo = $maxId;
+        $responseJSON = [
+            'status' => 'none',
+            'message' => 'none',
+            'data' => [],
+        ];
+
+        $excelRowdata = $data[0][0];
+        //dd($excelRowdata);
+
+        //Validation
+        $rules = [
+            'employee_code' => 'nullable',
+            'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+            'email' => 'required|email|unique:users,email',
+            'gender' => 'required|in:male,female,other',
+            'doj' => 'required|dateformat:d-m-Y',
+            'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+            'dob' => 'required|dateformat:d-m-Y|before:-18 years',
+            'father_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+            'father_gender' => 'required|in:male,female,other',
+            'father_dob' => 'required|date',
+
+            'pan_no' => 'required|regex:/(^([A-Z]){3}P([A-Z]){1}([0-9]){4}([A-Z]){1}$)/u',
+            'pan_ack' => 'required_if:pan_no,==,""',
+            'aadhar' => 'required|regex:/(^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$)/u',
+            'marital_status' => 'required|in:unmarried,married,widowed,separated,divorced',
+            'mobile_no' => 'required|regex:/^([0-9]{10})?$/u|numeric',
+            'bank_name' => 'required|regex:/(^([a-zA-z]+)(\d+)?$)/u',
+            'bank_ifsc' => 'required|regex:/(^([A-Z]){4}0([A-Z0-9]){6}?$)/u',
+            'account_no' => 'required|regex:/^([0-9]{9,18})?$/u|numeric',
+            'current_address' => 'required',
+            'permanent_address' => 'required',
+            'mother_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+            'mother_gender' => 'required|in:male,female,other',
+            'mother_dob' => 'required|dateformat:d-m-Y',
+            'spouse_name' => 'required_unless:marital_status,unmarried|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+            'spouse_dob' => 'required_unless:marital_status,single|dateformat:d-m-Y',
+            'child_name' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+            'child_dob' => 'nullable|date_format:d-m-Y',
+            'department' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+            'process' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+            'designation' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+            'cost_center' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+            'confirmation_period' => 'required|date_format:d-m-Y',
+            'holiday_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+            'l1_manager_code' => 'required|regex:/(^([a-zA-z0-9.]+)(\d+)?$)/u',
+            'l1_manager_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+            'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+            'official_mail' => 'required|email',
+            'official_mobile' => 'required|regex:/^([0-9]{10})?$/u|numeric',
+            'emp_notice' => 'required|numeric',
+            'basic' => 'required|numeric',
+            'hra' => 'required|numeric',
+            'statutory_bonus' => 'required|numeric',
+            'child_education_allowance' => 'required|numeric',
+            'food_coupon' => 'required|numeric',
+            'lta' => 'required|numeric',
+            'special_allowance' => 'required|numeric',
+            'other_allowance' => 'required|numeric',
+            'epf_employer_contribution' => 'required|numeric',
+            'insurance' => 'required|numeric',
+            'graduity' => 'required|numeric',
+            'epf_employee' => 'required|numeric',
+            'esic_employee' => 'required|numeric',
+            'professional_tax' => 'required|numeric',
+            'labour_welfare_fund' => 'required|numeric',
+            'uan_number' => 'required|numeric',
+            'pf_applicable' => 'required|in:yes,Yes,no,No',
+            'esic_applicable' => 'required|in:yes,Yes,no,No',
+            'ptax_location' =>'required',
+            'tax_regime' =>'required',
+            'lwf_location' =>'required',
+            'esic_employer_contribution' =>'required|numeric',
+
+        ];
+
+        $messages = [
+            'dateformat' => 'Field :attribute should have the following format DD-MM-YYYY ',
+            'in' => 'Field :attribute should have the following values : :values .',
+            'required' => 'Field :attribute is required',
+            'regex' => 'Field :attribute is invalid',
+            'employee_name.regex' => 'Field :attribute should not have special characters',
+        ];
+
+        $validator = Validator::make($excelRowdata, $rules, $messages);
+
+        if (!$validator->passes()) {
+           // $returnfailedMsg .= $empNo." not get added because of error ".json_encode($validator->errors()->all())." <br/>";
+
+            $responseJSON['status'] = 'failure';
+            $responseJSON['message'] = $empNo." not get added because of error ";
+            $responseJSON['data'] = json_encode($validator->errors());
+
+        }
+        else
+        {
+            //DB level validation
+
+
+                $validated = $validator->validated();
+
+
+                $row=$validated;
+
+                if(isset($row['employee_code']))
+                {
+                    $empNo = $row['employee_code'];
                 }
-            }
+                else
+                {
+                    $clientData  = VmtClientMaster::first();
+                    $maxId  = VmtEmployee::max('id')+1;
+                    if ($clientData) {
+                        $empNo = $clientData->client_code.$maxId;
+                    } else {
+                        $empNo = $maxId;
+                    }
+                }
 
-            $rules = [
-            ];
-            $messages = [
-
-            ];
-
-            $validator = Validator::make($row, $rules, $messages);
-            if ($validator->passes()) {
 
                 try {
                     $user =  User::create([
@@ -626,40 +712,34 @@ class VmtEmployeeController extends Controller
                     //Add new items into $row
                     $row['net_income'] = $compensatory->gross + $row["epf_employee"] + $row["esic_employee"] + $row["professional_tax"] + $row["labour_welfare_fund"] - ($row["epf_employer_contribution"] - $row["esic_employer_contribution"] - $row["insurance"] - $row["graduity"]);
 
-                    if ($newEmployee && $empOffice) {
-                        $addedCount++;
-                        $returnsuccessMsg .= $empNo." get added<br/>";
-                    } else {
-                        $failedCount++;
-                        $returnfailedMsg .= $empNo." not get added<br/>";
-                    }
+                    // if ($newEmployee && $empOffice) {
+                    //     $returnsuccessMsg .= $empNo." get added<br/>";
+                    // } else {
+                    //     $failedCount++;
+                    //     $returnfailedMsg .= $empNo." not get added<br/>";
+                    // }
 
                     if(fetchMasterConfigValue("can_send_appointmentmail_after_onboarding") == "true") {
                         $isEmailSent  = $this->attachApoinmentPdf($row);
                     }
 
+                    $responseJSON['status'] = 'success';
+                    $responseJSON['message'] = $empNo." get added";
 
+                    $returnsuccessMsg = "";
 
                 } catch (\Exception $e) {
-                    $returnfailedMsg .= $empNo." not get added because of error ".$e->getMessage()." <br/>";
-                    $failedCount++;
+                    $responseJSON['status'] = 'failure';
+                    $responseJSON['message'] = $empNo." not get added because of error ".$e->getMessage();
+                    $responseJSON['data'] = json_encode(['error'=>$e->getMessage()]);
+                    //$responseJSON['stacktrace'] = json_encode(report($e));
+                    //dd($e->getMessage());
+                    //$returnfailedMsg .= $empNo." not get added because of error ".$e->getMessage()." <br/>";
                 }
-
-            } else {
-                $returnfailedMsg .= $empNo." not get added because of error ".json_encode($validator->errors()->all())." <br/>";
-                $failedCount++;
-            }
         }
 
-        $data = ['success'=> $returnsuccessMsg, 'failed'=> $returnfailedMsg, 'success_count'=> $addedCount, 'failed_count'=> $failedCount];
-        return $data;
-    }
-
-    public function convertDate($date)
-    {
-        //dd("Date is : ".$date)->format('m-d-Y') );
-        return \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($date)->format('d-m-Y');
-
+        //$data = ['success'=> $returnsuccessMsg, 'failed'=> $returnfailedMsg, 'failure_json' => $failureJSON, 'success_count'=> $addedCount, 'failed_count'=> $failedCount];
+        return $responseJSON;
     }
 
     public function isUserExist($t_emp_code)
