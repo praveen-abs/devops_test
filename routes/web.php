@@ -283,6 +283,11 @@ Route::get('/clientOnboarding', function () {
     return view('vmt_clientOnboarding');
 })->name('vmt_clientOnboarding-route');
 
+// config menu (document tamplate view)
+Route::get('/document_preview', function () {
+    return view('document_template_ardens');
+})->name('document_preview');
+
 Route::get('/documents', function () {
     return view('vmt_documents');
 })->name('vmt-documents-route');
