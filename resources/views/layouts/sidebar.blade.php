@@ -467,6 +467,10 @@
                                 <a href="{{route('vmt_clientOnboarding-route')}}" class="nav-link"><span> Client
                                         Onboarding</span></a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{route('document_preview')}}" class="nav-link">Document Template<span> 
+                                        </span></a>
+                            </li>
                         </ul>
                     </div>
                 </li>
