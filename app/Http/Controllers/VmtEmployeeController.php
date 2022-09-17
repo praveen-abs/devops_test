@@ -609,9 +609,11 @@ class VmtEmployeeController extends Controller
                         'active' => '0',
                         'is_onboarded' => '1',
                         'onboard_type' => 'bulk',
+                        'is_default_password_updated' => '0',
 
 
                     ]);
+                    $user->save();
                     $user->assignRole("Employee");
                     // var_dump($row['dob']);
                     //  dd($row['dob'];
@@ -729,6 +731,7 @@ class VmtEmployeeController extends Controller
                     $returnsuccessMsg = "";
 
                 } catch (\Exception $e) {
+                    $this->deleteUser($user->id);
                     $responseJSON['status'] = 'failure';
                     $responseJSON['message'] = $empNo." not get added because of error ".$e->getMessage();
                     $responseJSON['data'] = json_encode(['error'=>$e->getMessage()]);
@@ -902,7 +905,8 @@ class VmtEmployeeController extends Controller
                         'active' => '1',
                         'is_onboarded' => '0',
                         'onboard_type' => 'quick',
-                        'is_admin' => '0'
+                        'is_admin' => '0',
+                        'is_default_password_updated' => '0',
 
                     ]);
 
