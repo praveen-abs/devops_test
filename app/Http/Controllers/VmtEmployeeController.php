@@ -907,6 +907,7 @@ class VmtEmployeeController extends Controller
                     ]);
 
                     $user->save();
+
                     $user->assignRole("Employee");
 
                     $newEmployee = new VmtEmployee;
@@ -962,6 +963,8 @@ class VmtEmployeeController extends Controller
 
                     \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $empNo, 'Abs@123123', request()->getSchemeAndHttpHost(),$image_view));
             } catch (\Exception $e) {
+
+                $this->deleteUser($user->id);
                 $responseJSON['status'] = 'failure';
                 $responseJSON['message'] = $empNo." not get added because of error ".$e->getMessage();
                 $responseJSON['data'] = json_encode(['error'=>$e->getMessage()]);
@@ -981,6 +984,15 @@ class VmtEmployeeController extends Controller
             return $responseJSON;
 
 
+
+    }
+    // DELETE USER BASE ALL DATA IN DB
+
+    public function deleteUser($data_id){
+        $user = User::where('id', $data_id)->delete();
+        $Compensatory = Compensatory::where('user_id', $data_id)->delete();
+        $VmtEmployeeOfficeDetails = VmtEmployeeOfficeDetails::where('user_id', $data_id)->delete();
+        $VmtEmployee = VmtEmployee::where('userid', $data_id)->delete();
 
     }
 
