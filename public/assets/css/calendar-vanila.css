@@ -29,18 +29,23 @@
     /* border: 1px solid #e2e2e2; */
     border: 0;
     text-align: center;
-    vertical-align: top;
+    /* vertical-align: top; */
     width: 40px;
 }
 
-._date-picker.selected span{
+._date-picker.selected p {
     font-weight: bold;
-    background: transparent;
-    border-radius: 50px;
-    /* height: 25px; */
-    /* width: 125px; */
-    padding: 7px 11px;
-    box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+    position: relative;
+    font-size: 14px;
+}
+._date-picker.selected p::after {
+    position: absolute;
+    content: '';
+    left: 0px;
+    width: 2px;
+    height: 20px;
+    background: #fc4000;
+    
 }
 
 ._date-picker ._date-picker.selected span {
@@ -49,7 +54,8 @@
 
 /* sunday */
 ._date-picker:nth-child(1) {
-    color: red;
+    color: #fc4000;
+    font-weight: 600;
 }
 
 /* friday */
