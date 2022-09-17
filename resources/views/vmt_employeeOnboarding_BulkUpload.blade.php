@@ -1024,29 +1024,50 @@
                     processData: false,
                     contentType: false,
                     success: function(data) {
-                        if(data.success_count > 0){
-                            $('#success-msg').html('<p>Upload Infoss :</p><ul><li>' + data.success + '</li></ul>');     
+                        console.log("Got response....");
+                        console.log("Status message : "+data.status);
+                        console.log(data);
+
+                        if(data.status == 'success'){
+                            $('#success-msg').html('<p>Upload Infoss :</p><ul><li>' + data.message + '</li></ul>');
+                            console.log("Success");
                         }
-                       
-                        if(data.failed_count > 0){
-                            $('#error-msg').html('<br/><ul><li>' +data.failed+ '</li></ul>');
+                        else
+                        // if(data.status == 'failure'){
+                        //     $('#error-msg').html('');
+                        //     $('#error-msg').append('<b>Uploaded excelsheet has the following errors : <br/></b>');
+                        //     $('#error-msg').append('<ul><li><b>' +data.message+ '</li></ul>');
+
+                        // }
+                        // else
+                        if(data.status == 'failure'){
+                            console.log("Error!");
+                            $('#error-msg').html('');
+                            var jsonResponse = JSON.parse(data.data);
+
+                           var keys = Object.keys(jsonResponse);
+                            console.log("Key length : "+keys.length);
+                            $('#error-msg').append('<b>Uploaded excelsheet has the following errors : <br/></b>');
+                           for(var i=0;i<keys.length;i++)
+                           {
+                                $('#error-msg').append('<ul><li><b>' +keys[i]+"</b> - "+ jsonResponse[keys[i]]+ '</li></ul>');
+                           }
+
+                           if(data.stacktrace)
+                           {
+                                $('#error-msg').append('<ul><li><b>' +keys[i]+"</b> - "+ data.stacktrace+ '</li></ul>');
+                           }
+
                         }else{
                             $('#error-msg').html('');
                         }
-                        
 
-
-                        //var toastLiveExample3 = document.getElementById("borderedToast2");
-                        //var toast = new bootstrap.Toast(toastLiveExample3);
-                        //toast.show();
-                        //alert(data); // show response from the php script.
                     },
                     error: function(data) {
                         //console.log('error', data);
                         $('#error-msg').html(data.responseText);
                     }
                 })
-                //console.log($('#role-form').serialize());
             });
         </script>
     @endsection
