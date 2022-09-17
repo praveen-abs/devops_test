@@ -515,7 +515,7 @@ class VmtEmployeeController extends Controller
             'mother_gender' => 'required|in:male,female,other',
             'mother_dob' => 'required|dateformat:d-m-Y',
             'spouse_name' => 'required_unless:marital_status,unmarried|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-            'spouse_dob' => 'required_unless:marital_status,single|dateformat:d-m-Y',
+            'spouse_dob' => 'required_unless:marital_status,unmarried|dateformat:d-m-Y',
             'child_name' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
             'child_dob' => 'nullable|date_format:d-m-Y',
             'department' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
