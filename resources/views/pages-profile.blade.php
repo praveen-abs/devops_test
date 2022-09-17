@@ -344,7 +344,7 @@
                                         data-bs-toggle="modal" data-bs-target="#emergency_contact_modal"><i
                                             class=" ri-pencil-fill"></i></a></h6>
 
-                                                                        <h6 class="text-muted">Primary</h6>
+                                                                  
                                         <ul class="personal-info">
                                             <li>
                                                 <div class="title">Name</div>
@@ -751,7 +751,7 @@
                             </div>
                         </div>
                         <div class="submit-section">
-                            <button class="btn btn-primary submit-btn" type="submit">Save</button>
+                            <button class="btn btn-orange submit-btn" type="submit">Save</button>
                         </div>
                     </form>
                 </div>
@@ -763,9 +763,9 @@
     <!-- employee info -->
 
     <div id="employee_info" class="modal custom-modal fade" role="dialog">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
+        <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
+            <div class="modal-content top-line">
+                <div class="modal-header border-0 ">
                     <h6 class="">Employee
                         Information</h6>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
@@ -917,7 +917,7 @@
     <div id="personal_info" class="modal  custom-modal fade" style="display: none;" aria-hidden="true">
         <div class="modal-dialog  modal-dialog-centered " role="document">
             <div class="modal-content profile-box">
-                <div class="modal-header  new-role-header d-flex align-items-center">
+                <div class="modal-header border-0  new-role-header d-flex align-items-center">
                     <h6 class="">Personal
                         Information</h6>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
@@ -958,8 +958,8 @@
     <!-- bank informatios -->
     <div id="Bank_info" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content profile-box">
-                <div class="modal-header d-flex align-items-center">
+            <div class="modal-content profile-box top-line">
+                <div class="modal-header d-flex align-items-center border-0">
                     <h6 class="">Bank Information
                     </h6>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
@@ -1006,7 +1006,7 @@
                         </div>
                         <div class="col-12">
                         <div class="text-right">
-                            <button class="btn btn-primary submit-btn">Submit</button>
+                            <button class="btn btn-orange submit-btn">Submit</button>
                         </div>
                         </div>
                     </form>
@@ -1072,8 +1072,8 @@
     <!-- modal -->
     <div id="personal_info_modal" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content profile-box">
-                <div class="modal-header">
+            <div class="modal-content profile-box top-line">
+                <div class="modal-header border-0s">
                     <h6 class="">Personal
                         Information</h6>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
@@ -1146,7 +1146,7 @@
                         </div>
                         <div class="col-12">
                         <div class="text-right">
-                            <button class="btn btn-primary submit-btn">Submit</button>
+                            <button class="btn btn-orange submit-btn">Submit</button>
                         </div>
                         </div>
                     </form>
@@ -1158,8 +1158,8 @@
     <!-- emergency modal-->
     <div id="emergency_contact_modal" class="modal custom-modal fade show" aria-modal="true" role="dialog">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content profile-box">
-                <div class="modal-header new-role-header d-flex align-items-center">
+            <div class="modal-content profile-box top-line">
+                <div class="modal-header new-role-header d-flex align-items-center border-0s">
                     <h6 class="">Emergency Contact
                     </h6>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
@@ -1171,7 +1171,7 @@
                         @csrf
                         <div class="card">
                             <div class="card-body">
-                                <h6 class="text-muted">Primary Contact</h6>
+                             
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
@@ -1202,7 +1202,7 @@
                         </div>
                         <div class="col-12">
                         <div class="text-right">
-                            <button class="btn btn-primary submit-btn">Submit</button>
+                            <button class="btn btn-orange submit-btn">Submit</button>
                         </div>
                         </div>
                     </form>
@@ -1226,12 +1226,13 @@
                 <div class="modal-body">
                     <form action="{{route('updtaeFamilyInfo', $user->id)}}" Method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div class="form-scroll">
+
+                      
                             <div class="card">
                                 <div class="card-body">
-                                    <h3 class="card-title fw-bold">Education Informations <a href="javascript:void(0);"
+                                    <!-- <h3 class="card-title fw-bold">Education Informations <a href="javascript:void(0);"
                                             {{-- class="delete-icon"><i class="   ri-delete-bin-line"></i></a> --}}
-                                    </h3>
+                                    </h3> -->
                                     <div class="content-container">
                                         <div class="row addition-content" id="content1">
                                             <div class="col-md-6">
@@ -1263,17 +1264,17 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="add-more" style="cursor:pointer;">
-                                        <div id="add_more" class="text-secondary">
+                                    <div class="add-more text-end" style="cursor:pointer;">
+                                        <div id="add_more" class="text-primary  cursor-pointer">
                                             <i class=" ri-add-circle-fill"></i> Add More
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                      
                         <div class="col-12">
                         <div class="text-right">
-                            <button class="btn btn-primary submit-btn">Submit</button>
+                            <button class="btn btn-orange submit-btn">Submit</button>
                         </div>
                         </div>
                     </form>
@@ -1424,7 +1425,7 @@
                         </div>
                         <div class="col-12">
                         <div class="text-right">
-                            <button class="btn btn-primary submit-btn">Submit</button>
+                            <button class="btn btn-orange submit-btn">Submit</button>
                         </div>
                         </div>
                     </form>
@@ -1437,8 +1438,8 @@
 
     <div id="experience_info" class="modal custom-modal fade show" role="dialog" aria-modal="true"s>
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content profile-box">
-                <div class="modal-header">
+            <div class="modal-content profile-box top-line">
+                <div class="modal-header border-0">
                     <h6 class="">Experience
                         Information</h6>
                     <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
@@ -1451,9 +1452,9 @@
                         <div class="form-scroll">
                             <div class="card">
                                 <div class="card-body">
-                                    <h6 class="">Experience Informations <a href="javascript:void(0);"
-                                            class="delete-icon"><i class="   ri-delete-bin-line"></i></a>
-                                    </h6>
+                                     <a href="javascript:void(0);"
+                                            class="delete-icon text-end"><i class="   ri-delete-bin-line"></i></a>
+                                   
                                     <div class="exp-content-container">
                                         <div class="row exp-addition-content" id="content1">
                                             <input type="hidden" name="ids[]">
@@ -1497,8 +1498,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="add-more">
-                                        <div class="text-secondary" id="exp-add-more">
+                                    <div class="add-more text-end">
+                                        <div class="text-primary f-13" id="exp-add-more">
                                             <i class=" ri-add-circle-fill"></i> Add More
                                         </div>
                                     </div>
@@ -1507,7 +1508,7 @@
                         </div>
                         <div class="col-12">
                         <div class="text-right">
-                            <button class="btn btn-primary submit-btn">Submit</button>
+                            <button class="btn btn-orange submit-btn">Submit</button>
                         </div>
                         </div>
                     </form>

@@ -32,16 +32,16 @@
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                                                 <!-- <label class="" for="aadhar_card">Aadhar Card{!! required() !!}</label> -->
                                                 <label for="">Aadhar
-                                                    Card</label>
+                                                    Card Front</label>
                                                 <div class="addfiles form-control md" data="#aadhar_card" id="aadhar_card_label"><span class="file_label">Choose Aadhar
-                                                        Card</span></div>
+                                                        Card Front</span></div>
                                                 <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Aadhar Card" name="aadhar_card" id="aadhar_card" class="onboard-form form-control files" />
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2" id="aadhar_card_backend_content">
                                                 <!-- <label class="" for="aadhar_card_backend">Aadhar Card Backend<span id="aadhar_card_backend_req">{!! required() !!}</span></label> -->
-                                                <label for=""> Aadhar Card Backend</label>
+                                                <label for=""> Aadhar Card Back</label>
                                                 <div class="addfiles form-control" data="#aadhar_card_backend" id="aadhar_card_backend_label"><span class="file_label">Choose
-                                                        Aadhar Card Backend</span></div>
+                                                        Aadhar Card Back</span></div>
                                                 <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Aadhar Card Backend" name="aadhar_card_backend" id="aadhar_card_backend" class="onboard-form form-control files" />
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">

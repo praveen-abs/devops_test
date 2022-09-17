@@ -112,31 +112,49 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
     public function attendanceMonthlyReport(Request $request)
     {
         // code...
-        $workingCount = $onTimeCount = $lateCount = $leftTimelyCount = $leftEarlyCount = $onLeaveCount = $absentCount = '0 days';
+        $workingCount = $onTimeCount = $lateCount = $leftTimelyCount = $leftEarlyCount = $onLeaveCount = $absentCount = 0;
         
-        $reportMonth  = $request->has('month') ? $request->month : date('m');
-        
-        $attendanceReport  = VmtEmployeeAttendance::select('id', 'date', 'user_id', 'checkin_time', 'checkout_time', 'leave_type_id', 'shift_type')
+        //$reportMonth  = $request->has('month') ? $request->month : date('m');
+
+        $monthlyGroups = VmtEmployeeAttendance::select(\DB::raw('MONTH(date) month'))->groupBy('month')->orderBy('month', 'DESC')->get();
+
+        $monthlyReport =  []; 
+
+        foreach ($monthlyGroups as $key => $value) {
+            // code...
+            //dd($value);
+            $dailyAttendanceReport  = VmtEmployeeAttendance::select('id', 'date', 'user_id', 'checkin_time', 'checkout_time', 'leave_type_id', 'shift_type')
                 ->where('user_id', auth::user()->id)
-                ->whereMonth("date", $reportMonth)
+                ->whereMonth("date", $value->month)
+                ->orderBy('created_at', 'DESC')
                 ->get();
+
+
+            $workingCount = $dailyAttendanceReport->count();
+            $onLeaveCount = $dailyAttendanceReport->whereNotNull('leave_type_id')->count() ;
+
+            $monthlyReport[]  =  array(
+                                    "month_value"  => $value->month,
+                                    "working_days" => $workingCount,
+                                    "on_time" => $onTimeCount,
+                                    "late" => $lateCount,
+                                    "left_timely" => $leftTimelyCount,
+                                    "left_early" => $leftEarlyCount,
+                                    "on_leave" => $onLeaveCount,
+                                    "absent" => $absentCount,
+                                    "daily_attendance_report" => $dailyAttendanceReport
+                                );
+        }
         
-        $workingCount = $attendanceReport->count() .' days';
         
-        $onLeaveCount = $attendanceReport->whereNotNull('leave_type_id')->count() .' days'; 
+        
+        
 
         return response()->json([
             'status' => true,
-            'message'=> 'Leave success',
+            'message'=> '',
             'data'   => [
-                            "dailyReports"  => $attendanceReport, 
-                            "workingCount"  => $workingCount, 
-                            "onLeaveCount"  => $onLeaveCount, 
-                            "onTimeCount"   => $onTimeCount,
-                            "lateCount"       => $lateCount,
-                            "leftTimelyCount" => $leftTimelyCount,
-                            "leftEarlyCount"  => $leftEarlyCount,
-                            "absentCount"     => $absentCount
+                            "month"  => $monthlyReport
                         ]
         ]);
 

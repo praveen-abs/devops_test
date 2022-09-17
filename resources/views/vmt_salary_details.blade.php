@@ -2,6 +2,8 @@
 @section('css')
 
 <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
+<link href="{{ URL::asset('public\assets\css\salary.css') }}" rel="stylesheet">
+
 <style>
     .cursor-pointer {
         cursor: pointer;
