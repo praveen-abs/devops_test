@@ -514,21 +514,22 @@ class VmtEmployeeController extends Controller
             'mother_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
             'mother_gender' => 'required|in:male,female,other',
             'mother_dob' => 'required|dateformat:d-m-Y',
-            'spouse_name' => 'required_unless:marital_status,unmarried|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-            'spouse_dob' => 'required_unless:marital_status,single|dateformat:d-m-Y',
+            'spouse_name' => 'nullable|required_unless:marital_status,unmarried|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+            'spouse_dob' => 'nullable|required_unless:marital_status,unmarried|dateformat:d-m-Y',
+            'no_of_child' => 'nullable|numeric',
             'child_name' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
             'child_dob' => 'nullable|date_format:d-m-Y',
             'department' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
             'process' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
             'designation' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-            'cost_center' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-            'confirmation_period' => 'required|date_format:d-m-Y',
+            'cost_center' => 'required',
+            'confirmation_period' => 'required',
             'holiday_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
             'l1_manager_code' => 'required|regex:/(^([a-zA-z0-9.]+)(\d+)?$)/u',
             'l1_manager_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
             'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
             'official_mail' => 'required|email',
-            'official_mobile' => 'required|regex:/^([0-9]{10})?$/u|numeric',
+            'official_mobile' => 'nullable|regex:/^([0-9]{10})?$/u|numeric',
             'emp_notice' => 'required|numeric',
             'basic' => 'required|numeric',
             'hra' => 'required|numeric',
@@ -609,9 +610,11 @@ class VmtEmployeeController extends Controller
                         'active' => '0',
                         'is_onboarded' => '1',
                         'onboard_type' => 'bulk',
+                        'is_default_password_updated' => '0',
 
 
                     ]);
+                    $user->save();
                     $user->assignRole("Employee");
                     // var_dump($row['dob']);
                     //  dd($row['dob'];
@@ -643,7 +646,7 @@ class VmtEmployeeController extends Controller
                     if ($row['marital_status'] <> 'unmarried') {
                         $newEmployee->spouse_name   = $row["spouse_name"];
                         $newEmployee->spouse_age   = $row["spouse_dob"];
-                        if ($row['no_child'] > 0) {
+                        if ($row['no_of_child'] > 0) {
                             $newEmployee->kid_name   = json_encode($row["child_name"]);
                             $newEmployee->kid_age  = json_encode($row["child_dob"]);
                         }
@@ -729,6 +732,7 @@ class VmtEmployeeController extends Controller
                     $returnsuccessMsg = "";
 
                 } catch (\Exception $e) {
+                    $this->deleteUser($user->id);
                     $responseJSON['status'] = 'failure';
                     $responseJSON['message'] = $empNo." not get added because of error ".$e->getMessage();
                     $responseJSON['data'] = json_encode(['error'=>$e->getMessage()]);
@@ -902,11 +906,13 @@ class VmtEmployeeController extends Controller
                         'active' => '1',
                         'is_onboarded' => '0',
                         'onboard_type' => 'quick',
-                        'is_admin' => '0'
+                        'is_admin' => '0',
+                        'is_default_password_updated' => '0',
 
                     ]);
 
                     $user->save();
+
                     $user->assignRole("Employee");
 
                     $newEmployee = new VmtEmployee;
@@ -962,6 +968,8 @@ class VmtEmployeeController extends Controller
 
                     \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $empNo, 'Abs@123123', request()->getSchemeAndHttpHost(),$image_view));
             } catch (\Exception $e) {
+
+                $this->deleteUser($user->id);
                 $responseJSON['status'] = 'failure';
                 $responseJSON['message'] = $empNo." not get added because of error ".$e->getMessage();
                 $responseJSON['data'] = json_encode(['error'=>$e->getMessage()]);
@@ -981,6 +989,15 @@ class VmtEmployeeController extends Controller
             return $responseJSON;
 
 
+
+    }
+    // DELETE USER BASE ALL DATA IN DB
+
+    public function deleteUser($data_id){
+        $user = User::where('id', $data_id)->delete();
+        $Compensatory = Compensatory::where('user_id', $data_id)->delete();
+        $VmtEmployeeOfficeDetails = VmtEmployeeOfficeDetails::where('user_id', $data_id)->delete();
+        $VmtEmployee = VmtEmployee::where('userid', $data_id)->delete();
 
     }
 
