@@ -15,7 +15,7 @@
     table th {
         color: #5265a7;
         background-color: #ccd6f7;
-        padding: 15px 10px !important;
+        padding: 10px !important;
         font-size: 13px;
     }
 
@@ -151,17 +151,17 @@
     @endcomponent
 
     <div class="client-wrapper bg-white container-fluid p-2 mt8-mb15">
-        <h6 class="">Client List</h6>
-        <div class=" text-end mb-2">
-            <button class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#newInventry">New
+        <h6 class="mb-0">Client List</h6>
+        <div class=" text-end">
+            <button class="btn btn-orange me-2" data-bs-toggle="modal" data-bs-target="#newClient">New
                 Client</button>
-            <button class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#importClient">
+            <button class="btn btn-orange " data-bs-toggle="modal" data-bs-target="#importClient">
                 Import Client
             </button>
         </div>
 
 
-        <div class="modal fade" id="newInventry" tabindex="-1" aria-labelledby="newInventry" aria-hidden="true">
+        <div class="modal fade" id="newClient" tabindex="-1" aria-labelledby="newInventry" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable  modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -263,16 +263,16 @@
 
         <div class="table-responsive">
             <table class="table table-hover">
-                <div id="table-clientlist"></div>
+                <div id="table-clientlist" class="w-100"></div>
 
             </table>
 
-            <div class="no-data-img flex-column d-flex justify-content-center align-items-center"  style="">
+            <!-- <div class="no-data-img flex-column d-flex justify-content-center align-items-center"  style="">
                 <img src="{{ URL::asset('assets/images/no-data/nodata.png') }}"
                     alt="" class="" style="height:100px;width:200px" >
                     <span class="f-15 fw-bold mt-2 text-muted">No Data</span>
             </div>
-            <hr class="m-0">
+            <hr class="m-0"> -->
         </div>
 
 

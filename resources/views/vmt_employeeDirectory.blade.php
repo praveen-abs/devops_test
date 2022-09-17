@@ -13,7 +13,7 @@
 
 
 <div class=" directory-wrapper bg-white px-3 pt-3 pb-0 mt8-mb25">
-    <h6 class="mb-0">Employee Directory</h6>
+    <h6 class="">Employee Directory</h6>
     <!-- <div class="row">
         <div class="col-12">
             <div class="row ">
@@ -222,190 +222,187 @@
             </div>
         </div>
     </div> -->
-    <br/>
-    <h6 class="mb-0">In-Active Employees</h6>
-    <br/>
+
+    <h6 class="text-secondary">In-Active Employees</h6>
+
     <div>
-    <div class="table-responsive">
-        <div class="container-fluid px-2 bg-white" style="position:relative;">
-            <table class=" table table-borderd " id="directory-table-1">
-                <thead class="table-light">
-                    <tr>
-                        <th scope="col">Employee Name</th>
-                        <th scope="col">Employee Code</th>
-                        <th scope="col">Designation</th>
-                        <th scope="col">Reporting Manager</th>
-                        <!-- <th scope="col">Email Id</th> -->
-                        <th scope="col">Date Of Joining</th>
-                        <th scope="col">Blood Group</th>
-                        <th scope="col">Profile</th>
-                        <th scope="col">Actions</th>
-                        <th scope="col">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($vmtEmployees_InActive as $key => $employee)
-                    <tr id="tr_{{$employee->user_id}}">
+        <div class="table-responsive">
+            <div class="container-fluid px-2 bg-white" style="position:relative;">
+                <table class=" table table-borderd " id="directory-table-1">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">Employee Name</th>
+                            <th scope="col">Employee Code</th>
+                            <th scope="col">Designation</th>
+                            <th scope="col">Reporting Manager</th>
+                            <!-- <th scope="col">Email Id</th> -->
+                            <th scope="col">Date Of Joining</th>
+                            <th scope="col">Blood Group</th>
+                            <th scope="col">Profile</th>
+                            <th scope="col">Actions</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($vmtEmployees_InActive as $key => $employee)
+                        <tr id="tr_{{$employee->user_id}}">
 
-                        <td>
-                            <div class="d-flex justify-content-start align-items-center table-img">
-                                <div class="mx-2 d-flex justify-content-center align-items-center profile-name-icon">
-                                    @if( empty($employee->avatar) || !file_exists(public_path('images/'. $employee->avatar)) )
+                            <td>
+                                <div class="d-flex justify-content-start align-items-center table-img">
+                                    <div class="mx-2 d-flex justify-content-center align-items-center profile-name-icon">
+                                        @if( empty($employee->avatar) || !file_exists(public_path('images/'. $employee->avatar)) )
                                         @php
-                                            $splitArray = explode(" ",$employee->emp_name);
-                                            if(count($splitArray) == 1)
-                                                $name = strtoupper($splitArray[0][0].$splitArray[0][1]);
-                                            else
-                                                $name = strtoupper($splitArray[0][0].$splitArray[1][0]);
+                                        $splitArray = explode(" ",$employee->emp_name);
+                                        if(count($splitArray) == 1)
+                                        $name = strtoupper($splitArray[0][0].$splitArray[0][1]);
+                                        else
+                                        $name = strtoupper($splitArray[0][0].$splitArray[1][0]);
 
                                         @endphp
-                                        <span class="align-middle fw-bold text-white">{{$name}}</span><!--/span-->
-                                    @else
+                                        <span class="align-middle fw-bold text-white">{{$name}}</span>
+                                        <!--/span-->
+                                        @else
                                         <img src="{{ URL::asset('images/'.$employee->avatar) }}" alt="" class="h-100 w-100" />
-                                    @endif
+                                        @endif
 
+                                    </div>
+                                    <span>
+
+                                        {{$employee->emp_name}}
+
+                                    </span>
                                 </div>
-                                <span>
+                            </td>
+                            <td> {{$employee->emp_no}}</td>
+                            <td>{{$employee->designation}}</td>
+                            <td>{{$employee->l1_manager_name }}</td>
+                            <td>{{$employee->doj }}</td>
+                            <!-- <td><span>{{$employee->email_id }}</span></td> -->
+                            <td>B <sup>+</sup></td>
+                            <td>70%</td>
+                            <td>
+                                <!-- <div class="d-flex justify-content-center align-items-center"> -->
+                                <a href="{{route('pages_impersonate_profile', $employee->userid)}}" class="btn border-0 outline-none bg-transparent p-0  mx-1">
+                                    <i class="ri-pencil-line text-orange fw-bold"></i>
+                                </a>
 
-                                    {{$employee->emp_name}}
+                                <!-- </div> -->
+                            </td>
+                            <td>
+                                <div class="switch-field align-items-center  justify-content-center">
+                                    <input type="hidden" value="{{$employee->user_id}}" name="id{{$key}}" id="id{{$key}}">
+                                    <input class="status" type="radio" id="radio-one{{$key}}" name="{{$key}}" value="1" @if($employee->emp_status) checked @endif />
+                                    <label for="radio-one{{$key}}">Active</label>
+                                    <input class="status" type="radio" id="radio-two{{$key}}" name="{{$key}}" value="0" @if(!$employee->emp_status) checked @endif>
+                                    <label for="radio-two{{$key}}">Inactive</label>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
 
-                                </span>
-                            </div>
-                        </td>
-                        <td> {{$employee->emp_no}}</td>
-                        <td>{{$employee->designation}}</td>
-                        <td>{{$employee->l1_manager_name }}</td>
-                        <td>{{$employee->doj }}</td>
-                        <!-- <td><span>{{$employee->email_id }}</span></td> -->
-                        <td>B <sup>+</sup></td>
-                        <td>70%</td>
-                        <td>
-                            <!-- <div class="d-flex justify-content-center align-items-center"> -->
-                            <a href="{{route('pages_impersonate_profile', $employee->userid)}}"
-                                class="btn border-0 outline-none bg-transparent p-0  mx-1">
-                                <i class="ri-pencil-line text-orange fw-bold"></i>
-                            </a>
+                    </tbody>
 
-                            <!-- </div> -->
-                        </td>
-                        <td>
-                            <div class="switch-field align-items-center  justify-content-center">
-                                <input type="hidden" value="{{$employee->user_id}}" name="id{{$key}}" id="id{{$key}}">
-                                <input class="status" type="radio" id="radio-one{{$key}}" name="{{$key}}" value="1"
-                                    @if($employee->emp_status) checked @endif />
-                                <label for="radio-one{{$key}}">Active</label>
-                                <input class="status" type="radio" id="radio-two{{$key}}" name="{{$key}}" value="0"
-                                    @if(!$employee->emp_status) checked @endif>
-                                <label for="radio-two{{$key}}">Inactive</label>
-                            </div>
-                        </td>
-                    </tr>
-                    @endforeach
+                </table>
 
-                </tbody>
-
-            </table>
-
-        </div>
-    </div>
-    </div>
-
-    <br/>
-    <br/>
-
-    <div class="table-responsive">
-        <div class="container-fluid px-2 bg-white" style="position:relative;">
-            <h6 class="mb-0">Active Employees</h6>
-
-            <div class="d-flex flex-row-reverse">
-                <button class="btn btn-primary py-1 fw-bold"><a href="{{route('employeeOnboarding')}}" class=" text-white">
-                    <i class="ri-add-line fw-bold mx-1"></i>
-                    Onboard Employee
-                </a></button>
             </div>
-            <br/>
-            <table class=" table table-borderd " id="directory-table">
-                <thead class="table-light">
-                    <tr>
-                        <th scope="col">Employee Name</th>
-                        <th scope="col">Employee Code</th>
-                        <th scope="col">Designation</th>
-                        <th scope="col">Reporting Manager</th>
-                        <!-- <th scope="col">Email Id</th> -->
-                        <th scope="col">Date Of Joining</th>
-                        <th scope="col">Blood Group</th>
-                        <th scope="col">Profile</th>
-                        <th scope="col">Actions</th>
-                        {{-- <th scope="col">Status</th> --}}
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($vmtEmployees as $key => $employee)
-                    <tr>
-
-                        <td>
-                            <div class="d-flex justify-content-start align-items-center table-img">
-                                <div class="mx-2 d-flex justify-content-center align-items-center profile-name-icon">
-                                    @if( empty($employee->avatar) || !file_exists(public_path('images/'. $employee->avatar)) )
-                                        @php
-                                            $splitArray = explode(" ",$employee->emp_name);
-                                            if(count($splitArray) == 1)
-                                                $name = strtoupper($splitArray[0][0].$splitArray[0][1]);
-                                            else
-                                                $name = strtoupper($splitArray[0][0].$splitArray[1][0]);
-
-                                        @endphp
-                                        <!--span class="badge rounded-circle h-10 w-10   badge-primary ms-2"-->
-                                        <span class="align-middle fw-bold text-white">{{$name}}</span><!--/span-->
-                                    @else
-                                        <img src="{{ URL::asset('images/'.$employee->avatar) }}" alt="" class="h-100 w-100" />
-                                    @endif
-
-                                </div>
-                                <span>
-
-                                    {{$employee->emp_name}}
-
-                                </span>
-                            </div>
-                        </td>
-                       
-                        <td> {{$employee->emp_no}}</td>
-                        <td>{{$employee->designation}}</td>
-                        <td>{{$employee->l1_manager_name }}</td>
-                        <td>{{$employee->doj }}</td>
-                        <!-- <td><span>{{$employee->email_id }}</span></td> -->
-                        <td>{{$employee->blood_group? $employee->blood_group : "-" }}</td>
-                        <td>70%</td>
-                        <td>
-                            <!-- <div class="d-flex justify-content-center align-items-center"> -->
-                            <a href="{{route('pages_impersonate_profile', $employee->userid)}}"
-                                class="btn border-0 outline-none bg-transparent p-0  mx-1">
-                                <i class="ri-pencil-line text-orange fw-bold"></i>
-                            </a>
-
-                            <!-- </div> -->
-                        </td>
-                        {{-- <td>
-                            <div class="switch-field align-items-center  justify-content-center">
-                                <input type="hidden" value="{{$employee->user_id}}" name="id{{$key}}" id="id{{$key}}">
-                                <input class="status" type="radio" id="radio-one{{$key}}" name="{{$key}}" value="1"
-                                    @if($employee->emp_status) checked @endif />
-                                <label for="radio-one{{$key}}">Active</label>
-                                <input class="status" type="radio" id="radio-two{{$key}}" name="{{$key}}" value="0"
-                                    @if(!$employee->emp_status) checked @endif>
-                                <label for="radio-two{{$key}}">Inactive</label>
-                            </div>
-                        </td> --}}
-                    </tr>
-                    @endforeach
-
-                </tbody>
-
-            </table>
-
         </div>
     </div>
+
+    <br />
+    <br />
+
+    <div class="table-responsive">
+
+        <h6 class="text-secondary">Active Employees</h6>
+        <div class="text-end mb-3">
+            <a href="{{route('employeeOnboarding')}}" class=" text-white btn btn-orange">
+                <i class="ri-add-line fw-bold mx-1" role="button"></i>
+                Onboard Employee
+            </a>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class=" table table-borderd " id="directory-table">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">Employee Name</th>
+                    <th scope="col">Employee Code</th>
+                    <th scope="col">Designation</th>
+                    <th scope="col">Reporting Manager</th>
+                    <!-- <th scope="col">Email Id</th> -->
+                    <th scope="col">Date Of Joining</th>
+                    <th scope="col">Blood Group</th>
+                    <th scope="col">Profile</th>
+                    <th scope="col">Actions</th>
+                    {{-- <th scope="col">Status</th> --}}
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($vmtEmployees as $key => $employee)
+                <tr>
+
+                    <td>
+                        <div class="d-flex justify-content-start align-items-center table-img">
+                            <div class="mx-2 d-flex justify-content-center align-items-center profile-name-icon">
+                                @if( empty($employee->avatar) || !file_exists(public_path('images/'. $employee->avatar)) )
+                                @php
+                                $splitArray = explode(" ",$employee->emp_name);
+                                if(count($splitArray) == 1)
+                                $name = strtoupper($splitArray[0][0].$splitArray[0][1]);
+                                else
+                                $name = strtoupper($splitArray[0][0].$splitArray[1][0]);
+
+                                @endphp
+                                <!--span class="badge rounded-circle h-10 w-10   badge-primary ms-2"-->
+                                <span class="align-middle fw-bold text-white">{{$name}}</span>
+                                <!--/span-->
+                                @else
+                                <img src="{{ URL::asset('images/'.$employee->avatar) }}" alt="" class="h-100 w-100" />
+                                @endif
+
+                            </div>
+                            <span>
+
+                                {{$employee->emp_name}}
+
+                            </span>
+                        </div>
+                    </td>
+
+                    <td> {{$employee->emp_no}}</td>
+                    <td>{{$employee->designation}}</td>
+                    <td>{{$employee->l1_manager_name }}</td>
+                    <td>{{$employee->doj }}</td>
+                    <!-- <td><span>{{$employee->email_id }}</span></td> -->
+                    <td>{{$employee->blood_group? $employee->blood_group : "-" }}</td>
+                    <td>70%</td>
+                    <td>
+                        <!-- <div class="d-flex justify-content-center align-items-center"> -->
+                        <a href="{{route('pages_impersonate_profile', $employee->userid)}}" class="btn border-0 outline-none bg-transparent p-0  mx-1">
+                            <i class="ri-pencil-line text-orange fw-bold"></i>
+                        </a>
+
+                        <!-- </div> -->
+                    </td>
+                    {{-- <td>
+                            <div class="switch-field align-items-center  justify-content-center">
+                                <input type="hidden" value="{{$employee->user_id}}" name="id{{$key}}" id="id{{$key}}">
+                    <input class="status" type="radio" id="radio-one{{$key}}" name="{{$key}}" value="1" @if($employee->emp_status) checked @endif />
+                    <label for="radio-one{{$key}}">Active</label>
+                    <input class="status" type="radio" id="radio-two{{$key}}" name="{{$key}}" value="0" @if(!$employee->emp_status) checked @endif>
+                    <label for="radio-two{{$key}}">Inactive</label>
+
+                    </td> --}}
+                </tr>
+                @endforeach
+
+            </tbody>
+
+        </table>
+    </div>
+
+
+</div>
 </div>
 
 @endsection
@@ -420,95 +417,95 @@
 <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 
 <script>
-$(document).ready(function() {
-    $(function() {
-        $("[data-toggle=popover]").popover({
-            html: true,
-            content: function() {
-                var content = $(this).attr("data-popover-content");
-                return $(content).children(".popover-body").html();
-            },
+    $(document).ready(function() {
+        $(function() {
+            $("[data-toggle=popover]").popover({
+                html: true,
+                content: function() {
+                    var content = $(this).attr("data-popover-content");
+                    return $(content).children(".popover-body").html();
+                },
+            });
         });
-    });
 
-    $('.status').click(function() {
-        var status = $(this).val();
-        var name = $(this).attr('name');
-        var id = $('#id' + name).val(); //get employee id from hidden htmlelement
-        // console.log(id);
+        $('.status').click(function() {
+            var status = $(this).val();
+            var name = $(this).attr('name');
+            var id = $('#id' + name).val(); //get employee id from hidden htmlelement
+            // console.log(id);
 
-        $.ajax({
-            url: "{{route('updateUserAccountStatus')}}",
-            type: "POST",
-            data: {
-                _token: "{{ csrf_token() }}",
-                "status": status,
-                "id": id,
-            },
-            success: function(data) {
-                //window.location.reload();
-                $('#tr_'+id).remove();
-                console.log("Deleting TR "+'#tr_'+id);
-                //console.log(data);
+            $.ajax({
+                url: "{{route('updateUserAccountStatus')}}",
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    "status": status,
+                    "id": id,
+                },
+                success: function(data) {
+                    //window.location.reload();
+                    $('#tr_' + id).remove();
+                    console.log("Deleting TR " + '#tr_' + id);
+                    //console.log(data);
+                }
+            });
+        });
+
+        // $('#directory-table').DataTable({
+
+        // });
+
+        $('body').on('click', '.topbarNav', function() {
+            $('.topbarNav').removeClass('active');
+            $(this).addClass('active');
+            var id = $(this).attr('id');
+            $('.topbarContent').hide();
+            $('.emp-' + id).css("display", "block");
+        });
+
+        $('#calendar_type').change(function() {
+            calendar();
+        });
+
+        function calendar() {
+            if ($('#calendar_type').val() == 'financial_year') {
+                $('#year').val('Apr');
+            } else {
+                $('#year').val('Jan');
             }
+        }
+
+        $('#frequency').change(function() {
+            frequency();
         });
+
+
+        $('body').on('click', '.popover-close', function() {
+            $("[data-toggle=popover]").popover('hide');
+        });
+
+
+        var options = [];
+        $('.dropdown-menu a').on('click', function(event) {
+            var $target = $(event.currentTarget),
+                val = $target.attr('data-value'),
+                $inp = $target.find('input'),
+                idx;
+            if ((idx = options.indexOf(val)) > -1) {
+                options.splice(idx, 1);
+                setTimeout(function() {
+                    $inp.prop('checked', false)
+                }, 0);
+            } else {
+                options.push(val);
+                setTimeout(function() {
+                    $inp.prop('checked', true)
+                }, 0);
+            }
+            $(event.target).blur();
+            return false;
+        });
+
     });
-
-    // $('#directory-table').DataTable({
-
-    // });
-
-    $('body').on('click', '.topbarNav', function() {
-        $('.topbarNav').removeClass('active');
-        $(this).addClass('active');
-        var id = $(this).attr('id');
-        $('.topbarContent').hide();
-        $('.emp-' + id).css("display", "block");
-    });
-
-    $('#calendar_type').change(function() {
-        calendar();
-    });
-
-    function calendar() {
-        if ($('#calendar_type').val() == 'financial_year') {
-            $('#year').val('Apr');
-        } else {
-            $('#year').val('Jan');
-        }
-    }
-
-    $('#frequency').change(function() {
-        frequency();
-    });
-
-
-    $('body').on('click', '.popover-close', function() {
-        $("[data-toggle=popover]").popover('hide');
-    });
-
-
-    var options = [];
-    $('.dropdown-menu a').on('click', function(event) {
-        var $target = $(event.currentTarget),
-            val = $target.attr('data-value'),
-            $inp = $target.find('input'),
-            idx;
-        if ((idx = options.indexOf(val)) > -1) {
-            options.splice(idx, 1);
-            setTimeout(function() {
-                $inp.prop('checked', false)
-            }, 0);
-        } else {
-            options.push(val);
-            setTimeout(function() {
-                $inp.prop('checked', true)
-            }, 0);
-        }
-        $(event.target).blur();
-        return false;
-    });
-
-});
 </script>
 @endsection
