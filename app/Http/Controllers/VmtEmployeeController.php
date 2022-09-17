@@ -516,6 +516,7 @@ class VmtEmployeeController extends Controller
             'mother_dob' => 'required|dateformat:d-m-Y',
             'spouse_name' => 'nullable|required_unless:marital_status,unmarried|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
             'spouse_dob' => 'nullable|required_unless:marital_status,unmarried|dateformat:d-m-Y',
+            'no_of_child' => 'nullable|numeric',
             'child_name' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
             'child_dob' => 'nullable|date_format:d-m-Y',
             'department' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
@@ -645,7 +646,7 @@ class VmtEmployeeController extends Controller
                     if ($row['marital_status'] <> 'unmarried') {
                         $newEmployee->spouse_name   = $row["spouse_name"];
                         $newEmployee->spouse_age   = $row["spouse_dob"];
-                        if ($row['no_child'] > 0) {
+                        if ($row['no_of_child'] > 0) {
                             $newEmployee->kid_name   = json_encode($row["child_name"]);
                             $newEmployee->kid_age  = json_encode($row["child_dob"]);
                         }
