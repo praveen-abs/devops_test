@@ -54,10 +54,10 @@ class VmtMainDashboardController extends Controller
             {
                 $request['email'] = auth()->user()->email;
 
-                //dd($request->email);
+               // dd($request);
                 $vmtEmpController = new VmtEmployeeController;
 
-                return $vmtEmpController->employeeOnboarding($request);
+                return $vmtEmpController->showEmployeeOnboardingPage($request);
             }
             else
             if(auth()->user()->onboard_type == 'bulk')

@@ -1477,11 +1477,11 @@ class VmtPMSModuleController extends Controller
         $editSaveText = 'Add';
         if(count( $employeesList) > 0){
             if(count($employeesList) > 4){
-                $html .= '<span class="employees-profile counting">+ '. count($employeesList) - 4 .'</span>';
+                $html .= '<span class="employees-profile counting btn btn-orange">+ '. count($employeesList) - 4 .'</span>';
             }
             $editSaveText = 'Edit';
         }
-        $html .= '<span class="employees-profile editProfile employeeEditButton">'.$editSaveText.'</span></div></div>';
+        $html .= '<span class="employees-profile editProfile employeeEditButton btn btn-orange">'.$editSaveText.'</span>';
         return response()->json(['status'=>true,'html'=>$html]);
     }
 

@@ -15,7 +15,7 @@
             <div class="form-control">
                 <div class="row">
                     <div class="col-md-12 col-xl-12 col-sm-12 col-xl-12">
-                        <h6> Quick Employee Onboarding Bulk Upload</h6>
+                        <h6>  Employee Quick Onboarding</h6>
                         <div class="col col-form-label">
                             <ul class="list-style-numbered list-style-circle ">
                                 <li>Download the
@@ -114,7 +114,8 @@
         <script type="text/javascript">
             $('#role-form').on('submit', function(e) {
                 e.preventDefault();
-
+                $('#error-msg').html('');
+                $('#success-msg').html('');
                 //var formData = new FormData(this);
                 var roleUri = $('#role-form').attr('action');
                 console.log(roleUri);
@@ -127,15 +128,43 @@
                     processData: false,
                     contentType: false,
                     success: function(data) {
-                        console.log('success', data);
-                        $('#success-msg').html('<p>Upload Info :</p><ul>' + data.success + '</ul>');
-                        $('#error-msg').html('<br/><ul>' + data.failed + '</ul>');
+                        console.log("Got response....");
+                        console.log("Status message : "+data.status);
+                        console.log(data);
 
+                        if(data.status == 'success'){
+                            $('#success-msg').html('<p>Upload Infoss :</p><ul><li>' + data.message + '</li></ul>');
+                            console.log("Success");
+                        }
+                        else
+                        // if(data.status == 'failure'){
+                        //     $('#error-msg').html('');
+                        //     $('#error-msg').append('<b>Uploaded excelsheet has the following errors : <br/></b>');
+                        //     $('#error-msg').append('<ul><li><b>' +data.message+ '</li></ul>');
 
-                        //var toastLiveExample3 = document.getElementById("borderedToast2");
-                        //var toast = new bootstrap.Toast(toastLiveExample3);
-                        //toast.show();
-                        //alert(data); // show response from the php script.
+                        // }
+                        // else
+                        if(data.status == 'failure'){
+                            console.log("Error!");
+                            $('#error-msg').html('');
+                            var jsonResponse = JSON.parse(data.data);
+
+                           var keys = Object.keys(jsonResponse);
+                            console.log("Key length : "+keys.length);
+                            $('#error-msg').append('<b>Uploaded excelsheet has the following errors : <br/></b>');
+                           for(var i=0;i<keys.length;i++)
+                           {
+                                $('#error-msg').append('<ul><li><b>' +keys[i]+"</b> - "+ jsonResponse[keys[i]]+ '</li></ul>');
+                           }
+
+                           if(data.stacktrace)
+                           {
+                                $('#error-msg').append('<ul><li><b>' +keys[i]+"</b> - "+ data.stacktrace+ '</li></ul>');
+                           }
+
+                        }else{
+                            $('#error-msg').html('');
+                        }
                     },
                     error: function(data) {
                         //console.log('error', data);

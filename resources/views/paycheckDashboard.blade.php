@@ -32,7 +32,7 @@
     @endslot
     @endcomponent
 
-    <div class="home-wrapper mb-45">
+    <div class="home-wrapper ">
         <div class="row">
             <div class="col-sm-12 col-md-12 col-xl-6 col-lg-6 ">
                 <div class="card shadow profile-box card-top-border p-2">

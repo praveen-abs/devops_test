@@ -185,7 +185,7 @@ Route::post('vmt-employess/bulk-upload', 'App\Http\Controllers\VmtEmployeeContro
 // Bulk upload employees for quick Onboarding
 Route::get('quickEmployeeOnboarding', 'App\Http\Controllers\VmtEmployeeController@bulkUploadEmployeeForQuickOnboarding')->name('quickEmployeeOnboarding');
 Route::post('vmt-employess/quick-onboarding/upload', 'App\Http\Controllers\VmtEmployeeController@storeEmployeeForQuickOnboarding');
-Route::get('vmt-employee/complete-onboarding', 'App\Http\Controllers\VmtEmployeeController@employeeOnboarding');
+Route::get('vmt-employee/complete-onboarding', 'App\Http\Controllers\VmtEmployeeController@showEmployeeOnboardingPage');
 Route::post('vmt-employee/complete-onboarding', 'App\Http\Controllers\VmtEmployeeController@storeQuickOnboardFormEmployee');
 
 
@@ -241,7 +241,7 @@ Route::post('vmt-pmsappraisal-hrreview', 'App\Http\Controllers\VmtPmsController@
 
 
 
-Route::get('/employeeOnboarding',  [App\Http\Controllers\VmtEmployeeController::class, 'employeeOnboarding'])->name('employeeOnboarding');
+Route::get('/employeeOnboarding',  [App\Http\Controllers\VmtEmployeeController::class, 'showEmployeeOnboardingPage'])->name('employeeOnboarding');
 Route::post('/upload_file',  [App\Http\Controllers\VmtApraisalController::class, 'uploadFile'])->name('upload-file');
 Route::post('/upload_file_review',  [App\Http\Controllers\VmtApraisalController::class, 'uploadFileReview'])->name('upload-file-review');
 Route::get('/download_file/{id}',  [App\Http\Controllers\VmtApraisalController::class, 'downloadFile'])->name('download-file');
@@ -284,6 +284,11 @@ Route::post('/vmt-pms-kpi-create',[App\Http\Controllers\VmtPmsController::class,
 Route::get('/clientOnboarding', function () {
     return view('vmt_clientOnboarding');
 })->name('vmt_clientOnboarding-route');
+
+// config menu (document tamplate view)
+Route::get('/document_preview', function () {
+    return view('document_template_ardens');
+})->name('document_preview');
 
 Route::get('/documents', function () {
     return view('vmt_documents');
