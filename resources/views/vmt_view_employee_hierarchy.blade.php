@@ -16,7 +16,23 @@
         .orgchart .dept-level .title .symbol{
             display: none;
         }
+        
+
+        /*  Logo node style */
+        .orgchart .logo-level .title{
+            display: none;
+        }
+        .orgchart .logo-level .content{
+            display: none;
+        }
+        .logo-level figure{
+            margin:  0;
+        }
+        .empPhoto{
+            width: 96px;
+        }
     </style>
+
 
 @endsection
 @section('content')
@@ -113,29 +129,34 @@ $(document).ready(function() {
 
     var ajaxURLs = {
 
-            'children': function(nodeData) {
-                //console.log($('input[name="department"]:checked'));
-                //console.log(nodeData.user_code);
+        'children': function(nodeData) {
+            if(nodeData.user_code == "ADMIN001"){
+                var url =  '{{ route('getTwoLevelOrgTree',['user_code' => Auth::user()->user_code ]) }}';
+            }else{
                 var url = "{{ route('getChildrenForUser','') }}"+"/"+nodeData.user_code;
-
-                if($('input[name="department"]:checked').val()){
-                    return url + '?department=true';
-                }
-                return url;
-            },
-            'parent': '/orgchart/parent/',
-            'siblings': function(nodeData) {
-                return '/orgchart/siblings/' + nodeData.id;
-            },
-            'families': function(nodeData) {
-                return '/orgchart/families/' + nodeData.id;
             }
+            
+            if($('input[name="department"]:checked').val()){
+                return url + '?department=true';
+            }
+            return url;
+        },
+        'parent': '/orgchart/parent/',
+        'siblings': function(nodeData) {
+            console.log("siblings Node URL "+nodeData.user_code);
+            return '/orgchart/siblings/' + nodeData.id;
+        },
+        'families': function(nodeData) {
+            console.log("families Node URL "+nodeData.user_code);
+            return '/orgchart/families/' + nodeData.id;
+        }
     };
 
     @if(Auth::user()->is_admin == 0)
         
         var ocOption  = {
-            'data' : '{{ route('getTwoLevelOrgTree',['user_code' => Auth::user()->user_code ]) }}',
+            'data' : '{{ route('getLogoLevelOrgTree') }}',
+            //'{{ route('getTwoLevelOrgTree',['user_code' => Auth::user()->user_code ]) }}', ADMIN001
             'ajaxURL' : ajaxURLs,
             'pan' : true,
             'zoom' : true,
@@ -143,10 +164,28 @@ $(document).ready(function() {
             'zoomoutLimit' : 0.7,
             'nodeContent': 'designation',
             'exportButton': true,
+            'parentNodeSymbol': '',
             'exportFilename': 'OrgChartImage',
             'exportFileextension':'png',
-            'createNode' : function($node,data)
-            {
+            'nodeTemplate': function(data) {
+              //var 
+              var nodeHtml =  '<div class="title">'; 
+              if(data.image){
+                nodeHtml  = nodeHtml + '<img class="empPhoto" src="'+data.image+'" />';
+              }
+              nodeHtml = nodeHtml + data.name+'</div>';
+              if(data.designation){
+                nodeHtml = nodeHtml + '<div class="content">'+data.designation+'</div>';  
+              }
+              return nodeHtml;
+            },
+            'createNode' : function($node,data){
+
+                if(data.className == "logo-level"){
+                    var photo =  '<figure><img class="empPhoto" src="'+data.image+'" ></figure>';
+                    $node.append(photo);
+                }
+               
                 return $node;
             }
         };
@@ -173,13 +212,11 @@ $(document).ready(function() {
 
         // refresh organisation chart on click department checkbox
         $('input[name="department"]').on('click', function(e){
-            console.log(orgContainer);
 
             if($('input[name="department"]:checked').val()){
-                //return url + '?department=true';
-                ocOption.data = '{{ route('getTwoLevelOrgTree',['user_code' => Auth::user()->user_code ]) }}?department=true';
+                ocOption.data = '{{ route('getLogoLevelOrgTree',['user_code' => Auth::user()->user_code ]) }}?department=true';
             }else{
-                ocOption.data = '{{ route('getTwoLevelOrgTree',['user_code' => Auth::user()->user_code ]) }}';
+                ocOption.data = '{{ route('getLogoLevelOrgTree',['user_code' => Auth::user()->user_code ]) }}';
             }
             orgContainer.init(ocOption);
         });
