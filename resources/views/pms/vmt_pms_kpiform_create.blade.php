@@ -163,13 +163,14 @@
                             </table>
                         </div>
                     </form>
-                    <div class="align-items-center justify-content-end d-flex mt-2 cursor-pointer">
-                        <span class="plus-sign text-info "><i class="fa fa-plus f-20"></i>Add More</span>
-                    </div>
-
-                    <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
+                    <div class="align-items-center justify-content-between d-flex mt-2 cursor-pointer">
+                        <span class="plus-sign text-primarys f-12 float-start "><i class="f-12 me-1 fa  fa-plus-circle"></i>Add More</span>
                         <button class="btn btn-orange table-btn mx-2" id="save-table">Save</button>
                     </div>
+
+                    <!-- <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
+                    <button class="btn btn-orange table-btn mx-2" id="save-table">Save</button>
+                    </div> -->
 
                 </div>
             </div>
