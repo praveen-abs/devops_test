@@ -462,8 +462,7 @@ class VmtEmployeeController extends Controller
 
         if($validator->passes()){
             $importDataArry = \Excel::toArray(new VmtEmployeeImport, request()->file('file'));
-            $data = $this->uploadEmployee($importDataArry);
-            return response()->json($data);
+            return $this->uploadEmployee($importDataArry);
         }else{
             $data['failed'] = $validator->errors()->all();
             return response()->json($data);
@@ -477,6 +476,14 @@ class VmtEmployeeController extends Controller
     */
     public function uploadEmployee($data) {
 
+        //For output jsonresponse
+        $status_array = [];
+        $message_array = [];
+        $data_array = [];
+
+        //For validation
+        $isAllRecordsValid = true;
+
         $rules = [];
         $empNo=0;
         $responseJSON = [
@@ -484,6 +491,8 @@ class VmtEmployeeController extends Controller
             'message' => 'none',
             'data' => [],
         ];
+
+
 
        // $excelRowdata = $data[0][0];
         $excelRowdata_row = $data;
@@ -571,184 +580,214 @@ class VmtEmployeeController extends Controller
             $validator = Validator::make($excelRowdata, $rules, $messages);
 
             if (!$validator->passes()) {
-            // $returnfailedMsg .= $empNo." not get added because of error ".json_encode($validator->errors()->all())." <br/>";
 
-                $responseJSON['status'] = 'failure';
-                $responseJSON['message'] = "Excel data Row : <b>".$currentRowInExcel."</b> not added because of following errors ";
-                $responseJSON['data'] = json_encode($validator->errors());
-                break;
+                $rowDataValidationResult = [
+                    'row_number' => $currentRowInExcel,
+                    'status' => 'failure',
+                    'message' => 'In Excel Row : '.$currentRowInExcel.' has following error(s)',
+                    'error_fields' => json_encode($validator->errors()),
+                ];
+
+                array_push($data_array, $rowDataValidationResult);
+
+                $isAllRecordsValid = false;
             }
-            else
+
+        }//for loop
+
+        //Runs only if all excel records are valid
+        if($isAllRecordsValid)
+        {
+            foreach($excelRowdata_row[0]  as $key => $excelRowdata)
             {
-            //DB level validation
+               $rowdata_response = $this->storeSingleRecord_BulkEmployee($excelRowdata);
 
+               array_push($data_array, $rowdata_response);
 
-                $validated = $validator->validated();
+            }
 
+            $responseJSON['status'] = 'success';
+            $responseJSON['message'] = "Excelsheet data import success";
+            $responseJSON['data'] = $data_array;
 
-                $row=$validated;
+        }
+        else
+        {
+            $responseJSON['status'] = 'failure';
+            $responseJSON['message'] = "Please fix the below excelsheet data";
+            $responseJSON['data'] = $data_array;
 
-                if(isset($row['employee_code']))
-                {
-                    $empNo = $row['employee_code'];
-                }
-                else
-                {
-                    $clientData  = VmtClientMaster::first();
-                    $maxId  = VmtEmployee::max('id')+1;
-                    if ($clientData) {
-                        $empNo = $clientData->client_code.$maxId;
-                    } else {
-                        $empNo = $maxId;
-                    }
-                }
+        }
 
+        //dd($responseJSON);
 
-                try {
-                    $user =  User::create([
-                        'name' => $row['employee_name'],
-                        'email' => $row["email"],
-                        'password' => Hash::make('Abs@123123'),
-                        'avatar' =>  $row['employee_name'].'_avatar.jpg',
-                        'user_code' =>  $empNo,
-                        'active' => '0',
-                        'is_onboarded' => '1',
-                        'onboard_type' => 'bulk',
-                        'is_default_password_updated' => '0',
+        //$data = ['success'=> $returnsuccessMsg, 'failed'=> $returnfailedMsg, 'failure_json' => $failureJSON, 'success_count'=> $addedCount, 'failed_count'=> $failedCount];
+        return response()->json($responseJSON);
+    }
 
+    /*
 
-                    ]);
-                    $user->save();
-                    $user->assignRole("Employee");
-                    // var_dump($row['dob']);
-                    //  dd($row['dob'];
-                    $newEmployee = new VmtEmployee;
-                    $newEmployee->userid = $user->id;
-                    $newEmployee->emp_no   =    $empNo;
-                    $newEmployee->gender   =    $row["gender"];
-                    $newEmployee->doj   =  $row['doj'];
-                    $newEmployee->dol   =   $row['doj'];
-                    $newEmployee->location   =    $row["work_location"];
-                    $newEmployee->dob   =   $row['dob'];
-                    $newEmployee->father_name   =  $row["father_name"];
-                    $newEmployee->father_gender   =  $row["father_gender"];
-                    $newEmployee->father_dob   =  $row['father_dob'];
+        $outputArray should be passed from parent function.
+    */
+    private function storeSingleRecord_BulkEmployee($row)
+    {
+        //DB level validation
 
-                    $newEmployee->pan_number   =  isset( $row["pan_no"] ) ? ($row["pan_no"]) : "";
-                    $newEmployee->pan_ack   =    $row["pan_ack"];
-                    $newEmployee->aadhar_number = $row["aadhar"];
-                    $newEmployee->marrital_status = $row["marital_status"];
-                    $newEmployee->mobile_number  = $row["mobile_no"];
-                    $newEmployee->bank_name   = $row["bank_name"];
-                    $newEmployee->bank_ifsc_code  = $row["bank_ifsc"];
-                    $newEmployee->bank_account_number  = $row["account_no"];
-                    $newEmployee->present_address   = $row["current_address"];
-                    $newEmployee->permanent_address   = $row["permanent_address"];
-                    $newEmployee->mother_name   = $row["mother_name"];
-                    $newEmployee->mother_gender   = $row["mother_gender"];
-                    $newEmployee->mother_dob   = $row["mother_dob"];
-                    if ($row['marital_status'] <> 'unmarried') {
-                        $newEmployee->spouse_name   = $row["spouse_name"];
-                        $newEmployee->spouse_age   = $row["spouse_dob"];
-                        if ($row['no_of_child'] > 0) {
-                            $newEmployee->kid_name   = json_encode($row["child_name"]);
-                            $newEmployee->kid_age  = json_encode($row["child_dob"]);
-                        }
-                    }
-                    $newEmployee->save();
-
-                    if($newEmployee){
-                        $empOffice  = new VmtEmployeeOfficeDetails;
-                        $empOffice->emp_id = $newEmployee->id;
-                        $empOffice->user_id = $newEmployee->userid;
-                        $empOffice->department_id = $row["department"];
-                        $empOffice->process = $row["process"];
-                        $empOffice->designation = $row["designation"];
-                        $empOffice->cost_center = $row["cost_center"];
-                        $empOffice->confirmation_period  = $row['confirmation_period'];
-                        $empOffice->holiday_location  = $row["holiday_location"];
-
-                        if($this->isUserExist( $row["l1_manager_code"]))
-                            $empOffice->l1_manager_code  = $row["l1_manager_code"];
-
-                        // $empOffice->l1_manager_name  = $row["l1_manager_name"];
-                        $empOffice->work_location  = $row["work_location"];
-                        $empOffice->officical_mail  = $row["official_mail"];
-                        $empOffice->official_mobile  = $row["official_mobile"];
-                        $empOffice->emp_notice  = $row["emp_notice"];
-                        $empOffice->save();
-                    }
-
-                    if ($empOffice) {
-
-                        //Statutory Details
-                        $newEmployee_statutoryDetails = new VmtEmployeeStatutoryDetails;
-                        $newEmployee_statutoryDetails->user_id = $user->id;
-                        $newEmployee_statutoryDetails->uan_number = $row["uan_number"];
-                        $newEmployee_statutoryDetails->pf_applicable = $row["pf_applicable"];
-                        $newEmployee_statutoryDetails->esic_applicable = $row["esic_applicable"];
-                        $newEmployee_statutoryDetails->ptax_location = $row["ptax_location"];
-                        $newEmployee_statutoryDetails->tax_regime = $row["tax_regime"];
-                        $newEmployee_statutoryDetails->lwf_location = $row["lwf_location"];
-                        $newEmployee_statutoryDetails->save();
-
-                        $compensatory = new Compensatory;
-                        $compensatory->user_id = $newEmployee->userid;
-                        $compensatory->basic = $row["basic"];
-                        $compensatory->hra = $row["hra"];
-                        $compensatory->Statutory_bonus = $row["statutory_bonus"];
-                        $compensatory->child_education_allowance = $row["child_education_allowance"];
-                        $compensatory->food_coupon = $row["food_coupon"];
-                        $compensatory->lta = $row["lta"];
-                        $compensatory->special_allowance = $row["special_allowance"];
-                        $compensatory->other_allowance = $row["other_allowance"];
-                        $compensatory->gross = $row["basic"] + $row["hra"] + $row["statutory_bonus"] + $row["child_education_allowance"] + $row["food_coupon"] + $row["lta"] + $row["special_allowance"] + $row["other_allowance"];
-                        $compensatory->epf_employer_contribution = $row["epf_employer_contribution"];
-                        $compensatory->esic_employer_contribution = $row["esic_employer_contribution"];
-                        $compensatory->insurance = $row["insurance"];
-                        $compensatory->graduity = $row["graduity"];
-                        $compensatory->cic = $compensatory->gross + $row["epf_employer_contribution"] + $row["esic_employer_contribution"] + $row["insurance"] + $row["graduity"];
-                        $compensatory->epf_employee = $row["epf_employee"];
-                        $compensatory->esic_employee = $row["esic_employee"];
-                        $compensatory->professional_tax = $row["professional_tax"];
-                        $compensatory->labour_welfare_fund = $row["labour_welfare_fund"];
-                        $compensatory->net_income = $compensatory->gross + $row["epf_employee"] + $row["esic_employee"] + $row["professional_tax"] + $row["labour_welfare_fund"] - ($row["epf_employer_contribution"] - $row["esic_employer_contribution"] - $row["insurance"] - $row["graduity"]);
-                        $compensatory->save();
-                    }
-
-                    //Add new items into $row
-                    $row['net_income'] = $compensatory->gross + $row["epf_employee"] + $row["esic_employee"] + $row["professional_tax"] + $row["labour_welfare_fund"] - ($row["epf_employer_contribution"] - $row["esic_employer_contribution"] - $row["insurance"] - $row["graduity"]);
-
-                    // if ($newEmployee && $empOffice) {
-                    //     $returnsuccessMsg .= $empNo." get added<br/>";
-                    // } else {
-                    //     $failedCount++;
-                    //     $returnfailedMsg .= $empNo." not get added<br/>";
-                    // }
-
-                    if(fetchMasterConfigValue("can_send_appointmentmail_after_onboarding") == "true") {
-                        $isEmailSent  = $this->attachApoinmentPdf($row);
-                    }
-
-                    $responseJSON['status'] = 'success';
-                    $responseJSON['message'] = $empNo." get added";
-
-                    $returnsuccessMsg = "";
-
-                } catch (\Exception $e) {
-                    $this->deleteUser($user->id);
-                    $responseJSON['status'] = 'failure';
-                    $responseJSON['message'] = $empNo." not get added because of error ".$e->getMessage();
-                    $responseJSON['data'] = json_encode(['error'=>$e->getMessage()]);
-                    //$responseJSON['stacktrace'] = json_encode(report($e));
-                    //dd($e->getMessage());
-                    //$returnfailedMsg .= $empNo." not get added because of error ".$e->getMessage()." <br/>";
-                }
+        if(isset($row['employee_code']))
+        {
+            $empNo = $row['employee_code'];
+        }
+        else
+        {
+            $clientData  = VmtClientMaster::first();
+            $maxId  = VmtEmployee::max('id')+1;
+            if ($clientData) {
+                $empNo = $clientData->client_code.$maxId;
+            } else {
+                $empNo = $maxId;
             }
         }
 
-        //$data = ['success'=> $returnsuccessMsg, 'failed'=> $returnfailedMsg, 'failure_json' => $failureJSON, 'success_count'=> $addedCount, 'failed_count'=> $failedCount];
-        return $responseJSON;
+
+        try {
+            $user =  User::create([
+                'name' => $row['employee_name'],
+                'email' => $row["email"],
+                'password' => Hash::make('Abs@123123'),
+                'avatar' =>  $row['employee_name'].'_avatar.jpg',
+                'user_code' =>  $empNo,
+                'active' => '0',
+                'is_onboarded' => '1',
+                'onboard_type' => 'bulk',
+                'is_default_password_updated' => '0',
+
+
+            ]);
+            $user->save();
+            $user->assignRole("Employee");
+            // var_dump($row['dob']);
+            //  dd($row['dob'];
+            $newEmployee = new VmtEmployee;
+            $newEmployee->userid = $user->id;
+            $newEmployee->emp_no   =    $empNo;
+            $newEmployee->gender   =    $row["gender"];
+            $newEmployee->doj   =  $row['doj'];
+            $newEmployee->dol   =   $row['doj'];
+            $newEmployee->location   =    $row["work_location"];
+            $newEmployee->dob   =   $row['dob'];
+            $newEmployee->father_name   =  $row["father_name"];
+            $newEmployee->father_gender   =  $row["father_gender"];
+            $newEmployee->father_dob   =  $row['father_dob'];
+
+            $newEmployee->pan_number   =  isset( $row["pan_no"] ) ? ($row["pan_no"]) : "";
+            $newEmployee->pan_ack   =    $row["pan_ack"];
+            $newEmployee->aadhar_number = $row["aadhar"];
+            $newEmployee->marrital_status = $row["marital_status"];
+            $newEmployee->mobile_number  = $row["mobile_no"];
+            $newEmployee->bank_name   = $row["bank_name"];
+            $newEmployee->bank_ifsc_code  = $row["bank_ifsc"];
+            $newEmployee->bank_account_number  = $row["account_no"];
+            $newEmployee->present_address   = $row["current_address"];
+            $newEmployee->permanent_address   = $row["permanent_address"];
+            $newEmployee->mother_name   = $row["mother_name"];
+            $newEmployee->mother_gender   = $row["mother_gender"];
+            $newEmployee->mother_dob   = $row["mother_dob"];
+            if ($row['marital_status'] <> 'unmarried') {
+                $newEmployee->spouse_name   = $row["spouse_name"];
+                $newEmployee->spouse_age   = $row["spouse_dob"];
+                if ($row['no_of_child'] > 0) {
+                    $newEmployee->kid_name   = json_encode($row["child_name"]);
+                    $newEmployee->kid_age  = json_encode($row["child_dob"]);
+                }
+            }
+            $newEmployee->save();
+
+            if($newEmployee){
+                $empOffice  = new VmtEmployeeOfficeDetails;
+                $empOffice->emp_id = $newEmployee->id;
+                $empOffice->user_id = $newEmployee->userid;
+                $empOffice->department_id = $row["department"];
+                $empOffice->process = $row["process"];
+                $empOffice->designation = $row["designation"];
+                $empOffice->cost_center = $row["cost_center"];
+                $empOffice->confirmation_period  = $row['confirmation_period'];
+                $empOffice->holiday_location  = $row["holiday_location"];
+
+                if($this->isUserExist( $row["l1_manager_code"]))
+                    $empOffice->l1_manager_code  = $row["l1_manager_code"];
+
+                // $empOffice->l1_manager_name  = $row["l1_manager_name"];
+                $empOffice->work_location  = $row["work_location"];
+                $empOffice->officical_mail  = $row["official_mail"];
+                $empOffice->official_mobile  = $row["official_mobile"];
+                $empOffice->emp_notice  = $row["emp_notice"];
+                $empOffice->save();
+            }
+
+            if ($empOffice) {
+
+                //Statutory Details
+                $newEmployee_statutoryDetails = new VmtEmployeeStatutoryDetails;
+                $newEmployee_statutoryDetails->user_id = $user->id;
+                $newEmployee_statutoryDetails->uan_number = $row["uan_number"];
+                $newEmployee_statutoryDetails->pf_applicable = $row["pf_applicable"];
+                $newEmployee_statutoryDetails->esic_applicable = $row["esic_applicable"];
+                $newEmployee_statutoryDetails->ptax_location = $row["ptax_location"];
+                $newEmployee_statutoryDetails->tax_regime = $row["tax_regime"];
+                $newEmployee_statutoryDetails->lwf_location = $row["lwf_location"];
+                $newEmployee_statutoryDetails->save();
+
+                $compensatory = new Compensatory;
+                $compensatory->user_id = $newEmployee->userid;
+                $compensatory->basic = $row["basic"];
+                $compensatory->hra = $row["hra"];
+                $compensatory->Statutory_bonus = $row["statutory_bonus"];
+                $compensatory->child_education_allowance = $row["child_education_allowance"];
+                $compensatory->food_coupon = $row["food_coupon"];
+                $compensatory->lta = $row["lta"];
+                $compensatory->special_allowance = $row["special_allowance"];
+                $compensatory->other_allowance = $row["other_allowance"];
+                $compensatory->gross = $row["basic"] + $row["hra"] + $row["statutory_bonus"] + $row["child_education_allowance"] + $row["food_coupon"] + $row["lta"] + $row["special_allowance"] + $row["other_allowance"];
+                $compensatory->epf_employer_contribution = $row["epf_employer_contribution"];
+                $compensatory->esic_employer_contribution = $row["esic_employer_contribution"];
+                $compensatory->insurance = $row["insurance"];
+                $compensatory->graduity = $row["graduity"];
+                $compensatory->cic = $compensatory->gross + $row["epf_employer_contribution"] + $row["esic_employer_contribution"] + $row["insurance"] + $row["graduity"];
+                $compensatory->epf_employee = $row["epf_employee"];
+                $compensatory->esic_employee = $row["esic_employee"];
+                $compensatory->professional_tax = $row["professional_tax"];
+                $compensatory->labour_welfare_fund = $row["labour_welfare_fund"];
+                $compensatory->net_income = $compensatory->gross + $row["epf_employee"] + $row["esic_employee"] + $row["professional_tax"] + $row["labour_welfare_fund"] - ($row["epf_employer_contribution"] - $row["esic_employer_contribution"] - $row["insurance"] - $row["graduity"]);
+                $compensatory->save();
+            }
+
+            //Add new items into $row
+            $row['net_income'] = $compensatory->gross + $row["epf_employee"] + $row["esic_employee"] + $row["professional_tax"] + $row["labour_welfare_fund"] - ($row["epf_employer_contribution"] - $row["esic_employer_contribution"] - $row["insurance"] - $row["graduity"]);
+
+
+            if(fetchMasterConfigValue("can_send_appointmentmail_after_onboarding") == "true") {
+                $isEmailSent  = $this->attachApoinmentPdf($row);
+            }
+
+            return $rowdata_response = [
+                'row_number' => '',
+                'status' => 'success',
+                'message' => $empNo.' added successfully',
+                'error_fields' => [],
+            ];
+
+        } catch (\Exception $e) {
+            $this->deleteUser($user->id);
+
+
+            return $rowdata_response = [
+                'row_number' => '',
+                'status' => 'failure',
+                'message' => $empNo.' not added',
+                'error_fields' => json_encode(['error'=>$e->getMessage()]),
+            ];
+
+        }
     }
 
     public function isUserExist($t_emp_code)
