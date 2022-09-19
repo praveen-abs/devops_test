@@ -176,17 +176,17 @@ Route::get('employee-hierarchy', 'App\Http\Controllers\VmtOrgTreeController@inde
 // store employee
 Route::post('vmt-employee-store', 'App\Http\Controllers\VmtEmployeeController@storeEmployeeData');
 
-Route::post('vmt-employee-onboard', 'App\Http\Controllers\VmtEmployeeController@employeeOnboard');
+Route::post('vmt-employee-onboard', 'App\Http\Controllers\VmtEmployeeController@storeEmployeeOnboardForm');
 
-Route::get('bulkEmployeeOnboarding', 'App\Http\Controllers\VmtEmployeeController@bulkUploadEmployee')->name('bulkEmployeeOnboarding');
-Route::post('vmt-employess/bulk-upload', 'App\Http\Controllers\VmtEmployeeController@storeBulkEmployee');
+Route::get('bulkEmployeeOnboarding', 'App\Http\Controllers\VmtEmployeeController@showBulkOnboardUploadPage')->name('bulkEmployeeOnboarding');
+Route::post('vmt-employess/bulk-upload', 'App\Http\Controllers\VmtEmployeeController@importBulkOnboardEmployeesExcelData');
 
 
 // Bulk upload employees for quick Onboarding
-Route::get('quickEmployeeOnboarding', 'App\Http\Controllers\VmtEmployeeController@bulkUploadEmployeeForQuickOnboarding')->name('quickEmployeeOnboarding');
-Route::post('vmt-employess/quick-onboarding/upload', 'App\Http\Controllers\VmtEmployeeController@storeEmployeeForQuickOnboarding');
+Route::get('quickEmployeeOnboarding', 'App\Http\Controllers\VmtEmployeeController@showQuickOnboardUploadPage')->name('quickEmployeeOnboarding');
+Route::post('vmt-employess/quick-onboarding/upload', 'App\Http\Controllers\VmtEmployeeController@importQuickOnboardEmployeesExcelData');
 Route::get('vmt-employee/complete-onboarding', 'App\Http\Controllers\VmtEmployeeController@showEmployeeOnboardingPage');
-Route::post('vmt-employee/complete-onboarding', 'App\Http\Controllers\VmtEmployeeController@storeQuickOnboardFormEmployee');
+Route::post('vmt-employee/complete-onboarding', 'App\Http\Controllers\VmtEmployeeController@storeQuickOnboardForm');
 
 
 Route::get('employeesDirectory', 'App\Http\Controllers\VmtEmployeeController@showEmployeeDirectory');

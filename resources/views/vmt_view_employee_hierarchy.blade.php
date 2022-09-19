@@ -16,7 +16,7 @@
         .orgchart .dept-level .title .symbol{
             display: none;
         }
-        
+
 
         /*  Logo node style */
         .orgchart .logo-level .title{
@@ -29,6 +29,14 @@
             margin:  0;
         }
         .empPhoto{
+            
+        }
+
+        .tree-avatar{    background: #f1f1f1;
+    align-items: center;
+    justify-content: center;}
+
+        .user-avatar{
             width: 96px;
         }
     </style>
@@ -135,7 +143,7 @@ $(document).ready(function() {
             }else{
                 var url = "{{ route('getChildrenForUser','') }}"+"/"+nodeData.user_code;
             }
-            
+
             if($('input[name="department"]:checked').val()){
                 return url + '?department=true';
             }
@@ -152,8 +160,7 @@ $(document).ready(function() {
         }
     };
 
-    @if(Auth::user()->is_admin == 0)
-        
+
         var ocOption  = {
             'data' : '{{ route('getLogoLevelOrgTree') }}',
             //'{{ route('getTwoLevelOrgTree',['user_code' => Auth::user()->user_code ]) }}', ADMIN001
@@ -168,24 +175,25 @@ $(document).ready(function() {
             'exportFilename': 'OrgChartImage',
             'exportFileextension':'png',
             'nodeTemplate': function(data) {
-              //var 
-              var nodeHtml =  '<div class="title">'; 
-              if(data.image){
-                nodeHtml  = nodeHtml + '<img class="empPhoto" src="'+data.image+'" />';
-              }
-              nodeHtml = nodeHtml + data.name+'</div>';
-              if(data.designation){
-                nodeHtml = nodeHtml + '<div class="content">'+data.designation+'</div>';  
-              }
-              return nodeHtml;
+                var nodeHtml =  ''; 
+                var imageHtml  =  '<img class="user-avatar" src="'+data.image+'" />';
+                nodeHtml =  '<div class="title">'+data.name+'</div>'; 
+                
+                if(data.className != 'dept-level'){
+                    nodeHtml = nodeHtml + '<div class="tree-avatar">'+imageHtml +'</div>';
+                }
+                if(data.designation){
+                    nodeHtml = nodeHtml + '<div class="content">'+data.designation+'</div>';
+                }
+                return nodeHtml;
             },
             'createNode' : function($node,data){
 
                 if(data.className == "logo-level"){
-                    var photo =  '<figure><img class="empPhoto" src="'+data.image+'" ></figure>';
-                    $node.append(photo);
+                    /*var photo =  '<figure><img class="empPhoto" src="'+data.image+'" ></figure>';
+                    $node.append(photo);*/
                 }
-               
+
                 return $node;
             }
         };
@@ -223,11 +231,6 @@ $(document).ready(function() {
 
 
 
-
-
-    @else
-        $('#chart-container').html('<h4> Not available for Super Admin</h4>');
-    @endif
 });
 </script>
 
