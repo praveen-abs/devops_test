@@ -1,5 +1,5 @@
 {{-- @section('ui-onboarding') --}}
-<div class="container-fluid mt-8">
+<div class="container-fluid ">
     <div class="">
         <div class="row ">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
