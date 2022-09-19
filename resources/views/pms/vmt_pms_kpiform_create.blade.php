@@ -236,7 +236,7 @@
                     <b id="info_message">Please fill all the fields.</b>
                     <div class="instructions ">
                                 <ul class="my-2 list-style-numbered list-style-circle" id="error_ul">
-                                    <li class="list-item" id="error_li"> </li>
+                                    <li class="list-item"> </li>
                                    
 
                                 </ul>
@@ -660,7 +660,7 @@ $(function () {
         {
             isAllFieldsEntered = false;
             // errorMessages.push("<li>KPI Form name is empty.</li>");
-            $('#error_li').append("KPI Form name is empty.");
+            $('#error_ul').append('<li class="list-item">KPI Form name is empty. </li>');
 
             console.log("KPI Form name is empty! ");
         }
@@ -676,21 +676,23 @@ $(function () {
                 canSaveForm = false;
                 //alert("KPI Weightage should be exactly 100%. Please validate.");
                 // errorMessages.push("<li>Please make sure that KPI Weightage is exactly 100%.</li>");
-                $('#error_li').append("Please make sure that KPI Weightage is exactly 100%.");
-                //$('#error_message').html("Please make sure that KPI Weightage is exactly 100%.");
+                $('#error_ul').append('<li class="list-item">Please make sure that KPI Weightage is exactly 100%.</li>');
+//$('#error_message').html("Please make sure that KPI Weightage is exactly 100%.");
                 //$('#errorModal_FillAllFields').modal('show');
             }else if(!isKPIWeightagePerc && $('textarea[name="kpiWeightage[]"]').attr('data-show') == 'true'){
                 canSaveForm = false;
                 // errorMessages.push("<li>Please make sure that KPI Weightage Should be in %.</li>");
-                $('#error_li').append("Please make sure that KPI Weightage Should be in %.");
-            }
+                //$('#error_li').append("Please make sure that KPI Weightage Should be in %.");
+                $('#error_ul').append('<li class="list-item">Please make sure that KPI Weightage Should be in %.</li>');
+                }
 
 
 
         }
         else
         {
-            $('#error_li').append("Please fill all the fields in KPI Form");
+            //$('#error_li').append("<br/>Please fill all the fields in KPI Form");
+            $('#error_ul').append('<li class="list-item">Please fill all the fields in KPI Form</li>');
             //alert("Please fill all the fields");
             // $('#error_message').html("Please fill all the fields.");
             // $('#errorModal_FillAllFields').modal('show');
