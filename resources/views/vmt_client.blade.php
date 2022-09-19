@@ -9,65 +9,7 @@
     position: relative;
     top:-20px;
         }
-    table {
-       box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px !important;
-    }
-    table th {
-        color: #5265a7;
-        background-color: #ccd6f7;
-        padding: 10px !important;
-        font-size: 13px;
-    }
-
-    tbody {
-        background-color: #fff;
-    }
-
-    tbody tr:hover {
-        background-color: #f3f3f9;
-
-    }
-
-    td {
-        border: solid 1px #000;
-        border-style: none solid solid none;
-        padding: 10px;
-        /* font-weight: 600; */
-        color: #878aa5;
-
-    }
-
-    td .btn i {
-        font-size: 16px;
-    }
-
-
-    tr:first-child th:first-child {
-        border-top-left-radius: 6px !important;
-    }
-
-    tr:first-child th:first-child {
-        border-bottom-left-radius: 6px !important;
-    }
-
-
-    tr:last-child td:first-child {
-        border-bottom-left-radius: 6px !important;
-    }
-
-    tr:first-child th:last-child {
-        border-top-right-radius: 6px !important;
-    }
-
-    tr:first-child th:last-child {
-        border-bottom-right-radius: 6px !important;
-    }
-
-
-    tr:last-child td:last-child {
-        border-bottom-right-radius: 6px !important;
-    }
-
+   
 
     /* for radio button */
 
@@ -162,8 +104,8 @@
 
 
         <div class="modal fade" id="newClient" tabindex="-1" aria-labelledby="newInventry" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable  modal-lg">
-                <div class="modal-content">
+            <div class="modal-dialog modal-dialog-scrollable  modal-md">
+                <div class="modal-content top-line" >
                     <div class="modal-header">
                         <h6 class="modal-title" id="exampleModalLabel">Add New Cient</h6>
                         <button type="button" class="modal-close outline-none  border-0" data-bs-dismiss="modal"
@@ -171,101 +113,139 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                                 <div class="mb-3 floating-label">
-                                    <label for="" class="form-label  float-label">Product ID<span
+                                    <label for="" class="form-label  float-label">Client ID<span
                                             class="text-danger">*</span></label>
                                     <input type="text" class="form-control textbox " id=""
-                                        placeholder="Product ID">
+                                        placeholder="Client ID">
 
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                                 <div class="mb-3 floating-label">
-                                    <label for="" class="form-label  float-label">Product Name<span
+                                    <label for="" class="form-label  float-label">Name<span
                                             class="text-danger">*</span></label>
                                     <input type="text" class="form-control textbox" id=""
-                                        placeholder="Product Name">
+                                        placeholder=" Name">
 
                                 </div>
                             </div>
                         </div>
                         <hr class="text-muted my-2">
                         <div class="row">
-                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                                 <div class="mb-3 floating-label">
-                                    <label for="" class="form-label  float-label">Inward Quantity<span
+                                    <label for="" class="form-label  float-label">Contact<span
                                             class="text-danger">*</span></label>
                                     <input type="text" class="form-control textbox" id="lead-name"
-                                        placeholder="Inward Quantity">
+                                        placeholder="Contact">
 
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                                 <div class="mb-3 floating-label">
-                                    <label for="" class="form-label  float-label">Outward Quantity</label>
+                                    <label for="" class="form-label  float-label">Email</label>
                                     <input type="text" class="form-control textbox" id="position"
-                                        placeholder="Outward Quantity">
+                                        placeholder="Email">
 
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                                 <div class="mb-3 floating-label">
-                                    <label for="" class="form-label  float-label">Stock in Quantity</label>
+                                    <label for="" class="form-label  float-label">Company Name</label>
                                     <input type="text" class="form-control textbox" id="lead-email"
-                                        placeholder="Stock in Quantity">
+                                        placeholder="Company Name">
 
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
+
                                 <div class="mb-3 floating-label">
 
-                                    <label for="" class="form-label  float-label">Rate</label>
-                                    <input type="text" class="form-control textbox" id="" placeholder="Rate">
+                                    <label for="" class="form-label  float-label">Customer type</label>
+                                    <input type="text" class="form-control textbox" id="" placeholder="Customer type">
 
                                 </div>
                             </div>
-                            <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                                 <div class="mb-3 floating-label">
-                                    <label for="" class="form-label float-label">Amount</label>
-                                    <input type="text" class="form-control textbox" id="lead-email" placeholder="Amount">
+                                    <label for="" class="form-label float-label">Status</label>
+                                    <input type="text" class="form-control textbox" id="lead-email" placeholder="Status">
 
                                 </div>
                             </div>
-                            <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                                <div class="mb-3 floating-label">
-                                    <label for="" class="form-label float-label">Reorder Level</label>
-                                    <input type="text" class="form-control textbox" id="lead-email"
-                                        placeholder="Reorder Level">
-
-                                </div>
-                            </div>
-                            <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                                <div class="">
-                                    <label for="floatingSelect" class="form-label float-label">Recorder</label>
-                                    <select class="form-select" id="floatingSelect"
-                                        aria-label="Floating label select example">
-                                        <option value="1" selected>Reorder</option>
-                                        <option value="2">Out of stock</option>
-                                    </select>
-
-                                </div>
-                            </div>
+                          
                         </div>
                     </div>
                     <div class="modal-footer ">
-                        <button type="button" class="btn btn-border-primary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-border-orange" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-orange">Save</button>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="table-responsive my-3">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                         
+                                            <th>Client ID</th>
+                                            <th>Name</th>                                           
+                                            <th>Email</th>
+                                            <th>Company Name</th>
+                                            <th>Contact</th>
+                                            <th>Customer Type</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                           
+                                            <td  class="">
 
+</td>
+<td  class="">
+
+</td>
+<td  class="">
+
+</td>  <td  class="">
+
+</td>
+<td  class="">
+
+</td>
+<td  class="">
+
+</td>
+<td  class="">
+
+</td>
+<td  class="">
+
+</td>
+
+
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
+                                {{-- <div class="no-data-img flex-column d-flex justify-content-center align-items-center"
+                                    style="">
+                                    <img src="{{ URL::asset('assets/images/no-data/nodata.png') }}" alt=""
+                                        class="" style="height:100px;width:200px">
+                                    <span class="f-15 fw-bold mt-2 text-muted">No Data</span>
+                                </div> --}}
+
+                            </div>
         <div class="table-responsive">
-            <table class="table table-hover">
-                <div id="table-clientlist" class="w-100"></div>
+            <!-- <table class="table table-hover">
+                <div id="table-clientlist" class="  "></div>
 
-            </table>
+            </table> -->
 
             <!-- <div class="no-data-img flex-column d-flex justify-content-center align-items-center"  style="">
                 <img src="{{ URL::asset('assets/images/no-data/nodata.png') }}"
@@ -280,16 +260,16 @@
         <!-- modal for import  -->
         <div class="modal fade" id="importClient" tabindex="-1" aria-labelledby="newLead" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable modal-lg modal-md">
-                <div class="modal-content top-line border-0">
-                    <div class="modal-header">
-                        <h6 class="modal-title mb-0 " id="">Add New Client</h6>
+                <div class="modal-content top-line ">
+                    <div class="modal-header border-0">
+                        <h6 class="modal-title mb-0 " id="">Import Client</h6>
                         <button type="button" class="modal-close outline-none  border-0" data-bs-dismiss="modal"
                             aria-label="Close">&times;</button>
                     </div>
                     <div class="modal-body">
                         <div class="import-contents px-2">
 
-                            <div class="text-end my-3">
+                            <div class="text-end ">
                                 <button class="btn btn-orange "><i class="fa fa-download mx-2"></i>Download
                                     Sample</button>
                             </div>
@@ -330,7 +310,7 @@
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
+                                         
                                             <th>Client ID</th>
                                             <th>Name</th>
                                             <th>Contact</th>
@@ -435,10 +415,11 @@
                         id: 'id',
                         name: 'ID',
                         hidden:true,
+                        
                     },
                     {
                         id: 'client_code',
-                        name: 'Client Code',
+                        name: 'Client Id',
                         formatter: function formatter(cell) {
                             return gridjs.html( cell );
                         }
@@ -448,119 +429,67 @@
                         name: 'Client Name',
                     },
                     {
-                        id: 'address',
-                        name: 'Address',
+                        id: 'client_name',
+                        name: 'Contact',
                     },
                     {
-                        id: 'contract_start_date',
-                        name: 'Contract Start Date',
+                        id: 'client_name',
+                        name: 'Email',
                     },
                     {
-                        id: 'contract_end_date',
-                        name: 'Contract End Date',
+                        id: 'client_name',
+                        name: 'Company name',
                     },
                     {
-                        id: 'cin_number',
-                        name: 'CIN Number',
-                    },
-                    {
-                        id: 'company_tan',
-                        name: 'Company TAN',
-                    },
-                    {
-                        id: 'company_pan',
-                        name: 'Company PAN',
-                    },
-                    {
-                        id: 'gst_no',
-                        name: 'GST No',
-                    },
-                    {
-                        id: 'epf_reg_number',
-                        name: 'EPF',
-                    },
-                    {
-                        id: 'esic_reg_number',
-                        name: 'ESIC',
-                    },
-                    {
-                        id: 'prof_tax_reg_number',
-                        name: 'Prof Tax',
-                    },
-                    {
-                        id: 'lwf_reg_number',
-                        name: 'LWF',
-                    },
-                    {
-                        id: 'authorised_person_name',
-                        name: 'Authorized Person',
-                    },
-                    {
-                        id: 'authorised_person_designation',
-                        name: 'Authorized Person Designation',
-                    },
-                    {
-                        id: 'authorised_person_contact_number',
-                        name: 'Authorized Person Contact No',
-                    },
-                    {
-                        id: 'authorised_person_contact_email',
-                        name: 'Authorized Person Contact Email',
-                    },
-                    {
-                        id: 'billing_address',
-                        name: 'Billing Address',
-                    },
-                    {
-                        id: 'billing_address',
-                        name: 'Billing Address',
+                        id: 'client_name',
+                        name: 'Company type',
                     },
                     {
                         id: 'status',
                         name: 'Status',
-                        hidden:true,
+                        // hidden:true,
                     },
-                    {
-                        id: 'assigned_date',
-                        name: 'Assigned Date',
-                    },
-                    {
-                        id: 'invoice',
-                        name: 'Invoice',
-                        formatter: function formatter(cell) {
-                            var URL = "{{ url('/assets/')}}" + "/" + cell;
-                            return gridjs.html('<a href=' + URL +
-                                ' target="_blank"><span class="text-link" style=" color: blue;"><i class="icon icon-lg text-info  ri-download-2-line text-primary fw-bold"></i></span></a>'
-                            );
-                        }
-                    },
-                    {
-                        id: 'id',
-                        name: 'Edit',
-                        formatter: function formatter(cell) {
+                    // {
+                    //     id: 'assigned_date',
+                    //     name: 'Assigned Date',
+                    // },
+                    // {
+                    //     id: 'invoice',
+                    //     name: 'Invoice',
+                    //     formatter: function formatter(cell) {
+                    //         var URL = "{{ url('/assets/')}}" + "/" + cell;
+                    //         return gridjs.html('<a href=' + URL +
+                    //             ' target="_blank"><span class="text-link" style=" color: blue;"><i class="icon icon-lg text-info  ri-download-2-line text-primary fw-bold"></i></span></a>'
+                    //         );
+                    //     }
+                    // },
+                    // {
+                    //     id: 'id',
+                    //     name: 'Edit',
+                    //     formatter: function formatter(cell) {
 
-                            var htmlcontent =
-                                '<a  class="trigger_asset_edit" ><span class="text-link" style=" color: blue;"><i class="icon icon-lg  ri-pencil-line text-dark fw-bold"></i></span></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
-                            //var html_edit="<button style='font-size:24px' onclick='hello()'>Edit</button>";
-                            //var html_delete = '<a href='+url_delete+' target="_blank"><span class="text-link" style=" color: blue;"><i class="icon icon-lg  ri-delete-bin-line text-primary fw-bold"></i></span></a>';
+                    //         var htmlcontent =
+                    //             '<a  class="trigger_asset_edit" ><span class="text-link" style=" color: blue;"><i class="icon icon-lg  ri-pencil-line text-dark fw-bold"></i></span></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
+                    //         var html_edit="<button style='font-size:24px' onclick='hello()'>Edit</button>";
+                    //         var html_delete = '<a href='+url_delete+' target="_blank"><span class="text-link" style=" color: blue;"><i class="icon icon-lg  ri-delete-bin-line text-primary fw-bold"></i></span></a>';
 
-                            return gridjs.html(htmlcontent);
-                        }
-                    },
-                    {
-                        id: 'delete',
-                        name: 'Delete',
-                        formatter: function formatter(cell) {
+                    //         return gridjs.html(htmlcontent);
+                    //     }
+                    // },
+                    // {
+                    //     id: 'delete',
+                    //     name: 'Delete',
+                    //     formatter: function formatter(cell) {
 
 
-                            var htmlcontent =
-                                '<a  class="trigger_asset_delete" ><span class="text-link" style=" color: blue;"><i class="icon icon-lg text-danger ri-delete-bin-line text-primary fw-bold"></i></span></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
-                            //var html_edit="<button style='font-size:24px' onclick='hello()'>Edit</button>";
-                            //var html_delete = '<a href='+url_delete+' target="_blank"><span class="text-link" style=" color: blue;"><i class="icon icon-lg  ri-delete-bin-line text-primary fw-bold"></i></span></a>';
+                    //         var htmlcontent =
+                    //             '<a  class="trigger_asset_delete" ><span class="text-link" style=" color: blue;"><i class="icon icon-lg text-danger ri-delete-bin-line text-primary fw-bold"></i></span></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
+                    //         var html_edit="<button style='font-size:24px' onclick='hello()'>Edit</button>";
+                    //         var html_delete = '<a href='+url_delete+' target="_blank"><span class="text-link" style=" color: blue;"><i class="icon icon-lg  ri-delete-bin-line text-primary fw-bold"></i></span></a>';
 
-                            return gridjs.html(htmlcontent);
-                        }
-                    }
+                    //         return gridjs.html(htmlcontent);
+                    //     }
+                    // }
 
                 ],
                 pagination: {
@@ -568,6 +497,7 @@
                 },
                 sort: true,
                 search: true,
+                pagination: true,
                 server: {
                     url: '{{route('vmt-clients-fetchall')}}',
                     then: data => data.map(
