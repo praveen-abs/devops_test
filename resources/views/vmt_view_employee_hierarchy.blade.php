@@ -169,9 +169,9 @@ $(document).ready(function() {
             'nodeTemplate': function(data) {
               //var
               var nodeHtml =  '<div class="title">';
-              if(data.image){
-                nodeHtml  = nodeHtml + '<img class="empPhoto" src="'+data.image+'" />';
-              }
+            //   if(data.image){
+            //     nodeHtml  = nodeHtml + '<img class="empPhoto" src="'+data.image+'" />';
+            //   }
               nodeHtml = nodeHtml + data.name+'</div>';
               if(data.designation){
                 nodeHtml = nodeHtml + '<div class="content">'+data.designation+'</div>';
