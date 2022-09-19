@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\VmtEmployeeOfficeDetails;
-
+use App\Models\VmtGeneralInfo; 
 use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\Auth;
 
 class VmtOrgTreeController extends Controller
 {
@@ -15,16 +17,28 @@ class VmtOrgTreeController extends Controller
         return view('vmt_view_employee_hierarchy');
     }
 
+
+    public function getLogoLevelOrgTree(Request $request)
+    {
+        
+        $data           = $this->getUserNodeDetails(Auth::user()->user_code);
+        $vmtGeneralInfo = VmtGeneralInfo::first();
+        $logoSrc        = asset($vmtGeneralInfo->logo_img);
+
+        $logoNode  = array("image" => $logoSrc, "relationship" => "011", "user_code" => "ADMIN001", "name" =>"", "className" => "logo-level");
+
+        $data['collapsed'] = false;
+        $logoNode['children'] = array($data); 
+        return $logoNode; 
+    }
+
     public function getTwoLevelOrgTree($user_code, Request $request)
     {
-
+        
         $data = $this->getUserNodeDetails($user_code);
-
-        //dd($user_code);
         
         if($this->hasChildNodes($user_code))
             $data['children'] =$this->getChildrenForUser( $data['user_code'])['children'];
-
 
         /* 
          * Grouping the node based on the department wise if department filter is set on 
@@ -46,9 +60,7 @@ class VmtOrgTreeController extends Controller
             $data['children']  = $dArray;
         }
 
-        //dd($data);
-
-        return $data;
+        return $data; 
     }
 
     public function getParentForUser($user_code)
@@ -128,6 +140,7 @@ class VmtOrgTreeController extends Controller
         $user_data = User::where('user_code',$user_code)->where('is_admin','0')->get();
         $data['name'] = $user_data->value('name');
         $data['user_code'] = $user_data->value('user_code');
+        $data['image'] = asset('images/'.$user_data->value('avatar'));
         $data['designation'] =  VmtEmployeeOfficeDetails::where('user_id',$user_data->value('id'))->value('designation');
 
         $data['department'] =  VmtEmployeeOfficeDetails::where('user_id',$user_data->value('id'))->value('department_id');
