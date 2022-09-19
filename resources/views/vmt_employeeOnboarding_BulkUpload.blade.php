@@ -1047,10 +1047,12 @@
 
                            var keys = Object.keys(jsonResponse);
                             console.log("Key length : "+keys.length);
-                            $('#error-msg').append('<b>Uploaded excelsheet has the following errors : <br/></b>');
+                            $('#error-msg').append('<b>Upload Status : <br/></b>');
+                            $('#error-msg').append(data.message+' : <br/>');
+
                            for(var i=0;i<keys.length;i++)
                            {
-                                $('#error-msg').append('<ul><li><b>'+ jsonResponse[keys[i]]+ '</li></ul>');
+                                $('#error-msg').append('<ul><li>'+ jsonResponse[keys[i]]+ '</li></ul>');
                            }
 
                            if(data.stacktrace)

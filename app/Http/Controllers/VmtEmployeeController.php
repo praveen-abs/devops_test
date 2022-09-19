@@ -487,97 +487,99 @@ class VmtEmployeeController extends Controller
 
        // $excelRowdata = $data[0][0];
         $excelRowdata_row = $data;
-        foreach($excelRowdata_row[0]  as $key => $excelRowdata){
-
-        //Validation
-        $rules = [
-            'employee_code' => 'nullable|unique:users,user_code',
-            'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-            'email' => 'required|email|unique:users,email',
-            'gender' => 'required|in:male,female,other',
-            'doj' => 'required|dateformat:d-m-Y',
-            'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-            'dob' => 'required|dateformat:d-m-Y|before:-18 years',
-            'father_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-            'father_gender' => 'required|in:male,female,other',
-            'father_dob' => 'required|date',
-
-            'pan_no' => 'required|regex:/(^([A-Z]){3}P([A-Z]){1}([0-9]){4}([A-Z]){1}$)/u',
-            'pan_ack' => 'required_if:pan_no,==,""',
-            'aadhar' => 'required|regex:/(^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$)/u',
-            'marital_status' => 'required|in:unmarried,married,widowed,separated,divorced',
-            'mobile_no' => 'required|regex:/^([0-9]{10})?$/u|numeric',
-            'bank_name' => 'required',
-            'bank_ifsc' => 'required|regex:/(^([A-Z]){4}0([A-Z0-9]){6}?$)/u',
-            'account_no' => 'required',
-            'current_address' => 'required',
-            'permanent_address' => 'required',
-            'mother_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-            'mother_gender' => 'required|in:male,female,other',
-            'mother_dob' => 'required|dateformat:d-m-Y',
-            'spouse_name' => 'nullable|required_unless:marital_status,unmarried|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-            'spouse_dob' => 'nullable|required_unless:marital_status,unmarried|dateformat:d-m-Y',
-            'no_of_child' => 'nullable|numeric',
-            'child_name' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-            'child_dob' => 'nullable|date_format:d-m-Y',
-            'department' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-            'process' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-            'designation' => 'required',
-            'cost_center' => 'required',
-            'confirmation_period' => 'required',
-            'holiday_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-            'l1_manager_code' => 'required|regex:/(^([a-zA-z0-9.]+)(\d+)?$)/u',
-            'l1_manager_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-            'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-            'official_mail' => 'required|email',
-            'official_mobile' => 'nullable|regex:/^([0-9]{10})?$/u|numeric',
-            'emp_notice' => 'required|numeric',
-            'basic' => 'required|numeric',
-            'hra' => 'required|numeric',
-            'statutory_bonus' => 'required|numeric',
-            'child_education_allowance' => 'required|numeric',
-            'food_coupon' => 'required|numeric',
-            'lta' => 'required|numeric',
-            'special_allowance' => 'required|numeric',
-            'other_allowance' => 'required|numeric',
-            'epf_employer_contribution' => 'required|numeric',
-            'insurance' => 'required|numeric',
-            'graduity' => 'required|numeric',
-            'epf_employee' => 'required|numeric',
-            'esic_employee' => 'required|numeric',
-            'professional_tax' => 'required|numeric',
-            'labour_welfare_fund' => 'required|numeric',
-            'uan_number' => 'required|numeric',
-            'pf_applicable' => 'required|in:yes,Yes,no,No',
-            'esic_applicable' => 'required|in:yes,Yes,no,No',
-            'ptax_location' =>'required',
-            'tax_regime' =>'required',
-            'lwf_location' =>'required',
-            'esic_employer_contribution' =>'required|numeric',
-
-        ];
-
-        $messages = [
-            'dateformat' => 'Field <b>:attribute</b> should have the following format DD-MM-YYYY ',
-            'in' => 'Field <b>:attribute</b> should have the following values : :values .',
-            'required' => 'Field <b>:attribute</b> is required',
-            'regex' => 'Field <b>:attribute</b> is invalid',
-            'employee_name.regex' => 'Field <b>:attribute</b> should not have special characters',
-            'unique' => 'Field <b>:attribute</b> should be unique',
-        ];
-
-        $validator = Validator::make($excelRowdata, $rules, $messages);
-
-        if (!$validator->passes()) {
-           // $returnfailedMsg .= $empNo." not get added because of error ".json_encode($validator->errors()->all())." <br/>";
-
-            $responseJSON['status'] = 'failure';
-            $responseJSON['message'] = $empNo." not get added because of error ";
-            $responseJSON['data'] = json_encode($validator->errors());
-
-        }
-        else
+        $currentRowInExcel = 0;
+        foreach($excelRowdata_row[0]  as $key => $excelRowdata)
         {
+            $currentRowInExcel++;
+            //Validation
+            $rules = [
+                'employee_code' => 'nullable|unique:users,user_code',
+                'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'email' => 'required|email|unique:users,email',
+                'gender' => 'required|in:male,female,other',
+                'doj' => 'required|dateformat:d-m-Y',
+                'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'dob' => 'required|dateformat:d-m-Y|before:-18 years',
+                'father_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'father_gender' => 'required|in:male,female,other',
+                'father_dob' => 'required|date',
+
+                'pan_no' => 'required|regex:/(^([A-Z]){3}P([A-Z]){1}([0-9]){4}([A-Z]){1}$)/u',
+                'pan_ack' => 'required_if:pan_no,==,""',
+                'aadhar' => 'required|regex:/(^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$)/u',
+                'marital_status' => 'required|in:unmarried,married,widowed,separated,divorced',
+                'mobile_no' => 'required|regex:/^([0-9]{10})?$/u|numeric',
+                'bank_name' => 'required',
+                'bank_ifsc' => 'required|regex:/(^([A-Z]){4}0([A-Z0-9]){6}?$)/u',
+                'account_no' => 'required',
+                'current_address' => 'required',
+                'permanent_address' => 'required',
+                'mother_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'mother_gender' => 'required|in:male,female,other',
+                'mother_dob' => 'required|dateformat:d-m-Y',
+                'spouse_name' => 'nullable|required_unless:marital_status,unmarried|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'spouse_dob' => 'nullable|required_unless:marital_status,unmarried|dateformat:d-m-Y',
+                'no_of_child' => 'nullable|numeric',
+                'child_name' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'child_dob' => 'nullable|date_format:d-m-Y',
+                'department' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'process' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'designation' => 'required',
+                'cost_center' => 'required',
+                'confirmation_period' => 'required',
+                'holiday_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'l1_manager_code' => 'required|regex:/(^([a-zA-z0-9.]+)(\d+)?$)/u',
+                'l1_manager_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'official_mail' => 'required|email',
+                'official_mobile' => 'nullable|regex:/^([0-9]{10})?$/u|numeric',
+                'emp_notice' => 'required|numeric',
+                'basic' => 'required|numeric',
+                'hra' => 'required|numeric',
+                'statutory_bonus' => 'required|numeric',
+                'child_education_allowance' => 'required|numeric',
+                'food_coupon' => 'required|numeric',
+                'lta' => 'required|numeric',
+                'special_allowance' => 'required|numeric',
+                'other_allowance' => 'required|numeric',
+                'epf_employer_contribution' => 'required|numeric',
+                'insurance' => 'required|numeric',
+                'graduity' => 'required|numeric',
+                'epf_employee' => 'required|numeric',
+                'esic_employee' => 'required|numeric',
+                'professional_tax' => 'required|numeric',
+                'labour_welfare_fund' => 'required|numeric',
+                'uan_number' => 'required|numeric',
+                'pf_applicable' => 'required|in:yes,Yes,no,No',
+                'esic_applicable' => 'required|in:yes,Yes,no,No',
+                'ptax_location' =>'required',
+                'tax_regime' =>'required',
+                'lwf_location' =>'required',
+                'esic_employer_contribution' =>'required|numeric',
+
+            ];
+
+            $messages = [
+                'dateformat' => 'Field <b>:attribute</b> should have the following format DD-MM-YYYY ',
+                'in' => 'Field <b>:attribute</b> should have the following values : :values .',
+                'required' => 'Field <b>:attribute</b> is required',
+                'regex' => 'Field <b>:attribute</b> is invalid',
+                'employee_name.regex' => 'Field <b>:attribute</b> should not have special characters',
+                'unique' => 'Field <b>:attribute</b> should be unique',
+            ];
+
+            $validator = Validator::make($excelRowdata, $rules, $messages);
+
+            if (!$validator->passes()) {
+            // $returnfailedMsg .= $empNo." not get added because of error ".json_encode($validator->errors()->all())." <br/>";
+
+                $responseJSON['status'] = 'failure';
+                $responseJSON['message'] = "Excel data Row : <b>".$currentRowInExcel."</b> not added because of following errors ";
+                $responseJSON['data'] = json_encode($validator->errors());
+                break;
+            }
+            else
+            {
             //DB level validation
 
 
@@ -840,9 +842,12 @@ class VmtEmployeeController extends Controller
         $failedCount = 0;
         $empNo=0;
         $excelRowdata_row = $data;
-        foreach($excelRowdata_row[0]  as $key => $excelRowdata){
+        $currentRowInExcel = 0;
 
+        foreach($excelRowdata_row[0]  as $key => $excelRowdata)
+        {
 
+            $currentRowInExcel++;
 
                     // var_dump($excelRowdata);exit();
                     //Validation
@@ -890,9 +895,9 @@ class VmtEmployeeController extends Controller
                 // $returnfailedMsg .= $empNo." not get added because of error ".json_encode($validator->errors()->all())." <br/>";
 
                 $responseJSON['status'] = 'failure';
-                $responseJSON['message'] = $empNo." not get added because of error ";
+                $responseJSON['message'] = "Excel data Row : <b>".$currentRowInExcel."</b> not added because of following errors ";
                 $responseJSON['data'] = json_encode($validator->errors());
-
+                break;
             }
             else
             {
