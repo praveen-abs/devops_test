@@ -1,5 +1,4 @@
-
-a:hover,
+:hover,
 a:focus,
 input,
 textarea {
@@ -239,24 +238,24 @@ p {
     font-size: 13px !important;
 }
 
-.btn-border-orange{
-    border-color:1px solid #ff4d00;
+.btn-border-orange {
+    border-color: 1px solid #ff4d00;
     background-color: transparent;
-    color:#ff4d00 ;
-    transition: 0.4s ease-in;    
+    color: #ff4d00;
+    transition: 0.4s ease-in;
     font-weight: 600;
     padding: 5px 8px !important;
     font-size: 13px !important;
 }
-.btn-border-orange:active{
-    background-color:transparent;
+.btn-border-orange:active {
+    background-color: transparent;
     border-color: #ff4d00;
-    color:#ff4d00 ;
+    color: #ff4d00;
 }
-.btn-border-orange:hover{
-    background-color:transparent;
+.btn-border-orange:hover {
+    background-color: transparent;
     border-color: #ff4d00;
-    color:#ff4d00 ;
+    color: #ff4d00;
 }
 .btn-orange:hover {
     background-color: #ff4d00;
@@ -274,8 +273,6 @@ p {
     border-color: #ff4d00;
     color: #fff;
 }
-
-
 
 .card-mini {
     height: 80px;
@@ -379,15 +376,11 @@ p {
     appearance: none;
 }
 
-
 /* by george 70px to 50px  */
 .page-content {
-    padding: calc(40px + 24px) calc(24px / 2) 60px calc(24px / 2);
-    /* padding: calc(70px + 1.5rem) calc(1.5rem / 2) 10px calc(1.5rem / 2); */
+    /* padding: calc(40px + 24px) calc(24px / 2) 60px calc(24px / 2); */
+    padding: calc(70px + 1.5rem) calc(1.5rem / 2) 15px calc(1.5rem / 2);
 }
-
-
-
 
 /* sub header (bread-crumb) nav bar */
 .page-title-box {
@@ -399,7 +392,7 @@ p {
     /* position: fixed; */
     z-index: 9999;
     /* width: 100%; */
-    margin: -44px -27px 1.5rem -27px;
+    margin: -44px -27px 10px -27px;
 }
 
 .breadcrumb .crumb-item:not(:first-child)::before {
@@ -483,11 +476,7 @@ p {
     left: 0px;
 }
 
-
-
-
 /* grid js */
-
 
 .gridjs-container {
     color: var(--vz-body-color);
@@ -534,7 +523,6 @@ p {
     overflow-x: scroll;
 }
 .gridjs-pagination .gridjs-summary {
-
     font-size: 14px !important;
 }
 
@@ -806,4 +794,12 @@ button.gridjs-sort-desc {
 .pagination-next.disabled:hover,
 .pagination-prev.disabled:hover {
     color: #878a99;
+}
+
+.breadcrumb {
+}
+.breadcrumb .crumb-item {
+}
+.breadcrumb .crumb-item a:active {
+    border-bottom: 1px solid #002f56 !important;
 }

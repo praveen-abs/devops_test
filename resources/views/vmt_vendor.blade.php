@@ -9,7 +9,7 @@
         @endslot
     @endcomponent
 
-    <div class="vendor-wrapper bg-white container-fluid p-2 mt8-mb15">
+    <div class="vendor-wrapper bg-white container-fluid p-2">
         <h6 class="">Vendor List</h6>
         <div class=" text-end mb-2">
             <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#newVendor">Create
