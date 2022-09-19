@@ -57,29 +57,32 @@
 
     }
 
-    table {
+    .avatar_table tr,td{
+        border: 2px solid #dee2e6 !important;
+    }
+    .payslip_table {
         width: 100%;
         vertical-align: middle;
         font-family: sans-serif;
     }
 
-    .payslip_table tr,
+    table.payslip_table tr,
     td {
-        border: 1.5pt solid #af1888;
+        border: 2px solid #af1888;
 
     }
 
-    table td:last-child {}
+    .payslip_table td:last-child {}
 
     .border-less {
         border: 0px !important;
     }
 
-    tr {
+    .payslip_table tr {
         height: 12.55pt;
     }
 
-    td {
+    .payslip_table td {
         width: 81.35pt
     }
 
@@ -136,6 +139,10 @@
 
 @endsection
 @section('content')
+@component('components.configuration_breadcrumb')
+@slot('li_1')
+@endslot
+@endcomponent
 <div class="container-fluid bg-white  ">
     <div class="fill salary-header nav-tab-header">
         <div>
@@ -257,9 +264,9 @@
                             <div class="main-page">
                                 <div class="sub-page" style="text-align: justify;font-size: 15px;">
                                     <div class="logo" style="width:150px;height: 50px;margin: 10px 0px;">
-                                        <img src="{{ URL::asset('assets/images/appoinment/brandavatarlogo.png') }}" class="" alt="user-pic" style="height:100%;width:100%;">
+                                        <img src="{{ URL::asset('assets/images/appoinment/brandavatarlogo.png') }}" class=""  style="height:100%;width:100%;">
                                     </div>
-                                    <table cellspacing=2 border="1" style="width:100%;" class="table table-bordered">
+                                    <table cellspacing=2   class="table table-bordered avatar_table">
                                         <tr>
                                             <td colspan="3" style="text-align:center">ANNEXURE A</td>
                                         </tr>
@@ -271,7 +278,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="width:40%"><b>Name: MARIAPPAN S</b> </td>
+                                            <td style="width:40%"><b>Name: </b> </td>
                                             <td><b>Salary</td></b>
                                             <td colspan="1"></td>
                                         </tr>
@@ -605,7 +612,7 @@
                 <div class="main-page">
                     <div class="sub-page" style="text-align: justify;font-size: 15px;">
                         <div class="table-responsive">
-                            <table cellspacing="0" cellpadding="0" class="payslip_table">
+                            <table cellspacing="0" cellpadding="0" class="payslip_table" >
                                 <tr class="header-row">
                                     <td colspan="8" class="border-less p3">
                                         <div class="header-cotent">

@@ -78,7 +78,7 @@
 @slot('li_1')  @endslot
 @endcomponent
 
-<div class="container-fluid assign-goal-wrapper mb-15 mt-8 ">
+<div class="container-fluid assign-goal-wrapper ">
     <div class="cards-wrapper">
         <div class="row">
             <div class="col-12 col-lg-12 col-md-12 col-xxl-12 col-xl-12">
