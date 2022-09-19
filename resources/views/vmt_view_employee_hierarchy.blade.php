@@ -175,16 +175,17 @@ $(document).ready(function() {
             'exportFilename': 'OrgChartImage',
             'exportFileextension':'png',
             'nodeTemplate': function(data) {
-              //var
-              var nodeHtml =  ''; 
-            //   if(data.image){
-                nodeHtml  = nodeHtml + '<img class="user-avatar" src="'+data.image+'" />';
-            //   }
-              nodeHtml =  '<div class="title">'+data.name+'</div><div class="tree-avatar">'+nodeHtml +'</div>';
-              if(data.designation){
-                nodeHtml = nodeHtml + '<div class="content">'+data.designation+'</div>';
-              }
-              return nodeHtml;
+                var nodeHtml =  ''; 
+                var imageHtml  =  '<img class="user-avatar" src="'+data.image+'" />';
+                nodeHtml =  '<div class="title">'+data.name+'</div>'; 
+                
+                if(data.className != 'dept-level'){
+                    nodeHtml = nodeHtml + '<div class="tree-avatar">'+imageHtml +'</div>';
+                }
+                if(data.designation){
+                    nodeHtml = nodeHtml + '<div class="content">'+data.designation+'</div>';
+                }
+                return nodeHtml;
             },
             'createNode' : function($node,data){
 
