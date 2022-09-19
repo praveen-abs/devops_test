@@ -154,7 +154,7 @@
                             $('#error-msg').append('<b>Uploaded excelsheet has the following errors : <br/></b>');
                            for(var i=0;i<keys.length;i++)
                            {
-                                $('#error-msg').append('<ul><li><b>' +keys[i]+"</b> - "+ jsonResponse[keys[i]]+ '</li></ul>');
+                                $('#error-msg').append('<ul><li>'+ jsonResponse[keys[i]]+ '</li></ul>');
                            }
 
                            if(data.stacktrace)
