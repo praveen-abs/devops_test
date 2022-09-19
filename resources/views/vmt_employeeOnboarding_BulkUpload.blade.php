@@ -1010,7 +1010,8 @@
         <script type="text/javascript">
             $('#role-form').on('submit', function(e) {
                 e.preventDefault();
-                $('#error-msg').html('');
+                $('#error-msg').html('Please wait. Uploading....');
+
                 $('#success-msg').html('');
                 //var formData = new FormData(this);
                 var roleUri = $('#role-form').attr('action');
