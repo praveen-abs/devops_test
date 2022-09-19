@@ -491,7 +491,7 @@ class VmtEmployeeController extends Controller
 
         //Validation
         $rules = [
-            'employee_code' => 'nullable',
+            'employee_code' => 'nullable|unique:users,user_code',
             'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
             'email' => 'required|email|unique:users,email',
             'gender' => 'required|in:male,female,other',
@@ -558,11 +558,12 @@ class VmtEmployeeController extends Controller
         ];
 
         $messages = [
-            'dateformat' => 'Field :attribute should have the following format DD-MM-YYYY ',
-            'in' => 'Field :attribute should have the following values : :values .',
-            'required' => 'Field :attribute is required',
-            'regex' => 'Field :attribute is invalid',
-            'employee_name.regex' => 'Field :attribute should not have special characters',
+            'dateformat' => 'Field <b>:attribute</b> should have the following format DD-MM-YYYY ',
+            'in' => 'Field <b>:attribute</b> should have the following values : :values .',
+            'required' => 'Field <b>:attribute</b> is required',
+            'regex' => 'Field <b>:attribute</b> is invalid',
+            'employee_name.regex' => 'Field <b>:attribute</b> should not have special characters',
+            'unique' => 'Field <b>:attribute</b> should not have special characters',
         ];
 
         $validator = Validator::make($excelRowdata, $rules, $messages);
