@@ -563,7 +563,7 @@ class VmtEmployeeController extends Controller
             'required' => 'Field <b>:attribute</b> is required',
             'regex' => 'Field <b>:attribute</b> is invalid',
             'employee_name.regex' => 'Field <b>:attribute</b> should not have special characters',
-            'unique' => 'Field <b>:attribute</b> should not have special characters',
+            'unique' => 'Field <b>:attribute</b> should be unique',
         ];
 
         $validator = Validator::make($excelRowdata, $rules, $messages);
