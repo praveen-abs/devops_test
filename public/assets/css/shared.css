@@ -382,8 +382,8 @@ p {
 
 /* by george 70px to 50px  */
 .page-content {
-    padding: calc(40px + 24px) calc(24px / 2) 60px calc(24px / 2);
-    /* padding: calc(70px + 1.5rem) calc(1.5rem / 2) 10px calc(1.5rem / 2); */
+    /* padding: calc(40px + 24px) calc(24px / 2) 60px calc(24px / 2); */
+    padding: calc(70px + 1.5rem) calc(1.5rem / 2) 15px calc(1.5rem / 2);
 }
 
 
@@ -399,7 +399,7 @@ p {
     /* position: fixed; */
     z-index: 9999;
     /* width: 100%; */
-    margin: -44px -27px 1.5rem -27px;
+    margin: -44px -27px 10px -27px; 
 }
 
 .breadcrumb .crumb-item:not(:first-child)::before {

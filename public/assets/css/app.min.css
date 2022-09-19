@@ -18000,7 +18000,7 @@ table > tbody > tr > td > img,
 }
 
 .mb15 {
-    margin-bottom: 15px !important;
+    margin-bottom: 15px ;
 }
 
 .mt-30 {
@@ -18019,7 +18019,8 @@ table > tbody > tr > td > img,
 }
 
 .mt8-mb15 {
-    margin: -8px 0px -15px;
+    margin-top: -8px ;
+    margin-bottom: -15px;
 }
 
 .mb-15 {
@@ -18027,11 +18028,12 @@ table > tbody > tr > td > img,
 }
 
 .mt-15 {
-    margin: -15px 0px 0px;
+    margin: -15px;
 }
 
 .mt15-mb15 {
-    margin: -15px 0px;
+    margin-top: -15px;
+    margin-bottom: -15px;
 }
 
 .mb-mt-30 {
@@ -18394,13 +18396,10 @@ ul.list-style-circle li {
     border-left: 5px solid #002f56 !important;
 }
 
-.topbar-logo {
-    height: 40px;
-    width: 100px;
-}
+
 
 .topbar-logo img {
-    height: 40px !important;
+    height: 30px !important;
     width: 100px !important;
 }
 
