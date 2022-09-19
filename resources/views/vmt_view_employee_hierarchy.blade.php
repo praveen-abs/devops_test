@@ -29,6 +29,14 @@
             margin:  0;
         }
         .empPhoto{
+            
+        }
+
+        .tree-avatar{    background: #f1f1f1;
+    align-items: center;
+    justify-content: center;}
+
+        .user-avatar{
             width: 96px;
         }
     </style>
@@ -169,11 +177,11 @@ $(document).ready(function() {
             'exportFileextension':'png',
             'nodeTemplate': function(data) {
               //var 
-              var nodeHtml =  '<div class="title">'; 
+              var nodeHtml =  ''; 
               if(data.image){
-                nodeHtml  = nodeHtml + '<img class="empPhoto" src="'+data.image+'" />';
+                nodeHtml  = nodeHtml + '<img class="user-avatar" src="'+data.image+'" />';
               }
-              nodeHtml = nodeHtml + data.name+'</div>';
+              nodeHtml =  '<div class="title">'+data.name+'</div><div class="tree-avatar">'+nodeHtml +'</div>';
               if(data.designation){
                 nodeHtml = nodeHtml + '<div class="content">'+data.designation+'</div>';  
               }
@@ -182,8 +190,8 @@ $(document).ready(function() {
             'createNode' : function($node,data){
 
                 if(data.className == "logo-level"){
-                    var photo =  '<figure><img class="empPhoto" src="'+data.image+'" ></figure>';
-                    $node.append(photo);
+                    /*var photo =  '<figure><img class="empPhoto" src="'+data.image+'" ></figure>';
+                    $node.append(photo);*/
                 }
                
                 return $node;
