@@ -485,8 +485,9 @@ class VmtEmployeeController extends Controller
             'data' => [],
         ];
 
-        $excelRowdata = $data[0][0];
-        //dd($excelRowdata);
+       // $excelRowdata = $data[0][0];
+        $excelRowdata_row = $data;
+        foreach($excelRowdata_row[0]  as $key => $excelRowdata){
 
         //Validation
         $rules = [
@@ -506,9 +507,9 @@ class VmtEmployeeController extends Controller
             'aadhar' => 'required|regex:/(^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$)/u',
             'marital_status' => 'required|in:unmarried,married,widowed,separated,divorced',
             'mobile_no' => 'required|regex:/^([0-9]{10})?$/u|numeric',
-            'bank_name' => 'required|regex:/(^([a-zA-z]+)(\d+)?$)/u',
+            'bank_name' => 'required',
             'bank_ifsc' => 'required|regex:/(^([A-Z]){4}0([A-Z0-9]){6}?$)/u',
-            'account_no' => 'required|regex:/^([0-9]{9,18})?$/u|numeric',
+            'account_no' => 'required',
             'current_address' => 'required',
             'permanent_address' => 'required',
             'mother_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
@@ -521,7 +522,7 @@ class VmtEmployeeController extends Controller
             'child_dob' => 'nullable|date_format:d-m-Y',
             'department' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
             'process' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-            'designation' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+            'designation' => 'required',
             'cost_center' => 'required',
             'confirmation_period' => 'required',
             'holiday_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
@@ -740,6 +741,7 @@ class VmtEmployeeController extends Controller
                     //dd($e->getMessage());
                     //$returnfailedMsg .= $empNo." not get added because of error ".$e->getMessage()." <br/>";
                 }
+            }
         }
 
         //$data = ['success'=> $returnsuccessMsg, 'failed'=> $returnfailedMsg, 'failure_json' => $failureJSON, 'success_count'=> $addedCount, 'failed_count'=> $failedCount];
@@ -820,6 +822,8 @@ class VmtEmployeeController extends Controller
 
     // insert the employee to database for quick onboarding
     public function storeQuickOnboardEmployee($data){
+
+
          $VmtGeneralInfo = VmtGeneralInfo::first();
 
          $rules = [];
@@ -834,158 +838,168 @@ class VmtEmployeeController extends Controller
         $addedCount = 0;
         $failedCount = 0;
         $empNo=0;
-        $excelRowdata = $data[0][0];
-         //Validation
-    $rules = [
-        'employee_code' => 'nullable',
-         'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-        'email' => 'required|email|unique:users,email',
-        'l1_manager_code' => 'required|regex:/(^([a-zA-z0-9.]+)(\d+)?$)/u',
-         'doj' => 'required|dateformat:d-m-Y',
-         'mobile_no' => 'required|regex:/^([0-9]{10})?$/u|numeric',
-         'designation' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-         'basic' => 'required|numeric',
-         'hra' => 'required|numeric',
-         'statutory_bonus' => 'required|numeric',
-         'child_education_allowance' => 'required|numeric',
-         'food_coupon' => 'required|numeric',
-         'lta' => 'required|numeric',
-         'special_allowance' => 'required|numeric',
-         'other_allowance' => 'required|numeric',
-         'epf_employer_contribution' => 'required|numeric',
-         'esic_employer_contribution'=> 'required|numeric',
-         'insurance' => 'required|numeric',
-         'graduity' => 'required|numeric',
-         'epf_employee' => 'required|numeric',
-         'esic_employee' => 'required|numeric',
-         'professional_tax' => 'required|numeric',
-         'labour_welfare_fund' => 'required|numeric',
-    ];
-
-    $messages = [
-        'dateformat' => 'Field :attribute should have the following format DD-MM-YYYY ',
-        'in' => 'Field :attribute should have the following values : :values .',
-        'required' => 'Field :attribute is required',
-        'regex' => 'Field :attribute is invalid',
-        'employee_name.regex' => 'Field :attribute should not have special characters',
-    ];
-
-    $validator = Validator::make($excelRowdata, $rules, $messages);
-
-
-    if (!$validator->passes()) {
-        // $returnfailedMsg .= $empNo." not get added because of error ".json_encode($validator->errors()->all())." <br/>";
-
-         $responseJSON['status'] = 'failure';
-         $responseJSON['message'] = $empNo." not get added because of error ";
-         $responseJSON['data'] = json_encode($validator->errors());
-
-     }
-     else
-     {
-
-        $validated = $validator->validated();
-
-
-        $row=$validated;
-       // dd($row['l1_manager_code']);
-                $empNo = $row['employee_code'];
-
-                if($this->isUserExist($row["l1_manager_code"])){
+        $excelRowdata_row = $data;
+        foreach($excelRowdata_row[0]  as $key => $excelRowdata){
 
 
 
-                    try {
+                    // var_dump($excelRowdata);exit();
+                    //Validation
+                $rules = [
+                    'employee_code' => 'nullable|unique:users,user_code',
+                    'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                    'email' => 'required|email|unique:users,email',
+                    'l1_manager_code' => 'required|regex:/(^([a-zA-z0-9.]+)(\d+)?$)/u',
+                    'doj' => 'required|dateformat:d-m-Y',
+                    'mobile_no' => 'required|regex:/^([0-9]{10})?$/u|numeric',
+                    'designation' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                    'basic' => 'required|numeric',
+                    'hra' => 'required|numeric',
+                    'statutory_bonus' => 'required|numeric',
+                    'child_education_allowance' => 'required|numeric',
+                    'food_coupon' => 'required|numeric',
+                    'lta' => 'required|numeric',
+                    'special_allowance' => 'required|numeric',
+                    'other_allowance' => 'required|numeric',
+                    'epf_employer_contribution' => 'required|numeric',
+                    'esic_employer_contribution'=> 'required|numeric',
+                    'insurance' => 'required|numeric',
+                    'graduity' => 'required|numeric',
+                    'epf_employee' => 'required|numeric',
+                    'esic_employee' => 'required|numeric',
+                    'professional_tax' => 'required|numeric',
+                    'labour_welfare_fund' => 'required|numeric',
+                ];
 
-                    $user =  User::create([
-                        'name' => $row['employee_name'],
-                        'email' => $row["email"],
-                        'password' => Hash::make('Abs@123123'),
-                        'avatar' =>  $row['employee_name'].'_avatar.jpg',
-                        'user_code' =>  $empNo,
-                        'active' => '1',
-                        'is_onboarded' => '0',
-                        'onboard_type' => 'quick',
-                        'is_admin' => '0',
-                        'is_default_password_updated' => '0',
+                $messages = [
+                    'dateformat' => 'Field <b>:attribute</b> should have the following format DD-MM-YYYY ',
+                    'in' => 'Field <b>:attribute</b> should have the following values : :values .',
+                    'required' => 'Field <b>:attribute</b> is required',
+                    'regex' => 'Field <b>:attribute</b> is invalid',
+                    'employee_name.regex' => 'Field <b>:attribute</b> should not have special characters',
+                    'unique' => 'Field <b>:attribute</b> should be unique',
+                ];
 
-                    ]);
+           // var_dump($excelRowdata);exit();
 
-                    $user->save();
+            $validator = Validator::make($excelRowdata, $rules, $messages);
+        // var_dump($validator);
 
-                    $user->assignRole("Employee");
+            if (!$validator->passes()) {
+                // $returnfailedMsg .= $empNo." not get added because of error ".json_encode($validator->errors()->all())." <br/>";
 
-                    $newEmployee = new VmtEmployee;
-                    $newEmployee->userid = $user->id;
-                    $newEmployee->emp_no   =    $empNo;
-                    //$newEmployee->gender   =    $row["gender"];
-                    $newEmployee->doj   =    $row['doj'];
-                    $newEmployee->dol   =    $row['doj'];
-                    $newEmployee->mobile_number   =    $row['mobile_no'];
-                    $newEmployee->save();
-
-                    if($newEmployee){
-                        $empOffice  = new VmtEmployeeOfficeDetails;
-                        $empOffice->emp_id      = $newEmployee->id;
-                        $empOffice->user_id     = $newEmployee->userid;
-                        $empOffice->designation = $row["designation"];
-                        $empOffice->save();
-                    }
-
-                    if ($empOffice) {
-                        $compensatory = new Compensatory;
-                        $compensatory->user_id = $newEmployee->userid;
-                        $compensatory->basic = $row["basic"];
-                        $compensatory->hra = $row["hra"];
-                        $compensatory->Statutory_bonus = $row["statutory_bonus"];
-                        $compensatory->child_education_allowance = $row["child_education_allowance"];
-                        $compensatory->food_coupon = $row["food_coupon"];
-                        $compensatory->lta = $row["lta"];
-                        $compensatory->special_allowance = $row["special_allowance"];
-                        $compensatory->other_allowance = $row["other_allowance"];
-                        $compensatory->gross = $row["basic"] + $row["hra"] + $row["statutory_bonus"] + $row["child_education_allowance"] + $row["food_coupon"] + $row["lta"] + $row["special_allowance"] + $row["other_allowance"];
-                        $compensatory->epf_employer_contribution = $row["epf_employer_contribution"];
-                        $compensatory->esic_employer_contribution = $row["esic_employer_contribution"];
-                        $compensatory->insurance = $row["insurance"];
-                        $compensatory->graduity = $row["graduity"];
-                        $compensatory->cic = $compensatory->gross + $row["epf_employer_contribution"] + $row["esic_employer_contribution"] + $row["insurance"] + $row["graduity"];
-                        $compensatory->epf_employee = $row["epf_employee"];
-                        $compensatory->esic_employee = $row["esic_employee"];
-                        $compensatory->professional_tax = $row["professional_tax"];
-                        $compensatory->labour_welfare_fund = $row["labour_welfare_fund"];
-                        $compensatory->net_income = $compensatory->gross + $row["epf_employee"] + $row["esic_employee"] + $row["professional_tax"] + $row["labour_welfare_fund"] - ($row["epf_employer_contribution"] - $row["esic_employer_contribution"] - $row["insurance"] - $row["graduity"]);
-                        $compensatory->save();
-                    }
-
-
-
-                 $image_view = url('/').$VmtGeneralInfo->logo_img;
-
-                   $responseJSON['status'] = 'success';
-                   $responseJSON['message'] = $empNo." get added";
-
-                   $returnsuccessMsg = "";
-
-                    \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $empNo, 'Abs@123123', request()->getSchemeAndHttpHost(),$image_view));
-            } catch (\Exception $e) {
-
-                $this->deleteUser($user->id);
                 $responseJSON['status'] = 'failure';
-                $responseJSON['message'] = $empNo." not get added because of error ".$e->getMessage();
-                $responseJSON['data'] = json_encode(['error'=>$e->getMessage()]);
-                //$responseJSON['stacktrace'] = json_encode(report($e));
-                //dd($e->getMessage());
-                //$returnfailedMsg .= $empNo." not get added because of error ".$e->getMessage()." <br/>";
+                $responseJSON['message'] = $empNo." not get added because of error ";
+                $responseJSON['data'] = json_encode($validator->errors());
+
             }
+            else
+            {
 
-            }else{
-                $returnfailedMsg .= "<li>"." Reporting Manager (".$row['reporting_manager_code'] .") is not available ";
-                $returnfailedMsg .= "</li>";
-                $failedCount++;
+                $validated = $validator->validated();
+
+
+                $row=$validated;
+
+               // var_dump($row['employee_code']);
+                        $empNo = $row['employee_code'];
+
+                        if($this->isUserExist($row["l1_manager_code"])){
+
+
+
+                            try {
+
+                            $user =  User::create([
+                                'name' => $row['employee_name'],
+                                'email' => $row["email"],
+                                'password' => Hash::make('Abs@123123'),
+                                'avatar' =>  $row['employee_name'].'_avatar.jpg',
+                                'user_code' =>  $empNo,
+                                'active' => '1',
+                                'is_onboarded' => '0',
+                                'onboard_type' => 'quick',
+                                'is_admin' => '0',
+                                'is_default_password_updated' => '0',
+
+                            ]);
+
+                            $user->save();
+
+                            $user->assignRole("Employee");
+
+                            $newEmployee = new VmtEmployee;
+                            $newEmployee->userid = $user->id;
+                            $newEmployee->emp_no   =    $empNo;
+                            //$newEmployee->gender   =    $row["gender"];
+                            $newEmployee->doj   =    $row['doj'];
+                            $newEmployee->dol   =    $row['doj'];
+                            $newEmployee->mobile_number   =    $row['mobile_no'];
+                            $newEmployee->save();
+
+                            if($newEmployee){
+                                $empOffice  = new VmtEmployeeOfficeDetails;
+                                $empOffice->emp_id      = $newEmployee->id;
+                                $empOffice->user_id     = $newEmployee->userid;
+                                $empOffice->designation = $row["designation"];
+                                $empOffice->save();
+                            }
+
+                            if ($empOffice) {
+                                $compensatory = new Compensatory;
+                                $compensatory->user_id = $newEmployee->userid;
+                                $compensatory->basic = $row["basic"];
+                                $compensatory->hra = $row["hra"];
+                                $compensatory->Statutory_bonus = $row["statutory_bonus"];
+                                $compensatory->child_education_allowance = $row["child_education_allowance"];
+                                $compensatory->food_coupon = $row["food_coupon"];
+                                $compensatory->lta = $row["lta"];
+                                $compensatory->special_allowance = $row["special_allowance"];
+                                $compensatory->other_allowance = $row["other_allowance"];
+                                $compensatory->gross = $row["basic"] + $row["hra"] + $row["statutory_bonus"] + $row["child_education_allowance"] + $row["food_coupon"] + $row["lta"] + $row["special_allowance"] + $row["other_allowance"];
+                                $compensatory->epf_employer_contribution = $row["epf_employer_contribution"];
+                                $compensatory->esic_employer_contribution = $row["esic_employer_contribution"];
+                                $compensatory->insurance = $row["insurance"];
+                                $compensatory->graduity = $row["graduity"];
+                                $compensatory->cic = $compensatory->gross + $row["epf_employer_contribution"] + $row["esic_employer_contribution"] + $row["insurance"] + $row["graduity"];
+                                $compensatory->epf_employee = $row["epf_employee"];
+                                $compensatory->esic_employee = $row["esic_employee"];
+                                $compensatory->professional_tax = $row["professional_tax"];
+                                $compensatory->labour_welfare_fund = $row["labour_welfare_fund"];
+                                $compensatory->net_income = $compensatory->gross + $row["epf_employee"] + $row["esic_employee"] + $row["professional_tax"] + $row["labour_welfare_fund"] - ($row["epf_employer_contribution"] - $row["esic_employer_contribution"] - $row["insurance"] - $row["graduity"]);
+                                $compensatory->save();
+                            }
+
+
+
+                        $image_view = url('/').$VmtGeneralInfo->logo_img;
+
+                        $responseJSON['status'] = 'success';
+                        $responseJSON['message'] = $empNo." get added";
+
+                        $returnsuccessMsg = "";
+
+                            \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $empNo, 'Abs@123123', request()->getSchemeAndHttpHost(),$image_view));
+                    } catch (\Exception $e) {
+
+                        $this->deleteUser($user->id);
+                        $responseJSON['status'] = 'failure';
+                        $responseJSON['message'] = $empNo." not get added because of error ".$e->getMessage();
+                        $responseJSON['data'] = json_encode(['error'=>$e->getMessage()]);
+                        //$responseJSON['stacktrace'] = json_encode(report($e));
+                        //dd($e->getMessage());
+                        //$returnfailedMsg .= $empNo." not get added because of error ".$e->getMessage()." <br/>";
+                    }
+
+                    }else{
+                        $returnfailedMsg .= "<li>"." Reporting Manager (".$row['l1_manager_code'] .") is not available ";
+                        $returnfailedMsg .= "</li>";
+                        $failedCount++;
+                    }
+
+
+                }
             }
-
-
-        }
             return $responseJSON;
 
 

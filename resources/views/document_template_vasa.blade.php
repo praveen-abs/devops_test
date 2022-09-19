@@ -427,13 +427,13 @@
                                     <td colspan="2" class="">
                                         <p class="txt-right">
                                     <td colspan="2" class="">
-                                        <p class="txt-right">2280.00</p>
+                                        <p class="txt-right"></p>
                                     </td>
                                     <td colspan="2" class="">
                                         <p class="txt-left text-strong">ESIC</p>
                                     </td>
                                     <td colspan="2" class="">
-                                        <p class="txt-right">58.00</p>
+                                        <p class="txt-right"></p>
                                     </td>
                                 </tr>
                                 <tr>
