@@ -65,7 +65,7 @@
 
     .payslip_table tr,
     td {
-        border: 2`px solid #004b81;
+        border: 2px solid #004b81;
 
     }
 
@@ -131,6 +131,10 @@
 
 @endsection
 @section('content')
+@component('components.configuration_breadcrumb')
+@slot('li_1')
+@endslot
+@endcomponent
 <div class="container-fluid bg-white  ">
     <div class="fill salary-header nav-tab-header">
         <div>
@@ -185,7 +189,7 @@
 
                                         <div class="header-img txt-right d-flex align-items-center" style="height:100px ;">
                                             <img src=""  title="">
-                                            <img src="{{ URL::asset('assets/images/vasa.jpg') }}" class="" alt="" style="height: 40px;width:180px;max-height:100%;">
+                                            <img src="{{ URL::asset('assets/images/vasa.jpg') }}" class="" alt="" style="height: 100px;width:250px;max-height:100%;">
                                         </div>
 
 
@@ -203,13 +207,13 @@
                                         <p>EMPLOYEE NAME</p>
                                     </td>
                                     <td colspan="3">
-                                        <p>xyz</p>
+                                        <p></p>
                                     </td>
                                     <td colspan="3" class="bg-ash text-strong">
                                         <p>EMPLOYEE CODE</p>
                                     </td>
                                     <td colspan="3">
-                                        <p>xyz</p>
+                                        <p></p>
                                     </td>
 
                                 </tr>
@@ -218,13 +222,13 @@
                                         <p>DATE OF BIRTH</p>
                                     </td>
                                     <td colspan="3">
-                                        <p>xyz</p>
+                                        <p></p>
                                     </td>
                                     <td colspan="3" class="bg-ash text-strong">
                                         <p>DATE OF JOINING</p>
                                     </td>
                                     <td colspan="3">
-                                        <p>11-MAY-2021</p>
+                                        <p></p>
                                     </td>
 
                                 </tr>
@@ -233,13 +237,13 @@
                                         <p>DESIGNATION</p>
                                     </td>
                                     <td colspan="3">
-                                        <p>xyz</p>
+                                        <p></p>
                                     </td>
                                     <td colspan="3" class="bg-ash text-strong">
                                         <p>LOCATION</p>
                                     </td>
                                     <td colspan="3">
-                                        <p>xyz</p>
+                                        <p></p>
                                     </td>
 
                                 </tr>
@@ -603,7 +607,7 @@
                                         <p class="txt-center text-strong">Paid Date</p>
                                     </td>
                                     <td colspan="3" class="">
-                                        <p class="txt-center">11-MAY-2022</p>
+                                        <p class="txt-center"></p>
                                     </td>
                                 </tr>
                                 <tr>
@@ -622,8 +626,8 @@
                                         <p class="txt-left">Please
                                             reach out to us for any payroll queries at -payroll@ardens.in</p>
                                     </td>
-                                    <td colspan="2" class="border-less txt-right">
-                                        <p>Powered By</p>
+                                    <td colspan="2" class="border-less ">
+                                        <p class="txt-right">Powered By</p>
 
 
                                     </td>
