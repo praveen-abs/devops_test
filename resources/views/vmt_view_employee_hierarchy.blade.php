@@ -16,7 +16,7 @@
         .orgchart .dept-level .title .symbol{
             display: none;
         }
-        
+
 
         /*  Logo node style */
         .orgchart .logo-level .title{
@@ -135,7 +135,7 @@ $(document).ready(function() {
             }else{
                 var url = "{{ route('getChildrenForUser','') }}"+"/"+nodeData.user_code;
             }
-            
+
             if($('input[name="department"]:checked').val()){
                 return url + '?department=true';
             }
@@ -152,8 +152,7 @@ $(document).ready(function() {
         }
     };
 
-    @if(Auth::user()->is_admin == 0)
-        
+
         var ocOption  = {
             'data' : '{{ route('getLogoLevelOrgTree') }}',
             //'{{ route('getTwoLevelOrgTree',['user_code' => Auth::user()->user_code ]) }}', ADMIN001
@@ -168,14 +167,14 @@ $(document).ready(function() {
             'exportFilename': 'OrgChartImage',
             'exportFileextension':'png',
             'nodeTemplate': function(data) {
-              //var 
-              var nodeHtml =  '<div class="title">'; 
+              //var
+              var nodeHtml =  '<div class="title">';
               if(data.image){
                 nodeHtml  = nodeHtml + '<img class="empPhoto" src="'+data.image+'" />';
               }
               nodeHtml = nodeHtml + data.name+'</div>';
               if(data.designation){
-                nodeHtml = nodeHtml + '<div class="content">'+data.designation+'</div>';  
+                nodeHtml = nodeHtml + '<div class="content">'+data.designation+'</div>';
               }
               return nodeHtml;
             },
@@ -185,7 +184,7 @@ $(document).ready(function() {
                     var photo =  '<figure><img class="empPhoto" src="'+data.image+'" ></figure>';
                     $node.append(photo);
                 }
-               
+
                 return $node;
             }
         };
@@ -223,11 +222,6 @@ $(document).ready(function() {
 
 
 
-
-
-    @else
-        $('#chart-container').html('<h4> Not available for Super Admin</h4>');
-    @endif
 });
 </script>
 
