@@ -11,7 +11,7 @@
 @endcomponent
 
 
-<div class="client-onboard-wrapper mt-8 ">
+<div class="client-onboard-wrapper">
     <div id="msform">
         <!-- progressbar -->
         <!-- <ul id="progressbar">

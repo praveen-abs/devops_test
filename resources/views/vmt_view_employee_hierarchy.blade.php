@@ -16,7 +16,7 @@
         .orgchart .dept-level .title .symbol{
             display: none;
         }
-        
+
 
         /*  Logo node style */
         .orgchart .logo-level .title{
@@ -143,7 +143,7 @@ $(document).ready(function() {
             }else{
                 var url = "{{ route('getChildrenForUser','') }}"+"/"+nodeData.user_code;
             }
-            
+
             if($('input[name="department"]:checked').val()){
                 return url + '?department=true';
             }
@@ -160,8 +160,7 @@ $(document).ready(function() {
         }
     };
 
-    @if(Auth::user()->is_admin == 0)
-        
+
         var ocOption  = {
             'data' : '{{ route('getLogoLevelOrgTree') }}',
             //'{{ route('getTwoLevelOrgTree',['user_code' => Auth::user()->user_code ]) }}', ADMIN001
@@ -176,14 +175,14 @@ $(document).ready(function() {
             'exportFilename': 'OrgChartImage',
             'exportFileextension':'png',
             'nodeTemplate': function(data) {
-              //var 
+              //var
               var nodeHtml =  ''; 
-              if(data.image){
+            //   if(data.image){
                 nodeHtml  = nodeHtml + '<img class="user-avatar" src="'+data.image+'" />';
-              }
+            //   }
               nodeHtml =  '<div class="title">'+data.name+'</div><div class="tree-avatar">'+nodeHtml +'</div>';
               if(data.designation){
-                nodeHtml = nodeHtml + '<div class="content">'+data.designation+'</div>';  
+                nodeHtml = nodeHtml + '<div class="content">'+data.designation+'</div>';
               }
               return nodeHtml;
             },
@@ -193,7 +192,7 @@ $(document).ready(function() {
                     /*var photo =  '<figure><img class="empPhoto" src="'+data.image+'" ></figure>';
                     $node.append(photo);*/
                 }
-               
+
                 return $node;
             }
         };
@@ -231,11 +230,6 @@ $(document).ready(function() {
 
 
 
-
-
-    @else
-        $('#chart-container').html('<h4> Not available for Super Admin</h4>');
-    @endif
 });
 </script>
 

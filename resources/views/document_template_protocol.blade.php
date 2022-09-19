@@ -65,7 +65,7 @@
 
     .payslip_table tr,
     td {
-        border: 2px solid #004b81;
+        border: 2px solid #99766f;
 
     }
 
@@ -175,27 +175,27 @@
                     <div class="sub-page" style="text-align: justify;font-size: 15px;">
                         <div class="table-responsive">
                             <table cellspacing="0" cellpadding="0" class="payslip_table">
-                                <tr class="header-row" aria-rowcount="">
-                                    <td colspan="8" class="border-less p3" rowspan="">
-                                        <!-- <div class="header-cotent">
+                            <tr class="header-row" aria-rowcount="">
+    <td colspan="8" class="border-less p3" rowspan="">
+        <div class="header-cotent">
 
-                                            <h6 class="margin-0">Brand Avatar LLP</h6>
-                                            <p class="mb-0">NO-01,Kandasamy Street,</p>
-                                            <p class="mb-0">Chandrabagh Ave 2nd St, Dr. Radha Krishnan Salai, </p>
-                                            <p class="mb-0">Mylapore, Chennai, Tamil Nadu 600004</p>
-                                        </div> -->
-                                    </td>
-                                    <td colspan="4" class="border-less p3">
+            <h6 class="margin-0">Protocol Labels India Pvt. Ltd.</h6>
+            <p class="mb-0">#3rd floor, S plot no 3A&3B, </p>
+            <p class="mb-0">166, Gerugambakkam, Bharathi Nagar,</p>
+            <p class="mb-0">Porur, Chennai, Tamil Nadu 600128.</p>
 
-                                        <div class="header-img txt-right d-flex align-items-center" style="height:100px ;">
-                                            <img src=""  title="">
-                                            <img src="{{ URL::asset('assets/images/vasa.jpg') }}" class="" alt="" style="height: 100px;width:250px;max-height:100%;">
-                                        </div>
+        </div>
+    </td>
+    <td colspan="4" class="border-less p3">
+
+        <div class="header-img txt-right d-flex align-items-center justify-content-end" style="height:100px ;width:100%">
+
+            <img src="{{ URL::asset('assets/images/protocol_logo.png') }}" class="txt-right" alt="" style="height: 80px;width:80px;max-height:100%;">
+        </div>
 
 
-                                    </td>
-                                </tr>
-
+    </td>
+</tr>
 
                                 <tr>
                                     <td colspan="12">

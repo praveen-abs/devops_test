@@ -41,13 +41,13 @@
                                 <span></span>
                             </span>
                         </button>
-                        <div class="topbar-logo mx-2">
+                        <div class="topbar-logo mx-2 d-felx align-items-center">
                             @php
                                 $client_logo =  App\Models\VmtGeneralInfo::first()->logo_img;
                             @endphp
 
                             @if( file_exists(public_path($client_logo)) )
-                                <img src=" {{URL::asset($client_logo)}}"  alt="" class="w-100 h-100">
+                                <img src=" {{URL::asset($client_logo)}}"  alt="" class="">
                             @endif
                         </div>
 

@@ -19,7 +19,6 @@
 
                 <!-- end Dashboard Menu -->
                 <li class="nav-item">
-                    @if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin'))
                     <a class="nav-link sidebar menu-link pt-0" href="{{route('index')}}">
                         <i> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#686363" class="bi bi-grid-fill" viewBox="0 0 16 16">
                                 <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3z" />
@@ -27,7 +26,6 @@
                         </i>
                         <span data-key="t-landing">Dashboard</span>
                     </a>
-                    @else
                     <a class="nav-link sidebar menu-link pt-0" href="{{route('index')}}">
                         <i> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#686363" class="bi bi-grid-fill" viewBox="0 0 16 16">
                                 <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3z" />
@@ -35,7 +33,6 @@
                         </i>
                         <span data-key="t-landing">Dashboard</span>
                     </a>
-                    @endif
                 </li>
 
 
@@ -96,7 +93,7 @@
 							</li>
 							<li class="nav-item">
 								<a href="{{url('attendance_approvals')}}" class="nav-link sidebar py-1">Approvals</a>
-							</li>						
+							</li>
 							<li class="nav-item">
 								<a href="{{url('attendance_shift_woff_hday')}}" class="nav-link sidebar py-1">Shift/WeeklyOff/Holidays</a>
 							</li>
@@ -105,7 +102,7 @@
 							</li>
 							<li class="nav-item">
 								<a href="{{url('attendance_overtime')}}" class="nav-link sidebar py-1">OverTime</a>
-							</li>						
+							</li>
 							<li class="nav-item">
 								<a href="{{url('attendance_leave')}}" class="nav-link sidebar py-1">Leave</a>
 							</li>
@@ -124,10 +121,10 @@
                             </li>
 							<li class="nav-item">
 								<a href="{{url('attendance_reports')}}" class="nav-link sidebar py-1"><span>Reports</span></a>
-							</li>						
+							</li>
 							<li class="nav-item">
 								<a href="{{url('attendance_settings')}}" class="nav-link sidebar py-1"><span>Settings</span></a>
-							</li>		
+							</li>
                         </ul>
                     </div>
                 </li>
@@ -206,16 +203,12 @@
                             <li class="nav-item">
                                 <a href="{{ route('employee-appraisal-pms-dashboard') }}" class="nav-link"><span>Employee Appraisal</span></a>
                             </li>
-                                                        <li class="nav-item">
-                                <a href="{{route('vmt_config_pms')}}" class="nav-link"><span>PMS Config</span></a>
-                            </li>
-                            @can('360_Degree_Review')
-                            <li class="nav-item">
-                                <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button"><span>360
-                                        Degree
-                                        Review</span></a>
-                            </li>
-                            @endcan
+                            @if(auth()->user()->org_role == "employee" || auth()->user()->org_role == "manager")
+
+                                <li class="nav-item">
+                                    <a href="{{route('vmt_config_pms')}}" class="nav-link"><span>PMS Config</span></a>
+                                </li>
+                            @endif
                         </ul>
                     </div>
                 </li>
@@ -468,7 +461,7 @@
                                         Onboarding</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('document_preview')}}" class="nav-link">Document Template<span> 
+                                <a href="{{route('document_preview')}}" class="nav-link">Document Template<span>
                                         </span></a>
                             </li>
                         </ul>

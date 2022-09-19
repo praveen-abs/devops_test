@@ -160,7 +160,7 @@
 
 
 
-<div class="container-fluid assign-goal-wrapper mt15-mb20">
+<div class="container-fluid assign-goal-wrapper">
     <div class="cards-wrapper">
         <div class="row">
             <div class="col-sm-12 col-md-6 col-xl-3 col-xxl-3 col-lg-3">
@@ -492,7 +492,7 @@
 
                                     </div>
                                     <div class="col-sm-1 col-md-1 col-lg-1 col-xl-1 col-xxl-1   ">
-                                    <label class="" for=""></label>
+                                        <label class="" for=""></label>
                                         <button id="" type="button" target="#reviewerReplaceSameLevel" class="btn py-1 px-3 btn btn-orange increment-btn  reviewerReplace">Change</button>
                                     </div>
 
@@ -508,7 +508,7 @@
                                             @endif
                                         </select>
                                     </div>
-                                   
+
 
                                     @endif
                                     <!-- Reviewer Selection Portion Ends -->
@@ -566,11 +566,11 @@
 <!-- Change Reviewer window -->
 
 <div id="reviewerReplaceSameLevel" class="modal custom-modal fade" role="dialog">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-md" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable fad  modal-md" role="document">
         <div class="modal-content top-line">
             <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
                 <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
-                Change Reviewer</h5>
+                    Change Reviewer</h5>
                 <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -580,7 +580,7 @@
                     @csrf
                     <h6 for="FormSelectDefault" class="form-label text-muted">Reviewer</h6>
                     <div class="row">
-                    <div class="col-12 col-md-12 col-lg-12 col-xxl-12 col-xl-12">
+                        <div class="col-12 col-md-12 col-lg-12 col-xxl-12 col-xl-12">
                             <label class="" for="">Existing Reviewer</label>
                             <select class="change-exiting-reviewer form-control" name="oldReviewerName">
 
@@ -594,21 +594,20 @@
                             <span style="color: red;" id="reviewerChangeError"></span>
                         </div>
                     </div>
-                    <div class="content-footer text-end>
-                       
-                                            <button class="btn btn-orange waves-effect waves-light" type="submit">
-                                                Save
-                                            </button>
+                    <div class="content-footer text-end mt-2">
+                        <button class="btn btn-orange waves-effect waves-light" type="submit">
+                            Save
+                        </button>
 
-                                  
-                        </div>
                     </div>
-                </form>
-
+                    </form>
             </div>
+            
+
         </div>
     </div>
-    <!-- add employee  Modal-->
+</div>
+<!-- add employee  Modal-->
 </div>
 
 <!-- Vertically Centered -->
@@ -643,40 +642,40 @@
         <div class="modal-content top-line">
             <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
                 <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
-                 Edit Employee</h5>
+                    Edit Employee</h5>
                 <!-- <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button> -->
             </div>
             <div class="modal-body">
-                
-                    @if(isset($loggedManagerEmployees))
-                    <!-- flow 2 -->
-                    <select class="select-employee-dropdown form-control" name="employees[]" multiple="multiple">
-                        @foreach($loggedManagerEmployees as $employeesSelection)
-                        <option selected value="{{ $employeesSelection->id }}">{{ $employeesSelection->name }}</option>
-                        @endforeach
-                    </select>
-                    <button class="btn btn-orange py-0 px-2" onclick="resetEmployeesList()"><span class="mr-10 icon"></span>Reset Employees</button>
-                    @else
-                    <!-- flow 1 -->
-                    <select class="select-employee-dropdown form-control form-select" id="selectedEmployeeDropdownId" name="employees[]" multiple="multiple">
-                        @if(isset($allEmployeesWithoutLoggedUserList) && count($allEmployeesWithoutLoggedUserList) > 0)
-                        @foreach($allEmployeesWithoutLoggedUserList as $employeeList)
-                        <option value="{{ $employeeList->id }}">{{ $employeeList->name }}</option>
-                        @endforeach
-                        @endif
-                    </select>
+
+                @if(isset($loggedManagerEmployees))
+                <!-- flow 2 -->
+                <select class="select-employee-dropdown form-control" name="employees[]" multiple="multiple">
+                    @foreach($loggedManagerEmployees as $employeesSelection)
+                    <option selected value="{{ $employeesSelection->id }}">{{ $employeesSelection->name }}</option>
+                    @endforeach
+                </select>
+                <button class="btn btn-orange py-0 px-2" onclick="resetEmployeesList()"><span class="mr-10 icon"></span>Reset Employees</button>
+                @else
+                <!-- flow 1 -->
+                <select class="select-employee-dropdown form-control form-select" id="selectedEmployeeDropdownId" name="employees[]" multiple="multiple">
+                    @if(isset($allEmployeesWithoutLoggedUserList) && count($allEmployeesWithoutLoggedUserList) > 0)
+                    @foreach($allEmployeesWithoutLoggedUserList as $employeeList)
+                    <option value="{{ $employeeList->id }}">{{ $employeeList->name }}</option>
+                    @endforeach
                     @endif
-                  
+                </select>
+                @endif
+
                 @if(isset($loggedManagerEmployees))
                 <div class="buttons d-flex justify-content-end align-items-center mt-2 ">
-                <!-- <button type="button" class="btn btn-border-orange close-modal " data-bs-dismiss="modal">Close</button> -->
+                    <!-- <button type="button" class="btn btn-border-orange close-modal " data-bs-dismiss="modal">Close</button> -->
                     <button class="btn btn-primary ml-2" id="edit-employee">Save</button>
                 </div>
                 @else
                 <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
-                <!-- <button type="button" class="btn btn-border-orange close-modal" data-bs-dismiss="modal">Close</button> -->
+                    <!-- <button type="button" class="btn btn-border-orange close-modal" data-bs-dismiss="modal">Close</button> -->
                     <button class="btn btn-orange ml-2" id="edit-employee-based-on-reviewer">Save</button>
                 </div>
                 @endif
@@ -700,12 +699,8 @@
             </div>
         </div>
     </div>
-
-
-
 </div>
 @endsection
-
 
 
 @section('script')
