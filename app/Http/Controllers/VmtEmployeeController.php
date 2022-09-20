@@ -309,6 +309,8 @@ class VmtEmployeeController extends Controller
         try {
             //$row = $request->all();
             $user =  User::where('email',  $row["email"])->first();
+            $user->is_onboarded = '1';
+            $user->save();
             $user->assignRole("Employee");
 
             $newEmployee = VmtEmployee::where('userid', $user->id)->first();
