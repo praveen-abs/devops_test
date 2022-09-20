@@ -27,8 +27,9 @@ class VmtOrgTreeController extends Controller
             //Get the top-most node
             $t_user_id = VmtEmployeeOfficeDetails::where('l1_manager_code','=','')
                                                 ->orWhereNull('l1_manager_code')
-                                                ->pluck('user_id');
-            $t_user_code = User::where('id',$t_user_id)->pluck('user_code');
+                                                ->value('user_id');
+
+            $t_user_code = User::where('id',$t_user_id)->value('user_code');
             //dd($t_user_code);
         }
         else
