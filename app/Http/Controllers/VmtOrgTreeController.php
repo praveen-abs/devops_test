@@ -25,7 +25,9 @@ class VmtOrgTreeController extends Controller
         if(Auth::user()->is_admin == 1)
         {
             //Get the top-most node
-            $t_user_id = VmtEmployeeOfficeDetails::where('l1_manager_code','')->pluck('user_id');
+            $t_user_id = VmtEmployeeOfficeDetails::where('l1_manager_code','=','')
+                                                ->orWhereNull('l1_manager_code')
+                                                ->pluck('user_id');
             $t_user_code = User::where('id',$t_user_id)->pluck('user_code');
             //dd($t_user_code);
         }
