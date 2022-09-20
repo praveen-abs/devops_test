@@ -379,7 +379,7 @@ p {
 /* by george 70px to 50px  */
 .page-content {
     /* padding: calc(40px + 24px) calc(24px / 2) 60px calc(24px / 2); */
-    padding: calc(70px + 1.5rem) calc(1.5rem / 2) 15px calc(1.5rem / 2);
+    padding: calc(70px + 1.5rem) calc(1.5rem / 2) 50px calc(1.5rem / 2);
 }
 
 /* sub header (bread-crumb) nav bar */

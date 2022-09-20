@@ -68,7 +68,7 @@
 
     table.payslip_table tr,
     td {
-        border: 2px solid #af1888;
+        border: 2px solid #af1888 !important;
 
     }
 
@@ -626,7 +626,8 @@
                                     <td colspan="4" class="border-less p3">
 
                                         <div class="header-img txt-right">
-                                            <img src="" style="height: 40px;width:180px;max-height:100%;" title="">
+                                            <!-- <img src="" title=""> -->
+                                               <img src="{{ URL::asset('assets/images/appoinment/brandavatarlogo.png') }}" class=""  style="height: 40px;width:180px;max-height:100%;" >
                                         </div>
 
 
