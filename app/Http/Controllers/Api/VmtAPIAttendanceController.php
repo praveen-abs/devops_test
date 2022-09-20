@@ -48,6 +48,9 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         $attendanceCheckin->checkin_time  = $request->checkin_time;
         $attendanceCheckin->user_id  = auth::user()->id;
         $attendanceCheckin->shift_type  = $request->shift_type;
+        $attendanceCheckin->work_mode = $request->workmode;
+        $attendanceCheckin->selfie_checkin = $request->selfie_checkin; ////Need to save the image in folder and add path here
+        $attendanceCheckin->checkin_comments = $request->checkin_comments;
         $attendanceCheckin->save();
 
         $emptyObj  = new \stdClass;
@@ -68,6 +71,8 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         $reqDate  = $request->date;
         $attendanceCheckout  = VmtEmployeeAttendance::where('user_id', auth::user()->id)->where("date", $reqDate)->first();
         $attendanceCheckout->checkout_time = $request->checkout_time;
+        $attendanceCheckout->selfie_checkout = $request->selfie_checkout; //Need to save the image in folder and add path here
+        $attendanceCheckout->checkout_comments = $request->checkout_comments;
         $attendanceCheckout->save();
 
         $emptyObj  = new \stdClass;
@@ -92,6 +97,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         $attendanceLeave = new VmtEmployeeAttendance;
         $attendanceLeave->date  = $request->date;
         $attendanceLeave->leave_type_id  = $request->leave_type_id;
+        $attendanceLeave->leave_comments = $request->leave_comments;
         $attendanceLeave->user_id  = auth::user()->id;
         $attendanceLeave->save();
         $emptyObj  = new \stdClass;
@@ -113,12 +119,12 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
     {
         // code...
         $workingCount = $onTimeCount = $lateCount = $leftTimelyCount = $leftEarlyCount = $onLeaveCount = $absentCount = 0;
-        
+
         //$reportMonth  = $request->has('month') ? $request->month : date('m');
 
         $monthlyGroups = VmtEmployeeAttendance::select(\DB::raw('MONTH(date) month'))->groupBy('month')->orderBy('month', 'DESC')->get();
 
-        $monthlyReport =  []; 
+        $monthlyReport =  [];
 
         foreach ($monthlyGroups as $key => $value) {
             // code...
@@ -145,10 +151,10 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
                                     "daily_attendance_report" => $dailyAttendanceReport
                                 );
         }
-        
-        
-        
-        
+
+
+
+
 
         return response()->json([
             'status' => true,
