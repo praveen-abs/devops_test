@@ -65,7 +65,7 @@
 
     .payslip_table tr,
     td {
-        border: 2`px solid #004b81;
+        border: 2px solid #004b81;
 
     }
 
@@ -203,13 +203,13 @@
                                         <p>EMPLOYEE NAME</p>
                                     </td>
                                     <td colspan="3">
-                                        <p>xyz</p>
+                                        <p></p>
                                     </td>
                                     <td colspan="3" class="bg-ash text-strong">
                                         <p>EMPLOYEE CODE</p>
                                     </td>
                                     <td colspan="3">
-                                        <p>xyz</p>
+                                        <p></p>
                                     </td>
 
                                 </tr>
@@ -218,13 +218,13 @@
                                         <p>DATE OF BIRTH</p>
                                     </td>
                                     <td colspan="3">
-                                        <p>xyz</p>
+                                        <p></p>
                                     </td>
                                     <td colspan="3" class="bg-ash text-strong">
                                         <p>DATE OF JOINING</p>
                                     </td>
                                     <td colspan="3">
-                                        <p>11-MAY-2021</p>
+                                        <p></p>
                                     </td>
 
                                 </tr>
@@ -233,13 +233,13 @@
                                         <p>DESIGNATION</p>
                                     </td>
                                     <td colspan="3">
-                                        <p>xyz</p>
+                                        <p></p>
                                     </td>
                                     <td colspan="3" class="bg-ash text-strong">
                                         <p>LOCATION</p>
                                     </td>
                                     <td colspan="3">
-                                        <p>xyz</p>
+                                        <p></p>
                                     </td>
 
                                 </tr>
@@ -603,7 +603,7 @@
                                         <p class="txt-center text-strong">Paid Date</p>
                                     </td>
                                     <td colspan="3" class="">
-                                        <p class="txt-center">11-MAY-2022</p>
+                                        <p class="txt-center"></p>
                                     </td>
                                 </tr>
                                 <tr>
