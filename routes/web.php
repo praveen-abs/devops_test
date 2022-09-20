@@ -176,7 +176,7 @@ Route::get('employee-hierarchy', 'App\Http\Controllers\VmtOrgTreeController@inde
 // store employee
 Route::post('vmt-employee-store', 'App\Http\Controllers\VmtEmployeeController@storeEmployeeData');
 
-Route::post('vmt-employee-onboard', 'App\Http\Controllers\VmtEmployeeController@storeEmployeeOnboardForm');
+Route::post('vmt-employee-onboard', 'App\Http\Controllers\VmtEmployeeController@processEmployeeOnboardForm_Normal_Quick');
 
 Route::get('bulkEmployeeOnboarding', 'App\Http\Controllers\VmtEmployeeController@showBulkOnboardUploadPage')->name('bulkEmployeeOnboarding');
 Route::post('vmt-employess/bulk-upload', 'App\Http\Controllers\VmtEmployeeController@importBulkOnboardEmployeesExcelData');
