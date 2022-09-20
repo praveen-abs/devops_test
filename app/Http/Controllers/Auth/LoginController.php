@@ -88,12 +88,12 @@ class LoginController extends Controller
 
         // Remember token set to false
         $save_credentials = false;
-        $user = User::where('user_code', $request->user_code)->where('active', 1)->first();
+        $user = User::where('user_code', $request->user_code)->where('can_login', 1)->first();
         //dd($user);
 
         if($user)
         {
-        $isDefaultPasswordUpdated = $user->is_default_password_updated;
+            $isDefaultPasswordUpdated = $user->is_default_password_updated;
 
             //If client_code selected
             if(isset($request->client_code))

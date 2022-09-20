@@ -47,7 +47,7 @@
 @component('components.organization_breadcrumb')
 @slot('li_1')  @endslot
 @endcomponent
-<div id="chart-container" class="mt-8" style="overflow: hidden;">
+<div id="chart-container" class="" style="overflow: hidden;">
 </div>
 <div class="">
     <input type="checkbox" name="department" id="department-wise" >Department

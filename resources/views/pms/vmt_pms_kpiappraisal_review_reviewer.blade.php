@@ -142,8 +142,8 @@
                     <input type="hidden" value="" name="formSubmitType" id="formSubmitType">
                     <input type="hidden" name="goal_id" value="{{$assignedGoals->id}}">
                     <input type="hidden" name="kpiReviewId" value="{{$assignedGoals->id}}">
-                    <div class="table-content mb-4">
-                        <table id="table_review"  class="table align-middle mb-0 table-bordered  responsive" data-paging="true" data-paging-size="10" data-paging-limit="3" data-paging-container="#paging-ui-container" data-paging-count-format="{PF} to {PL}" data-sorting="true" data-filtering="false" data-empty="No Results" data-filter-container="#filter-form-container" data-editing-add-text="Add New">
+                    <div class="table-content responsive">
+                        <table id="table_review"  class="table align-middle mb-0 table-bordered  " data-paging="true" data-paging-size="10" data-paging-limit="3" data-paging-container="#paging-ui-container" data-paging-count-format="{PF} to {PL}" data-sorting="true" data-filtering="false" data-empty="No Results" data-filter-container="#filter-form-container" data-editing-add-text="Add New">
                             <thead class="thead" id="tHead">
                                 <tr>
                                     <th scope="col" data-name='dimension' data-filterable="false" data-visible="{{$show['dimension']}}">
@@ -191,7 +191,9 @@
                                 @foreach($kpiRows as $index => $kpiRow)
                                 <tr>
                                     <th scope="row">
-                                        <div>{{$kpiRow->dimension}}</div>
+                                        <div>
+                                            {{$kpiRow->dimension}}
+                                        </div>
                                     </th>
                                     <td>
                                         <div>{{$kpiRow->kpi}}</div>
@@ -250,7 +252,7 @@
                                         </td>
                                         <td>
                                             @if($assignedGoals->is_assignee_submitted == '1' && $reviewersReview == Auth::id() && ($decodedKpiReviewSubmittedStatus[$reviewersReview] == '' || $decodedKpiReviewSubmittedStatus[$reviewersReview] == '0'))
-                                            <input type="number" class="inp-text" name="reviewer_kpi_percentage[{{$reviewersReview}}][{{$kpiRow->id}}]" id="reviewer_kpi_percentage{{$index}}-{{$reviewersReview}}" placeholder="type here" value="@if(isset( $decodedKpiReviewPerc[$reviewersReview])){{$decodedKpiReviewPerc[$reviewersReview][$kpiRow->id]}}@endif">
+                                            <textarea type="number" class="inp-text" name="reviewer_kpi_percentage[{{$reviewersReview}}][{{$kpiRow->id}}]" id="reviewer_kpi_percentage{{$index}}-{{$reviewersReview}}" placeholder="type here" value="@if(isset( $decodedKpiReviewPerc[$reviewersReview])){{$decodedKpiReviewPerc[$reviewersReview][$kpiRow->id]}}@endif"></textarea>
 
                                             @else
                                             <div>@if(isset( $decodedKpiReviewPerc[$reviewersReview])){{$decodedKpiReviewPerc[$reviewersReview][$kpiRow->id]}}@endif</div>
@@ -267,10 +269,10 @@
                 @if($assignedGoals->is_assignee_submitted == '1')
                     @if($decodedKpiReviewSubmittedStatus[Auth::id()] != '1')
                     <div class="buttons d-flex align-items-center justify-content-end ">
-                        <button class="btn btn-primary" id="save_table" >
+                        <button class="btn btn-orange" id="save_table" >
                         @if($decodedKpiReviewSubmittedStatus[Auth::id()] == '') Save @else Edit @endif </button>
                         &nbsp;&nbsp;
-                        <button class="btn btn-primary" id="publish_table" @if($decodedKpiReviewSubmittedStatus[Auth::id()] == '') disabled @endif>Submit</button>
+                        <button class="btn btn-orange" id="publish_table" @if($decodedKpiReviewSubmittedStatus[Auth::id()] == '') disabled @endif>Submit</button>
                     </div>
                     @endif
                 @else
@@ -659,5 +661,6 @@
             }
         });
     });
+    
 </script>
 @endsection

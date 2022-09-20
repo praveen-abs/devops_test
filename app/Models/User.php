@@ -25,7 +25,9 @@ class User extends Authenticatable
         'password',
         'avatar',
         'user_code',
-        'is_onboarded',
+        'can_login',//user can login.
+        'active',//user can access all app features
+        'is_onboarded',//if false, user prompted to fill onboard form
         'onboard_type',
         'is_admin',
         'is_default_password_updated'

@@ -1476,25 +1476,6 @@ body::-webkit-scrollbar-thumb{
     -ms-border-radius: 50%;
     -o-border-radius: 50%;
 }
-
-.table-content {
-    overflow: auto hidden;
-}
-
-.table-content table th {
-    background: var(--vz-header-bg-dark);
-    /* width: 250px; */
-    color: #fff;
-}
-
-.table-content table td div {
-    /* max-height: 300px;
-    min-height: 150px;
-    max-width: 600px;
-    min-width: 400px; */
-    width: 150px;
-}
-
 .settings-contents {
     height: 500px;
     overflow: hidden;
@@ -17731,7 +17712,7 @@ tr:last-child td:last-child {
     vertical-align: middle;
     border-top: 1px solid #eee;
     text-align: center;
-    white-space:nowrap  ;
+    /* white-space:nowrap  ; */
 }
 
 .gridjs-table > tbody > tr > td,
