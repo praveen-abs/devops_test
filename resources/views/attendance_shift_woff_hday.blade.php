@@ -4,16 +4,7 @@
     @lang('translation.dashboards')
 @endsection
 
-@section('css')
-<link href="{{URL::asset('assets/css/shared.css')}}" rel="stylesheet">
 
-<style>
- .project-wrapper{
-		position: relative;
-		top:-20px;
-    }
-</style>
-@endsection
 
 @section('content')
  @component('components.attendance_breadcrumb')

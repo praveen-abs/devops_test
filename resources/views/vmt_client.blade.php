@@ -92,7 +92,7 @@
         @endslot
     @endcomponent
 
-    <div class="client-wrapper bg-white container-fluid p-2 mt8-mb15">
+    <div class="client-wrapper bg-white container-fluid p-2 ">
         <h6 class="mb-0">Client List</h6>
         <div class=" text-end">
             <button class="btn btn-orange me-2" data-bs-toggle="modal" data-bs-target="#newClient">New

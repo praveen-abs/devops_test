@@ -55,7 +55,7 @@
 @endslot
 @endcomponent
 
-<div class="container-fluid py-2 px-3 mt-8 bg-white">
+<div class="container-fluid py-2 px-3 bg-white">
     <div class="cards-wrapper">
         <h6>Goals / Areas of development</h6>
         <form id="upload_form" enctype="multipart/form-data" class="mt-3">

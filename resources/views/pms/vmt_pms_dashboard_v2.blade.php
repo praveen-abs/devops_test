@@ -160,7 +160,7 @@
 
 
 
-<div class="container-fluid assign-goal-wrapper mt15-mb20">
+<div class="container-fluid assign-goal-wrapper">
     <div class="cards-wrapper">
         <div class="row">
             <div class="col-sm-12 col-md-6 col-xl-3 col-xxl-3 col-lg-3">
@@ -492,12 +492,12 @@
 
                                     </div>
                                     <div class="col-sm-1 col-md-1 col-lg-1 col-xl-1 col-xxl-1   ">
-                                    <label class="" for=""></label>
+                                        <label class="" for=""></label>
                                         <button id="" type="button" target="#reviewerReplaceSameLevel" class="btn py-1 px-3 btn btn-orange increment-btn  reviewerReplace">Change</button>
                                     </div>
 
                                     <div class=" col-sm-12 col-md-12 col-lg-4 col-xl-4 col-xxl-4  mb-3">
-                                        <label class="" for="">HR Reviewer</label>
+                                        <label class="" for="">Final Reviewer</label>
                                         <select class="form-control form-select select-hr-dropdown" name="hr_id">
                                             @if(isset($allEmployeesList) && count($allEmployeesList) > 0)
                                             @foreach($allEmployeesList as $employeeData)
@@ -508,7 +508,7 @@
                                             @endif
                                         </select>
                                     </div>
-                                   
+
 
                                     @endif
                                     <!-- Reviewer Selection Portion Ends -->
@@ -566,11 +566,11 @@
 <!-- Change Reviewer window -->
 
 <div id="reviewerReplaceSameLevel" class="modal custom-modal fade" role="dialog">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-md" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable fad  modal-md" role="document">
         <div class="modal-content top-line">
             <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
                 <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
-                Change Reviewer</h5>
+                    Change Reviewer</h5>
                 <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -580,7 +580,7 @@
                     @csrf
                     <h6 for="FormSelectDefault" class="form-label text-muted">Reviewer</h6>
                     <div class="row">
-                    <div class="col-12 col-md-12 col-lg-12 col-xxl-12 col-xl-12">
+                        <div class="col-12 col-md-12 col-lg-12 col-xxl-12 col-xl-12">
                             <label class="" for="">Existing Reviewer</label>
                             <select class="change-exiting-reviewer form-control" name="oldReviewerName">
 
@@ -594,44 +594,40 @@
                             <span style="color: red;" id="reviewerChangeError"></span>
                         </div>
                     </div>
-                    <div class="content-footer text-end>
-                       
-                                            <button class="btn btn-orange waves-effect waves-light" type="submit">
-                                                Save
-                                            </button>
+                    <div class="content-footer text-end">
+                        <button class="btn btn-orange waves-effect waves-light" type="submit">
+                            Save
+                        </button>
 
-                                  
-                        </div>
                     </div>
-                </form>
-
             </div>
+            </form>
+
         </div>
     </div>
-    <!-- add employee  Modal-->
+</div>
+<!-- add employee  Modal-->
 </div>
 
 <!-- Vertically Centered -->
-<div class="modal fade" id="notificationModal" role="dialog" aria-hidden="true" style="opacity:1; display:none;background:#00000073;">
-    <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2">
-        <div class="modal-content">
-            <div class="modal-header py-2 bg-primary">
-
-                <div class="w-100 modal-header-content d-flex align-items-center py-2">
-                    <h5 class="modal-title text-white" id="modalHeader">Success
-                    </h5>
-                    <button type="button" class="btn-close btn-close-white close-modal" data-bs-dismiss="modal" aria-label="Close">
-                    </button>
-                </div>
+<div id="notificationModal" class="modal custom-modal fade" role="dialog" aria-hidden="true" style="opacity:1; display:none;background:#00000073;">
+    <div class="modal-dialog modal-dialog-centered   modal-md" role="document">
+        <div class="modal-content top-line">
+            <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
+                <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
+                Success</h5>
+                <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
             </div>
             <div class="modal-body">
-                <div class="mt-4">
+            
                     <h4 class="mb-3" id="modalNot">Data Saved Successfully!</h4>
                     <p class="text-muted mb-4" id="modalBody"> Table Saved, Please publish goals.</p>
                     <div class="hstack gap-2 justify-content-center">
                         <button type="button" class="btn btn-light close-modal" data-bs-dismiss="modal">Close</button>
                     </div>
-                </div>
+                
             </div>
         </div>
     </div>
@@ -643,40 +639,40 @@
         <div class="modal-content top-line">
             <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
                 <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
-                 Edit Employee</h5>
-                <!-- <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal" aria-label="Close">
+                    Edit Employee</h5>
+                <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
-                </button> -->
+                </button>
             </div>
             <div class="modal-body">
-                
-                    @if(isset($loggedManagerEmployees))
-                    <!-- flow 2 -->
-                    <select class="select-employee-dropdown form-control" name="employees[]" multiple="multiple">
-                        @foreach($loggedManagerEmployees as $employeesSelection)
-                        <option selected value="{{ $employeesSelection->id }}">{{ $employeesSelection->name }}</option>
-                        @endforeach
-                    </select>
-                    <button class="btn btn-orange py-0 px-2" onclick="resetEmployeesList()"><span class="mr-10 icon"></span>Reset Employees</button>
-                    @else
-                    <!-- flow 1 -->
-                    <select class="select-employee-dropdown form-control form-select" id="selectedEmployeeDropdownId" name="employees[]" multiple="multiple">
-                        @if(isset($allEmployeesWithoutLoggedUserList) && count($allEmployeesWithoutLoggedUserList) > 0)
-                        @foreach($allEmployeesWithoutLoggedUserList as $employeeList)
-                        <option value="{{ $employeeList->id }}">{{ $employeeList->name }}</option>
-                        @endforeach
-                        @endif
-                    </select>
+
+                @if(isset($loggedManagerEmployees))
+                <!-- flow 2 -->
+                <select class="select-employee-dropdown form-control" name="employees[]" multiple="multiple">
+                    @foreach($loggedManagerEmployees as $employeesSelection)
+                    <option selected value="{{ $employeesSelection->id }}">{{ $employeesSelection->name }}</option>
+                    @endforeach
+                </select>
+                <button class="btn btn-orange py-0 px-2" onclick="resetEmployeesList()"><span class="mr-10 icon"></span>Reset Employees</button>
+                @else
+                <!-- flow 1 -->
+                <select class="select-employee-dropdown form-control form-select" id="selectedEmployeeDropdownId" name="employees[]" multiple="multiple">
+                    @if(isset($allEmployeesWithoutLoggedUserList) && count($allEmployeesWithoutLoggedUserList) > 0)
+                    @foreach($allEmployeesWithoutLoggedUserList as $employeeList)
+                    <option value="{{ $employeeList->id }}">{{ $employeeList->name }}</option>
+                    @endforeach
                     @endif
-                  
+                </select>
+                @endif
+
                 @if(isset($loggedManagerEmployees))
                 <div class="buttons d-flex justify-content-end align-items-center mt-2 ">
-                <!-- <button type="button" class="btn btn-border-orange close-modal " data-bs-dismiss="modal">Close</button> -->
+                    <!-- <button type="button" class="btn btn-border-orange close-modal " data-bs-dismiss="modal">Close</button> -->
                     <button class="btn btn-primary ml-2" id="edit-employee">Save</button>
                 </div>
                 @else
                 <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
-                <!-- <button type="button" class="btn btn-border-orange close-modal" data-bs-dismiss="modal">Close</button> -->
+                    <!-- <button type="button" class="btn btn-border-orange close-modal" data-bs-dismiss="modal">Close</button> -->
                     <button class="btn btn-orange ml-2" id="edit-employee-based-on-reviewer">Save</button>
                 </div>
                 @endif
@@ -705,6 +701,7 @@
 
 </div>
 @endsection
+
 
 
 
@@ -1020,10 +1017,10 @@
                 }
                 $('#hidden_calendar_year').val($("#year option:selected").text())
                 if ($('#calendar_type').val() != ''){
-                    var frequencyDataResult = '<option value="">Select</option><option value="monthly">Monthly</option><option value="quarterly">Quarterly</option><option value="halfYearly">Half Yearly</option><option value="yearly">Yearly</option>';
+                    var frequencyDataResult = '<option value="" selected disabled>Select frequency</option><option value="monthly">Monthly</option><option value="quarterly">Quarterly</option><option value="halfYearly">Half Yearly</option><option value="yearly">Yearly</option>';
                     $('#frequency').html(frequencyDataResult);
                 }else{
-                    var frequencyDataResult = '<option value="">Select</option>';
+                    var frequencyDataResult = '<option value="" selected disabled>Select frequency</option>';
                     $('#frequency').html(frequencyDataResult);
                     $('#frequency').val('');
                 }
@@ -1042,7 +1039,7 @@
                 if ($('#frequency').val() == 'monthly') {
 
                     if ($('#calendar_type').val() == 'financial_year') {
-                        data = "<option value=''>Select</option><option value='apr'>April - " + year +
+                        data = "<option value='' selected disabled>Select frequency</option><option value='apr'>April - " + year +
                             "</option><option value='may'>May - " + year + "</option><option value='june'>June - " +
                             year + "</option><option value='july'>July - " + year +
                             "</option><option value='aug'>August - " + year +
@@ -1054,7 +1051,7 @@
                             "</option><option value='feb'>February - " + nextyear +
                             "</option><option value='mar'>March - " + nextyear + "</option>";
                     } else {
-                        data = "<option value=''>Select</option><option value='jan'>January - " + year +
+                        data = "<option value='' selected disabled>Select frequency</option><option value='jan'>January - " + year +
                             "</option><option value='feb'>February - " + year +
                             "</option><option value='mar'>March - " + year +
                             "</option><option value='apr'>April - " + year + "</option><option value='may'>May - " +
@@ -1068,16 +1065,16 @@
                     }
                 } else if ($('#frequency').val() == 'quarterly') {
                     if ($('#calendar_type').val() == 'financial_year')
-                        data = "<option value=''>Select</option><option value='q1'>Q1 " + year +
+                        data = "<option value='' selected disabled>Select Assignment Period</option><option value='q1'>Q1 " + year +
                         "(Apr-Jun)</option><option value='q2'>Q2 " + year +
                         "(July-Sept)</option><option value='q3'>Q3 " + year +
                         "(Oct-Dec)</option><option value='q4'>Q4 " + nextyear + "(Jan-Mar)</option>";
                     else
                         data =
-                        "<option value=''>Select</option><option value='q1'>Q1(Jan-Mar)</option><option value='q2'>Q2(Apr-June)</option><option value='q3'>Q3(July-Sept)</option><option value='q4'>Q4(Oct-Dec)</option>";
+                        "<option value='' selected disabled>Select Assignment Period</option><option value='q1'>Q1(Jan-Mar)</option><option value='q2'>Q2(Apr-June)</option><option value='q3'>Q3(July-Sept)</option><option value='q4'>Q4(Oct-Dec)</option>";
                 } else if ($('#frequency').val() == 'halfYearly') {
                     if ($('#calendar_type').val() == 'financial_year')
-                        data = "<option value=''>Select</option><option value='h1'>H1(Apr " + year + " - Sept " +
+                        data = "<option value='' selected disabled>Select Assignment Period</option><option value='h1'>H1(Apr " + year + " - Sept " +
                         year + ")</option><option value='h2'>H2(Oct " + year + "- Mar " + nextyear + ")</option>";
                     else
                         data =

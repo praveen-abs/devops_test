@@ -1010,7 +1010,8 @@
         <script type="text/javascript">
             $('#role-form').on('submit', function(e) {
                 e.preventDefault();
-                $('#error-msg').html('');
+                $('#error-msg').html('Please wait. Uploading....');
+
                 $('#success-msg').html('');
                 //var formData = new FormData(this);
                 var roleUri = $('#role-form').attr('action');
@@ -1023,47 +1024,37 @@
                     data: new FormData(this),
                     processData: false,
                     contentType: false,
-                    success: function(data) {
+                    success: function(ajaxData) {
                         console.log("Got response....");
-                        console.log("Status message : "+data.status);
-                        console.log(data);
+                        console.log("Status message : "+ajaxData.status);
+                        console.log(ajaxData);
 
-                        if(data.status == 'success'){
-                            $('#success-msg').html('<p>Upload Infoss :</p><ul><li>' + data.message + '</li></ul>');
-                            console.log("Success");
-                        }
-                        else
-                        // if(data.status == 'failure'){
-                        //     $('#error-msg').html('');
-                        //     $('#error-msg').append('<b>Uploaded excelsheet has the following errors : <br/></b>');
-                        //     $('#error-msg').append('<ul><li><b>' +data.message+ '</li></ul>');
+                        $('#error-msg').html('');
+                        $('#error-msg').append('<b>Upload Status : <br/></b>');
+                        $('#error-msg').append(ajaxData.message+' : <br/>');
 
-                        // }
-                        // else
-                        if(data.status == 'failure'){
-                            console.log("Error!");
-                            $('#error-msg').html('');
-                            var jsonResponse = JSON.parse(data.data);
+                        //var jsonResponse = JSON.parse(data);
+                        console.log('Data array length : '+ajaxData.data.length);
 
-                           var keys = Object.keys(jsonResponse);
-                            console.log("Key length : "+keys.length);
-                            $('#error-msg').append('<b>Upload Status : <br/></b>');
-                            $('#error-msg').append(data.message+' : <br/>');
+                        for(var i=0; i < ajaxData.data.length; i++)
+                        {
+                            var row_data = ajaxData.data[i];
+                            $('#error-msg').append('<ul><li><b>'+ row_data.message+ '<b/></li></ul>');
 
-                           for(var i=0;i<keys.length;i++)
-                           {
-                                $('#error-msg').append('<ul><li>'+ jsonResponse[keys[i]]+ '</li></ul>');
-                           }
+                            if(ajaxData.status == 'failure'){
 
-                           if(data.stacktrace)
-                           {
-                                $('#error-msg').append('<ul><li><b>' +keys[i]+"</b> - "+ data.stacktrace+ '</li></ul>');
-                           }
+                                var json_error_fields = JSON.parse(row_data.error_fields);
+                                var keys = Object.keys(json_error_fields);
 
-                        }else{
-                            $('#error-msg').html('');
-                        }
+                                for(var j=0;j<keys.length;j++)
+                                {
+                                        $('#error-msg').append('<p>&emsp;'+ json_error_fields[keys[j]]+ '</p>');
+                                }
+                            }
 
+                            console.log(row_data.message);
+
+                        }//for
                     },
                     error: function(data) {
                         //console.log('error', data);

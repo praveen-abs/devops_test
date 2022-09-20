@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\VmtEmployeeOfficeDetails;
-use App\Models\VmtGeneralInfo; 
+use App\Models\VmtGeneralInfo;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
@@ -20,28 +20,42 @@ class VmtOrgTreeController extends Controller
 
     public function getLogoLevelOrgTree(Request $request)
     {
-        
-        $data           = $this->getUserNodeDetails(Auth::user()->user_code);
+        $t_user_code = 0;
+
+        if(Auth::user()->is_admin == 1)
+        {
+            //Get the top-most node
+            $t_user_id = VmtEmployeeOfficeDetails::where('l1_manager_code','')->pluck('user_id');
+            $t_user_code = User::where('id',$t_user_id)->pluck('user_code');
+            //dd($t_user_code);
+        }
+        else
+        {
+            //Get the current node
+            $t_user_code = Auth::user()->user_code;
+        }
+
+        $data           = $this->getUserNodeDetails($t_user_code);
         $vmtGeneralInfo = VmtGeneralInfo::first();
         $logoSrc        = asset($vmtGeneralInfo->logo_img);
 
         $logoNode  = array("image" => $logoSrc, "relationship" => "011", "user_code" => "ADMIN001", "name" =>"", "className" => "logo-level");
 
         $data['collapsed'] = false;
-        $logoNode['children'] = array($data); 
-        return $logoNode; 
+        $logoNode['children'] = array($data);
+        return $logoNode;
     }
 
     public function getTwoLevelOrgTree($user_code, Request $request)
     {
-        
+
         $data = $this->getUserNodeDetails($user_code);
-        
+
         if($this->hasChildNodes($user_code))
             $data['children'] =$this->getChildrenForUser( $data['user_code'])['children'];
 
-        /* 
-         * Grouping the node based on the department wise if department filter is set on 
+        /*
+         * Grouping the node based on the department wise if department filter is set on
          * request
         */
         if(request()->get('department')){
@@ -55,12 +69,12 @@ class VmtOrgTreeController extends Controller
                     // code...
                     $dArray[$j] = $value;
                     $j++;
-                }   
+                }
             }
             $data['children']  = $dArray;
         }
 
-        return $data; 
+        return $data;
     }
 
     public function getParentForUser($user_code)
@@ -81,14 +95,14 @@ class VmtOrgTreeController extends Controller
         {
             //get the child nodes of the given parent node
             $db_childNodes = $this->fetch_childrenForGivenUser($user_code);
-            
 
-            /* 
-             * Grouping the node based on the department wise if department filter is set on 
+
+            /*
+             * Grouping the node based on the department wise if department filter is set on
              * request
             */
             if(request()->get('department')){
-                
+
                 $j = 0;
 
                 // grouping children based on the department
@@ -96,7 +110,7 @@ class VmtOrgTreeController extends Controller
                 $dArray  = [];
 
                 foreach($db_departmentNodes as $key => $deptNodes ){
-                    $depArray  = []; 
+                    $depArray  = [];
                     // convert each db obj to node structure
                     foreach ($deptNodes as $value) {
                         // code...
@@ -106,7 +120,7 @@ class VmtOrgTreeController extends Controller
                     $j++;
                 }
                 $childnode_array['children']  = $dArray;
-            }            
+            }
             else{
                 $i = 0;
                 $t_array = [];

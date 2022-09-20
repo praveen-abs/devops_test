@@ -65,7 +65,7 @@
 
     .payslip_table tr,
     td {
-        border: 2px solid #99766f
+        border: 2px solid #99766f;
 
     }
 
@@ -131,6 +131,10 @@
 
 @endsection
 @section('content')
+@component('components.configuration_breadcrumb')
+@slot('li_1')
+@endslot
+@endcomponent
 <div class="container-fluid bg-white  ">
     <div class="fill salary-header nav-tab-header">
         <div>
@@ -171,28 +175,27 @@
                     <div class="sub-page" style="text-align: justify;font-size: 15px;">
                         <div class="table-responsive">
                             <table cellspacing="0" cellpadding="0" class="payslip_table">
-                                <tr class="header-row" aria-rowcount="">
-                                    <td colspan="8" class="border-less p3" rowspan="">
-                                        <div class="header-cotent">
+                            <tr class="header-row" aria-rowcount="">
+    <td colspan="8" class="border-less p3" rowspan="">
+        <div class="header-cotent">
 
-                                            <h6 class="margin-0">Protocol Labels India Pvt. Ltd.</h6>
-                                            <p class="mb-0">#3rd floor, S plot no 3A&3B,  </p>
-                                            <p class="mb-0">166, Gerugambakkam, Bharathi Nagar,</p> 
-                                            <p class="mb-0">Porur, Chennai, Tamil Nadu 600128.</p>
-                                            
-                                        </div>
-                                    </td>
-                                    <td colspan="4" class="border-less p3">
+            <h6 class="margin-0">Protocol Labels India Pvt. Ltd.</h6>
+            <p class="mb-0">#3rd floor, S plot no 3A&3B, </p>
+            <p class="mb-0">166, Gerugambakkam, Bharathi Nagar,</p>
+            <p class="mb-0">Porur, Chennai, Tamil Nadu 600128.</p>
 
-                                        <div class="header-img txt-right d-flex align-items-center justify-content-end" style="height:100px ;width:100%">
-                                            
-                                            <img src="{{ URL::asset('assets/images/protocol_logo.png') }}" class="txt-right" alt="" style="height: 80px;width:80px;max-height:100%;">
-                                        </div>
+        </div>
+    </td>
+    <td colspan="4" class="border-less p3">
+
+        <div class="header-img txt-right d-flex align-items-center justify-content-end" style="height:100px ;width:100%">
+
+            <img src="{{ URL::asset('assets/images/protocol_logo.png') }}" class="txt-right" alt="" style="height: 80px;width:80px;max-height:100%;">
+        </div>
 
 
-                                    </td>
-                                </tr>
-
+    </td>
+</tr>
 
                                 <tr>
                                     <td colspan="12">
@@ -204,13 +207,13 @@
                                         <p>EMPLOYEE NAME</p>
                                     </td>
                                     <td colspan="3">
-                                        <p>xyz</p>
+                                        <p></p>
                                     </td>
                                     <td colspan="3" class="bg-ash text-strong">
                                         <p>EMPLOYEE CODE</p>
                                     </td>
                                     <td colspan="3">
-                                        <p>xyz</p>
+                                        <p></p>
                                     </td>
 
                                 </tr>
@@ -219,13 +222,13 @@
                                         <p>DATE OF BIRTH</p>
                                     </td>
                                     <td colspan="3">
-                                        <p>xyz</p>
+                                        <p></p>
                                     </td>
                                     <td colspan="3" class="bg-ash text-strong">
                                         <p>DATE OF JOINING</p>
                                     </td>
                                     <td colspan="3">
-                                        <p>11-MAY-2021</p>
+                                        <p></p>
                                     </td>
 
                                 </tr>
@@ -234,13 +237,13 @@
                                         <p>DESIGNATION</p>
                                     </td>
                                     <td colspan="3">
-                                        <p>xyz</p>
+                                        <p></p>
                                     </td>
                                     <td colspan="3" class="bg-ash text-strong">
                                         <p>LOCATION</p>
                                     </td>
                                     <td colspan="3">
-                                        <p>xyz</p>
+                                        <p></p>
                                     </td>
 
                                 </tr>
@@ -604,7 +607,7 @@
                                         <p class="txt-center text-strong">Paid Date</p>
                                     </td>
                                     <td colspan="3" class="">
-                                        <p class="txt-center">11-MAY-2022</p>
+                                        <p class="txt-center"></p>
                                     </td>
                                 </tr>
                                 <tr>
@@ -623,8 +626,8 @@
                                         <p class="txt-left">Please
                                             reach out to us for any payroll queries at -payroll@ardens.in</p>
                                     </td>
-                                    <td colspan="2" class="border-less txt-right">
-                                        <p>Powered By</p>
+                                    <td colspan="2" class="border-less ">
+                                        <p class="txt-right">Powered By</p>
 
 
                                     </td>
