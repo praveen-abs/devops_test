@@ -12,7 +12,7 @@
 @endcomponent
 
 
-<div class=" directory-wrapper bg-white px-3 pt-3 pb-0">
+<div class=" directory-wrapper bg-white px-3 pt-3 pb-0 mt8-mb25">
     <h6 class="">Employee Directory</h6>
     <!-- <div class="row">
         <div class="col-12">
