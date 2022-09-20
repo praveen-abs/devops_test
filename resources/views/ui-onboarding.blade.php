@@ -26,7 +26,7 @@
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="employee_code">Employee Code{!! required() !!}</label> -->
                                                 <div class="floating">
-                                                   
+
                                                     <label for="" class="float-label">Employee Code</label>
                                                     <input type="text" placeholder="Employee Code" name="employee_code" class="onboard-form form-control textbox" value="{{$empNo}}" required />
                                                     <!-- <label for="" class="float-label">Employee Code</label> -->
@@ -34,7 +34,7 @@
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="employee_name">Employee Name as per Aadhar{!! required() !!}</label> -->
-                                                
+
                                                 <div class="floating">
                                                     <label for="" class="float-label">Employee Name as per Aadhar</label>
                                                     <input type="text" placeholder="Employee Name as per Aadhar " name="employee_name" id="employee_name" value="{{isset($employee->name)? $employee->name : ''}}" class="onboard-form form-control textbox" pattern="name" required />
@@ -95,7 +95,7 @@
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="mobile_no">Mobile Number{!! required() !!}</label> -->
                                                 <div class="floating">
-                                                    
+
                                                     <label for="" class="float-label">Mobile Number</label>
                                                     <input type="number" placeholder="Mobile Number" name="mobile_no" minlength="10" value="{{$clientData->mobile_number? $clientData->mobile_number : ''}}" maxlength="10" class="onboard-form form-control textbox " required />
                                                     <!-- <label for="" class="float-label">Mobile Number</label> -->
@@ -206,7 +206,7 @@
                                                     <!-- <label for="" class="float-label">Passport Exp Date</label> -->
                                                 </div>
                                             </div>
-                                           
+
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="blood_group">Blood Group</label> -->
                                                 <div class="floating">
@@ -302,7 +302,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                                                <!-- <label class="" for="current_pincode">Current Pincode{!! required() !!}</label> -->
+
                                                 <div class="floating">
                                                     <label for="" class="float-label">UAN Number</label>
                                                     <input type="text" placeholder="UAN Number" name="uan_number" id="uan_number" minlength="10" maxlength="10" class="onboard-form form-control textbox "/>
@@ -567,20 +567,25 @@
                                                 <!-- <label class="" for="l1_manager_code">Reporting Manager Employee Code{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Reporting Manager</label>
-                                                    <select placeholder="ManagerCode" name="l1_manager_code" id="l1_manager_code" class=" textbox onboard-form form-control " required>
-                                                        <option value="" hidden selected disabled>Select Reporting Manager</option>
-                                                        @foreach($allEmployeesCode as $e)
-                                                        <option value='{{$e->user_code}}'>{{$e->user_code}} - {{$e->name}}</option>
+                                                 @if (isset($emp_details->l1_manager_code))
+                                                    <input type="text"   value="{{$emp_details->l1_manager_code}}" name="process" id="process" class="onboard-form form-control textbox " pattern="" readonly />
+                                                    @else
+
+
+                                                    <select placeholder="Process" name="process" id="process" class="onboard-form form-control  textbox ">
+                                                        <option value="" hidden selected disabled>Select Process</option>
+                                                        @foreach($emp as $e)
+                                                        <option value="{{$e->process}}">{{$e->process}}</option>
                                                         @endforeach
                                                     </select>
-
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="l1_manager_name">Reporting Manager Name{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Reporting Manager Name</label>
-                                                    <input type="text" placeholder="Reporting Manager Name" name="l1_manager_name" id="l1_manager_name" class="textbox  onboard-form form-control " pattern="name" required readonly />
+                                                    <input type="text" placeholder="Reporting Manager Name" name="l1_manager_name" id="l1_manager_name" class="textbox  onboard-form form-control " pattern="name" value="{{(isset($emp_details->l1_manager_name)) ? $emp_details->l1_manager_name :''}}" required  />
                                                     <label class="error star_error l1_manager_name_label" for="l1_manager_name" style="display: none;"></label>
                                                 </div>
                                             </div>
@@ -778,9 +783,9 @@
                                         <div class="row">
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="basic">Basic Salary{!! required() !!}</label> -->
-                                                
+
                                                 @if(isset($compensatory))
-                                                
+
                                                 <div class="floating">
 
                                                     <label for="" class="float-label">Basic Salary</label>
@@ -797,9 +802,9 @@
 
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="hra">HRA{!! required() !!}</label> -->
-                                               
+
                                                 @if(isset($compensatory))
-                                              
+
                                                 <div class="floating">
                                                     <label for="" class="float-label">HRA</label>
 
@@ -815,9 +820,9 @@
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="Statutory_bonus">Statutory Bonus{!! required() !!}</label> -->
-                                                
+
                                                 @if(isset($compensatory))
-                                              
+
                                                 <div class="floating">
                                                     <label for="" class="float-label">Statutory Bonus</label>
                                                     <input type="number" placeholder="Statutory Bonus" name="statutory_bonus" value="{{$compensatory->Statutory_bonus? $compensatory->Statutory_bonus : ''}}" class="onboard-form form-control textbox   calculation_data gross_data" step="0.01"/>
@@ -832,9 +837,9 @@
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="child_education_allowance">Child Education Allowance{!! required() !!}</label> -->
-                                                
+
                                                 @if(isset($compensatory))
-                                              
+
                                                 <div class="floating">
                                                     <label for="" class="float-label">Child Education Allowance</label>
                                                     <input type="number" placeholder="Child Education Allowance" name="child_education_allowance" value="{{$compensatory->child_education_allowance? $compensatory->child_education_allowance : ''}}" class="onboard-form form-control textbox   calculation_data gross_data" step="0.01"/>
@@ -850,9 +855,9 @@
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="food_coupon">Food Coupon{!! required() !!}</label> -->
-                                                
+
                                                 @if(isset($compensatory))
-                                              
+
                                                 <div class="floating">
                                                     <label for="" class="float-label">Food Coupon</label>
                                                     <input type="number" placeholder="Food Coupon" name="food_coupon" value="{{$compensatory->food_coupon? $compensatory->food_coupon : ''}}" class="onboard-form form-control textbox  calculation_data gross_data" step="0.01"/>
@@ -867,9 +872,9 @@
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="lta">LTA{!! required() !!}</label> -->
-                                                
+
                                                 @if(isset($compensatory))
-                                              
+
                                                 <div class="floating">
                                                     <label for="" class="float-label">LTA</label>
                                                     <input type="number" placeholder="LTA" name="lta" value="{{$compensatory->lta? $compensatory->lta : ''}}" class="textbox onboard-form form-control     calculation_data gross_data" step="0.01"/>
@@ -884,9 +889,9 @@
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="special_allowance">Special Allowance{!! required() !!}</label> -->
-                                                
+
                                                 @if(isset($compensatory))
-                                              
+
                                                 <div class="floating">
                                                     <label for="" class="float-label">Special Allowance</label>
                                                     <input type="number" placeholder="Special Allowance" name="special_allowance" value="{{$compensatory->special_allowance? $compensatory->special_allowance : ''}}" class="onboard-form form-control textbox   calculation_data gross_data" step="0.01" />
@@ -901,9 +906,9 @@
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="other_allowance">Other Allowance{!! required() !!}</label> -->
-                                                
+
                                                 @if(isset($compensatory))
-                                              
+
                                                 <div class="floating">
                                                     <label for="" class="float-label">Other Allowance</label>
 
@@ -919,9 +924,9 @@
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="gross">Gross Salary{!! required() !!}</label> -->
-                                                
+
                                                 @if(isset($compensatory))
-                                              
+
                                                 <div class="floating">
                                                     <label for="" class="float-label">Gross Salary</label>
 
@@ -938,9 +943,9 @@
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="epf_employer_contribution">EPF employer contribution{!! required() !!}</label> -->
-                                                
+
                                                 @if(isset($compensatory))
-                                              
+
                                                 <div class="floating">
                                                     <label for="" class="float-label">EPF employer contribution</label>
 
@@ -957,9 +962,9 @@
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="esic_employer_contribution">ESIC employer contribution{!! required() !!}</label> -->
-                                                
+
                                                 @if(isset($compensatory))
-                                              
+
                                                 <div class="floating">
                                                     <label for="" class="float-label">ESIC employer contribution</label>
                                                     <input type="number" placeholder="ESIC employer contribution" name="esic_employer_contribution" value="{{$compensatory->esic_employer_contribution? $compensatory->esic_employer_contribution : ''}}" class="onboard-form form-control textbox   calculation_data cic_data" step="0.01" />
@@ -974,9 +979,9 @@
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="insurance">Insurance{!! required() !!}</label> -->
-                                                
+
                                                 @if(isset($compensatory))
-                                              
+
                                                 <div class="floating">
                                                     <label for="" class="float-label">Insurance</label>
                                                     <input type="number" placeholder="Insurance" name="insurance" value="{{$compensatory->insurance? $compensatory->insurance : ''}}" class="onboard-form form-control textbox   calculation_data cic_data" step="0.01" />
@@ -991,9 +996,9 @@
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="graduity">Graduity{!! required() !!}</label> -->
-                                                
+
                                                 @if(isset($compensatory))
-                                              
+
                                                 <div class="floating">
                                                     <label for="" class="float-label">Graduity</label>
                                                     <input type="number" placeholder="Graduity" name="graduity" value="{{$compensatory->graduity? $compensatory->graduity : ''}}" class="onboard-form form-control textbox   calculation_data cic_data" step="0.01"/>
@@ -1008,9 +1013,9 @@
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="cic">Cost of Company{!! required() !!}</label> -->
-                                                
+
                                                 @if(isset($compensatory))
-                                              
+
                                                 <div class="floating">
                                                     <label for="" class="float-label">Cost of Company</label>
 
@@ -1027,9 +1032,9 @@
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="epf_employee">EPF Employee{!! required() !!}</label> -->
-                                                
+
                                                 @if(isset($compensatory))
-                                              
+
                                                 <div class="floating">
                                                     <label for="" class="float-label">EPF Employee</label>
 
@@ -1046,9 +1051,9 @@
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="esic_employee">ESIC Employee{!! required() !!}</label> -->
-                                                
+
                                                 @if(isset($compensatory))
-                                              
+
                                                 <div class="floating">
                                                     <label for="" class="float-label">ESIC Employee</label>
 
@@ -1065,9 +1070,9 @@
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="professional_tax">Professional Tax{!! required() !!}</label> -->
-                                                
+
                                                 @if(isset($compensatory))
-                                              
+
                                                 <div class="floating">
                                                     <label for="" class="float-label">Professional Tax</label>
 
@@ -1085,9 +1090,9 @@
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="labour_welfare_fund">labour welfare fund{!! required() !!}</label> -->
-                                                
+
                                                 @if(isset($compensatory))
-                                              
+
                                                 <div class="floating">
                                                     <label for="" class="float-label">labour welfare fund</label>
 
@@ -1104,9 +1109,9 @@
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="net_income">Net Income{!! required() !!}</label> -->
-                                                
+
                                                 @if(isset($compensatory))
-                                              
+
                                                 <div class="floating">
                                                     <label for="" class="float-label">Net Income</label>
 

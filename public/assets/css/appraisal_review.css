@@ -50,3 +50,29 @@
     width: auto;
     word-break: break-word;
 }
+
+
+
+.table-content {
+    overflow: auto ;
+}
+
+.table-content table th {
+    background: var(--vz-header-bg-dark);
+    /* width: 250px; */
+    color: #fff;
+}
+
+.table-content div {
+    /* max-height: 300px;
+    min-height: 150px;
+    max-width: 600px;
+    min-width: 400px; */
+    width: 200px;
+    height: auto;
+}
+.table-content textarea{
+    border: 0px;
+    outline: none;
+}
+

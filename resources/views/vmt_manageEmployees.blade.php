@@ -11,10 +11,7 @@
 
 
 <style>
-    .project-wrapper{
-position: relative;
-top:-20px;
-    }
+  
 table {
    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px !important;
 }
@@ -155,9 +152,11 @@ tr:last-child td:last-child {
 
 
 <div class=" project-wrapper bg-white p-3">
-    <div class="directory-content  mb-3 mt-2">
-        <h5 class="text-muted fw-bold mb-4">Manage Employees</h5>
+            
         <div class="row">
+            <div class="col-12">
+            <h5 class="text-muted ">Manage Employees</h5>
+            </div>
             <div class="col-8">
                 <div class="float-left directory-left d-flex">
                     {{-- <div class="switch-field align-items-center">
@@ -190,7 +189,7 @@ tr:last-child td:last-child {
                 </div>
             </div>
         </div>
-    </div>
+    
 
     <div class="table-responsive">
         <div class="card-body">

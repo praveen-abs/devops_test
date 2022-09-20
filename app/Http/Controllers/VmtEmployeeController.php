@@ -52,7 +52,6 @@ class VmtEmployeeController extends Controller
             $india = Countries::where('country_code', 'IN')->first();
             $emp = VmtEmployeeOfficeDetails::all();
             $emp_details = VmtEmployeeOfficeDetails::where('emp_id', $clientData->id)->first();
-            //  dd($clientData);
             $department = Department::all();
             $bank = Bank::all();
             $allEmployeesCode = User::where('is_admin', 0)->where('active', 1)->whereNotNull('user_code')->get(['user_code', 'name']);
@@ -123,18 +122,36 @@ class VmtEmployeeController extends Controller
         return view('vmt_employeeOnboarding_BulkUpload');
     }
 
+    public function processEmployeeOnboardForm_Normal_Quick(Request $request)
+    {
+        $row = $request->all();
+        $user =  User::where('email',  $row["email"])->first();
+        $response = "";
 
+        if(!empty($user))
+        {
+            $response = $this->storeEmployeeQuickOnboardForm($row);
+
+        }
+        else
+        {
+            $response = $this->storeEmployeeNormalOnboardForm($row);
+        }
+
+        return $response;
+    }
     /*
         Save employee onboarding details
         -Normal Onboarding, Quick
 
 
     */
-    public function storeEmployeeOnboardForm(Request $request)
+    private function storeEmployeeNormalOnboardForm($row)
     {
         // code...
         try {
-            $row = $request->all();
+
+            //$row = $request->all();
 
             $user =  User::create([
                 'name' => $row['employee_name'],
@@ -181,7 +198,7 @@ class VmtEmployeeController extends Controller
             //$newEmployee->father_age   = $row["father_age"];
             $newEmployee->mother_name   = $row["mother_name"];
             //$newEmployee->mother_age  = $row["mother_age"];
-            if ($row['marital_status'] <> 'unmarried') {
+            if ($row['marital_status'] <> 'single') {
                 $newEmployee->spouse_name   = $row["spouse_name"];
                 $newEmployee->spouse_age   = $row["spouse_dob"];
                 if ($row['no_child'] > 0) {
@@ -283,13 +300,17 @@ class VmtEmployeeController extends Controller
     }
 
     // Store quick onboard employee data to Database
-    public function storeQuickOnboardForm(Request $request)
+    private function storeEmployeeQuickOnboardForm($row)
     {
         // dd($request->all());
         // code...
+
+       // dd($row);
         try {
-            $row = $request->all();
+            //$row = $request->all();
             $user =  User::where('email',  $row["email"])->first();
+            $user->is_onboarded = '1';
+            $user->save();
             $user->assignRole("Employee");
 
             $newEmployee = VmtEmployee::where('userid', $user->id)->first();
@@ -322,15 +343,6 @@ class VmtEmployeeController extends Controller
             $newEmployee->permanent_address   = $row["permanent_address"];
             //$newEmployee->father_age   = $row["father_age"];
             $newEmployee->mother_name   = $row["mother_name"];
-            //$newEmployee->mother_age  = $row["mother_age"];
-            if ($row['marital_status'] <> 'unmarried') {
-                $newEmployee->spouse_name   = $row["spouse_name"];
-                $newEmployee->spouse_age   = $row["spouse_dob"];
-                if ($row['no_child'] > 0) {
-                    $newEmployee->kid_name   = json_encode($row["child_name"]);
-                    $newEmployee->kid_age  = json_encode($row["child_dob"]);
-                }
-            }
 
             $newEmployee->aadhar_card_file = $this->fileUpload('aadhar_card');
             $newEmployee->aadhar_card_backend_file = $this->fileUpload('aadhar_card_backend');
@@ -354,7 +366,7 @@ class VmtEmployeeController extends Controller
                 $empOffice->cost_center = $row["cost_center"]; // => "k"
                 $empOffice->confirmation_period  = $row['confirmation_period']; // => "k"
                 $empOffice->holiday_location  = $row["holiday_location"]; // => "k"
-                $empOffice->l1_manager_code  = $row["l1_manager_code"]; // => "k"
+               $empOffice->l1_manager_code  = $row["process"]; // => "k"
                 // $empOffice->l1_manager_designation  = $row["l1_manager_designation"];// => "k"
                 $empOffice->l1_manager_name  = $row["l1_manager_name"]; // => "k"
                 // $empOffice->l2_manager_code  = $row["l2_manager_code"];// => "kk"
@@ -373,14 +385,17 @@ class VmtEmployeeController extends Controller
                 $empOffice->save();
             }
 
-            if ($empOffice) {
 
-                $newEmployee_statutoryDetails->uan_number = $row["uan_number"];
+            if ($empOffice) {
+                $newEmployee_statutoryDetails = new VmtEmployeeStatutoryDetails;
+                $newEmployee_statutoryDetails->user_id = $user->id;
+                 $newEmployee_statutoryDetails->uan_number = $row["uan_number"];
                 $newEmployee_statutoryDetails->pf_applicable = $row["pf_applicable"];
                 $newEmployee_statutoryDetails->esic_applicable = $row["esic_applicable"];
                 $newEmployee_statutoryDetails->ptax_location = $row["ptax_location"];
                 $newEmployee_statutoryDetails->tax_regime = $row["tax_regime"];
                 $newEmployee_statutoryDetails->lwf_location = $row["lwf_location"];
+                $newEmployee_statutoryDetails->save();
 
                 $compensatory = new Compensatory;
                 $compensatory->user_id = $newEmployee->userid;
@@ -650,7 +665,7 @@ class VmtEmployeeController extends Controller
             $newEmployee->mother_name   = $row["mother_name"];
             $newEmployee->mother_gender   = $row["mother_gender"];
             $newEmployee->mother_dob   = $row["mother_dob"];
-            if ($row['marital_status'] <> 'unmarried') {
+            if ($row['marital_status'] <> 'single') {
                 $newEmployee->spouse_name   = $row["spouse_name"];
                 $newEmployee->spouse_age   = $row["spouse_dob"];
                 if ($row['no_of_child'] > 0) {
@@ -1029,6 +1044,7 @@ class VmtEmployeeController extends Controller
                 $empOffice->emp_id      = $newEmployee->id;
                 $empOffice->user_id     = $newEmployee->userid;
                 $empOffice->designation = $row["designation"];
+                $empOffice->l1_manager_code  = $row["l1_manager_code"];
                 $empOffice->save();
             }
 
