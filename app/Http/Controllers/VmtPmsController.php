@@ -121,7 +121,7 @@ class VmtPmsController extends Controller
         $userNames = User::select('users.id', 'users.name')->join('vmt_employee_details',  'vmt_employee_details.userid', '=', 'users.id')->where('active', 1)->pluck('users.name','users.id');
         $users = User::select('users.id', 'users.name')->join('vmt_employee_details',  'vmt_employee_details.userid', '=', 'users.id')->where('active', 1)->get();
         //dd($users);
-        $department = Department::where('status', 'A')->get();
+        $departments = Department::where('is_active', 1)->get();
         // if (auth()->user()->hasrole('Employee')) {
             // $emp = VmtEmployee::join('vmt_employee_office_details',  'user_id', '=', 'vmt_employee_details.userid')->where('userid', auth()->user()->id)->first();
             // $rev = VmtEmployee::where('emp_no', $emp->l1_manager_code)->first();

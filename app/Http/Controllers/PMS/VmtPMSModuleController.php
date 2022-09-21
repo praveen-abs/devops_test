@@ -114,7 +114,7 @@ class VmtPMSModuleController extends Controller
         $existingKPIForms = VmtPMS_KPIFormModel::where('author_id', $loggedUserId)->get(['id','form_name']);
 
         // get Departments data
-        $departments = Department::where('status', 'A')->get();
+        $departments = Department::where('is_active', 1)->get();
 
         //Dashboard vars
         $employeesGoalsSetCount = 0;
@@ -181,7 +181,7 @@ class VmtPMSModuleController extends Controller
         $existingKPIForms = VmtPMS_KPIFormModel::where('author_id', $loggedUserId)->get(['id','form_name']);
 
         // get Departments data
-        $departments = Department::where('status', 'A')->get();
+        $departments = Department::where('is_active', 1)->get();
 
         //Dashboard vars
         $employeesGoalsSetCount = 0;
