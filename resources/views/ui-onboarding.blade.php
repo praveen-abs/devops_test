@@ -28,7 +28,7 @@
                                                 <div class="floating">
 
                                                     <label for="" class="float-label">Employee Code</label>
-                                                    <input type="text" placeholder="Employee Code" name="employee_code" class="onboard-form form-control textbox" value="{{$empNo}}" required readonly />
+                                                    <input type="text" placeholder="Employee Code" name="employee_code" class="onboard-form form-control textbox" value="{{$empNo}}" required readonly style='text-transform:uppercase'/>
                                                     <!-- <label for="" class="float-label">Employee Code</label> -->
                                                 </div>
                                             </div>
@@ -81,7 +81,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Date of Joining</label>
                                                     @if(isset($clientData->doj))
-                                                    <input type="text" max="9999-12-31" placeholder="Date of Joining" name="doj" value="{{isset($clientData->doj)? $clientData->doj : ''}}" class="onboard-form  form-control textbox " onfocus="(this.type='date')"  required />
+                                                    <input type="text" max="9999-12-31" placeholder="Date of Joining" name="doj" value="{{isset($clientData->doj)? $clientData->doj : ''}}" class="onboard-form  form-control textbox "  required readonly />
                                                     @else
                                                     <input type="text" max="9999-12-31" placeholder="Date of Joining" name="doj" class="onboard-form  form-control textbox " onfocus="(this.type='date')" required />
                                                     @endif
@@ -190,9 +190,8 @@
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <div class="floating">
-                                                    <!-- <label class="" for="passport_no">Passport Number<span id="passport_no_req">{!! required() !!}</span></label> -->
                                                     <label for="" class="float-label">Passport Number</label>
-                                                    <input type="text" placeholder="Passport Number" name="passport_no" id="passport_no" minlength="8" maxlength="8" class="onboard-form form-control textbox" required/>
+                                                    <input type="text" placeholder="Passport Number" name="passport_no" id="passport_no" minlength="8" maxlength="8" class="form-control textbox" style='text-transform:uppercase' required/>
                                                     <label class="error star_error passport_no_label" for="passport_no" style="display: none;"></label>
 
                                                     <span class="error" id="error_passport_no"></span>

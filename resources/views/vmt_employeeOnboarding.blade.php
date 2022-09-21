@@ -113,8 +113,8 @@
             });
 
 
-            $('#passport_no').on('input', function() {
-
+            $('#passport_no').on('input focus', function() {
+                console.log("validating passport");
                 var patt = new RegExp("^[A-PR-WYa-pr-wy][1-9]\\d\\s?\\d{4}[1-9]$");
                 var txtValue = $(this).val();
                 var maxLength = $(this).attr('maxlength');
@@ -289,16 +289,16 @@
                             if ($('nationality').val('indian')) {
 
                                 $("#passport_no").removeAttr("required");
-                                $('#passdate').removeAttr("required");               
+                                $('#passdate').removeAttr("required");
                             }
                             else if ($('nationality').val('other_country')){
                                 $("#passport_no").attr("required");
                                 $("#passdate").attr("required");
-                                
+
                             }
                         });
 
-            
+
 
 
 
@@ -651,7 +651,7 @@
 
             $('#submit_button').on('click', function(e) {
                 console.log("here");
-                console.log($('#form-1').valid());
+                //console.log($('#form-1').valid());
                 var flag = false;
 
                 //alert("1 st one");
@@ -667,13 +667,13 @@
                 //     //alert("dl no done");
                 //     console.log("DL No correct");
 
-                // } 
+                // }
 
                 // if (txtIFSCNo.match(ifsc)) {
                 //     // alert("done ifsc");
                 //     console.log("IFSC correct");
 
-                // } 
+                // }
 
                 if ($('#form-1').valid() && !flag) {
 
@@ -696,13 +696,14 @@
                                 $('#notificationModal').show();
                                 $('#notificationModal').removeClass('fade');
                             } else {
+                               // console.log(data)
                                 $('#modalHeader').html(data);
                                 $('#modalNot').html("Failed to save Data");
                                 //$('#modalBody').html("Request to the server failed");
                                 $('#notificationModal').show();
                                 $('#notificationModal').removeClass('fade');
                             }
-                            console.log(data);
+                            //console.log(data);
 
                             //alert(data);
                         },
@@ -729,9 +730,21 @@
                 }
             });
 
-        
+
 
             $('#form-1').validate({
+                invalidHandler: function(event, validator) {
+                    // 'this' refers to the form
+                    var errors = validator.numberOfInvalids();
+                    if (errors) {
+                    var message = 'You have missed ' + errors + ' field(s). Please check and submit again';
+                        console.log(message);
+                        alert(message);
+                    } else {
+                        console.log("no errors");
+
+                    }
+                },
                 errorPlacement: function(error, element) {
                     error.text('* ' + error.text());
                     if (element.parent('.input-group').length) {
