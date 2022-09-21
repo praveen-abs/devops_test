@@ -534,6 +534,7 @@ class HomeController extends Controller
         {
             //get the client name from client table
             $client_name = VmtClientMaster::first()->value('client_name');
+            $client_name = str_replace(' ', '', $client_name);
             //dd($client_name);
         }
 
