@@ -286,9 +286,7 @@ Route::get('/clientOnboarding', function () {
 })->name('vmt_clientOnboarding-route');
 
 // config menu (document tamplate view)
-Route::get('/document_preview', function () {
-    return view('document_template_ardens');
-})->name('document_preview');
+Route::get('/document_preview', 'App\Http\Controllers\HomeController@showDocumentTemplate')->name('document_preview');
 
 Route::get('/documents', function () {
     return view('vmt_documents');
@@ -359,6 +357,7 @@ Route::get('getKPIFormNameInDropdown', [VmtPMSModuleController::class,'getKPIFor
 Route::post('changeEmployeeProfileIconsOnEdit', [VmtPMSModuleController::class,'changeEmployeeProfileIconsOnEdit'])->name('changeEmployeeProfileIconsOnEdit');
 
 //DONT WRITE ANT ROUTES BELOW THIS
+Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index']);
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index']);
 
 

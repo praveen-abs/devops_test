@@ -17,6 +17,7 @@ use App\Models\Experience;
 use App\Models\VmtEmployeeAttendance;
 use App\Models\PollVoting;
 use App\Mail\TestEmail;
+use App\Models\VmtClientMaster;
 use \Datetime;
 use Session as Ses;
 use Carbon\Carbon;
@@ -448,7 +449,7 @@ class HomeController extends Controller
         $details['family_info_json'] = json_decode($details['family_info_json'], true);
         if($user->hasrole('Employee')) {
             $employee = VmtEmployee::first();
-            // report for disable for role base 
+            // report for disable for role base
             $report_key = 1;
         } else {
             $employee = null;
@@ -518,6 +519,28 @@ class HomeController extends Controller
         }
         else
             return back()->withErrors('we could not found the specified notification');
+    }
+
+    public function showDocumentTemplate(Request $request)
+    {
+        $client_name = "";
+
+        //For testing only.
+        if(isset($request->client_name))
+        {
+            $client_name = $request->client_name;
+        }
+        else
+        {
+            //get the client name from client table
+            $client_name = VmtClientMaster::first()->value('client_name');
+            //dd($client_name);
+        }
+
+        //choose the blade file
+
+        return view('document_template_'.strtolower($client_name) );
+
     }
 
 
