@@ -17900,8 +17900,8 @@ table > tbody > tr > td > img,
 }
 
 .footer-img-wrapper img {
-    height: 26px;
-    width: auto;
+    height: 12px;
+    width: 100%;
 }
 
 .footer .faq::before,
