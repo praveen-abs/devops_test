@@ -13,6 +13,8 @@ use App\Models\Department;
 use App\Models\Bank;
 use App\Imports\VmtEmployeeManagerImport;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\ViewNotification;
+use Illuminate\Support\Facades\Notification;
 use App\Imports\VmtEmployeeImport;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtEmployeeStatutoryDetails;
@@ -343,6 +345,8 @@ class VmtEmployeeController extends Controller
             $newEmployee->permanent_address   = $row["permanent_address"];
             //$newEmployee->father_age   = $row["father_age"];
             $newEmployee->mother_name   = $row["mother_name"];
+            $newEmployee->blood_group  = $row["blood_group"];
+
 
             $newEmployee->aadhar_card_file = $this->fileUpload('aadhar_card');
             $newEmployee->aadhar_card_backend_file = $this->fileUpload('aadhar_card_backend');
@@ -873,6 +877,10 @@ class VmtEmployeeController extends Controller
         if (fetchMasterConfigValue("can_send_appointmentletter_after_onboarding") == "true") {
             $appoinmentPath = public_path('/') . $filename;
         }
+        $notification_user = User::where('id',auth::user()->id)->first();
+        $message = "Employee Bulk OnBoard was Created   ";
+
+        Notification::send($notification_user ,new ViewNotification($message.$row['employee_name']));
         $isSent    = \Mail::to($employeeData['email'])->send(new WelcomeMail($employeeData['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(),  $appoinmentPath, $image_view));
 
         return $isSent;
@@ -1073,10 +1081,11 @@ class VmtEmployeeController extends Controller
                 $compensatory->save();
             }
 
-
+            $notification_user = User::where('id',auth::user()->id)->first();
+            $message = "Employee OnBoard was Created   ";
             $VmtGeneralInfo = VmtGeneralInfo::first();
             $image_view = url('/') . $VmtGeneralInfo->logo_img;
-
+            Notification::send($notification_user ,new ViewNotification($message.$row['employee_name']));
             \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $empNo, 'Abs@123123', request()->getSchemeAndHttpHost(), $image_view));
 
             return $rowdata_response = [
