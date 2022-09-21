@@ -298,6 +298,7 @@ Route::post('vmt-documents-route', 'App\Http\Controllers\VmtEmployeeController@s
 
 //
 Route::post('vmt_clientOnboarding', 'App\Http\Controllers\VmtClientController@store');
+Route::get('/department', 'App\Http\Controllers\VmtDepartmentController@showPage')->name('department');
 
 
 Route::get('/getPMSRatingJSON',  [App\Http\Controllers\ConfigPmsController::class, 'getPMSRating'])->name('getPMSRatingJSON');
