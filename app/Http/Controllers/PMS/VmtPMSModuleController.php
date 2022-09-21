@@ -52,7 +52,7 @@ class VmtPMSModuleController extends Controller
         $existingKPIForms = VmtPMS_KPIFormModel::where('author_id', auth::user()->id)->get(['id','form_name']);
 
         // get Departments data
-        $departments = Department::where('status', 'A')->get();
+        $departments = Department::where('is_active', 1)->get();
 
         //Dashboard vars
         $employeesGoalsSetCount = 0;
@@ -76,7 +76,7 @@ class VmtPMSModuleController extends Controller
         $dashboardCountersData['employeesAssessedCount'] = $employeesAssessedCount;
         $dashboardCountersData['selfReviewCount'] = $selfReviewCount;
         $dashboardCountersData['totalSelfReviewCount'] = $totalSelfReviewCount;
-    
+
             $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')->WhereRaw("find_in_set(".auth()->user()->id.", reviewer_id)")->orWhereRaw("find_in_set(".auth()->user()->id.", assignee_id)")->orderBy('id','DESC')->get();
 
         $flowCheck = 1;
@@ -114,7 +114,7 @@ class VmtPMSModuleController extends Controller
         $existingKPIForms = VmtPMS_KPIFormModel::where('author_id', $loggedUserId)->get(['id','form_name']);
 
         // get Departments data
-        $departments = Department::where('status', 'A')->get();
+        $departments = Department::where('is_active', 1)->get();
 
         //Dashboard vars
         $employeesGoalsSetCount = 0;
@@ -133,9 +133,9 @@ class VmtPMSModuleController extends Controller
             ->orderBy('vmt_employee_details.created_at', 'ASC')
             ->get();
 
-        // Get logged in user Employee deatils 
+        // Get logged in user Employee deatils
         $loggedUserManagerNumber = VmtEmployee::where('userid',$loggedUserId)->value('emp_no');
-        // Get logged in Manager Employees List 
+        // Get logged in Manager Employees List
         $loggedManagerEmployees = User::leftJoin('vmt_employee_office_details','users.id','=','vmt_employee_office_details.user_id')
             ->leftJoin('vmt_employee_details','users.id','=','vmt_employee_details.userid')
             ->where('l1_manager_code',$loggedUserManagerNumber)
@@ -165,7 +165,7 @@ class VmtPMSModuleController extends Controller
         $dashboardCountersData['employeesAssessedCount'] = $employeesAssessedCount;
         $dashboardCountersData['selfReviewCount'] = $selfReviewCount;
         $dashboardCountersData['totalSelfReviewCount'] = $totalSelfReviewCount;
-    
+
             $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')->WhereRaw("find_in_set(".$loggedUserId.", reviewer_id)")->orWhereRaw("find_in_set(".$loggedUserId.", assignee_id)")->orderBy('id','DESC')->get();
 
         $loggedInUser = Auth::user();
@@ -177,11 +177,11 @@ class VmtPMSModuleController extends Controller
     // flow 3 pms V2
     public function showPMSDashboardForEmployee(){
         $loggedUserId = Auth::id();
-        
+
         $existingKPIForms = VmtPMS_KPIFormModel::where('author_id', $loggedUserId)->get(['id','form_name']);
 
         // get Departments data
-        $departments = Department::where('status', 'A')->get();
+        $departments = Department::where('is_active', 1)->get();
 
         //Dashboard vars
         $employeesGoalsSetCount = 0;
@@ -206,10 +206,10 @@ class VmtPMSModuleController extends Controller
         if(isset($pmsConfigData) && isset($pmsConfigData->selected_reviewlevel)){
             $selectedReviewLevel = $pmsConfigData->selected_reviewlevel;
         }
-        
+
         $parentUserCode = VmtEmployeeOfficeDetails::where('user_id',$loggedUserId)->value('l1_manager_code');
 
-        // Get logged in user Employee details 
+        // Get logged in user Employee details
         $parentReviewerNames = [];
         $parentReviewerIds = [];
 
@@ -240,7 +240,7 @@ class VmtPMSModuleController extends Controller
                 $reviewerManagerDetail = getEmployeeManager([$reviewerId]);
                 $reviewerName = $reviewerManagerDetail->pluck('name')->first();
                 $reviewerId = $reviewerManagerDetail->pluck('id')->first();
-                
+
                 if(!empty($reviewerName) && !empty($reviewerId)){
                     if(!in_array($reviewerName,$parentReviewerNames)){
                         array_push($parentReviewerNames,$reviewerName);
@@ -253,14 +253,14 @@ class VmtPMSModuleController extends Controller
         }
         $parentReviewerIds = implode(',',$parentReviewerIds);
         $parentReviewerNames = implode(',',$parentReviewerNames);
-        
+
         $dashboardCountersData = [];
         $dashboardCountersData['employeesGoalsSetCount'] = $employeesGoalsSetCount;
         $dashboardCountersData['totalEmployeesCount'] = $totalEmployeesCount;
         $dashboardCountersData['employeesAssessedCount'] = $employeesAssessedCount;
         $dashboardCountersData['selfReviewCount'] = $selfReviewCount;
         $dashboardCountersData['totalSelfReviewCount'] = $totalSelfReviewCount;
-    
+
             $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')->WhereRaw("find_in_set(".$loggedUserId.", reviewer_id)")->orWhereRaw("find_in_set(".$loggedUserId.", assignee_id)")->orderBy('id','DESC')->get();
 
         $loggedInUser = Auth::user();
@@ -500,14 +500,14 @@ class VmtPMSModuleController extends Controller
             'reviewer.required' => 'Reviewer is Required',
             'selected_kpi_form_id.required' => 'KPI Form is Required',
         ]);
-        
+
         if ($validator->fails())
         {
             return response()->json(['status' => false,'message'=>$validator->messages()->first()]);
         }
         try{
             $loggedUser = Auth::user();
-            
+
             $reviewersList = is_array($request->reviewer) ? $request->reviewer : explode(",",$request->reviewer);
             $employeesList = is_array($request->employees) ? $request->employees : explode(",",$request->employees);
 
@@ -543,11 +543,11 @@ class VmtPMSModuleController extends Controller
             $parent_user_code = VmtEmployeeOfficeDetails::where('user_id',$loggedUser->id)->value('l1_manager_code');
             $parentUserID = User::where('user_code',$parent_user_code)->value('id');
 
-            
+
             //Based on assignee count, you create records in review table
             $assigneeIdsAll = explode(',',$kpi_AssignedTable->assignee_id );
             $explodedReviewersIds = explode(',',$kpi_AssignedTable->reviewer_id);
-            
+
             $reviewerAcceptedData = [];
             $reviewerSubmittedData = [];
             foreach($explodedReviewersIds as $reviewer){
@@ -555,10 +555,10 @@ class VmtPMSModuleController extends Controller
                 if(isset($request->flowCheck) && $request->flowCheck == 3 && $parentUserID == $reviewer){
                     $reviewerAcceptedData[$reviewer] = null;
                 }
-                
+
                 $reviewerSubmittedData[$reviewer] = null;
             }
-            
+
             if(count($assigneeIdsAll) > 0){
                 foreach($assigneeIdsAll as $assignee){
                     $assigneeReview = new VmtPMS_KPIFormReviewsModel();
@@ -579,7 +579,7 @@ class VmtPMSModuleController extends Controller
 
                     if($request->flowCheck != 3){
                         $assigneeMailId  = VmtEmployee::join('vmt_employee_office_details',  'user_id', '=', 'vmt_employee_details.userid')->where('userid', $assignee)->pluck('officical_mail','userid')->first();
-                        
+
                         $assigneeName = User::where('id',$assignee)->pluck('name')->first();
                         $assignerName = User::where('id',auth::user()->id)->pluck('name')->first();
                         $command_emp = '';
@@ -593,7 +593,7 @@ class VmtPMSModuleController extends Controller
 
             if($request->flowCheck == 3){
                 $reviewerMailId  = VmtEmployee::join('vmt_employee_office_details',  'user_id', '=', 'vmt_employee_details.userid')->whereIn('userid', explode(',',$kpi_AssignedTable->reviewer_id))->pluck('officical_mail','userid')->toArray();
-                        
+
                 $assigneeName = User::where('id',$assignee)->pluck('name')->first();
                 $assignerName = User::where('id',auth::user()->id)->pluck('name')->first();
                 $command_emp = '';
@@ -621,7 +621,7 @@ class VmtPMSModuleController extends Controller
     {
         // Flow 1 HR creates Form and Assignee
         $kpiFormAssignedDetails = VmtPMS_KPIFormAssignedModel::findorfail($request->assignedFormid);
-        
+
         $config = VmtPMS_KPIFormModel::findorfail($kpiFormAssignedDetails->vmt_pms_kpiform_id);
         $show['dimension'] = 'true';
         $show['kpi'] = 'true';
@@ -668,7 +668,7 @@ class VmtPMSModuleController extends Controller
         $reviewCompleted = false;
         $kpiRowsId = VmtPMS_KPIFormDetailsModel::where('vmt_pms_kpiform_id', $kpiFormAssignedDetails->vmt_pms_kpiform_id)->pluck('id')->toArray();
         $kpiRowsId = implode(',',$kpiRowsId);
-       
+
         // Get assigned Details
         $assignedGoals  = VmtPMS_KPIFormAssignedModel::where('vmt_pms_kpiform_assigned.id',$request->assignedFormid)->where('vmt_pms_kpiform_reviews.assignee_id',$request->assigneeId)->join('vmt_pms_kpiform_reviews','vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id','=','vmt_pms_kpiform_assigned.id')->first();
 
@@ -698,7 +698,7 @@ class VmtPMSModuleController extends Controller
                 $pmsConfigRatingDetails = VmtPMSRating::orderBy('sort_order','DESC')->get();
                 if(count($pmsConfigRatingDetails) > 0){
                     foreach($pmsConfigRatingDetails as $ratings){
-                        
+
                         $rangeCheck = explode('-',$ratings->score_range);
                         if($ratingDetail['rating'] >= $rangeCheck[0] && $ratingDetail['rating'] <= $rangeCheck[1]){
                             $ratingDetail['performance'] = $ratings->performance_rating;
@@ -722,7 +722,7 @@ class VmtPMSModuleController extends Controller
                     }
                 }
 
-                
+
                 // if ($ratingDetail['rating'] < 60) {
                 //     $ratingDetail['performance'] = "Needs Action";
                 //     $ratingDetail['ranking'] = 1;
@@ -771,7 +771,7 @@ class VmtPMSModuleController extends Controller
         }
 
         // check if all reviewers has Accepted the review or not
-        
+
         $isAllReviewersAcceptedData = [];
         $isAllReviewersAcceptedOrNot = false;
         if(isset($assignedGoals->is_reviewer_accepted)){
@@ -837,7 +837,7 @@ class VmtPMSModuleController extends Controller
             if($request->formSubmitType == 0){
                 $kpiReviewCheck->is_assignee_submitted =  '0';
                 $kpiReviewCheck->update();
-                return response()->json(['status'=>true,'message'=>'Saved as draft']);    
+                return response()->json(['status'=>true,'message'=>'Saved as draft']);
             }else{
                 $kpiReviewCheck->is_assignee_submitted =  '1';
                 $kpiReviewCheck->update();
@@ -848,7 +848,7 @@ class VmtPMSModuleController extends Controller
                 if(isset($kpiReviewCheck->getPmsKpiFormAssigned)){
                     $kpiFormAssignedReviewers = explode(',',$kpiReviewCheck->getPmsKpiFormAssigned->reviewer_id);
                 }
-                
+
                 // check Multiple Reviewers
                 if(count($kpiFormAssignedReviewers) > 0){
                     foreach($kpiFormAssignedReviewers as $reviewer){
@@ -858,7 +858,7 @@ class VmtPMSModuleController extends Controller
                             // office details of assignee employee
                             $currentUser_empDetails = VmtEmployeeOfficeDetails::where('user_id', $assigneeUser->id)->first();
                             array_push($kpiFormAssignedReviewersOfficialMails,$userEmployeeDetails->getEmployeeOfficeDetails->officical_mail);
-                            
+
                             // Send mail to All Reviewers
                             \Mail::to($userEmployeeDetails->getEmployeeOfficeDetails->officical_mail)->send(new NotifyPMSManager($assigneeUser->name, $currentUser_empDetails->designation, $userEmployeeDetails->name,$kpiReviewCheck->year ));
                             $message = "Employee has submitted KPI Assessment.  ";
@@ -871,9 +871,9 @@ class VmtPMSModuleController extends Controller
                 // all reviewers office mails
                 $kpiFormAssignedReviewersOfficialMails = implode(',',$kpiFormAssignedReviewersOfficialMails);
                 if(!empty($kpiFormAssignedReviewersOfficialMails)){
-                    return response()->json(['status'=>true,'message'=>"Published Review successfully.Sent mail to manager ".$kpiFormAssignedReviewersOfficialMails]);    
+                    return response()->json(['status'=>true,'message'=>"Published Review successfully.Sent mail to manager ".$kpiFormAssignedReviewersOfficialMails]);
                 }
-                return response()->json(['status'=>true,'message'=>'Published Review successfully']);    
+                return response()->json(['status'=>true,'message'=>'Published Review successfully']);
             }
 
         }catch(Exception $e){
@@ -896,15 +896,15 @@ class VmtPMSModuleController extends Controller
 
             $decodedKpiReviewerReview[Auth::id()] = $request->reviewer_kpi_review[Auth::id()];
             $decodedKpiReviewerPerc[Auth::id()] = $request->reviewer_kpi_percentage[Auth::id()];
-            
+
             $kpiReviewCheck->reviewer_kpi_review = $decodedKpiReviewerReview;
             $kpiReviewCheck->reviewer_kpi_percentage = $decodedKpiReviewerPerc;
-            
+
             if($request->formSubmitType == 0){
                 $decodedIsKpiReviewerSubmitted[Auth::id()] = '0';
                 $kpiReviewCheck->is_reviewer_submitted = $decodedIsKpiReviewerSubmitted;
                 $kpiReviewCheck->update();
-                return response()->json(['status'=>true,'message'=>'Saved as draft']);    
+                return response()->json(['status'=>true,'message'=>'Saved as draft']);
             }else{
                 $decodedIsKpiReviewerSubmitted[Auth::id()] = '1';
                 $kpiReviewCheck->is_reviewer_submitted = $decodedIsKpiReviewerSubmitted;
@@ -926,7 +926,7 @@ class VmtPMSModuleController extends Controller
                 $message = "Employee has submitted KPI Assessment.  ";
                     Notification::send($notification_user ,new ViewNotification($message.auth()->user()->name));
 
-                return response()->json(['status'=>true,'message'=>"Published Review successfully. Sent mail to HR ".$officialMailList]); 
+                return response()->json(['status'=>true,'message'=>"Published Review successfully. Sent mail to HR ".$officialMailList]);
             }
 
         }catch(Exception $e){
@@ -1039,7 +1039,7 @@ class VmtPMSModuleController extends Controller
     * function used for download excel sheet from review form
     */
     public function downloadExcelReviewForm($kpiAssignedId,$key,$yearAssignmentPeriod = null){
-        try{    
+        try{
 
             $sheetName = 'review-page-sheet.xlsx';
             if(isset($yearAssignmentPeriod)){
@@ -1049,16 +1049,16 @@ class VmtPMSModuleController extends Controller
 
                 $sheetName = 'review-page-'.$yearAssignmentPeriod.'.xlsx';
             }
-            
+
             // $key => 1 assignee and 2 reviewer
             $assignedKpiFormDetails = VmtPMS_KPIFormAssignedModel::where('id',$kpiAssignedId)->with('getPmsKpiFormColumnDetails.getPmsKpiFormDetails')->first();
-            
-            $finalDownloadedResult = [];  
+
+            $finalDownloadedResult = [];
             if(isset($assignedKpiFormDetails->getPmsKpiFormColumnDetails)){
                 if(isset($assignedKpiFormDetails->getPmsKpiFormColumnDetails->getPmsKpiFormDetails)){
-                    $vmtKpiForm = $assignedKpiFormDetails->getPmsKpiFormColumnDetails;  
+                    $vmtKpiForm = $assignedKpiFormDetails->getPmsKpiFormColumnDetails;
                     $getAvailableColumns = str_getcsv($vmtKpiForm->available_columns);
-                    
+
                     $dynamicTableCoumns = [];
                     $headerColumnsInSheet = [];
                     $configPmsData = ConfigPms::first();
@@ -1076,7 +1076,7 @@ class VmtPMSModuleController extends Controller
                     $show['stretchTarget'] = $getAvailableColumns && in_array('stretchTarget', $getAvailableColumns) ? array_push($dynamicTableCoumns,'stretch_target'): '';
                     $show['source'] = $getAvailableColumns && in_array('source', $getAvailableColumns) ? array_push($dynamicTableCoumns,'source'): '';
                     $show['kpiWeightage'] = $getAvailableColumns && in_array('kpiWeightage', $getAvailableColumns) ? array_push($dynamicTableCoumns,'kpi_weightage'): '';
-                    
+
                     foreach($show as $columnKey => $columnsCheck){
                         if($columnsCheck != ''){
                             if(isset($decodedColumnHeader[$columnKey])){
@@ -1087,13 +1087,13 @@ class VmtPMSModuleController extends Controller
                             }
                         }
                     }
-                    
+
 
                     $finalDownloadedResult = VmtPMS_KPIFormDetailsModel::where('vmt_pms_kpiform_id',$vmtKpiForm->id)->select($dynamicTableCoumns)->get();
                 }
 
             }
-            
+
             if(count($finalDownloadedResult) > 0){
                 if($key =='1'){
                     $assigneeReviewColumns = [
@@ -1116,7 +1116,7 @@ class VmtPMSModuleController extends Controller
             // $assignedKpiFormReviews = VmtPMS_KPIFormReviewsModel::where('vmt_pms_kpiform_assigned_id',$kpiAssignedId)->where('assignee_id',$assigneeId)->first();
             // dd($assignedKpiFormDetails, $assignedKpiFormReviews);
         }catch(Exception $e){
-            
+
             Log::info('excel sheet download form review page pms v2: '.$e->getMessage());
             return '';
         }
@@ -1129,7 +1129,7 @@ class VmtPMSModuleController extends Controller
         try{
             $vmtAssignedFormReview = VmtPMS_KPIFormReviewsModel::where('id',$request->assigneeGoalId)->with('getPmsKpiFormAssigned')->first();
             if(empty($vmtAssignedFormReview)){
-                return response()->json(['status'=>false,'message'=>"Assigned Form Review is not Available"]); 
+                return response()->json(['status'=>false,'message'=>"Assigned Form Review is not Available"]);
             }
             $isApproveOrReject = $request->isApproveOrReject; // 1 => Accept & 0 => Reject
             $vmtAssignedFormReview->is_assignee_accepted = $isApproveOrReject;
@@ -1164,10 +1164,10 @@ class VmtPMSModuleController extends Controller
                 }
             }
             return response()->json(['status'=>false,'message'=>'Something Went Wrong!']);
- 
+
         }catch(Exception $e){
             Log::info('accept/reject review by assignee error: '.$e->getMessage());
-            return response()->json(['status'=>false,'message'=>$e->getMessage()]); 
+            return response()->json(['status'=>false,'message'=>$e->getMessage()]);
         }
     }
 
@@ -1179,7 +1179,7 @@ class VmtPMSModuleController extends Controller
             // dD($request->all());
             $vmtAssignedFormReview = VmtPMS_KPIFormReviewsModel::where('id',$request->assigneeGoalId)->with('getPmsKpiFormAssigned')->first();
             if(empty($vmtAssignedFormReview)){
-                return response()->json(['status'=>false,'message'=>"Assigned Form Review is not Available"]); 
+                return response()->json(['status'=>false,'message'=>"Assigned Form Review is not Available"]);
             }
             $isApproveOrReject = $request->isApproveOrReject; // 1 => Accept & 0 => Reject
             $isReviewerAccepted = json_decode($vmtAssignedFormReview->is_reviewer_accepted,true);
@@ -1221,17 +1221,17 @@ class VmtPMSModuleController extends Controller
                 }
             }
             return response()->json(['status'=>false,'message'=>'Something Went Wrong!']);
- 
+
         }catch(Exception $e){
             Log::info('accept/reject review by assignee error: '.$e->getMessage());
-            return response()->json(['status'=>false,'message'=>$e->getMessage()]); 
+            return response()->json(['status'=>false,'message'=>$e->getMessage()]);
         }
     }
 
     public function getReviewerOfSelectedEmployee(Request $request){
         try{
             if(isset($request->selectedEmployeeId) && count($request->selectedEmployeeId) > 0){
-             
+
                 $pmsConfigData = ConfigPms::first();
                 $selectedReviewLevel = '';
                 if(isset($pmsConfigData) && isset($pmsConfigData->selected_reviewlevel)){
@@ -1242,7 +1242,7 @@ class VmtPMSModuleController extends Controller
                 $employeeManagerDetail = getEmployeeManager($request->selectedEmployeeId);
                 $reviewerNames = $employeeManagerDetail->pluck('name')->toArray();
                 $reviewerIds = $employeeManagerDetail->pluck('id')->toArray();
-                
+
                 // Level 2
                 if($selectedReviewLevel == '' || $selectedReviewLevel == 'L2' || $selectedReviewLevel == 'L3'){
                     foreach($reviewerIds as $reviewerId){
@@ -1266,7 +1266,7 @@ class VmtPMSModuleController extends Controller
                         $reviewerManagerDetail = getEmployeeManager([$reviewerId]);
                         $reviewerName = $reviewerManagerDetail->pluck('name')->first();
                         $reviewerId = $reviewerManagerDetail->pluck('id')->first();
-                        
+
                         if(!empty($reviewerName) && !empty($reviewerId)){
                             if(!in_array($reviewerName,$reviewerNames)){
                                 array_push($reviewerNames,$reviewerName);
@@ -1291,12 +1291,12 @@ class VmtPMSModuleController extends Controller
                     'reviewerIds' => $reviewerIds,
                     'removeSelectedEmployee' => $removeSelectedEmployee
                 ];
-                return response()->json(['status'=>true,'message'=>'Get Reviewers Details Done','result'=>$result]); 
+                return response()->json(['status'=>true,'message'=>'Get Reviewers Details Done','result'=>$result]);
             }
-            return response()->json(['status'=>false,'message'=>'Something went wrong!']); 
+            return response()->json(['status'=>false,'message'=>'Something went wrong!']);
         }catch(Exception $e){
             Log::info('Get Reviewer Of Selected Employee flow 1 HR PMS V2 error: '.$e->getMessage());
-            return response()->json(['status'=>false,'message'=>$e->getMessage()]); 
+            return response()->json(['status'=>false,'message'=>$e->getMessage()]);
         }
     }
     public function getSameLevelOfReviewer(Request $request){
@@ -1304,9 +1304,9 @@ class VmtPMSModuleController extends Controller
             if(isset($request->reviewerId)){
                 $currentEmpCode = VmtEmployeeOfficeDetails::where('user_id',$request->reviewerId)->pluck('l1_manager_code')->first();
                 if(empty($currentEmpCode)){
-                    return response()->json(['status'=>false,'message'=> 'Reviewer Not Exists']); 
+                    return response()->json(['status'=>false,'message'=> 'Reviewer Not Exists']);
                 }
-                                    
+
                 $getSameLevelManagers = VmtEmployeeOfficeDetails::where('l1_manager_code',$currentEmpCode)
                                     ->leftJoin('users','vmt_employee_office_details.user_id','=','users.id')
                                     ->select('users.name','users.id','vmt_employee_office_details.designation')
@@ -1319,15 +1319,15 @@ class VmtPMSModuleController extends Controller
                     'getSameLevelManagers' => $getSameLevelManagers,
                 ];
                 Log::info('Get Reviewers Of Same level flow 1 HR PMS V2 error: Something Went Wrong=> '.$request->reviewerId);
-                return response()->json(['status'=>true,'message'=>'','result'=>$result]); 
+                return response()->json(['status'=>true,'message'=>'','result'=>$result]);
             }
-            return response()->json(['status'=>false,'message'=>'']); 
+            return response()->json(['status'=>false,'message'=>'']);
         }catch(Exception $e){
             Log::info('Get Reviewers Of Same level flow 1 HR PMS V2 error: '.$e->getMessage());
-            return response()->json(['status'=>false,'message'=>$e->getMessage()]); 
+            return response()->json(['status'=>false,'message'=>$e->getMessage()]);
         }
     }
-    
+
     public function changeReviewerSelection(Request $request){
         try{
             // get new and old reviewer details, id and name
@@ -1338,13 +1338,13 @@ class VmtPMSModuleController extends Controller
             dD($request->all());
             $reviewersName = explode(',',$request->reviewersName);
             $existingReviewerIds = [];
-            
+
             foreach($reviewersIds as $reviewerId){
                 // checking old reviewer and remove from array
                 if($reviewerId != $request->oldReviewerName  && isset($request->oldReviewerName)){
                     array_push($existingReviewerIds, $reviewerId);
                 }
-                
+
                 // checking new reviewer and add in array
                 if(!in_array($request->newReviewerName, $existingReviewerIds) && isset($request->newReviewerName)){
                     array_push($existingReviewerIds, $request->newReviewerName);
@@ -1358,10 +1358,10 @@ class VmtPMSModuleController extends Controller
                 'existingReviewerIds' => implode(',',$existingReviewerIds),
                 'existingReviewerNames' => implode(',',$existingReviewerNames),
             ];
-            return response()->json(['status'=>true,'message'=>'','data'=>$result]); 
+            return response()->json(['status'=>true,'message'=>'','data'=>$result]);
         }catch(Exception $e){
             Log::info('Change Reviewer Selection flow 1 HR PMS V2 error: '.$e->getMessage());
-            return response()->json(['status'=>false,'message'=>$e->getMessage()]); 
+            return response()->json(['status'=>false,'message'=>$e->getMessage()]);
         }
     }
 
@@ -1427,8 +1427,8 @@ class VmtPMSModuleController extends Controller
             $form->update();
         }
 
-        
-        
+
+
         $reviewDetails = VmtPMS_KPIFormReviewsModel::where('vmt_pms_kpiform_assigned_id',$request->kpiAssignedId)->get();
         if(count($reviewDetails) > 0){
             foreach($reviewDetails as $review){
@@ -1471,7 +1471,7 @@ class VmtPMSModuleController extends Controller
                     }
                 }
             }
-            
+
             // <span class="employees-profile editProfile employeeEditButton">Edit</span>
         }
         $editSaveText = 'Add';
@@ -1499,7 +1499,7 @@ class VmtPMSModuleController extends Controller
                                 ->select('users.name','users.id','users.user_code','vmt_employee_office_details.designation')
                                 ->get()
                                 ->toArray();
-    
+
                     return response()->json(['status'=>false,'message' => '','result' => $employees]);
                 }
             }
