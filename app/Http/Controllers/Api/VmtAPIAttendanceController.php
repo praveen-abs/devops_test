@@ -43,15 +43,32 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
     */
     public function attendanceCheckin(Request $request){
 
-        $attendanceCheckin = new VmtEmployeeAttendance;
-        $attendanceCheckin->date  = $request->date;
+        // date,checkin_time,shift_type,work_mode, seflie_checkin,checkin_comments
+
+        $attendanceCheckin           = new VmtEmployeeAttendance;
+        $attendanceCheckin->date          = $request->date;
         $attendanceCheckin->checkin_time  = $request->checkin_time;
-        $attendanceCheckin->user_id  = auth::user()->id;
-        $attendanceCheckin->shift_type  = $request->shift_type;
-        $attendanceCheckin->work_mode = $request->workmode;
-        $attendanceCheckin->selfie_checkin = $request->selfie_checkin; ////Need to save the image in folder and add path here
+        $attendanceCheckin->user_id       = auth::user()->id;
+        $attendanceCheckin->shift_type    = $request->shift_type;
+        $attendanceCheckin->work_mode      = $request->work_mode;
+        //$attendanceCheckin->selfie_checkin = $request->selfie_checkin; ////Need to save the image in folder and add path here
         $attendanceCheckin->checkin_comments = $request->checkin_comments;
         $attendanceCheckin->save();
+
+        // processing and storing base64 files in public/selfies folder 
+        if($request->has('selfie_checkin')){
+            
+            $selfieFile  =  $request->selfie_checkin;
+            
+            $fileName = $attendanceCheckin->id.'_checkin.png';
+            
+            $imageName = public_path().'/selfies/'.$fileName; 
+            
+            \File::put($imageName, base64_decode($selfieFile));
+
+            $attendanceCheckin->selfie_checkin = asset('/selfies/'.$fileName);
+            $attendanceCheckin->save();
+        }
 
         $emptyObj  = new \stdClass;
         return response()->json([
@@ -71,9 +88,19 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         $reqDate  = $request->date;
         $attendanceCheckout  = VmtEmployeeAttendance::where('user_id', auth::user()->id)->where("date", $reqDate)->first();
         $attendanceCheckout->checkout_time = $request->checkout_time;
-        $attendanceCheckout->selfie_checkout = $request->selfie_checkout; //Need to save the image in folder and add path here
+        //$attendanceCheckout->selfie_checkout = $request->selfie_checkout; //Need to save the image in folder and add path here
         $attendanceCheckout->checkout_comments = $request->checkout_comments;
         $attendanceCheckout->save();
+
+        // processing and storing base64 files in public/selfies folder 
+        if($request->has('selfie_checkout')){
+            $selfieFile  =  $request->selfie_checkout;
+            $fileName = $attendanceCheckout->id.'_checkout.png';
+            $imageName = public_path().'/selfies/'.$fileName; 
+            \File::put($imageName, base64_decode($selfieFile));
+            $attendanceCheckout->selfie_checkout = asset('/selfies/'.$fileName);
+            $attendanceCheckout->save();
+        }
 
         $emptyObj  = new \stdClass;
         return response()->json([
