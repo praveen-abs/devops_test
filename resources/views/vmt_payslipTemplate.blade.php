@@ -11,105 +11,160 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
 
 
     <style>
-        table {
-            width: 100%;
-            vertical-align: middle;
-            font-family: sans-serif;
+    .main-page {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 10mm auto;
+        background: white;
+        box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: bo;
+    }
+
+    .sub-page {
+        padding: 1cm;
+
+    }
+
+    @media print {
+        .main-page {
+            page-break-after: always;
+        }
+    }
+
+
+    @page {
+        size: A4;
+        margin: 0;
+    }
+
+    @media print {
+
+        html,
+        body {
+            width: 210mm;
+            height: 297mm;
         }
 
-        .payslip_table tr,
-        td {
-            border: 1.5pt solid #af1888;
-
+        .main-page {
+            margin: 0;
+            border: initial;
+            border-radius: initial;
+            width: initial;
+            min-height: initial;
+            box-shadow: initial;
+            background: initial;
+            page-break-after: always;
         }
+    }
 
-        table td:last-child {}
+    p {
+        text-align: justify;
 
-        .border-less {
-            border: 0px !important;
-        }
+    }
 
-        tr {
-            height: 12.55pt;
-        }
+    table {
+        width: 100%;
+        vertical-align: middle;
+        font-family: sans-serif;
+    }
 
-        td {
-            width: 81.35pt
-        }
+    .payslip_table tr,
+    td {
+        border: 2px solid #99766f;
 
-        .padding-md {
-            /* padding: 2pt 0pt; */
-        }
+    }
 
-        .margin-0 {
-            margin: 0px;
-        }
+    table td:last-child {}
 
-        p {
-            font-size: 9pt;
-            margin-top: 3pt;
-            margin-bottom: 3pt;
-            padding: 0px 5px;
-        }
+    .border-less {
+        border: 0px !important;
+    }
+
+    tr {
+        height: 12.55pt;
+    }
+
+    td {
+        width: 81.35pt
+    }
+
+    .padding-md {
+        /* padding: 2pt 0pt; */
+    }
+
+    .margin-0 {
+        margin: 0px;
+    }
+
+    p {
+        font-size: 9pt;
+        margin-top: 3pt;
+        margin-bottom: 3pt;
+        padding: 0px 5px;
+    }
 
 
-        .sm {}
 
-        .md {}
+    .txt-left {
+        text-align: left;
+    }
 
-        .lg {}
+    .txt-right {
+        text-align: right;
+    }
 
-        .txt-left {
-            text-align: left;
-        }
+    .txt-center {
+        text-align: center;
+    }
 
-        .txt-right {
-            text-align: right;
-        }
+    .text-strong {
+        font-weight: 600;
+    }
 
-        .txt-center {
-            text-align: center;
-        }
+    .header-row {
+        height: 50px;
+    }
 
-        .text-strong {
-            font-weight: 600;
-        }
+    td.bg-ash {
+        background-color: #c1c1c1;
+    }
 
-        .header-row {
-            height: 50px;
-        }
-
-        td.bg-ash {
-            background-color: #c1c1c1;
-        }
-    </style>
+    .p3 {
+        padding: 3px;
+    }
+</style>
 </head>
 
 <body>
+
     <table cellspacing="0" cellpadding="0" class="payslip_table">
-        <tr class="header-row">
-            <td colspan="8" class="border-less">
+        <tr class="header-row" aria-rowcount="">
+            <td colspan="8" class="border-less p3" rowspan="">
                 <div class="header-cotent">
-                    <h6 class="margin-0">Ardens Business Solutions Private Limited</h6>
-                    <h6 class="margin-0">“SHALOM BUILDING”</h6>
-                    <p>1st Floor, Office No.20, No.04, Mannar Street,</p>
-                    <p>T Nagar, Chennai,Tamil Nadu, India – 600 017</p>
+
+                    <h6 class="margin-0">Protocol Labels India Pvt. Ltd.</h6>
+                    <p class="mb-0">#3rd floor, S plot no 3A&3B, </p>
+                    <p class="mb-0">166, Gerugambakkam, Bharathi Nagar,</p>
+                    <p class="mb-0">Porur, Chennai, Tamil Nadu 600128.</p>
+
                 </div>
             </td>
-            <td colspan="4" class="border-less">
+            <td colspan="4" class="border-less p3">
 
-                    <div class="header-img txt-right" style="height: 40px;width:180px;max-height:100%;">
-                        <img src={{$client_logo}} style="height:100%;width:100%;" title="">
-                    </div>
+                <div class="header-img txt-right d-flex align-items-center justify-content-end" style="height:100px ;width:100%">
+
+                    <img src="{{ URL::asset('assets/images/protocol_logo.png') }}" class="txt-right" alt="" style="height: 80px;width:80px;max-height:100%;">
+                </div>
 
 
             </td>
         </tr>
 
-
         <tr>
             <td colspan="12">
-                <p class="sub-header txt-center bg-ash text-strong">PAYSLIP FOR THE MONTH OF &ndash; {{strtoupper($employee->PAYROLL_MONTH)}}</p>
+                <p class="sub-header txt-center bg-ash text-strong">PAYSLIP FOR THE MONTH OF &ndash;APR-2022</p>
             </td>
         </tr>
         <tr>
@@ -117,13 +172,13 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
                 <p>EMPLOYEE NAME</p>
             </td>
             <td colspan="3">
-                <p>{{$employee->EMP_NAME}}</p>
+                <p></p>
             </td>
             <td colspan="3" class="bg-ash text-strong">
                 <p>EMPLOYEE CODE</p>
             </td>
             <td colspan="3">
-                <p>{{$employee->EMP_NO}}</p>
+                <p></p>
             </td>
 
         </tr>
@@ -132,13 +187,13 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
                 <p>DATE OF BIRTH</p>
             </td>
             <td colspan="3">
-                <p>{{date("d-m-Y", strtotime($employee->DOB))}}</p>
+                <p></p>
             </td>
             <td colspan="3" class="bg-ash text-strong">
                 <p>DATE OF JOINING</p>
             </td>
             <td colspan="3">
-                <p>{{date("d-m-Y", strtotime($employee->DOJ))}}</p>
+                <p></p>
             </td>
 
         </tr>
@@ -147,13 +202,13 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
                 <p>DESIGNATION</p>
             </td>
             <td colspan="3">
-                <p>{{$employee->DESIGNATION}}</p>
+                <p></p>
             </td>
             <td colspan="3" class="bg-ash text-strong">
                 <p>LOCATION</p>
             </td>
             <td colspan="3">
-                <p>{{$employee->LOCATION}}</p>
+                <p></p>
             </td>
 
         </tr>
@@ -162,13 +217,13 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
                 <p>EPF NUMBER</p>
             </td>
             <td colspan="3">
-                <p>{{$employee->EPF_Number}}</p>
+                <p></p>
             </td>
             <td colspan="3" class="bg-ash text-strong">
                 <p>ESIC NUMBER</p>
             </td>
             <td colspan="3">
-                <p>{{$employee->ESIC_Number}}</p>
+                <p></p>
             </td>
 
         </tr>
@@ -177,13 +232,13 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
                 <p>UAN</p>
             </td>
             <td colspan="3">
-                <p>{{$employee->UAN}}</p>
+                <p></p>
             </td>
             <td colspan="3" class="bg-ash text-strong">
                 <p>PAN</p>
             </td>
             <td colspan="3">
-                <p>{{$employee->PAN_Number}}</p>
+                <p></p>
             </td>
 
         </tr>
@@ -202,13 +257,13 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
         </tr>
         <tr>
             <td colspan="4" class="">
-                <p class="txt-center">{{$employee->Bank_Name}}</p>
+                <p class="txt-center"></p>
             </td>
             <td colspan="4" class="">
-                <p class="txt-center">{{$employee->Account_Number}}</p>
+                <p class="txt-center"></p>
             </td>
             <td colspan="4" class="">
-                <p class="txt-center">{{$employee->Bank_IFSC_Code}}</p>
+                <p class="txt-center"></p>
             </td>
 
 
@@ -232,37 +287,37 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
         </tr>
         <tr>
             <td colspan="3" class="">
-                <p class="txt-center">{{$employee->MONTH_DAYS}}</p>
+                <p class="txt-center"></p>
             </td>
             <td colspan="3" class="">
-                <p class="txt-center">{{$employee->Worked_Days}}</p>
+                <p class="txt-center"></p>
             </td>
             <td colspan="3" class="">
-                <p class="txt-center">{{$employee->LOP}}</p>
+                <p class="txt-center"></p>
             </td>
             <td colspan="3" class="">
-                <p class="txt-center">{{$employee->Arrears_Days}}</p>
+                <p class="txt-center"></p>
             </td>
         </tr>
         <tr>
-
+            <td colspan="2" class="bg-ash text-strong">
+                <p class="txt-center">CL/SL OpenBalance</p>
+            </td>
             <td colspan="2" class="bg-ash text-strong ">
-                <p class="txt-center">SL OpenBalance</p>
+                <p class="txt-center">PL OpenBalance</p>
+            </td>
+
+            <td colspan="2" class="bg-ash text-strong">
+                <p class="txt-center">Availed CL/SL</p>
             </td>
             <td colspan="2" class="bg-ash text-strong">
-                <p class="txt-center">CL OpenBalance</p>
+                <p class="txt-center">Availed PL</p>
             </td>
             <td colspan="2" class="bg-ash text-strong">
-                <p class="txt-center">Availed SL</p>
+                <p class="txt-center">Balance CL/SL</p>
             </td>
             <td colspan="2" class="bg-ash text-strong">
-                <p class="txt-center">Availed CL</p>
-            </td>
-            <td colspan="2" class="bg-ash text-strong">
-                <p class="txt-center">Balance SL</p>
-            </td>
-            <td colspan="2" class="bg-ash text-strong">
-                <p class="txt-center">Balance CL</p>
+                <p class="txt-center">Balance PL</p>
             </td>
         </tr>
         <tr>
@@ -316,19 +371,19 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
                 <p class="txt-left text-strong">BASIC</p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-right">{{number_format(round($employee->BASIC),2)}}</p>
+                <p class="txt-right"></p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-right">{{number_format(round($employee->BASIC_ARREAR),2)}}</p>
+                <p class="txt-right"></p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-right">{{number_format(round($employee->Earned_BASIC),2)}}</p>
+                <p class="txt-right"></p>
             </td>
             <td colspan="2" class="">
                 <p class="txt-left text-strong">EPF</p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-right">638.00</p>
+                <p class="txt-right"></p>
             </td>
         </tr>
         <tr>
@@ -336,47 +391,47 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
                 <p class="txt-left text-strong">HRA</p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-right">{{number_format(round($employee->HRA),2)}}</p>
+                <p class="txt-right"></p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-right">{{number_format(round($employee->HRA_ARREAR),2)}}</p>
-            </td>
+                <p class="txt-right">
             <td colspan="2" class="">
-                <p class="txt-right">2280.00</p>
+                <p class="txt-right"></p>
             </td>
             <td colspan="2" class="">
                 <p class="txt-left text-strong">ESIC</p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-right">58.00</p>
+                <p class="txt-right"></p>
             </td>
         </tr>
         <tr>
             <td colspan="2" class="">
-                <p class="txt-left text-strong">SPECIAL ALLOW</p>
+                <p class="txt-left text-strong">SPECIAL ALLOWANCE </p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-right">{{number_format(round($employee->SPL_ALW),2)}}</p>
+                <p class="txt-right"></p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-right">{{number_format(round($employee->SPL_ALW_ARREAR),2)}}</p>
+                <p class="txt-right"></p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-right">{{number_format(round($employee->Earned_SPL_ALW),2)}}</p>
+                <p class="txt-right"></p>
             </td>
             <td colspan="2" class="">
                 <p class="txt-left text-strong">PT</p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-right">{{number_format(round($employee->PROF_TAX),2)}}</p>
+                <p class="txt-right"></p>
             </td>
 
 
         </tr>
+
 
         <tr>
             <td colspan="2" class="">
-                <p class="txt-left text-strong"> OVERTIME</p>
+                <p class="txt-left text-strong"> COMMUNICATION ALLOWANCE </p>
             </td>
             <td colspan="2" class="">
                 <p class="txt-right"></p>
@@ -386,18 +441,18 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
             </td>
 
             <td colspan="2" class="">
-                <p class="txt-right">{{number_format(round($employee->Overtime),2)}}</p>
+                <p class="txt-right"></p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-left text-strong">TDS</p>
+                <p class="txt-left text-strong">INCOME TAX</p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-right">{{number_format(round($employee->TDS),2)}}</p>
+                <p class="txt-right"></p>
             </td>
         </tr>
         <tr>
             <td colspan="2" class="">
-                <p class="txt-left text-strong"> </p>
+                <p class="txt-left text-strong"> FOOD ALLOWANCE </p>
             </td>
             <td colspan="2" class="">
                 <p class="txt-right"></p>
@@ -410,12 +465,13 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
                 <p class="txt-right"></p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-left text-strong">CANT-DEDUCTION</p>
+                <p class="txt-left text-strong">FOOD DEDUCTION</p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-right"> {{number_format(round($employee->CANTEEN_DEDN),2)}}</p>
+                <p class="txt-right"></p>
             </td>
         </tr>
+
         <tr>
             <td colspan="2" class="">
                 <p class="txt-left text-strong"> </p>
@@ -434,7 +490,7 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
                 <p class="txt-left text-strong">SALARY ADVANCE</p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-right"> {{number_format(round($employee->SAL_ADV),2)}}</p>
+                <p class="txt-right"> </p>
             </td>
         </tr>
         <tr>
@@ -455,28 +511,28 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
                 <p class="txt-left text-strong">OTHER DEDUCTIONS</p>
             </td>
             <td colspan="2" class="">
-                <p class="txt-right">{{number_format(round($employee->OTHER_DEDUC),2)}}</p>
+                <p class="txt-right"></p>
             </td>
         </tr>
         <tr>
-            <td colspan="2" class="">
+            <td colspan="2" class="bg-ash">
                 <p class="txt-left text-strong">TOTAL EARNINGS</p>
             </td>
-            <td colspan="2" class="">
-                <p class="txt-right">{{number_format(round($employee->TOTAL_EARNED_GROSS),2)}}</p>
+            <td colspan="2" class="bg-ash">
+                <p class="txt-right"></p>
             </td>
-            <td colspan="2" class="">
+            <td colspan="2" class="bg-ash">
                 <p class="txt-right"></p>
             </td>
 
-            <td colspan="2" class="">
-                <p class="txt-right">7666.00</p>
+            <td colspan="2" class="bg-ash">
+                <p class="txt-right"></p>
             </td>
-            <td colspan="2" class="">
+            <td colspan="2" class="bg-ash">
                 <p class="txt-left text-strong">TOTAL DEDUCTION</p>
             </td>
-            <td colspan="2" class="">
-                <p class="txt-right">{{number_format(round($employee->TOTAL_DEDUCTIONS),2)}}</p>
+            <td colspan="2" class="bg-ash">
+                <p class="txt-right"></p>
             </td>
         </tr>
         <tr>
@@ -489,7 +545,7 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
                 <p class="txt-left text-strong">NET PAY</p>
             </td>
             <td colspan="8" class="">
-                <p class="txt-center ">{{number_format(round($employee->NET_TAKE_HOME),2)}}</p>
+                <p class="txt-center "></p>
             </td>
         </tr>
         <tr>
@@ -497,7 +553,7 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
                 <p class="txt-left text-strong">NET PAY IN WORDS</p>
             </td>
             <td colspan="8" class="">
-                <p class="txt-center ">{{$employee->Rupees}}</p>
+                <p class="txt-center "></p>
             </td>
         </tr>
         <tr>
@@ -516,7 +572,7 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
                 <p class="txt-center text-strong">Paid Date</p>
             </td>
             <td colspan="3" class="">
-                <p class="txt-center">11-MAY-2022</p>
+                <p class="txt-center"></p>
             </td>
         </tr>
         <tr>
@@ -535,8 +591,8 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
                 <p class="txt-left">Please
                     reach out to us for any payroll queries at -payroll@ardens.in</p>
             </td>
-            <td colspan="2" class="border-less txt-right">
-                <p>Powered By</p>
+            <td colspan="2" class="border-less ">
+                <p class="txt-right">Powered By</p>
 
 
             </td>
@@ -546,6 +602,7 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
         </tr>
 
     </table>
+
 
 
 
