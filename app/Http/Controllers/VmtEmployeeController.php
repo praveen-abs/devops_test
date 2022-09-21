@@ -13,6 +13,8 @@ use App\Models\Department;
 use App\Models\Bank;
 use App\Imports\VmtEmployeeManagerImport;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\ViewNotification;
+use Illuminate\Support\Facades\Notification;
 use App\Imports\VmtEmployeeImport;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtEmployeeStatutoryDetails;
@@ -40,15 +42,15 @@ class VmtEmployeeController extends Controller
         //dd($request->email);
         if ($request->has('email')) {
 
-            $employee  =  User::where('email', $request->email)->first();
-            $clientData  = VmtEmployee::where('userid', $employee->id)->first();
+            $employee_user  =  User::where('email', $request->email)->first();
+            $clientData  = VmtEmployee::where('userid', $employee_user->id)->first();
             // dd($clientData);
             $empNo = '';
             if ($clientData) {
                 $empNo = $clientData->emp_no;
             }
             $countries = Countries::all();
-            $compensatory = Compensatory::where('user_id', $employee->id)->first();
+            $compensatory = Compensatory::where('user_id', $employee_user->id)->first();
             $india = Countries::where('country_code', 'IN')->first();
             $emp = VmtEmployeeOfficeDetails::all();
             $emp_details = VmtEmployeeOfficeDetails::where('emp_id', $clientData->id)->first();
@@ -56,7 +58,7 @@ class VmtEmployeeController extends Controller
             $bank = Bank::all();
             $allEmployeesCode = User::where('is_admin', 0)->where('active', 1)->whereNotNull('user_code')->get(['user_code', 'name']);
 
-            return view('vmt_employeeOnboarding', compact('empNo', 'emp_details', 'employee', 'clientData', 'countries', 'compensatory', 'bank', 'emp', 'department', 'allEmployeesCode'));
+            return view('vmt_employeeOnboarding', compact('empNo', 'emp_details', 'employee_user', 'clientData', 'countries', 'compensatory', 'bank', 'emp', 'department', 'allEmployeesCode'));
         } else {
             $clientData  = VmtClientMaster::first();
             $employee  =  User::orderBy('created_at', 'DESC')->where('user_code', 'LIKE', '%' . $clientData->client_code . '%')->first();
@@ -72,6 +74,8 @@ class VmtEmployeeController extends Controller
             } else {
                 $empNo = $maxId;
             }
+
+            
             $countries = Countries::all();
             $india = Countries::where('country_code', 'IN')->first();
             $emp = VmtEmployeeOfficeDetails::all();
@@ -150,6 +154,8 @@ class VmtEmployeeController extends Controller
     {
         // code...
         try {
+
+
 
             //$row = $request->all();
 
@@ -241,7 +247,7 @@ class VmtEmployeeController extends Controller
                 $empOffice->cost_center = $row["cost_center"]; // => "k"
                 $empOffice->confirmation_period  = $row['confirmation_period']; // => "k"
                 $empOffice->holiday_location  = $row["holiday_location"]; // => "k"
-                $empOffice->l1_manager_code  = $row["l1_manager_code"]; // => "k"
+                $empOffice->l1_manager_code  = $row["process"]; // => "k"
                 // $empOffice->l1_manager_designation  = $row["l1_manager_designation"];// => "k"
                 $empOffice->l1_manager_name  = $row["l1_manager_name"]; // => "k"
                 // $empOffice->l2_manager_code  = $row["l2_manager_code"];// => "kk"
@@ -295,7 +301,14 @@ class VmtEmployeeController extends Controller
                 return "Error";
             }
         } catch (Throwable $e) {
-            return "Error";
+           // return "Error";
+            return $rowdata_response = [
+                'row_number' => '',
+                'status' => 'failure',
+                'message' => ' not added',
+                'error_fields' => json_encode(['error' => $e->getMessage()]),
+            ];
+
         }
     }
 
@@ -343,6 +356,8 @@ class VmtEmployeeController extends Controller
             $newEmployee->permanent_address   = $row["permanent_address"];
             //$newEmployee->father_age   = $row["father_age"];
             $newEmployee->mother_name   = $row["mother_name"];
+            $newEmployee->blood_group  = $row["blood_group"];
+
 
             $newEmployee->aadhar_card_file = $this->fileUpload('aadhar_card');
             $newEmployee->aadhar_card_backend_file = $this->fileUpload('aadhar_card_backend');
@@ -355,9 +370,10 @@ class VmtEmployeeController extends Controller
 
             $newEmployee->save();
 
-
+// dd($newEmployee->id);
             if ($newEmployee) {
                 $empOffice  = VmtEmployeeOfficeDetails::where('user_id', $user->id)->first();
+               // dd($empOffice);
                 $empOffice->emp_id = $newEmployee->id; // Need to remove this in future
                 $empOffice->user_id = $newEmployee->userid; //Link between USERS and VmtEmployeeOfficeDetails table
                 $empOffice->department_id = $row["department"]; // => "lk"
@@ -431,6 +447,7 @@ class VmtEmployeeController extends Controller
                 return "Error";
             }
         } catch (Throwable $e) {
+            $this->deleteUser($user->id);
             return "Error";
         }
     }
@@ -873,6 +890,10 @@ class VmtEmployeeController extends Controller
         if (fetchMasterConfigValue("can_send_appointmentletter_after_onboarding") == "true") {
             $appoinmentPath = public_path('/') . $filename;
         }
+        $notification_user = User::where('id',auth::user()->id)->first();
+        $message = "Employee Bulk OnBoard was Created   ";
+
+        Notification::send($notification_user ,new ViewNotification($message.$employeeData['employee_name']));
         $isSent    = \Mail::to($employeeData['email'])->send(new WelcomeMail($employeeData['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(),  $appoinmentPath, $image_view));
 
         return $isSent;
@@ -1073,10 +1094,11 @@ class VmtEmployeeController extends Controller
                 $compensatory->save();
             }
 
-
+            $notification_user = User::where('id',auth::user()->id)->first();
+            $message = "Employee OnBoard was Created   ";
             $VmtGeneralInfo = VmtGeneralInfo::first();
             $image_view = url('/') . $VmtGeneralInfo->logo_img;
-
+            Notification::send($notification_user ,new ViewNotification($message.$row['employee_name']));
             \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $empNo, 'Abs@123123', request()->getSchemeAndHttpHost(), $image_view));
 
             return $rowdata_response = [
