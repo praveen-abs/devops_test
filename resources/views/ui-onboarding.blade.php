@@ -37,8 +37,8 @@
 
                                                 <div class="floating">
                                                     <label for="" class="float-label">Employee Name as per Aadhar</label>
-                                                    @if(isset($employee->name))
-                                                    <input type="text" placeholder="Employee Name as per Aadhar " name="employee_name" id="employee_name" value="{{$employee->name}}" class="onboard-form form-control textbox" pattern="name" readonly />
+                                                    @if(isset($employee_user->name))
+                                                    <input type="text" placeholder="Employee Name as per Aadhar " name="employee_name" id="employee_name" value="{{$employee_user->name}}" class="onboard-form form-control textbox" pattern="name" readonly />
                                                     @else
                                                     <input type="text" placeholder="Employee Name as per Aadhar " name="employee_name" id="employee_name"  class="onboard-form form-control textbox" pattern="name" required />
 
