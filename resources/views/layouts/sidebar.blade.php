@@ -152,7 +152,9 @@
                                 <a href="{{route('showOrgTree')}}" id="tds" class="nav-link sidebar py-1"><span>ORG
                                         structure</span></a>
                             </li>
-
+                            <li class="nav-item ">
+                                <a href="{{route('department')}}" id="tds" class="nav-link sidebar py-1"><span>Department</span></a>
+                            </li>
                             <li class="nav-item ">
                                 <a href="{{url('employeeOnboarding')}}" id="" class="nav-link sidebar py-1" aria-expanded="false"><span>Onboarding</span> </a>
                             </li>

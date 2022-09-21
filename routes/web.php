@@ -208,7 +208,7 @@ Route::get('vmt-assetinventory-fetch/{id}', 'App\Http\Controllers\VmtAssetInvent
 Route::get('vmt-assetinventory-fetchAll', 'App\Http\Controllers\VmtAssetInventoryController@fetchAll')->name('vmt-assetinventory-fetchall');
 Route::post('vmt-assetinventory-edit', 'App\Http\Controllers\VmtAssetInventoryController@updateAsset')->name('vmt-assetinventory-edit');
 Route::post('vmt-assetinventory-delete', 'App\Http\Controllers\VmtAssetInventoryController@deleteAsset')->name('vmt-assetinventory-delete');
-Route::post('department', 'App\Http\Controllers\VmtPmsController@department')->name('department');
+//Route::post('department', 'App\Http\Controllers\VmtPmsController@department')->name('department');
 
 // pay slip
 
@@ -298,6 +298,7 @@ Route::post('vmt-documents-route', 'App\Http\Controllers\VmtEmployeeController@s
 
 //
 Route::post('vmt_clientOnboarding', 'App\Http\Controllers\VmtClientController@store');
+Route::get('/department', 'App\Http\Controllers\VmtDepartmentController@showPage')->name('department');
 
 
 Route::get('/getPMSRatingJSON',  [App\Http\Controllers\ConfigPmsController::class, 'getPMSRating'])->name('getPMSRatingJSON');
