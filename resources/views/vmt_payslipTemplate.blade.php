@@ -11,130 +11,139 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
 
 
     <style>
-    .main-page {
-        width: 210mm;
-        min-height: 297mm;
-        margin: 10mm auto;
-        background: white;
-        box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        -webkit-box-sizing: bo;
-    }
-
-    .sub-page {
-        padding: 1cm;
-
-    }
-
-    @media print {
         .main-page {
-            page-break-after: always;
-        }
-    }
-
-
-    @page {
-        size: A4;
-        margin: 0;
-    }
-
-    @media print {
-
-        html,
-        body {
             width: 210mm;
-            height: 297mm;
+            min-height: 297mm;
+            margin: 10mm auto;
+            background: white;
+            box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: bo;
         }
 
-        .main-page {
+        .sub-page {
+            padding: 1cm;
+
+        }
+
+        @media print {
+            .main-page {
+                page-break-after: always;
+            }
+        }
+
+
+        @page {
+            size: A4;
             margin: 0;
-            border: initial;
-            border-radius: initial;
-            width: initial;
-            min-height: initial;
-            box-shadow: initial;
-            background: initial;
-            page-break-after: always;
         }
-    }
 
-    p {
-        text-align: justify;
+        @media print {
 
-    }
+            html,
+            body {
+                width: 210mm;
+                height: 297mm;
+            }
 
-    table {
-        width: 100%;
-        vertical-align: middle;
-        font-family: sans-serif;
-    }
+            .main-page {
+                margin: 0;
+                border: initial;
+                border-radius: initial;
+                width: initial;
+                min-height: initial;
+                box-shadow: initial;
+                background: initial;
+                page-break-after: always;
+            }
+        }
 
-    .payslip_table tr,
-    td {
-        border: 2px solid #99766f;
+        p {
+            text-align: justify;
 
-    }
+        }
 
-    table td:last-child {}
+        table {
+            width: 100%;
+            vertical-align: middle;
+            font-family: sans-serif;
+        }
 
-    .border-less {
-        border: 0px !important;
-    }
+        .payslip_table tr,
+        td {
+            border: 2px solid #99766f;
 
-    tr {
-        height: 12.55pt;
-    }
+        }
 
-    td {
-        width: 81.35pt
-    }
+        table td:last-child {}
 
-    .padding-md {
-        /* padding: 2pt 0pt; */
-    }
+        .border-less {
+            border: 0px !important;
+        }
 
-    .margin-0 {
-        margin: 0px;
-    }
+        tr {
+            height: 12.55pt;
+        }
 
-    p {
-        font-size: 9pt;
-        margin-top: 3pt;
-        margin-bottom: 3pt;
-        padding: 0px 5px;
-    }
+        td {
+            width: 81.35pt
+        }
+
+        .padding-md {
+            /* padding: 2pt 0pt; */
+        }
+
+        .margin-0 {
+            margin: 0px;
+        }
+
+        p {
+            font-size: 9pt;
+            margin-top: 3pt;
+            margin-bottom: 3pt;
+            padding: 0px 5px;
+        }
 
 
 
-    .txt-left {
-        text-align: left;
-    }
+        .txt-left {
+            text-align: left;
+        }
 
-    .txt-right {
-        text-align: right;
-    }
+        .txt-right {
+            text-align: right;
+        }
 
-    .txt-center {
-        text-align: center;
-    }
+        .txt-center {
+            text-align: center;
+        }
 
-    .text-strong {
-        font-weight: 600;
-    }
+        .text-strong {
+            font-weight: 600;
+        }
 
-    .header-row {
-        height: 50px;
-    }
+        .header-row {
+            height: 50px;
+        }
 
-    td.bg-ash {
-        background-color: #c1c1c1;
-    }
+        td.bg-ash {
+            background-color: #c1c1c1;
+        }
 
-    .p3 {
-        padding: 3px;
-    }
-</style>
+        .p3 {
+            padding: 3px;
+        }
+
+        .f-16 {
+            font-size: 16px;
+        }
+
+        .header-cotent p.brand-name {
+            color: #99766f;
+            font-weight: 600;
+        }
+    </style>
 </head>
 
 <body>
@@ -144,7 +153,7 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
             <td colspan="8" class="border-less p3" rowspan="">
                 <div class="header-cotent">
 
-                    <h6 class="margin-0">Protocol Labels India Pvt. Ltd.</h6>
+                    <p class=" f-16 brand-name">Protocol Labels India Pvt. Ltd.</p>
                     <p class="mb-0">#3rd floor, S plot no 3A&3B, </p>
                     <p class="mb-0">166, Gerugambakkam, Bharathi Nagar,</p>
                     <p class="mb-0">Porur, Chennai, Tamil Nadu 600128.</p>
@@ -153,9 +162,9 @@ $client_logo = request()->getSchemeAndHttpHost() . "" . $general_info->logo_img;
             </td>
             <td colspan="4" class="border-less p3">
 
-                <div class="header-img txt-right d-flex align-items-center justify-content-end" style="height:100px ;width:100%">
+                <div class="header-img txt-right " style="height:100px ;width:100%;">
 
-                    <img src="{{ URL::asset('assets/images/protocol_logo.png') }}" class="txt-right" alt="" style="height: 80px;width:80px;max-height:100%;">
+                    <img src="{{ URL::asset('assets/images/protocol_logo.png') }}" class="txt-right" alt="" style="height: 80px;width:80px;max-height:100%;margin:10px">
                 </div>
 
 
