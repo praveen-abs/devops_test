@@ -175,27 +175,27 @@
                     <div class="sub-page" style="text-align: justify;font-size: 15px;">
                         <div class="table-responsive">
                             <table cellspacing="0" cellpadding="0" class="payslip_table">
-                            <tr class="header-row" aria-rowcount="">
-    <td colspan="8" class="border-less p3" rowspan="">
-        <div class="header-cotent">
+                                <tr class="header-row" aria-rowcount="">
+                                    <td colspan="8" class="border-less p3" rowspan="">
+                                        <div class="header-cotent">
 
-            <h6 class="margin-0">Protocol Labels India Pvt. Ltd.</h6>
-            <p class="mb-0">#3rd floor, S plot no 3A&3B, </p>
-            <p class="mb-0">166, Gerugambakkam, Bharathi Nagar,</p>
-            <p class="mb-0">Porur, Chennai, Tamil Nadu 600128.</p>
+                                            <h6 class="margin-0">Protocol Labels India Pvt. Ltd.</h6>
+                                            <p class="mb-0">#3rd floor, S plot no 3A&3B, </p>
+                                            <p class="mb-0">166, Gerugambakkam, Bharathi Nagar,</p>
+                                            <p class="mb-0">Porur, Chennai, Tamil Nadu 600128.</p>
 
-        </div>
-    </td>
-    <td colspan="4" class="border-less p3">
+                                        </div>
+                                    </td>
+                                    <td colspan="4" class="border-less p3">
 
-        <div class="header-img txt-right d-flex align-items-center justify-content-end" style="height:100px ;width:100%">
+                                        <div class="header-img txt-right d-flex align-items-center justify-content-end" style="height:100px ;width:100%">
 
-            <img src="{{ URL::asset('assets/images/protocol_logo.png') }}" class="txt-right" alt="" style="height: 80px;width:80px;max-height:100%;">
-        </div>
+                                            <img src="{{ URL::asset('assets/images/protocol_logo.png') }}" class="txt-right" alt="" style="height: 80px;width:80px;max-height:100%;">
+                                        </div>
 
 
-    </td>
-</tr>
+                                    </td>
+                                </tr>
 
                                 <tr>
                                     <td colspan="12">
@@ -487,7 +487,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2" class="">
-                                        <p class="txt-left text-strong"> FOOD ALLOWANCE </p>
+                                        <!-- <p class="txt-left text-strong"> FOOD ALLOWANCE </p> -->
                                     </td>
                                     <td colspan="2" class="">
                                         <p class="txt-right"></p>
@@ -626,13 +626,13 @@
                                         <p class="txt-left">Please
                                             reach out to us for any payroll queries at -payroll@ardens.in</p>
                                     </td>
-                                    <td colspan="2" class="border-less ">
-                                        <p class="txt-right">Powered By</p>
+                                    <td colspan="3" class="border-less txt-right">
+                                        <p>Powered By</p>
 
 
                                     </td>
-                                    <td colspan="2" class="border-less">
-                                        <img src="{{ URL::asset('assets/images/logo.png') }}" alt="" class="" style="height: 40px;width:120px;">
+                                    <td colspan="1" class="border-less">
+                                        <img src="{{ URL::asset('assets/images/footer_logo.png') }}" alt="" class="" style="height: 16px;width:95px;">
                                     </td>
                                 </tr>
 
