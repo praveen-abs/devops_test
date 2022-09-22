@@ -31,6 +31,7 @@ use Validator;
 use PhpOffice\PhpSpreadsheet\Shared;
 use Dompdf\Options;
 use Dompdf\Dompdf;
+use League\CommonMark\Extension\SmartPunct\EllipsesParser;
 use PDF;
 
 class VmtEmployeeController extends Controller
@@ -75,7 +76,7 @@ class VmtEmployeeController extends Controller
                 $empNo = $maxId;
             }
 
-            
+
             $countries = Countries::all();
             $india = Countries::where('country_code', 'IN')->first();
             $emp = VmtEmployeeOfficeDetails::all();
@@ -294,28 +295,52 @@ class VmtEmployeeController extends Controller
             // sent welcome email along with appointment Letter
             $isEmailSent  = $this->attachApoinmentPdf($row);
 
-
             if ($isEmailSent) {
-                return "Saved";
+                $mail_status="success";
             } else {
-                return "Error";
+                $mail_status="failure";
             }
-        } catch (Throwable $e) {
-           // return "Error";
-            return $rowdata_response = [
-                'row_number' => '',
-                'status' => 'failure',
-                'message' => ' not added',
-                'error_fields' => json_encode(['error' => $e->getMessage()]),
-            ];
 
+            return $response = [
+                'status' => 'success',
+                'message' => $row["employee_code"].' onboarded successfully',
+                'mail_status' => $mail_status,
+                'error' => "",
+            ];
+        } catch (\Exception $e) {
+            $user->is_onboarded = '0';
+            $user->save();
+
+            $message = "";
+            $error_field = "";
+
+            //This error occurs when the form field is empty in UI.
+            if(str_contains($e->getMessage(),"Undefined array key") )
+            {
+                $message = " not added due to missing field";
+                $error_field = trim($e->getMessage(), "Undefined array key"); //get the field name only
+
+            }
+            else
+            {
+                $message = " not added due to following error";
+                $error_field = $e->getMessage();
+            }
+
+            return $response = [
+                'status' => 'failure',
+                'message' => $row["employee_code"].$message,
+                'mail_status' => '',
+                'error' => $error_field,
+                'error_verbose' =>$e->getMessage()
+            ];
         }
     }
 
     // Store quick onboard employee data to Database
     private function storeEmployeeQuickOnboardForm($row)
     {
-        // dd($request->all());
+        //dd($row);
         // code...
 
        // dd($row);
@@ -370,7 +395,7 @@ class VmtEmployeeController extends Controller
 
             $newEmployee->save();
 
-// dd($newEmployee->id);
+            // dd($newEmployee->id);
             if ($newEmployee) {
                 $empOffice  = VmtEmployeeOfficeDetails::where('user_id', $user->id)->first();
                // dd($empOffice);
@@ -440,15 +465,49 @@ class VmtEmployeeController extends Controller
             // sent welcome email along with appointment Letter
             $isEmailSent  = $this->attachApoinmentPdf($row);
 
+            $mail_status ="";
 
             if ($isEmailSent) {
-                return "Saved";
+                $mail_status="success";
             } else {
-                return "Error";
+                $mail_status="failure";
             }
-        } catch (Throwable $e) {
-            $this->deleteUser($user->id);
-            return "Error";
+
+            return $response = [
+                'status' => 'success',
+                'message' => $row["employee_code"].' onboarded successfully',
+                'mail_status' => $mail_status,
+                'error' => "",
+            ];
+
+        } catch (\Exception $e) {
+
+            $user->is_onboarded = '0';
+            $user->save();
+
+            $message = "";
+            $error_field = "";
+
+            //This error occurs when the form field is empty in UI.
+            if(str_contains($e->getMessage(),"Undefined array key") )
+            {
+                $message = " not added due to missing field";
+                $error_field = trim($e->getMessage(), "Undefined array key"); //get the field name only
+
+            }
+            else
+            {
+                $message = " not added due to following error";
+                $error_field = $e->getMessage();
+            }
+
+            return $response = [
+                'status' => 'failure',
+                'message' => $row["employee_code"].$message,
+                'mail_status' => '',
+                'error' => $error_field,
+                'error_verbose' =>$e->getMessage()
+            ];
         }
     }
 

@@ -652,7 +652,7 @@
             $('#submit_button').on('click', function(e) {
                 console.log("here");
                 //console.log($('#form-1').valid());
-                var flag = false;
+                //var flag = false;
 
                 //alert("1 st one");
 
@@ -675,7 +675,7 @@
 
                 // }
 
-                if ($('#form-1').valid() && !flag) {
+                if ($('#form-1').valid()) {
 
                     //alert("1 st one");
                     var form_data1 = new FormData(document.getElementById("form-1"));
@@ -689,17 +689,26 @@
                         contentType: false,
                         processData: false,
                         success: function(data) {
-                            if (data.responseText == "Saved") {
-                                $('#modalHeader').html(data);
-                                $('#modalNot').html("Employee Onboarding success");
-                                $('#modalBody').html("Mail notification sent.");
+
+                            console.log("Response : "+data.status);
+                            console.log(data);
+
+                            if (data.status == "success") {
+                                $('#modalHeader').html("Success");
+                                $('#modalSubHeading').html(data.message);
+                                if(data.mail_status == "success")
+                                    $('#modalBody').html("Mail notification sent.");
+                                else
+                                    $('#modalBody').html("Mail notification not sent.");
+
                                 $('#notificationModal').show();
                                 $('#notificationModal').removeClass('fade');
-                            } else {
-                               // console.log(data)
-                                $('#modalHeader').html(data);
-                                $('#modalNot').html("Failed to save Data");
-                                //$('#modalBody').html("Request to the server failed");
+                            }
+                            else
+                            if (data.status == "failure") {
+                                $('#modalHeader').html("Error");
+                                $('#modalSubHeading').html(data.message);
+                                $('#modalBody').html(data.error);
                                 $('#notificationModal').show();
                                 $('#notificationModal').removeClass('fade');
                             }
@@ -708,31 +717,50 @@
                             //alert(data);
                         },
                         error: function(data) { //NEED TO FIX IT
-                            // console.log('error');
-                            if (data.responseText == "Saved") {
-                                $('#modalHeader').html(data);
-                                $('#modalNot').html("Employee Onboarding success");
-                                $('#modalBody').html("Mail notification sent.");
-                                $('#notificationModal').show();
-                                $('#notificationModal').removeClass('fade');
-                            } else {
 
-                                $('#modalHeader').html(data);
-                                $('#modalNot').html("Failed to save Data");
-                                //$('#modalBody').html("Request to the server failed");
-                                $('#notificationModal').show();
-                                $('#notificationModal').removeClass('fade');
-                            }
+                            // console.log('error');
+                            // if (data.status == "Saved") {
+                            //     $('#modalHeader').html(data);
+                            //     $('#modalNot').html("Employee Onboarding success");
+                            //     $('#modalBody').html("Mail notification sent.");
+                            //     $('#notificationModal').show();
+                            //     $('#notificationModal').removeClass('fade');
+                            // } else {
+
+                            //     $('#modalHeader').html(data);
+                            //     $('#modalNot').html("Failed to save Data");
+                            //     //$('#modalBody').html("Request to the server failed");
+                            //     $('#notificationModal').show();
+                            //     $('#notificationModal').removeClass('fade');
+                            // }
+                            console.log("Ajax Error block : "+data);
 
                         }
                     });
 
+                }
+                else
+                {
+                    console.log("Form validation failed");
                 }
             });
 
 
 
             $('#form-1').validate({
+                // rules: {
+                //     field1: {
+                //         required: true,
+                //         email: true
+                //     },
+                //     field2: {
+                //         required: true,
+                //         minlength: 5
+                //     }
+                // },
+                // messages: {
+                //             field1: "This is custom error message",
+                // },
                 invalidHandler: function(event, validator) {
                     // 'this' refers to the form
                     var errors = validator.numberOfInvalids();
@@ -762,9 +790,9 @@
                 $(this).valid();
             });
         });
-        $("#button_close").click(function(){
-                window.location.href = "/employeeOnboarding";
-            });
+        // $("#button_close").click(function(){
+        //         window.location.href = "/employeeOnboarding";
+        // });
     </script>
 
 
