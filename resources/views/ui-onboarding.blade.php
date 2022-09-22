@@ -317,7 +317,7 @@
 
                                                 <div class="floating">
                                                     <label for="" class="float-label">UAN Number</label>
-                                                    <input type="text" placeholder="UAN Number" name="uan_number" id="uan_number" minlength="10" maxlength="10" class="onboard-form form-control textbox "/>
+                                                    <input type="text" placeholder="UAN Number" name="uan_number" id="uan_number" minlength="12" maxlength="12" class="onboard-form form-control textbox "/>
 
                                                 </div>
                                             </div>

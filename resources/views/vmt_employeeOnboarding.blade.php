@@ -648,6 +648,7 @@
 
 
 
+            var error_fields ="";
 
             $('#submit_button').on('click', function(e) {
                 console.log("here");
@@ -663,17 +664,6 @@
                 var ifsc = '^[A-Z]{4}0[A-Z0-9]{6}$';
                 var dl_pat = '/^(([A-Z]{2}[0-9]{2})( )|([A-Z]{2}-[0-9]{2}))((19|20)[0-9][0-9])[0-9]{7}$/';
 
-                // if (textDLno.match(dl_pat)) {
-                //     //alert("dl no done");
-                //     console.log("DL No correct");
-
-                // }
-
-                // if (txtIFSCNo.match(ifsc)) {
-                //     // alert("done ifsc");
-                //     console.log("IFSC correct");
-
-                // }
 
                 if ($('#form-1').valid()) {
 
@@ -742,6 +732,13 @@
                 else
                 {
                     console.log("Form validation failed");
+                    console.log(error_fields);
+
+                    $('#modalHeader').html("Error");
+                    $('#modalSubHeading').html("The following fields are not filled.");
+                    $('#modalBody').html(error_fields);
+                    $('#notificationModal').show();
+                    $('#notificationModal').removeClass('fade');
                 }
             });
 
@@ -749,9 +746,9 @@
 
             $('#form-1').validate({
                 // rules: {
-                //     field1: {
+                //     gender: {
                 //         required: true,
-                //         email: true
+
                 //     },
                 //     field2: {
                 //         required: true,
@@ -759,31 +756,59 @@
                 //     }
                 // },
                 // messages: {
-                //             field1: "This is custom error message",
+                //     gender: "This is custom error message",
                 // },
+                showErrors: function(errorMap, errorList) {
+                    // $("#summary").html("Your form contains "
+                    // + this.numberOfInvalids()
+                    // + " errors, see details below.");
+                    this.defaultShowErrors();
+                    // console.log(errorMap);
+
+
+                    console.log(errorMap);
+
+                    var keys = Object.keys(errorMap);
+                    var errors_html = "<ul>";
+
+                    for(var j=0;j<keys.length;j++)
+                    {
+                          //  $('#error-msg').append('<p>&emsp;'+ json_error_fields[keys[j]]+ '</p>');
+                          //console.log(keys[j]);
+                          errors_html += "<li>"+keys[j]+"</li>";
+                    }
+
+                    error_fields = errors_html + "</ul>";
+
+                    //console.log("Inside showErrors");
+
+
+
+                },
+
                 invalidHandler: function(event, validator) {
                     // 'this' refers to the form
                     var errors = validator.numberOfInvalids();
                     if (errors) {
                     var message = 'You have missed ' + errors + ' field(s). Please check and submit again';
                         console.log(message);
-                        alert(message);
+                      //  alert(message);
                     } else {
                         console.log("no errors");
 
                     }
-                },
-                errorPlacement: function(error, element) {
-                    error.text('* ' + error.text());
-                    if (element.parent('.input-group').length) {
-                        error.insertAfter(element.parent()); // radio/checkbox?
-                    } else if (element.hasClass('select2-hidden-accessible')) {
-                        error.insertAfter(element.next('span')); // select2
-                        element.next('span').addClass('error').removeClass('valid');
-                    } else {
-                        error.insertAfter(element); // default
-                    }
                 }
+                // errorPlacement: function(error, element) {
+                //     error.text('* ' + error.text());
+                //     if (element.parent('.input-group').length) {
+                //         error.insertAfter(element.parent()); // radio/checkbox?
+                //     } else if (element.hasClass('select2-hidden-accessible')) {
+                //         error.insertAfter(element.next('span')); // select2
+                //         element.next('span').addClass('error').removeClass('valid');
+                //     } else {
+                //         error.insertAfter(element); // default
+                //     }
+                // }
             });
 
             $("select").on("select2:close", function(e) {
