@@ -11,7 +11,7 @@
         @slot('li_1')
         @endslot
     @endcomponent
-    <div class="uploadEmployee-wrpper mt-8">
+    <div class="uploadEmployee-wrpper ">
 
         <div class="card shadow profile-box ">
             <div class="card-body">
@@ -54,7 +54,7 @@
                                             {{-- </div> --}}
                                             <div class="row mt-2">
                                                 <div class="text-end col-xl-12">
-                                                    <button type="submit" class="btn btn-primary">Upload</button>
+                                                    <button type="submit" class="btn btn-orange"><i class="bi bi-file-earmark-arrow-up me-1"></i> Upload</button>
                                                 </div>
                                             </div>
 
@@ -196,7 +196,7 @@
                         </div>
                         <div class="row mt-2">
                             <div class="text-end col-xl-12">
-                                <button type="submit" class="btn btn-primary">Upload</button>
+                                <button type="submit" class="btn btn-orange"><i class="bi bi-file-earmark-arrow-up"></i>Upload</button>
                             </div>
                         </div>
                     </form>
@@ -1039,7 +1039,7 @@
                         for(var i=0; i < ajaxData.data.length; i++)
                         {
                             var row_data = ajaxData.data[i];
-                            $('#error-msg').append('<ul><li><b>'+ row_data.message+ '<b/></li></ul>');
+                            $('#error-msg').append('<b class="f-15 text-warning">'+ row_data.message+ '<b/>');
 
                             if(ajaxData.status == 'failure'){
 
@@ -1048,7 +1048,7 @@
 
                                 for(var j=0;j<keys.length;j++)
                                 {
-                                        $('#error-msg').append('<p>&emsp;'+ json_error_fields[keys[j]]+ '</p>');
+                                        $('#error-msg').append('<ul class="list-unstyled"><li>'+'<span class="text-muted f-14">' + json_error_fields[keys[j]] +'</span>' + '</li></ul>');
                                 }
                             }
 

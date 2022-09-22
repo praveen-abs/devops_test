@@ -90,9 +90,9 @@ legend {
     text-align: left;
 }
 
-.star_error::before {
+/* .star_error::before {
     content: '* ';
-}
+} */
 select {
     /* border:none !important; */
     background: white !important;
