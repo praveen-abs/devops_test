@@ -30,22 +30,31 @@ class VmtOrgTreeController extends Controller
                                                 ->value('user_id');
 
             $t_user_code = User::where('id',$t_user_id)->value('user_code');
-            //dd($t_user_code);
+            $data           = $this->getUserNodeDetails($t_user_code);
         }
-        else
-        {
+        else{
             //Get the current node
             $t_user_code = Auth::user()->user_code;
+            
+            
+            $data = $this->getUserNodeDetails($t_user_code);
+            $data  =  array($data);
+               
         }
 
-        $data           = $this->getUserNodeDetails($t_user_code);
+       
         $vmtGeneralInfo = VmtGeneralInfo::first();
         $logoSrc        = asset($vmtGeneralInfo->logo_img);
 
         $logoNode  = array("image" => $logoSrc, "relationship" => "011", "user_code" => "ADMIN001", "name" =>"", "className" => "logo-level");
 
-        $data['collapsed'] = false;
-        $logoNode['children'] = array($data);
+        $logoNode['collapsed'] = false;
+        
+        if(count($data) > 0)
+            $logoNode['children'] = $data;
+        else
+            $logoNode['children'] = array($data);
+
         return $logoNode;
     }
 
@@ -87,7 +96,53 @@ class VmtOrgTreeController extends Controller
 
     public function getSiblingsForUser($user_code)
     {
+        $siblingsnode_array = [];
 
+        if($this->hasSiblingsNode($user_code))
+        {
+            //get the child nodes of the given parent node
+            $db_childNodes = $this->fetch_siblingsForGivenUser($user_code);
+
+            /*
+             * Grouping the node based on the department wise if department filter is set on
+             * request
+            */
+            if(request()->get('department')){
+
+                $j = 0;
+
+                // grouping children based on the department
+                $db_departmentNodes =  $db_childNodes->groupBy('department_id')->all();
+                $dArray  = [];
+
+                foreach($db_departmentNodes as $key => $deptNodes ){
+                    $depArray  = [];
+                    // convert each db obj to node structure
+                    foreach ($deptNodes as $value) {
+                        // code...
+                        $depArray[] = $this->getUserNodeDetails($value->user_code);
+                    }
+                    $dArray[$j] = array("name" => $key, "className" => "dept-level","relationship" => "111","children" => $depArray);
+                    $j++;
+                }
+                $siblingsnode_array[]  = $dArray;
+            }
+            else{
+                //$i = 0;
+                $t_array = [];
+                //Convert each db obj to node structure
+                foreach($db_childNodes as $singleDBChild)
+                {
+                    if($singleDBChild->user_code != $user_code){
+                        $nodeObject = $this->getUserNodeDetails($singleDBChild->user_code);
+                        $siblingsnode_array[] = $nodeObject;
+                    }
+                }
+                //$siblingsnode_array  = $t_array;
+            }
+        }
+
+       return $siblingsnode_array;
     }
 
     public function getChildrenForUser($user_code){
@@ -229,7 +284,7 @@ class VmtOrgTreeController extends Controller
 
     private function fetch_siblingsForGivenUser($user_code)
     {
-        $userid = User::where('user_code',$user_code)->value('id');
+        $userid = User::where('user_code', $user_code)->value('id');
         $parent_user_code = VmtEmployeeOfficeDetails::where('user_id',$userid)->value('l1_manager_code');
 
         $siblings = $this->fetch_childrenForGivenUser($parent_user_code);
