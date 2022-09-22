@@ -181,6 +181,27 @@
                 </li>
                 @endif
 
+                <li class="nav-item">
+                    <a class="nav-link sidebar menu-link pt-0" href="#MyTasksDrop-Down" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarRoles">
+                        <i>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22.058" height="12.253" viewBox="0 0 22.058 12.253">
+                                <path id="arrow-trend-up-solid" d="M14.705,98.451a1.225,1.225,0,0,1,0-2.451h6.127a1.224,1.224,0,0,1,1.225,1.225v6.127a1.225,1.225,0,0,1-2.451,0v-3.167l-6.487,6.483a1.223,1.223,0,0,1-1.731,0l-4.071-4.032-5.226,5.258a1.225,1.225,0,0,1-1.733-1.731l6.128-6.127a1.223,1.223,0,0,1,1.731,0l4.036,4.032,5.618-5.652Z" transform="translate(0 -96)" fill="#686363" />
+                            </svg>
+
+                        </i>
+                        <span>My Tasks</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="MyTasksDrop-Down">
+                        <ul class="nav nav-sm flex-column">
+                            {{-- @if(auth()->user()->org_role == "hr") --}}
+                            <li class="nav-item">
+                                <a href="{{ route('vmt-documents-review') }}" class="nav-link sidebar py-1"><span>Review Documents</span></a>
+                            </li>
+                            {{-- @endif --}}
+                        </ul>
+                    </div>
+                </li>
+
                 <!-- Performance -->
 
                 <li class="nav-item">

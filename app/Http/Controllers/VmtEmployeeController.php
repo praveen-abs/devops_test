@@ -1262,4 +1262,33 @@ class VmtEmployeeController extends Controller
         }
         return null;
     }
+
+    public function showDocumentsReviewPage(Request $request)
+    {
+        if(isset($request->user_code))
+        {
+            $user_id = User::where('user_code',$request->user_code)->value('id');
+            $documents_filenames = VmtEmployee::where('userid',$user_id)
+                                    ->get([
+                                        'aadhar_card_file',
+                                        'aadhar_card_backend_file',
+                                        'pan_card_file',
+                                        'passport_file',
+                                        'voters_id_file',
+                                        'dl_file',
+                                        'education_certificate_file',
+                                        'reliving_letter_file'
+                                    ]);
+            //dd($documents_filenames);
+
+        }
+        else
+        {
+
+        }
+
+        //Get all documents for the given user
+
+        return view('vmt_document_reviews',compact('documents_filenames'));
+    }
 }
