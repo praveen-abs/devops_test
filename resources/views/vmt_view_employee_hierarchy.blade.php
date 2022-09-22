@@ -151,12 +151,14 @@ $(document).ready(function() {
         },
         'parent': '/orgchart/parent/',
         'siblings': function(nodeData) {
-            console.log("siblings Node URL "+nodeData.user_code);
-            return '/orgchart/siblings/' + nodeData.id;
+            //console.log("siblings Node URL "+nodeData.user_code);
+            // getSiblingsForUser
+            return "{{ route('getSiblingsForUser','') }}"+"/"+nodeData.user_code;
+            return '/orgchart/siblings/' + nodeData.user_code;
         },
         'families': function(nodeData) {
             console.log("families Node URL "+nodeData.user_code);
-            return '/orgchart/families/' + nodeData.id;
+            return '/orgchart/families/' + nodeData.user_code;
         }
     };
 
