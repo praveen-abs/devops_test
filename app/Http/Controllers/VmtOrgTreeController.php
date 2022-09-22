@@ -36,13 +36,10 @@ class VmtOrgTreeController extends Controller
             //Get the current node
             $t_user_code = Auth::user()->user_code;
             
-            if ($this->hasSiblingsNode($t_user_code)) {
-                // code...
-                $nodeData = $this->getUserNodeDetails($t_user_code);
-                $data  = array($nodeData);
-            }else{
-                $data =  $this->getSiblingsForUser($t_user_code);
-            }
+            
+            $data = $this->getUserNodeDetails($t_user_code);
+            $data  =  array($data);
+               
         }
 
        
@@ -136,10 +133,8 @@ class VmtOrgTreeController extends Controller
                 //Convert each db obj to node structure
                 foreach($db_childNodes as $singleDBChild)
                 {
-                    if($singleDBChild->user_code != null){
-                        
+                    if($singleDBChild->user_code != $user_code){
                         $nodeObject = $this->getUserNodeDetails($singleDBChild->user_code);
-
                         $siblingsnode_array[] = $nodeObject;
                     }
                 }
@@ -289,7 +284,7 @@ class VmtOrgTreeController extends Controller
 
     private function fetch_siblingsForGivenUser($user_code)
     {
-        $userid = User::where('user_code',$user_code)->value('id');
+        $userid = User::where('user_code', $user_code)->value('id');
         $parent_user_code = VmtEmployeeOfficeDetails::where('user_id',$userid)->value('l1_manager_code');
 
         $siblings = $this->fetch_childrenForGivenUser($parent_user_code);
