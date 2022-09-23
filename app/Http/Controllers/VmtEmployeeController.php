@@ -741,8 +741,8 @@ class VmtEmployeeController extends Controller
             $newEmployee->userid = $user->id;
             $newEmployee->emp_no   =    $empNo;
             $newEmployee->gender   =    $row["gender"];
-            $newEmployee->doj   =  $row['doj'];
-            $newEmployee->dol   =   $row['doj'];
+            $newEmployee->doj   =   \DateTime::createFromFormat('d-m-Y', $row['doj'])->format('Y-m-d');
+            $newEmployee->dol   =   \DateTime::createFromFormat('d-m-Y', $row['doj'])->format('Y-m-d');
             $newEmployee->location   =    $row["work_location"];
             $newEmployee->dob   =   $row['dob'];
             $newEmployee->father_name   =  $row["father_name"];
@@ -1098,6 +1098,7 @@ class VmtEmployeeController extends Controller
 
     private function storeSingleRecord_QuickEmployee($row)
     {
+
         //DB level validation
         if (isset($row['employee_code'])) {
             $empNo = $row['employee_code'];
@@ -1135,8 +1136,8 @@ class VmtEmployeeController extends Controller
             $newEmployee->userid = $user->id;
             $newEmployee->emp_no   =    $empNo;
             //$newEmployee->gender   =    $row["gender"];
-            $newEmployee->doj   =    $row['doj'];
-            $newEmployee->dol   =    $row['doj'];
+            $newEmployee->doj   =   \DateTime::createFromFormat('d-m-Y', $row['doj'])->format('Y-m-d');
+            $newEmployee->dol   =   \DateTime::createFromFormat('d-m-Y', $row['doj'])->format('Y-m-d');
             $newEmployee->mobile_number   =    $row['mobile_no'];
             $newEmployee->save();
 
