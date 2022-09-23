@@ -12,50 +12,143 @@
 
     min-height: 500px;
 }
+.orgchart .hierarchy {
+    /* position: relative; */
+    margin: 18px 0px;
+}
 
 .orgchart {
     background: rgba(255, 255, 255, 0);
-
     height: 500px;
     width: 100;
     width: auto;
-
 }
 
 .orgchart .hierarchy::before {
     background-color: #002f56 !important;
-    border-top: 2px solid #002f56 !important;
+    
+    height: 2px;
+    border-top: 0px !important;
 }
 
 .orgchart .node:not(:only-child)::after {
     background-color: #002f56 !important;
+    bottom: -19px !important;
+   
+    height: 18px !important;
 }
 
-.orgchart .node .title {
-    background-color: #002f56 !important;
-}
 
-.orgchart ul li .node:hover {
-    background-color: rgb(0 47 86 / 22%) !important;
-    border-radius: 3px !important;
-}
-
-.orgchart .node .content {
-    border: 1px solid #002f56 !important;
-}
-
-.orgchart .edge:hover::before {
-    border-color: #ff4d00 !important;
-}
 
 .orgchart .node.focused {
     background-color: rgb(0 47 86 / 22%) !important;
 }
 
-.orgchart>ul>li>ul li>.node::before {
+.orgchart > ul > li > ul li > .node::before {
+    /* background-color: #002f56 !important; */
+    content: "+";
+    position: absolute;
+    top: -33px;
+    left: calc(50% - 16px);
+    width: 15px;
+    height: 15px;
+    margin: 3px;
+    font-weight: 600;
+    background-color: transparent !important;
+    border: 1px solid #002f56 !important;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+    
+}
+
+.orgchart > ul > li > ul li > .node::after{
+    content: "";
+    position: absolute;
+    top: -19px;
+    left: calc(50% - 6px);
+    width: 2px;
+    height: 12px;
+    margin: 3px;
+    font-weight: 600;
     background-color: #002f56 !important;
+    /* border: 1px solid #002f56 !important; */
+    /* padding: 2px; */
+    /* display: flex; */
+    /* align-items: center; */
+    /* justify-content: center; */
+    /* border-radius: 50px; */
+    margin: 5px 0px;
 }
 
 .orgchart .node .edge::before {
     border-color: #ff4d0087 !important;
+}
+
+.orgchart .node .horizontalEdge::before {
+    top: 14px;
+  
+}
+.orgchart .node {
+    position: relative;
+    height: 50px;
+    width: 160px;
+    background-color: #b5b5b5 !important;
+    margin: 10px;
+    border-radius: 50px !important;
+}
+
+.orgchart .node {
+    height: auto;
+    width: auto;
+    background-color: #b5b5b5b8 !important;
+    /* overflow: hidden; */
+    margin: 10px;
+    border-radius: 50px !important;
+}
+.orgchart .node .title {
+    background-color: transparent !important;
+    /* margin: 0px 50px; */
+    /* position: relative; */
+    margin: 0px 0px 0px 55px;
+    justify-content: start;
+    display: flex;
+    align-items: start;
+}
+.tree-avatar {
+    position: absolute;
+    top: 3px;
+    left: 10px;
+    border-radius: 50px;
+}
+.tree-avatar img {
+    height: 40px;
+    width: 40px;
+    border-radius: 50px !important;
+}
+
+.orgchart .node .content {
+    margin: 0px 0px 0px 55px;
+    background-color: transparent !important;
+    border: 0px !important;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+.orgchart .node .title .symbol {
+    float: none !important;
+}
+.orgchart .node.focused {
+    background-color: none !important;
+}
+
+.orgchart .node .topEdge {
+    top: -5px;
+}
+.orgchart .node .topEdge.oci-chevron-down::before {
+    bottom: -2px !important; 
+    transform: rotate(220deg) !important;
 }

@@ -1,61 +1,99 @@
 @extends('layouts.master')
 
 @section('css')
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/orgchart/3.1.1/css/jquery.orgchart.min.css" rel="stylesheet">
-    <link href="{{ URL::asset('assets/css/employee_hirarchy.css') }}" rel="stylesheet">
-    <link href="{{ URL::asset('assets/css/app.min.css') }}" rel="stylesheet">
-    <style type="text/css">
-        .orgchart .dept-level .title{
-            padding-right: 4px;
-            background-color: #009933 !important;
-        }
-        .orgchart .dept-level .content{
-            height: 0;
-            border: none !important;
-        }
-        .orgchart .dept-level .title .symbol{
-            display: none;
-        }
+<link href="https://cdnjs.cloudflare.com/ajax/libs/orgchart/3.1.1/css/jquery.orgchart.min.css" rel="stylesheet">
+<link href="{{ URL::asset('assets/css/employee_hirarchy.css') }}" rel="stylesheet">
+<link href="{{ URL::asset('assets/css/app.min.css') }}" rel="stylesheet">
+<style type="text/css">
 
 
-        /*  Logo node style */
-        .orgchart .logo-level .title{
-            display: none;
-        }
-        .orgchart .logo-level .content{
-            display: none;
-        }
-        .logo-level figure{
-            margin:  0;
-        }
-        .empPhoto{
-            
-        }
+    .orgchart .dept-level .title {
+        padding-right: 4px;
+        background-color: #009933 !important;
+    }
 
-        .tree-avatar{    background: #f1f1f1;
-    align-items: center;
-    justify-content: center;}
+    .orgchart .dept-level .content {
+        height: 0;
+        border: none !important;
+    }
 
-        .user-avatar{
-            width: 96px;
-        }
-    </style>
+    .orgchart .dept-level .title .symbol {
+        display: none;
+    }
+
+    /* .oci-chevron-left::before {
+        content: "\002B" !important;
+         display: inline-block;
+        font-size: 20px;
+        display: block !important;
+        box-sizing: border-box;
+        width: 0px !important;
+        height: 0px !important;
+        border-width: 0px !important;
+        border-style: none !important;
+        border-color: transparent !important;
+        background: none !important;
+        transform: none !important;
+    } */
+
+    /* .oci-chevron-right::before {
+        content: "\002B" !important;
+        font-size: 28px;
+        display: block !important;
+        box-sizing: border-box;        
+        width: 0px !important;
+        height: 0px !important;
+        border-width: 0px !important;
+        border-style: none !important;
+        border-color: transparent !important;
+        background: none !important;
+        transform: none !important;
+    } */
+
+    
+
+  
+
+    /*  Logo node style */
+    .orgchart .logo-level .title {
+        display: none;
+    }
+
+    .orgchart .logo-level .content {
+        display: none;
+    }
+
+    .logo-level figure {
+        margin: 0;
+    }
+
+    .empPhoto {}
+
+    .tree-avatar {
+        background: #f1f1f1;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .user-avatar {
+        width: 96px;
+    }
+</style>
 
 
 @endsection
 @section('content')
 @component('components.organization_breadcrumb')
-@slot('li_1')  @endslot
+@slot('li_1') @endslot
 @endcomponent
 <div id="chart-container" class="" style="overflow: hidden;">
 </div>
 <div class="">
-    <input type="checkbox" name="department" id="department-wise" >Department
+    <input type="checkbox" name="department" id="department-wise">Department
 </div>
 
-
-
 @endsection
+
 @section('script')
 <script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script type="module" src="https://html2canvas.hertzen.com/dist/html2canvas.min.js">
@@ -151,7 +189,7 @@ $(document).ready(function() {
         },
         'parent': '/orgchart/parent/',
         'siblings': function(nodeData) {
-            //console.log("siblings Node URL "+nodeData.user_code);
+            console.log("siblings Node URL "+nodeData.avatar);
             // getSiblingsForUser
             return "{{ route('getSiblingsForUser','') }}"+"/"+nodeData.user_code;
             return '/orgchart/siblings/' + nodeData.user_code;
@@ -179,13 +217,13 @@ $(document).ready(function() {
             'nodeTemplate': function(data) {
                 var nodeHtml =  ''; 
                 var imageHtml  =  '<img class="user-avatar" src="'+data.image+'" />';
-                nodeHtml =  '<div class="title">'+data.name+'</div>'; 
+                nodeHtml =  '<div class="title">'+'<span>'+data.name+'</span>'+'</div>'; 
                 
                 if(data.className != 'dept-level'){
                     nodeHtml = nodeHtml + '<div class="tree-avatar">'+imageHtml +'</div>';
                 }
                 if(data.designation){
-                    nodeHtml = nodeHtml + '<div class="content">'+data.designation+'</div>';
+                    nodeHtml = nodeHtml + '<div class="content">'+'<span>'+ data.designation+'</span>'+'</div>';
                 }
                 return nodeHtml;
             },

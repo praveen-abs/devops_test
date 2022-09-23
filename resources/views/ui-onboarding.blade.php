@@ -139,27 +139,27 @@
 
                                                 <!-- <label class="" for="pan_no">Pan Card Number<span id="pan_no_req">{!! required() !!}</span></label> -->
                                                 <div class="floating">
-                                                    <label for="" class="float-label">Pan Number<span class="text-danger">*</span></label>
+                                                    <label for="" class="float-label">Pan Number / Pan Acknowlegement<span class="text-danger">*</span></label>
                                                     <input type="text" placeholder="Pan Card Number" name="pan_no" id="pan_num" class=" form-control textbox  pan" pattern="pan" minlength="10" maxlength="10" required />
                                                     <label class="error star_error pan_no_label" id="pan_no_label" for="pan_no" style="display: none;"></label>
 
                                                     <span class="error" id="error_pan_no"></span>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                                            <!-- <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"> -->
                                                 <!-- <label class="" for="pan_ack">Pan Acknowlegement<span id="pan_ack_req">{!! required() !!}</span></label> -->
                                                 <!-- <div class="floating">
                                                     <input type="text" placeholder="Pan Acknowlegement" name="pan_ack" pattern="alp-num" minlength="15" maxlength="15" id="pan_ack" class="onboard-form textbox  form-control not-required validate " />
                                                     <label for="" class="float-label">Pan Acknowlegement</label>
                                                 </div> -->
-                                                <div class="floating">
+                                                <!-- <div class="floating">
                                                     <label for="" class="float-label">Pan Acknowlegement</label>
                                                     <input type="text" placeholder="Pan Acknowlegement " name="pan_ack" id="pan_ack" pattern="alp-num" minlength="15" maxlength="15" class="onboard-form form-control textbox " pattern="name" not-required />
                                                     <label class="error star_error employee_name_label" for="employee_name" style="display: none;"></label>
 
 
-                                                </div>
-                                            </div>
+                                                </div> -->
+                                            <!-- </div> -->
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="444">DL Number</label> -->
                                                 <div class="floating">
