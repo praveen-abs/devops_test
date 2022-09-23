@@ -537,14 +537,9 @@
                                                 <!-- <label class="" for="process">Process{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Process</label>
+                                                    <input type="text" placeholder="Process" name="process" class="onboard-form form-control" pattern="name" required />
 
-                                                    <select placeholder="Process" name="process" id="process" class="onboard-form form-control  textbox ">
-                                                        <option value="" hidden selected disabled>Select Process</option>
-                                                        @foreach($emp as $e)
-                                                        <option value="{{$e->process}}">{{$e->process}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
+                                               </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 col-xxl-3 mb-2">
                                                 <!-- <label class="" for="designation">Designation{!! required() !!}</label> -->
@@ -597,27 +592,25 @@
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2 col-xxl-3">
                                                 <!-- <label class="" for="l1_manager_code">Reporting Manager Employee Code{!! required() !!}</label> -->
                                                 <div class="floating">
-                                                    <label for="" class="float-label">Reporting Manager<span class="text-danger">*</span></label>
+                                                    <label for="" class="float-label">Reporting Manager Code<span class="text-danger">*</span></label>
 
                                                     @if (isset($emp_details->l1_manager_code))
-                                                    <input type="text" value="{{$emp_details->l1_manager_code}}" name="process" id="process" class="onboard-form form-control textbox " pattern="" readonly />
+                                                        <input type="text" value="{{$emp_details->l1_manager_code}}" name="l1_manager_code" id="l1_manager_code" class="onboard-form form-control textbox " pattern="" readonly />
                                                     @else
-
-
-                                                    <select placeholder="Process" name="process" id="process" class="onboard-form form-control  textbox ">
-                                                        <option value="" hidden selected disabled>Select Process</option>
-                                                        @foreach($emp as $e)
-                                                        <option value="{{$e->process}}">{{$e->process}}</option>
-                                                        @endforeach
-                                                    </select>
+                                                        <select placeholder="Reporting Manager" name="l1_manager_code" id="l1_manager_code" class="onboard-form form-control  textbox ">
+                                                            <option value="" hidden selected disabled>Select</option>
+                                                            @foreach($allEmployeesUserCode as $e)
+                                                                 <option value="{{$e->user_code}}">{{$e->user_code}}</option>
+                                                            @endforeach
+                                                        </select>
                                                     @endif
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2 col-xxl-3">
-                                                <!-- <label class="" for="l1_manager_name">Reporting Manager Name{!! required() !!}</label> -->
+
                                                 <div class="floating">
                                                     <label for="" class="float-label">Reporting Manager Name</label>
-                                                    <input type="text" placeholder="Reporting Manager Name" name="l1_manager_name" id="l1_manager_name" class="textbox  onboard-form form-control " pattern="name" value="{{(isset($emp_details->l1_manager_name)) ? $emp_details->l1_manager_name :''}}" required />
+                                                    <input type="text" placeholder="Reporting Manager Name" name="l1_manager_name" id="l1_manager_name" class="textbox  onboard-form form-control " pattern="name" value="{{(isset($emp_details->l1_manager_name)) ? $emp_details->l1_manager_name :''}}" readonly/>
                                                     <label class="error star_error l1_manager_name_label" for="l1_manager_name" style="display: none;"></label>
                                                 </div>
                                             </div>

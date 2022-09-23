@@ -57,9 +57,10 @@ class VmtEmployeeController extends Controller
             $emp_details = VmtEmployeeOfficeDetails::where('emp_id', $employee_details->id)->first();
             $department = Department::all();
             $bank = Bank::all();
-            $allEmployeesCode = User::where('is_admin', 0)->where('active', 1)->whereNotNull('user_code')->get(['user_code', 'name']);
+            $allEmployeesUserCode = User::where('id','<>',$employee_user->id)
+                            ->where('is_admin', 0)->where('active', 1)->whereNotNull('user_code')->get(['user_code', 'name']);
 
-            return view('vmt_employeeOnboarding', compact('empNo', 'emp_details', 'employee_user', 'employee_details', 'countries', 'compensatory', 'bank', 'emp', 'department', 'allEmployeesCode'));
+            return view('vmt_employeeOnboarding', compact('empNo', 'emp_details', 'employee_user', 'employee_details', 'countries', 'compensatory', 'bank', 'emp', 'department', 'allEmployeesUserCode'));
         } else {
 
             $empNo = $this->generateEmployeeCode();
@@ -70,12 +71,19 @@ class VmtEmployeeController extends Controller
             $emp = VmtEmployeeOfficeDetails::all();
             $bank = Bank::all();
             $department = Department::all();
-            $allEmployeesCode = User::where('is_admin', 0)->where('active', 1)->whereNotNull('user_code')->get(['user_code', 'name']);
+            $allEmployeesUserCode = User::where('is_admin', 0)->where('active', 1)->whereNotNull('user_code')->get(['user_code', 'name']);
             //dd($allEmployeesCode);
-            return view('vmt_employeeOnboarding', compact('empNo', 'countries', 'india', 'emp', 'bank', 'department', 'allEmployeesCode'));
+            return view('vmt_employeeOnboarding', compact('empNo', 'countries', 'india', 'emp', 'bank', 'department', 'allEmployeesUserCode'));
         }
     }
 
+    public function getEmployeeName(Request $request)
+    {
+        if(isset($request->user_code))
+            return User::where('user_code',$request->user_code)->value('name');
+        else
+            return "";
+    }
 
     /*
         Generate Employee Code based on the master config
@@ -269,7 +277,7 @@ class VmtEmployeeController extends Controller
                 $empOffice->cost_center = $row["cost_center"]; // => "k"
                 $empOffice->confirmation_period  = $row['confirmation_period']; // => "k"
                 $empOffice->holiday_location  = $row["holiday_location"]; // => "k"
-                $empOffice->l1_manager_code  = $row["process"]; // => "k"
+                $empOffice->l1_manager_code  = $row["l1_manager_code"]; // => "k"
                 // $empOffice->l1_manager_designation  = $row["l1_manager_designation"];// => "k"
                 $empOffice->l1_manager_name  = $row["l1_manager_name"]; // => "k"
                 // $empOffice->l2_manager_code  = $row["l2_manager_code"];// => "kk"
@@ -428,7 +436,7 @@ class VmtEmployeeController extends Controller
                 $empOffice->cost_center = $row["cost_center"]; // => "k"
                 $empOffice->confirmation_period  = $row['confirmation_period']; // => "k"
                 $empOffice->holiday_location  = $row["holiday_location"]; // => "k"
-               $empOffice->l1_manager_code  = $row["process"]; // => "k"
+                $empOffice->l1_manager_code  = $row["l1_manager_code"]; // => "k"
                 // $empOffice->l1_manager_designation  = $row["l1_manager_designation"];// => "k"
                 $empOffice->l1_manager_name  = $row["l1_manager_name"]; // => "k"
                 // $empOffice->l2_manager_code  = $row["l2_manager_code"];// => "kk"
