@@ -21,10 +21,6 @@ class VmtMasterConfigController extends Controller
         });
 
 
-        //Get Client-code
-        $clientCode = VmtClientMaster::first(['client_code'])->toArray();
-        $data['client_code'] = $clientCode['client_code'];
-
         //dd($data);
 
         return view('vmt_config_master', compact('data'));

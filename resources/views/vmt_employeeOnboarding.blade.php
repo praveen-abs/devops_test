@@ -107,9 +107,21 @@
             });
 
             $('#l1_manager_code').on('select2:select', function(e) {
-                var data = e.params.data;
-                $('#l1_manager_name').val(data.text.split(' - ')[1]);
-                console.log(data);
+                var usercode = e.params.data.text;
+
+                //http://localhost:8000/getEmployeeName?user_code=EMP100
+                $.ajax({
+                    url: "{{route('get-employee-name')}}",
+                    type: "GET",
+                    data: {
+                        user_code: usercode,
+                        _token: '{{csrf_token()}}'
+                    },
+                    success: function(data) {
+                        $('#l1_manager_name').val(data);
+                    }
+                });
+               // console.log(usercode);
             });
 
 
@@ -530,7 +542,10 @@
             });
 
 
-
+            $('#holiday_location').select2({
+                width: '100%',
+                placeholder: "Select location",
+            });
 
 
             $('#nationality').change(function() {
