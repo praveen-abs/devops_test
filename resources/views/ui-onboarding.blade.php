@@ -81,8 +81,8 @@
                                                 <!-- <label class="" for="doj">Date of Joining{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Date of Joining<span class="text-danger">*</span></label>
-                                                    @if(isset($clientData->doj))
-                                                    <input type="text" max="9999-12-31" placeholder="Date of Joining" name="doj" value="{{isset($clientData->doj)? $clientData->doj : ''}}" class="onboard-form  form-control textbox "  required readonly />
+                                                    @if(isset($employee_details->doj))
+                                                    <input type="text" max="9999-12-31" placeholder="Date of Joining" name="doj" value="{{isset($employee_details->doj)? $employee_details->doj : ''}}" class="onboard-form  form-control textbox "  required readonly />
                                                     @else
                                                     <input type="text" max="9999-12-31" placeholder="Date of Joining" name="doj" class="onboard-form  form-control textbox " onfocus="(this.type='date')" required />
                                                     @endif
@@ -107,11 +107,11 @@
                                                 <div class="floating">
 
                                                     <label for="" class="float-label">Mobile Number<span class="text-danger">*</span></label>
-                                                    @if(isset($clientData->mobile_number))
-                                                    <input type="number" placeholder="Mobile Number" name="mobile_no" minlength="10" value="{{$clientData->mobile_number? $clientData->mobile_number : ''}}" maxlength="10" class="onboard-form form-control textbox " required readonly />
+                                                    @if(isset($employee_details->mobile_number))
+                                                        <input type="number" placeholder="Mobile Number" name="mobile_no" minlength="10" value="{{$employee_details->mobile_number? $employee_details->mobile_number : ''}}" maxlength="10" class="onboard-form form-control textbox " required readonly />
                                                     @else
 
-                                                    <input type="number" placeholder="Mobile Number" name="mobile_no" minlength="10" value="{{$clientData->mobile_number? $clientData->mobile_number : ''}}" maxlength="10" class="onboard-form form-control textbox " required />
+                                                    <input type="number" placeholder="Mobile Number" name="mobile_no" minlength="10" value="" maxlength="10" class="onboard-form form-control textbox " required />
                                                     @endif
                                                 </div>
                                             </div>

@@ -44,38 +44,26 @@ class VmtEmployeeController extends Controller
         if ($request->has('email')) {
 
             $employee_user  =  User::where('email', $request->email)->first();
-            $clientData  = VmtEmployee::where('userid', $employee_user->id)->first();
+            $employee_details  = VmtEmployee::where('userid', $employee_user->id)->first();
             // dd($clientData);
             $empNo = '';
-            if ($clientData) {
-                $empNo = $clientData->emp_no;
+            if ($employee_details) {
+                $empNo = $employee_details->emp_no;
             }
             $countries = Countries::all();
             $compensatory = Compensatory::where('user_id', $employee_user->id)->first();
             $india = Countries::where('country_code', 'IN')->first();
             $emp = VmtEmployeeOfficeDetails::all();
-            $emp_details = VmtEmployeeOfficeDetails::where('emp_id', $clientData->id)->first();
+            $emp_details = VmtEmployeeOfficeDetails::where('emp_id', $employee_details->id)->first();
             $department = Department::all();
             $bank = Bank::all();
             $allEmployeesCode = User::where('is_admin', 0)->where('active', 1)->whereNotNull('user_code')->get(['user_code', 'name']);
 
-            return view('vmt_employeeOnboarding', compact('empNo', 'emp_details', 'employee_user', 'clientData', 'countries', 'compensatory', 'bank', 'emp', 'department', 'allEmployeesCode'));
+            return view('vmt_employeeOnboarding', compact('empNo', 'emp_details', 'employee_user', 'employee_details', 'countries', 'compensatory', 'bank', 'emp', 'department', 'allEmployeesCode'));
         } else {
-            $clientData  = VmtClientMaster::first();
-            $employee  =  User::orderBy('created_at', 'DESC')->where('user_code', 'LIKE', '%' . $clientData->client_code . '%')->first();
-            if (empty($employee)) {
-                $client_code_series = VmtMasterConfig::where('config_name', '=', 'client_code_series')->first()->value('config_value');
-                $maxId = (int)($client_code_series) + 1;
-            } else {
-                $ucode = (int) filter_var($employee->user_code, FILTER_SANITIZE_NUMBER_INT);
-                $maxId  = $ucode + 1;
-            }
-            if ($clientData) {
-                $empNo = $clientData->client_code . $maxId;
-            } else {
-                $empNo = $maxId;
-            }
 
+            $empNo = $this->generateEmployeeCode();
+            //dd($empNo);
 
             $countries = Countries::all();
             $india = Countries::where('country_code', 'IN')->first();
@@ -84,8 +72,41 @@ class VmtEmployeeController extends Controller
             $department = Department::all();
             $allEmployeesCode = User::where('is_admin', 0)->where('active', 1)->whereNotNull('user_code')->get(['user_code', 'name']);
             //dd($allEmployeesCode);
-            return view('vmt_employeeOnboarding', compact('empNo', 'countries', 'clientData', 'employee', 'india', 'emp', 'bank', 'department', 'allEmployeesCode'));
+            return view('vmt_employeeOnboarding', compact('empNo', 'countries', 'india', 'emp', 'bank', 'department', 'allEmployeesCode'));
         }
+    }
+
+
+    /*
+        Generate Employee Code based on the master config
+
+    */
+    private function generateEmployeeCode()
+    {
+        $employeeCode_Format = VmtMasterConfig::where('config_name', '=', 'employee_code_prefix')->value('config_value') .
+                               VmtMasterConfig::where('config_name', '=', 'employee_code_median')->value('config_value');
+
+        //dd("Emp code format : " .$employeeCode_Format);
+
+        $number_series = VmtMasterConfig::where('config_name', '=', 'employee_code_suffix_series')->value('config_value');
+
+        //Get the recently created employee based on DOJ
+        //$employee  =  User::orderBy('created_at', 'DESC')->where('user_code', 'LIKE', '%' . $employeeCode_Format . '%')->first();
+        $recentlyJoinedEmployee_usercode = User::leftJoin('vmt_employee_details','vmt_employee_details.userid', '=' , 'users.id')
+                                ->orderBy('doj','DESC')
+                                ->first()->value('users.user_code');
+
+
+
+        if (empty($recentlyJoinedEmployee_usercode)) {
+            $maxId = (int)($number_series) + 1;
+        } else {
+            $ucode = (int) filter_var($recentlyJoinedEmployee_usercode, FILTER_SANITIZE_NUMBER_INT);
+            $maxId  = $ucode + 1;
+        }
+
+        return $employeeCode_Format.$maxId;
+
     }
 
 
@@ -1296,7 +1317,7 @@ class VmtEmployeeController extends Controller
     // Store Document Review in docs_reviewed column
     public function storeDocumentsReviewByAdmin(Request $request){
 
-        $docName  = $request->doc_name; 
+        $docName  = $request->doc_name;
         $user_id  = User::where('user_code',$request->user_code)->value('id');
         $documents_filenames = VmtEmployee::where('userid', $user_id)->first();
 
