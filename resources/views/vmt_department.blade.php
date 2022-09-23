@@ -106,22 +106,22 @@
         <div class="modal-dialog modal-dialog-scrollable  modal-md">
             <div class="modal-content top-line">
                 <div class="modal-header">
-                    <h6 class="modal-title" id="exampleModalLabel">Add New Cient</h6>
+                    <h6 class="modal-title" id="exampleModalLabel">Add Department</h6>
                     <button type="button" class="modal-close outline-none  border-0" data-bs-dismiss="modal" aria-label="Close">&times;</button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
+                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                             <div class="mb-3 floating-label">
-                                <label for="" class="form-label  float-label">Client ID<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control textbox " id="" placeholder="Client ID">
+                                <label for="" class="form-label  float-label">Name<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control textbox " id="" name="name" placeholder="Name">
 
                             </div>
                         </div>
-                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
+                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                             <div class="mb-3 floating-label">
-                                <label for="" class="form-label  float-label">Name<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control textbox" id="" placeholder=" Name">
+                                <label for="" class="form-label  float-label">Group Email<span class="text-danger">*</span></label>
+                                <input type="email" class="form-control textbox" name="email" id="" placeholder="Group Email">
 
                             </div>
                         </div>
@@ -130,42 +130,11 @@
                     <div class="row">
                         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                             <div class="mb-3 floating-label">
-                                <label for="" class="form-label  float-label">Contact<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control textbox" id="lead-name" placeholder="Contact">
+                                <label for="" class="form-label  float-label">Description<span class="text-danger">*</span></label>
+                                <textarea class="form-control" rows="4" name="description"></textarea>
 
                             </div>
                         </div>
-                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-                            <div class="mb-3 floating-label">
-                                <label for="" class="form-label  float-label">Email</label>
-                                <input type="text" class="form-control textbox" id="position" placeholder="Email">
-
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-                            <div class="mb-3 floating-label">
-                                <label for="" class="form-label  float-label">Company Name</label>
-                                <input type="text" class="form-control textbox" id="lead-email" placeholder="Company Name">
-
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-
-                            <div class="mb-3 floating-label">
-
-                                <label for="" class="form-label  float-label">Customer type</label>
-                                <input type="text" class="form-control textbox" id="" placeholder="Customer type">
-
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-                            <div class="mb-3 floating-label">
-                                <label for="" class="form-label float-label">Status</label>
-                                <input type="text" class="form-control textbox" id="lead-email" placeholder="Status">
-
-                            </div>
-                        </div>
-
                     </div>
                 </div>
                 <div class="modal-footer ">
@@ -175,55 +144,45 @@
             </div>
         </div>
     </div>
+
     <div class="table-responsive my-3">
         <table class="table table-hover">
             <thead>
                 <tr>
-
-                    <th>Client ID</th>
+                    <th>ID</th>
                     <th>Name</th>
                     <th>Email</th>
-                    <th>Company Name</th>
-                    <th>Contact</th>
-                    <th>Customer Type</th>
+                    <th>Description</th>
                     <th>Status</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
+                @foreach($departments as $index => $department)
                 <tr>
-
                     <td class="">
-
+                        {{$department->id}}
                     </td>
                     <td class="">
-
+                        {{$department->name}}
                     </td>
                     <td class="">
-
+                        {{$department->email}}
                     </td>
                     <td class="">
-
+                        {{$department->description}}
                     </td>
                     <td class="">
-
+                        {{$department->status}}
                     </td>
                     <td class="">
-
                     </td>
-                    <td class="">
-
-                    </td>
-                    <td class="">
-
-                    </td>
-
-
                 </tr>
-
+                @endforeach
             </tbody>
-        </table>
 
+        </table>
+        
         {{-- <div class="no-data-img flex-column d-flex justify-content-center align-items-center"
                                     style="">
                                     <img src="{{ URL::asset('assets/images/no-data/nodata.png') }}" alt=""
@@ -232,6 +191,8 @@
     </div> --}}
 
 </div>
+
+        {{ $departments->links() }}
 <div class="table-responsive">
     <!-- <table class="table table-hover">
                 <div id="table-clientlist" class="  "></div>

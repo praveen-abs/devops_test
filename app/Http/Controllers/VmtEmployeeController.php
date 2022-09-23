@@ -1279,7 +1279,7 @@ class VmtEmployeeController extends Controller
                                         'education_certificate_file',
                                         'reliving_letter_file'
                                     ]);
-            //dd($documents_filenames);
+            //dd($documents_filenames[0]->aadhar_card_file);
 
         }
         else
@@ -1290,5 +1290,35 @@ class VmtEmployeeController extends Controller
         //Get all documents for the given user
 
         return view('vmt_document_reviews',compact('documents_filenames'));
+    }
+
+
+    // Store Document Review in docs_reviewed column
+    public function storeDocumentsReviewByAdmin(Request $request){
+
+        $docName  = $request->doc_name; 
+        $user_id  = User::where('user_code',$request->user_code)->value('id');
+        $documents_filenames = VmtEmployee::where('userid', $user_id)->first();
+
+        if($documents_filenames->docs_reviewed != null){
+            $docReviewArray = json_decode($documents_filenames->docs_reviewed);
+            $docReviewArray->$docName = (int)$request->approve_status;
+        }else{
+            $docReviewArray = array(
+                'aadhar_card_file' => 0,
+                                        'aadhar_card_backend_file' => 0,
+                                        'pan_card_file' => 0,
+                                        'passport_file' => 0,
+                                        'voters_id_file' => 0,
+                                        'dl_file' => 0,
+                                        'education_certificate_file' => 0,
+                                        'reliving_letter_file' => 0
+            );
+            $docReviewArray[$docName] = (int)$request->approve_status;
+        }
+
+        $documents_filenames->docs_reviewed = json_encode($docReviewArray);
+        $documents_filenames->save();
+        return "Saved";
     }
 }

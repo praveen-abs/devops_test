@@ -51,7 +51,6 @@
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
                     <div class="">
                         <div id="msform">
-                            <form id="form-1" enctype="multipart/form-data">
                                 @csrf
 
                                 <div class="card shadow  profile-box card-top-border p-2">
@@ -59,85 +58,134 @@
                                         <div class="header-card-text">
                                             <h6 class="mb-0">Documents Review</h6>
                                         </div>
-                                        <div class="form-card mb-2">
-                                            <div class="row mt-1">
-                                                <!-- <div class="col-12 mb-2">
-                                                        <input type="checkbox" placeholder="" name="aadhar_backend"
-                                                            id="aadhar_backend" style="width:auto;" />
-                                                        <label for="aadhar_backend">Upload aadhar backend</label>
-                                                    </div> -->
-                                                <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
-                                                    <!-- <label class="" for="aadhar_card">Aadhar Card{!! required() !!}</label> -->
-                                                    <label for="">Aadhar
-                                                        Card Front</label>
-                                                    <div class="addfiles form-control md" data="#aadhar_card" id="aadhar_card_label"><span class="file_label">Choose Aadhar
-                                                            Card Front</span></div>
-                                                            <img class="w-100 h-100 soc-det-img "
-                                                            src="{{ URL::asset('images/' . $documents_filenames->aadhar_card_file) }}"
-                                                            alt="Header Avatar">
-                                                </div>
+                                        <div class="form-card mb-2 mt-2">
 
 
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>File</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Aadhar Card Front</td>
+                                                        <td> <img class="w-100 h-100 soc-det-img "
+                                                            src="{{ URL::asset('images/' . $documents_filenames[0]->aadhar_card_file) }}"
+                                                            alt="Aadhar Card Front">
+                                                   </td>
+                                                        <td> 
 
-                                                <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2" id="aadhar_card_backend_content">
-                                                    <!-- <label class="" for="aadhar_card_backend">Aadhar Card Backend<span id="aadhar_card_backend_req">{!! required() !!}</span></label> -->
-                                                    <label for=""> Aadhar Card Back</label>
-                                                    <div class="addfiles form-control" data="#aadhar_card_backend" id="aadhar_card_backend_label"><span class="file_label">Choose
-                                                            Aadhar Card Back</span></div>
-                                                    <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Aadhar Card Backend" name="aadhar_card_backend" id="aadhar_card_backend" class="onboard-form form-control files" />
-                                                </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
-                                                    <!-- <label class="" for="pan_card">Pan Card{!! required() !!}</label> -->
-                                                    <label for=""> Pan
-                                                        Card</label>
-                                                    <div class="addfiles form-control" data="#pan_card" id="pan_card_label"><span class="file_label">Upload Pan
-                                                            Card</span></div>
-                                                    <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Pan Card" name="pan_card" id="pan_card" class="onboard-form form-control files" />
-                                                </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
-                                                    <!-- <label class="" for="passport">Passport{!! required() !!}</label> -->
-                                                    <label for="">
-                                                        Passport</label>
-                                                    <div class="addfiles form-control" data="#passport" id="passport_label"><span class="file_label">Choose
-                                                            Passport</span></div>
-                                                    <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Passport" name="passport" id="passport" class="onboard-form form-control files" />
-                                                </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
-                                                    <!-- <label class="" for="voters_id">Voters ID</label> -->
-                                                    <label for="">
-                                                        Voters
-                                                        ID</label>
-                                                    <div class="addfiles form-control" data="#voters_id" id="voters_id_label"><span class="file_label">Choose Voters
-                                                            ID</span></div>
-                                                    <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Voters ID" name="voters_id" id="voters_id" class="onboard-form form-control files" />
-                                                </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
-                                                    <!-- <label class="" for="dl_file">Driving License</label> -->
-                                                    <label for=""> Driving License</label>
-                                                    <div class="addfiles form-control" data="#dl_file" id="dl_file_label"><span class="file_label">Choose Driving
-                                                            License</span></div>
-                                                    <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Driving License" name="dl_file" id="dl_file" class="onboard-form form-control files" />
-                                                </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
-                                                    <!-- <label class="" for="education_certificate">Educations Certificate{!! required() !!}</label> -->
-                                                    <label for="">Educations Certificate</label>
-                                                    <div class="addfiles form-control" data="#education_certificate" id="education_certificate_label"><span class="file_label">Choose
-                                                            Educations Certificate</span></div>
-                                                    <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Educations Certificate" name="education_certificate" id="education_certificate" class="onboard-form form-control files" />
-                                                </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
-                                                    <!-- <label class="" for="reliving_letter">Reliving Letter</label> -->
-                                                    <label for=""> Reliving Letter</label>
-                                                    <div class="addfiles form-control" data="#reliving_letter" id="reliving_letter_label"><span class="file_label">Choose
-                                                            Reliving Letter</span></div>
-                                                    <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Reliving Letter" name="reliving_letter" id="reliving_letter" class="onboard-form form-control files" />
-                                                </div>
-                                            </div>
+                                                            <button class="btn btn-success" onclick="approveOrRejectDocument('aadhar_card_file', 1)"> Approve</button>
+                                                            <button class="btn btn-secondary" onclick="approveOrRejectDocument('aadhar_card_file', 0)"> Reject</button>
+                                                        </td>
+
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Aadhar Card Back</td>
+                                                        <td> <img class="w-100 h-100 soc-det-img "
+                                                            src="{{ URL::asset('images/' . $documents_filenames[0]->aadhar_card_backend_file) }}"
+                                                            alt="Aadhar Card Front">
+                                                        </td>
+                                                        <td> 
+                                                            <button class="btn btn-success" onclick="approveOrRejectDocument('aadhar_card_backend_file', 1)"> Approve</button>
+                                                            <button class="btn btn-secondary" onclick="approveOrRejectDocument('aadhar_card_backend_file', 0)"> Reject</button>
+                                                        </td>
+                                                    </tr>
+
+                                                     <tr>
+                                                        <td>Pan Card</td>
+                                                        <td> <img class="w-100 h-100 soc-det-img "
+                                                            src="{{ URL::asset('images/' . $documents_filenames[0]->pan_card_file) }}"
+                                                            alt="Aadhar Card Front">
+                                                   </td>
+                                                        <td>
+                                                            <button class="btn btn-success" onclick="approveOrRejectDocument('pan_card_file', 1)"> Approve</button>
+                                                            <button class="btn btn-secondary" onclick="approveOrRejectDocument('pan_card_file', 0)"> Reject</button>
+                                                        </td>
+                                                    </tr>
+
+                                                     <tr>
+                                                        <td>Passport</td>
+                                                        <td> <img class="w-100 h-100 soc-det-img "
+                                                            src="{{ URL::asset('images/' . $documents_filenames[0]->passport_file) }}"
+                                                            alt="Aadhar Card Front">
+                                                   </td>
+                                                        <td> 
+
+                                                            <button class="btn btn-success" onclick="approveOrRejectDocument('passport_file', 1)"> Approve</button>
+                                                            
+                                                            <button class="btn btn-secondary" onclick="approveOrRejectDocument('passport_file', 0)"> Reject</button>
+                                                        </td>
+
+                                                    </tr>
+
+
+                                                     <tr>
+                                                        <td>Voters ID</td>
+                                                        <td> <img class="w-100 h-100 soc-det-img "
+                                                            src="{{ URL::asset('images/' . $documents_filenames[0]->voters_id_file) }}"
+                                                            alt="Aadhar Card Front">
+                                                   </td>
+                                                        <td> 
+                                                            <button class="btn btn-success" onclick="approveOrRejectDocument('voters_id_file', 1)"> Approve</button>
+                                                            
+                                                            <button class="btn btn-secondary" onclick="approveOrRejectDocument('voters_id_file', 0)"> Reject</button>
+                                                        </td>
+
+                                                    </tr> 
+                                                    <tr>
+                                                        <td>Driving License</td>
+                                                        <td> <img class="w-100 h-100 soc-det-img "
+                                                            src="{{ URL::asset('images/' . $documents_filenames[0]->dl_file) }}"
+                                                            alt="Aadhar Card Front">
+                                                   </td>
+                                                        <td> 
+
+                                                            <button class="btn btn-success" onclick="approveOrRejectDocument('dl_file', 1)"> Approve</button>
+                                                            
+                                                            <button class="btn btn-secondary" onclick="approveOrRejectDocument('dl_file', 0)"> Reject</button>
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Educational Certificate</td>
+                                                        <td> <img class="w-100 h-100 soc-det-img "
+                                                            src="{{ URL::asset('images/' . $documents_filenames[0]->education_certificate_file) }}"
+                                                            alt="Aadhar Card Front">
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn btn-success" onclick="approveOrRejectDocument('education_certificate_file', 1)"> Approve</button>
+                                                            
+                                                            <button class="btn btn-secondary" onclick="approveOrRejectDocument('education_certificate_file', 0)"> Reject</button>
+
+                                                        </td>
+
+                                                    </tr>
+
+                                                     <tr>
+                                                        <td>Reliving Letter</td>
+                                                        <td> <img class="w-100 h-100 soc-det-img "
+                                                            src="{{ URL::asset('images/' . $documents_filenames[0]->reliving_letter_file) }}"
+                                                            alt="Aadhar Card Front">
+                                                        </td>
+                                                        <td> 
+                                                            
+                                                            <button class="btn btn-success" onclick="approveOrRejectDocument('reliving_letter_file', 1)"> Approve</button>
+                                                            
+                                                            <button class="btn btn-secondary" onclick="approveOrRejectDocument('reliving_letter_file', 0)"> Reject</button>
+                                                        </td>
+                                                    </tr>
+                                       
+                                     
+                                                </tbody>
+                                            </table>
+                                            
                                         </div>
-                                        <div class="row">
-                                            <div class="col-12 text-right"><button type="button" data="row-6" next="row-6" placeholder="" name="next" id="submit_button" class="btn btn-orange  text-center" value="Submit">Submit</button>
-                                            </div>
-                                        </div>
+                                        
                                     </div>
                                 </div>
                             </form>
@@ -215,62 +263,24 @@
                 $('#notificationModal').addClass('fade');
             });
 
-           $('#submit_button').on('click', function(e) {
-                console.log("Submitting documents");
-                var flag = false;
+            function approveOrRejectDocument(docName, aproveStatus){
+            
+                $.ajax({
+                    url: "{{route('vmt-store-documents-review')}}",
+                    type: "POST",
+                    data: {
+                        user_code : "{{\Request::get('user_code')}}",
+                        doc_name: docName,
+                        approve_status: aproveStatus,
+                        _token: '{{csrf_token()}}'
+                    },
+                    success: function(data) {
+                        alert(data);
+                    }
+                });
+            }
 
-                if ($('#form-1').valid() && !flag) {
-
-                    //alert("1 st one");
-                    var form_data1 = new FormData(document.getElementById("form-1"));
-
-                    $.ajax({
-                        url: "{{route('vmt-storedocuments-route')}}",
-                        type: "POST",
-                        dataType: "json",
-                        data: form_data1,
-                        contentType: false,
-                        processData: false,
-                        success: function(data) {
-                            if (data.responseText == "Saved") {
-                                $('#modalHeader').html(data);
-                                $('#modalNot').html("Documents upload success");
-                                //$('#modalBody').html("Mail notification sent.");
-                                $('#notificationModal').show();
-                                $('#notificationModal').removeClass('fade');
-                            } else {
-                                $('#modalHeader').html(data);
-                                $('#modalNot').html("Failed to save Data");
-                                //$('#modalBody').html("Request to the server failed");
-                                $('#notificationModal').show();
-                                $('#notificationModal').removeClass('fade');
-                            }
-                            console.log(data);
-
-                            //alert(data);
-                        },
-                        error: function(data) { //NEED TO FIX IT
-                            // console.log('error');
-                            if (data.responseText == "Saved") {
-                                $('#modalHeader').html(data);
-                                $('#modalNot').html("Documents upload success");
-                                //$('#modalBody').html("Mail notification sent.");
-                                $('#notificationModal').show();
-                                $('#notificationModal').removeClass('fade');
-                            } else {
-
-                                $('#modalHeader').html(data);
-                                $('#modalNot').html("Failed to save Data");
-                                //$('#modalBody').html("Request to the server failed");
-                                $('#notificationModal').show();
-                                $('#notificationModal').removeClass('fade');
-                            }
-
-                        }
-                    });
-
-                }
-            });
+           
 
 
             $("#button_close").click(function(){

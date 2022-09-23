@@ -296,6 +296,8 @@ Route::post('vmt-documents-route', 'App\Http\Controllers\VmtEmployeeController@s
 
 Route::get('documents-review', 'App\Http\Controllers\VmtEmployeeController@showDocumentsReviewPage')->name('vmt-documents-review');
 
+Route::post('documents-review', 'App\Http\Controllers\VmtEmployeeController@storeDocumentsReviewByAdmin')->name('vmt-store-documents-review');
+
 //
 Route::post('vmt_clientOnboarding', 'App\Http\Controllers\VmtClientController@store');
 Route::get('/department', 'App\Http\Controllers\VmtDepartmentController@showPage')->name('department');
