@@ -1305,14 +1305,14 @@ class VmtEmployeeController extends Controller
             $docReviewArray->$docName = (int)$request->approve_status;
         }else{
             $docReviewArray = array(
-                'aadhar_card_file' => 0,
-                                        'aadhar_card_backend_file' => 0,
-                                        'pan_card_file' => 0,
-                                        'passport_file' => 0,
-                                        'voters_id_file' => 0,
-                                        'dl_file' => 0,
-                                        'education_certificate_file' => 0,
-                                        'reliving_letter_file' => 0
+                'aadhar_card_file' => -1,
+                                        'aadhar_card_backend_file' => -1,
+                                        'pan_card_file' => -1,
+                                        'passport_file' => -1,
+                                        'voters_id_file' => -1,
+                                        'dl_file' => -1,
+                                        'education_certificate_file' => -1,
+                                        'reliving_letter_file' => -1
             );
             $docReviewArray[$docName] = (int)$request->approve_status;
         }
