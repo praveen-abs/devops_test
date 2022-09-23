@@ -12,7 +12,7 @@
 @endcomponent
 
 
-<div class=" directory-wrapper bg-white px-3 pt-3 pb-0 mt8-mb25">
+<div class=" directory-wrapper bg-white px-3 pt-3 pb-0">
     <h6 class="">Employee Directory</h6>
     <!-- <div class="row">
         <div class="col-12">
@@ -223,7 +223,7 @@
         </div>
     </div> -->
 
-    <h6 class="text-secondary">In-Active Employees</h6>
+    <h6 class="text-secondary">Not yet active employees</h6>
 
     <div>
         <div class="table-responsive">
@@ -312,8 +312,7 @@
     <br />
 
     <div class="table-responsive">
-
-        <h6 class="text-secondary">Active Employees</h6>
+        <h6 class="text-secondary">Active employees</h6>
         <div class="text-end mb-3">
             <a href="{{route('employeeOnboarding')}}" class=" text-white btn btn-orange">
                 <i class="ri-add-line fw-bold mx-1" role="button"></i>

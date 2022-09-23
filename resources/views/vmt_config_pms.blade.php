@@ -9,7 +9,7 @@
         @endslot
     @endcomponent
 
-    <div class="pms-config-wrapper mt-8">
+    <div class="pms-config-wrapper ">
         <div class="row ">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
                 <div id="msform">
