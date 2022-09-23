@@ -52,7 +52,7 @@
                     <div class="">
                         <div id="msform">
                                 @csrf
-
+                                <input type="hidden" name="hidden_user_code" id="hidden_user_code" value="{{ $user_code}}"/>
                                 <div class="card shadow  profile-box card-top-border p-2">
                                     <div class="card-body justify-content-center align-items-center ">
                                         <div class="header-card-text">
@@ -76,7 +76,7 @@
                                                             src="{{ URL::asset('images/' . $documents_filenames[0]->aadhar_card_file) }}"
                                                             alt="Aadhar Card Front">
                                                    </td>
-                                                        <td> 
+                                                        <td>
 
                                                             <button class="btn btn-success" onclick="approveOrRejectDocument('aadhar_card_file', 1)"> Approve</button>
                                                             <button class="btn btn-secondary" onclick="approveOrRejectDocument('aadhar_card_file', 0)"> Reject</button>
@@ -90,7 +90,7 @@
                                                             src="{{ URL::asset('images/' . $documents_filenames[0]->aadhar_card_backend_file) }}"
                                                             alt="Aadhar Card Front">
                                                         </td>
-                                                        <td> 
+                                                        <td>
                                                             <button class="btn btn-success" onclick="approveOrRejectDocument('aadhar_card_backend_file', 1)"> Approve</button>
                                                             <button class="btn btn-secondary" onclick="approveOrRejectDocument('aadhar_card_backend_file', 0)"> Reject</button>
                                                         </td>
@@ -114,10 +114,10 @@
                                                             src="{{ URL::asset('images/' . $documents_filenames[0]->passport_file) }}"
                                                             alt="Aadhar Card Front">
                                                    </td>
-                                                        <td> 
+                                                        <td>
 
                                                             <button class="btn btn-success" onclick="approveOrRejectDocument('passport_file', 1)"> Approve</button>
-                                                            
+
                                                             <button class="btn btn-secondary" onclick="approveOrRejectDocument('passport_file', 0)"> Reject</button>
                                                         </td>
 
@@ -130,23 +130,23 @@
                                                             src="{{ URL::asset('images/' . $documents_filenames[0]->voters_id_file) }}"
                                                             alt="Aadhar Card Front">
                                                    </td>
-                                                        <td> 
+                                                        <td>
                                                             <button class="btn btn-success" onclick="approveOrRejectDocument('voters_id_file', 1)"> Approve</button>
-                                                            
+
                                                             <button class="btn btn-secondary" onclick="approveOrRejectDocument('voters_id_file', 0)"> Reject</button>
                                                         </td>
 
-                                                    </tr> 
+                                                    </tr>
                                                     <tr>
                                                         <td>Driving License</td>
                                                         <td> <img class="w-100 h-100 soc-det-img "
                                                             src="{{ URL::asset('images/' . $documents_filenames[0]->dl_file) }}"
                                                             alt="Aadhar Card Front">
                                                    </td>
-                                                        <td> 
+                                                        <td>
 
                                                             <button class="btn btn-success" onclick="approveOrRejectDocument('dl_file', 1)"> Approve</button>
-                                                            
+
                                                             <button class="btn btn-secondary" onclick="approveOrRejectDocument('dl_file', 0)"> Reject</button>
                                                         </td>
 
@@ -159,7 +159,7 @@
                                                         </td>
                                                         <td>
                                                             <button class="btn btn-success" onclick="approveOrRejectDocument('education_certificate_file', 1)"> Approve</button>
-                                                            
+
                                                             <button class="btn btn-secondary" onclick="approveOrRejectDocument('education_certificate_file', 0)"> Reject</button>
 
                                                         </td>
@@ -172,20 +172,20 @@
                                                             src="{{ URL::asset('images/' . $documents_filenames[0]->reliving_letter_file) }}"
                                                             alt="Aadhar Card Front">
                                                         </td>
-                                                        <td> 
-                                                            
+                                                        <td>
+
                                                             <button class="btn btn-success" onclick="approveOrRejectDocument('reliving_letter_file', 1)"> Approve</button>
-                                                            
+
                                                             <button class="btn btn-secondary" onclick="approveOrRejectDocument('reliving_letter_file', 0)"> Reject</button>
                                                         </td>
                                                     </tr>
-                                       
-                                     
+
+
                                                 </tbody>
                                             </table>
-                                            
+
                                         </div>
-                                        
+
                                     </div>
                                 </div>
                             </form>
@@ -264,12 +264,12 @@
             });
 
             function approveOrRejectDocument(docName, aproveStatus){
-            
+                console.log("User code "+ $('#hidden_user_code').val());
                 $.ajax({
                     url: "{{route('vmt-store-documents-review')}}",
                     type: "POST",
                     data: {
-                        user_code : "{{\Request::get('user_code')}}",
+                        user_code : $('#hidden_user_code').val(),
                         doc_name: docName,
                         approve_status: aproveStatus,
                         _token: '{{csrf_token()}}'
@@ -280,7 +280,7 @@
                 });
             }
 
-           
+
 
 
             $("#button_close").click(function(){

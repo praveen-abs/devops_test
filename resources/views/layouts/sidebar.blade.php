@@ -182,22 +182,31 @@
                 @endif
 
                 <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0" href="#MyTasksDrop-Down" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarRoles">
-                        <i>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="22.058" height="12.253" viewBox="0 0 22.058 12.253">
-                                <path id="arrow-trend-up-solid" d="M14.705,98.451a1.225,1.225,0,0,1,0-2.451h6.127a1.224,1.224,0,0,1,1.225,1.225v6.127a1.225,1.225,0,0,1-2.451,0v-3.167l-6.487,6.483a1.223,1.223,0,0,1-1.731,0l-4.071-4.032-5.226,5.258a1.225,1.225,0,0,1-1.733-1.731l6.128-6.127a1.223,1.223,0,0,1,1.731,0l4.036,4.032,5.618-5.652Z" transform="translate(0 -96)" fill="#686363" />
+                    <a class="nav-link sidebar menu-link pt-0" id="employeeInfo" href="#mytasksDrop-Down" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebar360questions">
+                        <i> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#686363" class="bi bi-clipboard2-check-fill" viewBox="0 0 16 16">
+                                <path d="M10 .5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5.5.5 0 0 1-.5.5.5.5 0 0 0-.5.5V2a.5.5 0 0 0 .5.5h5A.5.5 0 0 0 11 2v-.5a.5.5 0 0 0-.5-.5.5.5 0 0 1-.5-.5Z" />
+                                <path d="M4.085 1H3.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1h-.585c.055.156.085.325.085.5V2a1.5 1.5 0 0 1-1.5 1.5h-5A1.5 1.5 0 0 1 4 2v-.5c0-.175.03-.344.085-.5Zm6.769 6.854-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708.708Z" />
                             </svg>
-
                         </i>
+
                         <span>My Tasks</span>
+
                     </a>
-                    <div class="collapse menu-dropdown" id="MyTasksDrop-Down">
+                    <div class="collapse menu-dropdown" id="mytasksDrop-Down">
                         <ul class="nav nav-sm flex-column">
-                            {{-- @if(auth()->user()->org_role == "hr") --}}
+
                             <li class="nav-item">
-                                <a href="{{ route('vmt-documents-review') }}" class="nav-link sidebar py-1"><span>Review Documents</span></a>
+                                <a href="#approvalDrop-Down" id="" class="nav-link sidebar py-1" data-bs-toggle="collapse" role="button" aria-expanded="false"><span>
+                                        Approvals</span> </a>
+                                <div class="collapse menu-dropdown sub-dropdown" id="approvalDrop-Down">
+                                    <ul class="nav nav-sm flex-column">
+                                        <li class="nav-item">
+                                            <a href="{{route('vmt-approvals-emp-documents')}}" class="nav-link sidebar">
+                                                <span> Documents Approval</span> </a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
-                            {{-- @endif --}}
                         </ul>
                     </div>
                 </li>

@@ -295,9 +295,10 @@ Route::get('/documents', function () {
 
 Route::post('vmt-documents-route', 'App\Http\Controllers\VmtEmployeeController@storeEmployeeDocuments')->name('vmt-storedocuments-route');
 
-Route::get('documents-review', 'App\Http\Controllers\VmtEmployeeController@showDocumentsReviewPage')->name('vmt-documents-review');
-
-Route::post('documents-review', 'App\Http\Controllers\VmtEmployeeController@storeDocumentsReviewByAdmin')->name('vmt-store-documents-review');
+//Documents Approvals
+Route::get('approvals-documents', 'App\Http\Controllers\VmtApprovalsController@showDocumentsApprovalPage')->name('vmt-approvals-emp-documents');
+Route::get('/documents-review-page/{user_code}', 'App\Http\Controllers\VmtApprovalsController@showDocumentsReviewPage')->name('vmt-emp-documents-review');
+Route::post('documents-review', 'App\Http\Controllers\VmtApprovalsController@storeDocumentsReviewByAdmin')->name('vmt-store-documents-review');
 
 //
 Route::post('vmt_clientOnboarding', 'App\Http\Controllers\VmtClientController@store');
