@@ -80,17 +80,25 @@
 
 
     <script>
-        function onlyNumberKey(evt) {
+        // function onlyNumberKey(evt) {
 
-            // Only ASCII character in that range allowed
-            var ASCIICode = (evt.which) ? evt.which : evt.keyCode
-            if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
-                return false;
-            return true;
+        //     // Only ASCII character in that range allowed
+        //     var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+        //     if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+        //         return false;
+        //     return true;
+        // }
+
+        function numberOnly(id) {
+            // Get element by id which passed as parameter within HTML element event
+            var element = document.getElementById(id);
+            // This removes any other character but numbers as entered by user
+            element.value = element.value.replace(/[^0-9]/gi, "");
         }
+
         $(document).ready(function() {
 
-            $("input[type='number']").attr("onkeypress", "return onlyNumberKey(event)");
+           // $("input[type='number']").attr("onkeypress", "return onlyNumberKey(event)");
 
             $('#process').select2({
                 width: '100%',
@@ -391,15 +399,16 @@
                 var maxLength = $(this).attr('maxlength');
 
                 if (txtValue.trim().length == maxLength) {
+                    console.log("same length");
                     if (patt.test(txtValue)) {
                         return true;
                     } else {
                         $('#error_vmt_aadhar').html("Aadhar number is not valid");
                         return false;
                     }
-                } else {
-                    $('#error_vmt_aadhar').html("");
-                    return true;
+                }
+                if (txtValue.trim().length > maxLength) {
+                    return false;
                 }
             });
 
@@ -549,6 +558,8 @@
 
 
             $('#nationality').change(function() {
+                console.log("Changed nationality : "+$('#nationality').val());
+                // $('#permanent_country').val('IN').trigger('change');
                 if ($('#nationality').val() == 'indian') {
                     $('#passport_no').removeAttr('required');
                     $('#passport_no_req').hide();
@@ -565,8 +576,9 @@
                     $('#aadhar').removeClass('not-required validate');
                     $('#permanent_pincode').attr('type', 'number');
                     $('#current_pincode').attr('type', 'number');
-                    // $('#current_country').val('IN').trigger('change');
-                    //stateFunction('IN', '#current_country');
+                    $('#current_country').val('IN').trigger('change');
+                    stateFunction('IN', '#current_state');
+                    stateFunction('IN', '#permanent_state');
                 } else {
                     $('#passport_no').attr('required', true);
                     $('#passport_no_req').show();
@@ -601,12 +613,12 @@
 
             $('#passport_no_req').hide();
             $('#passport_exp_req').hide();
-            $('#current_country').val('IN').trigger('change');
-            $('#permanent_country').val('IN').trigger('change');
-            $('#current_state').val('IN').trigger('change');
-            $('#permanent_state').val('IN').trigger('change');
-            stateFunction('IN', '#current_state');
-            stateFunction('IN', '#permanent_state');
+            //$('#current_country').val('IN').trigger('change');
+            //$('#permanent_country').val('IN').trigger('change');
+            //$('#current_state').val('IN').trigger('change');
+            //$('#permanent_state').val('IN').trigger('change');
+           // stateFunction('IN', '#current_state');
+           // stateFunction('IN', '#permanent_state');
             stateFunction('IN', '#ptax_location');
             stateFunction('IN', '#lwf_location');
             stateFunction('IN', '#holiday_location');
@@ -640,6 +652,8 @@
                         _token: '{{csrf_token()}}'
                     },
                     success: function(data) {
+                        $(dataId).append('<option value="">Select State</option>');
+
                         $.each(data, function(key, value) {
                             $(dataId).append('<option value="' + value.id + '">' + value.state_name +
                                 '</option>');
