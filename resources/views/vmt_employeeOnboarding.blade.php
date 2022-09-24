@@ -412,7 +412,30 @@
                 }
             });
 
+            $('#dob_father').on('change', function() {
+                var txtValue = $(this).val();
+                $('#father_age').val(getAge(txtValue));
+                //console.log("Age is  : "+);
 
+            });
+
+            $('#dob_mother').on('change', function() {
+                var txtValue = $(this).val();
+                $('#mother_age').val(getAge(txtValue));
+                //console.log("Age is  : "+);
+
+            });
+
+            function getAge(dateString) {
+                var today = new Date();
+                var birthDate = new Date(dateString);
+                var age = today.getFullYear() - birthDate.getFullYear();
+                var m = today.getMonth() - birthDate.getMonth();
+                if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                    age--;
+                }
+                return age;
+            }
 
             // $('#dl_no').on('input', function(){
 
