@@ -674,7 +674,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Date of Birth</label>
 
-                                                    <input type="text" max="9999-12-31" placeholder="Date of Birth" name="dob_father" class="onboard-form form-control textbox  " onfocus="(this.type='date')" required />
+                                                    <input type="text" max="9999-12-31" placeholder="Date of Birth" name="dob_father" id="dob_father" class="onboard-form form-control textbox  " onfocus="(this.type='date')" required />
                                                 </div>
                                             </div>
 
@@ -695,7 +695,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Age </label>
 
-                                                    <input type="number" placeholder="Age" name="father_age" class="textbox  onboard-form form-control " minlength="2" maxlength="3" required />
+                                                    <input type="number" placeholder="Age" name="father_age" id="father_age" class="textbox  onboard-form form-control " minlength="2" maxlength="3" required readonly/>
                                                 </div>
                                             </div>
 
@@ -713,7 +713,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Date of Birth</label>
 
-                                                    <input type="text" max="9999-12-31" placeholder="Date of Birth" name="dob_mother" class="textbox  onboard-form form-control " onfocus="(this.type='date')" required />
+                                                    <input type="text" max="9999-12-31" placeholder="Date of Birth" name="dob_mother" id="dob_mother" class="textbox  onboard-form form-control " onfocus="(this.type='date')" required />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -732,7 +732,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Age</label>
 
-                                                    <input type="number" placeholder="Age" name="mother_age" class="textbox  onboard-form form-control " minlength="2" maxlength="3" required />
+                                                    <input type="number" placeholder="Age" name="mother_age" id="mother_age" class="textbox  onboard-form form-control " minlength="2" maxlength="3" required readonly/>
                                                 </div>
                                             </div>
 
