@@ -18,7 +18,7 @@ class VmtApprovalsController extends Controller
     public function showDocumentsApprovalPage(Request $request)
     {
         //Fetch the in-active users
-
+        //\DB::enableQueryLog();
         $vmtEmployees_InActive = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')
         ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
         ->select(
@@ -36,6 +36,7 @@ class VmtApprovalsController extends Controller
         ->where('users.is_admin', '0')
         ->where('vmt_employee_details.docs_reviewed','like', '%-1%')//only if documents not yet reviewed
         ->get();
+        //\Log::error( \DB::getQueryLog());
 
         //'like', 'T%')
         //dd($vmtEmployees_InActive->toArray());
@@ -61,20 +62,23 @@ class VmtApprovalsController extends Controller
                                         'voters_id_file',
                                         'dl_file',
                                         'education_certificate_file',
-                                        'reliving_letter_file'
+                                        'reliving_letter_file', 
+                                        'docs_reviewed'
                                     ]);
+
+            $docs_reviewed  =  json_decode($documents_filenames[0]->docs_reviewed);
             //dd($documents_filenames[0]->aadhar_card_file);
 
 
         }
         else
         {
-
+            $docs_reviewed =  null;
         }
 
         //Get all documents for the given user
-
-        return view('vmt_document_reviews',compact('documents_filenames','user_code'));
+        //dd($docs_reviewed);
+        return view('vmt_document_reviews',compact('documents_filenames','user_code', 'docs_reviewed'));
     }
 
 
