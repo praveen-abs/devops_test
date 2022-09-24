@@ -307,7 +307,7 @@
             </div>
         </div>
         <!-- content bpttom -->
-        <div class="col-sm-12 col-md-12 col-xl-4 col-lg-4 col-xxl-4">
+        <div class="col-sm-12 col-md-12 col-xl-4 col-lg-4 col-xxl-4 mb-3">
             <div class="calendar-wrapper card mb-0 border-0">
                 <div class="card-body p-0">
                     <div class="_wrapper">
@@ -335,7 +335,7 @@
 
     <!-- content-bottom -->
     <div class="row">
-        <div class="col-sm-12 col-md-12">
+        <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 col-xxl-12">
             <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 ipad-query">
                     {{-- @foreach ($dashboardEmployeeEventsData['birthday'] as $key)

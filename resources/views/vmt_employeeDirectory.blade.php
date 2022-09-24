@@ -342,7 +342,7 @@
 
                     <td>
                         <div class="d-flex justify-content-start align-items-center table-img">
-                            <div class="mx-2 d-flex justify-content-center align-items-center profile-name-icon">
+                            <div class="mx-2 d-flex justify-content-center align-items-center profile-name-icon shorthand_name_bg" style="background-color:#4d78f1 ;">
                                 @if( empty($employee->avatar) || !file_exists(public_path('images/'. $employee->avatar)) )
                                 @php
                                 $splitArray = explode(" ",$employee->emp_name);
@@ -353,7 +353,7 @@
 
                                 @endphp
                                 <!--span class="badge rounded-circle h-10 w-10   badge-primary ms-2"-->
-                                <span class="align-middle fw-bold text-white">{{$name}}</span>
+                                <span class="align-middle  text-white">{{$name}}</span>
                                 <!--/span-->
                                 @else
                                 <img src="{{ URL::asset('images/'.$employee->avatar) }}" alt="" class="h-100 w-100" />
@@ -416,7 +416,21 @@
 <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 
 <script>
+    // var divs = document.getElementById("shorthand_name_bg");
+
+    // for (var i = 0; i < divs.length; i++) {
+    //     divs[i].style.background = getRandomColor();
+    // }
+
+
+
     $(document).ready(function() {
+
+        $('.shorthand_name_bg').each(function(i, obj) {
+            $( obj ).css( "backgroundColor", getRandomColor() );
+        });
+
+
         $(function() {
             $("[data-toggle=popover]").popover({
                 html: true,

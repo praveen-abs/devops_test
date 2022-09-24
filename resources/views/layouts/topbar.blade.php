@@ -236,7 +236,7 @@
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <div class="d-flex align-items-center page-header-user-dropdown">
                                      @if( empty(Auth::user()->avatar) || !file_exists(public_path('images/'. Auth::user()->avatar)) )
-                                        <span class="rounded-circle user-profile  ml-2">
+                                        <span class="rounded-circle user-profile  ml-2 " id="shorthand_name_bg">
                                             <i id="topbar_username" class="align-middle "></i>
                                         </span>
                                     @else
@@ -290,6 +290,16 @@
 			  crossorigin="anonymous"></script>
 
 <script>
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF'.split('');
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+
 
     function generateProfileShortName_Topbar()
     {
@@ -312,6 +322,7 @@
     }
 
     generateProfileShortName_Topbar();
+    $('#shorthand_name_bg').css( "backgroundColor", getRandomColor() );
 
 </script>
 

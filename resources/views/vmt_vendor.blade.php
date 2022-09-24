@@ -12,9 +12,9 @@
     <div class="vendor-wrapper bg-white container-fluid p-2">
         <h6 class="">Vendor List</h6>
         <div class=" text-end mb-2">
-            <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#newVendor">Create
+            <button class="btn btn-orange me-2" data-bs-toggle="modal" data-bs-target="#newVendor">Create
                 Vendor</button>
-            <button class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#importVendor">
+            <button class="btn btn-orange " data-bs-toggle="modal" data-bs-target="#importVendor">
                 Import Vendor
             </button>
         </div>

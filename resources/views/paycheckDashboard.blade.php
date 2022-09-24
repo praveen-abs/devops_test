@@ -1339,7 +1339,7 @@
                         </div>
 
 
-                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        <!-- <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
 
                             <div class="previous-income-content my-2">
                                 <h5>Previous Employment Details</h5>
@@ -1414,9 +1414,9 @@
                                     </tbody>
 
                                 </table>
-                                <!-- end table -->
+                                
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

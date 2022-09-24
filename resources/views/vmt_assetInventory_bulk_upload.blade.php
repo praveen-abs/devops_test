@@ -8,43 +8,51 @@
 @endsection
 @section('content')
 
-<div class="uploadEmployee-wrpper ">
-<div class="row">
-    <div class="col-xl-12">
-        <div class="card shadow profile-box card-top-border ">
+<div class="uploadEmployee-wrpper mt-30">
+
+        <div class="card shadow profile-box card-top-border border-0">
             <div class="form-control">
                 <div class="row">
-                    <div class="col-md-6 ">
-                        <div class="col-form-label">
-                            <h5> Asset Inventory Bulk Upload</h5>
+                    <div class="col-md-6 col-xl-6  col-xxl-6  col-sm-12  col-lg-6 ">
+                                                    <h6> Asset Inventory Bulk Upload</h6>
                             <div class="col col-form-label">
                                 <ul class="list-style-numbered list-style-circle p-4">
                                         <li>Download the
-                                            <a href="{{ url('/assets/sample_asset_investory.xlsx')  }}" target="_blank">
-                                                <span class="text-link" style=" color: blue;">Sample File</span></a>
+                                            <a href="{{ url('/assets/sample_asset_investory.xlsx')  }}" target="_blank" class="ms-1 choose-file">
+                                            <i class="fa fa-file" aria-hidden="true"></i>Sample File</a>
 
                                         </li>
+
+                                       
+
                                         <li>Read the upload instructions on the right before uploading .</li>
                                         <li>Fill the information in excel template</li>
                                         <li>
                                             <form method="POST" id='role-form' action="{{ route('vmt-assetinventory-bulk-upload-post') }}"
                                                 enctype="multipart/form-data">  
                                                 @csrf
-                                                <div >
+                                              
                                                     <label >Please Upload the Asset Inventories details excel-sheet.</label>
-                                                </div>
-                                                <div class="mb-3 row">
+                                               
+                                                <!-- <div class="mb-3 row">
                                                     <div class="col-md-10">
                                                         <input name="file" type="file" required>
                                                     </div>
-                                                </div>
-                                                <div class="row mt-2">
-                                                    <div class="text-end col-xl-12">
-                                                        <button type="submit" class="btn btn-primary">Upload</button>
-                                                    </div>
-                                                </div>
+                                                </div> -->
 
-                                                 <div class="row mt-4">
+                                                <span class="choose-file ms-1">
+                                                <input name="file" type="file" required>
+                                                <i class="fa fa-file" aria-hidden="true"></i>
+                                                Choose file
+                                            </span>
+
+                                                
+                                                    <div class="text-end col-12  mt-2">
+                                                        <button type="submit" class="btn btn-orange">Upload</button>
+                                                    </div>
+                                                
+
+                                                 <div class="rows">
                                                     <div class="col-xl-12">
                                                         <div id="success-msg"></div>
                                                         <div id="error-msg"></div>
@@ -56,21 +64,21 @@
                                 </ul>
 
                                 </form>
-                            </div>
+                            
                         </div>
 
                     </div>
 
-                    <div class="col-md-6 ">
-                        <div class="col-form-label">
-                            <h5> Upload Instructions</h4>
-                            <div class="alert alert-warning">Read these instructions before uploading the file.</div>
-                            <div>
+                    <div class="col-md-6 col-xl-6  col-xxl-6  col-sm-12  col-lg-6 ">
+                      
+                            <h6> Upload Instructions</h6>
+                            <div class="alert py-2 f-12 alert-warning"><i class="fa fa-warning text-danger"></i> Read
+                                    these instructions before uploading the file.</div>
                             <ul class="list-style-circle">
                                 <li> Asset Name, Asset Type, Serial Number, Warranty, Vendor, Assignee, Asset Status And Assigned Date fields are required to add Asset Inventory. </li>
                             </ul>
                             </div>
-                        </div>
+                       
                     </div>
                 </div>
             </div>
@@ -104,8 +112,7 @@
             </div>
             </form> --}}
         </div>
-    </div><!-- end card body -->
-</div><!-- end card -->
+ 
 {{-- </div>end col --}}
 {{-- </div>end row --}}
 <div style="z-index: 11">

@@ -10,7 +10,7 @@
         @slot('li_1')
         @endslot
     @endcomponent
-    <div class="upload-payslip-wrapper mt-8">
+    <div class="upload-payslip-wrapper ">
         <div class="row">
             <div class="col-xl-12">
                 <div class="card shadow profile-box ">

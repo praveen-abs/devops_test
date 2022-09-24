@@ -10,7 +10,7 @@
 @slot('li_1') @endslot
 @endcomponent
 
-    <div class="uploadEmployee-wrpper   mt-8">
+    <div class="uploadEmployee-wrpper  ">
         <div class="card shadow profile-box card-top-border border-0">
             <div class="form-control">
                 <div class="row">

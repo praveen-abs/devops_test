@@ -1,5 +1,5 @@
 @if( empty(Auth::user()->avatar) || !file_exists(public_path('images/'. Auth::user()->avatar)) )
-    <span class="bage rounded-circle h-100 w-100 d-flex align-items-center justify-content-center  ">
+    <span class="bage rounded-circle h-100 w-100 d-flex align-items-center justify-content-center" id="shorthand_name_bg">
         <i id="profileShortNameLargeCircle-profile" class="align-middle "></i>
     </span>
 @else
@@ -13,6 +13,7 @@
     // $(document).ready(function() {
 
         generateProfileShortName_VendorScript('profileShortNameLargeCircle-profile','{{ $currentUserName }}');
+        $('#shorthand_name_bg').css( "backgroundColor", getRandomColor() );
     // });
 
     // function generateProfileShortName()

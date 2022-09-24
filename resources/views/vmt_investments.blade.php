@@ -65,15 +65,14 @@
                 </div>
             </div>
             <div class="tab-pane fade " id="investment_proof" role="tabpanel" aria-labelledby="pills-home-tab">
-                <div id="ember83" class="ember-view">
-                    <div class="fill body content">
+            <div class="fill body content">
                         <div class="empty-state-help-centered ind-empty-state text-center">
                             <img src="https://css.zohostatic.in/zfpayroll/zpayrollportal///assets/it-empty-state-68d45ef7fddba0f96b1ec6b7664ace53.svg" class="empty-state-image">
-                            <div class="empty-state-content">
+                            <div class="empty-state-content text-center align-items-center">
                                 <div class="empty-state-content-header">
                                     Investment Declaration submission is locked
                                 </div>
-                                <div class="empty-state-content-subtext">
+                                <div class="empty-state-content-subtext my-3">
                                     You can declare your IT saving investments for the current financial year once the admin
                                     opens this option
                                 </div>
@@ -81,8 +80,6 @@
                             </div>
                         </div>
                     </div>
-
-                </div>
             </div>
         </div>
 

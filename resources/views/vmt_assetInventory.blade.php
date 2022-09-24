@@ -11,10 +11,7 @@
 
 
 <style>
-    .project-wrapper{
-position: relative;
-top:-20px;
-    }
+  
 table {
    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px !important;
 }
@@ -155,10 +152,10 @@ tr:last-child td:last-child {
 
 
 <div class=" project-wrapper bg-white p-3">
-    <div class="directory-content  mb-3 mt-2">
-        <h5 class="text-muted fw-bold mb-4">Asset Inventory</h5>
+    <div class="directory-content  mt-2">
+        <h5 class="text-muted fw-bold">Asset Inventory</h5>
         <div class="row">
-            <div class="col-8">
+            
                 <div class="float-left directory-left d-flex">
                     {{-- <div class="switch-field align-items-center">
                         <input type="radio" id="radio-one" name="switch-one" value="Active" checked />
@@ -174,20 +171,20 @@ tr:last-child td:last-child {
                             placeholder="Search">
                     </div> --}}
                 </div>
-            </div>
-            <div class="col-4">
-                <div class="d-flex directory-right float-right justify-content-end align-items-center">
+           
+            <div class="col-12 text-end">
+                <!-- <div class="d-flex directory-right float-right justify-content-end align-items-center"> -->
                     {{-- <div class="btn border-0 outline-none mx-2 ">
                         <i class="ri-menu-add-line fw-bold"></i>
                     </div> --}}
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#modal_add_asset"
-                        class="btn btn-orange  py-1 onboard-employee-btn h-25 fw-bold bg-danger ">
-                        <i class="ri-add-line fw-bold mx-1"></i>
+                    <a href="#" data-bs-toggle="modal" role="button" data-bs-target="#modal_add_asset"
+                        class="btn btn-orange  py-1 onboard-employee-btn">
+                      
                         Add New Asset
                     </a>
-                    <a href="{{ route('vmt-assetinventory-bulk-upload') }}"><button class="btn btn-primary mx-2">Bulk Import Assets</button></a>
+                    <a href="{{ route('vmt-assetinventory-bulk-upload') }}" role="button" class="btn btn-orange">Bulk Import Assets</a>
 
-                </div>
+                <!-- </div> -->
             </div>
         </div>
     </div>
