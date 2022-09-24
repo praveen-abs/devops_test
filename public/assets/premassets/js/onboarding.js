@@ -47,21 +47,6 @@ $(document).ready(function() {
         }
     });
 
-    $('body').on('blur', '.onboard-form', function() {
-        var id = $(this).attr('name');
-        if ($(this).val() == '') {
-            $("label[for='" + id + "']").removeClass('empty');
-        } else {
-            $("label[for='" + id + "']").addClass('empty');
-        }
-        if ($("input[name='" + id + "']").valid()) {
-            $("label[for='" + id + "']").removeClass('notvalid');
-            $("input[name='" + id + "']").removeClass('notvalid');
-        } else {
-            $("label[for='" + id + "']").addClass('notvalid');
-            $("input[name='" + id + "']").addClass('notvalid');
-        }
-    });
 
     // var current_fs, next_fs, previous_fs; //fieldsets
     // var opacity;

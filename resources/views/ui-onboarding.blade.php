@@ -41,7 +41,7 @@
                                                     @if(isset($employee_user->name))
                                                     <input type="text" placeholder="Employee Name as per Aadhar " name="employee_name" id="employee_name" value="{{$employee_user->name}}" class="onboard-form form-control textbox" pattern="name" readonly />
                                                     @else
-                                                    <input type="text" placeholder="Employee Name as per Aadhar " name="employee_name" id="employee_name" class="onboard-form form-control textbox" pattern="name" required />
+                                                    <input type="text" placeholder="Employee Name as per Aadhar " name="employee_name" id="employee_name" class="form-control textbox" pattern="name" required />
 
                                                     @endif
                                                     <label class="error star_error employee_name_label" for="employee_name" style="display: none;"></label>
@@ -110,8 +110,7 @@
                                                     @if(isset($employee_details->mobile_number))
                                                         <input type="number" placeholder="Mobile Number" name="mobile_no" minlength="10" value="{{$employee_details->mobile_number? $employee_details->mobile_number : ''}}" maxlength="10" class="onboard-form form-control textbox " required readonly />
                                                     @else
-
-                                                    <input type="number" placeholder="Mobile Number" name="mobile_no" minlength="10" value="" maxlength="10" class="onboard-form form-control textbox " required />
+                                                        <input  type="text" placeholder="Mobile Number" name="mobile_no" id="mobile_no" minlength="10" value="" maxlength="10" oninput="numberOnly(this.id);" class="onboard-form form-control textbox " required />
                                                     @endif
                                                 </div>
                                             </div>
@@ -127,7 +126,7 @@
                                                 <!-- <label class="" for="aadhar">Aadhaar Number<span id="aadhar_req">{!! required() !!}</span></label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Aadhaar Number<span class="text-danger">*</span></label>
-                                                    <input type="number" placeholder="Aadhaar Number" name="aadhar" id="vmt_aadhar" pattern="aadhar" class="onboard-form form-control textbox " minlength="12" maxlength="12" required />
+                                                    <input type="text" oninput="numberOnly(this.id);" placeholder="Aadhaar Number" name="aadhar" id="vmt_aadhar" pattern="aadhar" class="onboard-form form-control textbox " minlength="12" maxlength="12" required />
                                                     {{-- <label class="error star_error aadhar_label" for="aadhar"
                                                         style="display: none;"></label> --}}
                                                     <!-- <label for="" class="float-label">Aadhaar Number</label> -->
@@ -399,30 +398,6 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                                                <!-- <label class="" for="current_city">Current City{!! required() !!}</label> -->
-                                                <div class="floating">
-                                                    <label for="" class="float-label"> City<span class="text-danger">*</span></label>
-                                                    <input type="text" placeholder="City" name="current_city" id="current_city" class="onboard-form form-control textbox     " required />
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                                                <!-- <label class="" for="current_state">Current State{!! required() !!}</label> -->
-                                                <div class="floating">
-                                                    <label for="" class="float-label">State<span class="text-danger">*</span></label>
-                                                    <select placeholder="State" name="current_state" id="current_state" class="onboard-form form-control textbox  select2_form_without_search" required>
-                                                        <option value="" hidden selected disabled>Select State</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                                                <!-- <label class="" for="current_pincode">Current Pincode{!! required() !!}</label> -->
-                                                <div class="floating">
-                                                    <label for="" class="float-label">Pincode<span class="text-danger">*</span></label>
-
-                                                    <input type="number" placeholder="Pincode" name="current_pincode" id="current_pincode" class="onboard-form form-control textbox " required />
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <input type="text" placeholder="" name="curent_district" class="onboard-form form-control textbox " required /> -->
                                                 <!-- <label class="" for="curent_district">Country{!! required() !!}</label> -->
                                                 <div class="floating">
@@ -436,6 +411,31 @@
                                                     </select>
                                                 </div>
                                             </div>
+                                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                                                <!-- <label class="" for="current_state">Current State{!! required() !!}</label> -->
+                                                <div class="floating">
+                                                    <label for="" class="float-label">State<span class="text-danger">*</span></label>
+                                                    <select placeholder="State" name="current_state" id="current_state" class="onboard-form form-control textbox  select2_form_without_search" required>
+                                                        <option value="" hidden selected disabled>Select State</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                                                <!-- <label class="" for="current_city">Current City{!! required() !!}</label> -->
+                                                <div class="floating">
+                                                    <label for="" class="float-label"> City<span class="text-danger">*</span></label>
+                                                    <input type="text" placeholder="City" name="current_city" id="current_city" class="onboard-form form-control textbox     " required />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                                                <!-- <label class="" for="current_pincode">Current Pincode{!! required() !!}</label> -->
+                                                <div class="floating">
+                                                    <label for="" class="float-label">Pincode<span class="text-danger">*</span></label>
+
+                                                    <input type="number" placeholder="Pincode" name="current_pincode" id="current_pincode" class="onboard-form form-control textbox " required />
+                                                </div>
+                                            </div>
+
 
                                         </div>
                                         {{-- copy address --}}
@@ -465,32 +465,6 @@
                                                     <textarea placeholder="Permanent Address" name="permanent_address" id="permanent_address" class="onboard-form form-control textbox " required cols="5" rows="1"></textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3  col-xxl-3 mb-2">
-                                                <!-- <label class="" for="permanent_city">Permanent City{!! required() !!}</label> -->
-                                                <div class="floating">
-                                                    <label for="" class="float-label"> City<span class="text-danger">*</span></label>
-
-                                                    <input type="text" placeholder=" City" name="permanent_city" id="permanent_city" class="onboard-form form-control textbox " required />
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                                                <!-- <label class="" for="permanent_state">Permanent State{!! required() !!}</label> -->
-                                                <div class="floating">
-                                                    <label for="" class="float-label"> State<span class="text-danger">*</span></label>
-
-                                                    <select placeholder="Permanent State" name="permanent_state" id="permanent_state" class="onboard-form form-control textbox  select2_form_without_search" required>
-                                                        <option value="" hidden selected disabled> State</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                                                <!-- <label class="" for="permanent_pincode">Permanent Pincode{!! required() !!}</label> -->
-                                                <div class="floating">
-                                                    <label for="" class="float-label"> Pincode <span class="text-danger">*</span></label>
-
-                                                    <input type="number" placeholder=" Pincode" name="permanent_pincode" id="permanent_pincode" class="onboard-form form-control textbox " required />
-                                                </div>
-                                            </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 col-xxl-3 mb-2">
                                                 <!-- <input type="text" placeholder="" name="permanent_district" class="onboard-form form-control textbox " required /> -->
                                                 <!-- <label class="" for="permanent_district">Permanent Country{!! required() !!}</label> -->
@@ -507,8 +481,32 @@
                                                     </select>
                                                 </div>
                                             </div>
+                                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                                                <!-- <label class="" for="permanent_state">Permanent State{!! required() !!}</label> -->
+                                                <div class="floating">
+                                                    <label for="" class="float-label"> State<span class="text-danger">*</span></label>
 
+                                                    <select placeholder="Permanent State" name="permanent_state" id="permanent_state" class="onboard-form form-control textbox  select2_form_without_search" required>
+                                                        <option value=""></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3  col-xxl-3 mb-2">
+                                                <!-- <label class="" for="permanent_city">Permanent City{!! required() !!}</label> -->
+                                                <div class="floating">
+                                                    <label for="" class="float-label"> City<span class="text-danger">*</span></label>
 
+                                                    <input type="text" placeholder=" City" name="permanent_city" id="permanent_city" class="onboard-form form-control textbox " required />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                                                <!-- <label class="" for="permanent_pincode">Permanent Pincode{!! required() !!}</label> -->
+                                                <div class="floating">
+                                                    <label for="" class="float-label"> Pincode <span class="text-danger">*</span></label>
+
+                                                    <input type="number" placeholder=" Pincode" name="permanent_pincode" id="permanent_pincode" class="onboard-form form-control textbox " required />
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
