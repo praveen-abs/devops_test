@@ -65,33 +65,36 @@
                 </div>
             </div>
             <div class="tab-pane fade " id="investment_proof" role="tabpanel" aria-labelledby="pills-home-tab">
-            <div class="fill body content">
-                        <div class="empty-state-help-centered ind-empty-state text-center">
-                            <img src="https://css.zohostatic.in/zfpayroll/zpayrollportal///assets/it-empty-state-68d45ef7fddba0f96b1ec6b7664ace53.svg" class="empty-state-image">
-                            <div class="empty-state-content text-center align-items-center">
-                                <div class="empty-state-content-header">
-                                    Investment Declaration submission is locked
-                                </div>
-                                <div class="empty-state-content-subtext my-3">
-                                    You can declare your IT saving investments for the current financial year once the admin
-                                    opens this option
-                                </div>
-                                <!---->
+                <div class="fill body content">
+                    <div class="empty-state-help-centered ind-empty-state text-center">
+                        <img src="https://css.zohostatic.in/zfpayroll/zpayrollportal///assets/it-empty-state-68d45ef7fddba0f96b1ec6b7664ace53.svg" class="empty-state-image">
+                        <div class="empty-state-content text-center align-items-center">
+                            <div class="empty-state-content-header">
+                                Investment Declaration submission is locked
                             </div>
+                            <div class="empty-state-content-subtext my-3">
+                                You can declare your IT saving investments for the current financial year once the admin
+                                opens this option
+                            </div>
+                            <!---->
                         </div>
                     </div>
+                </div>
             </div>
         </div>
 
-       
+    </div>
+</div>
 
-        @endsection
-        @section('script')
 
-        <!-- ui notifications -->
 
-        <script src="{{ URL::asset('/assets/libs/prismjs/prismjs.min.js') }}"></script>
-        <script src="{{ URL::asset('/assets/js/pages/notifications.init.js') }}"></script>
-        <!-- apexcharts -->
+@endsection
+@section('script')
 
-        @endsection
+<!-- ui notifications -->
+
+<script src="{{ URL::asset('/assets/libs/prismjs/prismjs.min.js') }}"></script>
+<script src="{{ URL::asset('/assets/js/pages/notifications.init.js') }}"></script>
+<!-- apexcharts -->
+
+@endsection

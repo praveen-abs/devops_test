@@ -737,3 +737,22 @@ button.gridjs-sort-asc, button.gridjs-sort-desc {
     margin-left: -8px;
     z-index: 1;
 }
+
+
+
+
+.form-check-input:checked {
+    background-color: #002f56 !important;
+}
+
+.bottom-content .check-box {
+    border: 1px solid #ced4da;
+    height: 15px !important;
+}
+
+
+.ember-view i {
+    font-size: 15px;
+    position: absolute;
+    top: 4px;
+}

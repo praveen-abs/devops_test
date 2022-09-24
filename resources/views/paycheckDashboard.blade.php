@@ -346,7 +346,7 @@
                             </div>
                         </nav>
                         <div class="tab-content" id="nav-tabContent">
-                            <div class="tab-pane fade show active" id="declaration" role="tabpanel" aria-labelledby="nav-home-tab">
+                            <div class="tab-pane fade" id="declaration" role="tabpanel" aria-labelledby="nav-home-tab">
                                 <div class="card bg-light-red declaration-important-card my-3">
                                     <div class="card-body">
                                         <div class="row">

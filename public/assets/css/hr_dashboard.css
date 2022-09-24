@@ -863,14 +863,7 @@ input + .slider-checkbox > .slider-checkbox-text:after {
     border: 0;
 }
 
-.bottom-content .check-box {
-    border: 1px solid #ced4da;
-    height: 15px !important;
-}
 
-.poll-content input {
-    border: 1px solid #ced4da;
-}
 
 .action-content {
     overflow-y: scroll;

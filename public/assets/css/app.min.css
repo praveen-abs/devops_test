@@ -16982,11 +16982,7 @@ a.ember-view {
     position: relative;
 }
 
-.ember-view i {
-    font-size: 15px;
-    position: absolute;
-    top: -2px;
-}
+
 
 .deduction-summary-card {
     margin: 0 0 30px;
@@ -17245,8 +17241,6 @@ a.ember-view {
 }
 
 /* investment */
-
-
 .empty-state-help-centered.ind-empty-state .empty-state-image {
     width: 200px;
     height: 225px;
@@ -18333,3 +18327,6 @@ ul.list-style-circle li {
     border-radius: 5px;
     box-shadow: rgb(60 64 67 / 30%) 0px 1px 2px 0px, rgb(60 64 67 / 15%) 0px 2px 6px 2px;
 }
+
+
+
