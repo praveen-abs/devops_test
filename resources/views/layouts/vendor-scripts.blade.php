@@ -46,7 +46,7 @@
         var username = t_username ;
         const splitArray = username.split(" ");
         var finalname ="empty111";
-        
+
         if( splitArray.length == 1)
         {
             finalname = splitArray[0][0] +""+ splitArray[0][1];
@@ -58,7 +58,7 @@
                 finalname = splitArray[0][0] +""+ splitArray[0][1];
         }
 
-        var a = $('#'+element_id).text(finalname);
+        var a = $('#'+element_id).text(finalname.toUpperCase());
     }
 
     function getRandomColor() {

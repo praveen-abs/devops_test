@@ -319,7 +319,7 @@
                 finalname = splitArray[0][0] +""+ splitArray[0][1];
         }
 
-        var a = $('#topbar_username').text(finalname);
+        var a = $('#topbar_username').text(finalname.toUpperCase());
     }
 
     generateProfileShortName_Topbar();
