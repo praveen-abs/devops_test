@@ -23,7 +23,7 @@
                                                 style="color:#E54E0D;">
                                                 @if ($employee['dob'] == date('Y-m-d'))
                                                     Today
-                                                @else($employee['dob'] == date('Y-m-d'))
+                                                @else
                                                     Upcoming
                                                 @endif
                                                 {{ $employee['dob'] }}
@@ -53,7 +53,7 @@
                                             <p class="fw-bold f-12 text-right program-day " style="color:#037B5A;">
                                                 @if ($employee['doj'] == date('Y-m-d'))
                                                     Today
-                                                @else($employee['dob'] == date('Y-m-d'))
+                                                @else
                                                     Upcoming
                                                 @endif
                                                 {{ $employee['doj'] }}
