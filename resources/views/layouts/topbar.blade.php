@@ -236,7 +236,8 @@
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <div class="d-flex align-items-center page-header-user-dropdown">
                                      @if( empty(Auth::user()->avatar) || !file_exists(public_path('images/'. Auth::user()->avatar)) )
-                                        <span class="rounded-circle user-profile  ml-2 " id="shorthand_name_bg">
+                                        <!-- <span class="rounded-circle user-profile  ml-2 " id="shorthand_name_bg"> -->
+                                        <span class="rounded-circle user-profile  ml-2 " id="">
                                             <i id="topbar_username" class="align-middle "></i>
                                         </span>
                                     @else

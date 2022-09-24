@@ -13,7 +13,7 @@
 
 
 <div class=" directory-wrapper bg-white px-3 pt-3 pb-0">
-    <h6 class="">Employee Directory</h6>
+    <!-- <h6 class="">Employee Directory</h6> -->
     <!-- <div class="row">
         <div class="col-12">
             <div class="row ">
@@ -250,6 +250,7 @@
                             <td>
                                 <div class="d-flex justify-content-start align-items-center table-img">
                                     <div class="mx-2 d-flex justify-content-center align-items-center profile-name-icon">
+                                        
                                         @if( empty($employee->avatar) || !file_exists(public_path('images/'. $employee->avatar)) )
                                         @php
                                         $splitArray = explode(" ",$employee->emp_name);
@@ -342,7 +343,9 @@
 
                     <td>
                         <div class="d-flex justify-content-start align-items-center table-img">
-                            <div class="mx-2 d-flex justify-content-center align-items-center profile-name-icon shorthand_name_bg" style="background-color:#4d78f1 ;">
+
+                            <!-- <div class="mx-2 d-flex justify-content-center align-items-center profile-name-icon shorthand_name_bg" > -->
+                            <div class="mx-2 d-flex justify-content-center align-items-center profile-name-icon" >
                                 @if( empty($employee->avatar) || !file_exists(public_path('images/'. $employee->avatar)) )
                                 @php
                                 $splitArray = explode(" ",$employee->emp_name);
