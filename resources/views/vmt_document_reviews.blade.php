@@ -74,9 +74,16 @@
                                                     <tr>
                                                         <td>Aadhar Card Front</td>
                                                         <td> 
-                                                            <img class="w-100 h-100 soc-det-img "
+                                                            <div 
+                                                                class="view-file" 
+                                                                data-src="{{ URL::asset('images/' . $documents_filenames[0]->aadhar_card_file) }}"
+                                                                style="cursor:pointer" 
+                                                            >
+                                                                {{"View Documents"}}
+                                                            </div>
+                                                            <!-- <img class="w-100 h-100 soc-det-img "
                                                             src="{{ URL::asset('images/' . $documents_filenames[0]->aadhar_card_file) }}"
-                                                            alt="Aadhar Card Front">
+                                                            alt="Aadhar Card Front"> -->
                                                         </td>
                                                         <td>
                                                             @if($docs_reviewed != null)
@@ -99,9 +106,17 @@
 
                                                     <tr>
                                                         <td>Aadhar Card Back</td>
-                                                        <td> <img class="w-100 h-100 soc-det-img "
+                                                        <td> 
+                                                            <div 
+                                                                class="view-file" 
+                                                                data-src="{{ URL::asset('images/' . $documents_filenames[0]->aadhar_card_backend_file) }}"
+                                                                style="cursor:pointer" 
+                                                            >
+                                                                {{"View Documents"}}
+                                                            </div>
+                                                            <!-- <img class="w-100 h-100 soc-det-img "
                                                             src="{{ URL::asset('images/' . $documents_filenames[0]->aadhar_card_backend_file) }}"
-                                                            alt="Aadhar Card Front">
+                                                            alt="Aadhar Card Front"> -->
                                                         </td>
                                                         <td>
                                                             @if($docs_reviewed != null)
@@ -125,9 +140,16 @@
                                                      <tr>
                                                         <td>Pan Card</td>
                                                         <td> 
-                                                            <img class="w-100 h-100 soc-det-img "
+                                                            <!-- <img class="w-100 h-100 soc-det-img "
                                                             src="{{ URL::asset('images/' . $documents_filenames[0]->pan_card_file) }}"
-                                                            alt="Aadhar Card Front">
+                                                            alt="Aadhar Card Front"> -->
+                                                            <div 
+                                                                class="view-file" 
+                                                                data-src="{{ URL::asset('images/' . $documents_filenames[0]->pan_card_file) }}"
+                                                                style="cursor:pointer" 
+                                                            >
+                                                                {{"View Documents"}}
+                                                            </div>
                                                         </td>
                                                         <td>
                                                             @if($docs_reviewed != null)
@@ -151,9 +173,16 @@
                                                      <tr>
                                                         <td>Passport</td>
                                                         <td> 
-                                                            <img class="w-100 h-100 soc-det-img "
+                                                           <!--  <img class="w-100 h-100 soc-det-img "
                                                             src="{{ URL::asset('images/' . $documents_filenames[0]->passport_file) }}"
-                                                            alt="Passport File">
+                                                            alt="Passport File"> -->
+                                                            <div 
+                                                                class="view-file" 
+                                                                data-src="{{ URL::asset('images/' . $documents_filenames[0]->passport_file) }}"
+                                                                style="cursor:pointer" 
+                                                            >
+                                                                {{"View Documents"}}
+                                                            </div>
                                                         </td>
                                                         <td>
                                                             @if($docs_reviewed != null)
@@ -180,9 +209,17 @@
 
                                                      <tr>
                                                         <td>Voters ID</td>
-                                                        <td> <img class="w-100 h-100 soc-det-img "
+                                                        <td> 
+                                                            <!-- <img class="w-100 h-100 soc-det-img "
                                                             src="{{ URL::asset('images/' . $documents_filenames[0]->voters_id_file) }}"
-                                                            alt="Voters Id File">
+                                                            alt="Voters Id File"> -->
+                                                            <div 
+                                                                class="view-file" 
+                                                                data-src="{{ URL::asset('images/' . $documents_filenames[0]->voters_id_file) }}"
+                                                                style="cursor:pointer" 
+                                                            >
+                                                                {{"View Documents"}}
+                                                            </div>
                                                         </td>
                                                         <td>
                                                             @if($docs_reviewed != null)
@@ -206,9 +243,17 @@
                                                     </tr>
                                                     <tr>
                                                         <td>Driving License</td>
-                                                        <td> <img class="w-100 h-100 soc-det-img "
+                                                        <td>
+                                                            <div 
+                                                                class="view-file" 
+                                                                data-src="{{ URL::asset('images/' . $documents_filenames[0]->dl_file) }}"
+                                                                style="cursor:pointer" 
+                                                            >
+                                                                {{"View Documents"}}
+                                                            </div> 
+                                                            <!-- <img class="w-100 h-100 soc-det-img "
                                                             src="{{ URL::asset('images/' . $documents_filenames[0]->dl_file) }}"
-                                                            alt="Aadhar Card Front">
+                                                            alt="Aadhar Card Front"> -->
                                                         </td>
                                                         <td>
                                                             @if($docs_reviewed != null)
@@ -233,9 +278,17 @@
                                                     </tr>
                                                     <tr>
                                                         <td>Educational Certificate</td>
-                                                        <td> <img class="w-100 h-100 soc-det-img "
+                                                        <td> 
+                                                            <!-- <img class="w-100 h-100 soc-det-img "
                                                             src="{{ URL::asset('images/' . $documents_filenames[0]->education_certificate_file) }}"
-                                                            alt="Aadhar Card Front">
+                                                            alt="Aadhar Card Front"> -->
+                                                            <div 
+                                                                class="view-file" 
+                                                                data-src="{{ URL::asset('images/' . $documents_filenames[0]->education_certificate_file) }}"
+                                                                style="cursor:pointer" 
+                                                            >
+                                                                {{"View Documents"}}
+                                                            </div> 
                                                         </td>
                                                         <td>
                                                             @if($docs_reviewed != null)
@@ -261,9 +314,18 @@
 
                                                      <tr>
                                                         <td>Reliving Letter</td>
-                                                        <td> <img class="w-100 h-100 soc-det-img "
+                                                        <td> 
+                                                            <!-- <img class="w-100 h-100 soc-det-img "
                                                             src="{{ URL::asset('images/' . $documents_filenames[0]->reliving_letter_file) }}"
-                                                            alt="Aadhar Card Front">
+                                                            alt="Aadhar Card Front"> -->
+
+                                                            <div 
+                                                                class="view-file" 
+                                                                data-src="{{ URL::asset('images/' . $documents_filenames[0]->reliving_letter_file) }}"
+                                                                style="cursor:pointer" 
+                                                            >
+                                                                {{"View Documents"}}
+                                                            </div> 
                                                         </td>
                                                         <td>
                                                             @if($docs_reviewed != null)
@@ -298,7 +360,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
         <!--Main Content-->
@@ -311,7 +372,7 @@
                 <div class="modal-header py-2 bg-primary">
 
                     <div class="w-100 modal-header-content d-flex align-items-center py-2">
-                        <h5 class="modal-title text-white" id="modalHeader">Failure
+                        <h5 class="modal-title text-white" id="modalHeader">Documents
                         </h5>
                         <button type="button" class="btn-close btn-close-white close-modal" data-bs-dismiss="modal" aria-label="Close">
                         </button>
@@ -319,8 +380,9 @@
                 </div>
                 <div class="modal-body">
                     <div class="mt-4">
-                        <h4 class="mb-3" id="modalNot">Data Saved Successfully!</h4>
-                        <p class="text-muted mb-4" id="modalBody"></p>
+                        <div class="mb-2" id="modalBody">
+                            
+                        </div>
                         <div class="hstack gap-2 justify-content-center">
                             <button type="button" id="button_close" class="btn btn-light close-modal" data-bs-dismiss="modal">Close</button>
                         </div>
@@ -368,6 +430,15 @@
                 $('#notificationModal').hide();
                 $('#notificationModal').addClass('fade');
             });
+
+
+            $('.view-file').on('click', function(e){
+                console.log($(this).data('src'));
+                var docHtmlString = "<img src="+$(this).data('src')+" width='320' />";
+                $('#modalBody').html(docHtmlString);
+
+                $('#notificationModal').show();
+            })
 
             function approveOrRejectDocument(docName, aproveStatus){
                 console.log("User code "+ $('#hidden_user_code').val());
