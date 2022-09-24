@@ -66,22 +66,35 @@
                                                     <tr>
                                                         <th>Name</th>
                                                         <th>File</th>
+                                                        <th>Approval Status</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr>
                                                         <td>Aadhar Card Front</td>
-                                                        <td> <img class="w-100 h-100 soc-det-img "
+                                                        <td> 
+                                                            <img class="w-100 h-100 soc-det-img "
                                                             src="{{ URL::asset('images/' . $documents_filenames[0]->aadhar_card_file) }}"
                                                             alt="Aadhar Card Front">
-                                                   </td>
+                                                        </td>
                                                         <td>
-
+                                                            @if($docs_reviewed != null)
+                                                                @if($docs_reviewed->aadhar_card_file == 1)
+                                                                    {{"Approved"}}
+                                                                @elseif($docs_reviewed->aadhar_card_file == 0)
+                                                                    {{"Rejected"}}
+                                                                @else
+                                                                    {{"Not Reviewed"}}
+                                                                @endif
+                                                            @else
+                                                                {{"Not Reviewed"}}
+                                                            @endif
+                                                        </td>
+                                                        <td>
                                                             <button class="btn btn-success" onclick="approveOrRejectDocument('aadhar_card_file', 1)"> Approve</button>
                                                             <button class="btn btn-secondary" onclick="approveOrRejectDocument('aadhar_card_file', 0)"> Reject</button>
                                                         </td>
-
                                                     </tr>
 
                                                     <tr>
@@ -91,6 +104,19 @@
                                                             alt="Aadhar Card Front">
                                                         </td>
                                                         <td>
+                                                            @if($docs_reviewed != null)
+                                                                @if($docs_reviewed->aadhar_card_backend_file == 1)
+                                                                    {{"Approved"}}
+                                                                @elseif($docs_reviewed->aadhar_card_backend_file == 0)
+                                                                    {{"Rejected"}}
+                                                                @else
+                                                                    {{"Not Reviewed"}}
+                                                                @endif
+                                                            @else
+                                                                {{"Not Reviewed"}}
+                                                            @endif
+                                                        </td>
+                                                        <td>
                                                             <button class="btn btn-success" onclick="approveOrRejectDocument('aadhar_card_backend_file', 1)"> Approve</button>
                                                             <button class="btn btn-secondary" onclick="approveOrRejectDocument('aadhar_card_backend_file', 0)"> Reject</button>
                                                         </td>
@@ -98,10 +124,24 @@
 
                                                      <tr>
                                                         <td>Pan Card</td>
-                                                        <td> <img class="w-100 h-100 soc-det-img "
+                                                        <td> 
+                                                            <img class="w-100 h-100 soc-det-img "
                                                             src="{{ URL::asset('images/' . $documents_filenames[0]->pan_card_file) }}"
                                                             alt="Aadhar Card Front">
-                                                   </td>
+                                                        </td>
+                                                        <td>
+                                                            @if($docs_reviewed != null)
+                                                                @if($docs_reviewed->pan_card_file == 1)
+                                                                    {{"Approved"}}
+                                                                @elseif($docs_reviewed->pan_card_file == 0)
+                                                                    {{"Rejected"}}
+                                                                @else
+                                                                    {{"Not Reviewed"}}
+                                                                @endif
+                                                            @else
+                                                                {{"Not Reviewed"}}
+                                                            @endif
+                                                        </td>
                                                         <td>
                                                             <button class="btn btn-success" onclick="approveOrRejectDocument('pan_card_file', 1)"> Approve</button>
                                                             <button class="btn btn-secondary" onclick="approveOrRejectDocument('pan_card_file', 0)"> Reject</button>
@@ -110,10 +150,24 @@
 
                                                      <tr>
                                                         <td>Passport</td>
-                                                        <td> <img class="w-100 h-100 soc-det-img "
+                                                        <td> 
+                                                            <img class="w-100 h-100 soc-det-img "
                                                             src="{{ URL::asset('images/' . $documents_filenames[0]->passport_file) }}"
-                                                            alt="Aadhar Card Front">
-                                                   </td>
+                                                            alt="Passport File">
+                                                        </td>
+                                                        <td>
+                                                            @if($docs_reviewed != null)
+                                                                @if($docs_reviewed->passport_file == 1)
+                                                                    {{"Approved"}}
+                                                                @elseif($docs_reviewed->passport_file == 0)
+                                                                    {{"Rejected"}}
+                                                                @else
+                                                                    {{"Not Reviewed"}}
+                                                                @endif
+                                                            @else
+                                                                {{"Not Reviewed"}}
+                                                            @endif
+                                                        </td>
                                                         <td>
 
                                                             <button class="btn btn-success" onclick="approveOrRejectDocument('passport_file', 1)"> Approve</button>
@@ -128,8 +182,21 @@
                                                         <td>Voters ID</td>
                                                         <td> <img class="w-100 h-100 soc-det-img "
                                                             src="{{ URL::asset('images/' . $documents_filenames[0]->voters_id_file) }}"
-                                                            alt="Aadhar Card Front">
-                                                   </td>
+                                                            alt="Voters Id File">
+                                                        </td>
+                                                        <td>
+                                                            @if($docs_reviewed != null)
+                                                                @if($docs_reviewed->voters_id_file == 1)
+                                                                    {{"Approved"}}
+                                                                @elseif($docs_reviewed->voters_id_file == 0)
+                                                                    {{"Rejected"}}
+                                                                @else
+                                                                    {{"Not Reviewed"}}
+                                                                @endif
+                                                            @else
+                                                                {{"Not Reviewed"}}
+                                                            @endif
+                                                        </td>
                                                         <td>
                                                             <button class="btn btn-success" onclick="approveOrRejectDocument('voters_id_file', 1)"> Approve</button>
 
@@ -142,7 +209,20 @@
                                                         <td> <img class="w-100 h-100 soc-det-img "
                                                             src="{{ URL::asset('images/' . $documents_filenames[0]->dl_file) }}"
                                                             alt="Aadhar Card Front">
-                                                   </td>
+                                                        </td>
+                                                        <td>
+                                                            @if($docs_reviewed != null)
+                                                                @if($docs_reviewed->dl_file == 1)
+                                                                    {{"Approved"}}
+                                                                @elseif($docs_reviewed->dl_file == 0)
+                                                                    {{"Rejected"}}
+                                                                @else
+                                                                    {{"Not Reviewed"}}
+                                                                @endif
+                                                            @else
+                                                                {{"Not Reviewed"}}
+                                                            @endif
+                                                        </td>
                                                         <td>
 
                                                             <button class="btn btn-success" onclick="approveOrRejectDocument('dl_file', 1)"> Approve</button>
@@ -158,6 +238,19 @@
                                                             alt="Aadhar Card Front">
                                                         </td>
                                                         <td>
+                                                            @if($docs_reviewed != null)
+                                                                @if($docs_reviewed->education_certificate_file == 1)
+                                                                    {{"Approved"}}
+                                                                @elseif($docs_reviewed->education_certificate_file == 0)
+                                                                    {{"Rejected"}}
+                                                                @else
+                                                                    {{"Not Reviewed"}}
+                                                                @endif
+                                                            @else
+                                                                {{"Not Reviewed"}}
+                                                            @endif
+                                                        </td>
+                                                        <td>
                                                             <button class="btn btn-success" onclick="approveOrRejectDocument('education_certificate_file', 1)"> Approve</button>
 
                                                             <button class="btn btn-secondary" onclick="approveOrRejectDocument('education_certificate_file', 0)"> Reject</button>
@@ -171,6 +264,19 @@
                                                         <td> <img class="w-100 h-100 soc-det-img "
                                                             src="{{ URL::asset('images/' . $documents_filenames[0]->reliving_letter_file) }}"
                                                             alt="Aadhar Card Front">
+                                                        </td>
+                                                        <td>
+                                                            @if($docs_reviewed != null)
+                                                                @if($docs_reviewed->reliving_letter_file == 1)
+                                                                    {{"Approved"}}
+                                                                @elseif($docs_reviewed->reliving_letter_file == 0)
+                                                                    {{"Rejected"}}
+                                                                @else
+                                                                    {{"Not Reviewed"}}
+                                                                @endif
+                                                            @else
+                                                                {{"Not Reviewed"}}
+                                                            @endif
                                                         </td>
                                                         <td>
 
