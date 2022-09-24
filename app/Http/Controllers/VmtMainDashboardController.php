@@ -77,7 +77,11 @@ class VmtMainDashboardController extends Controller
                                     'vmt_employee_details.dob',
                                     'vmt_employee_details.doj'
                                 )
-                                ->where('users.is_admin','=','0');
+                                ->where('users.is_admin','=','0')
+                                ->where('users.active','=','1')
+                                ->where('users.is_onboarded','=','1')
+                                ->whereNotNull('vmt_employee_details.doj')
+                                ->whereNotNull('vmt_employee_details.dob');
 
        //dd($employeesEventDetails->get('vmt_employee_details.dob')->toArray());
 
