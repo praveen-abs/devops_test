@@ -77,14 +77,18 @@ class VmtMainDashboardController extends Controller
                                     'vmt_employee_details.dob',
                                     'vmt_employee_details.doj'
                                 )
-                                ->where('users.is_admin','<>','1');
+                                ->where('users.is_admin','=','0');
+
+       //dd($employeesEventDetails->get('vmt_employee_details.dob')->toArray());
 
         //Employee events for the current month only
         $dashboardEmployeeEventsData = [];
-        $dashboardEmployeeEventsData['birthday'] = $employeesEventDetails->whereMonth('vmt_employee_details.dob',Carbon::now()->month)->get();
+        $dashboardEmployeeEventsData['birthday'] = $employeesEventDetails->get();
         $dashboardEmployeeEventsData['work_anniversary'] = $employeesEventDetails->whereMonth('vmt_employee_details.doj',Carbon::now()->month)->get();
         $dashboardEmployeeEventsData['hasData'] = 'true';
 
+
+        //dd($dashboardEmployeeEventsData['birthday']);
         //If any events found, then set 'hasData' to TRUE else FALSE
         if(count($dashboardEmployeeEventsData['birthday']) == 0 &&
            count($dashboardEmployeeEventsData['work_anniversary']) == 0
