@@ -779,6 +779,17 @@ class VmtEmployeeController extends Controller
                     $newEmployee->kid_age  = json_encode($row["child_dob"]);
                 }
             }
+            $docReviewArray = array(
+                'aadhar_card_file' => -1,
+                'aadhar_card_backend_file' => -1,
+                'pan_card_file' => -1,
+                'passport_file' => -1,
+                'voters_id_file' => -1,
+                'dl_file' => -1,
+                'education_certificate_file' => -1,
+                'reliving_letter_file' => -1
+            );
+            $newEmployee->docs_reviewed = json_encode($docReviewArray);
             $newEmployee->save();
 
             if ($newEmployee) {
@@ -1148,6 +1159,17 @@ class VmtEmployeeController extends Controller
             $newEmployee->doj   =   \DateTime::createFromFormat('d-m-Y', $row['doj'])->format('Y-m-d');
             $newEmployee->dol   =   \DateTime::createFromFormat('d-m-Y', $row['doj'])->format('Y-m-d');
             $newEmployee->mobile_number   =    $row['mobile_no'];
+            $docReviewArray = array(
+                'aadhar_card_file' => -1,
+                'aadhar_card_backend_file' => -1,
+                'pan_card_file' => -1,
+                'passport_file' => -1,
+                'voters_id_file' => -1,
+                'dl_file' => -1,
+                'education_certificate_file' => -1,
+                'reliving_letter_file' => -1
+            );
+            $newEmployee->docs_reviewed = json_encode($docReviewArray);
             $newEmployee->save();
 
             if ($newEmployee) {
