@@ -43,7 +43,9 @@
 @endcomponent
 <div class="main">
 
-    @include('ui-documents')
+    @include('ui-documents',[
+        'existing_doc_filenames' => $existing_doc_filenames,
+        ])
 
     @endsection
     @section('script')
@@ -88,12 +90,11 @@
 
            $('#submit_button').on('click', function(e) {
                 console.log("Submitting documents");
-                var flag = false;
 
-                if ($('#form-1').valid() && !flag) {
+                if ($('#form-documentsupload').valid()) {
 
                     //alert("1 st one");
-                    var form_data1 = new FormData(document.getElementById("form-1"));
+                    var form_data1 = new FormData(document.getElementById("form-documentsupload"));
 
                     $.ajax({
                         url: "{{route('vmt-storedocuments-route')}}",
@@ -103,39 +104,20 @@
                         contentType: false,
                         processData: false,
                         success: function(data) {
-                            if (data.responseText == "Saved") {
-                                $('#modalHeader').html(data);
-                                $('#modalNot').html("Documents upload success");
-                                //$('#modalBody').html("Mail notification sent.");
+
+                            if (data.status == "success") {
+                                $('#modalNot').html(data.message);
                                 $('#notificationModal').show();
                                 $('#notificationModal').removeClass('fade');
                             } else {
-                                $('#modalHeader').html(data);
-                                $('#modalNot').html("Failed to save Data");
-                                //$('#modalBody').html("Request to the server failed");
+                                $('#modalNot').html(data.message);
                                 $('#notificationModal').show();
                                 $('#notificationModal').removeClass('fade');
                             }
                             console.log(data);
 
-                            //alert(data);
                         },
-                        error: function(data) { //NEED TO FIX IT
-                            // console.log('error');
-                            if (data.responseText == "Saved") {
-                                $('#modalHeader').html(data);
-                                $('#modalNot').html("Documents upload success");
-                                //$('#modalBody').html("Mail notification sent.");
-                                $('#notificationModal').show();
-                                $('#notificationModal').removeClass('fade');
-                            } else {
-
-                                $('#modalHeader').html(data);
-                                $('#modalNot').html("Failed to save Data");
-                                //$('#modalBody').html("Request to the server failed");
-                                $('#notificationModal').show();
-                                $('#notificationModal').removeClass('fade');
-                            }
+                        error: function(data) {
 
                         }
                     });
@@ -157,12 +139,8 @@
                 }
             });
 
-            $("select").on("select2:close", function(e) {
-                $(this).valid();
-            });
-
             $("#button_close").click(function(){
-                window.location.href = "/";
+                window.location.reload();
             });
     </script>
 

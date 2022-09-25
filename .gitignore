@@ -24,3 +24,4 @@ Homestead.json
 .phpunit.result.cache
 /storage/framework/views/
 /public/generalinfo/
+/public/employee_documents/*

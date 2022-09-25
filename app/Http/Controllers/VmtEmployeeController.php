@@ -33,6 +33,7 @@ use Dompdf\Options;
 use Dompdf\Dompdf;
 use League\CommonMark\Extension\SmartPunct\EllipsesParser;
 use PDF;
+use Illuminate\Support\Facades\File;
 
 class VmtEmployeeController extends Controller
 {
@@ -243,14 +244,14 @@ class VmtEmployeeController extends Controller
                 }
             }
 
-            $newEmployee->aadhar_card_file = $this->fileUpload('aadhar_card');
-            $newEmployee->aadhar_card_backend_file = $this->fileUpload('aadhar_card_backend');
-            $newEmployee->pan_card_file = $this->fileUpload('pan_card');
-            $newEmployee->passport_file = $this->fileUpload('passport');
-            $newEmployee->voters_id_file = $this->fileUpload('voters_id');
-            $newEmployee->dl_file = $this->fileUpload('dl_file');
-            $newEmployee->education_certificate_file = $this->fileUpload('education_certificate');
-            $newEmployee->reliving_letter_file = $this->fileUpload('reliving_letter');
+            $newEmployee->aadhar_card_file = $this->fileUpload('aadhar_card_file',$user->user_code);
+            $newEmployee->aadhar_card_backend_file = $this->fileUpload('aadhar_card_backend_file',$user->user_code);
+            $newEmployee->pan_card_file = $this->fileUpload('pan_card_file',$user->user_code);
+            $newEmployee->passport_file = $this->fileUpload('passport_file',$user->user_code);
+            $newEmployee->voters_id_file = $this->fileUpload('voters_id_file',$user->user_code);
+            $newEmployee->dl_file = $this->fileUpload('dl_file',$user->user_code);
+            $newEmployee->education_certificate_file = $this->fileUpload('education_certificate_file',$user->user_code);
+            $newEmployee->reliving_letter_file = $this->fileUpload('reliving_letter_file',$user->user_code);
 
             $newEmployee->save();
 
@@ -413,15 +414,14 @@ class VmtEmployeeController extends Controller
             $newEmployee->blood_group  = $row["blood_group"];
 
 
-            $newEmployee->aadhar_card_file = $this->fileUpload('aadhar_card');
-            $newEmployee->aadhar_card_backend_file = $this->fileUpload('aadhar_card_backend');
-            $newEmployee->pan_card_file = $this->fileUpload('pan_card');
-            $newEmployee->passport_file = $this->fileUpload('passport');
-            $newEmployee->voters_id_file = $this->fileUpload('voters_id');
-            $newEmployee->dl_file = $this->fileUpload('dl_file');
-            $newEmployee->education_certificate_file = $this->fileUpload('education_certificate');
-            $newEmployee->reliving_letter_file = $this->fileUpload('reliving_letter');
-
+            $newEmployee->aadhar_card_file = $this->fileUpload('aadhar_card_file',$user->user_code);
+            $newEmployee->aadhar_card_backend_file = $this->fileUpload('aadhar_card_backend_file',$user->user_code);
+            $newEmployee->pan_card_file = $this->fileUpload('pan_card_file',$user->user_code);
+            $newEmployee->passport_file = $this->fileUpload('passport_file',$user->user_code);
+            $newEmployee->voters_id_file = $this->fileUpload('voters_id_file',$user->user_code);
+            $newEmployee->dl_file = $this->fileUpload('dl_file',$user->user_code);
+            $newEmployee->education_certificate_file = $this->fileUpload('education_certificate_file',$user->user_code);
+            $newEmployee->reliving_letter_file = $this->fileUpload('reliving_letter_file',$user->user_code);
             $newEmployee->save();
 
             // dd($newEmployee->id);
@@ -1232,33 +1232,133 @@ class VmtEmployeeController extends Controller
     }
 
     /*
+        Show the documents page for the current user.
+        If employee already uploaded the docs, it will show the
+    */
+    public function showEmployeeDocumentsPage(Request $request)
+    {
+        //Get the existing filenames
+        $existing_doc_filenames = VmtEmployee::where('userid', auth()->user()->id)->first([
+            'aadhar_card_file',
+            'aadhar_card_backend_file',
+            'pan_card_file',
+            'passport_file',
+            'voters_id_file',
+            'dl_file',
+            'education_certificate_file',
+            'reliving_letter_file',
+            ]);
+
+        //dd($existing_doc_filenames);
+
+        return view('vmt_documents',compact('existing_doc_filenames'));
+
+    }
+
+    /*
         Called when quick onboarded employee submits the documents from their login.
         After this, the employee is onboarded sucessfully.
     */
     public function storeEmployeeDocuments(Request $request)
     {
+        $rowdata_response = [
+            'status' => 'empty',
+            'message' => 'empty',
+        ];
 
+        //This wont work for super-admin for now.
         $currentEmployeeDetails = VmtEmployee::where('userid', auth()->user()->id)->first();
 
         //dd($currentEmployeeDetails->toArray());
 
-        $currentEmployeeDetails->aadhar_card_file = $this->fileUpload('aadhar_card');
-        $currentEmployeeDetails->aadhar_card_backend_file = $this->fileUpload('aadhar_card_backend');
-        $currentEmployeeDetails->pan_card_file = $this->fileUpload('pan_card');
-        $currentEmployeeDetails->passport_file = $this->fileUpload('passport');
-        $currentEmployeeDetails->voters_id_file = $this->fileUpload('voters_id');
-        $currentEmployeeDetails->dl_file = $this->fileUpload('dl_file');
-        $currentEmployeeDetails->education_certificate_file = $this->fileUpload('education_certificate');
-        $currentEmployeeDetails->reliving_letter_file = $this->fileUpload('reliving_letter');
+        try
+        {
+            if(isset($request->aadhar_card_file))
+                $currentEmployeeDetails->aadhar_card_file = $this->fileUpload('aadhar_card_file',auth()->user()->user_code);
 
-        $currentEmployeeDetails->save();
+            if(isset($request->aadhar_card_backend_file))
+                $currentEmployeeDetails->aadhar_card_backend_file = $this->fileUpload('aadhar_card_backend_file',auth()->user()->user_code);
 
-        // //set the onboard status to 1
-        $currentUser = User::where('id', auth()->user()->id)->first();
-        $currentUser->is_onboarded = '1';
-        $currentUser->save();
+            if(isset($request->pan_card_file))
+                $currentEmployeeDetails->pan_card_file = $this->fileUpload('pan_card_file',auth()->user()->user_code);
 
-        return "Saved";
+            if(isset($request->passport_file))
+                $currentEmployeeDetails->passport_file = $this->fileUpload('passport_file',auth()->user()->user_code);
+
+            if(isset($request->voters_id_file))
+                $currentEmployeeDetails->voters_id_file = $this->fileUpload('voters_id_file',auth()->user()->user_code);
+
+            if(isset($request->dl_file))
+                $currentEmployeeDetails->dl_file = $this->fileUpload('dl_file',auth()->user()->user_code);
+
+            if(isset($request->education_certificate_file))
+                $currentEmployeeDetails->education_certificate_file = $this->fileUpload('education_certificate_file',auth()->user()->user_code);
+
+            if(isset($request->reliving_letter_file))
+                $currentEmployeeDetails->reliving_letter_file = $this->fileUpload('reliving_letter_file',auth()->user()->user_code);
+
+            $currentEmployeeDetails->save();
+
+            if( $this->isAllDocumentsUploaded(auth()->user()->id) == 1)
+            {
+                //dd("all docs uploaded");
+
+                // //set the onboard status to 1
+                $currentUser = User::where('id', auth()->user()->id)->first();
+                $currentUser->is_onboarded = '1';
+                $currentUser->save();
+
+                return $rowdata_response = [
+                    'status' => 'success',
+                    'message' => 'All documents uploaded. You have been successfully onboarded',
+                ];
+            }
+            else
+            {
+
+                return $rowdata_response = [
+                    'status' => 'success',
+                    'message' => 'Documents uploaded. Please upload the remaining documents to successfully onboard',
+                ];
+            }
+
+        }
+        catch (\Throwable $e) {
+            //dd("error! ".$e);
+            return $rowdata_response = [
+                'status' => 'failure',
+                'message' => 'Error while uploading documents',
+                'error_message' => $e->getMessage()
+            ];
+        }
+    }
+
+    private function isAllDocumentsUploaded($emp_id)
+    {
+        $is_alldocs_uploaded = 1;
+
+        $existing_doc_filenames = VmtEmployee::where('userid',$emp_id)->first([
+            'aadhar_card_file',
+            'aadhar_card_backend_file',
+            'pan_card_file',
+            'passport_file',
+            'voters_id_file',
+            'dl_file',
+            'education_certificate_file',
+            'reliving_letter_file',
+            ]);
+
+        $t_array = $existing_doc_filenames->toArray();
+        foreach($t_array as $key => $value)
+        {
+            if(empty($value))
+            {
+                $is_alldocs_uploaded = 0;
+                break;
+            }
+        }
+
+        return $is_alldocs_uploaded;
     }
 
     public function updatePassword(Request $request)
@@ -1281,16 +1381,46 @@ class VmtEmployeeController extends Controller
         }
     }
 
-    public function fileUpload($file)
+    public function fileUpload($file, $emp_code)
     {
+
         if (request()->has($file)) {
             $docUploads = request()->file($file);
-            $docUploadsName = 'doc_' . $docUploads->getClientOriginalName() . "_" . time() . '.' . $docUploads->getClientOriginalExtension();
-            $docUploadsPath = public_path('/images/');
-            $docUploads->move($docUploadsPath, $docUploadsName);
+            $docUploadsName = 'doc_' .$emp_code.'_'. $file . "_" . time() . '.' . $docUploads->getClientOriginalExtension();
+
+            $emp_document_path = public_path('employee_documents/'.$emp_code);
+            // dd($emp_document_path);
+            if(!File::isDirectory($emp_document_path)){
+                File::makeDirectory($emp_document_path, 0777, true, true);
+            }
+            else
+            {
+                //get the filename
+                $user_id = User::where('user_code',$emp_code)->first('id');
+                $existing_file = VmtEmployee::where('userid',$user_id->id)->value($file);
+
+                //Delete the old file
+                if( isset($existing_file) && File::isFile($emp_document_path.'/'.$existing_file)){
+                   // dd("File found : ".$emp_document_path.'/'.$existing_file);
+                   File::delete($emp_document_path.'/'.$existing_file);
+                }
+                else
+                {
+                   //If file doesnt exists, delete the entry
+
+                }
+
+
+            }
+
+            //Upload the new file
+            $docUploads->move($emp_document_path, $docUploadsName);
             return $docUploadsName;
         }
-        return null;
+        else
+        {
+            return "";
+        }
     }
 
 }

@@ -289,9 +289,7 @@ Route::get('/clientOnboarding', function () {
 // config menu (document tamplate view)
 Route::get('/document_preview', 'App\Http\Controllers\HomeController@showDocumentTemplate')->name('document_preview');
 
-Route::get('/documents', function () {
-    return view('vmt_documents');
-})->name('vmt-documents-route');
+Route::get('/documents',  [App\Http\Controllers\VmtEmployeeController::class, 'showEmployeeDocumentsPage'])->name('vmt-documents-route');
 
 Route::post('vmt-documents-route', 'App\Http\Controllers\VmtEmployeeController@storeEmployeeDocuments')->name('vmt-storedocuments-route');
 
