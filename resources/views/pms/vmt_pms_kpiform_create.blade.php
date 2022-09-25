@@ -630,6 +630,7 @@ $(function () {
         var canSaveForm = true;
         var kpiWeightageTotal = 0;
         var errorMessages = [];
+        $('#error_ul').html('');
         // var ul_message=document.getElementById("error_ul");
         // var li_message=document.getElementById("error_li");
         
@@ -657,6 +658,7 @@ $(function () {
         });
 
         //Check if form name entered
+        console.log($('#name').val());
         if($('#name').val().trim().length==0)
         {
             isAllFieldsEntered = false;
