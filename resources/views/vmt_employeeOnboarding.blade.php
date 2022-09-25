@@ -18,7 +18,7 @@
         -moz-appearance: textfield;
     }
 
-    input {
+    .floating input {
         width: 100% !important;
         margin-left: 0 !important;
         height: 2.9em;

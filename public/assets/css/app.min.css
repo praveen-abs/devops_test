@@ -905,39 +905,6 @@ body::-webkit-scrollbar-thumb{
     padding-left: 1.75rem;
 }
 
-/* top bar search bar */
-
-.search-content {
-    position: relative;
-}
-
-.ri-search-line {
-    font-size: 14px;
-    position: absolute;
-    left: 10px;
-    color: #aea0af;
-}
-
-.search-bar {
-    background: transparent;
-    text-indent: 30px;
-    width: 300px;
-}
-
-.settings-icon {
-    font-size: 18px;
-    font-weight: 600;
-    /* padding: 0px 10px; */
-}
-
-/* george commant padding */
-.navbar-menu .navbar-nav .nav-sm .nav-link {
-    /* padding: .55rem 1.5rem !important; */
-    /* color: var(--vz-vertical-menu-sub-item-color); */
-    white-space: none;
-    position: relative;
-    font-size: 12px;
-}
 
 .navbar-menu .navbar-nav .nav-sm .nav-link:before {
     content: "";

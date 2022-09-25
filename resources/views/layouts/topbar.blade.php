@@ -51,11 +51,11 @@
                             @endif
                         </div>
 
-                        <div class="topbar-search-bar search-content d-flex ms-5 align-items-center"
+                        <div class="search-content ms-5 "
                             >
 
                             <i class=" ri-search-line "></i>
-                            <input type="text" class="search-bar form-control py-1 rounded-pill"
+                            <input type="text" class="search-bar form-control py-1 rounded"
                                 placeholder="Search">
                         </div>
                     </div>
