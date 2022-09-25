@@ -615,8 +615,8 @@ class VmtEmployeeController extends Controller
                 'spouse_name' => 'nullable|required_unless:marital_status,unmarried|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'spouse_dob' => 'nullable|required_unless:marital_status,unmarried|dateformat:d-m-Y',
                 'no_of_child' => 'nullable|numeric',
-                'child_name' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'child_dob' => 'nullable|date_format:d-m-Y',
+                'child_name' => 'nullable|required_unless:no_of_child,>,0|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'child_dob' => 'nullable||required_unless:no_of_child,>,0|dateformat:d-m-Y',
                 'department' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'process' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'designation' => 'required',
@@ -661,6 +661,7 @@ class VmtEmployeeController extends Controller
                 'regex' => 'Field <b>:attribute</b> is invalid',
                 'employee_name.regex' => 'Field <b>:attribute</b> should not have special characters',
                 'unique' => 'Field <b>:attribute</b> should be unique',
+                'dob.before' => 'Field <b>:attribute</b> should be above 18 years',
             ];
 
             $validator = Validator::make($excelRowdata, $rules, $messages);
@@ -733,7 +734,7 @@ class VmtEmployeeController extends Controller
                 'user_code' =>  $empNo,
                 'can_login' => '1',
                 'active' => '1',
-                'is_onboarded' => '1',
+                'is_onboarded' => '0',
                 'onboard_type' => 'bulk',
                 'is_admin' => '0',
                 'is_default_password_updated' => '0',
@@ -971,12 +972,12 @@ class VmtEmployeeController extends Controller
         $pdf->setPaper('A4', 'portrait');
         $pdf->render();
         $docUploads =  $pdf->output();
-        \File::put(public_path('/') . $filename, $docUploads);
-        $fileAttr  = file_get_contents(public_path('/') . $filename);
+        \File::put(public_path('appoinmentLetter/') . $filename, $docUploads);
+
         $image_view = url('/') . $VmtGeneralInfo->logo_img;
         $appoinmentPath = "";
         if (fetchMasterConfigValue("can_send_appointmentletter_after_onboarding") == "true") {
-            $appoinmentPath = public_path('/') . $filename;
+            $appoinmentPath = public_path('appoinmentLetter/') . $filename;
         }
         $notification_user = User::where('id',auth::user()->id)->first();
         $message = "Employee Bulk OnBoard was Created   ";

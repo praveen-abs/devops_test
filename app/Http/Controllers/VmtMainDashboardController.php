@@ -63,7 +63,7 @@ class VmtMainDashboardController extends Controller
             if(auth()->user()->onboard_type == 'bulk')
             {
 
-                return view('vmt_documents');
+                return redirect()->route('vmt-documents-route');
             }
         }
 

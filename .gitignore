@@ -25,3 +25,4 @@ Homestead.json
 /storage/framework/views/
 /public/generalinfo/
 /public/employee_documents/*
+/public/appoinmentLetter/*
