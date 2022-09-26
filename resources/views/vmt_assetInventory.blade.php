@@ -190,10 +190,9 @@ tr:last-child td:last-child {
     </div>
 
     <div class="table-responsive">
-        <div class="card-body">
+       
             <div id="table-assets"></div>
-        </div><!-- end card-body -->
-
+       
         <!-- end table -->
     </div>
 

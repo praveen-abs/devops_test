@@ -6,7 +6,7 @@
 ._container-calendar {
     background: #ffffff;
     padding: 1px;
-    max-width: 475px;
+    /* max-width: 475px; */
     height: 362px;
     margin: 0 auto;
     overflow: auto;

@@ -431,11 +431,11 @@ p {
     border: none !important;
     padding: 12px 0 0;
 }
-.gridjs-table {
-    width: auto !important;
-    overflow-x: scroll;
+
+table.gridjs-table{
+    width: 100%;
 }
-.gridjs-pagination .gridjs-summary {
+js-pagination .gridjs-summary {
     font-size: 14px !important;
 }
 .gridjs-tbody,
@@ -458,7 +458,23 @@ th.gridjs-th-sort:hover {
 }
 .gridjs-head {
     padding-top: 0;
+    margin-bottom: 5px;
+    padding: 5px 1px;
+    width: 100% !important;    
+    text-align: end;
+    position: relative;
 }
+.gridjs-search:before{
+    
+    left: 7px !important;
+    z-index: 0;
+}
+.gridjs-message{
+    background: url(../images/404-error.png) !important;
+    height: 50px !important;
+    width: 50px !important;
+}
+
 .gridjs-footer {
     box-shadow: none;
     border: 1px solid var(--vz-border-color);
@@ -506,7 +522,9 @@ th.gridjs-th-sort:hover {
 }
 .gridjs-search {
     position: relative;
-    float: left;
+    float: none !important;
+    text-align: left;
+    z-index: 2;
 }
 .gridjs-search:before {
     content: "\f0d1";
@@ -764,7 +782,20 @@ button.gridjs-sort-desc {
 .bottom-content .check-box {
     border: 1px solid #ced4da;
     height: 15px !important;
+    height: 13px !important;
+    padding: 7px;
+    margin: 5px;
 }
+
+
+.badge{
+    height: 18px;
+    width: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 
 .ember-view i {
     font-size: 15px;

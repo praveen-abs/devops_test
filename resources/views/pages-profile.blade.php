@@ -802,7 +802,7 @@
                                     }
                                     @endphp --}}
                                     {{-- <div class="fileupload btn">
-                                        <span class="btn-text">edit</span>
+                                        <span class="btn-text">Change</span>
                                         <input type='file' name="profilePic" class="upload"  accept="image/*" onchange="readURL(this);" />
                                         </div>
                                     </div> --}}
@@ -935,7 +935,7 @@
                                         src="@if (!empty($user->avatar)){{ URL::asset('images/' . $user->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"
                                         alt="">
                                     <div class="fileupload btn">
-                                        <span class="btn-text">edit</span>
+                                        <span class="btn-text">Change</span>
                                         <input type='file' name="profilePic" class="upload"  accept="image/*" onchange="readURL(this);" />
                                     </div>
                                     </div>

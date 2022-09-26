@@ -4,9 +4,25 @@
 <link href="{{ URL::asset('assets/css/crm.css') }}" rel="stylesheet">
 <link rel="stylesheet" href="{{ URL::asset('assets/libs/gridjs/gridjs.min.css') }}">
 
+<style>
+    .department-wrapper {
+        position: relative;
+       
+
+    }
+
+    .department-wrapper .bulk-assign {
+        position: absolute;
+        top: 12px;
+        right: 0px;
+        z-index: 5;
+    }
+</style>
 
 
 @endsection
+
+
 
 @section('content')
 <div class="main container-fluid mt-30">
@@ -30,23 +46,15 @@
                                 </div>
                             </li>
                             <li>
-                                <div class="dropdown-item d-flex justify-content-between" href="#">
-                                    <p class="text-muted">Humen resrouces</p>
-                                    <p class="text-muted">Content creative</p>
-                                </div>
+                                <p class="text-muted dropdown-item">Humen resources</p>
                             </li>
                             <li>
-                                <div class="dropdown-item d-flex justify-content-between" href="#">
-                                    <p class="text-muted">Design/Art</p>
-                                    <p class="text-muted text-left">SEO</p>
-                                </div>
+                                <p class="text-muted dropdown-item">Content creative</p>
                             </li>
                             <li>
-                                <div class="dropdown-item d-flex justify-content-between" href="#">
-                                    <p class="text-muted">CRO</p>
-                                    <p class="text-muted  text-left">Sales</p>
-                                </div>
+                                <p class="text-muted dropdown-item">Design/Art</p>
                             </li>
+
                         </ul>
                     </div>
 
@@ -69,11 +77,11 @@
                         <div>
                             <ul class="nav nav-pills    nav-tabs-dashed" id="pills-tab" role="tablist">
                                 <li class="nav-item active ember-view me-4" role="presentation">
-                                    <a class="nav-link active ember-view p-0" id="pills-home-tab" data-bs-toggle="pill" href="" data-bs-target="#investment_dec" role="tab" aria-controls="pills-home" aria-selected="true">
+                                    <a class="nav-link active ember-view p-0" id="pills-home-tab" data-bs-toggle="pill" href="" data-bs-target="#department_employee" role="tab" aria-controls="pills-home" aria-selected="true">
                                         Employees</a>
                                 </li>
                                 <li class="nav-item  ember-view mx-4 " role="presentation">
-                                    <a class="nav-link  ember-view p-0" id="pills-home-tab" data-bs-toggle="pill" href="" data-bs-target="#investment_proof" role="tab" aria-controls="pills-home" aria-selected="true">
+                                    <a class="nav-link  ember-view p-0" id="pills-home-tab" data-bs-toggle="pill" href="" data-bs-target="#department_settings" role="tab" aria-controls="pills-home" aria-selected="true">
                                         Settings</a>
                                 </li>
 
@@ -83,24 +91,17 @@
 
                     </div>
 
-                    <div class="tab-content " id="pills-tabContent">
+                    <div class="tab-content mt-3" id="pills-tabContent">
 
-                        <div class="tab-pane  fade show active" id="investment_dec" role="tabpanel" aria-labelledby="pills-home-tab">
+                        <div class="tab-pane  fade show active" id="department_employee" role="tabpanel" aria-labelledby="pills-home-tab">
 
-                            <div id="ember83" class="ember-view ">
-                                <div class="bulkhead my-3    d-flex justify-content-between">
-
+                            <div id="ember83" class="ember-view department-wrapper">
+                                <div class="bulkhead  bulk-assign   d-flex justify-content-between">
                                     <button class="btn btn-orange">Bulk Assign Employees</button>
-
-                                    <div class="search-content">
-
-                                        <i class=" ri-search-line "></i>
-                                        <input type="text" class="search-bar form-control py-1 rounded" placeholder="Search">
-                                    </div>
-
                                 </div>
-                                <div class="table-responsive">
-                                    <table class=" table table-hover    ">
+                                <!-- <div class="table-responsive">
+                           
+                                <table class=" table table-hover    ">
                                         <thead class="tabhead text-white">
 
                                             <th>Employee Number</th>
@@ -110,29 +111,17 @@
 
                                         </thead>
                                         <tbody>
-                                            <tr>
-
-                                                <td>ABS1009</td>
-                                                <td>George</td>
-                                                <td>UI/UX Designer and Developer</td>
-                                                <td>Srinivasan</td>
-
-                                            </tr>
-
-                                            <tr>
-
-                                                <td>ABS1009</td>
-                                                <td>George</td>
-                                                <td>UI/UX Designer and Developer</td>
-                                                <td>Srinivasan</td>
-
-                                            </tr>
+                                           
                                         </tbody>
                                     </table>
+                                </div> -->
+                                <div class="table-responsive">
+                                    <div id="department-table"></div>
+
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade mt-3 " id="investment_proof" role="tabpanel" aria-labelledby="pills-home-tab">
+                        <div class="tab-pane fade mt-3 " id="department_settings" role="tabpanel" aria-labelledby="pills-home-tab">
                             <div class="text-right">
                                 <button class="btn btn-orange me-2" data-bs-toggle="modal" data-bs-target="#"><i class="fa fa-pencil me-1"></i>Edit</button>
                             </div>
@@ -254,4 +243,74 @@
         </div>
     </div>
 </div>
+@endsection
+
+
+@section('script')
+<script src="{{ URL::asset('assets/libs/gridjs/gridjs.min.js') }}"></script>
+
+<script src="{{ URL::asset('/assets/js/pages/dashboard-projects.init.js') }}"></script>
+<script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+
+        if (document.getElementById("department-table")) {
+            const grid = new gridjs.Grid({
+                columns: [{
+                        id: 'number',
+                        name: 'Employee Number',
+
+                    },
+                    {
+                        id: 'name ',
+                        name: 'Employee Name',
+
+                    },
+                    {
+                        id: 'job_title',
+                        name: ' Job Title',
+                    },
+                    {
+                        id: 'reporting_to',
+                        name: ' Reporting to',
+                    },  
+
+                ],
+                data: [
+                    // {
+                    //     name: 'John',
+                    //     email: 'john@example.com',
+                    //     phoneNumber: '(353) 01 222 3333'
+                    // },
+                    // {
+                    //     name: 'Mark',
+                    //     email: 'mark@gmail.com',
+                    //     phoneNumber: '(01) 22 888 4444'
+                    // },
+                ],
+
+                pagination: {
+                    limit: 10
+                },
+                sort: true,
+                search: true,
+
+
+
+
+            }).render(document.getElementById("department-table"));
+
+
+        }
+
+
+
+    });
+</script>
 @endsection

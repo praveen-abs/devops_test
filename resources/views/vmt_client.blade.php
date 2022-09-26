@@ -182,17 +182,47 @@
         </div>
         <div class="table-responsive">
             <table class="table table-hover">
-                <div id="table-clientlist" class="  "></div>
+                <!-- <div id="table-clientlist" class="  "></div> -->
 
-            </table>
-
-            <!-- <div class="no-data-img flex-column d-flex justify-content-center align-items-center"  style="">
-                    <img src="{{ URL::asset('assets/images/no-data/nodata.png') }}"
-                        alt="" class="" style="height:100px;width:200px" >
-                        <span class="f-15 fw-bold mt-2 text-muted">No Data</span>
-                </div>
-                <hr class="m-0"> -->
+            </table>        
         </div>
+
+        
+        <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+
+                                            <th>Client ID</th>
+                                            <th>Name</th>
+                                            <th>Contact</th>
+                                            <th>Email</th>
+                                            <th>Company Name</th>
+                                            <th>Contact</th>
+                                            <th>Customer Type</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="10" class="">
+
+                                            </td>
+
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
+                                 <div class="no-data-img flex-column d-flex justify-content-center align-items-center"
+                                    style="">
+                                    <img src="{{ URL::asset('assets/images/no-data/nodata.png') }}" alt=""
+                        class="" style="height:100px;width:200px">
+                        <span class="f-15 fw-bold mt-2 text-muted">No Data</span>
+                    </div> 
+
+                            </div>
 
 
 

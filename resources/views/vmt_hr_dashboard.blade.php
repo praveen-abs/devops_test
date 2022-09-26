@@ -186,8 +186,8 @@
                                                             <div class="bottom-content d-flex mx-2">
 
                                                                 <div class="row">
-                                                                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                                                                        <div class="form-check mx-2">
+                                                                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                                                                        <div class="form-check ps-0">
                                                                             <input class="form-check-input check-box me-1" type="checkbox" value="1" id="notifyEmp" name="notify_employees">
                                                                             <label class="form-check-label" for="notifyEmp">
                                                                                 Notify employees
@@ -195,24 +195,24 @@
 
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                                                                        <div class="form-check mx-2">
+                                                                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                                                                        <div class="form-check ps-0">
                                                                             <input class="form-check-input check-box  me-1" type="checkbox" value="1" id="requireAcknowledge" name="require_acknowledgement">
                                                                             <label class="form-check-label" for="requireAcknowledge">
                                                                                 Require Acknowledgement
                                                                             </label>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                                                                        <div class="form-check mx-2">
+                                                                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6  col-xxl-6 ">
+                                                                        <div class="form-check ps-0">
                                                                             <input class="form-check-input check-box me-1" type="checkbox" value="1" id="hideAfter" name="hide_after">
                                                                             <label class="form-check-label" for="hideAfter">
                                                                                 Hide After
                                                                             </label>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                                                                        <div class="form-check mx-2">
+                                                                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                                                                        <div class="form-check ps-0">
                                                                             <input class="form-control me-1 anounce-date " type="date" name="date" placeholder="Select date" id="" required style="background-color:#e9ecef">
                                                                         </div>
                                                                     </div>
