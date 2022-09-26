@@ -15,7 +15,7 @@
                                 <li id="compensatory"><strong class="f-9 onboard-detail">Compensatory</strong></li>
                                 <li id="end"><strong class="f-9 onboard-detail">Personal Documents</strong></li>
                             </ul> -->
-                        <form id="form-1" enctype="multipart/form-data">
+                        <form id="form-1" enctype="multipart/form-data" class=" ">
                             @csrf
                             <div class="card shadow  profile-box card-top-border p-2">
                                 <div class="card-body justify-content-center align-items-center ">
@@ -41,7 +41,7 @@
                                                     @if(isset($employee_user->name))
                                                     <input type="text" placeholder="Employee Name as per Aadhar " name="employee_name" id="employee_name" value="{{$employee_user->name}}" class="onboard-form form-control textbox" pattern="name" readonly />
                                                     @else
-                                                    <input type="text" placeholder="Employee Name as per Aadhar " name="employee_name" id="employee_name" class="form-control textbox" pattern="name" required />
+                                                    <input type="text" placeholder="Employee Name as per Aadhar " name="employee_name" id="employee_name" class=" form-control textbox" pattern="name" required />
 
                                                     @endif
                                                     <label class="error star_error employee_name_label" for="employee_name" style="display: none;"></label>
@@ -1167,7 +1167,7 @@
                                                 </div> -->
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                                                 <!-- <label class="" for="aadhar_card">Aadhar Card{!! required() !!}</label> -->
-                                                <label for="">Aadhar
+                                                <label for="" class="float-label">Aadhar
                                                     Card Front<span class="text-danger">*</span></label>
                                                 <div class="addfiles form-control md" data="#aadhar_card_file" id="aadhar_card_file_label"><span class="file_label">Choose Aadhar
                                                         Card Front</span></div>
@@ -1175,14 +1175,14 @@
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2" id="aadhar_card_backend_content">
                                                 <!-- <label class="" for="aadhar_card_backend">Aadhar Card Backend<span id="aadhar_card_backend_req">{!! required() !!}</span></label> -->
-                                                <label for=""> Aadhar Card Back<span class="text-danger">*</span></label>
+                                                <label for="" class="float-label"> Aadhar Card Back<span class="text-danger">*</span></label>
                                                 <div class="addfiles form-control" data="#aadhar_card_backend_file" id="aadhar_card_backend_file_label"><span class="file_label">Choose
                                                         Aadhar Card Back </span></div>
                                                 <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Aadhar Card Backend" name="aadhar_card_backend_file" id="aadhar_card_backend_file" class="onboard-form form-control files" />
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                                                 <!-- <label class="" for="pan_card">Pan Card{!! required() !!}</label> -->
-                                                <label for=""> Pan
+                                                <label for="" class="float-label"> Pan
                                                     Card<span class="text-danger">*</span></label>
                                                 <div class="addfiles form-control" data="#pan_card_file" id="pan_card_file_label"><span class="file_label">Upload Pan
                                                         Card</span></div>
@@ -1190,7 +1190,7 @@
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                                                 <!-- <label class="" for="passport">Passport{!! required() !!}</label> -->
-                                                <label for="">
+                                                <label for="" class="float-label">
                                                     Passport</label>
                                                 <div class="addfiles form-control" data="#passport_file" id="passport_file_label"><span class="file_label">Choose
                                                         Passport</span></div>
@@ -1198,7 +1198,7 @@
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                                                 <!-- <label class="" for="voters_id">Voters ID</label> -->
-                                                <label for="">
+                                                <label for="" class="float-label">
                                                     Voters
                                                     ID</label>
                                                 <div class="addfiles form-control" data="#voters_id_file" id="voters_id_file_label"><span class="file_label">Choose Voters
@@ -1207,21 +1207,21 @@
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                                                 <!-- <label class="" for="dl_file">Driving License</label> -->
-                                                <label for=""> Driving License</label>
+                                                <label for="" class="float-label"> Driving License</label>
                                                 <div class="addfiles form-control" data="#dl_file" id="dl_file_label"><span class="file_label">Choose Driving
                                                         License</span></div>
                                                 <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Driving License" name="dl_file" id="dl_file" class="onboard-form form-control files" />
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
                                                 <!-- <label class="" for="education_certificate">Educations Certificate{!! required() !!}</label> -->
-                                                <label for="">Educations Certificate<span class="text-danger">*</span></label>
+                                                <label for="" class="float-label">Educations Certificate<span class="text-danger">*</span></label>
                                                 <div class="addfiles form-control" data="#education_certificate_file" id="education_certificate_file_label"><span class="file_label">Choose
                                                         Educations Certificate</span></div>
                                                 <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Educations Certificate" name="education_certificate_file" id="education_certificate_file" class="onboard-form form-control files" />
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
                                                 <!-- <label class="" for="reliving_letter">Reliving Letter</label> -->
-                                                <label for=""> Relieving Letter</label>
+                                                <label for="" class="float-label"> Relieving Letter</label>
                                                 <div class="addfiles form-control" data="#reliving_letter_file" id="reliving_letter_file_label"><span class="file_label">Choose
                                                         Relieving Letter</span></div>
                                                 <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Relieving Letter" name="reliving_letter_file" id="reliving_letter_file" class="onboard-form form-control files" />

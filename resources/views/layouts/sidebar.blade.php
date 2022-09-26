@@ -254,7 +254,7 @@
                         </i>
                         <span>Team</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="teamDrop-Down">
+                    <!-- <div class="collapse menu-dropdown" id="teamDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1"><span>Summary</span></a>
@@ -284,7 +284,7 @@
                                 <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button"><span>Performance</span></a>
                             </li>
                         </ul>
-                    </div>
+                    </div> -->
                 </li>
                 @endif
 
