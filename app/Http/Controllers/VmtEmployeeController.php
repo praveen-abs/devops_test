@@ -195,7 +195,7 @@ class VmtEmployeeController extends Controller
                 'email' => $row["email"],
                 'password' => Hash::make('Abs@123123'),
                 'avatar' =>  $row['employee_name'] . '_avatar.jpg',
-                'user_code' =>  $row['employee_code'],
+                'user_code' => strtoupper($row['employee_code']),
                 'active' => '0',
                 'is_onboarded' => '1',
                 'onboard_type' => 'normal',
@@ -217,7 +217,7 @@ class VmtEmployeeController extends Controller
             $newEmployee->dob   =    $row["dob"];
             $newEmployee->father_name   =  $row["father_name"];
             $newEmployee->pan_number   =  isset($row["pan_no"]) ? ($row["pan_no"]) : "";
-            $newEmployee->pan_ack   =    $row["pan_ack"];
+            //$newEmployee->pan_ack   =    $row["pan_ack"];
             $newEmployee->aadhar_number = $row["aadhar"];
             $newEmployee->epf_number = $row["epf_number"];
 
@@ -230,8 +230,8 @@ class VmtEmployeeController extends Controller
             $newEmployee->bank_name   = $row["bank_name"];
             $newEmployee->bank_ifsc_code  = $row["bank_ifsc"];
             $newEmployee->bank_account_number  = $row["account_no"];
-            $newEmployee->present_address   = $row["current_address"];
-            $newEmployee->permanent_address   = $row["permanent_address"];
+            $newEmployee->present_address   = $row["current_address_line_1"].' , '.$row["current_address_line_2"] ;
+            $newEmployee->permanent_address   = $row["permanent_address_line_1"].' , '.$row["permanent_address_line_2"] ;
             //$newEmployee->father_age   = $row["father_age"];
             $newEmployee->mother_name   = $row["mother_name"];
             //$newEmployee->mother_age  = $row["mother_age"];
@@ -252,7 +252,17 @@ class VmtEmployeeController extends Controller
             $newEmployee->dl_file = $this->fileUpload('dl_file',$user->user_code);
             $newEmployee->education_certificate_file = $this->fileUpload('education_certificate_file',$user->user_code);
             $newEmployee->reliving_letter_file = $this->fileUpload('reliving_letter_file',$user->user_code);
-
+            $docReviewArray = array(
+                'aadhar_card_file' => -1,
+                'aadhar_card_backend_file' => -1,
+                'pan_card_file' => -1,
+                'passport_file' => -1,
+                'voters_id_file' => -1,
+                'dl_file' => -1,
+                'education_certificate_file' => -1,
+                'reliving_letter_file' => -1
+            );
+            $newEmployee->docs_reviewed = json_encode($docReviewArray);
             $newEmployee->save();
 
             if ($newEmployee) {
@@ -395,7 +405,7 @@ class VmtEmployeeController extends Controller
             $newEmployee->dob   =    $row['dob'];
             $newEmployee->father_name   =  $row["father_name"];
             $newEmployee->pan_number   =  isset($row["pan_no"]) ? ($row["pan_no"]) : "";
-            $newEmployee->pan_ack   =    $row["pan_ack"];
+            //$newEmployee->pan_ack   =    $row["pan_ack"];
             $newEmployee->aadhar_number = $row["aadhar"];
             //$newEmployee->uan = $row["uan"];
             //$newEmployee->epf_number = $row["epf_number"];
@@ -407,8 +417,8 @@ class VmtEmployeeController extends Controller
             $newEmployee->bank_name   = $row["bank_name"];
             $newEmployee->bank_ifsc_code  = $row["bank_ifsc"];
             $newEmployee->bank_account_number  = $row["account_no"];
-            $newEmployee->present_address   = $row["current_address"];
-            $newEmployee->permanent_address   = $row["permanent_address"];
+            $newEmployee->present_address   = $row["current_address_line_1"].' , '.$row["current_address_line_2"] ;
+            $newEmployee->permanent_address   = $row["permanent_address_line_1"].' , '.$row["permanent_address_line_2"] ;
             //$newEmployee->father_age   = $row["father_age"];
             $newEmployee->mother_name   = $row["mother_name"];
             $newEmployee->blood_group  = $row["blood_group"];
@@ -422,6 +432,17 @@ class VmtEmployeeController extends Controller
             $newEmployee->dl_file = $this->fileUpload('dl_file',$user->user_code);
             $newEmployee->education_certificate_file = $this->fileUpload('education_certificate_file',$user->user_code);
             $newEmployee->reliving_letter_file = $this->fileUpload('reliving_letter_file',$user->user_code);
+            $docReviewArray = array(
+                'aadhar_card_file' => -1,
+                'aadhar_card_backend_file' => -1,
+                'pan_card_file' => -1,
+                'passport_file' => -1,
+                'voters_id_file' => -1,
+                'dl_file' => -1,
+                'education_certificate_file' => -1,
+                'reliving_letter_file' => -1
+            );
+            $newEmployee->docs_reviewed = json_encode($docReviewArray);
             $newEmployee->save();
 
             // dd($newEmployee->id);
@@ -600,7 +621,7 @@ class VmtEmployeeController extends Controller
                 'father_dob' => 'required|date',
 
                 'pan_no' => 'required|regex:/(^([A-Z]){3}P([A-Z]){1}([0-9]){4}([A-Z]){1}$)/u',
-                'pan_ack' => 'required_if:pan_no,==,""',
+                //'pan_ack' => 'required_if:pan_no,==,""',
                 'aadhar' => 'required|regex:/(^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$)/u',
                 'marital_status' => 'required|in:unmarried,married,widowed,separated,divorced',
                 'mobile_no' => 'required|regex:/^([0-9]{10})?$/u|numeric',
@@ -731,7 +752,7 @@ class VmtEmployeeController extends Controller
                 'email' => $row["email"],
                 'password' => Hash::make('Abs@123123'),
                 'avatar' =>  $row['employee_name'] . '_avatar.jpg',
-                'user_code' =>  $empNo,
+                'user_code' =>  strtoupper($empNo),
                 'can_login' => '1',
                 'active' => '1',
                 'is_onboarded' => '0',
@@ -759,15 +780,15 @@ class VmtEmployeeController extends Controller
             $newEmployee->father_dob   =  $row['father_dob'];
 
             $newEmployee->pan_number   =  isset($row["pan_no"]) ? ($row["pan_no"]) : "";
-            $newEmployee->pan_ack   =    $row["pan_ack"];
+            //$newEmployee->pan_ack   =    $row["pan_ack"];
             $newEmployee->aadhar_number = $row["aadhar"];
             $newEmployee->marrital_status = $row["marital_status"];
             $newEmployee->mobile_number  = $row["mobile_no"];
             $newEmployee->bank_name   = $row["bank_name"];
             $newEmployee->bank_ifsc_code  = $row["bank_ifsc"];
             $newEmployee->bank_account_number  = $row["account_no"];
-            $newEmployee->present_address   = $row["current_address"];
-            $newEmployee->permanent_address   = $row["permanent_address"];
+            $newEmployee->present_address   = $row["current_address_line_1"].' , '.$row["current_address_line_2"] ;
+            $newEmployee->permanent_address   = $row["permanent_address_line_1"].' , '.$row["permanent_address_line_2"] ;
             $newEmployee->mother_name   = $row["mother_name"];
             $newEmployee->mother_gender   = $row["mother_gender"];
             $newEmployee->mother_dob   = $row["mother_dob"];
@@ -1139,7 +1160,7 @@ class VmtEmployeeController extends Controller
                 'email' => $row["email"],
                 'password' => Hash::make('Abs@123123'),
                 'avatar' =>  $row['employee_name'] . '_avatar.jpg',
-                'user_code' =>  $empNo,
+                'user_code' =>  strtoupper($empNo),
                 'can_login' => '1',
                 'active' => '0',
                 'is_onboarded' => '0',

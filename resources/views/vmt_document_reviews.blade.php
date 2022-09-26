@@ -73,17 +73,14 @@
                                                 <tbody>
                                                     <tr>
                                                         <td>Aadhar Card Front</td>
-                                                        <td> 
-                                                            <div 
-                                                                class="view-file" 
-                                                                data-src="{{ URL::asset('images/' . $documents_filenames[0]->aadhar_card_file) }}"
-                                                                style="cursor:pointer" 
+                                                        <td>
+                                                            <div
+                                                                class="view-file"
+                                                                data-src="{{ URL::asset('employee_documents/'.$user_code.'/'.$documents_filenames[0]->aadhar_card_file) }}"
+                                                                style="cursor:pointer"
                                                             >
                                                                 {{"View Documents"}}
                                                             </div>
-                                                            <!-- <img class="w-100 h-100 soc-det-img "
-                                                            src="{{ URL::asset('images/' . $documents_filenames[0]->aadhar_card_file) }}"
-                                                            alt="Aadhar Card Front"> -->
                                                         </td>
                                                         <td>
                                                             @if($docs_reviewed != null)
@@ -99,24 +96,23 @@
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            <button class="btn btn-success" onclick="approveOrRejectDocument('aadhar_card_file', 1)"> Approve</button>
-                                                            <button class="btn btn-secondary" onclick="approveOrRejectDocument('aadhar_card_file', 0)"> Reject</button>
+                                                            @if(isset($docs_reviewed) && $docs_reviewed->aadhar_card_file == -1)
+                                                                <button class="btn btn-success" onclick="approveOrRejectDocument('aadhar_card_file', 1)"> Approve</button>
+                                                                <button class="btn btn-secondary" onclick="approveOrRejectDocument('aadhar_card_file', 0)"> Reject</button>
+                                                            @endif
                                                         </td>
                                                     </tr>
 
                                                     <tr>
                                                         <td>Aadhar Card Back</td>
-                                                        <td> 
-                                                            <div 
-                                                                class="view-file" 
-                                                                data-src="{{ URL::asset('images/' . $documents_filenames[0]->aadhar_card_backend_file) }}"
-                                                                style="cursor:pointer" 
+                                                        <td>
+                                                            <div
+                                                                class="view-file"
+                                                                data-src="{{ URL::asset('employee_documents/'.$user_code.'/'.$documents_filenames[0]->aadhar_card_backend_file) }}"
+                                                                style="cursor:pointer"
                                                             >
                                                                 {{"View Documents"}}
                                                             </div>
-                                                            <!-- <img class="w-100 h-100 soc-det-img "
-                                                            src="{{ URL::asset('images/' . $documents_filenames[0]->aadhar_card_backend_file) }}"
-                                                            alt="Aadhar Card Front"> -->
                                                         </td>
                                                         <td>
                                                             @if($docs_reviewed != null)
@@ -132,21 +128,24 @@
                                                             @endif
                                                         </td>
                                                         <td>
+                                                            @if(isset($docs_reviewed) && $docs_reviewed->aadhar_card_backend_file == -1)
+
                                                             <button class="btn btn-success" onclick="approveOrRejectDocument('aadhar_card_backend_file', 1)"> Approve</button>
                                                             <button class="btn btn-secondary" onclick="approveOrRejectDocument('aadhar_card_backend_file', 0)"> Reject</button>
+                                                            @endif
                                                         </td>
                                                     </tr>
 
                                                      <tr>
                                                         <td>Pan Card</td>
-                                                        <td> 
+                                                        <td>
                                                             <!-- <img class="w-100 h-100 soc-det-img "
                                                             src="{{ URL::asset('images/' . $documents_filenames[0]->pan_card_file) }}"
                                                             alt="Aadhar Card Front"> -->
-                                                            <div 
-                                                                class="view-file" 
-                                                                data-src="{{ URL::asset('images/' . $documents_filenames[0]->pan_card_file) }}"
-                                                                style="cursor:pointer" 
+                                                            <div
+                                                                class="view-file"
+                                                                data-src="{{ URL::asset('employee_documents/'.$user_code.'/'.$documents_filenames[0]->pan_card_file) }}"
+                                                                style="cursor:pointer"
                                                             >
                                                                 {{"View Documents"}}
                                                             </div>
@@ -165,21 +164,20 @@
                                                             @endif
                                                         </td>
                                                         <td>
+                                                            @if(isset($docs_reviewed) && $docs_reviewed->pan_card_file == -1)
                                                             <button class="btn btn-success" onclick="approveOrRejectDocument('pan_card_file', 1)"> Approve</button>
                                                             <button class="btn btn-secondary" onclick="approveOrRejectDocument('pan_card_file', 0)"> Reject</button>
+                                                            @endif
                                                         </td>
                                                     </tr>
 
                                                      <tr>
                                                         <td>Passport</td>
-                                                        <td> 
-                                                           <!--  <img class="w-100 h-100 soc-det-img "
-                                                            src="{{ URL::asset('images/' . $documents_filenames[0]->passport_file) }}"
-                                                            alt="Passport File"> -->
-                                                            <div 
-                                                                class="view-file" 
-                                                                data-src="{{ URL::asset('images/' . $documents_filenames[0]->passport_file) }}"
-                                                                style="cursor:pointer" 
+                                                        <td>
+                                                            <div
+                                                                class="view-file"
+                                                                data-src="{{ URL::asset('employee_documents/'.$user_code.'/'.$documents_filenames[0]->passport_file) }}"
+                                                                style="cursor:pointer"
                                                             >
                                                                 {{"View Documents"}}
                                                             </div>
@@ -198,10 +196,12 @@
                                                             @endif
                                                         </td>
                                                         <td>
+                                                            @if(isset($docs_reviewed) && $docs_reviewed->passport_file == -1)
 
                                                             <button class="btn btn-success" onclick="approveOrRejectDocument('passport_file', 1)"> Approve</button>
 
                                                             <button class="btn btn-secondary" onclick="approveOrRejectDocument('passport_file', 0)"> Reject</button>
+                                                            @endif
                                                         </td>
 
                                                     </tr>
@@ -209,14 +209,12 @@
 
                                                      <tr>
                                                         <td>Voters ID</td>
-                                                        <td> 
-                                                            <!-- <img class="w-100 h-100 soc-det-img "
-                                                            src="{{ URL::asset('images/' . $documents_filenames[0]->voters_id_file) }}"
-                                                            alt="Voters Id File"> -->
-                                                            <div 
-                                                                class="view-file" 
-                                                                data-src="{{ URL::asset('images/' . $documents_filenames[0]->voters_id_file) }}"
-                                                                style="cursor:pointer" 
+                                                        <td>
+                                                            <div
+                                                                class="view-file"
+                                                                data-src="{{ URL::asset('employee_documents/'.$user_code.'/'.$documents_filenames[0]->voters_id_file) }}"
+
+                                                                style="cursor:pointer"
                                                             >
                                                                 {{"View Documents"}}
                                                             </div>
@@ -235,25 +233,25 @@
                                                             @endif
                                                         </td>
                                                         <td>
+                                                            @if(isset($docs_reviewed) && $docs_reviewed->voters_id_file == -1)
                                                             <button class="btn btn-success" onclick="approveOrRejectDocument('voters_id_file', 1)"> Approve</button>
 
                                                             <button class="btn btn-secondary" onclick="approveOrRejectDocument('voters_id_file', 0)"> Reject</button>
+                                                            @endif
                                                         </td>
 
                                                     </tr>
                                                     <tr>
                                                         <td>Driving License</td>
                                                         <td>
-                                                            <div 
-                                                                class="view-file" 
-                                                                data-src="{{ URL::asset('images/' . $documents_filenames[0]->dl_file) }}"
-                                                                style="cursor:pointer" 
+                                                            <div
+                                                                class="view-file"
+                                                                data-src="{{ URL::asset('employee_documents/'.$user_code.'/'.$documents_filenames[0]->dl_file) }}"
+
+                                                                style="cursor:pointer"
                                                             >
                                                                 {{"View Documents"}}
-                                                            </div> 
-                                                            <!-- <img class="w-100 h-100 soc-det-img "
-                                                            src="{{ URL::asset('images/' . $documents_filenames[0]->dl_file) }}"
-                                                            alt="Aadhar Card Front"> -->
+                                                            </div>
                                                         </td>
                                                         <td>
                                                             @if($docs_reviewed != null)
@@ -269,26 +267,29 @@
                                                             @endif
                                                         </td>
                                                         <td>
+                                                            @if(isset($docs_reviewed) && $docs_reviewed->dl_file == -1)
 
                                                             <button class="btn btn-success" onclick="approveOrRejectDocument('dl_file', 1)"> Approve</button>
 
                                                             <button class="btn btn-secondary" onclick="approveOrRejectDocument('dl_file', 0)"> Reject</button>
+                                                            @endif
                                                         </td>
 
                                                     </tr>
                                                     <tr>
                                                         <td>Educational Certificate</td>
-                                                        <td> 
+                                                        <td>
                                                             <!-- <img class="w-100 h-100 soc-det-img "
                                                             src="{{ URL::asset('images/' . $documents_filenames[0]->education_certificate_file) }}"
                                                             alt="Aadhar Card Front"> -->
-                                                            <div 
-                                                                class="view-file" 
-                                                                data-src="{{ URL::asset('images/' . $documents_filenames[0]->education_certificate_file) }}"
-                                                                style="cursor:pointer" 
+                                                            <div
+                                                                class="view-file"
+                                                                data-src="{{ URL::asset('employee_documents/'.$user_code.'/'.$documents_filenames[0]->education_certificate_file) }}"
+
+                                                                style="cursor:pointer"
                                                             >
                                                                 {{"View Documents"}}
-                                                            </div> 
+                                                            </div>
                                                         </td>
                                                         <td>
                                                             @if($docs_reviewed != null)
@@ -304,28 +305,29 @@
                                                             @endif
                                                         </td>
                                                         <td>
+                                                            @if(isset($docs_reviewed) && $docs_reviewed->education_certificate_file == -1)
                                                             <button class="btn btn-success" onclick="approveOrRejectDocument('education_certificate_file', 1)"> Approve</button>
 
                                                             <button class="btn btn-secondary" onclick="approveOrRejectDocument('education_certificate_file', 0)"> Reject</button>
-
+                                                            @endif
                                                         </td>
 
                                                     </tr>
 
                                                      <tr>
                                                         <td>Reliving Letter</td>
-                                                        <td> 
+                                                        <td>
                                                             <!-- <img class="w-100 h-100 soc-det-img "
                                                             src="{{ URL::asset('images/' . $documents_filenames[0]->reliving_letter_file) }}"
                                                             alt="Aadhar Card Front"> -->
 
-                                                            <div 
-                                                                class="view-file" 
-                                                                data-src="{{ URL::asset('images/' . $documents_filenames[0]->reliving_letter_file) }}"
-                                                                style="cursor:pointer" 
+                                                            <div
+                                                                class="view-file"
+                                                                data-src="{{ URL::asset('employee_documents/'.$user_code.'/'.$documents_filenames[0]->reliving_letter_file) }}"
+                                                                style="cursor:pointer"
                                                             >
                                                                 {{"View Documents"}}
-                                                            </div> 
+                                                            </div>
                                                         </td>
                                                         <td>
                                                             @if($docs_reviewed != null)
@@ -342,9 +344,11 @@
                                                         </td>
                                                         <td>
 
+                                                            @if(isset($docs_reviewed) && $docs_reviewed->reliving_letter_file == -1)
                                                             <button class="btn btn-success" onclick="approveOrRejectDocument('reliving_letter_file', 1)"> Approve</button>
 
                                                             <button class="btn btn-secondary" onclick="approveOrRejectDocument('reliving_letter_file', 0)"> Reject</button>
+                                                            @endif
                                                         </td>
                                                     </tr>
 
@@ -381,7 +385,7 @@
                 <div class="modal-body">
                     <div class="mt-4">
                         <div class="mb-2" id="modalBody">
-                            
+
                         </div>
                         <div class="hstack gap-2 justify-content-center">
                             <button type="button" id="button_close" class="btn btn-light close-modal" data-bs-dismiss="modal">Close</button>
@@ -452,7 +456,9 @@
                         _token: '{{csrf_token()}}'
                     },
                     success: function(data) {
-                        alert(data);
+                        alert("Document reviewed successfully");
+                        //window.location.href = "/";
+                        location.reload();
                     }
                 });
             }
@@ -460,9 +466,9 @@
 
 
 
-            $("#button_close").click(function(){
-                window.location.href = "/";
-            });
+            // $("#button_close").click(function(){
+            //     window.location.href = "/";
+            // });
     </script>
 
 

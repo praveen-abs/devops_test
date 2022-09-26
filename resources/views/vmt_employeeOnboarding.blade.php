@@ -654,13 +654,15 @@
                     $('#permanent_country').val($('#current_country').val()).trigger('change');
                     $('#permanent_state').val($('#current_state').val());
                     $('#permanent_city').val($('#current_city').val());
-                    $('#permanent_address').val($('#current_address').val());
+                    $('#permanent_address_line_1').val($('#current_address_line_1').val());
+                    $('#permanent_address_line_2').val($('#current_address_line_2').val());
                 } else {
                     $('#permanent_pincode').val('');
                     $('#permanent_country').val('').trigger('change');
                     $('#permanent_state').val('').trigger('change');
                     $('#permanent_city').val('');
-                    $('#permanent_address').val('');
+                    $('#permanent_address_line_1').val('');
+                    $('#permanent_address_line_2').val('');
                 }
             });
 
