@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Api\HRMSBaseAPIController;
 use App\Models\VmtEmployeeAttendance;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class VmtAPIAttendanceController extends HRMSBaseAPIController
 {
@@ -55,18 +56,23 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         $attendanceCheckin->checkin_comments = $request->checkin_comments;
         $attendanceCheckin->save();
 
-        // processing and storing base64 files in public/selfies folder 
+        // processing and storing base64 files in public/selfies folder
         if($request->has('selfie_checkin')){
-            
-            $selfieFile  =  $request->selfie_checkin;
-            
-            $fileName = $attendanceCheckin->id.'_checkin.png';
-            
-            $imageName = public_path().'/selfies/'.$fileName; 
-            
-            \File::put($imageName, base64_decode($selfieFile));
 
-            $attendanceCheckin->selfie_checkin = asset('/selfies/'.$fileName);
+            $emp_selfiedir_path = public_path('employees/'.auth::user()->user_code.'/selfies/');
+
+            // dd($emp_document_path);
+            if(!File::isDirectory($emp_selfiedir_path))
+                File::makeDirectory($emp_selfiedir_path, 0777, true, true);
+
+
+            $selfieFileEncoded  =  $request->selfie_checkin;
+
+            $fileName = $attendanceCheckin->id.'_checkin.png';
+
+            \File::put($emp_selfiedir_path.$fileName, base64_decode($selfieFileEncoded));
+
+            $attendanceCheckin->selfie_checkin = $emp_selfiedir_path.$fileName;
             $attendanceCheckin->save();
         }
 
@@ -92,11 +98,11 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         $attendanceCheckout->checkout_comments = $request->checkout_comments;
         $attendanceCheckout->save();
 
-        // processing and storing base64 files in public/selfies folder 
+        // processing and storing base64 files in public/selfies folder
         if($request->has('selfie_checkout')){
             $selfieFile  =  $request->selfie_checkout;
             $fileName = $attendanceCheckout->id.'_checkout.png';
-            $imageName = public_path().'/selfies/'.$fileName; 
+            $imageName = public_path().'/selfies/'.$fileName;
             \File::put($imageName, base64_decode($selfieFile));
             $attendanceCheckout->selfie_checkout = asset('/selfies/'.$fileName);
             $attendanceCheckout->save();
