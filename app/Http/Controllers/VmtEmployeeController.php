@@ -252,7 +252,17 @@ class VmtEmployeeController extends Controller
             $newEmployee->dl_file = $this->fileUpload('dl_file',$user->user_code);
             $newEmployee->education_certificate_file = $this->fileUpload('education_certificate_file',$user->user_code);
             $newEmployee->reliving_letter_file = $this->fileUpload('reliving_letter_file',$user->user_code);
-
+            $docReviewArray = array(
+                'aadhar_card_file' => -1,
+                'aadhar_card_backend_file' => -1,
+                'pan_card_file' => -1,
+                'passport_file' => -1,
+                'voters_id_file' => -1,
+                'dl_file' => -1,
+                'education_certificate_file' => -1,
+                'reliving_letter_file' => -1
+            );
+            $newEmployee->docs_reviewed = json_encode($docReviewArray);
             $newEmployee->save();
 
             if ($newEmployee) {
@@ -422,6 +432,17 @@ class VmtEmployeeController extends Controller
             $newEmployee->dl_file = $this->fileUpload('dl_file',$user->user_code);
             $newEmployee->education_certificate_file = $this->fileUpload('education_certificate_file',$user->user_code);
             $newEmployee->reliving_letter_file = $this->fileUpload('reliving_letter_file',$user->user_code);
+            $docReviewArray = array(
+                'aadhar_card_file' => -1,
+                'aadhar_card_backend_file' => -1,
+                'pan_card_file' => -1,
+                'passport_file' => -1,
+                'voters_id_file' => -1,
+                'dl_file' => -1,
+                'education_certificate_file' => -1,
+                'reliving_letter_file' => -1
+            );
+            $newEmployee->docs_reviewed = json_encode($docReviewArray);
             $newEmployee->save();
 
             // dd($newEmployee->id);
