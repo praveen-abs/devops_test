@@ -62,7 +62,7 @@ class VmtApprovalsController extends Controller
                                         'voters_id_file',
                                         'dl_file',
                                         'education_certificate_file',
-                                        'reliving_letter_file', 
+                                        'reliving_letter_file',
                                         'docs_reviewed'
                                     ]);
 
