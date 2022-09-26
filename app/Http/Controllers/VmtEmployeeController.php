@@ -230,8 +230,8 @@ class VmtEmployeeController extends Controller
             $newEmployee->bank_name   = $row["bank_name"];
             $newEmployee->bank_ifsc_code  = $row["bank_ifsc"];
             $newEmployee->bank_account_number  = $row["account_no"];
-            $newEmployee->present_address   = $row["current_address"];
-            $newEmployee->permanent_address   = $row["permanent_address"];
+            $newEmployee->present_address   = $row["current_address_line_1"].' , '.$row["current_address_line_2"] ;
+            $newEmployee->permanent_address   = $row["permanent_address_line_1"].' , '.$row["permanent_address_line_2"] ;
             //$newEmployee->father_age   = $row["father_age"];
             $newEmployee->mother_name   = $row["mother_name"];
             //$newEmployee->mother_age  = $row["mother_age"];
@@ -407,8 +407,8 @@ class VmtEmployeeController extends Controller
             $newEmployee->bank_name   = $row["bank_name"];
             $newEmployee->bank_ifsc_code  = $row["bank_ifsc"];
             $newEmployee->bank_account_number  = $row["account_no"];
-            $newEmployee->present_address   = $row["current_address"];
-            $newEmployee->permanent_address   = $row["permanent_address"];
+            $newEmployee->present_address   = $row["current_address_line_1"].' , '.$row["current_address_line_2"] ;
+            $newEmployee->permanent_address   = $row["permanent_address_line_1"].' , '.$row["permanent_address_line_2"] ;
             //$newEmployee->father_age   = $row["father_age"];
             $newEmployee->mother_name   = $row["mother_name"];
             $newEmployee->blood_group  = $row["blood_group"];
@@ -766,8 +766,8 @@ class VmtEmployeeController extends Controller
             $newEmployee->bank_name   = $row["bank_name"];
             $newEmployee->bank_ifsc_code  = $row["bank_ifsc"];
             $newEmployee->bank_account_number  = $row["account_no"];
-            $newEmployee->present_address   = $row["current_address"];
-            $newEmployee->permanent_address   = $row["permanent_address"];
+            $newEmployee->present_address   = $row["current_address_line_1"].' , '.$row["current_address_line_2"] ;
+            $newEmployee->permanent_address   = $row["permanent_address_line_1"].' , '.$row["permanent_address_line_2"] ;
             $newEmployee->mother_name   = $row["mother_name"];
             $newEmployee->mother_gender   = $row["mother_gender"];
             $newEmployee->mother_dob   = $row["mother_dob"];

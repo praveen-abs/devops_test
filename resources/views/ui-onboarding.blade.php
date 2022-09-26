@@ -386,7 +386,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Address 1<span class="text-danger">*</span></label>
 
-                                                    <textarea placeholder="Current Address" name="current_address" id="current_address" class="onboard-form form-control textbox " required id="" cols="" rows="1"></textarea>
+                                                    <textarea placeholder="Current Address" name="current_address_line_1" id="current_address_line_1" class="onboard-form form-control textbox " required id="" cols="" rows="1"></textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6 mb-2">
@@ -394,7 +394,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Address 2</label>
 
-                                                    <textarea placeholder="Current Address" name="current_address" id="current_address" class="onboard-form form-control textbox " required id="" cols="" rows="1"></textarea>
+                                                    <textarea placeholder="Current Address" name="current_address_line_2" id="current_address_line_2" class="onboard-form form-control textbox " required id="" cols="" rows="1"></textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -455,14 +455,14 @@
                                                 <!-- <label class="" for="permanent_address">Permanent Address{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label"> Address 1 <span class="text-danger">*</span></label>
-                                                    <textarea placeholder="Permanent Address" name="permanent_address" id="permanent_address" class="onboard-form form-control textbox " required cols="5" rows="1"></textarea>
+                                                    <textarea placeholder="Permanent Address" name="permanent_address_line_1" id="permanent_address_line_1" class="onboard-form form-control textbox " required cols="5" rows="1"></textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6 mb-2">
                                                 <!-- <label class="" for="permanent_address">Permanent Address{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label"> Address 2</label>
-                                                    <textarea placeholder="Permanent Address" name="permanent_address" id="permanent_address" class="onboard-form form-control textbox " required cols="5" rows="1"></textarea>
+                                                    <textarea placeholder="Permanent Address" name="permanent_address_line_2" id="permanent_address_line_2" class="onboard-form form-control textbox " required cols="5" rows="1"></textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 col-xxl-3 mb-2">
