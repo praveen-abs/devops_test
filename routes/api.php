@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\VmtAPIPMSModuleController;
 use App\Http\Controllers\Api\VmtAPIDashboardController;
 use App\Http\Controllers\Api\VmtAPIAttendanceController;
+use App\Http\Controllers\Api\VmtAPIPaySlipController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,7 +42,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     */
     Route::post('getAssigneeKPIForms', [VmtAPIPMSModuleController::class,'getAssigneeKPIForms']);
        Route::post('getKPIFormDetails', [VmtAPIPMSModuleController::class,'getKPIFormDetails']);
- 
+
     /*
         getReviewerKPIForms():
         DB Table : vmt_pms_kpiform_assigned
@@ -117,7 +118,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('attendance_applyleave', [VmtAPIAttendanceController::class,
         'attendanceApplyLeave']);
 
-    
+
     /*
         attendanceMonthlyReport():
         Input : date
@@ -126,5 +127,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     */
     Route::get('attendance_monthlyreport', [VmtAPIAttendanceController::class,
         'attendanceMonthlyReport']);
+
+
+    //Payslip API
+    Route::get('payslip_getmonthlypayslipdata', [VmtAPIPaySlipController::class,
+        'getMonthlyPayslipData']);
+
+
 
 });
