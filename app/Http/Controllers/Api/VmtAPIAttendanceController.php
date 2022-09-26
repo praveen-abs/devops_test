@@ -100,11 +100,21 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
 
         // processing and storing base64 files in public/selfies folder
         if($request->has('selfie_checkout')){
-            $selfieFile  =  $request->selfie_checkout;
+
+            $emp_selfiedir_path = public_path('employees/'.auth::user()->user_code.'/selfies/');
+
+            // dd($emp_document_path);
+            if(!File::isDirectory($emp_selfiedir_path))
+                File::makeDirectory($emp_selfiedir_path, 0777, true, true);
+
+
+            $selfieFileEncoded  =  $request->selfie_checkout;
+
             $fileName = $attendanceCheckout->id.'_checkout.png';
-            $imageName = public_path().'/selfies/'.$fileName;
-            \File::put($imageName, base64_decode($selfieFile));
-            $attendanceCheckout->selfie_checkout = asset('/selfies/'.$fileName);
+
+            \File::put($emp_selfiedir_path.$fileName, base64_decode($selfieFileEncoded));
+
+            $attendanceCheckout->selfie_checkout = $fileName;
             $attendanceCheckout->save();
         }
 
