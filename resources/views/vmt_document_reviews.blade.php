@@ -73,17 +73,14 @@
                                                 <tbody>
                                                     <tr>
                                                         <td>Aadhar Card Front</td>
-                                                        <td> 
-                                                            <div 
-                                                                class="view-file" 
-                                                                data-src="{{ URL::asset('images/' . $documents_filenames[0]->aadhar_card_file) }}"
-                                                                style="cursor:pointer" 
+                                                        <td>
+                                                            <div
+                                                                class="view-file"
+                                                                data-src="{{ URL::asset('employee_documents/'.$user_code.'/'.$documents_filenames[0]->aadhar_card_file) }}"
+                                                                style="cursor:pointer"
                                                             >
                                                                 {{"View Documents"}}
                                                             </div>
-                                                            <!-- <img class="w-100 h-100 soc-det-img "
-                                                            src="{{ URL::asset('images/' . $documents_filenames[0]->aadhar_card_file) }}"
-                                                            alt="Aadhar Card Front"> -->
                                                         </td>
                                                         <td>
                                                             @if($docs_reviewed != null)
@@ -106,17 +103,14 @@
 
                                                     <tr>
                                                         <td>Aadhar Card Back</td>
-                                                        <td> 
-                                                            <div 
-                                                                class="view-file" 
-                                                                data-src="{{ URL::asset('images/' . $documents_filenames[0]->aadhar_card_backend_file) }}"
-                                                                style="cursor:pointer" 
+                                                        <td>
+                                                            <div
+                                                                class="view-file"
+                                                                data-src="{{ URL::asset('employee_documents/'.$user_code.'/'.$documents_filenames[0]->aadhar_card_backend_file) }}"
+                                                                style="cursor:pointer"
                                                             >
                                                                 {{"View Documents"}}
                                                             </div>
-                                                            <!-- <img class="w-100 h-100 soc-det-img "
-                                                            src="{{ URL::asset('images/' . $documents_filenames[0]->aadhar_card_backend_file) }}"
-                                                            alt="Aadhar Card Front"> -->
                                                         </td>
                                                         <td>
                                                             @if($docs_reviewed != null)
@@ -139,14 +133,14 @@
 
                                                      <tr>
                                                         <td>Pan Card</td>
-                                                        <td> 
+                                                        <td>
                                                             <!-- <img class="w-100 h-100 soc-det-img "
                                                             src="{{ URL::asset('images/' . $documents_filenames[0]->pan_card_file) }}"
                                                             alt="Aadhar Card Front"> -->
-                                                            <div 
-                                                                class="view-file" 
-                                                                data-src="{{ URL::asset('images/' . $documents_filenames[0]->pan_card_file) }}"
-                                                                style="cursor:pointer" 
+                                                            <div
+                                                                class="view-file"
+                                                                data-src="{{ URL::asset('employee_documents/'.$user_code.'/'.$documents_filenames[0]->pan_card_file) }}"
+                                                                style="cursor:pointer"
                                                             >
                                                                 {{"View Documents"}}
                                                             </div>
@@ -172,14 +166,11 @@
 
                                                      <tr>
                                                         <td>Passport</td>
-                                                        <td> 
-                                                           <!--  <img class="w-100 h-100 soc-det-img "
-                                                            src="{{ URL::asset('images/' . $documents_filenames[0]->passport_file) }}"
-                                                            alt="Passport File"> -->
-                                                            <div 
-                                                                class="view-file" 
-                                                                data-src="{{ URL::asset('images/' . $documents_filenames[0]->passport_file) }}"
-                                                                style="cursor:pointer" 
+                                                        <td>
+                                                            <div
+                                                                class="view-file"
+                                                                data-src="{{ URL::asset('employee_documents/'.$user_code.'/'.$documents_filenames[0]->passport_file) }}"
+                                                                style="cursor:pointer"
                                                             >
                                                                 {{"View Documents"}}
                                                             </div>
@@ -209,14 +200,12 @@
 
                                                      <tr>
                                                         <td>Voters ID</td>
-                                                        <td> 
-                                                            <!-- <img class="w-100 h-100 soc-det-img "
-                                                            src="{{ URL::asset('images/' . $documents_filenames[0]->voters_id_file) }}"
-                                                            alt="Voters Id File"> -->
-                                                            <div 
-                                                                class="view-file" 
-                                                                data-src="{{ URL::asset('images/' . $documents_filenames[0]->voters_id_file) }}"
-                                                                style="cursor:pointer" 
+                                                        <td>
+                                                            <div
+                                                                class="view-file"
+                                                                data-src="{{ URL::asset('employee_documents/'.$user_code.'/'.$documents_filenames[0]->voters_id_file) }}"
+
+                                                                style="cursor:pointer"
                                                             >
                                                                 {{"View Documents"}}
                                                             </div>
@@ -244,16 +233,14 @@
                                                     <tr>
                                                         <td>Driving License</td>
                                                         <td>
-                                                            <div 
-                                                                class="view-file" 
-                                                                data-src="{{ URL::asset('images/' . $documents_filenames[0]->dl_file) }}"
-                                                                style="cursor:pointer" 
+                                                            <div
+                                                                class="view-file"
+                                                                data-src="{{ URL::asset('employee_documents/'.$user_code.'/'.$documents_filenames[0]->dl_file) }}"
+
+                                                                style="cursor:pointer"
                                                             >
                                                                 {{"View Documents"}}
-                                                            </div> 
-                                                            <!-- <img class="w-100 h-100 soc-det-img "
-                                                            src="{{ URL::asset('images/' . $documents_filenames[0]->dl_file) }}"
-                                                            alt="Aadhar Card Front"> -->
+                                                            </div>
                                                         </td>
                                                         <td>
                                                             @if($docs_reviewed != null)
@@ -278,17 +265,18 @@
                                                     </tr>
                                                     <tr>
                                                         <td>Educational Certificate</td>
-                                                        <td> 
+                                                        <td>
                                                             <!-- <img class="w-100 h-100 soc-det-img "
                                                             src="{{ URL::asset('images/' . $documents_filenames[0]->education_certificate_file) }}"
                                                             alt="Aadhar Card Front"> -->
-                                                            <div 
-                                                                class="view-file" 
-                                                                data-src="{{ URL::asset('images/' . $documents_filenames[0]->education_certificate_file) }}"
-                                                                style="cursor:pointer" 
+                                                            <div
+                                                                class="view-file"
+                                                                data-src="{{ URL::asset('employee_documents/'.$user_code.'/'.$documents_filenames[0]->education_certificate_file) }}"
+
+                                                                style="cursor:pointer"
                                                             >
                                                                 {{"View Documents"}}
-                                                            </div> 
+                                                            </div>
                                                         </td>
                                                         <td>
                                                             @if($docs_reviewed != null)
@@ -314,18 +302,18 @@
 
                                                      <tr>
                                                         <td>Reliving Letter</td>
-                                                        <td> 
+                                                        <td>
                                                             <!-- <img class="w-100 h-100 soc-det-img "
                                                             src="{{ URL::asset('images/' . $documents_filenames[0]->reliving_letter_file) }}"
                                                             alt="Aadhar Card Front"> -->
 
-                                                            <div 
-                                                                class="view-file" 
-                                                                data-src="{{ URL::asset('images/' . $documents_filenames[0]->reliving_letter_file) }}"
-                                                                style="cursor:pointer" 
+                                                            <div
+                                                                class="view-file"
+                                                                data-src="{{ URL::asset('employee_documents/'.$user_code.'/'.$documents_filenames[0]->reliving_letter_file) }}"
+                                                                style="cursor:pointer"
                                                             >
                                                                 {{"View Documents"}}
-                                                            </div> 
+                                                            </div>
                                                         </td>
                                                         <td>
                                                             @if($docs_reviewed != null)
@@ -381,7 +369,7 @@
                 <div class="modal-body">
                     <div class="mt-4">
                         <div class="mb-2" id="modalBody">
-                            
+
                         </div>
                         <div class="hstack gap-2 justify-content-center">
                             <button type="button" id="button_close" class="btn btn-light close-modal" data-bs-dismiss="modal">Close</button>
@@ -460,9 +448,9 @@
 
 
 
-            $("#button_close").click(function(){
-                window.location.href = "/";
-            });
+            // $("#button_close").click(function(){
+            //     window.location.href = "/";
+            // });
     </script>
 
 

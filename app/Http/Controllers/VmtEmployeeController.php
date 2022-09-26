@@ -217,7 +217,7 @@ class VmtEmployeeController extends Controller
             $newEmployee->dob   =    $row["dob"];
             $newEmployee->father_name   =  $row["father_name"];
             $newEmployee->pan_number   =  isset($row["pan_no"]) ? ($row["pan_no"]) : "";
-            $newEmployee->pan_ack   =    $row["pan_ack"];
+            //$newEmployee->pan_ack   =    $row["pan_ack"];
             $newEmployee->aadhar_number = $row["aadhar"];
             $newEmployee->epf_number = $row["epf_number"];
 
@@ -405,7 +405,7 @@ class VmtEmployeeController extends Controller
             $newEmployee->dob   =    $row['dob'];
             $newEmployee->father_name   =  $row["father_name"];
             $newEmployee->pan_number   =  isset($row["pan_no"]) ? ($row["pan_no"]) : "";
-            $newEmployee->pan_ack   =    $row["pan_ack"];
+            //$newEmployee->pan_ack   =    $row["pan_ack"];
             $newEmployee->aadhar_number = $row["aadhar"];
             //$newEmployee->uan = $row["uan"];
             //$newEmployee->epf_number = $row["epf_number"];
@@ -621,7 +621,7 @@ class VmtEmployeeController extends Controller
                 'father_dob' => 'required|date',
 
                 'pan_no' => 'required|regex:/(^([A-Z]){3}P([A-Z]){1}([0-9]){4}([A-Z]){1}$)/u',
-                'pan_ack' => 'required_if:pan_no,==,""',
+                //'pan_ack' => 'required_if:pan_no,==,""',
                 'aadhar' => 'required|regex:/(^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$)/u',
                 'marital_status' => 'required|in:unmarried,married,widowed,separated,divorced',
                 'mobile_no' => 'required|regex:/^([0-9]{10})?$/u|numeric',
@@ -780,7 +780,7 @@ class VmtEmployeeController extends Controller
             $newEmployee->father_dob   =  $row['father_dob'];
 
             $newEmployee->pan_number   =  isset($row["pan_no"]) ? ($row["pan_no"]) : "";
-            $newEmployee->pan_ack   =    $row["pan_ack"];
+            //$newEmployee->pan_ack   =    $row["pan_ack"];
             $newEmployee->aadhar_number = $row["aadhar"];
             $newEmployee->marrital_status = $row["marital_status"];
             $newEmployee->mobile_number  = $row["mobile_no"];
