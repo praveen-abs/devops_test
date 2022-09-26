@@ -29,7 +29,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
                 ->first();
 
         return response()->json([
-            'status' => true,
+            'status' => 'success',
             'message'=> '',
             'data'   => $data
         ]);
@@ -78,7 +78,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
 
         $emptyObj  = new \stdClass;
         return response()->json([
-            'status' => true,
+            'status' => 'success',
             'message'=> 'Check in success',
             'data'   => $emptyObj
         ]);
@@ -120,7 +120,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
 
         $emptyObj  = new \stdClass;
         return response()->json([
-            'status' => true,
+            'status' => 'success',
             'message'=> 'Check out success',
             'data'   => $emptyObj
         ]);
@@ -146,7 +146,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         $emptyObj  = new \stdClass;
 
         return response()->json([
-            'status' => true,
+            'status' => 'success',
             'message'=> 'Leave success',
             'data'   => $emptyObj
         ]);
@@ -200,7 +200,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
 
 
         return response()->json([
-            'status' => true,
+            'status' => 'success',
             'message'=> '',
             'data'   => [
                             "month"  => $monthlyReport
