@@ -72,7 +72,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
 
             \File::put($emp_selfiedir_path.$fileName, base64_decode($selfieFileEncoded));
 
-            $attendanceCheckin->selfie_checkin = $emp_selfiedir_path.$fileName;
+            $attendanceCheckin->selfie_checkin = $fileName;
             $attendanceCheckin->save();
         }
 
