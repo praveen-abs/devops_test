@@ -541,3 +541,20 @@ option:hover {
     padding: 0.5rem 0.9rem;
     margin-right: 0.5rem;
 }
+
+
+.upload_content{
+
+    position: relative;
+}
+
+.upload_content i.bi-paperclip{
+    position: absolute;
+    left: 0px;
+}
+.float-label{
+    font-weight: 600;
+}
+.floating input.error{
+    border: 1px solid red;
+}
