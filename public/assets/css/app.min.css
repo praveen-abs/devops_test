@@ -17681,10 +17681,6 @@ white-space:nowrap;
     border: 0px;
 }
 
-.table > tbody > tr > td > img,
-table > tbody > tr > td > img,
-.gridjs-table > tbody > tr > td > img {
-}
 
 .amount-column:first-of-type .ytd-summary-column-table tbody tr td {
     border-left: none !important;

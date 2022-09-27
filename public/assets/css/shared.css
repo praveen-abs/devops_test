@@ -951,3 +951,21 @@ button.gridjs-sort-desc {
     top: 0px;
     left: 0px;
 }
+
+
+/* button.gridjs-sort-desc{
+    background-image: none !important;
+}
+button.gridjs-sort-neutral{
+    background-image: none !important;
+}
+button.gridjs-sort-asc{
+    background-image: none !important;
+}
+button.gridjs-sort-asc::after{
+    content: '';
+    height: 10px;
+    width: 10px;
+    color: #ffffff;
+    font-size: 20px;
+} */

@@ -192,16 +192,16 @@
                         <ul class="nav nav-sm flex-column">
 
                             <li class="nav-item">
-                                <a href="#approvalDrop-Down" id="" class="nav-link sidebar py-1" data-bs-toggle="collapse" role="button" aria-expanded="false"><span>
-                                        Approvals</span> </a>
-                                <div class="collapse menu-dropdown sub-dropdown" id="approvalDrop-Down">
+                                <a href="{{route('vmt-approvals-emp-documents')}}" id="" class="nav-link sidebar py-1" data-bs-toggle="" role="button" aria-expanded="false"><span>
+                                Documents Approval</span> </a>
+                                <!-- <div class="collapse menu-dropdown sub-dropdown" id="approvalDrop-Down">
                                     <ul class="nav flex-column">
                                         <li class="nav-item">
                                             <a href="{{route('vmt-approvals-emp-documents')}}" class="nav-link sidebar">
                                                 <span> Documents Approval</span> </a>
                                         </li>
                                     </ul>
-                                </div>
+                                </div> -->
                             </li>
                         </ul>
                     </div>
@@ -246,7 +246,7 @@
                 <!-- team -->
 
                 <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0" href="#teamDrop-Down" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarRoles">
+                    <a class="nav-link sidebar menu-link pt-0" href="#teamDrop-Down" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarRoles">
                         <i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="11.2" viewBox="0 0 16 11.2">
                                 <path id="people-group-solid" d="M4.6,33.4A1.4,1.4,0,1,1,3.2,32,1.4,1.4,0,0,1,4.6,33.4Zm.61,2.707A3.594,3.594,0,0,0,4,38.8a3.459,3.459,0,0,0,.8,2.262V41.6a.8.8,0,0,1-.8.8H2.4a.8.8,0,0,1-.8-.8v-.67A2.8,2.8,0,0,1,2.8,35.6h.8a2.841,2.841,0,0,1,1.61.507ZM1.6,37.343a1.6,1.6,0,0,0,0,2.115ZM11.2,41.6v-.537a3.6,3.6,0,0,0-.41-4.955A2.788,2.788,0,0,1,12.4,35.6h.8a2.8,2.8,0,0,1,1.2,5.33v.67a.8.8,0,0,1-.8.8H12A.8.8,0,0,1,11.2,41.6Zm3.2-2.142a1.6,1.6,0,0,0,0-2.115ZM14.2,33.4A1.4,1.4,0,1,1,12.8,32,1.4,1.4,0,0,1,14.2,33.4Zm-7.8.2A1.6,1.6,0,1,1,8,35.2,1.6,1.6,0,0,1,6.4,33.6Zm4.8,5.2a2.8,2.8,0,0,1-1.6,2.53V42.4a.8.8,0,0,1-.8.8H7.2a.8.8,0,0,1-.8-.8V41.33A2.8,2.8,0,0,1,7.6,36h.8A2.8,2.8,0,0,1,11.2,38.8ZM6.4,39.857V37.743a1.6,1.6,0,0,0,0,2.115Zm3.2-2.115v2.115a1.6,1.6,0,0,0,0-2.115Z" transform="translate(0 -32)" fill="#686363" />
                             </svg>
@@ -449,7 +449,7 @@
 
                 <!-- help desk -->
                 <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0" href="#helpDeskDrop-down" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
+                    <a class="nav-link sidebar menu-link pt-0" href="#helpDeskDrop-down" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarApps">
                         <i><svg xmlns="http://www.w3.org/2000/svg" width="18.306" height="16" viewBox="0 0 18.306 16">
                                 <path id="customer-care-icon" d="M12.179,8.14l-.079.244-.012.021-.01.013a1.077,1.077,0,0,1-.3.034,1.913,1.913,0,0,0,.091-.839h0a.228.228,0,0,1,.091-.2,1.016,1.016,0,0,0,.355-.505l.049-.389a.734.734,0,0,0-.028-.156.114.114,0,0,0-.016-.043h-.039a.228.228,0,0,1-.215-.226,3.837,3.837,0,0,0-.2-1.509,2.143,2.143,0,0,0-.994-.785c-.073-.031-.149-.066-.223-.1-1.36,1.421-2.486-.407-4.1,2.346H6.491c-.021.048-.043.1-.064.149l-.012.024A.228.228,0,0,1,6.1,6.3q-.055-.031-.063-.027c-.009,0-.019.024-.033.055a.7.7,0,0,0-.049.228,1.358,1.358,0,0,0,.3.949.225.225,0,0,1,.07.158,2.167,2.167,0,0,0,.991,1.816l.223.194a2.5,2.5,0,0,0,1.639.718,2.236,2.236,0,0,0,1.566-.706h.669l-.121.115-.22.209a2.711,2.711,0,0,1-1.883.842,2.969,2.969,0,0,1-1.947-.834l-.218-.191A2.591,2.591,0,0,1,5.92,8.152L5.2,8.21a.533.533,0,0,1-.6-.436l-.279-2.2A.529.529,0,0,1,4.8,4.989l.234-.019a.265.265,0,0,1-.024-.1A4.317,4.317,0,0,1,7.188.459a4.435,4.435,0,0,1,4.337.225A3.918,3.918,0,0,1,13.181,4.9a.365.365,0,0,1-.027.08l.356.04a.568.568,0,0,1,.505.636L13.74,7.754a.585.585,0,0,1-.654.49h0a4.207,4.207,0,0,1-.149.466,1.043,1.043,0,0,1-.223.347c-.3.307-1.26.307-1.6.307h-.894a1.043,1.043,0,0,1-.782.3c-.495,0-.894-.262-.894-.585s.4-.585.894-.585a1.052,1.052,0,0,1,.754.3h.916a3.2,3.2,0,0,0,1.2-.139.447.447,0,0,0,.1-.149l.1-.316-.325-.037ZM5.661,4.046A3.863,3.863,0,0,1,11.537,1.71a2.786,2.786,0,0,1,.636.5,3.146,3.146,0,0,0-1.016-1.043,3.7,3.7,0,0,0-1.8-.574,3.633,3.633,0,0,0-1.85.377A3.522,3.522,0,0,0,5.661,4.046Zm1.01,6.828,1.374,3.6.691-1.965L8.4,12.143c-.255-.372-.167-.794.3-.87a3.405,3.405,0,0,1,.511-.01,2.7,2.7,0,0,1,.562.022c.438.1.484.52.265.858l-.332.369.69,1.966,1.244-3.605c.894.807,4.054.97,5.041,1.52,1.368.766,1.33,2.235,1.63,3.605H0c.3-1.357.267-2.851,1.63-3.605C2.844,11.716,5.677,11.768,6.671,10.874Z" transform="translate(0 0.001)" fill="#686363" />
                             </svg>
