@@ -592,10 +592,10 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Reporting Manager Code<span class="text-danger">*</span></label>
 
-                                                    @if (isset($emp_details->l1_manager_code))
-                                                        <input type="text" value="{{$emp_details->l1_manager_code}}" name="l1_manager_code" id="l1_manager_code" class="onboard-form form-control textbox " pattern="" readonly />
+                                                    @if (isset($emp_office_details->l1_manager_code))
+                                                        <input type="text" value="{{$emp_office_details->l1_manager_code}}" name="l1_manager_code" id="l1_manager_code" class="form-control textbox " pattern="" readonly />
                                                     @else
-                                                        <select placeholder="Reporting Manager" name="l1_manager_code" id="l1_manager_code" class="onboard-form form-control  textbox ">
+                                                        <select placeholder="Reporting Manager" name="l1_manager_code" id="l1_manager_code_select" class="onboard-form form-control  textbox ">
                                                             <option value="" hidden selected disabled>Select</option>
                                                             @foreach($allEmployeesUserCode as $e)
                                                                  <option value="{{$e->user_code}}">{{$e->user_code}}</option>
@@ -608,7 +608,7 @@
 
                                                 <div class="floating">
                                                     <label for="" class="float-label">Reporting Manager Name</label>
-                                                    <input type="text" placeholder="Reporting Manager Name" name="l1_manager_name" id="l1_manager_name" class="textbox  onboard-form form-control " pattern="name" value="{{(isset($emp_details->l1_manager_name)) ? $emp_details->l1_manager_name :''}}" readonly/>
+                                                    <input type="text" placeholder="Reporting Manager Name" name="l1_manager_name" id="l1_manager_name" class="textbox  onboard-form form-control " pattern="name" value="{{(isset($assigned_l1_manager_name)) ? $assigned_l1_manager_name :''}}" readonly/>
                                                     <label class="error star_error l1_manager_name_label" for="l1_manager_name" style="display: none;"></label>
                                                 </div>
                                             </div>

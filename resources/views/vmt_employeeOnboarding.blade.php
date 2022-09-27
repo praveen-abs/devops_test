@@ -109,7 +109,7 @@
                 placeholder: "Select Department",
             });
 
-            $('#l1_manager_code').select2({
+            $('#l1_manager_code_select').select2({
                 width: '100%',
                 placeholder: "Select Reporting Manager",
             });
