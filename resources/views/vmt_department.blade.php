@@ -250,7 +250,7 @@
 <script src="{{ URL::asset('assets/libs/gridjs/gridjs.min.js') }}"></script>
 
 <script src="{{ URL::asset('/assets/js/pages/dashboard-projects.init.js') }}"></script>
-<script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 

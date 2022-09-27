@@ -17667,6 +17667,10 @@ tr:last-child td:last-child {
     /* white-space:nowrap  ; */
 }
 
+.gridjs-table > thead > tr > th,.table > thead > tr > th{
+white-space:nowrap;
+}
+
 .gridjs-table > tbody > tr > td,
 .gridjs-table > tbody > tr > th,
 .gridjs-table > tfoot > tr > td,
