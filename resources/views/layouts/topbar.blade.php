@@ -12,6 +12,14 @@
     background: aliceblue;
 
 }
+.topbar-logo{
+    height: 30px ;
+    width: 100px ;
+}
+.topbar-logo img{
+    height: 100%;
+    width: 100%;
+}
 
 
 

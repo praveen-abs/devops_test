@@ -195,7 +195,7 @@
                                 <a href="#approvalDrop-Down" id="" class="nav-link sidebar py-1" data-bs-toggle="collapse" role="button" aria-expanded="false"><span>
                                         Approvals</span> </a>
                                 <div class="collapse menu-dropdown sub-dropdown" id="approvalDrop-Down">
-                                    <ul class="nav nav-sm flex-column">
+                                    <ul class="nav flex-column">
                                         <li class="nav-item">
                                             <a href="{{route('vmt-approvals-emp-documents')}}" class="nav-link sidebar">
                                                 <span> Documents Approval</span> </a>
@@ -458,7 +458,7 @@
 
                         <span>Help Desk</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="helpDeskDrop-down">
+                    <!-- <div class="collapse menu-dropdown" id="helpDeskDrop-down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a href="{{route('page-not-found')}}" class="nav-link sidebar  py-1"><span>Calendar</span></a>
@@ -470,7 +470,7 @@
                                 <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1"><span>Mail-Box</span></a>
                             </li>
                         </ul>
-                    </div>
+                    </div> -->
                 </li>
 
                 @if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin'))

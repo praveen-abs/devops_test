@@ -8,3 +8,12 @@
     background: aliceblue;
 
 }
+
+.topbar-logo{
+    height: 30px !important;
+    width: 100px !important;
+}
+.topbar-logo img{
+    height: 100%;
+    width: 100%;
+}

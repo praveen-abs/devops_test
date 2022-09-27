@@ -30,7 +30,7 @@
                             <div class="col-md-6 col-sm-12 col-xs-12 col-xl-3 col-lg-3 mb-2 dashBoard">
                                 <!-- <label class="" for="client_code ">Client Code{!! required() !!}</label> -->
                                 <div class="floating">
-                                    <label for="" class="mb-0">Client Code</label>
+                                    <label for="" class=" float-label">Client Code</label>
                                     <input type="text" placeholder="Client Code" name="client_code" id="client_code" placeholder="Autogenerate from Company Legal Name" class="onboard-form form-control textbox" required readonly />
                                     <!-- <label for="" class="float-label">Client Code</label> -->
                                 </div>
@@ -38,7 +38,7 @@
                             <div class="col-md-6 col-sm-12 col-xs-12 col-xl-3 col-lg-3 mb-2 dashBoard">
                                 <!-- <label class="" for="client_name">Legal Name of the Company{!! required() !!}</label> -->
                                 <div class="floating">
-                                    <label for="" class="mb-0">Legal Name of the Company</label>
+                                    <label for="" class="float-label">Legal Name of the Company</label>
                                     <input type="text" placeholder="Legal Name of the Company" name="client_name" id="client_name" class="onboard-form form-control textbox" required />
 
                                     <!-- <label for="" class="float-label">Legal Name of the Company</label> -->
@@ -47,7 +47,7 @@
                             <div class="col-md-6 col-sm-12 col-xs-12 col-xl-3 col-lg-3 mb-2 dashBoard">
                                 <!-- <label class="" for="csd">Contract Start Date{!! required() !!}</label> -->
                                 <div class="floating">
-                                    <label for="" class="">Contract Start Date</label>
+                                    <label for="" class=" float-label">Contract Start Date</label>
                                     <input type="text" max="9999-12-31" placeholder="Contract Start Date" name="csd" class="onboard-form form-control textbox" onfocus="(this.type='date')" required />
                                     <!-- <label for="" class="float-label">Contract Start Date</label> -->
                                 </div>
@@ -205,8 +205,8 @@
                                 <!-- <label class="" for="product">Product{!! required() !!}</label> -->
                                 <div class="floating">
                                     <label for="" class="float-label">Select Product</label>
-                                    <select placeholder="Product" name="product" id="product" class="form-select onboard-form form-control textbox select2_form_without_search" required>
-                                        <option value="" hidden selected disabled>Select Product</option>
+                                    <select placeholder="Product" name="product" id="product" class="form-select onboard-form form-control" required>
+                                        <option value="" class="text-muted" hidden selected disabled>Select Product</option>
                                         <option value="Recruitment">Recruitment</option>
                                         <option value="Payroll">Payroll</option>
                                         <option value="Statutory Complainces">Statutory Complainces</option>
@@ -223,7 +223,7 @@
                             <div class="col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 mb-2 dashBoard">
                                 <!-- <label class="" for="subscription_type">Subscription Type{!! required() !!}</label> -->
                                 <div class="floating">
-                                    <label for="" class="">Subscription Type</label>
+                                    <label for="" class="float-label">Subscription Type</label>
                                     <select placeholder="Subscription Type" name="subscription_type" id="subscription_type"  class="form-select form-control" aria-label="" required>
                                         <option value="" disabled selected hidden>Select Subscription Type</option>
                                         <option value="Monthly">Monthly</option>
