@@ -17,17 +17,19 @@ class VmtAPIPaySlipController extends Controller
         $data = [
             "payslip_month" => "September",
             "payslip_pdf" => "asdfasdfasdfasdfasdf",
+            "take_home" => "25000",
+            "deductions" => "2000",
             "earnings" => [
-                "Basic" => "8000.00",
-                "House Rent Allowance" => "9000.00",
-                "Total Earnings" => "10000.00"
+                "basic" => "8000.00",
+                "house_rent_allowance" => "9000.00",
+                "total_earnings" => "10000.00"
             ],
-                "deductions" => [
-                "EPF Contribution" => "8000.00",
-                "House Rent Allowance" => "9000.00",
-                "Total Earnings" => "10000.00"
+            "deductions" => [
+                "epf_contribution" => "8000.00",
+                "employee_state_insurance" => "9000.00",
+                "total_deductions" => "10000.00"
             ],
-            "Total Net Pay" => "16,000.00"
+            "total_net_pay" => "16,000.00"
         ];
 
         return response()->json([

@@ -49,19 +49,22 @@ class VmtEmployeeController extends Controller
             // dd($clientData);
             $empNo = '';
             if ($employee_details) {
-                $empNo = $employee_details->emp_no;
+                $empNo = $employee_user->user_code;
             }
             $countries = Countries::all();
             $compensatory = Compensatory::where('user_id', $employee_user->id)->first();
             $india = Countries::where('country_code', 'IN')->first();
             $emp = VmtEmployeeOfficeDetails::all();
-            $emp_details = VmtEmployeeOfficeDetails::where('emp_id', $employee_details->id)->first();
+            $emp_office_details = VmtEmployeeOfficeDetails::where('user_id', $employee_user->id)->first();
             $department = Department::all();
             $bank = Bank::all();
             $allEmployeesUserCode = User::where('id','<>',$employee_user->id)
                             ->where('is_admin', 0)->where('active', 1)->whereNotNull('user_code')->get(['user_code', 'name']);
+            //dd($emp_office_details->toArray());
+            $assigned_l1_manager_name = User::where('user_code', $emp_office_details->l1_manager_code)->value('name');
+           //dd($emp_office_details->l1_manager_code);
 
-            return view('vmt_employeeOnboarding', compact('empNo', 'emp_details', 'employee_user', 'employee_details', 'countries', 'compensatory', 'bank', 'emp', 'department', 'allEmployeesUserCode'));
+            return view('vmt_employeeOnboarding', compact('empNo', 'emp_office_details', 'employee_user', 'employee_details', 'countries', 'compensatory', 'bank', 'emp', 'department', 'allEmployeesUserCode','assigned_l1_manager_name'));
         } else {
 
             $empNo = $this->generateEmployeeCode();
