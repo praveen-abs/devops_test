@@ -433,7 +433,7 @@ p {
 }
 
 table.gridjs-table{
-    width: 100%;
+    width: 100% !important;    
 }
 js-pagination .gridjs-summary {
     font-size: 14px !important;
@@ -934,4 +934,20 @@ button.gridjs-sort-desc {
 }
 .box-shadow-table table tbody tr th p {
     color: #707274;
+}
+
+
+.choose-file{
+    position: relative;
+    cursor: pointer;
+    color: #0d6efd;
+}
+
+.choose-file input{
+    position:absolute;
+    opacity:0;
+    width: 100px;
+    height: 30px;
+    top: 0px;
+    left: 0px;
 }

@@ -17678,6 +17678,7 @@ white-space:nowrap;
 .gridjs-table > thead > tr > td,
 .gridjs-table > thead > tr > th {
     width: 0 !important;
+    border: 0px;
 }
 
 .table > tbody > tr > td > img,

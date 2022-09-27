@@ -1,9 +1,7 @@
 {{-- @section('ui-onboarding') --}}
-<div class="container-fluid mt-8">
-    <div class="">
-        <div class="row ">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
-                <div class="">
+<div class="container-fluid">   
+
+                
                     <div id="msform">
                         <!-- progressbar -->
                         <!-- <ul id="progressbar">
@@ -17,12 +15,12 @@
                         <form id="form-documentsupload" enctype="multipart/form-data">
                             @csrf
 
-                            <div class="card shadow  profile-box card-top-border p-2">
-                                <div class="card-body justify-content-center align-items-center ">
-                                    <div class="header-card-text">
-                                        <h6 class="mb-0">Personal Documents</h6>
-                                    </div>
-                                    <div class="form-card mb-2">
+                            <div class="card shadow  top-line">
+                                <div class="card-body">
+                                    
+                                        <h6 class="text-start">Personal Documents</h6>
+                                    
+                                    <div class="form-card">
                                         <div class="row mt-1">
                                             <!-- <div class="col-12 mb-2">
                                                     <input type="checkbox" placeholder="" name="aadhar_backend"
@@ -31,7 +29,7 @@
                                                 </div> -->
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                                                 <!-- <label class="" for="aadhar_card">Aadhar Card{!! required() !!}</label> -->
-                                                <label for="">Aadhar Card Front
+                                                <label for="" class="float-label">Aadhar Card Front
                                                     @if(!empty($existing_doc_filenames->aadhar_card_file))
                                                         <b>&nbsp&nbsp(Already uploaded)  </b>
                                                     @endif
@@ -42,7 +40,7 @@
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2" id="aadhar_card_backend_content">
                                                 <!-- <label class="" for="aadhar_card_backend">Aadhar Card Backend<span id="aadhar_card_backend_req">{!! required() !!}</span></label> -->
-                                                <label for=""> Aadhar Card Back
+                                                <label for="" class="float-label"> Aadhar Card Back
                                                     @if(!empty($existing_doc_filenames->aadhar_card_backend_file))
                                                         <b>&nbsp&nbsp(Already uploaded)  </b>
                                                     @endif
@@ -53,7 +51,7 @@
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                                                 <!-- <label class="" for="pan_card">Pan Card{!! required() !!}</label> -->
-                                                <label for=""> Pan Card
+                                                <label for="" class="float-label"> Pan Card
                                                     @if(!empty($existing_doc_filenames->pan_card_file))
                                                         <b>&nbsp&nbsp(Already uploaded)  </b>
                                                     @endif
@@ -65,7 +63,7 @@
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                                                 <!-- <label class="" for="passport">Passport{!! required() !!}</label> -->
-                                                <label for="">Passport
+                                                <label for="" class="float-label">Passport
                                                     @if(!empty($existing_doc_filenames->passport_file))
                                                         <b>&nbsp&nbsp(Already uploaded)  </b>
                                                     @endif
@@ -76,7 +74,7 @@
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                                                 <!-- <label class="" for="voters_id">Voters ID</label> -->
-                                                <label for="">Voters ID
+                                                <label for="" class="float-label">Voters ID
                                                     @if(!empty($existing_doc_filenames->voters_id_file))
                                                         <b>&nbsp&nbsp(Already uploaded)  </b>
                                                     @endif
@@ -88,7 +86,7 @@
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                                                 <!-- <label class="" for="dl_file">Driving License</label> -->
-                                                <label for=""> Driving License
+                                                <label for="" class="float-label"> Driving License
                                                     @if(!empty($existing_doc_filenames->dl_file))
                                                         <b>&nbsp&nbsp(Already uploaded)  </b>
                                                     @endif
@@ -103,7 +101,7 @@
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
                                                 <!-- <label class="" for="education_certificate">Educations Certificate{!! required() !!}</label> -->
-                                                <label for="">Educations Certificate
+                                                <label for="" class="float-label">Educations Certificate
 
                                                     @if(!empty($existing_doc_filenames->education_certificate_file))
                                                         <b>&nbsp&nbsp(Already uploaded)  </b>
@@ -115,7 +113,7 @@
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
                                                 <!-- <label class="" for="reliving_letter">Reliving Letter</label> -->
-                                                <label for=""> Reliving Letter
+                                                <label for="" class="float-label"> Reliving Letter
                                                     @if(!empty($existing_doc_filenames->reliving_letter_file))
                                                         <b>&nbsp&nbsp(Already uploaded)  </b>
                                                     @endif
@@ -134,13 +132,11 @@
                                 </div>
                             </div>
                         </form>
-                    </div>
-                </div>
-            </div>
+                    
+             
 
         </div>
-    </div>
-    <!--Main Content-->
+   
 </div>
 
 <!-- Vertically Centered -->

@@ -7,7 +7,7 @@
 <style>
     .department-wrapper {
         position: relative;
-       
+
 
     }
 
@@ -97,7 +97,7 @@
 
                             <div id="ember83" class="ember-view department-wrapper">
                                 <div class="bulkhead  bulk-assign   d-flex justify-content-between">
-                                    <button class="btn btn-orange">Bulk Assign Employees</button>
+                                    <button class="btn btn-orange" data-bs-toggle="modal" data-bs-target="#bulk_department">Bulk Assign Employees</button>
                                 </div>
                                 <!-- <div class="table-responsive">
                            
@@ -144,11 +144,10 @@
                                     Employees can post polls in this department
                                 </label>
                             </div>
-
-                            <div class="bottom m-2 d-flex justify-content-end">
-                                <button class="btn btn-sm btn-secondary me-2">Cancel</button>
-                                <button class="btn btn-sm btn-secondary ">Save</button>
+                            <div class="text-right">
+                            <button class="btn  btn-primary  ">Save</button>
                             </div>
+
                         </div>
                     </div>
 
@@ -237,80 +236,151 @@
                         </div>
                     </div>
 
-                </div>
+                    <div class="modal fade" id="bulk_department" tabindex="-1" aria-labelledby="" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered  modal-xl">
+                            <div class="modal-content top-line">
+                                <div class="modal-header border-0 py-2">
+                                    <h6 class="modal-title" id="">Bulk Assign Employee</h6>
+                                    <button type="button" class="modal-close outline-none  border-0" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="text-muted py-2 f-14">You can Import Employee Group Assignments in bulk using the Excel file import here. Follow the instructions below. Please ensure you read all the upload instructions before filling in the excel template.</p>
+                                    <div class="row">
+                                        <div class="col-md-6 col-xl-6 col-sm-12 col-xl-6 col-xxl-6">
+                                            <h6 class="text-muted">Upload Data </h6>
+                                            <div class="col col-form-label">
+                                                <ul class="list-style-numbered list-style-circle ">
+                                                    <li>Download the Excel Template
 
+                                                        <a class="choose-file ms-1" href="{{ url('/assets/bulk_assign_employee.xlsx') }}" target="_blank">
+                                                            <i class="fa fa-file" aria-hidden="true"></i>Sample File</span></a>
+                                                    </li>
+                                                    <li>Read the upload instructions on the right before uploading</li>
+                                                    <li>Fill the information in excel template</li>
+                                                    <li>
+                                                        <form method="POST" id='role-form' action="{{ url('vmt-employess/quick-onboarding/upload') }}" enctype="multipart/form-data">
+                                                            @csrf
+                                                            <div>
+                                                                <span>Please Upload the employees details excel-sheet.</span>
+                                                                <span class="choose-file ms-1">
+                                                                    <input name="file" type="file" required>
+                                                                    <i class="fa fa-file" aria-hidden="true"></i>
+                                                                    Choose file
+                                                                </span>
+                                                            </div>
+                                                            <div class="text-end">
+                                                                <button type="submit" class="btn btn-orange">Upload</button>
+                                                            </div>
+
+                                                            <div class="">
+
+                                                                <p id="success-msg"></p>
+                                                                <p id="error-msg"></p>
+
+
+                                                            </div>
+                                                        </form>
+                                                    </li>
+                                                </ul>
+
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-xl-6 col-sm-12 col-xl-6 col-xxl-6">
+                                            <h6 class="text-muted"> Upload Instructions</h6>
+                                            <div class="alert py-2 f-12 alert-warning"><i class="fa fa-warning text-danger"></i> Read
+                                                these instructions before uploading the file.</div>
+                                            <div>
+                                                <ul class="list-style-circle">
+                                                    <li>Group types can be assigned or updated for the employee from this import</li>
+                                                    <li>Employee Number, Employee Name, Group Name all are required for importing employee group type assignments.</li>
+                                                    <li> If group details were not added earlier, then group details will be added for the employee.</li>
+                                                    <li> If group details are already present for the employee, then group details will be updated for the employee.</li>
+
+                                                </ul>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-@endsection
+    @endsection
 
 
-@section('script')
-<script src="{{ URL::asset('assets/libs/gridjs/gridjs.min.js') }}"></script>
+    @section('script')
+    <script src="{{ URL::asset('assets/libs/gridjs/gridjs.min.js') }}"></script>
 
-<script src="{{ URL::asset('/assets/js/pages/dashboard-projects.init.js') }}"></script>
+    <script src="{{ URL::asset('/assets/js/pages/dashboard-projects.init.js') }}"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-<script>
-    $(document).ready(function() {
+    <script>
+        $(document).ready(function() {
 
-        if (document.getElementById("department-table")) {
-            const grid = new gridjs.Grid({
-                columns: [{
-                        id: 'number',
-                        name: 'Employee Number',
+            if (document.getElementById("department-table")) {
+                const grid = new gridjs.Grid({
+                    columns: [{
+                            id: 'number',
+                            name: 'Employee Number',
 
+                        },
+                        {
+                            id: 'name ',
+                            name: 'Employee Name',
+
+                        },
+                        {
+                            id: 'job_title',
+                            name: ' Job Title',
+                        },
+                        {
+                            id: 'reporting_to',
+                            name: ' Reporting to',
+                        },
+
+                    ],
+                    data: [
+                        // {
+                        //     name: 'John',
+                        //     email: 'john@example.com',
+                        //     phoneNumber: '(353) 01 222 3333'
+                        // },
+                        // {
+                        //     name: 'Mark',
+                        //     email: 'mark@gmail.com',
+                        //     phoneNumber: '(01) 22 888 4444'
+                        // },
+                    ],
+
+                    pagination: {
+                        limit: 10
                     },
-                    {
-                        id: 'name ',
-                        name: 'Employee Name',
-
-                    },
-                    {
-                        id: 'job_title',
-                        name: ' Job Title',
-                    },
-                    {
-                        id: 'reporting_to',
-                        name: ' Reporting to',
-                    },  
-
-                ],
-                data: [
-                    // {
-                    //     name: 'John',
-                    //     email: 'john@example.com',
-                    //     phoneNumber: '(353) 01 222 3333'
-                    // },
-                    // {
-                    //     name: 'Mark',
-                    //     email: 'mark@gmail.com',
-                    //     phoneNumber: '(01) 22 888 4444'
-                    // },
-                ],
-
-                pagination: {
-                    limit: 10
-                },
-                sort: true,
-                search: true,
+                    sort: true,
+                    search: true,
 
 
 
 
-            }).render(document.getElementById("department-table"));
+                }).render(document.getElementById("department-table"));
 
 
-        }
+            }
 
 
 
-    });
-</script>
-@endsection
+        });
+    </script>
+    @endsection
