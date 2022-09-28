@@ -614,9 +614,9 @@ class VmtEmployeeController extends Controller
             $rules = [
                 'employee_code' => 'nullable|unique:users,user_code',
                 'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'email' => 'required|email|unique:users,email',
+                'email' => 'required|email:strict|unique:users,email',
                 'gender' => 'required|in:male,female,other',
-                'doj' => 'required|dateformat:d-m-Y',
+                'doj' => 'required|date',
                 'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'dob' => 'required|dateformat:d-m-Y|before:-18 years',
                 'father_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
@@ -679,13 +679,15 @@ class VmtEmployeeController extends Controller
             ];
 
             $messages = [
-                'dateformat' => 'Field <b>:attribute</b> should have the following format DD-MM-YYYY ',
+                'date' => 'Field <b>:attribute</b> should have the following format DD-MM-YYYY ',
                 'in' => 'Field <b>:attribute</b> should have the following values : :values .',
                 'required' => 'Field <b>:attribute</b> is required',
                 'regex' => 'Field <b>:attribute</b> is invalid',
                 'employee_name.regex' => 'Field <b>:attribute</b> should not have special characters',
                 'unique' => 'Field <b>:attribute</b> should be unique',
                 'dob.before' => 'Field <b>:attribute</b> should be above 18 years',
+                'email' => 'Field <b>:attribute</b> is invalid'
+
             ];
 
             $validator = Validator::make($excelRowdata, $rules, $messages);
@@ -1124,9 +1126,9 @@ class VmtEmployeeController extends Controller
             $rules = [
                 'employee_code' => 'nullable|unique:users,user_code',
                 'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'email' => 'required|email|unique:users,email',
+                'email' => 'required|email:strict|unique:users,email',
                 'l1_manager_code' => 'nullable|regex:/(^([a-zA-z0-9.]+)(\d+)?$)/u',
-                'doj' => 'required|dateformat:d-m-Y',
+                'doj' => 'required|date',
                 'mobile_no' => 'required|regex:/^([0-9]{10})?$/u|numeric',
                 'designation' => 'required',
                 'basic' => 'required|numeric',
@@ -1148,13 +1150,14 @@ class VmtEmployeeController extends Controller
             ];
 
             $messages = [
-                'dateformat' => 'Field <b>:attribute</b> should have the following format DD-MM-YYYY ',
+                'date' => 'Field <b>:attribute</b> should have the following format DD-MM-YYYY ',
                 'in' => 'Field <b>:attribute</b> should have the following values : :values .',
                 'required' => 'Field <b>:attribute</b> is required',
                 'regex' => 'Field <b>:attribute</b> is invalid',
                 'employee_name.regex' => 'Field <b>:attribute</b> should not have special characters',
                 'unique' => 'Field <b>:attribute</b> should be unique',
-                'numeric' => 'Field <b>:attribute</b> is invalid'
+                'numeric' => 'Field <b>:attribute</b> is invalid',
+                'email' => 'Field <b>:attribute</b> is invalid'
             ];
 
             // var_dump($excelRowdata);exit();

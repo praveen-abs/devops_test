@@ -38,7 +38,7 @@
 
 @section('content')
 
-@component('components.organization_breadcrumb')
+{{-- @component('components.organization_breadcrumb') --}}
 @slot('li_1') @endslot
 @endcomponent
 <div class="main">
