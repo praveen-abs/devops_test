@@ -2,6 +2,7 @@
 @section('title') @lang('translation.projects') @endsection
 @section('css')
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/employee-directory.css') }}">
+<link rel="stylesheet" href="{{ URL::asset('assets/libs/gridjs/gridjs.min.css') }}">
 
 @endsection
 
@@ -11,404 +12,27 @@
 @slot('li_1') @endslot
 @endcomponent
 
+<h5 class="text-muted fw-bold">Yet to Active Employees</h5>
 
-<div class=" directory-wrapper bg-white px-3 pt-3 pb-0">
-    <!-- <h6 class="">Employee Directory</h6> -->
-    <!-- <div class="row">
-        <div class="col-12">
-            <div class="row ">
-                <div class="card card-animate">
-                    <div class="card-body p-0">
+<div class="table-responsive">
 
-                        <ul class="nav sub-topnav">
-                            <li routerlinkactive="active" class="active">
-                                <a routerlink="directory" href="{{url('vmt-employess/directory')}}">Employee
-                                    Directory</a>
-                            </li>
-                            <li routerlinkactive="active">
-                                <a routerlink="tree" href="{{url('vmt-employee-hierarchy')}}">Organization Tree</a>
-                            </li>
-                            <li routerlinkactive="active">
-                                <a routerlink="logins" href="#/org/employees/logins">Logins</a>
-                            </li>
-                            <li routerlinkactive="active">
-                                <a routerlink="profile-changes" href="#/org/employees/profile-changes">Profile
-                                    Changes</a>
-
-                            </li>
-                            <li routerlinkactive="active">
-                                <a routerlink="privateprofiles" href="#/org/employees/privateprofiles">Private
-                                    Profiles</a>
-                            </li>
-                            <li routerlinkactive="active">
-                                <a href="/#/org/employees/probation/in-probation">Probation</a>
-                            </li>
-                            <li routerlinkactive="active">
-                                <a routerlink="settings" href="#/org/employees/settings">Settings</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="page-title">
-                <h1>Employee Directory</h1>
-            </div>
-            <div class="card clear-margin-x clear-margin-b">
-                <div class="card-body p-0">
-                    <div class="row" style="border: 1px solid #f8f8f9;">
-                        <div class="pt-1 col-2 dropdown-hover" style="border-right:1px solid #f8f8f9;">
-                            <div class="dropdown">
-                                <button type="button" class="btn" id="page-header-user-dropdown"
-                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    <span class="d-flex align-items-center">
-                                        <span class="text-start ms-xl-2">
-                                            <span class="wrap-text w-100"><span class="text-media">Department</span>
-                                                <span><i class="fa fa-angle-down"></i></span></span>
-                                            <span
-                                                class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text"></span>
-                                        </span>
-                                    </span>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <div class="input-search border-top-0 mx-16 mb-10">
-                                        <input type="text" placeholder="Search"
-                                            class="form-control h-100 w-100 text-normal ng-untouched ng-pristine ng-valid">
-                                        <span class="ic-search icon icon-xs mt-8"></span>
-                                    </div>
-                                    <label class="dropdown-item">
-                                        <input type="checkbox" class="checkbox-sm ng-untouched ng-pristine ng-valid"
-                                            id="departmentNameSelectAll">
-                                        <label for="departmentNameSelectAll">Select All</label>
-                                    </label>
-                                    <label class="dropdown-item">
-                                        <span class="pl-24">
-                                            <input type="checkbox" class="checkbox-sm ng-untouched ng-pristine ng-valid"
-                                                id="departmentName26546Hyderabad HQ_Customer Success">
-                                            <label class="text-truncate-1"
-                                                for="departmentName26546Hyderabad HQ_Customer Success"
-                                                title="Hyderabad HQ_Customer Success">Hyderabad HQ_Customer
-                                                Success</label>
-                                        </span>
-                                    </label>
-                                    <label class="dropdown-item">
-                                        <span class="pl-24">
-                                            <input type="checkbox" class="checkbox-sm ng-untouched ng-pristine ng-valid"
-                                                id="departmentName115611% Management %">
-                                            <label class="text-truncate-1" for="departmentName115611% Management %"
-                                                title="% Management %">% Management %</label>
-                                        </span>
-                                    </label>
-                                    <label class="dropdown-item">
-                                        <span class="pl-24">
-                                            <input type="checkbox" class="checkbox-sm ng-untouched ng-pristine ng-valid"
-                                                id="departmentName31801Hyderabad HQ_Inside Sales">
-                                            <label class="text-truncate-1"
-                                                for="departmentName31801Hyderabad HQ_Inside Sales"
-                                                title="Hyderabad HQ_Inside Sales">Hyderabad HQ_Inside Sales</label>
-                                        </span>
-                                    </label>
-                                    <label class="dropdown-item">
-                                        <span class="pl-24">
-                                            <input type="checkbox" class="checkbox-sm ng-untouched ng-pristine ng-valid"
-                                                id="departmentName159730Solutions">
-                                            <label class="text-truncate-1" for="departmentName159730Solutions"
-                                                title="Solutions">Solutions</label>
-                                        </span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="pt-1 col-2 dropdown-hover" style="border-right:1px solid #f8f8f9;">
-                            <div class="dropdown">
-                                <button type="button" class="btn" id="page-user-dropdown" data-bs-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="true">
-                                    <span class="d-flex align-items-center">
-                                        <span class="text-start ms-xl-2">
-                                            <span class="wrap-text w-100"><span class="text-media">Location
-                                                </span><span><i class="fa fa-angle-down"></i></span></span>
-                                            <span
-                                                class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text"></span>
-                                        </span>
-                                    </span>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <div class="input-search border-top-0 mx-16 mb-10">
-                                        <input type="text" placeholder="Search"
-                                            class="form-control h-100 w-100 text-normal ng-untouched ng-pristine ng-valid">
-                                        <span class="ic-search icon icon-xs mt-8"></span>
-                                    </div>
-                                    <label class="dropdown-item">
-                                        <input type="checkbox" class="checkbox-sm ng-untouched ng-pristine ng-valid"
-                                            id="locationSelectAll">
-                                        <label for="locationSelectAll">Select All</label>
-                                    </label>
-                                    <label class="dropdown-item">
-                                        <span class="pl-24">
-                                            <input type="checkbox" class="checkbox-sm ng-untouched ng-pristine ng-valid"
-                                                id="locationName26546Hyderabad HQ_Customer Success">
-                                            <label class="text-truncate-1"
-                                                for="locationName26546Hyderabad HQ_Customer Success"
-                                                title="Hyderabad HQ_Customer Success">Hyderabad HQ_Customer
-                                                Success</label>
-                                        </span>
-                                    </label>
-                                    <label class="dropdown-item">
-                                        <span class="pl-24">
-                                            <input type="checkbox" class="checkbox-sm ng-untouched ng-pristine ng-valid"
-                                                id="locationName115611% Management %">
-                                            <label class="text-truncate-1" for="locationName115611% Management %"
-                                                title="% Management %">% Management %</label>
-                                        </span>
-                                    </label>
-                                    <label class="dropdown-item">
-                                        <span class="pl-24">
-                                            <input type="checkbox" class="checkbox-sm ng-untouched ng-pristine ng-valid"
-                                                id="locationName31801Hyderabad HQ_Inside Sales">
-                                            <label class="text-truncate-1"
-                                                for="locationName31801Hyderabad HQ_Inside Sales"
-                                                title="Hyderabad HQ_Inside Sales">Hyderabad HQ_Inside Sales</label>
-                                        </span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="pt-1 col-8">
-                            <div class="input-search mr-40 d-flex">
-                                <span class="mt-2"><i class="fa fa-search"></i></span>
-                                <input type="text" placeholder="Search" name="filter" style="padding:6px;"
-                                    autocomplete="off"
-                                    class="mt-1 border-0 h-100 w-100 ng-untouched ng-pristine ng-valid">
-                            </div>
-                            <div class="reset-filter bg-white">
-                                <a class="icon-click">
-                                    <span tooltip="Clear filters" container="body"
-                                        class="ic-clear-filter icon icon-lg"></span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="float:right;" class="p-3">
-                        <div>
-                            <p class="text-x-small text-muted">Showing 8 of 8</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-        </div>
-    </div> -->
-    <!-- <div class="directory-content ">
-        <div class="row">
-            <div class="col-8">
-                <div class="float-left directory-left d-flex">
-                    <div class="search-content header-item w-50 ">
-                        <i class=" ri-search-line "></i>
-                        <input type="text" class="form-control py-1 search-bar rounded-pill directory-search-bar  w-75 "
-                            placeholder="Search">
-                    </div>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="d-flex directory-right float-right justify-content-end align-items-center">
-                    <div class="btn border-0 outline-none mx-2 ">
-                        <i class="ri-menu-add-line fw-bold"></i>
-                    </div>
-                    <a href="{{route('employeeOnboarding')}}" class="btn   btn-orange  fw-bold ">
-                        <i class="ri-add-line fw-bold mx-1"></i>
-                        Onboard Employee
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
-    <h6 class="text-secondary">Not yet active employees</h6>
-
-    <div>
-        <div class="table-responsive">
-            <div class="container-fluid px-2 bg-white" style="position:relative;">
-                <table class=" table table-borderd " id="directory-table-1">
-                    <thead class="table-light">
-                        <tr>
-                            <th scope="col">Employee Name</th>
-                            <th scope="col">Employee Code</th>
-                            <th scope="col">Designation</th>
-                            <th scope="col">Reporting Manager</th>
-                            <!-- <th scope="col">Email Id</th> -->
-                            <th scope="col">Date Of Joining</th>
-                            <th scope="col">Blood Group</th>
-                            <th scope="col">Profile</th>
-                            <th scope="col">Actions</th>
-                            <th scope="col">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($vmtEmployees_InActive as $key => $employee)
-                        <tr id="tr_{{$employee->user_id}}">
-
-                            <td>
-                                <div class="d-flex justify-content-start align-items-center table-img">
-                                    <div class="mx-2 d-flex justify-content-center align-items-center profile-name-icon">
-                                        
-                                        @if( empty($employee->avatar) || !file_exists(public_path('images/'. $employee->avatar)) )
-                                        @php
-                                        $splitArray = explode(" ",$employee->emp_name);
-                                        if(count($splitArray) == 1)
-                                        $name = strtoupper($splitArray[0][0].$splitArray[0][1]);
-                                        else
-                                        $name = strtoupper($splitArray[0][0].$splitArray[1][0]);
-
-                                        @endphp
-                                        <span class="align-middle fw-bold text-white">{{$name}}</span>
-                                        <!--/span-->
-                                        @else
-                                        <img src="{{ URL::asset('images/'.$employee->avatar) }}" alt="" class="h-100 w-100" />
-                                        @endif
-
-                                    </div>
-                                    <span>
-
-                                        {{$employee->emp_name}}
-
-                                    </span>
-                                </div>
-                            </td>
-                            <td> {{$employee->emp_no}}</td>
-                            <td>{{$employee->designation}}</td>
-                            <td>{{$employee->l1_manager_name }}</td>
-                            <td>{{$employee->doj }}</td>
-                            <!-- <td><span>{{$employee->email_id }}</span></td> -->
-                            <td>B <sup>+</sup></td>
-                            <td>70%</td>
-                            <td>
-                                <!-- <div class="d-flex justify-content-center align-items-center"> -->
-                                <a href="{{route('pages_impersonate_profile', $employee->userid)}}" class="btn border-0 outline-none bg-transparent p-0  mx-1">
-                                    <i class="ri-pencil-line text-orange fw-bold"></i>
-                                </a>
-
-                                <!-- </div> -->
-                            </td>
-                            <td>
-                                <div class="switch-field align-items-center  justify-content-center">
-                                    <input type="hidden" value="{{$employee->user_id}}" name="id{{$key}}" id="id{{$key}}">
-                                    <input class="status" type="radio" id="radio-one{{$key}}" name="{{$key}}" value="1" @if($employee->emp_status) checked @endif />
-                                    <label for="radio-one{{$key}}">Active</label>
-                                    <input class="status" type="radio" id="radio-two{{$key}}" name="{{$key}}" value="0" @if(!$employee->emp_status) checked @endif>
-                                    <label for="radio-two{{$key}}">Inactive</label>
-                                </div>
-                            </td>
-                        </tr>
-                        @endforeach
-
-                    </tbody>
-
-                </table>
-
-            </div>
-        </div>
-    </div>
-
-    <br />
-    <br />
-
-    <div class="table-responsive">
-        <h6 class="text-secondary">Active employees</h6>
-        <div class="text-end mb-3">
-            <a href="{{route('employeeOnboarding')}}" class=" text-white btn btn-orange">
-                <i class="ri-add-line fw-bold mx-1" role="button"></i>
-                Onboard Employee
-            </a>
-        </div>
-    </div>
-    <div class="table-responsive">
-        <table class=" table table-borderd " id="directory-table">
-            <thead class="table-light">
-                <tr>
-                    <th scope="col">Employee Name</th>
-                    <th scope="col">Employee Code</th>
-                    <th scope="col">Designation</th>
-                    <th scope="col">Reporting Manager</th>
-                    <!-- <th scope="col">Email Id</th> -->
-                    <th scope="col">Date Of Joining</th>
-                    <th scope="col">Blood Group</th>
-                    <th scope="col">Profile</th>
-                    <th scope="col">Actions</th>
-                    {{-- <th scope="col">Status</th> --}}
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($vmtEmployees as $key => $employee)
-                <tr>
-
-                    <td>
-                        <div class="d-flex justify-content-start align-items-center table-img">
-
-                            <!-- <div class="mx-2 d-flex justify-content-center align-items-center profile-name-icon shorthand_name_bg" > -->
-                            <div class="mx-2 d-flex justify-content-center align-items-center profile-name-icon" >
-                                @if( empty($employee->avatar) || !file_exists(public_path('images/'. $employee->avatar)) )
-                                @php
-                                $splitArray = explode(" ",$employee->emp_name);
-                                if(count($splitArray) == 1)
-                                $name = strtoupper($splitArray[0][0].$splitArray[0][1]);
-                                else
-                                $name = strtoupper($splitArray[0][0].$splitArray[1][0]);
-
-                                @endphp
-                                <!--span class="badge rounded-circle h-10 w-10   badge-primary ms-2"-->
-                                <span class="align-middle  text-white">{{$name}}</span>
-                                <!--/span-->
-                                @else
-                                <img src="{{ URL::asset('images/'.$employee->avatar) }}" alt="" class="h-100 w-100" />
-                                @endif
-
-                            </div>
-                            <span>
-
-                                {{$employee->emp_name}}
-
-                            </span>
-                        </div>
-                    </td>
-
-                    <td> {{$employee->emp_no}}</td>
-                    <td>{{$employee->designation}}</td>
-                    <td>{{$employee->l1_manager_name }}</td>
-                    <td>{{$employee->doj }}</td>
-                    <!-- <td><span>{{$employee->email_id }}</span></td> -->
-                    <td>{{$employee->blood_group? $employee->blood_group : "-" }}</td>
-                    <td>70%</td>
-                    <td>
-                        <!-- <div class="d-flex justify-content-center align-items-center"> -->
-                        <a href="{{route('pages_impersonate_profile', $employee->userid)}}" class="btn border-0 outline-none bg-transparent p-0  mx-1">
-                            <i class="ri-pencil-line text-orange fw-bold"></i>
-                        </a>
-
-                        <!-- </div> -->
-                    </td>
-                    {{-- <td>
-                            <div class="switch-field align-items-center  justify-content-center">
-                                <input type="hidden" value="{{$employee->user_id}}" name="id{{$key}}" id="id{{$key}}">
-                    <input class="status" type="radio" id="radio-one{{$key}}" name="{{$key}}" value="1" @if($employee->emp_status) checked @endif />
-                    <label for="radio-one{{$key}}">Active</label>
-                    <input class="status" type="radio" id="radio-two{{$key}}" name="{{$key}}" value="0" @if(!$employee->emp_status) checked @endif>
-                    <label for="radio-two{{$key}}">Inactive</label>
-
-                    </td> --}}
-                </tr>
-                @endforeach
-
-            </tbody>
-
-        </table>
-    </div>
-
+    <div id="yet-to-active-directory-table"></div>
 
 </div>
+
+<h5 class="text-muted fw-bold">Active Employees</h5>
+
+<div class="table-responsive">
+
+    <div id="active-directory-table"></div>
+
 </div>
+
 
 @endsection
 @section('script')
+<script src="{{ URL::asset('assets/libs/gridjs/gridjs.min.js') }}"></script>
+
 <!-- apexcharts -->
 <script src="{{ URL::asset('/assets/js/pages/dashboard-projects.init.js') }}"></script>
 
@@ -419,108 +43,273 @@
 <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 
 <script>
-    // var divs = document.getElementById("shorthand_name_bg");
+    var grid ="";
 
-    // for (var i = 0; i < divs.length; i++) {
-    //     divs[i].style.background = getRandomColor();
-    // }
+    function activateEmployee(obj)
+    {
+        var emp_id = obj.dataset.emp_id;
+        var status = 1;
+        console.log("Activating emp : "+emp_id);
 
+        $.ajax({
+            url: "{{route('updateUserAccountStatus')}}",
+            type: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+                "status": status,
+                "id": emp_id,
+            },
+            success: function(data) {
+                //window.location.reload();
+                console.log(data);
+
+                grid.updateConfig({
+
+                }).forceRender();;
+
+            }
+        });
+    }
 
 
     $(document).ready(function() {
 
-        $('.shorthand_name_bg').each(function(i, obj) {
-            $( obj ).css( "backgroundColor", getRandomColor() );
-        });
-
-
-        $(function() {
-            $("[data-toggle=popover]").popover({
-                html: true,
-                content: function() {
-                    var content = $(this).attr("data-popover-content");
-                    return $(content).children(".popover-body").html();
+        if (document.getElementById("yet-to-active-directory-table"))
+        {
+            grid = new gridjs.Grid({
+            columns: [{
+                    id: 'emp_id',
+                    name: 'ID',
+                    hidden:true,
                 },
-            });
-        });
+                {
+                    id: 'emp',
+                    name: 'Employee Name',
+                    formatter: function formatter(empObj) {
 
-        $('.status').click(function() {
-            var status = $(this).val();
-            var name = $(this).attr('name');
-            var id = $('#id' + name).val(); //get employee id from hidden htmlelement
-            // console.log(id);
+                        var emp_code = empObj.emp_code;
+                        var emp_name = empObj.emp_name;
 
-            $.ajax({
-                url: "{{route('updateUserAccountStatus')}}",
-                type: "POST",
-                data: {
-                    _token: "{{ csrf_token() }}",
-                    "status": status,
-                    "id": id,
+                        var imagePath = '{{ URL::asset("images/") }}' +'/'+ empObj.avatar;
+
+                        //Check if spaces present in profile image text
+                        if((/\s/).test(imagePath))
+                        {
+                           // console.log("White spaces present in : "+imagePath);
+
+                        }
+                        else
+                        {
+                           // console.log(span_id);
+
+                          //  console.log("##### White spaces not present in : "+imagePath);
+
+
+                        }
+
+                        //console.log(emp_name);
+                        var html_image_tag = '<img data-emp_code="'+emp_code+'" data-emp_name="'+emp_name+'" id="img_'+emp_code+'" class="h-10 w-10"  alt=" " src="'+imagePath+'" />';
+                        var html_empname = emp_name;
+                        var htmlContent = '<span id="span_'+emp_code+'">'+html_image_tag+'</span> &nbsp;&nbsp;'+html_empname;
+
+                        $('#img_'+emp_code).on('error', function(){
+
+                            console.log("Image missing for "+this.dataset.emp_name);
+
+                            $('#span_'+this.dataset.emp_code).html('<i id="shortname_'+emp_code+'" class="align-middle "></i>');
+
+                            generateProfileShortName_VendorScript("shortname_"+emp_code,emp_name);
+
+                        });
+
+                        return gridjs.html(htmlContent );
+                    }
                 },
-                success: function(data) {
-                    //window.location.reload();
-                    $('#tr_' + id).remove();
-                    console.log("Deleting TR " + '#tr_' + id);
-                    //console.log(data);
-                }
-            });
-        });
+                {
+                    id: 'emp_code',
+                    name: 'Employee Code',
+                },
+                {
+                    id: 'emp_designation',
+                    name: 'Designation',
+                },
+                {
+                    id: 'l1_manager_code',
+                    name: 'Reporting Manager',
+                },
+                {
+                    id: 'doj',
+                    name: 'DOJ',
+                },
+                {
+                    id: 'blood_group',
+                    name: 'Blood Group',
+                },
+                {
+                    id: 'emp_code',
+                    name: 'Edit',
+                    formatter: function formatter(user_id) {
 
-        // $('#directory-table').DataTable({
+                        var routeURL = "{{route('pages_impersonate_profile','')}}"+"/"+user_id;
 
-        // });
+                        var htmlcontent= '<a href="'+routeURL+'" class="btn border-0 outline-none bg-transparent p-0  mx-1"><i class="ri-pencil-line text-orange fw-bold"></i></a>';
 
-        $('body').on('click', '.topbarNav', function() {
-            $('.topbarNav').removeClass('active');
-            $(this).addClass('active');
-            var id = $(this).attr('id');
-            $('.topbarContent').hide();
-            $('.emp-' + id).css("display", "block");
-        });
+                        return gridjs.html(htmlcontent);
+                    }
+                },
+                {
+                    id: 'emp_code',
+                    name: 'Action',
+                    formatter: function formatter(cell) {
 
-        $('#calendar_type').change(function() {
-            calendar();
-        });
+                        var htmlcontent= '<input type="button" value="Activate" onclick="activateEmployee(this)" id="button_activate_"'+cell+'" data-emp_id="'+cell+'" class="status btn btn-orange py-1 onboard-employee-btn "></input>';
 
-        function calendar() {
-            if ($('#calendar_type').val() == 'financial_year') {
-                $('#year').val('Apr');
-            } else {
-                $('#year').val('Jan');
-            }
+                        return gridjs.html(htmlcontent);
+                    }
+                },
+            ],
+            pagination: {
+                limit: 5
+            },
+            sort: true,
+            search: true,
+            server: {
+                url: '{{route('vmt-yet-to-activeemployees-fetchall')}}',
+                then: data => data.map(
+                    emp => [
+                        emp.emp_id,
+                        emp,
+                        emp.emp_code,
+                        emp.emp_designation,
+                        emp.l1_manager_code,
+                        emp.doj,
+                        emp.blood_group,
+                        emp.emp_id,
+                        emp.emp_id,
+                    ]
+                )
+            },
+
+            }).render(document.getElementById("yet-to-active-directory-table")); // card Table
+
         }
 
-        $('#frequency').change(function() {
-            frequency();
-        });
 
 
-        $('body').on('click', '.popover-close', function() {
-            $("[data-toggle=popover]").popover('hide');
-        });
+
+        if (document.getElementById("active-directory-table"))
+        {
+            grid = new gridjs.Grid({
+            columns: [{
+                    id: 'emp_id',
+                    name: 'ID',
+                    hidden:true,
+                },
+                {
+                    id: 'emp',
+                    name: 'Employee Name',
+                    formatter: function formatter(empObj) {
+
+                        var emp_code = empObj.emp_code;
+                        var emp_name = empObj.emp_name;
+
+                        var imagePath = '{{ URL::asset("images/") }}' +'/'+ empObj.avatar;
+
+                        //Check if spaces present in profile image text
+                        if((/\s/).test(imagePath))
+                        {
+                           // console.log("White spaces present in : "+imagePath);
+
+                        }
+                        else
+                        {
+                           // console.log(span_id);
+
+                          //  console.log("##### White spaces not present in : "+imagePath);
 
 
-        var options = [];
-        $('.dropdown-menu a').on('click', function(event) {
-            var $target = $(event.currentTarget),
-                val = $target.attr('data-value'),
-                $inp = $target.find('input'),
-                idx;
-            if ((idx = options.indexOf(val)) > -1) {
-                options.splice(idx, 1);
-                setTimeout(function() {
-                    $inp.prop('checked', false)
-                }, 0);
-            } else {
-                options.push(val);
-                setTimeout(function() {
-                    $inp.prop('checked', true)
-                }, 0);
-            }
-            $(event.target).blur();
-            return false;
-        });
+                        }
+
+                        //console.log(emp_name);
+                        var html_image_tag = '<img data-emp_code="'+emp_code+'" data-emp_name="'+emp_name+'" id="img_'+emp_code+'" class="h-10 w-10"  alt=" " src="'+imagePath+'" />';
+                        var html_empname = emp_name;
+                        var htmlContent = '<span id="span_'+emp_code+'">'+html_image_tag+'</span> &nbsp;&nbsp;'+html_empname;
+
+                        $('#img_'+emp_code).on('error', function(){
+
+                            console.log("Image missing for "+this.dataset.emp_name);
+
+                            $('#span_'+this.dataset.emp_code).html('<i id="shortname_'+emp_code+'" class="align-middle "></i>');
+
+                            generateProfileShortName_VendorScript("shortname_"+emp_code,emp_name);
+
+                        });
+
+                        return gridjs.html(htmlContent );
+                    }
+                },
+                {
+                    id: 'emp_code',
+                    name: 'Employee Code',
+                },
+                {
+                    id: 'emp_designation',
+                    name: 'Designation',
+                },
+                {
+                    id: 'l1_manager_code',
+                    name: 'Reporting Manager',
+                },
+                {
+                    id: 'doj',
+                    name: 'DOJ',
+                },
+                {
+                    id: 'blood_group',
+                    name: 'Blood Group',
+                },
+                {
+                    id: 'emp_code',
+                    name: 'Edit',
+                    formatter: function formatter(user_id) {
+
+                        var routeURL = "{{route('pages_impersonate_profile','')}}"+"/"+user_id;
+
+                        var htmlcontent= '<a href="'+routeURL+'" class="btn border-0 outline-none bg-transparent p-0  mx-1"><i class="ri-pencil-line text-orange fw-bold"></i></a>';
+
+                        return gridjs.html(htmlcontent);
+                    }
+                },
+            ],
+            pagination: {
+                limit: 5
+            },
+            sort: true,
+            search: true,
+            server: {
+                url: '{{route('vmt-activeemployees-fetchall')}}',
+                then: data => data.map(
+                    emp => [
+                        emp.emp_id,
+                        emp,
+                        emp.emp_code,
+                        emp.emp_designation,
+                        emp.l1_manager_code,
+                        emp.doj,
+                        emp.blood_group,
+                        emp.emp_id,
+                    ]
+                )
+            },
+
+            }).render(document.getElementById("active-directory-table")); // card Table
+
+        }
+
+
+
+
+
 
     });
 </script>

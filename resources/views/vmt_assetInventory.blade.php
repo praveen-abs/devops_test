@@ -11,7 +11,7 @@
 
 
 <style>
-  
+
 table {
    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px !important;
 }
@@ -155,31 +155,11 @@ tr:last-child td:last-child {
     <div class="directory-content  mt-2">
         <h5 class="text-muted fw-bold">Asset Inventory</h5>
         <div class="row">
-            
-                <div class="float-left directory-left d-flex">
-                    {{-- <div class="switch-field align-items-center">
-                        <input type="radio" id="radio-one" name="switch-one" value="Active" checked />
-                        <label for="radio-one">Active</label>
-                        <input type="radio" id="radio-two" name="switch-one" value="Inactive" />
-                        <label for="radio-two">Inactive</label>
-                    </div> --}}
 
-                    {{-- <div class="search-content header-item w-50 mx-5">
-
-                        <i class=" ri-search-line "></i>
-                        <input type="text" class="form-control search-bar directory-search-bar  w-75 "
-                            placeholder="Search">
-                    </div> --}}
-                </div>
-           
             <div class="col-12 text-end">
-                <!-- <div class="d-flex directory-right float-right justify-content-end align-items-center"> -->
-                    {{-- <div class="btn border-0 outline-none mx-2 ">
-                        <i class="ri-menu-add-line fw-bold"></i>
-                    </div> --}}
                     <a href="#" data-bs-toggle="modal" role="button" data-bs-target="#modal_add_asset"
                         class="btn btn-orange  py-1 onboard-employee-btn">
-                      
+
                         Add New Asset
                     </a>
                     <a href="{{ route('vmt-assetinventory-bulk-upload') }}" role="button" class="btn btn-orange">Bulk Import Assets</a>
@@ -190,9 +170,9 @@ tr:last-child td:last-child {
     </div>
 
     <div class="table-responsive">
-       
+
             <div id="table-assets"></div>
-       
+
         <!-- end table -->
     </div>
 

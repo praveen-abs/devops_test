@@ -911,57 +911,115 @@ class VmtEmployeeController extends Controller
     public function updateUserAccountStatus(Request $request)
     {
         $user = User::find($request->id);
-        $user->active = $request->input('status');
+        $user->active = $request->input('status'); // 1 or 0
         $user->save();
         return 'User Account Status : ' . $request->input('status');
     }
 
-    //
-    public function showEmployeeDirectory(Request $request)
+    public function fetchAllActiveEmployees(Request $request)
     {
         $vmtEmployees = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')
             ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
             ->select(
-                'vmt_employee_details.*',
                 'users.name as emp_name',
+                'users.user_code as emp_code',
                 'users.active as emp_status',
                 'users.email as email_id',
-                'users.id as user_id',
+                'users.id as emp_id',
                 'users.avatar as avatar',
+                'vmt_employee_details.doj as doj',
+                'vmt_employee_details.blood_group as blood_group',
                 'vmt_employee_office_details.department_id',
-                'vmt_employee_office_details.designation',
-                'vmt_employee_office_details.l1_manager_code',
+                'vmt_employee_office_details.designation as emp_designation',
+                'vmt_employee_office_details.l1_manager_code as l1_manager_code',
                 'vmt_employee_office_details.l1_manager_name',
                 'vmt_employee_office_details.l1_manager_designation'
             )
-            ->orderBy('created_at', 'DESC')
+            ->orderBy('users.name', 'ASC')
             ->where('users.active', '1')
             ->where('users.is_admin', '0')
             ->whereNotNull('emp_no')
             ->get();
 
-        $vmtEmployees_InActive = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')
+        return json_encode($vmtEmployees);
+    }
+
+    public function fetchAllYetToActiveEmployees(Request $request)
+    {
+        $vmtEmployees = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')
             ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
             ->select(
-                'vmt_employee_details.*',
                 'users.name as emp_name',
+                'users.user_code as emp_code',
                 'users.active as emp_status',
                 'users.email as email_id',
-                'users.id as user_id',
+                'users.id as emp_id',
                 'users.avatar as avatar',
+                'vmt_employee_details.doj as doj',
+                'vmt_employee_details.blood_group as blood_group',
                 'vmt_employee_office_details.department_id',
-                'vmt_employee_office_details.designation',
-                'vmt_employee_office_details.l1_manager_code',
+                'vmt_employee_office_details.designation as emp_designation',
+                'vmt_employee_office_details.l1_manager_code as l1_manager_code',
                 'vmt_employee_office_details.l1_manager_name',
                 'vmt_employee_office_details.l1_manager_designation'
             )
-            ->orderBy('created_at', 'DESC')
+            ->orderBy('users.name', 'ASC')
             ->where('users.active', '0')
             ->where('users.is_admin', '0')
             ->whereNotNull('emp_no')
             ->get();
 
-        return view('vmt_employeeDirectory', compact('vmtEmployees', 'vmtEmployees_InActive'));
+        return json_encode($vmtEmployees);
+    }
+
+    //
+    public function showEmployeeDirectory(Request $request)
+    {
+        // $vmtEmployees = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')
+        //     ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+        //     ->select(
+        //         'users.name as emp_name',
+        //         'users.user_code as emp_code',
+        //         'users.active as emp_status',
+        //         'users.email as email_id',
+        //         'users.id as user_id',
+        //         'users.avatar as avatar',
+        //         'vmt_employee_details.doj as doj',
+        //         'vmt_employee_details.blood_group as blood_group',
+        //         'vmt_employee_office_details.department_id',
+        //         'vmt_employee_office_details.designation as emp_designation',
+        //         'vmt_employee_office_details.l1_manager_code as l1_manager_code',
+        //         'vmt_employee_office_details.l1_manager_name',
+        //         'vmt_employee_office_details.l1_manager_designation'
+        //     )
+        //     ->orderBy('created_at', 'DESC')
+        //     ->where('users.active', '1')
+        //     ->where('users.is_admin', '0')
+        //     ->whereNotNull('emp_no')
+        //     ->get();
+
+        // $vmtEmployees_InActive = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')
+        //     ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+        //     ->select(
+        //         'vmt_employee_details.*',
+        //         'users.name as emp_name',
+        //         'users.active as emp_status',
+        //         'users.email as email_id',
+        //         'users.id as user_id',
+        //         'users.avatar as avatar',
+        //         'vmt_employee_office_details.department_id',
+        //         'vmt_employee_office_details.designation',
+        //         'vmt_employee_office_details.l1_manager_code',
+        //         'vmt_employee_office_details.l1_manager_name',
+        //         'vmt_employee_office_details.l1_manager_designation'
+        //     )
+        //     ->orderBy('created_at', 'DESC')
+        //     ->where('users.active', '0')
+        //     ->where('users.is_admin', '0')
+        //     ->whereNotNull('emp_no')
+        //     ->get();
+
+        return view('vmt_employeeDirectory');
     }
 
     public function isUserExist($t_emp_code)

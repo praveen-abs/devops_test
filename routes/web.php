@@ -190,6 +190,9 @@ Route::post('vmt-employee/complete-onboarding', 'App\Http\Controllers\VmtEmploye
 
 
 Route::get('employeesDirectory', 'App\Http\Controllers\VmtEmployeeController@showEmployeeDirectory');
+Route::get('vmt-activeemployees-fetchall', 'App\Http\Controllers\VmtEmployeeController@fetchAllActiveEmployees')->name('vmt-activeemployees-fetchall');
+Route::get('vmt-yet-to-activeemployees-fetchall', 'App\Http\Controllers\VmtEmployeeController@fetchAllYetToActiveEmployees')->name('vmt-yet-to-activeemployees-fetchall');
+
 Route::get('manageEmployees', 'App\Http\Controllers\VmtEmployeeManagementController@index')->name('manage-employees-page');
 
 Route::post('vmt-kpi/data', 'App\Http\Controllers\VmtEmployeeController@showKpiData')->name('kpi-data');
@@ -209,6 +212,8 @@ Route::get('vmt-assetinventory-fetchAll', 'App\Http\Controllers\VmtAssetInventor
 Route::post('vmt-assetinventory-edit', 'App\Http\Controllers\VmtAssetInventoryController@updateAsset')->name('vmt-assetinventory-edit');
 Route::post('vmt-assetinventory-delete', 'App\Http\Controllers\VmtAssetInventoryController@deleteAsset')->name('vmt-assetinventory-delete');
 //Route::post('department', 'App\Http\Controllers\VmtPmsController@department')->name('department');
+
+
 
 // pay slip
 
