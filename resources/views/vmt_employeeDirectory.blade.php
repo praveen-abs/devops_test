@@ -146,6 +146,14 @@
                     name: 'Blood Group',
                 },
                 {
+                    id: 'profile',
+                    name: 'Profile',
+                    formatter: function formatter(user_id) {
+                        return gridjs.html("70%");
+
+                    }
+                },
+                {
                     id: 'emp_code',
                     name: 'Edit',
                     formatter: function formatter(user_id) {
@@ -184,6 +192,7 @@
                         emp.l1_manager_code,
                         emp.doj,
                         emp.blood_group,
+                        emp,
                         emp.emp_id,
                         emp.emp_id,
                     ]
@@ -269,6 +278,14 @@
                     name: 'Blood Group',
                 },
                 {
+                    id: 'profile',
+                    name: 'Profile',
+                    formatter: function formatter(user_id) {
+                        return gridjs.html("70%");
+
+                    }
+                },
+                {
                     id: 'emp_code',
                     name: 'Edit',
                     formatter: function formatter(user_id) {
@@ -297,6 +314,7 @@
                         emp.l1_manager_code,
                         emp.doj,
                         emp.blood_group,
+                        emp,
                         emp.emp_id,
                     ]
                 )
