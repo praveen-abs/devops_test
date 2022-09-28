@@ -766,6 +766,8 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
+                                        @if(!empty($user_full_details->gender))
+
                                             <label>Gender</label>
                                         <select class="form-select form-control" name="gender" aria-label="Default select" disabled>
                                             <option selected>-</option>
@@ -776,7 +778,7 @@
                                             <option value="other" @if($user_full_details->gender == 'other') selected
                                                 @endif>Other</option>
                                         </select>
-
+                                        @endif
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -808,7 +810,7 @@
                              <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Phone Number</label>
-                                    <input type=text  size=20 maxlength=10 onkeypress='return isNumberKey(event)' class="form-control"  name="mobile_number"  value="{{$user_full_details->mobile_number}}">
+                                    <input type=text  size=20 maxlength=10 onkeypress='return isNumberKey(event)' class="form-control"  name="mobile_number"  value="{{$user_full_details->mobile_number ?? ''}}">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -816,13 +818,13 @@
                                  <div class="form-group mb-3">
                                     <label>Email</label>
                                     <input type="email" name="present_email" onkeypress='return isValidEmail(email)' class="form-control"
-                                        value="{{$user->email}}">
+                                        value="{{$user->email ?? ''}}">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group mb-3">
                                     <label>Address</label>
-                                    <textarea name="address_PI" id="address_PI" cols="30" rows="3"  class="form-control"  value="{{$user_full_details->present_address}}">{{ $user_full_details->present_address? $user_full_details->present_address : ''}}</textarea>
+                                    <textarea name="address_PI" id="address_PI" cols="30" rows="3"  class="form-control"  value="{{$user_full_details->present_address ?? ''}}">{{ $user_full_details->present_address? $user_full_details->present_address : ''}}</textarea>
                                 </div>
                             </div>
                         </div>
