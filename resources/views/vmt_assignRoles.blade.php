@@ -15,7 +15,7 @@
         <div class="col-xl-8">
             <div class="card card-border-blue">
                 <div class="card-header border-0 align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1"><!-- Please Fill Form --></h4>
+                    <h4 class="card-title mb-0 flex-grow-1">Assign Roles</h4>
                 </div><!-- end card header -->
 
                 <div class="card-body  pb-2">
@@ -26,7 +26,7 @@
                             <div class="mb-3 row">
                                 <label class="col-md-2 col-form-label">Select User</label>
                                 <div class="col-md-10">
-                                    <select class="form-select" name="user" required>
+                                    <select class="form-select select2_form_without_search" name="user_id" id="user_id" required>
                                         <option>Select User</option>
                                         @foreach($users as $user)
                                             <option value="{{$user->id}}">{{$user->name}}</option>
@@ -38,7 +38,7 @@
                             <div class="mb-3 row">
                                 <label class="col-md-2 col-form-label">Select Roles</label>
                                 <div class="col-md-10">
-                                    <select class="form-select" name="roles" required>
+                                    <select class="form-select" name="role_id" required>
                                         <option>Select</option>
                                         @foreach($roles as $role)
                                             <option value="{{$role->id}}">{{$role->name}}</option>
@@ -74,7 +74,8 @@
 </div>
 @endsection
 @section('script')
-
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <!-- ui notifications -->
 
     <script src="{{ URL::asset('/assets/libs/prismjs/prismjs.min.js') }}"></script>
@@ -83,6 +84,12 @@
 
     <script type="text/javascript">
 
+$(document).ready(function() {
+
+        $('#user_id').select2({
+                width: '100%',
+                placeholder: "Select User",
+        });
 
 
         $('#role-form').on('submit', function(e){
@@ -105,6 +112,6 @@
             })
             //console.log($('#role-form').serialize());
         });
-
+    });
     </script>
 @endsection

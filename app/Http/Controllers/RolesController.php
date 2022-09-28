@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Spatie\Permission\Models\Role;
+use App\Models\VmtOrgRoles;
 use Spatie\Permission\Models\Permission;
 
 class RolesController extends Controller
@@ -28,21 +28,20 @@ class RolesController extends Controller
      */
     public function index()
     {
-        //
-        $roles = Role::all();
+        $roles = VmtOrgRoles::all();
         return $roles;
     }
 
-    public function permissionListForRoles($id){
-        $role = Role::find($id);
-        $pList =  $role->getAllPermissions();
-        $pArry = []; 
-        foreach ($pList as $key => $value) {
-            // code...
-            $pArry[] = $value->name;
-        }
-        return $pArry;
-    }
+    // public function permissionListForRoles($id){
+    //     $role = Role::find($id);
+    //     $pList =  $role->getAllPermissions();
+    //     $pArry = [];
+    //     foreach ($pList as $key => $value) {
+    //         // code...
+    //         $pArry[] = $value->name;
+    //     }
+    //     return $pArry;
+    // }
     /**
      * Show the form for creating a new resource.
      *
@@ -51,17 +50,17 @@ class RolesController extends Controller
     public function create()
     {
         //
-        $roles = Role::all();
+        $roles = VmtOrgRoles::all();
         return view('vmt_createEditRoles', compact('roles'));
     }
 
 
-    // assign roles view 
+    // assign roles view
     public function assignRoles()
     {
-        //
+
         $users = User::all();
-        $roles = Role::all();
+        $roles = VmtOrgRoles::all();
         return view('vmt_assignRoles', compact('users', 'roles'));
     }
 
@@ -73,118 +72,24 @@ class RolesController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        //dd($request->all());
-        $role = Role::create(['name' => $request->name]);
+        $role = VmtOrgRoles::create(['name' => $request->name, 'is_active' => 1]);
         return "Role saved";
-        //$permission = Permission::create(['name' => 'edit articles']);
     }
 
 
     public function assignRolesToUser(Request $request){
-        $role = Role::find($request->roles);
-        $user = User::find($request->user);
-        $user->assignRole($role->name);
+        $role = VmtOrgRoles::find($request->role_id);
+        $user = User::find($request->user_id);
+        $user->org_role =$role->id;
+        $user->save();
         return "Assigned";
     }
-
-    // assignPermissionToRoles
-    public function assignPermissionToRoles(Request $request){
-        $role = Role::find($request->roles);
-        $allP = $role->getAllPermissions();
-        foreach($allP as $rolePermit){
-            $role->revokePermissionTo($rolePermit);
-        }
-
-        if($request->has('page_level')){
-            if(count($request->get('page_level')) > 0){
-                foreach ($request->get('page_level') as $key => $value) {
-                    // code...
-                    $permission = Permission::where('name' , $value)->first();
-                    if($permission){
-                        $role->givePermissionTo($permission);
-                    }else{
-                        $permission = Permission::create(['name' => $value]);
-                        $role->givePermissionTo($permission);
-                    }
-                }
-                
-
-            }
-        }
-        if($request->has('section_level')){
-            if(count($request->get('section_level')) > 0){
-
-                foreach ($request->get('section_level') as $key => $value) {
-                    // code...
-                    $permission = Permission::where('name' , $value)->first();
-                    if($permission){
-                        $role->givePermissionTo($permission);
-                    }else{
-                        $permission = Permission::create(['name' => $value]);
-                        $role->givePermissionTo($permission);
-                    }
-                }
-                
-            }
-        }
-        return "Permission Saved";
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id = null, Request $request)
-    {
-        //
-        Role::find($request->roles)->delete();
-        return 'Role Deleted';
-        dd($request->all());
-    }
-
 
     // Delete Roles
     public function deleteRoles(Request $request)
     {
         //
-        Role::find($request->roles)->delete();
+        VmtOrgRoles::find($request->id)->delete();
         return 'Role Deleted';
         dd($request->all());
     }
