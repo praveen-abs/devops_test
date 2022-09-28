@@ -18,6 +18,7 @@ use App\Models\VmtEmployeeAttendance;
 use App\Models\PollVoting;
 use App\Mail\TestEmail;
 use App\Models\VmtClientMaster;
+use App\Models\VmtEmployeeFamilyDetails;
 use \Datetime;
 use Session as Ses;
 use Carbon\Carbon;
@@ -87,16 +88,14 @@ class HomeController extends Controller
 
         $user->update();
         if ($user) {
-            Ses::flash('message', 'User Details Updated successfully!');
-            Ses::flash('alert-class', 'alert-success');
+
             // return response()->json([
             //     'isSuccess' => true,
             //     'Message' => "User Details Updated successfully!"
             // ], 200); // Status code here
             return redirect()->back();
         } else {
-            Ses::flash('message', 'Something went wrong!');
-            Ses::flash('alert-class', 'alert-danger');
+
             // return response()->json([
             //     'isSuccess' => true,
             //     'Message' => "Something went wrong!"
@@ -219,13 +218,27 @@ class HomeController extends Controller
     }
 
     public function updtaeFamilyInfo(Request $request) {
-        $familyInfo = json_encode(['name'=> $request->input('name'), 'relationship'=> $request->input('relationship'),'dob'=> $request->input('dob'), 'phone'=> $request->input('phone')]);
-        $reDetails = VmtEmployee::where('userid', $request->id)->first();
-        $details = VmtEmployee::find($reDetails->id);
-        $details->family_info_json = $familyInfo;
-        $details->save();
-        Ses::flash('message', 'Personal Information Updated successfully!');
-        Ses::flash('alert-class', 'alert-success');
+       // $familyInfo = 'name'=> $request->input('name'), 'relationship'=> $request->input('relationship'),'dob'=> $request->input('dob'), 'phone'=> $request->input('phone')]);
+
+        //Delete existing family details
+        $familyDetails = VmtEmployeeFamilyDetails::where('user_id',$request->id)->delete();
+
+        $count = sizeof($request->input('name'));
+       // dd($count[0]);
+
+        for($i=0 ; $i < $count ; $i++)
+        {
+            $emp_familydetails = new VmtEmployeeFamilyDetails;
+
+            $emp_familydetails->user_id = $request->id;
+            $emp_familydetails->name = $request->input('name')[$i];
+            $emp_familydetails->relationship = $request->input('relationship')[$i];
+            $emp_familydetails->dob = $request->input('dob')[$i];
+            $emp_familydetails->phone_number = $request->input('phone_number')[$i];
+
+            $emp_familydetails->save();
+        }
+
         return redirect()->back();
     }
 
@@ -449,11 +462,10 @@ class HomeController extends Controller
                         ->where('users.id', $user->id)->first();
         //dd($user_full_details);
 
-        if(!empty($user_full_details->contact_json))
-        {
-            $details['contact_json'] = json_decode($user_full_details->contact_json, true);
-            $details['family_info_json'] = json_decode($user_full_details->family_info_json, true);
-        }
+        $familydetails = VmtEmployeeFamilyDetails::where('user_id',$user->id)->get();
+        //dd($familydetails);
+        $details['contact_json'] = json_decode($user_full_details->contact_json, true);
+        $details['family_info_json'] = json_decode($user_full_details->family_info_json, true);
 
         $bank = Bank::all();
         $exp = Experience::where('id',$user->id)->get();
@@ -465,7 +477,7 @@ class HomeController extends Controller
 
         $profileCompletenessValue  = $this->calculateProfileCompleteness($user->id);
 
-        return view('pages-profile', compact('user', 'user_full_details', 'bank', 'exp', 'reportingManager','profileCompletenessValue'));
+        return view('pages-profile', compact('user', 'user_full_details', 'familydetails','bank', 'exp', 'reportingManager','profileCompletenessValue'));
     }
 
     // Show Impersonate Profile info
