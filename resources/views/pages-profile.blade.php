@@ -89,11 +89,15 @@
                                         <div class="text">
                                             <div class="avatar-box">
                                                 <div class="avatar avatar-xs">
-                                                    @if (!empty($reportingManager) && $reportingManager->avatar)
-                                                    <img class="w-100 h-100 soc-det-img "
-                                                        src="{{ URL::asset('images/' . $reportingManager->avatar) }}"
-                                                        alt="Header Avatar">
+                                                    @if (!empty($reportingManager) && $reportingManager->avatar && file_exists(public_path('images/'. $reportingManager->avatar)) )
+
+                                                        <img class="w-100 h-100 soc-det-img "
+                                                            src="{{ URL::asset('images/' . $reportingManager->avatar) }}"
+                                                            alt="Header Avatar">
                                                     @else
+                                                        <span class="rounded-circle user-profile  ml-2 " id="">
+                                                            <i id="manager_shortname" class="align-middle "></i>
+                                                        </span>
                                                     @endif
                                                 </div>
                                             </div>
@@ -768,7 +772,7 @@
                                         <div class="form-group mb-3">
                                         @if(!empty($user_full_details->gender))
 
-                                            <label>Gender</label>
+                                        <label>Gender</label>
                                         <select class="form-select form-control" name="gender" aria-label="Default select" disabled>
                                             <option selected>-</option>
                                             <option value="male" @if($user_full_details->gender == 'male') selected
@@ -784,19 +788,16 @@
                                     <div class="col-md-6">
                                           <div class="form-group mb-3">
 
-                                            {{-- <label>Reports To <span class="text-danger">*</span></label>
-                                            @if($report_key == 1 || $report_key == '1' )
-                                            <select class="form-select form-control" name="report" disabled>
-                                                @else
-                                                <select class="form-select form-control" name="report" >
-                                                @endif
+                                            <label>Reports To <span class="text-danger">*</span></label>
+                                            <select class="form-select form-control" name="report" >
                                                 <option>Select</option>
 
-                                                @foreach($code as $c)
-                                                <option value="{{$c->emp_no}}" @if($rep && $rep->emp_no == $c->emp_no) selected
-                                                        @endif>{{$c->emp_no . ' (' .$c->name. ')'}}</option>
+                                                @foreach($allEmployees as $singleEmp)
+                                                <option value="{{$singleEmp->user_code}}"
+                                                         @if( !empty($reportingManager) && $reportingManager->user_code == $singleEmp->user_code) selected
+                                                        @endif>{{$singleEmp->user_code . ' (' .$singleEmp->name. ')'}}</option>
                                                 @endforeach
-                                            </select> --}}
+                                            </select>
 
                                         </div>
 
@@ -1523,6 +1524,7 @@
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 <script>
 $( document ).ready(function() {
+    generateProfileShortName_VendorScript("manager_shortname","{{ $reportingManager->name}}");
 
     console.log( "ready!" );
 });
