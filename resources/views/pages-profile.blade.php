@@ -27,18 +27,14 @@
                                     <div class="profile-info w-75 ">
                                         <h6 class="fw-bold mb-2 pt-1">{{$user->name}}
                                         </h6>
-                                        <p class="departmnet fw-bold f-15 text-muted">{{$details->department}}</p>
-                                        <p class="role text-muted f-15 fw-bold">{{$details->designation}}</p>
+                                        <p class="departmnet fw-bold f-15 text-muted">{{ !empty($user_full_details->department) ? $user_full_details->department : ""}}</p>
+                                        <p class="role text-muted f-15 fw-bold">{{!empty($user_full_details->designation) ? $user_full_details->designation : ""}}</p>
                                     </div>
 
                                 </div>
 
                                 <div class="mt-4">
                                     <h6 class="mb-2">Profile Completeness</h6>
-                                    <!-- <div class="staff-id fw-bold text-dark">Employee ID :
-                                        {{$details->emp_no}}</div>
-                                    <div class="small fw-bold text-muted">Date of Join :
-                                        {{date('d-m-Y', strtotime($details->doj))}}</div> -->
 
                                     <div class="progress-wrapper">
 
@@ -67,7 +63,7 @@
                                 <ul class="personal-info">
                                     <li>
                                         <div class="title">Phone:</div>
-                                        <div class="text"><a href="">{{$details->mobile_number}}</a></div>
+                                        <div class="text"><a href="">{{!empty($user_full_details->mobile_number) ?$user_full_details->mobile_number : ""}}</a></div>
                                     </li>
                                     <li>
                                         <div class="title">Email:</div>
@@ -75,33 +71,33 @@
                                     </li>
                                     <li>
                                         <div class="title">Birthday:</div>
-                                        <div class="text">{{date('d F', strtotime($details->dob))}}</div>
+                                        <div class="text">{{date('d F', strtotime($user_full_details->dob))}}</div>
                                     </li>
                                     <li>
                                         <div class="title">Address:</div>
-                                        <div class="text">{{$details->present_address}}
+                                        <div class="text">{{$user_full_details->present_address}}
                                         </div>
                                     </li>
                                     <li>
                                         <div class="title">Gender:</div>
-                                        <div class="text">{{$details->gender}}</div>
+                                        <div class="text">{{$user_full_details->gender}}</div>
                                     </li>
                                     <li>
                                         <div class="title">Reports to:</div>
                                         <div class="text">
                                             <div class="avatar-box">
                                                 <div class="avatar avatar-xs">
-                                                    @if ($rep && $rep->avatar)
+                                                    @if (!empty($reportingManager) && $reportingManager->avatar)
                                                     <img class="w-100 h-100 soc-det-img "
-                                                        src="{{ URL::asset('images/' . $rep->avatar) }}"
+                                                        src="{{ URL::asset('images/' . $reportingManager->avatar) }}"
                                                         alt="Header Avatar">
                                                     @else
                                                     @endif
                                                 </div>
                                             </div>
-                                            @if ($rep && $rep->name)
+                                            @if (!empty($reportingManager) && $reportingManager->name)
                                             <a href="profile.html">
-                                                {{$rep->name}}
+                                                {{$reportingManager->name}}
                                             </a>
                                             @else
                                                 ---
@@ -129,36 +125,36 @@
                                     <li>
                                         <div class="title">Passport No.</div>
                                         <div class="text">
-                                         {{$details->passport_number}}
+                                         {{$user_full_details->passport_number}}
                                         </div>
                                     </li>
                                     <li>
                                         <div class="title">Passport Exp Date.</div>
-                                        <div class="text">{{$details->passport_date}}</div>
+                                        <div class="text">{{$user_full_details->passport_date}}</div>
                                     </li>
                                     <li>
                                         <!-- <div class="title">Tel</div>
-                                        <div class="text"><a href="">{{$details->mobile_number}}</a></div> -->
+                                        <div class="text"><a href="">{{$user_full_details->mobile_number}}</a></div> -->
                                     </li>
                                     <li>
                                         <div class="title">Nationality</div>
-                                        <div class="text">{{$details->nationality}}</div>
+                                        <div class="text">{{$user_full_details->nationality}}</div>
                                     </li>
                                     <li>
                                         <div class="title">Religion</div>
-                                        <div class="text">{{$details->religion}}</div>
+                                        <div class="text">{{$user_full_details->religion}}</div>
                                     </li>
                                     <li>
                                         <div class="title">Marital status</div>
-                                        <div class="text">{{$details->marrital_status}}</div>
+                                        <div class="text">{{$user_full_details->marrital_status}}</div>
                                     </li>
                                     <li>
                                         <div class="title">Spouse Name</div>
-                                        <div class="text">{{$details->spouse_name}}</div>
+                                        <div class="text">{{$user_full_details->spouse_name}}</div>
                                     </li>
                                     <li>
                                         <div class="title">No. of children</div>
-                                        <div class="text">{{$details->children}}</div>
+                                        <div class="text">{{$user_full_details->children}}</div>
                                     </li>
                                 </ul>
                             </div>
@@ -242,13 +238,13 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if($details->family_info_json && $details->family_info_json['name'])
-                                            @foreach($details->family_info_json['name'] as $k => $info)
+                                            @if( !empty($user_full_details->family_info_json) && $user_full_details->family_info_json['name'])
+                                            @foreach($user_full_details->family_info_json['name'] as $k => $info)
                                             <tr>
-                                                <td>{{$details->family_info_json['name'][$k]}}</td>
-                                                <td>{{$details->family_info_json['relationship'][$k]}}</td>
-                                                <td>{{$details->family_info_json['dob'][$k]}}</td>
-                                                <td>{{$details->family_info_json['phone'][$k]}}</td>
+                                                <td>{{$user_full_details->family_info_json['name'][$k]}}</td>
+                                                <td>{{$user_full_details->family_info_json['relationship'][$k]}}</td>
+                                                <td>{{$user_full_details->family_info_json['dob'][$k]}}</td>
+                                                <td>{{$user_full_details->family_info_json['phone'][$k]}}</td>
                                                 {{-- <td class="text-end">
                                                     <div class="dropdown dropdown-action">
                                                         <a aria-expanded="false" data-bs-toggle="dropdown"
@@ -318,19 +314,19 @@
                                 <ul class="personal-info">
                                     <li>
                                         <div class="title">Bank name</div>
-                                        <div class="text">{{$details->bank_name}}</div>
+                                        <div class="text">{{$user_full_details->bank_name}}</div>
                                     </li>
                                     <li>
                                         <div class="title">Bank account No.</div>
-                                        <div class="text">{{$details->bank_account_number}}</div>
+                                        <div class="text">{{$user_full_details->bank_account_number}}</div>
                                     </li>
                                     <li>
                                         <div class="title">IFSC Code</div>
-                                        <div class="text">{{$details->bank_ifsc_code}}</div>
+                                        <div class="text">{{$user_full_details->bank_ifsc_code}}</div>
                                     </li>
                                     <li>
                                         <div class="title">PAN No</div>
-                                        <div class="text">{{$details->pan_number}}</div>
+                                        <div class="text">{{$user_full_details->pan_number}}</div>
                                     </li>
                                 </ul>
                             </div>
@@ -344,46 +340,29 @@
                                         data-bs-toggle="modal" data-bs-target="#emergency_contact_modal"><i
                                             class=" ri-pencil-fill"></i></a></h6>
 
-                                                                  
+                                        @if(!empty($user_full_details->contact_json))
+
                                         <ul class="personal-info">
                                             <li>
                                                 <div class="title">Name</div>
-                                                <div class="text">{{($details->contact_json && $details->contact_json['primary_name']) ? $details->contact_json['primary_name'] : '-'}}</div>
+                                                <div class="text">{{ $user_full_details->contact_json['primary_name'] ? $user_full_details->contact_json['primary_name'] : '-'}}</div>
                                             </li>
                                             <li>
                                                 <div class="title">Relationship</div>
-                                                <div class="text">{{($details->contact_json && $details->contact_json['primary_relationship']) ? $details->contact_json['primary_relationship'] : '-'}}</div>
+                                                <div class="text">{{ $user_full_details->contact_json['primary_relationship'] ? $user_full_details->contact_json['primary_relationship'] : '-'}}</div>
                                             </li>
                                             <li>
                                                 <div class="title">Phone - 1 </div>
-                                                <div class="text">{{($details->contact_json && $details->contact_json['primary_phone1']) ? $details->contact_json['primary_phone1'] : '-'}}
+                                                <div class="text">{{ $user_full_details->contact_json['primary_phone1'] ? $user_full_details->contact_json['primary_phone1'] : '-'}}
                                                 </div>
                                             </li>
                                             <li>
                                                 <div class="title">Phone - 2</div>
-                                                <div class="text">{{($details->contact_json && $details->contact_json['primary_phone2']) ? $details->contact_json['primary_phone2'] : '-'}}
+                                                <div class="text">{{ $user_full_details->contact_json['primary_phone2'] ? $user_full_details->contact_json['primary_phone2'] : '-'}}
                                                 </div>
                                             </li>
                                         </ul>
-
-                                    <!-- <hr> -->
-                                    <!-- <div class="col-md-6 col-lg-6 col-xl-6  col-sm-12 w-100">
-                                        <h5 class="section-title">Secondary</h5>
-                                        <ul class="personal-info">
-                                            <li>
-                                                <div class="title">Name</div>
-                                                <div class="text">{{($details->contact_json && $details->contact_json['secondary_name']) ? $details->contact_json['secondary_name'] : '-'}}</div>
-                                            </li>
-                                            <li>
-                                                <div class="title">Relationship</div>
-                                                <div class="text">{{($details->contact_json && $details->contact_json['secondary_relationship']) ? $details->contact_json['secondary_relationship'] : '-'}}</div>
-                                            </li>
-                                            <li>
-                                                <div class="title">Phone </div>
-                                                <div class="text">{{($details->contact_json && $details->contact_json['secondary_phone1']) ? $details->contact_json['secondary_phone1'] : '-'}}, {{($details->contact_json && $details->contact_json['secondary_phone2']) ? $details->contact_json['secondary_phone2'] : '-'}}</div>
-                                            </li>
-                                        </ul>
-                                    </div> -->
+                                        @endif
 
                             </div>
                         </div>
@@ -779,33 +758,6 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="d-flex align-items-center justify-content-center">
-                                {{-- <div class="profile-img-wrap edit-img"> --}}
-                                  <!--   <img id="profile_round_image_dist1" class="rounded-circle header-profile-user"
-                                        src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"
-                                        alt="Header Avatar"> -->
-                                         {{-- @php
-                                    preg_match('/(?:\w+\. )?(\w+).*?(\w+)(?: \w+\.)?$/',Auth::user()->name , $result);
-                                    $name = strtoupper($result[1][0].$result[2][0]);
-
-                                    if (Auth::user()->avatar == null || Auth::user()->avatar =='' ){
-                                    @endphp
-                                        <span class="badge rounded-circle h-100 w-100 header-profile-user badge-primary ml-2"><i
-                                            class="align-middle">{{$name}}</i></span>
-                                    @php
-                                    }else{
-                                    @endphp
-                                    <img id="profile_round_image_dist1" class="rounded-circle header-profile-user"
-                                        src="{{URL::asset('images/'. Auth::user()->avatar)}}" alt="">
-
-
-                                    @php
-                                    }
-                                    @endphp --}}
-                                    {{-- <div class="fileupload btn">
-                                        <span class="btn-text">Change</span>
-                                        <input type='file' name="profilePic" class="upload"  accept="image/*" onchange="readURL(this);" />
-                                        </div>
-                                    </div> --}}
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
@@ -819,7 +771,7 @@
                                             <label>Birth Date</label>
                                             <div class="cal-icon">
                                                 <input class="form-control datetimepicker" type="date" max="9999-12-31"
-                                                    name="dob" value="{{date('Y-m-d', strtotime($details->dob))}}" readonly>
+                                                    name="dob" value="{{date('Y-m-d', strtotime($user_full_details->dob))}}" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -828,11 +780,11 @@
                                             <label>Gender</label>
                                         <select class="form-select form-control" name="gender" aria-label="Default select" disabled>
                                             <option selected>-</option>
-                                            <option value="male" @if($details->gender == 'male') selected
+                                            <option value="male" @if($user_full_details->gender == 'male') selected
                                                 @endif>Male</option>
-                                            <option value="female" @if($details->gender == 'female') selected
+                                            <option value="female" @if($user_full_details->gender == 'female') selected
                                                 @endif>Female</option>
-                                            <option value="other" @if($details->gender == 'other') selected
+                                            <option value="other" @if($user_full_details->gender == 'other') selected
                                                 @endif>Other</option>
                                         </select>
 
@@ -841,21 +793,21 @@
                                     <div class="col-md-6">
                                           <div class="form-group mb-3">
 
-                                    <label>Reports To <span class="text-danger">*</span></label>
-                                    @if($report_key == 1 || $report_key == '1' )
-                                    <select class="form-select form-control" name="report" disabled>
-                                        @else
-                                        <select class="form-select form-control" name="report" >
-                                        @endif
-                                        <option>Select</option>
-                                    
-                                        @foreach($code as $c)
-                                        <option value="{{$c->emp_no}}" @if($rep && $rep->emp_no == $c->emp_no) selected
-                                                @endif>{{$c->emp_no . ' (' .$c->name. ')'}}</option>
-                                        @endforeach
-                                    </select>
+                                            {{-- <label>Reports To <span class="text-danger">*</span></label>
+                                            @if($report_key == 1 || $report_key == '1' )
+                                            <select class="form-select form-control" name="report" disabled>
+                                                @else
+                                                <select class="form-select form-control" name="report" >
+                                                @endif
+                                                <option>Select</option>
 
-                                </div>
+                                                @foreach($code as $c)
+                                                <option value="{{$c->emp_no}}" @if($rep && $rep->emp_no == $c->emp_no) selected
+                                                        @endif>{{$c->emp_no . ' (' .$c->name. ')'}}</option>
+                                                @endforeach
+                                            </select> --}}
+
+                                        </div>
 
                                     </div>
 
@@ -864,28 +816,10 @@
                         </div>
                         <div class="row">
 
-                            <!-- <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label>State</label>
-                                    <input type="text" class="form-control" value="New York">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label>Country</label>
-                                    <input type="text" class="form-control" value="United States">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label>Pin Code</label>
-                                    <input type="text" class="form-control" value="10523">
-                                </div>
-                            </div> -->
-                            <div class="col-md-6">
+                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Phone Number</label>
-                                    <input type=text  size=20 maxlength=10 onkeypress='return isNumberKey(event)' class="form-control"  name="mobile_number"  value="{{$details->mobile_number}}">
+                                    <input type=text  size=20 maxlength=10 onkeypress='return isNumberKey(event)' class="form-control"  name="mobile_number"  value="{{$user_full_details->mobile_number}}">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -899,7 +833,7 @@
                             <div class="col-md-12">
                                 <div class="form-group mb-3">
                                     <label>Address</label>
-                                    <textarea name="address_PI" id="address_PI" cols="30" rows="3"  class="form-control"  value="{{$details->present_address}}">{{ $details->present_address? $details->present_address : ''}}</textarea>
+                                    <textarea name="address_PI" id="address_PI" cols="30" rows="3"  class="form-control"  value="{{$user_full_details->present_address}}">{{ $user_full_details->present_address? $user_full_details->present_address : ''}}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -976,7 +910,7 @@
                                     <select name="bank_name" id="bank_name" class="form-select form-control onboard-form" required>
                                         <option value="">Select</option>
                                         @foreach($bank as $b)
-                                        <option value="{{$b->bank_name}}" min-data="{{$b->min_length}}" max-data="{{$b->max_length}}" @if($details->bank_name == $b->bank_name) selected @endif>{{$b->bank_name}}</option>
+                                        <option value="{{$b->bank_name}}" min-data="{{$b->min_length}}" max-data="{{$b->max_length}}" @if($user_full_details->bank_name == $b->bank_name) selected @endif>{{$b->bank_name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -985,7 +919,7 @@
                                 <div class="form-group mb-3">
                                     <label>Bank account No</label>
                                     <div class="cal-icon">
-                                        <input name="account_no" type="number" minlength="9" maxlength="18" class="form-control onboard-form" value="{{$details->bank_account_number}}" pattern-data="account" required>
+                                        <input name="account_no" type="number" minlength="9" maxlength="18" class="form-control onboard-form" value="{{$user_full_details->bank_account_number}}" pattern-data="account" required>
                                     </div>
                                 </div>
 
@@ -993,13 +927,13 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>IFSC Code</label>
-                                    <input name="bank_ifsc" class="form-control onboard-form" value="{{$details->bank_ifsc_code}}" type="text" pattern-data="ifsc" required>
+                                    <input name="bank_ifsc" class="form-control onboard-form" value="{{$user_full_details->bank_ifsc_code}}" type="text" pattern-data="ifsc" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>PAN No</label>
-                                    <input name="pan_no" class="form-control onboard-form" value="{{$details->pan_number}}" type="text" pattern-data="pan" required>
+                                    <input name="pan_no" class="form-control onboard-form" value="{{$user_full_details->pan_number}}" type="text" pattern-data="pan" required>
                                 </div>
                             </div>
 
@@ -1087,34 +1021,34 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Passport No</label>
-                                    <input type="text" class="form-control" name="passport_number" value="{{$details->passport_number}}">
+                                    <input type="text" class="form-control" name="passport_number" value="{{$user_full_details->passport_number}}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Passport Expiry Date</label>
                                     <div class="cal-icon">
-                                        <input class="form-control datetimepicker" name="passport_date" type="date" max="9999-12-31" value="{{date('Y-m-d', strtotime($details->passport_data))}}">
+                                        <input class="form-control datetimepicker" name="passport_date" type="date" max="9999-12-31" value="{{date('Y-m-d', strtotime($user_full_details->passport_data))}}">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Tel</label>
-                                    <input class="form-control" value="{{$details->mobile_number}}" name="mobile_number" minlength="10" maxlength="10" type="number" maxlength="10" minlength="10" required>
+                                    <input class="form-control" value="{{$user_full_details->mobile_number}}" name="mobile_number" minlength="10" maxlength="10" type="number" maxlength="10" minlength="10" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Nationality <span class="text-danger">*</span></label>
-                                    <input class="form-control onboard-form" type="text" name="nationality" pattern-data="alpha" value="{{$details->nationality}}">
+                                    <input class="form-control onboard-form" type="text" name="nationality" pattern-data="alpha" value="{{$user_full_details->nationality}}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Religion</label>
                                     <div class="cal-icon">
-                                        <input class="form-control onboard-form" pattern-data="name" name="religion" type="text" pattern-data="alpha" value="{{$details->religion}}">
+                                        <input class="form-control onboard-form" pattern-data="name" name="religion" type="text" pattern-data="alpha" value="{{$user_full_details->religion}}">
                                     </div>
                                 </div>
                             </div>
@@ -1123,24 +1057,24 @@
                                     <label>Marital status <span class="text-danger">*</span></label>
                                     <select class="form-select form-control" name="marital_status" required>
                                         <option>Select</option>
-                                        <option @if($details->marital_status == 'single') selected @endif>Un Married</option>
-                                        <option @if($details->marital_status == 'married') selected @endif>Married</option>
-                                        <option @if($details->marital_status == 'divorced') selected @endif>Divorces</option>
-                                        <option @if($details->marital_status == 'widowed') selected @endif>Widowe</option>
-                                        <option @if($details->marital_status == 'seperated') selected @endif>Seperated</option>
+                                        <option @if($user_full_details->marital_status == 'single') selected @endif>Un Married</option>
+                                        <option @if($user_full_details->marital_status == 'married') selected @endif>Married</option>
+                                        <option @if($user_full_details->marital_status == 'divorced') selected @endif>Divorces</option>
+                                        <option @if($user_full_details->marital_status == 'widowed') selected @endif>Widowe</option>
+                                        <option @if($user_full_details->marital_status == 'seperated') selected @endif>Seperated</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Spouse Name</label>
-                                    <input class="form-control onboard-form" type="text" name="spouse" pattern-data="alpha" value="{{$details->spouse_name}}">
+                                    <input class="form-control onboard-form" type="text" name="spouse" pattern-data="alpha" value="{{$user_full_details->spouse_name}}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>No. of children </label>
-                                    <input class="form-control onboard-form" type="number" name="children" maxlength="2" value="{{$details->children}}">
+                                    <input class="form-control onboard-form" type="number" name="children" maxlength="2" value="{{$user_full_details->children}}">
                                 </div>
                             </div>
                         </div>
@@ -1171,30 +1105,30 @@
                         @csrf
                         <div class="card">
                             <div class="card-body">
-                             
+
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
                                             <label>Name <span class="text-danger">*</span></label>
-                                            <input type="text" name="primary_name" class="form-control onboard-form" pattern-data="name" value="{{($details->contact_json && $details->contact_json['primary_name']) ? $details->contact_json['primary_name'] : ''}}">
+                                            <input type="text" name="primary_name" class="form-control onboard-form" pattern-data="name" value="{{($user_full_details->contact_json && $user_full_details->contact_json['primary_name']) ? $user_full_details->contact_json['primary_name'] : ''}}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
                                             <label>Relationship <span class="text-danger">*</span></label>
-                                            <input name="primary_relationship" class="form-control onboard-form" type="text" pattern-data="alpha" value="{{($details->contact_json && $details->contact_json['primary_relationship']) ? $details->contact_json['primary_relationship'] : ''}}">
+                                            <input name="primary_relationship" class="form-control onboard-form" type="text" pattern-data="alpha" value="{{($user_full_details->contact_json && $user_full_details->contact_json['primary_relationship']) ? $user_full_details->contact_json['primary_relationship'] : ''}}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
                                             <label>Phone 1<span class="text-danger">*</span></label>
-                                            <input name="primary_phone1" class="form-control onboard-form" type="number" maxlength="10" minlength="10" value="{{($details->contact_json && $details->contact_json['primary_phone1']) ? $details->contact_json['primary_phone1'] : ''}}">
+                                            <input name="primary_phone1" class="form-control onboard-form" type="number" maxlength="10" minlength="10" value="{{($user_full_details->contact_json && $user_full_details->contact_json['primary_phone1']) ? $user_full_details->contact_json['primary_phone1'] : ''}}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
                                             <label>Phone 2</label>
-                                            <input name="primary_phone2" class="form-control onboard-form" type="number" maxlength="10" minlength="10" value="{{($details->contact_json && $details->contact_json['primary_phone2']) ? $details->contact_json['primary_phone2'] : ''}}">
+                                            <input name="primary_phone2" class="form-control onboard-form" type="number" maxlength="10" minlength="10" value="{{($user_full_details->contact_json && $user_full_details->contact_json['primary_phone2']) ? $user_full_details->contact_json['primary_phone2'] : ''}}">
                                         </div>
                                     </div>
                                 </div>
@@ -1227,7 +1161,7 @@
                     <form action="{{route('updtaeFamilyInfo', $user->id)}}" Method="POST" enctype="multipart/form-data">
                         @csrf
 
-                      
+
                             <div class="card">
                                 <div class="card-body">
                                     <!-- <h3 class="card-title fw-bold">Education Informations <a href="javascript:void(0);"
@@ -1238,28 +1172,28 @@
                                             <div class="col-md-6">
                                                 <div class="form-group mb-3">
                                                     <label>Name <span class="text-danger">*</span></label>
-                                                    <input name="name[]" class="form-control onboard-form" type="text" pattern-data="name" required value="{{($details->family_info_json && $details->family_info_json['name']) ? $details->family_info_json['name'][0] : ''}}">
+                                                    <input name="name[]" class="form-control onboard-form" type="text" pattern-data="name" required value="{{($user_full_details->family_info_json && $user_full_details->family_info_json['name']) ? $user_full_details->family_info_json['name'][0] : ''}}">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group mb-3">
                                                     <label>Relationship <span class="text-danger">*</span></label>
                                                     <input name="relationship[]" class="form-control onboard-form" type="text"
-                                                        pattern-data="alpha" required value="{{($details->family_info_json && $details->family_info_json['relationship']) ? $details->family_info_json['relationship'][0] : ''}}">
+                                                        pattern-data="alpha" required value="{{($user_full_details->family_info_json && $user_full_details->family_info_json['relationship']) ? $user_full_details->family_info_json['relationship'][0] : ''}}">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group mb-3">
                                                     <label>Date of birth <span class="text-danger">*</span></label>
                                                     <input name="dob[]" class="form-control onboard-form" type="date"
-                                                        max="9999-12-31" required value="{{($details->family_info_json && $details->family_info_json['dob']) ? $details->family_info_json['dob'][0] : ''}}">
+                                                        max="9999-12-31" required value="{{($user_full_details->family_info_json && $user_full_details->family_info_json['dob']) ? $user_full_details->family_info_json['dob'][0] : ''}}">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group mb-3">
                                                     <label>Phone <span class="text-danger">*</span></label>
                                                     <input name="phone[]" class="form-control onboard-form" type="number"
-                                                        maxlength="10" minlength="10" required value="{{($details->family_info_json && $details->family_info_json['phone']) ? $details->family_info_json['phone'][0] : ''}}">
+                                                        maxlength="10" minlength="10" required value="{{($user_full_details->family_info_json && $user_full_details->family_info_json['phone']) ? $user_full_details->family_info_json['phone'][0] : ''}}">
                                                 </div>
                                             </div>
                                         </div>
@@ -1271,7 +1205,7 @@
                                     </div>
                                 </div>
                             </div>
-                      
+
                         <div class="col-12">
                         <div class="text-right">
                             <button class="btn btn-orange submit-btn">Submit</button>
@@ -1454,7 +1388,7 @@
                                 <div class="card-body">
                                      <a href="javascript:void(0);"
                                             class="delete-icon text-end"><i class="   ri-delete-bin-line"></i></a>
-                                   
+
                                     <div class="exp-content-container">
                                         <div class="row exp-addition-content" id="content1">
                                             <input type="hidden" name="ids[]">
@@ -1533,7 +1467,7 @@
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 <script>
 $( document ).ready(function() {
-    
+
     console.log( "ready!" );
 });
 
@@ -1597,7 +1531,7 @@ $('.edit-icon').click(function() {
         });
     }
     if (modalid == '#family_info_modal') {
-        var familyInfo = @json($details->family_info_json);
+        var familyInfo = @json($user_full_details->family_info_json);
         var id = $('.exp-addition-content:last').attr('id');
         var familyInfoCount = 1;
         if (id) {

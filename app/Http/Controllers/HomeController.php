@@ -444,25 +444,28 @@ class HomeController extends Controller
     // Show Profile info
     public function showProfile(Request $request){
         $user = Auth::user();
-        $details = VmtEmployee::join('vmt_employee_office_details', 'emp_id', '=', 'vmt_employee_details.id')->where('userid', $user->id)->first();
-        $details['contact_json'] = json_decode($details['contact_json'], true);
-        $details['family_info_json'] = json_decode($details['family_info_json'], true);
-        if($user->hasrole('Employee')) {
-            $employee = VmtEmployee::first();
-            // report for disable for role base
-            $report_key = 1;
-        } else {
-            $employee = null;
-            $report_key = 0;
+        $user_full_details = User::join('vmt_employee_details','vmt_employee_details.userid', '=', 'users.id')
+                        ->join('vmt_employee_office_details','vmt_employee_office_details.user_id', '=', 'users.id')
+                        ->where('users.id', $user->id)->first();
+        //dd($user_full_details);
+
+        if(!empty($user_full_details->contact_json))
+        {
+            $details['contact_json'] = json_decode($user_full_details->contact_json, true);
+            $details['family_info_json'] = json_decode($user_full_details->family_info_json, true);
         }
+
         $bank = Bank::all();
-        $exp = Experience::whereIn('id', explode(',', $details->experience_json))->get();
-        $code = VmtEmployee::join('users', 'users.id', '=', 'userid')->join('vmt_employee_office_details', 'emp_id', '=', 'vmt_employee_details.id')->where('emp_no', '<>' , $details->emp_no)->get();
-        $rep = VmtEmployee::select('emp_no', 'name', 'avatar')->join('vmt_employee_office_details', 'emp_id', '=', 'vmt_employee_details.id')->join('users', 'users.id', '=', 'vmt_employee_details.userid')->where('emp_no', $details->l1_manager_code)->first();
+        $exp = Experience::where('id',$user->id)->get();
+
+        if(!empty($user_full_details->l1_manager_code))
+            $reportingManager = User::where('user_code',$user_full_details->l1_manager_code)->first();
+        else
+            $reportingManager = null;
 
         $profileCompletenessValue  = $this->calculateProfileCompleteness($user->id);
 
-        return view('pages-profile', compact( 'employee', 'user', 'details','report_key', 'bank', 'exp', 'code', 'rep','profileCompletenessValue'));
+        return view('pages-profile', compact('user', 'user_full_details', 'bank', 'exp', 'reportingManager','profileCompletenessValue'));
     }
 
     // Show Impersonate Profile info
