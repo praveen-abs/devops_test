@@ -824,7 +824,8 @@
                             <div class="col-md-12">
                                 <div class="form-group mb-3">
                                     <label>Address</label>
-                                    <textarea name="address_PI" id="address_PI" cols="30" rows="3"  class="form-control"  value="{{$user_full_details->present_address ?? ''}}">{{ $user_full_details->present_address? $user_full_details->present_address : ''}}</textarea>
+
+                                    <textarea name="address_PI" id="address_PI" cols="30" rows="3"  class="form-control"  value="{{$user_full_details->present_address? $user_full_details->present_address : ''}}">{{ $user_full_details->present_address? $user_full_details->present_address : ''}}</textarea>
                                 </div>
                             </div>
                         </div>
