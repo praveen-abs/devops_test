@@ -292,6 +292,15 @@ class VmtEmployeeController extends Controller
                 $empOffice->confirmation_period  = $row['confirmation_period']; // => "k"
                 $empOffice->holiday_location  = $row["holiday_location"]; // => "k"
                 $empOffice->l1_manager_code  = $row["l1_manager_code"]; // => "k"
+
+
+                if ( !empty($row["l1_manager_code"]) && $this->isUserExist($row["l1_manager_code"]))
+                {
+                    $empOffice->l1_manager_code  = $row["l1_manager_code"];
+                    updateUserRole($empOffice->l1_manager_code,"Manager");
+
+                }
+
                 // $empOffice->l1_manager_designation  = $row["l1_manager_designation"];// => "k"
                 $empOffice->l1_manager_name  = $row["l1_manager_name"]; // => "k"
                 // $empOffice->l2_manager_code  = $row["l2_manager_code"];// => "kk"
@@ -461,6 +470,16 @@ class VmtEmployeeController extends Controller
                 $empOffice->confirmation_period  = $row['confirmation_period']; // => "k"
                 $empOffice->holiday_location  = $row["holiday_location"]; // => "k"
                 $empOffice->l1_manager_code  = $row["l1_manager_code"]; // => "k"
+
+                //If this l1_manager_code is not manager, then change his role to Manager
+
+                if ( !empty($row["l1_manager_code"]) && $this->isUserExist($row["l1_manager_code"]))
+                {
+                    $empOffice->l1_manager_code  = $row["l1_manager_code"];
+                    updateUserRole($empOffice->l1_manager_code,"Manager");
+
+                }
+
                 // $empOffice->l1_manager_designation  = $row["l1_manager_designation"];// => "k"
                 $empOffice->l1_manager_name  = $row["l1_manager_name"]; // => "k"
                 // $empOffice->l2_manager_code  = $row["l2_manager_code"];// => "kk"
@@ -829,8 +848,12 @@ class VmtEmployeeController extends Controller
                 $empOffice->confirmation_period  = $row['confirmation_period'];
                 $empOffice->holiday_location  = $row["holiday_location"];
 
-                if ($this->isUserExist($row["l1_manager_code"]))
+                if ( !empty($row["l1_manager_code"]) && $this->isUserExist($row["l1_manager_code"]))
+                {
                     $empOffice->l1_manager_code  = $row["l1_manager_code"];
+                    updateUserRole($empOffice->l1_manager_code,"Manager");
+
+                }
 
                 // $empOffice->l1_manager_name  = $row["l1_manager_name"];
                 $empOffice->work_location  = $row["work_location"];
@@ -1262,7 +1285,15 @@ class VmtEmployeeController extends Controller
                 $empOffice->emp_id      = $newEmployee->id;
                 $empOffice->user_id     = $newEmployee->userid;
                 $empOffice->designation = $row["designation"];
-                $empOffice->l1_manager_code  = $row["l1_manager_code"];
+
+                if ( !empty($row["l1_manager_code"]) && $this->isUserExist($row["l1_manager_code"]))
+                {
+                    $empOffice->l1_manager_code  = $row["l1_manager_code"];
+                    updateUserRole($empOffice->l1_manager_code,"Manager");
+
+                }
+
+
                 $empOffice->save();
             }
 
