@@ -757,8 +757,10 @@
                                         <div class="form-group mb-3">
                                             <label>Birth Date</label>
                                             <div class="cal-icon">
+                                                @if(!empty($user_full_details->dob))
                                                 <input class="form-control datetimepicker" type="date" max="9999-12-31"
                                                     name="dob" value="{{date('Y-m-d', strtotime($user_full_details->dob))}}" readonly>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
