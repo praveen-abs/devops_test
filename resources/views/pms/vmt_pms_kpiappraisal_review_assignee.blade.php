@@ -196,16 +196,49 @@
                                 @foreach($kpiRows as $index => $kpiRow)
                                 <tr>
                                     <th scope="row">
-                                        <div>{{$kpiRow->dimension}}</div>
+                                        <div >
+                                            {{$kpiRow->dimension}}
+                                        </div>
                                     </th>
                                     <td>
-                                        <div>{{$kpiRow->kpi}}</div>
+                                        <div>
+                                            
+                                            {{  \Str::words($kpiRow->kpi, 20, '')}}
+
+                                            @if(strlen(substr($kpiRow->kpi, strlen(\Str::words($kpiRow->kpi, 20, '')))) > 0)
+                                            <span class="{{'collapse-'.$index}}" style="display: none;">
+                                                {{substr($kpiRow->kpi, strlen(\Str::words($kpiRow->kpi, 20, '')))}}
+                                            </span>
+                                            <span class="btn-sm btn-primary" onclick="showOrHideDescription('{{$index}}')">More</span>
+                                            @endif
+                                        </div>
                                     </td>
                                     <td>
-                                        <div> {{$kpiRow->operational_definition}} </div>
+                                        <div> 
+                                            <!-- {{$kpiRow->operational_definition}} -->
+                                            {{  \Str::words($kpiRow->operational_definition, 20, '')}}
+
+                                            @if(strlen(substr($kpiRow->operational_definition, strlen(\Str::words($kpiRow->operational_definition, 20, '')))) > 0)
+                                            <span class="{{'collapse-'.$index}}" style="display: none;">
+                                                {{substr($kpiRow->operational_definition, strlen(\Str::words($kpiRow->operational_definition, 20, '')))}}
+                                            </span>
+                                            <span class="btn-sm btn-primary" onclick="showOrHideDescription('{{$index}}')">More</span>
+                                            @endif 
+
+                                        </div>
                                     </td>
                                     <td>
-                                        <div>{{$kpiRow->measure}} </div>
+                                        <div><!-- {{$kpiRow->measure}}  -->
+
+                                            {{  \Str::words($kpiRow->measure, 20, '')}}
+
+                                            @if(strlen(substr($kpiRow->measure, strlen(\Str::words($kpiRow->measure, 20, '')))) > 0)
+                                            <span class="{{'collapse-'.$index}}" style="display: none;">
+                                                {{substr($kpiRow->measure, strlen(\Str::words($kpiRow->measure, 20, '')))}}
+                                            </span>
+                                            <span class="btn-sm btn-primary" onclick="showOrHideDescription('{{$index}}')">More</span>
+                                            @endif 
+                                        </div>
                                     </td>
                                     <td>
                                         <div> {{$kpiRow->frequency}}</div>
@@ -658,5 +691,17 @@
             }
         });
     });
+
+
+    // show or hide table data
+    function showOrHideDescription(rowIndex){
+        console.log(rowIndex+'collapse');
+        //$(collapse-'.$index)
+        if($('.collapse-'+rowIndex).css('display') == 'none'){
+            $('.collapse-'+rowIndex).css('display', 'inline');
+        }else{
+            $('.collapse-'+rowIndex).css('display', 'none');
+        }
+    }
 </script>
 @endsection
