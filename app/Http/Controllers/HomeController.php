@@ -282,7 +282,7 @@ class HomeController extends Controller
         // $user->name = $request->input('name');
         if ($file) {
             //$filename = 'avatar-'.$request->id.'.'. $file->getClientOriginalExtension();
-            $filename = 'avatar_'.date("Y-m-d_h_i_sa").'.'. $file->getClientOriginalExtension();
+            $filename = 'avatar_'.$user->user_code.'_'.date("Y-m-d_h_i_sa").'.'. $file->getClientOriginalExtension();
             //dd($filename);
             $destination = public_path('/images');
             $file->move($destination, $filename);
@@ -473,9 +473,10 @@ class HomeController extends Controller
         else
             $reportingManager = null;
 
+        $allEmployees = User::where('user_code','<>',$user->id)->where('active',1)->get(['user_code','name']);
         $profileCompletenessValue  = $this->calculateProfileCompleteness($user->id);
 
-        return view('pages-profile', compact('user', 'user_full_details', 'familydetails','bank', 'exp', 'reportingManager','profileCompletenessValue'));
+        return view('pages-profile', compact('user','allEmployees', 'user_full_details', 'familydetails','bank', 'exp', 'reportingManager','profileCompletenessValue'));
     }
 
     // Show Impersonate Profile info

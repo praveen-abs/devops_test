@@ -82,18 +82,22 @@
                                     </li>
                                     <li>
                                         <div class="title">Gender:</div>
-                                        <div class="text">{{$user_full_details->gender}}</div>
+                                        <div class="text">{{$user_full_details->gender ?? ''}}</div>
                                     </li>
                                     <li>
                                         <div class="title">Reports to:</div>
                                         <div class="text">
                                             <div class="avatar-box">
                                                 <div class="avatar avatar-xs">
-                                                    @if (!empty($reportingManager) && $reportingManager->avatar)
-                                                    <img class="w-100 h-100 soc-det-img "
-                                                        src="{{ URL::asset('images/' . $reportingManager->avatar) }}"
-                                                        alt="Header Avatar">
+                                                    @if (!empty($reportingManager) && $reportingManager->avatar && file_exists(public_path('images/'. $reportingManager->avatar)) )
+
+                                                        <img class="w-100 h-100 soc-det-img "
+                                                            src="{{ URL::asset('images/' . $reportingManager->avatar) }}"
+                                                            alt="Header Avatar">
                                                     @else
+                                                        <span class="rounded-circle user-profile  ml-2 " id="">
+                                                            <i id="manager_shortname" class="align-middle "></i>
+                                                        </span>
                                                     @endif
                                                 </div>
                                             </div>
@@ -127,36 +131,36 @@
                                     <li>
                                         <div class="title">Passport No.</div>
                                         <div class="text">
-                                         {{$user_full_details->passport_number}}
+                                         {{$user_full_details->passport_number ?? ''}}
                                         </div>
                                     </li>
                                     <li>
                                         <div class="title">Passport Exp Date.</div>
-                                        <div class="text">{{$user_full_details->passport_date}}</div>
+                                        <div class="text">{{$user_full_details->passport_date ?? ''}}</div>
                                     </li>
                                     <li>
-                                        <!-- <div class="title">Tel</div>
-                                        <div class="text"><a href="">{{$user_full_details->mobile_number}}</a></div> -->
+                                        <div class="title">Tel</div>
+                                        <div class="text">{{$user_full_details->mobile_number ?? ''}}</div>
                                     </li>
                                     <li>
                                         <div class="title">Nationality</div>
-                                        <div class="text">{{$user_full_details->nationality}}</div>
+                                        <div class="text">{{$user_full_details->nationality ?? ''}}</div>
                                     </li>
                                     <li>
                                         <div class="title">Religion</div>
-                                        <div class="text">{{$user_full_details->religion}}</div>
+                                        <div class="text">{{$user_full_details->religion  ?? ''}}</div>
                                     </li>
                                     <li>
                                         <div class="title">Marital status</div>
-                                        <div class="text">{{$user_full_details->marrital_status}}</div>
+                                        <div class="text">{{$user_full_details->marrital_status ?? ''}}</div>
                                     </li>
                                     <li>
                                         <div class="title">Spouse Name</div>
-                                        <div class="text">{{$user_full_details->spouse_name}}</div>
+                                        <div class="text">{{$user_full_details->spouse_name ?? ''}}</div>
                                     </li>
                                     <li>
                                         <div class="title">No. of children</div>
-                                        <div class="text">{{$user_full_details->children}}</div>
+                                        <div class="text">{{$user_full_details->children ?? ''}}</div>
                                     </li>
                                 </ul>
                             </div>
@@ -301,19 +305,19 @@
                                 <ul class="personal-info">
                                     <li>
                                         <div class="title">Bank name</div>
-                                        <div class="text">{{$user_full_details->bank_name}}</div>
+                                        <div class="text">{{$user_full_details->bank_name ?? ''}}</div>
                                     </li>
                                     <li>
                                         <div class="title">Bank account No.</div>
-                                        <div class="text">{{$user_full_details->bank_account_number}}</div>
+                                        <div class="text">{{$user_full_details->bank_account_number ?? ''}}</div>
                                     </li>
                                     <li>
                                         <div class="title">IFSC Code</div>
-                                        <div class="text">{{$user_full_details->bank_ifsc_code}}</div>
+                                        <div class="text">{{$user_full_details->bank_ifsc_code ?? ''}}</div>
                                     </li>
                                     <li>
                                         <div class="title">PAN No</div>
-                                        <div class="text">{{$user_full_details->pan_number}}</div>
+                                        <div class="text">{{$user_full_details->pan_number ?? ''}}</div>
                                     </li>
                                 </ul>
                             </div>
@@ -757,14 +761,18 @@
                                         <div class="form-group mb-3">
                                             <label>Birth Date</label>
                                             <div class="cal-icon">
+                                                @if(!empty($user_full_details->dob))
                                                 <input class="form-control datetimepicker" type="date" max="9999-12-31"
                                                     name="dob" value="{{date('Y-m-d', strtotime($user_full_details->dob))}}" readonly>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
-                                            <label>Gender</label>
+                                        @if(!empty($user_full_details->gender))
+
+                                        <label>Gender</label>
                                         <select class="form-select form-control" name="gender" aria-label="Default select" disabled>
                                             <option selected>-</option>
                                             <option value="male" @if($user_full_details->gender == 'male') selected
@@ -774,25 +782,22 @@
                                             <option value="other" @if($user_full_details->gender == 'other') selected
                                                 @endif>Other</option>
                                         </select>
-
+                                        @endif
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                           <div class="form-group mb-3">
 
-                                            {{-- <label>Reports To <span class="text-danger">*</span></label>
-                                            @if($report_key == 1 || $report_key == '1' )
-                                            <select class="form-select form-control" name="report" disabled>
-                                                @else
-                                                <select class="form-select form-control" name="report" >
-                                                @endif
+                                            <label>Reports To <span class="text-danger">*</span></label>
+                                            <select class="form-select form-control" name="report" >
                                                 <option>Select</option>
 
-                                                @foreach($code as $c)
-                                                <option value="{{$c->emp_no}}" @if($rep && $rep->emp_no == $c->emp_no) selected
-                                                        @endif>{{$c->emp_no . ' (' .$c->name. ')'}}</option>
+                                                @foreach($allEmployees as $singleEmp)
+                                                <option value="{{$singleEmp->user_code}}"
+                                                         @if( !empty($reportingManager) && $reportingManager->user_code == $singleEmp->user_code) selected
+                                                        @endif>{{$singleEmp->user_code . ' (' .$singleEmp->name. ')'}}</option>
                                                 @endforeach
-                                            </select> --}}
+                                            </select>
 
                                         </div>
 
@@ -806,7 +811,7 @@
                              <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Phone Number</label>
-                                    <input type=text  size=20 maxlength=10 onkeypress='return isNumberKey(event)' class="form-control"  name="mobile_number"  value="{{$user_full_details->mobile_number}}">
+                                    <input type=text  size=20 maxlength=10 onkeypress='return isNumberKey(event)' class="form-control"  name="mobile_number"  value="{{$user_full_details->mobile_number ?? ''}}">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -814,13 +819,15 @@
                                  <div class="form-group mb-3">
                                     <label>Email</label>
                                     <input type="email" name="present_email" onkeypress='return isValidEmail(email)' class="form-control"
-                                        value="{{$user->email}}">
+                                        value="{{$user->email ?? ''}}">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group mb-3">
                                     <label>Address</label>
-                                    <textarea name="address_PI" id="address_PI" cols="30" rows="3"  class="form-control"  value="{{$user_full_details->present_address}}">{{ $user_full_details->present_address? $user_full_details->present_address : ''}}</textarea>
+                                    @if(!empty($user_full_details->present_address))
+                                        <textarea name="address_PI" id="address_PI" cols="30" rows="3"  class="form-control"  value="{{$user_full_details->present_address? $user_full_details->present_address : ''}}">{{ $user_full_details->present_address? $user_full_details->present_address : ''}}</textarea>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -894,12 +901,16 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Bank name</label>
-                                    <select name="bank_name" id="bank_name" class="form-select form-control onboard-form" required>
-                                        <option value="">Select</option>
-                                        @foreach($bank as $b)
-                                        <option value="{{$b->bank_name}}" min-data="{{$b->min_length}}" max-data="{{$b->max_length}}" @if($user_full_details->bank_name == $b->bank_name) selected @endif>{{$b->bank_name}}</option>
-                                        @endforeach
-                                    </select>
+                                    @if(!empty($bank))
+                                        <select name="bank_name" id="bank_name" class="form-select form-control onboard-form" required>
+                                            <option value="">Select</option>
+                                            @foreach($bank as $b)
+                                            @if(!empty($b->bank_name) && !empty($b->min_length) && !empty($b->max_length) )
+                                                <option value="{{$b->bank_name ?? ''}}" min-data="{{$b->min_length}}" max-data="{{$b->max_length}}" @if($user_full_details->bank_name == $b->bank_name) selected @endif>{{$b->bank_name}}</option>
+                                            @endif
+                                            @endforeach
+                                        </select>
+                                    @endif
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -1513,6 +1524,7 @@
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 <script>
 $( document ).ready(function() {
+    generateProfileShortName_VendorScript("manager_shortname","{{ $reportingManager->name}}");
 
     console.log( "ready!" );
 });
