@@ -301,19 +301,19 @@
                                 <ul class="personal-info">
                                     <li>
                                         <div class="title">Bank name</div>
-                                        <div class="text">{{$user_full_details->bank_name}}</div>
+                                        <div class="text">{{$user_full_details->bank_name ?? ''}}</div>
                                     </li>
                                     <li>
                                         <div class="title">Bank account No.</div>
-                                        <div class="text">{{$user_full_details->bank_account_number}}</div>
+                                        <div class="text">{{$user_full_details->bank_account_number ?? ''}}</div>
                                     </li>
                                     <li>
                                         <div class="title">IFSC Code</div>
-                                        <div class="text">{{$user_full_details->bank_ifsc_code}}</div>
+                                        <div class="text">{{$user_full_details->bank_ifsc_code ?? ''}}</div>
                                     </li>
                                     <li>
                                         <div class="title">PAN No</div>
-                                        <div class="text">{{$user_full_details->pan_number}}</div>
+                                        <div class="text">{{$user_full_details->pan_number ?? ''}}</div>
                                     </li>
                                 </ul>
                             </div>
