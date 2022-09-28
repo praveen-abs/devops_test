@@ -127,36 +127,36 @@
                                     <li>
                                         <div class="title">Passport No.</div>
                                         <div class="text">
-                                         {{$user_full_details->passport_number}}
+                                         {{$user_full_details->passport_number ?? ''}}
                                         </div>
                                     </li>
                                     <li>
                                         <div class="title">Passport Exp Date.</div>
-                                        <div class="text">{{$user_full_details->passport_date}}</div>
+                                        <div class="text">{{$user_full_details->passport_date ?? ''}}</div>
                                     </li>
                                     <li>
                                         <!-- <div class="title">Tel</div>
-                                        <div class="text"><a href="">{{$user_full_details->mobile_number}}</a></div> -->
+                                        <div class="text"><a href="">{{$user_full_details->mobile_number ? ''}}</a></div> -->
                                     </li>
                                     <li>
                                         <div class="title">Nationality</div>
-                                        <div class="text">{{$user_full_details->nationality}}</div>
+                                        <div class="text">{{$user_full_details->nationality ?? ''}}</div>
                                     </li>
                                     <li>
                                         <div class="title">Religion</div>
-                                        <div class="text">{{$user_full_details->religion}}</div>
+                                        <div class="text">{{$user_full_details->religion  ?? ''}}</div>
                                     </li>
                                     <li>
                                         <div class="title">Marital status</div>
-                                        <div class="text">{{$user_full_details->marrital_status}}</div>
+                                        <div class="text">{{$user_full_details->marrital_status ?? ''}}</div>
                                     </li>
                                     <li>
                                         <div class="title">Spouse Name</div>
-                                        <div class="text">{{$user_full_details->spouse_name}}</div>
+                                        <div class="text">{{$user_full_details->spouse_name ?? ''}}</div>
                                     </li>
                                     <li>
                                         <div class="title">No. of children</div>
-                                        <div class="text">{{$user_full_details->children}}</div>
+                                        <div class="text">{{$user_full_details->children ?? ''}}</div>
                                     </li>
                                 </ul>
                             </div>
