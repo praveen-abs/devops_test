@@ -71,7 +71,7 @@
                                     </li>
                                     <li>
                                         <div class="title">Birthday:</div>
-                                        <div class="text">{{date('d F', strtotime($user_full_details->dob))}}</div>
+                                        <div class="text">{{date('d F', strtotime($user_full_details->dob ? ''))}}</div>
                                     </li>
                                     <li>
                                         <div class="title">Address:</div>
