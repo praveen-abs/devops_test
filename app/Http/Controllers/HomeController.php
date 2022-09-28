@@ -464,8 +464,6 @@ class HomeController extends Controller
 
         $familydetails = VmtEmployeeFamilyDetails::where('user_id',$user->id)->get();
         //dd($familydetails);
-        $details['contact_json'] = json_decode($user_full_details->contact_json, true);
-        $details['family_info_json'] = json_decode($user_full_details->family_info_json, true);
 
         $bank = Bank::all();
         $exp = Experience::where('id',$user->id)->get();
