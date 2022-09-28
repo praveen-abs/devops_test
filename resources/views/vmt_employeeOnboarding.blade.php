@@ -38,9 +38,12 @@
 
 @section('content')
 
-{{-- @component('components.organization_breadcrumb') --}}
-@slot('li_1') @endslot
-@endcomponent
+@if(!request()->has('email'))
+
+    @component('components.organization_breadcrumb')
+    @slot('li_1') @endslot
+    @endcomponent
+@endif
 <div class="main">
 
     @include('ui-onboarding')
