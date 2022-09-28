@@ -904,7 +904,9 @@
                                         <select name="bank_name" id="bank_name" class="form-select form-control onboard-form" required>
                                             <option value="">Select</option>
                                             @foreach($bank as $b)
-                                            <option value="{{$b->bank_name ?? ''}}" min-data="{{$b->min_length}}" max-data="{{$b->max_length}}" @if($user_full_details->bank_name == $b->bank_name) selected @endif>{{$b->bank_name}}</option>
+                                            @if(!empty($b->bank_name) && !empty($b->min_length) && !empty($b->max_length) )
+                                                <option value="{{$b->bank_name ?? ''}}" min-data="{{$b->min_length}}" max-data="{{$b->max_length}}" @if($user_full_details->bank_name == $b->bank_name) selected @endif>{{$b->bank_name}}</option>
+                                            @endif
                                             @endforeach
                                         </select>
                                     @endif
