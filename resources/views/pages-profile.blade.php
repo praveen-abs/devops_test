@@ -238,30 +238,15 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if( !empty($user_full_details->family_info_json) && $user_full_details->family_info_json['name'])
-                                            @foreach($user_full_details->family_info_json['name'] as $k => $info)
-                                            <tr>
-                                                <td>{{$user_full_details->family_info_json['name'][$k]}}</td>
-                                                <td>{{$user_full_details->family_info_json['relationship'][$k]}}</td>
-                                                <td>{{$user_full_details->family_info_json['dob'][$k]}}</td>
-                                                <td>{{$user_full_details->family_info_json['phone'][$k]}}</td>
-                                                {{-- <td class="text-end">
-                                                    <div class="dropdown dropdown-action">
-                                                        <a aria-expanded="false" data-bs-toggle="dropdown"
-                                                            class="action-icon dropdown-toggle" href="#"><i
-                                                                class="ri-more-2-fill material-icons"></i></a>
-                                                        <div class="dropdown-menu dropdown-menu-right">
-                                                            <a href="#" class="dropdown-item"><i
-                                                                    class=" ri-pencil-fill m-r-5"></i>
-                                                                Edit</a>
-                                                            <a href="#" class="dropdown-item"><i
-                                                                    class=" ri-delete-bin-line"></i>
-                                                                Delete</a>
-                                                        </div>
-                                                    </div>
-                                                </td> --}}
-                                            </tr>
-                                            @endforeach
+                                            @if( !empty($familydetails))
+                                                @foreach($familydetails as $singledetail)
+                                                    <tr>
+                                                        <td>{{$singledetail->name}}</td>
+                                                        <td>{{$singledetail->relationship}}</td>
+                                                        <td>{{$singledetail->dob}}</td>
+                                                        <td>{{$singledetail->phone_number}}</td>
+                                                    </tr>
+                                                @endforeach
                                             @endif
                                         </tbody>
                                     </table>
@@ -1161,6 +1146,60 @@
                     <form action="{{route('updtaeFamilyInfo', $user->id)}}" Method="POST" enctype="multipart/form-data">
                         @csrf
 
+                                <div class="card">
+                                    <div class="card-body">
+                                        <!-- <h3 class="card-title fw-bold">Education Informations <a href="javascript:void(0);"
+                                                {{-- class="delete-icon"><i class="   ri-delete-bin-line"></i></a> --}}
+                                        </h3> -->
+
+                                        @if( !empty($familydetails))
+                                        @foreach($familydetails as $singledetail)
+                                            <div class="content-container">
+                                                <div class="row addition-content" id="content1">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group mb-3">
+                                                            <label>Name <span class="text-danger">*</span></label>
+                                                            <input name="name[]" class="form-control onboard-form" type="text" pattern-data="name" required value="{{ $singledetail->name }}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group mb-3">
+                                                            <label>Relationship <span class="text-danger">*</span></label>
+                                                            <input name="relationship[]" class="form-control onboard-form" type="text"
+                                                                pattern-data="alpha" required value="{{$singledetail->relationship }}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group mb-3">
+                                                            <label>Date of birth <span class="text-danger">*</span></label>
+                                                            <input name="dob[]" class="form-control onboard-form" type="date"
+                                                                max="9999-12-31" required value="{{$singledetail->dob}}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group mb-3">
+                                                            <label>Phone <span class="text-danger">*</span></label>
+                                                            <input name="phone_number[]" class="form-control onboard-form" type="number"
+                                                                maxlength="10" minlength="10" required value="{{ $singledetail->phone_number}}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+
+
+
+
+                                        <div class="add-more text-end" style="cursor:pointer;">
+                                            <div id="add_more" class="text-primary  cursor-pointer">
+                                                <i class=" ri-add-circle-fill"></i> Add More
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                        @else
 
                             <div class="card">
                                 <div class="card-body">
@@ -1198,6 +1237,10 @@
                                             </div>
                                         </div>
                                     </div>
+
+
+
+
                                     <div class="add-more text-end" style="cursor:pointer;">
                                         <div id="add_more" class="text-primary  cursor-pointer">
                                             <i class=" ri-add-circle-fill"></i> Add More
@@ -1205,6 +1248,7 @@
                                     </div>
                                 </div>
                             </div>
+                        @endif
 
                         <div class="col-12">
                         <div class="text-right">
