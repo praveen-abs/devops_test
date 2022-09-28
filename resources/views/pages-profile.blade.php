@@ -135,8 +135,8 @@
                                         <div class="text">{{$user_full_details->passport_date ?? ''}}</div>
                                     </li>
                                     <li>
-                                        <!-- <div class="title">Tel</div>
-                                        <div class="text"><a href="">{{$user_full_details->mobile_number ? ''}}</a></div> -->
+                                        <div class="title">Tel</div>
+                                        <div class="text">{{$user_full_details->mobile_number ?? ''}}</div>
                                     </li>
                                     <li>
                                         <div class="title">Nationality</div>
