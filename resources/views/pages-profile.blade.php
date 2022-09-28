@@ -77,7 +77,7 @@
                                     </li>
                                     <li>
                                         <div class="title">Address:</div>
-                                        <div class="text">{{$user_full_details->present_address ? ''}}
+                                        <div class="text">{{$user_full_details->present_address ?? ''}}
                                         </div>
                                     </li>
                                     <li>
