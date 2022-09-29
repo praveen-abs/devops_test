@@ -111,6 +111,36 @@ class VmtApprovalsController extends Controller
         return "Saved";
     }
 
+    // Approve all document
+    public function approveAllDocumentByAdmin(Request $request){
+        //dd($request->all());
+        //$docName  = $request->doc_name;
+        $user_id  = User::where('user_code',$request->user_code)->value('id');
+        $documents_filenames = VmtEmployee::where('userid', $user_id)->first();
+
+       /* if($documents_filenames->docs_reviewed != null){
+            $docReviewArray = json_decode($documents_filenames->docs_reviewed);
+            $docReviewArray->$docName = (int)$request->approve_status;
+        }else{
+            $docReviewArray = array(
+                'aadhar_card_file' => -1,
+                'aadhar_card_backend_file' => -1,
+                'pan_card_file' => -1,
+                'passport_file' => -1,
+                'voters_id_file' => -1,
+                'dl_file' => -1,
+                'education_certificate_file' => -1,
+                'reliving_letter_file' => -1
+            );
+            $docReviewArray[$docName] = (int)$request->approve_status;
+        }*/
+
+        $documents_filenames->docs_reviewed = json_encode($request->doc_array);
+        $documents_filenames->save();
+        return "Saved";
+    }
+
+
 
     /*
         Check whether all the documents for the given
