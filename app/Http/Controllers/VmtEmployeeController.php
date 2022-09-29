@@ -628,6 +628,7 @@ class VmtEmployeeController extends Controller
         $excelRowdata_row = $data;
         $currentRowInExcel = 0;
         foreach ($excelRowdata_row[0]  as $key => $excelRowdata) {
+            // dd($excelRowdata);
             $currentRowInExcel++;
             //Validation
             $rules = [
@@ -637,7 +638,7 @@ class VmtEmployeeController extends Controller
                 'gender' => 'required|in:male,female,other',
                 'doj' => 'required|date',
                 'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'dob' => 'required|dateformat:d-m-Y|before:-18 years',
+                'dob' => 'required|date|before:-18 years',
                 'father_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'father_gender' => 'required|in:male,female,other',
                 'father_dob' => 'required|date',
@@ -654,12 +655,12 @@ class VmtEmployeeController extends Controller
                 'permanent_address' => 'required',
                 'mother_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'mother_gender' => 'required|in:male,female,other',
-                'mother_dob' => 'required|dateformat:d-m-Y',
+                'mother_dob' => 'required|date',
                 'spouse_name' => 'nullable|required_unless:marital_status,unmarried|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'spouse_dob' => 'nullable|required_unless:marital_status,unmarried|dateformat:d-m-Y',
+                'spouse_dob' => 'nullable|required_unless:marital_status,unmarried|date',
                 'no_of_child' => 'nullable|numeric',
                 'child_name' => 'nullable|required_unless:no_of_child,>,0|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'child_dob' => 'nullable||required_unless:no_of_child,>,0|dateformat:d-m-Y',
+                'child_dob' => 'nullable||required_unless:no_of_child,>,0|date',
                 'department' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'process' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'designation' => 'required',
@@ -705,8 +706,7 @@ class VmtEmployeeController extends Controller
                 'employee_name.regex' => 'Field <b>:attribute</b> should not have special characters',
                 'unique' => 'Field <b>:attribute</b> should be unique',
                 'dob.before' => 'Field <b>:attribute</b> should be above 18 years',
-                'email' => 'Field <b>:attribute</b> is invalid'
-
+                'email' => 'Field <b>:attribute</b> is invalid',
             ];
 
             $validator = Validator::make($excelRowdata, $rules, $messages);
@@ -811,8 +811,8 @@ class VmtEmployeeController extends Controller
             $newEmployee->bank_name   = $row["bank_name"];
             $newEmployee->bank_ifsc_code  = $row["bank_ifsc"];
             $newEmployee->bank_account_number  = $row["account_no"];
-            $newEmployee->present_address   = $row["current_address_line_1"].' , '.$row["current_address_line_2"] ;
-            $newEmployee->permanent_address   = $row["permanent_address_line_1"].' , '.$row["permanent_address_line_2"] ;
+            $newEmployee->present_address   = $row["current_address"];
+            $newEmployee->permanent_address   = $row["permanent_address"];
             $newEmployee->mother_name   = $row["mother_name"];
             $newEmployee->mother_gender   = $row["mother_gender"];
             $newEmployee->mother_dob   = $row["mother_dob"];

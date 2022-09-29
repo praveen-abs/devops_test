@@ -24,7 +24,7 @@
                                         Sample file
                                     </a> --}}
 
-                                    <a class="choose-file ms-1" href="{{ url('/assets/sample_employeeBulkQuickOnboarding.xlsx') }}" target="_blank">
+                                    <a class="choose-file ms-1" href="{{ url('/assets/ABSQuickOnboarding.xlsx') }}" target="_blank">
                                         <i class="fa fa-file" aria-hidden="true"></i>Sample File</span></a>
                                 </li>
                                 <li>Read the upload instructions on the right before uploading .</li>
