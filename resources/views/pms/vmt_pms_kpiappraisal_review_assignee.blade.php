@@ -16,6 +16,11 @@
         background: url('{{ URL::asset("assets/images/loader.gif") }}') 50% 50% no-repeat rgb(249, 249, 249);
         opacity: 0.4;
     }
+    .btn-light{
+        padding: 4px;
+    border: 1px solid gray;
+    cursor: pointer;
+    }
 </style>
 @endsection
 @section('content')
@@ -209,7 +214,7 @@
                                             <span class="{{'collapse-'.$index}}" style="display: none;">
                                                 {{substr($kpiRow->kpi, strlen(\Str::words($kpiRow->kpi, 20, '')))}}
                                             </span>
-                                            <span class="btn-sm btn-primary" onclick="showOrHideDescription('{{$index}}')">More</span>
+                                            <span class="btn-sm btn-light" onclick="showOrHideDescription('{{$index}}')">More</span>
                                             @endif
                                         </div>
                                     </td>
@@ -222,7 +227,7 @@
                                             <span class="{{'collapse-'.$index}}" style="display: none;">
                                                 {{substr($kpiRow->operational_definition, strlen(\Str::words($kpiRow->operational_definition, 20, '')))}}
                                             </span>
-                                            <span class="btn-sm btn-primary" onclick="showOrHideDescription('{{$index}}')">More</span>
+                                            <span class="btn-sm btn-light" onclick="showOrHideDescription('{{$index}}')">More</span>
                                             @endif 
 
                                         </div>
@@ -236,7 +241,7 @@
                                             <span class="{{'collapse-'.$index}}" style="display: none;">
                                                 {{substr($kpiRow->measure, strlen(\Str::words($kpiRow->measure, 20, '')))}}
                                             </span>
-                                            <span class="btn-sm btn-primary" onclick="showOrHideDescription('{{$index}}')">More</span>
+                                            <span class="btn-sm btn-light" onclick="showOrHideDescription('{{$index}}')">More</span>
                                             @endif 
                                         </div>
                                     </td>
