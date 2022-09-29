@@ -8551,10 +8551,7 @@ button {
     color: var(--vz-dark);
 }
 
-.form-check {
-    position: relative;
-    text-align: left;
-}
+
 
 .form-check .form-check-input,
 .form-check label {

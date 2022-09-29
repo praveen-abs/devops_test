@@ -970,3 +970,8 @@ button.gridjs-sort-asc::after{
     color: #ffffff;
     font-size: 20px;
 } */
+
+.dropdown-item:focus, .dropdown-item:hover {
+    color: #003156 !important;
+
+}
