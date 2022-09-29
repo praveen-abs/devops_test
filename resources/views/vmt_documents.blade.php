@@ -38,9 +38,11 @@
 
 @section('content')
 
-@component('components.organization_breadcrumb')
-@slot('li_1') @endslot
-@endcomponent
+@if(Auth::user()->is_onboarded == '1')
+    @component('components.organization_breadcrumb')
+    @slot('li_1') @endslot
+    @endcomponent
+@endif
 <div class="main">
 
     @include('ui-documents',[

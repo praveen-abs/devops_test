@@ -1039,7 +1039,7 @@
                         for(var i=0; i < ajaxData.data.length; i++)
                         {
                             var row_data = ajaxData.data[i];
-                            $('#error-msg').append('<b class="f-15 text-warning">'+ row_data.message+ '<b/>');
+                            $('#error-msg').append('<b class="f-15 ">'+ row_data.message+ '<b/>');
 
                             if(ajaxData.status == 'failure'){
 

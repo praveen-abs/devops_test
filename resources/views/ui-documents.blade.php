@@ -1,7 +1,7 @@
 {{-- @section('ui-onboarding') --}}
-<div class="container-fluid">   
+<div class="container-fluid">
 
-                
+
                     <div id="msform">
                         <!-- progressbar -->
                         <!-- <ul id="progressbar">
@@ -17,9 +17,9 @@
 
                             <div class="card shadow  top-line">
                                 <div class="card-body">
-                                    
+
                                         <h6 class="text-start">Personal Documents</h6>
-                                    
+
                                     <div class="form-card">
                                         <div class="row mt-1">
                                             <!-- <div class="col-12 mb-2">
@@ -36,7 +36,7 @@
                                                 </label>
                                                 <div class="addfiles form-control md" data="#aadhar_card_file" id="aadhar_card_file_label"><span class="file_label">Choose Aadhar
                                                         Card Front</span></div>
-                                                <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Aadhar Card" name="aadhar_card_file" id="aadhar_card_file" class="onboard-form form-control files" />
+                                                <input type="file" accept="image/png, image/gif, image/jpeg" style="display:none;" placeholder="Aadhar Card" name="aadhar_card_file" id="aadhar_card_file" class="onboard-form form-control files" />
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2" id="aadhar_card_backend_content">
                                                 <!-- <label class="" for="aadhar_card_backend">Aadhar Card Backend<span id="aadhar_card_backend_req">{!! required() !!}</span></label> -->
@@ -47,7 +47,7 @@
                                                 </label>
                                                 <div class="addfiles form-control" data="#aadhar_card_backend_file" id="aadhar_card_backend_file_label"><span class="file_label">Choose
                                                         Aadhar Card Back</span></div>
-                                                <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Aadhar Card Backend" name="aadhar_card_backend_file" id="aadhar_card_backend_file" class="onboard-form form-control files" />
+                                                <input type="file" accept="image/png, image/gif, image/jpeg" style="display:none;" placeholder="Aadhar Card Backend" name="aadhar_card_backend_file" id="aadhar_card_backend_file" class="onboard-form form-control files" />
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                                                 <!-- <label class="" for="pan_card">Pan Card{!! required() !!}</label> -->
@@ -59,7 +59,7 @@
                                                 </label>
                                                 <div class="addfiles form-control" data="#pan_card_file" id="pan_card_file_label"><span class="file_label">Upload Pan
                                                         Card</span></div>
-                                                <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Pan Card" name="pan_card_file" id="pan_card_file" class="onboard-form form-control files" />
+                                                <input type="file" accept="image/png, image/gif, image/jpeg" style="display:none;" placeholder="Pan Card" name="pan_card_file" id="pan_card_file" class="onboard-form form-control files" />
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                                                 <!-- <label class="" for="passport">Passport{!! required() !!}</label> -->
@@ -70,7 +70,7 @@
                                                 </label>
                                                 <div class="addfiles form-control" data="#passport_file" id="passport_file_label"><span class="file_label">Choose
                                                         Passport</span></div>
-                                                <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Passport" name="passport_file" id="passport_file" class="onboard-form form-control files" />
+                                                <input type="file" accept="image/png, image/gif, image/jpeg" style="display:none;" placeholder="Passport" name="passport_file" id="passport_file" class="onboard-form form-control files" />
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                                                 <!-- <label class="" for="voters_id">Voters ID</label> -->
@@ -82,7 +82,7 @@
                                                 </label>
                                                 <div class="addfiles form-control" data="#voters_id_file" id="voters_id_file_label"><span class="file_label">Choose Voters
                                                         ID</span></div>
-                                                <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Voters ID" name="voters_id_file" id="voters_id_file" class="onboard-form form-control files" />
+                                                <input type="file" accept="image/png, image/gif, image/jpeg" style="display:none;" placeholder="Voters ID" name="voters_id_file" id="voters_id_file" class="onboard-form form-control files" />
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                                                 <!-- <label class="" for="dl_file">Driving License</label> -->
@@ -95,7 +95,7 @@
                                                 </label>
                                                 <div class="addfiles form-control" data="#dl_file" id="dl_file_label"><span class="file_label">Choose Driving
                                                         License</span></div>
-                                                <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Driving License"
+                                                <input type="file" accept="image/png, image/gif, image/jpeg" style="display:none;" placeholder="Driving License"
                                                  name="dl_file" id="dl_file" class="onboard-form form-control files" />
 
                                             </div>
@@ -109,7 +109,7 @@
                                                 </label>
                                                 <div class="addfiles form-control" data="#education_certificate_file" id="education_certificate_file_label"><span class="file_label">Choose
                                                         Educations Certificate</span></div>
-                                                <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Educations Certificate" name="education_certificate_file" id="education_certificate_file" class="onboard-form form-control files" />
+                                                <input type="file" accept="image/png, image/gif, image/jpeg" style="display:none;" placeholder="Educations Certificate" name="education_certificate_file" id="education_certificate_file" class="onboard-form form-control files" />
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
                                                 <!-- <label class="" for="reliving_letter">Reliving Letter</label> -->
@@ -121,7 +121,7 @@
                                                 </label>
                                                 <div class="addfiles form-control" data="#reliving_letter_file" id="reliving_letter_file_label"><span class="file_label">Choose
                                                         Reliving Letter</span></div>
-                                                <input type="file" accept=".doc,.docx,.pdf,image/*" style="display:none;" placeholder="Reliving Letter" name="reliving_letter_file" id="reliving_letter_file" class="onboard-form form-control files" />
+                                                <input type="file" accept="image/png, image/gif, image/jpeg" style="display:none;" placeholder="Reliving Letter" name="reliving_letter_file" id="reliving_letter_file" class="onboard-form form-control files" />
                                             </div>
                                         </div>
                                     </div>
@@ -132,11 +132,11 @@
                                 </div>
                             </div>
                         </form>
-                    
-             
+
+
 
         </div>
-   
+
 </div>
 
 <!-- Vertically Centered -->
