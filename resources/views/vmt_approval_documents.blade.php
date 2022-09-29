@@ -12,11 +12,9 @@
 @endcomponent
 
 
-<div class=" directory-wrapper bg-white px-3 pt-3 pb-0 mt8-mb25">
-    <h6 class="">Documents Approvals</h6>
-
-
-    <div>
+<div class=" approval_documents-wrapper card">
+    <div class="card-body">
+        <h6 class="">Documents Approvals</h6>
         <div class="table-responsive">
             <div class="container-fluid px-2 bg-white" style="position:relative;">
                 <table class=" table table-borderd " id="directory-table-1">
@@ -80,23 +78,14 @@
             </div>
         </div>
     </div>
-
-    <br />
-    <br />
-
-</div>
 </div>
 
 @endsection
 @section('script')
-<!-- apexcharts -->
-<script src="{{ URL::asset('/assets/js/pages/dashboard-projects.init.js') }}"></script>
 
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-<!-- data table -->
-<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 
 <script>
     $(document).ready(function() {
@@ -135,4 +124,7 @@
 
     });
 </script>
+
+
+
 @endsection

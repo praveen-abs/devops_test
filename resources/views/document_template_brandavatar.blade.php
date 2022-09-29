@@ -163,7 +163,7 @@
 
     <div class="tab-content " id="pills-tabContent">
         <div class="tab-pane fade show active" id="appointment" role="tabpanel" aria-labelledby="pills-home-tab">
-            <div id="indicators" class="carousel slide" data-bs-ride="true">
+            <div id="indicators" class="carousel slide" data-bs-touch="false" data-bs-interval="false">
                 <div class="carousel-indicators">
                     <button type="button" data-bs-target="#indicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                     <button type="button" data-bs-target="#indicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -185,7 +185,7 @@
                                             <img src="{{ URL::asset('assets/images/appoinment/brandavatarlogo.png') }}" class=""  style="height:100%;width:100%;">
                                         </div>
 
-                                        <p style="text-align: center;font-size:20px">LETTER OF APPOINTMENT
+                                        <p style="text-align: center;font-size:20px"><b> LETTER OF APPOINTMENT</b>
                                         </p>
                                         <b>
                                             <p> <br>Dear Xyz, </br>
@@ -238,15 +238,15 @@
 
                                         <hr>
                                         <p>
-                                            I <b>Xyz S,</b> have read <b>ANNEXURE A & B,</b> understood, and accept the appointment upon the terms
+                                            I <b>Xyz</b> have read <b>ANNEXURE A & B,</b> understood, and accept the appointment upon the terms
                                             and conditions as outlined in this appointment letter for my position at <b>Brand Avatar LLP.</b>
                                         </p>
 
 
                                         <div style="display: flex;justify-content:space-between ;margin-top:20px;">
-                                            <span style="text-align: left;font-size:20px;float: left;">SIGN:
+                                            <span style="text-align: left;font-size:15px;float: left;">SIGN:
                                             </span>
-                                            <span style="text-align: right;font-size:20px;float: right;margin-right: 80px;">DATE:
+                                            <span style="text-align: right;font-size:15px;float: right;margin-right: 80px;">DATE:
                                             </span>
                                         </div>
 
@@ -278,8 +278,9 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="width:40%"><b>Name: </b> </td>
-                                            <td><b>Salary</td></b>
+                                            <td style="width:40%" class="bg-ash"><b>Name: </b> </td>
+                                            <!-- <td><b>Salary</td></b> -->
+                                            <td colspan="1"></td>
                                             <td colspan="1"></td>
                                         </tr>
                                         <tr>
@@ -296,8 +297,8 @@
                                         </tr>
                                         <tr>
                                             <td style="width:40%">SALARY COMPONENTS </td>
-                                            <td><b>Per Month</b></td>
-                                            <td><b>Per Annum</b></td>
+                                            <td class="bg-ash"><b>Per Month</b></td>
+                                            <td class="bg-ash"><b>Per Annum</b></td>
                                         </tr>
                                         <tr>
                                             <td style="width:40%">Basic </td>
@@ -315,7 +316,7 @@
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <td style="width:40%"><b>Gross</b></td>
+                                            <td style="width:40%" class="bg-ash"><b>Gross</b></td>
                                             <td></td>
                                             <td></td>
                                         </tr>
@@ -330,7 +331,7 @@
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <td style="width:40%"><b>Cost to Company </b></td>
+                                            <td style="width:40%" class="bg-ash"><b>Cost to Company </b></td>
                                             <td></td>
                                             <td></td>
                                         </tr>
@@ -350,7 +351,7 @@
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <td style="width:40%"><b>Net Income </b></td>
+                                            <td style="width:40%" class="bg-ash"><b>Net Income </b></td>
                                             <td></td>
                                             <td></td>
                                         </tr>
@@ -364,9 +365,9 @@
                                     </p>
 
                                     <div style="display: flex;justify-content:space-between ;">
-                                        <span style="text-align: left;font-size:20px;float: left;">SIGN:
+                                        <span style="text-align: left;font-size:15px;float: left;">SIGN:
                                         </span>
-                                        <span style="text-align: right;font-size:20px;float: right;margin-right: 80px;">DATE:
+                                        <span style="text-align: right;font-size:15px;float: right;margin-right: 80px;">DATE:
                                         </span>
                                     </div>
 
@@ -580,9 +581,9 @@
                                     </p>
                                     </hr>
                                     <div style="display: flex;justify-content:space-between ;">
-                                        <span style="text-align: left;font-size:20px;float: left;">SIGN:
+                                        <span style="text-align: left;font-size:15px;float: left;">SIGN:
                                         </span>
-                                        <span style="text-align: right;font-size:20px;float: right;margin-right: 80px;">DATE:
+                                        <span style="text-align: right;font-size:15px;float: right;margin-right: 80px;">DATE:
                                         </span>
                                     </div>
                                     <hr style=" margin-top: 10px;">
@@ -651,7 +652,7 @@
                                         <p>EMPLOYEE CODE</p>
                                     </td>
                                     <td colspan="3">
-                                        <p>brnd1234</p>
+                                        <p></p>
                                     </td>
 
                                 </tr>
@@ -666,7 +667,7 @@
                                         <p>DATE OF JOINING</p>
                                     </td>
                                     <td colspan="3">
-                                        <p>11-MAY-2021</p>
+                                        <p></p>
                                     </td>
 
                                 </tr>
@@ -856,7 +857,7 @@
                                         <p class="txt-left text-strong">EPF</p>
                                     </td>
                                     <td colspan="2" class="">
-                                        <p class="txt-right">638.00</p>
+                                        <p class="txt-right"></p>
                                     </td>
                                 </tr>
                                 <tr>
@@ -869,13 +870,13 @@
                                     <td colspan="2" class="">
                                         <p class="txt-right">
                                     <td colspan="2" class="">
-                                        <p class="txt-right">2280.00</p>
+                                        <p class="txt-right"></p>
                                     </td>
                                     <td colspan="2" class="">
                                         <p class="txt-left text-strong">ESIC</p>
                                     </td>
                                     <td colspan="2" class="">
-                                        <p class="txt-right">58.00</p>
+                                        <p class="txt-right"></p>
                                     </td>
                                 </tr>
                                 <tr>
@@ -999,7 +1000,7 @@
                                     </td>
 
                                     <td colspan="2" class="bg-ash">
-                                        <p class="txt-right">7666.00</p>
+                                        <p class="txt-right"></p>
                                     </td>
                                     <td colspan="2" class="bg-ash">
                                         <p class="txt-left text-strong">TOTAL DEDUCTION</p>
@@ -1045,7 +1046,7 @@
                                         <p class="txt-center text-strong">Paid Date</p>
                                     </td>
                                     <td colspan="3" class="">
-                                        <p class="txt-center">11-MAY-2022</p>
+                                        <p class="txt-center"></p>
                                     </td>
                                 </tr>
                                 <tr>
@@ -1064,13 +1065,12 @@
                                         <p class="txt-left">Please
                                             reach out to us for any payroll queries at -payroll@ardens.in</p>
                                     </td>
-                                    <td colspan="2" class="border-less txt-right">
-                                        <p>Powered By</p>
-
+                                    <td colspan="2" class="border-less ">
+                                        <p class="txt-right">Powered By</p>
 
                                     </td>
-                                    <td colspan="2" class="border-less">
-                                        <img src="{{ URL::asset('assets/images/logo.png') }}" alt="" class="" style="height: 40px;width:120px;">
+                                    <td colspan="2" class="border-less text-left">
+                                        <img src="{{ URL::asset('assets/images/logo.png') }}" alt="" class="" style="height: 40px;width:100px;">
                                     </td>
                                 </tr>
 
