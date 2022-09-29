@@ -57,6 +57,10 @@
                                     <div class="card-body justify-content-center align-items-center ">
                                         <div class="header-card-text">
                                             <h6 class="mb-0">Documents Review</h6>
+
+                                            @if(str_contains(json_encode($docs_reviewed), -1) || ($docs_reviewed == null))
+                                            <button class="btn-md btn-primary" onclick="approveAllDocument()">Approve All</button>
+                                            @endif
                                         </div>
                                         <div class="form-card mb-2 mt-2">
 
@@ -100,6 +104,11 @@
                                                                 <button class="btn btn-success" onclick="approveOrRejectDocument('aadhar_card_file', 1)"> Approve</button>
                                                                 <button class="btn btn-secondary" onclick="approveOrRejectDocument('aadhar_card_file', 0)"> Reject</button>
                                                             @endif
+
+                                                            @if($docs_reviewed == null)
+                                                                <button class="btn btn-success" onclick="approveOrRejectDocument('aadhar_card_file', 1)"> Approve</button>
+                                                                <button class="btn btn-secondary" onclick="approveOrRejectDocument('aadhar_card_file', 0)"> Reject</button>
+                                                            @endif
                                                         </td>
                                                     </tr>
 
@@ -132,6 +141,11 @@
 
                                                             <button class="btn btn-success" onclick="approveOrRejectDocument('aadhar_card_backend_file', 1)"> Approve</button>
                                                             <button class="btn btn-secondary" onclick="approveOrRejectDocument('aadhar_card_backend_file', 0)"> Reject</button>
+                                                            @endif
+
+                                                            @if($docs_reviewed == null)
+                                                                <button class="btn btn-success" onclick="approveOrRejectDocument('aadhar_card_backend_file', 1)"> Approve</button>
+                                                                <button class="btn btn-secondary" onclick="approveOrRejectDocument('aadhar_card_backend_file', 0)"> Reject</button>
                                                             @endif
                                                         </td>
                                                     </tr>
@@ -168,6 +182,11 @@
                                                             <button class="btn btn-success" onclick="approveOrRejectDocument('pan_card_file', 1)"> Approve</button>
                                                             <button class="btn btn-secondary" onclick="approveOrRejectDocument('pan_card_file', 0)"> Reject</button>
                                                             @endif
+
+                                                            @if($docs_reviewed == null)
+                                                                <button class="btn btn-success" onclick="approveOrRejectDocument('pan_card_file', 1)"> Approve</button>
+                                                            <button class="btn btn-secondary" onclick="approveOrRejectDocument('pan_card_file', 0)"> Reject</button>
+                                                            @endif
                                                         </td>
                                                     </tr>
 
@@ -199,6 +218,12 @@
                                                             @if(isset($docs_reviewed) && $docs_reviewed->passport_file == -1)
 
                                                             <button class="btn btn-success" onclick="approveOrRejectDocument('passport_file', 1)"> Approve</button>
+
+                                                            <button class="btn btn-secondary" onclick="approveOrRejectDocument('passport_file', 0)"> Reject</button>
+                                                            @endif
+
+                                                            @if($docs_reviewed == null)
+                                                                <button class="btn btn-success" onclick="approveOrRejectDocument('passport_file', 1)"> Approve</button>
 
                                                             <button class="btn btn-secondary" onclick="approveOrRejectDocument('passport_file', 0)"> Reject</button>
                                                             @endif
@@ -238,6 +263,12 @@
 
                                                             <button class="btn btn-secondary" onclick="approveOrRejectDocument('voters_id_file', 0)"> Reject</button>
                                                             @endif
+
+                                                            @if($docs_reviewed == null)
+                                                                <button class="btn btn-success" onclick="approveOrRejectDocument('voters_id_file', 1)"> Approve</button>
+
+                                                            <button class="btn btn-secondary" onclick="approveOrRejectDocument('voters_id_file', 0)"> Reject</button>
+                                                            @endif
                                                         </td>
 
                                                     </tr>
@@ -272,6 +303,12 @@
                                                             <button class="btn btn-success" onclick="approveOrRejectDocument('dl_file', 1)"> Approve</button>
 
                                                             <button class="btn btn-secondary" onclick="approveOrRejectDocument('dl_file', 0)"> Reject</button>
+                                                            @endif
+
+                                                            @if($docs_reviewed == null)
+                                                                <button class="btn btn-success" onclick="approveOrRejectDocument('dl_file', 1)"> Approve</button>
+
+                                                                <button class="btn btn-secondary" onclick="approveOrRejectDocument('dl_file', 0)"> Reject</button>
                                                             @endif
                                                         </td>
 
@@ -309,6 +346,12 @@
                                                             <button class="btn btn-success" onclick="approveOrRejectDocument('education_certificate_file', 1)"> Approve</button>
 
                                                             <button class="btn btn-secondary" onclick="approveOrRejectDocument('education_certificate_file', 0)"> Reject</button>
+                                                            @endif
+
+                                                            @if($docs_reviewed == null)
+                                                                <button class="btn btn-success" onclick="approveOrRejectDocument('education_certificate_file', 1)"> Approve</button>
+
+                                                                <button class="btn btn-secondary" onclick="approveOrRejectDocument('education_certificate_file', 0)"> Reject</button>
                                                             @endif
                                                         </td>
 
@@ -349,6 +392,13 @@
 
                                                             <button class="btn btn-secondary" onclick="approveOrRejectDocument('reliving_letter_file', 0)"> Reject</button>
                                                             @endif
+
+                                                            @if($docs_reviewed == null)
+                                                                <button class="btn btn-success" onclick="approveOrRejectDocument('reliving_letter_file', 1)"> Approve</button>
+
+                                                                <button class="btn btn-secondary" onclick="approveOrRejectDocument('reliving_letter_file', 0)"> Reject</button>
+                                                            @endif
+
                                                         </td>
                                                     </tr>
 
@@ -445,7 +495,6 @@
             })
 
             function approveOrRejectDocument(docName, aproveStatus){
-                console.log("User code "+ $('#hidden_user_code').val());
                 $.ajax({
                     url: "{{route('vmt-store-documents-review')}}",
                     type: "POST",
@@ -463,6 +512,36 @@
                 });
             }
 
+            function approveAllDocument(){
+                //e.preventDefault();
+                console.log('aprove_All');
+
+                var doc_reviewed  =  {
+                    aadhar_card_file : 1,
+                    aadhar_card_backend_file : 1,
+                    pan_card_file : 1,
+                    passport_file : 1,
+                    voters_id_file : 1,
+                    dl_file: 1,
+                    education_certificate_file : 1,
+                    reliving_letter_file : 1
+                }
+
+                 $.ajax({
+                    url: "{{route('vmt-store-documents-review-approve-all')}}",
+                    type: "POST",
+                    data: {
+                        user_code : $('#hidden_user_code').val(),
+                        doc_array: doc_reviewed,
+                        _token: '{{csrf_token()}}'
+                    },
+                    success: function(data) {
+                        alert("All Documents approved successfully");
+                        //window.location.href = "/";
+                        location.reload();
+                    }
+                });
+            }
 
 
 
