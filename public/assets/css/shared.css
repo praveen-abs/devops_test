@@ -484,6 +484,7 @@ th.gridjs-th-sort:hover {
 .gridjs-summary {
     color: #878a99;
     margin-top: 8px !important;
+    font-size: 12px;
 }
 .gridjs-pagination .gridjs-pages button {
     background-color: #f0f3f4 !important;
