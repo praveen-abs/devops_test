@@ -140,6 +140,11 @@
                 {
                     id: 'doj',
                     name: 'DOJ',
+                    formatter: function formatter(cell) {
+                        var date = new Date(cell);
+                        return gridjs.html(date.getDate()+"-"+date.getMonth()+"-"+date.getFullYear());
+
+                    }
                 },
                 {
                     id: 'blood_group',
@@ -272,6 +277,11 @@
                 {
                     id: 'doj',
                     name: 'DOJ',
+                    formatter: function formatter(cell) {
+                        var date = new Date(cell);
+                        return gridjs.html(date.getDate()+"-"+date.getMonth()+"-"+date.getFullYear());
+
+                    }
                 },
                 {
                     id: 'blood_group',
