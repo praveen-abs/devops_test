@@ -1524,7 +1524,10 @@
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 <script>
 $( document ).ready(function() {
-    generateProfileShortName_VendorScript("manager_shortname","{{ $reportingManager->name}}");
+
+    @if(!empty($reportingManager))
+        generateProfileShortName_VendorScript("manager_shortname","{{ $reportingManager->name}}");
+    @endif
 
     console.log( "ready!" );
 });
