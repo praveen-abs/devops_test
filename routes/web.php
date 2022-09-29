@@ -368,6 +368,5 @@ Route::post('changeEmployeeProfileIconsOnEdit', [VmtPMSModuleController::class,'
 
 //DONT WRITE ANT ROUTES BELOW THIS
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index']);
-Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index']);
 
 
