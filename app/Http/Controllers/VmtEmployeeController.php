@@ -227,7 +227,7 @@ class VmtEmployeeController extends Controller
             $newEmployee->esic_number = $row["esic_number"];
             $newEmployee->marrital_status = $row["marital_status"];
 
-            $newEmployee->mobile_number  = $row["mobile_no"];
+            $newEmployee->mobile_number  = strval($row["mobile_no"]);
             $newEmployee->blood_group  = $row["blood_group"];
             //$newEmployee->email_id   = $row["email"];
             $newEmployee->bank_name   = $row["bank_name"];
@@ -424,7 +424,7 @@ class VmtEmployeeController extends Controller
             //$newEmployee->esic_number = $row["esic_number"];
             $newEmployee->marrital_status = $row["marital_status"];
 
-            $newEmployee->mobile_number  = $row["mobile_no"];
+            $newEmployee->mobile_number  = strval($row["mobile_no"]);
             //$newEmployee->email_id   = $row["email"];
             $newEmployee->bank_name   = $row["bank_name"];
             $newEmployee->bank_ifsc_code  = $row["bank_ifsc"];
@@ -807,7 +807,7 @@ class VmtEmployeeController extends Controller
             //$newEmployee->pan_ack   =    $row["pan_ack"];
             $newEmployee->aadhar_number = $row["aadhar"];
             $newEmployee->marrital_status = $row["marital_status"];
-            $newEmployee->mobile_number  = $row["mobile_no"];
+            $newEmployee->mobile_number  = strval($row["mobile_no"]);
             $newEmployee->bank_name   = $row["bank_name"];
             $newEmployee->bank_ifsc_code  = $row["bank_ifsc"];
             $newEmployee->bank_account_number  = $row["account_no"];
@@ -1266,7 +1266,7 @@ class VmtEmployeeController extends Controller
             //$newEmployee->gender   =    $row["gender"];
             $newEmployee->doj   =   \DateTime::createFromFormat('d-m-Y', $row['doj'])->format('Y-m-d');
             $newEmployee->dol   =   \DateTime::createFromFormat('d-m-Y', $row['doj'])->format('Y-m-d');
-            $newEmployee->mobile_number   =    $row['mobile_no'];
+            $newEmployee->mobile_number   =    strval($row['mobile_no']);
             $docReviewArray = array(
                 'aadhar_card_file' => -1,
                 'aadhar_card_backend_file' => -1,
