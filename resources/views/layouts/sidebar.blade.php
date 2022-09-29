@@ -359,7 +359,7 @@
                 </li>
                 <!-- claims -->
                 <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0" id="employeeInfo" href="#claimsDrop-Down" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebar360questions">
+                    <a class="nav-link sidebar menu-link pt-0" id="employeeInfo" href="#claimsDrop-Down" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebar360questions">
                         <i> <svg xmlns="http://www.w3.org/2000/svg" width="18.46" height="24.613" viewBox="0 0 18.46 24.613">
                                 <g id="Group_34506" data-name="Group 34506" transform="translate(-9251 -13713)">
                                     <path id="file-earmark-medical-fill" d="M13.219,0H5.077A3.077,3.077,0,0,0,2,3.077v18.46a3.077,3.077,0,0,0,3.077,3.077H17.383a3.077,3.077,0,0,0,3.077-3.077V7.241a1.538,1.538,0,0,0-.45-1.087l-5.7-5.7A1.538,1.538,0,0,0,13.219,0Zm.318,5.384V2.307l4.615,4.615H15.076A1.538,1.538,0,0,1,13.537,5.384Zm-7.692,10h7.692a.769.769,0,0,1,0,1.538H5.846a.769.769,0,0,1,0-1.538Zm0,3.077h7.692a.769.769,0,0,1,0,1.538H5.846a.769.769,0,0,1,0-1.538Z" transform="translate(9249 13713)" fill="#686363" />
@@ -372,7 +372,7 @@
                         <span>Claims</span>
 
                     </a>
-                    <div class="collapse menu-dropdown" id="claimsDrop-Down">
+                    <!-- <div class="collapse menu-dropdown" id="claimsDrop-Down">
                         <ul class="nav nav-sm flex-column">
 
                             <li class="nav-item">
@@ -408,7 +408,7 @@
                                 </div>
                             </li>
                         </ul>
-                    </div>
+                    </div> -->
 
 
 
