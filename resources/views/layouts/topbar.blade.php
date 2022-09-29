@@ -236,15 +236,16 @@
                         <div class="dropdown topbar-user ">
                             <button type="button" class="btn border-0  mx-1 shadow-sm " id="choose_client" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-                                    <p class=" " id="">
-                                        Choose Client <i class="fa fa-caret-down ms-2" aria-hidden="true"></i>
-                                    </p>
+                                <p class=" " id="">
+                                    Choose Client <i class="fa fa-caret-down ms-2" aria-hidden="true"></i>
+                                </p>
 
                             </button>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item " href="javascript:void();">Client One</a>
-                                <a class="dropdown-item " href="javascript:void();">Client Two</a>
-                                <a class="dropdown-item " href="javascript:void();">Client Three</a>
+                                <?php $subclientsList = fetchSubClients() ?>
+                                @foreach($subclientsList as $subClient)
+                                    <a class="dropdown-item " onclick="refreshCurrentPage('{{$subClient->id}}');">{{$subClient->client_name}}</a>
+                                @endforeach
                             </div>
                         </div>
                         @endif
@@ -330,4 +331,12 @@
 
     generateProfileShortName_Topbar();
     $('#shorthand_name_bg').css("backgroundColor", getRandomColor());
+
+
+    function refreshCurrentPage(sub_client_id)
+    {
+        console.log("Loading for sub-client id: "+sub_client_id);
+        location.reload();
+    }
+
 </script>

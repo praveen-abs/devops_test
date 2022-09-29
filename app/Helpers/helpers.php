@@ -25,6 +25,11 @@ function updateUserRole($user_code,$role_name)
     $user->save();
 }
 
+function currentLoggedInUserRole()
+{
+    return $role = VmtOrgRoles::where('id',auth()->user()->org_role)->first('name');
+}
+
 function hasSubClients()
 {
     $sub_clients_count = VmtClientMaster::all()->count();
@@ -32,4 +37,10 @@ function hasSubClients()
         return true;
     else
         return false;
+}
+
+function fetchSubClients(){
+
+    return VmtClientMaster::all(['id','client_name']);
+
 }
