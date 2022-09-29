@@ -2,6 +2,7 @@
 use App\Models\VmtMasterConfig;
 use App\Models\VmtOrgRoles;
 use App\Models\User;
+use App\Models\VmtClientMaster;
 
 function required()
 {
@@ -22,4 +23,13 @@ function updateUserRole($user_code,$role_name)
     $user = User::where('user_code',$user_code)->first();
     $user->org_role = $role->id;
     $user->save();
+}
+
+function hasSubClients()
+{
+    $sub_clients_count = VmtClientMaster::all()->count();
+    if($sub_clients_count > 1)
+        return true;
+    else
+        return false;
 }

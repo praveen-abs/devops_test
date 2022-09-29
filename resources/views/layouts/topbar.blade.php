@@ -1,6 +1,5 @@
 @section('css')
 <link href="{{ URL::asset('assets/css/top_bar.css') }}" rel="stylesheet">
-
 <style>
     .page-header-user-dropdown span {
         height: 30px;
@@ -23,12 +22,12 @@
         width: 100%;
     }
     /* button[aria-expanded="false"] .user-dropdown p i.fa-caret-down{
-       
+
 
     }
     button[aria-expanded="true"] .user-dropdown .fa-caret-down{
         transform: rotate(-90deg);
-        
+
     } */
 </style>
 
@@ -232,13 +231,15 @@
 
                             <img src="{{ URL::asset('assets/images/megaphone.png') }}" class="" alt="user-pic" style="height:20px;width:20px;">
                         </button>
+                        @if( hasSubClients() )
+
                         <div class="dropdown topbar-user ">
                             <button type="button" class="btn border-0  mx-1 shadow-sm " id="choose_client" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                              
+
                                     <p class=" " id="">
                                         Choose Client <i class="fa fa-caret-down ms-2" aria-hidden="true"></i>
                                     </p>
-                              
+
                             </button>
                             <div class="dropdown-menu dropdown-menu-end">
                                 <a class="dropdown-item " href="javascript:void();">Client One</a>
@@ -246,6 +247,7 @@
                                 <a class="dropdown-item " href="javascript:void();">Client Three</a>
                             </div>
                         </div>
+                        @endif
 
                         <div class="dropdown topbar-user ">
                             <button type="button" class="btn border-0 mx-1 py-1 shadow-sm" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -264,7 +266,7 @@
                                         <span class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text"></span>
                                         <i class="fa fa-caret-down ms-2" aria-hidden="true"></i>
                                     </span>
-                                    
+
                                 </div>
                             </button>
                             <div class="dropdown-menu dropdown-menu-end">
