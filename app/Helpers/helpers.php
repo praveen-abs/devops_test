@@ -27,7 +27,7 @@ function updateUserRole($user_code,$role_name)
 
 function currentLoggedInUserRole()
 {
-    return $role = VmtOrgRoles::where('id',auth()->user()->org_role)->first('name');
+    return $role = VmtOrgRoles::where('id',auth()->user()->org_role)->value('name');
 }
 
 function hasSubClients()

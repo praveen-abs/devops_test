@@ -48,23 +48,41 @@ class VmtMainDashboardController extends Controller
 
     public function index(Request $request)
     {
-        if(auth()->user()->is_onboarded == '0')
+        if(auth()->user()->active == 0)
         {
-            if(auth()->user()->onboard_type == 'quick')
+            if(auth()->user()->is_onboarded == 0)
             {
-                $request['email'] = auth()->user()->email;
+                if(auth()->user()->onboard_type == 'quick')
+                {
+                    $request['email'] = auth()->user()->email;
 
-               // dd($request);
-                $vmtEmpController = new VmtEmployeeController;
+                // dd($request);
+                    $vmtEmpController = new VmtEmployeeController;
 
-                return $vmtEmpController->showEmployeeOnboardingPage($request);
+                    return $vmtEmpController->showEmployeeOnboardingPage($request);
+                }
+                else
+                if(auth()->user()->onboard_type == 'bulk')
+                {
+
+                    return redirect()->route('vmt-documents-route');
+                }
             }
             else
-            if(auth()->user()->onboard_type == 'bulk')
+            if(auth()->user()->is_onboarded == 1)
             {
+                //Profile is not activated . Show a message
+                return view('vmt_profile_under_review');
 
-                return redirect()->route('vmt-documents-route');
             }
+
+        }
+        else
+        if(auth()->user()->active == -1)
+        {
+            //For employees who left the company.Show account terminated page.
+            return view('vmt_profile_terminated');
+
         }
 
         $employeesEventDetails = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
@@ -124,7 +142,7 @@ class VmtMainDashboardController extends Controller
         $dashboardpost  =  vmt_dashboard_posts::all();
         // $holidays = vmtHolidays::orderBy('holiday_date', 'ASC')->get();
         $todayDate = date('Y-m-d');
-        
+
         // getting upcoming holiday list
         $upcomingHolidays = vmtHolidays::where('holiday_date', '>=', $todayDate)->orderBy('holiday_date', 'ASC')->get();
 
@@ -138,7 +156,7 @@ class VmtMainDashboardController extends Controller
         }else{
             $holidays = vmtHolidays::orderBy('holiday_date', 'ASC')->get();
         }
-        
+
 
         $polling = Polling::first();
         if ($polling) {
