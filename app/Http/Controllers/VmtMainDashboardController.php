@@ -67,6 +67,12 @@ class VmtMainDashboardController extends Controller
 
                     return redirect()->route('vmt-documents-route');
                 }
+                else
+                if(auth()->user()->onboard_type == 'normal')
+                {
+                    //This wont happen since HR is onboarding and so it should not come. But wrote for safety
+                    return view('vmt_profile_under_review');
+                }
             }
             else
             if(auth()->user()->is_onboarded == 1)

@@ -1400,7 +1400,12 @@ class VmtEmployeeController extends Controller
 
         //dd($existing_doc_filenames);
 
-        return view('vmt_documents',compact('existing_doc_filenames'));
+
+        if( $this->isAllDocumentsUploaded(auth()->user()->id) == 1)
+            return view('vmt_profile_under_review');
+        else
+            return view('vmt_documents',compact('existing_doc_filenames'));
+
 
     }
 
@@ -1579,19 +1584,19 @@ class VmtEmployeeController extends Controller
      */
     protected function storeEmployeeFamilyMembers($familyData, $userId){
         if(isset($familyData['father_name'])){
-            $familyMember =  new VmtEmployeeFamilyDetails; 
+            $familyMember =  new VmtEmployeeFamilyDetails;
             $familyMember->user_id  = $userId;
             $familyMember->name =   $familyData['father_name'];
             $familyMember->relationship = 'Father';
 
             if(isset($familyData["father_dob"]))
                 $familyMember->dob = \DateTime::createFromFormat('d-m-Y', $familyData['father_dob'])->format('Y-m-d');
-            
+
             $familyMember->save();
         }
 
         if(isset($familyData['mother_name'])){
-            $familyMember =  new VmtEmployeeFamilyDetails; 
+            $familyMember =  new VmtEmployeeFamilyDetails;
             $familyMember->user_id  = $userId;
             $familyMember->name =   $familyData['mother_name'];
             $familyMember->relationship = 'Mother';
@@ -1599,11 +1604,11 @@ class VmtEmployeeController extends Controller
             if(isset($familyData["mother_dob"]))
                 $familyMember->dob = \DateTime::createFromFormat('d-m-Y', $familyData['mother_dob'])->format('Y-m-d');
             //$familyData["mother_dob"];
-            
+
             $familyMember->save();
         }
         if ($familyData['marital_status'] <> 'single') {
-            $familyMember =  new VmtEmployeeFamilyDetails; 
+            $familyMember =  new VmtEmployeeFamilyDetails;
             $familyMember->user_id  = $userId;
             $familyMember->name =   $familyData['spouse_name'];
             $familyMember->relationship = 'Spouse';
@@ -1611,11 +1616,11 @@ class VmtEmployeeController extends Controller
             if(isset($familyData["spouse_dob"]))
                 $familyMember->dob = \DateTime::createFromFormat('d-m-Y', $familyData['spouse_dob'])->format('Y-m-d');
             //$familyData["spouse_dob"];
-            
+
             $familyMember->save();
 
             if (isset($familyData['child_name'])) {
-                $familyMember =  new VmtEmployeeFamilyDetails; 
+                $familyMember =  new VmtEmployeeFamilyDetails;
                 $familyMember->user_id  = $userId;
                 $familyMember->name =   $familyData['child_name'];
                 $familyMember->relationship = 'Children';
@@ -1623,7 +1628,7 @@ class VmtEmployeeController extends Controller
                 if(isset($familyData["child_dob"]))
                     $familyMember->dob = \DateTime::createFromFormat('d-m-Y', $familyData['child_dob'])->format('Y-m-d');
                 //$familyData["child_dob"];
-                
+
                 $familyMember->save();
             }
         }
