@@ -35,6 +35,8 @@ use League\CommonMark\Extension\SmartPunct\EllipsesParser;
 use PDF;
 use Illuminate\Support\Facades\File;
 
+use App\Models\VmtEmployeeFamilyDetails;
+
 class VmtEmployeeController extends Controller
 {
 
@@ -267,6 +269,9 @@ class VmtEmployeeController extends Controller
             );
             $newEmployee->docs_reviewed = json_encode($docReviewArray);
             $newEmployee->save();
+
+            // store family member in vmt_employee_family_details tables
+            $this->storeEmployeeFamilyMembers($row, $user->id);
 
             if ($newEmployee) {
 
@@ -613,7 +618,6 @@ class VmtEmployeeController extends Controller
 
         //For output jsonresponse
         $data_array = [];
-
         //For validation
         $isAllRecordsValid = true;
 
@@ -784,9 +788,7 @@ class VmtEmployeeController extends Controller
                 'is_onboarded' => '0',
                 'onboard_type' => 'bulk',
                 'is_admin' => '0',
-                'is_default_password_updated' => '0',
-
-
+                'is_default_password_updated' => '0'
             ]);
             $user->save();
             $user->assignRole("Employee");
@@ -818,6 +820,9 @@ class VmtEmployeeController extends Controller
             $newEmployee->mother_name   = $row["mother_name"];
             $newEmployee->mother_gender   = $row["mother_gender"];
             $newEmployee->mother_dob   = $row["mother_dob"];
+
+
+
             if ($row['marital_status'] <> 'single') {
                 $newEmployee->spouse_name   = $row["spouse_name"];
                 $newEmployee->spouse_age   = $row["spouse_dob"];
@@ -838,6 +843,9 @@ class VmtEmployeeController extends Controller
             );
             $newEmployee->docs_reviewed = json_encode($docReviewArray);
             $newEmployee->save();
+
+            // Storing family member in vmt_employee_family_details
+            $this->storeEmployeeFamilyMembers($row, $user->id);
 
             if ($newEmployee) {
                 $empOffice  = new VmtEmployeeOfficeDetails;
@@ -1562,6 +1570,67 @@ class VmtEmployeeController extends Controller
         {
             return "";
         }
+    }
+
+
+    /**
+     *  storeEmployeeFamilyMembers()
+     *  table: vmt_employee_family_details
+     */
+    protected function storeEmployeeFamilyMembers($familyData, $userId){
+        if(isset($familyData['father_name'])){
+            $familyMember =  new VmtEmployeeFamilyDetails; 
+            $familyMember->user_id  = $userId;
+            $familyMember->name =   $familyData['father_name'];
+            $familyMember->relationship = 'Father';
+
+            if(isset($familyData["father_dob"]))
+                $familyMember->dob = \DateTime::createFromFormat('d-m-Y', $familyData['father_dob'])->format('Y-m-d');
+            
+            $familyMember->save();
+        }
+
+        if(isset($familyData['mother_name'])){
+            $familyMember =  new VmtEmployeeFamilyDetails; 
+            $familyMember->user_id  = $userId;
+            $familyMember->name =   $familyData['mother_name'];
+            $familyMember->relationship = 'Mother';
+
+            if(isset($familyData["mother_dob"]))
+                $familyMember->dob = \DateTime::createFromFormat('d-m-Y', $familyData['mother_dob'])->format('Y-m-d');
+            //$familyData["mother_dob"];
+            
+            $familyMember->save();
+        }
+        if ($familyData['marital_status'] <> 'single') {
+            $familyMember =  new VmtEmployeeFamilyDetails; 
+            $familyMember->user_id  = $userId;
+            $familyMember->name =   $familyData['spouse_name'];
+            $familyMember->relationship = 'Spouse';
+
+            if(isset($familyData["spouse_dob"]))
+                $familyMember->dob = \DateTime::createFromFormat('d-m-Y', $familyData['spouse_dob'])->format('Y-m-d');
+            //$familyData["spouse_dob"];
+            
+            $familyMember->save();
+
+            if (isset($familyData['child_name'])) {
+                $familyMember =  new VmtEmployeeFamilyDetails; 
+                $familyMember->user_id  = $userId;
+                $familyMember->name =   $familyData['child_name'];
+                $familyMember->relationship = 'Children';
+
+                if(isset($familyData["child_dob"]))
+                    $familyMember->dob = \DateTime::createFromFormat('d-m-Y', $familyData['child_dob'])->format('Y-m-d');
+                //$familyData["child_dob"];
+                
+                $familyMember->save();
+            }
+        }
+
+        return "saved";
+
+
     }
 
 }
