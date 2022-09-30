@@ -1,7 +1,8 @@
 @if( empty(Auth::user()->avatar) || !file_exists(public_path('images/'. Auth::user()->avatar)) )
-    <span class="bage rounded-circle h-100 w-100 d-flex align-items-center justify-content-center" id="shorthand_name_bg">
-        <i id="profileShortNameLargeCircle-profile" class="align-middle "></i>
-    </span>
+    <!-- <span class=" rounded-circle h-100 w-100 d-flex align-items-center justify-content-center" id="shorthand_name_bg"> -->
+    <div class=" rounded-circle  user_profile-wrapper" id="">
+        <div id="profileShortNameLargeCircle-profile" class="align-middle "></div>
+    </div>
 @else
     <img class="rounded-circle header-profile-user" src=" {{URL::asset('images/'. Auth::user()->avatar)}}" alt="Header Avatar" style="width: 70px; height: 70px;">
 @endif

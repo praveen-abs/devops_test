@@ -5,13 +5,7 @@
 <link href="{{ URL::asset('assets/css/employee_hirarchy.css') }}" rel="stylesheet">
 <link href="{{ URL::asset('assets/css/app.min.css') }}" rel="stylesheet">
 <style type="text/css">
-
-
-    .orgchart .dept-level .title {
-        padding-right: 4px;
-        background-color: #009933 !important;
-    }
-
+   
     .orgchart .dept-level .content {
         height: 0;
         border: none !important;
@@ -50,9 +44,9 @@
         transform: none !important;
     } */
 
-    
 
-  
+
+
 
     /*  Logo node style */
     .orgchart .logo-level .title {
@@ -82,39 +76,30 @@
     /* logo node css */
     .node.logo-level {
         box-sizing: border-box;
-    display: inline-block;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    /*height: 50px;*/
-    width: 160px;
-     background-color: transparent !important; 
-    /* overflow: hidden; */
-     margin: 10px; 
-    border-radius: 0px !important;
-}
+        display: inline-block;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        height: 50px;
+        width: 160px;
 
+        margin: 10px;
 
+        border-radius: 50px;
+    }
 
+    .logo-level .tree-avatar {
+        left: 0px;
+        position: relative;
+        border-radius: 0px;
+        background: transparent;
+    }
 
-.tree-avatar img {
-    /* height: 40px; */
-    /* width: 40px;*/
-
-}
-
-.logo-level .tree-avatar{
-    left: 0px;
-    position: relative;
-    border-radius: 0px;
-    background: transparent;
-}
-
-.logo-level .tree-avatar img{
+    .logo-level .tree-avatar img {
         height: auto;
-    width: 100%;
-    border-radius: 0px !important;
-}
+        width: 100%;
+        border-radius: 0px !important;
+    }
 </style>
 
 
@@ -123,13 +108,20 @@
 @component('components.organization_breadcrumb')
 @slot('li_1') @endslot
 @endcomponent
-<div id="chart-container" class="" style="overflow: hidden;">
-</div>
-<div class="">
-    <input type="checkbox" name="department" id="department-wise">Department
+<div class="hierarchy-wrapper">
+    <div id="chart-container" class="" style="overflow: hidden;">
+    </div>
+    <div class="form-check  department-wise">
+        <input type="checkbox" name="department" class="form-check-input" id="department-wise">
+        <label class="form-check-label fw-bold f-15" for="flexCheckDefault">
+            Department
+        </label>
+    </div>
+
 </div>
 
 @endsection
+
 
 @section('script')
 <script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>

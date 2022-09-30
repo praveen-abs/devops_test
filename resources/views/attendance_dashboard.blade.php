@@ -493,16 +493,16 @@
 						<div class="col-12 mb-3">
 							<ul class="nav nav-pills nav-tabs-dashed card-header-tabs">
 								<li class="nav-item text-muted">
-									<a class="nav-link attendances-analyist-tab active" data-bs-toggle="tab" href="#tab1">&nbsp;Most Taken Leave&nbsp;&nbsp;</a>
+									<a class="nav-link attendances-analyist-tab active" data-bs-toggle="tab" href="#tab21">&nbsp;Most Taken Leave&nbsp;&nbsp;</a>
 								</li>
 								<li class="nav-item text-muted">
-									<a class="nav-link attendances-analyist-tab margin-left-mainases" data-bs-toggle="tab" href="#tab2">&nbsp;Unplaned Leave Taken&nbsp;&nbsp;</a>
+									<a class="nav-link attendances-analyist-tab margin-left-mainases" data-bs-toggle="tab" href="#tab22">&nbsp;Unplaned Leave Taken&nbsp;&nbsp;</a>
 								</li>
 								<li class="nav-item text-muted">
-									<a class="nav-link attendances-analyist-tab margin-left-mainases " data-bs-toggle="tab" href="#tab3">&nbsp;Leave Balance Available&nbsp;&nbsp;</a>
+									<a class="nav-link attendances-analyist-tab margin-left-mainases " data-bs-toggle="tab" href="#tab23">&nbsp;Leave Balance Available&nbsp;&nbsp;</a>
 								</li>
 								<li class="nav-item text-muted">
-									<a class="nav-link attendances-analyist-tab margin-left-mainases " data-bs-toggle="tab" href="#tab4">&nbsp;Most Breaks Taken&nbsp;&nbsp;</a>
+									<a class="nav-link attendances-analyist-tab margin-left-mainases " data-bs-toggle="tab" href="#tab24">&nbsp;Most Breaks Taken&nbsp;&nbsp;</a>
 								</li>
 							</ul>
 						</div>
@@ -559,7 +559,7 @@
 						</div>		
 					</div>
 					<div class="col-md-12 box-shadow-table">
-						<table class="table">
+						<!-- <table class="table">
 							<thead class="table-dark">
 								<tr>
 									<th scope="col" style="padding-left: 25px">Employee</th>
@@ -594,17 +594,77 @@
 									<td>0.5</td>
 								</tr>
 							</tbody>
-						</table>
+						</table> -->
+						<div id="vendor-tables"></div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-
 @endsection
-
 @section('script')
+<script src="{{ URL::asset('assets/libs/gridjs/gridjs.min.js') }}"></script>
+<script src="{{ URL::asset('/assets/js/pages/dashboard-projects.init.js') }}"></script>
+<script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 <script>
+    $(document).ready(function() {
+        if (document.getElementById("vendor-tables")) {
+            const grid = new gridjs.Grid({
+                columns: [{
+                        id: 'number',
+                        name: 'Supplier Id',
+
+                    },
+                    {
+                        id: 'name',
+                        name: ' Name',
+                    },
+                    {
+                        id: 'job_title',
+                        name: 'Contact',
+                    },
+                    {
+                        id: 'reporting_to',
+                        name: ' Email',
+                    },
+                    {
+                        id: 'reporting_to',
+                        name: ' Company Name',
+                    },
+                    {
+                        id: 'reporting_to',
+                        name: 'Vendor Category',
+                    },
+                    {
+                        id: 'reporting_to',
+                        name: 'Status ',
+                    }, 
+                    {
+                        id: '',
+                        name: 'Action ',
+                    },
+
+                ],
+                data: [
+                    // {
+                    //     name: 'John',
+                    //     email: 'john@example.com',
+                    //     phoneNumber: '(353) 01 222 3333'
+                    // },
+                    // {
+                    //     name: 'Mark',
+                    //     email: 'mark@gmail.com',
+                    //     phoneNumber: '(01) 22 888 4444'
+                    // },
+                ],
+                pagination: {
+                    limit: 10
+                },
+                sort: true,
+                search: true,
+            }).render(document.getElementById("vendor-table"));
+        }
+    });
 </script>
 @endsection

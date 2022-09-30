@@ -110,13 +110,14 @@
                         //console.log(emp_name);
                         var html_image_tag = '<img data-emp_code="'+emp_code+'" data-emp_name="'+emp_name+'" id="img_'+emp_code+'" class="h-10 w-10"  alt=" " src="'+imagePath+'" />';
                         var html_empname = emp_name;
-                        var htmlContent = '<span id="span_'+emp_code+'">'+html_image_tag+'</span> &nbsp;&nbsp;'+html_empname;
+                        // var htmlContent = '<dv id="span_'+emp_code+'">'+html_image_tag+'</dv> &nbsp;&nbsp;'+html_empname;
+                        var htmlContent =  '<div class="d-flex align-items-center page-header-user-dropdown" >' +'<div id="span_'+emp_code+'" class="rounded-circle user-profile  me-1">'+html_image_tag+'</div>'+html_empname +'</div>';
 
                         $('#img_'+emp_code).on('error', function(){
 
                             console.log("Image missing for "+this.dataset.emp_name);
 
-                            $('#span_'+this.dataset.emp_code).html('<i id="shortname_'+emp_code+'" class="align-middle "></i>');
+                            $('#span_'+this.dataset.emp_code).html('<i id="shortname_'+emp_code+'" class="align-middle fw-bold "></i>');
 
                             generateProfileShortName_VendorScript("shortname_"+emp_code,emp_name);
 
@@ -280,13 +281,13 @@
                         //console.log(emp_name);
                         var html_image_tag = '<img data-emp_code="'+emp_code+'" data-emp_name="'+emp_name+'" id="img_'+emp_code+'" class="h-10 w-10"  alt=" " src="'+imagePath+'" />';
                         var html_empname = emp_name;
-                        var htmlContent = '<span id="span_'+emp_code+'">'+html_image_tag+'</span> &nbsp;&nbsp;'+html_empname;
+                        var htmlContent =  '<div class="d-flex align-items-center page-header-user-dropdown" >' +'<div id="span_'+emp_code+'" class="rounded-circle user-profile  me-1">'+html_image_tag+'</div>'+html_empname +'</div>';
 
                         $('#img_'+emp_code).on('error', function(){
 
                             console.log("Image missing for "+this.dataset.emp_name);
 
-                            $('#span_'+this.dataset.emp_code).html('<i id="shortname_'+emp_code+'" class="align-middle "></i>');
+                            $('#span_'+this.dataset.emp_code).html('<i id="shortname_'+emp_code+'" class="align-middle fw-bold"></i>');
 
                             generateProfileShortName_VendorScript("shortname_"+emp_code,emp_name);
 

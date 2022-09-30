@@ -45,8 +45,8 @@
 
 
     {{-- @section('ui-onboarding') --}}
-    <div class="container-fluid mt-8">
-        <div class="">
+    <div class="container-fluid ">
+      
             <div class="row ">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
                     <div class="">
@@ -54,12 +54,12 @@
                                 @csrf
                                 <input type="hidden" name="hidden_user_code" id="hidden_user_code" value="{{ $user_code}}"/>
                                 <div class="card shadow  profile-box card-top-border p-2">
-                                    <div class="card-body justify-content-center align-items-center ">
-                                        <div class="header-card-text">
-                                            <h6 class="mb-0">Documents Review</h6>
-
+                                    <div class="card-body">
+                                    <h6 class="mb-0 text-start">Documents Review</h6>
+                                        <div class="header-card-text text-end">
+                                           
                                             @if(str_contains(json_encode($docs_reviewed), -1) || ($docs_reviewed == null))
-                                            <button class="btn-md btn-primary" onclick="approveAllDocument()">Approve All</button>
+                                            <button class="btn  btn-primary" onclick="approveAllDocument()">Approve All</button>
                                             @endif
                                         </div>
                                         <div class="form-card mb-2 mt-2">
@@ -102,12 +102,12 @@
                                                         <td>
                                                             @if(isset($docs_reviewed) && $docs_reviewed->aadhar_card_file == -1)
                                                                 <button class="btn btn-success" onclick="approveOrRejectDocument('aadhar_card_file', 1)"> Approve</button>
-                                                                <button class="btn btn-secondary" onclick="approveOrRejectDocument('aadhar_card_file', 0)"> Reject</button>
+                                                                <button class="btn btn-danger" onclick="approveOrRejectDocument('aadhar_card_file', 0)"> Reject</button>
                                                             @endif
 
                                                             @if($docs_reviewed == null)
                                                                 <button class="btn btn-success" onclick="approveOrRejectDocument('aadhar_card_file', 1)"> Approve</button>
-                                                                <button class="btn btn-secondary" onclick="approveOrRejectDocument('aadhar_card_file', 0)"> Reject</button>
+                                                                <button class="btn btn-danger" onclick="approveOrRejectDocument('aadhar_card_file', 0)"> Reject</button>
                                                             @endif
                                                         </td>
                                                     </tr>
@@ -140,12 +140,12 @@
                                                             @if(isset($docs_reviewed) && $docs_reviewed->aadhar_card_backend_file == -1)
 
                                                             <button class="btn btn-success" onclick="approveOrRejectDocument('aadhar_card_backend_file', 1)"> Approve</button>
-                                                            <button class="btn btn-secondary" onclick="approveOrRejectDocument('aadhar_card_backend_file', 0)"> Reject</button>
+                                                            <button class="btn btn-danger" onclick="approveOrRejectDocument('aadhar_card_backend_file', 0)"> Reject</button>
                                                             @endif
 
                                                             @if($docs_reviewed == null)
                                                                 <button class="btn btn-success" onclick="approveOrRejectDocument('aadhar_card_backend_file', 1)"> Approve</button>
-                                                                <button class="btn btn-secondary" onclick="approveOrRejectDocument('aadhar_card_backend_file', 0)"> Reject</button>
+                                                                <button class="btn btn-danger" onclick="approveOrRejectDocument('aadhar_card_backend_file', 0)"> Reject</button>
                                                             @endif
                                                         </td>
                                                     </tr>
@@ -180,12 +180,12 @@
                                                         <td>
                                                             @if(isset($docs_reviewed) && $docs_reviewed->pan_card_file == -1)
                                                             <button class="btn btn-success" onclick="approveOrRejectDocument('pan_card_file', 1)"> Approve</button>
-                                                            <button class="btn btn-secondary" onclick="approveOrRejectDocument('pan_card_file', 0)"> Reject</button>
+                                                            <button class="btn btn-danger" onclick="approveOrRejectDocument('pan_card_file', 0)"> Reject</button>
                                                             @endif
 
                                                             @if($docs_reviewed == null)
                                                                 <button class="btn btn-success" onclick="approveOrRejectDocument('pan_card_file', 1)"> Approve</button>
-                                                            <button class="btn btn-secondary" onclick="approveOrRejectDocument('pan_card_file', 0)"> Reject</button>
+                                                            <button class="btn btn-danger" onclick="approveOrRejectDocument('pan_card_file', 0)"> Reject</button>
                                                             @endif
                                                         </td>
                                                     </tr>
@@ -219,13 +219,13 @@
 
                                                             <button class="btn btn-success" onclick="approveOrRejectDocument('passport_file', 1)"> Approve</button>
 
-                                                            <button class="btn btn-secondary" onclick="approveOrRejectDocument('passport_file', 0)"> Reject</button>
+                                                            <button class="btn btn-danger" onclick="approveOrRejectDocument('passport_file', 0)"> Reject</button>
                                                             @endif
 
                                                             @if($docs_reviewed == null)
                                                                 <button class="btn btn-success" onclick="approveOrRejectDocument('passport_file', 1)"> Approve</button>
 
-                                                            <button class="btn btn-secondary" onclick="approveOrRejectDocument('passport_file', 0)"> Reject</button>
+                                                            <button class="btn btn-danger" onclick="approveOrRejectDocument('passport_file', 0)"> Reject</button>
                                                             @endif
                                                         </td>
 
@@ -261,13 +261,13 @@
                                                             @if(isset($docs_reviewed) && $docs_reviewed->voters_id_file == -1)
                                                             <button class="btn btn-success" onclick="approveOrRejectDocument('voters_id_file', 1)"> Approve</button>
 
-                                                            <button class="btn btn-secondary" onclick="approveOrRejectDocument('voters_id_file', 0)"> Reject</button>
+                                                            <button class="btn btn-danger" onclick="approveOrRejectDocument('voters_id_file', 0)"> Reject</button>
                                                             @endif
 
                                                             @if($docs_reviewed == null)
                                                                 <button class="btn btn-success" onclick="approveOrRejectDocument('voters_id_file', 1)"> Approve</button>
 
-                                                            <button class="btn btn-secondary" onclick="approveOrRejectDocument('voters_id_file', 0)"> Reject</button>
+                                                            <button class="btn btn-danger" onclick="approveOrRejectDocument('voters_id_file', 0)"> Reject</button>
                                                             @endif
                                                         </td>
 
@@ -302,13 +302,13 @@
 
                                                             <button class="btn btn-success" onclick="approveOrRejectDocument('dl_file', 1)"> Approve</button>
 
-                                                            <button class="btn btn-secondary" onclick="approveOrRejectDocument('dl_file', 0)"> Reject</button>
+                                                            <button class="btn btn-danger" onclick="approveOrRejectDocument('dl_file', 0)"> Reject</button>
                                                             @endif
 
                                                             @if($docs_reviewed == null)
                                                                 <button class="btn btn-success" onclick="approveOrRejectDocument('dl_file', 1)"> Approve</button>
 
-                                                                <button class="btn btn-secondary" onclick="approveOrRejectDocument('dl_file', 0)"> Reject</button>
+                                                                <button class="btn btn-danger" onclick="approveOrRejectDocument('dl_file', 0)"> Reject</button>
                                                             @endif
                                                         </td>
 
@@ -345,13 +345,13 @@
                                                             @if(isset($docs_reviewed) && $docs_reviewed->education_certificate_file == -1)
                                                             <button class="btn btn-success" onclick="approveOrRejectDocument('education_certificate_file', 1)"> Approve</button>
 
-                                                            <button class="btn btn-secondary" onclick="approveOrRejectDocument('education_certificate_file', 0)"> Reject</button>
+                                                            <button class="btn btn-danger" onclick="approveOrRejectDocument('education_certificate_file', 0)"> Reject</button>
                                                             @endif
 
                                                             @if($docs_reviewed == null)
                                                                 <button class="btn btn-success" onclick="approveOrRejectDocument('education_certificate_file', 1)"> Approve</button>
 
-                                                                <button class="btn btn-secondary" onclick="approveOrRejectDocument('education_certificate_file', 0)"> Reject</button>
+                                                                <button class="btn btn-danger" onclick="approveOrRejectDocument('education_certificate_file', 0)"> Reject</button>
                                                             @endif
                                                         </td>
 
@@ -390,13 +390,13 @@
                                                             @if(isset($docs_reviewed) && $docs_reviewed->reliving_letter_file == -1)
                                                             <button class="btn btn-success" onclick="approveOrRejectDocument('reliving_letter_file', 1)"> Approve</button>
 
-                                                            <button class="btn btn-secondary" onclick="approveOrRejectDocument('reliving_letter_file', 0)"> Reject</button>
+                                                            <button class="btn btn-danger" onclick="approveOrRejectDocument('reliving_letter_file', 0)"> Reject</button>
                                                             @endif
 
                                                             @if($docs_reviewed == null)
                                                                 <button class="btn btn-success" onclick="approveOrRejectDocument('reliving_letter_file', 1)"> Approve</button>
 
-                                                                <button class="btn btn-secondary" onclick="approveOrRejectDocument('reliving_letter_file', 0)"> Reject</button>
+                                                                <button class="btn btn-danger" onclick="approveOrRejectDocument('reliving_letter_file', 0)"> Reject</button>
                                                             @endif
 
                                                         </td>
@@ -415,7 +415,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+      
         <!--Main Content-->
     </div>
 

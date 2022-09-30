@@ -1,5 +1,5 @@
 @if( empty(Auth::user()->avatar) || !file_exists(public_path('images/'. Auth::user()->avatar)) )
-    <span class="bage rounded-circle h-100 w-100 d-flex align-items-center justify-content-center  ">
+    <span class=" rounded-circle h-100 w-100 d-flex align-items-center justify-content-center  ">
         <i id="profileShortNameLargeCircle" class="align-middle "></i>
     </span>
 @else
