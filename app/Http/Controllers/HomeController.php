@@ -19,6 +19,7 @@ use App\Models\PollVoting;
 use App\Mail\TestEmail;
 use App\Models\VmtClientMaster;
 use App\Models\VmtEmployeeFamilyDetails;
+use App\Models\VmtEmployeeEmergencyContactDetails;
 use \Datetime;
 use Session as Ses;
 use Carbon\Carbon;
@@ -243,11 +244,19 @@ class HomeController extends Controller
     }
 
     public function updtaeEmergencyInfo(Request $request) {
-        $contact = json_encode(['primary_name'=> $request->input('primary_name'), 'primary_relationship'=> $request->input('primary_relationship'),'primary_phone1'=> $request->input('primary_phone1'), 'primary_phone2'=> $request->input('primary_phone2'), 'secondary_name'=> $request->input('secondary_name'), 'secondary_relationship'=> $request->input('secondary_relationship'),'secondary_phone1'=> $request->input('secondary_phone1'), 'secondary_phone2'=> $request->input('secondary_phone2')]);
+        //dd($request->all());
+        $contact  = new VmtEmployeeEmergencyContactDetails; 
+        $contact->user_id =  $request->id; 
+        $contact->name     = $request->input('primary_name');
+        $contact->relationship = $request->input('primary_relationship');
+        $contact->phone_number_1 = $request->input('primary_phone1');
+        $contact->phone_number_2 = $request->input('primary_phone2');
+        $contact->save();
+        /*$contact = json_encode(['primary_name'=> $request->input('primary_name'), 'primary_relationship'=> $request->input('primary_relationship'),'primary_phone1'=> $request->input('primary_phone1'), 'primary_phone2'=> $request->input('primary_phone2'), 'secondary_name'=> $request->input('secondary_name'), 'secondary_relationship'=> $request->input('secondary_relationship'),'secondary_phone1'=> $request->input('secondary_phone1'), 'secondary_phone2'=> $request->input('secondary_phone2')]);
         $reDetails = VmtEmployee::where('userid', $request->id)->first();
         $details = VmtEmployee::find($reDetails->id);
         $details->contact_json = $contact;
-        $details->save();
+        $details->save();*/
         Ses::flash('message', 'Personal Information Updated successfully!');
         Ses::flash('alert-class', 'alert-success');
         return redirect()->back();
@@ -461,7 +470,7 @@ class HomeController extends Controller
                         ->join('vmt_employee_office_details','vmt_employee_office_details.user_id', '=', 'users.id')
                         ->where('users.id', $user->id)->first();
         //dd($user_full_details);
-
+        $user_full_details['contact_json'] = VmtEmployeeEmergencyContactDetails::where('user_id', $user->id)->first();
         $familydetails = VmtEmployeeFamilyDetails::where('user_id',$user->id)->get();
         //dd($familydetails);
 
@@ -483,8 +492,13 @@ class HomeController extends Controller
     public function showImpersonateProfile(Request $request){
         $user = User::where('id', $request->id)->first();
         $details = VmtEmployee::join('vmt_employee_office_details', 'emp_id', '=', 'vmt_employee_details.id')->where('userid', $user->id)->first();
-        $details['contact_json'] = json_decode($details['contact_json'], true);
-        $details['family_info_json'] = json_decode($details['family_info_json'], true);
+
+        $user_full_details = User::join('vmt_employee_details','vmt_employee_details.userid', '=', 'users.id')
+                        ->join('vmt_employee_office_details','vmt_employee_office_details.user_id', '=', 'users.id')
+                        ->where('users.id', $user->id)->first();
+        $user_full_details['contact_json'] = VmtEmployeeEmergencyContactDetails::where('user_id', $user->id)->first();
+        //json_decode($details['contact_json'], true);
+        $familydetails = VmtEmployeeFamilyDetails::where('user_id',$user->id)->get();
         if($user->hasrole('Employee')) {
              // report for disable for role base
             $employee = VmtEmployee::first();
@@ -499,7 +513,10 @@ class HomeController extends Controller
         $rep = VmtEmployee::select('emp_no', 'name', 'avatar')->join('vmt_employee_office_details', 'emp_id', '=', 'vmt_employee_details.id')->join('users', 'users.id', '=', 'vmt_employee_details.userid')->where('emp_no', $details->l1_manager_code)->first();
 
         $profileCompletenessValue  = $this->calculateProfileCompleteness($user->id);
-        return view('pages-profile', compact( 'employee', 'report_key','user', 'details', 'bank', 'exp', 'code', 'rep','profileCompletenessValue'));
+        $allEmployees = User::where('user_code','<>',$user->id)->where('active',1)->get(['user_code','name']);
+        
+        //dd($details['contact_json']);
+        return view('pages-profile', compact( 'employee','allEmployees', 'report_key','user', 'details', 'bank', 'exp', 'code', 'user_full_details','rep','profileCompletenessValue', 'familydetails'));
     }
 
     public function showProfilePage(Request $request) {
