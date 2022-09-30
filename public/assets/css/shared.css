@@ -1,7 +1,4 @@
-:hover,
-a:focus,
-input,
-textarea {
+:hover, a:focus, input, textarea {
     text-decoration: none;
     outline: none;
 }
@@ -243,55 +240,6 @@ p {
     border-left: 5px solid #002f56;
 }
 /* floating label */
-
-/* .floating {
-    position: relative;
-}
-.floating .float-label {
-    position: absolute;
-    padding: 0px 2px;
-    top: 8px;
-    left: 15px;
-    cursor: text;
-    color: #375775;
-    pointer-events: none;
-
-    transition: 0.2s ease all;
-    -moz-transition: 0.2s ease all;
-    -webkit-transition: 0.2s ease all;
-} */
-/* .floating .textbox::placeholder,.floating .textbox:-moz-placeholder,.floating .textbox:-ms-input-placeholder,.text::-webkit-input-placeholder {
-    opacity: 0;
-    color: transparent;
-    visibility: hidden;
-} */
-
-/* .textbox::placeholder, .textbox::-webkit-input-placeholder {
-    opacity: 0;
-    color: transparent;
-    visibility: hidden;
-} */
-
-/* .textbox:not(:-moz-placeholder) ~ .float-label, .textbox:not(:-ms-input-placeholder) ~ .float-label, .textbox:not(::-webkit-input-placeholder) ~ .float-label  */
-/* 
-.textbox:focus ~ .float-label, .textbox:not(:placeholder-shown) ~ .float-label {
-    top: -9px;
-    left: 11px;
-    font-size: 11px;
-    background-color: #fff;
-    color: #375775;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-}
-.textbox:focus ~ .float-label, .textbox:valid ~ .float-label {
-    top: -9px;
-    left: 11px;
-    font-size: 11px;
-    background-color: #fff;
-    color: #375775;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-} */
 .select2-hidden-accessible {
     display: block;
     width: 100%;
@@ -431,9 +379,9 @@ p {
     border: none !important;
     padding: 12px 0 0;
 }
-
-table.gridjs-table{
-    width: 100% !important;    
+.gridjs-table {
+    width: 100% !important;
+    overflow-x: scroll;
 }
 js-pagination .gridjs-summary {
     font-size: 14px !important;
@@ -739,7 +687,7 @@ button.gridjs-sort-desc {
     background-color: #002f56 !important;
     color: #fff !important;
     font-size: 13px !important;
-    padding: 4px 7px;
+    padding: 4px 15px;
     font-weight: 500;
     z-index: 2;
     position: relative;
@@ -775,11 +723,9 @@ button.gridjs-sort-desc {
     margin-left: -8px;
     z-index: 1;
 }
-
 .form-check-input:checked {
     background-color: #002f56 !important;
 }
-
 .bottom-content .check-box {
     border: 1px solid #ced4da;
     height: 15px !important;
@@ -803,13 +749,10 @@ button.gridjs-sort-desc {
     position: absolute;
     top: 4px;
 }
-
 /* top bar search bar */
-
 .search-content {
     position: relative;
 }
-
 .search-content input{
     background: transparent;
     text-indent: 20px;
@@ -821,27 +764,16 @@ button.gridjs-sort-desc {
     left: 10px;
     top: 5px;
     color: #aea0af;
-
 }
-
 .settings-icon {
     font-size: 18px;
     font-weight: 600;
 }
-.settings-icon {
-}
-
-/* george commant padding */
 .navbar-menu .navbar-nav .nav-sm .nav-link {
     white-space: none;
     position: relative;
     font-size: 12px;
-    
-
-    
 }
-
-
 .filter-btn {
     background: #ee6a05;
     color: #fff;
@@ -926,9 +858,6 @@ button.gridjs-sort-desc {
     border-radius: 5px;
     box-shadow: rgb(60 64 67 / 30%) 0px 1px 2px 0px, rgb(60 64 67 / 15%) 0px 2px 6px 2px;
 }
-/* .box-shadow-table table tbody tr th, .box-shadow-table table thead tr th {
-    padding-left: 20px;
-} */
 .box-shadow-table table tbody tr th h6 {
     font-size: 15px;
     margin-bottom: 4px;
@@ -973,5 +902,29 @@ button.gridjs-sort-asc::after{
 
 .dropdown-item:focus, .dropdown-item:hover {
     color: #003156 !important;
-
+}
+.position_absolute-count span {
+    background-color: #f62008;
+    font-size: 12px;
+    border-radius: 20px;
+    padding: 1px 4px;
+    color: #fff;
+}
+.position_absolute-count {
+    position: absolute;
+    top: -10px;
+    right: -8px;
+}
+.btn-custom-outline-secondary {
+    background-color: transparent !important;
+    color: #656668 !important;
+    font-size: 13px !important;
+    padding: 4px 15px;
+    font-weight: 500;
+    z-index: 2;
+    position: relative;
+    border: 1px solid #57585a;
+}
+.btn-custom-primary svg {
+    color: #fff;
 }
