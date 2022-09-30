@@ -764,25 +764,23 @@
                                                 @if(!empty($user_full_details->dob))
                                                 <input class="form-control datetimepicker" type="date" max="9999-12-31"
                                                     name="dob" value="{{date('Y-m-d', strtotime($user_full_details->dob))}}" readonly>
+                                                @else
+                                                    <input class="form-control datetimepicker" type="date" max="9999-12-31"
+                                                    name="dob" value="" >
                                                 @endif
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
-                                        @if(!empty($user_full_details->gender))
+                                            <label>Gender</label>
 
-                                        <label>Gender</label>
-                                        <select class="form-select form-control" name="gender" aria-label="Default select" disabled>
-                                            <option selected>-</option>
-                                            <option value="male" @if($user_full_details->gender == 'male') selected
-                                                @endif>Male</option>
-                                            <option value="female" @if($user_full_details->gender == 'female') selected
-                                                @endif>Female</option>
-                                            <option value="other" @if($user_full_details->gender == 'other') selected
-                                                @endif>Other</option>
-                                        </select>
-                                        @endif
+                                            <select class="form-select form-control" name="gender" aria-label="Default select">
+                                                <option >select</option>
+                                                @foreach($genderArray as $item)
+                                                    <option value="{{$item}}" >{{$item}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -825,9 +823,7 @@
                             <div class="col-md-12">
                                 <div class="form-group mb-3">
                                     <label>Address</label>
-                                    @if(!empty($user_full_details->present_address))
-                                        <textarea name="address_PI" id="address_PI" cols="30" rows="3"  class="form-control"  value="{{$user_full_details->present_address? $user_full_details->present_address : ''}}">{{ $user_full_details->present_address? $user_full_details->present_address : ''}}</textarea>
-                                    @endif
+                                        <textarea name="address_PI" id="address_PI" cols="30" rows="3"  class="form-control"  value="{{ $user_full_details->present_address ?? ''}}">{{ $user_full_details->present_address?? ''}}</textarea>
                                 </div>
                             </div>
                         </div>

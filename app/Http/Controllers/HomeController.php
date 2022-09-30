@@ -295,16 +295,17 @@ class HomeController extends Controller
             $details->l1_manager_designation = $code->designation;
             $details->save();
         }
-        $reDetails = VmtEmployee::where('userid', $request->id)->first();
-        $details = VmtEmployee::find($reDetails->id);
+
+        $details = VmtEmployee::where('userid',$request->id)->first();
+        //dd($details);
         $details->dob = $request->input('dob');
         $details->gender = $request->input('gender');
         $details->present_address = $request->input('present_address');
         $details->mobile_number = $request->input('mobile_number');
         $details->present_address = $request->input('address_PI');
         $details->save();
-        Ses::flash('message', 'User Details Updated successfully!');
-        Ses::flash('alert-class', 'alert-success');
+
+
         return redirect()->back();
     }
 
@@ -434,8 +435,8 @@ class HomeController extends Controller
     // Show Profile info
     public function showProfile(Request $request){
         $user = Auth::user();
-        $user_full_details = User::join('vmt_employee_details','vmt_employee_details.userid', '=', 'users.id')
-                        ->join('vmt_employee_office_details','vmt_employee_office_details.user_id', '=', 'users.id')
+        $user_full_details = User::leftjoin('vmt_employee_details','vmt_employee_details.userid', '=', 'users.id')
+                        ->leftjoin('vmt_employee_office_details','vmt_employee_office_details.user_id', '=', 'users.id')
                         ->where('users.id', $user->id)->first();
 
         $emergencyContactDetails = VmtEmployeeEmergencyContactDetails::where('user_id', $user->id)->first();
@@ -448,6 +449,9 @@ class HomeController extends Controller
                             'divorced',
                             'widowed',
                             'seperated');
+
+        $genderArray = array("Male", "Female", "Other");
+
         //dd($maritalStatus);
         if(!empty($user_full_details->l1_manager_code))
             $reportingManager = User::where('user_code',$user_full_details->l1_manager_code)->first();
@@ -457,14 +461,14 @@ class HomeController extends Controller
         $allEmployees = User::where('user_code','<>',$user->id)->where('active',1)->get(['user_code','name']);
         $profileCompletenessValue  = calculateProfileCompleteness($user->id);
 
-        return view('pages-profile', compact('user','allEmployees', 'maritalStatus','user_full_details', 'familydetails','emergencyContactDetails','bank', 'exp', 'reportingManager','profileCompletenessValue'));
+        return view('pages-profile', compact('user','allEmployees', 'maritalStatus','genderArray','user_full_details', 'familydetails','emergencyContactDetails','bank', 'exp', 'reportingManager','profileCompletenessValue'));
     }
 
     // Show Impersonate Profile info
     public function showImpersonateProfile(Request $request){
         $user = User::find($request->id);
-        $user_full_details = User::join('vmt_employee_details','vmt_employee_details.userid', '=', 'users.id')
-                        ->join('vmt_employee_office_details','vmt_employee_office_details.user_id', '=', 'users.id')
+        $user_full_details = User::leftjoin('vmt_employee_details','vmt_employee_details.userid', '=', 'users.id')
+                        ->leftjoin('vmt_employee_office_details','vmt_employee_office_details.user_id', '=', 'users.id')
                         ->where('users.id', $user->id)->first();
 
         $emergencyContactDetails = VmtEmployeeEmergencyContactDetails::where('user_id', $user->id)->first();
@@ -479,6 +483,8 @@ class HomeController extends Controller
                             'widowed',
                             'seperated');
 
+        $genderArray = array("Male", "Female", "Other");
+
         if(!empty($user_full_details->l1_manager_code))
             $reportingManager = User::where('user_code',$user_full_details->l1_manager_code)->first();
         else
@@ -487,8 +493,8 @@ class HomeController extends Controller
         $allEmployees = User::where('user_code','<>',$user->id)->where('active',1)->get(['user_code','name']);
         $profileCompletenessValue  = calculateProfileCompleteness($user->id);
 
-        //dd($details['contact_json']);
-        return view('pages-profile', compact('user','allEmployees','maritalStatus', 'user_full_details', 'familydetails','emergencyContactDetails','bank', 'exp', 'reportingManager','profileCompletenessValue'));
+        //dd($user_full_details);
+        return view('pages-profile', compact('user','allEmployees','maritalStatus','genderArray' ,'user_full_details', 'familydetails','emergencyContactDetails','bank', 'exp', 'reportingManager','profileCompletenessValue'));
     }
 
     public function showProfilePage(Request $request) {
