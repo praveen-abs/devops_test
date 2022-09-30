@@ -12,37 +12,24 @@
 @slot('li_1') @endslot
 @endcomponent
 
-<div class="card">
-    <div class="card-body">
-        <h6 class="text-muted fw-bold">Yet to Active Employees</h6>
+<h5 class="text-muted fw-bold">Yet to Active Employees</h5>
 
-        <div class="table-responsive">
+<div class="table-responsive">
 
-            <div id="yet-to-active-directory-table"></div>
+    <div id="yet-to-active-directory-table"></div>
 
-        </div>
-    </div>
 </div>
 
+<h5 class="text-muted fw-bold">Active Employees</h5>
 
-<div class="card">
-    <div class="card-body">
-        <h6 class="text-muted fw-bold">Active Employees</h6>
+<div class="table-responsive">
 
-        <div class="table-responsive">
+    <div id="active-directory-table"></div>
 
-            <div id="active-directory-table"></div>
-
-        </div>
-    </div>
 </div>
-
 
 
 @endsection
-
-
-
 @section('script')
 <script src="{{ URL::asset('assets/libs/gridjs/gridjs.min.js') }}"></script>
 
@@ -168,10 +155,10 @@
                     name: 'Blood Group',
                 },
                 {
-                    id: 'profile',
+                    id: 'profile_completeness',
                     name: 'Profile',
-                    formatter: function formatter(user_id) {
-                        return gridjs.html("30%");
+                    formatter: function formatter(cell) {
+                        return gridjs.html(cell+"%");
 
                     }
                 },
@@ -242,7 +229,7 @@
                         emp.l1_manager_code,
                         emp.doj,
                         emp.blood_group,
-                        emp,
+                        emp.profile_completeness,
                         emp.is_onboarded,
                         emp.is_docs_approved,
                         emp.user_id,
@@ -337,10 +324,10 @@
                     name: 'Blood Group',
                 },
                 {
-                    id: 'profile',
+                    id: 'profile_completeness',
                     name: 'Profile',
-                    formatter: function formatter(user_id) {
-                        return gridjs.html("70%");
+                    formatter: function formatter(cell) {
+                        return gridjs.html(cell+"%");
 
                     }
                 },
@@ -373,7 +360,7 @@
                         emp.l1_manager_code,
                         emp.doj,
                         emp.blood_group,
-                        emp,
+                        emp.profile_completeness,
                         emp.user_id,
                     ]
                 )

@@ -77,3 +77,70 @@ function fetchSubClients(){
             return false;
         }
     }
+
+    function calculateProfileCompleteness($user_id)
+    {
+
+        $user_full_details = User::leftjoin('vmt_employee_details','vmt_employee_details.userid', '=', 'users.id')
+                        ->leftjoin('vmt_employee_office_details','vmt_employee_office_details.user_id', '=', 'users.id')
+                        ->leftjoin('vmt_employee_family_details','vmt_employee_family_details.user_id', '=', 'users.id')
+                        ->leftjoin('vmt_employee_emergency_contact_details','vmt_employee_emergency_contact_details.user_id', '=', 'users.id')
+
+                        //Employee info
+
+                        ->select(
+                            'vmt_employee_details.mobile_number',
+                            'users.email',
+                            'vmt_employee_details.dob',
+                            'vmt_employee_details.present_address',
+                            'vmt_employee_details.gender',
+                            'vmt_employee_office_details.l1_manager_code',
+                        //Personal Info
+                            'vmt_employee_details.passport_number',
+                            'vmt_employee_details.passport_date',
+                            'vmt_employee_details.nationality',
+                            'vmt_employee_details.religion',
+                            'vmt_employee_details.marrital_status',
+                            'vmt_employee_details.spouse_name',
+                            //'vmt_employee_details.no_of_children',
+
+                        //Family Informations
+                            'vmt_employee_family_details.name',
+                            'vmt_employee_family_details.relationship',
+                            'vmt_employee_family_details.dob',
+                            'vmt_employee_family_details.phone_number',
+
+                        //Bank Informations
+                            'vmt_employee_details.bank_name',
+                            'vmt_employee_details.bank_ifsc_code',
+                            'vmt_employee_details.bank_account_number',
+
+                        //Emergency Contact
+                            'vmt_employee_emergency_contact_details.name',
+                            'vmt_employee_emergency_contact_details.relationship',
+                            'vmt_employee_emergency_contact_details.phone_number_1',
+                            'vmt_employee_emergency_contact_details.phone_number_2'
+
+                        )->where('users.id', $user_id)->first();
+
+        $count_total_fields = count($user_full_details->toArray());
+        $count_null_fields = 0;
+
+        foreach($user_full_details->toArray() as $key => $value)
+        {
+            if(empty($value))
+            {
+                //dd($key);
+                $count_null_fields++;
+            }
+        }
+
+        //dd($count_total_fields);
+        //dd($count_null_fields);
+        //dd($user_full_details);
+
+        $value = (int)( round(( ($count_total_fields -$count_null_fields)/$count_total_fields) * 100 ));
+        //dd($value);
+        return $value;
+    }
+
