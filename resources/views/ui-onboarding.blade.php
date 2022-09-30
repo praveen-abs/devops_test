@@ -564,7 +564,7 @@
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="confirmation_period">Probabition Period{!! required() !!}</label> -->
                                                 <div class="floating">
-                                                    <label for="" class="float-label">Probabition Period</label>
+                                                    <label for="" class="float-label">Probation Period</label>
 
                                                     <select placeholder="Probabition Period" name="confirmation_period" class="onboard-form form-control textbox  not-required validate select2_form_without_search">
                                                         <option value="" hidden selected disabled>Select Probabition Period</option>
@@ -670,14 +670,14 @@
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="father_name">Father Name{!! required() !!}</label> -->
                                                 <div class="floating">
-                                                    <label for="" class="float-label">Father Name</label>
+                                                    <label for="" class="float-label">Father Name <span class="text-danger">*</span></label>
 
                                                     <input type="text" placeholder="Father Name" name="father_name" pattern="name" class="onboard-form form-control textbox " required />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <div class="floating">
-                                                    <label for="" class="float-label">Date of Birth</label>
+                                                    <label for="" class="float-label">Date of Birth <span class="text-danger">*</span></label>
 
                                                     <input type="text" max="9999-12-31" placeholder="Date of Birth" name="dob_father" id="dob_father" class="onboard-form form-control textbox  " onfocus="(this.type='date')" required />
                                                 </div>
@@ -687,12 +687,13 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Gender</label>
 
-                                                    <select placeholder="Gender" name="father_gender" id="father_gender" class="textbox  onboard-form form-control   select2_form_without_search" required>
+                                                    <!-- <select placeholder="Gender" name="father_gender" id="father_gender" class="textbox  onboard-form form-control   select2_form_without_search" required>
                                                         <option value="" hidden selected disabled>Gender</option>
                                                         <option value="male">Male</option>
                                                         <option value="female">Female</option>
 
-                                                    </select>
+                                                    </select> -->
+                                                    <input type="text" class="form-control" name="Male" id="" value="Male" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -708,7 +709,7 @@
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="mother_name">Mother Name{!! required() !!}</label> -->
                                                 <div class="floating">
-                                                    <label for="" class="float-label">Mother Name</label>
+                                                    <label for="" class="float-label">Mother Name <span class="text-danger">*</span></label>
 
                                                     <input type="text" placeholder="Mother Name" name="mother_name" pattern="name" class="textbox  onboard-form form-control " required />
                                                 </div>
@@ -716,7 +717,7 @@
 
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <div class="floating">
-                                                    <label for="" class="float-label">Date of Birth</label>
+                                                    <label for="" class="float-label">Date of Birth <span class="text-danger">*</span></label>
 
                                                     <input type="text" max="9999-12-31" placeholder="Date of Birth" name="dob_mother" id="dob_mother" class="textbox  onboard-form form-control " onfocus="(this.type='date')" required />
                                                 </div>
@@ -725,11 +726,12 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Gender</label>
 
-                                                    <select placeholder="Gender" name="mother_gender" id="mother_gender" class="textbox  onboard-form form-control   select2_form_without_search" required>
+                                                    <!-- <select placeholder="Gender" name="mother_gender" id="mother_gender" class="textbox  onboard-form form-control   select2_form_without_search" required>
                                                         <option value="" hidden selected disabled>Gender</option>
                                                         <option value="male">Male</option>
                                                         <option value="female">Female</option>
-                                                    </select>
+                                                    </select> -->
+                                                    <input type="text" class="form-control" name="Male" id="" value="Female" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -746,7 +748,7 @@
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="spouse_name">Spouse Name<span id="spouse_name_req">{!! required() !!}</span></label> -->
                                                 <div class="floating">
-                                                    <label for="" class="float-label">Spouse Name</label>
+                                                    <label for="" class="float-label">Spouse Name <span class="text-danger">*</span></label>
 
                                                     <input type="text" placeholder="Spouse Name" name="spouse_name" pattern="name" class="textbox  onboard-form form-control  spouse_data" required />
                                                 </div>
@@ -754,7 +756,7 @@
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="dow">Date of Wedding<span id="dow_req">{!! required() !!}</span></label> -->
                                                 <div class="floating">
-                                                    <label for="" class="float-label">Date of Wedding</label>
+                                                    <label for="" class="float-label">Date of Wedding <span class="text-danger">*</span></label>
 
                                                     <input type="text" max="9999-12-31" placeholder="Date of Wedding" name="dow" class="textbox  onboard-form form-control  spouse_data" onfocus="(this.type='date')" />
                                                 </div>
@@ -763,7 +765,7 @@
                                                 <!-- <label class="" for="spouse_gender">Spouse Gender<span id="spouse_gender_req">{!! required() !!}</span></label> -->
 
                                                 <div class="floating">
-                                                    <label for="" class="float-label">Gender</label>
+                                                    <label for="" class="float-label">Gender <span class="text-danger">*</span></label>
 
                                                     <select placeholder="Spouse Gender" name="spouse_gender" id="spouse_gender" class="textbox  onboard-form form-control  spouse_data select2_form_without_search" required>
                                                         <option value="" hidden selected disabled>Select Spouse Gender</option>
@@ -776,7 +778,7 @@
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="spouse_dob">Spouse DOB<span id="spouse_dob_req">{!! required() !!}</span></label> -->
                                                 <div class="floating">
-                                                    <label for="" class="float-label">Spouse DOB</label>
+                                                    <label for="" class="float-label">Spouse DOB <span class="text-danger">*</span></label>
 
                                                     <input type="text" max="9999-12-31" placeholder="Spouse DOB" name="spouse_dob" class="textbox  onboard-form form-control  spouse_data" onfocus="(this.type='date')" required />
                                                 </div>
