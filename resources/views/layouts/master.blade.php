@@ -1,5 +1,6 @@
 @php
 clearstatcache();
+// dd(Auth::user()->active);
 @endphp
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-layout="vertical" data-topbar="dark" data-sidebar="light" data-sidebar-size="lg">
@@ -183,7 +184,7 @@ clearstatcache();
 <div id="layout-wrapper">
     @include('layouts.topbar')
 
-    @if (Auth::user()->is_onboarded == 0 && Auth::user()->onboard_type != "normal")
+    @if (Auth::user()->active == 0)
         @include('layouts.sidebar_dummy')
     @else
         @include('layouts.sidebar')

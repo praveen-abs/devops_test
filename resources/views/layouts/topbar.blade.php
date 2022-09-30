@@ -231,7 +231,7 @@
 
                             <img src="{{ URL::asset('assets/images/megaphone.png') }}" class="" alt="user-pic" style="height:20px;width:20px;">
                         </button>
-                        @if( hasSubClients() )
+                        @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR","Manager"]) &&  hasSubClients() )
 
                         <div class="dropdown topbar-user ">
                             <button type="button" class="btn border-0  mx-1 shadow-sm " id="choose_client" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
