@@ -959,8 +959,9 @@ class VmtEmployeeController extends Controller
                 'users.name as emp_name',
                 'users.user_code as emp_code',
                 'users.active as emp_status',
+                'users.is_onboarded as is_onboarded',
                 'users.email as email_id',
-                'users.id as emp_id',
+                'users.id as user_id',
                 'users.avatar as avatar',
                 'vmt_employee_details.doj as doj',
                 'vmt_employee_details.blood_group as blood_group',
@@ -976,6 +977,8 @@ class VmtEmployeeController extends Controller
             ->whereNotNull('emp_no')
             ->get();
 
+            //dd($vmtEmployees->toArray());
+
         return json_encode($vmtEmployees);
     }
 
@@ -987,8 +990,9 @@ class VmtEmployeeController extends Controller
                 'users.name as emp_name',
                 'users.user_code as emp_code',
                 'users.active as emp_status',
+                'users.is_onboarded as is_onboarded',
                 'users.email as email_id',
-                'users.id as emp_id',
+                'users.id as user_id',
                 'users.avatar as avatar',
                 'vmt_employee_details.doj as doj',
                 'vmt_employee_details.blood_group as blood_group',

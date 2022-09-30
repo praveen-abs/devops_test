@@ -142,26 +142,5 @@ class VmtApprovalsController extends Controller
 
 
 
-    /*
-        Check whether all the documents for the given
-        employee code is approved or not
 
-    */
-    // private function isAllDocumentsApproved($user_code)
-    // {
-    //     $user_id  = User::where('user_code',$user_code)->value('id');
-    //     $documents_filenames = VmtEmployee::where('userid', $user_id)->first();
-
-    //     if($documents_filenames->docs_reviewed != null){
-    //         $docReviewArray = json_decode($documents_filenames->docs_reviewed);
-
-    //         //check whether each document value is '1'
-
-
-    //     }
-    //     else
-    //     {
-    //         return false;
-    //     }
-    // }
 }

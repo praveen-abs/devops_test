@@ -47,9 +47,9 @@
 
     function activateEmployee(obj)
     {
-        var emp_id = obj.dataset.emp_id;
+        var user_id = obj.dataset.user_id;
         var status = 1;
-        console.log("Activating emp : "+emp_id);
+        console.log("Activating emp : "+user_id);
 
         $.ajax({
             url: "{{route('updateUserAccountStatus')}}",
@@ -57,7 +57,7 @@
             data: {
                 _token: "{{ csrf_token() }}",
                 "status": status,
-                "id": emp_id,
+                "id": user_id,
             },
             success: function(data) {
                 //window.location.reload();
@@ -78,7 +78,7 @@
         {
             grid = new gridjs.Grid({
             columns: [{
-                    id: 'emp_id',
+                    id: 'user_id',
                     name: 'ID',
                     hidden:true,
                 },
@@ -159,6 +159,30 @@
                     }
                 },
                 {
+                    id: 'is_onboarded',
+                    name: 'Onboarded?',
+                    formatter: function formatter(cell) {
+                        if(cell == "1")
+                            return gridjs.html("Done");
+                        else
+                            return gridjs.html("Not Done");
+
+
+                    }
+                },
+                {
+                    id: 'is_docs_approved',
+                    name: 'Documents Approved?',
+                    formatter: function formatter(cell) {
+                        if(cell == "1")
+                            return gridjs.html("Done");
+                        else
+                            return gridjs.html("Not Done");
+
+
+                    }
+                },
+                {
                     id: 'emp_code',
                     name: 'Edit',
                     formatter: function formatter(user_id) {
@@ -173,9 +197,13 @@
                 {
                     id: 'emp_code',
                     name: 'Action',
-                    formatter: function formatter(cell) {
+                    formatter: function formatter(emp) {
+                        var htmlcontent = "";
 
-                        var htmlcontent= '<input type="button" value="Activate" onclick="activateEmployee(this)" id="button_activate_"'+cell+'" data-emp_id="'+cell+'" class="status btn btn-orange py-1 onboard-employee-btn "></input>';
+                        if(emp.is_onboarded == "1" && emp.is_docs_approved == "1")
+                            htmlcontent = '<input type="button" value="Activate" onclick="activateEmployee(this)" id="button_activate_"'+emp.user_id+'" data-user_id="'+emp.user_id+'" class="status btn btn-orange py-1 onboard-employee-btn "></input>';
+                        else
+                            htmlcontent = '<input type="button" value="Activate" class="status btn btn-orange py-1 onboard-employee-btn disabled"></input>';
 
                         return gridjs.html(htmlcontent);
                     }
@@ -190,7 +218,7 @@
                 url: '{{route('vmt-yet-to-activeemployees-fetchall')}}',
                 then: data => data.map(
                     emp => [
-                        emp.emp_id,
+                        emp.user_id,
                         emp,
                         emp.emp_code,
                         emp.emp_designation,
@@ -198,8 +226,10 @@
                         emp.doj,
                         emp.blood_group,
                         emp,
-                        emp.emp_id,
-                        emp.emp_id,
+                        emp.is_onboarded,
+                        emp.is_docs_approved,
+                        emp.user_id,
+                        emp,
                     ]
                 )
             },
@@ -215,7 +245,7 @@
         {
             grid = new gridjs.Grid({
             columns: [{
-                    id: 'emp_id',
+                    id: 'user_id',
                     name: 'ID',
                     hidden:true,
                 },
@@ -317,7 +347,7 @@
                 url: '{{route('vmt-activeemployees-fetchall')}}',
                 then: data => data.map(
                     emp => [
-                        emp.emp_id,
+                        emp.user_id,
                         emp,
                         emp.emp_code,
                         emp.emp_designation,
@@ -325,7 +355,7 @@
                         emp.doj,
                         emp.blood_group,
                         emp,
-                        emp.emp_id,
+                        emp.user_id,
                     ]
                 )
             },
