@@ -124,6 +124,7 @@ option:hover {
     /* font-size: 14px; */
     /* letter-spacing: 1px; */
     /* outline: none; */
+    text-transform: capitalize;
 }
 
 
