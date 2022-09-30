@@ -18161,44 +18161,6 @@ span .paginate_button {
     float: left;
 }
 
-#profileShortNameLargeCircle {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: #f1f1f1;
-    font-size: 20px;
-    /* color: #212529; */
-    text-align: center;
-    line-height: 60px;
-    margin: 0px 0;
-    font-weight: 600;
-}
-
-#profileShortNameLargeCircle-profile {
-    width: 75px;
-    height: 75px;
-    border-radius: 50%;
-    background: #f1f1f1;
-    font-size: 35px;
-    /* color: #212529; */
-    text-align: center;
-    line-height: 70px;
-    margin: 0px 0;
-    font-weight: 600;
-}
-
-#pencil-on-avatar {
-    margin-top: 45px;
-    margin-left: -15px;
-}
-
-#experience-detail-table::-webkit-scrollbar-track {
-    background-color: #ccc;
-}
-
-#experience-detail-table::-webkit-scrollbar-thumb {
-    background-color: red;
-}
 
 /* top bar message notification */
 
