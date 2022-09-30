@@ -142,7 +142,10 @@
                     name: 'DOJ',
                     formatter: function formatter(cell) {
                         var date = new Date(cell);
-                        return gridjs.html(date.getDate()+"-"+date.getMonth()+"-"+date.getFullYear());
+                        if(! isNaN(date))
+                            return gridjs.html(date.getDate()+"-"+date.getMonth()+"-"+date.getFullYear());
+                        else
+                            return gridjs.html("");
 
                     }
                 },
@@ -309,8 +312,10 @@
                     name: 'DOJ',
                     formatter: function formatter(cell) {
                         var date = new Date(cell);
-                        return gridjs.html(date.getDate()+"-"+date.getMonth()+"-"+date.getFullYear());
-
+                        if(! isNaN(date))
+                            return gridjs.html(date.getDate()+"-"+date.getMonth()+"-"+date.getFullYear());
+                        else
+                            return gridjs.html("");
                     }
                 },
                 {
