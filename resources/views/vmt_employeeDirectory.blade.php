@@ -154,10 +154,10 @@
                     name: 'Blood Group',
                 },
                 {
-                    id: 'profile',
+                    id: 'profile_completeness',
                     name: 'Profile',
-                    formatter: function formatter(user_id) {
-                        return gridjs.html("70%");
+                    formatter: function formatter(cell) {
+                        return gridjs.html(cell+"%");
 
                     }
                 },
@@ -228,7 +228,7 @@
                         emp.l1_manager_code,
                         emp.doj,
                         emp.blood_group,
-                        emp,
+                        emp.profile_completeness,
                         emp.is_onboarded,
                         emp.is_docs_approved,
                         emp.user_id,
@@ -323,10 +323,10 @@
                     name: 'Blood Group',
                 },
                 {
-                    id: 'profile',
+                    id: 'profile_completeness',
                     name: 'Profile',
-                    formatter: function formatter(user_id) {
-                        return gridjs.html("70%");
+                    formatter: function formatter(cell) {
+                        return gridjs.html(cell+"%");
 
                     }
                 },
@@ -359,7 +359,7 @@
                         emp.l1_manager_code,
                         emp.doj,
                         emp.blood_group,
-                        emp,
+                        emp.profile_completeness,
                         emp.user_id,
                     ]
                 )

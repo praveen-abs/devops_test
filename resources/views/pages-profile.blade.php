@@ -160,7 +160,7 @@
                                     </li>
                                     <li>
                                         <div class="title">No. of children</div>
-                                        <div class="text">{{$user_full_details->children ?? ''}}</div>
+                                        <div class="text">{{$user_full_details->no_of_children ?? ''}}</div>
                                     </li>
                                 </ul>
                             </div>
@@ -331,25 +331,25 @@
                                         data-bs-toggle="modal" data-bs-target="#emergency_contact_modal"><i
                                             class=" ri-pencil-fill"></i></a></h6>
 
-                                        @if(!empty($user_full_details->contact_json))
+                                        @if(!empty($emergencyContactDetails))
 
                                         <ul class="personal-info">
                                             <li>
                                                 <div class="title">Name</div>
-                                                <div class="text">{{ $user_full_details->contact_json['name'] ? $user_full_details->contact_json['name'] : '-'}}</div>
+                                                <div class="text">{{ $emergencyContactDetails->name ?? ''}}</div>
                                             </li>
                                             <li>
                                                 <div class="title">Relationship</div>
-                                                <div class="text">{{ $user_full_details->contact_json['relationship'] ? $user_full_details->contact_json['relationship'] : '-'}}</div>
+                                                <div class="text">{{$emergencyContactDetails->relationship ?? ''}}</div>
                                             </li>
                                             <li>
                                                 <div class="title">Phone - 1 </div>
-                                                <div class="text">{{ $user_full_details->contact_json['phone_number_1'] ? $user_full_details->contact_json['phone_number_1'] : '-'}}
+                                                <div class="text">{{ $emergencyContactDetails->phone_number_1 ?? ''}}
                                                 </div>
                                             </li>
                                             <li>
                                                 <div class="title">Phone - 2</div>
-                                                <div class="text">{{ $user_full_details->contact_json['phone_number_2'] ? $user_full_details->contact_json['phone_number_2'] : '-'}}
+                                                <div class="text">{{ $emergencyContactDetails->phone_number_2 ?? ''}}
                                                 </div>
                                             </li>
                                         </ul>
@@ -906,7 +906,7 @@
                                             <option value="">Select</option>
                                             @foreach($bank as $b)
                                             @if(!empty($b->bank_name) && !empty($b->min_length) && !empty($b->max_length) )
-                                                <option value="{{$b->bank_name ?? ''}}" min-data="{{$b->min_length}}" max-data="{{$b->max_length}}" @if($user_full_details->bank_name == $b->bank_name) selected @endif>{{$b->bank_name}}</option>
+                                                <option value="{{$b->bank_name ?? ''}}" min-data="{{$b->min_length}}" max-data="{{$b->max_length}}" @if(!empty($user_full_details->bank_name) && $user_full_details->bank_name == $b->bank_name) selected @endif>{{$b->bank_name}}</option>
                                             @endif
                                             @endforeach
                                         </select>
@@ -917,7 +917,7 @@
                                 <div class="form-group mb-3">
                                     <label>Bank account No</label>
                                     <div class="cal-icon">
-                                        <input name="account_no" type="number" minlength="9" maxlength="18" class="form-control onboard-form" value="{{$user_full_details->bank_account_number}}" pattern-data="account" required>
+                                        <input name="account_no" type="number" minlength="9" maxlength="18" class="form-control onboard-form" value="{{ $user_full_details->bank_account_number ?? ''}}" pattern-data="account" required>
                                     </div>
                                 </div>
 
@@ -925,13 +925,13 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>IFSC Code</label>
-                                    <input name="bank_ifsc" class="form-control onboard-form" value="{{$user_full_details->bank_ifsc_code}}" type="text" pattern-data="ifsc" required>
+                                    <input name="bank_ifsc" class="form-control onboard-form" value="{{$user_full_details->bank_ifsc_code ?? ''}}" type="text" pattern-data="ifsc" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>PAN No</label>
-                                    <input name="pan_no" class="form-control onboard-form" value="{{$user_full_details->pan_number}}" type="text" pattern-data="pan" required>
+                                    <input name="pan_no" class="form-control onboard-form" value="{{$user_full_details->pan_number ?? ''}}" type="text" pattern-data="pan" required>
                                 </div>
                             </div>
 
@@ -1019,34 +1019,39 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Passport No</label>
-                                    <input type="text" class="form-control" name="passport_number" value="{{$user_full_details->passport_number}}">
+                                    <input type="text" class="form-control" name="passport_number" value="{{$user_full_details->passport_number ?? ''}}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Passport Expiry Date</label>
                                     <div class="cal-icon">
-                                        <input class="form-control datetimepicker" name="passport_date" type="date" max="9999-12-31" value="{{date('Y-m-d', strtotime($user_full_details->passport_data))}}">
+                                        @if(!empty($user_full_details->passport_date) )
+                                        <input class="form-control datetimepicker" name="passport_date" type="date" max="9999-12-31" value="{{date('Y-m-d', strtotime($user_full_details->passport_date))}}">
+                                        @else
+                                        <input class="form-control datetimepicker" name="passport_date" type="date" max="9999-12-31" value="">
+
+                                        @endif
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Tel</label>
-                                    <input class="form-control" value="{{$user_full_details->mobile_number}}" name="mobile_number" minlength="10" maxlength="10" type="number" maxlength="10" minlength="10" required>
+                                    <input class="form-control" value="{{$user_full_details->mobile_number ?? ''}}" name="mobile_number" minlength="10" maxlength="10" type="number" maxlength="10" minlength="10" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Nationality <span class="text-danger">*</span></label>
-                                    <input class="form-control onboard-form" type="text" name="nationality" pattern-data="alpha" value="{{$user_full_details->nationality}}">
+                                    <input class="form-control onboard-form" type="text" name="nationality" pattern-data="alpha" value="{{$user_full_details->nationality ?? ''}}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Religion</label>
                                     <div class="cal-icon">
-                                        <input class="form-control onboard-form" pattern-data="name" name="religion" type="text" pattern-data="alpha" value="{{$user_full_details->religion}}">
+                                        <input class="form-control onboard-form" pattern-data="name" name="religion" type="text" pattern-data="alpha" value="{{$user_full_details->religion ?? ''}}">
                                     </div>
                                 </div>
                             </div>
@@ -1055,24 +1060,22 @@
                                     <label>Marital status <span class="text-danger">*</span></label>
                                     <select class="form-select form-control" name="marital_status" required>
                                         <option>Select</option>
-                                        <option @if($user_full_details->marital_status == 'single') selected @endif>Un Married</option>
-                                        <option @if($user_full_details->marital_status == 'married') selected @endif>Married</option>
-                                        <option @if($user_full_details->marital_status == 'divorced') selected @endif>Divorces</option>
-                                        <option @if($user_full_details->marital_status == 'widowed') selected @endif>Widowe</option>
-                                        <option @if($user_full_details->marital_status == 'seperated') selected @endif>Seperated</option>
+                                        @foreach($maritalStatus as $item_maritalStatus)
+                                            <option @if(!empty($user_full_details->marital_status)  && $user_full_details->marital_status == $item_maritalStatus ) selected @endif value="{{$item_maritalStatus }}">{{$item_maritalStatus }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Spouse Name</label>
-                                    <input class="form-control onboard-form" type="text" name="spouse" pattern-data="alpha" value="{{$user_full_details->spouse_name}}">
+                                    <input class="form-control onboard-form" type="text" name="spouse" pattern-data="alpha" value="{{$user_full_details->spouse_name ?? ''}}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>No. of children </label>
-                                    <input class="form-control onboard-form" type="number" name="children" maxlength="2" value="{{$user_full_details->children}}">
+                                    <input class="form-control onboard-form" type="number" name="no_of_children" maxlength="2" value="{{$user_full_details->no_of_children ?? ''}}">
                                 </div>
                             </div>
                         </div>
@@ -1108,25 +1111,25 @@
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
                                             <label>Name <span class="text-danger">*</span></label>
-                                            <input type="text" name="primary_name" class="form-control onboard-form" pattern-data="name" value="{{($user_full_details->contact_json && $user_full_details->contact_json['primary_name']) ? $user_full_details->contact_json['primary_name'] : ''}}">
+                                            <input type="text" name="name" class="form-control onboard-form" pattern-data="name" value="{{$emergencyContactDetails->name ?? ''}}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
                                             <label>Relationship <span class="text-danger">*</span></label>
-                                            <input name="primary_relationship" class="form-control onboard-form" type="text" pattern-data="alpha" value="{{($user_full_details->contact_json && $user_full_details->contact_json['primary_relationship']) ? $user_full_details->contact_json['primary_relationship'] : ''}}">
+                                            <input name="relationship" class="form-control onboard-form" type="text" pattern-data="alpha" value="{{$emergencyContactDetails->relationship ?? ''}}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
                                             <label>Phone 1<span class="text-danger">*</span></label>
-                                            <input name="primary_phone1" class="form-control onboard-form" type="number" maxlength="10" minlength="10" value="{{($user_full_details->contact_json && $user_full_details->contact_json['primary_phone1']) ? $user_full_details->contact_json['primary_phone1'] : ''}}">
+                                            <input name="phone_number_1" class="form-control onboard-form" type="number" maxlength="10" minlength="10" value="{{$emergencyContactDetails->phone_number_1 ?? ''}}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
                                             <label>Phone 2</label>
-                                            <input name="primary_phone2" class="form-control onboard-form" type="number" maxlength="10" minlength="10" value="{{($user_full_details->contact_json && $user_full_details->contact_json['primary_phone2']) ? $user_full_details->contact_json['primary_phone2'] : ''}}">
+                                            <input name="phone_number_2" class="form-control onboard-form" type="number" maxlength="10" minlength="10"  value="{{$emergencyContactDetails->phone_number_2 ?? ''}}">
                                         </div>
                                     </div>
                                 </div>
@@ -1159,13 +1162,10 @@
                     <form action="{{route('updtaeFamilyInfo', $user->id)}}" Method="POST" enctype="multipart/form-data">
                         @csrf
 
+                        @if( !empty($familydetails) && count($familydetails) > 0)
                                 <div class="card">
                                     <div class="card-body">
-                                        <!-- <h3 class="card-title fw-bold">Education Informations <a href="javascript:void(0);"
-                                                {{-- class="delete-icon"><i class="   ri-delete-bin-line"></i></a> --}}
-                                        </h3> -->
 
-                                        @if( !empty($familydetails))
                                         @foreach($familydetails as $singledetail)
                                             <div class="content-container">
                                                 <div class="row addition-content" id="content1">
@@ -1223,29 +1223,29 @@
                                         <div class="row addition-content" id="content1">
                                             <div class="col-md-6">
                                                 <div class="form-group mb-3">
-                                                    <label>Name <span class="text-danger">*</span></label>
-                                                    <input name="name[]" class="form-control onboard-form" type="text" pattern-data="name" required value="{{($user_full_details->family_info_json && $user_full_details->family_info_json['name']) ? $user_full_details->family_info_json['name'][0] : ''}}">
+                                                    <label>Name<span class="text-danger">*</span></label>
+                                                    <input name="name[]" class="form-control onboard-form" type="text" pattern-data="name" required value="">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group mb-3">
                                                     <label>Relationship <span class="text-danger">*</span></label>
                                                     <input name="relationship[]" class="form-control onboard-form" type="text"
-                                                        pattern-data="alpha" required value="{{($user_full_details->family_info_json && $user_full_details->family_info_json['relationship']) ? $user_full_details->family_info_json['relationship'][0] : ''}}">
+                                                        pattern-data="alpha" required value="">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group mb-3">
                                                     <label>Date of birth <span class="text-danger">*</span></label>
                                                     <input name="dob[]" class="form-control onboard-form" type="date"
-                                                        max="9999-12-31" required value="{{($user_full_details->family_info_json && $user_full_details->family_info_json['dob']) ? $user_full_details->family_info_json['dob'][0] : ''}}">
+                                                        max="9999-12-31" required value="">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group mb-3">
                                                     <label>Phone <span class="text-danger">*</span></label>
-                                                    <input name="phone[]" class="form-control onboard-form" type="number"
-                                                        maxlength="10" minlength="10" required value="{{($user_full_details->family_info_json && $user_full_details->family_info_json['phone']) ? $user_full_details->family_info_json['phone'][0] : ''}}">
+                                                    <input name="phone_number[]" class="form-control onboard-form" type="number"
+                                                        maxlength="10" minlength="10" required value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -1573,39 +1573,6 @@ $('body').on('keyup', ".onboard-form", function() {
 $('.edit-icon').click(function() {
     var modalid = $(this).attr('data-bs-target');
     $(modalid).modal('show');
-    if (modalid == '#experience_info') {
-        var expInfo = @json($exp);
-        if (expInfo.length > 0) {
-            $('.exp-content-container').html('');
-        }
-        var id = $('.addition-content:last').attr('id');
-        var expInfoCount = 1;
-        if (id) {
-            expInfoCount = parseInt(id.replace('content', '')) + 1;
-        }
-        console.log(expInfo);
-
-        $.each(expInfo,function(key, value) {
-            $('.exp-content-container').append('<div class="row exp-addition-content" id="content' + expInfoCount +'"><input type="hidden" name="ids[]" value="'+value['id']+'"><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Company Name</label><input type="text" class="form-control floating" value="'+value['company_name']+'" name="company_name[]" required></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Location</label><input type="text" class="form-control floating" value="'+value['location']+'" name="location[]" required></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Job Position</label><input type="text" class="form-control floating" value="'+value['job_position']+'" name="job_position[]" required></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><label class="focus-label">Period From</label><div class="cal-icon"><input type="date" max="9999-12-31"  class="form-control floating datetimepicker" value="'+value['period_from']+'" name="period_from[]" required></div></div></div><div class="col-md-6"><div class="form-group mb-3 form-focus focused"><div class="cal-icon"><label class="focus-label">Period To</label><input type="date" max="9999-12-31"  class="form-control floating datetimepicker" value="'+value['period_to']+'" name="period_to[]" required></div></div></div></div>'
-            );
-            expInfoCount++;
-        });
-    }
-    if (modalid == '#family_info_modal') {
-        var familyInfo = @json($user_full_details->family_info_json);
-        var id = $('.exp-addition-content:last').attr('id');
-        var familyInfoCount = 1;
-        if (id) {
-            familyInfoCount = parseInt(id.replace('content', '')) + 1;
-        }
-        $.each(familyInfo['name'],function(key, value) {
-            if (key > 0) {
-                $('.content-container').append('<div class="row addition-content" id="content' + familyInfoCount +'"><input type="hidden" name="ids[]"><div class="col-md-6"><div class="form-group mb-3"><label>Name <span class="text-danger">*</span></label><input value="'+familyInfo['name'][key]+'" name="name[]" class="form-control onboard-form" type="text" pattern-data="name" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Relationship <span class="text-danger">*</span></label><input value="'+familyInfo['relationship'][key]+'" name="relationship[]" class="form-control onboard-form" type="text" pattern-data="alpha" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Date of birth <span class="text-danger">*</span></label><input value="'+familyInfo['dob'][key]+'" name="dob[]" class="form-control onboard-form" type="date" max="9999-12-31" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Phone <span class="text-danger">*</span></label><input value="'+familyInfo['phone'][key]+'" name="phone[]" class="form-control onboard-form" type="number" maxlength="10" minlength="10" required></div></div></div>'
-                );
-                familyInfoCount++;
-            }
-        });
-    }
 });
 
 function readURL(input) {
@@ -1640,7 +1607,7 @@ $('#add_more').click(function() {
         length = parseInt(id.replace('content', '')) + 1;
     }
     $('.content-container').append('<div class="row addition-content" id="content' + length +
-        '"><div class="col-md-6"><div class="form-group mb-3"><label>Name <span class="text-danger">*</span></label><input name="name[]" class="form-control onboard-form" type="text" pattern-data="name" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Relationship <span class="text-danger">*</span></label><input name="relationship[]" class="form-control onboard-form" type="text" pattern-data="alpha" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Date of birth <span class="text-danger">*</span></label><input name="dob[]" class="form-control onboard-form" type="date" max="9999-12-31" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Phone <span class="text-danger">*</span></label><input name="phone[]" class="form-control onboard-form" type="number" maxlength="10" minlength="10" required></div></div></div>'
+        '"><div class="col-md-6"><div class="form-group mb-3"><label>Name <span class="text-danger">*</span></label><input name="name[]" class="form-control onboard-form" type="text" pattern-data="name" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Relationship <span class="text-danger">*</span></label><input name="relationship[]" class="form-control onboard-form" type="text" pattern-data="alpha" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Date of birth <span class="text-danger">*</span></label><input name="dob[]" class="form-control onboard-form" type="date" max="9999-12-31" required></div></div><div class="col-md-6"><div class="form-group mb-3"><label>Phone <span class="text-danger">*</span></label><input name="phone_number[]" class="form-control onboard-form" type="number" maxlength="10" minlength="10" required></div></div></div>'
     );
 });
 

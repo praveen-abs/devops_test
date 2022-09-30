@@ -11,7 +11,7 @@ class VmtEmployee extends Model
     protected $table ="vmt_employee_details";
 
     //Dynamic attribute
-    protected $appends = ['is_docs_approved'];
+    protected $appends = ['is_docs_approved','profile_completeness'];
 
     public function getUserDetail() {
         return $this->belongsTo(User::class);
@@ -21,6 +21,13 @@ class VmtEmployee extends Model
     protected function getIsDocsApprovedAttribute()
     {
         return isAllDocumentsApproved($this->user_id);
+
+    }
+
+    //Called automatically
+    protected function getProfileCompletenessAttribute()
+    {
+        return calculateProfileCompleteness($this->user_id);
 
     }
 }

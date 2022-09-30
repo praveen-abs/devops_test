@@ -822,11 +822,11 @@ class VmtEmployeeController extends Controller
             $newEmployee->mother_dob   = $row["mother_dob"];
 
 
-
             if ($row['marital_status'] <> 'single') {
                 $newEmployee->spouse_name   = $row["spouse_name"];
                 $newEmployee->spouse_age   = $row["spouse_dob"];
                 if ($row['no_of_child'] > 0) {
+                    $newEmployee->no_of_children = $row['no_of_child'];
                     $newEmployee->kid_name   = json_encode($row["child_name"]);
                     $newEmployee->kid_age  = json_encode($row["child_dob"]);
                 }

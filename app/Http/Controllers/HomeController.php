@@ -2,27 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Session;
-use App\Models\VmtGeneralSettings;
-use App\Models\VmtGeneralInfo;
-use App\Models\VmtEmployee;
-use App\Models\VmtEmployeeOfficeDetails;
-use App\Models\Bank;
-use App\Models\Experience;
-use App\Models\VmtEmployeeAttendance;
-use App\Models\PollVoting;
-use App\Mail\TestEmail;
-use App\Models\VmtClientMaster;
-use App\Models\VmtEmployeeFamilyDetails;
-use App\Models\VmtEmployeeEmergencyContactDetails;
 use \Datetime;
-use Session as Ses;
 use Carbon\Carbon;
+use Session as Ses;
+use App\Models\Bank;
+use App\Models\User;
+use App\Mail\TestEmail;
+use App\Models\Experience;
+use App\Models\PollVoting;
+use App\Models\VmtEmployee;
+use Illuminate\Http\Request;
+use App\Models\VmtGeneralInfo;
+use App\Models\VmtClientMaster;
+use App\Models\VmtGeneralSettings;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Models\VmtEmployeeAttendance;
+use Illuminate\Support\Facades\Session;
+use App\Models\VmtEmployeeFamilyDetails;
+use App\Models\VmtEmployeeOfficeDetails;
+use App\Models\VmtEmployeeEmergencyContactDetails;
 
 class HomeController extends Controller
 {
@@ -145,32 +145,6 @@ class HomeController extends Controller
         return view('vmt_appraisalFlow_generalSettings');
     }
 
-    public function calculateProfileCompleteness($user_id)
-    {
-        $employee_columns = ['gender','dob','present_address','passport_number','passport_date','nationality','religion','marrital_status','spouse_name','children','family_info_json','contact_json','experience_json','bank_name','bank_ifsc_code','bank_account_number','pan_number'];
-        $empDetails = VmtEmployee::where('userid', $user_id)->get($employee_columns)->first();
-
-        $totalCount = count($employee_columns);
-        $totalNullCount = 0;
-
-        ////Missing fields check
-        //$missingFields = [];
-
-        foreach($employee_columns as $singleColumn)
-        {
-            if( empty($empDetails[$singleColumn]))
-            {
-                $totalNullCount++;
-                //array_push($missingFields,$singleColumn);
-            }
-        }
-
-        //dd($missingFields);
-       // dd($totalCount);
-        $value = (int)( round(( ($totalCount -$totalNullCount)/$totalCount) * 100 ));
-
-        return $value;
-    }
 
     public function updateExperienceInfo(Request $request) {
         $reDetails = VmtEmployee::where('userid', $request->id)->first();
@@ -225,7 +199,7 @@ class HomeController extends Controller
         $familyDetails = VmtEmployeeFamilyDetails::where('user_id',$request->id)->delete();
 
         $count = sizeof($request->input('name'));
-       // dd($count[0]);
+       //dd($request->input('phone_number'));
 
         for($i=0 ; $i < $count ; $i++)
         {
@@ -245,20 +219,14 @@ class HomeController extends Controller
 
     public function updtaeEmergencyInfo(Request $request) {
         //dd($request->all());
-        $contact  = new VmtEmployeeEmergencyContactDetails; 
-        $contact->user_id =  $request->id; 
-        $contact->name     = $request->input('primary_name');
-        $contact->relationship = $request->input('primary_relationship');
-        $contact->phone_number_1 = $request->input('primary_phone1');
-        $contact->phone_number_2 = $request->input('primary_phone2');
+        $contact  = new VmtEmployeeEmergencyContactDetails;
+        $contact->user_id =  $request->id;
+        $contact->name     = $request->input('name');
+        $contact->relationship = $request->input('relationship');
+        $contact->phone_number_1 = $request->input('phone_number_1');
+        $contact->phone_number_2 = $request->input('phone_number_2');
         $contact->save();
-        /*$contact = json_encode(['primary_name'=> $request->input('primary_name'), 'primary_relationship'=> $request->input('primary_relationship'),'primary_phone1'=> $request->input('primary_phone1'), 'primary_phone2'=> $request->input('primary_phone2'), 'secondary_name'=> $request->input('secondary_name'), 'secondary_relationship'=> $request->input('secondary_relationship'),'secondary_phone1'=> $request->input('secondary_phone1'), 'secondary_phone2'=> $request->input('secondary_phone2')]);
-        $reDetails = VmtEmployee::where('userid', $request->id)->first();
-        $details = VmtEmployee::find($reDetails->id);
-        $details->contact_json = $contact;
-        $details->save();*/
-        Ses::flash('message', 'Personal Information Updated successfully!');
-        Ses::flash('alert-class', 'alert-success');
+
         return redirect()->back();
     }
 
@@ -268,7 +236,7 @@ class HomeController extends Controller
         $details = VmtEmployee::find($reDetails->id);
         $details->marrital_status = $request->input('marital_status');
         $details->mobile_number = $request->input('mobile_number');
-        $details->children = $request->input('children');
+        $details->no_of_children = $request->input('no_of_children');
         $details->spouse_name = $request->input('spouse');
         $details->religion = $request->input('religion');
         $details->nationality = $request->input('nationality');
@@ -469,13 +437,47 @@ class HomeController extends Controller
         $user_full_details = User::join('vmt_employee_details','vmt_employee_details.userid', '=', 'users.id')
                         ->join('vmt_employee_office_details','vmt_employee_office_details.user_id', '=', 'users.id')
                         ->where('users.id', $user->id)->first();
-        //dd($user_full_details);
-        $user_full_details['contact_json'] = VmtEmployeeEmergencyContactDetails::where('user_id', $user->id)->first();
+
+        $emergencyContactDetails = VmtEmployeeEmergencyContactDetails::where('user_id', $user->id)->first();
         $familydetails = VmtEmployeeFamilyDetails::where('user_id',$user->id)->get();
-        //dd($familydetails);
 
         $bank = Bank::all();
         $exp = Experience::where('id',$user->id)->get();
+        $maritalStatus = array('single',
+                            'married',
+                            'divorced',
+                            'widowed',
+                            'seperated');
+        //dd($maritalStatus);
+        if(!empty($user_full_details->l1_manager_code))
+            $reportingManager = User::where('user_code',$user_full_details->l1_manager_code)->first();
+        else
+            $reportingManager = null;
+
+        $allEmployees = User::where('user_code','<>',$user->id)->where('active',1)->get(['user_code','name']);
+        $profileCompletenessValue  = calculateProfileCompleteness($user->id);
+
+        return view('pages-profile', compact('user','allEmployees', 'maritalStatus','user_full_details', 'familydetails','emergencyContactDetails','bank', 'exp', 'reportingManager','profileCompletenessValue'));
+    }
+
+    // Show Impersonate Profile info
+    public function showImpersonateProfile(Request $request){
+        $user = User::find($request->id);
+        $user_full_details = User::join('vmt_employee_details','vmt_employee_details.userid', '=', 'users.id')
+                        ->join('vmt_employee_office_details','vmt_employee_office_details.user_id', '=', 'users.id')
+                        ->where('users.id', $user->id)->first();
+
+        $emergencyContactDetails = VmtEmployeeEmergencyContactDetails::where('user_id', $user->id)->first();
+        $familydetails = VmtEmployeeFamilyDetails::where('user_id',$user->id)->get();
+
+        $bank = Bank::all();
+        $exp = Experience::where('id',$user->id)->get();
+
+        $maritalStatus = array('single',
+                            'married',
+                            'divorced',
+                            'widowed',
+                            'seperated');
 
         if(!empty($user_full_details->l1_manager_code))
             $reportingManager = User::where('user_code',$user_full_details->l1_manager_code)->first();
@@ -483,40 +485,10 @@ class HomeController extends Controller
             $reportingManager = null;
 
         $allEmployees = User::where('user_code','<>',$user->id)->where('active',1)->get(['user_code','name']);
-        $profileCompletenessValue  = $this->calculateProfileCompleteness($user->id);
+        $profileCompletenessValue  = calculateProfileCompleteness($user->id);
 
-        return view('pages-profile', compact('user','allEmployees', 'user_full_details', 'familydetails','bank', 'exp', 'reportingManager','profileCompletenessValue'));
-    }
-
-    // Show Impersonate Profile info
-    public function showImpersonateProfile(Request $request){
-        $user = User::where('id', $request->id)->first();
-        $details = VmtEmployee::join('vmt_employee_office_details', 'emp_id', '=', 'vmt_employee_details.id')->where('userid', $user->id)->first();
-
-        $user_full_details = User::join('vmt_employee_details','vmt_employee_details.userid', '=', 'users.id')
-                        ->join('vmt_employee_office_details','vmt_employee_office_details.user_id', '=', 'users.id')
-                        ->where('users.id', $user->id)->first();
-        $user_full_details['contact_json'] = VmtEmployeeEmergencyContactDetails::where('user_id', $user->id)->first();
-        //json_decode($details['contact_json'], true);
-        $familydetails = VmtEmployeeFamilyDetails::where('user_id',$user->id)->get();
-        if($user->hasrole('Employee')) {
-             // report for disable for role base
-            $employee = VmtEmployee::first();
-            $report_key = 1;
-        } else {
-            $employee = null;
-            $report_key = 0;
-        }
-        $bank = Bank::all();
-        $exp = Experience::whereIn('id', explode(',', $details->experience_json))->get();
-        $code = VmtEmployee::join('users', 'users.id', '=', 'userid')->join('vmt_employee_office_details', 'emp_id', '=', 'vmt_employee_details.id')->where('emp_no', '<>' , $details->emp_no)->get();
-        $rep = VmtEmployee::select('emp_no', 'name', 'avatar')->join('vmt_employee_office_details', 'emp_id', '=', 'vmt_employee_details.id')->join('users', 'users.id', '=', 'vmt_employee_details.userid')->where('emp_no', $details->l1_manager_code)->first();
-
-        $profileCompletenessValue  = $this->calculateProfileCompleteness($user->id);
-        $allEmployees = User::where('user_code','<>',$user->id)->where('active',1)->get(['user_code','name']);
-        
         //dd($details['contact_json']);
-        return view('pages-profile', compact( 'employee','allEmployees', 'report_key','user', 'details', 'bank', 'exp', 'code', 'user_full_details','rep','profileCompletenessValue', 'familydetails'));
+        return view('pages-profile', compact('user','allEmployees','maritalStatus', 'user_full_details', 'familydetails','emergencyContactDetails','bank', 'exp', 'reportingManager','profileCompletenessValue'));
     }
 
     public function showProfilePage(Request $request) {
