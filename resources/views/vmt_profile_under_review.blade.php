@@ -28,7 +28,11 @@
                         <img src="https://css.zohostatic.in/zfpayroll/zpayrollportal///assets/it-empty-state-68d45ef7fddba0f96b1ec6b7664ace53.svg" class="empty-state-image">
                         <div class="empty-state-content">
                             <div class="">
-                                <h5>Your profile is under review. Kindly contact the HR for further details.</h5>
+                                @if(auth()->user()->active == 1)
+                                    <h5>You have submitted all the documents</h5>
+                                @else
+                                    <h5>Your profile is under review. Kindly contact the HR for further details.</h5>
+                                @endif
                             </div>
                         </div>
                     </div>
