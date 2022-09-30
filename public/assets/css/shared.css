@@ -1,3 +1,6 @@
+
+@import url(../../assets/css/_button.scss);
+
 :hover, a:focus, input, textarea {
     text-decoration: none;
     outline: none;
@@ -105,9 +108,29 @@ p {
 .page-nav ul li a {
     color: #444;
 }
+.btn-danger{
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 5px 8px !important;
+    font-size: 13px !important;
+}
+.btn-secondary{
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 5px 8px !important;
+    font-size: 13px !important;
+}
 .btn-success {
     background-color: #863dd9;
     border-color: #863dd9;
+    transition: 0.4s ease-in;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 5px 8px !important;
+    font-size: 13px !important;
 }
 .btn-success:hover {
     background-color: #863dd9 !important;
@@ -139,12 +162,7 @@ p {
     border-color: #4f6dcd !important;
     box-shadow: none !important;
 }
-.text-orange {
-    color: #ff3900;
-}
-.text-primary {
-    color: #002f56;
-}
+
 .btn-border-primary {
     border: 1px solid #002f56;
     background-color: #fff;
@@ -511,7 +529,7 @@ th.gridjs-th .gridjs-th-content {
     float: none !important;
     display: inline-block;
     vertical-align: middle;
-    margin: 0px 5px !important;
+    /* margin: 0px 5px !important; */
 }
 button.gridjs-sort {
     width: 10px;
@@ -520,7 +538,7 @@ button.gridjs-sort {
 .trigger_asset_edit {
 }
 th.gridjs-th-sort .gridjs-th-content {
-    width: auto !important;
+    
     float: unset !important;
 }
 button.gridjs-sort-asc,
@@ -927,4 +945,11 @@ button.gridjs-sort-asc::after{
 }
 .btn-custom-primary svg {
     color: #fff;
+}
+
+.text-orange {
+    color: #ff3900;
+}
+.text-primary {
+    color: #002f56;
 }

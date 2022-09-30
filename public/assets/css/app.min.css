@@ -18017,7 +18017,9 @@ white-space:nowrap;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: #f1f1f1;
+    background: #003056;
+    color: #ffffff;
+    font-weight: 600;
 }
 
 /* data table */
