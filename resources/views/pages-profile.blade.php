@@ -336,20 +336,20 @@
                                         <ul class="personal-info">
                                             <li>
                                                 <div class="title">Name</div>
-                                                <div class="text">{{ $user_full_details->contact_json['primary_name'] ? $user_full_details->contact_json['primary_name'] : '-'}}</div>
+                                                <div class="text">{{ $user_full_details->contact_json['name'] ? $user_full_details->contact_json['name'] : '-'}}</div>
                                             </li>
                                             <li>
                                                 <div class="title">Relationship</div>
-                                                <div class="text">{{ $user_full_details->contact_json['primary_relationship'] ? $user_full_details->contact_json['primary_relationship'] : '-'}}</div>
+                                                <div class="text">{{ $user_full_details->contact_json['relationship'] ? $user_full_details->contact_json['relationship'] : '-'}}</div>
                                             </li>
                                             <li>
                                                 <div class="title">Phone - 1 </div>
-                                                <div class="text">{{ $user_full_details->contact_json['primary_phone1'] ? $user_full_details->contact_json['primary_phone1'] : '-'}}
+                                                <div class="text">{{ $user_full_details->contact_json['phone_number_1'] ? $user_full_details->contact_json['phone_number_1'] : '-'}}
                                                 </div>
                                             </li>
                                             <li>
                                                 <div class="title">Phone - 2</div>
-                                                <div class="text">{{ $user_full_details->contact_json['primary_phone2'] ? $user_full_details->contact_json['primary_phone2'] : '-'}}
+                                                <div class="text">{{ $user_full_details->contact_json['phone_number_2'] ? $user_full_details->contact_json['phone_number_2'] : '-'}}
                                                 </div>
                                             </li>
                                         </ul>
