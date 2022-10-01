@@ -653,8 +653,8 @@ class VmtEmployeeController extends Controller
                 'spouse_name' => 'nullable|required_unless:marital_status,unmarried|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'spouse_dob' => 'nullable|required_unless:marital_status,unmarried|date',
                 'no_of_child' => 'nullable|numeric',
-                'child_name' => 'nullable|required_unless:no_of_child,>,0|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'child_dob' => 'nullable||required_unless:no_of_child,>,0|date',
+                'child_name' => 'nullable|required_unless:no_of_child,null,0|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'child_dob' => 'nullable||required_unless:no_of_child,null,0|date',
                 'department' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'process' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'designation' => 'required',
@@ -702,7 +702,8 @@ class VmtEmployeeController extends Controller
                 'dob.before' => 'Field <b>:attribute</b> should be above 18 years',
                 'email' => 'Field <b>:attribute</b> is invalid',
                 'pan_no.required_if' =>'Field <b>:attribute</b> is required if <b>pan ack</b> not provided ',
-                'pan_ack.required_if' =>'Field <b>:attribute</b> is required if <b>pan no</b> not provided '
+                'pan_ack.required_if' =>'Field <b>:attribute</b> is required if <b>pan no</b> not provided ',
+                'required_unless' => 'Field <b>:attribute</b> is invalid',
             ];
 
             $validator = Validator::make($excelRowdata, $rules, $messages);
