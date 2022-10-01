@@ -115,6 +115,34 @@
     </div>
 </div>
 
+     <!-- Rejection Modal Starts -->
+     <div class="modal fade" id="rejectionCommentModal" role="dialog" aria-hidden="true" style="opacity:1; display:none;background:#00000073;">
+        <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2">
+            <div class="modal-content">
+                <div class="modal-header py-2 bg-primary">
+
+                    <div class="w-100 modal-header-content d-flex align-items-center py-2">
+                        <h5 class="modal-title text-white" id="modalHeader">Rejected
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white close-modal" data-bs-dismiss="modal" aria-label="Close">
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="mt-4">
+                        <h4 class="mb-3" id="modalNot"></h4>
+                        <textarea name="reject_comment" id="reject_comment" class="form-control mb-3"></textarea>
+                        <div class="hstack gap-2 justify-content-center">
+                            <button type="button" class="btn btn-primary" id="rejection_submit" disabled>Save</button>
+                            <button type="button" class="btn btn-light close-modal" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Rejection Modal Ends -->
+
 <div class="row">
     <div class="col-xl-12">
         <!-- appraisal table -->
@@ -182,7 +210,7 @@
                                     @if(isset($assignedGoals) && $assignedGoals->is_assignee_submitted == '1')
                                         <th scope="col" data-name='kpiSelfReview' data-filterable="false" data-visible="true">Employee KPI - Achievement</th>
                                         <th scope="col" data-name='kpiSelfAchivement' data-filterable="false" data-visible="true">Employee KPI Achievement %</th>
-                                        <th scope="col" data-name='comments' data-filterable="false" data-visible="true">Employee Comments</th> 
+                                        <th scope="col" data-name='comments' data-filterable="false" data-visible="true">Employee Comments</th>
                                     @endif
 
                                     @foreach($reviewersId as $reviewersReview)
@@ -209,11 +237,11 @@
                                                 {{substr($kpiRow->kpi, strlen(\Str::words($kpiRow->kpi, 20, '')))}}
                                             </span>
                                             <span class="btn-sm btn-light" onclick="showOrHideDescription('{{$index}}')">More</span>
-                                            @endif 
+                                            @endif
                                         </div>
                                     </td>
                                     <td>
-                                        <div> 
+                                        <div>
                                             {{  \Str::words($kpiRow->operational_definition, 20, '')}}
 
                                             @if(strlen(substr($kpiRow->operational_definition, strlen(\Str::words($kpiRow->operational_definition, 20, '')))) > 0)
@@ -221,20 +249,20 @@
                                                 {{substr($kpiRow->operational_definition, strlen(\Str::words($kpiRow->operational_definition, 20, '')))}}
                                             </span>
                                             <span class="btn-sm btn-light" onclick="showOrHideDescription('{{$index}}')">More</span>
-                                            @endif 
+                                            @endif
 
-                                            
+
                                         </div>
                                     </td>
                                     <td>
-                                        <div> 
+                                        <div>
                                             {{  \Str::words($kpiRow->measure, 20, '')}}
                                             @if(strlen(substr($kpiRow->measure, strlen(\Str::words($kpiRow->measure, 20, '')))) > 0)
                                             <span class="{{'collapse-'.$index}}" style="display: none;">
                                                 {{substr($kpiRow->measure, strlen(\Str::words($kpiRow->measure, 20, '')))}}
                                             </span>
                                             <span class="btn-sm btn-light" onclick="showOrHideDescription('{{$index}}')">More</span>
-                                            @endif 
+                                            @endif
 
                                         </div>
                                     </td>
@@ -254,7 +282,7 @@
                                         <div>{{$kpiRow->kpi_weightage}}</div>
                                     </td>
                                     @if(isset($assignedGoals) && $assignedGoals->is_assignee_submitted == '1')
-                                    <?php 
+                                    <?php
                                         $assigneeKPIReview = json_decode($assignedGoals->assignee_kpi_review,true);
                                         $assigneeKPIPerc = json_decode($assignedGoals->assignee_kpi_percentage,true);
                                         $assigneeKPIComments = json_decode($assignedGoals->assignee_kpi_comments,true);
@@ -286,7 +314,7 @@
 
                                         </td>
                                         <td>
-                                            
+
                                             @if(isset($assignedGoals->is_assignee_submitted) && $assignedGoals->is_assignee_submitted == '1' && $reviewersReview == Auth::id() && ($decodedKpiReviewSubmittedStatus[$reviewersReview] == '' || $decodedKpiReviewSubmittedStatus[$reviewersReview] == '0'))
                                             <textarea type="number" class="inp-text" name="reviewer_kpi_percentage[{{$reviewersReview}}][{{$kpiRow->id}}]" id="reviewer_kpi_percentage{{$index}}-{{$reviewersReview}}" placeholder="type here" >@if(isset( $decodedKpiReviewPerc[$reviewersReview])){{$decodedKpiReviewPerc[$reviewersReview][$kpiRow->id]}}@endif</textarea>
 
@@ -399,32 +427,6 @@
     @endif
 
 
-    <div class="modal fade" id="notificationModal" role="dialog" aria-hidden="true" style="opacity:1; display:none;background:#00000073;">
-        <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2">
-            <div class="modal-content">
-                <div class="modal-header py-2 bg-primary">
-
-                    <div class="w-100 modal-header-content d-flex align-items-center py-2">
-                        <h5 class="modal-title text-white" id="modalHeader">Rejected
-                        </h5>
-                        <button type="button" class="btn-close btn-close-white close-modal" data-bs-dismiss="modal" aria-label="Close">
-                        </button>
-                    </div>
-                </div>
-                <div class="modal-body">
-                    <div class="mt-4">
-                        <h4 class="mb-3" id="modalNot"></h4>
-                        <textarea name="reject_content" id="reject_content" class="form-control mb-3"></textarea>
-                        <div class="hstack gap-2 justify-content-center">
-                            <button type="button" class="btn btn-primary" id="reject_save" disabled>Save</button>
-                            <button type="button" class="btn btn-light close-modal" data-bs-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Modal -->
     <div class="modal fade flip" id="acceptPMS" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -449,34 +451,6 @@
         </div>
     </div>
     <!--end modal -->
-
-     <!-- Rejection Modal Starts -->
-     <div class="modal fade" id="rejectionCommentModal" role="dialog" aria-hidden="true" style="opacity:1; display:none;background:#00000073;">
-        <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2">
-            <div class="modal-content">
-                <div class="modal-header py-2 bg-primary">
-
-                    <div class="w-100 modal-header-content d-flex align-items-center py-2">
-                        <h5 class="modal-title text-white" id="modalHeader">Rejected
-                        </h5>
-                        <button type="button" class="btn-close btn-close-white close-modal" data-bs-dismiss="modal" aria-label="Close">
-                        </button>
-                    </div>
-                </div>
-                <div class="modal-body">
-                    <div class="mt-4">
-                        <h4 class="mb-3" id="modalNot"></h4>
-                        <textarea name="reject_comment" id="reject_comment" class="form-control mb-3"></textarea>
-                        <div class="hstack gap-2 justify-content-center">
-                            <button type="button" class="btn btn-primary" id="rejection_submit" disabled>Save</button>
-                            <button type="button" class="btn btn-light close-modal" data-bs-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Rejection Modal Ends -->
 
 </div>
 
@@ -633,7 +607,7 @@
         });
     });
 
-    // On click reject Rejection Comments modal should show 
+    // On click reject Rejection Comments modal should show
     $('#reject_review').click(function(e) {
         $('#modalHeader').html("Rejected");
         $('#modalNot').html(
@@ -642,13 +616,13 @@
         $('#rejectionCommentModal').show('modal');
     });
 
-    // close Rejection Comments modal 
+    // close Rejection Comments modal
     $('body').on('click', '.close-modal', function() {
         $('#rejectionCommentModal').hide();
         $('#rejectionCommentModal').addClass('fade');
     });
 
-    // close Rejection Comments modal 
+    // close Rejection Comments modal
     $('body').on("keyup", '#reject_comment', function() {
         if ($(this).val() == '') {
             $('#rejection_submit').attr('disabled', true);
@@ -656,7 +630,7 @@
             $('#rejection_submit').removeAttr('disabled');
         }
     });
-    
+
     // Accept Review
     $('#rejection_submit').click(function(e) {
         e.preventDefault();
@@ -709,6 +683,6 @@
             $('.collapse-'+rowIndex).css('display', 'none');
         }
     }
-    
+
 </script>
 @endsection
