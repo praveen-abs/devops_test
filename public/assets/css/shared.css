@@ -370,6 +370,81 @@ p {
     padding: 0;
     display: block;
 }
+th.gridjs-th .gridjs-th-content{
+    text-overflow:none !important;
+    width: auto !important;
+    min-width: auto !important;
+    
+}
+
+.gridjs-table > thead > tr > th:nth-child(1) {
+        width: auto !important;
+    min-width: auto !important;
+}
+.gridjs-table > thead > tr > th:nth-child(2) {
+        width: auto !important;
+    min-width: auto !important;
+}
+.gridjs-table > thead > tr > th:nth-child(3) {
+        width: auto !important;
+    min-width: auto !important;
+}
+.gridjs-table > thead > tr > th:nth-child(4) {
+        width: auto !important;
+    min-width: auto !important;
+}
+.gridjs-table > thead > tr > th:nth-child(5) {
+        width: auto !important;
+    min-width: auto !important;
+}
+.gridjs-table > thead > tr > th:nth-child(6) {
+        width: auto !important;
+    min-width: auto !important;
+}
+.gridjs-table > thead > tr > th:nth-child(7) {
+        width: auto !important;
+    min-width: auto !important;
+}
+.gridjs-table > thead > tr > th:nth-child(8) {
+        width: auto !important;
+    min-width: auto !important;
+}
+.gridjs-table > thead > tr > th:nth-child(9) {
+        width: auto !important;
+    min-width: auto !important;
+}
+.gridjs-table > thead > tr > th:nth-child(10) {
+        width: auto !important;
+    min-width: auto !important;
+}
+.gridjs-table > thead > tr > th:nth-child(11) {
+    width: auto !important;
+min-width: auto !important;
+}
+.gridjs-table > thead > tr > th:nth-child(12) {
+    width: auto !important;
+min-width: auto !important;
+}
+.gridjs-table > thead > tr > th:nth-child(13) {
+    width: auto !important;
+min-width: auto !important;
+}
+.gridjs-table > thead > tr > th:nth-child(14) {
+    width: auto !important;
+min-width: auto !important;
+}
+.gridjs-table > thead > tr > th:nth-child(15) {
+    width: auto !important;
+min-width: auto !important;
+}
+
+.table.gridjs-table{
+    table-layout: auto !important;
+}
+
+
+
+
 .gridjs-wrapper {
     box-shadow: none;
     border: 1px solid var(--vz-border-color);
@@ -400,6 +475,7 @@ p {
 .gridjs-table {
     width: 100% !important;
     overflow-x: scroll;
+    table-layout: unset !important;
 }
 js-pagination .gridjs-summary {
     font-size: 14px !important;
