@@ -1443,7 +1443,7 @@ class VmtEmployeeController extends Controller
     {
         $is_alldocs_uploaded = 1;
 
-        $existing_doc_filenames = VmtEmployee::where('userid',$emp_id)->first([
+        $column_filenames = [
             'aadhar_card_file',
             'aadhar_card_backend_file',
             'pan_card_file',
@@ -1452,12 +1452,16 @@ class VmtEmployeeController extends Controller
             'dl_file',
             'education_certificate_file',
             'reliving_letter_file',
-            ]);
+        ];
 
-        $t_array = $existing_doc_filenames->toArray();
-        foreach($t_array as $key => $value)
+        $uploaded_doc_filenames = VmtEmployee::where('userid',$emp_id)->first($column_filenames);
+
+        $t_array = $uploaded_doc_filenames->toArray();
+
+        //dd($existing_doc_filenames['aadhar_card_file']);
+        foreach($column_filenames as $value)
         {
-            if(empty($value))
+            if(empty($uploaded_doc_filenames[$value]))
             {
                 $is_alldocs_uploaded = 0;
                 break;
