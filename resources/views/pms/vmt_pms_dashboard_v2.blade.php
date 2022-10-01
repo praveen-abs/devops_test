@@ -147,6 +147,10 @@
     .fa-refresh:hover {
         cursor: pointer;
     }
+
+    #employeeSelectionModal .modal-body{
+        height: 200px;   
+    }
 </style>
 @endsection
 
@@ -808,6 +812,8 @@
         $(document).on('click', '#employeeSelectionModal .close', function() {
             $('#employeeSelectionModal').hide();
             $('#employeeSelectionModal').addClass('fade');
+
+            $('#add-goals-modal').modal('show');
         })
 
         $('#edit-employee').click(function(){
@@ -856,7 +862,6 @@
             });
             $('.select-employee-dropdown').select2({
                 dropdownParent: $("#employeeSelectionModal"),
-                
                 width: '100%'
             });
             $('.select-reviewer-dropdown').select2({
@@ -952,7 +957,7 @@
                     selectedEmployeeId : selectedEmployeeId,
                 },
                 success: function(data) {
-                    console.log(data.result.reviewerIds);
+                    
                     if(data.status == true ){
                         $.each(data.result.removeSelectedEmployee, function(i, value) {
                             $(".select-employee-dropdown option[value="+value+"]").remove();
@@ -964,6 +969,11 @@
                         $("#reviewersAccordingAssignee").val(data.result.reviewerNames.join(","));
                         $("#selectedReviewIds").val(data.result.reviewerIds.join(","));
                         var afterUpdateEmployee = $('.select-employee-dropdown').val();
+                    }else{
+                        console.log('no reviewer');
+                        $('.select-multiple-reviewer').val('')
+                        $('.select-multiple-reviewer').trigger('change.select2');
+                        $("#selectedReviewIds").val('');
                     }
                     $('#add-goals-modal').modal('show');
                     checkReviewersExistOrNot();
