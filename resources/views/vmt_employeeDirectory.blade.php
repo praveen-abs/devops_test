@@ -170,6 +170,7 @@
 
                     }
                 },
+                
                 {
                     id: 'is_onboarded',
                     name: 'Onboard Status',
