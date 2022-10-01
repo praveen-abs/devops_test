@@ -793,7 +793,7 @@ class VmtEmployeeController extends Controller
             $newEmployee->doj   =   \DateTime::createFromFormat('d-m-Y', $row['doj'])->format('Y-m-d');
             $newEmployee->dol   =   \DateTime::createFromFormat('d-m-Y', $row['doj'])->format('Y-m-d');
             $newEmployee->location   =    $row["work_location"];
-            $newEmployee->dob   =   $row['dob'];
+            $newEmployee->dob   =   \DateTime::createFromFormat('d-m-Y', $row['dob'])->format('Y-m-d');
             $newEmployee->father_name   =  $row["father_name"];
             $newEmployee->father_gender   =  $row["father_gender"];
             $newEmployee->father_dob   =  $row['father_dob'];
@@ -853,7 +853,6 @@ class VmtEmployeeController extends Controller
                 {
                     $empOffice->l1_manager_code  = $row["l1_manager_code"];
                     updateUserRole($empOffice->l1_manager_code,"Manager");
-
                 }
 
                 // $empOffice->l1_manager_name  = $row["l1_manager_name"];
