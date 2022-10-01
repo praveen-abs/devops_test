@@ -147,6 +147,14 @@
     .fa-refresh:hover {
         cursor: pointer;
     }
+
+    #employeeSelectionModal .modal-body{
+        height: 200px;   
+    }
+
+    .modal-body .select2-container--default .select2-selection--multiple {
+        height: auto !important;
+    }
 </style>
 @endsection
 
@@ -640,7 +648,7 @@
             <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
                 <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
                     Edit Employee</h5>
-                <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal" aria-label="Close">
+                <button type="button" class="close outline-none bg-transparent border-0 h3 " data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
@@ -804,6 +812,14 @@
             $('#employeeSelectionModal').removeClass('fade');
         })
 
+
+        $(document).on('click', '#employeeSelectionModal .close', function() {
+            $('#employeeSelectionModal').hide();
+            $('#employeeSelectionModal').addClass('fade');
+
+            $('#add-goals-modal').modal('show');
+        })
+
         $('#edit-employee').click(function(){
             var selectedEmployeesId = $('.select-employee-dropdown').val();
             // getReviewerOfSelectedEmployee(selectedEmployeesId);
@@ -826,33 +842,39 @@
             $('.createKpiFromOnClick').click(function(){
                 console.log("Create KPI button clicked");
 
-            var assignmentPeriod = $('#assignment_period_start').val();
-            var year = $('#year').val();
-            if(assignmentPeriod != '' && year != ''){
-                var YearText = $("#year option:selected").text();
-                var url = '{{ route("showKPICreateForm", ":year") }}';
-                url = url.replace(':year', YearText);
-                // alert(url);
-                window.open(url);
-                return false;
-            }
-            else
-            {
-                alert("Please enter Assignment Period and Year ");
-            }
+                var assignmentPeriod = $('#assignment_period_start').val();
+                var year = $('#year').val();
+                if(assignmentPeriod != '' && year != ''){
+                    var YearText = $("#year option:selected").text();
+                    var url = '{{ route("showKPICreateForm", ":year") }}';
+                    url = url.replace(':year', YearText);
+                    // alert(url);
+                    window.open(url);
+                    return false;
+                }
+                else
+                {
+                    alert("Please enter Assignment Period and Year ");
+                }
 
-        });
+            });
 
 
             $('.selectedKpiFormClass').select2({
                 dropdownParent: $("#add-goals-modal"),
                 width: '98%'
             });
+            
             $('.select-employee-dropdown').select2({
                 dropdownParent: $("#employeeSelectionModal"),
-                
                 width: '100%'
             });
+
+            $('#select-employee-dropdown').on('select2:opening select2:closing', function( event ) {
+                var $searchfield = $(this).parent().find('.select2-search__field');
+                $searchfield.prop('disabled', true);
+            });
+
             $('.select-reviewer-dropdown').select2({
                 dropdownParent: $("#add-goals-modal"),
                 width: '100%'
@@ -946,7 +968,7 @@
                     selectedEmployeeId : selectedEmployeeId,
                 },
                 success: function(data) {
-                    console.log(data.result.reviewerIds);
+                    
                     if(data.status == true ){
                         $.each(data.result.removeSelectedEmployee, function(i, value) {
                             $(".select-employee-dropdown option[value="+value+"]").remove();
@@ -958,6 +980,11 @@
                         $("#reviewersAccordingAssignee").val(data.result.reviewerNames.join(","));
                         $("#selectedReviewIds").val(data.result.reviewerIds.join(","));
                         var afterUpdateEmployee = $('.select-employee-dropdown').val();
+                    }else{
+                        console.log('no reviewer');
+                        $('.select-multiple-reviewer').val('')
+                        $('.select-multiple-reviewer').trigger('change.select2');
+                        $("#selectedReviewIds").val('');
                     }
                     $('#add-goals-modal').modal('show');
                     checkReviewersExistOrNot();

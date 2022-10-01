@@ -114,12 +114,41 @@
     </div>
 </div>
 
+   <!-- Rejection Modal Starts -->
+   <div class="modal " id="rejectionCommentModal" role="dialog" aria-hidden="true" style="opacity:1; display:none;background:#00000073;">
+    <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2">
+        <div class="modal-content">
+            <div class="modal-header py-2 bg-primary">
+
+                <div class="w-100 modal-header-content d-flex align-items-center py-2">
+                    <h5 class="modal-title text-white" id="modalHeader">Rejected
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white close-modal" data-bs-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="mt-4">
+                    <h4 class="mb-3" id="modalNot"></h4>
+                    <textarea name="reject_comment" id="reject_comment" class="form-control mb-3"></textarea>
+                    <div class="hstack gap-2 justify-content-center">
+                        <button type="button" class="btn btn-primary" id="rejection_submit" disabled>Save</button>
+                        <button type="button" class="btn btn-light close-modal" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <div class="row">
     <div class="col-xl-12">
         <!-- appraisal table -->
         <div class="card">
             <div class="card-body pb-2">
-                
+
                 @if(isset($assignedGoals) && $assignedGoals->is_assignee_submitted != '1')
                 <div class="row">
                     <div class="col-12 mt-3">
@@ -131,14 +160,14 @@
                                     <a href="{{route('download.excelsheet.pmsv2.review.form', [$assignedGoals->vmt_pms_kpiform_assigned_id,'1', $assignedGoals->year .'-'. strtoupper($assignedGoals->assignment_period)])}}" class="btn btn-orange pull-right"
                                     id="download-excel">Download</a>
                                 </div>
-                                
+
                                 <div class="col-auto p-0">
                                     <input type="file" name="upload_file" id="upload_file" accept=".xls,.xlsx" class="form-control" required>
                                 </div>
                                 <div class="col">
                                     <button type="button" class="btn btn-orange pull-right" id="upload-goal" disabled>Upload</button>
                                 </div>
-                                
+
                             </div>
                         </form>
                     </div>
@@ -197,7 +226,7 @@
                                 </tr>
                             </thead>
                             <tbody class="tbody" id="tbody">
-                                
+
                                 @foreach($kpiRows as $index => $kpiRow)
                                 <tr>
                                     <th scope="row">
@@ -207,7 +236,7 @@
                                     </th>
                                     <td>
                                         <div>
-                                            
+
                                             {{  \Str::words($kpiRow->kpi, 20, '')}}
 
                                             @if(strlen(substr($kpiRow->kpi, strlen(\Str::words($kpiRow->kpi, 20, '')))) > 0)
@@ -219,7 +248,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <div> 
+                                        <div>
                                             <!-- {{$kpiRow->operational_definition}} -->
                                             {{  \Str::words($kpiRow->operational_definition, 20, '')}}
 
@@ -228,7 +257,7 @@
                                                 {{substr($kpiRow->operational_definition, strlen(\Str::words($kpiRow->operational_definition, 20, '')))}}
                                             </span>
                                             <span class="btn-sm btn-light" onclick="showOrHideDescription('{{$index}}')">More</span>
-                                            @endif 
+                                            @endif
 
                                         </div>
                                     </td>
@@ -242,7 +271,7 @@
                                                 {{substr($kpiRow->measure, strlen(\Str::words($kpiRow->measure, 20, '')))}}
                                             </span>
                                             <span class="btn-sm btn-light" onclick="showOrHideDescription('{{$index}}')">More</span>
-                                            @endif 
+                                            @endif
                                         </div>
                                     </td>
                                     <td>
@@ -353,6 +382,10 @@
         </div>
     </div>
 
+
+
+
+
     <!-- Rating grid after submitted review by All Reviewers -->
     @if($isAllReviewersSubmittedOrNot && count($pmsRatingDetails) > 0)
     <div class="card">
@@ -408,32 +441,7 @@
     </div>
     @endif
 
-    <!-- Rejection Modal Starts -->
-    <div class="modal fade" id="rejectionCommentModal" role="dialog" aria-hidden="true" style="opacity:1; display:none;background:#00000073;">
-        <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2">
-            <div class="modal-content">
-                <div class="modal-header py-2 bg-primary">
 
-                    <div class="w-100 modal-header-content d-flex align-items-center py-2">
-                        <h5 class="modal-title text-white" id="modalHeader">Rejected
-                        </h5>
-                        <button type="button" class="btn-close btn-close-white close-modal" data-bs-dismiss="modal" aria-label="Close">
-                        </button>
-                    </div>
-                </div>
-                <div class="modal-body">
-                    <div class="mt-4">
-                        <h4 class="mb-3" id="modalNot"></h4>
-                        <textarea name="reject_comment" id="reject_comment" class="form-control mb-3"></textarea>
-                        <div class="hstack gap-2 justify-content-center">
-                            <button type="button" class="btn btn-primary" id="rejection_submit" disabled>Save</button>
-                            <button type="button" class="btn btn-light close-modal" data-bs-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <!-- Rejection Modal Ends -->
 </div>
 
@@ -456,7 +464,7 @@
     /*
     * for calculating Self KPI Achievement % If Target is Number
     * formula :-
-    * Self KPI Achievement %' = (KPI - Achievement Self-Review (this) / Target (targetVal)) * KPI Weightage (kpiWeightageVal);	
+    * Self KPI Achievement %' = (KPI - Achievement Self-Review (this) / Target (targetVal)) * KPI Weightage (kpiWeightageVal);
     */
     $(document).on('keyup','.calculateSelfKPIPercentage',function(){
         getCalculationResult($(this));
@@ -511,7 +519,7 @@
                             if($.isNumeric( value[countIndex] ) == true){
                                 $('#assignee_kpi_review' + key).val(value[countIndex]);
 
-                                getCalculationResult($('#assignee_kpi_review' + key));  
+                                getCalculationResult($('#assignee_kpi_review' + key));
                             }else{
                                 $('#assignee_kpi_review' + key).val('');
                                 $('#assignee_kpi_percentage'+key).val('');
@@ -522,8 +530,8 @@
                             $('#assignee_kpi_percentage' + key).val(value[countIndex+1]);
                         }
                         $('#assignee_kpi_comments' + key).val(value[countIndex+2]);
-                          
-                        
+
+
                     });
                     if(validationCheck == true){
                         swal("Wrong!", "Only Numbers are Allowed in KPI Achievement (Self Review) when Target is Number", "error");
@@ -632,7 +640,7 @@
         });
     });
 
-    // On click reject Rejection Comments modal should show 
+    // On click reject Rejection Comments modal should show
     $('#reject_review').click(function(e) {
         $('#modalHeader').html("Rejected");
         $('#modalNot').html(
@@ -641,13 +649,13 @@
         $('#rejectionCommentModal').show('modal');
     });
 
-    // close Rejection Comments modal 
+    // close Rejection Comments modal
     $('body').on('click', '.close-modal', function() {
         $('#rejectionCommentModal').hide();
         $('#rejectionCommentModal').addClass('fade');
     });
 
-    // close Rejection Comments modal 
+    // close Rejection Comments modal
     $('body').on("keyup", '#reject_comment', function() {
         if ($(this).val() == '') {
             $('#rejection_submit').attr('disabled', true);
@@ -655,7 +663,7 @@
             $('#rejection_submit').removeAttr('disabled');
         }
     });
-    
+
     // Accept Review
     $('#rejection_submit').click(function(e) {
         e.preventDefault();
