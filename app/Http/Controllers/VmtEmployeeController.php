@@ -1354,8 +1354,14 @@ class VmtEmployeeController extends Controller
 
 
         if( $this->isAllDocumentsUploaded(auth()->user()->id) == 1)
+        {
+            // //set the onboard status to 1
+            $currentUser = User::where('id', auth()->user()->id)->first();
+            $currentUser->is_onboarded = '1';
+            $currentUser->save();
+
             return view('vmt_profile_under_review');
-        else
+        }else
             return view('vmt_documents',compact('existing_doc_filenames'));
 
 

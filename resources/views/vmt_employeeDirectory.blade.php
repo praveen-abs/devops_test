@@ -51,7 +51,8 @@
 <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 
 <script>
-    var grid ="";
+    var gridtable_yetToActiveTable ="";
+    var gridtable_activeTable ="";
 
     function activateEmployee(obj)
     {
@@ -71,10 +72,14 @@
                 //window.location.reload();
                 console.log(data);
 
-                grid.updateConfig({
+                gridtable_yetToActiveTable.updateConfig({
 
-                }).forceRender();;
+                }).forceRender();
 
+
+                gridtable_activeTable.updateConfig({
+
+                }).forceRender();
             }
         });
     }
@@ -84,7 +89,7 @@
 
         if (document.getElementById("yet-to-active-directory-table"))
         {
-            grid = new gridjs.Grid({
+            gridtable_yetToActiveTable = new gridjs.Grid({
             columns: [{
                     id: 'user_id',
                     name: 'ID',
@@ -170,7 +175,7 @@
 
                     }
                 },
-                
+
                 {
                     id: 'is_onboarded',
                     name: 'Onboard Status',
@@ -256,7 +261,7 @@
 
         if (document.getElementById("active-directory-table"))
         {
-            grid = new gridjs.Grid({
+            gridtable_activeTable = new gridjs.Grid({
             columns: [{
                     id: 'user_id',
                     name: 'ID',
@@ -361,11 +366,11 @@
       'overflow-x':'scroll'
     },
     th: {
-        
+
       'width':'100% !important'
     },
     td: {
-      
+
     }
   },
             sort: true,
@@ -386,7 +391,7 @@
                     ]
                 )
             },
-            
+
 
             }).render(document.getElementById("active-directory-table")); // card Table
 
