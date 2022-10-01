@@ -775,7 +775,7 @@ class VmtEmployeeController extends Controller
                 'avatar' =>  $row['employee_name'] . '_avatar.jpg',
                 'user_code' =>  strtoupper($empNo),
                 'can_login' => '1',
-                'active' => '1',
+                'active' => '0',
                 'is_onboarded' => '0',
                 'onboard_type' => 'bulk',
                 'is_admin' => '0',
@@ -849,10 +849,12 @@ class VmtEmployeeController extends Controller
                 $empOffice->confirmation_period  = $row['confirmation_period'];
                 $empOffice->holiday_location  = $row["holiday_location"];
 
-                if ( !empty($row["l1_manager_code"]) && $this->isUserExist($row["l1_manager_code"]))
+                if ( !empty($row["l1_manager_code"]))
                 {
                     $empOffice->l1_manager_code  = $row["l1_manager_code"];
-                    updateUserRole($empOffice->l1_manager_code,"Manager");
+
+                    if($this->isUserExist($row["l1_manager_code"]))
+                        updateUserRole($empOffice->l1_manager_code,"Manager");
                 }
 
                 // $empOffice->l1_manager_name  = $row["l1_manager_name"];
