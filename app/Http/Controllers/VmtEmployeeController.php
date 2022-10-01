@@ -605,7 +605,7 @@ class VmtEmployeeController extends Controller
     */
     private function storeBulkOnboardEmployees($data)
     {
-
+        ini_set('max_execution_time', 300);
         //For output jsonresponse
         $data_array = [];
         //For validation
@@ -912,7 +912,7 @@ class VmtEmployeeController extends Controller
             return $rowdata_response = [
                 'row_number' => '',
                 'status' => 'success',
-                'message' => $empNo . ' added successfully',
+                'message' => $empNo . ' added successfully<br/>',
                 'error_fields' => [],
             ];
         } catch (\Exception $e) {
@@ -1534,6 +1534,7 @@ class VmtEmployeeController extends Controller
      *  table: vmt_employee_family_details
      */
     protected function storeEmployeeFamilyMembers($familyData, $userId){
+
         if(isset($familyData['father_name'])){
             $familyMember =  new VmtEmployeeFamilyDetails;
             $familyMember->user_id  = $userId;
@@ -1558,7 +1559,7 @@ class VmtEmployeeController extends Controller
 
             $familyMember->save();
         }
-        if ($familyData['marital_status'] <> 'single') {
+        if ($familyData['marital_status'] <> 'unmarried') {
             $familyMember =  new VmtEmployeeFamilyDetails;
             $familyMember->user_id  = $userId;
             $familyMember->name =   $familyData['spouse_name'];
