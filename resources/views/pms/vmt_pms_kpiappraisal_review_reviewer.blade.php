@@ -16,6 +16,12 @@
         background: url('{{ URL::asset("assets/images/loader.gif") }}') 50% 50% no-repeat rgb(249, 249, 249);
         opacity: 0.4;
     }
+
+    .btn-light{
+        padding: 4px;
+        border: 1px solid gray;
+        cursor: pointer;
+    }
 </style>
 @endsection
 @section('content')
@@ -196,13 +202,41 @@
                                         </div>
                                     </th>
                                     <td>
-                                        <div>{{$kpiRow->kpi}}</div>
+                                        <div>
+                                            {{  \Str::words($kpiRow->kpi, 20, '')}}
+                                            @if(strlen(substr($kpiRow->kpi, strlen(\Str::words($kpiRow->kpi, 20, '')))) > 0)
+                                            <span class="{{'collapse-'.$index}}" style="display: none;">
+                                                {{substr($kpiRow->kpi, strlen(\Str::words($kpiRow->kpi, 20, '')))}}
+                                            </span>
+                                            <span class="btn-sm btn-light" onclick="showOrHideDescription('{{$index}}')">More</span>
+                                            @endif 
+                                        </div>
                                     </td>
                                     <td>
-                                        <div> {{$kpiRow->operational_definition}} </div>
+                                        <div> 
+                                            {{  \Str::words($kpiRow->operational_definition, 20, '')}}
+
+                                            @if(strlen(substr($kpiRow->operational_definition, strlen(\Str::words($kpiRow->operational_definition, 20, '')))) > 0)
+                                            <span class="{{'collapse-'.$index}}" style="display: none;">
+                                                {{substr($kpiRow->operational_definition, strlen(\Str::words($kpiRow->operational_definition, 20, '')))}}
+                                            </span>
+                                            <span class="btn-sm btn-light" onclick="showOrHideDescription('{{$index}}')">More</span>
+                                            @endif 
+
+                                            
+                                        </div>
                                     </td>
                                     <td>
-                                        <div>{{$kpiRow->measure}} </div>
+                                        <div> 
+                                            {{  \Str::words($kpiRow->measure, 20, '')}}
+                                            @if(strlen(substr($kpiRow->measure, strlen(\Str::words($kpiRow->measure, 20, '')))) > 0)
+                                            <span class="{{'collapse-'.$index}}" style="display: none;">
+                                                {{substr($kpiRow->measure, strlen(\Str::words($kpiRow->measure, 20, '')))}}
+                                            </span>
+                                            <span class="btn-sm btn-light" onclick="showOrHideDescription('{{$index}}')">More</span>
+                                            @endif 
+
+                                        </div>
                                     </td>
                                     <td>
                                         <div> {{$kpiRow->frequency}}</div>
@@ -238,7 +272,8 @@
                                     <?php
                                         $decodedKpiReview = json_decode($assignedGoals->reviewer_kpi_review,true);
                                         $decodedKpiReviewSubmittedStatus = json_decode($assignedGoals->is_reviewer_submitted,true);
-                                        $decodedKpiReviewPerc = json_decode($assignedGoals->reviewer_kpi_percentage,true);
+                                        $decodedKpiReviewPerc = json_decode($assignedGoals->reviewer_kpi_percentage, true);
+
                                     ?>
                                     @foreach($reviewersId as $reviewersReview)
                                         @if($reviewersReview == Auth::id())
@@ -251,8 +286,9 @@
 
                                         </td>
                                         <td>
-                                            @if($assignedGoals->is_assignee_submitted == '1' && $reviewersReview == Auth::id() && ($decodedKpiReviewSubmittedStatus[$reviewersReview] == '' || $decodedKpiReviewSubmittedStatus[$reviewersReview] == '0'))
-                                            <textarea type="number" class="inp-text" name="reviewer_kpi_percentage[{{$reviewersReview}}][{{$kpiRow->id}}]" id="reviewer_kpi_percentage{{$index}}-{{$reviewersReview}}" placeholder="type here" value="@if(isset( $decodedKpiReviewPerc[$reviewersReview])){{$decodedKpiReviewPerc[$reviewersReview][$kpiRow->id]}}@endif"></textarea>
+                                            
+                                            @if(isset($assignedGoals->is_assignee_submitted) && $assignedGoals->is_assignee_submitted == '1' && $reviewersReview == Auth::id() && ($decodedKpiReviewSubmittedStatus[$reviewersReview] == '' || $decodedKpiReviewSubmittedStatus[$reviewersReview] == '0'))
+                                            <textarea type="number" class="inp-text" name="reviewer_kpi_percentage[{{$reviewersReview}}][{{$kpiRow->id}}]" id="reviewer_kpi_percentage{{$index}}-{{$reviewersReview}}" placeholder="type here" >@if(isset( $decodedKpiReviewPerc[$reviewersReview])){{$decodedKpiReviewPerc[$reviewersReview][$kpiRow->id]}}@endif</textarea>
 
                                             @else
                                             <div>@if(isset( $decodedKpiReviewPerc[$reviewersReview])){{$decodedKpiReviewPerc[$reviewersReview][$kpiRow->id]}}@endif</div>
@@ -661,6 +697,18 @@
             }
         });
     });
+
+
+    // show or hide table data
+    function showOrHideDescription(rowIndex){
+        console.log(rowIndex+'collapse');
+        //$(collapse-'.$index)
+        if($('.collapse-'+rowIndex).css('display') == 'none'){
+            $('.collapse-'+rowIndex).css('display', 'inline');
+        }else{
+            $('.collapse-'+rowIndex).css('display', 'none');
+        }
+    }
     
 </script>
 @endsection
