@@ -151,6 +151,10 @@
     #employeeSelectionModal .modal-body{
         height: 200px;   
     }
+
+    .modal-body .select2-container--default .select2-selection--multiple {
+        height: auto !important;
+    }
 </style>
 @endsection
 
@@ -860,10 +864,17 @@
                 dropdownParent: $("#add-goals-modal"),
                 width: '98%'
             });
+            
             $('.select-employee-dropdown').select2({
                 dropdownParent: $("#employeeSelectionModal"),
                 width: '100%'
             });
+
+            $('#select-employee-dropdown').on('select2:opening select2:closing', function( event ) {
+                var $searchfield = $(this).parent().find('.select2-search__field');
+                $searchfield.prop('disabled', true);
+            });
+
             $('.select-reviewer-dropdown').select2({
                 dropdownParent: $("#add-goals-modal"),
                 width: '100%'
