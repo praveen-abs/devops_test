@@ -12,24 +12,32 @@
 @slot('li_1') @endslot
 @endcomponent
 
-<h5 class="text-muted fw-bold">Yet to Active Employees</h5>
 
-<div class="table-responsive">
+<div class="card">
+    <div class="card-body">
+        <h6 class="text-muted fw-bold">Yet to Active Employees</h6>
 
-    <div id="yet-to-active-directory-table"></div>
 
+
+        <div id="yet-to-active-directory-table"></div>
+
+
+    </div>
 </div>
 
-<h5 class="text-muted fw-bold">Active Employees</h5>
+<div class="card">
+    <div class="card-body">
 
-<div class="table-responsive">
-
-    <div id="active-directory-table"></div>
-
+        <h6 class="text-muted fw-bold">Active Employees</h6>
+        <div id="active-directory-table"></div>
+    </div>
 </div>
+
+
 
 
 @endsection
+
 @section('script')
 <script src="{{ URL::asset('assets/libs/gridjs/gridjs.min.js') }}"></script>
 
@@ -111,7 +119,7 @@
                         var html_image_tag = '<img data-emp_code="'+emp_code+'" data-emp_name="'+emp_name+'" id="img_'+emp_code+'" class="h-10 w-10"  alt=" " src="'+imagePath+'" />';
                         var html_empname = emp_name;
                         // var htmlContent = '<dv id="span_'+emp_code+'">'+html_image_tag+'</dv> &nbsp;&nbsp;'+html_empname;
-                        var htmlContent =  '<div class="d-flex align-items-center page-header-user-dropdown" >' +'<div id="span_'+emp_code+'" class="rounded-circle user-profile  me-1">'+html_image_tag+'</div>'+html_empname +'</div>';
+                        var htmlContent =  '<div class="d-flex align-items-center page-header-user-dropdown" style="width:max-content;">' +'<div id="span_'+emp_code+'" class="rounded-circle user-profile  me-1">'+html_image_tag+'</div>'+html_empname +'</div>';
 
                         $('#img_'+emp_code).on('error', function(){
 
@@ -164,7 +172,7 @@
                 },
                 {
                     id: 'is_onboarded',
-                    name: 'Onboarded?',
+                    name: 'Onboard Status',
                     formatter: function formatter(cell) {
                         if(cell == "1")
                             return gridjs.html("Done");
@@ -176,7 +184,7 @@
                 },
                 {
                     id: 'is_docs_approved',
-                    name: 'Documents Approved?',
+                    name: ' Approvel Status',
                     formatter: function formatter(cell) {
                         if(cell == "1")
                             return gridjs.html("Done");
@@ -281,7 +289,7 @@
                         //console.log(emp_name);
                         var html_image_tag = '<img data-emp_code="'+emp_code+'" data-emp_name="'+emp_name+'" id="img_'+emp_code+'" class="h-10 w-10"  alt=" " src="'+imagePath+'" />';
                         var html_empname = emp_name;
-                        var htmlContent =  '<div class="d-flex align-items-center page-header-user-dropdown" >' +'<div id="span_'+emp_code+'" class="rounded-circle user-profile  me-1">'+html_image_tag+'</div>'+html_empname +'</div>';
+                        var htmlContent =  '<div class="d-flex align-items-center page-header-user-dropdown" style="width:max-content;">' +'<div id="span_'+emp_code+'" class="rounded-circle user-profile  me-1">'+html_image_tag+'</div>'+html_empname +'</div>';
 
                         $('#img_'+emp_code).on('error', function(){
 
@@ -347,6 +355,18 @@
             pagination: {
                 limit: 5
             },
+            style: {
+    table: {
+      'overflow-x':'scroll'
+    },
+    th: {
+        
+      'width':'100% !important'
+    },
+    td: {
+      
+    }
+  },
             sort: true,
             search: true,
             server: {
@@ -365,6 +385,7 @@
                     ]
                 )
             },
+            
 
             }).render(document.getElementById("active-directory-table")); // card Table
 
