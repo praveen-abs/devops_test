@@ -306,17 +306,7 @@ class VmtEmployeeController extends Controller
 
                 }
 
-                // $empOffice->l1_manager_designation  = $row["l1_manager_designation"];// => "k"
                 $empOffice->l1_manager_name  = $row["l1_manager_name"]; // => "k"
-                // $empOffice->l2_manager_code  = $row["l2_manager_code"];// => "kk"
-                // $empOffice->l2_manager_designation  = $row["l2_manager_designation"];// => "k"
-                // $empOffice->l2_manager_name  = $row["l2_manager_name"]; // => "k"
-                // $empOffice->l3_manager_code  = $row["l3_manager_code"]; // => "kk"
-                // $empOffice->l3_manager_designation  = $row["l3_manager_designation"]; // => "k"
-                // $empOffice->l3_manager_name  = $row["l3_manager_name"]; // => "kk"
-                // $empOffice->l4_manager_code  = $row["l4_manager_code"]; // => "kk"
-                // $empOffice->l4_manager_designation  = $row["l4_manager_designation"]; // => "kk"
-                // $empOffice->l4_manager_name  = $row["l4_manager_name"]; // => "kk"
                 $empOffice->work_location  = $row["work_location"]; // => "k"
                 $empOffice->officical_mail  = $row["officical_mail"]; // => "k@k.in"
                 $empOffice->official_mobile  = $row["official_mobile"]; // => "1234567890"
@@ -1014,50 +1004,6 @@ class VmtEmployeeController extends Controller
     //
     public function showEmployeeDirectory(Request $request)
     {
-        // $vmtEmployees = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')
-        //     ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-        //     ->select(
-        //         'users.name as emp_name',
-        //         'users.user_code as emp_code',
-        //         'users.active as emp_status',
-        //         'users.email as email_id',
-        //         'users.id as user_id',
-        //         'users.avatar as avatar',
-        //         'vmt_employee_details.doj as doj',
-        //         'vmt_employee_details.blood_group as blood_group',
-        //         'vmt_employee_office_details.department_id',
-        //         'vmt_employee_office_details.designation as emp_designation',
-        //         'vmt_employee_office_details.l1_manager_code as l1_manager_code',
-        //         'vmt_employee_office_details.l1_manager_name',
-        //         'vmt_employee_office_details.l1_manager_designation'
-        //     )
-        //     ->orderBy('created_at', 'DESC')
-        //     ->where('users.active', '1')
-        //     ->where('users.is_admin', '0')
-        //     ->whereNotNull('emp_no')
-        //     ->get();
-
-        // $vmtEmployees_InActive = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')
-        //     ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-        //     ->select(
-        //         'vmt_employee_details.*',
-        //         'users.name as emp_name',
-        //         'users.active as emp_status',
-        //         'users.email as email_id',
-        //         'users.id as user_id',
-        //         'users.avatar as avatar',
-        //         'vmt_employee_office_details.department_id',
-        //         'vmt_employee_office_details.designation',
-        //         'vmt_employee_office_details.l1_manager_code',
-        //         'vmt_employee_office_details.l1_manager_name',
-        //         'vmt_employee_office_details.l1_manager_designation'
-        //     )
-        //     ->orderBy('created_at', 'DESC')
-        //     ->where('users.active', '0')
-        //     ->where('users.is_admin', '0')
-        //     ->whereNotNull('emp_no')
-        //     ->get();
-
         return view('vmt_employeeDirectory');
     }
 

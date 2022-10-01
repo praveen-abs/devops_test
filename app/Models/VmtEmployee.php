@@ -27,7 +27,11 @@ class VmtEmployee extends Model
     //Called automatically
     protected function getProfileCompletenessAttribute()
     {
-        return calculateProfileCompleteness($this->user_id);
+        //Works only if this model is part of query joins.
+        if(!empty($this->user_id))
+            return calculateProfileCompleteness($this->user_id);
+        else
+            return "NA";
 
     }
 }

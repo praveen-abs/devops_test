@@ -33,9 +33,9 @@
 
 
                 <!-- CRM -->
+                @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR"]))
 
                 <li class="nav-item">
-                    @if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin'))
 
                     <a class="nav-link sidebar menu-link pt-0" href="#crmDrop-Down" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarRoles">
                         <i>
@@ -63,9 +63,8 @@
                             </li>
                         </ul>
                     </div>
-                    @endif
                 </li>
-
+                @endif
 
                 <!-- Navigation Menu for attendance-->
 
@@ -87,47 +86,54 @@
                                     <span>Dashboard</span>
                                 </a>
                             </li>
+
+                            @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR"]))
+                                <li class="nav-item">
+                                    <a href="{{url('attendance_approvals')}}" class="nav-link sidebar py-1">Approvals</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{url('attendance_shift_woff_hday')}}" class="nav-link sidebar py-1">Shift/WeeklyOff/Holidays</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{url('attendance_tracking')}}" class="nav-link sidebar py-1">Tracking</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{url('attendance_overtime')}}" class="nav-link sidebar py-1">OverTime</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="apps-calendar" class="nav-link sidebar py-1" role="button">
+                                        <span>Attendance</span>
+                                    </a>
+                                </li>
+                            @endif
+
                             <li class="nav-item">
-                                <a href="{{url('attendance_approvals')}}" class="nav-link sidebar py-1">Approvals</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{url('attendance_shift_woff_hday')}}" class="nav-link sidebar py-1">Shift/WeeklyOff/Holidays</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{url('attendance_tracking')}}" class="nav-link sidebar py-1">Tracking</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{url('attendance_overtime')}}" class="nav-link sidebar py-1">OverTime</a>
+                                <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button"><span>Timesheet</span></a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{url('attendance_leave')}}" class="nav-link sidebar py-1">Leave</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="apps-calendar" class="nav-link sidebar py-1" role="button">
-                                    <span>Attendance</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button"><span>Timesheet</span></a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button">
                                     <span>Expenses & Travel</span>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="{{url('attendance_reports')}}" class="nav-link sidebar py-1"><span>Reports</span></a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{url('attendance_settings')}}" class="nav-link sidebar py-1"><span>Settings</span></a>
-                            </li>
+
+                            @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR"]))
+                                <li class="nav-item">
+                                    <a href="{{url('attendance_reports')}}" class="nav-link sidebar py-1"><span>Reports</span></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{url('attendance_settings')}}" class="nav-link sidebar py-1"><span>Settings</span></a>
+                                </li>
+                            @endif
                         </ul>
                     </div>
                 </li>
 
 
                 <!-- Organization -->
-                @if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin'))
+                @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR"]))
                 <li class="nav-item">
                     <a class="nav-link sidebar menu-link pt-0" href="#orgDrop-Down" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarRoles">
 
@@ -177,6 +183,8 @@
                 </li>
                 @endif
 
+
+                @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR"]))
                 <li class="nav-item">
                     <a class="nav-link sidebar menu-link pt-0" id="employeeInfo" href="#mytasksDrop-Down" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebar360questions">
                         <i> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#686363" class="bi bi-clipboard2-check-fill" viewBox="0 0 16 16">
@@ -206,6 +214,7 @@
                         </ul>
                     </div>
                 </li>
+                @endif
 
                 <!-- Performance -->
 
@@ -221,17 +230,21 @@
                     </a>
                     <div class="collapse menu-dropdown" id="PerformanceDrop-Down">
                         <ul class="nav nav-sm flex-column">
+                            @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR"]))
                             <li class="nav-item">
                                 <!-- <a href="{{url('vmt-pms-assigngoals')}}" class="nav-link sidebar py-1"><span>Dashboard</span></a> -->
-                                <a href="{{ route('pms-dashboard') }}" class="nav-link sidebar py-1"><span>Dashboard</span></a>
+                                <a href="{{ route('pms-dashboard') }}" class="nav-link sidebar py-1"><span>Org Appraisal</span></a>
                             </li>
+                            @endif
+                            @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR","Manager"]))
                             <li class="nav-item">
                                 <a href="{{ route('team-appraisal-pms-dashboard') }}" class="nav-link"><span>Team Appraisal</span></a>
                             </li>
+                            @endif
                             <li class="nav-item">
                                 <a href="{{ route('employee-appraisal-pms-dashboard') }}" class="nav-link"><span>Employee Appraisal</span></a>
                             </li>
-                            @if(auth()->user()->org_role == "employee" || auth()->user()->org_role == "manager")
+                            @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR"]))
 
                             <li class="nav-item">
                                 <a href="{{route('vmt_config_pms')}}" class="nav-link"><span>PMS Config</span></a>
@@ -288,7 +301,7 @@
                 </li>
                 @endif
 
-                @if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin'))
+                @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR"]))
                 <!-- pay roll -->
 
                 <li class="nav-item">
@@ -349,14 +362,11 @@
                             </li>
                             @endcan
                         </ul>
-
-
                     </div>
-
-
-
-
                 </li>
+
+
+
                 <!-- claims -->
                 <li class="nav-item">
                     <a class="nav-link sidebar menu-link pt-0" id="employeeInfo" href="#claimsDrop-Down" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebar360questions">
@@ -372,47 +382,6 @@
                         <span>Claims</span>
 
                     </a>
-                    <!-- <div class="collapse menu-dropdown" id="claimsDrop-Down">
-                        <ul class="nav nav-sm flex-column">
-
-                            <li class="nav-item">
-                                <a href="#transitionDrop-Down" id="" class="nav-link sidebar py-1" data-bs-toggle="collapse" role="button" aria-expanded="false"><span>
-                                        Transaction</span> </a>
-                                <div class="collapse menu-dropdown sub-dropdown" id="transitionDrop-Down">
-                                    <ul class="nav nav-sm flex-column">
-                                        <li class="nav-item">
-                                            <a href="{{url('vmt-assign-roles')}}" class="nav-link sidebar">
-                                                <span> Employee Entry</span> </a>
-                                        </li>
-
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="nav-item tdItem">
-                                <a href="#reportsDrop-Down" id="tds" data-bs-toggle="collapse" role="button" aria-expanded="false" class="nav-link sidebar py-1"><span> Reports</span> </a>
-                                <div class="collapse  menu-dropdown sub-dropdown" id="reportsDrop-Down">
-                                    <ul class="nav nav-sm flex-column">
-                                        <li class="nav-item">
-                                            <a href="{{url('vmt-assign-roles')}}" class="nav-link sidebar"><span>
-                                                    Appraisal Reports</a>
-                                            </span>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{url('vmt-assign-roles')}}" class="nav-link sidebar"><span>
-                                                    Appraisal Review
-                                                    Reports </span></a>
-                                        </li>
-
-
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
-                    </div> -->
-
-
-
-
                 </li>
 
 
@@ -425,7 +394,6 @@
                             </svg>
                         </i>
                         <span> Reports</span>
-
                     </a>
                     <div class="collapse menu-dropdown" id="reportsDrop-Down">
                         <ul class="nav nav-sm flex-column">
@@ -441,11 +409,10 @@
                             </li>
                         </ul>
                     </div>
-
-
-
-
                 </li>
+
+
+
 
                 <!-- help desk -->
                 <li class="nav-item">
@@ -473,7 +440,7 @@
                     </div> -->
                 </li>
 
-                @if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin'))
+                @if( Str::contains( currentLoggedInUserRole(), ["Admin"]))
                 <li class="nav-item">
                     <a class="nav-link sidebar menu-link pt-0" href="#configDrop-down" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
                         <i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#686363" class="bi bi-gear-fill" viewBox="0 0 16 16">
@@ -524,9 +491,6 @@
                         </ul>
                     </div>
                 </li>
-
-
-
             </ul>
         </div>
 
