@@ -17663,7 +17663,7 @@ tr:last-child td:last-child {
     vertical-align: middle;
     border-top: 1px solid #eee;
     text-align: center;
-    white-space:nowrap  ;
+    /* white-space:nowrap  ; */
 }
 
 .gridjs-table > thead > tr > th,.table > thead > tr > th{
@@ -17677,7 +17677,7 @@ white-space:nowrap;
 .gridjs-table > thead > tr > td,
 .gridjs-table > thead > tr > th {
     /* width: 0 !important; */
-    
+
     border: 0px;
 }
 
