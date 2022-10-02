@@ -1,60 +1,59 @@
-.appraisal-user{
+.appraisal-user {
     height: 90px !important;
-    width: 90px !important; 
+    width: 90px !important;
 }
-.appraisal-right-content,.appraisal-left-content {
+.appraisal-right-content,
+.appraisal-left-content {
     background-color: #c1d3e3 !important;
     /* margin: 10px 0px 0px; */
 }
-.appraisal-right-content .input-wrap{
+.appraisal-right-content .input-wrap {
     width: 100%;
     /* border: 1px solid; */
     padding: 3px 15px;
     border-radius: 5px;
     background: #f4faff;
     display: flex;
-    align-items:center;
+    align-items: center;
 }
-.input-wrap p{
+.input-wrap p {
     color: #002f56;
     font-weight: 600;
     font-size: smaller;
 }
-.input-wrap .appraisal-box{
+.input-wrap .appraisal-box {
     padding: 3px 10px;
     flex: none;
     text-align: center;
 }
 
-.left-content ul li{
-    margin-bottom: 12px ;
+.left-content ul li {
+    margin-bottom: 12px;
 }
 
-.e-table>:not(caption)>*>* {
+.e-table > :not(caption) > * > * {
     border-bottom-width: 0px !important;
-    padding: .45rem .6rem !important;
+    padding: 0.45rem 0.6rem !important;
 }
 
 .e-table .e-table,
-.e-table>thead {
+.e-table > thead {
     border: 0px !important;
 }
 
-.table-bordered .table-bordered>:not(caption)>*>* {
+.table-bordered .table-bordered > :not(caption) > * > * {
     border-top-width: 0px !important;
     border-bottom-width: 0px !important;
 }
 
 .inp-text {
-    height: 165px;
+    height: 40px;
     width: auto;
     word-break: break-word;
 }
 
-
-
 .table-content {
-    overflow: auto ;
+    overflow: auto;
 }
 
 .table-content table th {
@@ -64,15 +63,67 @@
 }
 
 .table-content div {
-    /* max-height: 300px;
-    min-height: 150px;
-    max-width: 600px;
-    min-width: 400px; */
-    width: 200px;
+    width: 323px;
     height: auto;
 }
-.table-content textarea{
+.table-content textarea {
     border: 0px;
     outline: none;
 }
 
+.loader {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url('{{ URL::asset("assets/images/loader.gif") }}') 50% 50% no-repeat rgb(249, 249, 249);
+    opacity: 0.4;
+}
+
+.btn-light {
+    padding: 4px;
+    border: 1px solid gray;
+    cursor: pointer;
+}
+
+table.kpi_appraisal-table tr,table.kpi_appraisal-table td,table.kpi_appraisal-table th,table.kpi_appraisal-table td div,table.kpi_appraisal-table th div{
+    text-align: start !important;
+    vertical-align: top !important;
+}
+table.kpi_appraisal-table th div{
+    width: 100px !important;
+}
+
+.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+  }
+  
+  .active, .accordion:hover {
+    background-color: #ccc; 
+  }
+  
+  .panel {
+    padding: 0 18px;
+    display: none;
+    background-color: white;
+    overflow: hidden;
+  }
+
+  .less_btn{
+    content: 'Less';
+
+  }
+  .more_btn{
+    content: 'More';
+  }
