@@ -1,6 +1,8 @@
 @extends('layouts.master')
 @section('css')
 <link href="{{ URL::asset('assets/css/assign_goals.css') }}" rel="stylesheet">
+<link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
+
 <!--Font Awesome-->
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/fontawesome-all.min.css') }}">
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/fontawesome.css') }}">
@@ -17,9 +19,143 @@
 <link href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css' rel='stylesheet' type='text/css'>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.15/tailwind.min.css" rel="stylesheet" />
 <style>
+    .output {
+        font: 1rem 'Fira Sans', sans-serif;
+    }
 
+    blockquote {
+        background: white;
+        border-radius: 5px;
+        margin: 0 !important;
+        height: 100px;
+        overflow-y: auto;
+    }
+
+    blockquote p {
+        padding: 15px;
+    }
+
+    [contenteditable='true'] {
+        caret-color: red;
+    }
 </style>
+<style type="text/css">
+    header {
+        font-family: 'Lobster', cursive;
+        text-align: center;
+        font-size: 25px;
+    }
 
+
+    .scrollbar {
+        /*margin-left: 67px;*/
+        /*float: left;*/
+        height: 300px;
+        /*width: 400px;*/
+
+        overflow-y: scroll;
+        margin-bottom: 25px;
+    }
+
+    .force-overflow {
+        min-height: 450px;
+    }
+
+    #wrapper {
+        text-align: center;
+        width: 500px;
+        margin: auto;
+    }
+
+    .td_content_center {
+        text-align: center;
+    }
+
+    /*
+ *  STYLE 1
+ */
+
+    #style-1::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        background-color: #F5F5F5;
+    }
+
+    #style-1::-webkit-scrollbar {
+        width: 12px;
+        background-color: #F5F5F5;
+    }
+
+    #style-1::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+        background-color: #555;
+    }
+
+    .loader {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url('{{ URL::asset("assets/images/loader.gif") }}') 50% 50% no-repeat rgb(249, 249, 249);
+        opacity: 0.4;
+    }
+
+    .employees-profile {
+        display: flex;
+        align-items: center;
+    }
+
+    .employees-profile img {
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 1px solid #fff;
+    }
+
+    .employees-profile img:not(:first-child) {
+        margin-left: -13px;
+    }
+
+    .employees-card {
+        background-color: #fff;
+        border-radius: 20px;
+        /* padding: 8px 5px; */
+    }
+
+    .employees-profile.counting {
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 1px solid #fff;
+        color: #003056;
+        background-color: #d1d3d5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+    .mr-10 {
+        margin-right: 0px !important;
+    }
+
+    .fa-refresh:hover {
+        cursor: pointer;
+    }
+
+    #employeeSelectionModal .modal-body{
+        height: 200px;
+    }
+
+    .modal-body .select2-container--default .select2-selection--multiple {
+        height: auto !important;
+    }
+</style>
 @endsection
 
 
@@ -95,7 +231,7 @@
                     <div class="card-body p-0">
                         <div class="row">
                             <div class="col-sm-6 col-5 col-md-5 col-xl-5 col-xxl-5 col-lg-5 text-center">
-                                <img src="{{ URL::asset('assets/images/pms_rating.png') }}" alt="" class="">
+                                <img src="{{ URL::asset('assets/images/self_review.png') }}" alt="" class="">
                             </div>
                             <div class="col-sm-6  col-7 col-md-7 mt-3 col-xl-7 col-xxl-7 ps-0 col-lg-7 align-items-center flex-column d-flex">
                                 <p class="mb-1 text-center">Final Score Published</p>
@@ -109,453 +245,451 @@
 
             </div>
         </div>
-    </div>
-    @if(count($pmsKpiAssigneeDetails) == 0)
-    <div class="mt-2 " id="initial-section">
-        <div class="row ">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center p-0 ">
-                <div class="p-3 justify-content-center d-flex align-items-center"><img src="{{ URL::asset('assets/images/assign_goals.png') }}" style="width:300px;height: 50%;"></div>
-                <h4 class="fw-bold">Assign Goals for your employees</h4>
-                <button id="add-goals" class="btn btn-orange mt-1">
-                    <i class="text-white fa fa-plus me-1"></i>
-                    Add
-                </button>
+        @if(count($pmsKpiAssigneeDetails) == 0)
+        <div class="mt-2 " id="initial-section">
+            <div class="row ">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center p-0 ">
+                    <div class="p-3 justify-content-center d-flex align-items-center"><img src="{{ URL::asset('assets/images/assign_goals.png') }}" style="width:300px;height: 50%;"></div>
+                    <h4 class="fw-bold">Assign Goals for your employees</h4>
+                    <button id="add-goals" class="btn btn-orange mt-1">
+                        <i class="text-white fa fa-plus me-1"></i>
+                        Add
+                    </button>
 
+                </div>
             </div>
         </div>
-    </div>
-    @else
-    <div class="table-responsive">
-        <div class="container-fluid px-2 bg-white" style="position:relative;">
-            <button id="add-goals" class="text-white py-1 px-3 btn btn-primary add-goals"><i class="text-white fa fa-plus mx-1"></i>Add Goals</button>
-            <table id='empTable' class=' table table-borderd  mb-0'>
-                <thead class="table-light">
-                    <tr>
-                        <td class="d-none">Serial No</td>
-                        <th scope="col">Employee Name</th>
-                        <th scope="col">Employee ID</th>
+        @else
+        <div class="table-responsive">
+            <div class="container-fluid px-2 bg-white" style="position:relative;">
+                <button id="add-goals" class="text-white py-1 px-3 btn btn-primary add-goals"><i class="text-white fa fa-plus mx-1"></i>Add Goals</button>
+                <table id='empTable' class=' table table-borderd  mb-0'>
+                    <thead class="table-light">
+                        <tr>
+                            <td class="d-none">Serial No</td>
+                            <th scope="col">Employee Name</th>
+                            <th scope="col">Employee ID</th>
 
-                        <th scope="col">Manager</th>
-                        <!-- <th scope="col">Employee name</th> -->
+                            <th scope="col">Manager</th>
+                            <!-- <th scope="col">Employee name</th> -->
 
-                        <th scope="col">Assignment Period</th>
-                        <th scope="col">Employee Status</th>
-                        <th scope="col">Manager Status</th>
-                        <th scope="col">Average Rating</th>
-                        <th scope="col">Review </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- pms kpi assigned details foreach  -->
-                    @foreach ($pmsKpiAssigneeDetails as $key1 => $pmsKpiAssignee)
-                    <!-- gte kpi pms assignee details like currentLoggedUserRole, $decoded assigneeIds and reviewersIds -->
-                    @php $pmsKpiAssigneeData = getPmsKpiAssigneeDetails($pmsKpiAssignee->id); @endphp
-                    <!-- pms kpi assigned details assignees ids foreach  -->
-                    @foreach($pmsKpiAssigneeData['assigneesIds'] as $key => $assigneeId)
-                    <!-- check if Role is Assignee then check Own assignee id otherwise will show all Assignees -->
-                    @if(($pmsKpiAssigneeData['currentLoggedUserRole'] == 'assignee' && $assigneeId==Auth::id()) || $pmsKpiAssigneeData['currentLoggedUserRole'] != 'assignee')
-                    <?php
-                    // get KpiPmsReview Details
-                    $kpiFormAssigneeReview = getReviewKpiFormDetails($pmsKpiAssignee->id, $assigneeId);
-                    ?>
-                    <tr>
-                        <td class="d-none">{{ $key1 }}</td>
-                        <td class="">
-                            <div class="td_content_center">{{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</div>
-                        </td>
-                        <td class="">
-                            <div class="td_content_center">{{ $pmsKpiAssignee->getUserDetails($assigneeId)['userEmpIds'] }}</div>
-                        </td>
-                        <td class="">
-                            @foreach($pmsKpiAssigneeData['reviewersIds'] as $keyCheck => $reviewer)
-                            @if($pmsKpiAssigneeData['currentLoggedUserRole'] == 'reviewer' && $reviewer == Auth::id())
+                            <th scope="col">Assignment Period</th>
+                            <th scope="col">Employee Status</th>
+                            <th scope="col">Manager Status</th>
+                            <th scope="col">Average Rating</th>
+                            <th scope="col">Review </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- pms kpi assigned details foreach  -->
+                        @foreach ($pmsKpiAssigneeDetails as $key1 => $pmsKpiAssignee)
+                        <!-- gte kpi pms assignee details like currentLoggedUserRole, $decoded assigneeIds and reviewersIds -->
+                        @php $pmsKpiAssigneeData = getPmsKpiAssigneeDetails($pmsKpiAssignee->id); @endphp
+                        <!-- pms kpi assigned details assignees ids foreach  -->
+                        @foreach($pmsKpiAssigneeData['assigneesIds'] as $key => $assigneeId)
+                        <!-- check if Role is Assignee then check Own assignee id otherwise will show all Assignees -->
+                        @if(($pmsKpiAssigneeData['currentLoggedUserRole'] == 'assignee' && $assigneeId==Auth::id()) || $pmsKpiAssigneeData['currentLoggedUserRole'] != 'assignee')
+                        <?php
+                        // get KpiPmsReview Details
+                        $kpiFormAssigneeReview = getReviewKpiFormDetails($pmsKpiAssignee->id, $assigneeId);
+                        ?>
+                        <tr>
+                            <td class="d-none">{{ $key1 }}</td>
+                            <td class="">
+                                <div class="td_content_center">{{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</div>
+                            </td>
+                            <td class="">
+                                <div class="td_content_center">{{ $pmsKpiAssignee->getUserDetails($assigneeId)['userEmpIds'] }}</div>
+                            </td>
+                            <td class="">
+                                @foreach($pmsKpiAssigneeData['reviewersIds'] as $keyCheck => $reviewer)
+                                @if($pmsKpiAssigneeData['currentLoggedUserRole'] == 'reviewer' && $reviewer == Auth::id())
 
-                            <div class="td_content_center">{{ getUserDetailsById($reviewer) }}</div>
-                            @elseif($pmsKpiAssigneeData['currentLoggedUserRole'] != 'reviewer')
-                            @if($keyCheck != 0)<br>@endif
-                            <div class="td_content_center">{{ getUserDetailsById($reviewer) }}</div>
-                            @endif
-                            @endforeach
-
-                        </td>
-                        <td class="">
-                            <div class="td_content_center">{{ strtoupper($pmsKpiAssignee->assignment_period) }}</div>
-                        </td>
-                        <td class="">
-                            <div class="td_content_center">
-                                @if(isset($kpiFormAssigneeReview) && $kpiFormAssigneeReview->is_assignee_accepted == '0')
-                                Rejected
-                                @else
-                                @if(isset($kpiFormAssigneeReview) && $kpiFormAssigneeReview->is_assignee_submitted == '1')
-                                Submitted
-                                @else
-                                Not yet submitted
+                                <div class="td_content_center">{{ getUserDetailsById($reviewer) }}</div>
+                                @elseif($pmsKpiAssigneeData['currentLoggedUserRole'] != 'reviewer')
+                                @if($keyCheck != 0)<br>@endif
+                                <div class="td_content_center">{{ getUserDetailsById($reviewer) }}</div>
                                 @endif
-                                @endif
-                            </div>
-                        </td>
-                        <td class="">
+                                @endforeach
 
-                            <div class="td_content_center">
-                                <?php echo checkCurrentLoggedUserReviewerOrNot($pmsKpiAssigneeData['reviewersIds'], $pmsKpiAssigneeData['currentLoggedUserRole'], $kpiFormAssigneeReview); ?>
-                            </div>
-                        </td>
-                        <td class="">
-                            <div class="td_content_center">
-                                <?php echo calculateOverallReviewRatings($pmsKpiAssignee->id, $assigneeId); ?>
-                            </div>
-                        </td>
-                        <td>
-                            <?php
-                            $checkViewReviewText = checkViewReviewText($pmsKpiAssigneeData['currentLoggedUserRole'], $kpiFormAssigneeReview);
-                            ?>
-                            <div class="td_content_center">
-                                <a target="_blank" @if($checkViewReviewText=='Edit' ) href="{{ route('republishForm',$pmsKpiAssignee->id) }}" @else href="{{ url('pms-showReviewPage?assignedFormid=' . $pmsKpiAssignee->id . '&assigneeId=' . $assigneeId) }}" @endif><button class="btn btn-orange py-0 px-2 "> <span class="mr-10 icon"></span>
-                                        <?php
-                                        echo $checkViewReviewText;
-                                        ?>
-                                    </button></a>
-                            </div>
-                        </td>
-                    </tr>
-                    @endif
-                    @endforeach
-                    @endforeach
-                </tbody>
-            </table>
+                            </td>
+                            <td class="">
+                                <div class="td_content_center">{{ strtoupper($pmsKpiAssignee->assignment_period) }}</div>
+                            </td>
+                            <td class="">
+                                <div class="td_content_center">
+                                    @if(isset($kpiFormAssigneeReview) && $kpiFormAssigneeReview->is_assignee_accepted == '0')
+                                    Rejected
+                                    @else
+                                    @if(isset($kpiFormAssigneeReview) && $kpiFormAssigneeReview->is_assignee_submitted == '1')
+                                    Submitted
+                                    @else
+                                    Not yet submitted
+                                    @endif
+                                    @endif
+                                </div>
+                            </td>
+                            <td class="">
+
+                                <div class="td_content_center">
+                                    <?php echo checkCurrentLoggedUserReviewerOrNot($pmsKpiAssigneeData['reviewersIds'], $pmsKpiAssigneeData['currentLoggedUserRole'], $kpiFormAssigneeReview); ?>
+                                </div>
+                            </td>
+                            <td class="">
+                                <div class="td_content_center">
+                                    <?php echo calculateOverallReviewRatings($pmsKpiAssignee->id, $assigneeId); ?>
+                                </div>
+                            </td>
+                            <td>
+                                <?php
+                                $checkViewReviewText = checkViewReviewText($pmsKpiAssigneeData['currentLoggedUserRole'], $kpiFormAssigneeReview);
+                                ?>
+                                <div class="td_content_center">
+                                    <a target="_blank" @if($checkViewReviewText=='Edit' ) href="{{ route('republishForm',$pmsKpiAssignee->id) }}" @else href="{{ url('pms-showReviewPage?assignedFormid=' . $pmsKpiAssignee->id . '&assigneeId=' . $assigneeId) }}" @endif><button class="btn btn-orange py-0 px-2 "> <span class="mr-10 icon"></span>
+                                            <?php
+                                            echo $checkViewReviewText;
+                                            ?>
+                                        </button></a>
+                                </div>
+                            </td>
+                        </tr>
+                        @endif
+                        @endforeach
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+
         </div>
-
+        @endif
     </div>
-    @endif
+</div>
 
+<div id="add-goals-modal" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
+                <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
+                    New Assign Goals</h5>
+                <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card profile-box p-2 top-line">
+                    <div class="card-body">
 
+                        <form id="goalForm">
+                            <input type="hidden" name="goal_id" id="goal_id">
+                            @csrf
+                            <input type="hidden" name="flowCheck" id="flowCheck" value="{{ $flowCheck }}">
+                            <input type="hidden" name="kpitable_id" id="kpitable_id">
 
-    <div id="add-goals-modal" class="modal custom-modal fade" role="dialog">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-xl" role="document">
-            <div class="modal-content">
-                <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
-                        New Assign Goals</h5>
-                    <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="card profile-box p-2 top-line">
-                        <div class="card-body">
+                            <!-- <input type="hidden" name="reviewer" id="sel_reviewer"> -->
+                            <input type="hidden" name="assignment_period_year" id="assignment_period_year" value="<?php echo date('Y'); ?>">
 
-                            <form id="goalForm">
-                                <input type="hidden" name="goal_id" id="goal_id">
-                                @csrf
-                                <input type="hidden" name="flowCheck" id="flowCheck" value="{{ $flowCheck }}">
-                                <input type="hidden" name="kpitable_id" id="kpitable_id">
+                            <div class="row ">
+                                <div class=" col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
 
-                                <!-- <input type="hidden" name="reviewer" id="sel_reviewer"> -->
-                                <input type="hidden" name="assignment_period_year" id="assignment_period_year" value="<?php echo date('Y'); ?>">
-
-                                <div class="row ">
-                                    <div class=" col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
-
-                                        <label class="" for="calendar_type">Calendar Type</label>
-                                        <select name="calendar_type" id="calendar_type" class="form-select  form-control">
-                                            <option value="" selected disabled>Select Calendar Type</option>
-                                            <option name="financial_year" value="financial_year">Financial Year</option>
-                                            <option name="calendar_year" value="calendar_year">Calendar Year</option>
-                                        </select>
-
-                                    </div>
-                                    <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
-
-                                        <label class="" for="year">Year</label>
-                                        <input type="hidden" name="hidden_calendar_year" id="hidden_calendar_year" value="">
-
-                                        <select name="year" id="year" disabled class="form-select form-control">
-                                            <option value="" selected disabled>Select year</option>
-                                            <option value="Jan-Dec">January - <?php echo date('Y'); ?> to December - <?= date('Y') ?> </option>
-                                            <option value="Apr-Mar">April - <?php echo date('Y'); ?> to March - <?= date('Y') + 1 ?></option>
-                                        </select>
-
-                                    </div>
-                                    <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
-
-                                        <label class="" for="frequency">Frequency</label>
-                                        <select name="frequency" id="frequency" class="form-control form-select">
-                                            <option value="" selected disabled>Select Frequency</option>
-                                        </select>
-
-                                    </div>
-                                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4  mb-2">
-
-                                        <label class="" for="assignment_period_start">Assignment Period</label>
-                                        <select name="assignment_period_start" id="assignment_period_start" class="form-control form-select">
-                                            <option value="" selected disabled>Select Assignment Period</option>
-                                        </select>
-                                    </div>
-
-
-                                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4  mb-2">
-                                        <label class="" for="department">Department</label>
-                                        <select name="department" id="department" class="form-control form-select">
-                                            <option value="" selected disabled>Select Department</option>
-                                            @foreach ($departments as $dept)
-                                            <option value="{{ $dept->id }}">{{ $dept->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="row">
-                                        <!-- employee Selection portion starts -->
-                                        @if(isset($parentReviewerIds) && isset($parentReviewerNames))
-                                        <!-- flow 1 -->
-                                        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
-                                            <label class="" for="">Employees</label>
-                                            <input type="hidden" name="employees" value="{{ $loggedInUser->id }}">
-                                            <input type="text" disabled class="form-control increment-input" placeholder="Employee" value="{{ $loggedInUser->name }}">
-                                        </div>
-                                        @else
-                                        <!-- flow 2 & 3 -->
-                                        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
-                                            <label class="" for="">Employees</label>
-                                            <div class="employee-selection-section">
-
-                                            </div>
-                                            <input type="hidden" name="employees" id="employeesSelectedValues">
-                                        </div>
-                                        @endif
-                                        <!-- employee Selection portion Ends -->
-
-                                        <!-- Reviewer Selection Portion Starts -->
-                                        @if(isset($parentReviewerIds) && isset($parentReviewerNames))
-                                        <!-- flow 3 -->
-                                        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
-                                            <label class="" for="">Reviewer</label>
-                                            <input type="hidden" class="form-control" name="reviewer" value="{{ $parentReviewerIds }}">
-                                            <input type="text" disabled class="form-control increment-input" placeholder="Reviewer" value="{{ $parentReviewerNames }}">
-                                        </div>
-                                        @elseif(isset($loggedManagerEmployees))
-                                        <!-- flow 2 -->
-                                        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
-                                            <label class="" for="">Reviewer</label>
-                                            @if(isset($getSameLevelManagers) && count($getSameLevelManagers) > 0)
-                                            <select class="select-reviewer-dropdown form-select form-control form-select" name="reviewer">
-                                                <option value="" selected disabled>Reviewer</option>
-                                                @foreach($getSameLevelManagers as $sameLevelManager)
-                                                <option @if($sameLevelManager->id == Auth::id()) selected @endif value="{{ $sameLevelManager->id }}">{{ $sameLevelManager->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            @else
-                                            <input type="hidden" name="reviewer" value="{{ $loggedUserDetails->id }}">
-                                            <input type="text" disabled class="form-control increment-input" placeholder="Reviewer" value="{{ $loggedUserDetails->name }}">
-                                            @endif
-                                        </div>
-                                        @else
-                                        <!-- flow 1 -->
-                                        <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xxl-3  mb-2">
-
-                                            <label class="" for="">Reviewer</label>
-
-                                            <select class="select-multiple-reviewer search-bar form-select form-control" name="reviewer[]" multiple="multiple">
-                                                @if(isset($allEmployeesList) && count($allEmployeesList) > 0)
-                                                @foreach($allEmployeesList as $employeeData)
-                                                <option value="{{ $employeeData->id }}">{{ $employeeData->name }}</option>
-                                                @endforeach
-                                                @else
-                                                <option value="">Select Reviewer</option>
-                                                @endif
-                                            </select>
-
-                                        </div>
-                                        <div class="col-sm-1 col-md-1 col-lg-1 col-xl-1 col-xxl-1   ">
-                                            <label class="" for=""></label>
-                                            <button id="" type="button" target="#reviewerReplaceSameLevel" class="btn py-1 px-3 btn btn-orange increment-btn  reviewerReplace">Change</button>
-                                        </div>
-
-                                        <div class=" col-sm-12 col-md-12 col-lg-4 col-xl-4 col-xxl-4  mb-3">
-                                            <label class="" for="">Final Reviewer</label>
-                                            <select class="form-control form-select select-hr-dropdown" name="hr_id">
-                                                @if(isset($allEmployeesList) && count($allEmployeesList) > 0)
-                                                @foreach($allEmployeesList as $employeeData)
-                                                <option value="{{ $employeeData->id }}">{{ $employeeData->name }}</option>
-                                                @endforeach
-                                                @else
-                                                <option value="">Select Reviewer</option>
-                                                @endif
-                                            </select>
-                                        </div>
-
-
-                                        @endif
-                                        <!-- Reviewer Selection Portion Ends -->
-                                    </div>
-                                </div>
-
-                                {{-- </form> --}}
-                        </div>
-                    </div>
-                    <div class="card  profile-box p-2 top-line ">
-                        <div class="card-body ">
-                            <div class="row">
-                                <div class="col-sm-12 col-md-12 col-lg-12 col-xxl-12 col-xl-12">
-                                    <h5 class="text-start">Goals / Areas of development</h5>
-                                </div>
-                                <div class="col-sm-12 col-md-5 col-lg-5 col-xxl-5 col-xl-5">
-                                    <label class="form-label">Select existing form from the Dropdown</label>
-                                </div>
-                                <div class="col-sm-12 col-md-6 col-lg-6 col-xxl-6 col-xl-6">
-                                    {{-- <form id="kpiTableForm"> --}}
-                                    @csrf
-
-                                    <select name="selected_kpi_form_id" class="ms-2 selectedKpiFormClass form-select form-control mb-2">
-
+                                    <label class="" for="calendar_type">Calendar Type</label>
+                                    <select name="calendar_type" id="calendar_type" class="form-select  form-control">
+                                        <option value="" selected disabled>Select Calendar Type</option>
+                                        <option name="financial_year" value="financial_year">Financial Year</option>
+                                        <option name="calendar_year" value="calendar_year">Calendar Year</option>
                                     </select>
 
                                 </div>
-                                <div class="col-sm-12 col-md-1 col-lg-1 col-xxl-1 col-xl-1 d-flex align-items-center text-start">
-                                    <i class="fa fa-refresh	refreshKPIFormDetails" aria-hidden="true"></i>
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
+
+                                    <label class="" for="year">Year</label>
+                                    <input type="hidden" name="hidden_calendar_year" id="hidden_calendar_year" value="">
+
+                                    <select name="year" id="year" disabled class="form-select form-control">
+                                        <option value="" selected disabled>Select year</option>
+                                        <option value="Jan-Dec">January - <?php echo date('Y'); ?> to December - <?= date('Y') ?> </option>
+                                        <option value="Apr-Mar">April - <?php echo date('Y'); ?> to March - <?= date('Y') + 1 ?></option>
+                                    </select>
+
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
+
+                                    <label class="" for="frequency">Frequency</label>
+                                    <select name="frequency" id="frequency" class="form-control form-select">
+                                        <option value="" selected disabled>Select Frequency</option>
+                                    </select>
+
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4  mb-2">
+
+                                    <label class="" for="assignment_period_start">Assignment Period</label>
+                                    <select name="assignment_period_start" id="assignment_period_start" class="form-control form-select">
+                                        <option value="" selected disabled>Select Assignment Period</option>
+                                    </select>
                                 </div>
 
-                                </form>
-                                <div class="col-sm-12 col-md-6 col-lg-6 col-xxl-6 col-xl-6 d-flex align-items-center text-start">
 
-                                    <!-- <a href="{{ route('showKPICreateForm') }}" target="_blank"> -->
-                                    <a class="createKpiFromOnClick cursor-pointer plus-sign" target="_blank">
-                                        <i class="fa fa-plus-circle me-2"></i>Create
-                                        KPI Form</a>
-
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4  mb-2">
+                                    <label class="" for="department">Department</label>
+                                    <select name="department" id="department" class="form-control form-select">
+                                        <option value="" selected disabled>Select Department</option>
+                                        @foreach ($departments as $dept)
+                                        <option value="{{ $dept->id }}">{{ $dept->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                                <div class="col-sm-12 col-md-6 col-lg-6 col-xxl-6 col-xl-6 text-end">
-                                    <button class="btn btn-orange mt-2" id="publish-goal">Publish</button>
+                                <div class="row">
+                                    <!-- employee Selection portion starts -->
+                                    @if(isset($parentReviewerIds) && isset($parentReviewerNames))
+                                    <!-- flow 1 -->
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
+                                        <label class="" for="">Employees</label>
+                                        <input type="hidden" name="employees" value="{{ $loggedInUser->id }}">
+                                        <input type="text" disabled class="form-control increment-input" placeholder="Employee" value="{{ $loggedInUser->name }}">
+                                    </div>
+                                    @else
+                                    <!-- flow 2 & 3 -->
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
+                                        <label class="" for="">Employees</label>
+                                        <div class="employee-selection-section">
+
+                                        </div>
+                                        <input type="hidden" name="employees" id="employeesSelectedValues">
+                                    </div>
+                                    @endif
+                                    <!-- employee Selection portion Ends -->
+
+                                    <!-- Reviewer Selection Portion Starts -->
+                                    @if(isset($parentReviewerIds) && isset($parentReviewerNames))
+                                    <!-- flow 3 -->
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
+                                        <label class="" for="">Reviewer</label>
+                                        <input type="hidden" class="form-control" name="reviewer" value="{{ $parentReviewerIds }}">
+                                        <input type="text" disabled class="form-control increment-input" placeholder="Reviewer" value="{{ $parentReviewerNames }}">
+                                    </div>
+                                    @elseif(isset($loggedManagerEmployees))
+                                    <!-- flow 2 -->
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
+                                        <label class="" for="">Reviewer</label>
+                                        @if(isset($getSameLevelManagers) && count($getSameLevelManagers) > 0)
+                                        <select class="select-reviewer-dropdown form-select form-control form-select" name="reviewer">
+                                            <option value="" selected disabled>Reviewer</option>
+                                            @foreach($getSameLevelManagers as $sameLevelManager)
+                                            <option @if($sameLevelManager->id == Auth::id()) selected @endif value="{{ $sameLevelManager->id }}">{{ $sameLevelManager->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @else
+                                        <input type="hidden" name="reviewer" value="{{ $loggedUserDetails->id }}">
+                                        <input type="text" disabled class="form-control increment-input" placeholder="Reviewer" value="{{ $loggedUserDetails->name }}">
+                                        @endif
+                                    </div>
+                                    @else
+                                    <!-- flow 1 -->
+                                    <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xxl-3  mb-2">
+
+                                        <label class="" for="">Reviewer</label>
+
+                                        <select class="select-multiple-reviewer search-bar form-select form-control" name="reviewer[]" multiple="multiple">
+                                            @if(isset($allEmployeesList) && count($allEmployeesList) > 0)
+                                            @foreach($allEmployeesList as $employeeData)
+                                            <option value="{{ $employeeData->id }}">{{ $employeeData->name }}</option>
+                                            @endforeach
+                                            @else
+                                            <option value="">Select Reviewer</option>
+                                            @endif
+                                        </select>
+
+                                    </div>
+                                    <div class="col-sm-1 col-md-1 col-lg-1 col-xl-1 col-xxl-1   ">
+                                        <label class="" for=""></label>
+                                        <button id="" type="button" target="#reviewerReplaceSameLevel" class="btn py-1 px-3 btn btn-orange increment-btn  reviewerReplace">Change</button>
+                                    </div>
+
+                                    <div class=" col-sm-12 col-md-12 col-lg-4 col-xl-4 col-xxl-4  mb-3">
+                                        <label class="" for="">Final Reviewer</label>
+                                        <select class="form-control form-select select-hr-dropdown" name="hr_id">
+                                            @if(isset($allEmployeesList) && count($allEmployeesList) > 0)
+                                            @foreach($allEmployeesList as $employeeData)
+                                            <option value="{{ $employeeData->id }}">{{ $employeeData->name }}</option>
+                                            @endforeach
+                                            @else
+                                            <option value="">Select Reviewer</option>
+                                            @endif
+                                        </select>
+                                    </div>
+
+
+                                    @endif
+                                    <!-- Reviewer Selection Portion Ends -->
                                 </div>
                             </div>
 
-                        </div>
+                            {{-- </form> --}}
                     </div>
                 </div>
-
-            </div>
-        </div>
-    </div>
-
-
-    <!-- Change Reviewer window -->
-
-    <div id="reviewerReplaceSameLevel" class="modal custom-modal fade" role="dialog">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable fad  modal-md" role="document">
-            <div class="modal-content top-line">
-                <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
-                        Change Reviewer</h5>
-                    <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="changeReviewForm" action="{{ route('changeReviewerSelection') }}" method="POST">
-                        @csrf
-                        <h6 for="FormSelectDefault" class="form-label text-muted">Reviewer</h6>
+                <div class="card  profile-box p-2 top-line ">
+                    <div class="card-body ">
                         <div class="row">
-                            <div class="col-12 col-md-12 col-lg-12 col-xxl-12 col-xl-12">
-                                <label class="" for="">Existing Reviewer</label>
-                                <select class="change-exiting-reviewer form-control" name="oldReviewerName">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xxl-12 col-xl-12">
+                                <h5 class="text-start">Goals / Areas of development</h5>
+                            </div>
+                            <div class="col-sm-12 col-md-5 col-lg-5 col-xxl-5 col-xl-5">
+                                <label class="form-label">Select existing form from the Dropdown</label>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xxl-6 col-xl-6">
+                                {{-- <form id="kpiTableForm"> --}}
+                                @csrf
+
+                                <select name="selected_kpi_form_id" class="ms-2 selectedKpiFormClass form-select form-control mb-2">
 
                                 </select>
-                            </div>
-                            <div class="col-12 col-md-12 col-lg-12 col-xxl-12 col-xl-12">
-                                <label class="" for="">New Reviewer</label>
-                                <select class="with-new-reviewer form-control" name="newReviewerName">
 
-                                </select>
-                                <span style="color: red;" id="reviewerChangeError"></span>
+                            </div>
+                            <div class="col-sm-12 col-md-1 col-lg-1 col-xxl-1 col-xl-1 d-flex align-items-center text-start">
+                                <i class="fa fa-refresh	refreshKPIFormDetails" aria-hidden="true"></i>
+                            </div>
+
+                            </form>
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xxl-6 col-xl-6 d-flex align-items-center text-start">
+
+                                <!-- <a href="{{ route('showKPICreateForm') }}" target="_blank"> -->
+                                <a class="createKpiFromOnClick cursor-pointer plus-sign" target="_blank">
+                                    <i class="fa fa-plus-circle me-2"></i>Create
+                                    KPI Form</a>
+
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xxl-6 col-xl-6 text-end">
+                                <button class="btn btn-orange mt-2" id="publish-goal">Publish</button>
                             </div>
                         </div>
-                        <div class="content-footer text-end">
-                            <button class="btn btn-orange waves-effect waves-light" type="submit">
-                                Save
-                            </button>
 
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- Change Reviewer window -->
+
+<div id="reviewerReplaceSameLevel" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable fad  modal-md" role="document">
+        <div class="modal-content top-line">
+            <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
+                <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
+                    Change Reviewer</h5>
+                <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="changeReviewForm" action="{{ route('changeReviewerSelection') }}" method="POST">
+                    @csrf
+                    <h6 for="FormSelectDefault" class="form-label text-muted">Reviewer</h6>
+                    <div class="row">
+                        <div class="col-12 col-md-12 col-lg-12 col-xxl-12 col-xl-12">
+                            <label class="" for="">Existing Reviewer</label>
+                            <select class="change-exiting-reviewer form-control" name="oldReviewerName">
+
+                            </select>
                         </div>
-                </div>
-                </form>
+                        <div class="col-12 col-md-12 col-lg-12 col-xxl-12 col-xl-12">
+                            <label class="" for="">New Reviewer</label>
+                            <select class="with-new-reviewer form-control" name="newReviewerName">
+
+                            </select>
+                            <span style="color: red;" id="reviewerChangeError"></span>
+                        </div>
+                    </div>
+                    <div class="content-footer text-end">
+                        <button class="btn btn-orange waves-effect waves-light" type="submit">
+                            Save
+                        </button>
+
+                    </div>
+            </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+<!-- add employee  Modal-->
+</div>
+
+<!-- Vertically Centered -->
+<div id="notificationModal" class="modal custom-modal fade" role="dialog" aria-hidden="true" style="opacity:1; display:none;background:#00000073;">
+    <div class="modal-dialog modal-dialog-centered   modal-md" role="document">
+        <div class="modal-content top-line">
+            <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
+                <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
+                Success</h5>
+                <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                    <h4 class="mb-3" id="modalNot">Data Saved Successfully!</h4>
+                    <p class="text-muted mb-4" id="modalBody"> Table Saved, Please publish goals.</p>
+                    <div class="hstack gap-2 justify-content-center">
+                        <button type="button" class="btn btn-light close-modal" data-bs-dismiss="modal">Close</button>
+                    </div>
 
             </div>
         </div>
     </div>
+</div>
 
-
-    <!-- Vertically Centered -->
-    <div id="notificationModal" class="modal custom-modal fade" role="dialog" aria-hidden="true" style="opacity:1; display:none;background:#00000073;">
-        <div class="modal-dialog modal-dialog-centered   modal-md" role="document">
-            <div class="modal-content top-line">
-                <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
-                        Success</h5>
-                    <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="text-center">
-                    <h4 class="mb-1" id="modalNot">Data Saved Successfully!</h4>
-                    <span class="text-muted mb-2 text-muted fw-bold" id="modalBody"> Table Saved, Please publish goals.</span>
-                    </div>
-                    <div class="text-end">
-                        <button type="button" class="btn btn-orange close-modal" data-bs-dismiss="modal">Close</button>
-                    </div>
-
-                </div>
+<!-- employee edit modal starts -->
+<div id="employeeSelectionModal" class="modal custom-modal fade" role="dialog" aria-hidden="true" style="opacity:1; display:none;background:#00000073;">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-md" role="document">
+        <div class="modal-content top-line">
+            <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
+                <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
+                    Edit Employee</h5>
+                <button type="button" class="close outline-none bg-transparent border-0 h3 " data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
             </div>
-        </div>
-    </div>
+            <div class="modal-body">
 
-    <!-- employee edit modal starts -->
-    <div id="employeeSelectionModal" class="modal custom-modal fade" role="dialog" aria-hidden="true" style="opacity:1; display:none;background:#00000073;">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-md" role="document">
-            <div class="modal-content top-line">
-                <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
-                    <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
-                        Edit Employee</h5>
-                    <button type="button" class="close outline-none bg-transparent border-0 h3 " data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-
-                <label for="form-lael">Choose Employee</label>
-                    @if(isset($loggedManagerEmployees))
-                    <!-- flow 2 -->
-                    <select class="select-employee-dropdown form-control" name="employees[]" multiple="multiple">
-                        @foreach($loggedManagerEmployees as $employeesSelection)
-                        <option selected value="{{ $employeesSelection->id }}">{{ $employeesSelection->name }}</option>
-                        @endforeach
-                    </select>
-                    <button class="btn btn-orange py-0 px-2" onclick="resetEmployeesList()"><span class="mr-10 icon"></span>Reset Employees</button>
-                    @else
-                    <!-- flow 1 -->
-                    <select class="select-employee-dropdown form-control form-select" id="selectedEmployeeDropdownId" name="employees[]" multiple="multiple">
-                        @if(isset($allEmployeesWithoutLoggedUserList) && count($allEmployeesWithoutLoggedUserList) > 0)
-                        @foreach($allEmployeesWithoutLoggedUserList as $employeeList)
-                        <option value="{{ $employeeList->id }}">{{ $employeeList->name }}</option>
-                        @endforeach
-                        @endif
-                    </select>
+                @if(isset($loggedManagerEmployees))
+                <!-- flow 2 -->
+                <select class="select-employee-dropdown form-control" name="employees[]" multiple="multiple">
+                    @foreach($loggedManagerEmployees as $employeesSelection)
+                    <option selected value="{{ $employeesSelection->id }}">{{ $employeesSelection->name }}</option>
+                    @endforeach
+                </select>
+                <button class="btn btn-orange py-0 px-2" onclick="resetEmployeesList()"><span class="mr-10 icon"></span>Reset Employees</button>
+                @else
+                <!-- flow 1 -->
+                <select class="select-employee-dropdown form-control form-select" id="selectedEmployeeDropdownId" name="employees[]" multiple="multiple">
+                    @if(isset($allEmployeesWithoutLoggedUserList) && count($allEmployeesWithoutLoggedUserList) > 0)
+                    @foreach($allEmployeesWithoutLoggedUserList as $employeeList)
+                    <option value="{{ $employeeList->id }}">{{ $employeeList->name }}</option>
+                    @endforeach
                     @endif
+                </select>
+                @endif
 
-                    @if(isset($loggedManagerEmployees))
-                    <div class="buttons d-flex justify-content-end align-items-center mt-2 ">
-                        <!-- <button type="button" class="btn btn-border-orange close-modal " data-bs-dismiss="modal">Close</button> -->
-                        <button class="btn btn-primary ml-2" id="edit-employee">Save</button>
-                    </div>
-                    @else
-                    <div class="buttons d-flex justify-content-end align-items-center mt-2 ">
-                        <!-- <button type="button" class="btn btn-border-orange close-modal" data-bs-dismiss="modal">Close</button> -->
-                        <button class="btn btn-orange ml-2" id="edit-employee-based-on-reviewer">Save</button>
-                    </div>
-                    @endif
-
+                @if(isset($loggedManagerEmployees))
+                <div class="buttons d-flex justify-content-end align-items-center mt-2 ">
+                    <!-- <button type="button" class="btn btn-border-orange close-modal " data-bs-dismiss="modal">Close</button> -->
+                    <button class="btn btn-primary ml-2" id="edit-employee">Save</button>
                 </div>
+                @else
+                <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
+                    <!-- <button type="button" class="btn btn-border-orange close-modal" data-bs-dismiss="modal">Close</button> -->
+                    <button class="btn btn-orange ml-2" id="edit-employee-based-on-reviewer">Save</button>
+                </div>
+                @endif
+
             </div>
         </div>
-
     </div>
+
+
     <div style="z-index: 11">
         <div id="errorMessageNotif1" class="toast toast-border-danger overflow-hidden mt-3" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-body">
@@ -571,8 +705,13 @@
         </div>
     </div>
 
+
+
 </div>
 @endsection
+
+
+
 
 @section('script')
     <!-- Prem assets -->
@@ -610,7 +749,7 @@
     <?php } ?>
     <script>
 
-       
+
 
         $('.refreshKPIFormDetails').click(function(){
             $('.loader').show();
@@ -725,7 +864,7 @@
                 dropdownParent: $("#add-goals-modal"),
                 width: '98%'
             });
-            
+
             $('.select-employee-dropdown').select2({
                 dropdownParent: $("#employeeSelectionModal"),
                 width: '100%'
@@ -809,7 +948,7 @@
                     });
                     var selectedEmployeesId = $('#selectedEmployeeDropdownId').val();
                     changeAssigneeProfilePicOnSelection(selectedEmployeesId);
-                    
+
                 },
                 error: function(error) {
                     console.log('something went wrong');
@@ -829,7 +968,7 @@
                     selectedEmployeeId : selectedEmployeeId,
                 },
                 success: function(data) {
-                    
+
                     if(data.status == true ){
                         $.each(data.result.removeSelectedEmployee, function(i, value) {
                             $(".select-employee-dropdown option[value="+value+"]").remove();
@@ -1032,7 +1171,7 @@
         function checkReviewersExistOrNot(){
             var values = [];
             var selectedReviewersVal = $(".select-multiple-reviewer").val();
-            
+
             console.log(selectedReviewersVal);
             $.each (selectedReviewersVal, function(key,val){
                 console.log(key);
@@ -1189,7 +1328,7 @@
                     employeeSelected.push($(this).val());
                 }
             });
-            @if (auth()->user()->hasrole('Employee'))
+            @if (Str::contains( currentLoggedInUserRole(), ["Employee"]))
             @else
                 // var imgHtml ="";
                 // var count = 0;
@@ -1229,7 +1368,7 @@
                             $("#kpiTableForm :input").prop("disabled", true);
                             $(".table-btn").prop('disabled', true);
 
-                            @if (auth()->user()->hasrole('Employee'))
+                            @if (Str::contains( currentLoggedInUserRole(), ["Employee"]))
                                 $('#modalBody').html("Goals published. Email Sent to your Manager");
                                 $('#notificationModal').show();
                                 $('#notificationModal').removeClass('fade');
@@ -1278,7 +1417,7 @@
         }
 
         $("#changeReviewForm").submit(function(e) {
-            
+
             // var reviewersName =$("#reviewersAccordingAssignee").val();
             // var reviewersIds =$("#selectedReviewIds").val();
 
@@ -1301,10 +1440,10 @@
             $(".select-multiple-reviewer").val(result);
             $('.select-multiple-reviewer').trigger('change.select2');
 
-            
+
             $('#reviewerReplaceSameLevel').hide();
             $('#reviewerReplaceSameLevel').addClass('fade');
-            
+
             $('#add-goals-modal').modal('show');
             checkReviewersExistOrNot();
         })

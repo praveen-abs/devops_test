@@ -19,7 +19,6 @@
 
                 <!-- end Dashboard Menu -->
                 <li class="nav-item">
-                    @if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin'))
                     <a class="nav-link sidebar menu-link pt-0" href="#">
                         <i> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#686363" class="bi bi-grid-fill" viewBox="0 0 16 16">
                                 <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3z" />
@@ -27,50 +26,12 @@
                         </i>
                         <span data-key="t-landing">Dashboard</span>
                     </a>
-                    @else
-                    <a class="nav-link sidebar menu-link pt-0" href="#">
-                        <i> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#686363" class="bi bi-grid-fill" viewBox="0 0 16 16">
-                                <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3z" />
-                            </svg>
-                        </i>
-                        <span data-key="t-landing">Dashboard</span>
-                    </a>
-                    @endif
                 </li>
 
 
                 <!-- CRM -->
 
                 <li class="nav-item">
-                    @if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin'))
-
-                    <a class="nav-link sidebar menu-link pt-0" href="#" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarRoles">
-                        <i>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
-                                <g id="Group_34352" data-name="Group 34352" transform="translate(2635 -5134)">
-                                    <path id="handshake-angle-solid_1_" data-name="handshake-angle-solid (1)" d="M5.792,2.187h-1.8V2.8a.889.889,0,0,1-.766.9.855.855,0,0,1-.943-.85V1.419l-.291.175a1.751,1.751,0,0,0-.848,1.5l-.95.55a.379.379,0,0,0-.139.518L1,5.806a.382.382,0,0,0,.519.139l1.227-.709H4.368a.761.761,0,0,0,.76-.76.57.57,0,0,0,.57-.57v-.57h.095a.285.285,0,0,0,.285-.285v-.57A.294.294,0,0,0,5.792,2.187Zm1.753-.434L6.6.107a.382.382,0,0,0-.519-.139L4.85.677H4.107a2.406,2.406,0,0,0-1.271.364.382.382,0,0,0-.177.321v1.5a.475.475,0,0,0,.95,0V1.807H5.792a.665.665,0,0,1,.665.665V2.81l.95-.549A.366.366,0,0,0,7.546,1.752Z" transform="translate(-2630.798 5139.144)" fill="#686363" />
-                                    <path id="gear-wide" d="M8.931.727a.961.961,0,0,0-1.864,0L7,1.013a.96.96,0,0,1-1.622.434l-.2-.211a.96.96,0,0,0-1.613.931l.08.284A.96.96,0,0,1,2.451,3.638l-.284-.081A.96.96,0,0,0,1.236,5.17l.211.2A.96.96,0,0,1,1.013,7l-.286.071a.961.961,0,0,0,0,1.864L1.013,9a.96.96,0,0,1,.434,1.622l-.211.2a.96.96,0,0,0,.931,1.613l.284-.08a.96.96,0,0,1,1.187,1.187l-.081.283a.96.96,0,0,0,1.613.931l.2-.211A.96.96,0,0,1,7,14.986l.071.286a.961.961,0,0,0,1.864,0L9,14.986a.96.96,0,0,1,1.622-.434l.2.211a.96.96,0,0,0,1.613-.931l-.08-.284a.96.96,0,0,1,1.187-1.187l.283.081a.96.96,0,0,0,.931-1.613l-.211-.2A.96.96,0,0,1,14.986,9l.286-.071a.961.961,0,0,0,0-1.864L14.986,7a.96.96,0,0,1-.434-1.622l.211-.2a.96.96,0,0,0-.931-1.613l-.284.08a.96.96,0,0,1-1.187-1.186l.081-.284a.96.96,0,0,0-1.613-.931l-.2.211A.96.96,0,0,1,9,1.013ZM8,13a5,5,0,1,1,5-5,5,5,0,0,1-5,5Z" transform="translate(-2635 5134)" fill="#686363" />
-                                </g>
-                            </svg>
-
-
-                        </i>
-                        <span>CRM</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="crmDrop-Down">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="#" class="nav-link sidebar py-1">
-                                    <span>Vendor</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-
-                                <a href="#" class="nav-link sidebar py-1" role="button"><span>Client</span></a>
-                            </li>
-                        </ul>
-                    </div>
-                    @endif
                 </li>
 
 
@@ -115,51 +76,6 @@
 
 
                 <!-- Organization -->
-                @if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin'))
-                <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0" href="#" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarRoles">
-
-                        <i><svg xmlns="http://www.w3.org/2000/svg" width="22.04" height="17.142" viewBox="0 0 22.04 17.142">
-                                <path id="sitemap-solid" d="M7.959,33.837A1.837,1.837,0,0,1,9.8,32h2.449a1.837,1.837,0,0,1,1.837,1.837v2.449a1.837,1.837,0,0,1-1.837,1.837h-.306v1.531h5.816A2.144,2.144,0,0,1,19.9,41.8V43.02H20.2a1.837,1.837,0,0,1,1.837,1.837v2.449A1.837,1.837,0,0,1,20.2,49.142H17.754a1.837,1.837,0,0,1-1.837-1.837V44.856a1.837,1.837,0,0,1,1.837-1.837h.306V41.8a.307.307,0,0,0-.306-.306H11.938V43.02h.306a1.837,1.837,0,0,1,1.837,1.837v2.449a1.837,1.837,0,0,1-1.837,1.837H9.8a1.837,1.837,0,0,1-1.837-1.837V44.856A1.837,1.837,0,0,1,9.8,43.02H10.1V41.489H4.285a.307.307,0,0,0-.306.306V43.02h.306a1.837,1.837,0,0,1,1.837,1.837v2.449a1.837,1.837,0,0,1-1.837,1.837H1.837A1.837,1.837,0,0,1,0,47.305V44.856A1.837,1.837,0,0,1,1.837,43.02h.306V41.8a2.143,2.143,0,0,1,2.143-2.143H10.1V38.122H9.8a1.837,1.837,0,0,1-1.837-1.837Z" transform="translate(0 -32)" fill="#686363" />
-                            </svg>
-                        </i>
-
-                        <span>Organization</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="orgDrop-Down">
-                        <ul class="nav nav-sm flex-column">
-
-                            <li class="nav-item ">
-                                <a href="#" id="tds" class="nav-link sidebar py-1"><span>Directory </span></a>
-                            </li>
-                            <li class="nav-item ">
-                                <a href="#" id="tds" class="nav-link sidebar py-1"><span>ORG
-                                        structure</span></a>
-                            </li>
-
-                            <li class="nav-item ">
-                                <a href="#" id="" class="nav-link sidebar py-1" aria-expanded="false"><span>Onboarding</span> </a>
-                            </li>
-                            <li class="nav-item ">
-                                <a href="#" id="" class="nav-link sidebar py-1" aria-expanded="false"><span>Onboarding Bulk Upload</span> </a>
-                            </li>
-                            <li class="nav-item ">
-                                <a href="#" id="" class="nav-link sidebar py-1" aria-expanded="false"><span>Onboarding Quick Upload</span> </a>
-                            </li>
-                            <li class="nav-item ">
-                                <a href="#" id="tds" class="nav-link sidebar py-1"><span>Exit</span></a>
-                            </li>
-                            <li class="nav-item ">
-                                <a href="#" id="tds" class="nav-link sidebar py-1"><span>Documents</span></a>
-                            </li>
-                            <li class="nav-item ">
-                                <a href="#" id="tds" class="nav-link sidebar py-1"><span>Assets</span></a>
-                            </li>
-
-                        </ul>
-                    </div>
-                </li>
-                @endif
 
                 <!-- Performance -->
 
@@ -185,92 +101,14 @@
                                                         <li class="nav-item">
                                 <a href="#" class="nav-link"><span>PMS Config</span></a>
                             </li>
-                            @can('360_Degree_Review')
                             <li class="nav-item">
                                 <a href="#" class="nav-link sidebar py-1" role="button"><span>360
                                         Degree
                                         Review</span></a>
                             </li>
-                            @endcan
                         </ul>
                     </div>
                 </li>
-
-                @if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin') ||
-                auth()->user()->hasrole('Manager'))
-                <!-- team -->
-
-                <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0" href="#" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarRoles">
-                        <i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="11.2" viewBox="0 0 16 11.2">
-                                <path id="people-group-solid" d="M4.6,33.4A1.4,1.4,0,1,1,3.2,32,1.4,1.4,0,0,1,4.6,33.4Zm.61,2.707A3.594,3.594,0,0,0,4,38.8a3.459,3.459,0,0,0,.8,2.262V41.6a.8.8,0,0,1-.8.8H2.4a.8.8,0,0,1-.8-.8v-.67A2.8,2.8,0,0,1,2.8,35.6h.8a2.841,2.841,0,0,1,1.61.507ZM1.6,37.343a1.6,1.6,0,0,0,0,2.115ZM11.2,41.6v-.537a3.6,3.6,0,0,0-.41-4.955A2.788,2.788,0,0,1,12.4,35.6h.8a2.8,2.8,0,0,1,1.2,5.33v.67a.8.8,0,0,1-.8.8H12A.8.8,0,0,1,11.2,41.6Zm3.2-2.142a1.6,1.6,0,0,0,0-2.115ZM14.2,33.4A1.4,1.4,0,1,1,12.8,32,1.4,1.4,0,0,1,14.2,33.4Zm-7.8.2A1.6,1.6,0,1,1,8,35.2,1.6,1.6,0,0,1,6.4,33.6Zm4.8,5.2a2.8,2.8,0,0,1-1.6,2.53V42.4a.8.8,0,0,1-.8.8H7.2a.8.8,0,0,1-.8-.8V41.33A2.8,2.8,0,0,1,7.6,36h.8A2.8,2.8,0,0,1,11.2,38.8ZM6.4,39.857V37.743a1.6,1.6,0,0,0,0,2.115Zm3.2-2.115v2.115a1.6,1.6,0,0,0,0-2.115Z" transform="translate(0 -32)" fill="#686363" />
-                            </svg>
-
-                        </i>
-                        <span>Team</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="teamDrop-Down">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="#" class="nav-link sidebar py-1"><span>Summary</span></a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link sidebar py-1" role="button"><span>Leave</span></a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link sidebar py-1" role="button"><span>Attendance</span></a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link sidebar py-1" role="button"><span>Expenses & Trevel</span></a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link sidebar py-1" role="button"><span>Timesheet</span></a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link sidebar py-1" role="button"><span>Profile
-                                        change</span></a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link sidebar py-1" role="button"><span>Salary
-                                        on
-                                        hold</span></a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link sidebar py-1" role="button"><span>Performance</span></a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                @endif
-
-                @if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin'))
-                <!-- pay roll -->
-
-                <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0" href="#" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarRoles">
-                        <i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="12.652" viewBox="0 0 16 12.652">
-                                <g id="Group_34184" data-name="Group 34184" transform="translate(-18 -404.98)">
-                                    <path id="hand-holding-dollar-solid_1_" data-name="hand-holding-dollar-solid (1)" d="M15.867,12.712a1.114,1.114,0,0,0-1.562-.236l-3.343,2.462H7.595a.429.429,0,0,1-.422-.447.446.446,0,0,1,.422-.447H9.78a.95.95,0,0,0,.932-.743.9.9,0,0,0-.883-1.044H5.336a3.339,3.339,0,0,0-2.07.733l-1.3,1.054L.422,14.019A.471.471,0,0,0,0,14.491v2.68a.445.445,0,0,0,.422.447h9.665a2.926,2.926,0,0,0,1.723-.566C16.126,13.907,16.232,13.209,15.867,12.712Z" transform="translate(18 400.015)" fill="#686363" />
-                                    <path id="bx-rupee" d="M12.493,6.635V6H9v.635h1.112a.951.951,0,0,1,.894.635H9v.635h2.006a.951.951,0,0,1-.894.635H9v.767l1.774,1.774h.9L9.767,9.176h.345a1.59,1.59,0,0,0,1.556-1.27h.826V7.27h-.826a1.567,1.567,0,0,0-.293-.635Z" transform="translate(15.253 398.98)" fill="#686363" />
-                                </g>
-                            </svg>
-                        </i>
-
-
-                        <span>Payroll</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="payRollDrop-Down">
-                        <ul class="nav nav-sm flex-column">
-
-                            <li class="nav-item">
-                                <a href="#" class="nav-link sidebar py-1" role="button"><span>Pay
-                                        Run</span></a>
-                            </li>
-
-                        </ul>
-                    </div>
-                </li>
-                @endif
 
                 <!-- pay check -->
                 <li class="nav-item">
@@ -286,23 +124,17 @@
                             <li class="nav-item">
                                 <a href="#" class="nav-link sidebar py-1" role="button"><span>Dashboard</span></a>
                             </li>
-                            @can('Team')
                             <li class="nav-item">
                                 <a href="#" class="nav-link sidebar py-1" role="button"><span>Salary
                                         Details</span></a>
                             </li>
-                            @endcan
-                            @can('ORG')
                             <li class="nav-item">
                                 <a href="#" class="nav-link sidebar py-1" role="button"><span>Investments</span></a>
                             </li>
-                            @endcan
-                            @can('360_Degree_Review')
                             <li class="nav-item">
                                 <a href="#" class="nav-link sidebar py-1" role="button"><span>
                                         Form 16</span></a>
                             </li>
-                            @endcan
                         </ul>
 
 
@@ -424,29 +256,6 @@
                         </ul>
                     </div>
                 </li>
-
-                @if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin'))
-                <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0" href="#" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
-                        <i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#686363" class="bi bi-gear-fill" viewBox="0 0 16 16">
-                                <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z" />
-                            </svg>
-                        </i>
-                        <span>Configuration</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="configDrop-down">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="#" class="nav-link"><span>Master Config</span></a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link"><span> Client
-                                        Onboarding</span></a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                @endif
 
                 <!-- exit -->
                 <li class="nav-item">

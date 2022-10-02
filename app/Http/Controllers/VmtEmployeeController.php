@@ -138,7 +138,7 @@ class VmtEmployeeController extends Controller
             $compensatory = Compensatory::where('user_id', $employee->id)->first();
             $india = Countries::where('country_code', 'IN')->first();
             $emp = VmtEmployeeOfficeDetails::all();
-            $emp_details = VmtEmployeeOfficeDetails::where('emp_id', $clientData->id)->first();
+            $emp_details = VmtEmployeeOfficeDetails::where('user_id', $clientData->id)->first();
             // dd($emp);
             $department = Department::all();
             $bank = Bank::all();
@@ -204,9 +204,9 @@ class VmtEmployeeController extends Controller
                 'active' => '0',
                 'is_onboarded' => '1',
                 'onboard_type' => 'normal',
+                'org_role' => '5',
                 'is_ssa' => '0'
             ]);
-            $user->assignRole("Employee");
 
             $newEmployee = new VmtEmployee;
             $newEmployee->userid = $user->id;
@@ -288,7 +288,6 @@ class VmtEmployeeController extends Controller
 
                 //Create Employee Details
                 $empOffice  = new VmtEmployeeOfficeDetails;
-                $empOffice->emp_id = $newEmployee->id; // Need to remove this in future
                 $empOffice->user_id = $newEmployee->userid; //Link between USERS and VmtEmployeeOfficeDetails table
                 $empOffice->department_id = $row["department"]; // => "lk"
                 $empOffice->process = $row["process"]; // => "k"
@@ -395,8 +394,8 @@ class VmtEmployeeController extends Controller
             //$row = $request->all();
             $user =  User::where('email',  $row["email"])->first();
             $user->is_onboarded = '1';
+            $user->org_role ='5'; //employee role
             $user->save();
-            $user->assignRole("Employee");
 
             $newEmployee = VmtEmployee::where('userid', $user->id)->first();
             $newEmployee->userid = $user->id;
@@ -456,7 +455,6 @@ class VmtEmployeeController extends Controller
             if ($newEmployee) {
                 $empOffice  = VmtEmployeeOfficeDetails::where('user_id', $user->id)->first();
                // dd($empOffice);
-                $empOffice->emp_id = $newEmployee->id; // Need to remove this in future
                 $empOffice->user_id = $newEmployee->userid; //Link between USERS and VmtEmployeeOfficeDetails table
                 $empOffice->department_id = $row["department"]; // => "lk"
                 $empOffice->process = $row["process"]; // => "k"
@@ -779,10 +777,10 @@ class VmtEmployeeController extends Controller
                 'is_onboarded' => '0',
                 'onboard_type' => 'bulk',
                 'is_ssa' => '0',
+                'org_role' =>'5', //employee role
                 'is_default_password_updated' => '0'
             ]);
             $user->save();
-            $user->assignRole("Employee");
 
             // var_dump($row['dob']);
             //  dd($row['dob'];
@@ -840,7 +838,6 @@ class VmtEmployeeController extends Controller
 
             if ($newEmployee) {
                 $empOffice  = new VmtEmployeeOfficeDetails;
-                $empOffice->emp_id = $newEmployee->id;
                 $empOffice->user_id = $newEmployee->userid;
                 $empOffice->department_id = $row["department"];
                 $empOffice->process = $row["process"];
@@ -1216,11 +1213,10 @@ class VmtEmployeeController extends Controller
                 'onboard_type' => 'quick',
                 'is_ssa' => '0',
                 'is_default_password_updated' => '0',
-
+                'org_role' => '5',
             ]);
 
             $user->save();
-            $user->assignRole("Employee");
 
             $newEmployee = new VmtEmployee;
             $newEmployee->userid = $user->id;
@@ -1244,7 +1240,6 @@ class VmtEmployeeController extends Controller
 
             if ($newEmployee) {
                 $empOffice  = new VmtEmployeeOfficeDetails;
-                $empOffice->emp_id      = $newEmployee->id;
                 $empOffice->user_id     = $newEmployee->userid;
                 $empOffice->designation = $row["designation"];
 

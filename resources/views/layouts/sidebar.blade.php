@@ -254,8 +254,7 @@
                     </div>
                 </li>
 
-                @if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin') ||
-                auth()->user()->hasrole('Manager'))
+                @if((Str::contains( currentLoggedInUserRole(), ["Admin","HR","Manager"]) ))
                 <!-- team -->
 
                 <li class="nav-item">
@@ -344,23 +343,17 @@
                             <li class="nav-item">
                                 <a href="{{route('paycheckDashboard')}}" class="nav-link sidebar py-1" role="button"><span>Dashboard</span></a>
                             </li>
-                            @can('Team')
                             <li class="nav-item">
                                 <a href="{{route('vmt_salary_details')}}" class="nav-link sidebar py-1" role="button"><span>Salary
                                         Details</span></a>
                             </li>
-                            @endcan
-                            @can('ORG')
                             <li class="nav-item">
                                 <a href="{{route('vmt-investments-route')}}" class="nav-link sidebar py-1" role="button"><span>Investments</span></a>
                             </li>
-                            @endcan
-                            @can('360_Degree_Review')
                             <li class="nav-item">
                                 <a href="{{route('vmt-form16-route')}}" class="nav-link sidebar py-1" role="button"><span>
                                         Form 16</span></a>
                             </li>
-                            @endcan
                         </ul>
                     </div>
                 </li>

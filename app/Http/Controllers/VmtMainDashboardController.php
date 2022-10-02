@@ -37,6 +37,7 @@ use App\Http\Controllers\VmtEmployeeController;
 use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class VmtMainDashboardController extends Controller
 {
@@ -212,16 +213,17 @@ class VmtMainDashboardController extends Controller
         // get praise data
         $praiseData = VmtPraise::orderBy('created_at','DESC')->get();
 
-        if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin')) {
+        if(Str::contains( currentLoggedInUserRole(), ["Admin","HR"]) )
+        {
             return view('vmt_hr_dashboard', compact( 'dashboardEmployeeEventsData', 'checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData'));
         }
         else
-        if(auth()->user()->hasrole('Manager'))
+        if(Str::contains( currentLoggedInUserRole(), ["Manager"]) )
         {
             return view('vmt_manager_dashboard', compact( 'dashboardEmployeeEventsData','checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData'));
         }
         else
-        if(auth()->user()->hasrole('Employee'))
+        if(Str::contains( currentLoggedInUserRole(), ["Employee"]) )
         {
             return view('vmt_employee_dashboard', compact( 'dashboardEmployeeEventsData','checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData','announcementData','praiseData'));
         }

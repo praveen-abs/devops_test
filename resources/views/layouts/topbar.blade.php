@@ -72,10 +72,6 @@
                     </div>
 
                     <div class="notify-content d-flex justify-content-center align-items-center">
-                        @hasrole("Employee")
-
-                        @else
-                        @endhasrole
 
                         <!--DROPDOWN CODE WAS HERE-->
                         <div class="dropdown topbar-head-dropdown ms-1 ">
@@ -275,7 +271,7 @@
                                 <h6 class="dropdown-header">Welcome </h6>
                                 <a class="dropdown-item" href="{{route('pages-profile')}}"><i class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i> <span class="align-middle">Profile</span></a>
 
-                                @if(auth()->user()->hasrole('HR') || auth()->user()->hasrole('Admin'))
+                                @if(Str::contains( currentLoggedInUserRole(), ["Admin","HR"]) )
 
                                 <a class="dropdown-item" href="{{route('vmt_topbar_settings')}}"><i class="mdi mdi-cog-outline text-muted fs-16 align-middle me-1"></i> <span class="align-middle">Settings</span></a>
                                 @endif

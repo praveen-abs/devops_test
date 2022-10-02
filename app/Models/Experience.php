@@ -12,7 +12,6 @@ class Experience extends Model
     protected $table = 'vmt_employee_experiences';
 
     protected $fillable = [
-        'emp_id',
         'user_id',
         'company_name',
         'location',

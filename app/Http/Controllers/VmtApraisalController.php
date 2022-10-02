@@ -25,6 +25,8 @@ use App\Notifications\ViewNotification;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Str;
+
 
 class VmtApraisalController extends Controller
 {
@@ -244,7 +246,7 @@ class VmtApraisalController extends Controller
         $empCount = VmtEmployeePMSGoals::groupBy('employee_id')->count();
         $subCount = VmtEmployeePMSGoals::groupBy('employee_id')->where('is_hr_submitted', true)->count();
         $departments = Department::where('is_active', 1)->get();
-        if (auth()->user()->hasrole('Employee')) {
+        if(Str::contains( currentLoggedInUserRole(), ["Employee"]) ){
             $emp = VmtEmployee::join('vmt_employee_office_details',  'user_id', '=', 'vmt_employee_details.userid')->where('userid', auth()->user()->id)->first();
             $rev = VmtEmployee::where('emp_no', $emp->l1_manager_code)->first();
             $users = User::where('id', $rev->userid)->get();
@@ -274,7 +276,7 @@ class VmtApraisalController extends Controller
                 }
             }
             return view('vmt_pms_assigngoals', compact('users','empGoals','userCount','empCount','subCount', 'config', 'show', 'department'));
-        } elseif (auth()->user()->hasrole('Manager')) {
+        } elseif (Str::contains( currentLoggedInUserRole(), ["Manager"]) ) {
             $empGoals = $empGoalQuery->get();
 
             $getId = VmtEmployee::where('userid', auth()->user()->id)->first();
@@ -401,7 +403,7 @@ class VmtApraisalController extends Controller
                 $empPmsGoal->employee_id  = $value;
                 $empPmsGoal->mail_link    = url('vmt-pmsappraisal-review');
                 $empPmsGoal->author_id    = auth::user()->id;
-                if(auth::user()->hasRole(['HR','Admin']) ){
+                if(Str::contains( currentLoggedInUserRole(), ["Admin","HR"]) ){
 
                     $empPmsGoal->is_employee_accepted  = true;
                     $empPmsGoal->is_employee_submitted  = false;
@@ -411,7 +413,7 @@ class VmtApraisalController extends Controller
 
                 }
                 // else
-                if(auth::user()->hasRole(['Employee','Manager']) ){
+                if(Str::contains( currentLoggedInUserRole(), ["Manager","Employee"]) ){
 
                     // if employeee is creating kpi table
                     if($value == auth::user()->id){
@@ -433,8 +435,9 @@ class VmtApraisalController extends Controller
                 }
                  $notification_user = User::where('id',auth::user()->id)->first();
                     //dd($user_emp_name);exit();
-                if (auth()->user()->hasrole('Employee')) {
-         \Mail::to($mailingRevList)->send(new VmtAssignGoals("none",$user_emp_name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$user_manager_name,$command_emp));
+                if(Str::contains( currentLoggedInUserRole(), ["Employee"]) ){
+                {
+                \Mail::to($mailingRevList)->send(new VmtAssignGoals("none",$user_emp_name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$user_manager_name,$command_emp));
 
                  $message = "Employee has created Personal Assessment goal ";
                 Notification::send($notification_user ,new ViewNotification($message.auth()->user()->name));
@@ -561,15 +564,15 @@ class VmtApraisalController extends Controller
 
     public function approveRejectCommandKPITable(Request $request){
 
-        if(auth::user()->hasRole('Employee') ){
-           $vmtEmployeeGoal =   VmtEmployeePMSGoals::where('kpi_table_id', $request->goal_id)->where('employee_id', $request->user_id)->first();
+        if(Str::contains( currentLoggedInUserRole(), ["Employee"]) ){
+            $vmtEmployeeGoal =   VmtEmployeePMSGoals::where('kpi_table_id', $request->goal_id)->where('employee_id', $request->user_id)->first();
            $vmtEmployeeGoal->employee_rejection_comments = $request->content;
            $vmtEmployeeGoal->save();
            $returnMsg="--";
            return $returnMsg;
         }
 
-        if(auth::user()->hasRole('Manager') ){
+        if(Str::contains( currentLoggedInUserRole(), ["Manager"]) ){
             $vmtEmployeeGoal =   VmtEmployeePMSGoals::where('kpi_table_id', $request->goal_id)->where('employee_id', $request->user_id)->first();
             $vmtEmployeeGoal->manager_rejection_comments = $request->content;
             $vmtEmployeeGoal->save();
@@ -787,7 +790,7 @@ class VmtApraisalController extends Controller
     // Manger review : to see kpi table filled by employees
     public function showManagerApraisalReview(Request $request){
         // show review for HR
-        if(auth::user()->hasRole(['HR','Admin']) ){
+        if(Str::contains( currentLoggedInUserRole(), ["Admin","HR"]) ){
             //dd("INside HR login");
             //$pmsGoalList  = VmtEmployeePMSGoals::select('vmt_employee_details.emp_name', 'vmt_employee_pms_goals_table.*' )->rightJoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'vmt_employee_pms_goals_table.author_id')->orderBy('updated_at', 'DESC')->get();
             $kpiRowsId = '';

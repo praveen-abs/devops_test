@@ -31,6 +31,11 @@ function currentLoggedInUserRole()
     return $role = VmtOrgRoles::where('id',auth()->user()->org_role)->value('name');
 }
 
+function getUserRole($org_role_id)
+{
+    return $role = VmtOrgRoles::where('id',$org_role_id)->value('name');
+}
+
 function hasSubClients()
 {
     $sub_clients_count = VmtClientMaster::all()->count();

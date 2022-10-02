@@ -102,7 +102,7 @@
                                                 </div>
                                             </div>
                                             @if (!empty($reportingManager) && $reportingManager->name)
-                                            <a href="profile.html">
+                                            <a href="{{$reportingManager->id}}">
                                                 {{$reportingManager->name}}
                                             </a>
                                             @else

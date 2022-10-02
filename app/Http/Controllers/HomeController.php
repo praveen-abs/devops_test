@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\VmtEmployeeFamilyDetails;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtEmployeeEmergencyContactDetails;
+use Illuminate\Support\Str;
 
 class HomeController extends Controller
 {
@@ -162,7 +163,6 @@ class HomeController extends Controller
             } else {
                 $exp = new Experience;
             }
-            $exp->emp_id = $reDetails->id;
             $exp->user_id = $request->id;
             $exp->company_name = $companyNameArr[$k];
             $exp->location = $locationArr[$k];
@@ -172,7 +172,6 @@ class HomeController extends Controller
             $exp->save();
             array_push($saveId, $exp->id);
         }
-        $details->experience_json = implode(',', $saveId);
         $details->save();
         Ses::flash('message', 'Bank Details Updated successfully!');
         Ses::flash('alert-class', 'alert-success');
@@ -286,7 +285,7 @@ class HomeController extends Controller
         }
         $user->save();
         $report = $request->input('report');
-        $code = VmtEmployee::select('emp_no', 'name', 'designation')->join('vmt_employee_office_details', 'emp_id', '=', 'vmt_employee_details.id')->join('users', 'users.id', '=', 'vmt_employee_details.userid')->where('emp_no', $report)->first();
+        $code = VmtEmployee::select('emp_no', 'name', 'designation')->join('vmt_employee_office_details', 'user_id', '=', 'vmt_employee_details.userid')->join('users', 'users.id', '=', 'vmt_employee_details.userid')->where('emp_no', $report)->first();
         if ($code) {
             $reDetails = VmtEmployeeOfficeDetails::where('user_id', $request->id)->first();
             $details = VmtEmployeeOfficeDetails::find($reDetails->id);
@@ -499,8 +498,8 @@ class HomeController extends Controller
 
     public function showProfilePage(Request $request) {
         $user = Auth::user();
-        $details = VmtEmployee::join('vmt_employee_office_details', 'emp_id', '=', 'vmt_employee_details.id')->where('userid', $user->id)->first();
-        if($user->hasrole('Employee')) {
+        $details = VmtEmployee::join('vmt_employee_office_details', 'user_id', '=', 'vmt_employee_details.userid')->where('userid', $user->id)->first();
+        if(Str::contains( getUserRole($user->org_role), ["Manager"]) ) {
             $employee = VmtEmployee::first();
         } else {
             $employee = null;
@@ -508,7 +507,7 @@ class HomeController extends Controller
         $bank = Bank::all();
         $exp = Experience::whereIn('id', explode(',', $details->experience_josn))->get();
         $code = VmtEmployee::join('users', 'users.id', '=', 'userid')->where('emp_no', '<>' , $details->emp_no)->get();
-        $rep = VmtEmployee::select('l1_manager_code', 'l1_manager_name', 'avatar')->join('vmt_employee_office_details', 'emp_id', '=', 'vmt_employee_details.id')->join('users', 'users.id', '=', 'vmt_employee_details.userid')->where('emp_no', $details->l1_manager_code)->first();
+        $rep = VmtEmployee::select('l1_manager_code', 'l1_manager_name', 'avatar')->join('vmt_employee_office_details', 'user_id', '=', 'vmt_employee_details.userid')->join('users', 'users.id', '=', 'vmt_employee_details.userid')->where('emp_no', $details->l1_manager_code)->first();
         return view('pages-profile-settings', compact( 'employee', 'user', 'details', 'bank', 'exp', 'code', 'rep'));
     }
 
