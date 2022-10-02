@@ -435,7 +435,7 @@ class VmtApraisalController extends Controller
                 }
                  $notification_user = User::where('id',auth::user()->id)->first();
                     //dd($user_emp_name);exit();
-                if(Str::contains( currentLoggedInUserRole(), ["Employee"]) ){
+                if(Str::contains( currentLoggedInUserRole(), ["Employee"]) )
                 {
                 \Mail::to($mailingRevList)->send(new VmtAssignGoals("none",$user_emp_name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$user_manager_name,$command_emp));
 
