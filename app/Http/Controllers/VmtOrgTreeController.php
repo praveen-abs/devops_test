@@ -22,7 +22,7 @@ class VmtOrgTreeController extends Controller
     {
         $t_user_code = 0;
 
-        if(Auth::user()->is_admin == 1)
+        if(Auth::user()->is_ssa == 1)
         {
             //Get the top-most node
             $t_user_id = VmtEmployeeOfficeDetails::where('l1_manager_code','=','')
@@ -30,26 +30,27 @@ class VmtOrgTreeController extends Controller
                                                 ->value('user_id');
 
             $t_user_code = User::where('id',$t_user_id)->value('user_code');
-            $data           = $this->getUserNodeDetails($t_user_code);
+            $data           = array($this->getUserNodeDetails($t_user_code));
+
         }
         else{
             //Get the current node
             $t_user_code = Auth::user()->user_code;
-            
-            
+
+
             $data = $this->getUserNodeDetails($t_user_code);
             $data  =  array($data);
-               
+
         }
 
-       
+
         $vmtGeneralInfo = VmtGeneralInfo::first();
         $logoSrc        = asset($vmtGeneralInfo->logo_img);
 
         $logoNode  = array("image" => $logoSrc, "relationship" => "011", "user_code" => "ADMIN001", "name" =>"", "className" => "logo-level");
 
         $logoNode['collapsed'] = false;
-        
+
         if(count($data) > 0)
             $logoNode['children'] = $data;
         else
@@ -209,7 +210,7 @@ class VmtOrgTreeController extends Controller
         $t_data['relationship']=['0','0','0']; //parent,sibling,child
 
         //get the given node's username,designation
-        $user_data = User::where('user_code',$user_code)->where('is_admin','0')->get();
+        $user_data = User::where('user_code',$user_code)->where('is_ssa','0')->get();
         $data['name'] = $user_data->value('name');
         $data['user_code'] = $user_data->value('user_code');
         $data['image'] = asset('images/'.$user_data->value('avatar'));
@@ -264,7 +265,7 @@ class VmtOrgTreeController extends Controller
     {
         $children = User::leftJoin('vmt_employee_office_details','users.id','=','vmt_employee_office_details.user_id')
                             ->leftJoin('vmt_employee_details','users.id','=','vmt_employee_details.userid')
-                            ->where('users.is_admin','0')
+                            ->where('users.is_ssa','0')
                             ->where('vmt_employee_office_details.l1_manager_code',$user_code)
                             ->select('users.name','users.id','users.user_code','vmt_employee_office_details.designation', 'vmt_employee_office_details.department_id')
                             ->get();

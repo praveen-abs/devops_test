@@ -101,7 +101,7 @@ class VmtMainDashboardController extends Controller
                                     'vmt_employee_details.dob',
                                     'vmt_employee_details.doj'
                                 )
-                                ->where('users.is_admin','=','0')
+                                ->where('users.is_ssa','=','0')
                                 ->where('users.active','=','1')
                                 ->where('users.is_onboarded','=','1')
                                 ->whereNotNull('vmt_employee_details.doj')
@@ -174,7 +174,7 @@ class VmtMainDashboardController extends Controller
 
         ////Dashboard counters data
         //Total Employees Count
-        $totalEmployeesCount = User::where('users.is_admin','<>','1')->count();
+        $totalEmployeesCount = User::where('users.is_ssa','0')->count();
 
         //New Joinees Count
         $currentDate = Carbon::now();
@@ -182,7 +182,7 @@ class VmtMainDashboardController extends Controller
         $dateDifferenceForNewJoinees = 7; //Right now, showing 1 week old joinees
         $newEmployeesCount = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
                                 ->whereRaw('DATEDIFF(? , vmt_employee_details.doj) <= ?',[$currentDate, $dateDifferenceForNewJoinees])
-                                ->where('users.is_admin','<>','1')
+                                ->where('users.is_ssa','0')
                                 ->get()->count();
 
 
@@ -190,7 +190,7 @@ class VmtMainDashboardController extends Controller
         $todayEmployeesCheckedInCount = User::join('vmt_employee_attendance','vmt_employee_attendance.user_id','=','users.id')
                                 ->whereDate('vmt_employee_attendance.checkin_time','=', $currentDate )
                                 ->whereNull('vmt_employee_attendance.checkout_time')
-                                ->where('users.is_admin','<>','1')
+                                ->where('users.is_ssa','0')
                                 ->get()->count();
 
         //Employees Leave today count

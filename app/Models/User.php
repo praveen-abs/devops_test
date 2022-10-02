@@ -23,14 +23,16 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'client_code',
         'avatar',
         'user_code',
         'can_login',//user can login.
         'active',//user can access all app features
         'is_onboarded',//if false, user prompted to fill onboard form
         'onboard_type',
-        'is_admin',
-        'is_default_password_updated'
+        'is_ssa',
+        'is_default_password_updated',
+        'org_role'
     ];
 
     /**

@@ -33,7 +33,7 @@ class VmtApprovalsController extends Controller
         )
         ->orderBy('users.created_at', 'DESC')
         ->where('users.active', '0')
-        ->where('users.is_admin', '0')
+        ->where('users.is_ssa', '0')
         ->where('vmt_employee_details.docs_reviewed','like', '%-1%')//only if documents not yet reviewed
         ->get();
         //\Log::error( \DB::getQueryLog());
