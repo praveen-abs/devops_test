@@ -100,6 +100,15 @@
         width: 100%;
         border-radius: 0px !important;
     }
+
+    .tree-avatar .rounded-circle.user-profile{
+            height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    }
 </style>
 
 
@@ -205,7 +214,7 @@ $(document).ready(function() {
     var ajaxURLs = {
 
         'children': function(nodeData) {
-            if(nodeData.user_code == "ADMIN001"){
+            if(nodeData.user_code == "LogoNode"){
                 var url =  '{{ route('getTwoLevelOrgTree',['user_code' => Auth::user()->user_code ]) }}';
             }else{
                 var url = "{{ route('getChildrenForUser','') }}"+"/"+nodeData.user_code;
@@ -220,7 +229,7 @@ $(document).ready(function() {
         'siblings': function(nodeData) {
             console.log("siblings Node URL "+nodeData.avatar);
             // getSiblingsForUser
-            return "{{ route('getSiblingsForUser','') }}"+"/"+nodeData.user_code;
+            //return "{{ route('getSiblingsForUser','') }}"+"/"+nodeData.user_code;
             return '/orgchart/siblings/' + nodeData.user_code;
         },
         'families': function(nodeData) {
@@ -232,7 +241,7 @@ $(document).ready(function() {
 
         var ocOption  = {
             'data' : '{{ route('getLogoLevelOrgTree') }}',
-            //'{{ route('getTwoLevelOrgTree',['user_code' => Auth::user()->user_code ]) }}', ADMIN001
+            //'{{ route('getTwoLevelOrgTree',['user_code' => Auth::user()->user_code ]) }}', LogoNode
             'ajaxURL' : ajaxURLs,
             'pan' : true,
             'zoom' : true,
@@ -245,7 +254,13 @@ $(document).ready(function() {
             'exportFileextension':'png',
             'nodeTemplate': function(data) {
                 var nodeHtml =  '';
-                var imageHtml  =  '<img class="user-avatar" src="'+data.image+'" />';
+
+                if(data.image_exist)
+                    var imageHtml  =  '<img class="user-avatar" src="'+data.image+'" />';
+                else{
+                    var imageHtml  =  '<span class="rounded-circle user-profile  ml-2 " id=""><i id="topbar_username" class="align-middle ">'+data.name.split(" ").join("").substring(0, 2)+'</i></span>';
+                }
+
                 nodeHtml =  '<div class="title">'+'<span>'+data.name+'</span>'+'</div>';
 
                 if(data.className != 'dept-level'){

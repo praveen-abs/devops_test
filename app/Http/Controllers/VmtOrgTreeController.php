@@ -37,17 +37,31 @@ class VmtOrgTreeController extends Controller
             //Get the current node
             $t_user_code = Auth::user()->user_code;
 
+            // fetching employee office data
+            $employeeOfficeData =  VmtEmployeeOfficeDetails::where('user_id', auth::user()->id)->first();
 
-            $data = $this->getUserNodeDetails($t_user_code);
-            $data  =  array($data);
-
+            // checking whether employee has l1 manager or not
+            if($employeeOfficeData->l1_manager_code == '' || $employeeOfficeData->l1_manager_code == null ){
+                
+                $data[]  = $this->getUserNodeDetails($t_user_code);
+                $siblingNode = $this->getSiblingsForUser($t_user_code);
+                if(count($siblingNode) > 0){
+                    foreach ($siblingNode as $index => $value) {
+                        // code...
+                        $data[] = $value;
+                    }
+                }
+            }else{
+                $data[]  = $this->getUserNodeDetails($t_user_code);
+            }
+          
         }
 
 
         $vmtGeneralInfo = VmtGeneralInfo::first();
         $logoSrc        = asset($vmtGeneralInfo->logo_img);
 
-        $logoNode  = array("image" => $logoSrc, "relationship" => "011", "user_code" => "ADMIN001", "name" =>"", "className" => "logo-level");
+        $logoNode  = array("image" => $logoSrc, "relationship" => "011", "user_code" => "LogoNode", "name" =>"", "className" => "logo-level");
 
         $logoNode['collapsed'] = false;
 
@@ -213,7 +227,13 @@ class VmtOrgTreeController extends Controller
         $user_data = User::where('user_code',$user_code)->where('is_ssa','0')->get();
         $data['name'] = $user_data->value('name');
         $data['user_code'] = $user_data->value('user_code');
-        $data['image'] = asset('images/'.$user_data->value('avatar'));
+        $data['image'] =    asset('images/'.$user_data->value('avatar'));
+
+        if(!file_exists(public_path('images/'. $user_data->value('avatar'))) )
+            $data['image_exist'] =   false;
+        else
+            $data['image_exist'] =   true;
+                                   
         $data['designation'] =  VmtEmployeeOfficeDetails::where('user_id',$user_data->value('id'))->value('designation');
 
         $data['department'] =  VmtEmployeeOfficeDetails::where('user_id',$user_data->value('id'))->value('department_id');
