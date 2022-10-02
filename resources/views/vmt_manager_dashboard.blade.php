@@ -41,6 +41,8 @@
         </div>
     </div>
     <!-- content middle -->
+
+
     <div class="row">
         <div class="col-sm-12 col-md-12 col-xl-8 col-lg-8 col-xxl-8">
             <div class="row mb-n4">
@@ -49,9 +51,9 @@
                         <!-- <div class="p-1 bg-primary" > -->
                         <div class="card-body d-flex justify-content-center align-items-center">
                             <div class="text-center">
-                                <h6 class="fw-bold title">New Employees</h6>
+                                <h6 class="fw-bold title">Team Employees</h6>
                                 <span class="number-increment text-muted f-15 fw-bold">
-                                    {{ json_decode($json_dashboardCountersData)->newEmployeesCount }}</span>
+                                    0</span>
                             </div>
                         </div>
                     </div>
@@ -68,30 +70,6 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
-                    <div class=" card shadow profile-box card-top-border ">
-                        <!-- <div class=" p-1 bg-primary"> -->
-                        <div class="card-body d-flex justify-content-center align-items-center">
-                            <div class="text-center">
-                                <h6 class="fw-bold title">Total Employees</h6>
-                                <span class="number-increment text-muted f-15 fw-bold">
-                                    {{ json_decode($json_dashboardCountersData)->totalEmployeesCount }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
-                    <div class="card  profile-box card-top-border ">
-                        <!-- <div class="p-1 bg-primary" > -->
-                        <div class="card-body d-flex justify-content-center align-items-center">
-                            <div class="text-center">
-                                <h6 class="fw-bold title">Employees on Leave</h6>
-                                <span class="number-increment text-muted f-15 fw-bold">
-                                    {{ json_decode($json_dashboardCountersData)->todayEmployeesOnLeaveCount }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
                     <div class="card shadow profile-box orange-top-border ">
                         <!-- <div class="p-1 bg-danger" > -->
                         <div class="card-body d-flex justify-content-center align-items-center">
@@ -100,17 +78,6 @@
                                 <span class="number-increment text-muted f-15 fw-bold">
                                     {{ json_decode($json_dashboardCountersData)->todayEmployeesCheckedInCount }}</span>
 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
-                    <div class="card shadow  profile-box card-top-border ">
-                        <!-- <div class="p-1 bg-primary" > -->
-                        <div class="card-body d-flex justify-content-center align-items-center">
-                            <div class="text-center">
-                                <h6 class="fw-bold title">Future Joiners</h6>
-                                <span class="number-increment text-muted f-15 fw-bold">0</span>
                             </div>
                         </div>
                     </div>
@@ -331,7 +298,6 @@
             </div>
         </div>
     </div>
-
 
     <!-- content-bottom -->
     <div class="row">
