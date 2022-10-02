@@ -159,33 +159,6 @@
                                                     <div class="topbarContent emp-poll" style="display:none;">
                                                         <div>
                                                             <div class="poll-content">
-                                                                <!-- <form action="{{ route('poll_voting') }}" method="POST">
-                                                                                                                        @csrf
-                                                                                                                        <div class="px-20 p-16 row no-gutters scrollBar">
-                                                                                                                            @if ($polling)
-    <h3>{{ $polling->question }}</h3>
-                                                                                                                            <div class="d-flex align-items-center">
-                                                                                                                                @foreach (json_decode($polling->options, true) as $key => $option)
-    <div class="mr-2"><input id="polling{{ $key }}"
-                                                                                                                                        type="radio" name="polling"
-                                                                                                                                        value="{{ $option }}" @if ($polling->data && $polling->data == $option) checked @endif>
-                                                                                                                                    <label for="polling{{ $key }}"
-                                                                                                                                        class="m-0 mr-2">{{ $option }}</label>
-                                                                                                                                </div>
-    @endforeach
-                                                                                                                                <input type="hidden" name="id"
-                                                                                                                                    value="{{ $polling->id }}">
-                                                                                                                            </div>
-@else
-    <div class="text-center">
-                                                                                                                                <h4>There is no polling now..!</h4>
-                                                                                                                            </div>
-    @endif
-                                                                                                                        </div>
-                                                                                                                        <button class="btn btn-danger py-1 px-4  float-right">
-                                                                                                                            Submit
-                                                                                                                        </button>
-                                                                                                                    </form> -->
                                                                 <form id="polling-questions-form-submit">
                                                                     <input type="text" name="question" id="" class="form-control border-0 outline-none" placeholder="What this poll is about" required>
                                                                     <hr>
@@ -302,9 +275,7 @@
     <div class="col-sm-12 col-md-12">
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 ipad-query">
-                {{-- @foreach ($dashboardEmployeeEventsData['birthday'] as $key)
-                            @include('ui-dashboard-event-card',['date' => $key->dob])
-                    @endforeach --}}
+
                 @include('ui-dashboard-event-card', [
                 'dashboardEmployeeEventsData' => $dashboardEmployeeEventsData,
                 ])
