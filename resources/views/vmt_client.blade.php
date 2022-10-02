@@ -366,59 +366,120 @@
             if (document.getElementById("client-table")) {
                 const grid = new gridjs.Grid({
                     columns: [{
-                            id: 'number',
-                            name: 'Client Id',
+                            id: 'id',
+                            name: 'ID',
+                            hidden: true,
 
                         },
                         {
-                            id: 'name ',
-                            name: ' Name',
-
+                            id: 'client_code',
+                            name: 'Client Code',
+                            formatter: function formatter(cell) {
+                                return gridjs.html(cell);
+                            }
                         },
                         {
-                            id: 'job_title',
+                            id: 'client_name',
+                            name: 'Client Name',
+                        },
+                        {
+                            id: 'authorised_person_contact_number',
                             name: 'Contact',
                         },
                         {
-                            id: 'reporting_to',
-                            name: ' Email',
+                            id: 'authorised_person_contact_email',
+                            name: 'Email',
                         },
                         {
-                            id: 'reporting_to',
-                            name: ' Company Name',
+                            id: 'contract_start_date',
+                            name: 'Contract Start Date',
                         },
                         {
-                            id: 'reporting_to',
-                            name: 'Customer Type',
+                            id: 'contract_end_date',
+                            name: 'Contract End Date',
                         },
                         {
-                            id: '',
-                            name: 'Status ',
-                        }, {
-                            id: '',
-                            name: 'Action ',
-                        },
-
-                    ],
-                    data: [
+                            id: 'subscription_type',
+                            name: 'Subscription Type',
+                            // hidden:true,
+                        }
                         // {
-                        //     name: 'John',
-                        //     email: 'john@example.com',
-                        //     phoneNumber: '(353) 01 222 3333'
+                        //     id: 'assigned_date',
+                        //     name: 'Assigned Date',
                         // },
                         // {
-                        //     name: 'Mark',
-                        //     email: 'mark@gmail.com',
-                        //     phoneNumber: '(01) 22 888 4444'
+                        //     id: 'invoice',
+                        //     name: 'Invoice',
+                        //     formatter: function formatter(cell) {
+                        //         var URL = "{{ url('/assets/') }}" + "/" + cell;
+                        //         return gridjs.html('<a href=' + URL +
+                        //             ' target="_blank"><span class="text-link" style=" color: blue;"><i class="icon icon-lg text-info  ri-download-2-line text-primary fw-bold"></i></span></a>'
+                        //         );
+                        //     }
                         // },
-                    ],
+                        // {
+                        //     id: 'id',
+                        //     name: 'Edit',
+                        //     formatter: function formatter(cell) {
 
+                        //         var htmlcontent =
+                        //             '<a  class="trigger_asset_edit" ><span class="text-link" style=" color: blue;"><i class="icon icon-lg  ri-pencil-line text-dark fw-bold"></i></span></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
+                        //         var html_edit="<button style='font-size:24px' onclick='hello()'>Edit</button>";
+                        //         var html_delete = '<a href='+url_delete+' target="_blank"><span class="text-link" style=" color: blue;"><i class="icon icon-lg  ri-delete-bin-line text-primary fw-bold"></i></span></a>';
+
+                        //         return gridjs.html(htmlcontent);
+                        //     }
+                        // },
+                        // {
+                        //     id: 'delete',
+                        //     name: 'Delete',
+                        //     formatter: function formatter(cell) {
+
+
+                        //         var htmlcontent =
+                        //             '<a  class="trigger_asset_delete" ><span class="text-link" style=" color: blue;"><i class="icon icon-lg text-danger ri-delete-bin-line text-primary fw-bold"></i></span></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
+                        //         var html_edit="<button style='font-size:24px' onclick='hello()'>Edit</button>";
+                        //         var html_delete = '<a href='+url_delete+' target="_blank"><span class="text-link" style=" color: blue;"><i class="icon icon-lg  ri-delete-bin-line text-primary fw-bold"></i></span></a>';
+
+                        //         return gridjs.html(htmlcontent);
+                        //     }
+                        // }
+                    ],
                     pagination: {
                         limit: 10
                     },
                     sort: true,
                     search: true,
+                    server: {
+                                url: '{{ route('vmt-clients-fetchall') }}',
+                                then: data => data.map(
+                                    client => [
+                                        client.id,
+                                        client.client_code,
+                                        client.client_name,
+                                        // client.address,
+                                        client.authorised_person_contact_number,
+                                        client.authorised_person_contact_email,
+                                        client.contract_start_date,
+                                        client.contract_end_date,
+                                        // client.cin_number,
+                                        // client.company_tan,
+                                        // client.company_pan,
+                                        // client.gst_no,
+                                        // client.epf_reg_number,
+                                        // client.esic_reg_number,
+                                        // client.prof_tax_reg_number,
+                                        // client.lwf_reg_number,
+                                        // client.authorised_person_name,
+                                        // client.authorised_person_designation,
+                                        // client.billing_address,
+                                        // client.shipping_address,
+                                        // client.product,
+                                        client.subscription_type,
 
+                                    ]
+                                )
+                            },
 
 
 
