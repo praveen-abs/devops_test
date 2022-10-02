@@ -24,16 +24,27 @@ class VmtOrgTreeController extends Controller
 
         if(Auth::user()->is_ssa == 1)
         {
+
             //Get the top-most node
-            $t_user_id = VmtEmployeeOfficeDetails::where('l1_manager_code','=','')
+            $topNodeUserIds = VmtEmployeeOfficeDetails::where('l1_manager_code','=','')
                                                 ->orWhereNull('l1_manager_code')
-                                                ->value('user_id');
+                                                ->get();
+            $data = []; 
+            
+            $loggedUserId = Auth::user()->id; 
 
-            $t_user_code = User::where('id',$t_user_id)->value('user_code');
-            $data           = array($this->getUserNodeDetails($t_user_code));
+            foreach ($topNodeUserIds as $key => $value) {
+                // code...
+                if($value->user_id != $loggedUserId){
+                    $t_user_code = User::where('id', $value->user_id)->value('user_code');
+                    $data[]        = $this->getUserNodeDetails($t_user_code);
+                }
+            }
 
+            
         }
         else{
+
             //Get the current node
             $t_user_code = Auth::user()->user_code;
 
