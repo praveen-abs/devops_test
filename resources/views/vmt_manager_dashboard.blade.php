@@ -1,41 +1,18 @@
 @extends('layouts.master')
-@section('title') @lang('translation.dashboards') @endsection
+@section('title')
+@lang('translation.dashboards')
+@endsection
 @section('css')
-
 <link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
+<link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/holiday.css') }}">
+<link rel="stylesheet" href="{{ URL::asset('/assets/css/calendar-vanila.css') }}">
 
 <meta name="csrf-token" content="{{ csrf_token() }}" />
-<link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css')}}" rel="stylesheet" type="text/css" />
-<link href="{{ URL::asset('assets/libs/swiper/swiper.min.css')}}" rel="stylesheet" type="text/css" />
-
-<!-- prem content -->
-
-<!--Bootstrap CSS-->
-<link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/bootstrap.min.css') }}">
 
 <!--Custom style.css-->
-<link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/quicksand.css') }}">
-<link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/dashboard.css') }}">
 <!-- <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/hr_dashboard.css') }}"> -->
-<link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/holiday.css') }}">
-<!--Bootstrap Calendar-->
-<!-- <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/bootstrap_calendar.css') }}"> -->
 
-<!--Font Awesome-->
-<link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/fontawesome-all.min.css') }}">
-<link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/fontawesome.css') }}">
-<!--Animate CSS-->
-<link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/chartist.min.css') }}">
-<link rel="stylesheet" href="{{ URL::asset('/assets/css/app.min.css') }}">
-<!--Map-->
-<link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/jquery-jvectormap-2.0.2.css') }}">
-
-<!-- calendar -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" />
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" /> -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
-<!-- prem content end -->
-
+<script src="{{ URL::asset('assets/js/calendar-vanila.js') }}" defer></script>
 @endsection
 
 @section('loading')
@@ -50,43 +27,76 @@
 @endsection
 
 @section('content')
-
-<div class="hr-dashboar-wrpper mt30-mb15">
-    <!-- Content Row -->
+<div class="hr-dashboar-wrpper mt-30 ">
+    <!-- Content top -->
     <div class="row">
-        <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4">
+        <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4 col-xxl-4">
             @include('ui-dashboard-welcome-card')
         </div>
-        <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4  d-flex">
+        <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4  d-flex col-xxl-4">
             @include('ui-dashboard-action-card')
         </div>
-        <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4 d-flex">
+        <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4 d-flex col-xxl4">
             @include('ui-dashboard-holiday-card')
         </div>
     </div>
-
-    <div class="card profile-box flex-fill py-2">
-        <div class="card-body">
-        <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
+    <!-- content middle -->
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-xl-8 col-lg-8 col-xxl-8">
             <div class="row mb-n4">
-                <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
-                    <div class="card shadow profile-box card-top-border ">
+                <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
+                    <div class="card shadow profile-box card-top-border">
                         <!-- <div class="p-1 bg-primary" > -->
                         <div class="card-body d-flex justify-content-center align-items-center">
                             <div class="text-center">
-                                <h5 class="fw-bold title">Total Team Members</h5>
+                                <h6 class="fw-bold title">New Employees</h6>
+                                <span class="number-increment text-muted f-15 fw-bold">
+                                    {{ json_decode($json_dashboardCountersData)->newEmployeesCount }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
+                    <div class="card shadow  profile-box card-top-border ">
+                        <!-- <div class="p-1 bg-primary" > -->
+                        <div class="card-body d-flex justify-content-center align-items-center">
+                            <div class="text-center">
+                                <h6 class="fw-bold title">Offline</h6>
+                                <span class="number-increment text-muted f-15 fw-bold">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
+                    <div class=" card shadow profile-box card-top-border ">
+                        <!-- <div class=" p-1 bg-primary"> -->
+                        <div class="card-body d-flex justify-content-center align-items-center">
+                            <div class="text-center">
+                                <h6 class="fw-bold title">Total Employees</h6>
                                 <span class="number-increment text-muted f-15 fw-bold">
                                     {{ json_decode($json_dashboardCountersData)->totalEmployeesCount }}</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
+                <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
+                    <div class="card  profile-box card-top-border ">
+                        <!-- <div class="p-1 bg-primary" > -->
+                        <div class="card-body d-flex justify-content-center align-items-center">
+                            <div class="text-center">
+                                <h6 class="fw-bold title">Employees on Leave</h6>
+                                <span class="number-increment text-muted f-15 fw-bold">
+                                    {{ json_decode($json_dashboardCountersData)->todayEmployeesOnLeaveCount }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
                     <div class="card shadow profile-box orange-top-border ">
                         <!-- <div class="p-1 bg-danger" > -->
                         <div class="card-body d-flex justify-content-center align-items-center">
                             <div class="text-center">
-                                <h5 class="fw-bold title">Total Team Members Online</h5>
+                                <h6 class="fw-bold title">Online</h6>
                                 <span class="number-increment text-muted f-15 fw-bold">
                                     {{ json_decode($json_dashboardCountersData)->todayEmployeesCheckedInCount }}</span>
 
@@ -94,69 +104,41 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
+                <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
                     <div class="card shadow  profile-box card-top-border ">
                         <!-- <div class="p-1 bg-primary" > -->
                         <div class="card-body d-flex justify-content-center align-items-center">
                             <div class="text-center">
-                                <h5 class="fw-bold title">Total Team Members Offline</h5>
+                                <h6 class="fw-bold title">Future Joiners</h6>
                                 <span class="number-increment text-muted f-15 fw-bold">0</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
-                    <div class="card shadow  profile-box card-top-border ">
-                        <!-- <div class="p-1 bg-primary" > -->
-                        <div class="card-body d-flex justify-content-center align-items-center">
-                            <div class="text-center">
-                                <h5 class="fw-bold title">Team Members on Leave</h5>
-                                <span class="number-increment text-muted f-15 fw-bold">
-                                    {{ json_decode($json_dashboardCountersData)->todayEmployeesOnLeaveCount }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-xl-3 col-lg-3">
-                    <div class="card shadow  profile-box card-top-border ">
-                        <!-- <div class="p-1 bg-primary" > -->
-                        <div class="card-body d-flex justify-content-center align-items-center">
-                            <div class="text-center">
-                                <h5 class="fw-bold title">Team Members Hybrid</h5>
-                                <span class="number-increment text-muted f-15 fw-bold">0</span>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        </div>
-    </div>
-    <div class="row">
-
-        <div class="col-sm-9 col-md-9">
-            <div class="row">
-                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 ipad-query">
-                    <div class="card profile-box flex-fill card-top-border">
+                <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 col-xxl-12">
+                    <div class="card profile-box flex-fill card-top-border w-100">
                         <!-- <div class="p-1 bg-primary" ></div> -->
                         <div class="card-body ">
                             <div class="profile-wrapper d-flex p-0">
                                 <div class="popover-body p-0 w-100">
-                                    <div class="min-h-250">
+                                    <div class="">
                                         <div>
                                             <ul class="nav sub-topnav">
                                                 <!-- <li class="title active topbarNav fw-bold" id="post_view"><a>View
-                                                        Post</a>
-                                                </li> -->
-                                                <li class="title  topbarNav fw-bold active" id="post"><a>Post</a>
+                                                                                                                    Post</a>
+                                                                                                            </li> -->
+                                                <li class="title  topbarNav fw-bold active" id="post">
+                                                    <a>Post</a>
                                                 </li>
                                                 <li class="title topbarNav  fw-bold" id="announcement">
                                                     <a>Announcement</a>
                                                 </li>
-                                                <li class="title topbarNav fw-bold" id="poll"><a>Poll</a></li>
-                                                <li class="title topbarNav fw-bold" id="praise"><a>Praise</a></li>
+                                                <li class="title topbarNav fw-bold" id="poll"><a>Poll</a>
+                                                </li>
+                                                <li class="title topbarNav fw-bold" id="praise"><a>Praise</a>
+                                                </li>
                                             </ul>
+                                            <!-- code post view  -->
 
 
                                             <!-- emd view -->
@@ -164,33 +146,27 @@
                                                 <div>
                                                     <div class="px-22 p-16 row no-gutters scrollBar">
 
-                                                        <textarea name="post_menu" id="post_menu"
-                                                            class="border-0 outline-none w-100 h-100"
-                                                            placeholder="Write your Post here"></textarea>
+                                                        <textarea name="post_menu" id="post_menu" class="border-0 outline-none w-100 h-100" placeholder="Write your Post here"></textarea>
 
                                                     </div>
                                                     <div class="post-contents d-flex align-items-center mx-4">
 
                                                         <div class="img-contents">
                                                             <i class="ri-image-2-fill"></i>
-                                                            <input type="file" class="filestyle" name="image_src"
-                                                                id="image_src" data-input="false" multiple
-                                                                accept="image/*" data-iconName="fa fa-upload"
-                                                                data-buttonText="Upload File" />
+                                                            <input type="file" class="filestyle" name="image_src" id="image_src" data-input="false" multiple accept="image/*" data-iconName="fa fa-upload" data-buttonText="Upload File" />
                                                             <span class="tooltiptext">Image</span>
 
                                                         </div>
 
                                                         <div class="emoji-content mx-3">
-                                                            <i class="ri-user-smile-line"></i>
+                                                            <i class="ri-user-smile-line "></i>
                                                             <span class="tooltiptext">Emoji</span>
 
                                                         </div>
 
 
                                                     </div>
-                                                    <button class="btn btn-primary py-1 px-4  float-right"
-                                                        type="submit">
+                                                    <button class="btn btn-primary  float-end" type="submit">
                                                         Create Post
                                                     </button>
 
@@ -198,134 +174,127 @@
                                             </div>
                                             <div class="topbarContent emp-announcement " style="display:none;">
                                                 <div>
+                                                    <form id="announcement-form-submit">
+                                                        <div class="announcement-content scrollBar">
 
-                                                    <div class="announcement-content scrollBar">
-
-                                                        <input class="form-control   w-100 h-100"
-                                                            aria-label="default input example"
-                                                            placeholder="Title of the Announcement" type="text"
-                                                            id="title_data" name="title_data">
-                                                        <hr>
-                                                        <!-- <input class="form-control" type="text" placeholder="Default input" aria-label="default input example"> -->
-                                                        <textarea class="form-control placeholder-glow w-100 h-100"
-                                                            placeholder="Details of Announcement"
-                                                            aria-label="default input example" type="text"
-                                                            name="details_data" id="details_data"></textarea>
+                                                            <input class="form-control   w-100 h-100" aria-label="default input example" placeholder="Title of the Announcement" type="text" id="title_data" name="title_data" required>
+                                                            <hr>
+                                                            <!-- <input class="form-control" type="text" placeholder="Default input" aria-label="default input example"> -->
+                                                            <textarea class="form-control placeholder-glow w-100 h-100" placeholder="Details of Announcement" aria-label="default input example" type="text" name="details_data" id="details_data" required></textarea>
 
 
+                                                            <div class="bottom-content d-flex mx-2">
 
-                                                        <div class="bottom-content d-flex mx-2">
-                                                            <div class="form-check mx-2">
-                                                                <input class="form-check-input check-box mr-1"
-                                                                    type="checkbox" value="" id="notifyEmp">
-                                                                <label class="form-check-label" for="notifyEmp">
-                                                                    Notify employees
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check mx-2">
-                                                                <input class="form-check-input check-box  mr-1"
-                                                                    type="checkbox" value="" id="requireAcknowledge">
-                                                                <label class="form-check-label"
-                                                                    for="requireAcknowledge">
-                                                                    Require Acknowledgement
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check mx-2">
-                                                                <input class="form-check-input check-box mr-1"
-                                                                    type="checkbox" value="" id="hideAfter">
-                                                                <label class="form-check-label" for="hideAfter">
-                                                                    Hide After
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check mx-2">
-                                                                <input class="form-control mr-1 anounce-date "
-                                                                    type="text" placeholder="Select date" value="" id=""
-                                                                    disabled>
+                                                                <div class="row">
+                                                                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                                                                        <div class="form-check ps-0">
+                                                                            <input class="form-check-input check-box me-1" type="checkbox" value="1" id="notifyEmp" name="notify_employees">
+                                                                            <label class="form-check-label" for="notifyEmp">
+                                                                                Notify employees
+                                                                            </label>
 
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                                                                        <div class="form-check ps-0">
+                                                                            <input class="form-check-input check-box  me-1" type="checkbox" value="1" id="requireAcknowledge" name="require_acknowledgement">
+                                                                            <label class="form-check-label" for="requireAcknowledge">
+                                                                                Require Acknowledgement
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6  col-xxl-6 ">
+                                                                        <div class="form-check ps-0">
+                                                                            <input class="form-check-input check-box me-1" type="checkbox" value="1" id="hideAfter" name="hide_after">
+                                                                            <label class="form-check-label" for="hideAfter">
+                                                                                Hide After
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                                                                        <div class="form-check ps-0">
+                                                                            <input class="form-control me-1 anounce-date " type="date" name="date" placeholder="Select date" id="" required style="background-color:#e9ecef">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
-
-                                                    </div>
-                                                    <button class="btn btn-primary py-1 px-4  float-right"
-                                                        id="annon_menu_submit" type="button">
-                                                        Submit
-                                                    </button>
-
-
+                                                        <button class="btn btn-primary float-end" id="annon_menu_submit" type="submit">
+                                                            Submit
+                                                        </button>
+                                                    </form>
                                                 </div>
                                             </div>
                                             <div class="topbarContent emp-poll" style="display:none;">
                                                 <div>
                                                     <div class="poll-content">
-
-                                                        <input type="text" name="" id=""
-                                                            class="form-control border-0 outline-none"
-                                                            placeholder="What this poll is about">
-                                                        <hr>
-                                                        <div class="mt-3 d-flex align-items-center">
-                                                            <input type="text" name="" id="" class="form-control w-50"
-                                                                placeholder="Add option here">
-                                                            <i class="ri-delete-bin-7-fill mx-2 text-danger"></i>
-                                                        </div>
-
-                                                        <div class="mt-2 d-flex align-items-center">
-                                                            <input type="text" name="" id="" class="form-control w-50"
-                                                                placeholder="Add option here">
-                                                            <i class="ri-delete-bin-7-fill mx-2 text-danger"></i>
-                                                        </div>
-                                                        <div class="text-start">
-                                                            <!-- <button class="btn btn-secondary outline-none border-0"><i class=" ri-add-circle-line mr-2">Add More</i></button> -->
-                                                            <button
-                                                                class="btn btn-light text-secondary px-0 bg-transparent outline-none border-0"><span
-                                                                    class="mr-2">+</span> Add More</i></button>
-                                                        </div>
-
-                                                        <div class="bottom-content d-flex justify-content-between mx-2">
-                                                            <div class=" mx-2">
-                                                                <label for="">Poll Expires On</label>
-                                                                <input class=" mr-1 anounce-date " type="text"
-                                                                    placeholder="Select date" value="" id="" disabled>
-
+                                                        <form id="polling-questions-form-submit">
+                                                            <input type="text" name="question" id="" class="form-control border-0 outline-none" placeholder="What this poll is about" required>
+                                                            <hr>
+                                                            <div class="content-container">
+                                                                <div class="mt-3 d-flex align-items-center">
+                                                                    <input type="text" name="options[]" id="" class="form-control " placeholder="Add option here" required>
+                                                                </div>
+                                                                <div class="mt-3 d-flex align-items-center">
+                                                                    <input type="text" name="options[]" id="" class="form-control " placeholder="Add option here" required>
+                                                                </div>
                                                             </div>
-                                                            <div class=" mx-2">
-                                                                <input class="form-check-input check-box mr-1"
-                                                                    type="checkbox" value="" id="notifyEmp2">
-                                                                <label class="form-check-label" for="notifyEmp2">
-                                                                    Notify employees
-                                                                </label>
-                                                            </div>
-                                                            <div class="mx-2">
-                                                                <input class="form-check-input check-box mr-1"
-                                                                    type="checkbox" value="" id="anonymous">
-                                                                <label class="form-check-label" for="anonymous">
-                                                                    Anonymous Poll
-                                                                </label>
+                                                            <div class="text-end my-2">
+                                                                <!-- <button class="btn btn-secondary outline-none border-0"><i class=" ri-add-circle-line mr-2">Add More</i></button> -->
+                                                                <button class="btn text-primary p-0 bg-transparent outline-none border-0 f-12 plus-sign" type="button"><i class="f-12 me-1 fa  fa-plus-circle" aria-hidden="true"></i>Add
+                                                                    More</i></button>
                                                             </div>
 
-                                                        </div>
-                                                        <div class="mt-3 text-end">
-                                                            <button class="btn btn-default">Cancel</button>
-                                                            <button class="btn btn-primary">Post</button>
-                                                        </div>
+                                                            <div class="bottom-content">
+                                                                <div class="row">
+                                                                    <div class="col-sm-6 col-md-6 col-xl-4 col-lg-4 mt-1">
+                                                                        <div class=" d-flex align-items-center">
+                                                                            <label for="" class="me-1 mb-0">Poll
+                                                                                Expires
+                                                                                On</label>
+                                                                            <input class=" me-1 anounce-date form-control" name="date" type="date" placeholder="Select date" id="" required style="background-color:#e9ecef">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6 col-md-6 col-xl-4 col-lg-4 mt-1">
+
+                                                                        <input class="form-check-input check-box me-1" type="checkbox" name="notify_employees" id="notifyEmp2" value="1">
+                                                                        <label class="form-check-label" for="notifyEmp2">
+                                                                            Notify employees
+                                                                        </label>
+
+                                                                    </div>
+                                                                    <div class="col-sm-6 col-md-6 col-xl-4 col-lg-4 mt-1">
+
+                                                                        <input class="form-check-input check-box me-1" type="checkbox" name="anonymous_poll" value="1" id="anonymous">
+                                                                        <label class="form-check-label" for="anonymous">
+                                                                            Anonymous Poll
+                                                                        </label>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mt-2 text-end">
+                                                                <button class="btn btn-primary" id="polling-cancel-btn" type="button">Cancel</button>
+                                                                <button class="btn btn-primary" id="polling-submit-btn" type="submit">Post</button>
+                                                            </div>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="topbarContent emp-praise" style="display:none;">
                                                 <div>
-                                                    <div>
-                                                        <div class="px-20 p-16 row no-gutters scrollBar">
-                                                            <textarea name="" id="" cols="30" rows="3"
-                                                                class="border-0 outline-none w-100">
-                                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id nesciunt debitis esse facilis harum cumque eos in minus sed unde nisi assumenda ipsum sit aliquam placeat doloremque quasi sint sequi ullam, nostrum numquam aliquid! Magni, ipsam. Quod aperiam rem id labore amet totam doloribus ab, asperiores numquam rerum deserunt. Voluptate.
-                                                        </textarea>
+                                                    <form id="praise-form-submit">
+                                                        <div>
+                                                            <div class="px-20 p-16 row no-gutters scrollBar">
+                                                                <textarea name="praise_data" id="" cols="30" rows="3" class="border-0 outline-none w-100" required></textarea>
+                                                            </div>
+                                                            <div class="text-end mt-2">
+                                                                <button id="praise-submit-btn" type="submit" class="btn btn-primary py-1 px-4  float-right">
+                                                                    Submit
+                                                                </button>
+                                                            </div>
                                                         </div>
-                                                        <button class="btn btn-primary py-1 px-4  float-right">
-                                                            Submit
-                                                        </button>
-                                                    </div>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
@@ -335,61 +304,52 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 ipad-query">
-
-                    @include('ui-dashboard-event-card',['dashboardEmployeeEventsData' => $dashboardEmployeeEventsData])
-
-                </div>
             </div>
         </div>
-
-        <div class="col-sm-3 col-md-3">
-            <div class="">
-                <div class="card profile-box flex-fill m-0 mb-2 "
-                    style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);border-radius:3px 3px 20px 20px;">
-                    <!-- <div class="p-1 bg-primary" ></div> -->
-                    <div class="card-body p-0" style="padding:0px !important">
-                        <!-- <div id='full_calendar_events'></div> -->
-                        <!-- <div id="calendar"></div> -->
-                        <div class="calendar-wrapper" id="calendar-wrapper"></div>
-                    </div>
-                </div>
-                <!-- <div class="mb-0">
-                    <div class="title py-4 px-2" style="border-bottom:dotted #a4a5a7;">
-                        <h6 class="m-0 font-weight-bold text-primary">List Of Holidays-2022</h6>
-                    </div>
-                    <div class="card-body p-1">
-                    </div>
-                </div> -->
-                <!-- <div class="">
-                    <div class="card-body">
-                        <div class="col-sm-12 col-md-12 p-0">
-                            <div class="bg-muted pl-2 pr-2">
-                                <div class="row p-3">
-                                    <h6 class="mr-1 col-auto f-13 pr-0 wrap-text" style="width: 60%;"><i
-                                            class="fa fa-calendar-alt f-15 mr-2 text-purple"></i>Republic Day</h6>
-                                    <h6 class="f-13 col pl-0">
-                                        <div class="text-right">
-                                            <span>Sun, Jan 26</span>
-                                        </div>
-                                    </h6>
-                                </div>
-                                <hr class="m-0">
-                                <div class="row p-3">
-                                    <h6 class="mr-1 col-auto f-13 pr-0 wrap-text" style="width: 60%;"><i
-                                            class="fa fa-calendar-alt f-11 mr-2 text-yellow"></i>Shivaratri</h6>
-                                    <h6 class="f-13 col pl-0">
-                                        <div class="text-right">
-                                            <span>Sun, July 26</span>
-                                        </div>
-                                    </h6>
-                                </div>
+        <!-- content bpttom -->
+        <div class="col-sm-12 col-md-12 col-xl-4 col-lg-4 col-xxl-4 mb-3">
+            <div class="calendar-wrapper card mb-0 border-0">
+                <div class="card-body p-0">
+                    <div class="_wrapper">
+                        <div class="h-100  _container-calendar">
+                            <div class="_button-container-calendar d-flex align-items-center justify-content-between">
+                                <button id="_previous" onclick="previous()" class="previous"><i class="fa fa-chevron-left"></i></button>
+                                <h6 id="_monthAndYear" class="_monthAndYear"></h6>
+                                <button id="_next" onclick="next()" class="next"><i class="fa fa-chevron-right"></i></button>
                             </div>
+                            <table class="_table-calendar" id="_calendar" data-lang="en">
+
+
+                                <thead id="_thead-month"></thead>
+                                <tbody id="_calendar-body">
+
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                </div> -->
+                </div>
             </div>
         </div>
+    </div>
+
+
+    <!-- content-bottom -->
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 col-xxl-12">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 ipad-query">
+                    {{-- @foreach ($dashboardEmployeeEventsData['birthday'] as $key)
+                            @include('ui-dashboard-event-card',['date' => $key->dob])
+                    @endforeach --}}
+                    @include('ui-dashboard-event-card', [
+                    'dashboardEmployeeEventsData' => $dashboardEmployeeEventsData,
+                    ])
+
+                </div>
+            </div>
+        </div>
+
+
     </div>
 </div>
 
@@ -398,30 +358,16 @@
 @section('script')
 <!-- Prem assets -->
 <!-- OWL CAROUSEL -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
 
-<script src="{{ URL::asset('/assets/premassets/js/jquery-1.12.4.min.js') }}"></script>
-<!--Popper JS-->
-<script src="{{ URL::asset('/assets/premassets/js/popper.min.js') }}"></script>
-<!--Bootstrap-->
-<script src="{{ URL::asset('/assets/premassets/js/bootstrap.min.js') }}"></script>
 <!--Sweet alert JS-->
 <script src="{{ URL::asset('/assets/premassets/js/sweetalert.js') }}"></script>
 <script src="{{ URL::asset('/assets/premassets/js/progressbar.min.js') }}"></script>
 
-<!--Bootstrap Calendar JS-->
-<!-- <script src="{{ URL::asset('/assets/premassets/js/calendar/bootstrap_calendar.js') }}"></script>
-    <script src="{{ URL::asset('/assets/premassets/js/calendar/demo.js') }}"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment.min.js"></script>
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script> -->
 <!--Nice select-->
 <script src="{{ URL::asset('/assets/premassets/js/jquery.nice-select.min.js') }}"></script>
 
 <!--Custom Js Script-->
 <script src="{{ URL::asset('/assets/premassets/js/custom.js') }}"></script>
-<script src="{{ URL::asset('/assets/premassets/js/hr_dashboard.js') }}"></script>
 <script src="{{ URL::asset('/assets/premassets/js/holiday.js') }}"></script>
 <script src="{{ URL::asset('/assets/premassets/js/calendar.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/premassets/js/calendar.js') }}"></script>
@@ -429,167 +375,216 @@
 <!-- Prem assets ends -->
 
 <!-- apexcharts -->
-<script src="{{ URL::asset('/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
-<script src="{{ URL::asset('/assets/libs/jsvectormap/jsvectormap.min.js') }}"></script>
-<script src="{{ URL::asset('assets/libs/swiper/swiper.min.js')}}"></script>
 <!-- dashboard init -->
-<script src="{{ URL::asset('/assets/js/pages/dashboard-ecommerce.init.js') }}"></script>
-<script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 @yield('welcome-script')
+@yield('script-profile-avatar')
 <!-- for date and time -->
 
-<script src="https://unpkg.com/codeflask/build/codeflask.min.js"></script>
-<script type="text/javascript">
-var config = `
-function selectDate(date) {
-  $('#calendar-wrapper').updateCalendarOptions({
-    date: date
-  });
-  console.log(calendar.getSelectedDate());
-}
 
-var defaultConfig = {
-  weekDayLength: 1,
-  date: '08/05/2021',
-  onClickDate: selectDate,
-  showYearDropdown: true,
-  startOnMonday: false,
-};
-
-var calendar = $('#calendar-wrapper').calendar(defaultConfig);
-console.log(calendar.getSelectedDate());
-`;
-eval(config);
-const flask = new CodeFlask('#editor', {
-    language: 'js',
-    lineNumbers: true
-});
-flask.updateCode(config);
-flask.onUpdate((code) => {
-    try {
-        eval(code);
-    } catch (e) {}
-});
-</script>
-<script defer src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<script defer>
-fetch('https://raw.githubusercontent.com/wrick17/calendar-plugin/master/README.md')
-    .then(response => response.text())
-    .then(function(text) {
-        const docs = text.split('**DOCS**')[1];
-        document.getElementById('content').innerHTML = `
-          <div>
-            <h2>DOCS</h2>
-            ${marked.parse(docs)}
-          <div>
-          `;
-    });
-</script>
 <script>
-$(document).ready(function() {
-    $(function() {
-        $("[data-toggle=popover]").popover({
-            html: true,
-            content: function() {
-                var content = $(this).attr("data-popover-content");
-                return $(content).children(".popover-body").html();
-            },
+    $(document).ready(function() {
+
+        $('body').on('click', '.plus-sign', function() {
+            $('.content-container').append('<div class="mt-3 d-flex align-items-center"><input type="text" name="options[]"id="" class="form-control" placeholder="Add option here" required><i class="delete-row ri-delete-bin-7-fill mx-2 text-danger"></i></div>');
         });
-    });
 
-    $('body').on('click', '.popover-close', function() {
-        $("[data-toggle=popover]").popover('hide');
-    });
-    $('body').on('click', '.topbarNav', function() {
-        $('.topbarNav').removeClass('active');
-        $(this).addClass('active');
-        var id = $(this).attr('id');
-        $('.topbarContent').hide();
-        $('.emp-' + id).css("display", "block");
-    });
+        $('body').on('click', '.delete-row', function() {
+            $(this).parent().remove();
+        });
 
+        $(function() {
+            $("[data-toggle=popover]").popover({
+                html: true,
+                content: function() {
+                    var content = $(this).attr("data-popover-content");
+                    return $(content).children(".popover-body").html();
+                },
+            });
+        });
 
-});
+        $('body').on('click', '.popover-close', function() {
+            $("[data-toggle=popover]").popover('hide');
+        });
 
+        $('body').on('click', '.topbarNav', function() {
+            $('.topbarNav').removeClass('active');
+            $(this).addClass('active');
+            var id = $(this).attr('id');
+            $('.topbarContent').hide();
+            $('.emp-' + id).css("display", "block");
+        });
 
-// for number increament
+        // Announcement Submit Form through Ajax starts
+        $('#announcement-form-submit').on('submit', function(e) {
+            e.preventDefault();
+            if ($('#announcement-form-submit').is(':valid')) {
+                var announcementFormData = new FormData(document.getElementById("announcement-form-submit"));
+                console.log(announcementFormData);
 
-$(function() {
-    function count($this) {
-        var current = parseInt($this.html(), 10);
-        $this.html(++current);
+                $.ajax({
+                    url: "{{ url('vmt-dashboard-announcement') }}",
+                    type: "POST",
+                    processData: false,
+                    contentType: false,
+                    data: announcementFormData,
+                    beforeSend: function() {
+                        $("#annon_menu_submit").attr("disabled", true);
+                    },
+                    success: function(data) {
+                        swal("Success!", "Announcement added successfully", "success");
+                        document.getElementById("announcement-form-submit").reset();
+                        $("#annon_menu_submit").attr("disabled", false);
+                    }
+                });
 
-        if (current != 0) {
-            if (current !== $this.data('count')) {
-                setTimeout(function() {
-                    count($this)
-                }, 50);
-            }
-        }
-    }
-
-    $(".number-increment").each(function() {
-        var currentValue = parseInt($(this).html(), 10);
-        $(this).data('count', currentValue);
-        $(this).html('0');
-
-        if (currentValue != 0)
-            count($(this));
-    });
-});
-</script>
-<script type="text/javascript">
-$(document).ready(function(e) {
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    $('#submit_post_data').submit(function(e) {
-        e.preventDefault();
-        // alert("helooo");
-        var formData = new FormData(this);
-        $.ajax({
-            type: 'POST',
-            url: "{{url('vmt-dashboard-post')}}",
-            data: formData,
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: (data) => {
-                this.reset();
-                alert('Post Created Successfully');
-                console.log(data);
-            },
-            error: function(data) {
-                console.log(data);
             }
         });
+        // Announcement Submit Form through Ajax ends
+
+        // Polling Submit Form through Ajax starts
+        $('#polling-questions-form-submit').on('submit', function(e) {
+            e.preventDefault();
+            if ($('#polling-questions-form-submit').is(':valid')) {
+                var pollingFormData = new FormData(document.getElementById("polling-questions-form-submit"));
+                console.log(pollingFormData);
+
+                $.ajax({
+                    url: "{{ url('vmt-dashboard-polling-question') }}",
+                    type: "POST",
+                    processData: false,
+                    contentType: false,
+                    data: pollingFormData,
+                    beforeSend: function() {
+                        $("#polling-submit-btn").attr("disabled", true);
+                    },
+                    success: function(data) {
+                        if (data.status == true) {
+                            swal("Success!", data.message, "success");
+                            $('.delete-row').parent().remove();
+                        } else {
+                            swal("Error!", data.message, "error");
+                        }
+                        document.getElementById("polling-questions-form-submit").reset();
+                        $("#polling-submit-btn").attr("disabled", false);
+                    }
+                });
+
+            }
+        });
+
+        $('#polling-cancel-btn').on('click', function(e) {
+            document.getElementById("polling-questions-form-submit").reset();
+        });
+        // Polling Submit Form through Ajax ends
+
+        // Praise Submit Form through Ajax starts
+        $('#praise-form-submit').on('submit', function(e) {
+            e.preventDefault();
+            if ($('#praise-form-submit').is(':valid')) {
+                var praiseFormData = new FormData(document.getElementById("praise-form-submit"));
+                console.log(praiseFormData);
+
+                $.ajax({
+                    url: "{{ url('vmt-dashboard-praise') }}",
+                    type: "POST",
+                    processData: false,
+                    contentType: false,
+                    data: praiseFormData,
+                    beforeSend: function() {
+                        $("#praise-submit-btn").attr("disabled", true);
+                    },
+                    success: function(data) {
+                        if (data.status == true) {
+                            swal("Success!", data.message, "success");
+                        } else {
+                            swal("Error!", data.message, "error");
+                        }
+                        document.getElementById("praise-form-submit").reset();
+                        $("#praise-submit-btn").attr("disabled", false);
+                    }
+                });
+
+            }
+        });
+        // Praise Submit Form through Ajax Ends
+
+        // $('#annon_menu_submit').click(function(e) {
+        //     e.preventDefault();
+        //     var image = $('#image_src').val();
+        //     //alert(image);
+        //     var title_data = $('#title_data').val();
+        //     var details_data = $('#details_data').val();
+        //     var user_ref_id = "{{ Auth::user()->id }}";
+        //     $.ajax({
+        //         type: "POST",
+        //         url: "{{ url('vmt-dashboard-announcement') }}",
+        //         data: {
+        //             "_token": "{{ csrf_token() }}",
+        //             title_data: title_data,
+        //             user_ref_id: user_ref_id,
+        //             details_data: details_data,
+        //         },
+        //         success: function(data) {
+        //             // alert(data);
+        //             location.reload();
+        //         }
+        //     })
+        // });
+
+
+        // for number increament
+
+        $(function() {
+            function count($this) {
+                var current = parseInt($this.html(), 10);
+                $this.html(++current);
+
+                if (current != 0) {
+                    if (current !== $this.data('count')) {
+                        setTimeout(function() {
+                            count($this)
+                        }, 50);
+                    }
+                }
+            }
+
+            $(".number-increment").each(function() {
+                var currentValue = parseInt($(this).html(), 10);
+                $(this).data('count', currentValue);
+                $(this).html('0');
+
+                if (currentValue != 0)
+                    count($(this));
+            });
+        });
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $('#submit_post_data').submit(function(e) {
+            e.preventDefault();
+            // alert("helooo");
+            var formData = new FormData(this);
+            $.ajax({
+                type: 'POST',
+                url: "{{ url('vmt-dashboard-post') }}",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: (data) => {
+                    this.reset();
+                    alert('Post Created Successfully');
+                    console.log(data);
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            });
+        });
     });
-});
-</script>
-<script type="text/javascript">
-$('#annon_menu_submit').click(function(e) {
-    e.preventDefault();
-    var image = $('#image_src').val();
-    //alert(image);
-    var title_data = $('#title_data').val();
-    var details_data = $('#details_data').val();
-    var user_ref_id = "{{Auth::user()->id}}";
-    $.ajax({
-        type: "POST",
-        url: "{{url('vmt-dashboard-announcement')}}",
-        data: {
-            "_token": "{{ csrf_token() }}",
-            title_data: title_data,
-            user_ref_id: user_ref_id,
-            details_data: details_data,
-        },
-        success: function(data) {
-            // alert(data);
-            location.reload();
-        }
-    })
-});
 </script>
 @endsection
