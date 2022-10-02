@@ -69,17 +69,29 @@ class VmtOrgTreeController extends Controller
         }
 
 
-        $vmtGeneralInfo = VmtGeneralInfo::first();
-        $logoSrc        = asset($vmtGeneralInfo->logo_img);
+        $client_logo = VmtGeneralInfo::first()->logo_img;
+        
+        if( file_exists(public_path($client_logo)) ){
+            $logoSrc     = \URL::asset($client_logo);
+            $logoNode  = array("image" => $logoSrc, "relationship" => "001", "user_code" => "LogoNode", "name" =>"", "className" => "logo-level", "image_exist" => true);
+        }
+        else{
+            $client_name = \DB::table('vmt_client_master')->first()->client_name; 
+            $logoNode  = array("image" => "", "relationship" => "001", "user_code" => "LogoNode", "name" => $client_name, "className" => "logo-level", "image_exist"=> false);
+        }
 
-        $logoNode  = array("image" => $logoSrc, "relationship" => "011", "user_code" => "LogoNode", "name" =>"", "className" => "logo-level");
-
+        
         $logoNode['collapsed'] = false;
+
+
 
         if(count($data) > 0)
             $logoNode['children'] = $data;
         else
-            $logoNode['children'] = array($data);
+            $logoNode['relationship'] =  "000";
+            //$logoNode['children'] = ($data);
+
+        
 
         return $logoNode;
     }

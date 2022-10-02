@@ -50,7 +50,17 @@
 
     /*  Logo node style */
     .orgchart .logo-level .title {
-        display: none;
+       /* display: none;*/
+         height: auto; 
+        display: inline-flex;
+        margin: 0px;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .orgchart .logo-level .title span{
+
+        font-size: 20px;
     }
 
     .orgchart .logo-level .content {
@@ -255,14 +265,30 @@ $(document).ready(function() {
             'nodeTemplate': function(data) {
                 var nodeHtml =  '';
 
-                if(data.image_exist)
+
+
+                if(data.image_exist){
+                    if(data.className != "logo-level")
+                        nodeHtml =  '<div class="title">'+'<span>'+data.name+'</span>'+'</div>';
+
                     var imageHtml  =  '<img class="user-avatar" src="'+data.image+'" />';
+                
+                }
                 else{
-                    var imageHtml  =  '<span class="rounded-circle user-profile  ml-2 " id=""><i id="topbar_username" class="align-middle ">'+data.name.split(" ").join("").substring(0, 2)+'</i></span>';
+                    if(data.className == "logo-level"){
+                        var imageHtml  =  '';
+                        nodeHtml =  '<div class="title">'+'<span>'+data.name+'</span>'+'</div>';
+
+                    }else{
+                        nodeHtml =  '<div class="title">'+'<span>'+data.name+'</span>'+'</div>';
+
+                        var imageHtml  =  '<span class="rounded-circle user-profile  ml-2 " id=""><i id="topbar_username" class="align-middle ">'+data.name.split(" ").join("").substring(0, 2)+'</i></span>';    
+                    }
+                    
                 }
 
-                nodeHtml =  '<div class="title">'+'<span>'+data.name+'</span>'+'</div>';
-
+                
+                
                 if(data.className != 'dept-level'){
                     nodeHtml = nodeHtml + '<div class="tree-avatar">'+imageHtml +'</div>';
                 }
