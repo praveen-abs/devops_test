@@ -85,7 +85,7 @@ class AuthController extends Controller
                 ], 401);
             }
 
-            $user = User::where('user_code', $request->user_code)->where('is_admin','0')->first();
+            $user = User::where('user_code', $request->user_code)->where('is_ssa','0')->first();
 
             return response()->json([
                 'status' => true,

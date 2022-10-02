@@ -5,7 +5,7 @@
 <link href="{{ URL::asset('assets/css/employee_hirarchy.css') }}" rel="stylesheet">
 <link href="{{ URL::asset('assets/css/app.min.css') }}" rel="stylesheet">
 <style type="text/css">
-   
+
     .orgchart .dept-level .content {
         height: 0;
         border: none !important;
@@ -34,7 +34,7 @@
         content: "\002B" !important;
         font-size: 28px;
         display: block !important;
-        box-sizing: border-box;        
+        box-sizing: border-box;
         width: 0px !important;
         height: 0px !important;
         border-width: 0px !important;
@@ -244,10 +244,10 @@ $(document).ready(function() {
             'exportFilename': 'OrgChartImage',
             'exportFileextension':'png',
             'nodeTemplate': function(data) {
-                var nodeHtml =  ''; 
+                var nodeHtml =  '';
                 var imageHtml  =  '<img class="user-avatar" src="'+data.image+'" />';
-                nodeHtml =  '<div class="title">'+'<span>'+data.name+'</span>'+'</div>'; 
-                
+                nodeHtml =  '<div class="title">'+'<span>'+data.name+'</span>'+'</div>';
+
                 if(data.className != 'dept-level'){
                     nodeHtml = nodeHtml + '<div class="tree-avatar">'+imageHtml +'</div>';
                 }
@@ -267,25 +267,8 @@ $(document).ready(function() {
             }
         };
 
+
         var orgContainer  = $('#chart-container').orgchart(ocOption);
-
-        /*{
-            'data' : '{{ route('getTwoLevelOrgTree',['user_code' => Auth::user()->user_code ]) }}',
-            'ajaxURL' : ajaxURLs,
-            'pan' : true,
-            'zoom' : true,
-            'zoominLimit' : 2,
-            'zoomoutLimit' : 0.7,
-            'nodeContent': 'designation',
-            'exportButton': true,
-            'exportFilename': 'OrgChartImage',
-            'exportFileextension':'png',
-            'createNode' : function($node,data)
-            {
-                return $node;
-            }
-        });*/
-
 
         // refresh organisation chart on click department checkbox
         $('input[name="department"]').on('click', function(e){

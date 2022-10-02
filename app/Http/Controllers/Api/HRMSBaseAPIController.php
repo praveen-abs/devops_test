@@ -11,7 +11,7 @@ class HRMSBaseAPIController extends Controller
     {
         return  User::where('id', $userId)
                     ->where('active', 1)
-                    ->where('is_admin', 0)
+                    ->where('is_ssa', 0)
                     ->where('is_onboarded', 1)
                     ->first();
     }

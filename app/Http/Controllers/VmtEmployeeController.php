@@ -61,7 +61,7 @@ class VmtEmployeeController extends Controller
             $department = Department::all();
             $bank = Bank::all();
             $allEmployeesUserCode = User::where('id','<>',$employee_user->id)
-                            ->where('is_admin', 0)->where('active', 1)->whereNotNull('user_code')->get(['user_code', 'name']);
+                            ->where('is_ssa', 0)->where('active', 1)->whereNotNull('user_code')->get(['user_code', 'name']);
             //dd($emp_office_details->toArray());
             $assigned_l1_manager_name = User::where('user_code', $emp_office_details->l1_manager_code)->value('name');
            //dd($emp_office_details->l1_manager_code);
@@ -77,7 +77,7 @@ class VmtEmployeeController extends Controller
             $emp = VmtEmployeeOfficeDetails::all();
             $bank = Bank::all();
             $department = Department::all();
-            $allEmployeesUserCode = User::where('is_admin', 0)->where('active', 1)->whereNotNull('user_code')->get(['user_code', 'name']);
+            $allEmployeesUserCode = User::where('is_ssa', 0)->where('active', 1)->whereNotNull('user_code')->get(['user_code', 'name']);
             //dd($allEmployeesCode);
             return view('vmt_employeeOnboarding', compact('empNo', 'countries', 'india', 'emp', 'bank', 'department', 'allEmployeesUserCode'));
         }
@@ -204,7 +204,7 @@ class VmtEmployeeController extends Controller
                 'active' => '0',
                 'is_onboarded' => '1',
                 'onboard_type' => 'normal',
-                'is_admin' => '0'
+                'is_ssa' => '0'
             ]);
             $user->assignRole("Employee");
 
@@ -778,7 +778,7 @@ class VmtEmployeeController extends Controller
                 'active' => '0',
                 'is_onboarded' => '0',
                 'onboard_type' => 'bulk',
-                'is_admin' => '0',
+                'is_ssa' => '0',
                 'is_default_password_updated' => '0'
             ]);
             $user->save();
@@ -965,7 +965,7 @@ class VmtEmployeeController extends Controller
             )
             ->orderBy('users.name', 'ASC')
             ->where('users.active', '1')
-            ->where('users.is_admin', '0')
+            ->where('users.is_ssa', '0')
             ->whereNotNull('emp_no')
             ->get();
 
@@ -996,7 +996,7 @@ class VmtEmployeeController extends Controller
             )
             ->orderBy('users.name', 'ASC')
             ->where('users.active', '0')
-            ->where('users.is_admin', '0')
+            ->where('users.is_ssa', '0')
             ->whereNotNull('emp_no')
             ->get();
 
@@ -1011,7 +1011,7 @@ class VmtEmployeeController extends Controller
 
     public function isUserExist($t_emp_code)
     {
-        if (empty(User::where('user_code', $t_emp_code)->where('is_admin', '0')->first()))
+        if (empty(User::where('user_code', $t_emp_code)->where('is_ssa', '0')->first()))
             return false;
         else
             return true;
@@ -1214,7 +1214,7 @@ class VmtEmployeeController extends Controller
                 'active' => '0',
                 'is_onboarded' => '0',
                 'onboard_type' => 'quick',
-                'is_admin' => '0',
+                'is_ssa' => '0',
                 'is_default_password_updated' => '0',
 
             ]);
