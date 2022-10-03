@@ -18,7 +18,7 @@
                                 <div class="profile-wrapper d-flex w-100 ">
                                     <div class="profile-img d-flex">
                                         @include('ui-profile-avatar-lg',[
-                                            'currentUserName' => $user->name,
+                                            'currentUser' => $user,
                                             ])
                                         <span class="personal-edit img-edit"><a href="#" class="edit-icon"
                                             data-bs-toggle="modal" data-bs-target="#personal_info" id="pencil-on-avatar">
