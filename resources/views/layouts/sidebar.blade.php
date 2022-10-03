@@ -82,7 +82,7 @@
                     <div class="collapse menu-dropdown" id="attendanceDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item active">
-                                <a href="{{url('attendance_dashboard')}}" class="nav-link sidebar py-1">
+                                <a href="{{route('attendance-dashboard')}}" class="nav-link sidebar py-1">
                                     <span>Dashboard</span>
                                 </a>
                             </li>
@@ -121,7 +121,7 @@
 
                             @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR"]))
                                 <li class="nav-item">
-                                    <a href="{{url('attendance_reports')}}" class="nav-link sidebar py-1"><span>Reports</span></a>
+                                    <a href="{{route('attendance-leavereports')}}" class="nav-link sidebar py-1"><span>Reports</span></a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{url('attendance_settings')}}" class="nav-link sidebar py-1"><span>Settings</span></a>

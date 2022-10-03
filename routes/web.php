@@ -30,8 +30,15 @@ Route::get('/page-not-found', function () {
     return view('page404');
 })->name('page-not-found');
 
+//Attendance
+Route::get('/attendance-dashboard', [App\Http\Controllers\VmtAttendanceController::class, 'showDashboard'])->name('attendance-dashboard');
+Route::get('/attendance-leavepolicy', [App\Http\Controllers\VmtAttendanceController::class, 'showAttendanceLeavePolicyPage'])->name('attendance-leavepolicy');
+Route::get('/attendance-leavereports', [App\Http\Controllers\VmtAttendanceController::class, 'showAttendanceLeaveReportsPage'])->name('attendance-leavereports');
+
+
+
+
 //Update User Details
-Route::get('/profile-completeness/{id}', [App\Http\Controllers\HomeController::class, 'calculateProfileCompleteness'])->name('calculateProfileCompleteness');
 
 Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');
 Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
