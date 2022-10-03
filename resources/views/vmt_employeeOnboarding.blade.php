@@ -289,7 +289,7 @@
                     } else if (mygender == "Female") {
                         $('#spouse_gender').val('male');
                     }
-                } else if ($('#marital_status').val('single')) {
+                } else if ($('#marital_status').val('unmarried')) {
 
                     if (mygender == "Male") {
                         $('#spouse_gender').val('');
@@ -500,7 +500,7 @@
             });
 
             $('#marital_status').change(function() {
-                if ($('#marital_status').val() == 'single') {
+                if ($('#marital_status').val() == 'unmarried') {
                     $.each($('.spouse_data'), function(value) {
                         var name = $(this).attr('name');
                         if ($('input[name="' + name + '"]').val() == '') {
@@ -530,7 +530,7 @@
             });
 
             $('#gender').change(function() {
-                if ($('#marital_status').val() == 'single') {
+                if ($('#marital_status').val() == 'unmarried') {
                     $('#spouse_gender').val('');
                 } else {
                     if ($('#gender').val() == 'male') {
