@@ -164,7 +164,7 @@
                                         </li>
                                         <li>
                                             <div class="title">Marital status</div>
-                                            <div class="text">{{$details->marrital_status}}</div>
+                                            <div class="text">{{$details->marital_status}}</div>
                                         </li>
                                         <li>
                                             <div class="title">Employment of spouse</div>

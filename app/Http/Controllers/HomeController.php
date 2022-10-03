@@ -233,7 +233,7 @@ class HomeController extends Controller
        // dd($request->all());
         $reDetails = VmtEmployee::where('userid', $request->id)->first();
         $details = VmtEmployee::find($reDetails->id);
-        $details->marrital_status = $request->input('marital_status');
+        $details->marital_status = $request->input('marital_status');
         $details->mobile_number = $request->input('mobile_number');
         $details->no_of_children = $request->input('no_of_children');
         $details->spouse_name = $request->input('spouse');
@@ -476,7 +476,7 @@ class HomeController extends Controller
         $bank = Bank::all();
         $exp = Experience::where('id',$user->id)->get();
 
-        $maritalStatus = array('single',
+        $maritalStatus = array('unmarried',
                             'married',
                             'divorced',
                             'widowed',

@@ -105,7 +105,7 @@ function fetchSubClients(){
                             'vmt_employee_details.passport_date',
                             'vmt_employee_details.nationality',
                             'vmt_employee_details.religion',
-                            'vmt_employee_details.marrital_status',
+                            'vmt_employee_details.marital_status',
                             'vmt_employee_details.spouse_name',
                             //'vmt_employee_details.no_of_children',
 

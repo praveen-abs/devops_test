@@ -152,7 +152,7 @@
                                     </li>
                                     <li>
                                         <div class="title">Marital status</div>
-                                        <div class="text">{{$user_full_details->marrital_status ?? ''}}</div>
+                                        <div class="text">{{$user_full_details->marital_status ?? ''}}</div>
                                     </li>
                                     <li>
                                         <div class="title">Spouse Name</div>
