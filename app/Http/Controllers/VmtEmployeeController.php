@@ -227,7 +227,7 @@ class VmtEmployeeController extends Controller
             $newEmployee->epf_number = $row["epf_number"];
 
             $newEmployee->esic_number = $row["esic_number"];
-            $newEmployee->marrital_status = $row["marital_status"];
+            $newEmployee->marital_status = $row["marital_status"];
 
             $newEmployee->mobile_number  = strval($row["mobile_no"]);
             $newEmployee->blood_group  = $row["blood_group"];
@@ -416,7 +416,7 @@ class VmtEmployeeController extends Controller
             //$newEmployee->uan = $row["uan"];
             //$newEmployee->epf_number = $row["epf_number"];
             //$newEmployee->esic_number = $row["esic_number"];
-            $newEmployee->marrital_status = $row["marital_status"];
+            $newEmployee->marital_status = $row["marital_status"];
 
             $newEmployee->mobile_number  = strval($row["mobile_no"]);
             //$newEmployee->email_id   = $row["email"];
@@ -802,7 +802,7 @@ class VmtEmployeeController extends Controller
             $newEmployee->pan_number   =  isset($row["pan_no"]) ? ($row["pan_no"]) : "";
             //$newEmployee->pan_ack   =    $row["pan_ack"];
             $newEmployee->aadhar_number = $row["aadhar"];
-            $newEmployee->marrital_status = $row["marital_status"];
+            $newEmployee->marital_status = $row["marital_status"];
             $newEmployee->mobile_number  = strval($row["mobile_no"]);
             $newEmployee->bank_name   = $row["bank_name"];
             $newEmployee->bank_ifsc_code  = $row["bank_ifsc"];
