@@ -4,8 +4,7 @@
 @endsection
 @section('content')
 @component('components.attendance_breadcrumb')
-@slot('li_1')
-@endslot
+@slot('li_1')@endslot
 @endcomponent
 
     <div class="card flex-fill project-wrapper">
@@ -36,11 +35,11 @@
         <div class="card-body">
             <div class="card profile-box flex-fill card-top-border w-100 p-3">
                 <h6 class="text-left fw-bold mb-3">Leave History</h6>
-                <div class="col-md-12 d-flex justify-content-between mb-3">
+                <div class="card profile-box flex-fill card-top-border w-100 p-3">
                     <div class="d-flex space-around-between">
                         <button class="filter-btn">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel" viewBox="0 0 16 16">
-                                <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2h-11z"></path>
+                            <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2h-11z"></path>
                             </svg>
                         </button>
                         <button class="btn selection-btn">
@@ -56,179 +55,200 @@
                             </svg>
                         </button>
                     </div>
-                    <div class="position_relative">
-                        <input type="text" class="search-box-feild" placeholder="Search">
-                        <div class="position-absolute-search">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
-                            </svg>
-                        </div>
-                    </div>		
-                </div>
-                <div class="col-md-12 box-shadow-table">
-                    <table class="table">
-                        <thead class="table-dark">
-                            <tr>
-                                <td scope="col" style="padding-left: 25px">Leave Type</td>
-                                <td scope="col">Annual(Days)</td>
-                                <td scope="col">Month(Days)</td>
-                                <td scope="col">Restricted Days</td>
-                                <td scope="col">None</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td scope="row" style="padding-left: 25px">Casual Leave</td>
-                                <td scope="row">12</td>
-                                <td scope="row"></td>
-                                <td>01</td>
-                                <td>02</td>
-                                <td>20</td>
-                            </tr>
-                            <tr>
-                                <td scope="row" style="padding-left: 25px">Casual Leave</td>
-                                <td scope="row">12</td>
-                                <td scope="row"></td>
-                                <td>01</td>
-                                <td>02</td>
-                                <td>20</td>
-                            </tr>
-                            <tr>
-                                <td scope="row" style="padding-left: 25px">Casual Leave</td>
-                                <td scope="row">12</td>
-                                <td scope="row"></td>
-                                <td>01</td>
-                                <td>02</td>
-                                <td>20</td>
-                            </tr>
-                            <tr>
-                                <td scope="row" style="padding-left: 25px">Casual Leave</td>
-                                <td scope="row">12</td>
-                                <td scope="row"></td>
-                                <td>01</td>
-                                <td>02</td>
-                                <td>20</td>
-                            </tr>
-                            <tr>
-                                <td scope="row" style="padding-left: 25px">Casual Leave</td>
-                                <td scope="row">12</td>
-                                <td scope="row"></td>
-                                <td>01</td>
-                                <td>02</td>
-                                <td>20</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="col-md-12">
+                        <div id="vendor-tables"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal fade show" id="newVendor" tabindex="-1" aria-labelledby="newVendor" style="display: block;" aria-modal="true" role="dialog">
-            <div class="modal-dialog modal-dialog-scrollable  modal-lg ">
-                <div class="modal-content border-0">
-                    <div class="modal-header top-line">
-                        <h6 class="modal-title" id="exampleModalLabel">Add New Vendor</h6>
-                        <button type="button" class=" modal-close outline-none rounded-circle border-0" data-bs-dismiss="modal">×</button>
+    <section class="leave-request-section">
+        <div class="modal fade" id="requestmodal" tabindex="-1" aria-labelledby="requestmodalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="requestmodalLabel">Leave Request</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="card profile-box flex-fill card-top-border w-100">
-                            <div class="card-body">
-                                <div class="row px-3 pt-2">
-                                    <div class="col-md-6">
-                                        <h6 class="text-left fw-bold pt-2">Leave Type</h6>
-                                    </div>
-                                    <div class="col-md-6 d-flex px-3 justify-content-end">
-                                        <div class="pt-2 text-md-start text-center me-3">
-                                            <button type="button" class="btn btn-custom-outline-secondary">
-                                                Leave Policy Explanation
-                                            </button>
-                                        </div>
+                        <div class="border-top-blue">
+                            <div class="row mb-2">
+                                <div class="col-6 text-start">
+                                    <p class="modal-sub-title">Leave Type</p>
+                                </div>
+                                <div class="col-6 text-end">
+                                    <a class="btn btn-sm leave-policy" href="#">Leave Policy Explanation</a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-4 col-md-6 mb-lg-4 mb-3">
+                                    <div class="border-left-blue text-center">
+                                        <h5>Casual Leave</h5>
+                                        <span><span class="number-count-span">9</span>days</span>
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis rerum velit possimus</p>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-sm-3 col-xl-3 col-md-3 col-lg-3">
-                                        <div class="card shadow small-card left-line">
-                                            <div class="card-body">
-                                                <div class="text-center">
-                                                    <p class="text-muted f-15">Casual Leave</p>
-                                                    <h4 class="fw-bold text-primary mb-0">9<span class="text-secondary">days</span></h4>
+                                <div class="col-xl-4 col-md-6 mb-lg-4 mb-3">
+                                    <div class="border-left-blue text-center">
+                                        <h5>Sick Leave</h5>
+                                        <span><span class="number-count-span">3</span>days</span>
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis rerum velit possimus</p>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-md-6 mb-lg-4 mb-3">
+                                    <div class="border-left-blue text-center">
+                                        <h5>Earned Leave</h5>
+                                        <span><span class="number-count-span">1</span>days</span>
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis rerum velit possimus</p>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-md-6 mb-lg-0 mb-3">
+                                    <div class="border-left-blue text-center">
+                                        <h5>Maternity Leave</h5>
+                                        <span><span class="number-count-span">180</span>days</span>
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis rerum velit possimus</p>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-md-6 mb-lg-0 mb-3">
+                                    <div class="border-left-blue text-center">
+                                        <h5>Casual Leave</h5>
+                                        <span><span class="number-count-span">3</span>days</span>
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis rerum velit possimus</p>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-md-6 mb-lg-0 mb-3">
+                                    <div class="border-left-blue text-center">
+                                        <h5>Casual Leave</h5>
+                                        <span><span class="number-count-span">6</span>days</span>
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis rerum velit possimus</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-top-blue">
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <p class="modal-sub-title">Set range</p>
+                                    <div class="row mb-3">
+                                        <div class="col-md-4 text-md-start mb-md-0 mb-3">
+                                            <label>Start Date</label>
+                                            <input type="date">
+                                        </div>
+                                        <div class="col-md-4 text-md-center mb-md-0 mb-3" style="display: flex;justify-content: center;align-items: center;">
+                                            <span class="type-end-eight">Total days</span>
+                                        </div>
+                                        <div class="col-md-4 text-md-end">
+                                            <label>End Date</label>
+                                            <input type="date">
+                                        </div>
+                                    </div>
+                                    <textarea class="w-100" rows="4"></textarea>
+                                    <div class="py-2" style="border-bottom: 1px solid #cecece;"></div>
+                                    <p class="modal-sub-title py-2">Notify to</p>
+                                    <div class="row mb-3">
+                                        <div class="col-md-4 mb-md-0 mb-3">
+                                            <div class="profile-wrapper center">
+                                                <div class="profile-body">
+                                                    <img src="http://images.equipboard.com/uploads/user/image/524/big_calvin-harris.jpg?v=1466072866" alt="" />
+                                                    <div class="profile-details">
+                                                        <p>Dillip Kumar</p>
+                                                        <h5 class="description">Scottish DJ</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-md-0 mb-3">
+                                            <div class="profile-wrapper center">
+                                                <div class="profile-body">
+                                                    <img src="http://images.equipboard.com/uploads/user/image/524/big_calvin-harris.jpg?v=1466072866" alt="" />
+                                                    <div class="profile-details">
+                                                        <p>Dillip Kumar</p>
+                                                        <h5 class="description">Scottish DJ</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-md-0 mb-3">
+                                            <div class="profile-wrapper center">
+                                                <div class="profile-body">
+                                                    <img src="http://images.equipboard.com/uploads/user/image/524/big_calvin-harris.jpg?v=1466072866" alt="" />
+                                                    <div class="profile-details">
+                                                        <p>Dillip Kumar</p>
+                                                        <h5 class="description">Scottish DJ</h5>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-3 col-xl-3 col-md-3 col-lg-3">
-                                        <div class="card shadow small-card left-line">
-                                            <div class="card-body text-center">
-                                                <p class="text-muted f-15">Sick Leave</p>
-                                                <h4 class="fw-bold text-primary mb-0">days</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3 col-xl-3 col-md-3 col-lg-3">
-                                        <div class="card shadow small-card left-line">
-                                            <div class="card-body text-center">
-                                                <p class="text-muted f-15">Carryover</p>
-                                                <h4 class="fw-bold text-primary mb-0">10</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3 col-xl-3 col-md-3 col-lg-3">
-                                        <div class="card shadow small-card left-line">
-                                            <div class="card-body text-center">
-                                                <p class="text-muted f-15">Carryover</p>
-                                                <h3 class="fw-bold text-primary mb-0">25</h3>
-                                            </div>
-                                        </div>
+                                    <div class="text-center text-md-end">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn btn-orange">Request Leave</button>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-sm-3 col-xl-3 col-md-3 col-lg-3">
-                                        <div class="card shadow small-card left-line">
-                                            <div class="card-body">
-                                                <div class="text-center">
-                                                    <p class="text-muted f-15">Available</p>
-                                                    <h4 class="fw-bold text-primary mb-0">9</h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3 col-xl-3 col-md-3 col-lg-3">
-                                        <div class="card shadow small-card left-line">
-                                            <div class="card-body text-center">
-                                                <p class="text-muted f-15">Accrued so Far</p>
-                                                <h4 class="fw-bold text-primary mb-0">20</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3 col-xl-3 col-md-3 col-lg-3">
-                                        <div class="card shadow small-card left-line">
-                                            <div class="card-body text-center">
-                                                <p class="text-muted f-15">Carryover</p>
-                                                <h4 class="fw-bold text-primary mb-0">10</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3 col-xl-3 col-md-3 col-lg-3">
-                                        <div class="card shadow small-card left-line">
-                                            <div class="card-body text-center">
-                                                <p class="text-muted f-15">Carryover</p>
-                                                <h3 class="fw-bold text-primary mb-0">25</h3>
-                                            </div>
-                                        </div>
+                                <div class="col-xl-6">
+                                    <div class="calendar">
+                                        <div id="calendar"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-border-primary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save</button>
-                    </div>
                 </div>
             </div>
         </div>
+    </section>
 @endsection
+
 @section('script')
+<script src="{{ URL::asset('assets/libs/gridjs/gridjs.min.js') }}"></script>
+<script src="{{ URL::asset('/assets/js/pages/dashboard-projects.init.js') }}"></script>
+<script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
+
 <script>
+    $(document).ready(function() {
+        if (document.getElementById("vendor-tables")) {
+            const grid = new gridjs.Grid({
+                columns: [
+                    {
+                        id: 'number',
+                        name: 'Leave Type',
+                    },
+                    {
+                        id: 'name',
+                        name: 'Annual(Days)',
+                    },
+                    {
+                        id: 'job_title',
+                        name: 'Month(Days)',
+                    },
+                    {
+                        id: 'reporting_to',
+                        name: 'Restricted Days',
+                    },
+                    {
+                        id: 'reporting_to',
+                        name: 'Department',
+                    },
+                ],
+                data: [
+                    // {
+                    //     name: 'John',
+                    //     email: 'john@example.com',
+                    //     phoneNumber: '(353) 01 222 3333'
+                    // },
+                    // {
+                    //     name: 'Mark',
+                    //     email: 'mark@gmail.com',
+                    //     phoneNumber: '(01) 22 888 4444'
+                    // },
+                ],
+                pagination: {
+                    limit: 10
+                },
+                sort: true,
+                search: true,
+            }).render(document.getElementById("vendor-tables"));
+        }
+    });
 </script>
 @endsection
