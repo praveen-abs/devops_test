@@ -12,39 +12,9 @@
     }
 
     .orgchart .dept-level .title .symbol {
-        display: none;
-    }
+        display: none;   }
 
-    /* .oci-chevron-left::before {
-        content: "\002B" !important;
-         display: inline-block;
-        font-size: 20px;
-        display: block !important;
-        box-sizing: border-box;
-        width: 0px !important;
-        height: 0px !important;
-        border-width: 0px !important;
-        border-style: none !important;
-        border-color: transparent !important;
-        background: none !important;
-        transform: none !important;
-    } */
-
-    /* .oci-chevron-right::before {
-        content: "\002B" !important;
-        font-size: 28px;
-        display: block !important;
-        box-sizing: border-box;
-        width: 0px !important;
-        height: 0px !important;
-        border-width: 0px !important;
-        border-style: none !important;
-        border-color: transparent !important;
-        background: none !important;
-        transform: none !important;
-    } */
-
-
+   
 
 
 
@@ -73,11 +43,7 @@
 
     .empPhoto {}
 
-    .tree-avatar {
-        background: #f1f1f1;
-        align-items: center;
-        justify-content: center;
-    }
+   
 
     .user-avatar {
         width: 96px;
@@ -98,12 +64,7 @@
         border-radius: 50px;
     }
 
-    .logo-level .tree-avatar {
-        left: 0px;
-        position: relative;
-        border-radius: 0px;
-        background: transparent;
-    }
+ 
 
     .logo-level .tree-avatar img {
         height: auto;

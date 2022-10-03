@@ -46,7 +46,7 @@
             <div class="d-flex container-fluid">
                 <!-- disable setting icon for employee -->
                 <div class="d-flex justify-content-between align-items-center w-100">
-                    <div class="d-flex ">
+                    <div class="d-flex  align-items-center">
                         <button type="button" class="btn btn-sm fs-16 vertical-menu-btn topnav-hamburger border-0 outline-none" id="topnav-hamburger-icon">
                             <span class="hamburger-icon open">
                                 <span></span>

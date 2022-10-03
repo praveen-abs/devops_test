@@ -14,6 +14,7 @@
     margin-top: 0px;
     margin: 0px 3px 0px 0px;
 }
+
 #chart-container {
     height: auto;
     /* border: 1px solid #aaa; */
@@ -27,8 +28,7 @@
     min-height: 500px;
 }
 .orgchart .hierarchy {
-    /* position: relative; */
-    margin: 18px 0px;
+    margin: 15px 0px;
 }
 
 .orgchart {
@@ -46,21 +46,55 @@
 
 .orgchart .node:not(:only-child)::after {
     background-color: #002f56 !important;
-    left: calc(50% - 6px) !important;
-    /* bottom: 0px !important; */
-    height: 20px !important;
-    z-index: 0;
-    bottom: -22px !important;
+    top: 48px;
+    height: 27px !important;
 }
+.orgchart .node:not(:only-child)::before{
+    background-color: #002f56 !important;
+    top: 48px;
+    height: 12px !important;
+    content: "";
+    position: absolute;
+    bottom: -11px;
+    left: calc(50% - 1px);
+    width: 2px; 
+    left: calc(50% - 1px) !important;
+}
+
+
+
+.orgchart .dept-level:not(:only-child)::after {  
+    height: 28px;
+    top: 28px;
+
+}
+
+.nodes .dept-level::before {  
+    content: "";
+    position: absolute;
+    bottom: -11px;
+    left: calc(50% - 1px);
+    width: 2px;
+    background-color: #002f56 !important;
+}
+.orgchart .logo-level:not(:only-child)::after{   
+    height: 38px !important;    
+    top: 48px !important;
+
+}
+
 .orgchart .hierarchy:first-child::before {
-    left: calc(50% - 4px);
-    width: calc(50% + 4px);
+    left: calc(50% - 1px);
+    width: calc(50% + 1px);
+}
+
+.orgchart .hierarchy:last-child::before {
+    width: calc(50% + 1px) !important;
 }
 
 .orgchart .node.focused {
     background-color: rgb(0 47 86 / 22%) !important;
 }
-
 
 .orgchart .node .horizontalEdge::before {
     top: 14px;
@@ -73,7 +107,7 @@
     background-color: #ffffff !important;
     /* overflow: hidden; */
     color: #003156;
-    margin: 10px;
+    margin: 6px 20px;
     border-radius: 50px !important;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
@@ -91,25 +125,47 @@
     border-radius: 5px !important;
     height: 30px;
     width: auto;
-   
 }
-.nodes .dept-level .title{
+.nodes .dept-level .title {
     margin: 0px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.tree-avatar {
+/* user img */
+.hierarchy .node .tree-avatar {
     position: absolute;
     top: 3px;
-    left: 10px;
+    left: 3px;
     border-radius: 50px;
+    background: #003156;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    color: #ffffff;
+    font-weight: 600;
+    width: 40px;
+    height: 40px;
+    border-radius: 50px !important;
 }
 .tree-avatar img {
-    height: 40px;
-    width: 40px;
-    border-radius: 50px !important;
+    height: 100%;
+    width: 100%;
+}
+
+
+/* logo img */
+.logo-level .tree-avatar {
+    left: 0px;
+    position: relative;
+    border-radius: 0px;
+    background: transparent !important;
+    width: 100% !important;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .orgchart .node .content {
@@ -132,15 +188,7 @@
 .orgchart .node.focused {
     background-color: none !important;
 }
-.orgchart .hierarchy:last-child::before {
-    width: calc(50% + -4px) !important;
-}
 
-/* .orgchart .node .topEdge {
-    top: -28px;
-    z-index: 21;
-    opacity: 0;
-} */
 
 /* .orgchart .hierarchy::after{
     content: "";
@@ -156,9 +204,19 @@
     margin: 5px 0px;
 } */
 
-.orgchart .node .verticalEdge::before {
+.orgchart > ul > li > ul li > .node::after {
+       content: "";
     position: absolute;
-    left: calc(50% - 10px);
+    bottom: 0px;
+    left: calc(50% - 1px);
+    width: 2px;
+    height: 9px;
+    background-color: #002f56 !important;
+    left: calc(50% - 1px) !important;
+    top: -18px;
+    height: 16px !important;
+    margin: 0px 0px;
+
 }
 
 .oc-export-btn {
@@ -214,72 +272,54 @@
     height: 15px !important;
 }
 
-.orgchart > ul > li > ul li > .node::after {
-    content: "";
-    position: absolute;
-    bottom: -11px;
-    left: calc(50% - 1px);
-    width: 2px;
-    height: 9px;
-    background-color: #002f56 !important;
-    left: calc(50% - 6px) !important;
-    top: -28px;
-    height: 21px !important;
-    margin: 5px 0px;
-}
 .orgchart > ul > li > ul li > .node::before {
     display: none !important;
 }
 
 .oci-chevron-down::before {
     content: "+";
-    position: absolute;
-    top: -10px;
-    left: calc(50% - 16px);
+}
+.oci-chevron-down::before,
+.oci-chevron-up::before,
+.orgchart .node .topEdge.oci-chevron-down::before,
+.orgchart .node .topEdge.oci-chevron-up::before {
+    top: 12px;
+    left: calc(50% - 8px) !important;
     width: 15px;
     height: 15px;
-    margin: 3px;
     font-weight: 600;
     background-color: white !important;
-    border: 1px solid #002f56 !important;
-    padding: 2px;
+    border: 1px solid #ff2c16 !important;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50px;
-    z-index: 20;
-    left: calc(50% - 14px) !important;
+    z-index: 4;
     transform: none !important;
 }
 .orgchart .node .edge::before {
-    border-color: #002f56 !important;
+    border-color: #ff2c16 !important;
 }
-.orgchart .node .edge:hover:before {
-    border-color: #002f56 !important;
-}
-
 .oci-chevron-up::before {
     content: "-";
-    position: absolute;
-    top: 0px;
-    left: calc(50% - 16px) !important;
-    width: 15px;
-    height: 15px;
-    margin: 3px;
-    font-weight: 600;
-    background-color: white !important;
-    border: 1px solid #002f56 !important;
-    padding: 2px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50px;
-    z-index: 20;
-    left: calc(50% - 12px);
-    transform: none !important;
 }
 
 .orgchart .node .topEdge.oci-chevron-down::before {
-    transform: none !important;
-    left: calc(50% - 15px);
+    content: "-";
+    top: -9px;
+    left: calc(50% - 5px) !important;
+    
+}
+
+.dept-level .oci-chevron-down::before,.dept-level
+.oci-chevron-up::before,.dept-level
+.orgchart .node .topEdge.oci-chevron-down::before,.dept-level
+.orgchart .node .topEdge.oci-chevron-up::before{
+    top: 12px !important;
+    left: calc(50% - 8px) !important;
+}
+
+.orgchart .node .topEdge {
+    top: -18px;
+    left: 1px;
 }
