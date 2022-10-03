@@ -240,7 +240,7 @@ class VmtEmployeeController extends Controller
             //$newEmployee->father_age   = $row["father_age"];
             $newEmployee->mother_name   = $row["mother_name"];
             //$newEmployee->mother_age  = $row["mother_age"];
-            if ($row['marital_status'] <> 'single') {
+            if ($row['marital_status'] <> 'unmarried') {
                 $newEmployee->spouse_name   = $row["spouse_name"];
                 $newEmployee->spouse_age   = $row["spouse_dob"];
                 if ($row['no_child'] > 0) {
@@ -814,7 +814,7 @@ class VmtEmployeeController extends Controller
             $newEmployee->mother_dob   = $row["mother_dob"];
 
 
-            if ($row['marital_status'] <> 'single') {
+            if ($row['marital_status'] <> 'unmarried') {
                 $newEmployee->spouse_name   = $row["spouse_name"];
                 $newEmployee->spouse_age   = $row["spouse_dob"];
                 if ($row['no_of_child'] > 0) {
