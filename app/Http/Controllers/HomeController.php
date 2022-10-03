@@ -443,7 +443,7 @@ class HomeController extends Controller
 
         $bank = Bank::all();
         $exp = Experience::where('id',$user->id)->get();
-        $maritalStatus = array('single',
+        $maritalStatus = array('unmarried',
                             'married',
                             'divorced',
                             'widowed',

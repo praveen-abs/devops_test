@@ -809,9 +809,8 @@ class VmtPMSModuleController extends Controller
 
                 $currentUser_empDetails = VmtEmployeeOfficeDetails::where('user_id', auth::user()->id)->first();
 
-                $hrList =  User::role(['HR', 'admin', 'Admin'])->get();
-                $hrUsers = $hrList->pluck('id');
-                $officialMailList =   VmtEmployeeOfficeDetails::whereIn('user_id', $hrUsers)->pluck('officical_mail');
+                $hr_emp =  User::where('org_role','3')->pluck('id');//HR
+                $officialMailList =   VmtEmployeeOfficeDetails::whereIn('user_id', $hr_emp)->pluck('officical_mail');
 
                 $notification_user = User::where('id',auth::user()->id)->first();
                 //dd($officialMailList);
