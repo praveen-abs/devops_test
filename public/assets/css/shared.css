@@ -1029,3 +1029,13 @@ button.gridjs-sort-asc::after{
 .text-primary {
     color: #002f56;
 }
+
+.topbar-logo{
+    height: 25px ;
+    width: 140px ;
+   
+}
+.topbar-logo img {
+    height: 100% !important;
+    width: 100% !important;
+}
