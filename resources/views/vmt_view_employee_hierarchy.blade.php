@@ -49,28 +49,10 @@
         width: 96px;
     }
 
-    /* logo node css */
-    .node.logo-level {
-        box-sizing: border-box;
-        display: inline-block;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        height: 50px;
-        width: 160px;
-
-        margin: 10px;
-
-        border-radius: 50px;
-    }
 
  
 
-    .logo-level .tree-avatar img {
-        height: auto;
-        width: 100%;
-        border-radius: 0px !important;
-    }
+  
 
     .tree-avatar .rounded-circle.user-profile{
             height: 30px;
