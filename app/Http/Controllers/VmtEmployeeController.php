@@ -451,6 +451,9 @@ class VmtEmployeeController extends Controller
             $newEmployee->docs_reviewed = json_encode($docReviewArray);
             $newEmployee->save();
 
+            // store family member in vmt_employee_family_details tables
+            $this->storeEmployeeFamilyMembers($row, $user->id);
+
             // dd($newEmployee->id);
             if ($newEmployee) {
                 $empOffice  = VmtEmployeeOfficeDetails::where('user_id', $user->id)->first();
