@@ -42,9 +42,9 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Employee Name as per Aadhar <span class="text-danger">*</span></label>
                                                     @if(isset($employee_user->name))
-                                                    <input type="text" placeholder="Employee Name as per Aadhar " name="employee_name" id="employee_name" value="{{$employee_user->name}}" class="onboard-form form-control textbox capitalize" pattern="name" readonly />
+                                                    <input type="text" placeholder="Employee Name as per Aadhar " name="employee_name" id="employee_name" value="Praveen" class="onboard-form form-control textbox capitalize" pattern="name" readonly />
                                                     @else
-                                                    <input type="text" placeholder="Employee Name as per Aadhar " name="employee_name" id="employee_name" class=" form-control textbox capitalize" pattern="name" required />
+                                                    <input type="text" placeholder="Employee Name as per Aadhar " name="employee_name" id="employee_name" class=" form-control textbox capitalize" value="Praveen" pattern="name" required  />
 
                                                     @endif
                                                     <label class="error star_error employee_name_label" for="employee_name" style="display: none;"></label>
@@ -60,7 +60,7 @@
                                                 @endphp
                                                 <div class="floating">
                                                     <label for="" class="float-label">Date of Birth <span class="text-danger">*</span></label>
-                                                    <input type="text" placeholder="Date of Birth" name="dob" max="{{$date}}" class="onboard-form form-control textbox" onfocus="(this.type='date')" required />
+                                                    <input type="text" value="02/12/2022" placeholder="Date of Birth" name="dob" max="{{$date}}" class="onboard-form form-control textbox" onfocus="(this.type='date')" required />
                                                     <!-- <label for="" class="float-label">Date of Birth</label> -->
                                                 </div>
                                             </div>
@@ -70,8 +70,8 @@
                                                     <label for="" class="float-label">Marital Status <span class="text-danger">*</span></label>
 
                                                     <select placeholder="Marital Status" name="marital_status" id="marital_status" class="onboard-form form-control textbox select2_form_without_search " required>
-                                                        <option value="" hidden selected disabled>Marital Status</option>
-                                                        <option value="unmarried">Unmarried</option>
+                                                        <option value="" hidden  disabled>Marital Status</option>
+                                                        <option value="unmarried" selected>Unmarried</option>
                                                         <option value="married">Married</option>
                                                         <option value="widowed">Widowed</option>
                                                         <option value="separated">Separated</option>
@@ -85,9 +85,9 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Date of Joining<span class="text-danger">*</span></label>
                                                     @if(isset($employee_details->doj))
-                                                    <input type="text" max="9999-12-31" placeholder="Date of Joining" name="doj" value="{{isset($employee_details->doj)? date("d-m-Y", strtotime($employee_details->doj)) : ''}}" class="onboard-form  form-control textbox "  required readonly />
+                                                    <input type="text" max="9999-12-31" value="02/12/2022" placeholder="Date of Joining" name="doj" value="{{isset($employee_details->doj)? date("d-m-Y", strtotime($employee_details->doj)) : ''}}" class="onboard-form  form-control textbox "  required readonly />
                                                     @else
-                                                    <input type="text" max="9999-12-31" placeholder="Date of Joining" name="doj" class="onboard-form  form-control textbox " onfocus="(this.type='date')" required />
+                                                    <input type="text" max="9999-12-31" value="02/12/2022"  placeholder="Date of Joining" name="doj" class="onboard-form  form-control textbox " onfocus="(this.type='date')" required />
                                                     @endif
                                                     <!-- <label for="" class="float-label">Date of Joining</label> -->
                                                 </div>
@@ -98,7 +98,7 @@
                                                     <label for="" class="float-label">Gender<span class="text-danger">*</span></label>
                                                     <select placeholder="Choose Gender" name="gender" id="gender" class="onboard-form form-control textbox select2_form_without_search " required>
                                                         <option value="" hidden selected disabled>Choose Gender</option>
-                                                        <option value="male">Male</option>
+                                                        <option value="male" selected>Male</option>
                                                         <option value="female">Female</option>
                                                         <option value="other">Other</option>
                                                     </select>
@@ -111,9 +111,9 @@
 
                                                     <label for="" class="float-label">Mobile Number<span class="text-danger">*</span></label>
                                                     @if(isset($employee_details->mobile_number))
-                                                        <input type="number" placeholder="Mobile Number" name="mobile_no" minlength="10" value="{{$employee_details->mobile_number? $employee_details->mobile_number : ''}}" maxlength="10" class="onboard-form form-control textbox " required readonly />
+                                                        <input type="text"  placeholder="Mobile Number" name="mobile_no" minlength="10" value="9922002440" maxlength="10" class="onboard-form form-control textbox " required readonly />
                                                     @else
-                                                        <input  type="text" placeholder="Mobile Number" name="mobile_no" id="mobile_no" minlength="10" value="" maxlength="10" oninput="numberOnly(this.id);" class="onboard-form form-control textbox " required />
+                                                        <input  type="text"  value="9922002440"  placeholder="Mobile Number" name="mobile_no" id="mobile_no" minlength="10" value="" maxlength="10" oninput="numberOnly(this.id);" class="onboard-form form-control textbox " required />
                                                     @endif
                                                 </div>
                                             </div>
@@ -121,7 +121,7 @@
                                                 <!-- <label class="" for="email">Email ID{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Email<span class="text-danger">*</span></label>
-                                                    <input type="email" pattern="email" placeholder="Email ID" name="email" value="{{request()->has('email')? request()->email : ''}}" class="  form-control textbox " onkeypress="return event.charCode != 32" @if(request()->has('email')) readonly @endif required />
+                                                    <input type="email" pattern="email" placeholder="Email ID" name="email" value="freakz@gmail.com" class="  form-control textbox " onkeypress="return event.charCode != 32" @if(request()->has('email')) readonly @endif required />
                                                     <!-- <label for="" class="float-label">Email</label> -->
                                                 </div>
                                             </div>
@@ -129,7 +129,7 @@
                                                 <!-- <label class="" for="aadhar">Aadhaar Number<span id="aadhar_req">{!! required() !!}</span></label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Aadhaar Number<span class="text-danger">*</span></label>
-                                                    <input type="text" oninput="numberOnly(this.id);" placeholder="Aadhaar Number" name="aadhar" id="vmt_aadhar" pattern="aadhar" class="onboard-form form-control textbox " minlength="12" maxlength="12" required />
+                                                    <input type="text" oninput="numberOnly(this.id);" placeholder="Aadhaar Number" value="223344556666" name="aadhar" id="vmt_aadhar" pattern="aadhar" class="onboard-form form-control textbox " minlength="12" maxlength="12" required />
                                                     {{-- <label class="error star_error aadhar_label" for="aadhar"
                                                         style="display: none;"></label> --}}
                                                     <!-- <label for="" class="float-label">Aadhaar Number</label> -->
@@ -142,7 +142,7 @@
                                                 <!-- <label class="" for="pan_no">Pan Card Number<span id="pan_no_req">{!! required() !!}</span></label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Pan Number / Pan Acknowlegement<span class="text-danger">*</span></label>
-                                                    <input type="text" placeholder="Pan Card Number" name="pan_no" id="pan_num" class=" form-control textbox  pan" pattern="pan" minlength="10" maxlength="10" required />
+                                                    <input type="text" placeholder="Pan Card Number" name="pan_no" id="pan_num" class=" form-control textbox  pan" value="GGDE234G44" pattern="pan" minlength="10" maxlength="10" required />
                                                     <label class="error star_error pan_no_label" id="pan_no_label" for="pan_no" style="display: none;"></label>
 
                                                     <span class="error" id="error_pan_no"></span>
@@ -166,7 +166,7 @@
                                                 <!-- <label class="" for="444">DL Number</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">DL Number</label>
-                                                    <input type="text" placeholder="DL Number" name="dl_no" id="dl_no" minlength="16" maxlength="16" class="onboard-form form-control textbox " style='text-transform:uppercase' />
+                                                    <input type="text" placeholder="DL Number" name="dl_no" value="Rj1s320120123456" id="dl_no" minlength="16" maxlength="16" class="onboard-form form-control textbox " style='text-transform:uppercase' />
                                                     <label class="error star_error dl_no_label" for="dl_no" style="display: none;"></label>
 
                                                     <span class="error" id="error_dl_no"></span>
@@ -185,7 +185,7 @@
                                                     <label for="" class="float-label">Choose nationality<span class="text-danger">*</span></label>
                                                     <select placeholder="Choose nationality" name="nationality" id="nationality" class="onboard-form form-control textbox  select2_form_without_search" required>
                                                         <option value="" hidden selected disabled>Choose nationality</option>
-                                                        <option value="indian">Indian</option>
+                                                        <option value="indian" selected>Indian</option>
                                                         <option value="other_country">Other Nationality</option>
                                                     </select>
                                                     <!-- <label for="" class="float-label">Choose nationality</label> -->
@@ -194,7 +194,7 @@
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <div class="floating">
                                                     <label for="" class="float-label">Passport Number</label>
-                                                    <input type="text" placeholder="Passport Number" name="passport_no" id="passport_no" minlength="8" maxlength="8" class="form-control textbox" style='text-transform:uppercase' required/>
+                                                    <input type="text" placeholder="Passport Number" name="passport_no" id="passport_no" minlength="8" maxlength="8" value="24422333" class="form-control textbox" style='text-transform:uppercase' required/>
                                                     <label class="error star_error passport_no_label" for="passport_no" style="display: none;"></label>
 
                                                     <span class="error" id="error_passport_no"></span>
@@ -217,7 +217,7 @@
                                                 </div> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Passport Exp Date</label>
-                                                    <input type="text" max="9999-12-31" placeholder="Date of Joining" name="exp" class="onboard-form  form-control textbox " id="passdate" onfocus="(this.type='date')" required />
+                                                    <input type="text" max="9999-12-31" placeholder="Date of Joining" name="exp" class="onboard-form  form-control textbox " value="9999-12-31" id="passdate" onfocus="(this.type='date')" required />
                                                     <!-- <label for="" class="float-label">Passport Exp Date</label> -->
                                                 </div>
                                             </div>
@@ -228,7 +228,7 @@
                                                     <label for="" class="float-label">Blood Group</label>
                                                     <select placeholder="Blood Group" name="blood_group" id="blood_group" class="onboard-form form-control textbox   select2_form_without_search">
                                                         <option value="" hidden selected disabled>Select Blood Group</option>
-                                                        <option value="a-positive">A Positive</option>
+                                                        <option value="a-positive" selected>A Positive</option>
                                                         <option value="a-negative">A Negative</option>
                                                         <option value="b-positive">B Positive</option>
                                                         <option value="b-negative">B Negative</option>
@@ -247,7 +247,7 @@
                                                     <select placeholder="Physically Challenged" name="physically_challenged" class="onboard-form form-control textbox  select2_form_without_search" required>
                                                         <option value="" hidden selected disabled>Physically Challenged</option>
                                                         <option value="yes">Yes</option>
-                                                        <option value="no">No</option>
+                                                        <option value="no" selected>No</option>
                                                     </select>
                                                     <!-- <label for="" class="float-label">Physically Challenged</label> -->
                                                 </div>
@@ -260,7 +260,9 @@
                                                     <select placeholder="Bank Name" name="bank_name" id="bank_names" class="onboard-form form-control textbox  select2_form_without_search" required>
                                                         <option value="" hidden selected disabled>Select Bank Name</option>
                                                         @foreach($bank as $b)
-                                                        <option value="{{$b->bank_name}}" min-data="{{$b->min_length}}" max-data="{{$b->max_length}}">{{$b->bank_name}}</option>
+                                                        <!-- <option value="{{$b->bank_name}}" min-data="{{$b->min_length}}" max-data="{{$b->max_length}}">{{$b->bank_name}}</option> -->
+                                                        
+                                                        <option value="HDFC" selected>HDFC</option>
                                                         @endforeach
                                                     </select>
                                                     <!-- <label for="" class="float-label">Bank Name</label> -->
@@ -271,16 +273,16 @@
                                                     <!-- <label class="" for="account_no">Account Number</label> -->
                                                     <label for="" class="float-label">Account Number<span class="text-danger">*</span></label>
 
-                                                    <input type="text" placeholder="Account Number" name="account_no" id="account_no" class="onboard-form form-control textbox " oninput="numberOnly(this.id);"  minlength="10" maxlength="18" required />
+                                                    <input type="text" placeholder="Account Number" name="account_no" value="34532245667799" id="account_no" class="onboard-form form-control textbox " oninput="numberOnly(this.id);"  minlength="10" maxlength="18" required />
                                                     <label class="error star_error account_no_label" for="account_no" style="display: none;"></label>
                                                     <!-- <label for="" class="float-label">Account Number</label> -->
                                                 </div>
-                                            </div>
+                                            </div> 
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="bank_ifsc">Bank IFSC Code</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Bank IFSC Code<span class="text-danger">*</span></label>
-                                                    <input type="text" placeholder="Bank IFSC Code" name="bank_ifsc" id="bank_ifsc" pattern="ifsc" class=" form-control textbox " required />
+                                                    <input type="text" placeholder="Bank IFSC Code" name="bank_ifsc" id="bank_ifsc" value="HDFC2345" pattern="ifsc" class=" form-control textbox " required />
                                                     <label class="error star_error bank_ifsc_label" for="bank_ifsc" style="display: none;"></label>
                                                     <!-- <label for="" class="float-label">Bank IFSC Code</label> -->
                                                 </div>
@@ -302,16 +304,16 @@
                                                     <label for="" class="float-label">PF Applicable</label>
 
                                                     <select placeholder="PF Applicable" name="pf_applicable" id="pf_applicable" class="onboard-form form-control textbox  select2_form_without_search" required>
-                                                        <option value="" hidden selected disabled>PF Applicable</option>
+                                                        <!-- <option value="" hidden selected disabled>PF Applicable</option> -->
                                                         <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
+                                                        <option value="No" selected>No</option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <div class="floating">
                                                     <label for="" class="float-label">EPF Number</label>
-                                                    <input type="text" placeholder="EPF Number" name="epf_number" id="epf_number" class="onboard-form form-control textbox " />
+                                                    <input type="text" placeholder="EPF Number" name="epf_number" id="epf_number" value="TN MAS 054110 000 0054321" class="onboard-form form-control textbox " />
 
                                                     <span class="error" id="error_epf_number"></span>
                                                 </div>
@@ -320,7 +322,7 @@
 
                                                 <div class="floating">
                                                     <label for="" class="float-label">UAN Number</label>
-                                                    <input type="text" placeholder="UAN Number" name="uan_number" id="uan_number" minlength="12" maxlength="12" class="onboard-form form-control textbox "/>
+                                                    <input type="text" placeholder="UAN Number" name="uan_number" value="FGTF12455" id="uan_number" minlength="12" maxlength="12" class="onboard-form form-control textbox "/>
 
                                                 </div>
                                             </div>
@@ -328,9 +330,9 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">ESIC Applicable</label>
                                                     <select placeholder="ESIC Applicable" name="esic_applicable" id="esic_applicable" class="onboard-form form-control textbox  select2_form_without_search" required>
-                                                        <option value="" hidden selected disabled>ESIC Applicable</option>
+                                                        <!-- <option value="" hidden selected disabled>ESIC Applicable</option> -->
                                                         <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
+                                                        <option value="No" selected>No</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -338,7 +340,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">ESIC Number</label>
 
-                                                    <input type="text" placeholder="ESIC Number" name="esic_number" id="esic_number" minlength="10" maxlength="10" class="onboard-form form-control textbox " />
+                                                    <input type="text" placeholder="ESIC Number" name="esic_number" value="31–00–123456–000–0000" id="esic_number" minlength="10" maxlength="10" class="onboard-form form-control textbox " />
                                                     <span class="error" id="error_esic_number"></span>
                                                 </div>
                                             </div>
@@ -347,8 +349,8 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Ptax Location</label>
 
-                                                    <select placeholder="Ptax Location" name="ptax_location" id="ptax_location" class="onboard-form form-control textbox  select2_form_without_search">
-                                                        <option value="" hidden selected disabled>Ptax Location</option>
+                                                    <select placeholder="Ptax Location" value name="ptax_location" id="" class="onboard-form form-control textbox  select2_form_without_search">
+                                                        <option value="Chennai" hidden selected disabled>Chennai</option>
 
                                                     </select>
                                                 </div>
@@ -357,9 +359,9 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">TAX Regime</label>
                                                     <select placeholder="TAX Regime" name="tax_regime" id="tax_regime" class="onboard-form form-control textbox  select2_form_without_search" required>
-                                                        <option value="" hidden selected disabled>TAX Regime</option>
+                                                        <!-- <option value="" hidden selected disabled>TAX Regime</option> -->
                                                         <option value="Old">Old</option>
-                                                        <option value="New">New</option>
+                                                        <option value="New" selected> New</option>
                                                     </select>
 
                                                 </div>
@@ -367,10 +369,10 @@
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <div class="floating">
                                                     <label for="" class="float-label">LWF Location</label>
-                                                    <select placeholder="LWF Location" name="lwf_location" id="lwf_location" class="onboard-form form-control textbox  select2_form_without_search">
-                                                        <option value="" hidden selected disabled>LWF Location</option>
+                                                    <select placeholder="LWF Location" name="lwf_location" id="" class="onboard-form form-control textbox  select2_form_without_search">
+                                                        <!-- <option value="" hidden selected disabled>LWF Location</option> -->
                                                         <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
+                                                        <option value="No" selected>Trichy</option>
                                                     </select>
 
                                                 </div>
