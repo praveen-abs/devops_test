@@ -441,7 +441,6 @@
                                                     <label for="" class="float-label">Pincode<span class="text-danger">*</span></label>
 
                                                     <input type="text" minlength="6" maxlength="6" oninput="numberOnly(this.id);" placeholder="Pincode" name="current_pincode" id="current_pincode" class="onboard-form form-control textbox " required />
-                                                    <input  type="text" placeholder="Mobile Number" name="mobile_no" id="mobile_no" minlength="10" value="" maxlength="10" oninput="numberOnly(this.id);" class="onboard-form form-control textbox " required />
                                                 </div>
                                             </div>
 
