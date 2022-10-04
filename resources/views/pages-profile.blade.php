@@ -1040,7 +1040,11 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Nationality <span class="text-danger">*</span></label>
-                                    <input class="form-control onboard-form" type="text" name="nationality" pattern-data="alpha" value="{{$user_full_details->nationality ?? ''}}">
+                                    <select placeholder="Choose nationality" name="nationality" id="nationality" class="onboard-form form-control textbox  select2_form_without_search" required>
+                                        <option value="" hidden selected disabled>Choose nationality</option>
+                                        <option value="Indian">Indian</option>
+                                        <option value="Other Nationality">Other Nationality</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-6">

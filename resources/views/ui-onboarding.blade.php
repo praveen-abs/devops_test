@@ -42,9 +42,9 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Employee Name as per Aadhar <span class="text-danger">*</span></label>
                                                     @if(isset($employee_user->name))
-                                                    <input type="text" placeholder="Employee Name as per Aadhar " name="employee_name" id="employee_name" value="{{$employee_user->name}}" class="onboard-form form-control textbox" pattern="name" readonly />
+                                                    <input type="text" placeholder="Employee Name as per Aadhar " name="employee_name" id="employee_name" value="{{$employee_user->name}}" class="onboard-form form-control textbox capitalize" pattern="name" readonly />
                                                     @else
-                                                    <input type="text" placeholder="Employee Name as per Aadhar " name="employee_name" id="employee_name" class=" form-control textbox" pattern="name" required />
+                                                    <input type="text" placeholder="Employee Name as per Aadhar " name="employee_name" id="employee_name" class=" form-control textbox capitalize" pattern="name" required />
 
                                                     @endif
                                                     <label class="error star_error employee_name_label" for="employee_name" style="display: none;"></label>
@@ -121,7 +121,7 @@
                                                 <!-- <label class="" for="email">Email ID{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Email<span class="text-danger">*</span></label>
-                                                    <input type="email" pattern="email" placeholder="Email ID" name="email" value="{{request()->has('email')? request()->email : ''}}" class="onboard-form  form-control textbox " @if(request()->has('email')) readonly @endif required />
+                                                    <input type="email" pattern="email" placeholder="Email ID" name="email" value="{{request()->has('email')? request()->email : ''}}" class="  form-control textbox " onkeypress="return event.charCode != 32" @if(request()->has('email')) readonly @endif required />
                                                     <!-- <label for="" class="float-label">Email</label> -->
                                                 </div>
                                             </div>
@@ -394,7 +394,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Address 1<span class="text-danger">*</span></label>
 
-                                                    <textarea placeholder="Current Address" name="current_address_line_1" id="current_address_line_1" class="onboard-form form-control textbox " required id="" cols="" rows="1"></textarea>
+                                                    <textarea placeholder="Current Address" name="current_address_line_1" id="current_address_line_1" class=" form-control textbox capitalize" required id="" cols="" rows="1"></textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6 mb-2">
@@ -402,7 +402,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Address 2</label>
 
-                                                    <textarea placeholder="Current Address" name="current_address_line_2" id="current_address_line_2" class="onboard-form form-control textbox " required id="" cols="" rows="1"></textarea>
+                                                    <textarea placeholder="Current Address" name="current_address_line_2" id="current_address_line_2" class="form-control textbox capitalize" required id="" cols="" rows="1"></textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -432,7 +432,7 @@
                                                 <!-- <label class="" for="current_city">Current City{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label"> City<span class="text-danger">*</span></label>
-                                                    <input type="text" placeholder="City" name="current_city" id="current_city" class="onboard-form form-control textbox     " required />
+                                                    <input type="text" placeholder="City" name="current_city" id="current_city" class="onboard-form form-control textbox  capitalize" required />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -440,7 +440,8 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Pincode<span class="text-danger">*</span></label>
 
-                                                    <input type="number" placeholder="Pincode" name="current_pincode" id="current_pincode" class="onboard-form form-control textbox " required />
+                                                    <input type="text" minlength="6" maxlength="6" oninput="numberOnly(this.id);" placeholder="Pincode" name="current_pincode" id="current_pincode" class="onboard-form form-control textbox " required />
+                                                    <input  type="text" placeholder="Mobile Number" name="mobile_no" id="mobile_no" minlength="10" value="" maxlength="10" oninput="numberOnly(this.id);" class="onboard-form form-control textbox " required />
                                                 </div>
                                             </div>
 
@@ -463,14 +464,14 @@
                                                 <!-- <label class="" for="permanent_address">Permanent Address{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label"> Address 1 <span class="text-danger">*</span></label>
-                                                    <textarea placeholder="Permanent Address" name="permanent_address_line_1" id="permanent_address_line_1" class="onboard-form form-control textbox " required cols="5" rows="1"></textarea>
+                                                    <textarea placeholder="Permanent Address" name="permanent_address_line_1" id="permanent_address_line_1" class="form-control textbox capitalize" required cols="5" rows="1"></textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6 mb-2">
                                                 <!-- <label class="" for="permanent_address">Permanent Address{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label"> Address 2</label>
-                                                    <textarea placeholder="Permanent Address" name="permanent_address_line_2" id="permanent_address_line_2" class="onboard-form form-control textbox " required cols="5" rows="1"></textarea>
+                                                    <textarea placeholder="Permanent Address" name="permanent_address_line_2" id="permanent_address_line_2" class="form-control textbox capitalize" required cols="5" rows="1"></textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 col-xxl-3 mb-2">
@@ -504,7 +505,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label"> City<span class="text-danger">*</span></label>
 
-                                                    <input type="text" placeholder=" City" name="permanent_city" id="permanent_city" class="onboard-form form-control textbox " required />
+                                                    <input type="text" placeholder=" City" name="permanent_city" id="permanent_city" class="onboard-form form-control textbox capitalize" required />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -512,7 +513,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label"> Pincode <span class="text-danger">*</span></label>
 
-                                                    <input type="number" placeholder=" Pincode" name="permanent_pincode" id="permanent_pincode" class="onboard-form form-control textbox " required />
+                                                    <input type="text" placeholder=" Pincode" name="permanent_pincode" id="permanent_pincode" oninput="numberOnly(this.id);" minlength="6" maxlength="6" class="onboard-form form-control textbox " required />
                                                 </div>
                                             </div>
                                         </div>
@@ -552,7 +553,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Designation<span class="text-danger">*</span> </label>
 
-                                                    <input type="text" placeholder="Designation" name="designation" class="onboard-form form-control textbox " pattern="alpha" required />
+                                                    <input type="text" placeholder="Designation" name="designation" class=" form-control textbox " pattern="alpha" required />
                                                     <label class="error star_error designation_label" for="designation" style="display: none;"></label>
                                                 </div>
                                             </div>
@@ -590,7 +591,7 @@
                                                 <!-- <label class="" for="work_location">Work Location{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Work Location<span class="text-danger">*</span></label>
-                                                    <input type="text" placeholder="Work Location" name="work_location" class="onboard-form form-control textbox " pattern="alpha" required />
+                                                    <input type="text" placeholder="Work Location" name="work_location" class="onboard-form form-control textbox capitalize" pattern="alpha" required />
                                                     <label class="error star_error work_location_label" for="work_location" style="display: none;"></label>
 
                                                 </div>
@@ -632,7 +633,7 @@
                                                 <!-- <label class="" for="officical_mail">Official E-Mail Id{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Official Email </label>
-                                                    <input type="email" placeholder="Official E-Mail Id" name="officical_mail" class="textbox  onboard-form form-control " pattern="email" />
+                                                    <input type="email" placeholder="Official E-Mail Id" name="officical_mail" class="textbox form-control " pattern="email" onkeypress="return event.charCode != 32"/>
                                                     <!--  <label class="error star_error officical_mail_label" for="officical_mail" style="display: none;"></label> -->
                                                 </div>
                                             </div>
@@ -640,7 +641,7 @@
                                                 <!-- <label class="" for="official_mobile">Official Mobile{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Official Mobile</label>
-                                                    <input type="number" minlength="10" maxlength="10" placeholder="Official Mobile" name="official_mobile" class="textbox  onboard-form form-control " />
+                                                    <input type="text" minlength="10" maxlength="10" placeholder="Official Mobile" name="official_mobile" id="official_mobile" oninput="numberOnly(this.id);" class="textbox  onboard-form form-control " />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -675,7 +676,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Father Name <span class="text-danger">*</span></label>
 
-                                                    <input type="text" placeholder="Father Name" name="father_name" pattern="name" class="onboard-form form-control textbox " required />
+                                                    <input type="text" placeholder="Father Name" name="father_name" pattern="name" class="onboard-form form-control textbox capitalize" required />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -704,7 +705,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Age </label>
 
-                                                    <input type="number" placeholder="Age" name="father_age" id="father_age" class="textbox  onboard-form form-control " minlength="2" maxlength="3" required readonly/>
+                                                    <input type="number" placeholder="Age" name="father_age" id="father_age" class="textbox  onboard-form form-control " minlength="2" maxlength="3" readonly/>
                                                 </div>
                                             </div>
 
@@ -714,7 +715,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Mother Name <span class="text-danger">*</span></label>
 
-                                                    <input type="text" placeholder="Mother Name" name="mother_name" pattern="name" class="textbox  onboard-form form-control " required />
+                                                    <input type="text" placeholder="Mother Name" name="mother_name" pattern="name" class="textbox  onboard-form form-control capitalize" required />
                                                 </div>
                                             </div>
 
@@ -742,7 +743,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Age</label>
 
-                                                    <input type="number" placeholder="Age" name="mother_age" id="mother_age" class="textbox  onboard-form form-control " minlength="2" maxlength="3" required readonly/>
+                                                    <input type="number" placeholder="Age" name="mother_age" id="mother_age" class="textbox  onboard-form form-control " minlength="2" maxlength="3" readonly/>
                                                 </div>
                                             </div>
 
@@ -753,7 +754,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Spouse Name <span class="text-danger">*</span></label>
 
-                                                    <input type="text" placeholder="Spouse Name" name="spouse_name" pattern="name" class="textbox  onboard-form form-control  spouse_data" required />
+                                                    <input type="text" placeholder="Spouse Name" name="spouse_name" pattern="name" class="textbox  onboard-form form-control  spouse_data capitalize" required />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">

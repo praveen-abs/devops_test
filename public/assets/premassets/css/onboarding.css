@@ -1,3 +1,6 @@
+.capitalize {
+    text-transform: capitalize;
+}
 
 fieldset {
     border: 1px solid !important;
@@ -124,15 +127,9 @@ option:hover {
     /* font-size: 14px; */
     /* letter-spacing: 1px; */
     /* outline: none; */
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
 }
 
-#msform .date-inp{
-    text-transform: uppercas
-}
-#msform #employee_name { 
-    text-transform: uppercase !important;
-}
 ::-webkit-input-placeholder { /* WebKit browsers */
 text-transform: none;
 }
@@ -260,7 +257,7 @@ text-transform: none;
 }
 
 .card {
-    
+
     position: relative
 }
 
@@ -299,7 +296,7 @@ text-transform: none;
         padding-left: 0 !important;
     }
 
-    
+
 
     .header {
         margin-right: 0px !important;

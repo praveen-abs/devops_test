@@ -33,10 +33,22 @@
         padding: 7px;
         border-radius: 2px;
     }
+    .loader {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url('{{ URL::asset("assets/images/loader.gif") }}') 50% 50% no-repeat rgb(249, 249, 249);
+        opacity: 0.4;
+    }
+
 </style>
 @endsection
 
 @section('content')
+<div class="loader" style="display:none;"></div>
 
 @if(!request()->has('email'))
 
@@ -117,7 +129,7 @@
                 placeholder: "Select Reporting Manager",
             });
 
-            $('#l1_manager_code').on('select2:select', function(e) {
+            $('#l1_manager_code_select').on('select2:select', function(e) {
                 var usercode = e.params.data.text;
 
                 //http://localhost:8000/getEmployeeName?user_code=EMP100
@@ -606,8 +618,8 @@
                     $('#aadhar').attr('required', true);
                     $('#aadhar_req').show();
                     $('#aadhar').removeClass('not-required validate');
-                    $('#permanent_pincode').attr('type', 'number');
-                    $('#current_pincode').attr('type', 'number');
+                    $('#permanent_pincode').attr('type', 'text');
+                    $('#current_pincode').attr('type', 'text');
                     $('#current_country').val('IN').trigger('change');
                     stateFunction('IN', '#current_state');
                     stateFunction('IN', '#permanent_state');
@@ -733,6 +745,7 @@
                     //alert("1 st one");
                     var form_data1 = new FormData(document.getElementById("form-1"));
                     var txtPANCard = $("#pan_no").val();
+                    $('.loader').show();
 
                     $.ajax({
                         url: "{{url('vmt-employee-onboard')}}",
@@ -742,6 +755,7 @@
                         contentType: false,
                         processData: false,
                         success: function(data) {
+                            $('.loader').hide();
 
                             console.log("Response : "+data.status);
                             console.log(data);
