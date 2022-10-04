@@ -57,8 +57,11 @@
     @endcomponent
 @endif
 <div class="main">
-
-    @include('ui-onboarding')
+    @if(Request::has('debug'))
+        @include('ui-onboarding-debug')
+    @else
+        @include('ui-onboarding')
+    @endif
 
     @endsection
     @section('script')
@@ -237,8 +240,6 @@
                 $('#account_no').attr('minlength', min);
                 $('#account_no').attr('maxlength', max);
             })
-
-
 
             $('body').on('click', '.close-modal', function() {
                 $('#notificationModal').hide();
@@ -784,22 +785,14 @@
                             //alert(data);
                         },
                         error: function(data) { //NEED TO FIX IT
+                            $('.loader').hide();
 
-                            // console.log('error');
-                            // if (data.status == "Saved") {
-                            //     $('#modalHeader').html(data);
-                            //     $('#modalNot').html("Employee Onboarding success");
-                            //     $('#modalBody').html("Mail notification sent.");
-                            //     $('#notificationModal').show();
-                            //     $('#notificationModal').removeClass('fade');
-                            // } else {
+                            $('#modalHeader').html("Error");
+                            $('#modalSubHeading').html(data.message);
+                            $('#modalBody').html(data);
+                            $('#notificationModal').show();
+                            $('#notificationModal').removeClass('fade');
 
-                            //     $('#modalHeader').html(data);
-                            //     $('#modalNot').html("Failed to save Data");
-                            //     //$('#modalBody').html("Request to the server failed");
-                            //     $('#notificationModal').show();
-                            //     $('#notificationModal').removeClass('fade');
-                            // }
                             console.log("Ajax Error block : "+data);
 
                         }
