@@ -71,7 +71,7 @@
 
                                                     <select placeholder="Marital Status" name="marital_status" id="marital_status" class="onboard-form form-control textbox select2_form_without_search " required>
                                                         <option value="" hidden selected disabled>Marital Status</option>
-                                                        <option value="unmarried">Un-married</option>
+                                                        <option value="unmarried">Unmarried</option>
                                                         <option value="married">Married</option>
                                                         <option value="widowed">Widowed</option>
                                                         <option value="separated">Separated</option>

@@ -152,7 +152,7 @@
                                     </li>
                                     <li>
                                         <div class="title">Marital status</div>
-                                        <div class="text">{{$user_full_details->marital_status ?? ''}}</div>
+                                        <div class="text text-capitalize">{{$user_full_details->marital_status ?? ''}}</div>
                                     </li>
                                     <li>
                                         <div class="title">Spouse Name</div>
@@ -1054,10 +1054,10 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Marital status <span class="text-danger">*</span></label>
-                                    <select class="form-select form-control" name="marital_status" required>
+                                    <select class="form-select form-control text-capitalize" name="marital_status" required>
                                         <option>Select</option>
                                         @foreach($maritalStatus as $item_maritalStatus)
-                                            <option @if(!empty($user_full_details->marital_status)  && $user_full_details->marital_status == $item_maritalStatus ) selected @endif value="{{$item_maritalStatus }}">{{$item_maritalStatus }}</option>
+                                            <option @if(!empty($user_full_details->marital_status)  && $user_full_details->marital_status == $item_maritalStatus ) selected @endif value="{{$item_maritalStatus }}">{{ucfirst($item_maritalStatus) }}</option>
                                         @endforeach
                                     </select>
                                 </div>
