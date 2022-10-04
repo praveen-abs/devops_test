@@ -231,7 +231,7 @@
                     <div class="card-body p-0">
                         <div class="row">
                             <div class="col-sm-6 col-5 col-md-5 col-xl-5 col-xxl-5 col-lg-5 text-center">
-                                <img src="{{ URL::asset('assets/images/self_review.png') }}" alt="" class="">
+                                <img src="{{ URL::asset('assets/images/pms_rating.png') }}" alt="" class="">
                             </div>
                             <div class="col-sm-6  col-7 col-md-7 mt-3 col-xl-7 col-xxl-7 ps-0 col-lg-7 align-items-center flex-column d-flex">
                                 <p class="mb-1 text-center">Final Score Published</p>

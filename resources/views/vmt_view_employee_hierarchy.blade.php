@@ -39,20 +39,7 @@
 
     .logo-level figure {
         margin: 0;
-    }
-
-    .empPhoto {}
-
-   
-
-    .user-avatar {
-        width: 96px;
-    }
-
-
- 
-
-  
+    } 
 
     .tree-avatar .rounded-circle.user-profile{
             height: 30px;
@@ -71,7 +58,7 @@
 @slot('li_1') @endslot
 @endcomponent
 <div class="hierarchy-wrapper">
-    <div id="chart-container" class="" style="overflow: hidden;">
+    <div id="chart-container" class="">
     </div>
     <div class="form-check  department-wise">
         <input type="checkbox" name="department" class="form-check-input" id="department-wise">

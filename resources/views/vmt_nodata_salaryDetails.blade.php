@@ -9,14 +9,14 @@
 @component('components.paycheck_breadcrumb')
 @slot('li_1') @endslot
 @endcomponent
-<div class="investments-wrapper">
+<div class="salary-wrapper">
     <div class="card shadow profile-box card-top-border ">
         <div class="fill salary-header nav-tab-header">
             <div class="row">
                 <div class="col-xs-6">
                     <ul class="nav nav-pills nav-tabs-dashed">
                         <li id="ember76" class="active ember-view">
-                            <a href="#/investments-and-proofs/investment-declaration" id="ember77" class="active ember-view">
+                            <a href="#/investments-and-proofs/investment-declaration" id="ember77" class="text-muted f-14 fw-bold ember-view">
                                 Salary Details
                             </a>
                         </li>

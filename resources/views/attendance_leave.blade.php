@@ -10,17 +10,17 @@
 <div class="card flex-fill project-wrapper">
 	<div class="d-flex px-3 justify-content-end">
 		<div class="pt-2 text-md-end text-center me-3">
-			<button type="button" class="btn btn-custom-outline-secondary position-relative">
+			<a  class="btn btn-custom-outline-secondary position-relative " href="#">
 				Leave Requests
 				<div class="position_absolute-count">
 					<span>2</span>
 				</div>
-			</button>
+			</a>
 		</div>
 		<div class="pt-2 text-md-start text-center me-3">
-			<button type="button" class="btn btn-custom-outline-secondary">
+			<a  class="btn btn-custom-outline-secondary" href="{{route('attendance-leavepolicy')}}">
 				Leave Policy
-			</button>
+			</a>
 		</div>
 		<div class="pt-2 text-md-start text-center">
 			<button type="button" class="btn btn-custom-primary">

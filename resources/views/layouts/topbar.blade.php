@@ -1,16 +1,7 @@
 @section('css')
 <link href="{{ URL::asset('assets/css/top_bar.css') }}" rel="stylesheet">
 <style>
-    .page-header-user-dropdown span {
-        height: 30px;
-        width: 30px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        background: aliceblue;
 
-    }
 
     .topbar-logo {
         height: 30px;
@@ -21,14 +12,8 @@
         height: 100%;
         width: 100%;
     }
-    /* button[aria-expanded="false"] .user-dropdown p i.fa-caret-down{
 
 
-    }
-    button[aria-expanded="true"] .user-dropdown .fa-caret-down{
-        transform: rotate(-90deg);
-
-    } */
 </style>
 
 @endsection
@@ -135,9 +120,14 @@
 
 
                                                     @endphp
-                                                    <span class="rounded-circle user-profile  ml-2">
+                                                    <!-- <span class="rounded-circle user-profile  ml-2">
                                                         <i class="align-middle ">{{ "A" }}</i>
-                                                    </span>
+                                                    </span> -->
+                                                    <div class="notify-user-bg">
+                                                        <span class="rounded-circle user-profile  ml-2 " id="">
+                                                        {{ "A" }}
+                                                        </span>
+                                                    </div>
                                                     @else
                                                     <img class="rounded-circle header-profile-user" src=" {{URL::asset('images/'. Auth::user()->avatar)}}" alt="Header Avatar">
                                                     @endif
@@ -177,7 +167,13 @@
                                                     // $name = strtoupper($splitArray[0][0].$splitArray[1][0]);
                                                     // if (Auth::user()->avatar == null || Auth::user()->avatar =='' ){
                                                     @endphp
-                                                    <span class="rounded-circle user-profile  ml-2"><i class="align-middle f-12 fw-bold">A</i></span>
+                                                    <!-- <span class="rounded-circle user-profile  ml-2"><i class="align-middle f-12 fw-bold">A</i></span> -->
+                                                    <div class="notify-user-bg">
+                                                        <span class="rounded-circle user-profile  ml-2 " id="">
+                                                        <!-- {{ "A" }} -->
+                                                        A
+                                                        </span>
+                                                    </div>
                                                     @php
                                                     // }else{
                                                     @endphp
@@ -227,7 +223,7 @@
 
                             <img src="{{ URL::asset('assets/images/megaphone.png') }}" class="" alt="user-pic" style="height:20px;width:20px;">
                         </button>
-                        @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR","Manager"]) &&  hasSubClients() )
+                        @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR","Manager"]) && hasSubClients() )
 
                         <div class="dropdown topbar-user ">
                             <button type="button" class="btn border-0  mx-1 shadow-sm " id="choose_client" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -240,7 +236,7 @@
                             <div class="dropdown-menu dropdown-menu-end">
                                 <?php $subclientsList = fetchSubClients() ?>
                                 @foreach($subclientsList as $subClient)
-                                    <a class="dropdown-item " onclick="refreshCurrentPage('{{$subClient->id}}');">{{$subClient->client_name}}</a>
+                                <a class="dropdown-item " onclick="refreshCurrentPage('{{$subClient->id}}');">{{$subClient->client_name}}</a>
                                 @endforeach
                             </div>
                         </div>
@@ -329,10 +325,8 @@
     $('#shorthand_name_bg').css("backgroundColor", getRandomColor());
 
 
-    function refreshCurrentPage(sub_client_id)
-    {
-        console.log("Loading for sub-client id: "+sub_client_id);
+    function refreshCurrentPage(sub_client_id) {
+        console.log("Loading for sub-client id: " + sub_client_id);
         location.reload();
     }
-
 </script>
