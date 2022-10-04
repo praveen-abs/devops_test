@@ -9,48 +9,45 @@
 @component('components.configuration_breadcrumb')
 @slot('li_1') @endslot
 @endcomponent
-
-
-    <div class="master-config-wrapper mt-8">
+    <div class="master-config-wrapper ">
         <div class="row ">
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
-                    <div class="">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ">                    
                         <div id="msform">
                             <form id="form_config_master" method="POST" action="{{route('store-config-master')}}" enctype="multipart/form-data">
                                 @csrf
-                                <div class="card shadow  profile-box  p-2">
+                                <div class="card top-line">
                                     <div class="card-body justify-content-center align-items-center mb-3">
-                                        <div class="text-primary my-2 header-card-text">
-                                            <h6>Master Configuration</h6>
-                                        </div>
+                                       
+                                            <h6 class="text-muted">Master Configuration</h6>
+                                        
                                         <div class="form-card">
-                                            <h6 class="mt-3">Onboarding : </h6>
-                                            <div class="row mt-1">
-                                                <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
+                                            <h6 class="">Onboarding : </h6>
+                                            <div class="row ">
+                                                <div class="col-md-5 col-xxl-5 col-lg-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
                                                     <label class="" for="selected_head">Employee Code Prefix</label>
                                                 </div>
-                                                <div class="col-md-7 col-sm-7 mt-2">
+                                                <div class="col-md-7 col-lg-7 col-xxl-7 col-xl-7  col-sm-7 mt-2">
                                                     <input placeholder="" type="text" name="employee_code_prefix" value="{{ isset($data['employee_code_prefix']) ? $data["employee_code_prefix"] : "" }}" class="onboard-form form-control" required>
                                                 </div>
                                             </div>
                                             <div class="row mt-1">
-                                                <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
+                                                <div class="col-md-5 col-xxl-5 col-lg-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
                                                     <label class="" for="selected_head">Employee Code Median</label>
                                                 </div>
-                                                <div class="col-md-7 col-sm-7 mt-2">
+                                                <div class="col-md-7 col-lg-7 col-xxl-7 col-xl-7  col-sm-7 mt-2">
                                                     <input placeholder="" type="text" name="employee_code_median" value="{{ isset($data['employee_code_median']) ? $data["employee_code_median"] : "" }}" class="onboard-form form-control" >
                                                 </div>
                                             </div>
                                             <div class="row mt-1">
-                                                <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
+                                                <div class="col-md-5 col-xxl-5 col-lg-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
                                                     <label class="" for="selected_head">Employee Code Suffix Series</label>
                                                 </div>
-                                                <div class="col-md-7 col-sm-7 mt-2">
+                                                <div class="col-md-7 col-lg-7 col-xxl-7 col-xl-7  col-sm-7 mt-2">
                                                     <input placeholder="" type="number" name="employee_code_suffix_series" value="{{ isset($data['employee_code_suffix_series']) ? $data["employee_code_suffix_series"] : "" }}" class="onboard-form form-control" required>
                                                 </div>
                                             </div>
                                             <div class="row mt-1">
-                                                <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
+                                                <div class="col-md-5 col-xxl-5 col-lg-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
                                                     <label class="" for="selected_head">Can send <b>Appointment Letter PDF</b> after Onboard form submit?</label>
                                                 </div>
                                                 <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
@@ -68,7 +65,7 @@
                                                 </div>
                                             </div>
                                             <div class="row mt-1">
-                                                <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
+                                                <div class="col-md-5 col-xxl-5 col-lg-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
                                                     <label class="" for="selected_head">Can send <b>Appointment Mail</b> after Onboard form submit?</label>
                                                 </div>
                                                 <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
@@ -86,7 +83,7 @@
                                                 </div>
                                             </div>
                                             <div class="row mt-1">
-                                                <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
+                                                <div class="col-md-5 col-xxl-5 col-lg-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
                                                     <label class="" for="selected_head">Is <b>Employee Code</b> autogenerated in bulk onboarding?</label>
                                                 </div>
                                                 <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
@@ -115,7 +112,7 @@
                                 </div>
                             </form>
                         </div>
-                    </div>
+                   
                 </div>
         </div>
     </div>

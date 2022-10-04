@@ -18062,7 +18062,7 @@ white-space:nowrap;
     display: flex;
 }
 
-.page-header-user-dropdown .user-profile {
+.page-header-user-dropdown .user-profile,.notify-user-bg  .user-profile{
     height: 30px;
     width: 30px;
     display: flex;
