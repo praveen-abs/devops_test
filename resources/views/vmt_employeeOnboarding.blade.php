@@ -50,12 +50,14 @@
 @section('content')
 <div class="loader" style="display:none;"></div>
 
-@if(!request()->has('email'))
+{{-- Show Only if employee is already onboarded --}}
+@if(!empty($employee_user) && $employee_user->is_onboarded == "1")
 
     @component('components.organization_breadcrumb')
     @slot('li_1') @endslot
     @endcomponent
 @endif
+
 <div class="main">
     @if(Request::has('debug'))
         @include('ui-onboarding-debug')
@@ -726,35 +728,102 @@
 
             var error_fields ="";
 
-            $('#submit_button').on('click', function(e) {
+            $('.submitOnboardForm').on('click', function(e) {
                 console.log("here");
                 //console.log($('#form-1').valid());
                 //var flag = false;
 
                 //alert("1 st one");
 
-                var regex = ' /([A-Z]){5}([0-9]){4}([A-Z]){1}$/';
-                var txtPANCard = $("#pan_no").val();
-                var textDLno = $("#dl_no").val();
-                var txtIFSCNo = $("#bank_ifsc").val();
-                var ifsc = '^[A-Z]{4}0[A-Z0-9]{6}$';
-                var dl_pat = '/^(([A-Z]{2}[0-9]{2})( )|([A-Z]{2}-[0-9]{2}))((19|20)[0-9][0-9])[0-9]{7}$/';
 
+                console.log("Selected Button : "+$(this).attr('name'));
 
-                if ($('#form-1').valid()) {
+                var can_onboard_employee = "0";
+                let form_data1 = $("#form-1");
 
-                    //alert("1 st one");
-                    var form_data1 = new FormData(document.getElementById("form-1"));
-                    var txtPANCard = $("#pan_no").val();
-                    $('.loader').show();
+                //Find whether SAVE or SUBMIT button clicked
+                if($(this).attr('name') == "submit_form")  //Form is saved and employee is onboarded
+                {
+                    if ($('#form-1').valid()) {
 
-                    $.ajax({
+                        //alert("1 st one");
+                        console.log("Submitting Onboard data");
+
+                        // console.log(form_data1.values());
+                        // for (var pair of form_data1.entries())
+                        // {
+                        //     console.log(pair[0]+ ', '+ pair[1]);
+                        // }
+
+                        $('.loader').show();
+
+                        saveOrSubmitForm("1", form_data1);
+                    }
+                    else
+                    {
+                        console.log("Form validation failed");
+                        console.log(error_fields);
+
+                        $('#modalHeader').html("Error");
+                        $('#modalSubHeading').html("The following fields are not filled.");
+                        $('#modalBody').html(error_fields);
+                        $('#notificationModal').show();
+                        $('#notificationModal').removeClass('fade');
+                    }
+                }
+                else
+                if($(this).attr('name') == "save_form")  //Form is saved but employee not onboarded
+                {
+                    console.log("Saving Onboard data");
+
+                    // saveOrSubmitForm("0", form_data1);
+                    if ($('#form-1').valid()) {
+
+                        //alert("1 st one");
+                        console.log("Submitting Onboard data");
+
+                        // console.log(form_data1.values());
+                        // for (var pair of form_data1.entries())
+                        // {
+                        //     console.log(pair[0]+ ', '+ pair[1]);
+                        // }
+
+                        $('.loader').show();
+
+                        saveOrSubmitForm("0", form_data1);
+
+                    }
+                    else
+                    {
+                        console.log("Form validation failed");
+                        console.log(error_fields);
+
+                        $('#modalHeader').html("Error");
+                        $('#modalSubHeading').html("The following fields are not filled.");
+                        $('#modalBody').html(error_fields);
+                        $('#notificationModal').show();
+                        $('#notificationModal').removeClass('fade');
+                    }
+                }
+            });
+
+            function saveOrSubmitForm(t_can_onboard_employee, t_form_data1)
+            {
+
+                $.ajax({
                         url: "{{url('vmt-employee-onboard')}}",
                         type: "POST",
-                        dataType: "json",
-                        data: form_data1,
-                        contentType: false,
-                        processData: false,
+                        dataType:"json",
+                        data:{
+                            // "onboard_type" : t_onboard_type,
+                            "can_onboard_employee" : t_can_onboard_employee,
+                            "form_data" : t_form_data1.serialize(),
+                           "_token" : "{{ csrf_token() }}"
+                        },
+
+                        // data:form_data1,
+                        // contentType: false,
+                        // processData: false,
                         success: function(data) {
                             $('.loader').hide();
 
@@ -764,8 +833,11 @@
                             if (data.status == "success") {
                                 $('#modalHeader').html("Success");
                                 $('#modalSubHeading').html(data.message);
-                                if(data.mail_status == "success")
+                                if(t_can_onboard_employee == "1" && data.mail_status == "success")
                                     $('#modalBody').html("Mail notification sent.");
+                                else
+                                if(t_can_onboard_employee == "0")
+                                    $('#modalBody').html("");
                                 else
                                     $('#modalBody').html("Mail notification not sent.");
 
@@ -798,21 +870,7 @@
                         }
                     });
 
-                }
-                else
-                {
-                    console.log("Form validation failed");
-                    console.log(error_fields);
-
-                    $('#modalHeader').html("Error");
-                    $('#modalSubHeading').html("The following fields are not filled.");
-                    $('#modalBody').html(error_fields);
-                    $('#notificationModal').show();
-                    $('#notificationModal').removeClass('fade');
-                }
-            });
-
-
+            }
 
             $('#form-1').validate({
                 // rules: {

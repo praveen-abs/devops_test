@@ -1,20 +1,12 @@
 {{-- @section('ui-onboarding') --}}
-<div class="container-fluid ">
+<div class="container-fluid "  style="background-color: blue">
     <div class="">
         <div class="row ">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
                 <div class="">
                     <div id="msform">
 
-                        <!-- progressbar -->
-                        <!-- <ul id="progressbar">
-                                <li class="active" id="account"><strong class="f-9 onboard-detail">Personal Details</strong></li>
-                                <li id="personal"><strong class="f-9 onboard-detail">Location Details</strong></li>
-                                <li id="payment"><strong class="f-9 onboard-detail">Official Details</strong></li>
-                                <li id="confirm"><strong class="f-9 onboard-detail">Family Details</strong></li>
-                                <li id="compensatory"><strong class="f-9 onboard-detail">Compensatory</strong></li>
-                                <li id="end"><strong class="f-9 onboard-detail">Personal Documents</strong></li>
-                            </ul> -->
+                        <h1>DEBUG MODE</h1>
                         <form id="form-1" enctype="multipart/form-data" class=" ">
                             @csrf
                             <div class="card shadow  profile-box card-top-border p-2">
@@ -261,7 +253,7 @@
                                                         <option value="" hidden selected disabled>Select Bank Name</option>
                                                         @foreach($bank as $b)
                                                         <!-- <option value="{{$b->bank_name}}" min-data="{{$b->min_length}}" max-data="{{$b->max_length}}">{{$b->bank_name}}</option> -->
-                                                        
+
                                                         <option value="HDFC" selected>HDFC</option>
                                                         @endforeach
                                                     </select>
@@ -277,7 +269,7 @@
                                                     <label class="error star_error account_no_label" for="account_no" style="display: none;"></label>
                                                     <!-- <label for="" class="float-label">Account Number</label> -->
                                                 </div>
-                                            </div> 
+                                            </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="bank_ifsc">Bank IFSC Code</label> -->
                                                 <div class="floating">
