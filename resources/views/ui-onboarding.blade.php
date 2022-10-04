@@ -29,7 +29,10 @@
                                                 <div class="floating">
 
                                                     <label for="" class="float-label">Employee Code</label>
-                                                    <input type="text" placeholder="Employee Code" name="employee_code" class="onboard-form form-control textbox" value="{{$empNo}}" required readonly style='text-transform:uppercase'/>
+                                                    <input type="text" placeholder="Employee Code" name="employee_code"
+                                                        class="onboard-form form-control textbox" value="{{$empNo}}" required style='text-transform:uppercase'
+                                                        @if(!empty($is_employeeCode_editable) && $is_employeeCode_editable == 'false') readonly @endif
+                                                    />
                                                     <!-- <label for="" class="float-label">Employee Code</label> -->
                                                 </div>
                                             </div>

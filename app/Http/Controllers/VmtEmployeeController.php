@@ -44,6 +44,9 @@ class VmtEmployeeController extends Controller
     {
         // Used for Quick onboarding
         //dd($request->email);
+
+        $is_employeeCode_editable = fetchMasterConfigValue("is_employee_code_editable_in_normal_onboarding");
+
         if ($request->has('email')) {
 
             $employee_user  =  User::where('email', $request->email)->first();
@@ -66,8 +69,9 @@ class VmtEmployeeController extends Controller
             $assigned_l1_manager_name = User::where('user_code', $emp_office_details->l1_manager_code)->value('name');
            //dd($emp_office_details->l1_manager_code);
 
-            return view('vmt_employeeOnboarding', compact('empNo', 'emp_office_details', 'employee_user', 'employee_details', 'countries', 'compensatory', 'bank', 'emp', 'department', 'allEmployeesUserCode','assigned_l1_manager_name'));
+            return view('vmt_employeeOnboarding', compact('empNo','is_employeeCode_editable', 'emp_office_details', 'employee_user', 'employee_details', 'countries', 'compensatory', 'bank', 'emp', 'department', 'allEmployeesUserCode','assigned_l1_manager_name'));
         } else {
+
 
             $empNo = $this->generateEmployeeCode();
             //dd($empNo);
@@ -79,7 +83,7 @@ class VmtEmployeeController extends Controller
             $department = Department::all();
             $allEmployeesUserCode = User::where('is_ssa', 0)->where('active', 1)->whereNotNull('user_code')->get(['user_code', 'name']);
             //dd($allEmployeesCode);
-            return view('vmt_employeeOnboarding', compact('empNo', 'countries', 'india', 'emp', 'bank', 'department', 'allEmployeesUserCode'));
+            return view('vmt_employeeOnboarding', compact('empNo','is_employeeCode_editable', 'countries', 'india', 'emp', 'bank', 'department', 'allEmployeesUserCode'));
         }
     }
 
