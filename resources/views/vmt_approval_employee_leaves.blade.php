@@ -58,7 +58,7 @@
                     <div class="row" style="border: 1px solid #f8f8f9;">
                         <div class="pt-1 col-2 dropdown-hover" style="border-right:1px solid #f8f8f9;">
                             <div class="dropdown">
-                                <button type="button" class="btn" id="page-header-user-dropdown"
+                                <button type="button" class="btn" id=""
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                     <span class="d-flex align-items-center">
                                         <span class="text-start ms-xl-2">
