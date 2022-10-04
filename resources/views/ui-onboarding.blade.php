@@ -271,7 +271,7 @@
                                                     <!-- <label class="" for="account_no">Account Number</label> -->
                                                     <label for="" class="float-label">Account Number<span class="text-danger">*</span></label>
 
-                                                    <input type="number" placeholder="Account Number" name="account_no" id="account_no" class="onboard-form form-control textbox " minlength="10" maxlength="18" required />
+                                                    <input type="text" placeholder="Account Number" name="account_no" id="account_no" class="onboard-form form-control textbox " oninput="numberOnly(this.id);"  minlength="10" maxlength="18" required />
                                                     <label class="error star_error account_no_label" for="account_no" style="display: none;"></label>
                                                     <!-- <label for="" class="float-label">Account Number</label> -->
                                                 </div>

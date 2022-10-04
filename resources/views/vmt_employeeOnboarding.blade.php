@@ -212,12 +212,18 @@
                 placeholder: "Select Bank Name",
             });
 
+            $('#bank_names').on('click',function() {
+                console.log("hello");
+                 //$( "#target" ).focus();
+            });
 
-            $('#bank_name').change(function() {
-                var min = $('#bank_name option:selected').attr('min-data');
-                var max = $('#bank_name option:selected').attr('max-data');
+            $('#bank_names').change(function() {
+                var min = $('#bank_names option:selected').attr('min-data');
+                var max = $('#bank_names option:selected').attr('max-data');
+
+                $('#account_no').val('');
                 $('#account_no').attr('minlength', min);
-                $('#account_no').attr('maxlength', min);
+                $('#account_no').attr('maxlength', max);
             })
 
 
