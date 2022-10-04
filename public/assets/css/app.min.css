@@ -17252,7 +17252,7 @@ a.ember-view {
 }
 
 .empty-state-help-centered.ind-empty-state .empty-state-content {
-    height: 50px;
+    /* height: 50px; */
     display: -ms-flexbox;
     display: flex;
     -ms-flex-direction: column;
@@ -17260,8 +17260,9 @@ a.ember-view {
     -ms-flex-pack: center;
     justify-content: center;
     -ms-flex-align: start;
-    align-items: flex-start;
-    text-align: left;
+    /* align-items: flex-start; */
+    /* text-align: left; */
+    font-size: 15px;
     font-weight: 600;
 }
 
