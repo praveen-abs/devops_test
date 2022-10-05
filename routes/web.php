@@ -35,9 +35,20 @@ Route::get('/attendance-dashboard', [App\Http\Controllers\VmtAttendanceControlle
 Route::get('/attendance-leavepolicy', [App\Http\Controllers\VmtAttendanceController::class, 'showAttendanceLeavePolicyPage'])->name('attendance-leavepolicy');
 Route::get('/attendance-leavereports', [App\Http\Controllers\VmtAttendanceController::class, 'showAttendanceLeaveReportsPage'])->name('attendance-leavereports');
 
+Route::get('/isEmailExists/{email?}', function($email){
+
+    return isEmailExists($email);
+
+})->name('isEmailExists');
+
+Route::get('/isEmpCodeExists/{emp_code?}', function($emp_code){
+
+    return isEmpCodeExists($emp_code);
+
+})->name('isEmpCodeExists');
 
 Route::controller(VmtEmployeeOnboardingController::class)->group(function () {
-    // Route::get('/employee-onboarding-v2/{id}', 'testFunction');
+    Route::post('employee-onboarding-v2/{user_data}', 'testFunction')->name('employee-onboarding-v2');
 });
 
 //Update User Details
