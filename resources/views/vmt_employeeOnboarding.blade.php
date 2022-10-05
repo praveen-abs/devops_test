@@ -121,7 +121,7 @@
 
         $(document).ready(function() {
 
-           // $("input[type='number']").attr("onkeypress", "return onlyNumberKey(event)");
+
 
             $('#process').select2({
                 width: '100%',
@@ -453,6 +453,84 @@
 
             });
 
+            $('#email').on('input', function() {
+                var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+                if(!regex.test($(this).val())) {
+                    console.log("Invalid Email");
+
+                    return false;
+                }else{
+                    console.log("Valid Email");
+
+                    //Check if email already exists
+                    var routeURL = "{{route('isEmailExists',':email')}}";
+                    routeURL = routeURL.replace(':email', $(this).val());
+
+                    $.ajax({
+                        url: routeURL,
+                        type: "GET",
+                        success: function(data) {
+                           console.log("(isEmailExists :: AJAX call response : "+data);
+
+                           $('#error_email').html("");
+
+                           if(data == "true")
+                           {
+                                $('#error_email').html("Email already exists");
+                           }
+                        }
+                    });
+
+
+                    return true;
+                }
+            });
+
+            function checkEmpCodeExists(emp_code)
+            {
+
+                    //Check if email already exists
+                    var routeURL = "{{route('isEmpCodeExists',':emp_code')}}";
+
+                    routeURL = routeURL.replace(':emp_code', emp_code);
+
+                    $.ajax({
+                        url: routeURL,
+                        type: "GET",
+                        success: function(data) {
+                           console.log("isEmpCodeExists :: AJAX call response : "+data);
+
+                           $('#error_emp_code').html("");
+
+                           if(data == "true")
+                           {
+
+                                console.log(emp_code+" already exists!");
+
+                                $('#error_emp_code').html("Employee code already exists. Re-enter new code.");
+                                $('#employee_code').removeAttr('readonly');
+
+                                $('#modalHeader').html("Error");
+                                $('#modalSubHeading').html("Please fix the below issue");
+                                $('#modalBody').html("Employee code already exists. Re-enter new code.");
+                                $('#notificationModal').show();
+                                $('#notificationModal').removeClass('fade');
+
+                                errors_core_fields.push("Employee code already exists. Re-enter new code.");
+
+                                is_core_fields_valid = false;
+                            }
+                           else
+                           {
+                                console.log(emp_code+" doesnt exists");
+
+                           }
+
+                        }
+                    });
+            }
+
             function getAge(dateString) {
                 var today = new Date();
                 var birthDate = new Date(dateString);
@@ -649,26 +727,8 @@
                 }
             });
 
-            // $('#vmt_aadhar').on('input', function() {s
-            //     var aadharno = new RegExp("^[2-9]{1}[0-9]{3}\s{1}[0-9]{4}\s{1}[0-9]{4}$");
-            //     var aadhartes = $("#vmt_aadhar").val();
-            //     if (aadharno.test(aadhartes)) {
-            //         return true;
-            //     } else {
-            //         alert("Please Enter Valid Aadhar Number");
-            //     }
-            //     return false;
-            // });
-
-
             $('#passport_no_req').hide();
             $('#passport_exp_req').hide();
-            //$('#current_country').val('IN').trigger('change');
-            //$('#permanent_country').val('IN').trigger('change');
-            //$('#current_state').val('IN').trigger('change');
-            //$('#permanent_state').val('IN').trigger('change');
-           // stateFunction('IN', '#current_state');
-           // stateFunction('IN', '#permanent_state');
             stateFunction('IN', '#ptax_location');
             stateFunction('IN', '#lwf_location');
             stateFunction('IN', '#holiday_location');
@@ -717,97 +777,66 @@
                 });
             }
 
-            // $('#permanent_district').change(function() {
-            // var id = $(this).val();
-            // stateFunction(id, '#permanent_state');
-            // });
-
-            // $('#current_district').change(function() {
-            // var id = $(this).val();
-            // stateFunction(id, '#current_state');
-            // });
-
-
 
             var error_fields ="";
 
-            $('.submitOnboardForm').on('click', function(e) {
-                console.log("here");
-                //console.log($('#form-1').valid());
-                //var flag = false;
-
-                //alert("1 st one");
-
-
+            $('.processOnboardForm').on('click', function(e) {
                 console.log("Selected Button : "+$(this).attr('name'));
 
                 var can_onboard_employee = "0";
                 let form_data1 = $("#form-1");
 
-                //Find whether SAVE or SUBMIT button clicked
-                if($(this).attr('name') == "submit_form")  //Form is saved and employee is onboarded
+                //Validate core fields first
+                //EMP code, email
+                errors_core_fields = []; //reset the error array
+
+                checkEmpCodeExists( $('#employee_code').val().trim());
+
+                console.log("Error Array Length : "+errors_core_fields.length );
+                if(errors_core_fields.length > 0)
                 {
-                    if ($('#form-1').valid()) {
 
-                        //alert("1 st one");
+                    console.log("Please check core fields (Emp code , email) : ");
+                    return;
+                }
+
+                //Find whether SAVE or SUBMIT button clicked
+                if (!$('#form-1').valid())
+                {
+
+                    //alert("1 st one");
+
+                    // console.log(form_data1.values());
+                    // for (var pair of form_data1.entries())
+                    // {
+                    //     console.log(pair[0]+ ', '+ pair[1]);
+                    // }
+
+                    $('.loader').show();
+                    if($(this).attr('name') == "submit_form")  //Form is saved and employee is onboarded
+                    {
                         console.log("Submitting Onboard data");
-
-                        // console.log(form_data1.values());
-                        // for (var pair of form_data1.entries())
-                        // {
-                        //     console.log(pair[0]+ ', '+ pair[1]);
-                        // }
-
-                        $('.loader').show();
-
                         saveOrSubmitForm("1", form_data1);
                     }
                     else
+                    if($(this).attr('name') == "save_form")  //Form is saved but employee not onboarded
                     {
-                        console.log("Form validation failed");
-                        console.log(error_fields);
-
-                        $('#modalHeader').html("Error");
-                        $('#modalSubHeading').html("The following fields are not filled.");
-                        $('#modalBody').html(error_fields);
-                        $('#notificationModal').show();
-                        $('#notificationModal').removeClass('fade');
+                        console.log("Saving Onboard data");
+                        saveOrSubmitForm("0", form_data1);
                     }
                 }
                 else
-                if($(this).attr('name') == "save_form")  //Form is saved but employee not onboarded
                 {
-                    console.log("Saving Onboard data");
+                    console.log("Form validation failed");
+                    console.log(error_fields);
 
-                    // saveOrSubmitForm("0", form_data1);
-                    if ($('#form-1').valid()) {
-
-                        //alert("1 st one");
-                        console.log("Submitting Onboard data");
-
-                        // console.log(form_data1.values());
-                        // for (var pair of form_data1.entries())
-                        // {
-                        //     console.log(pair[0]+ ', '+ pair[1]);
-                        // }
-
-                        $('.loader').show();
-
-                        saveOrSubmitForm("0", form_data1);
-
-                    }
-                    else
-                    {
-                        console.log("Form validation failed");
-                        console.log(error_fields);
-
-                        $('#modalHeader').html("Error");
-                        $('#modalSubHeading').html("The following fields are not filled.");
-                        $('#modalBody').html(error_fields);
-                        $('#notificationModal').show();
-                        $('#notificationModal').removeClass('fade');
-                    }
+                    $('#modalHeader').html("Error");
+                    $('#modalSubHeading').html("The following fields are not filled.");
+                    $('#modalBody').html(error_fields);
+                    $('#notificationModal').show();
+                    $('#notificationModal').removeClass('fade');
                 }
+
             });
 
             function saveOrSubmitForm(t_can_onboard_employee, t_form_data1)
@@ -946,6 +975,10 @@
                 $(this).valid();
             });
         });
+
+
+        var is_core_fields_valid = false;
+        var errors_core_fields = [] ;
         // $("#button_close").click(function(){
         //         window.location.href = "/employeeOnboarding";
         // });

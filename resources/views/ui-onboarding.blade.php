@@ -29,8 +29,11 @@
                                                 <div class="floating">
 
                                                     <label for="" class="float-label">Employee Code</label>
-                                                    <input type="text" placeholder="Employee Code" name="employee_code" class="onboard-form form-control textbox" value="{{$empNo}}" required style='text-transform:uppercase' @if(!empty($is_employeeCode_editable) && $is_employeeCode_editable=='false' ) readonly @endif />
-                                                    <!-- <label for="" class="float-label">Employee Code</label> -->
+                                                    <input type="text" placeholder="Employee Code" name="employee_code" id="employee_code"
+                                                        class="onboard-form form-control textbox" value="{{$empNo}}" required style='text-transform:uppercase'
+                                                        @if(!empty($is_employeeCode_editable) && $is_employeeCode_editable == 'false') readonly @endif
+                                                    />
+                                                    <span class="error" id="error_emp_code"></span>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -118,9 +121,11 @@
                                                 <!-- <label class="" for="email">Email ID{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Email<span class="text-danger">*</span></label>
-                                                    <input type="email" pattern="email" placeholder="Email ID" name="email" value="{{request()->has('email')? request()->email : ''}}" class="  form-control textbox " onkeypress="return event.charCode != 32" @if(request()->has('email')) readonly @endif required />
+                                                    <input type="email" pattern="email" placeholder="Email ID" name="email" id="email" value="{{request()->has('email')? request()->email : ''}}" class="  form-control textbox " onkeypress="return event.charCode != 32" @if(request()->has('email')) readonly @endif required />
                                                     <!-- <label for="" class="float-label">Email</label> -->
                                                 </div>
+                                                <span class="error" id="error_email"></span>
+
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="aadhar">Aadhaar Number<span id="aadhar_req">{!! required() !!}</span></label> -->
@@ -1235,10 +1240,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="text-end">
-                                        <button data="row-6" next="row-6" name="save_form" id="save_button" class="btn btn-orange  text-center submitOnboardForm" value="Submit">Save</button>
-                                        <button data="row-6" next="row-6" name="submit_form" id="submit_button" class="btn btn-orange  text-center submitOnboardForm" value="Submit">Submit</button>
-
+                                    <div class="row">
+                                        <div class="col-12 text-right"><button type="button" data="row-6" next="row-6" placeholder="" name="save_form" id="save_button" class="btn btn-orange  text-center processOnboardForm" value="Submit">Save</button>
+                                        <br/>
+                                        <div class="col-12 text-right"><button type="button" data="row-6" next="row-6" placeholder="" name="submit_form" id="submit_button" class="btn btn-orange  text-center processOnboardForm" value="Submit">Submit</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1265,7 +1271,7 @@
                     </button>
                 </div>
             </div>
-           
+
         </div>
     </div>
 </div> -->
@@ -1288,10 +1294,10 @@
                 </div> -->
                 <div id="modalBody"></div>
                 <!-- <ul class="list-style-numbered list-style-circle p-4" id="modalBody">
-                  
+
                 </ul> -->
 
-               
+
             </div>
             <div class="modal-footer py-0 border-0">
                 <button type="button" id="button_close" class="btn btn-border-primary close-modal" data-bs-dismiss="modal">Close</button>
