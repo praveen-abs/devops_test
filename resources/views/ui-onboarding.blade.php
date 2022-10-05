@@ -29,10 +29,7 @@
                                                 <div class="floating">
 
                                                     <label for="" class="float-label">Employee Code</label>
-                                                    <input type="text" placeholder="Employee Code" name="employee_code"
-                                                        class="onboard-form form-control textbox" value="{{$empNo}}" required style='text-transform:uppercase'
-                                                        @if(!empty($is_employeeCode_editable) && $is_employeeCode_editable == 'false') readonly @endif
-                                                    />
+                                                    <input type="text" placeholder="Employee Code" name="employee_code" class="onboard-form form-control textbox" value="{{$empNo}}" required style='text-transform:uppercase' @if(!empty($is_employeeCode_editable) && $is_employeeCode_editable=='false' ) readonly @endif />
                                                     <!-- <label for="" class="float-label">Employee Code</label> -->
                                                 </div>
                                             </div>
@@ -85,7 +82,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Date of Joining<span class="text-danger">*</span></label>
                                                     @if(isset($employee_details->doj))
-                                                    <input type="text" max="9999-12-31" placeholder="Date of Joining" name="doj" value="{{isset($employee_details->doj)? date("d-m-Y", strtotime($employee_details->doj)) : ''}}" class="onboard-form  form-control textbox "  required readonly />
+                                                    <input type="text" max="9999-12-31" placeholder="Date of Joining" name="doj" value="{{isset($employee_details->doj)? date("d-m-Y", strtotime($employee_details->doj)) : ''}}" class="onboard-form  form-control textbox " required readonly />
                                                     @else
                                                     <input type="text" max="9999-12-31" placeholder="Date of Joining" name="doj" class="onboard-form  form-control textbox " onfocus="(this.type='date')" required />
                                                     @endif
@@ -111,9 +108,9 @@
 
                                                     <label for="" class="float-label">Mobile Number<span class="text-danger">*</span></label>
                                                     @if(isset($employee_details->mobile_number))
-                                                        <input type="number" placeholder="Mobile Number" name="mobile_no" minlength="10" value="{{$employee_details->mobile_number? $employee_details->mobile_number : ''}}" maxlength="10" class="onboard-form form-control textbox " required readonly />
+                                                    <input type="number" placeholder="Mobile Number" name="mobile_no" minlength="10" value="{{$employee_details->mobile_number? $employee_details->mobile_number : ''}}" maxlength="10" class="onboard-form form-control textbox " required readonly />
                                                     @else
-                                                        <input  type="text" placeholder="Mobile Number" name="mobile_no" id="mobile_no" minlength="10" value="" maxlength="10" oninput="numberOnly(this.id);" class="onboard-form form-control textbox " required />
+                                                    <input type="text" placeholder="Mobile Number" name="mobile_no" id="mobile_no" minlength="10" value="" maxlength="10" oninput="numberOnly(this.id);" class="onboard-form form-control textbox " required />
                                                     @endif
                                                 </div>
                                             </div>
@@ -129,9 +126,7 @@
                                                 <!-- <label class="" for="aadhar">Aadhaar Number<span id="aadhar_req">{!! required() !!}</span></label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Aadhaar Number<span class="text-danger">*</span></label>
-                                                    <input type="text" oninput="numberOnly(this.id);" placeholder="Aadhaar Number" name="aadhar" id="vmt_aadhar"
-                                                    value="{{ !empty($employee_details) && $employee_details->aadhar_number ? $employee_details->aadhar_number  : ''}}"
-                                                    pattern="aadhar" class="onboard-form form-control textbox " minlength="12" maxlength="12" required />
+                                                    <input type="text" oninput="numberOnly(this.id);" placeholder="Aadhaar Number" name="aadhar" id="vmt_aadhar" value="{{ !empty($employee_details) && $employee_details->aadhar_number ? $employee_details->aadhar_number  : ''}}" pattern="aadhar" class="onboard-form form-control textbox " minlength="12" maxlength="12" required />
                                                     {{-- <label class="error star_error aadhar_label" for="aadhar"
                                                         style="display: none;"></label> --}}
                                                     <!-- <label for="" class="float-label">Aadhaar Number</label> -->
@@ -144,21 +139,19 @@
                                                 <!-- <label class="" for="pan_no">Pan Card Number<span id="pan_no_req">{!! required() !!}</span></label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Pan Number / Pan Acknowlegement<span class="text-danger">*</span></label>
-                                                    <input type="text" placeholder="Pan Card Number" name="pan_no" id="pan_num"
-                                                        value="{{ !empty($employee_details) && $employee_details->pan_number ? $employee_details->pan_number  : ''}}"
-                                                        class=" form-control textbox  pan" pattern="pan" minlength="10" maxlength="10" required />
+                                                    <input type="text" placeholder="Pan Card Number" name="pan_no" id="pan_num" value="{{ !empty($employee_details) && $employee_details->pan_number ? $employee_details->pan_number  : ''}}" class=" form-control textbox  pan" pattern="pan" minlength="10" maxlength="10" required />
                                                     <label class="error star_error pan_no_label" id="pan_no_label" for="pan_no" style="display: none;"></label>
 
                                                     <span class="error" id="error_pan_no"></span>
                                                 </div>
                                             </div>
                                             <!-- <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2"> -->
-                                                <!-- <label class="" for="pan_ack">Pan Acknowlegement<span id="pan_ack_req">{!! required() !!}</span></label> -->
-                                                <!-- <div class="floating">
+                                            <!-- <label class="" for="pan_ack">Pan Acknowlegement<span id="pan_ack_req">{!! required() !!}</span></label> -->
+                                            <!-- <div class="floating">
                                                     <input type="text" placeholder="Pan Acknowlegement" name="pan_ack" pattern="alp-num" minlength="15" maxlength="15" id="pan_ack" class="onboard-form textbox  form-control not-required validate " />
                                                     <label for="" class="float-label">Pan Acknowlegement</label>
                                                 </div> -->
-                                                <!-- <div class="floating">
+                                            <!-- <div class="floating">
                                                     <label for="" class="float-label">Pan Acknowlegement</label>
                                                     <input type="text" placeholder="Pan Acknowlegement " name="pan_ack" id="pan_ack" pattern="alp-num" minlength="15" maxlength="15" class="onboard-form form-control textbox " pattern="name" not-required />
                                                     <label class="error star_error employee_name_label" for="employee_name" style="display: none;"></label>
@@ -170,10 +163,7 @@
                                                 <!-- <label class="" for="444">DL Number</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">DL Number</label>
-                                                    <input type="text" placeholder="DL Number" name="dl_no" id="dl_no"
-                                                    value="{{ !empty($employee_details) && $employee_details->dl_no ? $employee_details->dl_no  : ''}}"
-
-                                                    minlength="16" maxlength="16" class="onboard-form form-control textbox " style='text-transform:uppercase' />
+                                                    <input type="text" placeholder="DL Number" name="dl_no" id="dl_no" value="{{ !empty($employee_details) && $employee_details->dl_no ? $employee_details->dl_no  : ''}}" minlength="16" maxlength="16" class="onboard-form form-control textbox " style='text-transform:uppercase' />
                                                     <label class="error star_error dl_no_label" for="dl_no" style="display: none;"></label>
 
                                                     <span class="error" id="error_dl_no"></span>
@@ -201,10 +191,7 @@
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <div class="floating">
                                                     <label for="" class="float-label">Passport Number</label>
-                                                    <input type="text" placeholder="Passport Number" name="passport_no" id="passport_no"
-                                                    value="{{ !empty($employee_details) && $employee_details->passport_number ? $employee_details->passport_number  : ''}}"
-
-                                                    minlength="8" maxlength="8" class="form-control textbox" style='text-transform:uppercase' required/>
+                                                    <input type="text" placeholder="Passport Number" name="passport_no" id="passport_no" value="{{ !empty($employee_details) && $employee_details->passport_number ? $employee_details->passport_number  : ''}}" minlength="8" maxlength="8" class="form-control textbox" style='text-transform:uppercase' required />
                                                     <label class="error star_error passport_no_label" for="passport_no" style="display: none;"></label>
 
                                                     <span class="error" id="error_passport_no"></span>
@@ -281,7 +268,7 @@
                                                     <!-- <label class="" for="account_no">Account Number</label> -->
                                                     <label for="" class="float-label">Account Number<span class="text-danger">*</span></label>
 
-                                                    <input type="text" placeholder="Account Number" name="account_no" id="account_no" class="onboard-form form-control textbox " oninput="numberOnly(this.id);"  minlength="10" maxlength="18" required />
+                                                    <input type="text" placeholder="Account Number" name="account_no" id="account_no" class="onboard-form form-control textbox " oninput="numberOnly(this.id);" minlength="10" maxlength="18" required />
                                                     <label class="error star_error account_no_label" for="account_no" style="display: none;"></label>
                                                     <!-- <label for="" class="float-label">Account Number</label> -->
                                                 </div>
@@ -330,7 +317,7 @@
 
                                                 <div class="floating">
                                                     <label for="" class="float-label">UAN Number</label>
-                                                    <input type="text" placeholder="UAN Number" name="uan_number" id="uan_number" minlength="12" maxlength="12" class="onboard-form form-control textbox "/>
+                                                    <input type="text" placeholder="UAN Number" name="uan_number" id="uan_number" minlength="12" maxlength="12" class="onboard-form form-control textbox " />
 
                                                 </div>
                                             </div>
@@ -555,7 +542,7 @@
                                                     <label for="" class="float-label">Process</label>
                                                     <input type="text" placeholder="Process" name="process" class="onboard-form form-control" pattern="name" required />
 
-                                               </div>
+                                                </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 col-xxl-3 mb-2">
                                                 <!-- <label class="" for="designation">Designation{!! required() !!}</label> -->
@@ -611,14 +598,14 @@
                                                     <label for="" class="float-label">Reporting Manager Code<span class="text-danger">*</span></label>
 
                                                     @if (isset($emp_office_details->l1_manager_code))
-                                                        <input type="text" value="{{$emp_office_details->l1_manager_code}}" name="l1_manager_code" id="l1_manager_code" class="form-control textbox " pattern="" readonly />
+                                                    <input type="text" value="{{$emp_office_details->l1_manager_code}}" name="l1_manager_code" id="l1_manager_code" class="form-control textbox " pattern="" readonly />
                                                     @else
-                                                        <select placeholder="Reporting Manager" name="l1_manager_code" id="l1_manager_code_select" class="onboard-form form-control  textbox ">
-                                                            <option value="" hidden selected disabled>Select</option>
-                                                            @foreach($allEmployeesUserCode as $e)
-                                                                 <option value="{{$e->user_code}}">{{$e->user_code}}</option>
-                                                            @endforeach
-                                                        </select>
+                                                    <select placeholder="Reporting Manager" name="l1_manager_code" id="l1_manager_code_select" class="onboard-form form-control  textbox ">
+                                                        <option value="" hidden selected disabled>Select</option>
+                                                        @foreach($allEmployeesUserCode as $e)
+                                                        <option value="{{$e->user_code}}">{{$e->user_code}}</option>
+                                                        @endforeach
+                                                    </select>
                                                     @endif
                                                 </div>
                                             </div>
@@ -626,7 +613,7 @@
 
                                                 <div class="floating">
                                                     <label for="" class="float-label">Reporting Manager Name</label>
-                                                    <input type="text" placeholder="Reporting Manager Name" name="l1_manager_name" id="l1_manager_name" class="textbox  onboard-form form-control " pattern="name" value="{{(isset($assigned_l1_manager_name)) ? $assigned_l1_manager_name :''}}" readonly/>
+                                                    <input type="text" placeholder="Reporting Manager Name" name="l1_manager_name" id="l1_manager_name" class="textbox  onboard-form form-control " pattern="name" value="{{(isset($assigned_l1_manager_name)) ? $assigned_l1_manager_name :''}}" readonly />
                                                     <label class="error star_error l1_manager_name_label" for="l1_manager_name" style="display: none;"></label>
                                                 </div>
                                             </div>
@@ -642,7 +629,7 @@
                                                 <!-- <label class="" for="officical_mail">Official E-Mail Id{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Official Email </label>
-                                                    <input type="email" placeholder="Official E-Mail Id" name="officical_mail" class="textbox form-control " pattern="email" onkeypress="return event.charCode != 32"/>
+                                                    <input type="email" placeholder="Official E-Mail Id" name="officical_mail" class="textbox form-control " pattern="email" onkeypress="return event.charCode != 32" />
                                                     <!--  <label class="error star_error officical_mail_label" for="officical_mail" style="display: none;"></label> -->
                                                 </div>
                                             </div>
@@ -714,7 +701,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Age </label>
 
-                                                    <input type="number" placeholder="Age" name="father_age" id="father_age" class="textbox  onboard-form form-control " minlength="2" maxlength="3" readonly/>
+                                                    <input type="number" placeholder="Age" name="father_age" id="father_age" class="textbox  onboard-form form-control " minlength="2" maxlength="3" readonly />
                                                 </div>
                                             </div>
 
@@ -752,7 +739,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Age</label>
 
-                                                    <input type="number" placeholder="Age" name="mother_age" id="mother_age" class="textbox  onboard-form form-control " minlength="2" maxlength="3" readonly/>
+                                                    <input type="number" placeholder="Age" name="mother_age" id="mother_age" class="textbox  onboard-form form-control " minlength="2" maxlength="3" readonly />
                                                 </div>
                                             </div>
 
@@ -1198,7 +1185,7 @@
                                                 <label for="" class="float-label"> Aadhar Card Back<span class="text-danger">*</span></label>
                                                 <div class="addfiles form-control" data="#aadhar_card_backend_file" id="aadhar_card_backend_file_label"><span class="file_label">Choose
                                                         Aadhar Card Back </span></div>
-                                                <input type="file" accept="image/png, image/gif, image/jpeg" style="display:none;" placeholder="Aadhar Card Backend" name="aadhar_card_backend_file" id="aadhar_card_backend_file" class="onboard-form form-control files" required/>
+                                                <input type="file" accept="image/png, image/gif, image/jpeg" style="display:none;" placeholder="Aadhar Card Backend" name="aadhar_card_backend_file" id="aadhar_card_backend_file" class="onboard-form form-control files" required />
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                                                 <!-- <label class="" for="pan_card">Pan Card{!! required() !!}</label> -->
@@ -1206,7 +1193,7 @@
                                                     Card<span class="text-danger">*</span></label>
                                                 <div class="addfiles form-control" data="#pan_card_file" id="pan_card_file_label"><span class="file_label">Upload Pan
                                                         Card</span></div>
-                                                <input type="file" accept="image/png, image/gif, image/jpeg" style="display:none;" placeholder="Pan Card" name="pan_card_file" id="pan_card_file" class="onboard-form form-control files" required/>
+                                                <input type="file" accept="image/png, image/gif, image/jpeg" style="display:none;" placeholder="Pan Card" name="pan_card_file" id="pan_card_file" class="onboard-form form-control files" required />
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                                                 <!-- <label class="" for="passport">Passport{!! required() !!}</label> -->
@@ -1214,7 +1201,7 @@
                                                     Passport</label>
                                                 <div class="addfiles form-control" data="#passport_file" id="passport_file_label"><span class="file_label">Choose
                                                         Passport</span></div>
-                                                <input type="file" accept="image/png, image/gif, image/jpeg" style="display:none;" placeholder="Passport" name="passport_file" id="passport_file" class="onboard-form form-control files" required/>
+                                                <input type="file" accept="image/png, image/gif, image/jpeg" style="display:none;" placeholder="Passport" name="passport_file" id="passport_file" class="onboard-form form-control files" required />
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                                                 <!-- <label class="" for="voters_id">Voters ID</label> -->
@@ -1223,36 +1210,35 @@
                                                     ID</label>
                                                 <div class="addfiles form-control" data="#voters_id_file" id="voters_id_file_label"><span class="file_label">Choose Voters
                                                         ID</span></div>
-                                                <input type="file" accept="image/png, image/gif, image/jpeg" style="display:none;" placeholder="Voters ID" name="voters_id_file" id="voters_id_file" class="onboard-form form-control files" required/>
+                                                <input type="file" accept="image/png, image/gif, image/jpeg" style="display:none;" placeholder="Voters ID" name="voters_id_file" id="voters_id_file" class="onboard-form form-control files" required />
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2">
                                                 <!-- <label class="" for="dl_file">Driving License</label> -->
                                                 <label for="" class="float-label"> Driving License</label>
                                                 <div class="addfiles form-control" data="#dl_file" id="dl_file_label"><span class="file_label">Choose Driving
                                                         License</span></div>
-                                                <input type="file" accept="image/png, image/gif, image/jpeg" style="display:none;" placeholder="Driving License" name="dl_file" id="dl_file" class="onboard-form form-control files" required/>
+                                                <input type="file" accept="image/png, image/gif, image/jpeg" style="display:none;" placeholder="Driving License" name="dl_file" id="dl_file" class="onboard-form form-control files" required />
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
                                                 <!-- <label class="" for="education_certificate">Educations Certificate{!! required() !!}</label> -->
                                                 <label for="" class="float-label">Educations Certificate<span class="text-danger">*</span></label>
                                                 <div class="addfiles form-control" data="#education_certificate_file" id="education_certificate_file_label"><span class="file_label">Choose
                                                         Educations Certificate</span></div>
-                                                <input type="file" accept="image/png, image/gif, image/jpeg" style="display:none;" placeholder="Educations Certificate" name="education_certificate_file" id="education_certificate_file" class="onboard-form form-control files" required/>
+                                                <input type="file" accept="image/png, image/gif, image/jpeg" style="display:none;" placeholder="Educations Certificate" name="education_certificate_file" id="education_certificate_file" class="onboard-form form-control files" required />
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
                                                 <!-- <label class="" for="reliving_letter">Reliving Letter</label> -->
                                                 <label for="" class="float-label"> Relieving Letter</label>
                                                 <div class="addfiles form-control" data="#reliving_letter_file" id="reliving_letter_file_label"><span class="file_label">Choose
                                                         Relieving Letter</span></div>
-                                                <input type="file" accept="image/png, image/gif, image/jpeg" style="display:none;" placeholder="Relieving Letter" name="reliving_letter_file" id="reliving_letter_file" class="onboard-form form-control files" required/>
+                                                <input type="file" accept="image/png, image/gif, image/jpeg" style="display:none;" placeholder="Relieving Letter" name="reliving_letter_file" id="reliving_letter_file" class="onboard-form form-control files" required />
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-12 text-right"><button type="button" data="row-6" next="row-6" placeholder="" name="save_form" id="save_button" class="btn btn-orange  text-center submitOnboardForm" value="Submit">Save</button>
-                                        <br/>
-                                        <div class="col-12 text-right"><button type="button" data="row-6" next="row-6" placeholder="" name="submit_form" id="submit_button" class="btn btn-orange  text-center submitOnboardForm" value="Submit">Submit</button>
-                                        </div>
+                                    <div class="text-end">
+                                        <button data="row-6" next="row-6" name="save_form" id="save_button" class="btn btn-orange  text-center submitOnboardForm" value="Submit">Save</button>
+                                        <button data="row-6" next="row-6" name="submit_form" id="submit_button" class="btn btn-orange  text-center submitOnboardForm" value="Submit">Submit</button>
+
                                     </div>
                                 </div>
                             </div>
@@ -1267,8 +1253,8 @@
 </div>
 
 <!-- Vertically Centered -->
-<div class="modal fade" id="notificationModal" role="dialog" aria-hidden="true" style="opacity:1; display:none;background:#00000073;">
-    <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2">
+<!-- <div class="modal fade" id="notificationModal" role="dialog" aria-hidden="true" style="opacity:1; display:none;background:#00000073;">
+    <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true" aria-labelledby="">
         <div class="modal-content">
             <div class="modal-header py-2 bg-primary">
 
@@ -1279,14 +1265,36 @@
                     </button>
                 </div>
             </div>
+           
+        </div>
+    </div>
+</div> -->
+<div id="notificationModal" class="modal custom-modal fade show" aria-modal="true" role="dialog" style="opacity:1; display:none;background:#00000073;">
+    <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable  modal-md" role="document">
+        <div class="modal-content top-line">
+            <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
+                <hp class="modal-title mb-1 text-primary" id="modalHeader" style="border-bottom:5px solid #d0d4e2;">
+                </hp>
+                <button type="button" class="close-modal outline-none bg-transparent border-0 h3" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
             <div class="modal-body">
-                <div class="mt-4">
-                    <h6 class="mb-3" id="modalSubHeading">---</h6>
+            <h6 class="text-muted m-0" id="modalSubHeading">---</h6>
+                <!-- <div class="">
+                    <h6 class="" id="modalSubHeading">---</h6>
                     <p class="text-muted mb-4" id="modalBody"></p>
-                    <div class="hstack gap-2 justify-content-center">
-                        <button type="button" id="button_close" class="btn btn-light close-modal" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </div>
+
+                </div> -->
+                <div id="modalBody"></div>
+                <!-- <ul class="list-style-numbered list-style-circle p-4" id="modalBody">
+                  
+                </ul> -->
+
+               
+            </div>
+            <div class="modal-footer py-0 border-0">
+                <button type="button" id="button_close" class="btn btn-border-primary close-modal" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

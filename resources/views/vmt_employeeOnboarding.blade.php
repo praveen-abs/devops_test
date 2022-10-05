@@ -48,6 +48,9 @@
 @endsection
 
 @section('content')
+@component('components.organization_breadcrumb')
+@slot('li_1') @endslot
+@endcomponent
 <div class="loader" style="display:none;"></div>
 
 {{-- Show Only if employee is already onboarded --}}
@@ -897,7 +900,7 @@
                     console.log(errorMap);
 
                     var keys = Object.keys(errorMap);
-                    var errors_html = "<ul>";
+                    var errors_html = "<ul class='list-style-numbered list-style-circle p-4'>";
 
                     for(var j=0;j<keys.length;j++)
                     {
