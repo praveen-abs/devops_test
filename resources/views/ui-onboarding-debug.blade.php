@@ -396,7 +396,8 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Address 1<span class="text-danger">*</span></label>
 
-                                                    <textarea placeholder="Current Address" name="current_address_line_1" id="current_address_line_1" class=" form-control textbox capitalize" required id="" cols="" rows="1"></textarea>
+                                                    <textarea placeholder="Current Address" name="current_address_line_1" id="current_address_line_1" class=" form-control textbox capitalize" required id="" cols="" rows="1">no.21 mgr nagar,t.nagar
+                                                    </textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6 mb-2">
@@ -404,7 +405,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Address 2</label>
 
-                                                    <textarea placeholder="Current Address" name="current_address_line_2" id="current_address_line_2" class="form-control textbox capitalize" required id="" cols="" rows="1"></textarea>
+                                                    <textarea placeholder="Current Address" name="current_address_line_2" id="current_address_line_2" class="form-control textbox capitalize" required id="" cols="" rows="1">no.21 mgr nagar,t.nagar</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -412,12 +413,13 @@
                                                 <!-- <label class="" for="curent_district">Country{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Country<span class="text-danger">*</span></label>
-                                                    <select placeholder="Country" name="current_district" id="current_country" class="onboard-form form-control textbox  select2_form_without_search" required>
-                                                        <option value="" hidden selected disabled>Select Country</option>
+                                                    <select placeholder="Country" name="current_district" id="" class="onboard-form form-control textbox  select2_form_without_search" required>
+                                                        <!-- <option value="" hidden selected disabled>Select Country</option> -->
                                                         @foreach($countries as $data)
-                                                        <option value="{{$data->country_code}}">{{$data->country_name}}
-                                                        </option>
+                                                        <!-- <option value="{{$data->country_code}}">{{$data->country_name}}
+                                                        </option> -->
                                                         @endforeach
+                                                        <option value="india"  selected >India</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -425,8 +427,9 @@
                                                 <!-- <label class="" for="current_state">Current State{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">State<span class="text-danger">*</span></label>
-                                                    <select placeholder="State" name="current_state" id="current_state" class="onboard-form form-control textbox  select2_form_without_search" required>
-                                                        <option value="" hidden selected disabled>Select State</option>
+                                                    <select placeholder="State" name="current_state" id="" class="onboard-form form-control textbox  select2_form_without_search" required>
+                                                        <!-- <option value="" hidden selected disabled>Select State</option> -->
+                                                        <option value="Tamil Nadu" selected>Tamil Nadu</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -434,7 +437,7 @@
                                                 <!-- <label class="" for="current_city">Current City{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label"> City<span class="text-danger">*</span></label>
-                                                    <input type="text" placeholder="City" name="current_city" id="current_city" class="onboard-form form-control textbox  capitalize" required />
+                                                    <input type="text" placeholder="City" value="Chennai" name="current_city" id="current_city" class="onboard-form form-control textbox  capitalize" required />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -442,7 +445,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Pincode<span class="text-danger">*</span></label>
 
-                                                    <input type="text" minlength="6" maxlength="6" oninput="numberOnly(this.id);" placeholder="Pincode" name="current_pincode" id="current_pincode" class="onboard-form form-control textbox " required />
+                                                    <input type="text" minlength="6" maxlength="6" value="600042" oninput="numberOnly(this.id);" placeholder="Pincode" name="current_pincode" id="current_pincode" class="onboard-form form-control textbox " required />
                                                 </div>
                                             </div>
 
@@ -465,14 +468,14 @@
                                                 <!-- <label class="" for="permanent_address">Permanent Address{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label"> Address 1 <span class="text-danger">*</span></label>
-                                                    <textarea placeholder="Permanent Address" name="permanent_address_line_1" id="permanent_address_line_1" class="form-control textbox capitalize" required cols="5" rows="1"></textarea>
+                                                    <textarea placeholder="Permanent Address" name="permanent_address_line_1" id="permanent_address_line_1" class="form-control textbox capitalize" required cols="5" rows="1">no.21 mgr nagar,t.nagar</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6 mb-2">
                                                 <!-- <label class="" for="permanent_address">Permanent Address{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label"> Address 2</label>
-                                                    <textarea placeholder="Permanent Address" name="permanent_address_line_2" id="permanent_address_line_2" class="form-control textbox capitalize" required cols="5" rows="1"></textarea>
+                                                    <textarea placeholder="Permanent Address" name="permanent_address_line_2" id="permanent_address_line_2" class="form-control textbox capitalize" required cols="5" rows="1">no.21 mgr nagar,t.nagar</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 col-xxl-3 mb-2">
@@ -482,12 +485,13 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Country <span class="text-danger">*</span></label>
 
-                                                    <select placeholder="Permanent Country" name="permanent_district" id="permanent_country" class="onboard-form form-control textbox  select2_form_without_search" required>
-                                                        <option value="" hidden selected disabled>Select Country</option>
+                                                    <select placeholder="Permanent Country" name="permanent_district" id="" class="onboard-form form-control textbox  select2_form_without_search" required>
+                                                        <!-- <option value="" hidden selected disabled>Select Country</option>
                                                         @foreach($countries as $data)
                                                         <option value="{{$data->country_code}}">{{$data->country_name}}
                                                         </option>
-                                                        @endforeach
+                                                        @endforeach -->
+                                                        <option value="India" selected>India</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -496,8 +500,8 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label"> State<span class="text-danger">*</span></label>
 
-                                                    <select placeholder="Permanent State" name="permanent_state" id="permanent_state" class="onboard-form form-control textbox  select2_form_without_search" required>
-                                                        <option value=""></option>
+                                                    <select placeholder="Permanent State" name="permanent_state" id="" class="onboard-form form-control textbox  select2_form_without_search" required>
+                                                        <option value="Tamil Nadu" selected>Tamil Nadu</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -506,7 +510,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label"> City<span class="text-danger">*</span></label>
 
-                                                    <input type="text" placeholder=" City" name="permanent_city" id="permanent_city" class="onboard-form form-control textbox capitalize" required />
+                                                    <input type="text" placeholder=" City" value="Chennai" name="permanent_city" id="permanent_city" class="onboard-form form-control textbox capitalize" required />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -514,7 +518,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label"> Pincode <span class="text-danger">*</span></label>
 
-                                                    <input type="text" placeholder=" Pincode" name="permanent_pincode" id="permanent_pincode" oninput="numberOnly(this.id);" minlength="6" maxlength="6" class="onboard-form form-control textbox " required />
+                                                    <input type="text" placeholder=" Pincode" value="600042" name="permanent_pincode" id="permanent_pincode" oninput="numberOnly(this.id);" minlength="6" maxlength="6" class="onboard-form form-control textbox " required />
                                                 </div>
                                             </div>
                                         </div>
@@ -533,11 +537,10 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Department</label>
 
-                                                    <select placeholder="Department" name="department" id="department" class="onboard-form form-control textbox">
-                                                        <option value="" hidden selected disabled>Select Department</option>
-                                                        @foreach($department as $e)
-                                                        <option value="{{$e->name}}">{{$e->name}}</option>
-                                                        @endforeach
+                                                    <select placeholder="Department" name="" id="" class=" form-control textbox">
+                                                    <option value="IT" selected> IT</option>    
+                                                  
+                                                        
                                                     </select>
                                                 </div>
                                             </div>
@@ -545,7 +548,7 @@
                                                 <!-- <label class="" for="process">Process{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Process</label>
-                                                    <input type="text" placeholder="Process" name="process" class="onboard-form form-control" pattern="name" required />
+                                                    <input type="text" placeholder="Process"  value="frontend senior" name="process" class="onboard-form form-control" pattern="name" required />
 
                                                </div>
                                             </div>
@@ -554,7 +557,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Designation<span class="text-danger">*</span> </label>
 
-                                                    <input type="text" placeholder="Designation" name="designation" class=" form-control textbox " pattern="alpha" required />
+                                                    <input type="text" placeholder="Designation" value="frontend" name="designation" class=" form-control textbox " pattern="alpha" required />
                                                     <label class="error star_error designation_label" for="designation" style="display: none;"></label>
                                                 </div>
                                             </div>
@@ -563,7 +566,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Cost Center</label>
 
-                                                    <input type="number" placeholder="Cost Center" name="cost_center" class="onboard-form form-control textbox " />
+                                                    <input type="number" placeholder="Cost Center" value="444" name="cost_center" class="onboard-form form-control textbox " />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -573,7 +576,7 @@
 
                                                     <select placeholder="Probabition Period" name="confirmation_period" class="onboard-form form-control textbox  not-required validate select2_form_without_search">
                                                         <option value="" hidden selected disabled>Select Probabition Period</option>
-                                                        <option value="1">1 Month</option>
+                                                        <option value="1" selected>1 Month</option>
                                                         <option value="2">2 Month</option>
                                                         <option value="3">3 Month</option>
                                                         <option value="4">4 Month</option>
@@ -592,7 +595,7 @@
                                                 <!-- <label class="" for="work_location">Work Location{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Work Location<span class="text-danger">*</span></label>
-                                                    <input type="text" placeholder="Work Location" name="work_location" class="onboard-form form-control textbox capitalize" pattern="alpha" required />
+                                                    <input type="text" value="Chennai" placeholder="Work Location" name="work_location" class="onboard-form form-control textbox capitalize" pattern="alpha" required />
                                                     <label class="error star_error work_location_label" for="work_location" style="display: none;"></label>
 
                                                 </div>
@@ -603,13 +606,14 @@
                                                     <label for="" class="float-label">Reporting Manager Code<span class="text-danger">*</span></label>
 
                                                     @if (isset($emp_office_details->l1_manager_code))
-                                                        <input type="text" value="{{$emp_office_details->l1_manager_code}}" name="l1_manager_code" id="l1_manager_code" class="form-control textbox " pattern="" readonly />
+                                                        <input type="text" value="Emp100" name="l1_manager_code" id="l1_manager_code" class="form-control textbox " pattern="" readonly />
                                                     @else
-                                                        <select placeholder="Reporting Manager" name="l1_manager_code" id="l1_manager_code_select" class="onboard-form form-control  textbox ">
-                                                            <option value="" hidden selected disabled>Select</option>
+                                                        <select placeholder="Reporting Manager" name="l1_manager_code" id="" class=" form-control  textbox ">
+                                                            <option value="Praveen" selected>Praveen</option>
+                                                            <!-- <option value="" hidden selected disabled>Select</option>
                                                             @foreach($allEmployeesUserCode as $e)
                                                                  <option value="{{$e->user_code}}">{{$e->user_code}}</option>
-                                                            @endforeach
+                                                            @endforeach -->
                                                         </select>
                                                     @endif
                                                 </div>
@@ -618,7 +622,7 @@
 
                                                 <div class="floating">
                                                     <label for="" class="float-label">Reporting Manager Name</label>
-                                                    <input type="text" placeholder="Reporting Manager Name" name="l1_manager_name" id="l1_manager_name" class="textbox  onboard-form form-control " pattern="name" value="{{(isset($assigned_l1_manager_name)) ? $assigned_l1_manager_name :''}}" readonly/>
+                                                    <input type="text" placeholder="Reporting Manager Name" name="l1_manager_name" id="" class="textbox  onboard-form form-control " pattern="name" value="Sirini" readonly/>
                                                     <label class="error star_error l1_manager_name_label" for="l1_manager_name" style="display: none;"></label>
                                                 </div>
                                             </div>
@@ -634,7 +638,7 @@
                                                 <!-- <label class="" for="officical_mail">Official E-Mail Id{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Official Email </label>
-                                                    <input type="email" placeholder="Official E-Mail Id" name="officical_mail" class="textbox form-control " pattern="email" onkeypress="return event.charCode != 32"/>
+                                                    <input type="email" placeholder="Official E-Mail Id" name="officical_mail" value="praveen@gamil.com" class="textbox form-control " pattern="email" onkeypress="return event.charCode != 32"/>
                                                     <!--  <label class="error star_error officical_mail_label" for="officical_mail" style="display: none;"></label> -->
                                                 </div>
                                             </div>
@@ -642,21 +646,21 @@
                                                 <!-- <label class="" for="official_mobile">Official Mobile{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Official Mobile</label>
-                                                    <input type="text" minlength="10" maxlength="10" placeholder="Official Mobile" name="official_mobile" id="official_mobile" oninput="numberOnly(this.id);" class="textbox  onboard-form form-control " />
+                                                    <input type="text" minlength="10" maxlength="10" value="9988776644" placeholder="Official Mobile" name="official_mobile" id="official_mobile" oninput="numberOnly(this.id);" class="textbox  onboard-form form-control " />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="emp_notice">Employee Notice Period Days{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Employee Notice Period Days</label>
-                                                    <input type="number" placeholder="Employee Notice Period Days" name="emp_notice" class="onboard-form form-control textbox " />
+                                                    <input type="number" placeholder="Employee Notice Period Days" name="emp_notice" value="10" class="onboard-form form-control textbox " />
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <div class="floating">
                                                     <label for="" class="float-label">Date of confirmation<span class="text-danger">*</span></label>
-                                                    <input type="text" max="9999-12-31" placeholder="Date of confirmation" name="dow" class="onboard-form form-control textbox " onfocus="(this.type='date')" required />
+                                                    <input type="text" max="9999-12-31" placeholder="Date of confirmation" name="dow" value="9999-12-31" class="onboard-form form-control textbox " onfocus="(this.type='date')" required />
                                                 </div>
                                             </div>
                                         </div>
@@ -677,14 +681,14 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Father Name <span class="text-danger">*</span></label>
 
-                                                    <input type="text" placeholder="Father Name" name="father_name" pattern="name" class="onboard-form form-control textbox capitalize" required />
+                                                    <input type="text" placeholder="Father Name" name="father_name" pattern="name" class="onboard-form form-control textbox capitalize" required  value="Joe"/>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <div class="floating">
                                                     <label for="" class="float-label">Date of Birth <span class="text-danger">*</span></label>
 
-                                                    <input type="text" max="9999-12-31" placeholder="Date of Birth" name="dob_father" id="dob_father" class="onboard-form form-control textbox  " onfocus="(this.type='date')" required />
+                                                    <input type="text" max="9999-12-31" placeholder="Date of Birth" value="9999-12-31" name="dob_father" id="dob_father" class="onboard-form form-control textbox  " onfocus="(this.type='date')" required />
                                                 </div>
                                             </div>
 
@@ -706,7 +710,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Age </label>
 
-                                                    <input type="number" placeholder="Age" name="father_age" id="father_age" class="textbox  onboard-form form-control " minlength="2" maxlength="3" readonly/>
+                                                    <input type="number" placeholder="Age" value="55" name="father_age" id="father_age" class="textbox  onboard-form form-control " minlength="2" maxlength="3" readonly/>
                                                 </div>
                                             </div>
 
@@ -716,7 +720,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Mother Name <span class="text-danger">*</span></label>
 
-                                                    <input type="text" placeholder="Mother Name" name="mother_name" pattern="name" class="textbox  onboard-form form-control capitalize" required />
+                                                    <input type="text" placeholder="Mother Name" value="Rose" name="mother_name" pattern="name" class="textbox  onboard-form form-control capitalize" required />
                                                 </div>
                                             </div>
 
@@ -724,7 +728,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Date of Birth <span class="text-danger">*</span></label>
 
-                                                    <input type="text" max="9999-12-31" placeholder="Date of Birth" name="dob_mother" id="dob_mother" class="textbox  onboard-form form-control " onfocus="(this.type='date')" required />
+                                                    <input type="text" max="9999-12-31" value="9999-12-31" placeholder="Date of Birth" name="dob_mother" id="dob_mother" class="textbox  onboard-form form-control " onfocus="(this.type='date')" required />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -744,7 +748,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Age</label>
 
-                                                    <input type="number" placeholder="Age" name="mother_age" id="mother_age" class="textbox  onboard-form form-control " minlength="2" maxlength="3" readonly/>
+                                                    <input type="number" placeholder="Age" value="50" name="mother_age" id="mother_age" class="textbox  onboard-form form-control " minlength="2" maxlength="3" readonly/>
                                                 </div>
                                             </div>
 
@@ -755,7 +759,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Spouse Name <span class="text-danger">*</span></label>
 
-                                                    <input type="text" placeholder="Spouse Name" name="spouse_name" pattern="name" class="textbox  onboard-form form-control  spouse_data capitalize" required />
+                                                    <input type="text" value="Ray" placeholder="Spouse Name" name="spouse_name" pattern="name" class="textbox  onboard-form form-control  spouse_data capitalize" required />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -763,7 +767,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Date of Wedding <span class="text-danger">*</span></label>
 
-                                                    <input type="text" max="9999-12-31" placeholder="Date of Wedding" name="dow" class="textbox  onboard-form form-control  spouse_data" onfocus="(this.type='date')" />
+                                                    <input type="text" value="1999-02-11" max="9999-12-31" placeholder="Date of Wedding" name="dow" class="textbox  onboard-form form-control  spouse_data" onfocus="(this.type='date')" />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -773,10 +777,10 @@
                                                     <label for="" class="float-label">Gender <span class="text-danger">*</span></label>
 
                                                     <select placeholder="Spouse Gender" name="spouse_gender" id="spouse_gender" class="textbox  onboard-form form-control  spouse_data select2_form_without_search" required>
-                                                        <option value="" hidden selected disabled>Select Spouse Gender</option>
-                                                        <option value="male">Male</option>
-                                                        <option value="female">Female</option>
-                                                        <option value="other">Other</option>
+                                                        <!-- <option value="" hidden selected disabled>Select Spouse Gender</option> -->
+                                                        <!-- <option value="male">Male</option> -->
+                                                        <option value="female" selected>Female</option>
+                                                        <!-- <option value="other">Other</option> -->
                                                     </select>
                                                 </div>
                                             </div>
@@ -785,7 +789,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Spouse DOB <span class="text-danger">*</span></label>
 
-                                                    <input type="text" max="9999-12-31" placeholder="Spouse DOB" name="spouse_dob" class="textbox  onboard-form form-control  spouse_data" onfocus="(this.type='date')" required />
+                                                    <input type="text" max="9999-12-31" value="9999-12-31" placeholder="Spouse DOB" name="spouse_dob" class="textbox  onboard-form form-control  spouse_data" onfocus="(this.type='date')" required />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -794,13 +798,13 @@
                                                     <label for="" class="float-label">Number of Children</label>
 
                                                     <select placeholder="Number of Children" name="no_of_child" id="no_of_child" class="textbox onboard-form form-control  spouse_data select2_form_without_search">
-                                                        <option value="" hidden selected disabled>Select Number of Children</option>
-                                                        <option value="0">0</option>
-                                                        <option value="1">1</option>
-                                                        <option value="2">2</option>
+                                                        <!-- <option value="" hidden selected disabled>Select Number of Children</option>
+                                                        <option value="0">0</option> -->
+                                                        <option value="1" selected>1</option>
+                                                        <!-- <option value="2">2</option>
                                                         <option value="3">3</option>
                                                         <option value="4">4</option>
-                                                        <option value="5">5</option>
+                                                        <option value="5">5</option> -->
                                                     </select>
                                                 </div>
                                             </div>
@@ -824,12 +828,12 @@
                                                 <div class="floating">
 
                                                     <label for="" class="float-label">Basic Salary</label>
-                                                    <input type="number" placeholder="Basic Salary" name="basic" value="{{$compensatory->basic? $compensatory->basic : '0'}}" class="textbox   onboard-form form-control  calculation_data gross_data" step="0.01" readonly />
+                                                    <input type="number" placeholder="Basic Salary" name="basic" value="88999" class="textbox   onboard-form form-control  calculation_data gross_data" step="0.01" readonly />
                                                 </div>
                                                 @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">Basic Salary</label>
-                                                    <input type="number" placeholder="Basic Salary" name="basic" class="onboard-form form-control textbox  calculation_data gross_data  " step="0.01" required />
+                                                    <input type="number" placeholder="Basic Salary" name="basic" value="88999" class="onboard-form form-control textbox  calculation_data gross_data  " step="0.01" required />
                                                 </div>
                                                 @endif
 
@@ -843,12 +847,12 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">HRA</label>
 
-                                                    <input type="number" placeholder="HRA" name="hra" value="{{$compensatory->hra? $compensatory->hra : '0'}}" class="onboard-form form-control textbox   calculation_data gross_data " step="0.01" readonly />
+                                                    <input type="number" placeholder="HRA" name="hra" value="333" class="onboard-form form-control textbox   calculation_data gross_data " step="0.01" readonly />
                                                 </div>
                                                 @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">HRA</label>
-                                                    <input type="number" placeholder="HRA" name="hra" class="textbox  onboard-form form-control textbox    calculation_data gross_data" step="0.01" />
+                                                    <input type="number" placeholder="HRA" name="hra" value="333" class="textbox  onboard-form form-control textbox    calculation_data gross_data" step="0.01" />
                                                 </div>
 
                                                 @endif
@@ -860,12 +864,12 @@
 
                                                 <div class="floating">
                                                     <label for="" class="float-label">Statutory Bonus</label>
-                                                    <input type="number" placeholder="Statutory Bonus" name="statutory_bonus" value="{{$compensatory->Statutory_bonus? $compensatory->Statutory_bonus : '0'}}" class="onboard-form form-control textbox   calculation_data gross_data" step="0.01" readonly />
+                                                    <input type="number" placeholder="Statutory Bonus"  name="statutory_bonus" value="500" class="onboard-form form-control textbox   calculation_data gross_data" step="0.01" readonly />
                                                 </div>
                                                 @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">Statutory Bonus</label>
-                                                    <input type="number" placeholder="Statutory Bonus" name="statutory_bonus" class="textbox onboard-form form-control  calculation_data gross_data" step="0.01" />
+                                                    <input type="number" placeholder="Statutory Bonus" name="statutory_bonus" value="500" class="textbox onboard-form form-control  calculation_data gross_data" step="0.01" />
                                                 </div>
                                                 @endif
 
@@ -877,12 +881,12 @@
 
                                                 <div class="floating">
                                                     <label for="" class="float-label">Child Education Allowance</label>
-                                                    <input type="number" placeholder="Child Education Allowance" name="child_education_allowance" value="{{$compensatory->child_education_allowance? $compensatory->child_education_allowance : '0'}}" class="onboard-form form-control textbox   calculation_data gross_data" step="0.01" readonly />
+                                                    <input type="number" placeholder="Child Education Allowance" name="child_education_allowance" value="50000" class="onboard-form form-control textbox   calculation_data gross_data" step="0.01" readonly />
                                                 </div>
                                                 @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">Child Education Allowance</label>
-                                                    <input type="number" placeholder="Child Education Allowance" name="child_education_allowance" class="onboard-form form-control  calculation_data textbox  gross_data" step="0.01" />
+                                                    <input type="number" placeholder="Child Education Allowance" name="child_education_allowance" value="50000" class="onboard-form form-control  calculation_data textbox  gross_data" step="0.01" />
                                                 </div>
                                                 @endif
 
@@ -895,12 +899,12 @@
 
                                                 <div class="floating">
                                                     <label for="" class="float-label">Food Coupon</label>
-                                                    <input type="number" placeholder="Food Coupon" name="food_coupon" value="{{$compensatory->food_coupon? $compensatory->food_coupon : '0'}}" class="onboard-form form-control textbox  calculation_data gross_data" step="0.01" readonly />
+                                                    <input type="number" placeholder="Food Coupon" name="food_coupon" value="44555" class="onboard-form form-control textbox  calculation_data gross_data" step="0.01" readonly />
                                                 </div>
                                                 @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">Food Coupon</label>
-                                                    <input type="number" placeholder="Food Coupon" name="food_coupon" class="textbox  onboard-form form-control  calculation_data gross_data" step="0.01" />
+                                                    <input type="number" placeholder="Food Coupon" name="food_coupon" value="44555" class="textbox  onboard-form form-control  calculation_data gross_data" step="0.01" />
                                                 </div>
                                                 @endif
 
@@ -912,12 +916,12 @@
 
                                                 <div class="floating">
                                                     <label for="" class="float-label">LTA</label>
-                                                    <input type="number" placeholder="LTA" name="lta" value="{{$compensatory->lta? $compensatory->lta : '0'}}" class="textbox onboard-form form-control     calculation_data gross_data" step="0.01" readonly />
+                                                    <input type="number" placeholder="LTA" name="lta" value="9900" class="textbox onboard-form form-control     calculation_data gross_data" step="0.01" readonly />
                                                 </div>
                                                 @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">LTA</label>
-                                                    <input type="number" placeholder="LTA" name="lta" class="onboard-form form-control textbox   calculation_data gross_data" step="0.01" />
+                                                    <input type="number" placeholder="LTA" name="lta" value="9900" class="onboard-form form-control textbox   calculation_data gross_data" step="0.01" />
                                                 </div>
                                                 @endif
 
@@ -929,12 +933,12 @@
 
                                                 <div class="floating">
                                                     <label for="" class="float-label">Special Allowance</label>
-                                                    <input type="number" placeholder="Special Allowance" name="special_allowance" value="{{$compensatory->special_allowance? $compensatory->special_allowance : '0'}}" class="onboard-form form-control textbox   calculation_data gross_data" step="0.01" readonly />
+                                                    <input type="number" placeholder="Special Allowance" value="888" name="special_allowance"  class="onboard-form form-control textbox   calculation_data gross_data" step="0.01" readonly />
                                                 </div>
                                                 @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">Special Allowance</label>
-                                                    <input type="number" placeholder="Special Allowance" name="special_allowance" class="textbox  onboard-form form-control  calculation_data gross_data" step="0.01" />
+                                                    <input type="number" placeholder="Special Allowance" value="888" name="special_allowance" class="textbox  onboard-form form-control  calculation_data gross_data" step="0.01" />
                                                 </div>
                                                 @endif
 
@@ -947,12 +951,12 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Other Allowance</label>
 
-                                                    <input type="number" placeholder="Other Allowance" name="other_allowance" value="{{$compensatory->other_allowance? $compensatory->other_allowance : '0'}}" class="textbox  onboard-form form-control  calculation_data gross_data" step="0.01" readonly />
+                                                    <input type="number" placeholder="Other Allowance" name="other_allowance" value="44" class="textbox  onboard-form form-control  calculation_data gross_data" step="0.01" readonly />
                                                 </div>
                                                 @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">Other Allowance</label>
-                                                    <input type="number" placeholder="Other Allowance" name="other_allowance" class="textbox  onboard-form form-control  calculation_data gross_data" step="0.01" />
+                                                    <input type="number" placeholder="Other Allowance" name="other_allowance" value="44" class="textbox  onboard-form form-control  calculation_data gross_data" step="0.01" />
                                                 </div>
                                                 @endif
 
@@ -965,13 +969,13 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Gross Salary</label>
 
-                                                    <input type="number" placeholder="Gross Salary" name="gross" value="{{$compensatory->gross? $compensatory->gross : '0'}}" class="textbox  onboard-form form-control " step="0.01" required readonly />
+                                                    <input type="number" placeholder="Gross Salary" name="gross" value="33" class="textbox  onboard-form form-control " step="0.01" required readonly />
                                                 </div>
                                                 @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">Gross Salary</label>
 
-                                                    <input type="number" placeholder="Gross Salary" name="gross" id="gross" class="textbox  onboard-form form-control " step="0.01" required readOnly />
+                                                    <input type="number" placeholder="Gross Salary" name="gross" id="gross" value="33" class="textbox  onboard-form form-control " step="0.01" required readOnly />
                                                 </div>
                                                 @endif
 
@@ -984,12 +988,12 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">EPF employer contribution</label>
 
-                                                    <input type="number" placeholder="EPF employer contribution" name="epf_employer_contribution" value="{{$compensatory->epf_employer_contribution? $compensatory->epf_employer_contribution : '0'}}" class="textbox   onboard-form form-control  calculation_data cic_data" step="0.01" readonly />
+                                                    <input type="number" placeholder="EPF employer contribution" name="epf_employer_contribution" value="33" class="textbox   onboard-form form-control  calculation_data cic_data" step="0.01" readonly />
                                                 </div>
                                                 @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">EPF employer contribution</label>
-                                                    <input type="number" placeholder="EPF employer contribution" name="epf_employer_contribution" class="onboard-form form-control  calculation_data cic_data textbox " step="0.01" />
+                                                    <input type="number" placeholder="EPF employer contribution" name="epf_employer_contribution" value="33" class="onboard-form form-control  calculation_data cic_data textbox " step="0.01" />
                                                 </div>
                                                 @endif
 
@@ -1002,12 +1006,12 @@
 
                                                 <div class="floating">
                                                     <label for="" class="float-label">ESIC employer contribution</label>
-                                                    <input type="number" placeholder="ESIC employer contribution" name="esic_employer_contribution" value="{{$compensatory->esic_employer_contribution? $compensatory->esic_employer_contribution : '0'}}" class="onboard-form form-control textbox   calculation_data cic_data" step="0.01" readonly />
+                                                    <input type="number" placeholder="ESIC employer contribution" name="esic_employer_contribution" value="100" class="onboard-form form-control textbox   calculation_data cic_data" step="0.01" readonly />
                                                 </div>
                                                 @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">ESIC employer contribution</label>
-                                                    <input type="number" placeholder="ESIC employer contribution" name="esic_employer_contribution" class="onboard-form form-control textbox  calculation_data cic_data" step="0.01" />
+                                                    <input type="number" placeholder="ESIC employer contribution" name="esic_employer_contribution" value="100" class="onboard-form form-control textbox  calculation_data cic_data" step="0.01" />
                                                 </div>
                                                 @endif
 
@@ -1019,12 +1023,12 @@
 
                                                 <div class="floating">
                                                     <label for="" class="float-label">Insurance</label>
-                                                    <input type="number" placeholder="Insurance" name="insurance" value="{{$compensatory->insurance? $compensatory->insurance : '0'}}" class="onboard-form form-control textbox   calculation_data cic_data" step="0.01" readonly />
+                                                    <input type="number" placeholder="Insurance" name="insurance" value="666" class="onboard-form form-control textbox   calculation_data cic_data" step="0.01" readonly />
                                                 </div>
                                                 @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">Insurance</label>
-                                                    <input type="number" placeholder="Insurance" name="insurance" class="onboard-form form-control textbox  calculation_data cic_data" step="0.01" />
+                                                    <input type="number" placeholder="Insurance" name="insurance" value="666" class="onboard-form form-control textbox  calculation_data cic_data" step="0.01" />
                                                 </div>
                                                 @endif
 
@@ -1036,12 +1040,12 @@
 
                                                 <div class="floating">
                                                     <label for="" class="float-label">Graduity</label>
-                                                    <input type="number" placeholder="Graduity" name="graduity" value="{{$compensatory->graduity? $compensatory->graduity : '0'}}" class="onboard-form form-control textbox   calculation_data cic_data" step="0.01" readonly />
+                                                    <input type="number" placeholder="Graduity" name="graduity" value="455" class="onboard-form form-control textbox   calculation_data cic_data" step="0.01" readonly />
                                                 </div>
                                                 @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">Graduity</label>
-                                                    <input type="number" placeholder="Graduity" name="graduity" class="onboard-form form-control textbox   calculation_data cic_data" step="0.01" />
+                                                    <input type="number" placeholder="Graduity" name="graduity" value="455" class="onboard-form form-control textbox   calculation_data cic_data" step="0.01" />
                                                 </div>
                                                 @endif
 
@@ -1054,13 +1058,13 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Cost of Company</label>
 
-                                                    <input type="number" placeholder="Cost of Company" name="cic" value="{{$compensatory->cic? $compensatory->cic : '0'}}" id="cic" class="onboard-form form-control textbox " step="0.01" required readonly />
+                                                    <input type="number" placeholder="Cost of Company" name="cic" value="444" id="cic" class="onboard-form form-control textbox " step="0.01" required readonly />
                                                 </div>
                                                 @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">Cost of Company</label>
 
-                                                    <input type="number" placeholder="Cost of Company" name="cic" id="cic" class="onboard-form form-control textbox " step="0.01" required readOnly />
+                                                    <input type="number" placeholder="Cost of Company" name="cic" value="444" id="cic" class="onboard-form form-control textbox " step="0.01" required readOnly />
                                                 </div>
                                                 @endif
 
@@ -1073,13 +1077,13 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">EPF Employee</label>
 
-                                                    <input type="number" placeholder="EPF Employee" name="epf_employee" value="{{$compensatory->epf_employee? $compensatory->epf_employee : '0'}}" class="onboard-form form-control  calculation_data net_data textbox " step="0.01" readonly />
+                                                    <input type="number" placeholder="EPF Employee" name="epf_employee" value="5555" class="onboard-form form-control  calculation_data net_data textbox " step="0.01" readonly />
                                                 </div>
                                                 @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">EPF Employee</label>
 
-                                                    <input type="number" placeholder="EPF Employee" name="epf_employee" class="onboard-form form-control  calculation_data net_data textbox " step="0.01" />
+                                                    <input type="number" placeholder="EPF Employee" name="epf_employee" value="5555" class="onboard-form form-control  calculation_data net_data textbox " step="0.01" />
                                                 </div>
                                                 @endif
 
@@ -1092,13 +1096,13 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">ESIC Employee</label>
 
-                                                    <input type="number" placeholder="ESIC Employee" name="esic_employee" value="{{$compensatory->esic_employee? $compensatory->esic_employee : '0'}}" class="textbox  onboard-form form-control  calculation_data net_data" step="0.01" readonly />
+                                                    <input type="number" placeholder="ESIC Employee" name="esic_employee" value="998" class="textbox  onboard-form form-control  calculation_data net_data" step="0.01" readonly />
                                                 </div>
                                                 @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">ESIC Employee</label>
 
-                                                    <input type="number" placeholder="ESIC Employee" name="esic_employee" class="textbox  onboard-form form-control  calculation_data net_data" step="0.01" />
+                                                    <input type="number" placeholder="ESIC Employee" name="esic_employee" value="998" class="textbox  onboard-form form-control  calculation_data net_data" step="0.01" />
                                                 </div>
                                                 @endif
 
@@ -1111,13 +1115,13 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Professional Tax</label>
 
-                                                    <input type="number" placeholder="Professional Tax" name="professional_tax" value="{{$compensatory->professional_tax? $compensatory->professional_tax : '0'}}" class="textbox  onboard-form form-control  calculation_data net_data " step="0.01" readonly />
+                                                    <input type="number" placeholder="Professional Tax" name="professional_tax" value="1000" class="textbox  onboard-form form-control  calculation_data net_data " step="0.01" readonly />
                                                 </div>
                                                 @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">Professional Tax</label>
 
-                                                    <input type="number" placeholder="Professional Tax" name="professional_tax" class="textbox  onboard-form form-control calculation_data net_data " step="0.01" />
+                                                    <input type="number" placeholder="Professional Tax" name="professional_tax" value="1000" class="textbox  onboard-form form-control calculation_data net_data " step="0.01" />
                                                 </div>
 
                                                 @endif
@@ -1131,13 +1135,13 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">labour welfare fund</label>
 
-                                                    <input type="number" placeholder="labour welfare fund" name="labour_welfare_fund" value="{{$compensatory->labour_welfare_fund? $compensatory->labour_welfare_fund : '0'}}" class="onboard-form form-control calculation_data net_data textbox " step="0.01" readonly />
+                                                    <input type="number" placeholder="labour welfare fund" name="labour_welfare_fund" value="909" class="onboard-form form-control calculation_data net_data textbox " step="0.01" readonly />
                                                 </div>
                                                 @else
                                                 <div class="floating">
                                                     <label for="" class="float-label">labour welfare fund</label>
 
-                                                    <input type="number" placeholder="labour welfare fund" name="labour_welfare_fund" class="onboard-form form-control calculation_data net_data textbox  " step="0.01" />
+                                                    <input type="number" placeholder="labour welfare fund" name="labour_welfare_fund" value="909"class="onboard-form form-control calculation_data net_data textbox  " step="0.01" />
                                                 </div>
                                                 @endif
 
