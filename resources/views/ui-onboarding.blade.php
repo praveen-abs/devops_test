@@ -129,7 +129,9 @@
                                                 <!-- <label class="" for="aadhar">Aadhaar Number<span id="aadhar_req">{!! required() !!}</span></label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Aadhaar Number<span class="text-danger">*</span></label>
-                                                    <input type="text" oninput="numberOnly(this.id);" placeholder="Aadhaar Number" name="aadhar" id="vmt_aadhar" pattern="aadhar" class="onboard-form form-control textbox " minlength="12" maxlength="12" required />
+                                                    <input type="text" oninput="numberOnly(this.id);" placeholder="Aadhaar Number" name="aadhar" id="vmt_aadhar"
+                                                    value="{{ !empty($employee_details) && $employee_details->aadhar_number ? $employee_details->aadhar_number  : ''}}"
+                                                    pattern="aadhar" class="onboard-form form-control textbox " minlength="12" maxlength="12" required />
                                                     {{-- <label class="error star_error aadhar_label" for="aadhar"
                                                         style="display: none;"></label> --}}
                                                     <!-- <label for="" class="float-label">Aadhaar Number</label> -->
@@ -142,7 +144,9 @@
                                                 <!-- <label class="" for="pan_no">Pan Card Number<span id="pan_no_req">{!! required() !!}</span></label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Pan Number / Pan Acknowlegement<span class="text-danger">*</span></label>
-                                                    <input type="text" placeholder="Pan Card Number" name="pan_no" id="pan_num" class=" form-control textbox  pan" pattern="pan" minlength="10" maxlength="10" required />
+                                                    <input type="text" placeholder="Pan Card Number" name="pan_no" id="pan_num"
+                                                        value="{{ !empty($employee_details) && $employee_details->pan_number ? $employee_details->pan_number  : ''}}"
+                                                        class=" form-control textbox  pan" pattern="pan" minlength="10" maxlength="10" required />
                                                     <label class="error star_error pan_no_label" id="pan_no_label" for="pan_no" style="display: none;"></label>
 
                                                     <span class="error" id="error_pan_no"></span>
@@ -166,7 +170,10 @@
                                                 <!-- <label class="" for="444">DL Number</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">DL Number</label>
-                                                    <input type="text" placeholder="DL Number" name="dl_no" id="dl_no" minlength="16" maxlength="16" class="onboard-form form-control textbox " style='text-transform:uppercase' />
+                                                    <input type="text" placeholder="DL Number" name="dl_no" id="dl_no"
+                                                    value="{{ !empty($employee_details) && $employee_details->dl_no ? $employee_details->dl_no  : ''}}"
+
+                                                    minlength="16" maxlength="16" class="onboard-form form-control textbox " style='text-transform:uppercase' />
                                                     <label class="error star_error dl_no_label" for="dl_no" style="display: none;"></label>
 
                                                     <span class="error" id="error_dl_no"></span>
@@ -194,7 +201,10 @@
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <div class="floating">
                                                     <label for="" class="float-label">Passport Number</label>
-                                                    <input type="text" placeholder="Passport Number" name="passport_no" id="passport_no" minlength="8" maxlength="8" class="form-control textbox" style='text-transform:uppercase' required/>
+                                                    <input type="text" placeholder="Passport Number" name="passport_no" id="passport_no"
+                                                    value="{{ !empty($employee_details) && $employee_details->passport_number ? $employee_details->passport_number  : ''}}"
+
+                                                    minlength="8" maxlength="8" class="form-control textbox" style='text-transform:uppercase' required/>
                                                     <label class="error star_error passport_no_label" for="passport_no" style="display: none;"></label>
 
                                                     <span class="error" id="error_passport_no"></span>
@@ -1239,7 +1249,9 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-12 text-right"><button type="button" data="row-6" next="row-6" placeholder="" name="next" id="submit_button" class="btn btn-orange  text-center" value="Submit">Submit</button>
+                                        <div class="col-12 text-right"><button type="button" data="row-6" next="row-6" placeholder="" name="save_form" id="save_button" class="btn btn-orange  text-center submitOnboardForm" value="Submit">Save</button>
+                                        <br/>
+                                        <div class="col-12 text-right"><button type="button" data="row-6" next="row-6" placeholder="" name="submit_form" id="submit_button" class="btn btn-orange  text-center submitOnboardForm" value="Submit">Submit</button>
                                         </div>
                                     </div>
                                 </div>
