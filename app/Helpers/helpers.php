@@ -17,6 +17,25 @@ function fetchMasterConfigValue($config_name)
 
 }
 
+function isEmailExists($email)
+{
+    if(User::where('email',$email)->exists())
+        return "true";
+    else
+        return "false";
+
+}
+
+function isEmpCodeExists($emp_code)
+{
+    if(User::where('user_code',$emp_code)->exists())
+        return "true";
+    else
+        return "false";
+
+}
+
+
 function updateUserRole($user_code,$role_name)
 {
     $role = VmtOrgRoles::where('name',$role_name)->first('id');
