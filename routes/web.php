@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PMS\VmtPMSModuleController;
+use App\Http\Controllers\VmtEmployeeOnboardingController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,7 +24,6 @@ Auth::routes();
 
 Route::get('/',  [App\Http\Controllers\VmtMainDashboardController::class, 'index'])->name('index');
 
-// Route::get('/index',  [App\Http\Controllers\VmtMainDashboardController::class, 'index'])->name('main');
 
 //404 error page
 Route::get('/page-not-found', function () {
@@ -36,7 +36,9 @@ Route::get('/attendance-leavepolicy', [App\Http\Controllers\VmtAttendanceControl
 Route::get('/attendance-leavereports', [App\Http\Controllers\VmtAttendanceController::class, 'showAttendanceLeaveReportsPage'])->name('attendance-leavereports');
 
 
-
+Route::controller(VmtEmployeeOnboardingController::class)->group(function () {
+    // Route::get('/employee-onboarding-v2/{id}', 'testFunction');
+});
 
 //Update User Details
 
