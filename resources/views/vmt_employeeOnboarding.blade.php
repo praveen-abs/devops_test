@@ -790,15 +790,15 @@
                 //EMP code, email
                 errors_core_fields = []; //reset the error array
 
-                checkEmpCodeExists( $('#employee_code').val().trim());
+                //checkEmpCodeExists( $('#employee_code').val().trim());
 
-                console.log("Error Array Length : "+errors_core_fields.length );
-                if(errors_core_fields.length > 0)
-                {
+                // console.log("Error Array Length : "+errors_core_fields.length );
+                // if(errors_core_fields.length > 0)
+                // {
 
-                    console.log("Please check core fields (Emp code , email) : ");
-                    return;
-                }
+                //     console.log("Please check core fields (Emp code , email) : ");
+                //     return;
+                // }
 
                 //Find whether SAVE or SUBMIT button clicked
                 if (!$('#form-1').valid())

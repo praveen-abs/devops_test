@@ -37,6 +37,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
 use App\Models\VmtEmployeeFamilyDetails;
+use App\Services\VmtEmployeeService;
 
 class VmtEmployeeController extends Controller
 {
@@ -172,58 +173,91 @@ class VmtEmployeeController extends Controller
         return view('vmt_employeeOnboarding_BulkUpload');
     }
 
-    public function processEmployeeOnboardForm_Normal_Quick(Request $request)
+    public function processEmployeeOnboardForm_Normal_Quick(Request $request, VmtEmployeeService $employeeService)
     {
-
-        return redirect()->action([VmtEmployeeOnboardingController::class,'testFunction'],['user_data'=>"asdfff"]);
 
         $onboard_form_data =  array();
         parse_str($request->input('form_data'), $onboard_form_data);
 
-        //dd($onboard_form_data);
-
-        //check whether the user already exists
         $response = "";
 
         $currentLoggedinInUser = auth()->user();
 
+        $existingUser = User::where('user_code',$onboard_form_data['employee_code']);
+        $existing_user_id = null;
+
+        if($existingUser->exists())
+             $existing_user_id = $existingUser->first()->id;
+
         //If current user is Admin, then its normal onboarding only.
         if(Str::contains( currentLoggedInUserRole(), ["Admin","HR"]) )
         {
+            $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->input('can_onboard_employee'), $existing_user_id);
 
-            $response = $this->storeEmployeeNormalOnboardForm($onboard_form_data, $request->input('can_onboard_employee'));
+            if($result)
+            {
+                $response = [
+                    'status' => 'success',
+                    'message' => 'Employee information Saved in draft',
+                    'mail_status' => '',
+                    'error' => '',
+                    'error_verbose' =>''
+                ];
+            }
 
         }
-        else
-        //If the currentuser is quick onboareded emp and not yet onboarded, then save the form.
+        else //If the currentuser is quick onboareded emp and not yet onboarded, then save the form.
         if($currentLoggedinInUser->is_onboarded == 0 && $currentLoggedinInUser->onboard_type  == "quick")
         {
             //check whether if emp_code is tampered
             if($onboard_form_data['employee_code'] == $currentLoggedinInUser->user_code)
-                $response = $this->storeEmployeeNormalOnboardForm($onboard_form_data, $request->input('can_onboard_employee'));
-            else
-                dd("Emp code mismatch. Please contact HR immediately");
+            {
+                //$response = $this->storeEmployeeNormalOnboardForm($onboard_form_data, $request->input('can_onboard_employee'));
 
+                $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->input('can_onboard_employee'), $existing_user_id);
+
+
+                $response = [
+                    'status' => 'success',
+                    'message' => 'Your Onboard information Saved in draft',
+                    'mail_status' => '',
+                    'error' => '',
+                    'error_verbose' =>''
+                ];
+
+            }
+            else
+            {
+                //dd("Emp code mismatch. Please contact HR immediately");
+
+                $response = [
+                    'status' => 'failure',
+                    'message' => 'Unauthorized Action :: Emp code mismatch. Please contact HR immediately',
+                    'mail_status' => '',
+                    'error' => '',
+                    'error_verbose' =>''
+                ];
+
+            }
         }
         else
         {
-            dd("You are not authorized to perform this action. Please contact the Admin immediately. Log : ".$currentLoggedinInUser);
-        }
-        //}
+            //dd("You are not authorized to perform this action. Please contact the Admin immediately. Log : ".$currentLoggedinInUser);
 
-        // else
-        // {
-        //     $response = [
-        //         'status' => 'failure',
-        //         'message' => 'Undefined Onboard type',
-        //         'mail_status' => '',
-        //         'error' => '',
-        //         'error_verbose' =>$onboard_form_data
-        //     ];
-        // }
+            $response = [
+                'status' => 'failure',
+                'message' => 'You are not authorized to perform this action. Please contact the Admin immediately. Log : '.$currentLoggedinInUser,
+                'mail_status' => '',
+                'error' => '',
+                'error_verbose' =>''
+            ];
+        }
 
         return $response;
     }
+
+
+
     /*
         Save employee onboarding details
         -Normal Onboarding, Quick
