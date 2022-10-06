@@ -801,7 +801,7 @@
                 // }
 
                 //Find whether SAVE or SUBMIT button clicked
-                if (!$('#form-1').valid())
+                if ($('#form-1').valid())
                 {
 
                     //alert("1 st one");

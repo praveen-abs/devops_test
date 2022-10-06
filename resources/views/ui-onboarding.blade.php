@@ -698,7 +698,7 @@
                                                         <option value="female">Female</option>
 
                                                     </select> -->
-                                                    <input type="text" class="form-control" name="Male" id="" value="Male" readonly>
+                                                    <input type="text" class="form-control" name="father_gender" id="father_gender" value="Male" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -736,7 +736,7 @@
                                                         <option value="male">Male</option>
                                                         <option value="female">Female</option>
                                                     </select> -->
-                                                    <input type="text" class="form-control" name="Male" id="" value="Female" readonly>
+                                                    <input type="text" class="form-control" name="mother_gender" id="" value="Female" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">

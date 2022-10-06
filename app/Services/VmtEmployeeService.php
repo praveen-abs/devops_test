@@ -273,6 +273,9 @@ class VmtEmployeeService {
             $familyMember->user_id  = $user_id;
             $familyMember->name =   $familyData['father_name'];
             $familyMember->relationship = 'Father';
+            $familyMember->gender = $familyData['father_gender'];
+
+
             //dd($familyData["dob_father"]);
             if(!empty($familyData["dob_father"]))
                 $familyMember->dob = $familyData["dob_father"];
@@ -287,6 +290,7 @@ class VmtEmployeeService {
             $familyMember->user_id  = $user_id;
             $familyMember->name =   $familyData['mother_name'];
             $familyMember->relationship = 'Mother';
+            $familyMember->gender = $familyData['mother_gender'];
 
             if(!empty($familyData["dob_mother"]))
                 $familyMember->dob = $familyData["dob_mother"];
@@ -300,6 +304,7 @@ class VmtEmployeeService {
             $familyMember->user_id  = $user_id;
             $familyMember->name =   $familyData['spouse_name'];
             $familyMember->relationship = 'Spouse';
+            $familyMember->gender = $familyData['spouse_gender'];
 
             if(!empty($familyData["spouse_dob"]))
                 $familyMember->dob =  $familyData["spouse_dob"];
@@ -312,6 +317,7 @@ class VmtEmployeeService {
                 $familyMember->user_id  = $user_id;
                 $familyMember->name =   $familyData['child_name'];
                 $familyMember->relationship = 'Children';
+                $familyMember->gender = '---';
 
                 if(isset($familyData["child_dob"]))
                     $familyMember->dob =   $familyData["child_dob"];
