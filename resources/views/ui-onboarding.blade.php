@@ -73,9 +73,9 @@
                                                         <option value="" hidden selected disabled>Marital Status</option>
                                                         <option value="unmarried"  @if( !empty($employee_details) && $employee_details->marital_status &&  $employee_details->marital_status == "unmarried" ) selected @endif >Unmarried</option>
                                                         <option value="married"  @if( !empty($employee_details) && $employee_details->marital_status &&  $employee_details->marital_status == "married" ) selected @endif     >Married</option>
-                                                        <option value="widowed"      >Widowed</option>
-                                                        <option value="separated"    >Separated</option>
-                                                        <option value="divorced"     >Divorced</option>
+                                                        <option value="widowed"   @if( !empty($employee_details) && $employee_details->marital_status &&  $employee_details->marital_status == "widowed" ) selected @endif         >Widowed</option>
+                                                        <option value="separated" @if( !empty($employee_details) && $employee_details->marital_status &&  $employee_details->marital_status == "separated" ) selected @endif         >Separated</option>
+                                                        <option value="divorced"  @if( !empty($employee_details) && $employee_details->marital_status &&  $employee_details->marital_status == "divorced" ) selected @endif         >Divorced</option>
                                                     </select>
                                                     <!-- <label for="" class="float-label">Marital Status</label> -->
                                                 </div>
@@ -98,9 +98,9 @@
                                                     <label for="" class="float-label">Gender<span class="text-danger">*</span></label>
                                                     <select placeholder="Choose Gender" name="gender" id="gender" class="onboard-form form-control textbox select2_form_without_search " required>
                                                         <option value="" hidden selected disabled>Choose Gender</option>
-                                                        <option value="male">Male</option>
-                                                        <option value="female">Female</option>
-                                                        <option value="other">Other</option>
+                                                        <option value="male"   @if( !empty($employee_details) && $employee_details->gender &&  $employee_details->gender == "male" ) selected @endif  >Male</option>
+                                                        <option value="female" @if( !empty($employee_details) && $employee_details->gender &&  $employee_details->gender == "female" ) selected @endif >Female</option>
+                                                        <option value="other"  @if( !empty($employee_details) && $employee_details->gender &&  $employee_details->gender == "other" ) selected @endif >Other</option>
                                                     </select>
                                                     <!-- <label for="" class="float-label">Gender</label> -->
                                                 </div>
@@ -188,8 +188,8 @@
                                                     <label for="" class="float-label">Choose nationality<span class="text-danger">*</span></label>
                                                     <select placeholder="Choose nationality" name="nationality" id="nationality" class="onboard-form form-control textbox  select2_form_without_search" required>
                                                         <option value="" hidden selected disabled>Choose nationality</option>
-                                                        <option value="indian">Indian</option>
-                                                        <option value="other_country">Other Nationality</option>
+                                                        <option value="indian"        @if( !empty($employee_details) && $employee_details->nationality &&  $employee_details->nationality == "indian" ) selected @endif >Indian</option>
+                                                        <option value="other_country" @if( !empty($employee_details) && $employee_details->nationality &&  $employee_details->nationality == "other nationality" ) selected @endif >Other Nationality</option>
                                                     </select>
                                                     <!-- <label for="" class="float-label">Choose nationality</label> -->
                                                 </div>
@@ -231,14 +231,14 @@
                                                     <label for="" class="float-label">Blood Group</label>
                                                     <select placeholder="Blood Group" name="blood_group" id="blood_group" class="onboard-form form-control textbox   select2_form_without_search">
                                                         <option value="" hidden selected disabled>Select Blood Group</option>
-                                                        <option value="a-positive">A Positive</option>
-                                                        <option value="a-negative">A Negative</option>
-                                                        <option value="b-positive">B Positive</option>
-                                                        <option value="b-negative">B Negative</option>
-                                                        <option value="ab-positive">AB Positive</option>
-                                                        <option value="ab-negative">AB Negative</option>
-                                                        <option value="o-positive">O Positive</option>
-                                                        <option value="o-negative">O Negative</option>
+                                                        <option value="a-positive" @if( !empty($employee_details) && $employee_details->blood_group &&  $employee_details->blood_group == "A Positive" ) selected @endif>A Positive</option>
+                                                        <option value="a-negative" @if( !empty($employee_details) && $employee_details->blood_group &&  $employee_details->blood_group == "A Negative" ) selected @endif>A Negative</option>
+                                                        <option value="b-positive" @if( !empty($employee_details) && $employee_details->blood_group &&  $employee_details->blood_group == "B Positive" ) selected @endif>B Positive</option>
+                                                        <option value="b-negative" @if( !empty($employee_details) && $employee_details->blood_group &&  $employee_details->blood_group == "B Negative" ) selected @endif>B Negative</option>
+                                                        <option value="ab-positive" @if( !empty($employee_details) && $employee_details->blood_group &&  $employee_details->blood_group == "AB Positive" ) selected @endif>AB Positive</option>
+                                                        <option value="ab-negative" @if( !empty($employee_details) && $employee_details->blood_group &&  $employee_details->blood_group == "AB Negative" ) selected @endif>AB Negative</option>
+                                                        <option value="o-positive" @if( !empty($employee_details) && $employee_details->blood_group &&  $employee_details->blood_group == "O Positive" ) selected @endif>O Positive</option>
+                                                        <option value="o-negative" @if( !empty($employee_details) && $employee_details->blood_group &&  $employee_details->blood_group == "O Negative" ) selected @endif>O Negative</option>
                                                     </select>
                                                     <!-- <label for="" class="float-label">Blood Group</label> -->
                                                 </div>
@@ -286,7 +286,7 @@
                                                 <!-- <label class="" for="bank_ifsc">Bank IFSC Code</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Bank IFSC Code<span class="text-danger">*</span></label>
-                                                    <input type="text" placeholder="Bank IFSC Code" name="bank_ifsc" id="bank_ifsc" pattern="ifsc" class=" form-control textbox " required />
+                                                    <input type="text" placeholder="Bank IFSC Code" name="bank_ifsc" id="bank_ifsc" pattern="ifsc" value="{{ !empty($employee_details) && $employee_details->bank_ifsc_code ? $employee_details->bank_ifsc_code  : ''}}" class=" form-control textbox " required />
                                                     <label class="error star_error bank_ifsc_label" for="bank_ifsc" style="display: none;"></label>
                                                     <!-- <label for="" class="float-label">Bank IFSC Code</label> -->
                                                 </div>
@@ -317,7 +317,7 @@
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <div class="floating">
                                                     <label for="" class="float-label">EPF Number</label>
-                                                    <input type="text" placeholder="EPF Number" name="epf_number" id="epf_number" class="onboard-form form-control textbox " />
+                                                    <input type="text" placeholder="EPF Number" name="epf_number" id="epf_number" class="onboard-form form-control textbox " value="{{ !empty($employee_details) && $employee_details->epf_number ? $employee_details->epf_number  : ''}}" />
 
                                                     <span class="error" id="error_epf_number"></span>
                                                 </div>
@@ -326,7 +326,7 @@
 
                                                 <div class="floating">
                                                     <label for="" class="float-label">UAN Number</label>
-                                                    <input type="text" placeholder="UAN Number" name="uan_number" id="uan_number" minlength="12" maxlength="12" class="onboard-form form-control textbox " />
+                                                    <input type="text" placeholder="UAN Number" name="uan_number" id="uan_number" minlength="12" maxlength="12" class="onboard-form form-control textbox " value="{{ !empty($employee_details) && $employee_details->uan_number ? $employee_details->uan_number  : ''}}"/>
 
                                                 </div>
                                             </div>
@@ -344,7 +344,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">ESIC Number</label>
 
-                                                    <input type="text" placeholder="ESIC Number" name="esic_number" id="esic_number" minlength="10" maxlength="10" class="onboard-form form-control textbox " />
+                                                    <input type="text" placeholder="ESIC Number" name="esic_number" id="esic_number" minlength="10" maxlength="10" class="onboard-form form-control textbox " value="{{ !empty($employee_details) && $employee_details->esic_number ? $employee_details->esic_number  : ''}}"/>
                                                     <span class="error" id="error_esic_number"></span>
                                                 </div>
                                             </div>
@@ -400,7 +400,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Address 1<span class="text-danger">*</span></label>
 
-                                                    <textarea placeholder="Current Address" name="current_address_line_1" id="current_address_line_1" class=" form-control textbox capitalize" required id="" cols="" rows="1"></textarea>
+                                                    <textarea placeholder="Current Address" value="{{ !empty($employee_details) && $employee_details->present_address ? $employee_details->present_address  : ''}}" name="current_address_line_1" id="current_address_line_1" class=" form-control textbox capitalize" required id="" cols="" rows="1" ></textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6 mb-2">
