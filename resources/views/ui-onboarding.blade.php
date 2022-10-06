@@ -71,11 +71,11 @@
 
                                                     <select placeholder="Marital Status" name="marital_status" id="marital_status" class="onboard-form form-control textbox select2_form_without_search " required>
                                                         <option value="" hidden selected disabled>Marital Status</option>
-                                                        <option value="unmarried">Unmarried</option>
-                                                        <option value="married">Married</option>
-                                                        <option value="widowed">Widowed</option>
-                                                        <option value="separated">Separated</option>
-                                                        <option value="divorced">Divorced</option>
+                                                        <option value="unmarried"  @if( !empty($employee_details) && $employee_details->marital_status &&  $employee_details->marital_status == "unmarried" ) selected @endif >Unmarried</option>
+                                                        <option value="married"  @if( !empty($employee_details) && $employee_details->marital_status &&  $employee_details->marital_status == "married" ) selected @endif     >Married</option>
+                                                        <option value="widowed"      >Widowed</option>
+                                                        <option value="separated"    >Separated</option>
+                                                        <option value="divorced"     >Divorced</option>
                                                     </select>
                                                     <!-- <label for="" class="float-label">Marital Status</label> -->
                                                 </div>
@@ -121,8 +121,9 @@
                                                 <!-- <label class="" for="email">Email ID{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Email<span class="text-danger">*</span></label>
-                                                    <input type="email" pattern="email" placeholder="Email ID" name="email" id="email" value="{{request()->has('email')? request()->email : ''}}" class="  form-control textbox " onkeypress="return event.charCode != 32" @if(request()->has('email')) readonly @endif required />
+                                                    <input type="email" pattern="email" placeholder="Email ID" name="email" id="email" value="{{ !empty($employee_user) && $employee_user->email ? $employee_user->email  : ''}}" class="  form-control textbox " onkeypress="return event.charCode != 32" @if(request()->has('email')) readonly @endif required />
                                                     <!-- <label for="" class="float-label">Email</label> -->
+
                                                 </div>
                                                 <span class="error" id="error_email"></span>
 
@@ -273,7 +274,10 @@
                                                     <!-- <label class="" for="account_no">Account Number</label> -->
                                                     <label for="" class="float-label">Account Number<span class="text-danger">*</span></label>
 
-                                                    <input type="text" placeholder="Account Number" name="account_no" id="account_no" class="onboard-form form-control textbox " oninput="numberOnly(this.id);" minlength="10" maxlength="18" required />
+                                                    <input type="text" placeholder="Account Number" name="account_no" id="account_no" class="onboard-form form-control textbox "
+                                                    value="{{ !empty($employee_details) && $employee_details->bank_account_number ? $employee_details->bank_account_number  : ''}}"
+                                                     oninput="numberOnly(this.id);" minlength="10" maxlength="18" required />
+
                                                     <label class="error star_error account_no_label" for="account_no" style="display: none;"></label>
                                                     <!-- <label for="" class="float-label">Account Number</label> -->
                                                 </div>
