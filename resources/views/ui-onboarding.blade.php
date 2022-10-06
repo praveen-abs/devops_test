@@ -488,7 +488,7 @@
                                                 <!-- <label class="" for="curent_district">Country{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Country<span class="text-danger">*</span></label>
-                                                    <select placeholder="Country" name="current_district" id="current_country" class="onboard-form form-control textbox  select2_form_without_search" required>
+                                                    <select placeholder="Country" name="current_country" id="current_country" class="onboard-form form-control textbox  select2_form_without_search" required>
                                                         <option value="" hidden selected disabled>Select Country</option>
                                                         @foreach($countries as $data)
                                                         <option value="{{$data->country_code}}">{{$data->country_name}}
@@ -565,7 +565,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Country <span class="text-danger">*</span></label>
 
-                                                    <select placeholder="Permanent Country" name="permanent_district" id="permanent_country" class="onboard-form form-control textbox  select2_form_without_search" required>
+                                                    <select placeholder="Permanent Country" name="permanent_country" id="permanent_country" class="onboard-form form-control textbox  select2_form_without_search" required>
                                                         <option value="" hidden selected disabled>Select Country</option>
                                                         @foreach($countries as $data)
                                                         <option value="{{$data->country_code}}">{{$data->country_name}}

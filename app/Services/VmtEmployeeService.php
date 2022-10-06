@@ -73,7 +73,7 @@ class VmtEmployeeService {
             $this->createOrUpdate_EmployeeOfficeDetails( $onboard_user->id, $data);
             $this->createOrUpdate_EmployeeStatutoryDetails( $onboard_user->id, $data);
             $this->createOrUpdate_EmployeeFamilyDetails( $onboard_user->id, $data);
-            //$this->createOrUpdate_EmployeeOfficeDetails( $onboard_user->id, $data);
+            $this->createOrUpdate_EmployeeCompensatory( $onboard_user->id, $data);
 
         }
         else
@@ -165,6 +165,10 @@ class VmtEmployeeService {
         $newEmployee->current_address_line_2   = $row["current_address_line_2"] ?? '' ;
         $newEmployee->permanent_address_line_1   = $row["permanent_address_line_1"] ?? '';
         $newEmployee->permanent_address_line_2   = $row["permanent_address_line_2"] ?? '';
+        $newEmployee->current_country   = $row["current_country"] ?? '';
+        $newEmployee->permanent_country   = $row["permanent_country"] ?? '';
+        $newEmployee->current_state   = $row["current_state"] ?? '';
+        $newEmployee->permanent_state   = $row["permanent_state"] ?? '';
         $newEmployee->current_city   = $row["current_city"] ?? '';
         $newEmployee->permanent_city   = $row["permanent_city"] ?? '';
         $newEmployee->current_pincode   = $row["current_pincode"] ?? '';
@@ -207,7 +211,7 @@ class VmtEmployeeService {
         $newEmployee->save();
     }
 
-    private function createOrUpdate_EmployeeOfficeDetails($user_id,$user_data)
+    private function createOrUpdate_EmployeeOfficeDetails($user_id,$row)
     {
 
         $empOffice = VmtEmployeeOfficeDetails::where('user_id',$user_id);
@@ -220,7 +224,7 @@ class VmtEmployeeService {
         {
             $empOffice = new VmtEmployeeOfficeDetails;
         }
-
+        //dd($row);
          $empOffice->user_id = $user_id; //Link between USERS and VmtEmployeeOfficeDetails table
          $empOffice->department_id = $row["department"] ?? ''; // => "lk"
          $empOffice->process = $row["process"] ?? ''; // => "k"
@@ -246,7 +250,7 @@ class VmtEmployeeService {
          $empOffice->save();
     }
 
-    private function createOrUpdate_EmployeeStatutoryDetails($user_id,$user_data)
+    private function createOrUpdate_EmployeeStatutoryDetails($user_id,$row)
     {
         $newEmployee_statutoryDetails = VmtEmployeeStatutoryDetails::where('user_id',$user_id);
 
@@ -343,13 +347,21 @@ class VmtEmployeeService {
     {
     }
 
-    private function createOrUpdate_EmployeeCompensatory($user_id,$user_data)
+    private function createOrUpdate_EmployeeCompensatory($user_id,$row)
     {
-        Compensatory::where('user_id', $user_id->id)->delete();
+        $compensatory = Compensatory::where('user_id',$user_id);
 
-        $newEmployee=new VmtEmployee;
-        $compensatory = new Compensatory;
-        $compensatory->user_id = $newEmployee->userid;
+        if($compensatory->exists())
+        {
+            $compensatory = $compensatory->first();
+        }
+        else
+        {
+            $compensatory = new Compensatory;
+        }
+
+
+        $compensatory->user_id = $user_id;
         $compensatory->basic = $row["basic"] ?? '';
         $compensatory->hra = $row["hra"] ?? '';
         $compensatory->Statutory_bonus = $row["statutory_bonus"] ?? '' ;
@@ -425,6 +437,15 @@ class VmtEmployeeService {
         {
             return "";
         }
+    }
+
+
+    public function isUserExist($t_emp_code)
+    {
+        if (empty(User::where('user_code', $t_emp_code)->where('is_ssa', '0')->first()))
+            return false;
+        else
+            return true;
     }
 
 }
