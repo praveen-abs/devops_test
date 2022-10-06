@@ -150,18 +150,26 @@ class VmtEmployeeService {
         $newEmployee->passport_number = $row["passport_no"] ?? '';
         //$newEmployee->pan_ack   =    $row["pan_ack"];
         $newEmployee->aadhar_number = $row["aadhar"] ?? '';
-        $newEmployee->epf_number = $row["epf_number"] ?? '';
 
-        $newEmployee->esic_number = $row["esic_number"] ?? '';
         $newEmployee->marital_status = $row["marital_status"] ?? '';
 
         $newEmployee->mobile_number  = strval($row["mobile_no"]);
         $newEmployee->blood_group  = $row["blood_group"] ?? '';
+        $newEmployee->physically_challenged  = $row["physically_challenged"] ?? 'no';
         $newEmployee->bank_name   = $row["bank_name"] ?? '';
         $newEmployee->bank_ifsc_code  = $row["bank_ifsc"] ?? '';
         $newEmployee->bank_account_number  = $row["account_no"] ?? '';
-        $newEmployee->present_address   = $row["current_address_line_1"] ?? '' . ' , ' . $row["current_address_line_2"] ?? '';
-        $newEmployee->permanent_address   = $row["permanent_address_line_1"] ?? '' . ' , ' . $row["permanent_address_line_2"] ?? '';
+        // $newEmployee->present_address   = $row["current_address_line_1"] ?? '' . ' , ' . $row["current_address_line_2"] ?? '';
+        // $newEmployee->permanent_address   = $row["permanent_address_line_1"] ?? '' . ' , ' . $row["permanent_address_line_2"] ?? '';
+        $newEmployee->current_address_line_1   = $row["current_address_line_1"] ?? '';
+        $newEmployee->current_address_line_2   = $row["current_address_line_2"] ?? '' ;
+        $newEmployee->permanent_address_line_1   = $row["permanent_address_line_1"] ?? '';
+        $newEmployee->permanent_address_line_2   = $row["permanent_address_line_2"] ?? '';
+        $newEmployee->current_city   = $row["current_city"] ?? '';
+        $newEmployee->permanent_city   = $row["permanent_city"] ?? '';
+        $newEmployee->current_pincode   = $row["current_pincode"] ?? '';
+        $newEmployee->permanent_pincode   = $row["permanent_pincode"] ?? '';
+
         $newEmployee->mother_name   = $row["mother_name"] ?? '';
 
         if (!empty($row['marital_status'])) {
@@ -254,6 +262,8 @@ class VmtEmployeeService {
         //Statutory Details
         $newEmployee_statutoryDetails->user_id = $user_id;
         $newEmployee_statutoryDetails->uan_number = $row["uan_number"] ?? '';
+        $newEmployee_statutoryDetails->epf_number = $row["epf_number"] ?? '';
+        $newEmployee_statutoryDetails->esic_number = $row["esic_number"] ?? '';
         $newEmployee_statutoryDetails->pf_applicable = $row["pf_applicable"] ?? '';
         $newEmployee_statutoryDetails->esic_applicable = $row["esic_applicable"] ?? '';
         $newEmployee_statutoryDetails->ptax_location = $row["ptax_location"] ?? '';

@@ -67,6 +67,7 @@ class VmtEmployeeController extends Controller
             $employee_details  = VmtEmployee::where('userid', $employee_user->id)->first();
             $emp_office_details = VmtEmployeeOfficeDetails::where('user_id', $employee_user->id)->first();
             $compensatory = Compensatory::where('user_id', $employee_user->id)->first();
+            $emp_statutory_details = VmtEmployeeStatutoryDetails::where('user_id', $employee_user->id)->first();
 
             //dd($employee_details);
             $empNo = '';
@@ -80,7 +81,7 @@ class VmtEmployeeController extends Controller
 
             $assigned_l1_manager_name = User::where('user_code', $emp_office_details->l1_manager_code)->value('name');
 
-            return view('vmt_employeeOnboarding', compact('empNo','is_employeeCode_editable', 'emp_office_details', 'employee_user', 'employee_details', 'countries', 'compensatory', 'bank', 'emp', 'department', 'allEmployeesUserCode','assigned_l1_manager_name'));
+            return view('vmt_employeeOnboarding', compact('empNo','is_employeeCode_editable', 'emp_office_details', 'emp_statutory_details','employee_user', 'employee_details', 'countries', 'compensatory', 'bank', 'emp', 'department', 'allEmployeesUserCode','assigned_l1_manager_name'));
         }
         else
         {
@@ -336,8 +337,13 @@ class VmtEmployeeController extends Controller
                 $newEmployee->bank_name   = $row["bank_name"] ?? '';
                 $newEmployee->bank_ifsc_code  = $row["bank_ifsc"] ?? '';
                 $newEmployee->bank_account_number  = $row["account_no"] ?? '';
-                $newEmployee->present_address   = $row["current_address_line_1"] ?? ''.' , '.$row["current_address_line_2"] ?? '' ;
-                $newEmployee->permanent_address   = $row["permanent_address_line_1"] ?? ''.' , '.$row["permanent_address_line_2"] ?? '' ;
+                // $newEmployee->current_address_line_1   = $row["current_address_line_1"] ?? '';
+                // $newEmployee->current_address_line_2   = $row["current_address_line_2"] ?? '' ;
+                // $newEmployee->permanent_address_line_1   = $row["permanent_address_line_1"] ?? '';
+                // $newEmployee->permanent_address_line_2   = $row["permanent_address_line_2"] ?? '';
+                // $newEmployee->current_city   = $row["current_city"] ?? '';
+                // $newEmployee->permanent_city   = $row["permanent_city"] ?? '';
+
                 //$newEmployee->father_age   = $row["father_age"];
                 $newEmployee->mother_name   = $row["mother_name"] ?? '';
                 //$newEmployee->mother_age  = $row["mother_age"];
@@ -748,8 +754,8 @@ class VmtEmployeeController extends Controller
             $newEmployee->bank_name   = $row["bank_name"];
             $newEmployee->bank_ifsc_code  = $row["bank_ifsc"];
             $newEmployee->bank_account_number  = $row["account_no"];
-            $newEmployee->present_address   = $row["current_address"];
-            $newEmployee->permanent_address   = $row["permanent_address"];
+            $newEmployee->current_address_line_1   = $row["current_address"];
+            $newEmployee->permanent_address_line_1   = $row["permanent_address"];
             $newEmployee->mother_name   = $row["mother_name"];
             $newEmployee->mother_gender   = $row["mother_gender"];
             $newEmployee->mother_dob   = $row["mother_dob"];
@@ -812,6 +818,8 @@ class VmtEmployeeController extends Controller
                 $newEmployee_statutoryDetails = new VmtEmployeeStatutoryDetails;
                 $newEmployee_statutoryDetails->user_id = $user->id;
                 $newEmployee_statutoryDetails->uan_number = $row["uan_number"];
+                $newEmployee_statutoryDetails->epf_number = $row["epf_number"] ?? '';
+                $newEmployee_statutoryDetails->esic_number = $row["esic_number"] ?? '';
                 $newEmployee_statutoryDetails->pf_applicable = $row["pf_applicable"];
                 $newEmployee_statutoryDetails->esic_applicable = $row["esic_applicable"];
                 $newEmployee_statutoryDetails->ptax_location = $row["ptax_location"];

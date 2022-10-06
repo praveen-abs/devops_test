@@ -753,9 +753,24 @@
                 }
             });
 
-            function stateFunction(id, dataId, flag = false) {
+            function stateFunction(id, dataId) {
                 var val = $('#current_state').val();
                 $(dataId).empty();
+
+                var backend_value ="";
+                //set a value if already exists in DB for this employee
+                if(dataId == '#ptax_location')
+                    backend_value = "{{ !empty($emp_statutory_details) && $emp_statutory_details->ptax_location ? $emp_statutory_details->ptax_location  : ''}}";
+                else
+                if(dataId == '#lwf_location')
+                    backend_value = "{{ !empty($emp_statutory_details) && $emp_statutory_details->lwf_location ? $emp_statutory_details->lwf_location  : ''}}";
+                else
+                if(dataId == '#holiday_location')
+                    backend_value = "{{ !empty($emp_statutory_details) && $emp_statutory_details->holiday_location ? $emp_statutory_details->holiday_location  : ''}}";
+
+                //console.log(backend_value);
+
+
                 $.ajax({
                     url: "{{route('state')}}",
                     type: "POST",
@@ -767,12 +782,23 @@
                         $(dataId).append('<option value="">Select State</option>');
 
                         $.each(data, function(key, value) {
-                            $(dataId).append('<option value="' + value.id + '">' + value.state_name +
-                                '</option>');
+
+                            //if data already exists in back-end , then make it selected
+                            if(backend_value == value.state_name)
+                            {
+                                $(dataId).append('<option value="' + value.id + '" selected>' + value.state_name + '</option>');
+                                console.log("Updated dropdown value for "+dataId);
+                            }
+                            else
+                            {
+                                $(dataId).append('<option value="' + value.id + '">' + value.state_name + '</option>');
+                            }
+
                         });
-                        if (val && flag) {
+                        if (val) {
                             $('#permanent_state').val($('#current_state').val());
                         }
+
                     }
                 });
             }

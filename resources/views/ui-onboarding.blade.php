@@ -68,14 +68,21 @@
                                                 <!-- <label class="" for="marital_status">Marital Status{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Marital Status <span class="text-danger">*</span></label>
+                                                    <?php
+                                                        $value = "";
 
+                                                        if( !empty($employee_details) && $employee_details->marital_status )
+                                                        {
+                                                            $value = $employee_details->marital_status;
+                                                        }
+                                                    ?>
                                                     <select placeholder="Marital Status" name="marital_status" id="marital_status" class="onboard-form form-control textbox select2_form_without_search " required>
                                                         <option value="" hidden selected disabled>Marital Status</option>
-                                                        <option value="unmarried"  @if( !empty($employee_details) && $employee_details->marital_status &&  $employee_details->marital_status == "unmarried" ) selected @endif >Unmarried</option>
-                                                        <option value="married"  @if( !empty($employee_details) && $employee_details->marital_status &&  $employee_details->marital_status == "married" ) selected @endif     >Married</option>
-                                                        <option value="widowed"   @if( !empty($employee_details) && $employee_details->marital_status &&  $employee_details->marital_status == "widowed" ) selected @endif         >Widowed</option>
-                                                        <option value="separated" @if( !empty($employee_details) && $employee_details->marital_status &&  $employee_details->marital_status == "separated" ) selected @endif         >Separated</option>
-                                                        <option value="divorced"  @if( !empty($employee_details) && $employee_details->marital_status &&  $employee_details->marital_status == "divorced" ) selected @endif         >Divorced</option>
+                                                        <option value="unmarried"  @if( $value == "unmarried" ) selected @endif >Unmarried</option>
+                                                        <option value="married"  @if( $value == "married" ) selected @endif     >Married</option>
+                                                        <option value="widowed"   @if( $value  == "widowed" ) selected @endif    >Widowed</option>
+                                                        <option value="separated"  @if( $value == "separated" ) selected @endif       >Separated</option>
+                                                        <option value="divorced" @if( $value == "divorced" ) selected @endif           >Divorced</option>
                                                     </select>
                                                     <!-- <label for="" class="float-label">Marital Status</label> -->
                                                 </div>
@@ -96,11 +103,19 @@
                                                 <!-- <label class="" for="gender">Gender{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Gender<span class="text-danger">*</span></label>
+                                                    <?php
+                                                        $value = "";
+
+                                                        if( !empty($employee_details) && $employee_details->gender )
+                                                        {
+                                                            $value = $employee_details->gender;
+                                                        }
+                                                    ?>
                                                     <select placeholder="Choose Gender" name="gender" id="gender" class="onboard-form form-control textbox select2_form_without_search " required>
                                                         <option value="" hidden selected disabled>Choose Gender</option>
-                                                        <option value="male"   @if( !empty($employee_details) && $employee_details->gender &&  $employee_details->gender == "male" ) selected @endif  >Male</option>
-                                                        <option value="female" @if( !empty($employee_details) && $employee_details->gender &&  $employee_details->gender == "female" ) selected @endif >Female</option>
-                                                        <option value="other"  @if( !empty($employee_details) && $employee_details->gender &&  $employee_details->gender == "other" ) selected @endif >Other</option>
+                                                        <option value="male" @if( $value == "male" ) selected @endif >Male</option>
+                                                        <option value="female" @if( $value == "female" ) selected @endif >Female</option>
+                                                        <option value="other" @if( $value == "other" ) selected @endif>Other</option>
                                                     </select>
                                                     <!-- <label for="" class="float-label">Gender</label> -->
                                                 </div>
@@ -186,10 +201,18 @@
                                                 <!-- <label class="" for="nationality">Nationality{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Choose nationality<span class="text-danger">*</span></label>
+                                                    <?php
+                                                        $value = "";
+
+                                                        if( !empty($employee_details) && $employee_details->nationality )
+                                                        {
+                                                            $value = $employee_details->nationality;
+                                                        }
+                                                    ?>
                                                     <select placeholder="Choose nationality" name="nationality" id="nationality" class="onboard-form form-control textbox  select2_form_without_search" required>
                                                         <option value="" hidden selected disabled>Choose nationality</option>
-                                                        <option value="indian"        @if( !empty($employee_details) && $employee_details->nationality &&  $employee_details->nationality == "indian" ) selected @endif >Indian</option>
-                                                        <option value="other_country" @if( !empty($employee_details) && $employee_details->nationality &&  $employee_details->nationality == "other nationality" ) selected @endif >Other Nationality</option>
+                                                        <option value="indian"        @if( $value == "indian" ) selected @endif >Indian</option>
+                                                        <option value="other_country" @if( $value == "other_country" ) selected @endif >Other Nationality</option>
                                                     </select>
                                                     <!-- <label for="" class="float-label">Choose nationality</label> -->
                                                 </div>
@@ -229,16 +252,25 @@
                                                 <!-- <label class="" for="blood_group">Blood Group</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Blood Group</label>
+                                                    <?php
+                                                        $value = "";
+
+                                                        if( !empty($employee_details) && $employee_details->blood_group )
+                                                        {
+                                                            $value = $employee_details->blood_group;
+                                                        }
+                                                    ?>
+
                                                     <select placeholder="Blood Group" name="blood_group" id="blood_group" class="onboard-form form-control textbox   select2_form_without_search">
                                                         <option value="" hidden selected disabled>Select Blood Group</option>
-                                                        <option value="a-positive" @if( !empty($employee_details) && $employee_details->blood_group &&  $employee_details->blood_group == "A Positive" ) selected @endif>A Positive</option>
-                                                        <option value="a-negative" @if( !empty($employee_details) && $employee_details->blood_group &&  $employee_details->blood_group == "A Negative" ) selected @endif>A Negative</option>
-                                                        <option value="b-positive" @if( !empty($employee_details) && $employee_details->blood_group &&  $employee_details->blood_group == "B Positive" ) selected @endif>B Positive</option>
-                                                        <option value="b-negative" @if( !empty($employee_details) && $employee_details->blood_group &&  $employee_details->blood_group == "B Negative" ) selected @endif>B Negative</option>
-                                                        <option value="ab-positive" @if( !empty($employee_details) && $employee_details->blood_group &&  $employee_details->blood_group == "AB Positive" ) selected @endif>AB Positive</option>
-                                                        <option value="ab-negative" @if( !empty($employee_details) && $employee_details->blood_group &&  $employee_details->blood_group == "AB Negative" ) selected @endif>AB Negative</option>
-                                                        <option value="o-positive" @if( !empty($employee_details) && $employee_details->blood_group &&  $employee_details->blood_group == "O Positive" ) selected @endif>O Positive</option>
-                                                        <option value="o-negative" @if( !empty($employee_details) && $employee_details->blood_group &&  $employee_details->blood_group == "O Negative" ) selected @endif>O Negative</option>
+                                                        <option value="a-positive" @if( $value == "A Positive" ) selected @endif>A Positive</option>
+                                                        <option value="a-negative" @if( $value == "A Negative" ) selected @endif>A Negative</option>
+                                                        <option value="b-positive" @if( $value == "B Positive" ) selected @endif>B Positive</option>
+                                                        <option value="b-negative" @if( $value == "B Negative" ) selected @endif>B Negative</option>
+                                                        <option value="ab-positive" @if( $value == "AB Positive" ) selected @endif>AB Positive</option>
+                                                        <option value="ab-negative" @if( $value == "AB Negative" ) selected @endif>AB Negative</option>
+                                                        <option value="o-positive" @if( $value == "O Positive" ) selected @endif>O Positive</option>
+                                                        <option value="o-negative" @if( $value == "O Negative" ) selected @endif>O Negative</option>
                                                     </select>
                                                     <!-- <label for="" class="float-label">Blood Group</label> -->
                                                 </div>
@@ -247,10 +279,18 @@
                                                 <!-- <label class="" for="physically_challenged">Physically Challenged</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Physically Challenged</label>
+                                                    <?php
+                                                        $value = "";
+
+                                                        if( !empty($employee_details) && $employee_details->physically_challenged )
+                                                        {
+                                                            $value = $employee_details->physically_challenged;
+                                                        }
+                                                    ?>
                                                     <select placeholder="Physically Challenged" name="physically_challenged" class="onboard-form form-control textbox  select2_form_without_search" required>
                                                         <option value="" hidden selected disabled>Physically Challenged</option>
-                                                        <option value="yes">Yes</option>
-                                                        <option value="no">No</option>
+                                                        <option value="yes" @if( $value == "yes" ) selected @endif>Yes</option>
+                                                        <option value="no" @if( $value == "no" ) selected @endif>No</option>
                                                     </select>
                                                     <!-- <label for="" class="float-label">Physically Challenged</label> -->
                                                 </div>
@@ -263,7 +303,11 @@
                                                     <select placeholder="Bank Name" name="bank_name" id="bank_names" class="onboard-form form-control textbox  select2_form_without_search" required>
                                                         <option value="" hidden selected disabled>Select Bank Name</option>
                                                         @foreach($bank as $b)
-                                                        <option value="{{$b->bank_name}}" min-data="{{$b->min_length}}" max-data="{{$b->max_length}}">{{$b->bank_name}}</option>
+                                                            <option value="{{$b->bank_name}}" min-data="{{$b->min_length}}" max-data="{{$b->max_length}}"
+                                                                @if(!empty($employee_details->bank_name) && $employee_details->bank_name == $b->bank_name)
+                                                                    selected
+                                                                @endif
+                                                            >{{$b->bank_name}}</option>
                                                         @endforeach
                                                     </select>
                                                     <!-- <label for="" class="float-label">Bank Name</label> -->
@@ -306,18 +350,26 @@
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <div class="floating">
                                                     <label for="" class="float-label">PF Applicable</label>
+                                                    <?php
+                                                        $value = "";
 
+                                                        if( !empty($emp_statutory_details) && $emp_statutory_details->pf_applicable )
+                                                        {
+                                                            $value = $emp_statutory_details->pf_applicable;
+                                                        }
+
+                                                    ?>
                                                     <select placeholder="PF Applicable" name="pf_applicable" id="pf_applicable" class="onboard-form form-control textbox  select2_form_without_search" required>
                                                         <option value="" hidden selected disabled>PF Applicable</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
+                                                        <option value="yes"  @if( $value == "yes") selected @endif>Yes</option>
+                                                        <option value="no" @if( $value == "no") selected @endif>No</option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <div class="floating">
                                                     <label for="" class="float-label">EPF Number</label>
-                                                    <input type="text" placeholder="EPF Number" name="epf_number" id="epf_number" class="onboard-form form-control textbox " value="{{ !empty($employee_details) && $employee_details->epf_number ? $employee_details->epf_number  : ''}}" />
+                                                    <input type="text" placeholder="EPF Number" name="epf_number" id="epf_number" class="onboard-form form-control textbox " value="{{ !empty($emp_statutory_details) && $emp_statutory_details->epf_number ? $emp_statutory_details->epf_number  : ''}}" />
 
                                                     <span class="error" id="error_epf_number"></span>
                                                 </div>
@@ -326,17 +378,26 @@
 
                                                 <div class="floating">
                                                     <label for="" class="float-label">UAN Number</label>
-                                                    <input type="text" placeholder="UAN Number" name="uan_number" id="uan_number" minlength="12" maxlength="12" class="onboard-form form-control textbox " value="{{ !empty($employee_details) && $employee_details->uan_number ? $employee_details->uan_number  : ''}}"/>
+                                                    <input type="text" placeholder="UAN Number" name="uan_number" id="uan_number" minlength="12" maxlength="12" class="onboard-form form-control textbox " value="{{ !empty($emp_statutory_details) && $emp_statutory_details->uan_number ? $emp_statutory_details->uan_number  : ''}}"/>
 
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <div class="floating">
                                                     <label for="" class="float-label">ESIC Applicable</label>
+                                                    <?php
+                                                        $value = "";
+
+                                                        if( !empty($emp_statutory_details) && $emp_statutory_details->esic_applicable )
+                                                        {
+                                                            $value = $emp_statutory_details->esic_applicable;
+                                                        }
+
+                                                    ?>
                                                     <select placeholder="ESIC Applicable" name="esic_applicable" id="esic_applicable" class="onboard-form form-control textbox  select2_form_without_search" required>
                                                         <option value="" hidden selected disabled>ESIC Applicable</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
+                                                        <option value="yes" @if( $value == "yes") selected @endif >Yes</option>
+                                                        <option value="no"  @if( $value == "no")  selected @endif >No</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -344,7 +405,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">ESIC Number</label>
 
-                                                    <input type="text" placeholder="ESIC Number" name="esic_number" id="esic_number" minlength="10" maxlength="10" class="onboard-form form-control textbox " value="{{ !empty($employee_details) && $employee_details->esic_number ? $employee_details->esic_number  : ''}}"/>
+                                                    <input type="text" placeholder="ESIC Number" name="esic_number" id="esic_number" minlength="10" maxlength="10" class="onboard-form form-control textbox " value="{{ !empty($emp_statutory_details) && $emp_statutory_details->esic_number ? $emp_statutory_details->esic_number  : ''}}"/>
                                                     <span class="error" id="error_esic_number"></span>
                                                 </div>
                                             </div>
@@ -362,10 +423,19 @@
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-lg-3 col-xl-3 mb-2">
                                                 <div class="floating">
                                                     <label for="" class="float-label">TAX Regime</label>
+                                                    <?php
+                                                        $value = "";
+
+                                                        if( !empty($emp_statutory_details) && $emp_statutory_details->tax_regime )
+                                                        {
+                                                            $value = $emp_statutory_details->tax_regime;
+                                                        }
+
+                                                    ?>
                                                     <select placeholder="TAX Regime" name="tax_regime" id="tax_regime" class="onboard-form form-control textbox  select2_form_without_search" required>
                                                         <option value="" hidden selected disabled>TAX Regime</option>
-                                                        <option value="Old">Old</option>
-                                                        <option value="New">New</option>
+                                                        <option value="old" @if( $value == "old") selected @endif >Old</option>
+                                                        <option value="new" @if( $value == "new")  selected @endif >New</option>
                                                     </select>
 
                                                 </div>
@@ -400,7 +470,8 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Address 1<span class="text-danger">*</span></label>
 
-                                                    <textarea placeholder="Current Address" value="{{ !empty($employee_details) && $employee_details->present_address ? $employee_details->present_address  : ''}}" name="current_address_line_1" id="current_address_line_1" class=" form-control textbox capitalize" required id="" cols="" rows="1" ></textarea>
+                                                    <textarea placeholder="Current Address" name="current_address_line_1" id="current_address_line_1" class=" form-control textbox capitalize" required
+                                                     id="" cols="" rows="1" >{{ !empty($employee_details) && $employee_details->current_address_line_1 ? $employee_details->current_address_line_1  : ''}}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6 mb-2">
@@ -408,7 +479,8 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Address 2</label>
 
-                                                    <textarea placeholder="Current Address" name="current_address_line_2" id="current_address_line_2" class="form-control textbox capitalize" required id="" cols="" rows="1"></textarea>
+                                                    <textarea placeholder="Current Address" name="current_address_line_2" id="current_address_line_2" class="form-control textbox capitalize" required
+                                                     id="" cols="" rows="1">{{ !empty($employee_details) && $employee_details->current_address_line_2 ? $employee_details->current_address_line_2  : ''}}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -438,7 +510,10 @@
                                                 <!-- <label class="" for="current_city">Current City{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label"> City<span class="text-danger">*</span></label>
-                                                    <input type="text" placeholder="City" name="current_city" id="current_city" class="onboard-form form-control textbox  capitalize" required />
+                                                    <input type="text" placeholder="City" name="current_city" id="current_city" class="onboard-form form-control textbox  capitalize"
+                                                    value ="{{ !empty($employee_details) && $employee_details->current_city ? $employee_details->current_city  : ''}}"
+
+                                                    required />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -446,7 +521,9 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Pincode<span class="text-danger">*</span></label>
 
-                                                    <input type="text" minlength="6" maxlength="6" oninput="numberOnly(this.id);" placeholder="Pincode" name="current_pincode" id="current_pincode" class="onboard-form form-control textbox " required />
+                                                    <input type="text" minlength="6" maxlength="6" oninput="numberOnly(this.id);" placeholder="Pincode" name="current_pincode" id="current_pincode" class="onboard-form form-control textbox "
+                                                    value ="{{ !empty($employee_details) && $employee_details->current_pincode ? $employee_details->current_pincode  : ''}}"
+                                                    required />
                                                 </div>
                                             </div>
 
@@ -469,14 +546,16 @@
                                                 <!-- <label class="" for="permanent_address">Permanent Address{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label"> Address 1 <span class="text-danger">*</span></label>
-                                                    <textarea placeholder="Permanent Address" name="permanent_address_line_1" id="permanent_address_line_1" class="form-control textbox capitalize" required cols="5" rows="1"></textarea>
+                                                    <textarea placeholder="Permanent Address" name="permanent_address_line_1" id="permanent_address_line_1" class="form-control textbox capitalize" required cols="5"
+                                                     rows="1">{{ !empty($employee_details) && $employee_details->permanent_address_line_1 ? $employee_details->permanent_address_line_1  : ''}}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6 mb-2">
                                                 <!-- <label class="" for="permanent_address">Permanent Address{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label"> Address 2</label>
-                                                    <textarea placeholder="Permanent Address" name="permanent_address_line_2" id="permanent_address_line_2" class="form-control textbox capitalize" required cols="5" rows="1"></textarea>
+                                                    <textarea placeholder="Permanent Address" name="permanent_address_line_2" id="permanent_address_line_2" class="form-control textbox capitalize" required cols="5"
+                                                    rows="1">{{ !empty($employee_details) && $employee_details->permanent_address_line_2 ? $employee_details->permanent_address_line_2  : ''}}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 col-xxl-3 mb-2">
@@ -510,7 +589,10 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label"> City<span class="text-danger">*</span></label>
 
-                                                    <input type="text" placeholder=" City" name="permanent_city" id="permanent_city" class="onboard-form form-control textbox capitalize" required />
+                                                    <input type="text" placeholder=" City" name="permanent_city" id="permanent_city" class="onboard-form form-control textbox capitalize"
+                                                    value ="{{ !empty($employee_details) && $employee_details->permanent_city ? $employee_details->permanent_city  : ''}}"
+
+                                                    required />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -518,7 +600,10 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label"> Pincode <span class="text-danger">*</span></label>
 
-                                                    <input type="text" placeholder=" Pincode" name="permanent_pincode" id="permanent_pincode" oninput="numberOnly(this.id);" minlength="6" maxlength="6" class="onboard-form form-control textbox " required />
+                                                    <input type="text" placeholder=" Pincode" name="permanent_pincode" id="permanent_pincode" oninput="numberOnly(this.id);" minlength="6" maxlength="6" class="onboard-form form-control textbox "
+                                                    value ="{{ !empty($employee_details) && $employee_details->permanent_pincode ? $employee_details->permanent_pincode  : ''}}"
+
+                                                    required />
                                                 </div>
                                             </div>
                                         </div>
