@@ -126,7 +126,18 @@ function fetchSubClients(){
                             'vmt_employee_details.religion',
                             'vmt_employee_details.marital_status',
                             'vmt_employee_details.spouse_name',
+                        //Documents
+                            'vmt_employee_details.aadhar_card_file',
+                            'vmt_employee_details.aadhar_card_backend_file',
+                            'vmt_employee_details.pan_card_file',
+                            'vmt_employee_details.passport_file',
+                            'vmt_employee_details.voters_id_file',
+                            'vmt_employee_details.dl_file',
+                            'vmt_employee_details.education_certificate_file',
+                            'vmt_employee_details.reliving_letter_file',
+
                             //'vmt_employee_details.no_of_children',
+
 
                         //Family Informations
                             'vmt_employee_family_details.name',
