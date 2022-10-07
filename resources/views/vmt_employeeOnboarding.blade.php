@@ -4,6 +4,10 @@
 @section('css')
 <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/onboarding.css') }}">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 
 <style>
     /* Chrome, Safari, Edge, Opera */
@@ -99,7 +103,18 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 
+
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
+
+    {{-- for date picker --}}
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js" type="text/javascript"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" />
+    {{-- <link rel="stylesheet" href="dist/datepicker.min.css">
+    <script src="dist/datepicker.min.js"></script> --}}
+
+
+
 
 
     <script>
@@ -119,10 +134,22 @@
             element.value = element.value.replace(/[^0-9]/gi, "");
         }
 
+
+
         $(document).ready(function() {
 
 
+            var now = Date.now();
 
+$("#dob_date").datepicker({
+    changeMonth: true,
+     changeYear: true,
+     yearRange: "1930:2010"
+    // isDisabled: function(date) {
+
+    //     return date.valueOf() < now ? true : false;
+    // }
+});
             $('#process').select2({
                 width: '100%',
                 placeholder: "Select Process",

@@ -54,14 +54,13 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
-                                                <!-- <label class="" for="dob">Date of Birth{!! required() !!}</label> -->
-                                                @php
-                                                $date = (date('Y')-18)."-".date('m')."-".date('d');
-                                                @endphp
+
+
                                                 <div class="floating">
                                                     <label for="" class="float-label">Date of Birth <span class="text-danger">*</span></label>
-                                                    <input type="text" placeholder="Date of Birth" name="dob" max="{{$date}}" class="onboard-form form-control textbox" onfocus="(this.type='date')" required />
-                                                    <!-- <label for="" class="float-label">Date of Birth</label> -->
+                                                    {{-- <input type="text" placeholder="Date of Birth" name="" max="" class="form-control textbox" id="datepicker" required /> --}}
+                                                    <input type="text" data-toggle="datepicker" id="dob_date" class="form-control">
+
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -488,6 +487,7 @@
                                                 <!-- <label class="" for="curent_district">Country{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Country<span class="text-danger">*</span></label>
+
                                                     <select placeholder="Country" name="current_country" id="current_country" class="onboard-form form-control textbox  select2_form_without_search" required>
                                                         <option value="" hidden selected disabled>Select Country</option>
                                                         @foreach($countries as $data)
