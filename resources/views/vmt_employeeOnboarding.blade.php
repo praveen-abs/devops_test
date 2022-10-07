@@ -133,18 +133,8 @@
 
         $(document).ready(function() {
 
-
-            var now = Date.now();
-
-$("#dob_date").datepicker({
-    changeMonth: true,
-     changeYear: true,
-     yearRange: "1930:2010"
-    // isDisabled: function(date) {
-
-    //     return date.valueOf() < now ? true : false;
-    // }
-});
+            $('#gender').val('other').trigger("change");
+            console.log('Gender from DB : '+'{{ !empty($employee_details) && $employee_details->gender ? $employee_details->gender : '' }}');
             $('#process').select2({
                 width: '100%',
                 placeholder: "Select Process",
@@ -701,12 +691,6 @@ $("#dob_date").datepicker({
             });
 
 
-            $('#holiday_location').select2({
-                width: '100%',
-                placeholder: "Select location",
-            });
-
-
             $('#nationality').change(function() {
                 console.log("Changed nationality : "+$('#nationality').val());
                 // $('#permanent_country').val('IN').trigger('change');
@@ -755,6 +739,13 @@ $("#dob_date").datepicker({
             stateFunction('IN', '#lwf_location');
             stateFunction('IN', '#holiday_location');
 
+            stateFunction('IN', '#current_state');
+
+            stateFunction('IN', '#permanent_state');
+
+            populateGenderDropdown('#gender');
+            populateMaritalStatusDropdown();
+
             $('#current_address_copy').change(function() {
                 if ($('#current_address_copy').is(':checked')) {
                     // stateFunction($('#current_district').val(), '#permanent_state', true);
@@ -775,6 +766,59 @@ $("#dob_date").datepicker({
                 }
             });
 
+            function populateGenderDropdown(element_id ) {
+
+                var genderValues = [];
+                genderValues['male'] = 'Male';
+                genderValues['female'] = 'Female';
+                genderValues['other'] = 'Other';
+
+                var backend_value = "";
+
+                if(element_id == '#gender')
+                {
+                    backend_value = "{{ !empty($employee_details) && $employee_details->gender ? $employee_details->gender  : ''}}";
+                }
+
+                //create the dropdown
+                const keys = genderValues.keys();
+                console.log("Gender array : "+genderValues);
+
+                for (var key in genderValues) {
+                    if(key == backend_value)
+                        $(element_id).append('<option value="' + key + '" selected>' + genderValues[key] + '</option>');
+                    else
+                        $(element_id).append('<option value="' + key + '">' + genderValues[key] + '</option>');
+
+                }
+
+            }
+
+            function populateMaritalStatusDropdown() {
+
+                var marital_status = [];
+                marital_status['unmarried'] = 'Unmarried';
+                marital_status['married'] = 'Married';
+                marital_status['widowed'] = 'Widowed';
+                marital_status['separated'] = 'Separated';
+                marital_status['divorced'] = 'Divorced';
+
+
+                var backend_value = "{{ !empty($employee_details) && $employee_details->marital_status ? $employee_details->marital_status : ''}}";
+
+                //create the dropdown
+                const keys = marital_status.keys();
+
+                for (var key in marital_status) {
+                    if(key == backend_value)
+                        $('#marital_status').append('<option value="' + key + '" selected>' + marital_status[key] + '</option>');
+                    else
+                        $('#marital_status').append('<option value="' + key + '">' + marital_status[key] + '</option>');
+
+                }
+
+            }
+
             function stateFunction(id, dataId) {
                 var val = $('#current_state').val();
                 $(dataId).empty();
@@ -782,15 +826,21 @@ $("#dob_date").datepicker({
                 var backend_value ="";
                 //set a value if already exists in DB for this employee
                 if(dataId == '#ptax_location')
-                    backend_value = "{{ !empty($emp_statutory_details) && $emp_statutory_details->ptax_location ? $emp_statutory_details->ptax_location  : ''}}";
+                    backend_value = "{{ !empty($emp_statutory_details) && $emp_statutory_details->ptax_location_state_id ? $emp_statutory_details->ptax_location_state_id  : ''}}";
                 else
                 if(dataId == '#lwf_location')
-                    backend_value = "{{ !empty($emp_statutory_details) && $emp_statutory_details->lwf_location ? $emp_statutory_details->lwf_location  : ''}}";
+                    backend_value = "{{ !empty($emp_statutory_details) && $emp_statutory_details->lwf_location_state_id ? $emp_statutory_details->lwf_location_state_id  : ''}}";
                 else
                 if(dataId == '#holiday_location')
-                    backend_value = "{{ !empty($emp_statutory_details) && $emp_statutory_details->holiday_location ? $emp_statutory_details->holiday_location  : ''}}";
+                    backend_value = "{{ !empty($emp_office_details) && $emp_office_details->holiday_location ? $emp_office_details->holiday_location  : ''}}";
+                else
+                if(dataId == '#current_state')
+                    backend_value = "{{ !empty($employee_details) && $employee_details->current_state_id ? $employee_details->current_state_id  : ''}}";
+                else
+                if(dataId == '#permanent_state')
+                    backend_value = "{{ !empty($employee_details) && $employee_details->permanent_state_id ? $employee_details->permanent_state_id  : ''}}";
 
-                //console.log(backend_value);
+                console.log(dataId+" : " +backend_value);
 
 
                 $.ajax({
@@ -806,7 +856,14 @@ $("#dob_date").datepicker({
                         $.each(data, function(key, value) {
 
                             //if data already exists in back-end , then make it selected
-                            if(backend_value == value.state_name)
+                            //Only for holiday location
+                            if(dataId == '#holiday_location'  &&  backend_value == value.state_name)
+                            {
+                                $(dataId).append('<option value="' + value.id + '" selected>' + value.state_name + '</option>');
+                                console.log("Updated dropdown value for "+dataId);
+                            }
+                            else
+                            if(backend_value == value.id)
                             {
                                 $(dataId).append('<option value="' + value.id + '" selected>' + value.state_name + '</option>');
                                 console.log("Updated dropdown value for "+dataId);
@@ -834,19 +891,7 @@ $("#dob_date").datepicker({
                 var can_onboard_employee = "0";
                 let form_data1 = $("#form-1");
 
-                //Validate core fields first
-                //EMP code, email
-                errors_core_fields = []; //reset the error array
-
-                //checkEmpCodeExists( $('#employee_code').val().trim());
-
-                // console.log("Error Array Length : "+errors_core_fields.length );
-                // if(errors_core_fields.length > 0)
-                // {
-
-                //     console.log("Please check core fields (Emp code , email) : ");
-                //     return;
-                // }
+                console.log($('#gender').val());
 
                 if($(this).attr('name') == "save_form")  //Form is saved but employee not onboarded
                 {

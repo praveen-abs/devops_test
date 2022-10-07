@@ -11,6 +11,7 @@ use App\Models\Countries;
 use App\Models\State;
 use App\Models\Department;
 use App\Models\Bank;
+use App\Models\VmtBloodGroup;
 use App\Imports\VmtEmployeeManagerImport;
 use Illuminate\Support\Facades\Auth;
 use App\Notifications\ViewNotification;
@@ -59,6 +60,7 @@ class VmtEmployeeController extends Controller
         $emp = VmtEmployeeOfficeDetails::all();
         $department = Department::all();
         $state = State::where('country_code','IN')->get(['id','state_name']);
+        $blood_group = VmtBloodGroup::all();
 
         $bank = Bank::all();
 
@@ -69,7 +71,6 @@ class VmtEmployeeController extends Controller
             $emp_office_details = VmtEmployeeOfficeDetails::where('user_id', $employee_user->id)->first();
             $compensatory = Compensatory::where('user_id', $employee_user->id)->first();
             $emp_statutory_details = VmtEmployeeStatutoryDetails::where('user_id', $employee_user->id)->first();
-
             //dd($employee_details);
             $empNo = '';
             if ($employee_details) {
@@ -82,7 +83,7 @@ class VmtEmployeeController extends Controller
 
             $assigned_l1_manager_name = User::where('user_code', $emp_office_details->l1_manager_code)->value('name');
 
-            return view('vmt_employeeOnboarding', compact('empNo','is_employeeCode_editable', 'emp_office_details', 'emp_statutory_details','employee_user', 'employee_details', 'countries','state', 'compensatory', 'bank', 'emp', 'department', 'allEmployeesUserCode','assigned_l1_manager_name'));
+            return view('vmt_employeeOnboarding', compact('empNo','is_employeeCode_editable', 'emp_office_details', 'emp_statutory_details','employee_user','blood_group', 'employee_details', 'countries','state', 'compensatory', 'bank', 'emp', 'department', 'allEmployeesUserCode','assigned_l1_manager_name'));
         }
         else
         {
@@ -91,7 +92,7 @@ class VmtEmployeeController extends Controller
             $emp = VmtEmployeeOfficeDetails::all();
             $allEmployeesUserCode = User::where('is_ssa', 0)->where('active', 1)->whereNotNull('user_code')->get(['user_code', 'name']);
             //dd($allEmployeesCode);
-            return view('vmt_employeeOnboarding', compact('empNo','is_employeeCode_editable', 'countries', 'state', 'emp', 'bank', 'department', 'allEmployeesUserCode'));
+            return view('vmt_employeeOnboarding', compact('empNo','is_employeeCode_editable', 'countries', 'state', 'emp', 'bank', 'department', 'allEmployeesUserCode','blood_group'));
         }
     }
 

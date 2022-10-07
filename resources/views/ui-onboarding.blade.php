@@ -67,21 +67,8 @@
                                                 <!-- <label class="" for="marital_status">Marital Status{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Marital Status <span class="text-danger">*</span></label>
-                                                    <?php
-                                                        $value = "";
-
-                                                        if( !empty($employee_details) && $employee_details->marital_status )
-                                                        {
-                                                            $value = $employee_details->marital_status;
-                                                        }
-                                                    ?>
                                                     <select placeholder="Marital Status" name="marital_status" id="marital_status" class="onboard-form form-control textbox select2_form_without_search " required>
                                                         <option value="" hidden selected disabled>Marital Status</option>
-                                                        <option value="unmarried"  @if( $value == "unmarried" ) selected @endif >Unmarried</option>
-                                                        <option value="married"  @if( $value == "married" ) selected @endif     >Married</option>
-                                                        <option value="widowed"   @if( $value  == "widowed" ) selected @endif    >Widowed</option>
-                                                        <option value="separated"  @if( $value == "separated" ) selected @endif       >Separated</option>
-                                                        <option value="divorced" @if( $value == "divorced" ) selected @endif           >Divorced</option>
                                                     </select>
                                                     <!-- <label for="" class="float-label">Marital Status</label> -->
                                                 </div>
@@ -102,19 +89,9 @@
                                                 <!-- <label class="" for="gender">Gender{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Gender<span class="text-danger">*</span></label>
-                                                    <?php
-                                                        $value = "";
 
-                                                        if( !empty($employee_details) && $employee_details->gender )
-                                                        {
-                                                            $value = $employee_details->gender;
-                                                        }
-                                                    ?>
                                                     <select placeholder="Choose Gender" name="gender" id="gender" class="onboard-form form-control textbox select2_form_without_search " required>
-                                                        <option value="" hidden selected disabled>Choose Gender</option>
-                                                        <option value="male" @if( $value == "male" ) selected @endif >Male</option>
-                                                        <option value="female" @if( $value == "female" ) selected @endif >Female</option>
-                                                        <option value="other" @if( $value == "other" ) selected @endif>Other</option>
+                                                        <option value="" hidden   disabled>Choose Gender</option>
                                                     </select>
                                                     <!-- <label for="" class="float-label">Gender</label> -->
                                                 </div>
@@ -209,7 +186,7 @@
                                                         }
                                                     ?>
                                                     <select placeholder="Choose nationality" name="nationality" id="nationality" class="onboard-form form-control textbox  select2_form_without_search" required>
-                                                        <option value="" hidden selected disabled>Choose nationality</option>
+                                                        <option value="" hidden disabled>Choose nationality</option>
                                                         <option value="indian"        @if( $value == "indian" ) selected @endif >Indian</option>
                                                         <option value="other_country" @if( $value == "other_country" ) selected @endif >Other Nationality</option>
                                                     </select>
@@ -254,22 +231,21 @@
                                                     <?php
                                                         $value = "";
 
-                                                        if( !empty($employee_details) && $employee_details->blood_group )
+                                                        if( !empty($employee_details) && $employee_details->blood_group_id )
                                                         {
-                                                            $value = $employee_details->blood_group;
+                                                            $value = $employee_details->blood_group_id;
                                                         }
                                                     ?>
 
                                                     <select placeholder="Blood Group" name="blood_group" id="blood_group" class="onboard-form form-control textbox   select2_form_without_search">
                                                         <option value="" hidden selected disabled>Select Blood Group</option>
-                                                        <option value="a-positive" @if( $value == "A Positive" ) selected @endif>A Positive</option>
-                                                        <option value="a-negative" @if( $value == "A Negative" ) selected @endif>A Negative</option>
-                                                        <option value="b-positive" @if( $value == "B Positive" ) selected @endif>B Positive</option>
-                                                        <option value="b-negative" @if( $value == "B Negative" ) selected @endif>B Negative</option>
-                                                        <option value="ab-positive" @if( $value == "AB Positive" ) selected @endif>AB Positive</option>
-                                                        <option value="ab-negative" @if( $value == "AB Negative" ) selected @endif>AB Negative</option>
-                                                        <option value="o-positive" @if( $value == "O Positive" ) selected @endif>O Positive</option>
-                                                        <option value="o-negative" @if( $value == "O Negative" ) selected @endif>O Negative</option>
+                                                        @foreach($blood_group as $b)
+                                                            <option value="{{$b->id}}"
+                                                                @if($value == $b->id)
+                                                                    selected
+                                                                @endif
+                                                            >{{$b->name}}</option>
+                                                        @endforeach
                                                     </select>
                                                     <!-- <label for="" class="float-label">Blood Group</label> -->
                                                 </div>
@@ -491,7 +467,7 @@
                                                     <select placeholder="Country" name="current_country" id="current_country" class="onboard-form form-control textbox  select2_form_without_search" required>
                                                         <option value="" hidden selected disabled>Select Country</option>
                                                         @foreach($countries as $data)
-                                                        <option value="{{$data->country_code}}">{{$data->country_name}}
+                                                            <option value="{{$data->id}}"  @if( !empty($employee_details) && $employee_details->current_country_id == $data->id) selected @endif >{{$data->country_name}}
                                                         </option>
                                                         @endforeach
                                                     </select>
@@ -568,7 +544,9 @@
                                                     <select placeholder="Permanent Country" name="permanent_country" id="permanent_country" class="onboard-form form-control textbox  select2_form_without_search" required>
                                                         <option value="" hidden selected disabled>Select Country</option>
                                                         @foreach($countries as $data)
-                                                        <option value="{{$data->country_code}}">{{$data->country_name}}
+
+                                                        <option value="{{$data->id}}"  @if( !empty($employee_details) && $employee_details->permanent_country_id == $data->id) selected @endif >
+                                                            {{$data->country_name}}
                                                         </option>
                                                         @endforeach
                                                     </select>
@@ -788,6 +766,7 @@
                                                         <option value="female">Female</option>
 
                                                     </select> -->
+
                                                     <input type="text" class="form-control" name="father_gender" id="father_gender" value="Male" readonly value="{{ !empty($employee_details) && $employee_details->father_gender ? $employee_details->father_gender  : ''}}">
                                                 </div>
                                             </div>
@@ -933,7 +912,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">HRA</label>
 
-                                                    <input type="number" placeholder="HRA" name="hra" value="{{$compensatory->hra? $compensatory->hra : '0'}}" class="onboard-form form-control textbox   calculation_data gross_data " step="0.01" readonly />
+                                                    <input type="number" placeholder="HRA" name="hra" value="{{$compensatory->hra? $compensatory->hra : '0'}}" class="onboard-form form-control textbox   calculation_data gross_data " step="0.01"  />
                                                 </div>
                                                 @else
                                                 <div class="floating">
@@ -950,7 +929,7 @@
 
                                                 <div class="floating">
                                                     <label for="" class="float-label">Statutory Bonus</label>
-                                                    <input type="number" placeholder="Statutory Bonus" name="statutory_bonus" value="{{$compensatory->Statutory_bonus? $compensatory->Statutory_bonus : '0'}}" class="onboard-form form-control textbox   calculation_data gross_data" step="0.01" readonly />
+                                                    <input type="number" placeholder="Statutory Bonus" name="statutory_bonus" value="{{$compensatory->Statutory_bonus? $compensatory->Statutory_bonus : '0'}}" class="onboard-form form-control textbox   calculation_data gross_data" step="0.01"  />
                                                 </div>
                                                 @else
                                                 <div class="floating">
@@ -967,7 +946,7 @@
 
                                                 <div class="floating">
                                                     <label for="" class="float-label">Child Education Allowance</label>
-                                                    <input type="number" placeholder="Child Education Allowance" name="child_education_allowance" value="{{$compensatory->child_education_allowance? $compensatory->child_education_allowance : '0'}}" class="onboard-form form-control textbox   calculation_data gross_data" step="0.01" readonly />
+                                                    <input type="number" placeholder="Child Education Allowance" name="child_education_allowance" value="{{$compensatory->child_education_allowance? $compensatory->child_education_allowance : '0'}}" class="onboard-form form-control textbox   calculation_data gross_data" step="0.01"  />
                                                 </div>
                                                 @else
                                                 <div class="floating">
@@ -985,7 +964,7 @@
 
                                                 <div class="floating">
                                                     <label for="" class="float-label">Food Coupon</label>
-                                                    <input type="number" placeholder="Food Coupon" name="food_coupon" value="{{$compensatory->food_coupon? $compensatory->food_coupon : '0'}}" class="onboard-form form-control textbox  calculation_data gross_data" step="0.01" readonly />
+                                                    <input type="number" placeholder="Food Coupon" name="food_coupon" value="{{$compensatory->food_coupon? $compensatory->food_coupon : '0'}}" class="onboard-form form-control textbox  calculation_data gross_data" step="0.01"  />
                                                 </div>
                                                 @else
                                                 <div class="floating">

@@ -126,6 +126,7 @@ class VmtEmployeeService {
 
     private function createOrUpdate_EmployeeDetails($user,$row)
     {
+        //dd($row);
         $newEmployee = VmtEmployee::where('userid',$user->id);
 
         if($newEmployee->exists())
@@ -152,6 +153,8 @@ class VmtEmployeeService {
         $newEmployee->aadhar_number = $row["aadhar"] ?? '';
 
         $newEmployee->marital_status = $row["marital_status"] ?? '';
+
+        $newEmployee->nationality = $row["nationality"] ?? '';
 
         $newEmployee->mobile_number  = strval($row["mobile_no"]);
         $newEmployee->blood_group_id  = $row["blood_group"] ?? '';
@@ -320,7 +323,7 @@ class VmtEmployeeService {
             $familyMember->user_id  = $user_id;
             $familyMember->name =   $familyData['spouse_name'];
             $familyMember->relationship = 'Spouse';
-            $familyMember->gender = $familyData['spouse_gender'];
+            $familyMember->gender = $familyData['spouse_gender'] ?? '';
 
             if(!empty($familyData["spouse_dob"]))
                 $familyMember->dob =  $familyData["spouse_dob"];
