@@ -826,6 +826,13 @@
                 //     return;
                 // }
 
+                if($(this).attr('name') == "save_form")  //Form is saved but employee not onboarded
+                {
+                    console.log("Saving Onboard data");
+                    saveOrSubmitForm("0", form_data1);
+                    return;
+                }
+
                 //Find whether SAVE or SUBMIT button clicked
                 if ($('#form-1').valid())
                 {
@@ -844,12 +851,12 @@
                         console.log("Submitting Onboard data");
                         saveOrSubmitForm("1", form_data1);
                     }
-                    else
-                    if($(this).attr('name') == "save_form")  //Form is saved but employee not onboarded
-                    {
-                        console.log("Saving Onboard data");
-                        saveOrSubmitForm("0", form_data1);
-                    }
+                    // else
+                    // if($(this).attr('name') == "save_form")  //Form is saved but employee not onboarded
+                    // {
+                    //     console.log("Saving Onboard data");
+                    //     saveOrSubmitForm("0", form_data1);
+                    // }
                 }
                 else
                 {

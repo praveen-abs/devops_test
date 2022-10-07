@@ -154,7 +154,7 @@ class VmtEmployeeService {
         $newEmployee->marital_status = $row["marital_status"] ?? '';
 
         $newEmployee->mobile_number  = strval($row["mobile_no"]);
-        $newEmployee->blood_group  = $row["blood_group"] ?? '';
+        $newEmployee->blood_group_id  = $row["blood_group"] ?? '';
         $newEmployee->physically_challenged  = $row["physically_challenged"] ?? 'no';
         $newEmployee->bank_name   = $row["bank_name"] ?? '';
         $newEmployee->bank_ifsc_code  = $row["bank_ifsc"] ?? '';
@@ -165,10 +165,10 @@ class VmtEmployeeService {
         $newEmployee->current_address_line_2   = $row["current_address_line_2"] ?? '' ;
         $newEmployee->permanent_address_line_1   = $row["permanent_address_line_1"] ?? '';
         $newEmployee->permanent_address_line_2   = $row["permanent_address_line_2"] ?? '';
-        $newEmployee->current_country   = $row["current_country"] ?? '';
-        $newEmployee->permanent_country   = $row["permanent_country"] ?? '';
-        $newEmployee->current_state   = $row["current_state"] ?? '';
-        $newEmployee->permanent_state   = $row["permanent_state"] ?? '';
+        $newEmployee->current_country_id   = $row["current_country"] ?? '';
+        $newEmployee->permanent_country_id   = $row["permanent_country"] ?? '';
+        $newEmployee->current_state_id   = $row["current_state"] ?? '';
+        $newEmployee->permanent_state_id   = $row["permanent_state"] ?? '';
         $newEmployee->current_city   = $row["current_city"] ?? '';
         $newEmployee->permanent_city   = $row["permanent_city"] ?? '';
         $newEmployee->current_pincode   = $row["current_pincode"] ?? '';
@@ -180,7 +180,8 @@ class VmtEmployeeService {
             if ($row['marital_status'] <> 'unmarried') {
                 $newEmployee->spouse_name   = $row["spouse_name"];
                 $newEmployee->spouse_age   = $row["spouse_dob"];
-                if ($row['no_of_child'] > 0) {
+
+                if (!empty($row['no_of_child']) && $row['no_of_child'] > 0) {
                     // $newEmployee->kid_name   = json_encode($row["child_name"]);
                     // $newEmployee->kid_age  = json_encode($row["child_dob"]);
                 }
@@ -270,9 +271,9 @@ class VmtEmployeeService {
         $newEmployee_statutoryDetails->esic_number = $row["esic_number"] ?? '';
         $newEmployee_statutoryDetails->pf_applicable = $row["pf_applicable"] ?? '';
         $newEmployee_statutoryDetails->esic_applicable = $row["esic_applicable"] ?? '';
-        $newEmployee_statutoryDetails->ptax_location = $row["ptax_location"] ?? '';
+        $newEmployee_statutoryDetails->ptax_location_state_id = $row["ptax_location"] ?? '';
         $newEmployee_statutoryDetails->tax_regime = $row["tax_regime"] ?? '';
-        $newEmployee_statutoryDetails->lwf_location = $row["lwf_location"] ?? '';
+        $newEmployee_statutoryDetails->lwf_location_state_id = $row["lwf_location"] ?? '';
         $newEmployee_statutoryDetails->save();
     }
 
@@ -313,7 +314,8 @@ class VmtEmployeeService {
             $familyMember->save();
         }
         //dd($familyData);
-        if ($familyData['marital_status'] <> 'unmarried') {
+
+        if (!empty($familyData['marital_status']) && $familyData['marital_status'] <> 'unmarried') {
             $familyMember =  new VmtEmployeeFamilyDetails;
             $familyMember->user_id  = $user_id;
             $familyMember->name =   $familyData['spouse_name'];
