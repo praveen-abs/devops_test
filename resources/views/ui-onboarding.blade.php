@@ -634,7 +634,7 @@
                                                 <!-- <label class="" for="process">Process{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Process</label>
-                                                    <input type="text" placeholder="Process" name="process" class="onboard-form form-control" pattern="name" required />
+                                                    <input type="text" placeholder="Process" name="process" class="onboard-form form-control" pattern="name" required  value="{{ !empty($emp_office_details) && $emp_office_details->process ? $emp_office_details->process  : ''}}"/>
 
                                                 </div>
                                             </div>
@@ -643,7 +643,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Designation<span class="text-danger">*</span> </label>
 
-                                                    <input type="text" placeholder="Designation" name="designation" class=" form-control textbox " pattern="alpha" required />
+                                                    <input type="text" placeholder="Designation" name="designation" class=" form-control textbox " pattern="alpha" required value="{{ !empty($emp_office_details) && $emp_office_details->designation ? $emp_office_details->designation  : ''}}" />
                                                     <label class="error star_error designation_label" for="designation" style="display: none;"></label>
                                                 </div>
                                             </div>
@@ -652,7 +652,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Cost Center</label>
 
-                                                    <input type="number" placeholder="Cost Center" name="cost_center" class="onboard-form form-control textbox " />
+                                                    <input type="number" placeholder="Cost Center" name="cost_center" class="onboard-form form-control textbox " value="{{ !empty($emp_office_details) && $emp_office_details->cost_center ? $emp_office_details->cost_center  : ''}}" />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -681,7 +681,7 @@
                                                 <!-- <label class="" for="work_location">Work Location{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Work Location<span class="text-danger">*</span></label>
-                                                    <input type="text" placeholder="Work Location" name="work_location" class="onboard-form form-control textbox capitalize" pattern="alpha" required />
+                                                    <input type="text" placeholder="Work Location" name="work_location" class="onboard-form form-control textbox capitalize" pattern="alpha" required  value="{{ !empty($emp_office_details) && $emp_office_details->work_location ? $emp_office_details->work_location  : ''}}" />
                                                     <label class="error star_error work_location_label" for="work_location" style="display: none;"></label>
 
                                                 </div>
@@ -692,7 +692,7 @@
                                                     <label for="" class="float-label">Reporting Manager Code<span class="text-danger">*</span></label>
 
                                                     @if (isset($emp_office_details->l1_manager_code))
-                                                    <input type="text" value="{{$emp_office_details->l1_manager_code}}" name="l1_manager_code" id="l1_manager_code" class="form-control textbox " pattern="" readonly />
+                                                    <input type="text" value="{{$emp_office_details->l1_manager_code}}" name="l1_manager_code" id="l1_manager_code" class="form-control textbox " pattern="" readonly value="{{ !empty($emp_office_details) && $emp_office_details->l1_manager_code ? $emp_office_details->l1_manager_code  : ''}}" />
                                                     @else
                                                     <select placeholder="Reporting Manager" name="l1_manager_code" id="l1_manager_code_select" class="onboard-form form-control  textbox ">
                                                         <option value="" hidden selected disabled>Select</option>
@@ -707,7 +707,8 @@
 
                                                 <div class="floating">
                                                     <label for="" class="float-label">Reporting Manager Name</label>
-                                                    <input type="text" placeholder="Reporting Manager Name" name="l1_manager_name" id="l1_manager_name" class="textbox  onboard-form form-control " pattern="name" value="{{(isset($assigned_l1_manager_name)) ? $assigned_l1_manager_name :''}}" readonly />
+                                                    {{-- <input type="text" placeholder="Reporting Manager Name" name="l1_manager_name" id="l1_manager_name" class="textbox  onboard-form form-control " pattern="name" value="{{(isset($assigned_l1_manager_name)) ? $assigned_l1_manager_name :''}}" readonly /> --}}
+                                                    <input type="text" placeholder="Reporting Manager Name" name="l1_manager_name" id="l1_manager_name" class="textbox  onboard-form form-control " pattern="name" value="{{ !empty($emp_office_details) && $emp_office_details->l1_manager_name ? $emp_office_details->l1_manager_name  : ''}}" readonly />
                                                     <label class="error star_error l1_manager_name_label" for="l1_manager_name" style="display: none;"></label>
                                                 </div>
                                             </div>
@@ -723,7 +724,7 @@
                                                 <!-- <label class="" for="officical_mail">Official E-Mail Id{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Official Email </label>
-                                                    <input type="email" placeholder="Official E-Mail Id" name="officical_mail" class="textbox form-control " pattern="email" onkeypress="return event.charCode != 32" />
+                                                    <input type="email" placeholder="Official E-Mail Id" name="officical_mail" class="textbox form-control " pattern="email" onkeypress="return event.charCode != 32" value="{{ !empty($emp_office_details) && $emp_office_details->officical_mail ? $emp_office_details->officical_mail  : ''}}" />
                                                     <!--  <label class="error star_error officical_mail_label" for="officical_mail" style="display: none;"></label> -->
                                                 </div>
                                             </div>
@@ -731,21 +732,21 @@
                                                 <!-- <label class="" for="official_mobile">Official Mobile{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Official Mobile</label>
-                                                    <input type="text" minlength="10" maxlength="10" placeholder="Official Mobile" name="official_mobile" id="official_mobile" oninput="numberOnly(this.id);" class="textbox  onboard-form form-control " />
+                                                    <input type="text" minlength="10" maxlength="10" placeholder="Official Mobile" name="official_mobile" id="official_mobile" oninput="numberOnly(this.id);" class="textbox  onboard-form form-control " value="{{ !empty($emp_office_details) && $emp_office_details->official_mobile ? $emp_office_details->official_mobile  : ''}}" />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <!-- <label class="" for="emp_notice">Employee Notice Period Days{!! required() !!}</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Employee Notice Period Days</label>
-                                                    <input type="number" placeholder="Employee Notice Period Days" name="emp_notice" class="onboard-form form-control textbox " />
+                                                    <input type="number" placeholder="Employee Notice Period Days" name="emp_notice" class="onboard-form form-control textbox "value="{{ !empty($emp_office_details) && $emp_office_details->emp_notice ? $emp_office_details->emp_notice  : ''}}"  />
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <div class="floating">
                                                     <label for="" class="float-label">Date of confirmation<span class="text-danger">*</span></label>
-                                                    <input type="text" max="9999-12-31" placeholder="Date of confirmation" name="dow" class="onboard-form form-control textbox " onfocus="(this.type='date')" required />
+                                                    <input type="text" max="9999-12-31" placeholder="Date of confirmation" name="dow" class="onboard-form form-control textbox " onfocus="(this.type='date')" required value="{{ !empty($emp_office_details) && $emp_office_details->dow ? $emp_office_details->dow  : ''}}" />
                                                 </div>
                                             </div>
                                         </div>
@@ -766,7 +767,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Father Name <span class="text-danger">*</span></label>
 
-                                                    <input type="text" placeholder="Father Name" name="father_name" pattern="name" class="onboard-form form-control textbox capitalize" required />
+                                                    <input type="text" placeholder="Father Name" name="father_name" pattern="name" class="onboard-form form-control textbox capitalize" required value="{{ !empty($employee_details) && $employee_details->father_name ? $employee_details->father_name  : ''}}" />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -787,7 +788,7 @@
                                                         <option value="female">Female</option>
 
                                                     </select> -->
-                                                    <input type="text" class="form-control" name="father_gender" id="father_gender" value="Male" readonly>
+                                                    <input type="text" class="form-control" name="father_gender" id="father_gender" value="Male" readonly value="{{ !empty($employee_details) && $employee_details->father_gender ? $employee_details->father_gender  : ''}}">
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -795,7 +796,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Age </label>
 
-                                                    <input type="number" placeholder="Age" name="father_age" id="father_age" class="textbox  onboard-form form-control " minlength="2" maxlength="3" readonly />
+                                                    <input type="number" placeholder="Age" name="father_age" id="father_age" class="textbox  onboard-form form-control " minlength="2" maxlength="3" readonly  value="{{ !empty($employee_details) && $employee_details->father_age ? $employee_details->father_age  : ''}}"/>
                                                 </div>
                                             </div>
 
@@ -805,7 +806,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Mother Name <span class="text-danger">*</span></label>
 
-                                                    <input type="text" placeholder="Mother Name" name="mother_name" pattern="name" class="textbox  onboard-form form-control capitalize" required />
+                                                    <input type="text" placeholder="Mother Name" name="mother_name" pattern="name" class="textbox  onboard-form form-control capitalize" required   value="{{ !empty($employee_details) && $employee_details->mother_name ? $employee_details->mother_name  : ''}}"/>
                                                 </div>
                                             </div>
 
@@ -833,7 +834,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Age</label>
 
-                                                    <input type="number" placeholder="Age" name="mother_age" id="mother_age" class="textbox  onboard-form form-control " minlength="2" maxlength="3" readonly />
+                                                    <input type="number" placeholder="Age" name="mother_age" id="mother_age" class="textbox  onboard-form form-control " minlength="2" maxlength="3" readonly  value="{{ !empty($employee_details) && $employee_details->mother_age ? $employee_details->mother_age  : ''}}"/>
                                                 </div>
                                             </div>
 
@@ -844,7 +845,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Spouse Name <span class="text-danger">*</span></label>
 
-                                                    <input type="text" placeholder="Spouse Name" name="spouse_name" pattern="name" class="textbox  onboard-form form-control  spouse_data capitalize" required />
+                                                    <input type="text" placeholder="Spouse Name" name="spouse_name" pattern="name" class="textbox  onboard-form form-control  spouse_data capitalize" required  value="{{ !empty($employee_details) && $employee_details->spouse_name ? $employee_details->spouse_name  : ''}}"/>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
