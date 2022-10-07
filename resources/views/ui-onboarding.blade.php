@@ -893,7 +893,7 @@
                                                 <div class="floating">
 
                                                     <label for="" class="float-label">Basic Salary</label>
-                                                    <input type="number" placeholder="Basic Salary" name="basic" value="{{$compensatory->basic? $compensatory->basic : '0'}}" class="textbox   onboard-form form-control  calculation_data gross_data" step="0.01" readonly />
+                                                    <input type="number" placeholder="Basic Salary" name="basic" value="{{$compensatory->basic? $compensatory->basic : '0'}}" class="textbox   onboard-form form-control  calculation_data gross_data" step="0.01"  />
                                                 </div>
                                                 @else
                                                 <div class="floating">
@@ -981,7 +981,7 @@
 
                                                 <div class="floating">
                                                     <label for="" class="float-label">LTA</label>
-                                                    <input type="number" placeholder="LTA" name="lta" value="{{$compensatory->lta? $compensatory->lta : '0'}}" class="textbox onboard-form form-control     calculation_data gross_data" step="0.01" readonly />
+                                                    <input type="number" placeholder="LTA" name="lta" value="{{$compensatory->lta? $compensatory->lta : '0'}}" class="textbox onboard-form form-control     calculation_data gross_data" step="0.01"  />
                                                 </div>
                                                 @else
                                                 <div class="floating">
@@ -998,7 +998,7 @@
 
                                                 <div class="floating">
                                                     <label for="" class="float-label">Special Allowance</label>
-                                                    <input type="number" placeholder="Special Allowance" name="special_allowance" value="{{$compensatory->special_allowance? $compensatory->special_allowance : '0'}}" class="onboard-form form-control textbox   calculation_data gross_data" step="0.01" readonly />
+                                                    <input type="number" placeholder="Special Allowance" name="special_allowance" value="{{$compensatory->special_allowance? $compensatory->special_allowance : '0'}}" class="onboard-form form-control textbox   calculation_data gross_data" step="0.01"  />
                                                 </div>
                                                 @else
                                                 <div class="floating">
@@ -1016,7 +1016,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Other Allowance</label>
 
-                                                    <input type="number" placeholder="Other Allowance" name="other_allowance" value="{{$compensatory->other_allowance? $compensatory->other_allowance : '0'}}" class="textbox  onboard-form form-control  calculation_data gross_data" step="0.01" readonly />
+                                                    <input type="number" placeholder="Other Allowance" name="other_allowance" value="{{$compensatory->other_allowance? $compensatory->other_allowance : '0'}}" class="textbox  onboard-form form-control  calculation_data gross_data" step="0.01"  />
                                                 </div>
                                                 @else
                                                 <div class="floating">
@@ -1053,7 +1053,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">EPF employer contribution</label>
 
-                                                    <input type="number" placeholder="EPF employer contribution" name="epf_employer_contribution" value="{{$compensatory->epf_employer_contribution? $compensatory->epf_employer_contribution : '0'}}" class="textbox   onboard-form form-control  calculation_data cic_data" step="0.01" readonly />
+                                                    <input type="number" placeholder="EPF employer contribution" name="epf_employer_contribution" value="{{$compensatory->epf_employer_contribution? $compensatory->epf_employer_contribution : '0'}}" class="textbox   onboard-form form-control  calculation_data cic_data" step="0.01"  />
                                                 </div>
                                                 @else
                                                 <div class="floating">
@@ -1071,7 +1071,7 @@
 
                                                 <div class="floating">
                                                     <label for="" class="float-label">ESIC employer contribution</label>
-                                                    <input type="number" placeholder="ESIC employer contribution" name="esic_employer_contribution" value="{{$compensatory->esic_employer_contribution? $compensatory->esic_employer_contribution : '0'}}" class="onboard-form form-control textbox   calculation_data cic_data" step="0.01" readonly />
+                                                    <input type="number" placeholder="ESIC employer contribution" name="esic_employer_contribution" value="{{$compensatory->esic_employer_contribution? $compensatory->esic_employer_contribution : '0'}}" class="onboard-form form-control textbox   calculation_data cic_data" step="0.01"  />
                                                 </div>
                                                 @else
                                                 <div class="floating">
@@ -1088,7 +1088,7 @@
 
                                                 <div class="floating">
                                                     <label for="" class="float-label">Insurance</label>
-                                                    <input type="number" placeholder="Insurance" name="insurance" value="{{$compensatory->insurance? $compensatory->insurance : '0'}}" class="onboard-form form-control textbox   calculation_data cic_data" step="0.01" readonly />
+                                                    <input type="number" placeholder="Insurance" name="insurance" value="{{$compensatory->insurance? $compensatory->insurance : '0'}}" class="onboard-form form-control textbox   calculation_data cic_data" step="0.01"  />
                                                 </div>
                                                 @else
                                                 <div class="floating">
@@ -1105,7 +1105,7 @@
 
                                                 <div class="floating">
                                                     <label for="" class="float-label">Graduity</label>
-                                                    <input type="number" placeholder="Graduity" name="graduity" value="{{$compensatory->graduity? $compensatory->graduity : '0'}}" class="onboard-form form-control textbox   calculation_data cic_data" step="0.01" readonly />
+                                                    <input type="number" placeholder="Graduity" name="graduity" value="{{$compensatory->graduity? $compensatory->graduity : '0'}}" class="onboard-form form-control textbox   calculation_data cic_data" step="0.01"  />
                                                 </div>
                                                 @else
                                                 <div class="floating">
@@ -1142,7 +1142,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">EPF Employee</label>
 
-                                                    <input type="number" placeholder="EPF Employee" name="epf_employee" value="{{$compensatory->epf_employee? $compensatory->epf_employee : '0'}}" class="onboard-form form-control  calculation_data net_data textbox " step="0.01" readonly />
+                                                    <input type="number" placeholder="EPF Employee" name="epf_employee" value="{{$compensatory->epf_employee? $compensatory->epf_employee : '0'}}" class="onboard-form form-control  calculation_data net_data textbox " step="0.01"  />
                                                 </div>
                                                 @else
                                                 <div class="floating">
@@ -1161,7 +1161,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">ESIC Employee</label>
 
-                                                    <input type="number" placeholder="ESIC Employee" name="esic_employee" value="{{$compensatory->esic_employee? $compensatory->esic_employee : '0'}}" class="textbox  onboard-form form-control  calculation_data net_data" step="0.01" readonly />
+                                                    <input type="number" placeholder="ESIC Employee" name="esic_employee" value="{{$compensatory->esic_employee? $compensatory->esic_employee : '0'}}" class="textbox  onboard-form form-control  calculation_data net_data" step="0.01"  />
                                                 </div>
                                                 @else
                                                 <div class="floating">
@@ -1180,7 +1180,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Professional Tax</label>
 
-                                                    <input type="number" placeholder="Professional Tax" name="professional_tax" value="{{$compensatory->professional_tax? $compensatory->professional_tax : '0'}}" class="textbox  onboard-form form-control  calculation_data net_data " step="0.01" readonly />
+                                                    <input type="number" placeholder="Professional Tax" name="professional_tax" value="{{$compensatory->professional_tax? $compensatory->professional_tax : '0'}}" class="textbox  onboard-form form-control  calculation_data net_data " step="0.01"  />
                                                 </div>
                                                 @else
                                                 <div class="floating">
@@ -1198,13 +1198,13 @@
                                                 @if(isset($compensatory->labour_welfare_fund))
 
                                                 <div class="floating">
-                                                    <label for="" class="float-label">labour welfare fund</label>
+                                                    <label for="" class="float-label">Labour welfare fund</label>
 
-                                                    <input type="number" placeholder="labour welfare fund" name="labour_welfare_fund" value="{{$compensatory->labour_welfare_fund? $compensatory->labour_welfare_fund : '0'}}" class="onboard-form form-control calculation_data net_data textbox " step="0.01" readonly />
+                                                    <input type="number" placeholder="labour welfare fund" name="labour_welfare_fund" value="{{$compensatory->labour_welfare_fund? $compensatory->labour_welfare_fund : '0'}}" class="onboard-form form-control calculation_data net_data textbox " step="0.01"  />
                                                 </div>
                                                 @else
                                                 <div class="floating">
-                                                    <label for="" class="float-label">labour welfare fund</label>
+                                                    <label for="" class="float-label">Labour welfare fund</label>
 
                                                     <input type="number" placeholder="labour welfare fund" name="labour_welfare_fund" class="onboard-form form-control calculation_data net_data textbox  " step="0.01" />
                                                 </div>
