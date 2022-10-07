@@ -100,17 +100,15 @@ Route::get('clients', 'App\Http\Controllers\VmtClientController@showAllClients')
 Route::get('clients-fetchAll', 'App\Http\Controllers\VmtClientController@fetchAllClients')->name('vmt-clients-fetchall');
 
 // Permission Roles Routing
-Route::get('vmt-roles', 'App\Http\Controllers\RolesController@create');
 
-Route::get('vmt-role-list', 'App\Http\Controllers\RolesController@index');
-Route::post('vmt-roles', 'App\Http\Controllers\RolesController@store');
-Route::get('vmt-role-permissions/{id}', 'App\Http\Controllers\RolesController@permissionListForRoles');
+Route::get('roles-permissions', 'App\Http\Controllers\VmtUserRolesPermissionsController@index')->name('roles-permissions');
+Route::get('roles-permissions-createRole', 'App\Http\Controllers\VmtUserRolesPermissionsController@createRole')->name('roles-permissions-createRole');
+Route::get('roles-permissions-deleteRole', 'App\Http\Controllers\VmtUserRolesPermissionsController@deleteRole')->name('roles-permissions-deleteRole');
+Route::get('roles-permissions-createPermission', 'App\Http\Controllers\VmtUserRolesPermissionsController@createPermission')->name('roles-permissions-createPermission');
+Route::get('roles-permissions-deletePermission', 'App\Http\Controllers\VmtUserRolesPermissionsController@deletePermission')->name('roles-permissions-deletePermission');
+Route::get('roles-permissions-assignRoleToUser', 'App\Http\Controllers\VmtUserRolesPermissionsController@assignRoleToUser')->name('roles-permissions-assignRoleToUser');
+Route::get('roles-permissions-assignPermissionToRole', 'App\Http\Controllers\VmtUserRolesPermissionsController@assignPermissionToRole')->name('roles-permissions-assignPermissionToRole');
 
-Route::post('vmt-permissions', 'App\Http\Controllers\RolesController@assignPermissionToRoles');
-Route::get('vmt-assign-roles', 'App\Http\Controllers\RolesController@assignRoles');
-Route::post('vmt-assign-roles', 'App\Http\Controllers\RolesController@assignRolesToUser');
-
-Route::post('vmt-delete-roles', 'App\Http\Controllers\RolesController@deleteRoles');
 
 //360 Review Module Routing
 Route::get('vmt-360-questions', 'App\Http\Controllers\Review360ModuleController@showQuestionsPage');
