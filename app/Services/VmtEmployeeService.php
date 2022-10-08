@@ -124,9 +124,11 @@ class VmtEmployeeService {
         $newUser->name = $data['employee_name'];
         $newUser->email = $data["email"];
         $newUser->password = Hash::make('Abs@123123');
-        $newUser->avatar = $data['employee_code'] . '_avatar.jpg';
+        //$newUser->avatar = $data['employee_code'] . '_avatar.jpg';
         $newUser->user_code = strtoupper($data['employee_code']);
         $newUser->active = '0';
+        $newUser->is_default_password_updated = '0';
+
         $newUser->is_onboarded = $can_onboard_employee;
         $newUser->onboard_type = 'normal';
         $newUser->org_role = '5';

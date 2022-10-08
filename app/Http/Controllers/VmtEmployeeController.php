@@ -190,6 +190,10 @@ class VmtEmployeeController extends Controller
         //Check whether we are updating existing user or adding new user.
         $existingUser = User::where('id',$user_id);
 
+
+
+
+
         if($existingUser->exists())
         {
 
@@ -198,11 +202,17 @@ class VmtEmployeeController extends Controller
             {
                 $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->input('can_onboard_employee'), $existingUser->first()->id);
 
+                $message = "";
+                if($request->input('can_onboard_employee') == "1")
+                    $message="Employee onboarded successfully";
+                else
+                    $message="Employee details Updated in draft";
+
                 if($result)
                 {
                     $response = [
                         'status' => 'success',
-                        'message' => 'Employee information Updated in draft',
+                        'message' => $message,
                         'mail_status' => '',
                         'error' => '',
                         'error_verbose' =>''
@@ -219,7 +229,6 @@ class VmtEmployeeController extends Controller
                     //$response = $this->storeEmployeeNormalOnboardForm($onboard_form_data, $request->input('can_onboard_employee'));
 
                     $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->input('can_onboard_employee'), $existingUser->first()->id);
-
 
                     $response = [
                         'status' => 'success',
