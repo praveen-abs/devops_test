@@ -187,8 +187,13 @@
                                                     ?>
                                                     <select placeholder="Choose nationality" name="nationality" id="nationality" class="onboard-form form-control textbox  select2_form_without_search" required>
                                                         <option value="" hidden disabled>Choose nationality</option>
-                                                        <option value="indian"        @if( $value == "indian" ) selected @endif >Indian</option>
-                                                        <option value="other_country" @if( $value == "other_country" ) selected @endif >Other Nationality</option>
+
+                                                        <option value="indian" >Indian</option>
+                                                        
+                                                        <option value="other_country"  >Other Nationality</option>
+
+                                                        <!-- <option value="indian"        @if( $value == "indian" ) selected @endif >Indian</option>
+                                                        <option value="other_country" @if( $value == "other_country" ) selected @endif >Other Nationality</option> -->
                                                     </select>
                                                     <!-- <label for="" class="float-label">Choose nationality</label> -->
                                                 </div>

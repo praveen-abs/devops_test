@@ -144,6 +144,15 @@
                 placeholder: "Select Department",
             });
 
+            $('#nationality').select2({
+                width: '100%'
+            });
+
+           
+
+
+        
+
             $('#l1_manager_code_select').select2({
                 width: '100%',
                 placeholder: "Select Reporting Manager",
@@ -819,6 +828,11 @@
 
             }
 
+            @if( !empty($employee_details) && $employee_details->nationality )
+                console.log('{{$employee_details->nationality}}');
+                $('#nationality').val('{{$employee_details->nationality}}').trigger('change');
+            @endif
+
             function stateFunction(id, dataId) {
                 var val = $('#current_state').val();
                 $(dataId).empty();
@@ -892,9 +906,11 @@
                 let form_data1 = $("#form-1");
 
                 console.log($('#gender').val());
+                console.log($('#nationality').val());
 
                 if($(this).attr('name') == "save_form")  //Form is saved but employee not onboarded
                 {
+                    console.log(form_data1);
                     console.log("Saving Onboard data");
                     saveOrSubmitForm("0", form_data1);
                     return;
