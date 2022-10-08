@@ -107,7 +107,7 @@ class VmtMainDashboardController extends Controller
                                 ->whereNotNull('vmt_employee_details.doj')
                                 ->whereNotNull('vmt_employee_details.dob');
 
-       //dd($employeesEventDetails->get('vmt_employee_details.dob')->toArray());
+    //    dd($employeesEventDetails->get('vmt_employee_details.dob')->toArray());
 
         //Employee events for the current month only
         $dashboardEmployeeEventsData = [];

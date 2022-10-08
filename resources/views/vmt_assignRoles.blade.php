@@ -15,7 +15,35 @@
         <div class="col-xl-8">
             <div class="card card-border-blue">
                 <div class="card-header border-0 align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">Assign Roles</h4>
+                    <h4 class="card-title mb-0 flex-grow-1">Create Role</h4>
+                </div><!-- end card header -->
+
+                <div class="card-body  pb-2">
+                    <div>
+                        <form method="POST" id='role-form' action="/vmt-assign-roles">
+
+                            @csrf
+                            <div class="mb-3 row">
+                                <label class="col-md-2 col-form-label">Enter Role Name</label>
+                                <div class="col-md-10">
+                                    <input type="text"  name="role_name" id="role_name" class=""  />
+                                </div>
+                            </div>
+
+                            <div class="row mt-2">
+                                <div class="text-end col-xl-12">
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- end card body -->
+            </div><!-- end card -->
+
+
+            <div class="card card-border-blue">
+                <div class="card-header border-0 align-items-center d-flex">
+                    <h4 class="card-title mb-0 flex-grow-1">Assign Roles to User</h4>
                 </div><!-- end card header -->
 
                 <div class="card-body  pb-2">
@@ -36,6 +64,49 @@
                             </div>
 
                             <div class="mb-3 row">
+                                <label class="col-md-2 col-form-label">Select Role</label>
+                                <div class="col-md-10">
+                                    <select class="form-select" name="role_id" required>
+                                        <option>Select</option>
+                                        @foreach($roles as $role)
+                                            <option value="{{$role->id}}">{{$role->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row mt-2">
+                                <div class="text-end col-xl-12">
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- end card body -->
+            </div><!-- end card -->
+            <div class="card card-border-blue">
+                <div class="card-header border-0 align-items-center d-flex">
+                    <h4 class="card-title mb-0 flex-grow-1">Assign Permissions to Roles</h4>
+                </div><!-- end card header -->
+
+                <div class="card-body  pb-2">
+                    <div>
+                        <form method="POST" id='role-form' action="/vmt-assign-roles">
+
+                            @csrf
+                            <div class="mb-3 row">
+                                <label class="col-md-2 col-form-label">Select Permissions</label>
+                                <div class="col-md-10">
+                                    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+                                    <label for="vehicle1"> Permission 1</label><br>
+                                    <input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
+                                    <label for="vehicle2">  Permission 2</label><br>
+                                    <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">
+                                    <label for="vehicle3">  Permission 3</label><br>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
                                 <label class="col-md-2 col-form-label">Select Roles</label>
                                 <div class="col-md-10">
                                     <select class="form-select" name="role_id" required>
@@ -44,6 +115,45 @@
                                             <option value="{{$role->id}}">{{$role->name}}</option>
                                         @endforeach
                                     </select>
+                                </div>
+                            </div>
+
+                            <div class="row mt-2">
+                                <div class="text-end col-xl-12">
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- end card body -->
+            </div><!-- end card -->
+
+            <div class="card card-border-blue">
+                <div class="card-header border-0 align-items-center d-flex">
+                    <h4 class="card-title mb-0 flex-grow-1">View Users by Roles</h4>
+                </div><!-- end card header -->
+
+                <div class="card-body  pb-2">
+                    <div>
+                        <form method="POST" id='role-form' action="/vmt-assign-roles">
+
+                            @csrf
+                            <div class="mb-3 row">
+                                <label class="col-md-2 col-form-label">Select Role</label>
+                                <div class="col-md-10">
+                                    <select class="form-select" name="role_id" required>
+                                        <option>Select</option>
+                                        @foreach($roles as $role)
+                                            <option value="{{$role->id}}">{{$role->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <label class="col-md-2 col-form-label">Users</label>
+                                <div class="col-md-10">
+                                    <h4> View all users based on selected roles </h4>
                                 </div>
                             </div>
 
