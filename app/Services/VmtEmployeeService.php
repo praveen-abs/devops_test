@@ -94,20 +94,33 @@ class VmtEmployeeService {
 
             $newUser = User::where('id',$user_id);
 
-            if($newUser->exists())
-            {
-                $newUser = $newUser->first();
-            }
-            else
-            {
-                $newUser = new User;
-            }
+            $newUser = $newUser->first();
+
+            //Update existing user
+            $newUser->name = $data['employee_name'];
+            $newUser->email = $data["email"];
+            //$newUser->password = Hash::make('Abs@123123');
+            //$newUser->avatar = $data['employee_code'] . '_avatar.jpg';
+            $newUser->user_code = strtoupper($data['employee_code']);
+            //$newUser->active = '0';
+            $newUser->is_onboarded = $can_onboard_employee;
+            //$newUser->onboard_type = 'normal';
+            //$newUser->org_role = '5';
+            //$newUser->is_ssa = '0';
+            $newUser->save();
+
         }
         else
         {
-            $newUser = new User;
+            $newUser = $this->CreateNewUser($data, $can_onboard_employee);
         }
 
+        return $newUser;
+    }
+
+    private function CreateNewUser($data, $can_onboard_employee)
+    {
+        $newUser = new User;
         $newUser->name = $data['employee_name'];
         $newUser->email = $data["email"];
         $newUser->password = Hash::make('Abs@123123');
@@ -122,7 +135,6 @@ class VmtEmployeeService {
 
         return $newUser;
     }
-
 
     private function createOrUpdate_EmployeeDetails($user,$row)
     {
@@ -159,7 +171,7 @@ class VmtEmployeeService {
         $newEmployee->mobile_number  = strval($row["mobile_no"]);
         $newEmployee->blood_group_id  = $row["blood_group"] ?? '';
         $newEmployee->physically_challenged  = $row["physically_challenged"] ?? 'no';
-        $newEmployee->bank_name   = $row["bank_name"] ?? '';
+        $newEmployee->bank_id   = $row["bank_name"] ?? '';
         $newEmployee->bank_ifsc_code  = $row["bank_ifsc"] ?? '';
         $newEmployee->bank_account_number  = $row["account_no"] ?? '';
         // $newEmployee->present_address   = $row["current_address_line_1"] ?? '' . ' , ' . $row["current_address_line_2"] ?? '';
@@ -177,14 +189,11 @@ class VmtEmployeeService {
         $newEmployee->current_pincode   = $row["current_pincode"] ?? '';
         $newEmployee->permanent_pincode   = $row["permanent_pincode"] ?? '';
 
-        $newEmployee->mother_name   = $row["mother_name"] ?? '';
-
         if (!empty($row['marital_status'])) {
             if ($row['marital_status'] <> 'unmarried') {
-                $newEmployee->spouse_name   = $row["spouse_name"];
-                $newEmployee->spouse_age   = $row["spouse_dob"];
+                $newEmployee->no_of_children   = $row["no_of_children"];
 
-                if (!empty($row['no_of_child']) && $row['no_of_child'] > 0) {
+                if (!empty($row['no_of_children']) && $row['no_of_children'] > 0) {
                     // $newEmployee->kid_name   = json_encode($row["child_name"]);
                     // $newEmployee->kid_age  = json_encode($row["child_dob"]);
                 }
@@ -234,9 +243,12 @@ class VmtEmployeeService {
          $empOffice->process = $row["process"] ?? ''; // => "k"
          $empOffice->designation = $row["designation"] ?? ''; // => "k"
          $empOffice->cost_center = $row["cost_center"] ?? ''; // => "k"
+         $empOffice->probation_period  = $row['probation_period'] ?? ''; // => "k"
          $empOffice->confirmation_period  = $row['confirmation_period'] ?? ''; // => "k"
          $empOffice->holiday_location  = $row["holiday_location"] ?? ''; // => "k"
          $empOffice->l1_manager_code  = $row["l1_manager_code"] ?? ''; // => "k"
+         $empOffice->l1_manager_code  = $row["l1_manager_code"] ?? ''; // => "k"
+
 
 
          if ( !empty($row["l1_manager_code"]) && $this->isUserExist($row["l1_manager_code"]))
@@ -325,9 +337,12 @@ class VmtEmployeeService {
             $familyMember->relationship = 'Spouse';
             $familyMember->gender = $familyData['spouse_gender'] ?? '';
 
-            if(!empty($familyData["spouse_dob"]))
-                $familyMember->dob =  $familyData["spouse_dob"];
-            //$familyData["spouse_dob"];
+            if(!empty($familyData["dob_spouse"]))
+                $familyMember->dob =  $familyData["dob_spouse"];
+
+            if(!empty($familyData["wedding_date"]))
+                $familyMember->wedding_date =  $familyData["wedding_date"];
+
 
             $familyMember->save();
 

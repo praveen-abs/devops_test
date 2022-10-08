@@ -148,10 +148,10 @@
                 width: '100%'
             });
 
-           
 
 
-        
+
+
 
             $('#l1_manager_code_select').select2({
                 width: '100%',
@@ -262,7 +262,7 @@
                 var min = $('#bank_names option:selected').attr('min-data');
                 var max = $('#bank_names option:selected').attr('max-data');
 
-                $('#account_no').val('');
+                //$('#account_no').val('');
                 $('#account_no').attr('minlength', min);
                 $('#account_no').attr('maxlength', max);
             })
@@ -719,7 +719,7 @@
                     $('#aadhar').removeClass('not-required validate');
                     $('#permanent_pincode').attr('type', 'text');
                     $('#current_pincode').attr('type', 'text');
-                    $('#current_country').val('IN').trigger('change');
+                    $('#current_country').val('103').trigger('change');
                     stateFunction('IN', '#current_state');
                     stateFunction('IN', '#permanent_state');
                 } else {
@@ -828,9 +828,69 @@
 
             }
 
+
             @if( !empty($employee_details) && $employee_details->nationality )
                 console.log('{{$employee_details->nationality}}');
                 $('#nationality').val('{{$employee_details->nationality}}').trigger('change');
+            @endif
+
+            @if( !empty($emp_statutory_details) && $emp_statutory_details->pf_applicable )
+
+                $('#pf_applicable').val('{{$emp_statutory_details->pf_applicable}}').trigger('change');
+            @endif
+
+            @if( !empty($emp_statutory_details) && $emp_statutory_details->esic_applicable )
+
+                $('#esic_applicable').val('{{$emp_statutory_details->esic_applicable}}').trigger('change');
+            @endif
+
+            @if( !empty($emp_statutory_details) && $emp_statutory_details->tax_regime )
+
+                $('#tax_regime').val('{{$emp_statutory_details->tax_regime}}').trigger('change');
+            @endif
+
+
+            @if( !empty($emp_office_details) && $emp_office_details->department_id )
+
+                $('#department').val('{{$emp_office_details->department_id}}').trigger('change');
+            @endif
+
+            @if(!empty($employee_details->bank_id) && $employee_details->bank_id)
+                 $('#bank_names').val('{{$employee_details->bank_id}}').trigger('change');
+            @endif
+
+
+            @if(!empty($emp_office_details) && $emp_office_details->probation_period)
+                 $('#probation_period').val('{{$emp_office_details->probation_period}}').trigger('change');
+            @endif
+
+            @if(!empty($emp_office_details) && $emp_office_details->confirmation_period)
+                 $('#confirmation_period').val('{{$emp_office_details->confirmation_period}}').trigger('change');
+            @endif
+
+            @if(!empty($employee_details->no_of_children) && $employee_details->no_of_children)
+                 $('#no_of_children').val('{{$employee_details->no_of_children}}').trigger('change');
+            @endif
+
+            @if(!empty($employee_details->dob) && $employee_details->dob)
+                 $('#dob').val('{{$employee_details->dob}}');
+            @endif
+
+            @if( !empty($emp_family_details))
+                @foreach($emp_family_details as $details)
+                    @if(!empty($details->relationship) && $details->relationship == "Father")
+                        $('#father_name').val('{{$details->name}}').trigger('change');
+                        $('#dob_father').val('{{$details->dob}}').trigger('change');
+                    @elseif(!empty($details->relationship) && $details->relationship == "Mother")
+                        $('#mother_name').val('{{$details->name}}').trigger('change');
+                        $('#dob_mother').val('{{$details->dob}}').trigger('change');
+                    @elseif(!empty($details->relationship) && $details->relationship == "Spouse")
+                        $('#spouse_name').val('{{$details->name}}').trigger('change');
+                        $('#dob_spouse').val('{{$details->dob}}').trigger('change');
+                        $('#spouse_gender').val('{{$details->gender}}').trigger('change');
+                        $('#wedding_date').val('{{$details->wedding_date}}').trigger('change');
+                    @endif
+                @endforeach
             @endif
 
             function stateFunction(id, dataId) {
@@ -964,6 +1024,7 @@
                         dataType:"json",
                         data:{
                             // "onboard_type" : t_onboard_type,
+                            "user_id": $('#user_id').val(),
                             "can_onboard_employee" : t_can_onboard_employee,
                             "form_data" : t_form_data1.serialize(),
                            "_token" : "{{ csrf_token() }}"
@@ -991,6 +1052,10 @@
 
                                 $('#notificationModal').show();
                                 $('#notificationModal').removeClass('fade');
+
+                                //add the user_id into the hidden field
+                                if(data.user_id)
+                                    $('#user_id').val(data.user_id);
                             }
                             else
                             if (data.status == "failure") {

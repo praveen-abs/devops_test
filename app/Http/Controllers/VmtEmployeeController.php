@@ -82,8 +82,9 @@ class VmtEmployeeController extends Controller
                             ->where('is_ssa', 0)->where('active', 1)->whereNotNull('user_code')->get(['user_code', 'name']);
 
             $assigned_l1_manager_name = User::where('user_code', $emp_office_details->l1_manager_code)->value('name');
+            $emp_family_details = VmtEmployeeFamilyDetails::where('user_id', $user_id)->get();
 
-            return view('vmt_employeeOnboarding', compact('empNo','is_employeeCode_editable', 'emp_office_details', 'emp_statutory_details','employee_user','blood_group', 'employee_details', 'countries','state', 'compensatory', 'bank', 'emp', 'department', 'allEmployeesUserCode','assigned_l1_manager_name'));
+            return view('vmt_employeeOnboarding', compact('empNo','user_id','is_employeeCode_editable','emp_family_details', 'emp_office_details', 'emp_statutory_details','employee_user','blood_group', 'employee_details', 'countries','state', 'compensatory', 'bank', 'emp', 'department', 'allEmployeesUserCode','assigned_l1_manager_name'));
         }
         else
         {
@@ -178,30 +179,78 @@ class VmtEmployeeController extends Controller
 
     public function processEmployeeOnboardForm_Normal_Quick(Request $request, VmtEmployeeService $employeeService)
     {
-
+        $user_id = $request->input('user_id');
+        $response = "";
         $onboard_form_data =  array();
         parse_str($request->input('form_data'), $onboard_form_data);
 
-        $response = "";
-
         $currentLoggedinInUser = auth()->user();
 
-        $existingUser = User::where('user_code',$onboard_form_data['employee_code']);
-        $existing_user_id = null;
+
+        //Check whether we are updating existing user or adding new user.
+        $existingUser = User::where('id',$user_id);
 
         if($existingUser->exists())
-             $existing_user_id = $existingUser->first()->id;
-
-        //If current user is Admin, then its normal onboarding only.
-        if(Str::contains( currentLoggedInUserRole(), ["Admin","HR"]) )
         {
-            $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->input('can_onboard_employee'), $existing_user_id);
 
-            if($result)
+            //If current user is Admin, then its normal onboarding or updating existing user details.
+            if(Str::contains( currentLoggedInUserRole(), ["Admin","HR"]) )
             {
+                $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->input('can_onboard_employee'), $existingUser->first()->id);
+
+                if($result)
+                {
+                    $response = [
+                        'status' => 'success',
+                        'message' => 'Employee information Updated in draft',
+                        'mail_status' => '',
+                        'error' => '',
+                        'error_verbose' =>''
+                    ];
+                }
+
+            }
+            else //If the currentuser is quick onboareded emp and not yet onboarded, then save the form.
+            if($currentLoggedinInUser->is_onboarded == 0 && $currentLoggedinInUser->onboard_type  == "quick")
+            {
+                //check whether if emp_code is tampered
+                if($onboard_form_data['employee_code'] == $currentLoggedinInUser->user_code)
+                {
+                    //$response = $this->storeEmployeeNormalOnboardForm($onboard_form_data, $request->input('can_onboard_employee'));
+
+                    $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->input('can_onboard_employee'), $existingUser->first()->id);
+
+
+                    $response = [
+                        'status' => 'success',
+                        'message' => 'Your Onboard information Saved in draft',
+                        'mail_status' => '',
+                        'error' => '',
+                        'error_verbose' =>''
+                    ];
+
+                }
+                else
+                {
+                    //dd("Emp code mismatch. Please contact HR immediately");
+
+                    $response = [
+                        'status' => 'failure',
+                        'message' => 'Unauthorized Action :: Emp code mismatch. Please contact HR immediately',
+                        'mail_status' => '',
+                        'error' => '',
+                        'error_verbose' =>''
+                    ];
+
+                }
+            }
+            else
+            {
+                //dd("You are not authorized to perform this action. Please contact the Admin immediately. Log : ".$currentLoggedinInUser);
+
                 $response = [
-                    'status' => 'success',
-                    'message' => 'Employee information Saved in draft',
+                    'status' => 'failure',
+                    'message' => 'You are not authorized to perform this action. Please contact the Admin immediately. Log : '.$currentLoggedinInUser,
                     'mail_status' => '',
                     'error' => '',
                     'error_verbose' =>''
@@ -209,51 +258,40 @@ class VmtEmployeeController extends Controller
             }
 
         }
-        else //If the currentuser is quick onboareded emp and not yet onboarded, then save the form.
-        if($currentLoggedinInUser->is_onboarded == 0 && $currentLoggedinInUser->onboard_type  == "quick")
+        else
         {
-            //check whether if emp_code is tampered
-            if($onboard_form_data['employee_code'] == $currentLoggedinInUser->user_code)
+            //we are inserting new user.
+            //Check whether current login is admin
+            if(Str::contains( currentLoggedInUserRole(), ["Admin","HR"]) )
             {
-                //$response = $this->storeEmployeeNormalOnboardForm($onboard_form_data, $request->input('can_onboard_employee'));
+                $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->input('can_onboard_employee'), null);
 
-                $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->input('can_onboard_employee'), $existing_user_id);
+                if($result)
+                {
+                    $response = [
+                        'status' => 'success',
+                        'message' => 'New Employee information Saved in draft',
+                        'mail_status' => '',
+                        'error' => '',
+                        'error_verbose' =>'',
+                        'user_id' => $result->id      //send the user id to front-end
 
-
-                $response = [
-                    'status' => 'success',
-                    'message' => 'Your Onboard information Saved in draft',
-                    'mail_status' => '',
-                    'error' => '',
-                    'error_verbose' =>''
-                ];
+                    ];
+                }
 
             }
             else
             {
-                //dd("Emp code mismatch. Please contact HR immediately");
 
                 $response = [
                     'status' => 'failure',
-                    'message' => 'Unauthorized Action :: Emp code mismatch. Please contact HR immediately',
+                    'message' => 'You are not authorized to perform this action. Please contact the Admin immediately. Log : '.$currentLoggedinInUser,
                     'mail_status' => '',
                     'error' => '',
                     'error_verbose' =>''
                 ];
 
             }
-        }
-        else
-        {
-            //dd("You are not authorized to perform this action. Please contact the Admin immediately. Log : ".$currentLoggedinInUser);
-
-            $response = [
-                'status' => 'failure',
-                'message' => 'You are not authorized to perform this action. Please contact the Admin immediately. Log : '.$currentLoggedinInUser,
-                'mail_status' => '',
-                'error' => '',
-                'error_verbose' =>''
-            ];
         }
 
         return $response;

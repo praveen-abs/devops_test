@@ -1,4 +1,5 @@
 {{-- @section('ui-onboarding') --}}
+<?php //dd($employee_details); ?>
 <div class="container-fluid ">
     <div class="">
         <div class="row ">
@@ -17,6 +18,7 @@
                             </ul> -->
                         <form id="form-1" enctype="multipart/form-data" class=" ">
                             @csrf
+                            <input type="hidden" name="user_id" id="user_id" value="{{ $user_id ?? '' }}" />
                             <div class="card shadow  profile-box card-top-border p-2">
                                 <div class="card-body justify-content-center align-items-center ">
                                     <div class=" header-card-text">
@@ -59,8 +61,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Date of Birth <span class="text-danger">*</span></label>
                                                     {{-- <input type="text" placeholder="Date of Birth" name="" max="" class="form-control textbox" id="datepicker" required /> --}}
-                                                    <input type="text" data-toggle="datepicker" id="dob_date" class="form-control">
-
+                                                    <input type="text" max="9999-12-31" placeholder="Date of Birth" name="dob" id="dob" onfocus="(this.type='date')" value="" class="onboard-form  form-control spouse_data " required  />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -189,7 +190,7 @@
                                                         <option value="" hidden disabled>Choose nationality</option>
 
                                                         <option value="indian" >Indian</option>
-                                                        
+
                                                         <option value="other_country"  >Other Nationality</option>
 
                                                         <!-- <option value="indian"        @if( $value == "indian" ) selected @endif >Indian</option>
@@ -283,10 +284,7 @@
                                                     <select placeholder="Bank Name" name="bank_name" id="bank_names" class="onboard-form form-control textbox  select2_form_without_search" required>
                                                         <option value="" hidden selected disabled>Select Bank Name</option>
                                                         @foreach($bank as $b)
-                                                            <option value="{{$b->bank_name}}" min-data="{{$b->min_length}}" max-data="{{$b->max_length}}"
-                                                                @if(!empty($employee_details->bank_name) && $employee_details->bank_name == $b->bank_name)
-                                                                    selected
-                                                                @endif
+                                                            <option value="{{$b->id}}" min-data="{{$b->min_length}}" max-data="{{$b->max_length}}"
                                                             >{{$b->bank_name}}</option>
                                                         @endforeach
                                                     </select>
@@ -298,7 +296,7 @@
                                                     <!-- <label class="" for="account_no">Account Number</label> -->
                                                     <label for="" class="float-label">Account Number<span class="text-danger">*</span></label>
 
-                                                    <input type="text" placeholder="Account Number" name="account_no" id="account_no" class="onboard-form form-control textbox "
+                                                    <input type="text" placeholder="Account Number" name="account_no" id="account_no" class="onboard-form form-control textbox"
                                                     value="{{ !empty($employee_details) && $employee_details->bank_account_number ? $employee_details->bank_account_number  : ''}}"
                                                      oninput="numberOnly(this.id);" minlength="10" maxlength="18" required />
 
@@ -310,7 +308,8 @@
                                                 <!-- <label class="" for="bank_ifsc">Bank IFSC Code</label> -->
                                                 <div class="floating">
                                                     <label for="" class="float-label">Bank IFSC Code<span class="text-danger">*</span></label>
-                                                    <input type="text" placeholder="Bank IFSC Code" name="bank_ifsc" id="bank_ifsc" pattern="ifsc" value="{{ !empty($employee_details) && $employee_details->bank_ifsc_code ? $employee_details->bank_ifsc_code  : ''}}" class=" form-control textbox " required />
+                                                    <input type="text" placeholder="Bank IFSC Code" name="bank_ifsc" id="bank_ifsc" pattern="ifsc"
+                                                     value="{{ !empty($employee_details) && $employee_details->bank_ifsc_code ? $employee_details->bank_ifsc_code  : ''}}" class=" form-control textbox " required />
                                                     <label class="error star_error bank_ifsc_label" for="bank_ifsc" style="display: none;"></label>
                                                     <!-- <label for="" class="float-label">Bank IFSC Code</label> -->
                                                 </div>
@@ -330,19 +329,10 @@
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <div class="floating">
                                                     <label for="" class="float-label">PF Applicable</label>
-                                                    <?php
-                                                        $value = "";
-
-                                                        if( !empty($emp_statutory_details) && $emp_statutory_details->pf_applicable )
-                                                        {
-                                                            $value = $emp_statutory_details->pf_applicable;
-                                                        }
-
-                                                    ?>
                                                     <select placeholder="PF Applicable" name="pf_applicable" id="pf_applicable" class="onboard-form form-control textbox  select2_form_without_search" required>
                                                         <option value="" hidden selected disabled>PF Applicable</option>
-                                                        <option value="yes"  @if( $value == "yes") selected @endif>Yes</option>
-                                                        <option value="no" @if( $value == "no") selected @endif>No</option>
+                                                        <option value="yes" >Yes</option>
+                                                        <option value="no" >No</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -403,19 +393,11 @@
                                             <div class="col-md-6 col-sm-6 col-xs-6 col-lg-3 col-xl-3 mb-2">
                                                 <div class="floating">
                                                     <label for="" class="float-label">TAX Regime</label>
-                                                    <?php
-                                                        $value = "";
 
-                                                        if( !empty($emp_statutory_details) && $emp_statutory_details->tax_regime )
-                                                        {
-                                                            $value = $emp_statutory_details->tax_regime;
-                                                        }
-
-                                                    ?>
                                                     <select placeholder="TAX Regime" name="tax_regime" id="tax_regime" class="onboard-form form-control textbox  select2_form_without_search" required>
                                                         <option value="" hidden selected disabled>TAX Regime</option>
-                                                        <option value="old" @if( $value == "old") selected @endif >Old</option>
-                                                        <option value="new" @if( $value == "new")  selected @endif >New</option>
+                                                        <option value="old">Old</option>
+                                                        <option value="new">New</option>
                                                     </select>
 
                                                 </div>
@@ -608,7 +590,7 @@
                                                     <select placeholder="Department" name="department" id="department" class="onboard-form form-control textbox">
                                                         <option value="" hidden selected disabled>Select Department</option>
                                                         @foreach($department as $e)
-                                                        <option value="{{$e->name}}">{{$e->name}}</option>
+                                                        <option value="{{$e->id}}">{{$e->name}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -643,20 +625,20 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Probation Period</label>
 
-                                                    <select placeholder="Probabition Period" name="confirmation_period" class="onboard-form form-control textbox  not-required validate select2_form_without_search">
+                                                    <select placeholder="Probation Period" name="probation_period" id="probation_period" class="onboard-form form-control textbox  not-required validate select2_form_without_search">
                                                         <option value="" hidden selected disabled>Select Probabition Period</option>
-                                                        <option value="1">1 Month</option>
-                                                        <option value="2">2 Month</option>
-                                                        <option value="3">3 Month</option>
-                                                        <option value="4">4 Month</option>
-                                                        <option value="5">5 Month</option>
-                                                        <option value="6">6 Month</option>
-                                                        <option value="7">7 Month</option>
-                                                        <option value="8">8 Month</option>
-                                                        <option value="9">9 Month</option>
-                                                        <option value="10">10 Month</option>
-                                                        <option value="11">11 Month</option>
-                                                        <option value="12">12 Month</option>
+                                                        <option value="1 Month">1 Month</option>
+                                                        <option value="2 Month">2 Month</option>
+                                                        <option value="3 Month">3 Month</option>
+                                                        <option value="4 Month">4 Month</option>
+                                                        <option value="5 Month">5 Month</option>
+                                                        <option value="6 Month">6 Month</option>
+                                                        <option value="7 Month">7 Month</option>
+                                                        <option value="8 Month">8 Month</option>
+                                                        <option value="9 Month">9 Month</option>
+                                                        <option value="10 Month">10 Month</option>
+                                                        <option value="11 Month">11 Month</option>
+                                                        <option value="12 Month">12 Month</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -691,7 +673,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Reporting Manager Name</label>
                                                     {{-- <input type="text" placeholder="Reporting Manager Name" name="l1_manager_name" id="l1_manager_name" class="textbox  onboard-form form-control " pattern="name" value="{{(isset($assigned_l1_manager_name)) ? $assigned_l1_manager_name :''}}" readonly /> --}}
-                                                    <input type="text" placeholder="Reporting Manager Name" name="l1_manager_name" id="l1_manager_name" class="textbox  onboard-form form-control " pattern="name" value="{{ !empty($emp_office_details) && $emp_office_details->l1_manager_name ? $emp_office_details->l1_manager_name  : ''}}" readonly />
+                                                    <input type="text" placeholder="Reporting Manager Name" name="l1_manager_name" id="l1_manager_name" class="textbox  onboard-form form-control " pattern="name" value="{{ !empty($assigned_l1_manager_name) ? $assigned_l1_manager_name  : ''}}" readonly />
                                                     <label class="error star_error l1_manager_name_label" for="l1_manager_name" style="display: none;"></label>
                                                 </div>
                                             </div>
@@ -729,7 +711,7 @@
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <div class="floating">
                                                     <label for="" class="float-label">Date of confirmation<span class="text-danger">*</span></label>
-                                                    <input type="text" max="9999-12-31" placeholder="Date of confirmation" name="dow" class="onboard-form form-control textbox " onfocus="(this.type='date')" required value="{{ !empty($emp_office_details) && $emp_office_details->dow ? $emp_office_details->dow  : ''}}" />
+                                                    <input type="text" max="9999-12-31" placeholder="Date of confirmation" name="confirmation_period" id="confirmation_period" class="onboard-form form-control textbox " onfocus="(this.type='date')" required value="" />
                                                 </div>
                                             </div>
                                         </div>
@@ -750,7 +732,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Father Name <span class="text-danger">*</span></label>
 
-                                                    <input type="text" placeholder="Father Name" name="father_name" pattern="name" class="onboard-form form-control textbox capitalize" required value="{{ !empty($employee_details) && $employee_details->father_name ? $employee_details->father_name  : ''}}" />
+                                                    <input type="text" placeholder="Father Name" name="father_name" id="father_name" pattern="name" class="onboard-form form-control textbox capitalize" required value="" />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -790,7 +772,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Mother Name <span class="text-danger">*</span></label>
 
-                                                    <input type="text" placeholder="Mother Name" name="mother_name" pattern="name" class="textbox  onboard-form form-control capitalize" required   value="{{ !empty($employee_details) && $employee_details->mother_name ? $employee_details->mother_name  : ''}}"/>
+                                                    <input type="text" placeholder="Mother Name" name="mother_name" id="mother_name" pattern="name" class="textbox  onboard-form form-control capitalize" required   value="{{ !empty($employee_details) && $employee_details->mother_name ? $employee_details->mother_name  : ''}}"/>
                                                 </div>
                                             </div>
 
@@ -829,7 +811,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Spouse Name <span class="text-danger">*</span></label>
 
-                                                    <input type="text" placeholder="Spouse Name" name="spouse_name" pattern="name" class="textbox  onboard-form form-control  spouse_data capitalize" required  value="{{ !empty($employee_details) && $employee_details->spouse_name ? $employee_details->spouse_name  : ''}}"/>
+                                                    <input type="text" placeholder="Spouse Name" name="spouse_name" id="spouse_name" pattern="name" class="textbox  onboard-form form-control  spouse_data capitalize" required  value="{{ !empty($employee_details) && $employee_details->spouse_name ? $employee_details->spouse_name  : ''}}"/>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -837,7 +819,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Date of Wedding <span class="text-danger">*</span></label>
 
-                                                    <input type="text" max="9999-12-31" placeholder="Date of Wedding" name="dow" class="textbox  onboard-form form-control  spouse_data" onfocus="(this.type='date')" />
+                                                    <input type="text" max="9999-12-31" placeholder="Date of Wedding" name="wedding_date" id="wedding_date"  class="textbox  onboard-form form-control  spouse_data" onfocus="(this.type='date')" />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -859,7 +841,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Spouse DOB <span class="text-danger">*</span></label>
 
-                                                    <input type="text" max="9999-12-31" placeholder="Spouse DOB" name="spouse_dob" class="textbox  onboard-form form-control  spouse_data" onfocus="(this.type='date')" required />
+                                                    <input type="text" max="9999-12-31" placeholder="Spouse DOB" name="dob_spouse" id="dob_spouse" class="textbox  onboard-form form-control  spouse_data" onfocus="(this.type='date')" required />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -867,7 +849,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Number of Children</label>
 
-                                                    <select placeholder="Number of Children" name="no_of_child" id="no_of_child" class="textbox onboard-form form-control  spouse_data select2_form_without_search">
+                                                    <select placeholder="Number of Children" name="no_of_children" id="no_of_children" class="textbox onboard-form form-control  spouse_data select2_form_without_search">
                                                         <option value="" hidden selected disabled>Select Number of Children</option>
                                                         <option value="0">0</option>
                                                         <option value="1">1</option>
