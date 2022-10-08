@@ -161,6 +161,8 @@ class VmtEmployeeService {
         $newEmployee->pan_number   =  isset($row["pan_no"]) ? ($row["pan_no"]) : "";
         $newEmployee->dl_no   =  $row["dl_no"] ?? '';
         $newEmployee->passport_number = $row["passport_no"] ?? '';
+        $newEmployee->passport_date = $row["passport_date"] ?? '';
+
         //$newEmployee->pan_ack   =    $row["pan_ack"];
         $newEmployee->aadhar_number = $row["aadhar"] ?? '';
 

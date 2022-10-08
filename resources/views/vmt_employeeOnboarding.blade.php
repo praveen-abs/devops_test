@@ -872,8 +872,12 @@
                  $('#no_of_children').val('{{$employee_details->no_of_children}}').trigger('change');
             @endif
 
-            @if(!empty($employee_details->dob) && $employee_details->dob)
+            @if(!empty($employee_details) && $employee_details->dob)
                  $('#dob').val('{{$employee_details->dob}}');
+            @endif
+
+            @if(!empty($employee_details) && $employee_details->passport_date)
+                 $('#passport_date').val('{{$employee_details->passport_date}}');
             @endif
 
             @if( !empty($emp_family_details))
