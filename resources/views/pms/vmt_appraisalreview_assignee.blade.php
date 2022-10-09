@@ -305,7 +305,8 @@
 
 
     @if($reviewCompleted)
-
+    <div class="row mt-3">
+        <div class="col-lg-12">
     <div class="card">
         <div class="card-header">
             <h5>Best People Rating Grid</h5>
@@ -365,6 +366,8 @@
             </div>
         </div>
     </div>
+</div>
+</div>
     @endif
 
     <!-- Modal -->

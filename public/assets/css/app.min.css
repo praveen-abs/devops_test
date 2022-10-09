@@ -962,7 +962,12 @@ body::-webkit-scrollbar-thumb {
     width: 5px;
     background: #ff530a;
     top: 0px !important;
+
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+
 }
+
 
 .navbar-menu .navbar-nav .nav-sm .nav-link.active {
     color: var(--vz-vertical-menu-item-active-color);

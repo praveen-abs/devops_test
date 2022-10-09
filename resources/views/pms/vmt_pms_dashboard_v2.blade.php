@@ -149,7 +149,7 @@
     }
 
     #employeeSelectionModal .modal-body{
-        height: 200px;
+        height: auto;
     }
 
     .modal-body .select2-container--default .select2-selection--multiple {
@@ -656,14 +656,21 @@
 
                 @if(isset($loggedManagerEmployees))
                 <!-- flow 2 -->
+                <div class="row">
+                    <div class="col-8">
                 <select class="select-employee-dropdown form-control" name="employees[]" multiple="multiple">
                     @foreach($loggedManagerEmployees as $employeesSelection)
                     <option selected value="{{ $employeesSelection->id }}">{{ $employeesSelection->name }}</option>
                     @endforeach
                 </select>
-                <button class="btn btn-orange py-0 px-2" onclick="resetEmployeesList()"><span class="mr-10 icon"></span>Reset Employees</button>
+            </div>
+            <div class="col-4 text-end">
+                <button class="btn btn-primary py-0 px-2" onclick="resetEmployeesList()">Reset Employees</button>
+            </div>
+        </div>
                 @else
                 <!-- flow 1 -->
+                <div class="col-8 ">
                 <select class="select-employee-dropdown form-control form-select" id="selectedEmployeeDropdownId" name="employees[]" multiple="multiple">
                     @if(isset($allEmployeesWithoutLoggedUserList) && count($allEmployeesWithoutLoggedUserList) > 0)
                     @foreach($allEmployeesWithoutLoggedUserList as $employeeList)
@@ -671,15 +678,16 @@
                     @endforeach
                     @endif
                 </select>
+                </div>
                 @endif
 
                 @if(isset($loggedManagerEmployees))
-                <div class="buttons d-flex justify-content-end align-items-center mt-2 ">
+                <div class="buttons text-end mt-4 ">
                     <!-- <button type="button" class="btn btn-border-orange close-modal " data-bs-dismiss="modal">Close</button> -->
                     <button class="btn btn-primary ml-2" id="edit-employee">Save</button>
                 </div>
                 @else
-                <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
+                <div class="buttons text-end mt-4 ">
                     <!-- <button type="button" class="btn btn-border-orange close-modal" data-bs-dismiss="modal">Close</button> -->
                     <button class="btn btn-orange ml-2" id="edit-employee-based-on-reviewer">Save</button>
                 </div>

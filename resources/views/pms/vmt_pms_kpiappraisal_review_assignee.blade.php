@@ -367,6 +367,8 @@
 
         <!-- Rating grid after submitted review by All Reviewers -->
         @if($isAllReviewersSubmittedOrNot && count($pmsRatingDetails) > 0)
+        <div class="row">
+        <div class="col-12">
         <div class="card">
             <div class="card-header">
                 <h5>Best People Rating Grid</h5>
@@ -418,6 +420,8 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
         @endif
 
 

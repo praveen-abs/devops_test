@@ -696,16 +696,16 @@ button.gridjs-sort-asc, button.gridjs-sort-desc {
     color: #878a99;
 }
 .breadcrumb .crumb-item.active {
-    background-color: #002f56;
+    /* background-color: #002f56;
     padding: 0px 10px;
-    border-radius: 3px;
+    border-radius: 3px; */
 }
 .breadcrumb .crumb-item {
     margin: 0px 10px !important;
 }
-.breadcrumb .crumb-item.active a {
+/* .breadcrumb .crumb-item.active a {
     color: #fff !important;
-}
+} */
 .breadcrumb .crumb-item a:active {
     border-bottom: 1px solid #002f56 !important;
 }
