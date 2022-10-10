@@ -121,6 +121,7 @@
         //         return false;
         //     return true;
         // }
+        var isEmailExists = false;
 
         function numberOnly(id) {
             // Get element by id which passed as parameter within HTML element event
@@ -483,7 +484,6 @@
                     return false;
                 }else{
                     console.log("Valid Email");
-
                     //Check if email already exists
                     var routeURL = "{{route('isEmailExists',':email')}}";
                     routeURL = routeURL.replace(':email', $(this).val());
@@ -499,6 +499,12 @@
                            if(data == "true")
                            {
                                 $('#error_email').html("Email already exists");
+                                isEmailExists = true;
+
+                           }
+                           else
+                           {
+                                isEmailExists = false;
                            }
                         }
                     });
@@ -969,8 +975,18 @@
                 var can_onboard_employee = "0";
                 let form_data1 = $("#form-1");
 
-                console.log($('#gender').val());
-                console.log($('#nationality').val());
+                //check if mail exists
+                if(isEmailExists == true)
+                {
+                    console.log("Unable to submit form. Email already exists");
+
+                    $('#modalHeader').html("Error");
+                    $('#modalSubHeading').html("Email already exists!");
+                    $('#notificationModal').show();
+                    $('#notificationModal').removeClass('fade');
+
+                    return;
+                }
 
                 if($(this).attr('name') == "save_form")  //Form is saved but employee not onboarded
                 {

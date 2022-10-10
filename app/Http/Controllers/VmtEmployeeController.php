@@ -121,11 +121,13 @@ class VmtEmployeeController extends Controller
         //Get the recently created employee based on DOJ
         //$employee  =  User::orderBy('created_at', 'DESC')->where('user_code', 'LIKE', '%' . $employeeCode_Format . '%')->first();
         $recentlyJoinedEmployee_usercode = User::leftJoin('vmt_employee_details','vmt_employee_details.userid', '=' , 'users.id')
-                                ->orderBy('doj','DESC')
-                                ->first()->value('users.user_code');
+                                //->get('users.user_code');
+                                ->orderBy('vmt_employee_details.doj','DESC')
+                                ->first('users.user_code');
+                               // ->get(['users.user_code', 'vmt_employee_details.doj']);
 
 
-
+        //dd($recentlyJoinedEmployee_usercode);
         if (empty($recentlyJoinedEmployee_usercode)) {
             $maxId = (int)($number_series) + 1;
         } else {
@@ -181,6 +183,7 @@ class VmtEmployeeController extends Controller
     {
         $user_id = $request->input('user_id');
         $response = "";
+        $isEmailSent = "";
         $onboard_form_data =  array();
         parse_str($request->input('form_data'), $onboard_form_data);
 
@@ -189,10 +192,6 @@ class VmtEmployeeController extends Controller
 
         //Check whether we are updating existing user or adding new user.
         $existingUser = User::where('id',$user_id);
-
-
-
-
 
         if($existingUser->exists())
         {
@@ -203,17 +202,23 @@ class VmtEmployeeController extends Controller
                 $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->input('can_onboard_employee'), $existingUser->first()->id);
 
                 $message = "";
+
                 if($request->input('can_onboard_employee') == "1")
+                {
+                    $isEmailSent  = $employeeService->attachApoinmentPdf($onboard_form_data);
                     $message="Employee onboarded successfully";
+                }
                 else
-                    $message="Employee details Updated in draft";
+                {
+                    $message="Employee details updated in draft";
+                }
 
                 if($result)
                 {
                     $response = [
                         'status' => 'success',
                         'message' => $message,
-                        'mail_status' => '',
+                        'mail_status' => $isEmailSent ? "success" : "failure",
                         'error' => '',
                         'error_verbose' =>''
                     ];

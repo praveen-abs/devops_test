@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use App\Models\VmtGeneralInfo;
+use Dompdf\Dompdf;
 
 use App\Models\User;
 use App\Models\VmtEmployee;
@@ -16,6 +18,11 @@ use App\Models\Compensatory;
 use App\Models\VmtEmployeeStatutoryDetails;
 use App\Models\VmtEmployeeFamilyDetails;
 use App\Models\VmtOrgRoles;
+use App\Notifications\ViewNotification;
+use Illuminate\Support\Facades\Notification;
+use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Auth;
+
 
 class VmtEmployeeService {
 
@@ -67,14 +74,24 @@ class VmtEmployeeService {
     {
         $onboard_user = $this->createOrUpdate_User(data: $data, can_onboard_employee : $can_onboard_employee, user_id: $existing_user_id);
 
+
         if(!empty($onboard_user))
         {
-            $this->createOrUpdate_EmployeeDetails( $onboard_user, $data);
-            $this->createOrUpdate_EmployeeOfficeDetails( $onboard_user->id, $data);
-            $this->createOrUpdate_EmployeeStatutoryDetails( $onboard_user->id, $data);
-            $this->createOrUpdate_EmployeeFamilyDetails( $onboard_user->id, $data);
-            $this->createOrUpdate_EmployeeCompensatory( $onboard_user->id, $data);
+            try
+            {
+                $this->createOrUpdate_EmployeeDetails( $onboard_user, $data);
+                $this->createOrUpdate_EmployeeOfficeDetails( $onboard_user->id, $data);
+                $this->createOrUpdate_EmployeeStatutoryDetails( $onboard_user->id, $data);
+                $this->createOrUpdate_EmployeeFamilyDetails( $onboard_user->id, $data);
+                $this->createOrUpdate_EmployeeCompensatory( $onboard_user->id, $data);
 
+                //$message_part =" onboarded successfully.";
+            }
+            catch(\Exception $e)
+            {
+               // dd("sdf");
+               return null;
+            }
         }
         else
         {
@@ -89,32 +106,38 @@ class VmtEmployeeService {
     {
         $newUser = null;
 
-        if(! empty($user_id))
+        try
         {
+            if(! empty($user_id))
+            {
 
-            $newUser = User::where('id',$user_id);
+                $newUser = User::where('id',$user_id);
 
-            $newUser = $newUser->first();
+                $newUser = $newUser->first();
 
-            //Update existing user
-            $newUser->name = $data['employee_name'];
-            $newUser->email = $data["email"];
-            //$newUser->password = Hash::make('Abs@123123');
-            //$newUser->avatar = $data['employee_code'] . '_avatar.jpg';
-            $newUser->user_code = strtoupper($data['employee_code']);
-            //$newUser->active = '0';
-            $newUser->is_onboarded = $can_onboard_employee;
-            //$newUser->onboard_type = 'normal';
-            //$newUser->org_role = '5';
-            //$newUser->is_ssa = '0';
-            $newUser->save();
+                //Update existing user
+                $newUser->name = $data['employee_name'];
+                $newUser->email = $data["email"];
+                //$newUser->password = Hash::make('Abs@123123');
+                //$newUser->avatar = $data['employee_code'] . '_avatar.jpg';
+                $newUser->user_code = strtoupper($data['employee_code']);
+                //$newUser->active = '0';
+                $newUser->is_onboarded = $can_onboard_employee;
+                //$newUser->onboard_type = 'normal';
+                //$newUser->org_role = '5';
+                //$newUser->is_ssa = '0';
+                $newUser->save();
 
+            }
+            else
+            {
+                $newUser = $this->CreateNewUser($data, $can_onboard_employee);
+            }
         }
-        else
+        catch(\Exception $e)
         {
-            $newUser = $this->CreateNewUser($data, $can_onboard_employee);
+            return null;
         }
-
         return $newUser;
     }
 
@@ -195,7 +218,7 @@ class VmtEmployeeService {
 
         if (!empty($row['marital_status'])) {
             if ($row['marital_status'] <> 'unmarried') {
-                $newEmployee->no_of_children   = $row["no_of_children"];
+                $newEmployee->no_of_children   = $row["no_of_children"] ?? 0;
 
                 if (!empty($row['no_of_children']) && $row['no_of_children'] > 0) {
                     // $newEmployee->kid_name   = json_encode($row["child_name"]);
@@ -461,6 +484,57 @@ class VmtEmployeeService {
         {
             return "";
         }
+    }
+
+    // Generate Employee Apoinment PDF after onboarding
+    public function attachApoinmentPdf($employeeData)
+    {
+        //dd($employeeData);
+        $VmtGeneralInfo = VmtGeneralInfo::first();
+        $empNameString  = $employeeData['employee_name'];
+        $filename = 'appoinment_letter_' . $empNameString . '_' . time() . '.pdf';
+        $data = $employeeData;
+        $data['basic_monthly'] = $employeeData['basic'];
+        $data['basic_yearly'] = intval($employeeData['basic']) * 12;
+        $data['hra_monthly'] = $employeeData['hra'];
+        $data['hra_yearly'] = intval($employeeData['hra']) * 12;
+        $data['spl_allowance_monthly'] = $employeeData['special_allowance'];
+        $data['spl_allowance_yearly'] = intval($employeeData['special_allowance']) * 12;
+        $data['gross_monthly'] = $employeeData["basic"] + $employeeData["hra"] + $employeeData["statutory_bonus"] + $employeeData["child_education_allowance"] + $employeeData["food_coupon"] + $employeeData["lta"] + $employeeData["special_allowance"] + $employeeData["other_allowance"];
+        $data['gross_yearly'] = intval($data['gross_monthly']) * 12;
+        $data['employer_epf_monthly'] = $employeeData['epf_employer_contribution'];
+        $data['employer_epf_yearly'] = intval($employeeData['epf_employer_contribution']) * 12;
+        $data['employer_esi_monthly'] = $employeeData['esic_employer_contribution'];
+        $data['employer_esi_yearly'] = intval($employeeData['esic_employer_contribution']) * 12;
+        $data['ctc_monthly'] = $data['gross_monthly'];
+        $data['ctc_yearly'] = intval($data['gross_monthly']) * 12;
+        $data['employee_epf_monthly'] =  $employeeData["epf_employer_contribution"];
+        $data['employee_epf_yearly'] = intval($employeeData["epf_employer_contribution"]) * 12;
+        $data['employer_pt_monthly'] = $employeeData["professional_tax"];
+        $data['employer_pt_yearly'] =  intval($employeeData["professional_tax"]) * 12;
+        $data['net_take_home_monthly'] = $employeeData["net_income"];
+        $data['net_take_home_yearly'] = intval($employeeData["net_income"]) * 12;
+        // download PDF file with download method
+        $pdf = new Dompdf();
+        $html =  view('testing', compact('data'));
+        $pdf->loadHtml($html, 'UTF-8');
+        $pdf->setPaper('A4', 'portrait');
+        $pdf->render();
+        $docUploads =  $pdf->output();
+        \File::put(public_path('appoinmentLetter/') . $filename, $docUploads);
+
+        $image_view = url('/') . $VmtGeneralInfo->logo_img;
+        $appoinmentPath = "";
+        if (fetchMasterConfigValue("can_send_appointmentletter_after_onboarding") == "true") {
+            $appoinmentPath = public_path('appoinmentLetter/') . $filename;
+        }
+        $notification_user = User::where('id',auth::user()->id)->first();
+        $message = "Employee Bulk OnBoard was Created   ";
+
+        Notification::send($notification_user ,new ViewNotification($message.$employeeData['employee_name']));
+        $isSent    = \Mail::to($employeeData['email'])->send(new WelcomeMail($employeeData['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(),  $appoinmentPath, $image_view));
+
+        return $isSent;
     }
 
 
