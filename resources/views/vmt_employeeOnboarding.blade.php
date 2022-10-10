@@ -132,7 +132,25 @@
 
 
 
+
+
+
         $(document).ready(function() {
+
+            // $('input[@type="text"]')[0].focus();
+
+            $("input[type='text']").on("click", function() {
+            $(this).select();
+        });
+        $("input").focus(function() {
+            $(this).select();
+        });
+        $("input").focusin(function() {
+            $(this).select();
+        });
+
+
+
 
             $('#gender').val('other').trigger("change");
             console.log('Gender from DB : '+'{{ !empty($employee_details) && $employee_details->gender ? $employee_details->gender : '' }}');
@@ -199,6 +217,7 @@
 
 
             $('#employee_name').css('text-transform', 'capitalize');
+
 
             $('.select2_form_without_search').each(function() {
                 var placeholder = $(this).attr('placeholder')
@@ -1170,6 +1189,8 @@
             $("select").on("select2:close", function(e) {
                 $(this).valid();
             });
+
+
         });
 
 
@@ -1178,6 +1199,10 @@
         // $("#button_close").click(function(){
         //         window.location.href = "/employeeOnboarding";
         // });
+
+
+
+
     </script>
 
 

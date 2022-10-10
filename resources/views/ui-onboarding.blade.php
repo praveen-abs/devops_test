@@ -44,9 +44,9 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Employee Name as per Aadhar <span class="text-danger">*</span></label>
                                                     @if(isset($employee_user->name))
-                                                    <input type="text" placeholder="Employee Name as per Aadhar " name="employee_name" id="employee_name" value="{{$employee_user->name}}" class="onboard-form form-control textbox capitalize" pattern="name" readonly />
+                                                    <input type="text" placeholder="Employee Name as per Aadhar " name="employee_name" id="employee_name" value="{{$employee_user->name}}" class="onboard-form form-control textbox capitalize" pattern="name" readonly autofocus />
                                                     @else
-                                                    <input type="text" placeholder="Employee Name as per Aadhar " name="employee_name" id="employee_name" class=" form-control textbox capitalize" pattern="name" required />
+                                                    <input type="text" placeholder="Employee Name as per Aadhar " name="employee_name" id="employee_name" class=" form-control textbox capitalize" pattern="name" required autofocus />
 
                                                     @endif
                                                     <label class="error star_error employee_name_label" for="employee_name" style="display: none;"></label>
@@ -61,7 +61,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Date of Birth <span class="text-danger">*</span></label>
                                                     {{-- <input type="text" placeholder="Date of Birth" name="" max="" class="form-control textbox" id="datepicker" required /> --}}
-                                                    <input type="text" max="9999-12-31" placeholder="Date of Birth" name="dob" id="dob" onfocus="(this.type='date')" value="" class="onboard-form  form-control spouse_data " required  />
+                                                    <input type="text" max="9999-12-31" placeholder="Date of Birth" name="dob" id="dob" onfocus="(this.type='date')" value="" class="onboard-form  form-control spouse_data " required  autofocus/>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -1297,9 +1297,8 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-12 text-right"><button type="button" data="row-6" next="row-6" placeholder="" name="save_form" id="save_button" class="btn btn-orange  text-center processOnboardForm" value="Submit">Save</button>
-                                        <br/>
-                                        <div class="col-12 text-right"><button type="button" data="row-6" next="row-6" placeholder="" name="submit_form" id="submit_button" class="btn btn-orange  text-center processOnboardForm" value="Submit">Submit</button>
+
+                                        <div class="col-12 text-end"><button type="button" data="row-6" next="row-6" placeholder="" name="save_form" id="save_button" class="btn btn-orange  me-3  processOnboardForm" value="Submit">Save</button><button type="button" data="row-6" next="row-6" placeholder="" name="submit_form" id="submit_button" class="btn btn-orange  processOnboardForm" value="Submit">Submit</button>
                                         </div>
                                     </div>
                                 </div>
