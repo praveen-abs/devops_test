@@ -805,7 +805,7 @@ class VmtEmployeeController extends Controller
             $newEmployee->aadhar_number = $row["aadhar"];
             $newEmployee->marital_status = $row["marital_status"];
             $newEmployee->mobile_number  = strval($row["mobile_no"]);
-            $newEmployee->bank_name   = $row["bank_name"];
+            $newEmployee->bank_id   = $row["bank_name"];
             $newEmployee->bank_ifsc_code  = $row["bank_ifsc"];
             $newEmployee->bank_account_number  = $row["account_no"];
             $newEmployee->current_address_line_1   = $row["current_address"];
@@ -876,9 +876,9 @@ class VmtEmployeeController extends Controller
                 $newEmployee_statutoryDetails->esic_number = $row["esic_number"] ?? '';
                 $newEmployee_statutoryDetails->pf_applicable = $row["pf_applicable"];
                 $newEmployee_statutoryDetails->esic_applicable = $row["esic_applicable"];
-                $newEmployee_statutoryDetails->ptax_location = $row["ptax_location"];
+                $newEmployee_statutoryDetails->ptax_location_state_id = $row["ptax_location"];
                 $newEmployee_statutoryDetails->tax_regime = $row["tax_regime"];
-                $newEmployee_statutoryDetails->lwf_location = $row["lwf_location"];
+                $newEmployee_statutoryDetails->lwf_location_state_id = $row["lwf_location"];
                 $newEmployee_statutoryDetails->save();
 
                 $compensatory = new Compensatory;
@@ -959,7 +959,7 @@ class VmtEmployeeController extends Controller
                 'users.id as user_id',
                 'users.avatar as avatar',
                 'vmt_employee_details.doj as doj',
-                'vmt_employee_details.blood_group as blood_group',
+                'vmt_employee_details.blood_group_id as blood_group_id',
                 'vmt_employee_office_details.department_id',
                 'vmt_employee_office_details.designation as emp_designation',
                 'vmt_employee_office_details.l1_manager_code as l1_manager_code',
@@ -990,7 +990,7 @@ class VmtEmployeeController extends Controller
                 'users.id as user_id',
                 'users.avatar as avatar',
                 'vmt_employee_details.doj as doj',
-                'vmt_employee_details.blood_group as blood_group',
+                'vmt_employee_details.blood_group_id as blood_group_id',
                 'vmt_employee_office_details.department_id',
                 'vmt_employee_office_details.designation as emp_designation',
                 'vmt_employee_office_details.l1_manager_code as l1_manager_code',

@@ -4,6 +4,7 @@ use App\Models\VmtOrgRoles;
 use App\Models\User;
 use App\Models\VmtClientMaster;
 use App\Models\VmtEmployee;
+use App\Models\VmtBloodGroup;
 
 function required()
 {
@@ -102,6 +103,12 @@ function fetchSubClients(){
         }
     }
 
+    function getAllBloodGroupNames()
+    {
+        return VmtBloodGroup::all(['id','name']);
+
+    }
+
     function calculateProfileCompleteness($user_id)
     {
 
@@ -146,7 +153,7 @@ function fetchSubClients(){
                             'vmt_employee_family_details.phone_number',
 
                         //Bank Informations
-                            'vmt_employee_details.bank_name',
+                            'vmt_employee_details.bank_id',
                             'vmt_employee_details.bank_ifsc_code',
                             'vmt_employee_details.bank_account_number',
 
@@ -178,4 +185,6 @@ function fetchSubClients(){
         //dd($value);
         return $value;
     }
+
+
 

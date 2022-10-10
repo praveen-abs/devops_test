@@ -54,6 +54,8 @@
     var gridtable_yetToActiveTable ="";
     var gridtable_activeTable ="";
 
+    var bloodgroup_array = <?php echo json_encode(getAllBloodGroupNames()) ?>;
+
     function activateEmployee(obj)
     {
         var user_id = obj.dataset.user_id;
@@ -164,18 +166,29 @@
                     }
                 },
                 {
-                    id: 'blood_group',
+                    id: 'blood_group_id',
                     name: 'Blood Group',
+                    formatter: function formatter(cell) {
+                        //console.log("Blood group : "+cell);
+
+                        //console.log(bloodgroup_array[0].name);
+
+                        for(var i=0; i < bloodgroup_array.length; i++)
+                        {
+                            if(bloodgroup_array[i].id == cell)
+                                return gridjs.html(bloodgroup_array[i].name);
+                        }
+                    }
                 },
                 {
                     id: 'profile_completeness',
                     name: 'Profile',
                     formatter: function formatter(cell) {
+
                         return gridjs.html(cell+"%");
 
                     }
                 },
-
                 {
                     id: 'is_onboarded',
                     name: 'Onboard Status',
@@ -242,7 +255,7 @@
                         emp.emp_designation,
                         emp.l1_manager_code,
                         emp.doj,
-                        emp.blood_group,
+                        emp.blood_group_id,
                         emp.profile_completeness,
                         emp.is_onboarded,
                         emp.is_docs_approved,
@@ -334,8 +347,19 @@
                     }
                 },
                 {
-                    id: 'blood_group',
+                    id: 'blood_group_id',
                     name: 'Blood Group',
+                    formatter: function formatter(cell) {
+                        //console.log("Blood group : "+cell);
+
+                        //console.log(bloodgroup_array[0].name);
+
+                        for(var i=0; i < bloodgroup_array.length; i++)
+                        {
+                            if(bloodgroup_array[i].id == cell)
+                                return gridjs.html(bloodgroup_array[i].name);
+                        }
+                    }
                 },
                 {
                     id: 'profile_completeness',
@@ -385,7 +409,7 @@
                         emp.emp_designation,
                         emp.l1_manager_code,
                         emp.doj,
-                        emp.blood_group,
+                        emp.blood_group_id,
                         emp.profile_completeness,
                         emp.user_id,
                     ]
