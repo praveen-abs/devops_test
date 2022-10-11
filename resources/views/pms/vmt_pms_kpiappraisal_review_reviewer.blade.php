@@ -449,8 +449,8 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
-<script src="{{ URL::asset('/assets/premassets/js/footable.min.js') }}"></script>
-<script src="{{ URL::asset('/assets/premassets/css/footable.bootstrap.min.css') }}"></script>
+{{-- <script src="{{ URL::asset('/assets/premassets/js/footable.min.js') }}"></script>
+<script src="{{ URL::asset('/assets/premassets/css/footable.bootstrap.min.css') }}"></script> --}}
 <script type="text/javascript">
     $('#upload_file').change(function() {
         if ($(this).is(':valid')) {

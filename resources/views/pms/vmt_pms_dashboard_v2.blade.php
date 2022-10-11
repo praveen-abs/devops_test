@@ -330,7 +330,7 @@
         <div class="mt-2 " id="initial-section">
             <div class="row ">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center p-0 ">
-                    <div class="p-3 justify-content-center d-flex align-items-center"><img src="{{ URL::asset('assets/images/assign_goals.png') }}" style="width:300px;height: 50%;"></div>
+                    <div class="p-3 justify-content-center d-flex align-items-center"><img src="{{ URL::asset('assets/images/assign_goals.png') }}" style="width:280px;min-height:250px;"></div>
                     <h4 class="fw-bold">Assign Goals for your employees</h4>
                     <button id="add-goals" class="btn btn-orange mt-1">
                         <i class="text-white fa fa-plus me-1"></i>
