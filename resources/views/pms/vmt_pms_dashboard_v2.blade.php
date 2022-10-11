@@ -295,22 +295,22 @@
 
                                     <div class="mb-3 input-wrap">
                                         <span>Overall Annual Score</span> <div class="appraisal-box  btn bg-success text-white "><small>
-                                                @if(!empty($isAllReviewersSubmittedOrNot)) @if($ratingDetail){{$ratingDetail['rating']}}@else - @endif @else - @endif</small></div>
+                                                @if($ratingDetail){{$ratingDetail['rating']}}@else - @endif</small></div>
 
                                     </div>
                                     <div class="mb-3 input-wrap">
                                         <span>Corresponding ANNUAL PERFORMANCE Rating </span><div class="appraisal-box  btn bg-success  text-white"><small>
-                                            @if(!empty($isAllReviewersSubmittedOrNot)) @if($ratingDetail){{$ratingDetail['performance']}}@else - @endif @else - @endif</small></div>
+                                           @if($ratingDetail){{$ratingDetail['performance']}}@else - @endif</small></div>
                                     </div>
                                     <div class="mb-3 input-wrap">
                                         <span>Ranking</span>
                                         <div class="appraisal-box   btn bg-success text-white "><small>
-                                            @if(!empty($isAllReviewersSubmittedOrNot)) @if($ratingDetail){{$ratingDetail['ranking']}}@else - @endif @else - @endif</small></div>
+                                           @if($ratingDetail){{$ratingDetail['ranking']}}@else - @endif</small></div>
                                     </div>
                                     <div class=" input-wrap">
                                         <span>Action</span>
                                         <div class="appraisal-box btn bg-success text-white"><small>
-                                            @if(!empty($isAllReviewersSubmittedOrNot)) @if($ratingDetail){{$ratingDetail['action']}}@else - @endif @else - @endif</small></div>
+                                           @if($ratingDetail){{$ratingDetail['action']}}@else - @endif</small></div>
                                     </div>
 
                                 </div>
