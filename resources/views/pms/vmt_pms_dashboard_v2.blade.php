@@ -254,8 +254,8 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-6 col-sm-12 col-lg-6 col-xl-6 col-xxl-6">
-                            <div class="card  appraisal-left-content">
+                        <div class="col-md-6 d-flex col-sm-12 col-lg-6 col-xl-6 col-xxl-6">
+                            <div class="card w-100  appraisal-left-content">
                                 <div class="card-body">
                                         <div class="appraisal-info left-content">
                                             <ul class="personal-info">
