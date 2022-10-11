@@ -224,7 +224,7 @@
     <div class="modal fade zoomIn" id="Modal_Message" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md modal-dialog-centered " id="" aria-hidden="true" aria-labelledby="">
             <div class="modal-content top-line">
-               
+
                     <div class="modal-header py-2 border-0">
                         <h5 class="modal-title text-primary" id="modalHeader">Info
                         </h5>
@@ -232,13 +232,13 @@
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
-              
+
                 <div class="modal-body">
                     <b id="info_message">Please fill all the fields.</b>
                     <div class="instructions ">
                                 <ul class="my-2 list-style-numbered list-style-circle" id="error_ul">
                                     <li class="list-item"> </li>
-                                   
+
 
                                 </ul>
                             </div>
@@ -296,7 +296,7 @@ var isKPIFormSaved = false;
 
 $(document).ready(function(){
 
-    
+
     // $('#select-reviewer').select2({
     //     dropdownParent: '#createEmployee',
     //     minimumResultsForSearch: Infinity,
@@ -405,7 +405,7 @@ $(document).ready(function(){
                     $.each(data.result,function(key, value) {
                         var dataResult =  '';
                         var increment = 0;
-                        $.each(availableValues,function(keyAvailable, valueAvailable) {  
+                        $.each(availableValues,function(keyAvailable, valueAvailable) {
                             var textAreaVal = value[increment];
                             var pattern = ''
                             var label = 'type here';
@@ -413,19 +413,19 @@ $(document).ready(function(){
                                 label = 'type percentage value only';
                                 pattern = "return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 37";
                                 if($.isNumeric( value[increment] ) == true){
-                                    textAreaVal = value[increment] * 100;
+                                    textAreaVal = value[increment] * 100+"%";
                                 }else{
                                     textAreaVal = '';
                                     validationCheck = true;
                                 }
                             }
-                            
+
                             var test = '<td class="text-box-td p-1"><textarea name="'+valueAvailable+'" data-show="true" id="" class="text-box" cols="20" placeholder="'+label+'" onkeypress="'+pattern+'">'+textAreaVal+'</textarea></td>';
                             dataResult += test;
                             increment++;
                         });
-                        
-                        $.each(nonAvailableValues,function(keyNotAvailable, valueNotAvailable) {   
+
+                        $.each(nonAvailableValues,function(keyNotAvailable, valueNotAvailable) {
                             var test = '<input type="hidden" name="'+valueNotAvailable+'">';
                             dataResult += test;
                         });
@@ -440,7 +440,7 @@ $(document).ready(function(){
                 }
                 // var getAvaibleColumnHeader = getAvailableColumns();
                 // getAvailableColumns();
-                
+
                 // var length = 1;
                 // var showdimension = "{{$show['dimension'] == 'true' ? 'block' : 'none'}}";
                 // var showkpi = "{{$show['kpi'] == 'true' ? 'block' : 'none'}}";
@@ -633,7 +633,7 @@ $(function () {
         $('#error_ul').html('');
         // var ul_message=document.getElementById("error_ul");
         // var li_message=document.getElementById("error_li");
-        
+
         // li_message.append(errorMessages);
 
         //Validate the input fields
