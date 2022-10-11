@@ -2,6 +2,7 @@
 @section('css')
 <link href="{{ URL::asset('assets/css/assign_goals.css') }}" rel="stylesheet">
 <link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
+<link href="{{ URL::asset('assets/css/appraisal_review.css') }}" rel="stylesheet">
 
 <!--Font Awesome-->
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/fontawesome-all.min.css') }}">
@@ -289,26 +290,26 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 col-sm-12 col-lg-6 col-xl-6 col-xxl-6">
-                            <div class="card  appraisal-right-content">
+                        <div class="col-md-6  col-sm-12 col-lg-6 col-xl-6 col-xxl-6">
+                            <div class="card   appraisal-right-content">
                                 <div class="card-body">
 
                                     <div class="mb-3 input-wrap">
-                                        <span>Overall Annual Score</span> <div class="appraisal-box  btn bg-success text-white "><small>
+                                        <p>Overall Annual Score</p> <div class="appraisal-box  btn bg-success text-white "><small>
                                                 @if($ratingDetail){{$ratingDetail['rating']}}@else - @endif</small></div>
 
                                     </div>
                                     <div class="mb-3 input-wrap">
-                                        <span>Corresponding ANNUAL PERFORMANCE Rating </span><div class="appraisal-box  btn bg-success  text-white"><small>
+                                        <p>Corresponding ANNUAL PERFORMANCE Rating </p><div class="appraisal-box  btn bg-success  text-white"><small>
                                            @if($ratingDetail){{$ratingDetail['performance']}}@else - @endif</small></div>
                                     </div>
                                     <div class="mb-3 input-wrap">
-                                        <span>Ranking</span>
+                                        <p>Ranking</p>
                                         <div class="appraisal-box   btn bg-success text-white "><small>
                                            @if($ratingDetail){{$ratingDetail['ranking']}}@else - @endif</small></div>
                                     </div>
                                     <div class=" input-wrap">
-                                        <span>Action</span>
+                                        <p>Action</p>
                                         <div class="appraisal-box btn bg-success text-white"><small>
                                            @if($ratingDetail){{$ratingDetail['action']}}@else - @endif</small></div>
                                     </div>
