@@ -266,7 +266,27 @@ class VmtPMSModuleController extends Controller
         $loggedInUser = Auth::user();
 
         $flowCheck = 3;
-        return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','existingKPIForms','departments','employees','pmsKpiAssigneeDetails','flowCheck','loggedInUser','parentReviewerIds','parentReviewerNames','parentReviewerIds'));
+
+
+        $assignedUserDetails = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')
+            ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+            ->select(
+                'users.name',
+                'users.user_code',
+                'vmt_employee_office_details.department_id',
+                'vmt_employee_office_details.designation',
+                'vmt_employee_office_details.l1_manager_code',
+                'vmt_employee_office_details.l1_manager_name',
+                'vmt_employee_office_details.l1_manager_designation'
+            )
+            ->where('users.active', '1')
+            ->where('users.is_ssa', '0')
+            ->where('users.id',Auth::user()->id)
+            ->first();
+
+        $reportingManagerName =User::where('user_code',$assignedUserDetails->l1_manager_code)->value('name');
+
+        return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','reportingManagerName','existingKPIForms','assignedUserDetails','departments','employees','pmsKpiAssigneeDetails','flowCheck','loggedInUser','parentReviewerIds','parentReviewerNames','parentReviewerIds'));
     }
 
     // KPI Form

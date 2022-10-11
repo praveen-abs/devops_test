@@ -170,6 +170,9 @@
 
 <div class="container-fluid assign-goal-wrapper">
     <div class="cards-wrapper">
+
+        @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR","Manager"]))
+
         <div class="row">
             <div class="col-sm-12 col-md-6 col-xl-3 col-xxl-3 col-lg-3">
                 <div class="card pms-card  left-line">
@@ -245,6 +248,83 @@
 
             </div>
         </div>
+
+        @elseif( Str::contains( currentLoggedInUserRole(), ["Employee"]))
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 col-lg-6 col-xl-6 col-xxl-6">
+                            <div class="card  appraisal-left-content">
+                                <div class="card-body">
+                                        <div class="appraisal-info left-content">
+                                            <ul class="personal-info">
+                                                <li>
+                                                    <p class="title h5">Employee Name</p>
+                                                    <p class="text">{{ !empty($assignedUserDetails) ? $assignedUserDetails->name : ''}}</p>
+                                                </li>
+                                                <li>
+                                                    <p class="title h5"> Employee ID</p>
+                                                    <p class="text">{{ !empty($assignedUserDetails) ? $assignedUserDetails->user_code : ''}}</p>
+                                                </li>
+                                                <li>
+                                                    <p class="title h5">Job Title/Designation</p>
+                                                    <p class="text">{{ !empty($assignedUserDetails) ? $assignedUserDetails->designation  : ''}}</p>
+                                                </li>
+                                                <li>
+                                                    <p class="title h5">Business Unit/Process/Function</p>
+                                                    <p class="text">{{   !empty($assignedUserDetails) ? $assignedUserDetails->department : ""}}</p>
+                                                </li>
+                                                <li>
+                                                    <p class="title h5">Reporting Manager</p>
+                                                    <p class="text">{{ !empty($reportingManagerName) ? $reportingManagerName : ''}}</p>
+                                                </li>
+                                                <li class="mb-0">
+                                                    <p class="title h5">Review Period</p>
+                                                    <p class="text">
+                                                        {{ !empty($assignedUserDetails) ? $assignedUserDetails->assignment_period : ''}}
+                                                    </p>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12 col-lg-6 col-xl-6 col-xxl-6">
+                            <div class="card  appraisal-right-content">
+                                <div class="card-body">
+
+                                    <div class="mb-3 input-wrap">
+                                        <span>Overall Annual Score</span> <div class="appraisal-box  btn bg-success text-white "><small>
+                                                @if(!empty($isAllReviewersSubmittedOrNot)) @if($ratingDetail){{$ratingDetail['rating']}}@else - @endif @else - @endif</small></div>
+
+                                    </div>
+                                    <div class="mb-3 input-wrap">
+                                        <span>Corresponding ANNUAL PERFORMANCE Rating </span><div class="appraisal-box  btn bg-success  text-white"><small>
+                                            @if(!empty($isAllReviewersSubmittedOrNot)) @if($ratingDetail){{$ratingDetail['performance']}}@else - @endif @else - @endif</small></div>
+                                    </div>
+                                    <div class="mb-3 input-wrap">
+                                        <span>Ranking</span>
+                                        <div class="appraisal-box   btn bg-success text-white "><small>
+                                            @if(!empty($isAllReviewersSubmittedOrNot)) @if($ratingDetail){{$ratingDetail['ranking']}}@else - @endif @else - @endif</small></div>
+                                    </div>
+                                    <div class=" input-wrap">
+                                        <span>Action</span>
+                                        <div class="appraisal-box btn bg-success text-white"><small>
+                                            @if(!empty($isAllReviewersSubmittedOrNot)) @if($ratingDetail){{$ratingDetail['action']}}@else - @endif @else - @endif</small></div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        @endif
+
         @if(count($pmsKpiAssigneeDetails) == 0)
         <div class="mt-2 " id="initial-section">
             <div class="row ">
