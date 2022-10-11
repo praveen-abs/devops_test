@@ -17,7 +17,7 @@ function getUserDetailsById($userId){
     }
     return '';
 }
-  
+
 // Get KPI Form Assignees's Review Data of Particular Assignee
 function getReviewKpiFormDetails($kpiAssignedId, $assigneeId){
     $reviewData = VmtPMS_KPIFormReviewsModel::where('vmt_pms_kpiform_assigned_id',$kpiAssignedId)->where('assignee_id',$assigneeId)->first();
@@ -39,9 +39,9 @@ function getPmsKpiAssigneeDetails($pmsKpiAssigneeId){
     if(in_array(Auth::id(),$assigneesIds)){
         $currentLoggedUserRole = 'assignee';
     }
-    if(Auth::id() == $pmsKpiAssigneeDetails->assigner_id){
-        $currentLoggedUserRole = 'assigner';
-    }
+    // if(Auth::id() == $pmsKpiAssigneeDetails->assigner_id){
+    //     $currentLoggedUserRole = 'assigner';
+    // }
     $result = [
         'currentLoggedUserRole' => $currentLoggedUserRole,
         'reviewersIds' => $reviewersIds,
@@ -73,7 +73,7 @@ function checkCurrentLoggedUserReviewerOrNot($reviewersIds,$currentLoggedUserRol
                     }
                 }
             }else{
-                if($keyCheck != 0) $result .= '<br>'; 
+                if($keyCheck != 0) $result .= '<br>';
                 if(isset($decodedReviewSubmitted[$singleReviewerSubmittedStatus]) && $decodedReviewSubmitted[$singleReviewerSubmittedStatus] == '1')
                 {
                     $result .= 'Reviewed<br>';
@@ -84,7 +84,7 @@ function checkCurrentLoggedUserReviewerOrNot($reviewersIds,$currentLoggedUserRol
                 }
             }
         }
-        
+
         return $result;
     }catch(Exception $e){
         Log::info('check Current Logged User Reviewer Or Not helper error: '.$e->getMessage());
@@ -106,7 +106,7 @@ function calculateOverallReviewRatings($assigneeReviewTableId=null,$assigneeId)
                 if(json_decode($assigneeReviewerReview->reviewer_kpi_percentage,true)!='' && isset(json_decode($assigneeReviewerReview->reviewer_kpi_percentage,true)[$decodedReviewsId[0]])){
                     $firstReviewRating = json_decode($assigneeReviewerReview->reviewer_kpi_percentage,true)[$decodedReviewsId[0]];
                 }
-                
+
                 // calculate Rating Based on Table Dynamic Data
                 if (count($firstReviewRating) > 0) {
                     $ratingCheck = array_sum($firstReviewRating)/count($firstReviewRating);
@@ -147,7 +147,7 @@ function calculateOverallReviewRatings($assigneeReviewTableId=null,$assigneeId)
         return 0;
     }
 
-    
+
 }
 
 // function for get View, Review and Self Review Text Change of Kpi Pms Form
@@ -164,7 +164,7 @@ function checkViewReviewText($loggedUserRole,$kpiFormReviewDetails){
                 $isAllReviewersAcceptedOrNot = true;
             }
         }
-        
+
         if($loggedUserRole == 'assignee'){
             if($isAllReviewersAcceptedOrNot == false){
                 $result = 'Edit';
@@ -176,12 +176,13 @@ function checkViewReviewText($loggedUserRole,$kpiFormReviewDetails){
                 }
             }
         }elseif($loggedUserRole == 'reviewer'){
+
             if(isset($kpiFormReviewDetails) && $kpiFormReviewDetails->is_assignee_accepted == '0'){
-                $result = 'Edit'; 
+                $result = 'Edit';
             }else{
                 $decodedReview = isset($kpiFormReviewDetails->is_reviewer_submitted) ? json_decode($kpiFormReviewDetails->is_reviewer_submitted,true) : [];
                 if(isset($decodedReview[Auth::id()]) && $decodedReview[Auth::id()] == '1'){
-                        $result = 'View';        
+                        $result = 'View';
                 }else{
                     $result = 'Review';
                 }
@@ -189,7 +190,7 @@ function checkViewReviewText($loggedUserRole,$kpiFormReviewDetails){
         }else{
             $result = 'Review';
             if($isAllReviewersAcceptedOrNot == false){
-                $result = 'Edit'; 
+                $result = 'Edit';
             }
         }
         return $result;
@@ -197,9 +198,9 @@ function checkViewReviewText($loggedUserRole,$kpiFormReviewDetails){
         Log::info('get View, Review and Self Review Text Change of Kpi Pms Form helper error: '.$e->getMessage());
         return 'Review';
     }
-  
-    
-    
+
+
+
 }
 
 function getEmployeeManager($selectedEmployeeId){
