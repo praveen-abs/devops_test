@@ -284,7 +284,10 @@ class VmtPMSModuleController extends Controller
             ->where('users.id',Auth::user()->id)
             ->first();
 
-        $reportingManagerName =User::where('user_code',$assignedUserDetails->l1_manager_code)->value('name');
+        $reportingManagerName = "---";
+
+        if($assignedUserDetails)
+            $reportingManagerName =User::where('user_code',$assignedUserDetails->l1_manager_code)->value('name');
 
         //// Rating calculation
         // Get assigned Details
