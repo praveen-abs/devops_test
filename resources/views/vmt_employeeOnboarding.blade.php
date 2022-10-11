@@ -326,40 +326,42 @@
                 if ($('marital_status').val('married')) {
                     if (mygender == "Male") {
                         console.log("Male selected");
-                        $('#spouse_gender').val('female');
+                        $('#spouse_gender').val('female').trigger('change').prop('disabled', true);
                     } else if (mygender == "Female") {
-                        $('#spouse_gender').val('male');
+
+                        $('#spouse_gender').val('male').trigger('change').prop('disabled', true);
                     }
                 } else if ($('marital_status').val('widowed')) {
-
                     if (mygender == "Male") {
                         console.log("Male selected");
-                        $('#spouse_gender').val('female');
+                        $('#spouse_gender').val('female').trigger('change').prop('disabled', true);
                     } else if (mygender == "Female") {
-                        $('#spouse_gender').val('male');
+                        $('#spouse_gender').val('male').trigger('change').prop('disabled', true);
                     }
                 } else if ($('marital_status').val('separated')) {
 
                     if (mygender == "Male") {
                         console.log("Male selected");
-                        $('#spouse_gender').val('female');
+                        $('#spouse_gender').val('female').trigger('change').prop('disabled', true);
                     } else if (mygender == "Female") {
-                        $('#spouse_gender').val('male');
+                        $('#spouse_gender').val('male').trigger('change').prop('disabled', true);
                     }
                 } else if ($('marital_status').val('divorced')) {
 
                     if (mygender == "Male") {
                         console.log("Male selected");
-                        $('#spouse_gender').val('female');
+                        $('#spouse_gender').val('female').trigger('change').prop('disabled', true);
                     } else if (mygender == "Female") {
-                        $('#spouse_gender').val('male');
+                        $('#spouse_gender').val('male').trigger('change').prop('disabled', true);
                     }
                 } else if ($('#marital_status').val('unmarried')) {
 
                     if (mygender == "Male") {
-                        $('#spouse_gender').val('');
+                        $('#spouse_gender').val('').prop('disabled', true);
+                        console.log("female unmarried");
                     } else if (mygender == "Female") {
-                        $('#spouse_gender').val('');
+                        $('#spouse_gender').val('').prop('disabled', true);
+                        console.log("male unmarried");
                     }
 
 
