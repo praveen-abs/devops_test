@@ -53,8 +53,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12s">
-                        <div class="card profile-box employee-info-card flex-fill">
+                    <div class="col-md-6 d-flex col-xl-4 col-lg-6 col-sm-12s">
+                        <div class="card  profile-box employee-info-card flex-fill">
                             <div class="card-body">
                                 <h6 class="">Employee Informations
                                     <span class="personal-edit"><a href="#" class="edit-icon" data-bs-toggle="modal"
@@ -86,9 +86,9 @@
                                     </li>
                                     <li>
                                         <div class="title">Reports to:</div>
-                                        <div class="text">
+                                        <div class="text d-flex align-items-center">
                                             <div class="avatar-box">
-                                                <div class="avatar avatar-xs">
+                                                <div class="avatar avatar-xs d-flex align-items-center page-header-user-dropdown me-2">
                                                     @if (!empty($reportingManager) && $reportingManager->avatar && file_exists(public_path('images/'. $reportingManager->avatar)) )
 
                                                         <img class="w-100 h-100 soc-det-img "
