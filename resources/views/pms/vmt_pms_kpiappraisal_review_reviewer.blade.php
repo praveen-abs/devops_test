@@ -154,7 +154,7 @@
                         <input type="hidden" name="goal_id" value="{{$assignedGoals->id}}">
                         <input type="hidden" name="kpiReviewId" value="{{$assignedGoals->id}}">
                         <div class="table-content responsive">
-                            <table id="table_review" class="table kpi_appraisal-table align-middle mb-0 table-bordered  " data-paging="true" data-paging-size="10" data-paging-limit="3" data-paging-container="#paging-ui-container" data-paging-count-format="{PF} to {PL}" data-sorting="true" data-filtering="false" data-empty="No Results" data-filter-container="#filter-form-container" data-editing-add-text="Add New">
+                            <table id="table_review" class="table kpi_appraisal-table align-middle mb-0 table-bordered  " data-paging="true" data-paging-size="100" data-paging-limit="3" data-paging-container="#paging-ui-container" data-paging-count-format="{PF} to {PL}" data-sorting="true" data-filtering="false" data-empty="No Results" data-filter-container="#filter-form-container" data-editing-add-text="Add New">
                                 <thead class="thead" id="tHead">
                                     <tr>
                                         <th scope="col" data-name='dimension' data-filterable="false" data-visible="{{$show['dimension']}}">
