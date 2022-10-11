@@ -378,11 +378,10 @@
 
                                 $("#passport_no").removeAttr("required");
                                 $('#passdate').removeAttr("required");
-                            }
+                           }
                             else if ($('nationality').val('other_country')){
                                 $("#passport_no").attr("required");
                                 $("#passdate").attr("required");
-
                             }
                         });
 
@@ -747,6 +746,11 @@
                     $('#current_country').val('103').trigger('change');
                     stateFunction('IN', '#current_state');
                     stateFunction('IN', '#permanent_state');
+
+                    $('#asterisk_passport_no').html('');
+                    $('#asterisk_passport_expdate').html('');
+
+
                 } else {
                     $('#passport_no').attr('required', true);
                     $('#passport_no_req').show();
@@ -763,7 +767,14 @@
                     $('#aadhar').addClass('not-required validate');
                     $('#aadhar_req').hide();
                     $('#current_state').val('AF').trigger('change');
+                    $('#current_country').val('').trigger('change');
+
                     stateFunction('AF', '#current_state');
+
+                    $('#asterisk_passport_no').html('*');
+                    $('#asterisk_passport_expdate').html('*');
+
+
                 }
             });
 

@@ -201,7 +201,7 @@
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
                                                 <div class="floating">
-                                                    <label for="" class="float-label">Passport Number</label>
+                                                    <label for=""  class="float-label">Passport Number<span class="text-danger" id="asterisk_passport_no"></span></label>
                                                     <input type="text" placeholder="Passport Number" name="passport_no" id="passport_no" value="{{ !empty($employee_details) && $employee_details->passport_number ? $employee_details->passport_number  : ''}}" minlength="8" maxlength="8" class="form-control textbox" style='text-transform:uppercase' required />
                                                     <label class="error star_error passport_no_label" for="passport_no" style="display: none;"></label>
 
@@ -224,7 +224,7 @@
                                                     <label for="" class="float-label">Passport Exp Date</label>
                                                 </div> -->
                                                 <div class="floating">
-                                                    <label for="" class="float-label">Passport Exp Date</label>
+                                                    <label for="" class="float-label">Passport Exp Date<span class="text-danger" id="asterisk_passport_expdate"></span></label>
                                                     <input type="text" max="9999-12-31" placeholder="Passport Exp Date" name="passport_date" id="passport_date" class="onboard-form  form-control textbox " id="passdate" onfocus="(this.type='date')" required />
                                                     <!-- <label for="" class="float-label">Passport Exp Date</label> -->
                                                 </div>
