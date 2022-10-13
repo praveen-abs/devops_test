@@ -1025,6 +1025,7 @@
                     console.log(form_data1);
                     console.log("Saving Onboard data");
                     saveOrSubmitForm("0", form_data1);
+                    $('#submit_button').prop('disabled', false);
                     return;
                 }
 
