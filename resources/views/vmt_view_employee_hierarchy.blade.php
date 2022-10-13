@@ -221,6 +221,9 @@ $(document).ready(function() {
                 
                 if(data.className != 'dept-level'){
                     nodeHtml = nodeHtml + '<div class="tree-avatar">'+imageHtml +'</div>';
+
+                }else{
+                    nodeHtml = nodeHtml + '<div class="content">'+'<span></span>'+'</div>';
                 }
                 if(data.designation){
                     nodeHtml = nodeHtml + '<div class="content">'+'<span>'+ data.designation+'</span>'+'</div>';

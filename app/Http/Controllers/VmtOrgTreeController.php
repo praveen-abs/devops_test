@@ -160,7 +160,15 @@ class VmtOrgTreeController extends Controller
                         // code...
                         $depArray[] = $this->getUserNodeDetails($value->user_code);
                     }
-                    $dArray[$j] = array("name" => $key, "className" => "dept-level","relationship" => "111","children" => $depArray);
+
+                    $dept  = \DB::table('vmt_department')->where('id', $key)->first(); 
+                    
+                    if($dept){
+                        $dArray[$j] = array("name" => $dept->name, "className" => "dept-level","relationship" => "111","children" => $depArray);
+                    } else{
+                        $dArray[$j] = array("name" => $key, "className" => "dept-level","relationship" => "111","children" => $depArray);
+                    }
+                    
                     $j++;
                 }
                 $siblingsnode_array[]  = $dArray;
@@ -212,7 +220,16 @@ class VmtOrgTreeController extends Controller
                         // code...
                         $depArray[] = $this->getUserNodeDetails($value->user_code);
                     }
-                    $dArray[$j] = array("name" => $key, "className" => "dept-level","relationship" => "111","children" => $depArray);
+
+                    $dept  = \DB::table('vmt_department')->where('id', $key)->first(); 
+                    
+                    if($dept){
+                        $dArray[$j] = array("name" => $dept->name, "className" => "dept-level","relationship" => "111","children" => $depArray);
+                    } else{
+                        $dArray[$j] = array("name" => $key, "className" => "dept-level","relationship" => "111","children" => $depArray);
+                    }
+                    
+                    //$dArray[$j] = array("name" => $key, "className" => "dept-level","relationship" => "111","children" => $depArray);
                     $j++;
                 }
                 $childnode_array['children']  = $dArray;
