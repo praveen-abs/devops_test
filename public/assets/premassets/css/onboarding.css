@@ -1,3 +1,6 @@
+.capitalize {
+    text-transform: capitalize;
+}
 
 fieldset {
     border: 1px solid !important;
@@ -124,8 +127,23 @@ option:hover {
     /* font-size: 14px; */
     /* letter-spacing: 1px; */
     /* outline: none; */
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
 }
+
+::-webkit-input-placeholder { /* WebKit browsers */
+text-transform: none;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+text-transform: none;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+text-transform: none;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+text-transform: none;
+}
+
+
 
 
 
@@ -239,7 +257,7 @@ option:hover {
 }
 
 .card {
-    
+
     position: relative
 }
 
@@ -278,7 +296,7 @@ option:hover {
         padding-left: 0 !important;
     }
 
-    
+
 
     .header {
         margin-right: 0px !important;

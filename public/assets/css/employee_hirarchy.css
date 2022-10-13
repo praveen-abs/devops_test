@@ -16,15 +16,10 @@
 }
 
 #chart-container {
-    height: auto;
-    /* border: 1px solid #aaa; */
-    /* overflow: auto; */
-    text-align: center;
-    /* background: #fff; */
-    border-radius: 6px;
-    /* border-top: 5px solid #002f56; */
-    overflow: hidden;
-
+    height: auto;    
+    text-align: center;    
+    border-radius: 6px;    
+    overflow:scroll !important;
     min-height: 500px;
 }
 .orgchart .hierarchy {
@@ -47,7 +42,7 @@
 .orgchart .node:not(:only-child)::after {
     background-color: #002f56 !important;
     top: 48px;
-    height: 27px !important;
+    height: 12px !important;
 }
 .orgchart .node:not(:only-child)::before{
     background-color: #002f56 !important;
@@ -64,8 +59,20 @@
 
 
 .orgchart .dept-level:not(:only-child)::after {  
-    height: 28px;
+   /* height: 28px;
     top: 28px;
+*/
+        content: "";
+    position: absolute;
+    bottom: 0px;
+    left: calc(50% - 1px);
+    width: 2px;
+    height: 9px;
+    background-color: #002f56 !important;
+    left: calc(50% - 1px) !important;
+    top: -18px;
+    height: 16px !important;
+    margin: 0px 0px;
 
 }
 

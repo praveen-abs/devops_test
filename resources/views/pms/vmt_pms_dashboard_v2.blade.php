@@ -2,6 +2,7 @@
 @section('css')
 <link href="{{ URL::asset('assets/css/assign_goals.css') }}" rel="stylesheet">
 <link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
+<link href="{{ URL::asset('assets/css/appraisal_review.css') }}" rel="stylesheet">
 
 <!--Font Awesome-->
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/fontawesome-all.min.css') }}">
@@ -149,7 +150,7 @@
     }
 
     #employeeSelectionModal .modal-body{
-        height: 200px;
+        height: auto;
     }
 
     .modal-body .select2-container--default .select2-selection--multiple {
@@ -170,6 +171,9 @@
 
 <div class="container-fluid assign-goal-wrapper">
     <div class="cards-wrapper">
+
+        @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR","Manager"]))
+
         <div class="row">
             <div class="col-sm-12 col-md-6 col-xl-3 col-xxl-3 col-lg-3">
                 <div class="card pms-card  left-line">
@@ -231,7 +235,7 @@
                     <div class="card-body p-0">
                         <div class="row">
                             <div class="col-sm-6 col-5 col-md-5 col-xl-5 col-xxl-5 col-lg-5 text-center">
-                                <img src="{{ URL::asset('assets/images/self_review.png') }}" alt="" class="">
+                                <img src="{{ URL::asset('assets/images/pms_rating.png') }}" alt="" class="">
                             </div>
                             <div class="col-sm-6  col-7 col-md-7 mt-3 col-xl-7 col-xxl-7 ps-0 col-lg-7 align-items-center flex-column d-flex">
                                 <p class="mb-1 text-center">Final Score Published</p>
@@ -245,11 +249,88 @@
 
             </div>
         </div>
+
+        @elseif( Str::contains( currentLoggedInUserRole(), ["Employee"]))
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 d-flex col-sm-12 col-lg-6 col-xl-6 col-xxl-6">
+                            <div class="card w-100  appraisal-left-content">
+                                <div class="card-body">
+                                        <div class="appraisal-info left-content">
+                                            <ul class="personal-info">
+                                                <li>
+                                                    <p class="title h5">Employee Name</p>
+                                                    <p class="text">{{ !empty($assignedUserDetails) ? $assignedUserDetails->name : ''}}</p>
+                                                </li>
+                                                <li>
+                                                    <p class="title h5"> Employee ID</p>
+                                                    <p class="text">{{ !empty($assignedUserDetails) ? $assignedUserDetails->user_code : ''}}</p>
+                                                </li>
+                                                <li>
+                                                    <p class="title h5">Job Title/Designation</p>
+                                                    <p class="text">{{ !empty($assignedUserDetails) ? $assignedUserDetails->designation  : ''}}</p>
+                                                </li>
+                                                <li>
+                                                    <p class="title h5">Business Unit/Process/Function</p>
+                                                    <p class="text">{{   !empty($assignedUserDetails) ? $assignedUserDetails->department : ""}}</p>
+                                                </li>
+                                                <li>
+                                                    <p class="title h5">Reporting Manager</p>
+                                                    <p class="text">{{ !empty($reportingManagerName) ? $reportingManagerName : ''}}</p>
+                                                </li>
+                                                <li class="mb-0">
+                                                    <p class="title h5">Review Period</p>
+                                                    <p class="text">
+                                                        {{ !empty($assignedUserDetails) ? $assignedUserDetails->assignment_period : ''}}
+                                                    </p>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6  col-sm-12 col-lg-6 col-xl-6 col-xxl-6">
+                            <div class="card   appraisal-right-content">
+                                <div class="card-body">
+
+                                    <div class="mb-3 input-wrap">
+                                        <p>Overall Annual Score</p> <div class="appraisal-box  btn bg-success text-white "><small>
+                                                @if($ratingDetail){{$ratingDetail['rating']}}@else - @endif</small></div>
+
+                                    </div>
+                                    <div class="mb-3 input-wrap">
+                                        <p>Corresponding ANNUAL PERFORMANCE Rating </p><div class="appraisal-box  btn bg-success  text-white"><small>
+                                           @if($ratingDetail){{$ratingDetail['performance']}}@else - @endif</small></div>
+                                    </div>
+                                    <div class="mb-3 input-wrap">
+                                        <p>Ranking</p>
+                                        <div class="appraisal-box   btn bg-success text-white "><small>
+                                           @if($ratingDetail){{$ratingDetail['ranking']}}@else - @endif</small></div>
+                                    </div>
+                                    <div class=" input-wrap">
+                                        <p>Action</p>
+                                        <div class="appraisal-box btn bg-success text-white"><small>
+                                           @if($ratingDetail){{$ratingDetail['action']}}@else - @endif</small></div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        @endif
+
         @if(count($pmsKpiAssigneeDetails) == 0)
         <div class="mt-2 " id="initial-section">
             <div class="row ">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center p-0 ">
-                    <div class="p-3 justify-content-center d-flex align-items-center"><img src="{{ URL::asset('assets/images/assign_goals.png') }}" style="width:300px;height: 50%;"></div>
+                    <div class="p-3 justify-content-center d-flex align-items-center"><img src="{{ URL::asset('assets/images/assign_goals.png') }}" style="width:280px;min-height:250px;"></div>
                     <h4 class="fw-bold">Assign Goals for your employees</h4>
                     <button id="add-goals" class="btn btn-orange mt-1">
                         <i class="text-white fa fa-plus me-1"></i>
@@ -656,14 +737,21 @@
 
                 @if(isset($loggedManagerEmployees))
                 <!-- flow 2 -->
+                <div class="row">
+                    <div class="col-8">
                 <select class="select-employee-dropdown form-control" name="employees[]" multiple="multiple">
                     @foreach($loggedManagerEmployees as $employeesSelection)
                     <option selected value="{{ $employeesSelection->id }}">{{ $employeesSelection->name }}</option>
                     @endforeach
                 </select>
-                <button class="btn btn-orange py-0 px-2" onclick="resetEmployeesList()"><span class="mr-10 icon"></span>Reset Employees</button>
+            </div>
+            <div class="col-4 text-end">
+                <button class="btn btn-primary py-0 px-2" onclick="resetEmployeesList()">Reset Employees</button>
+            </div>
+        </div>
                 @else
                 <!-- flow 1 -->
+                <div class="col-8 ">
                 <select class="select-employee-dropdown form-control form-select" id="selectedEmployeeDropdownId" name="employees[]" multiple="multiple">
                     @if(isset($allEmployeesWithoutLoggedUserList) && count($allEmployeesWithoutLoggedUserList) > 0)
                     @foreach($allEmployeesWithoutLoggedUserList as $employeeList)
@@ -671,15 +759,16 @@
                     @endforeach
                     @endif
                 </select>
+                </div>
                 @endif
 
                 @if(isset($loggedManagerEmployees))
-                <div class="buttons d-flex justify-content-end align-items-center mt-2 ">
+                <div class="buttons text-end mt-4 ">
                     <!-- <button type="button" class="btn btn-border-orange close-modal " data-bs-dismiss="modal">Close</button> -->
                     <button class="btn btn-primary ml-2" id="edit-employee">Save</button>
                 </div>
                 @else
-                <div class="buttons d-flex justify-content-end align-items-center mt-4 ">
+                <div class="buttons text-end mt-4 ">
                     <!-- <button type="button" class="btn btn-border-orange close-modal" data-bs-dismiss="modal">Close</button> -->
                     <button class="btn btn-orange ml-2" id="edit-employee-based-on-reviewer">Save</button>
                 </div>

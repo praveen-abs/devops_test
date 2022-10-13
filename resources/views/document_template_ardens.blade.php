@@ -13,6 +13,48 @@
 
 
     }
+    .payslip_table{
+        border-collapse: collapse;
+        
+    }
+    table.payslip_table tr p,table.payslip_table td p {
+    font-size: 9pt;
+    margin-top: 3pt;
+    margin-bottom: 3pt;
+    padding: 0px 5px;
+}
+    .txt-left {
+            text-align: left;
+        }
+
+        .txt-right {
+            text-align: right;
+        }
+
+        .txt-center {
+            text-align: center;
+        }
+
+        .text-strong {
+            font-weight: 600;
+        }
+
+        .header-row {
+            height: 50px;
+        }
+
+        td.bg-ash {
+            background-color: #c1c1c1;
+        }
+
+        .header-cotent p.brand-name {
+            font-weight: 600;
+            color: #002f56;
+            font-size: 16px;
+        }
+    table.payslip_table tr,table.payslip_table td {
+    border: 2px solid #ff5a38 !important;
+}
 
     .gen_terms-table tr td ul li {
         padding: 10px 0px;
@@ -22,9 +64,9 @@
         padding: 2px 0px;
     }
 
-    table tr td ul {
-        /* list-style: numb; */
-    }
+    table.payslip_table   td.bg-ash {
+    background-color: #c1c1c1;
+}
 
     .sub-page {
         padding: 10px 30px;

@@ -5,6 +5,7 @@
 <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
 <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/onboarding.css') }}">
 
+
 <style>
     /* Chrome, Safari, Edge, Opera */
     input::-webkit-outer-spin-button,
@@ -33,20 +34,40 @@
         padding: 7px;
         border-radius: 2px;
     }
+    .loader {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url('{{ URL::asset("assets/images/loader.gif") }}') 50% 50% no-repeat rgb(249, 249, 249);
+        opacity: 0.4;
+    }
+
 </style>
 @endsection
 
 @section('content')
+@component('components.organization_breadcrumb')
+@slot('li_1') @endslot
+@endcomponent
+<div class="loader" style="display:none;"></div>
 
-@if(!request()->has('email'))
+{{-- Show Only if employee is already onboarded --}}
+@if(!empty($employee_user) && $employee_user->is_onboarded == "1")
 
     @component('components.organization_breadcrumb')
     @slot('li_1') @endslot
     @endcomponent
 @endif
-<div class="main">
 
-    @include('ui-onboarding')
+<div class="main">
+    @if(Request::has('debug'))
+        @include('ui-onboarding-debug')
+    @else
+        @include('ui-onboarding')
+    @endif
 
     @endsection
     @section('script')
@@ -79,7 +100,16 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 
+
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
+
+    {{-- for date picker --}}
+
+    {{-- <link rel="stylesheet" href="dist/datepicker.min.css">
+    <script src="dist/datepicker.min.js"></script> --}}
+
+
+
 
 
     <script>
@@ -91,6 +121,7 @@
         //         return false;
         //     return true;
         // }
+        var isEmailExists = false;
 
         function numberOnly(id) {
             // Get element by id which passed as parameter within HTML element event
@@ -99,10 +130,30 @@
             element.value = element.value.replace(/[^0-9]/gi, "");
         }
 
+
+
+
+
+
         $(document).ready(function() {
 
-           // $("input[type='number']").attr("onkeypress", "return onlyNumberKey(event)");
+            // $('input[@type="text"]')[0].focus();
 
+            $("input[type='text']").on("click", function() {
+            $(this).select();
+        });
+        $("input").focus(function() {
+            $(this).select();
+        });
+        $("input").focusin(function() {
+            $(this).select();
+        });
+
+
+
+
+            $('#gender').val('other').trigger("change");
+            console.log('Gender from DB : '+'{{ !empty($employee_details) && $employee_details->gender ? $employee_details->gender : '' }}');
             $('#process').select2({
                 width: '100%',
                 placeholder: "Select Process",
@@ -112,12 +163,21 @@
                 placeholder: "Select Department",
             });
 
+            $('#nationality').select2({
+                width: '100%'
+            });
+
+
+
+
+
+
             $('#l1_manager_code_select').select2({
                 width: '100%',
                 placeholder: "Select Reporting Manager",
             });
 
-            $('#l1_manager_code').on('select2:select', function(e) {
+            $('#l1_manager_code_select').on('select2:select', function(e) {
                 var usercode = e.params.data.text;
 
                 //http://localhost:8000/getEmployeeName?user_code=EMP100
@@ -157,6 +217,7 @@
 
 
             $('#employee_name').css('text-transform', 'capitalize');
+
 
             $('.select2_form_without_search').each(function() {
                 var placeholder = $(this).attr('placeholder')
@@ -212,15 +273,19 @@
                 placeholder: "Select Bank Name",
             });
 
+            $('#bank_names').on('click',function() {
+                console.log("hello");
+                 //$( "#target" ).focus();
+            });
 
-            $('#bank_name').change(function() {
-                var min = $('#bank_name option:selected').attr('min-data');
-                var max = $('#bank_name option:selected').attr('max-data');
+            $('#bank_names').change(function() {
+                var min = $('#bank_names option:selected').attr('min-data');
+                var max = $('#bank_names option:selected').attr('max-data');
+
+                //$('#account_no').val('');
                 $('#account_no').attr('minlength', min);
-                $('#account_no').attr('maxlength', min);
+                $('#account_no').attr('maxlength', max);
             })
-
-
 
             $('body').on('click', '.close-modal', function() {
                 $('#notificationModal').hide();
@@ -261,40 +326,42 @@
                 if ($('marital_status').val('married')) {
                     if (mygender == "Male") {
                         console.log("Male selected");
-                        $('#spouse_gender').val('female');
+                        $('#spouse_gender').val('female').trigger('change').prop('disabled', true);
                     } else if (mygender == "Female") {
-                        $('#spouse_gender').val('male');
+
+                        $('#spouse_gender').val('male').trigger('change').prop('disabled', true);
                     }
                 } else if ($('marital_status').val('widowed')) {
-
                     if (mygender == "Male") {
                         console.log("Male selected");
-                        $('#spouse_gender').val('female');
+                        $('#spouse_gender').val('female').trigger('change').prop('disabled', true);
                     } else if (mygender == "Female") {
-                        $('#spouse_gender').val('male');
+                        $('#spouse_gender').val('male').trigger('change').prop('disabled', true);
                     }
                 } else if ($('marital_status').val('separated')) {
 
                     if (mygender == "Male") {
                         console.log("Male selected");
-                        $('#spouse_gender').val('female');
+                        $('#spouse_gender').val('female').trigger('change').prop('disabled', true);
                     } else if (mygender == "Female") {
-                        $('#spouse_gender').val('male');
+                        $('#spouse_gender').val('male').trigger('change').prop('disabled', true);
                     }
                 } else if ($('marital_status').val('divorced')) {
 
                     if (mygender == "Male") {
                         console.log("Male selected");
-                        $('#spouse_gender').val('female');
+                        $('#spouse_gender').val('female').trigger('change').prop('disabled', true);
                     } else if (mygender == "Female") {
-                        $('#spouse_gender').val('male');
+                        $('#spouse_gender').val('male').trigger('change').prop('disabled', true);
                     }
                 } else if ($('#marital_status').val('unmarried')) {
 
                     if (mygender == "Male") {
-                        $('#spouse_gender').val('');
+                        $('#spouse_gender').val('').prop('disabled', true);
+                        console.log("female unmarried");
                     } else if (mygender == "Female") {
-                        $('#spouse_gender').val('');
+                        $('#spouse_gender').val('').prop('disabled', true);
+                        console.log("male unmarried");
                     }
 
 
@@ -313,11 +380,10 @@
 
                                 $("#passport_no").removeAttr("required");
                                 $('#passdate').removeAttr("required");
-                            }
+                           }
                             else if ($('nationality').val('other_country')){
                                 $("#passport_no").attr("required");
                                 $("#passdate").attr("required");
-
                             }
                         });
 
@@ -428,6 +494,89 @@
                 //console.log("Age is  : "+);
 
             });
+
+            $('#email').on('input', function() {
+                var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+                if(!regex.test($(this).val())) {
+                    console.log("Invalid Email");
+
+                    return false;
+                }else{
+                    console.log("Valid Email");
+                    //Check if email already exists
+                    var routeURL = "{{route('isEmailExists',':email')}}";
+                    routeURL = routeURL.replace(':email', $(this).val());
+
+                    $.ajax({
+                        url: routeURL,
+                        type: "GET",
+                        success: function(data) {
+                           console.log("(isEmailExists :: AJAX call response : "+data);
+
+                           $('#error_email').html("");
+
+                           if(data == "true")
+                           {
+                                $('#error_email').html("Email already exists");
+                                isEmailExists = true;
+
+                           }
+                           else
+                           {
+                                isEmailExists = false;
+                           }
+                        }
+                    });
+
+
+                    return true;
+                }
+            });
+
+            function checkEmpCodeExists(emp_code)
+            {
+
+                    //Check if email already exists
+                    var routeURL = "{{route('isEmpCodeExists',':emp_code')}}";
+
+                    routeURL = routeURL.replace(':emp_code', emp_code);
+
+                    $.ajax({
+                        url: routeURL,
+                        type: "GET",
+                        success: function(data) {
+                           console.log("isEmpCodeExists :: AJAX call response : "+data);
+
+                           $('#error_emp_code').html("");
+
+                           if(data == "true")
+                           {
+
+                                console.log(emp_code+" already exists!");
+
+                                $('#error_emp_code').html("Employee code already exists. Re-enter new code.");
+                                $('#employee_code').removeAttr('readonly');
+
+                                $('#modalHeader').html("Error");
+                                $('#modalSubHeading').html("Please fix the below issue");
+                                $('#modalBody').html("Employee code already exists. Re-enter new code.");
+                                $('#notificationModal').show();
+                                $('#notificationModal').removeClass('fade');
+
+                                errors_core_fields.push("Employee code already exists. Re-enter new code.");
+
+                                is_core_fields_valid = false;
+                            }
+                           else
+                           {
+                                console.log(emp_code+" doesnt exists");
+
+                           }
+
+                        }
+                    });
+            }
 
             function getAge(dateString) {
                 var today = new Date();
@@ -577,12 +726,6 @@
             });
 
 
-            $('#holiday_location').select2({
-                width: '100%',
-                placeholder: "Select location",
-            });
-
-
             $('#nationality').change(function() {
                 console.log("Changed nationality : "+$('#nationality').val());
                 // $('#permanent_country').val('IN').trigger('change');
@@ -600,11 +743,16 @@
                     $('#aadhar').attr('required', true);
                     $('#aadhar_req').show();
                     $('#aadhar').removeClass('not-required validate');
-                    $('#permanent_pincode').attr('type', 'number');
-                    $('#current_pincode').attr('type', 'number');
-                    $('#current_country').val('IN').trigger('change');
+                    $('#permanent_pincode').attr('type', 'text');
+                    $('#current_pincode').attr('type', 'text');
+                    $('#current_country').val('103').trigger('change');
                     stateFunction('IN', '#current_state');
                     stateFunction('IN', '#permanent_state');
+
+                    $('#asterisk_passport_no').html('');
+                    $('#asterisk_passport_expdate').html('');
+
+
                 } else {
                     $('#passport_no').attr('required', true);
                     $('#passport_no_req').show();
@@ -621,33 +769,29 @@
                     $('#aadhar').addClass('not-required validate');
                     $('#aadhar_req').hide();
                     $('#current_state').val('AF').trigger('change');
+                    $('#current_country').val('').trigger('change');
+
                     stateFunction('AF', '#current_state');
+
+                    $('#asterisk_passport_no').html('*');
+                    $('#asterisk_passport_expdate').html('*');
+
+
                 }
             });
 
-            // $('#vmt_aadhar').on('input', function() {s
-            //     var aadharno = new RegExp("^[2-9]{1}[0-9]{3}\s{1}[0-9]{4}\s{1}[0-9]{4}$");
-            //     var aadhartes = $("#vmt_aadhar").val();
-            //     if (aadharno.test(aadhartes)) {
-            //         return true;
-            //     } else {
-            //         alert("Please Enter Valid Aadhar Number");
-            //     }
-            //     return false;
-            // });
-
-
             $('#passport_no_req').hide();
             $('#passport_exp_req').hide();
-            //$('#current_country').val('IN').trigger('change');
-            //$('#permanent_country').val('IN').trigger('change');
-            //$('#current_state').val('IN').trigger('change');
-            //$('#permanent_state').val('IN').trigger('change');
-           // stateFunction('IN', '#current_state');
-           // stateFunction('IN', '#permanent_state');
             stateFunction('IN', '#ptax_location');
             stateFunction('IN', '#lwf_location');
             stateFunction('IN', '#holiday_location');
+
+            stateFunction('IN', '#current_state');
+
+            stateFunction('IN', '#permanent_state');
+
+            populateGenderDropdown('#gender');
+            populateMaritalStatusDropdown();
 
             $('#current_address_copy').change(function() {
                 if ($('#current_address_copy').is(':checked')) {
@@ -669,9 +813,152 @@
                 }
             });
 
-            function stateFunction(id, dataId, flag = false) {
+            function populateGenderDropdown(element_id ) {
+
+                var genderValues = [];
+                genderValues['male'] = 'Male';
+                genderValues['female'] = 'Female';
+                genderValues['other'] = 'Other';
+
+                var backend_value = "";
+
+                if(element_id == '#gender')
+                {
+                    backend_value = "{{ !empty($employee_details) && $employee_details->gender ? $employee_details->gender  : ''}}";
+                }
+
+                //create the dropdown
+                const keys = genderValues.keys();
+                console.log("Gender array : "+genderValues);
+
+                for (var key in genderValues) {
+                    if(key == backend_value)
+                        $(element_id).append('<option value="' + key + '" selected>' + genderValues[key] + '</option>');
+                    else
+                        $(element_id).append('<option value="' + key + '">' + genderValues[key] + '</option>');
+
+                }
+
+            }
+
+            function populateMaritalStatusDropdown() {
+
+                var marital_status = [];
+                marital_status['unmarried'] = 'Unmarried';
+                marital_status['married'] = 'Married';
+                marital_status['widowed'] = 'Widowed';
+                marital_status['separated'] = 'Separated';
+                marital_status['divorced'] = 'Divorced';
+
+
+                var backend_value = "{{ !empty($employee_details) && $employee_details->marital_status ? $employee_details->marital_status : ''}}";
+
+                //create the dropdown
+                const keys = marital_status.keys();
+
+                for (var key in marital_status) {
+                    if(key == backend_value)
+                        $('#marital_status').append('<option value="' + key + '" selected>' + marital_status[key] + '</option>');
+                    else
+                        $('#marital_status').append('<option value="' + key + '">' + marital_status[key] + '</option>');
+
+                }
+
+            }
+
+
+            @if( !empty($employee_details) && $employee_details->nationality )
+                console.log('{{$employee_details->nationality}}');
+                $('#nationality').val('{{$employee_details->nationality}}').trigger('change');
+            @endif
+
+            @if( !empty($emp_statutory_details) && $emp_statutory_details->pf_applicable )
+
+                $('#pf_applicable').val('{{$emp_statutory_details->pf_applicable}}').trigger('change');
+            @endif
+
+            @if( !empty($emp_statutory_details) && $emp_statutory_details->esic_applicable )
+
+                $('#esic_applicable').val('{{$emp_statutory_details->esic_applicable}}').trigger('change');
+            @endif
+
+            @if( !empty($emp_statutory_details) && $emp_statutory_details->tax_regime )
+
+                $('#tax_regime').val('{{$emp_statutory_details->tax_regime}}').trigger('change');
+            @endif
+
+
+            @if( !empty($emp_office_details) && $emp_office_details->department_id )
+
+                $('#department').val('{{$emp_office_details->department_id}}').trigger('change');
+            @endif
+
+            @if(!empty($employee_details->bank_id) && $employee_details->bank_id)
+                 $('#bank_names').val('{{$employee_details->bank_id}}').trigger('change');
+            @endif
+
+
+            @if(!empty($emp_office_details) && $emp_office_details->probation_period)
+                 $('#probation_period').val('{{$emp_office_details->probation_period}}').trigger('change');
+            @endif
+
+            @if(!empty($emp_office_details) && $emp_office_details->confirmation_period)
+                 $('#confirmation_period').val('{{$emp_office_details->confirmation_period}}').trigger('change');
+            @endif
+
+            @if(!empty($employee_details->no_of_children) && $employee_details->no_of_children)
+                 $('#no_of_children').val('{{$employee_details->no_of_children}}').trigger('change');
+            @endif
+
+            @if(!empty($employee_details) && $employee_details->dob)
+                 $('#dob').val('{{$employee_details->dob}}');
+            @endif
+
+            @if(!empty($employee_details) && $employee_details->passport_date)
+                 $('#passport_date').val('{{$employee_details->passport_date}}');
+            @endif
+
+            @if( !empty($emp_family_details))
+                @foreach($emp_family_details as $details)
+                    @if(!empty($details->relationship) && $details->relationship == "Father")
+                        $('#father_name').val('{{$details->name}}').trigger('change');
+                        $('#dob_father').val('{{$details->dob}}').trigger('change');
+                    @elseif(!empty($details->relationship) && $details->relationship == "Mother")
+                        $('#mother_name').val('{{$details->name}}').trigger('change');
+                        $('#dob_mother').val('{{$details->dob}}').trigger('change');
+                    @elseif(!empty($details->relationship) && $details->relationship == "Spouse")
+                        $('#spouse_name').val('{{$details->name}}').trigger('change');
+                        $('#dob_spouse').val('{{$details->dob}}').trigger('change');
+                        $('#spouse_gender').val('{{$details->gender}}').trigger('change');
+                        $('#wedding_date').val('{{$details->wedding_date}}').trigger('change');
+                    @endif
+                @endforeach
+            @endif
+
+            function stateFunction(id, dataId) {
                 var val = $('#current_state').val();
                 $(dataId).empty();
+
+                var backend_value ="";
+                //set a value if already exists in DB for this employee
+                if(dataId == '#ptax_location')
+                    backend_value = "{{ !empty($emp_statutory_details) && $emp_statutory_details->ptax_location_state_id ? $emp_statutory_details->ptax_location_state_id  : ''}}";
+                else
+                if(dataId == '#lwf_location')
+                    backend_value = "{{ !empty($emp_statutory_details) && $emp_statutory_details->lwf_location_state_id ? $emp_statutory_details->lwf_location_state_id  : ''}}";
+                else
+                if(dataId == '#holiday_location')
+                    backend_value = "{{ !empty($emp_office_details) && $emp_office_details->holiday_location ? $emp_office_details->holiday_location  : ''}}";
+                else
+                if(dataId == '#current_state')
+                    backend_value = "{{ !empty($employee_details) && $employee_details->current_state_id ? $employee_details->current_state_id  : ''}}";
+                else
+                if(dataId == '#permanent_state')
+                    backend_value = "{{ !empty($employee_details) && $employee_details->permanent_state_id ? $employee_details->permanent_state_id  : ''}}";
+
+                console.log(dataId+" : " +backend_value);
+
+
                 $.ajax({
                     url: "{{route('state')}}",
                     type: "POST",
@@ -683,59 +970,119 @@
                         $(dataId).append('<option value="">Select State</option>');
 
                         $.each(data, function(key, value) {
-                            $(dataId).append('<option value="' + value.id + '">' + value.state_name +
-                                '</option>');
+
+                            //if data already exists in back-end , then make it selected
+                            //Only for holiday location
+                            if(dataId == '#holiday_location'  &&  backend_value == value.state_name)
+                            {
+                                $(dataId).append('<option value="' + value.id + '" selected>' + value.state_name + '</option>');
+                                console.log("Updated dropdown value for "+dataId);
+                            }
+                            else
+                            if(backend_value == value.id)
+                            {
+                                $(dataId).append('<option value="' + value.id + '" selected>' + value.state_name + '</option>');
+                                console.log("Updated dropdown value for "+dataId);
+                            }
+                            else
+                            {
+                                $(dataId).append('<option value="' + value.id + '">' + value.state_name + '</option>');
+                            }
+
                         });
-                        if (val && flag) {
+                        if (val) {
                             $('#permanent_state').val($('#current_state').val());
                         }
+
                     }
                 });
             }
 
-            // $('#permanent_district').change(function() {
-            // var id = $(this).val();
-            // stateFunction(id, '#permanent_state');
-            // });
-
-            // $('#current_district').change(function() {
-            // var id = $(this).val();
-            // stateFunction(id, '#current_state');
-            // });
-
-
 
             var error_fields ="";
 
-            $('#submit_button').on('click', function(e) {
-                console.log("here");
-                //console.log($('#form-1').valid());
-                //var flag = false;
+            $('.processOnboardForm').on('click', function(e) {
+                console.log("Selected Button : "+$(this).attr('name'));
 
-                //alert("1 st one");
+                var can_onboard_employee = "0";
+                let form_data1 = $("#form-1");
 
-                var regex = ' /([A-Z]){5}([0-9]){4}([A-Z]){1}$/';
-                var txtPANCard = $("#pan_no").val();
-                var textDLno = $("#dl_no").val();
-                var txtIFSCNo = $("#bank_ifsc").val();
-                var ifsc = '^[A-Z]{4}0[A-Z0-9]{6}$';
-                var dl_pat = '/^(([A-Z]{2}[0-9]{2})( )|([A-Z]{2}-[0-9]{2}))((19|20)[0-9][0-9])[0-9]{7}$/';
+                //check if mail exists
+                if(isEmailExists == true)
+                {
+                    console.log("Unable to submit form. Email already exists");
 
+                    $('#modalHeader').html("Error");
+                    $('#modalSubHeading').html("Email already exists!");
+                    $('#notificationModal').show();
+                    $('#notificationModal').removeClass('fade');
 
-                if ($('#form-1').valid()) {
+                    return;
+                }
+
+                if($(this).attr('name') == "save_form")  //Form is saved but employee not onboarded
+                {
+                    console.log(form_data1);
+                    console.log("Saving Onboard data");
+                    saveOrSubmitForm("0", form_data1);
+                    $('#submit_button').prop('disabled', false);
+                    return;
+                }
+
+                //Find whether SAVE or SUBMIT button clicked
+                if ($('#form-1').valid())
+                {
 
                     //alert("1 st one");
-                    var form_data1 = new FormData(document.getElementById("form-1"));
-                    var txtPANCard = $("#pan_no").val();
 
-                    $.ajax({
+                    // console.log(form_data1.values());
+                    // for (var pair of form_data1.entries())
+                    // {
+                    //     console.log(pair[0]+ ', '+ pair[1]);
+                    // }
+
+                    $('.loader').show();
+                    if($(this).attr('name') == "submit_form")  //Form is saved and employee is onboarded
+                    {
+                        console.log("Submitting Onboard data");
+                        saveOrSubmitForm("1", form_data1);
+                    }
+
+                }
+                else
+                {
+                    console.log("Form validation failed");
+                    console.log(error_fields);
+
+                    $('#modalHeader').html("Error");
+                    $('#modalSubHeading').html("The following fields are not filled.");
+                    $('#modalBody').html(error_fields);
+                    $('#notificationModal').show();
+                    $('#notificationModal').removeClass('fade');
+                }
+
+            });
+
+            function saveOrSubmitForm(t_can_onboard_employee, t_form_data1)
+            {
+
+                $.ajax({
                         url: "{{url('vmt-employee-onboard')}}",
                         type: "POST",
-                        dataType: "json",
-                        data: form_data1,
-                        contentType: false,
-                        processData: false,
+                        dataType:"json",
+                        data:{
+                            // "onboard_type" : t_onboard_type,
+                            "user_id": $('#user_id').val(),
+                            "can_onboard_employee" : t_can_onboard_employee,
+                            "form_data" : t_form_data1.serialize(),
+                           "_token" : "{{ csrf_token() }}"
+                        },
+
+                        // data:form_data1,
+                        // contentType: false,
+                        // processData: false,
                         success: function(data) {
+                            $('.loader').hide();
 
                             console.log("Response : "+data.status);
                             console.log(data);
@@ -743,13 +1090,20 @@
                             if (data.status == "success") {
                                 $('#modalHeader').html("Success");
                                 $('#modalSubHeading').html(data.message);
-                                if(data.mail_status == "success")
+                                if(t_can_onboard_employee == "1" && data.mail_status == "success")
                                     $('#modalBody').html("Mail notification sent.");
+                                else
+                                if(t_can_onboard_employee == "0")
+                                    $('#modalBody').html("");
                                 else
                                     $('#modalBody').html("Mail notification not sent.");
 
                                 $('#notificationModal').show();
                                 $('#notificationModal').removeClass('fade');
+
+                                //add the user_id into the hidden field
+                                if(data.user_id)
+                                    $('#user_id').val(data.user_id);
                             }
                             else
                             if (data.status == "failure") {
@@ -764,42 +1118,20 @@
                             //alert(data);
                         },
                         error: function(data) { //NEED TO FIX IT
+                            $('.loader').hide();
 
-                            // console.log('error');
-                            // if (data.status == "Saved") {
-                            //     $('#modalHeader').html(data);
-                            //     $('#modalNot').html("Employee Onboarding success");
-                            //     $('#modalBody').html("Mail notification sent.");
-                            //     $('#notificationModal').show();
-                            //     $('#notificationModal').removeClass('fade');
-                            // } else {
+                            $('#modalHeader').html("Error");
+                            $('#modalSubHeading').html(data.message);
+                            $('#modalBody').html(data);
+                            $('#notificationModal').show();
+                            $('#notificationModal').removeClass('fade');
 
-                            //     $('#modalHeader').html(data);
-                            //     $('#modalNot').html("Failed to save Data");
-                            //     //$('#modalBody').html("Request to the server failed");
-                            //     $('#notificationModal').show();
-                            //     $('#notificationModal').removeClass('fade');
-                            // }
                             console.log("Ajax Error block : "+data);
 
                         }
                     });
 
-                }
-                else
-                {
-                    console.log("Form validation failed");
-                    console.log(error_fields);
-
-                    $('#modalHeader').html("Error");
-                    $('#modalSubHeading').html("The following fields are not filled.");
-                    $('#modalBody').html(error_fields);
-                    $('#notificationModal').show();
-                    $('#notificationModal').removeClass('fade');
-                }
-            });
-
-
+            }
 
             $('#form-1').validate({
                 // rules: {
@@ -826,7 +1158,7 @@
                     console.log(errorMap);
 
                     var keys = Object.keys(errorMap);
-                    var errors_html = "<ul>";
+                    var errors_html = "<ul class='list-style-numbered list-style-circle p-4'>";
 
                     for(var j=0;j<keys.length;j++)
                     {
@@ -871,10 +1203,20 @@
             $("select").on("select2:close", function(e) {
                 $(this).valid();
             });
+
+
         });
+
+
+        var is_core_fields_valid = false;
+        var errors_core_fields = [] ;
         // $("#button_close").click(function(){
         //         window.location.href = "/employeeOnboarding";
         // });
+
+
+
+
     </script>
 
 

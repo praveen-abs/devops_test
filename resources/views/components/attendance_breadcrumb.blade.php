@@ -32,7 +32,7 @@
 						</a>
 					</li>
 					<li class="crumb-item">
-						<a href="{{url('attendance_reports')}}" class="text-muted">Reports</a>
+						<a href="{{route('attendance-leavereports')}}" class="text-muted">Reports</a>
 					</li>						
                     <li class="crumb-item">
 						<a href="{{url('attendance_settings')}}" class="text-muted">Settings</a>

@@ -489,7 +489,7 @@ th.gridjs-th-sort:focus, th.gridjs-th-sort:hover {
     padding-top: 0;
     margin-bottom: 5px;
     padding: 5px 1px;
-    width: 100% !important;    
+    width: 100% !important;
     text-align: end;
     position: relative;
 }
@@ -696,16 +696,16 @@ button.gridjs-sort-asc, button.gridjs-sort-desc {
     color: #878a99;
 }
 .breadcrumb .crumb-item.active {
-    background-color: #002f56;
+    /* background-color: #002f56;
     padding: 0px 10px;
-    border-radius: 3px;
+    border-radius: 3px; */
 }
 .breadcrumb .crumb-item {
     margin: 0px 10px !important;
 }
-.breadcrumb .crumb-item.active a {
+/* .breadcrumb .crumb-item.active a {
     color: #fff !important;
-}
+} */
 .breadcrumb .crumb-item a:active {
     border-bottom: 1px solid #002f56 !important;
 }
@@ -992,7 +992,7 @@ button.gridjs-sort-asc::after{
     color: #002f56;
 }
 .topbar-logo {
-    height: 25px;
+    height: 40px;
     width: 140px;
 }
 .topbar-logo img {
@@ -1107,10 +1107,28 @@ button.gridjs-sort-asc::after{
     padding: 0;
 }
 .profile-details ul li, .profile-details .item {
-    display: inline; 
+    display: inline;
 }
 @media (min-width: 576px) {
     .leave-request-section .modal .modal-dialog {
         max-width: 80% !important;
     }
+}
+
+
+/* side bar content hover effect and active effect */
+[data-layout="vertical"][data-sidebar-size="lg"] .navbar-menu .navbar-nav .nav-link:active::before,.navbar-menu .navbar-nav .nav-link[data-bs-toggle="collapse"][aria-expanded="true"]:before {
+    content: "";
+    height: 75%;
+    margin: 0px 0px 0px -2px;
+    overflow: hidden;
+    transition: transform 0.2s;
+    font-size: 1.05rem;
+    position: absolute;
+
+   background-color: #ff530a;
+    width: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    left: 2px !important;
 }

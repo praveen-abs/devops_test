@@ -5,35 +5,34 @@
 
 @endsection
 @section('content')
-<div class="investments-wrapper">
-    <div class="card shadow profile-box card-top-border ">
-        <div class="fill salary-header nav-tab-header">
-            <div class="row">
-                <div class="col-xs-6">
-                    <ul class="nav nav-pills nav-tabs-dashed">
-                        <li id="ember76" class="active ember-view">
-                            <a href="#/investments-and-proofs/investment-declaration" id="ember77" class="active ember-view">
-                                Information
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+
+<div class="card shadow top-line under_review-wrapper">
+    <div class="fill salary-header nav-tab-header">
+        <div class="row">
+            <div class="col-xs-6">
+                <ul class="nav nav-pills nav-tabs-dashed">
+                    <li id="ember76" class="active ember-view">
+                        <a href="#/investments-and-proofs/investment-declaration" id="ember77" class="active ember-view">
+                            Information
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
+    </div>
 
-        <div class="zp-container nav-tab-body-top scroll-x scroll-y">
-            <div id="ember83" class="ember-view">
-                <div class="fill body content">
-                    <div class="empty-state-help-centered ind-empty-state d-flex align-items-center justify-content-center flex-column ">
-                        <img src="https://css.zohostatic.in/zfpayroll/zpayrollportal///assets/it-empty-state-68d45ef7fddba0f96b1ec6b7664ace53.svg" class="empty-state-image">
-                        <div class="empty-state-content">
-                            <div class="">
-                                @if(auth()->user()->active == 1)
-                                    <h5>You have submitted all the documents</h5>
-                                @else
-                                    <h5>Your profile is under review. Kindly contact the HR for further details.</h5>
-                                @endif
-                            </div>
+    <div class="zp-container nav-tab-body-top scroll-x scroll-y">
+        <div id="ember83" class="ember-view">
+            <div class="fill body content">
+                <div class="empty-state-help-centered ind-empty-state d-flex align-items-center justify-content-center flex-column ">
+                    <img src="https://css.zohostatic.in/zfpayroll/zpayrollportal///assets/it-empty-state-68d45ef7fddba0f96b1ec6b7664ace53.svg" class="empty-state-image">
+                    <div class="empty-state-content">
+                        <div class="">
+                            @if(auth()->user()->active == 1)
+                            <p>You have submitted all the documents</p>
+                            @else
+                            <p>Your profile is under review. Kindly contact the HR for further details.</p>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -41,6 +40,7 @@
         </div>
     </div>
 </div>
+
 
 @endsection
 @section('script')

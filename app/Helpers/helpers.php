@@ -4,6 +4,7 @@ use App\Models\VmtOrgRoles;
 use App\Models\User;
 use App\Models\VmtClientMaster;
 use App\Models\VmtEmployee;
+use App\Models\VmtBloodGroup;
 
 function required()
 {
@@ -16,6 +17,25 @@ function fetchMasterConfigValue($config_name)
     return VmtMasterConfig::where('config_name','=',$config_name)->get()->value('config_value');
 
 }
+
+function isEmailExists($email)
+{
+    if(User::where('email',$email)->exists())
+        return "true";
+    else
+        return "false";
+
+}
+
+function isEmpCodeExists($emp_code)
+{
+    if(User::where('user_code',$emp_code)->exists())
+        return "true";
+    else
+        return "false";
+
+}
+
 
 function updateUserRole($user_code,$role_name)
 {
@@ -83,6 +103,12 @@ function fetchSubClients(){
         }
     }
 
+    function getAllBloodGroupNames()
+    {
+        return VmtBloodGroup::all(['id','name']);
+
+    }
+
     function calculateProfileCompleteness($user_id)
     {
 
@@ -107,7 +133,18 @@ function fetchSubClients(){
                             'vmt_employee_details.religion',
                             'vmt_employee_details.marital_status',
                             'vmt_employee_details.spouse_name',
+                        //Documents
+                            'vmt_employee_details.aadhar_card_file',
+                            'vmt_employee_details.aadhar_card_backend_file',
+                            'vmt_employee_details.pan_card_file',
+                            'vmt_employee_details.passport_file',
+                            'vmt_employee_details.voters_id_file',
+                            'vmt_employee_details.dl_file',
+                            'vmt_employee_details.education_certificate_file',
+                            'vmt_employee_details.reliving_letter_file',
+
                             //'vmt_employee_details.no_of_children',
+
 
                         //Family Informations
                             'vmt_employee_family_details.name',
@@ -116,7 +153,7 @@ function fetchSubClients(){
                             'vmt_employee_family_details.phone_number',
 
                         //Bank Informations
-                            'vmt_employee_details.bank_name',
+                            'vmt_employee_details.bank_id',
                             'vmt_employee_details.bank_ifsc_code',
                             'vmt_employee_details.bank_account_number',
 
@@ -148,4 +185,6 @@ function fetchSubClients(){
         //dd($value);
         return $value;
     }
+
+
 

@@ -55,12 +55,11 @@ class VmtMainDashboardController extends Controller
             {
                 if(auth()->user()->onboard_type == 'quick')
                 {
-                    $request['email'] = auth()->user()->email;
+                    //User record already exists. So fetch it and show in normal onboard form
 
-                // dd($request);
                     $vmtEmpController = new VmtEmployeeController;
 
-                    return $vmtEmpController->showEmployeeOnboardingPage($request);
+                    return $vmtEmpController->showEmployeeOnboardingPage(auth()->user()->id);
                 }
                 else
                 if(auth()->user()->onboard_type == 'bulk')
@@ -108,7 +107,7 @@ class VmtMainDashboardController extends Controller
                                 ->whereNotNull('vmt_employee_details.doj')
                                 ->whereNotNull('vmt_employee_details.dob');
 
-       //dd($employeesEventDetails->get('vmt_employee_details.dob')->toArray());
+    //    dd($employeesEventDetails->get('vmt_employee_details.dob')->toArray());
 
         //Employee events for the current month only
         $dashboardEmployeeEventsData = [];

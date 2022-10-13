@@ -154,7 +154,7 @@
                         <input type="hidden" name="goal_id" value="{{$assignedGoals->id}}">
                         <input type="hidden" name="kpiReviewId" value="{{$assignedGoals->id}}">
                         <div class="table-content responsive">
-                            <table id="table_review" class="table kpi_appraisal-table align-middle mb-0 table-bordered  " data-paging="true" data-paging-size="10" data-paging-limit="3" data-paging-container="#paging-ui-container" data-paging-count-format="{PF} to {PL}" data-sorting="true" data-filtering="false" data-empty="No Results" data-filter-container="#filter-form-container" data-editing-add-text="Add New">
+                            <table id="table_review" class="table kpi_appraisal-table align-middle mb-0 table-bordered  " data-paging="true" data-paging-size="100" data-paging-limit="3" data-paging-container="#paging-ui-container" data-paging-count-format="{PF} to {PL}" data-sorting="true" data-filtering="false" data-empty="No Results" data-filter-container="#filter-form-container" data-editing-add-text="Add New">
                                 <thead class="thead" id="tHead">
                                     <tr>
                                         <th scope="col" data-name='dimension' data-filterable="false" data-visible="{{$show['dimension']}}">
@@ -352,6 +352,8 @@
         @endif
 
         @if($isAllReviewersSubmittedOrNot && count($pmsRatingDetails) > 0)
+       <div class="row">
+        <div class="col-12">
         <div class="card">
             <div class="card-header">
                 <h5>Best People Rating Grid</h5>
@@ -401,6 +403,8 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
         @endif
 
 
@@ -445,8 +449,8 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
-<script src="{{ URL::asset('/assets/premassets/js/footable.min.js') }}"></script>
-<script src="{{ URL::asset('/assets/premassets/css/footable.bootstrap.min.css') }}"></script>
+{{-- <script src="{{ URL::asset('/assets/premassets/js/footable.min.js') }}"></script>
+<script src="{{ URL::asset('/assets/premassets/css/footable.bootstrap.min.css') }}"></script> --}}
 <script type="text/javascript">
     $('#upload_file').change(function() {
         if ($(this).is(':valid')) {
@@ -659,13 +663,13 @@
         //$(collapse-'.$index)
         if($('.collapse-'+rowIndex).css('display') == 'none'){
             $('.collapse-'+rowIndex).css('display', 'inline');
-            
+
             less_more.innerHTML="Less"
-            
+
         }else{
             $('.collapse-'+rowIndex).css('display', 'none');
             less_more.innerHTML="More"
-            
+
         }
     }
 

@@ -8,7 +8,8 @@
     <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ URL::asset('assets/images/favicon_abs.png')}}">
-    
+    {{-- <link rel="shortcut icon" href="https://demo.abshrms.com/assets/images/favicon_abs.png"> --}}
+
     @include('layouts.head-css')
 </head>
 

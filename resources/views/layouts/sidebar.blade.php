@@ -88,23 +88,23 @@
                             </li>
 
                             @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR"]))
-                                <li class="nav-item">
-                                    <a href="{{url('attendance_approvals')}}" class="nav-link sidebar py-1">Approvals</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{url('attendance_shift_woff_hday')}}" class="nav-link sidebar py-1">Shift/WeeklyOff/Holidays</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{url('attendance_tracking')}}" class="nav-link sidebar py-1">Tracking</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{url('attendance_overtime')}}" class="nav-link sidebar py-1">OverTime</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="apps-calendar" class="nav-link sidebar py-1" role="button">
-                                        <span>Attendance</span>
-                                    </a>
-                                </li>
+                            <li class="nav-item">
+                                <a href="{{url('attendance_approvals')}}" class="nav-link sidebar py-1">Approvals</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{url('attendance_shift_woff_hday')}}" class="nav-link sidebar py-1">Shift/WeeklyOff/Holidays</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{url('attendance_tracking')}}" class="nav-link sidebar py-1">Tracking</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{url('attendance_overtime')}}" class="nav-link sidebar py-1">OverTime</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="apps-calendar" class="nav-link sidebar py-1" role="button">
+                                    <span>Attendance</span>
+                                </a>
+                            </li>
                             @endif
 
                             <li class="nav-item">
@@ -120,12 +120,12 @@
                             </li>
 
                             @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR"]))
-                                <li class="nav-item">
-                                    <a href="{{route('attendance-leavereports')}}" class="nav-link sidebar py-1"><span>Reports</span></a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{url('attendance_settings')}}" class="nav-link sidebar py-1"><span>Settings</span></a>
-                                </li>
+                            <li class="nav-item">
+                                <a href="{{route('attendance-leavereports')}}" class="nav-link sidebar py-1"><span>Reports</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{url('attendance_settings')}}" class="nav-link sidebar py-1"><span>Settings</span></a>
+                            </li>
                             @endif
                         </ul>
                     </div>
@@ -201,7 +201,7 @@
 
                             <li class="nav-item">
                                 <a href="{{route('vmt-approvals-emp-documents')}}" id="" class="nav-link sidebar py-1" data-bs-toggle="" role="button" aria-expanded="false"><span>
-                                Documents Approval</span> </a>
+                                        Documents Approval</span> </a>
                                 <!-- <div class="collapse menu-dropdown sub-dropdown" id="approvalDrop-Down">
                                     <ul class="nav flex-column">
                                         <li class="nav-item">
@@ -400,6 +400,36 @@
                         </ul>
                     </div>
                 </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link sidebar menu-link pt-0" id="employeeInfo" href="#docDrop-Down" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="">
+                        <i>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#696363" class="bi bi-folder-fill" viewBox="0 0 16 16">
+                                <path d="M9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.825a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3zm-8.322.12C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139z" />
+                            </svg>
+                        </i>
+                        <span> Documents</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="docDrop-Down">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+
+                                <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button"><span>Personal Documents
+                                    </span></a>
+                            </li>
+                            <li class="nav-item">
+
+                                <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button"><span>
+                                        Official Documents </span></a>
+                                <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button"><span>
+                                        Statutory Documents </span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+
 
 
 

@@ -18,7 +18,7 @@
                                 <div class="profile-wrapper d-flex w-100 ">
                                     <div class="profile-img d-flex">
                                         @include('ui-profile-avatar-lg',[
-                                            'currentUserName' => $user->name,
+                                            'currentUser' => $user,
                                             ])
                                         <span class="personal-edit img-edit"><a href="#" class="edit-icon"
                                             data-bs-toggle="modal" data-bs-target="#personal_info" id="pencil-on-avatar">
@@ -53,8 +53,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-xl-4 col-lg-6 col-sm-12s">
-                        <div class="card profile-box employee-info-card flex-fill">
+                    <div class="col-md-6 d-flex col-xl-4 col-lg-6 col-sm-12s">
+                        <div class="card  profile-box employee-info-card flex-fill">
                             <div class="card-body">
                                 <h6 class="">Employee Informations
                                     <span class="personal-edit"><a href="#" class="edit-icon" data-bs-toggle="modal"
@@ -86,9 +86,9 @@
                                     </li>
                                     <li>
                                         <div class="title">Reports to:</div>
-                                        <div class="text">
+                                        <div class="text d-flex align-items-center">
                                             <div class="avatar-box">
-                                                <div class="avatar avatar-xs">
+                                                <div class="avatar avatar-xs d-flex align-items-center page-header-user-dropdown me-2">
                                                     @if (!empty($reportingManager) && $reportingManager->avatar && file_exists(public_path('images/'. $reportingManager->avatar)) )
 
                                                         <img class="w-100 h-100 soc-det-img "
@@ -152,7 +152,7 @@
                                     </li>
                                     <li>
                                         <div class="title">Marital status</div>
-                                        <div class="text">{{$user_full_details->marital_status ?? ''}}</div>
+                                        <div class="text text-capitalize">{{$user_full_details->marital_status ?? ''}}</div>
                                     </li>
                                     <li>
                                         <div class="title">Spouse Name</div>
@@ -1040,7 +1040,11 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Nationality <span class="text-danger">*</span></label>
-                                    <input class="form-control onboard-form" type="text" name="nationality" pattern-data="alpha" value="{{$user_full_details->nationality ?? ''}}">
+                                    <select placeholder="Choose nationality" name="nationality" id="nationality" class="onboard-form form-control textbox  select2_form_without_search" required>
+                                        <option value="" hidden selected disabled>Choose nationality</option>
+                                        <option value="Indian">Indian</option>
+                                        <option value="Other Nationality">Other Nationality</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -1054,10 +1058,10 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Marital status <span class="text-danger">*</span></label>
-                                    <select class="form-select form-control" name="marital_status" required>
+                                    <select class="form-select form-control text-capitalize" name="marital_status" required>
                                         <option>Select</option>
                                         @foreach($maritalStatus as $item_maritalStatus)
-                                            <option @if(!empty($user_full_details->marital_status)  && $user_full_details->marital_status == $item_maritalStatus ) selected @endif value="{{$item_maritalStatus }}">{{$item_maritalStatus }}</option>
+                                            <option @if(!empty($user_full_details->marital_status)  && $user_full_details->marital_status == $item_maritalStatus ) selected @endif value="{{$item_maritalStatus }}">{{ucfirst($item_maritalStatus) }}</option>
                                         @endforeach
                                     </select>
                                 </div>

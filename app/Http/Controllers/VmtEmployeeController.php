@@ -11,6 +11,7 @@ use App\Models\Countries;
 use App\Models\State;
 use App\Models\Department;
 use App\Models\Bank;
+use App\Models\VmtBloodGroup;
 use App\Imports\VmtEmployeeManagerImport;
 use Illuminate\Support\Facades\Auth;
 use App\Notifications\ViewNotification;
@@ -34,52 +35,65 @@ use Dompdf\Dompdf;
 use League\CommonMark\Extension\SmartPunct\EllipsesParser;
 use PDF;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 use App\Models\VmtEmployeeFamilyDetails;
+use App\Services\VmtEmployeeService;
 
 class VmtEmployeeController extends Controller
 {
 
-    public function showEmployeeOnboardingPage(Request $request)
+    /*
+    Called from VmtMainDashboardController ,if quick onboarded employee logs in.
+    Also used by HR to restore saved drafts of particular employee's normal onboarding.
+
+    Here, we will handle both normal onboarding and quick-onboarded form viewing
+    */
+    public function showEmployeeOnboardingPage($user_id=null)
     {
         // Used for Quick onboarding
         //dd($request->email);
-        if ($request->has('email')) {
 
-            $employee_user  =  User::where('email', $request->email)->first();
+        $is_employeeCode_editable = fetchMasterConfigValue("is_employee_code_editable_in_normal_onboarding");
+
+        $countries = Countries::all();
+        $emp = VmtEmployeeOfficeDetails::all();
+        $department = Department::all();
+        $state = State::where('country_code','IN')->get(['id','state_name']);
+        $blood_group = VmtBloodGroup::all();
+
+        $bank = Bank::all();
+
+        if (!empty($user_id)) {
+
+            $employee_user  =  User::where('id', $user_id)->first();
             $employee_details  = VmtEmployee::where('userid', $employee_user->id)->first();
-            // dd($clientData);
+            $emp_office_details = VmtEmployeeOfficeDetails::where('user_id', $employee_user->id)->first();
+            $compensatory = Compensatory::where('user_id', $employee_user->id)->first();
+            $emp_statutory_details = VmtEmployeeStatutoryDetails::where('user_id', $employee_user->id)->first();
+            //dd($employee_details);
             $empNo = '';
             if ($employee_details) {
                 $empNo = $employee_user->user_code;
             }
-            $countries = Countries::all();
-            $compensatory = Compensatory::where('user_id', $employee_user->id)->first();
-            $india = Countries::where('country_code', 'IN')->first();
-            $emp = VmtEmployeeOfficeDetails::all();
-            $emp_office_details = VmtEmployeeOfficeDetails::where('user_id', $employee_user->id)->first();
-            $department = Department::all();
-            $bank = Bank::all();
+
+
             $allEmployeesUserCode = User::where('id','<>',$employee_user->id)
                             ->where('is_ssa', 0)->where('active', 1)->whereNotNull('user_code')->get(['user_code', 'name']);
-            //dd($emp_office_details->toArray());
+
             $assigned_l1_manager_name = User::where('user_code', $emp_office_details->l1_manager_code)->value('name');
-           //dd($emp_office_details->l1_manager_code);
+            $emp_family_details = VmtEmployeeFamilyDetails::where('user_id', $user_id)->get();
 
-            return view('vmt_employeeOnboarding', compact('empNo', 'emp_office_details', 'employee_user', 'employee_details', 'countries', 'compensatory', 'bank', 'emp', 'department', 'allEmployeesUserCode','assigned_l1_manager_name'));
-        } else {
-
+            return view('vmt_employeeOnboarding', compact('empNo','user_id','is_employeeCode_editable','emp_family_details', 'emp_office_details', 'emp_statutory_details','employee_user','blood_group', 'employee_details', 'countries','state', 'compensatory', 'bank', 'emp', 'department', 'allEmployeesUserCode','assigned_l1_manager_name'));
+        }
+        else
+        {
             $empNo = $this->generateEmployeeCode();
-            //dd($empNo);
 
-            $countries = Countries::all();
-            $india = Countries::where('country_code', 'IN')->first();
             $emp = VmtEmployeeOfficeDetails::all();
-            $bank = Bank::all();
-            $department = Department::all();
             $allEmployeesUserCode = User::where('is_ssa', 0)->where('active', 1)->whereNotNull('user_code')->get(['user_code', 'name']);
             //dd($allEmployeesCode);
-            return view('vmt_employeeOnboarding', compact('empNo', 'countries', 'india', 'emp', 'bank', 'department', 'allEmployeesUserCode'));
+            return view('vmt_employeeOnboarding', compact('empNo','is_employeeCode_editable', 'countries', 'state', 'emp', 'bank', 'department', 'allEmployeesUserCode','blood_group'));
         }
     }
 
@@ -107,11 +121,13 @@ class VmtEmployeeController extends Controller
         //Get the recently created employee based on DOJ
         //$employee  =  User::orderBy('created_at', 'DESC')->where('user_code', 'LIKE', '%' . $employeeCode_Format . '%')->first();
         $recentlyJoinedEmployee_usercode = User::leftJoin('vmt_employee_details','vmt_employee_details.userid', '=' , 'users.id')
-                                ->orderBy('doj','DESC')
-                                ->first()->value('users.user_code');
+                                //->get('users.user_code');
+                                ->orderBy('vmt_employee_details.doj','DESC')
+                                ->first('users.user_code');
+                               // ->get(['users.user_code', 'vmt_employee_details.doj']);
 
 
-
+        //dd($recentlyJoinedEmployee_usercode);
         if (empty($recentlyJoinedEmployee_usercode)) {
             $maxId = (int)($number_series) + 1;
         } else {
@@ -146,6 +162,7 @@ class VmtEmployeeController extends Controller
             return view('vmt_employeeOnboarding_QuickUpload', compact('empNo', 'emp_details', 'countries', 'compensatory', 'bank', 'emp', 'department'));
         }
     }
+
     /*
      *  Quick Onboarding Employee
      *
@@ -162,140 +179,300 @@ class VmtEmployeeController extends Controller
         return view('vmt_employeeOnboarding_BulkUpload');
     }
 
-    public function processEmployeeOnboardForm_Normal_Quick(Request $request)
+    public function processEmployeeOnboardForm_Normal_Quick(Request $request, VmtEmployeeService $employeeService)
     {
-        $row = $request->all();
-        $user =  User::where('email',  $row["email"])->first();
+        $user_id = $request->input('user_id');
         $response = "";
+        $isEmailSent = "";
+        $onboard_form_data =  array();
+        parse_str($request->input('form_data'), $onboard_form_data);
 
-        if(!empty($user))
+        $currentLoggedinInUser = auth()->user();
+
+
+        //Check whether we are updating existing user or adding new user.
+        $existingUser = User::where('id',$user_id);
+
+        if($existingUser->exists())
         {
-            $response = $this->storeEmployeeQuickOnboardForm($row);
+
+            //If current user is Admin, then its normal onboarding or updating existing user details.
+            if(Str::contains( currentLoggedInUserRole(), ["Admin","HR"]) )
+            {
+                $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->input('can_onboard_employee'), $existingUser->first()->id);
+
+                $message = "";
+
+                if($request->input('can_onboard_employee') == "1")
+                {
+                    $isEmailSent  = $employeeService->attachApoinmentPdf($onboard_form_data);
+                    $message="Employee onboarded successfully";
+                }
+                else
+                {
+                    $message="Employee details updated in draft";
+                }
+
+                if($result)
+                {
+                    $response = [
+                        'status' => 'success',
+                        'message' => $message,
+                        'mail_status' => $isEmailSent ? "success" : "failure",
+                        'error' => '',
+                        'error_verbose' =>''
+                    ];
+                }
+
+            }
+            else //If the currentuser is quick onboareded emp and not yet onboarded, then save the form.
+            if($currentLoggedinInUser->is_onboarded == 0 && $currentLoggedinInUser->onboard_type  == "quick")
+            {
+                //check whether if emp_code is tampered
+                if($onboard_form_data['employee_code'] == $currentLoggedinInUser->user_code)
+                {
+                    //$response = $this->storeEmployeeNormalOnboardForm($onboard_form_data, $request->input('can_onboard_employee'));
+
+                    $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->input('can_onboard_employee'), $existingUser->first()->id);
+
+                    $response = [
+                        'status' => 'success',
+                        'message' => 'Your Onboard information Saved in draft',
+                        'mail_status' => '',
+                        'error' => '',
+                        'error_verbose' =>''
+                    ];
+
+                }
+                else
+                {
+                    //dd("Emp code mismatch. Please contact HR immediately");
+
+                    $response = [
+                        'status' => 'failure',
+                        'message' => 'Unauthorized Action :: Emp code mismatch. Please contact HR immediately',
+                        'mail_status' => '',
+                        'error' => '',
+                        'error_verbose' =>''
+                    ];
+
+                }
+            }
+            else
+            {
+                //dd("You are not authorized to perform this action. Please contact the Admin immediately. Log : ".$currentLoggedinInUser);
+
+                $response = [
+                    'status' => 'failure',
+                    'message' => 'You are not authorized to perform this action. Please contact the Admin immediately. Log : '.$currentLoggedinInUser,
+                    'mail_status' => '',
+                    'error' => '',
+                    'error_verbose' =>''
+                ];
+            }
 
         }
         else
         {
-            $response = $this->storeEmployeeNormalOnboardForm($row);
+            //we are inserting new user.
+            //Check whether current login is admin
+            if(Str::contains( currentLoggedInUserRole(), ["Admin","HR"]) )
+            {
+                $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->input('can_onboard_employee'), null);
+
+                if($result)
+                {
+                    $response = [
+                        'status' => 'success',
+                        'message' => 'New Employee information Saved in draft',
+                        'mail_status' => '',
+                        'error' => '',
+                        'error_verbose' =>'',
+                        'user_id' => $result->id      //send the user id to front-end
+
+                    ];
+                }
+
+            }
+            else
+            {
+
+                $response = [
+                    'status' => 'failure',
+                    'message' => 'You are not authorized to perform this action. Please contact the Admin immediately. Log : '.$currentLoggedinInUser,
+                    'mail_status' => '',
+                    'error' => '',
+                    'error_verbose' =>''
+                ];
+
+            }
         }
 
         return $response;
     }
+
+
+
     /*
         Save employee onboarding details
         -Normal Onboarding, Quick
 
 
     */
-    private function storeEmployeeNormalOnboardForm($row)
+    private function storeEmployeeNormalOnboardForm($row, $can_onboard_employee)
     {
         // code...
         try {
 
+            $is_new_user = true;
 
+            //Check if user already exists
+            $user = User::where('email',$row["email"])->first();
 
-            //$row = $request->all();
+            if(empty($user))
+            {
+              //  dd("emp doesnt exist");
+                $user =  User::create([
+                    'name' => $row['employee_name'],
+                    'email' => $row["email"],
+                    'password' => Hash::make('Abs@123123'),
+                    'avatar' =>  $row['employee_name'] . '_avatar.jpg',
+                    'user_code' => strtoupper($row['employee_code']),
+                    'active' => '0',
+                    'is_onboarded' => $can_onboard_employee,
+                    'onboard_type' => 'normal',
+                    'org_role' => '5',
+                    'is_ssa' => '0'
+                ]);
 
-            $user =  User::create([
-                'name' => $row['employee_name'],
-                'email' => $row["email"],
-                'password' => Hash::make('Abs@123123'),
-                'avatar' =>  $row['employee_name'] . '_avatar.jpg',
-                'user_code' => strtoupper($row['employee_code']),
-                'active' => '0',
-                'is_onboarded' => '1',
-                'onboard_type' => 'normal',
-                'org_role' => '5',
-                'is_ssa' => '0'
-            ]);
+                $is_new_user = true;
+            }
+            else
+            {
+               // dd("emp exists");
+               $is_new_user = false;
 
-            $newEmployee = new VmtEmployee;
-            $newEmployee->userid = $user->id;
-            $newEmployee->emp_no   =    $row["employee_code"];
-            //$newEmployee->emp_name   =    $row["employee_name"];
-            $newEmployee->gender   =    $row["gender"];
-            //$newEmployee->designation   =    $row["designation"];
-            //$newEmployee->department   =    $row["department"];
-            //$newEmployee->status   =    $row["status"];
-            $newEmployee->doj   =    $row["doj"];
-            $newEmployee->dol   =    $row["doj"];
-            $newEmployee->location   =    $row["work_location"];
-            $newEmployee->dob   =    $row["dob"];
-            $newEmployee->father_name   =  $row["father_name"];
-            $newEmployee->pan_number   =  isset($row["pan_no"]) ? ($row["pan_no"]) : "";
-            //$newEmployee->pan_ack   =    $row["pan_ack"];
-            $newEmployee->aadhar_number = $row["aadhar"];
-            $newEmployee->epf_number = $row["epf_number"];
-
-            $newEmployee->esic_number = $row["esic_number"];
-            $newEmployee->marital_status = $row["marital_status"];
-
-            $newEmployee->mobile_number  = strval($row["mobile_no"]);
-            $newEmployee->blood_group  = $row["blood_group"];
-            //$newEmployee->email_id   = $row["email"];
-            $newEmployee->bank_name   = $row["bank_name"];
-            $newEmployee->bank_ifsc_code  = $row["bank_ifsc"];
-            $newEmployee->bank_account_number  = $row["account_no"];
-            $newEmployee->present_address   = $row["current_address_line_1"].' , '.$row["current_address_line_2"] ;
-            $newEmployee->permanent_address   = $row["permanent_address_line_1"].' , '.$row["permanent_address_line_2"] ;
-            //$newEmployee->father_age   = $row["father_age"];
-            $newEmployee->mother_name   = $row["mother_name"];
-            //$newEmployee->mother_age  = $row["mother_age"];
-            if ($row['marital_status'] <> 'unmarried') {
-                $newEmployee->spouse_name   = $row["spouse_name"];
-                $newEmployee->spouse_age   = $row["spouse_dob"];
-                if ($row['no_child'] > 0) {
-                    $newEmployee->kid_name   = json_encode($row["child_name"]);
-                    $newEmployee->kid_age  = json_encode($row["child_dob"]);
-                }
             }
 
-            $newEmployee->aadhar_card_file = $this->fileUpload('aadhar_card_file',$user->user_code);
-            $newEmployee->aadhar_card_backend_file = $this->fileUpload('aadhar_card_backend_file',$user->user_code);
-            $newEmployee->pan_card_file = $this->fileUpload('pan_card_file',$user->user_code);
-            $newEmployee->passport_file = $this->fileUpload('passport_file',$user->user_code);
-            $newEmployee->voters_id_file = $this->fileUpload('voters_id_file',$user->user_code);
-            $newEmployee->dl_file = $this->fileUpload('dl_file',$user->user_code);
-            $newEmployee->education_certificate_file = $this->fileUpload('education_certificate_file',$user->user_code);
-            $newEmployee->reliving_letter_file = $this->fileUpload('reliving_letter_file',$user->user_code);
-            $docReviewArray = array(
-                'aadhar_card_file' => -1,
-                'aadhar_card_backend_file' => -1,
-                'pan_card_file' => -1,
-                'passport_file' => -1,
-                'voters_id_file' => -1,
-                'dl_file' => -1,
-                'education_certificate_file' => -1,
-                'reliving_letter_file' => -1
-            );
-            $newEmployee->docs_reviewed = json_encode($docReviewArray);
-            $newEmployee->save();
 
-            // store family member in vmt_employee_family_details tables
-            $this->storeEmployeeFamilyMembers($row, $user->id);
+            if($user)
+            {
+                //STORE EMPLOYEE DETAILS
+                //Delete old data
+                VmtEmployee::where('userid', $user->id)->delete();
+
+                $newEmployee = new VmtEmployee;
+
+                $newEmployee->userid = $user->id;
+                $newEmployee->emp_no   =    $row["employee_code"] ?? '';
+                //$newEmployee->emp_name   =    $row["employee_name"];
+                $newEmployee->gender   =    $row["gender"] ?? '';
+                //$newEmployee->designation   =    $row["designation"];
+                //$newEmployee->department   =    $row["department"];
+                //$newEmployee->status   =    $row["status"];
+                $newEmployee->doj   =    $row["doj"] ?? '';
+                $newEmployee->dol   =    $row["doj"] ?? '';
+                $newEmployee->location   =    $row["work_location"] ?? '';
+                $newEmployee->dob   =    $row["dob"] ?? '';
+                $newEmployee->father_name   =  $row["father_name"] ?? '';
+                $newEmployee->pan_number   =  isset($row["pan_no"]) ? ($row["pan_no"]) : "";
+                $newEmployee->dl_no   =  $row["dl_no"] ?? '';
+                $newEmployee->passport_number = $row["passport_no"] ?? '';
+                //$newEmployee->pan_ack   =    $row["pan_ack"];
+                $newEmployee->aadhar_number = $row["aadhar"] ?? '';
+                $newEmployee->epf_number = $row["epf_number"] ?? '';
+
+                $newEmployee->esic_number = $row["esic_number"] ?? '';
+                $newEmployee->marital_status = $row["marital_status"] ?? '';
+
+                $newEmployee->mobile_number  = strval($row["mobile_no"]);
+                $newEmployee->blood_group  = $row["blood_group"] ?? '';
+                //$newEmployee->email_id   = $row["email"];
+                $newEmployee->bank_name   = $row["bank_name"] ?? '';
+                $newEmployee->bank_ifsc_code  = $row["bank_ifsc"] ?? '';
+                $newEmployee->bank_account_number  = $row["account_no"] ?? '';
+                // $newEmployee->current_address_line_1   = $row["current_address_line_1"] ?? '';
+                // $newEmployee->current_address_line_2   = $row["current_address_line_2"] ?? '' ;
+                // $newEmployee->permanent_address_line_1   = $row["permanent_address_line_1"] ?? '';
+                // $newEmployee->permanent_address_line_2   = $row["permanent_address_line_2"] ?? '';
+                // $newEmployee->current_city   = $row["current_city"] ?? '';
+                // $newEmployee->permanent_city   = $row["permanent_city"] ?? '';
+
+                //$newEmployee->father_age   = $row["father_age"];
+                $newEmployee->mother_name   = $row["mother_name"] ?? '';
+                //$newEmployee->mother_age  = $row["mother_age"];
+                if (!empty($row['marital_status'] ))
+                {
+                    if($row['marital_status'] <> 'unmarried')
+                    {
+                        $newEmployee->spouse_name   = $row["spouse_name"];
+                        $newEmployee->spouse_age   = $row["spouse_dob"];
+                        if ($row['no_child'] > 0) {
+                            $newEmployee->kid_name   = json_encode($row["child_name"]);
+                            $newEmployee->kid_age  = json_encode($row["child_dob"]);
+                        }
+                    }
+                }
+                else
+                {
+                    $row['marital_status'] = '';
+                }
+
+                $newEmployee->aadhar_card_file = $this->fileUpload('aadhar_card_file',$user->user_code);
+                $newEmployee->aadhar_card_backend_file = $this->fileUpload('aadhar_card_backend_file',$user->user_code);
+                $newEmployee->pan_card_file = $this->fileUpload('pan_card_file',$user->user_code);
+                $newEmployee->passport_file = $this->fileUpload('passport_file',$user->user_code);
+                $newEmployee->voters_id_file = $this->fileUpload('voters_id_file',$user->user_code);
+                $newEmployee->dl_file = $this->fileUpload('dl_file',$user->user_code);
+                $newEmployee->education_certificate_file = $this->fileUpload('education_certificate_file',$user->user_code);
+                $newEmployee->reliving_letter_file = $this->fileUpload('reliving_letter_file',$user->user_code);
+                $docReviewArray = array(
+                    'aadhar_card_file' => -1,
+                    'aadhar_card_backend_file' => -1,
+                    'pan_card_file' => -1,
+                    'passport_file' => -1,
+                    'voters_id_file' => -1,
+                    'dl_file' => -1,
+                    'education_certificate_file' => -1,
+                    'reliving_letter_file' => -1
+                );
+                $newEmployee->docs_reviewed = json_encode($docReviewArray);
+                $newEmployee->save();
+
+                // store family member in vmt_employee_family_details tables
+                $this->storeEmployeeFamilyMembers($row, $user->id);
+
+            }
 
             if ($newEmployee) {
+
+                //Delete old record
+                VmtEmployeeStatutoryDetails::where('user_id', $user->id)->delete();
 
                 //Statutory Details
                 $newEmployee_statutoryDetails = new VmtEmployeeStatutoryDetails;
                 $newEmployee_statutoryDetails->user_id = $user->id;
-                $newEmployee_statutoryDetails->uan_number = $row["uan_number"];
-                $newEmployee_statutoryDetails->pf_applicable = $row["pf_applicable"];
-                $newEmployee_statutoryDetails->esic_applicable = $row["esic_applicable"];
-                $newEmployee_statutoryDetails->ptax_location = $row["ptax_location"];
-                $newEmployee_statutoryDetails->tax_regime = $row["tax_regime"];
-                $newEmployee_statutoryDetails->lwf_location = $row["lwf_location"];
+                $newEmployee_statutoryDetails->uan_number = $row["uan_number"] ?? '';
+                $newEmployee_statutoryDetails->pf_applicable = $row["pf_applicable"] ?? '';
+                $newEmployee_statutoryDetails->esic_applicable = $row["esic_applicable"] ?? '';
+                $newEmployee_statutoryDetails->ptax_location = $row["ptax_location"] ?? '';
+                $newEmployee_statutoryDetails->tax_regime = $row["tax_regime"] ?? '';
+                $newEmployee_statutoryDetails->lwf_location = $row["lwf_location"] ?? '';
                 $newEmployee_statutoryDetails->save();
+
+                //Delete old record
+                VmtEmployeeOfficeDetails::where('user_id', $user->id)->delete();
 
                 //Create Employee Details
                 $empOffice  = new VmtEmployeeOfficeDetails;
                 $empOffice->user_id = $newEmployee->userid; //Link between USERS and VmtEmployeeOfficeDetails table
-                $empOffice->department_id = $row["department"]; // => "lk"
-                $empOffice->process = $row["process"]; // => "k"
-                $empOffice->designation = $row["designation"]; // => "k"
-                $empOffice->cost_center = $row["cost_center"]; // => "k"
-                $empOffice->confirmation_period  = $row['confirmation_period']; // => "k"
-                $empOffice->holiday_location  = $row["holiday_location"]; // => "k"
-                $empOffice->l1_manager_code  = $row["l1_manager_code"]; // => "k"
+                $empOffice->department_id = $row["department"] ?? ''; // => "lk"
+                $empOffice->process = $row["process"] ?? ''; // => "k"
+                $empOffice->designation = $row["designation"] ?? ''; // => "k"
+                $empOffice->cost_center = $row["cost_center"] ?? ''; // => "k"
+                $empOffice->confirmation_period  = $row['confirmation_period'] ?? ''; // => "k"
+                $empOffice->holiday_location  = $row["holiday_location"] ?? ''; // => "k"
+                $empOffice->l1_manager_code  = $row["l1_manager_code"] ?? ''; // => "k"
 
 
                 if ( !empty($row["l1_manager_code"]) && $this->isUserExist($row["l1_manager_code"]))
@@ -305,249 +482,74 @@ class VmtEmployeeController extends Controller
 
                 }
 
-                $empOffice->l1_manager_name  = $row["l1_manager_name"]; // => "k"
-                $empOffice->work_location  = $row["work_location"]; // => "k"
-                $empOffice->officical_mail  = $row["officical_mail"]; // => "k@k.in"
-                $empOffice->official_mobile  = $row["official_mobile"]; // => "1234567890"
-                $empOffice->emp_notice  = $row["emp_notice"]; // => "0"
+                $empOffice->l1_manager_name  = $row["l1_manager_name"] ?? ''; // => "k"
+                $empOffice->work_location  = $row["work_location"] ?? ''; // => "k"
+                $empOffice->officical_mail  = $row["officical_mail"] ?? ''; // => "k@k.in"
+                $empOffice->official_mobile  = $row["official_mobile"] ?? ''; // => "1234567890"
+                $empOffice->emp_notice  = $row["emp_notice"] ?? ''; // => "0"
                 $empOffice->save();
             }
 
             if ($empOffice) {
+
+                //Delete old record
+                Compensatory::where('user_id', $user->id)->delete();
+
                 $compensatory = new Compensatory;
                 $compensatory->user_id = $newEmployee->userid;
-                $compensatory->basic = $row["basic"];
-                $compensatory->hra = $row["hra"];
-                $compensatory->Statutory_bonus = $row["statutory_bonus"];
-                $compensatory->child_education_allowance = $row["child_education_allowance"];
-                $compensatory->food_coupon = $row["food_coupon"];
-                $compensatory->lta = $row["lta"];
-                $compensatory->special_allowance = $row["special_allowance"];
-                $compensatory->other_allowance = $row["other_allowance"];
-                $compensatory->gross = $row["gross"];
-                $compensatory->epf_employer_contribution = $row["epf_employer_contribution"];
-                $compensatory->esic_employer_contribution = $row["esic_employer_contribution"];
-                $compensatory->insurance = $row["insurance"];
-                $compensatory->graduity = $row["graduity"];
-                $compensatory->cic = $row["cic"];
-                $compensatory->epf_employee = $row["epf_employee"];
-                $compensatory->esic_employee = $row["esic_employee"];
-                $compensatory->professional_tax = $row["professional_tax"];
-                $compensatory->labour_welfare_fund = $row["labour_welfare_fund"];
-                $compensatory->net_income = $row["net_income"];
+                $compensatory->basic = $row["basic"] ?? '';
+                $compensatory->hra = $row["hra"] ?? '';
+                $compensatory->Statutory_bonus = $row["statutory_bonus"] ?? '' ;
+                $compensatory->child_education_allowance = $row["child_education_allowance"] ?? '' ;
+                $compensatory->food_coupon = $row["food_coupon"] ?? '' ;
+                $compensatory->lta = $row["lta"] ?? '' ;
+                $compensatory->special_allowance = $row["special_allowance"] ?? '' ;
+                $compensatory->other_allowance = $row["other_allowance"] ?? '' ;
+                $compensatory->gross = $row["gross"] ?? '' ;
+                $compensatory->epf_employer_contribution = $row["epf_employer_contribution"] ?? '' ;
+                $compensatory->esic_employer_contribution = $row["esic_employer_contribution"] ?? '' ;
+                $compensatory->insurance = $row["insurance"] ?? '' ;
+                $compensatory->graduity = $row["graduity"] ?? '' ;
+                $compensatory->cic = $row["cic"] ?? '' ;
+                $compensatory->epf_employee = $row["epf_employee"] ?? '' ;
+                $compensatory->esic_employee = $row["esic_employee"] ?? '' ;
+                $compensatory->professional_tax = $row["professional_tax"] ?? '' ;
+                $compensatory->labour_welfare_fund = $row["labour_welfare_fund"] ?? '' ;
+                $compensatory->net_income = $row["net_income"] ?? '' ;
                 $compensatory->save();
             }
 
-            // sent welcome email along with appointment Letter
-            $isEmailSent  = $this->attachApoinmentPdf($row);
+            $message_part = "---";
+            $mail_status ="---";
 
-            if ($isEmailSent) {
-                $mail_status="success";
-            } else {
-                $mail_status="failure";
-            }
-
-            return $response = [
-                'status' => 'success',
-                'message' => $row["employee_code"].' onboarded successfully',
-                'mail_status' => $mail_status,
-                'error' => "",
-            ];
-        } catch (\Exception $e) {
-            $user->is_onboarded = '0';
-            $user->save();
-
-            $message = "";
-            $error_field = "";
-
-            //This error occurs when the form field is empty in UI.
-            if(str_contains($e->getMessage(),"Undefined array key") )
+            //If SAVE button pressed, dont onboard. Onboard if Submit button was pressed
+            if($can_onboard_employee == "1")
             {
-                $message = " not added due to missing field";
-                $error_field = trim($e->getMessage(), "Undefined array key"); //get the field name only
+                // sent welcome email along with appointment Letter
 
+                $isEmailSent  = $this->attachApoinmentPdf($row);
+
+                if ($isEmailSent) {
+                    $mail_status="success";
+                } else {
+                    $mail_status="failure";
+                }
+
+                $message_part =" onboarded successfully";
             }
             else
+            if($can_onboard_employee == "0")
             {
-                $message = " not added due to following error";
-                $error_field = $e->getMessage();
-            }
+                $message_part =" saved in draft.";
 
-            return $response = [
-                'status' => 'failure',
-                'message' => $row["employee_code"].$message,
-                'mail_status' => '',
-                'error' => $error_field,
-                'error_verbose' =>$e->getMessage()
-            ];
-        }
-    }
-
-    // Store quick onboard employee data to Database
-    private function storeEmployeeQuickOnboardForm($row)
-    {
-        //dd($row);
-        // code...
-
-       // dd($row);
-        try {
-            //$row = $request->all();
-            $user =  User::where('email',  $row["email"])->first();
-            $user->is_onboarded = '1';
-            $user->org_role ='5'; //employee role
-            $user->save();
-
-            $newEmployee = VmtEmployee::where('userid', $user->id)->first();
-            $newEmployee->userid = $user->id;
-            $newEmployee->emp_no   =    $row["employee_code"];
-            //$newEmployee->emp_name   =    $row["employee_name"];
-            $newEmployee->gender   =    $row["gender"];
-            //$newEmployee->designation   =    $row["designation"];
-            //$newEmployee->department   =    $row["department"];
-            //$newEmployee->status   =    $row["status"];
-            $newEmployee->doj   =   $row['doj'];
-            $newEmployee->dol   =   $row['doj'];
-            $newEmployee->location   =    $row["work_location"];
-            $newEmployee->dob   =    $row['dob'];
-            $newEmployee->father_name   =  $row["father_name"];
-            $newEmployee->pan_number   =  isset($row["pan_no"]) ? ($row["pan_no"]) : "";
-            //$newEmployee->pan_ack   =    $row["pan_ack"];
-            $newEmployee->aadhar_number = $row["aadhar"];
-            //$newEmployee->uan = $row["uan"];
-            //$newEmployee->epf_number = $row["epf_number"];
-            //$newEmployee->esic_number = $row["esic_number"];
-            $newEmployee->marital_status = $row["marital_status"];
-
-            $newEmployee->mobile_number  = strval($row["mobile_no"]);
-            //$newEmployee->email_id   = $row["email"];
-            $newEmployee->bank_name   = $row["bank_name"];
-            $newEmployee->bank_ifsc_code  = $row["bank_ifsc"];
-            $newEmployee->bank_account_number  = $row["account_no"];
-            $newEmployee->present_address   = $row["current_address_line_1"].' , '.$row["current_address_line_2"] ;
-            $newEmployee->permanent_address   = $row["permanent_address_line_1"].' , '.$row["permanent_address_line_2"] ;
-            //$newEmployee->father_age   = $row["father_age"];
-            $newEmployee->mother_name   = $row["mother_name"];
-            $newEmployee->blood_group  = $row["blood_group"];
-
-
-            $newEmployee->aadhar_card_file = $this->fileUpload('aadhar_card_file',$user->user_code);
-            $newEmployee->aadhar_card_backend_file = $this->fileUpload('aadhar_card_backend_file',$user->user_code);
-            $newEmployee->pan_card_file = $this->fileUpload('pan_card_file',$user->user_code);
-            $newEmployee->passport_file = $this->fileUpload('passport_file',$user->user_code);
-            $newEmployee->voters_id_file = $this->fileUpload('voters_id_file',$user->user_code);
-            $newEmployee->dl_file = $this->fileUpload('dl_file',$user->user_code);
-            $newEmployee->education_certificate_file = $this->fileUpload('education_certificate_file',$user->user_code);
-            $newEmployee->reliving_letter_file = $this->fileUpload('reliving_letter_file',$user->user_code);
-            $docReviewArray = array(
-                'aadhar_card_file' => -1,
-                'aadhar_card_backend_file' => -1,
-                'pan_card_file' => -1,
-                'passport_file' => -1,
-                'voters_id_file' => -1,
-                'dl_file' => -1,
-                'education_certificate_file' => -1,
-                'reliving_letter_file' => -1
-            );
-            $newEmployee->docs_reviewed = json_encode($docReviewArray);
-            $newEmployee->save();
-
-            // store family member in vmt_employee_family_details tables
-            $this->storeEmployeeFamilyMembers($row, $user->id);
-
-            // dd($newEmployee->id);
-            if ($newEmployee) {
-                $empOffice  = VmtEmployeeOfficeDetails::where('user_id', $user->id)->first();
-               // dd($empOffice);
-                $empOffice->user_id = $newEmployee->userid; //Link between USERS and VmtEmployeeOfficeDetails table
-                $empOffice->department_id = $row["department"]; // => "lk"
-                $empOffice->process = $row["process"]; // => "k"
-                $empOffice->designation = $row["designation"]; // => "k"
-                $empOffice->cost_center = $row["cost_center"]; // => "k"
-                $empOffice->confirmation_period  = $row['confirmation_period']; // => "k"
-                $empOffice->holiday_location  = $row["holiday_location"]; // => "k"
-                $empOffice->l1_manager_code  = $row["l1_manager_code"]; // => "k"
-
-                //If this l1_manager_code is not manager, then change his role to Manager
-
-                if ( !empty($row["l1_manager_code"]) && $this->isUserExist($row["l1_manager_code"]))
-                {
-                    $empOffice->l1_manager_code  = $row["l1_manager_code"];
-                    updateUserRole($empOffice->l1_manager_code,"Manager");
-
-                }
-
-                // $empOffice->l1_manager_designation  = $row["l1_manager_designation"];// => "k"
-                $empOffice->l1_manager_name  = $row["l1_manager_name"]; // => "k"
-                // $empOffice->l2_manager_code  = $row["l2_manager_code"];// => "kk"
-                // $empOffice->l2_manager_designation  = $row["l2_manager_designation"];// => "k"
-                // $empOffice->l2_manager_name  = $row["l2_manager_name"]; // => "k"
-                // $empOffice->l3_manager_code  = $row["l3_manager_code"]; // => "kk"
-                // $empOffice->l3_manager_designation  = $row["l3_manager_designation"]; // => "k"
-                // $empOffice->l3_manager_name  = $row["l3_manager_name"]; // => "kk"
-                // $empOffice->l4_manager_code  = $row["l4_manager_code"]; // => "kk"
-                // $empOffice->l4_manager_designation  = $row["l4_manager_designation"]; // => "kk"
-                // $empOffice->l4_manager_name  = $row["l4_manager_name"]; // => "kk"
-                $empOffice->work_location  = $row["work_location"]; // => "k"
-                $empOffice->officical_mail  = $row["officical_mail"]; // => "k@k.in"
-                $empOffice->official_mobile  = $row["official_mobile"]; // => "1234567890"
-                $empOffice->emp_notice  = $row["emp_notice"]; // => "0"
-                $empOffice->save();
-            }
-
-
-            if ($empOffice) {
-                $newEmployee_statutoryDetails = new VmtEmployeeStatutoryDetails;
-                $newEmployee_statutoryDetails->user_id = $user->id;
-                 $newEmployee_statutoryDetails->uan_number = $row["uan_number"];
-                $newEmployee_statutoryDetails->pf_applicable = $row["pf_applicable"];
-                $newEmployee_statutoryDetails->esic_applicable = $row["esic_applicable"];
-                $newEmployee_statutoryDetails->ptax_location = $row["ptax_location"];
-                $newEmployee_statutoryDetails->tax_regime = $row["tax_regime"];
-                $newEmployee_statutoryDetails->lwf_location = $row["lwf_location"];
-                $newEmployee_statutoryDetails->save();
-
-                $compensatory = new Compensatory;
-                $compensatory->user_id = $newEmployee->userid;
-                $compensatory->basic = $row["basic"];
-                $compensatory->hra = $row["hra"];
-                $compensatory->Statutory_bonus = $row["statutory_bonus"];
-                $compensatory->child_education_allowance = $row["child_education_allowance"];
-                $compensatory->food_coupon = $row["food_coupon"];
-                $compensatory->lta = $row["lta"];
-                $compensatory->special_allowance = $row["special_allowance"];
-                $compensatory->other_allowance = $row["other_allowance"];
-                $compensatory->gross = $row["gross"];
-                $compensatory->epf_employer_contribution = $row["epf_employer_contribution"];
-                $compensatory->esic_employer_contribution = $row["esic_employer_contribution"];
-                $compensatory->insurance = $row["insurance"];
-                $compensatory->graduity = $row["graduity"];
-                $compensatory->cic = $row["cic"];
-                $compensatory->epf_employee = $row["epf_employee"];
-                $compensatory->esic_employee = $row["esic_employee"];
-                $compensatory->professional_tax = $row["professional_tax"];
-                $compensatory->labour_welfare_fund = $row["labour_welfare_fund"];
-                $compensatory->net_income = $row["net_income"];
-                $compensatory->save();
-            }
-
-            // sent welcome email along with appointment Letter
-            $isEmailSent  = $this->attachApoinmentPdf($row);
-
-            $mail_status ="";
-
-            if ($isEmailSent) {
-                $mail_status="success";
-            } else {
-                $mail_status="failure";
             }
 
             return $response = [
                 'status' => 'success',
-                'message' => $row["employee_code"].' onboarded successfully',
+                'message' => $row["employee_code"].$message_part,
                 'mail_status' => $mail_status,
                 'error' => "",
             ];
-
         } catch (\Exception $e) {
 
             $user->is_onboarded = '0';
@@ -574,11 +576,10 @@ class VmtEmployeeController extends Controller
                 'message' => $row["employee_code"].$message,
                 'mail_status' => '',
                 'error' => $error_field,
-                'error_verbose' =>$e->getMessage()
+                'error_verbose' =>$e
             ];
         }
     }
-
 
     // store employeess from excel sheet to database
     public function importBulkOnboardEmployeesExcelData(Request $request)
@@ -656,8 +657,8 @@ class VmtEmployeeController extends Controller
                 'no_of_child' => 'nullable|numeric',
                 'child_name' => 'nullable|required_unless:no_of_child,null,0|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'child_dob' => 'nullable||required_unless:no_of_child,null,0|date',
-                'department' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'process' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'department' => 'required',
+                'process' => 'required',
                 'designation' => 'required',
                 'cost_center' => 'required',
                 'confirmation_period' => 'required',
@@ -804,11 +805,11 @@ class VmtEmployeeController extends Controller
             $newEmployee->aadhar_number = $row["aadhar"];
             $newEmployee->marital_status = $row["marital_status"];
             $newEmployee->mobile_number  = strval($row["mobile_no"]);
-            $newEmployee->bank_name   = $row["bank_name"];
+            $newEmployee->bank_id   = $row["bank_name"];
             $newEmployee->bank_ifsc_code  = $row["bank_ifsc"];
             $newEmployee->bank_account_number  = $row["account_no"];
-            $newEmployee->present_address   = $row["current_address"];
-            $newEmployee->permanent_address   = $row["permanent_address"];
+            $newEmployee->current_address_line_1   = $row["current_address"];
+            $newEmployee->permanent_address_line_1   = $row["permanent_address"];
             $newEmployee->mother_name   = $row["mother_name"];
             $newEmployee->mother_gender   = $row["mother_gender"];
             $newEmployee->mother_dob   = $row["mother_dob"];
@@ -871,11 +872,13 @@ class VmtEmployeeController extends Controller
                 $newEmployee_statutoryDetails = new VmtEmployeeStatutoryDetails;
                 $newEmployee_statutoryDetails->user_id = $user->id;
                 $newEmployee_statutoryDetails->uan_number = $row["uan_number"];
+                $newEmployee_statutoryDetails->epf_number = $row["epf_number"] ?? '';
+                $newEmployee_statutoryDetails->esic_number = $row["esic_number"] ?? '';
                 $newEmployee_statutoryDetails->pf_applicable = $row["pf_applicable"];
                 $newEmployee_statutoryDetails->esic_applicable = $row["esic_applicable"];
-                $newEmployee_statutoryDetails->ptax_location = $row["ptax_location"];
+                $newEmployee_statutoryDetails->ptax_location_state_id = $row["ptax_location"];
                 $newEmployee_statutoryDetails->tax_regime = $row["tax_regime"];
-                $newEmployee_statutoryDetails->lwf_location = $row["lwf_location"];
+                $newEmployee_statutoryDetails->lwf_location_state_id = $row["lwf_location"];
                 $newEmployee_statutoryDetails->save();
 
                 $compensatory = new Compensatory;
@@ -956,7 +959,7 @@ class VmtEmployeeController extends Controller
                 'users.id as user_id',
                 'users.avatar as avatar',
                 'vmt_employee_details.doj as doj',
-                'vmt_employee_details.blood_group as blood_group',
+                'vmt_employee_details.blood_group_id as blood_group_id',
                 'vmt_employee_office_details.department_id',
                 'vmt_employee_office_details.designation as emp_designation',
                 'vmt_employee_office_details.l1_manager_code as l1_manager_code',
@@ -987,7 +990,7 @@ class VmtEmployeeController extends Controller
                 'users.id as user_id',
                 'users.avatar as avatar',
                 'vmt_employee_details.doj as doj',
-                'vmt_employee_details.blood_group as blood_group',
+                'vmt_employee_details.blood_group_id as blood_group_id',
                 'vmt_employee_office_details.department_id',
                 'vmt_employee_office_details.designation as emp_designation',
                 'vmt_employee_office_details.l1_manager_code as l1_manager_code',
@@ -1543,26 +1546,28 @@ class VmtEmployeeController extends Controller
      *  table: vmt_employee_family_details
      */
     protected function storeEmployeeFamilyMembers($familyData, $userId){
+        //delete old records
+        VmtEmployeeFamilyDetails::where('user_id',$userId)->delete();
 
-        if(isset($familyData['father_name'])){
+        if(!empty($familyData['father_name'])){
             $familyMember =  new VmtEmployeeFamilyDetails;
             $familyMember->user_id  = $userId;
             $familyMember->name =   $familyData['father_name'];
             $familyMember->relationship = 'Father';
 
-            if(isset($familyData["father_dob"]))
+            if(!empty($familyData["father_dob"]))
                 $familyMember->dob = \DateTime::createFromFormat('d-m-Y', $familyData['father_dob'])->format('Y-m-d');
 
             $familyMember->save();
         }
 
-        if(isset($familyData['mother_name'])){
+        if(!empty($familyData['mother_name'])){
             $familyMember =  new VmtEmployeeFamilyDetails;
             $familyMember->user_id  = $userId;
             $familyMember->name =   $familyData['mother_name'];
             $familyMember->relationship = 'Mother';
 
-            if(isset($familyData["mother_dob"]))
+            if(!empty($familyData["mother_dob"]))
                 $familyMember->dob = \DateTime::createFromFormat('d-m-Y', $familyData['mother_dob'])->format('Y-m-d');
             //$familyData["mother_dob"];
 
@@ -1574,13 +1579,13 @@ class VmtEmployeeController extends Controller
             $familyMember->name =   $familyData['spouse_name'];
             $familyMember->relationship = 'Spouse';
 
-            if(isset($familyData["spouse_dob"]))
+            if(!empty($familyData["spouse_dob"]))
                 $familyMember->dob = \DateTime::createFromFormat('d-m-Y', $familyData['spouse_dob'])->format('Y-m-d');
             //$familyData["spouse_dob"];
 
             $familyMember->save();
 
-            if (isset($familyData['child_name'])) {
+            if (!empty($familyData['child_name'])) {
                 $familyMember =  new VmtEmployeeFamilyDetails;
                 $familyMember->user_id  = $userId;
                 $familyMember->name =   $familyData['child_name'];

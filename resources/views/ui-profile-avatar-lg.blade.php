@@ -1,10 +1,10 @@
-@if( empty(Auth::user()->avatar) || !file_exists(public_path('images/'. Auth::user()->avatar)) )
+@if( empty($currentUser->avatar) || !file_exists(public_path('images/'. $currentUser->avatar)) )
     <!-- <span class=" rounded-circle h-100 w-100 d-flex align-items-center justify-content-center" id="shorthand_name_bg"> -->
-    <div class=" rounded-circle  user_profile-wrapper" id="">
+    <div class=" rounded-circle  user_profile-wrapper " id="">
         <div id="profileShortNameLargeCircle-profile" class="align-middle "></div>
     </div>
 @else
-    <img class="rounded-circle header-profile-user" src=" {{URL::asset('images/'. Auth::user()->avatar)}}" alt="Header Avatar" style="width: 70px; height: 70px;">
+    <img class="rounded-circle header-profile-user" src=" {{URL::asset('images/'. $currentUser->avatar)}}" alt="Header Avatar" style="width: 70px; height: 70px;">
 @endif
 
 
@@ -13,7 +13,7 @@
 <script>
     // $(document).ready(function() {
 
-        generateProfileShortName_VendorScript('profileShortNameLargeCircle-profile','{{ $currentUserName }}');
+        generateProfileShortName_VendorScript('profileShortNameLargeCircle-profile','{{ $currentUser->name }}');
         $('#shorthand_name_bg').css( "backgroundColor", getRandomColor() );
     // });
 

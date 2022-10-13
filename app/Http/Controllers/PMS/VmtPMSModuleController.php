@@ -266,7 +266,93 @@ class VmtPMSModuleController extends Controller
         $loggedInUser = Auth::user();
 
         $flowCheck = 3;
-        return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','existingKPIForms','departments','employees','pmsKpiAssigneeDetails','flowCheck','loggedInUser','parentReviewerIds','parentReviewerNames','parentReviewerIds'));
+
+
+        $assignedUserDetails = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')
+            ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+            ->select(
+                'users.name',
+                'users.user_code',
+                'vmt_employee_office_details.department_id',
+                'vmt_employee_office_details.designation',
+                'vmt_employee_office_details.l1_manager_code',
+                'vmt_employee_office_details.l1_manager_name',
+                'vmt_employee_office_details.l1_manager_designation'
+            )
+            ->where('users.active', '1')
+            ->where('users.is_ssa', '0')
+            ->where('users.id',Auth::user()->id)
+            ->first();
+
+        $reportingManagerName = "---";
+
+        if($assignedUserDetails)
+            $reportingManagerName =User::where('user_code',$assignedUserDetails->l1_manager_code)->value('name');
+
+        //// Rating calculation
+        // Get assigned Details
+        $assignedGoals  = VmtPMS_KPIFormAssignedModel::where('vmt_pms_kpiform_reviews.assignee_id',Auth::user()->id)->join('vmt_pms_kpiform_reviews','vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id','=','vmt_pms_kpiform_assigned.id')->first();
+
+        // rating details
+        $ratingDetail['performance'] ='-';
+        $ratingDetail['ranking'] = '-';
+        $ratingDetail['action'] = '-';
+        $ratingDetail['rating'] = '-';
+        if($assignedGoals!=''){
+            // Calculation and check All Reviewers Rating
+            // dD($assignedGoals->reviewer_kpi_percentage);
+            $percentageVal = 0;
+            $howManyPercCount = 0;
+            // dd(json_decode($assignedGoals->reviewer_kpi_percentage, true));
+            $allReviewerPercentages = isset($assignedGoals->reviewer_kpi_percentage) ? json_decode($assignedGoals->reviewer_kpi_percentage, true) : [];
+            if(count($allReviewerPercentages) > 0){
+                foreach($allReviewerPercentages as $percentage){
+                    $arraySumPercentage = array_sum($percentage);
+                    $percentageVal += $arraySumPercentage;
+                    $howManyPercCount += count($percentage);
+                }
+            }
+            if ($howManyPercCount > 0) {
+                $ratingDetail['rating'] = $percentageVal / $howManyPercCount;
+                // calculate Rating Based on Table Dynamic Data
+                $pmsConfigRatingDetails = VmtPMSRating::orderBy('sort_order','DESC')->get();
+                if(count($pmsConfigRatingDetails) > 0){
+                    foreach($pmsConfigRatingDetails as $ratings){
+
+                        $rangeCheck = explode('-',$ratings->score_range);
+                        if($ratingDetail['rating'] >= $rangeCheck[0] && $ratingDetail['rating'] <= $rangeCheck[1]){
+                            $ratingDetail['performance'] = $ratings->performance_rating;
+                            $ratingDetail['ranking'] = $ratings->ranking;
+                            $ratingDetail['action'] = $ratings->action;
+                        }elseif($ratingDetail['rating'] >= 100){
+                            if($ratings->score_range == '90 - 100'){
+                                $ratingDetail['performance'] = $ratings->performance_rating;
+                                $ratingDetail['ranking'] = $ratings->ranking;
+                                $ratingDetail['action'] = $ratings->action;
+                            }else{
+                                $ratingDetail['performance'] = "Exceptionally Exceeds Expectations";
+                                $ratingDetail['ranking'] = 5;
+                                $ratingDetail['action'] = '20%';
+                            }
+                        }else{
+                            $ratingDetail['performance'] = "error";
+                            $ratingDetail['ranking'] = 000;
+                            $ratingDetail['action'] = '0000%';
+                        }
+                    }
+                }
+            }
+        }
+
+
+        //// Rating calculation -ends
+
+        //dd($ratingDetail);
+
+
+
+
+        return view('pms.vmt_pms_dashboard_v2', compact('dashboardCountersData','ratingDetail','reportingManagerName','existingKPIForms','assignedUserDetails','departments','employees','pmsKpiAssigneeDetails','flowCheck','loggedInUser','parentReviewerIds','parentReviewerNames','parentReviewerIds'));
     }
 
     // KPI Form
@@ -557,6 +643,7 @@ class VmtPMSModuleController extends Controller
                 $commentArray = (json_decode($ff->reviewer_kpi_comments, true)) ? (json_decode($ff->reviewer_kpi_comments, true)) : [];
             }
         }
+
         $kpiRows      =  VmtPMS_KPIFormDetailsModel::where('vmt_pms_kpiform_id', $kpiFormAssignedDetails->vmt_pms_kpiform_id)->get();
         $reviewCompleted = false;
         $kpiRowsId = VmtPMS_KPIFormDetailsModel::where('vmt_pms_kpiform_id', $kpiFormAssignedDetails->vmt_pms_kpiform_id)->pluck('id')->toArray();
@@ -571,8 +658,7 @@ class VmtPMSModuleController extends Controller
         $ratingDetail['action'] = '-';
         $ratingDetail['rating'] = '-';
         if($assignedGoals!=''){
-
-        // Calculation and check All Reviewers Rating
+            // Calculation and check All Reviewers Rating
             // dD($assignedGoals->reviewer_kpi_percentage);
             $percentageVal = 0;
             $howManyPercCount = 0;
@@ -614,34 +700,6 @@ class VmtPMSModuleController extends Controller
                         }
                     }
                 }
-
-
-                // if ($ratingDetail['rating'] < 60) {
-                //     $ratingDetail['performance'] = "Needs Action";
-                //     $ratingDetail['ranking'] = 1;
-                //     $ratingDetail['action'] = 'Exit';
-                // } elseif ($ratingDetail['rating'] >= 60 && $ratingDetail['rating'] < 70) {
-                //     $ratingDetail['performance'] = "Below Expectations";
-                //     $ratingDetail['ranking'] = 2;
-                //     $ratingDetail['action'] = 'PIP';
-                // } elseif ($ratingDetail['rating'] >= 70 && $ratingDetail['rating'] < 80) {
-                //     $ratingDetail['performance'] = "Meet Expectations";
-                //     $ratingDetail['ranking'] = 3;
-                //     $ratingDetail['action'] = '10%';
-                // } elseif ($ratingDetail['rating'] >= 80 && $ratingDetail['rating'] < 90) {
-                //     $ratingDetail['performance'] = "Exceeds Expectations";
-                //     $ratingDetail['ranking'] = 4;
-                //     $ratingDetail['action'] = '15%';
-                // } elseif ($ratingDetail['rating'] >= 90) {
-                //     $ratingDetail['performance'] = "Exceptionally Exceeds Expectations";
-                //     $ratingDetail['ranking'] = 5;
-                //     $ratingDetail['action'] = '20%';
-                // }
-                // else{
-                //     $ratingDetail['performance'] = "error";
-                //     $ratingDetail['ranking'] = 000;
-                //     $ratingDetail['action'] = '0000%';
-                // }
             }
         }
 
@@ -813,7 +871,7 @@ class VmtPMSModuleController extends Controller
                 $officialMailList =   VmtEmployeeOfficeDetails::whereIn('user_id', $hr_emp)->pluck('officical_mail');
 
                 $notification_user = User::where('id',auth::user()->id)->first();
-                //dd($officialMailList);
+
                 \Mail::to($officialMailList)->send(new NotifyPMSManager(auth::user()->name,  $currentUser_empDetails->designation,$hrReview->name,$kpiReviewCheck->year ));
                 $message = "Employee has submitted KPI Assessment.  ";
                     Notification::send($notification_user ,new ViewNotification($message.auth()->user()->name));
