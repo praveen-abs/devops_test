@@ -305,7 +305,8 @@
                                 <ul class="personal-info">
                                     <li>
                                         <div class="title">Bank name</div>
-                                        <div class="text">{{$user_full_details->bank_name ?? ''}}</div>
+                                        <?php $bank_name = App\Models\Bank::where('id',$user_full_details->bank_id)->value('bank_name'); ?>
+                                        <div class="text">{{$bank_name ?? ''}}</div>
                                     </li>
                                     <li>
                                         <div class="title">Bank account No.</div>

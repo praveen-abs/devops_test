@@ -181,7 +181,7 @@ class HomeController extends Controller
     public function updateBankInfo(Request $request) {
         $reDetails = VmtEmployee::where('userid', $request->id)->first();
         $details = VmtEmployee::find($reDetails->id);
-        $details->bank_name = $request->input('bank_name');
+        $details->bank_id = Bank::where('bank_name',$request->input('bank_name'))->value('id');
         $details->bank_ifsc_code = $request->input('bank_ifsc');
         $details->bank_account_number = $request->input('account_no');
         $details->pan_number = $request->input('pan_no');
