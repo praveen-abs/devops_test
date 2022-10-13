@@ -35,6 +35,10 @@ Route::get('/attendance-dashboard', [App\Http\Controllers\VmtAttendanceControlle
 Route::get('/attendance-leavepolicy', [App\Http\Controllers\VmtAttendanceController::class, 'showAttendanceLeavePolicyPage'])->name('attendance-leavepolicy');
 Route::get('/attendance-leavereports', [App\Http\Controllers\VmtAttendanceController::class, 'showAttendanceLeaveReportsPage'])->name('attendance-leavereports');
 
+//Department
+Route::post('/department-add', [App\Http\Controllers\VmtDepartmentController::class, 'addDepartment'])->name('department-add');
+
+
 Route::get('/isEmailExists/{email?}', function($email){
 
     return isEmailExists($email);
@@ -92,7 +96,7 @@ Route::post('vmt-general-settings', [App\Http\Controllers\HomeController::class,
 
 
 Route::get('/vendor', function () {
-    return view('vmt_vendor');
+    return view('document_template_protocol');
 })->name('vmt-vendor-route');
 
 
