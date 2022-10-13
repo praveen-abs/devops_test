@@ -16,7 +16,7 @@
                     <a routerlink="directory" href="{{route('paycheckDashboard')}}">Dashboard</a>
                 </li>
                 <li routerlinkactive="active" class="active">
-                    <a routerlink="tree" href="{{route('vmt_salary_details')}}"">Salary
+                    <a routerlink="tree" href="{{route('vmt_salary_details')}}">Salary
                                         Details</a>
                 </li>
 

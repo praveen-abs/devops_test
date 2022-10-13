@@ -261,6 +261,7 @@ Route::get('/download_file/{id}',  [App\Http\Controllers\VmtApraisalController::
 Route::post('/state',  [App\Http\Controllers\VmtEmployeeController::class, 'getState'])->name('state');
 Route::get('/salary_details',  [App\Http\Controllers\VmtPaySlipController::class, 'paySlipIndex'])->name('vmt_salary_details');
 Route::get('/paycheckDashboard',  [App\Http\Controllers\VmtPayCheckController::class, 'index'])->name('paycheckDashboard');
+Route::get('/payrunDashboard',  [App\Http\Controllers\VmtPayCheckController::class, 'index'])->name('payrunDashboard');
 
 Route::get('/form16', function () {
     return view('vmt_form16');
