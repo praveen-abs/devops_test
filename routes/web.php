@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\PMS\VmtPMSModuleController;
-use App\Http\Controllers\VmtEmployeeOnboardingController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,6 +23,7 @@ Auth::routes();
 
 Route::get('/',  [App\Http\Controllers\VmtMainDashboardController::class, 'index'])->name('index');
 
+// Route::get('/index',  [App\Http\Controllers\VmtMainDashboardController::class, 'index'])->name('main');
 
 //404 error page
 Route::get('/page-not-found', function () {
@@ -35,25 +35,8 @@ Route::get('/attendance-dashboard', [App\Http\Controllers\VmtAttendanceControlle
 Route::get('/attendance-leavepolicy', [App\Http\Controllers\VmtAttendanceController::class, 'showAttendanceLeavePolicyPage'])->name('attendance-leavepolicy');
 Route::get('/attendance-leavereports', [App\Http\Controllers\VmtAttendanceController::class, 'showAttendanceLeaveReportsPage'])->name('attendance-leavereports');
 
-//Department
-Route::post('/department-add', [App\Http\Controllers\VmtDepartmentController::class, 'addDepartment'])->name('department-add');
 
 
-Route::get('/isEmailExists/{email?}', function($email){
-
-    return isEmailExists($email);
-
-})->name('isEmailExists');
-
-Route::get('/isEmpCodeExists/{emp_code?}', function($emp_code){
-
-    return isEmpCodeExists($emp_code);
-
-})->name('isEmpCodeExists');
-
-Route::controller(VmtEmployeeOnboardingController::class)->group(function () {
-    Route::post('employee-onboarding-v2/{user_data}', 'testFunction')->name('employee-onboarding-v2');
-});
 
 //Update User Details
 
@@ -96,7 +79,7 @@ Route::post('vmt-general-settings', [App\Http\Controllers\HomeController::class,
 
 
 Route::get('/vendor', function () {
-    return view('document_template_protocol');
+    return view('vmt_vendor');
 })->name('vmt-vendor-route');
 
 
@@ -104,15 +87,17 @@ Route::get('clients', 'App\Http\Controllers\VmtClientController@showAllClients')
 Route::get('clients-fetchAll', 'App\Http\Controllers\VmtClientController@fetchAllClients')->name('vmt-clients-fetchall');
 
 // Permission Roles Routing
+Route::get('vmt-roles', 'App\Http\Controllers\RolesController@create');
 
-Route::get('roles-permissions', 'App\Http\Controllers\VmtUserRolesPermissionsController@index')->name('roles-permissions');
-Route::get('roles-permissions-createRole', 'App\Http\Controllers\VmtUserRolesPermissionsController@createRole')->name('roles-permissions-createRole');
-Route::get('roles-permissions-deleteRole', 'App\Http\Controllers\VmtUserRolesPermissionsController@deleteRole')->name('roles-permissions-deleteRole');
-Route::get('roles-permissions-createPermission', 'App\Http\Controllers\VmtUserRolesPermissionsController@createPermission')->name('roles-permissions-createPermission');
-Route::get('roles-permissions-deletePermission', 'App\Http\Controllers\VmtUserRolesPermissionsController@deletePermission')->name('roles-permissions-deletePermission');
-Route::get('roles-permissions-assignRoleToUser', 'App\Http\Controllers\VmtUserRolesPermissionsController@assignRoleToUser')->name('roles-permissions-assignRoleToUser');
-Route::get('roles-permissions-assignPermissionToRole', 'App\Http\Controllers\VmtUserRolesPermissionsController@assignPermissionToRole')->name('roles-permissions-assignPermissionToRole');
+Route::get('vmt-role-list', 'App\Http\Controllers\RolesController@index');
+Route::post('vmt-roles', 'App\Http\Controllers\RolesController@store');
+Route::get('vmt-role-permissions/{id}', 'App\Http\Controllers\RolesController@permissionListForRoles');
 
+Route::post('vmt-permissions', 'App\Http\Controllers\RolesController@assignPermissionToRoles');
+Route::get('vmt-assign-roles', 'App\Http\Controllers\RolesController@assignRoles');
+Route::post('vmt-assign-roles', 'App\Http\Controllers\RolesController@assignRolesToUser');
+
+Route::post('vmt-delete-roles', 'App\Http\Controllers\RolesController@deleteRoles');
 
 //360 Review Module Routing
 Route::get('vmt-360-questions', 'App\Http\Controllers\Review360ModuleController@showQuestionsPage');
@@ -269,14 +254,13 @@ Route::post('vmt-pmsappraisal-hrreview', 'App\Http\Controllers\VmtPmsController@
 Route::get('/getEmployeeName',  [App\Http\Controllers\VmtEmployeeController::class, 'getEmployeeName'])->name('get-employee-name');
 
 
-Route::get('/employeeOnboarding/{user_id?}',  [App\Http\Controllers\VmtEmployeeController::class, 'showEmployeeOnboardingPage'])->name('employeeOnboarding');
+Route::get('/employeeOnboarding',  [App\Http\Controllers\VmtEmployeeController::class, 'showEmployeeOnboardingPage'])->name('employeeOnboarding');
 Route::post('/upload_file',  [App\Http\Controllers\VmtApraisalController::class, 'uploadFile'])->name('upload-file');
 Route::post('/upload_file_review',  [App\Http\Controllers\VmtApraisalController::class, 'uploadFileReview'])->name('upload-file-review');
 Route::get('/download_file/{id}',  [App\Http\Controllers\VmtApraisalController::class, 'downloadFile'])->name('download-file');
 Route::post('/state',  [App\Http\Controllers\VmtEmployeeController::class, 'getState'])->name('state');
 Route::get('/salary_details',  [App\Http\Controllers\VmtPaySlipController::class, 'paySlipIndex'])->name('vmt_salary_details');
 Route::get('/paycheckDashboard',  [App\Http\Controllers\VmtPayCheckController::class, 'index'])->name('paycheckDashboard');
-Route::get('/payrunDashboard',  [App\Http\Controllers\VmtPayCheckController::class, 'index'])->name('payrunDashboard');
 
 Route::get('/form16', function () {
     return view('vmt_form16');

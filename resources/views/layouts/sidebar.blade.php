@@ -88,23 +88,23 @@
                             </li>
 
                             @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR"]))
-                            <li class="nav-item">
-                                <a href="{{url('attendance_approvals')}}" class="nav-link sidebar py-1">Approvals</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{url('attendance_shift_woff_hday')}}" class="nav-link sidebar py-1">Shift/WeeklyOff/Holidays</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{url('attendance_tracking')}}" class="nav-link sidebar py-1">Tracking</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{url('attendance_overtime')}}" class="nav-link sidebar py-1">OverTime</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="apps-calendar" class="nav-link sidebar py-1" role="button">
-                                    <span>Attendance</span>
-                                </a>
-                            </li>
+                                <li class="nav-item">
+                                    <a href="{{url('attendance_approvals')}}" class="nav-link sidebar py-1">Approvals</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{url('attendance_shift_woff_hday')}}" class="nav-link sidebar py-1">Shift/WeeklyOff/Holidays</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{url('attendance_tracking')}}" class="nav-link sidebar py-1">Tracking</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{url('attendance_overtime')}}" class="nav-link sidebar py-1">OverTime</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="apps-calendar" class="nav-link sidebar py-1" role="button">
+                                        <span>Attendance</span>
+                                    </a>
+                                </li>
                             @endif
 
                             <li class="nav-item">
@@ -120,12 +120,12 @@
                             </li>
 
                             @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR"]))
-                            <li class="nav-item">
-                                <a href="{{route('attendance-leavereports')}}" class="nav-link sidebar py-1"><span>Reports</span></a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{url('attendance_settings')}}" class="nav-link sidebar py-1"><span>Settings</span></a>
-                            </li>
+                                <li class="nav-item">
+                                    <a href="{{route('attendance-leavereports')}}" class="nav-link sidebar py-1"><span>Reports</span></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{url('attendance_settings')}}" class="nav-link sidebar py-1"><span>Settings</span></a>
+                                </li>
                             @endif
                         </ul>
                     </div>
@@ -201,7 +201,7 @@
 
                             <li class="nav-item">
                                 <a href="{{route('vmt-approvals-emp-documents')}}" id="" class="nav-link sidebar py-1" data-bs-toggle="" role="button" aria-expanded="false"><span>
-                                        Documents Approval</span> </a>
+                                Documents Approval</span> </a>
                                 <!-- <div class="collapse menu-dropdown sub-dropdown" id="approvalDrop-Down">
                                     <ul class="nav flex-column">
                                         <li class="nav-item">
@@ -300,18 +300,25 @@
                 </li>
                 @endif
 
+                @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR"]))
                 <!-- pay roll -->
+
                 <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0" id="employeeInfo" href="#payRollDrop-Down" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarRoles">
-                        <i>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
-                                <path id="Subtraction_5" data-name="Subtraction 5" d="M14,16H2a2,2,0,0,1-1.94-1.517L8,10.072l7.941,4.412A2,2,0,0,1,14,16Zm2-2.627h0L10.307,10.21,16,6.873v6.5Zm-16,0v-6.5L5.693,10.21,0,13.371ZM6.5,9.5h0L3,7.5v-6A1.5,1.5,0,0,1,4.5,0h7A1.5,1.5,0,0,1,13,1.5v6l-3.5,2L8,8.75,6.5,9.5Zm.183-4.585v.579L8.021,6.832H8.7L7.261,5.395h.26a1.2,1.2,0,0,0,1.173-.958h.623V3.958H8.694a1.184,1.184,0,0,0-.221-.479h.844V3H6.682v.48h.839a.72.72,0,0,1,.674.479H6.682v.479H8.2a.718.718,0,0,1-.674.479ZM14,6.886V3.133l.941.5A2,2,0,0,1,16,5.4v.313L14,6.885Zm-12,0H2L0,5.713V5.4A2,2,0,0,1,1.059,3.635L2,3.133V6.886Z" fill="#686363" />
+                    <a class="nav-link sidebar menu-link pt-0" href="#payRollDrop-Down" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarRoles">
+                        <i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="12.652" viewBox="0 0 16 12.652">
+                                <g id="Group_34184" data-name="Group 34184" transform="translate(-18 -404.98)">
+                                    <path id="hand-holding-dollar-solid_1_" data-name="hand-holding-dollar-solid (1)" d="M15.867,12.712a1.114,1.114,0,0,0-1.562-.236l-3.343,2.462H7.595a.429.429,0,0,1-.422-.447.446.446,0,0,1,.422-.447H9.78a.95.95,0,0,0,.932-.743.9.9,0,0,0-.883-1.044H5.336a3.339,3.339,0,0,0-2.07.733l-1.3,1.054L.422,14.019A.471.471,0,0,0,0,14.491v2.68a.445.445,0,0,0,.422.447h9.665a2.926,2.926,0,0,0,1.723-.566C16.126,13.907,16.232,13.209,15.867,12.712Z" transform="translate(18 400.015)" fill="#686363" />
+                                    <path id="bx-rupee" d="M12.493,6.635V6H9v.635h1.112a.951.951,0,0,1,.894.635H9v.635h2.006a.951.951,0,0,1-.894.635H9v.767l1.774,1.774h.9L9.767,9.176h.345a1.59,1.59,0,0,0,1.556-1.27h.826V7.27h-.826a1.567,1.567,0,0,0-.293-.635Z" transform="translate(15.253 398.98)" fill="#686363" />
+                                </g>
                             </svg>
                         </i>
+
+
                         <span>Payroll</span>
                     </a>
                     <div class="collapse menu-dropdown" id="payRollDrop-Down">
                         <ul class="nav nav-sm flex-column">
+
                             <li class="nav-item">
                                 <a href="{{route('payRun')}}" class="nav-link sidebar py-1" role="button"><span>
                                     Pay Run</span>
@@ -321,17 +328,14 @@
                         </ul>
                     </div>
                 </li>
+                @endif
 
                 <!-- pay check -->
                 <li class="nav-item">
                     <a class="nav-link sidebar menu-link pt-0" id="employeeInfo" href="#paycheckDrop-Down" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebar360questions">
-                        <i>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="12.652" viewBox="0 0 16 12.652">
-                                <g id="Group_34184" data-name="Group 34184" transform="translate(-18 -404.98)">
-                                    <path id="hand-holding-dollar-solid_1_" data-name="hand-holding-dollar-solid (1)" d="M15.867,12.712a1.114,1.114,0,0,0-1.562-.236l-3.343,2.462H7.595a.429.429,0,0,1-.422-.447.446.446,0,0,1,.422-.447H9.78a.95.95,0,0,0,.932-.743.9.9,0,0,0-.883-1.044H5.336a3.339,3.339,0,0,0-2.07.733l-1.3,1.054L.422,14.019A.471.471,0,0,0,0,14.491v2.68a.445.445,0,0,0,.422.447h9.665a2.926,2.926,0,0,0,1.723-.566C16.126,13.907,16.232,13.209,15.867,12.712Z" transform="translate(18 400.015)" fill="#686363" />
-                                    <path id="bx-rupee" d="M12.493,6.635V6H9v.635h1.112a.951.951,0,0,1,.894.635H9v.635h2.006a.951.951,0,0,1-.894.635H9v.767l1.774,1.774h.9L9.767,9.176h.345a1.59,1.59,0,0,0,1.556-1.27h.826V7.27h-.826a1.567,1.567,0,0,0-.293-.635Z" transform="translate(15.253 398.98)" fill="#686363" />
-                                </g>
-                            </svg>   
+                        <i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                                <path id="Subtraction_5" data-name="Subtraction 5" d="M14,16H2a2,2,0,0,1-1.94-1.517L8,10.072l7.941,4.412A2,2,0,0,1,14,16Zm2-2.627h0L10.307,10.21,16,6.873v6.5Zm-16,0v-6.5L5.693,10.21,0,13.371ZM6.5,9.5h0L3,7.5v-6A1.5,1.5,0,0,1,4.5,0h7A1.5,1.5,0,0,1,13,1.5v6l-3.5,2L8,8.75,6.5,9.5Zm.183-4.585v.579L8.021,6.832H8.7L7.261,5.395h.26a1.2,1.2,0,0,0,1.173-.958h.623V3.958H8.694a1.184,1.184,0,0,0-.221-.479h.844V3H6.682v.48h.839a.72.72,0,0,1,.674.479H6.682v.479H8.2a.718.718,0,0,1-.674.479ZM14,6.886V3.133l.941.5A2,2,0,0,1,16,5.4v.313L14,6.885Zm-12,0H2L0,5.713V5.4A2,2,0,0,1,1.059,3.635L2,3.133V6.886Z" fill="#686363" />
+                            </svg>
                         </i>
                         <span>Paycheck</span>
                     </a>
@@ -400,36 +404,6 @@
                         </ul>
                     </div>
                 </li>
-
-
-                <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0" id="employeeInfo" href="#docDrop-Down" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="">
-                        <i>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#696363" class="bi bi-folder-fill" viewBox="0 0 16 16">
-                                <path d="M9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.825a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3zm-8.322.12C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139z" />
-                            </svg>
-                        </i>
-                        <span> Documents</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="docDrop-Down">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-
-                                <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button"><span>Personal Documents
-                                    </span></a>
-                            </li>
-                            <li class="nav-item">
-
-                                <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button"><span>
-                                        Official Documents </span></a>
-                                <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button"><span>
-                                        Statutory Documents </span></a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
-
 
 
 
