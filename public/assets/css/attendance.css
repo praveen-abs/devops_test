@@ -28,3 +28,42 @@
     padding: 7px;
     margin: 5px;
 }
+
+
+.leave_det_calendar .casual_leave,.leave_det_calendar .sick_leave
+,.leave_det_calendar .floater_leave,.leave_det_calendar .maternity_leave{
+    position: relative;
+    margin-left: 10px;
+}
+
+
+.leave_det_calendar .casual_leave::before,
+.leave_det_calendar .sick_leave::before
+,.leave_det_calendar .floater_leave::before,.leave_det_calendar .maternity_leave::before{
+    position: absolute;
+    content: '';
+    height: 5px;
+    width: 5px;
+    border-radius: 50%;
+
+    left: -8px;
+    margin: 7px 0px 0px 0px;
+}
+.leave_det_calendar .casual_leave::before
+{
+    background-color: #f00;
+}
+.leave_det_calendar .sick_leave::before
+{
+    background-color: #5eff00;
+}
+
+
+.leave_det_calendar .floater_leave::before{
+    background-color: #ffee00;
+}
+
+.leave_det_calendar .maternity_leave::before{
+    background-color: #0011ff;
+}
+

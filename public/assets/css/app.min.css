@@ -16583,15 +16583,15 @@ span.flatpickr-weekday {
     color: #333333;
 }
 
-a {
+/* a {
     text-decoration: none;
     outline: none;
     color: #444;
-}
+} */
 
-a:hover {
+/* a:hover {
     color: #444;
-}
+} */
 
 ul {
     margin-bottom: 0;

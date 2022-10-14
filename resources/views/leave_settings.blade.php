@@ -67,25 +67,31 @@
                                         <th colspan="2">Accural <span class="f-10">(Days)</span> </th>
                                     </thead>
                                     <tbody>
-
-                                        <tr class="">
-                                            <td colspan="2">
-                                                <p>Casula Leave</p>
-                                            </td>
-                                            <td colspan="2">12</td>
-                                            <td colspan="2">01</td>
-                                            <td colspan="2">10</td>
-                                            <td colspan="2">20</td>
-                                        </tr>
                                         <tr>
-                                            <td colspan="10">
-                                                <div class="alert alert-danger py-1 d-flex align-items-center"
-                                                    role="alert">
-                                                    <div class="d-flex justify-content-center">
-                                                        <span class="text-warning fw-bold me-1">Note : </span><span
-                                                            class="  text-muted "> Lorem ipsum dolor sit amet.</span>
-                                                    </div>
-                                                </div>
+                                            <td class="" colspan="10">
+                                                <table class="table table-borderless">
+                                                    <tbody>
+                                                        <tr class="">
+                                                            <td colspan="2">hie</td>
+                                                            <td colspan="2">12</td>
+                                                            <td colspan="2">01</td>
+                                                            <td colspan="2">10</td>
+                                                            <td colspan="2">20</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="10">
+                                                                <div class="alert alert-danger py-1 d-flex align-items-center"
+                                                                    role="alert">
+                                                                    <div class="d-flex justify-content-center">
+                                                                        <span class="text-warning fw-bold me-1">Note :
+                                                                        </span><span class="  text-muted "> Lorem ipsum
+                                                                            dolor sit amet.</span>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </td>
 
                                         </tr>
