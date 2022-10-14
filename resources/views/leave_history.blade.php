@@ -8,11 +8,9 @@
 
 
 
-<style>
+    <style>
 
-</style>
-
-
+    </style>
 @endsection
 @endsection
 @section('content')
@@ -166,8 +164,36 @@
 
                     </div>
 
-                    <div id="leaveSettings_table"></div>
+                    {{-- <div id="leaveSettings_table"></div> --}}
 
+                    <div class="table-responsive">
+                        <table class="table table-borderless">
+                            <thead class="bg-primary text-white">
+                                <th>Leave Date</th>
+                                <th>Leave Type </th>
+                                <th>Status</th>
+                                <th>Requested By</th>
+                                <th>Action Taken On</th>
+                                <th>Leave Note</th>
+                                <th>Action</th>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td>Sep 22,2022</td>
+                                    <td>Sick</td>
+                                    <td>Approved</td>
+                                    <td>Augustin</td>
+                                    <td>Sep 22,2022</td>
+                                    <td>Casual Leave</td>
+                                    <td><button class="btn btn-orange" data-bs-target="#leaveDetails_modal" data-bs-toggle="modal">
+                                      <i class="fa  fa-sticky-note-o"></i>
+                                    </button></td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -180,7 +206,7 @@
             <div class="modal-content top-line">
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
                     <h6 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
-                        View Employees</h6>
+                        </h6>
                     <button type="button" class="close outline-none bg-transparent border-0 h3"
                         data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
@@ -209,6 +235,8 @@
                         </div>
                     </div>
                     <div id="viewEmphistory_table"></div>
+
+
                 </div>
             </div>
         </div>
@@ -219,7 +247,7 @@
             <div class="modal-content top-line">
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
                     <h6 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
-                        View Employees</h6>
+                        </h6>
                     <button type="button" class="close outline-none bg-transparent border-0 h3"
                         data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
@@ -248,6 +276,8 @@
                         </div>
                     </div>
                     <div id="viewEmp_history_balance_table"></div>
+
+
                 </div>
             </div>
         </div>
@@ -416,7 +446,7 @@
                                         </div>
                                         <div class="col-md-4 text-md-center mb-md-0 ">
                                             <p class="fw-bold  text-muted">Total Days</p>
-                                            <span class="shadow-lite mt-3">10</span>
+                                            <span class="shadow-lite mt-3">-</span>
                                         </div>
                                         <div class="col-md-4 text-md-end ">
                                             <label class="fw-bold">End Date</label>
@@ -435,7 +465,7 @@
                                                         alt="" />
                                                     <div class="profile-details">
                                                         <p>Dillip Kumar</p>
-                                                        <h5 class="description">Scottish DJ</h5>
+                                                        <h5 class="description">Sick</h5>
                                                     </div>
                                                 </div>
                                             </div>
@@ -526,6 +556,136 @@
         </div>
     </div>
 
+
+
+
+
+    <div id="leaveDetails_modal" class="modal custom-modal fade" role="dialog">
+        <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable  modal-lg" role="document">
+            <div class="modal-content top-line">
+                <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
+                    <h6 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
+                        Leave Request Details</h6>
+                    <button type="button" class="close outline-none bg-transparent border-0 h3"
+                        data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="card">
+                        <div class="card-body">
+
+                            <div class="d-flex profile-wrapper">
+                                <div class="profile-img d-flex align-items-center justify-content-center me-3">
+                                    <span>GN</span>
+                                </div>
+
+                                <div class="content d-flex flex-column align-items-center justify-content-center">
+                                    <p class="text-primary fw-bold">Augustin</p>
+                                    <p class="text-muted">Requested on Sep 21,2022 </p>
+                                </div>
+
+
+                            </div>
+
+
+                            <hr class="text-muted p-0">
+
+                            <div class="d-flex ">
+                                <div class="date-wrapper shadow-lite d-flex flex-column justify-content-center me-2">
+
+                                    <div class="month text-center bg-primary text-white">
+                                        Apr
+                                    </div>
+                                    <div class="date text-center fw-bold f-14 text-primary ">
+                                        22
+                                    </div>
+                                    <div class="day text-center f-12 fw-bold text-muted ">
+
+                                        Fri
+                                    </div>
+
+                                </div>
+                                <div class="content-det">
+                                    <h6>1 Day Sick Leave</h6>
+                                    <p>Leave Ended 40 days ago</p>
+                                    <p>No teammates are no leave on this day</p>
+                                </div>
+                            </div>
+
+                            <hr class="text-muted p-0">
+                            <h6 class="modal-sub-title py-2">Notify to</h6>
+                            <div class="row mb-3">
+                                <div class="col-6 mb-md-0 mb-3">
+                                    <div class="profile-wrapper center">
+                                        <div class="profile-body">
+                                            <img src="http://images.equipboard.com/uploads/user/image/524/big_calvin-harris.jpg?v=1466072866"
+                                                alt="" />
+                                            <div class="profile-details">
+                                                <p>Dillip Kumar</p>
+                                                <h5 class="description">Designation</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 mb-md-0 mb-3">
+                                    <div class="profile-wrapper center">
+                                        <div class="profile-body">
+                                            <img src="http://images.equipboard.com/uploads/user/image/524/big_calvin-harris.jpg?v=1466072866"
+                                                alt="" />
+                                            <div class="profile-details">
+                                                <p>Praveen</p>
+                                                <h5 class="description">Designation</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <hr class="text-muted p-0">
+                            <h6 class="modal-sub-title py-2">Approved by</h6>
+                            <div class="row mb-3">
+                                <div class="col-6 mb-md-0 mb-3">
+                                    <div class="profile-wrapper center">
+                                        <div class="profile-body">
+                                            <img src="http://images.equipboard.com/uploads/user/image/524/big_calvin-harris.jpg?v=1466072866"
+                                                alt="" />
+                                            <div class="profile-details">
+                                                <p>Dillip Kumar</p>
+                                                <h5 class="description">Designation</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="text-muted p-0">
+                            <h6 class="modal-sub-title py-2">Approved by</h6>
+                            <div class="row mb-3">
+                                <div class="col-12 mb-md-0 mb-3">
+                                    <textarea placeholder="Add Comment" class="form-control outline-none border-0 shadow-lite" name=""
+                                        id="" cols="30" rows="3"></textarea>
+
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-12 mb-md-0 mb-3 text-end">
+                                    <button class="btn btn-orange">Post</button>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </div>
 
 </div>
@@ -542,47 +702,65 @@
         if (document.getElementById("leaveSettings_table")) {
             const grid = new gridjs.Grid({
                 columns: [{
-                        id: 'name',
+                        id: 'leave_date',
                         name: 'Leave Dates',
                     },
 
                     {
-                        id: 'number',
+                        id: 'leave_type',
                         name: 'Leave Type',
                     },
 
                     {
-                        id: 'job_title',
+                        id: 'status',
                         name: 'Status',
                     },
                     {
-                        id: 'reporting_to',
+                        id: 'requested_by',
                         name: 'Requested by',
                     },
                     {
-                        id: 'reporting_to',
+                        id: 'action_taken_on',
                         name: 'Action Taken On',
                     },
                     {
-                        id: '',
+                        id: 'leave_note',
                         name: 'Leave Note',
                     },
                     {
-                        id: '',
-                        name: 'Actions',
+                        id: 'actions',
+                        // name: 'Actions',
+                        //     formatter: (cell, row) => {
+                        //         return h('button', {
+                        //             className: 'py-2 mb-4 px-4 border rounded-md text-white bg-blue-600',
+                        //             onClick: () => alert(
+                        //                 `Editing "${row.cells[0].data}" "${row.cells[1].data}"`
+                        //                 )
+                        //         }, 'Edit');
+
+                        // },
                     },
                 ],
-                data: [
-                    // {
-                    //     name: 'John',
-                    //     email: 'john@example.com',
-                    //     phoneNumber: '(353) 01 222 3333'
-                    // },
-                    // {
-                    //     name: 'Mark',
-                    //     email: 'mark@gmail.com',
-                    //     phoneNumber: '(01) 22 888 4444'
-                    // },
+                data: [{
+                        leave_date: 'sep 15,2022',
+                        leave_type: 'casual',
+                        status: 'approved',
+                        requested_by: 'praveen',
+                        action_taken_on: 'sep 14,2022',
+                        leave_note: 'sick',
+                        actions: 'actions',
+                    },
+                    {
+                        leave_date: 'sep 17,2022',
+                        leave_type: 'casual',
+                        status: 'approved',
+                        requested_by: 'praveen',
+                        action_taken_on: 'sep 15,2022',
+                        leave_note: 'casual',
+                        actions: 'actions',
+                    },
+
+
                 ],
                 pagination: {
                     limit: 10

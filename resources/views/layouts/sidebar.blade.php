@@ -91,9 +91,9 @@
                                 <li class="nav-item">
                                     <a href="{{url('attendance_approvals')}}" class="nav-link sidebar py-1">Approvals</a>
                                 </li>
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <a href="{{url('attendance_shift_woff_hday')}}" class="nav-link sidebar py-1">Shift/WeeklyOff/Holidays</a>
-                                </li>
+                                </li> --}}
                                 <li class="nav-item">
                                     <a href="{{url('attendance_tracking')}}" class="nav-link sidebar py-1">Tracking</a>
                                 </li>
@@ -107,11 +107,14 @@
                                 </li>
                             @endif
 
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button"><span>Timesheet</span></a>
-                            </li>
+                            </li> --}}
                             <li class="nav-item">
                                 <a href="{{url('attendance_leave')}}" class="nav-link sidebar py-1">Leave</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{url('leave_history')}}" class="nav-link sidebar py-1">Leave History</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button">
@@ -148,7 +151,7 @@
                         <ul class="nav nav-sm flex-column">
 
                             <li class="nav-item ">
-                                <a href="{{url('employeesDirectory')}}" id="tds" class="nav-link sidebar py-1"><span>Directory </span></a>
+                                <a href="{{url('employeesDirectory')}}" id="tds" class="nav-link sidebar py-1"><span>Manage Employees</span></a>
                             </li>
                             <li class="nav-item ">
                                 <a href="{{route('showOrgTree')}}" id="tds" class="nav-link sidebar py-1"><span>ORG
@@ -175,9 +178,9 @@
                             <li class="nav-item ">
                                 <a href="{{route('assetinventory-index')}}" id="tds" class="nav-link sidebar py-1"><span>Assets</span></a>
                             </li>
-                            <li class="nav-item ">
+                            {{-- <li class="nav-item ">
                                 <a href="{{route('manage-employees-page')}}" id="tds" class="nav-link sidebar py-1"><span>Manage Employees</span></a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </div>
                 </li>

@@ -11,32 +11,33 @@
 					</li>
 					<li class="crumb-item">
 						<a href="{{url('attendance_approvals')}}" class="text-muted">Approvals</a>
-					</li>						
-                    <li class="crumb-item">
+					</li>
+                    {{-- <li class="crumb-item">
 						<a href="{{url('attendance_shift_woff_hday')}}" class="text-muted">Shift/WeeklyOff/Holidays</a>
-					</li>
-					<li class="crumb-item">
+					</li> --}}
+					{{-- <li class="crumb-item">
 						<a href="{{url('attendance_tracking')}}" class="text-muted">Tracking</a>
-					</li>
+					</li> --}}
 					<li class="crumb-item">
 						<a href="{{url('attendance_overtime')}}" class="text-muted">OverTime</a>
-					</li>						
+					</li>
                     <li class="crumb-item">
 						<a href="{{url('attendance_leave')}}" class="text-muted">Leave</a>
 					</li>
                     <li class="crumb-item"><a href="apps-calendar" class="text-muted">Attendance</a></li>
-                    <li class="crumb-item"><a href="{{route('page-not-found')}}" class="text-muted">Timesheet</a></li>
+                    {{-- <li class="crumb-item"><a href="{{route('')}}" class="text-muted">Timesheet</a></li> --}}
                     <li class="crumb-item">
 						<a href="{{route('page-not-found')}}" class="text-muted">
 							Expenses & Travel
 						</a>
 					</li>
+
 					<li class="crumb-item">
 						<a href="{{route('attendance-leavereports')}}" class="text-muted">Reports</a>
-					</li>						
+					</li>
                     <li class="crumb-item">
 						<a href="{{url('attendance_settings')}}" class="text-muted">Settings</a>
-					</li>					
+					</li>
                 </ol>
             </div>
 
