@@ -107,9 +107,9 @@
                                 </li>
                             @endif
 
-                            {{-- <li class="nav-item">
+                            <li class="nav-item">
                                 <a href="{{route('dayWiseStaffAttendance')}}" class="nav-link sidebar py-1" role="button"><span>Timesheet</span></a>
-                            </li> --}}
+                            </li>
                             <li class="nav-item">
                                 <a href="{{url('attendance_leave')}}" class="nav-link sidebar py-1">Leave</a>
                             </li>
