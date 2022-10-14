@@ -377,6 +377,8 @@ Route::post('changeEmployeeProfileIconsOnEdit', [VmtPMSModuleController::class,'
 //
 Route::get('syncStaffAttendanceFromDeviceDatabase', [App\Http\Controllers\VmtStaffAttendanceController::class, 'syncStaffAttendanceFromDeviceDatabase']);
 
+Route::get('dayWiseStaffAttendance', [App\Http\Controllers\VmtStaffAttendanceController::class, 'dayWiseStaffAttendance']);
+
 //DONT WRITE ANT ROUTES BELOW THIS
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index']);
 

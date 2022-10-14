@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\VmtStaffAttendanceDevice;
+use App\Models\User;
 
 class VmtStaffAttendanceController extends Controller
 {
@@ -48,5 +49,25 @@ class VmtStaffAttendanceController extends Controller
         $staffAttendace->timezone  = $data->timezone;
         $staffAttendace->created_on  = $data->created_on; 
         $staffAttendace->save();
+    }
+
+    /**
+     * dayWiseStaffAttendance 
+     * table: users, vmt_staff_attenndance_device
+     * input param: date
+     *  
+    */
+    protected function dayWiseStaffAttendance(Request $request){
+        $date = $request->date; 
+        $attendanceJoin = \DB::table('vmt_staff_attenndance_device')
+                   ->select('user_Id',\DB::raw('MAX(date) as check_out_time'), \DB::raw('MIN(date) as check_in_time'))
+                   ->whereDate('date', $date)
+                   ->groupBy('user_Id');
+ 
+        $users = \DB::table('users')->select('id', 'name', 'user_code', 'check_in_time','check_out_time')
+            ->leftJoinSub($attendanceJoin, 'vmt_staff_attenndance_device', function ($join) {
+                $join->on('users.id', '=', 'vmt_staff_attenndance_device.user_Id');
+            })->get();
+        return view('vmt_daily_staff_attendance', compact('users'));
     }
 }
