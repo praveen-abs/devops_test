@@ -85,6 +85,10 @@
                                         <div class="text">{{$user_full_details->gender ?? ''}}</div>
                                     </li>
                                     <li>
+                                        <div class="title">Gender:</div>
+                                        <div class="text">{{$user_full_details->gender ?? ''}}</div>
+                                    </li>
+                                    <li>
                                         <div class="title">Reports to:</div>
                                         <div class="text d-flex align-items-center">
                                             <div class="avatar-box">

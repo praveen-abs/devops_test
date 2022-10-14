@@ -274,9 +274,6 @@ class VmtEmployeeService {
          $empOffice->confirmation_period  = $row['confirmation_period'] ?? ''; // => "k"
          $empOffice->holiday_location  = $row["holiday_location"] ?? ''; // => "k"
          $empOffice->l1_manager_code  = $row["l1_manager_code"] ?? ''; // => "k"
-         $empOffice->l1_manager_code  = $row["l1_manager_code"] ?? ''; // => "k"
-
-
 
          if ( !empty($row["l1_manager_code"]) && $this->isUserExist($row["l1_manager_code"]))
          {

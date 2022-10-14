@@ -212,7 +212,8 @@ class VmtMainDashboardController extends Controller
         // get praise data
         $praiseData = VmtPraise::orderBy('created_at','DESC')->get();
 
-        if(Str::contains( currentLoggedInUserRole(), ["Admin","HR"]) )
+
+        if(Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]) )
         {
             return view('vmt_hr_dashboard', compact( 'dashboardEmployeeEventsData', 'checked','effective_hours', 'holidays', 'polling','dashboardpost','json_dashboardCountersData'));
         }
