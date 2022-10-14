@@ -30,6 +30,27 @@ Route::get('/page-not-found', function () {
     return view('page404');
 })->name('page-not-found');
 
+//Department
+Route::post('/department-add', [App\Http\Controllers\VmtDepartmentController::class, 'addDepartment'])->name('department-add');
+
+
+Route::get('/isEmailExists/{email?}', function($email){
+
+    return isEmailExists($email);
+
+})->name('isEmailExists');
+
+Route::get('/isEmpCodeExists/{emp_code?}', function($emp_code){
+
+    return isEmpCodeExists($emp_code);
+
+})->name('isEmpCodeExists');
+
+Route::controller(VmtEmployeeOnboardingController::class)->group(function () {
+    Route::post('employee-onboarding-v2/{user_data}', 'testFunction')->name('employee-onboarding-v2');
+});
+
+
 //Attendance
 Route::get('/attendance-dashboard', [App\Http\Controllers\VmtAttendanceController::class, 'showDashboard'])->name('attendance-dashboard');
 Route::get('/attendance-leavepolicy', [App\Http\Controllers\VmtAttendanceController::class, 'showAttendanceLeavePolicyPage'])->name('attendance-leavepolicy');
@@ -37,9 +58,6 @@ Route::get('/attendance-leavereports', [App\Http\Controllers\VmtAttendanceContro
 Route::get('/attendance-admin-timesheet', [App\Http\Controllers\VmtAttendanceController::class, 'showAllEmployeesTimesheetPage'])->name('attendance-admin-timesheet');
 Route::get('/attendance-timesheet', [App\Http\Controllers\VmtAttendanceController::class, 'showEmployeeTimeSheetPage'])->name('attendance-timesheet');
 Route::get('/fetch-leave-policy-details', [App\Http\Controllers\VmtAttendanceController::class, 'fetchLeavePolicyDetails'])->name('vmt-fetch-leave-policy-details');
-
-
-
 
 //Update User Details
 
