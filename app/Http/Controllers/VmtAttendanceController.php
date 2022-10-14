@@ -54,7 +54,7 @@ class VmtAttendanceController extends Controller
         Show the attendance IN/OUT time for the given month
 
     */
-    public function showEmployeeTimeSheet(Request $request)
+    public function showEmployeeTimeSheetPage(Request $request)
     {
         $currentmonth = $request->current_month;
 
@@ -62,6 +62,12 @@ class VmtAttendanceController extends Controller
         $employeeAttendanceData = VmtEmployeeAttendance::where('user_id',$request->user_id)->get();
 
         return view('vmt_attendance_timesheet',compact('employeeAttendanceData'));
+    }
+
+    public function showAllEmployeesTimesheetPage(Request $request){
+
+        return view('vmt_admin_attendance_timesheet',compact('employeeAttendanceData'));
+
     }
 
 }
