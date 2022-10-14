@@ -18,8 +18,7 @@ class VmtAttendanceController extends Controller
 
     public function showAttendanceLeavePolicyPage(Request $request)
     {
-        $leave_policy_details = VmtLeaves::all();
-        return view('attendance_leavepolicy',compact('leave_policy_details'));
+        return view('attendance_leavepolicy');
     }
 
     public function showAttendanceLeaveReportsPage(Request $request)
@@ -68,6 +67,11 @@ class VmtAttendanceController extends Controller
 
         return view('vmt_admin_attendance_timesheet',compact('employeeAttendanceData'));
 
+    }
+
+    public function fetchLeavePolicyDetails(Request $request)
+    {
+        return VmtLeaves::all();
     }
 
 }

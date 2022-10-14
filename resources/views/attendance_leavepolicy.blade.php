@@ -56,7 +56,7 @@
                         </button>
                     </div>
                     <div class="col-md-12">
-                        <div id="vendor-tables"></div>
+                        <div id="leave-policy-table"></div>
                     </div>
                 </div>
             </div>
@@ -206,23 +206,23 @@
 
 <script>
     $(document).ready(function() {
-        if (document.getElementById("vendor-tables")) {
+        if (document.getElementById("leave-policy-table")) {
             const grid = new gridjs.Grid({
                 columns: [
                     {
-                        id: 'number',
+                        id: 'leave_type',
                         name: 'Leave Type',
                     },
                     {
-                        id: 'name',
+                        id: 'days_annual',
                         name: 'Annual(Days)',
                     },
                     {
-                        id: 'job_title',
+                        id: 'days_monthly',
                         name: 'Month(Days)',
                     },
                     {
-                        id: 'reporting_to',
+                        id: 'days_restricted',
                         name: 'Restricted Days',
                     },
                     {
@@ -231,23 +231,25 @@
                     },
                 ],
                 data: [
-                    // {
-                    //     name: 'John',
-                    //     email: 'john@example.com',
-                    //     phoneNumber: '(353) 01 222 3333'
-                    // },
-                    // {
-                    //     name: 'Mark',
-                    //     email: 'mark@gmail.com',
-                    //     phoneNumber: '(01) 22 888 4444'
-                    // },
+
                 ],
                 pagination: {
                     limit: 10
                 },
                 sort: true,
                 search: true,
-            }).render(document.getElementById("vendor-tables"));
+                server: {
+                url: '{{route('vmt-fetch-leave-policy-details')}}',
+                then: data => data.map(
+                    leave_policy => [
+                        leave_policy.leave_type,
+                        leave_policy.days_annual,
+                        leave_policy.days_monthly,
+                        leave_policy.days_restricted,
+                    ]
+                )
+            },
+            }).render(document.getElementById("leave-policy-table"));
         }
     });
 </script>
