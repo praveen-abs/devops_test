@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\VmtStaffAttendanceDevice;
 use App\Models\User;
+use Carbon\Carbon;
 
 class VmtStaffAttendanceController extends Controller
 {
@@ -58,7 +59,8 @@ class VmtStaffAttendanceController extends Controller
      *  
     */
     protected function dayWiseStaffAttendance(Request $request){
-        $date = $request->date; 
+        $date = $request->has('date') ? $request->date : Carbon::now()->format('Y-m-d'); 
+       
         $attendanceJoin = \DB::table('vmt_staff_attenndance_device')
                    ->select('user_Id',\DB::raw('MAX(date) as check_out_time'), \DB::raw('MIN(date) as check_in_time'))
                    ->whereDate('date', $date)
