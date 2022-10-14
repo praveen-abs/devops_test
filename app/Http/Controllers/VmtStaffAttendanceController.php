@@ -66,7 +66,7 @@ class VmtStaffAttendanceController extends Controller
  
         $users = \DB::table('users')->select('id', 'name', 'user_code', 'check_in_time','check_out_time')
             ->leftJoinSub($attendanceJoin, 'vmt_staff_attenndance_device', function ($join) {
-                $join->on('users.id', '=', 'vmt_staff_attenndance_device.user_Id');
+                $join->on('users.user_code', '=', 'vmt_staff_attenndance_device.user_Id');
             })->get();
         return view('vmt_daily_staff_attendance', compact('users'));
     }
