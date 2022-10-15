@@ -140,7 +140,15 @@
                                             </div>
                                         </div>
                                         <div class="col-2">
-                                            @if($isAllReviewersSubmittedOrNot) @if($ratingDetail){{$ratingDetail['action']}}@else - @endif @else - @endif
+                                            @if ($isAllReviewersSubmittedOrNot)
+                                                @if ($ratingDetail)
+                                                    {{ $ratingDetail['action'] }}
+                                                @else
+                                                    -
+                                                @endif
+                                            @else
+                                                -
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -150,6 +158,118 @@
 
                     </div>
                 </div>
+
+                {{-- <div class="row">
+                    <div class="col-6">
+                        @if ($empSelected)
+                            <div class="appraisal-info left-content">
+                                <ul class="personal-info">
+                                    <li>
+                                        <p class="title h5">Employee Name</p>
+                                        <p class="text">{{ $assignedUserDetails->name }}</p>
+                                    </li>
+                                    @if (isset($assignedUserDetails->getEmployeeDetails))
+                                        <li>
+                                            <p class="title h5"> Employee ID</p>
+                                            <p class="text">{{ $assignedUserDetails->getEmployeeDetails->emp_no }}</p>
+                                        </li>
+                                    @endif
+                                    @if (isset($assignedUserDetails->getEmployeeOfficeDetails))
+                                        <li>
+                                            <p class="title h5">Job Title/Designation</p>
+                                            <p class="text">
+                                                {{ $assignedUserDetails->getEmployeeOfficeDetails->designation }}</p>
+                                        </li>
+                                    @endif
+                                    @if (isset($assignedUserDetails->getEmployeeOfficeDetails))
+                                        <li>
+                                            <p class="title h5">Business Unit/Process/Function</p>
+                                            <p class="text">
+                                                {{ $assignedUserDetails->getEmployeeOfficeDetails->department }}</p>
+                                        </li>
+                                    @endif
+                                    <li>
+                                        <p class="title h5">Reporting Manager</p>
+                                        <p class="text">{{ $assignersName }}</p>
+                                    </li>
+                                    <li class="mb-0">
+                                        <p class="title h5">Review Period</p>
+                                        <p class="text">
+                                            {{ $assignedGoals->year }} -
+                                            {{ strtoupper($assignedGoals->assignment_period) }}
+                                        </p>
+                                    </li>
+                                </ul>
+                            </div>
+                        @endif
+                    </div>
+                    <div class="col-6">
+                        <div class="card-body">
+
+                            <div class="mb-3 input-wrap">
+                                <p>Overall Annual Score</p>
+                                <div class="appraisal-box  btn bg-success text-white "><small>
+                                        @if ($isAllReviewersSubmittedOrNot)
+                                            @if ($ratingDetail)
+                                                {{ $ratingDetail['rating'] }}
+                                            @else
+                                                -
+                                            @endif
+                                        @else
+                                            -
+                                        @endif
+                                    </small>
+                                </div>
+
+                            </div>
+                            <div class="mb-3 input-wrap">
+                                <p>Corresponding ANNUAL PERFORMANCE Rating</p>
+                                <div class="appraisal-box  btn bg-success  text-white"><small>
+                                        @if ($isAllReviewersSubmittedOrNot)
+                                            @if ($ratingDetail)
+                                                {{ $ratingDetail['performance'] }}
+                                            @else
+                                                -
+                                            @endif
+                                        @else
+                                            -
+                                        @endif
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="mb-3 input-wrap">
+                                <p>Ranking</p>
+                                <div class="appraisal-box   btn bg-success text-white "><small>
+                                        @if ($isAllReviewersSubmittedOrNot)
+                                            @if ($ratingDetail)
+                                                {{ $ratingDetail['ranking'] }}
+                                            @else
+                                                -
+                                            @endif
+                                        @else
+                                            -
+                                        @endif
+                                    </small>
+                                </div>
+                            </div>
+                            <div class=" input-wrap">
+                                <p>Action</p>
+                                <div class="appraisal-box btn bg-success text-white"><small>
+                                        @if ($isAllReviewersSubmittedOrNot)
+                                            @if ($ratingDetail)
+                                                {{ $ratingDetail['action'] }}
+                                            @else
+                                                -
+                                            @endif
+                                        @else
+                                            -
+                                        @endif
+                                    </small></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div> --}}
             </div>
         </div>
 
