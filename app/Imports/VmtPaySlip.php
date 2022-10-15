@@ -27,8 +27,9 @@ class VmtPaySlip implements ToModel,  WithHeadingRow
     public function model(array $row)
     {
 
-        $errorMessage = "";
-       
+        return $row; 
+       /* $errorMessage = "";
+            //dd($row);
             $user_id = User::where('user_code',$row['emp_no'])->value('id');
 
             if (!isset($row['emp_no']) && $user_id) {
@@ -104,7 +105,7 @@ class VmtPaySlip implements ToModel,  WithHeadingRow
             "Email" => $row['email'],
             "Greetings" => $row['greetings']
         ]);
-        }
+        }*/
     }
 
     }

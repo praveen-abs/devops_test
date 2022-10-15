@@ -36,7 +36,8 @@
         "files": [
             "app/Helpers/helpers.php",
             "app/Helpers/PMSv2_helper.php",
-            "app/Services/VmtEmployeeService.php"
+            "app/Services/VmtEmployeeService.php",
+            "app/Services/VmtEmployeePayslipService.php"
 
         ]
     },

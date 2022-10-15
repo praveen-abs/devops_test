@@ -13,6 +13,8 @@ use PDF;
 use Illuminate\Support\Facades\DB;
 use App\Models\VmtGeneralInfo;
 
+use App\Services\VmtEmployeePayslipService;
+
 
 class VmtPaySlipController extends Controller
 {
@@ -27,9 +29,12 @@ class VmtPaySlipController extends Controller
 
 
     //
-    public function uploadPaySlip(Request $request){
-        $importDataArry = \Excel::import(new VmtPaySlip, request()->file('file'));
-        return "Processed";
+    public function uploadPaySlip(Request $request, VmtEmployeePayslipService $employeePaySlipService){
+
+        return $employeePaySlipService->importBulkEmployeesPayslipExcelData($request->all());
+        
+        //$importDataArry = \Excel::import(new VmtPaySlip, request()->file('file'));
+        //dd($importDataArry);
     }
 
     //
