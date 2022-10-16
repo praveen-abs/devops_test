@@ -430,8 +430,8 @@
 <!-- apexcharts -->
 
 
-{{-- <script src="{{ URL::asset('/assets/premassets/js/footable.min.js') }}"></script>
-<script src="{{ URL::asset('/assets/premassets/css/footable.bootstrap.min.css') }}"></script> --}}
+<script src="{{ URL::asset('/assets/premassets/js/footable.min.js') }}"></script>
+<script src="{{ URL::asset('/assets/premassets/css/footable.bootstrap.min.css') }}"></script>
 <script type="text/javascript">
     //$('#prizePopup').modal('show');
     /* var showPopup = "{{$showModal}}";
