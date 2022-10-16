@@ -371,7 +371,7 @@ class VmtEmployeePayslipService {
         } catch (\Exception $e) {
             //$this->deleteUser($user->id);
 
-            dd($e);
+            //dd($e);
             return $rowdata_response = [
                 'row_number' => '',
                 'status' => 'failure',
