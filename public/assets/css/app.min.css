@@ -17637,27 +17637,27 @@ table.zp-table.ytd-summary-table tbody > tr td.amount-column.ytd-amount-column {
 }
 
 tr:first-child th:first-child {
-    border-top-left-radius: 6px !important;
+    border-top-left-radius: 6px ;
 }
 
 tr:first-child th:first-child {
-    border-bottom-left-radius: 6px !important;
+    border-bottom-left-radius: 6px ;
 }
 
 tr:last-child td:first-child {
-    border-bottom-left-radius: 6px !important;
+    border-bottom-left-radius: 6px ;
 }
 
 tr:first-child th:last-child {
-    border-top-right-radius: 6px !important;
+    border-top-right-radius: 6px ;
 }
 
 tr:first-child th:last-child {
-    border-bottom-right-radius: 6px !important;
+    border-bottom-right-radius: 6px ;
 }
 
 tr:last-child td:last-child {
-    border-bottom-right-radius: 6px !important;
+    border-bottom-right-radius: 6px ;
 }
 
 .table > thead > tr > th,
@@ -18041,17 +18041,6 @@ white-space:nowrap;
     display: flex;
 }
 
-.page-header-user-dropdown .user-profile,.notify-user-bg  .user-profile,.profile-page .user-profile{
-    height: 30px;
-    width: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background: #003056;
-    color: #ffffff;
-    font-weight: 600;
-}
 
 /* data table */
 
@@ -18247,9 +18236,7 @@ ul.list-style-circle li {
     color: #fff;
 }
 
-.text-primary {
-    color: #002f56 !important;
-}
+
 
 /* card sizes */
 

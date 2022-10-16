@@ -993,9 +993,7 @@ button.gridjs-sort-asc::after{
 .text-orange {
     color: #ff3900;
 }
-.text-primary {
-    color: #002f56;
-}
+
 .topbar-logo {
     height: 40px;
     width: 140px;
@@ -1137,3 +1135,29 @@ button.gridjs-sort-asc::after{
     border-bottom-right-radius: 5px;
     left: 2px !important;
 }
+
+
+
+.wel_userImg {
+    height: 70px !important;
+    width: 70px !important;
+    border-radius: 50%;
+    position: relative;
+}
+
+
+/* for user shorthand img and user img  */
+
+.page-header-user-dropdown .user-profile,.notify-user-bg  .user-profile,.profile-page .user-profile,
+.wel_userImg,.kpi_userImg{
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #003056;
+    color: #ffffff;
+    font-weight: 600;
+}
+

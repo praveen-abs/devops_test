@@ -108,11 +108,11 @@ table.kpi_appraisal-table th div{
     font-size: 15px;
     transition: 0.4s;
   }
-  
+
   .active, .accordion:hover {
-    background-color: #ccc; 
+    background-color: #ccc;
   }
-  
+
   .panel {
     padding: 0 18px;
     display: none;
@@ -127,3 +127,13 @@ table.kpi_appraisal-table th div{
   .more_btn{
     content: 'More';
   }
+
+  .kpi_userImg{
+    height: 120px !important;
+    width: 120px !important;
+  }
+
+
+.appraisal_rating .progress{
+    height: 7px;
+}

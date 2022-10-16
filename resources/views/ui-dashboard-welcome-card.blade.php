@@ -1,7 +1,7 @@
 <div class="card profile-box flex-fill ">
     <div class="card-body">
         <div class="d-flex">
-            <div class="status-wrapper page-header-user-dropdown me-3">
+            <div class="status-wrapper wel_userImg page-header-user-dropdown me-3">
                 @include('ui-profile-avatar',[
                     'currentUserName' =>  auth()->user()->name,
                     ])

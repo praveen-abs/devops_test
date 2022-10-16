@@ -56,38 +56,7 @@
     visibility: visible;
 }
 
-.f-10 {
-    font-size: 10px;
-}
 
-.f-11 {
-    font-size: 11px;
-}
-
-.f-11 {
-    font-size: 12px;
-}
-
-.f-13 {
-    font-size: 13px;
-}
-
-.f-14 {
-    font-size: 14px;
-}
-
-.f-15 {
-    font-size: 15px;
-}
-
-.status-wrapper {
-    height: 70px !important;
-    width: 70px;
-    border-radius: 50%;
-
-    background: #f1f1f1;
-    position: relative;
-}
 
 .status-wrapper::before {
     inset: 0;
