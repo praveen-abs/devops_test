@@ -266,10 +266,13 @@
                                     <tbody class="tbody" id="tbody">
                                         @foreach ($config_data as $iteem)
                                         <tr>
-                                            <td>{{ $iteem->score_range }}
+                                            {{-- <td>{{ $iteem->score_range }} --}}
+                                                <td > <a  class="update" data-name="performance_rating" data-type="text" data-pk="{{ $iteem->id }}" data-title="Enter name">{{ $iteem->score_range }}</a></td>
                                         </td>
                                         <td > <a  class="update" data-name="performance_rating" data-type="text" data-pk="{{ $iteem->id }}" data-title="Enter name">{{ $iteem->performance_rating }}</a></td>
-                                        <td >{{ $iteem->ranking }}</td>
+                                        {{-- <td >{{ $iteem->ranking }}
+                                        </td> --}}
+                                        <td > <a  class="update" data-name="performance_rating" data-type="text" data-pk="{{ $iteem->id }}" data-title="Enter name">{{ $iteem->ranking }}</a></td>
                                         <td ><a  class="update" data-name="action" data-type="text" data-pk="{{ $iteem->id }}" data-title="Enter name">{{ $iteem->action }}</a></td>
                                         {{-- <td ><a  class="update" data-name="sort_order" data-type="text" data-pk="{{ $iteem->id }}" data-title="Enter name">{{ $iteem->sort_order }}</a></td> --}}
 
