@@ -46,7 +46,10 @@ class VmtEmployeePayslipService {
             return $this->storeBulkEmployeesPayslips($importDataArry);
         } else {
             $data['failed'] = $validator->errors()->all();
-            return response()->json($data);
+            $responseJSON['status'] = 'failure';
+            $responseJSON['message'] = $data['failed'][0];//"Please fix the below excelsheet data";
+            //$responseJSON['data'] = $validator->errors()->all();
+            return response()->json($responseJSON);
         }
         // linking Manager To the employees;
         // $linkToManager  = \Excel::import(new VmtEmployeeManagerImport, request()->file('file'));

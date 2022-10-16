@@ -55,6 +55,14 @@
 
                                         </ul>
 
+                                        <div class="row mt-4">
+                                                <div class="col-xl-12">
+                                                    <div id="success-msg"></div>
+                                                    <div id="error-msg"></div>
+
+                                                </div>
+                                            </div>
+
                                         </form>
                                     </div>
                                 </div>
@@ -160,11 +168,39 @@
                 data: new FormData(this),
                 processData: false,
                 contentType: false,
-                success: function(data) {
-                    $('#alert-msg').html(data);
+                success: function(ajaxData) {
+                   /* $('#alert-msg').html(data);
                     var toastLiveExample3 = document.getElementById("borderedToast2");
                     var toast = new bootstrap.Toast(toastLiveExample3);
-                    toast.show();
+                    toast.show();*/
+
+
+                        $('#error-msg').html('');
+                        $('#error-msg').append('<b>Upload Status : <br/></b>');
+                        $('#error-msg').append(ajaxData.message+' : <br/>');
+
+                        //var jsonResponse = JSON.parse(data);
+                        console.log('Data array length : '+ajaxData.data.length);
+
+                        for(var i=0; i < ajaxData.data.length; i++)
+                        {
+                            var row_data = ajaxData.data[i];
+                            $('#error-msg').append('<b class="f-15 ">'+ row_data.message+ '<b/><br/>');
+
+                            if(ajaxData.status == 'failure'){
+
+                                var json_error_fields = JSON.parse(row_data.error_fields);
+                                var keys = Object.keys(json_error_fields);
+
+                                for(var j=0;j<keys.length;j++)
+                                {
+                                        $('#error-msg').append('<ul class="list-unstyled"><li>'+'<span class="text-muted f-14">' + json_error_fields[keys[j]] +'</span>' + '</li></ul>');
+                                }
+                            }
+
+                            console.log(row_data.message);
+
+                        }
                     //alert(data); // show response from the php script.
                 }
             })
