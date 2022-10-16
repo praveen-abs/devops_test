@@ -161,6 +161,9 @@
             var roleUri = $('#role-form').attr('action');
             console.log(roleUri);
 
+            $('#error-msg').html('');
+            $('#error-msg').append('<b>Uploading now...<br/></b>');
+
             $.ajax({
                 type: "POST",
                 url: roleUri,
