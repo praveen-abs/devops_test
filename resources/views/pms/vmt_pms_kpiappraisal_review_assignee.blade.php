@@ -10,7 +10,7 @@
 @section('content')
 <div class="loader" style="display:none;"></div>
 <div class="employee-review-wrapper mt-30">
-    <div class="card">
+    {{-- <div class="card">
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6 col-sm-12 col-lg-6 col-xl-6 col-xxl-6">
@@ -88,6 +88,162 @@
 
                 </div>
             </div>
+
+        </div>
+    </div> --}}
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-lg-3 col-xl-3 col-xxl-3 d-flex mb-sm-3">
+                    <div class="card w-100">
+                        <div class="card-body  text-center">
+
+                            <div class="d-flex justify-content-center">
+                                <div class="kpi_userImg">
+                                    @include('ui-profile-avatar', [
+                                        'currentUserName' => auth()->user()->name,
+                                    ])
+                                </div>
+                            </div>
+
+                            <div class="appraisal_userDet mt-3">
+                                <h5>{{ $assignedUserDetails->name }}</h5>
+                                <p class="f-14 mt-2 fw-bold">
+                                    {{ $assignedUserDetails->getEmployeeOfficeDetails->designation }}</p>
+                                <p class="f-12 text-muted mt-2 fw-bold">
+                                    {{ $assignedUserDetails->getEmployeeDetails->emp_no }}</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-lg-4 col-xl-4 col-xxl-4 d-flex  mb-sm-3">
+                    <div class="card w-100">
+                        <div class="card-body">
+                            <p class="f-12 text-muted mt-2 fw-bold">Business Unit/Process/Function</p>
+                            <h6 class="mb-4">{{ $assignedUserDetails->getEmployeeOfficeDetails->department }}</h6>
+                            <p class="f-12 text-muted mt-2 fw-bold">Reporting Manager</p>
+                            <h6 class="mb-4">{{ $assignersName }}</h6>
+                            <p class="f-12 text-muted mt-2 fw-bold">Reporting Manager</p>
+                            <h6 class="mb-4">{{ $assignedGoals->year }} -
+                                {{ strtoupper($assignedGoals->assignment_period) }}</h6>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-12 col-sm-12 col-lg-5 col-xl-5 col-xxl-5  mb-sm-3 d-flex">
+                    <div class="card w-100 appraisal_rating">
+                        <div class="card-body">
+                            <h6 class="mb-3">Ratings</h6>
+                            <div class="mb-3">
+                                <p class="f-12 text-primary mt-2 fw-bold">Overall Annual Score</p>
+
+                                <div class="row">
+
+                                    <div class="col-10 mt-2">
+                                        <div class="progress">
+                                            <div class="progress-bar bg-success" role="progressbar" style="width:25%"
+                                                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        {{-- <span class="text-primary f-15 fw-bold">1/3</span> --}}
+                                        <b class="f-15">
+                                            @if ($isAllReviewersSubmittedOrNot)
+                                                @if ($ratingDetail)
+                                                    {{ $ratingDetail['rating'] }}
+                                                @else
+                                                    -
+                                                @endif
+                                            @else
+                                                -
+                                            @endif
+                                        </b>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="mb-3">
+                                <p class="f-12 text-primary mt-2 fw-bold">Corresponding ANNUAL PERFORMANCE Rating</p>
+                                <div class="row">
+                                    {{-- <div class="col-10 mt-2">
+                                        <div class="progress">
+                                            <div class="progress-bar bg-info" role="progressbar" style="width: 50%"
+                                                aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div> --}}
+                                    <div class="col-12">
+                                        <b class="f-15">
+                                            @if ($isAllReviewersSubmittedOrNot)
+                                                @if ($ratingDetail)
+                                                    {{ $ratingDetail['performance'] }}
+                                                @else
+                                                    -
+                                                @endif
+                                            @else
+                                                -
+                                            @endif
+                                        </b>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <p class="f-12 text-primary mt-2 fw-bold">Ranking</p>
+                                <div class="row">
+                                    <div class="col-10 mt-2">
+                                        <div class="progress">
+                                            <div class="progress-bar bg-warning" role="progressbar" style="width: 75%"
+                                                aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <b class="f-15">
+                                            @if ($isAllReviewersSubmittedOrNot)
+                                                @if ($ratingDetail)
+                                                    {{ $ratingDetail['ranking'] }}
+                                                @else
+                                                    -
+                                                @endif
+                                            @else
+                                                -
+                                            @endif
+                                        </b>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="mb-3">
+                                <p class="f-12 text-primary mt-2 fw-bold">Review Period</p>
+                                <div class="row">
+                                    <div class="col-10 mt-2">
+                                        <div class="progress">
+                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 100%"
+                                                aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        @if ($isAllReviewersSubmittedOrNot)
+                                            @if ($ratingDetail)
+                                                {{ $ratingDetail['action'] }}
+                                            @else
+                                                -
+                                            @endif
+                                        @else
+                                            -
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
 
         </div>
     </div>

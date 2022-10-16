@@ -82,13 +82,13 @@
                                 <div class="mb-3">
                                     <p class="f-12 text-primary mt-2 fw-bold">Corresponding ANNUAL PERFORMANCE Rating</p>
                                     <div class="row">
-                                        <div class="col-10 mt-2">
+                                        {{-- <div class="col-10 mt-2">
                                             <div class="progress">
                                                 <div class="progress-bar bg-info" role="progressbar" style="width: 50%"
                                                     aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
-                                        </div>
-                                        <div class="col-2">
+                                        </div> --}}
+                                        <div class="col-12">
                                             <b class="f-15">
                                                 @if ($isAllReviewersSubmittedOrNot)
                                                     @if ($ratingDetail)
