@@ -523,13 +523,17 @@
                                                                 <div>
                                                                     <textarea style="width: 100%;" rows="3" class="inp-text" id="assignee_kpi_percentage{{ $index }}"
                                                                         name="assignee_kpi_percentage[{{ $kpiRow->id }}]"
-                                                                        onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46' @if
-                                                                        (is_numeric($kpiRow->target)) readonly placeholder="Calculate based on Target and Self Review" @else
-                                                                        placeholder="type number here" @endif>
-@if (isset(json_decode($assignedGoals->assignee_kpi_percentage, true)[$kpiRow->id]))
-{{ json_decode($assignedGoals->assignee_kpi_percentage, true)[$kpiRow->id] }}
-@endif
-</textarea>
+                                                                        onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46'
+                                                                        @if(is_numeric($kpiRow->target))
+                                                                            readonly placeholder="Calculate based on Target and Self Review"
+                                                                        @else
+                                                                            placeholder="type number here"
+                                                                        @endif
+                                                                        >
+                                                                        @if (isset(json_decode($assignedGoals->assignee_kpi_percentage, true)[$kpiRow->id]))
+                                                                        {{ json_decode($assignedGoals->assignee_kpi_percentage, true)[$kpiRow->id] }}
+                                                                        @endif
+                                                                    </textarea>
 
                                                                 </div>
                                                             @else
