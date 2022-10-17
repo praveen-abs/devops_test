@@ -535,17 +535,22 @@
                             <td class="">
                                 {{-- <div class="td_content_center">{{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</div> --}}
                                 <div class="d-flex align-items-center page-header-user-dropdown">
-                                    @if( empty(Auth::user()->avatar) || !file_exists(public_path('images/'. Auth::user()->avatar)) )
-                                    <!-- <span class="rounded-circle user-profile  ml-2 " id="shorthand_name_bg"> -->
-                                    <span class="rounded-circle user-profile  ml-2 " id="">
-                                        <i id="topbar_username" class="align-middle "></i>
-                                    </span>
-                                    @else
-                                    <img class="rounded-circle header-profile-user" src=" {{URL::asset('images/'. Auth::user()->avatar)}}" alt="Header Avatar">
+                                    <?php
+                                       $employee_icon = getEmployeeAvatarOrShortName($assigneeId);
+                                    //    dd($employee_icon);
+                                    ?>
+                                    @if(!empty($employee_icon))
+                                        @if($employee_icon['type'] == "shortname")
+                                        <span class="rounded-circle user-profile  ml-2 " id="">
+                                            <i id="topbar_username" class="align-middle ">{{$employee_icon['data'] }}</i>
+                                        </span>
+                                        @elseif($employee_icon['type'] == "avatar")
+                                        <img class="rounded-circle header-profile-user" src=" {{URL::asset('images/'. $employee_icon['data'] )}}" alt="--">
+                                        @endif
                                     @endif
 
                                     <span class="f-12 mx-2 d-flex align-items-center">
-                                        <span class=""><!-- {{Auth::user()->name }}-->
+                                        <span class="">
                                         {{$pmsKpiAssignee->getUserDetails($assigneeId)['userNames']}}</span>
                                         <span class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text"></span>
 
