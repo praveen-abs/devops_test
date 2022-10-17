@@ -86,7 +86,7 @@
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-  color: white !important;
+  color: #003056 !important;
 }
 
 .dataTables_wrapper .dataTables_paginate span .paginate_button {

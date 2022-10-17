@@ -186,9 +186,10 @@
                                     <td>Augustin</td>
                                     <td>Sep 22,2022</td>
                                     <td>Casual Leave</td>
-                                    <td><button class="btn btn-orange" data-bs-target="#leaveDetails_modal" data-bs-toggle="modal">
-                                      <i class="fa  fa-sticky-note-o"></i>
-                                    </button></td>
+                                    <td><button class="btn btn-orange" data-bs-target="#leaveDetails_modal"
+                                            data-bs-toggle="modal">
+                                            <i class="fa  fa-sticky-note-o"></i>
+                                        </button></td>
                                 </tr>
                             </tbody>
 
@@ -206,7 +207,7 @@
             <div class="modal-content top-line">
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
                     <h6 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
-                        </h6>
+                    </h6>
                     <button type="button" class="close outline-none bg-transparent border-0 h3"
                         data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
@@ -247,7 +248,7 @@
             <div class="modal-content top-line">
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
                     <h6 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
-                        </h6>
+                    </h6>
                     <button type="button" class="close outline-none bg-transparent border-0 h3"
                         data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
@@ -437,8 +438,24 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-xl-8 col-sm-12 col-lg-8 col-xxl-8 col-md-12">
-                                    <h6 class=" mb-1">Set range</h6>
+
                                     <div class="row mb-3">
+
+                                        <div class="col-md-6 text-md-start mb-md-0 mb-3">
+                                            <h6 class=" mb-1">Set range</h6>
+                                        </div>
+
+                                        <div class="col-md-6 text-end mb-md-0 mb-3">
+                                            <select name="" id="" class="form-select border-primary">
+                                                <option value="1">Sick Leave</option>
+                                                <option value="2">LOP Leave</option>
+                                                <option value="3">Casual Leave</option>
+                                                <option value="4">Compensatory Leave
+                                                </option>
+                                                <option value="5">Flexi day-off Leave</option>
+                                            </select>
+                                        </div>
+
                                         <div class="col-md-4 text-md-start mb-md-0 mb-3">
                                             <label class="fw-bold">Start Date</label>
                                             <input type="date"
