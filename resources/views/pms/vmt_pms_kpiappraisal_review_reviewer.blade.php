@@ -4,6 +4,10 @@
     <!-- for styling -->
     <link href="{{ URL::asset('assets/css/appraisal_review.css') }}" rel="stylesheet">
 @endsection
+@component('components.performance_breadcrumb')
+@slot('li_1')
+@endslot
+@endcomponent
 @section('content')
     <div class="loader" style="display:none;"></div>
     <div class="employee-review-wrapper mt-30">

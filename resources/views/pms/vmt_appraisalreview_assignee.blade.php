@@ -8,6 +8,10 @@
 
 @endsection
 @section('content')
+@component('components.performance_breadcrumb')
+@slot('li_1')
+@endslot
+@endcomponent
 
 
 <div>

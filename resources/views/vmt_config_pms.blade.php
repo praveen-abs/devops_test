@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-    @component('components.configuration_breadcrumb')
+    @component('components.performance_breadcrumb')
         @slot('li_1')
         @endslot
     @endcomponent

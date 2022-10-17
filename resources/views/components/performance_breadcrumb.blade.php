@@ -6,12 +6,24 @@
 
             <div class="page-title-right">
                 <ol class="breadcrumb m-0  fw-bold ">
-                    <li class="crumb-item"><a href="{{url('vmt-pms-assigngoals')}}"
-                            class="text-muted">Dashboard</a></li>
-                    {{-- <li class="crumb-item"><a href="{{route('page-not-found')}}" class="text-muted">360
-                            Degree
-                            Review</a></li> --}}
-
+                    @if (Str::contains(currentLoggedInUserRole(), ['Admin', 'HR']))
+                        <li class="crumb-item"><a href="{{ route('pms-dashboard') }}" class="text-muted">Org Appraisal</a>
+                        </li>
+                    @endif
+                    @if (Str::contains(currentLoggedInUserRole(), ['Admin', 'HR', 'Manager']))
+                        <li class="crumb-item"><a href="{{ route('team-appraisal-pms-dashboard') }}"
+                                class="text-muted">Team Appraisal</a>
+                        </li>
+                    @endif
+                    @if (Str::contains(currentLoggedInUserRole(), ['Admin', 'HR', 'Manager']))
+                        <li class="crumb-item"><a href="{{ route('employee-appraisal-pms-dashboard') }}"
+                                class="text-muted">Self
+                                Appraisal</a></li>
+                    @endif
+                    @if (Str::contains(currentLoggedInUserRole(), ['Admin', 'HR']))
+                        <li class="crumb-item"><a href="{{ route('vmt_config_pms') }}" class="text-muted">pms
+                                Config</a></li>
+                    @endif
                 </ol>
             </div>
 

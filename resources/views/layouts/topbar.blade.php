@@ -49,7 +49,7 @@
                             @endif
                         </div>
 
-                        <div class="search-content ms-5 ">
+                        <div class="search-content ms-2 ">
 
                             <i class=" ri-search-line "></i>
                             <input type="text" class="search-bar form-control py-1 rounded" placeholder="Search">
