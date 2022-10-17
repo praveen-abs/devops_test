@@ -140,6 +140,7 @@
                                             </div>
                                         </div>
                                         <div class="col-2">
+                                            <b class="f-15">
                                             @if ($isAllReviewersSubmittedOrNot)
                                                 @if ($ratingDetail)
                                                     {{ $ratingDetail['action'] }}
@@ -149,6 +150,7 @@
                                             @else
                                                 -
                                             @endif
+                                        </b>
                                         </div>
                                     </div>
                                 </div>
