@@ -1007,9 +1007,9 @@ class VmtEmployeeController extends Controller
     }
 
     //
-    public function showEmployeeDirectory(Request $request)
+    public function showManageEmployeePage(Request $request)
     {
-        return view('vmt_employeeDirectory');
+        return view('vmt_manageEmployee');
     }
 
     public function isUserExist($t_emp_code)

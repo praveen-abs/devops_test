@@ -217,11 +217,9 @@ Route::get('vmt-employee/complete-onboarding', 'App\Http\Controllers\VmtEmployee
 Route::post('vmt-employee/complete-onboarding', 'App\Http\Controllers\VmtEmployeeController@storeQuickOnboardForm');
 
 
-Route::get('employeesDirectory', 'App\Http\Controllers\VmtEmployeeController@showEmployeeDirectory');
+Route::get('manageEmployees', 'App\Http\Controllers\VmtEmployeeController@showManageEmployeePage')->name('manageEmployees');
 Route::get('vmt-activeemployees-fetchall', 'App\Http\Controllers\VmtEmployeeController@fetchAllActiveEmployees')->name('vmt-activeemployees-fetchall');
 Route::get('vmt-yet-to-activeemployees-fetchall', 'App\Http\Controllers\VmtEmployeeController@fetchAllYetToActiveEmployees')->name('vmt-yet-to-activeemployees-fetchall');
-
-Route::get('manageEmployees', 'App\Http\Controllers\VmtEmployeeManagementController@index')->name('manage-employees-page');
 
 Route::post('vmt-kpi/data', 'App\Http\Controllers\VmtEmployeeController@showKpiData')->name('kpi-data');
 Route::post('vmt-employess/status', 'App\Http\Controllers\VmtEmployeeController@updateUserAccountStatus')->name('updateUserAccountStatus');

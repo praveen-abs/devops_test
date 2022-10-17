@@ -151,7 +151,7 @@
                         <ul class="nav nav-sm flex-column">
 
                             <li class="nav-item ">
-                                <a href="{{url('employeesDirectory')}}" id="tds" class="nav-link sidebar py-1"><span>Manage Employees</span></a>
+                                <a href="{{route('manageEmployees')}}" id="tds" class="nav-link sidebar py-1"><span>Manage Employees</span></a>
                             </li>
                             <li class="nav-item ">
                                 <a href="{{route('showOrgTree')}}" id="tds" class="nav-link sidebar py-1"><span>ORG
@@ -178,9 +178,6 @@
                             <li class="nav-item ">
                                 <a href="{{route('assetinventory-index')}}" id="tds" class="nav-link sidebar py-1"><span>Assets</span></a>
                             </li>
-                            {{-- <li class="nav-item ">
-                                <a href="{{route('manage-employees-page')}}" id="tds" class="nav-link sidebar py-1"><span>Manage Employees</span></a>
-                            </li> --}}
                         </ul>
                     </div>
                 </li>
