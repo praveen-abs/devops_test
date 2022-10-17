@@ -9,6 +9,9 @@
 					<li class="crumb-item active">
 						<a href="{{url('attendance_dashboard')}}" class="text-muted">Dashboard</a>
 					</li>
+                    <li class="crumb-item">
+						<a href="{{url('attendance_leave')}}" class="text-muted">Leave</a>
+					</li>
 					<li class="crumb-item">
 						<a href="{{url('attendance_approvals')}}" class="text-muted">Approvals</a>
 					</li>
@@ -16,21 +19,19 @@
 						<a href="{{url('attendance_shift_woff_hday')}}" class="text-muted">Shift/WeeklyOff/Holidays</a>
 					</li> --}}
 					{{-- <li class="crumb-item">
-						<a href="{{url('attendance_tracking')}}" class="text-muted">Tracking</a>
+						<a href="{{url('')}}" class="text-muted">Tracking</a>
 					</li> --}}
 					<li class="crumb-item">
-						<a href="{{url('attendance_overtime')}}" class="text-muted">OverTime</a>
+						<a href="{{url('leave_history')}}" class="text-muted">Leave history</a>
 					</li>
-                    <li class="crumb-item">
-						<a href="{{url('attendance_leave')}}" class="text-muted">Leave</a>
-					</li>
+
                     <li class="crumb-item"><a href="apps-calendar" class="text-muted">Attendance</a></li>
-                    {{-- <li class="crumb-item"><a href="{{route('')}}" class="text-muted">Timesheet</a></li> --}}
-                    <li class="crumb-item">
+                    <li class="crumb-item"><a href="{{route('dayWiseStaffAttendance')}}" class="text-muted">Timesheet</a></li>
+                    {{-- <li class="crumb-item">
 						<a href="{{route('page-not-found')}}" class="text-muted">
 							Expenses & Travel
 						</a>
-					</li>
+					</li> --}}
 
 					<li class="crumb-item">
 						<a href="{{route('attendance-leavereports')}}" class="text-muted">Reports</a>

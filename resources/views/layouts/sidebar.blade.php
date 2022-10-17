@@ -94,12 +94,12 @@
                                 {{-- <li class="nav-item">
                                     <a href="{{url('attendance_shift_woff_hday')}}" class="nav-link sidebar py-1">Shift/WeeklyOff/Holidays</a>
                                 </li> --}}
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <a href="{{url('attendance_tracking')}}" class="nav-link sidebar py-1">Tracking</a>
-                                </li>
-                                <li class="nav-item">
+                                </li> --}}
+                                {{-- <li class="nav-item">
                                     <a href="{{url('attendance_overtime')}}" class="nav-link sidebar py-1">OverTime</a>
-                                </li>
+                                </li> --}}
                                 <li class="nav-item">
                                     <a href="apps-calendar" class="nav-link sidebar py-1" role="button">
                                         <span>Attendance</span>
@@ -116,11 +116,11 @@
                             <li class="nav-item">
                                 <a href="{{url('leave_history')}}" class="nav-link sidebar py-1">Leave History</a>
                             </li>
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button">
                                     <span>Expenses & Travel</span>
                                 </a>
-                            </li>
+                            </li> --}}
 
                             @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR"]))
                                 <li class="nav-item">
@@ -245,7 +245,7 @@
                             </li>
                             @endif
                             <li class="nav-item">
-                                <a href="{{ route('employee-appraisal-pms-dashboard') }}" class="nav-link"><span>Employee Appraisal</span></a>
+                                <a href="{{ route('employee-appraisal-pms-dashboard') }}" class="nav-link"><span>Self Appraisal</span></a>
                             </li>
                             @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR"]))
 

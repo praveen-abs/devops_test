@@ -37,8 +37,9 @@
 @endsection
 @section('content')
 
-@component('components.organization_breadcrumb')
-@slot('li_1') @endslot
+@component('components.attendance_breadcrumb')
+    @slot('li_1')
+    @endslot
 @endcomponent
 
 
@@ -48,15 +49,15 @@
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
                 <div class="">
                     <div id="msform">
-                        
+
                         <div class="card shadow  profile-box card-top-border p-2">
                             <div class="card-body">
                                 <h6 class="mb-0 text-start">Daily Attendance</h6>
-                                
+
                                 <div class="header-card-text text-end">
                                     <form method="GET" class="form-inline">
                                         <input type="date" name="date" value="{{\Request::get('date')}}" class="form-control" placeholder="select date" >
-                                        
+
                                         <button class="btn  btn-primary" type="submit" >Apply</button>
                                 </form>
                                 </div>
@@ -65,7 +66,7 @@
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
-                                                
+
                                                 <th>Name</th>
                                                 <th>Employee Code</th>
                                                 <th>Check-in Time </th>
@@ -75,21 +76,21 @@
                                         <tbody>
                                             @foreach($users as $user)
                                             <tr>
-                                               
+
                                                 <td>{{$user->user_code}}
                                                 </td>
                                                 <td>{{$user->name}}
                                                 </td>
-                                                
+
                                                 <td>{{$user->check_in_time ? $user->check_in_time : 'Absent' }}
                                                 </td>
-                                                
+
                                                 <td>{{
                                                     $user->check_out_time ? $user->check_out_time : 'Absent'
                                                 }}
                                                 </td>
-                                                
-                                               
+
+
 
                                             </tr>
                                             @endforeach
@@ -107,9 +108,9 @@
             </div>
         </div>
 
-      
+
     </div>
- 
+
 
 
 
@@ -133,9 +134,9 @@
 
 <script>
 
-       
 
-        
+
+
 
 
 
