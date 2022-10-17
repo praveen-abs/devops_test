@@ -89,7 +89,7 @@
 
                             @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR"]))
                                 <li class="nav-item">
-                                    <a href="{{url('attendance_approvals')}}" class="nav-link sidebar py-1">Approvals</a>
+                                    <a href="{{route('attendance-approvals')}}" class="nav-link sidebar py-1">Approvals</a>
                                 </li>
                                 {{-- <li class="nav-item">
                                     <a href="{{url('attendance_shift_woff_hday')}}" class="nav-link sidebar py-1">Shift/WeeklyOff/Holidays</a>

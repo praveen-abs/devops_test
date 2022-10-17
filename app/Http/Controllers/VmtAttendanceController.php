@@ -40,6 +40,13 @@ class VmtAttendanceController extends Controller
 
     }
 
+    public function showAttendanceApprovalPage(Request $request){
+        $allEmployeesList = User::all(['id','name']);
+
+        return view('attendance_approvals',compact('allEmployeesList'));
+
+    }
+
     public function fetchLeaveRequestDetails(Request $request)
     {
         return VmtEmployeeLeaves::all();
