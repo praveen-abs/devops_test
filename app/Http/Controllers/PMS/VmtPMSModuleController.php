@@ -150,7 +150,7 @@ class VmtPMSModuleController extends Controller
         $loggedManagerEmployeesIDs = implode(',',$loggedManagerEmployeesIDs);
 
         // Get logged in user office deatils and its parent code
-        $loggedUserManagerOfficeDetails = VmtEmployeeOfficeDetails::where('user_id',$loggedUserId)->value('l1_manager_code');
+        $loggedUserManagerOfficeDetails = VmtEmployeeOfficeDetails::where('user_id', $loggedUserId)->value('l1_manager_code');
         // From its parent code can get childs (same level managers of loggedIn Manager)
         $getSameLevelManagers = [];
         if(!empty($loggedUserManagerOfficeDetails)){
@@ -167,7 +167,7 @@ class VmtPMSModuleController extends Controller
         $dashboardCountersData['selfReviewCount'] = $selfReviewCount;
         $dashboardCountersData['totalSelfReviewCount'] = $totalSelfReviewCount;
 
-            $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')->WhereRaw("find_in_set(".$loggedUserId.", reviewer_id)")->orWhereRaw("find_in_set(".$loggedUserId.", assignee_id)")->orderBy('id','DESC')->get();
+            $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')->WhereRaw("find_in_set(".$loggedUserId.", reviewer_id)")/*->orWhereRaw("find_in_set(".$loggedUserId.", assignee_id)")*/->orderBy('id','DESC')->get();
 
         $loggedInUser = Auth::user();
 
@@ -262,7 +262,7 @@ class VmtPMSModuleController extends Controller
         $dashboardCountersData['selfReviewCount'] = $selfReviewCount;
         $dashboardCountersData['totalSelfReviewCount'] = $totalSelfReviewCount;
 
-            $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')->WhereRaw("find_in_set(".$loggedUserId.", reviewer_id)")->orWhereRaw("find_in_set(".$loggedUserId.", assignee_id)")->orderBy('id','DESC')->get();
+            $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')/*->WhereRaw("find_in_set(".$loggedUserId.", reviewer_id)")->*/->orWhereRaw("find_in_set(".$loggedUserId.", assignee_id)")->orderBy('id','DESC')->get();
 
         $loggedInUser = Auth::user();
 
@@ -633,6 +633,7 @@ class VmtPMSModuleController extends Controller
         ->where('vmt_pms_kpiform_reviews.assignee_id','=',$request->assigneeId)
         ->get();
 
+        //dd($review);
         foreach($review as $ff){
             $assignersName = User::whereRaw("id IN($ff->reviewer_id)")->pluck('name')->toArray();
             if ($assignersName) {
@@ -652,6 +653,7 @@ class VmtPMSModuleController extends Controller
 
         // Get assigned Details
         $assignedGoals  = VmtPMS_KPIFormAssignedModel::where('vmt_pms_kpiform_assigned.id',$request->assignedFormid)->where('vmt_pms_kpiform_reviews.assignee_id',$request->assigneeId)->join('vmt_pms_kpiform_reviews','vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id','=','vmt_pms_kpiform_assigned.id')->first();
+
 
         // rating details
         $ratingDetail['performance'] ='-';
@@ -750,7 +752,7 @@ class VmtPMSModuleController extends Controller
         }
 
         // check if logged in user is reviewer or not
-        if(in_array(Auth::id(),$reviewersId)){
+        if(in_array(Auth::id(), $reviewersId)){
             return view('pms.vmt_pms_kpiappraisal_review_reviewer', compact('review','assignedUserDetails','assignedGoals','empSelected','assignersName','config','show','ratingDetail','kpiRowsId','kpiRows','reviewCompleted','reviewersId','isAllReviewersSubmittedOrNot','isAllReviewersSubmittedData','isAllReviewersAcceptedData','isAllReviewersAcceptedOrNot','pmsRatingDetails','kpiFormAssignedDetails','headerColumnsDynamic'));
         }
         dD("Assigner's review page is pending");
