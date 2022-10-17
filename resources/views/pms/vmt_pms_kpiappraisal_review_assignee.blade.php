@@ -94,7 +94,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-lg-3 col-xl-3 col-xxl-3 d-flex mb-sm-3">
-                        <div class="card w-100">
+                        <div class="card w-100 border-0 boxshadow_lite4">
                             <div class="card-body  text-center">
 
                                 <div class="d-flex justify-content-center">
@@ -106,10 +106,10 @@
                                 </div>
 
                                 <div class="appraisal_userDet mt-3">
-                                    <h5>{{ $assignedUserDetails->name }}</h5>
-                                    <p class="f-14 mt-2 fw-bold">
+                                    <h6>{{ $assignedUserDetails->name }}</h6>
+                                    <p class="f-14 mt-2  text-primary">
                                         {{ $assignedUserDetails->getEmployeeOfficeDetails->designation }}</p>
-                                    <p class="f-12 text-muted mt-2 fw-bold">
+                                    <p class="f-12 text-muted mt-2">
                                         {{ $assignedUserDetails->getEmployeeDetails->emp_no }}</p>
                                 </div>
 
@@ -117,28 +117,26 @@
                         </div>
                     </div>
                     <div class="col-md-12 col-sm-12 col-lg-4 col-xl-4 col-xxl-4 d-flex  mb-sm-3">
-                        <div class="card w-100">
+                        <div class="card w-100 border-0 boxshadow_lite4">
                             <div class="card-body">
-                                <p class="f-12 text-muted mt-2 fw-bold">Business Unit/Process/Function</p>
-                                <h6 class="mb-4">{{ $assignedUserDetails->getEmployeeOfficeDetails->department }}</h6>
-                                <p class="f-12 text-muted mt-2 fw-bold">Reporting Manager</p>
-                                <h6 class="mb-4">{{ $assignersName }}</h6>
-                                <p class="f-12 text-muted mt-2 fw-bold">Reporting Manager</p>
-                                <h6 class="mb-4">{{ $assignedGoals->year }} -
-                                    {{ strtoupper($assignedGoals->assignment_period) }}</h6>
+                                <p class="f-14 text-ash  ">Business Unit/Process/Function</p>
+                                <p class="mb-4 f-15 fw-bold text-primary">{{ $assignedUserDetails->getEmployeeOfficeDetails->department }}</p>
+                                <p class="f-14 text-ash  ">Reporting Manager</p>
+                                <p class="mb-4 f-15 fw-bold text-primary ">{{ $assignersName }}</p>
+                                <p class="f-14 text-ash  ">Reporting Manager</p>
+                                <p class="mb-4 f-15 fw-bold text-primary">{{ $assignedGoals->year }} -
+                                    {{ strtoupper($assignedGoals->assignment_period) }}</p>
                             </div>
                         </div>
 
                     </div>
                     <div class="col-md-12 col-sm-12 col-lg-5 col-xl-5 col-xxl-5  mb-sm-3 d-flex">
-                        <div class="card w-100 appraisal_rating">
+                        <div class="card w-100 appraisal_rating border-0 boxshadow_lite4">
                             <div class="card-body">
-                                <h6 class="mb-3">Ratings</h6>
+                                <p class="mb-2 fw-bold f-14 text-primary">Ratings</p>
                                 <div class="mb-3">
-                                    <p class="f-12 text-primary mt-2 fw-bold">Overall Annual Score</p>
-
+                                    <p class="f-14 text-ash mt-2 ">Overall Annual Score</p>
                                     <div class="row">
-
                                         <div class="col-10 mt-2">
                                             <div class="progress">
                                                 <div class="progress-bar bg-success" role="progressbar" style="width:25%"
@@ -147,7 +145,7 @@
                                         </div>
                                         <div class="col-2">
                                             {{-- <span class="text-primary f-15 fw-bold">1/3</span> --}}
-                                            <b class="f-15">
+                                            <b class="f-15 text-primary">
                                                 @if ($isAllReviewersSubmittedOrNot)
                                                     @if ($ratingDetail)
                                                         {{ $ratingDetail['rating'] }}
@@ -163,16 +161,16 @@
 
                                 </div>
                                 <div class="mb-3">
-                                    <p class="f-12 text-primary mt-2 fw-bold">Corresponding ANNUAL PERFORMANCE Rating</p>
+                                    <p class="f-14 text-ash mt-2 ">Corresponding ANNUAL PERFORMANCE Rating</p>
                                     <div class="row">
                                         {{-- <div class="col-10 mt-2">
-                                        <div class="progress">
-                                            <div class="progress-bar bg-info" role="progressbar" style="width: 50%"
-                                                aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div> --}}
+                                            <div class="progress">
+                                                <div class="progress-bar bg-info" role="progressbar" style="width: 50%"
+                                                    aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div> --}}
                                         <div class="col-12">
-                                            <b class="f-15">
+                                            <b class="f-15 text-primary">
                                                 @if ($isAllReviewersSubmittedOrNot)
                                                     @if ($ratingDetail)
                                                         {{ $ratingDetail['performance'] }}
@@ -187,7 +185,7 @@
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <p class="f-12 text-primary mt-2 fw-bold">Ranking</p>
+                                    <p class="f-14 text-ash mt-2 ">Ranking</p>
                                     <div class="row">
                                         <div class="col-10 mt-2">
                                             <div class="progress">
@@ -196,7 +194,7 @@
                                             </div>
                                         </div>
                                         <div class="col-2">
-                                            <b class="f-15">
+                                            <b class="f-15 text-primary">
                                                 @if ($isAllReviewersSubmittedOrNot)
                                                     @if ($ratingDetail)
                                                         {{ $ratingDetail['ranking'] }}
@@ -214,7 +212,7 @@
 
 
                                 <div class="mb-3">
-                                    <p class="f-12 text-primary mt-2 fw-bold">Review Period</p>
+                                    <p class="f-14 text-ash mt-2 ">Review Period</p>
                                     <div class="row">
                                         <div class="col-10 mt-2">
                                             <div class="progress">
@@ -223,17 +221,17 @@
                                             </div>
                                         </div>
                                         <div class="col-2">
-                                            <b class="f-15">
-                                                @if ($isAllReviewersSubmittedOrNot)
-                                                    @if ($ratingDetail)
-                                                        {{ $ratingDetail['action'] }}
-                                                    @else
-                                                        -
-                                                    @endif
+                                            <b class="f-15 text-primary">
+                                            @if ($isAllReviewersSubmittedOrNot)
+                                                @if ($ratingDetail)
+                                                    {{ $ratingDetail['action'] }}
                                                 @else
                                                     -
                                                 @endif
-                                            </b>
+                                            @else
+                                                -
+                                            @endif
+                                        </b>
                                         </div>
                                     </div>
                                 </div>

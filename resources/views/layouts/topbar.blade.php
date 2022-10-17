@@ -219,10 +219,10 @@
                             <i class="fa fa-bullhorn" aria-hidden="true"></i>
 
                        </button> --}}
-                        <button class="btn btn-icon bg-transparent outline-none border-0 btn-topbar rounded-circle text-muted">
+                        {{-- <button class="btn btn-icon bg-transparent outline-none border-0 btn-topbar rounded-circle text-muted">
 
                             <img src="{{ URL::asset('assets/images/megaphone.png') }}" class="" alt="user-pic" style="height:20px;width:20px;">
-                        </button>
+                        </button> --}}
                         @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR","Manager"]) && hasSubClients() )
 
                         <div class="dropdown topbar-user ">
