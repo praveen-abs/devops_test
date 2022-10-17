@@ -316,34 +316,37 @@
                 <!-- appraisal table -->
                 <div class="card">
                     <div class="card-body pb-2">
-                        @if (isset($isAllReviewersSubmittedData) &&
-                            count($isAllReviewersSubmittedData) > 0 &&
-                            $isAllReviewersSubmittedData[Auth::id()] != '1' &&
-                            $assignedGoals->is_assignee_submitted == '1')
-                            <div class="row">
-                                <div class="col-12 mt-3">
-                                    <form id="upload_form" enctype="multipart/form-data">
-                                        <div class="row pull-right mb-3">
-                                            @csrf
-                                            <input type="hidden" name="kpiFormAssignedId"
-                                                value="{{ $kpiFormAssignedDetails->id }}">
-                                            <div class="col">
-                                                <a href="{{ route('download.excelsheet.pmsv2.review.form', [$assignedGoals->vmt_pms_kpiform_assigned_id, '2', $assignedGoals->year . '-' . strtoupper($assignedGoals->assignment_period)]) }}"
-                                                    class="btn btn-orange pull-right" id="download-excel">Download</a>
+                        @if($enableButton)
+                            @if (isset($isAllReviewersSubmittedData) &&
+                                count($isAllReviewersSubmittedData) > 0 &&
+                                $isAllReviewersSubmittedData[Auth::id()] != '1' &&
+                                $assignedGoals->is_assignee_submitted == '1')
+                                <div class="row">
+                                    <div class="col-12 mt-3">
+                                        <form id="upload_form" enctype="multipart/form-data">
+                                            <div class="row pull-right mb-3">
+                                                @csrf
+                                                <input type="hidden" name="kpiFormAssignedId"
+                                                    value="{{ $kpiFormAssignedDetails->id }}">
+                                                <div class="col">
+                                                    <a href="{{ route('download.excelsheet.pmsv2.review.form', [$assignedGoals->vmt_pms_kpiform_assigned_id, '2', $assignedGoals->year . '-' . strtoupper($assignedGoals->assignment_period)]) }}"
+                                                        class="btn btn-orange pull-right" id="download-excel">Download</a>
+                                                </div>
+                                                <div class="col-auto p-0">
+                                                    <input type="file" name="upload_file" id="upload_file"
+                                                        accept=".xls,.xlsx" class="form-control" required>
+                                                </div>
+                                                <div class="col">
+                                                    <button type="button" class="btn btn-orange pull-right" id="upload-goal"
+                                                        disabled>Upload</button>
+                                                </div>
                                             </div>
-                                            <div class="col-auto p-0">
-                                                <input type="file" name="upload_file" id="upload_file"
-                                                    accept=".xls,.xlsx" class="form-control" required>
-                                            </div>
-                                            <div class="col">
-                                                <button type="button" class="btn btn-orange pull-right" id="upload-goal"
-                                                    disabled>Upload</button>
-                                            </div>
-                                        </div>
-                                    </form>
+                                        </form>
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
                         @endif
+
                         @if (count($kpiRows) > 0)
                             <form id="employee_self_review" method="POST">
                                 @csrf
@@ -575,10 +578,10 @@
                                                                     <textarea name="reviewer_kpi_review[{{ $reviewersReview }}][{{ $kpiRow->id }}]"
                                                                         id="reviewer_kpi_review{{ $index }}-{{ $reviewersReview }}" cols="20" rows="8"
                                                                         placeholder="type here">
-@if (isset($decodedKpiReview[$reviewersReview]))
-{{ $decodedKpiReview[$reviewersReview][$kpiRow->id] }}
-@endif
-</textarea>
+                                                                        @if (isset($decodedKpiReview[$reviewersReview]))
+                                                                        {{ $decodedKpiReview[$reviewersReview][$kpiRow->id] }}
+                                                                        @endif
+                                                                    </textarea>
                                                                 @else
                                                                     <div>
                                                                         @if (isset($decodedKpiReview[$reviewersReview]))
@@ -618,33 +621,35 @@
                                     </table>
                                 </div>
                             </form>
-                            @if ($assignedGoals->is_assignee_submitted == '1')
-                                @if ($decodedKpiReviewSubmittedStatus[Auth::id()] != '1')
-                                    <div class="buttons d-flex align-items-center justify-content-end ">
-                                        <button class="btn btn-orange" id="save_table">
-                                            @if ($decodedKpiReviewSubmittedStatus[Auth::id()] == '')
-                                                Save
-                                            @else
-                                                Edit
-                                            @endif
-                                        </button>
-                                        &nbsp;&nbsp;
-                                        <button class="btn btn-orange" id="publish_table"
-                                            @if ($decodedKpiReviewSubmittedStatus[Auth::id()] == '') disabled @endif>Submit</button>
-                                    </div>
-                                @endif
-                            @else
-                                @if (isset($isAllReviewersAcceptedData) && $isAllReviewersAcceptedData[Auth::id()] == null)
-                                    <div class="buttons d-flex align-items-center justify-content-end ">
-                                        <button class="btn btn-primary" id="accept_review">
-                                            Accept </button>
-                                        &nbsp;&nbsp;
-                                        <button class="btn btn-primary" id="reject_review">Reject</button>
-                                    </div>
-                                @elseif($isAllReviewersAcceptedData[Auth::id()] == '0')
-                                    <h6 class="mt-3 text-muted">You have Already Rejected this review.</h6>
+                            @if($enableButton)
+                                @if ($assignedGoals->is_assignee_submitted == '1')
+                                    @if ($decodedKpiReviewSubmittedStatus[Auth::id()] != '1')
+                                        <div class="buttons d-flex align-items-center justify-content-end ">
+                                            <button class="btn btn-orange" id="save_table">
+                                                @if ($decodedKpiReviewSubmittedStatus[Auth::id()] == '')
+                                                    Save
+                                                @else
+                                                    Edit
+                                                @endif
+                                            </button>
+                                            &nbsp;&nbsp;
+                                            <button class="btn btn-orange" id="publish_table"
+                                                @if ($decodedKpiReviewSubmittedStatus[Auth::id()] == '') disabled @endif>Submit</button>
+                                        </div>
+                                    @endif
                                 @else
-                                    <h6 class="mt-3 text-muted">Employee has not yet submitted this review.</h6>
+                                    @if (isset($isAllReviewersAcceptedData) && $isAllReviewersAcceptedData[Auth::id()] == null)
+                                        <div class="buttons d-flex align-items-center justify-content-end ">
+                                            <button class="btn btn-primary" id="accept_review">
+                                                Accept </button>
+                                            &nbsp;&nbsp;
+                                            <button class="btn btn-primary" id="reject_review">Reject</button>
+                                        </div>
+                                    @elseif($isAllReviewersAcceptedData[Auth::id()] == '0')
+                                        <h6 class="mt-3 text-muted">You have Already Rejected this review.</h6>
+                                    @else
+                                        <h6 class="mt-3 text-muted">Employee has not yet submitted this review.</h6>
+                                    @endif
                                 @endif
                             @endif
                         @else
