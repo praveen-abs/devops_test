@@ -545,7 +545,8 @@
                                     @endif
 
                                     <span class="f-12 mx-2 d-flex align-items-center">
-                                        <span class="">{{Auth::user()->name}}</span>
+                                        <span class=""><!-- {{Auth::user()->name }}-->
+                                        {{$pmsKpiAssignee->getUserDetails($assigneeId)['userNames']}}</span>
                                         <span class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text"></span>
 
                                     </span>
