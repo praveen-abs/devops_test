@@ -89,7 +89,7 @@
                                     <div class="px-2 pt-2">
                                         <ul class="nav nav-tabs  dropdown-tabs nav-tabs-custom" data-dropdown-tabs="true" id="notificationItemsTab" role="tablist">
                                             <li class="nav-item waves-effect active waves-light">
-                                                <a class="nav-link active" data-bs-toggle="tab" href="#messages-tab" role="tab" aria-select ed="false">
+                                                <a class="nav-link active text-muted fw-bold f-14" data-bs-toggle="tab" href="#messages-tab" role="tab" aria-select ed="false">
                                                     Messages
                                                 </a>
                                             </li>
@@ -110,34 +110,28 @@
                                             <div class="text-reset notification-item d-block dropdown-item">
                                                 <div class="d-flex">
                                                     @if( empty(Auth::user()->avatar) || !file_exists(public_path('images/'. Auth::user()->avatar)) )
-                                                    @php
-                                                    // $splitArray = explode(" ",$currentUser->emp_name);
-                                                    // // print_r($currentUser->emp_name);
-                                                    // if(count($splitArray) == 1)
-                                                    // $name = strtoupper($splitArray[0][0].$splitArray[0][1]);
-                                                    // else
-                                                    // $name = strtoupper($splitArray[0][0].$splitArray[1][0]);
+                                                    {{-- @php
+                                                    $splitArray = explode(" ",$currentUser->emp_name);
+                                                    print_r($currentUser->emp_name);
+                                                    if(count($splitArray) == 1)
+                                                    $name = strtoupper($splitArray[0][0].$splitArray[0][1]);
+                                                    else
+                                                    $name = strtoupper($splitArray[0][0].$splitArray[1][0]);
 
 
-                                                    @endphp
-                                                    <!-- <span class="rounded-circle user-profile  ml-2">
-                                                        <i class="align-middle ">{{ "A" }}</i>
-                                                    </span> -->
+                                                    @endphp --}}
+
                                                     <div class="notify-user-bg">
-                                                        <span class="rounded-circle user-profile  ml-2 " id="">
+                                                        <span class="rounded-circle user-profile  me-2 " id="">
                                                         {{ "A" }}
                                                         </span>
                                                     </div>
                                                     @else
                                                     <img class="rounded-circle header-profile-user" src=" {{URL::asset('images/'. Auth::user()->avatar)}}" alt="Header Avatar">
                                                     @endif
-
-
-                                                    &nbsp;&nbsp;&nbsp;
                                                     <div class="flex-1">
                                                         <div class="fs-13 text-muted">
                                                             <a href="{{url('notifications/'.$notification->id)}}" data-notif-id="{{$notification->id}}" class="text-primary">
-
                                                                 {{$notification->data['message']}}
                                                             </a>
                                                         </div>
@@ -146,61 +140,9 @@
                                                                 ago</span>
                                                         </p>
                                                     </div>
-                                                    <!-- <div class="px-2 fs-15">
-                                                            <input class="form-check-input" type="checkbox">
-                                                        </div> -->
                                                 </div>
                                             </div>
                                             @endforeach
-                                            @php
-                                            foreach ($currentUser->Notifications as $notification) {
-                                            // if($notification){
-                                            @endphp
-                                            <div class="text-reset notification-item d-block dropdown-item">
-                                                <div class="d-flex">
-                                                    @php
-                                                    // $splitArray = explode(" ",$currentUser->emp_name);
-
-                                                    // if(count($splitArray) == 1)
-                                                    // $name = strtoupper($splitArray[0][0].$splitArray[0][1]);
-                                                    // else
-                                                    // $name = strtoupper($splitArray[0][0].$splitArray[1][0]);
-                                                    // if (Auth::user()->avatar == null || Auth::user()->avatar =='' ){
-                                                    @endphp
-                                                    <!-- <span class="rounded-circle user-profile  ml-2"><i class="align-middle f-12 fw-bold">A</i></span> -->
-                                                    <div class="notify-user-bg">
-                                                        <span class="rounded-circle user-profile  ml-2 " id="">
-                                                        <!-- {{ "A" }} -->
-                                                        A
-                                                        </span>
-                                                    </div>
-                                                    @php
-                                                    // }else{
-                                                    @endphp
-                                                    <img src="{{URL::asset('images/'. Auth::user()->avatar)}}" class="me-3 rounded-circle avatar-xs" alt="">
-                                                    @php
-                                                    // }
-                                                    @endphp
-                                                    <div class="flex-1">
-                                                        <div class="fs-13 text-muted">
-                                                            <a href="{{url('notifications/'.$notification->id)}}" data-notif-id="{{$notification->id}}">
-                                                                {{$notification->data['message']}}
-                                                            </a>
-                                                        </div>
-                                                        <p class="mb-0 f-11 text-end fw-mediumtext-muted">
-                                                            <span><i class="mdi mdi-clock-outline"></i> 30 min
-                                                                ago</span>
-                                                        </p>
-                                                    </div>
-                                                    <!-- <div class="px-2 fs-15">
-                                                        <input class="form-check-input" type="checkbox">
-                                                    </div> -->
-                                                </div>
-                                            </div>
-                                            @php
-                                            // }
-                                            }
-                                            @endphp
 
                                         </div>
                                     </div>
