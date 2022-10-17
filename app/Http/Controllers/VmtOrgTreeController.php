@@ -37,11 +37,11 @@ class VmtOrgTreeController extends Controller
                 // code...
                 if($value->user_id != $loggedUserId){
                     $t_user_code = User::where('id', $value->user_id)->value('user_code');
-                    $data[]        = $this->getUserNodeDetails($t_user_code);
+                    $nodeObj       = $this->getUserNodeDetails($t_user_code);  
+                    if(count($nodeObj) > 0)
+                        $data[] = $nodeObj;
                 }
             }
-
-            
         }
         else{
 
@@ -62,9 +62,12 @@ class VmtOrgTreeController extends Controller
                         $data[] = $value;
                     }
                 }
+
             }else{
                 $data[]  = $this->getUserNodeDetails($t_user_code);
             }
+
+
           
         }
 
@@ -260,11 +263,14 @@ class VmtOrgTreeController extends Controller
     private function getUserNodeDetails($user_code)
     {
         $data = array();
-
+        \Log::error($user_code);
         $t_data['relationship']=['0','0','0']; //parent,sibling,child
 
         //get the given node's username,designation
-        $user_data = User::where('user_code',$user_code)->where('is_ssa','0')->get();
+        $user_data = User::where('user_code',$user_code)->where('is_ssa','0')->whereNotNull('name')->get();
+        if(count($user_data) == 0){
+            return $data;
+        }
         $data['name'] = $user_data->value('name');
         $data['user_code'] = $user_data->value('user_code');
         $data['image'] =    asset('images/'.$user_data->value('avatar'));
