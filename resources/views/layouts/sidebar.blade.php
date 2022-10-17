@@ -260,7 +260,7 @@
                 @if((Str::contains( currentLoggedInUserRole(), ["Admin","HR","Manager"]) ))
                 <!-- team -->
 
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link sidebar menu-link pt-0" href="#teamDrop-Down" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarRoles">
                         <i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="11.2" viewBox="0 0 16 11.2">
                                 <path id="people-group-solid" d="M4.6,33.4A1.4,1.4,0,1,1,3.2,32,1.4,1.4,0,0,1,4.6,33.4Zm.61,2.707A3.594,3.594,0,0,0,4,38.8a3.459,3.459,0,0,0,.8,2.262V41.6a.8.8,0,0,1-.8.8H2.4a.8.8,0,0,1-.8-.8v-.67A2.8,2.8,0,0,1,2.8,35.6h.8a2.841,2.841,0,0,1,1.61.507ZM1.6,37.343a1.6,1.6,0,0,0,0,2.115ZM11.2,41.6v-.537a3.6,3.6,0,0,0-.41-4.955A2.788,2.788,0,0,1,12.4,35.6h.8a2.8,2.8,0,0,1,1.2,5.33v.67a.8.8,0,0,1-.8.8H12A.8.8,0,0,1,11.2,41.6Zm3.2-2.142a1.6,1.6,0,0,0,0-2.115ZM14.2,33.4A1.4,1.4,0,1,1,12.8,32,1.4,1.4,0,0,1,14.2,33.4Zm-7.8.2A1.6,1.6,0,1,1,8,35.2,1.6,1.6,0,0,1,6.4,33.6Zm4.8,5.2a2.8,2.8,0,0,1-1.6,2.53V42.4a.8.8,0,0,1-.8.8H7.2a.8.8,0,0,1-.8-.8V41.33A2.8,2.8,0,0,1,7.6,36h.8A2.8,2.8,0,0,1,11.2,38.8ZM6.4,39.857V37.743a1.6,1.6,0,0,0,0,2.115Zm3.2-2.115v2.115a1.6,1.6,0,0,0,0-2.115Z" transform="translate(0 -32)" fill="#686363" />
@@ -269,7 +269,7 @@
                         </i>
                         <span>Team</span>
                     </a>
-                    <!-- <div class="collapse menu-dropdown" id="teamDrop-Down">
+                    <div class="collapse menu-dropdown" id="teamDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1"><span>Summary</span></a>
@@ -299,8 +299,8 @@
                                 <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button"><span>Performance</span></a>
                             </li>
                         </ul>
-                    </div> -->
-                </li>
+                    </div>
+                </li> --}}
                 @endif
 
                 @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR"]))
