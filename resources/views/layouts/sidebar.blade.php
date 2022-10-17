@@ -114,7 +114,7 @@
                                 <a href="{{url('attendance_leave')}}" class="nav-link sidebar py-1">Leave</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('leave_history')}}" class="nav-link sidebar py-1">Leave History</a>
+                                <a href="{{route('attendance-leavehistory')}}" class="nav-link sidebar py-1">Leave History</a>
                             </li>
                             {{-- <li class="nav-item">
                                 <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button">

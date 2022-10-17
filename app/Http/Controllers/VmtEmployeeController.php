@@ -1024,7 +1024,6 @@ class VmtEmployeeController extends Controller
     public function attachApoinmentPdf($employeeData)
     {
         //dd($employeeData);
-        $VmtGeneralInfo = VmtGeneralInfo::first();
         $empNameString  = $employeeData['employee_name'];
         $filename = 'appoinment_letter_' . $empNameString . '_' . time() . '.pdf';
         $data = $employeeData;
@@ -1057,6 +1056,7 @@ class VmtEmployeeController extends Controller
         $docUploads =  $pdf->output();
         \File::put(public_path('appoinmentLetter/') . $filename, $docUploads);
 
+        $VmtGeneralInfo = VmtGeneralInfo::first();
         $image_view = url('/') . $VmtGeneralInfo->logo_img;
         $appoinmentPath = "";
         if (fetchMasterConfigValue("can_send_appointmentletter_after_onboarding") == "true") {

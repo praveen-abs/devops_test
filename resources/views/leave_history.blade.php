@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="{{ URL::asset('/assets/css/calendar-vanila.css') }}">
     <script src="{{ URL::asset('assets/js/calendar-vanila.js') }}" defer></script>
     <link href="{{ URL::asset('assets/css/attendance.css') }}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
 
 
@@ -160,40 +161,8 @@
             <h6 class="mb-2">Leave history</h6>
             <div class="card">
                 <div class="card-body">
-                    <div class="right-history-leave">
-
-                    </div>
-
-                    {{-- <div id="leaveSettings_table"></div> --}}
-
                     <div class="table-responsive">
-                        <table class="table table-borderless">
-                            <thead class="bg-primary text-white">
-                                <th>Leave Date</th>
-                                <th>Leave Type </th>
-                                <th>Status</th>
-                                <th>Requested By</th>
-                                <th>Action Taken On</th>
-                                <th>Leave Note</th>
-                                <th>Action</th>
-                            </thead>
-
-                            <tbody>
-                                <tr>
-                                    <td>Sep 22,2022</td>
-                                    <td>Sick</td>
-                                    <td>Approved</td>
-                                    <td>Augustin</td>
-                                    <td>Sep 22,2022</td>
-                                    <td>Casual Leave</td>
-                                    <td><button class="btn btn-orange" data-bs-target="#leaveDetails_modal"
-                                            data-bs-toggle="modal">
-                                            <i class="fa  fa-sticky-note-o"></i>
-                                        </button></td>
-                                </tr>
-                            </tbody>
-
-                        </table>
+                        <div id="table_leaveHistory"></div>
                     </div>
                 </div>
             </div>
@@ -207,7 +176,7 @@
             <div class="modal-content top-line">
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
                     <h6 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
-                    </h6>
+                        </h6>
                     <button type="button" class="close outline-none bg-transparent border-0 h3"
                         data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
@@ -235,7 +204,11 @@
                             </select>
                         </div>
                     </div>
-                    <div id="viewEmphistory_table"></div>
+                    <div id="table_leaveHistory">
+
+
+
+                    </div>
 
 
                 </div>
@@ -248,7 +221,7 @@
             <div class="modal-content top-line">
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
                     <h6 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
-                    </h6>
+                        </h6>
                     <button type="button" class="close outline-none bg-transparent border-0 h3"
                         data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
@@ -434,31 +407,33 @@
                         </div>
                     </div>
 
-                    <div class="card top-line">
+
+                    <!-- MODEL : Request leave -->
+                    <div id="modal_request_leave" class="card top-line">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-xl-8 col-sm-12 col-lg-8 col-xxl-8 col-md-12">
-
                                     <div class="row mb-3">
-
                                         <div class="col-md-6 text-md-start mb-md-0 mb-3">
                                             <h6 class=" mb-1">Set range</h6>
                                         </div>
 
+
                                         <div class="col-md-6 text-end mb-md-0 mb-3">
-                                            <select name="" id="" class="form-select border-primary">
+                                            <select name="" id="leave_type_id" class="form-select border-primary">
                                                 <option value="1">Sick Leave</option>
                                                 <option value="2">LOP Leave</option>
                                                 <option value="3">Casual Leave</option>
-                                                <option value="4">Compensatory Leave
-                                                </option>
+                                                <option value="4">Compensatory Leave</option>
                                                 <option value="5">Flexi day-off Leave</option>
                                             </select>
                                         </div>
+                                    </div>
 
+                                    <div class="row mb-3">
                                         <div class="col-md-4 text-md-start mb-md-0 mb-3">
                                             <label class="fw-bold">Start Date</label>
-                                            <input type="date"
+                                            <input type="date" id="start_date"
                                                 class="form-control outline-none border-0 shadow-lite">
                                         </div>
                                         <div class="col-md-4 text-md-center mb-md-0 ">
@@ -467,55 +442,33 @@
                                         </div>
                                         <div class="col-md-4 text-md-end ">
                                             <label class="fw-bold">End Date</label>
-                                            <input type="date"
+                                            <input type="date" id="end_date"
                                                 class="form-control outline-none border-0 shadow-lite">
                                         </div>
                                     </div>
-                                    <textarea class="w-100 outline-none border-0 shadow-lite form-control" rows="4" style=""></textarea>
+                                    <textarea id="leave_reason" class="w-100 outline-none border-0 shadow-lite form-control" rows="4" style=""></textarea>
                                     <div class="py-2" style="border-bottom: 1px solid #cecece;"></div>
                                     <h6 class="modal-sub-title py-2">Notify to</h6>
                                     <div class="row mb-3">
-                                        <div class="col-md-4 mb-md-0 mb-3">
-                                            <div class="profile-wrapper center">
-                                                <div class="profile-body">
-                                                    <img src="http://images.equipboard.com/uploads/user/image/524/big_calvin-harris.jpg?v=1466072866"
-                                                        alt="" />
-                                                    <div class="profile-details">
-                                                        <p>Dillip Kumar</p>
-                                                        <h5 class="description">Sick</h5>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        <div>
+
+                                            <select class="" name="notifications_users_id[]" id="notifications_users_id" multiple="multiple">
+                                                @if(!empty($allEmployeesList))
+                                                    @foreach($allEmployeesList as $employeeData)
+                                                    <option value="{{ $employeeData->id }}">{{ $employeeData->name }}</option>
+                                                    @endforeach
+                                                @else
+                                                    <option value="">Select Employees</option>
+                                                @endif
+                                            </select>
+
+
                                         </div>
-                                        {{-- <div class="col-md-4 mb-md-0 mb-3">
-                                            <div class="profile-wrapper center">
-                                                <div class="profile-body">
-                                                    <img src="http://images.equipboard.com/uploads/user/image/524/big_calvin-harris.jpg?v=1466072866"
-                                                        alt="" />
-                                                    <div class="profile-details">
-                                                        <p>Dillip Kumar</p>
-                                                        <h5 class="description">Scottish DJ</h5>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 mb-md-0 mb-3">
-                                            <div class="profile-wrapper center">
-                                                <div class="profile-body">
-                                                    <img src="http://images.equipboard.com/uploads/user/image/524/big_calvin-harris.jpg?v=1466072866"
-                                                        alt="" />
-                                                    <div class="profile-details">
-                                                        <p>Dillip Kumar</p>
-                                                        <h5 class="description">Scottish DJ</h5>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> --}}
                                     </div>
                                     <div class="text-center text-md-end">
                                         <button type="button" class="btn btn-border-primary"
                                             data-bs-dismiss="modal">Cancel</button>
-                                        <button type="button" class="btn btn-primary">Request Leave</button>
+                                        <button type="button" id="btn_request_leave" class="btn btn-primary">Request Leave</button>
                                     </div>
                                 </div>
                                 <div class="col-xl-4 col-sm-12 col-lg-4 col-xxl-4 col-md-12  mt-md-3 mt-sm-3">
@@ -713,40 +666,114 @@
 <script src="{{ URL::asset('/assets/js/pages/dashboard-projects.init.js') }}"></script>
 <script src="{{ URL::asset('/assets/premassets/js/calendar.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/premassets/js/calendar.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
+
+var leavetypes_array = <?php echo json_encode(getAllLeaveTypes()); ?>;
+
+var employeesList_array = <?php echo json_encode($allEmployeesList); ?>;
+
+
     $(document).ready(function() {
-        if (document.getElementById("leaveSettings_table")) {
+        $('#notifications_users_id').select2({
+                dropdownParent: $("#modal_request_leave"),
+               width: '100%'
+            });
+
+        // $(document).on('#select-reviewer:open', () => {
+        //         $('.select2-search__field').focus();
+        //     });
+
+        $('#btn_request_leave').on('click', function(e) {
+            console.log("Selected Button : "+$(this).attr('name'));
+
+            $.ajax({
+                url: "{{url('attendance-applyleave')}}",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    'user_id': $('#leave_type_id').val(),
+                    'start_date': $('#start_date').val(),
+                    'end_date': $('#end_date').val(),
+                    'leave_reason': $('#leave_reason').val(),
+                    'leave_type_id': $('#leave_type_id').val(),
+                    'notifications_users_id': $('#notifications_users_id').val(),
+                    "_token": "{{ csrf_token() }}",
+                },
+                success: function(data) {
+                    if(data.status == "success")
+                    {
+                        alert(data.message+" \n "+data.mail_status);
+                    }
+                    else
+                    {
+                        alert("Leave request failed. Contact your Admin");
+                    }
+                },
+                error: function(data) {
+
+
+                }
+            });
+        });
+
+
+        if (document.getElementById("table_leaveHistory")) {
             const grid = new gridjs.Grid({
-                columns: [{
-                        id: 'leave_date',
-                        name: 'Leave Dates',
+                columns: [
+
+                    {
+                        id: 'user_id',
+                        name: 'Employee Name',
+                        hidden:true,
+                        formatter: function formatter(cell) {
+                            return gridjs.html( cell );
+                        }
+                    },
+                    {
+                        id: 'leave_type_id',
+                        name: 'Leave Type',
+                        formatter: function formatter(cell) {
+
+                            for (var i = 0; i < leavetypes_array.length; i++) {
+                                    if (leavetypes_array[i].id == cell)
+                                        return gridjs.html(leavetypes_array[i].leave_type);
+                                }
+                        }
+                    },
+                    {
+                        id: 'start_date',
+                        name: 'Start Date',
                     },
 
                     {
-                        id: 'leave_type',
-                        name: 'Leave Type',
+                        id: 'end_date',
+                        name: 'End Date',
                     },
 
+                    {
+                        id: 'leave_reason',
+                        name: 'Leave Reason',
+                    },
+                    {
+                        id: 'reviewer_user_id',
+                        name: 'Reviewer Name',
+                        formatter: function formatter(cell) {
+
+                        for (var i = 0; i < employeesList_array.length; i++) {
+                                if (employeesList_array[i].id == cell)
+                                    return gridjs.html(employeesList_array[i].name);
+                            }
+                        }
+                    },
+                    {
+                        id: 'reviewer_comments',
+                        name: 'Reviewer Comments',
+                    },
                     {
                         id: 'status',
                         name: 'Status',
-                    },
-                    {
-                        id: 'requested_by',
-                        name: 'Requested by',
-                    },
-                    {
-                        id: 'action_taken_on',
-                        name: 'Action Taken On',
-                    },
-                    {
-                        id: 'leave_note',
-                        name: 'Leave Note',
-                    },
-                    {
-                        id: 'actions',
-                        // name: 'Actions',
                         //     formatter: (cell, row) => {
                         //         return h('button', {
                         //             className: 'py-2 mb-4 px-4 border rounded-md text-white bg-blue-600',
@@ -757,98 +784,56 @@
 
                         // },
                     },
-                ],
-                data: [{
-                        leave_date: 'sep 15,2022',
-                        leave_type: 'casual',
-                        status: 'approved',
-                        requested_by: 'praveen',
-                        action_taken_on: 'sep 14,2022',
-                        leave_note: 'sick',
-                        actions: 'actions',
-                    },
                     {
-                        leave_date: 'sep 17,2022',
-                        leave_type: 'casual',
-                        status: 'approved',
-                        requested_by: 'praveen',
-                        action_taken_on: 'sep 15,2022',
-                        leave_note: 'casual',
-                        actions: 'actions',
+                        id: 'actions',
+                        name: 'Action',
+                        formatter: function formatter(emp) {
+                                var htmlcontent = "";
+
+                                // if (leave_history.status == "Pending")
+                                //     htmlcontent =
+                                //     '<input type="button" value="Activate" onclick="activateEmployee(this)" id="button_activate_"' +
+                                //     emp.user_id + '" data-user_id="' + emp.user_id +
+                                //     '" class="status btn btn-orange py-1 onboard-employee-btn "></input>';
+                                // else
+                                //     htmlcontent =
+                                //     '<input type="button" value="Activate" class="status btn btn-orange py-1 onboard-employee-btn disabled"></input>';
+                                // <button class="btn btn-orange" data-bs-target="#leaveDetails_modal" data-bs-toggle="modal">
+                                //       <i class="fa  fa-sticky-note-o"></i>
+                                //     </button>
+
+                                    htmlcontent =
+                                    '<input type="button" value="View" class="status btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal" disabled></input>';
+
+                                return gridjs.html(htmlcontent);
+                            }
                     },
-
-
-                ],
-                pagination: {
-                    limit: 10
-                },
-                sort: true,
-                search: true,
-            }).render(document.getElementById("leaveSettings_table"));
-        }
-        if (document.getElementById("viewEmphistory_table")) {
-            const grid = new gridjs.Grid({
-                columns: [{
-                        id: 'name',
-                        name: 'Employee',
-                    },
-
-                    {
-                        id: 'number',
-                        name: 'Department',
-                    },
-
-                    {
-                        id: 'job_title',
-                        name: 'Location',
-                    },
-                    {
-                        id: 'reporting_to',
-                        name: 'Job Title',
-                    },
-
-                ],
-                data: [
-
                 ],
                 pagination: {
                     limit: 10
                 },
                 sort: true,
                 search: true,
-            }).render(document.getElementById("viewEmphistory_table"));
-        }
-        if (document.getElementById("viewEmp_history_balance_table")) {
-            const grid = new gridjs.Grid({
-                columns: [{
-                        id: 'name',
-                        name: 'Employee',
-                    },
+                server: {
+                    url: '{{route('fetch-leavehistory')}}',
+                    then: data => data.map(
+                        leave_history => [
+                            leave_history.id,
+                           // leave_history.user_id,
+                            leave_history.leave_type_id,
+                            leave_history.start_date,
+                            leave_history.end_date,
+                            leave_history.leave_reason,
+                            leave_history.reviewer_user_id,
+                            //leave_history.notifications_users_id,
+                            leave_history.reviewer_comments,
+                            leave_history.status,
+                            leave_history,
 
-                    {
-                        id: 'number',
-                        name: 'Department',
-                    },
-
-                    {
-                        id: 'job_title',
-                        name: 'Location',
-                    },
-                    {
-                        id: 'reporting_to',
-                        name: 'Job Title',
-                    },
-
-                ],
-                data: [
-
-                ],
-                pagination: {
-                    limit: 10
-                },
-                sort: true,
-                search: true,
-            }).render(document.getElementById("viewEmp_history_balance_table"));
+                        ]
+                    )
+                }
+            }).render(document.getElementById("table_leaveHistory"));
         }
     });
 </script>

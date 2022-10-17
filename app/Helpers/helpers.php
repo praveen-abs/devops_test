@@ -5,6 +5,7 @@ use App\Models\User;
 use App\Models\VmtClientMaster;
 use App\Models\VmtEmployee;
 use App\Models\VmtBloodGroup;
+use App\Models\VmtLeaves;
 
 function required()
 {
@@ -63,6 +64,11 @@ function hasSubClients()
         return true;
     else
         return false;
+}
+
+function getAllLeaveTypes()
+{
+    return VmtLeaves::all(['id','leave_type']);
 }
 
 function fetchSubClients(){

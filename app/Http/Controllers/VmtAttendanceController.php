@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\RequestLeaveMail;
+use App\Models\User;
 use App\Models\VmtEmployeeAttendance;
 use App\Models\VmtEmployeeLeaves;
+use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtLeaves;
+use App\Models\VmtGeneralInfo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Mail\WelcomeMail;
+
 
 class VmtAttendanceController extends Controller
 {
@@ -26,26 +33,71 @@ class VmtAttendanceController extends Controller
         return view('attendance_leaveReports');
     }
 
-    public function getLeaveRequestDetails(Request $request)
+    public function showLeaveHistoryPage(Request $request){
+        $allEmployeesList = User::all(['id','name']);
+
+        return view('leave_history',compact('allEmployeesList'));
+
+    }
+
+    public function fetchLeaveRequestDetails(Request $request)
     {
-        return VmtEmployeeLeaves::where('id')->get();
+        return VmtEmployeeLeaves::all();
     }
 
     public function saveLeaveRequestDetails(Request $request)
     {
+
+        //dd($request->all());
+        $notification_user = User::where('id',auth::user()->id)->first();
+
         $emp_leave_details =  new VmtEmployeeLeaves;
+        $emp_leave_details->user_id = auth::user()->id;
         $emp_leave_details->leave_type_id = $request->leave_type_id;
         $emp_leave_details->start_date = $request->start_date;
         $emp_leave_details->end_date = $request->end_date;
         $emp_leave_details->leave_reason = $request->leave_reason;
-        $emp_leave_details->reviewer_user_id = $request->reviewer_user_id;
-        $emp_leave_details->notifications_users_id = $request->notifications_users_id;
-        $emp_leave_details->reviewer_comments = $request->reviewer_comments;
-        $emp_leave_details->status = $request->status;
 
+        //get manager of this employee
+        $manager_emp_code = VmtEmployeeOfficeDetails::where('user_id',auth::user()->id)->value('l1_manager_code');
+
+        $emp_leave_details->reviewer_user_id = User::where('user_code',$manager_emp_code)->first()->value('id');
+        $emp_leave_details->notifications_users_id = implode(",",$request->notifications_users_id);
+        $emp_leave_details->reviewer_comments = "";
+        $emp_leave_details->status = "Pending";
+
+        //dd($request->notifications_users_id);
+
+        //dd($emp_leave_details->toArray());
         $emp_leave_details->save();
 
-        return "success";
+        //Need to send mail to 'reviewer' and 'notifications_users_id' list
+        $reviewer_mail =  User::where('user_code',$manager_emp_code)->first()->value('email');;
+
+        $message = "";
+        $mail_status = "";
+
+        $VmtGeneralInfo = VmtGeneralInfo::first();
+        $image_view = url('/') . $VmtGeneralInfo->logo_img;
+
+        $isSent    = \Mail::to("praveenkumar.techdev@gmail.com")->send(new RequestLeaveMail(auth::user()->name, auth::user()->user_code, request()->getSchemeAndHttpHost(), $image_view));
+
+        if( $isSent) {
+            $mail_status = "Mail sent successfully";
+
+         } else {
+            $mail_status= "There was one or more failures.";
+        }
+
+        $response = [
+            'status' => 'success',
+            'message' => 'Leave Request applied successfully',
+            'mail_status' => $mail_status,
+            'error' => '',
+            'error_verbose' =>''
+        ];
+
+        return $response;
 
     }
 
