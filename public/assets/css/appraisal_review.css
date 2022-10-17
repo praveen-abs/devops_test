@@ -63,7 +63,7 @@
 }
 
 .table-content div {
-    width: 323px;
+    /* width: 323px; */
     height: auto;
 }
 .table-content textarea {

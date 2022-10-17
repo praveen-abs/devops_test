@@ -93,8 +93,8 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-12 col-sm-12 col-lg-3 col-xl-3 col-xxl-3 d-flex mb-sm-3">
-                        <div class="card w-100 border-0 boxshadow_lite4">
+                    <div class="col-md-12 col-sm-12 col-lg-3 col-xl-3 col-xxl-3 d-flex ">
+                        <div class="mb-0 card w-100 border-0 boxshadow_lite4">
                             <div class="card-body  text-center">
 
                                 <div class="d-flex justify-content-center">
@@ -116,8 +116,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12 col-sm-12 col-lg-4 col-xl-4 col-xxl-4 d-flex  mb-sm-3">
-                        <div class="card w-100 border-0 boxshadow_lite4">
+                    <div class="col-md-12 col-sm-12 col-lg-4 col-xl-4 col-xxl-4 d-flex  ">
+                        <div class="card mb-0 w-100 border-0 boxshadow_lite4">
                             <div class="card-body">
                                 <p class="f-14 text-ash  ">Business Unit/Process/Function</p>
                                 <p class="mb-4 f-15 fw-bold text-primary">{{ $assignedUserDetails->getEmployeeOfficeDetails->department }}</p>
@@ -130,8 +130,8 @@
                         </div>
 
                     </div>
-                    <div class="col-md-12 col-sm-12 col-lg-5 col-xl-5 col-xxl-5  mb-sm-3 d-flex">
-                        <div class="card w-100 appraisal_rating border-0 boxshadow_lite4">
+                    <div class="col-md-12 col-sm-12 col-lg-5 col-xl-5 col-xxl-5   d-flex">
+                        <div class="card mb-0 w-100 appraisal_rating border-0 boxshadow_lite4">
                             <div class="card-body">
                                 <p class="mb-2 fw-bold f-14 text-primary">Ratings</p>
                                 <div class="mb-3">
