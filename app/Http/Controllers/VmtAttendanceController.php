@@ -61,7 +61,22 @@ class VmtAttendanceController extends Controller
 
     public function updateSingleLeavePolicyRecord(Request $request)
     {
-        dd($request);
+        $vmtLeave =VmtLeaves::find($request->leave_policy_id);
+        $vmtLeave->days_annual  = $request->days_annual;
+        $vmtLeave->days_monthly  = $request->days_month;
+        $vmtLeave->days_restricted  = $request->days_restricted;
+
+
+        $vmtLeave->save();
+        $response = [
+            'status' => 'success',
+            'message' => 'Leave details updated',
+            'error' => '',
+            'error_verbose' =>''
+        ];
+
+        return $response;
+        return 'Saved';
     }
 
     public function saveLeaveRequestDetails(Request $request)

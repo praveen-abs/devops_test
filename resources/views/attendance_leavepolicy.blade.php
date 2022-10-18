@@ -79,6 +79,7 @@
                     <form class="requires-validation" id="form_edit_leavepolicy" novalidate>
                         @csrf
                         <div class="row">
+                            <input type="hidden" name="leave_policy_id" id='leave_policy_id'>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Annual (Days)</label>
@@ -343,7 +344,7 @@
                 success: function(data) {
                     console.log(data+'success');
                     if (data == "200") {
-                        var rowId = $('#row_id').val() - 1;
+                        //var rowId = $('#row_id').val() - 1;
                         // var row = $("table tbody tr:eq(" + rowId + ")");
                         // row.find("td:eq(0)").html('<b>'+$("#asset_name").val()+'</b>');
                         // row.find("td:eq(1)").html($("#asset_type").val());
@@ -352,14 +353,14 @@
                         // row.find("td:eq(4)").html($("#vendor").val());
                         // row.find("td:eq(5)").html($("#assignee").val());
                         // row.find("td:eq(6)").html($("#assigned_date").val());
-                        window.location.reload();
+                        
                     }
                     $('#modal_edit_leave').modal('hide');
+                    window.location.reload();
 
+                    /*gridtable_leavePolicy.updateConfig({
 
-                    gridtable_leavePolicy.updateConfig({
-
-                    }).forceRender();
+                    }).forceRender();*/
                 },
                 error: function(data) {
                     console.log(data+'error');
@@ -383,7 +384,7 @@
                 processData: false,
                 success: function(data) {
                     console.log("Editing Leave type : "+data.leave_type);
-
+                    $('#leave_policy_id').val(data.id);
                     $('#days_annual').val(data.days_annual);
                     $('#days_month').val(data.days_monthly);
                     $('#days_restricted').val(data.days_restricted);
