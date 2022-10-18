@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtGeneralInfo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -22,22 +23,22 @@ class VmtOrgTreeController extends Controller
     {
         $t_user_code = 0;
 
-        if(Auth::user()->is_ssa == 1)
+        if(Str::contains( currentLoggedInUserRole(), ["Admin","HR"]))
         {
 
             //Get the top-most node
             $topNodeUserIds = VmtEmployeeOfficeDetails::where('l1_manager_code','=','')
                                                 ->orWhereNull('l1_manager_code')
                                                 ->get();
-            $data = []; 
-            
-            $loggedUserId = Auth::user()->id; 
+            $data = [];
+
+            $loggedUserId = Auth::user()->id;
 
             foreach ($topNodeUserIds as $key => $value) {
                 // code...
                 if($value->user_id != $loggedUserId){
                     $t_user_code = User::where('id', $value->user_id)->value('user_code');
-                    $nodeObj       = $this->getUserNodeDetails($t_user_code);  
+                    $nodeObj       = $this->getUserNodeDetails($t_user_code);
                     if(count($nodeObj) > 0)
                         $data[] = $nodeObj;
                 }
@@ -53,7 +54,7 @@ class VmtOrgTreeController extends Controller
 
             // checking whether employee has l1 manager or not
             if($employeeOfficeData->l1_manager_code == '' || $employeeOfficeData->l1_manager_code == null ){
-                
+
                 $data[]  = $this->getUserNodeDetails($t_user_code);
                 $siblingNode = $this->getSiblingsForUser($t_user_code);
                 if(count($siblingNode) > 0){
@@ -68,22 +69,22 @@ class VmtOrgTreeController extends Controller
             }
 
 
-          
+
         }
 
 
         $client_logo = VmtGeneralInfo::first()->logo_img;
-        
+
         if( file_exists(public_path($client_logo)) ){
             $logoSrc     = \URL::asset($client_logo);
             $logoNode  = array("image" => $logoSrc, "relationship" => "001", "user_code" => "LogoNode", "name" =>"", "className" => "logo-level", "image_exist" => true);
         }
         else{
-            $client_name = \DB::table('vmt_client_master')->first()->client_name; 
+            $client_name = \DB::table('vmt_client_master')->first()->client_name;
             $logoNode  = array("image" => "", "relationship" => "001", "user_code" => "LogoNode", "name" => $client_name, "className" => "logo-level", "image_exist"=> false);
         }
 
-        
+
         $logoNode['collapsed'] = false;
 
 
@@ -94,7 +95,7 @@ class VmtOrgTreeController extends Controller
             $logoNode['relationship'] =  "000";
             //$logoNode['children'] = ($data);
 
-        
+
 
         return $logoNode;
     }
@@ -164,14 +165,14 @@ class VmtOrgTreeController extends Controller
                         $depArray[] = $this->getUserNodeDetails($value->user_code);
                     }
 
-                    $dept  = \DB::table('vmt_department')->where('id', $key)->first(); 
-                    
+                    $dept  = \DB::table('vmt_department')->where('id', $key)->first();
+
                     if($dept){
                         $dArray[$j] = array("name" => $dept->name, "className" => "dept-level","relationship" => "111","children" => $depArray);
                     } else{
                         $dArray[$j] = array("name" => $key, "className" => "dept-level","relationship" => "111","children" => $depArray);
                     }
-                    
+
                     $j++;
                 }
                 $siblingsnode_array[]  = $dArray;
@@ -224,14 +225,14 @@ class VmtOrgTreeController extends Controller
                         $depArray[] = $this->getUserNodeDetails($value->user_code);
                     }
 
-                    $dept  = \DB::table('vmt_department')->where('id', $key)->first(); 
-                    
+                    $dept  = \DB::table('vmt_department')->where('id', $key)->first();
+
                     if($dept){
                         $dArray[$j] = array("name" => $dept->name, "className" => "dept-level","relationship" => "111","children" => $depArray);
                     } else{
                         $dArray[$j] = array("name" => $key, "className" => "dept-level","relationship" => "111","children" => $depArray);
                     }
-                    
+
                     //$dArray[$j] = array("name" => $key, "className" => "dept-level","relationship" => "111","children" => $depArray);
                     $j++;
                 }
@@ -279,7 +280,7 @@ class VmtOrgTreeController extends Controller
             $data['image_exist'] =   false;
         else
             $data['image_exist'] =   true;
-                                   
+
         $data['designation'] =  VmtEmployeeOfficeDetails::where('user_id',$user_data->value('id'))->value('designation');
 
         $data['department'] =  VmtEmployeeOfficeDetails::where('user_id',$user_data->value('id'))->value('department_id');
