@@ -864,6 +864,21 @@ class VmtPMSModuleController extends Controller
                 $kpiReviewCheck->update();
                 return response()->json(['status'=>true,'message'=>'Saved as draft']);
             }else{
+                $hr_emp =  User::where('org_role','2')->pluck('id');//Admin
+                $hr_emp_details =   VmtEmployeeOfficeDetails::whereIn('user_id', $hr_emp);
+                $hr_mail ="";
+
+                if($hr_emp_details->exists())
+                {
+                  $hr_mail = $hr_emp_details->pluck('officical_mail');
+                }
+                else
+                {
+                    //dd("HR doesnt exist");
+                    return response()->json(['status'=>false,'message'=>'Please assign a HR/Admin in your organisation. Contact the support team.']);
+
+                }
+
                 $decodedIsKpiReviewerSubmitted[Auth::id()] = '1';
                 $kpiReviewCheck->is_reviewer_submitted = $decodedIsKpiReviewerSubmitted;
                 $kpiReviewCheck->update();
@@ -874,16 +889,15 @@ class VmtPMSModuleController extends Controller
 
                 $currentUser_empDetails = VmtEmployeeOfficeDetails::where('user_id', auth::user()->id)->first();
 
-                $hr_emp =  User::where('org_role','3')->pluck('id');//HR
-                $officialMailList =   VmtEmployeeOfficeDetails::whereIn('user_id', $hr_emp)->pluck('officical_mail');
+
 
                 $notification_user = User::where('id',auth::user()->id)->first();
-
-                \Mail::to($officialMailList)->send(new NotifyPMSManager(auth::user()->name,  $currentUser_empDetails->designation,$hrReview->name,$kpiReviewCheck->year ));
+                //dd($hr_mail);
+                \Mail::to($hr_mail)->send(new NotifyPMSManager(auth::user()->name,  $currentUser_empDetails->designation,$hrReview->name,$kpiReviewCheck->year ));
                 $message = "Employee has submitted KPI Assessment.  ";
                     Notification::send($notification_user ,new ViewNotification($message.auth()->user()->name));
 
-                return response()->json(['status'=>true,'message'=>"Published Review successfully. Sent mail to HR ".$officialMailList]);
+                return response()->json(['status'=>true,'message'=>"Published Review successfully. Sent mail to HR ".$hr_mail]);
             }
 
         }catch(Exception $e){
