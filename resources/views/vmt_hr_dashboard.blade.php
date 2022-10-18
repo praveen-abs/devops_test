@@ -43,7 +43,7 @@
     <!-- content middle -->
     <div class="row">
         <div class="col-sm-12 col-md-12 col-xl-8 col-lg-8 col-xxl-8">
-            @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR","Manager"]))
+            @if( Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR","Manager"]))
             <div class="row mb-n4">
                 <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
                     <div class="card shadow profile-box card-top-border">

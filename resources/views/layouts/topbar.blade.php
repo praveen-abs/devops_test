@@ -75,7 +75,7 @@
 
                             <img src="{{ URL::asset('assets/images/megaphone.png') }}" class="" alt="user-pic" style="height:20px;width:20px;">
                         </button> --}}
-                        @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR","Manager"]) && hasSubClients() )
+                        @if( Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR","Manager"]) && hasSubClients() )
 
                         <div class="dropdown topbar-user ">
                             <button type="button" class="btn border-0  mx-1 shadow-sm " id="choose_client" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -119,7 +119,7 @@
                                 <h6 class="dropdown-header">Welcome </h6>
                                 <a class="dropdown-item" href="{{route('pages-profile')}}"><i class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i> <span class="align-middle">Profile</span></a>
 
-                                @if(Str::contains( currentLoggedInUserRole(), ["Admin","HR"]) )
+                                @if(Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]) )
 
                                 <a class="dropdown-item" href="{{route('vmt_topbar_settings')}}"><i class="mdi mdi-cog-outline text-muted fs-16 align-middle me-1"></i> <span class="align-middle">Settings</span></a>
                                 @endif

@@ -23,7 +23,7 @@ class VmtOrgTreeController extends Controller
     {
         $t_user_code = 0;
 
-        if(Str::contains( currentLoggedInUserRole(), ["Admin","HR"]))
+        if(Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]))
         {
 
             //Get the top-most node
@@ -268,7 +268,7 @@ class VmtOrgTreeController extends Controller
         $t_data['relationship']=['0','0','0']; //parent,sibling,child
 
         //get the given node's username,designation
-        $user_data = User::where('user_code',$user_code)->where('is_ssa','0')->whereNotNull('name')->get();
+        $user_data = User::where('user_code',$user_code)->where('org_role','<>','1')->whereNotNull('name')->get();
         if(count($user_data) == 0){
             return $data;
         }
@@ -287,14 +287,14 @@ class VmtOrgTreeController extends Controller
 
         ////Check if it has any parent,sibling,child nodes and relationship node
 
-            //check parent node
-            $this->hasParentNode($user_code) ? $t_data['relationship'][0]='1' : '';
+        //check parent node
+        $this->hasParentNode($user_code) ? $t_data['relationship'][0]='1' : '';
 
-            //check siblings node
-            $this->hasSiblingsNode($user_code) ? $t_data['relationship'][1]='1' : '';
+        //check siblings node
+        $this->hasSiblingsNode($user_code) ? $t_data['relationship'][1]='1' : '';
 
-            //check child nodes
-            $this->hasChildNodes($user_code) ? $t_data['relationship'][2]='1' : '';
+        //check child nodes
+        $this->hasChildNodes($user_code) ? $t_data['relationship'][2]='1' : '';
 
         $data['relationship'] = implode($t_data['relationship']);
 
@@ -332,7 +332,7 @@ class VmtOrgTreeController extends Controller
     {
         $children = User::leftJoin('vmt_employee_office_details','users.id','=','vmt_employee_office_details.user_id')
                             ->leftJoin('vmt_employee_details','users.id','=','vmt_employee_details.userid')
-                            ->where('users.is_ssa','0')
+                            // ->where('users.org_role','<>','1')
                             ->where('vmt_employee_office_details.l1_manager_code',$user_code)
                             ->select('users.name','users.id','users.user_code','vmt_employee_office_details.designation', 'vmt_employee_office_details.department_id')
                             ->get();

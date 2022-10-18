@@ -197,7 +197,7 @@ class VmtEmployeeController extends Controller
         {
 
             //If current user is Admin, then its normal onboarding or updating existing user details.
-            if(Str::contains( currentLoggedInUserRole(), ["Admin","HR"]) )
+            if(Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]) )
             {
                 $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->input('can_onboard_employee'), $existingUser->first()->id);
 
@@ -276,7 +276,7 @@ class VmtEmployeeController extends Controller
         {
             //we are inserting new user.
             //Check whether current login is admin
-            if(Str::contains( currentLoggedInUserRole(), ["Admin","HR"]) )
+            if(Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]) )
             {
                 $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->input('can_onboard_employee'), null);
 

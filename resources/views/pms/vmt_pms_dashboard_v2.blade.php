@@ -172,7 +172,7 @@
 <div class="container-fluid assign-goal-wrapper">
     <div class="cards-wrapper">
 
-        @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR","Manager"]))
+        @if( Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR","Manager"]))
 
         <div class="row">
             <div class="col-sm-12 col-md-6 col-xl-3 col-xxl-3 col-lg-3">

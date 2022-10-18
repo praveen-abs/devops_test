@@ -33,7 +33,7 @@
 
 
                 <!-- CRM -->
-                @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR"]))
+                @if( Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]))
 
                 <li class="nav-item">
 
@@ -87,7 +87,7 @@
                                 </a>
                             </li>
 
-                            @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR"]))
+                            @if( Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]))
                                 <li class="nav-item">
                                     <a href="{{route('attendance-approvals')}}" class="nav-link sidebar py-1">Approvals</a>
                                 </li>
@@ -105,11 +105,12 @@
                                         <span>Attendance</span>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="{{route('dayWiseStaffAttendance')}}" class="nav-link sidebar py-1" role="button"><span>Timesheet</span></a>
+                                </li>
                             @endif
 
-                            <li class="nav-item">
-                                <a href="{{route('dayWiseStaffAttendance')}}" class="nav-link sidebar py-1" role="button"><span>Timesheet</span></a>
-                            </li>
+
                             <li class="nav-item">
                                 <a href="{{url('attendance_leave')}}" class="nav-link sidebar py-1">Leave</a>
                             </li>
@@ -122,7 +123,7 @@
                                 </a>
                             </li> --}}
 
-                            @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR"]))
+                            @if( Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]))
                                 <li class="nav-item">
                                     <a href="{{route('attendance-leavereports')}}" class="nav-link sidebar py-1"><span>Reports</span></a>
                                 </li>
@@ -136,7 +137,7 @@
 
 
                 <!-- Organization -->
-                @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR"]))
+                @if( Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]))
                 <li class="nav-item">
                     <a class="nav-link sidebar menu-link pt-0" href="#orgDrop-Down" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarRoles">
 
@@ -184,7 +185,7 @@
                 @endif
 
 
-                @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR"]))
+                @if( Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]))
                 <li class="nav-item">
                     <a class="nav-link sidebar menu-link pt-0" id="employeeInfo" href="#mytasksDrop-Down" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebar360questions">
                         <i> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#686363" class="bi bi-clipboard2-check-fill" viewBox="0 0 16 16">
@@ -230,13 +231,13 @@
                     </a>
                     <div class="collapse menu-dropdown" id="PerformanceDrop-Down">
                         <ul class="nav nav-sm flex-column">
-                            @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR"]))
+                            @if( Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]))
                             <li class="nav-item">
                                 <!-- <a href="{{url('vmt-pms-assigngoals')}}" class="nav-link sidebar py-1"><span>Dashboard</span></a> -->
                                 <a href="{{ route('pms-dashboard') }}" class="nav-link sidebar py-1"><span>Org Appraisal</span></a>
                             </li>
                             @endif
-                            @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR","Manager"]))
+                            @if( Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR","Manager"]))
                             <li class="nav-item">
                                 <a href="{{ route('team-appraisal-pms-dashboard') }}" class="nav-link"><span>Team Appraisal</span></a>
                             </li>
@@ -244,7 +245,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('employee-appraisal-pms-dashboard') }}" class="nav-link"><span>Self Appraisal</span></a>
                             </li>
-                            @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR"]))
+                            @if( Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]))
 
                             <li class="nav-item">
                                 <a href="{{route('vmt_config_pms')}}" class="nav-link"><span>PMS Config</span></a>
@@ -254,7 +255,7 @@
                     </div>
                 </li>
 
-                @if((Str::contains( currentLoggedInUserRole(), ["Admin","HR","Manager"]) ))
+                @if((Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR","Manager"]) ))
                 <!-- team -->
 
                 {{-- <li class="nav-item">
@@ -300,7 +301,7 @@
                 </li> --}}
                 @endif
 
-                @if( Str::contains( currentLoggedInUserRole(), ["Admin","HR"]))
+                @if( Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]))
                 <!-- pay roll -->
 
                 <li class="nav-item">
@@ -434,7 +435,7 @@
                     </div> -->
                 </li>
 
-                @if( Str::contains( currentLoggedInUserRole(), ["Admin"]))
+                @if( Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin"]))
                 <li class="nav-item">
                     <a class="nav-link sidebar menu-link pt-0" href="#configDrop-down" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
                         <i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#686363" class="bi bi-gear-fill" viewBox="0 0 16 16">
