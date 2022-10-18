@@ -323,7 +323,7 @@
                                 <div class="table-content mb-4">
                                     <table id="table_review"
                                         class="table kpi_appraisal-table align-middle mb-0 table-bordered  responsive"
-                                        data-paging="true" data-paging-size="10" data-paging-limit="3"
+                                        data-paging="true" data-paging-size="100" data-paging-limit="3"
                                         data-paging-container="#paging-ui-container"
                                         data-paging-count-format="{PF} to {PL}" data-sorting="true"
                                         data-filtering="false" data-empty="No Results"
@@ -731,7 +731,7 @@
             var targetVal = idValue.data("targetval");
             var kpiWeightageVal = idValue.data("kpiweightageval");
             kpiWeightageVal = kpiWeightageVal.replace('%', '');
-            kpiWeightageVal = kpiWeightageVal / 100;
+            kpiWeightageVal = kpiWeightageVal;
 
             if (kpiAchievementSelfReview != '') {
                 var result = (kpiAchievementSelfReview / targetVal) * kpiWeightageVal;
