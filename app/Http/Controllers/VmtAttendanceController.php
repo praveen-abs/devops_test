@@ -54,7 +54,7 @@ class VmtAttendanceController extends Controller
 
     public function fetchSingleLeavePolicyRecord($id)
     {
-        $temp =VmtLeaves::find($id)->first();
+        $temp =VmtLeaves::find($id);
         return $temp;
 
     }
