@@ -3,7 +3,7 @@
         <i id="profileShortNameLargeCircle" class="align-middle "></i>
     </span>
 @else
-    <img class="rounded-circle header-profile-user" src=" {{URL::asset('images/'. Auth::user()->avatar)}}" alt="Header Avatar">
+    <img class="w-100 h-100 rounded-circle header-profile-user" src=" {{URL::asset('images/'. Auth::user()->avatar)}}" alt="Header Avatar" >
 @endif
 
 

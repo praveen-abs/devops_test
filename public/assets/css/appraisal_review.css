@@ -63,8 +63,8 @@
 }
 
 .table-content div {
-    /* width: 323px; */
     height: auto;
+    min-width: 50px;
 }
 .table-content textarea {
     border: 0px;
@@ -109,9 +109,7 @@ table.kpi_appraisal-table th div{
     transition: 0.4s;
   }
 
-  .active, .accordion:hover {
-    background-color: #ccc;
-  }
+
 
   .panel {
     padding: 0 18px;

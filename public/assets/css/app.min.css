@@ -18164,20 +18164,7 @@ span .paginate_button {
 
 /* data table pagination */
 
-.dataTables_wrapper .dataTables_paginate .paginate_button {
-    box-sizing: border-box;
-    display: inline-block;
-    min-width: 1.5em;
-    padding: 0.5em 1em;
-    margin-left: 2px;
-    text-align: center;
-    text-decoration: none !important;
-    cursor: pointer;
-    *cursor: hand;
-    color: #333 !important;
-    border: 1px solid transparent;
-    border-radius: 2px;
-}
+
 
 .dataTables_wrapper .dataTables_length {
     float: left;
@@ -18186,14 +18173,8 @@ span .paginate_button {
 
 /* top bar message notification */
 
-.dropdown-item:focus {
-    background-color: #adb5bd !important;
-}
 
-.dropdown-item.active,
-.dropdown-item:active {
-    background-color: #adb5bd !important;
-}
+
 
 ul.list-style-circle {
     list-style-type: none;

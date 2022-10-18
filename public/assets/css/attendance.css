@@ -3,7 +3,17 @@
     color: #c2c1bf;
     font-size: 14px;
     padding: 6px 25px;
+    margin: 0px;
 }
+
+/* .nav-tabs-dashed .nav-item .attendances-analyist-tab:first-child {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+.nav-tabs-dashed .nav-item .attendances-analyist-tab:last-child {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+} */
 .nav-tabs-dashed .nav-item .attendances-analyist-tab.active {
     background-color: #002f56 !important;
     color: #fff !important;
@@ -73,16 +83,16 @@
     color: #ffffff;
 }
 
-.profile-wrapper span{
+.profile-wrapper span {
     color: #ffffff;
     font-weight: 600;
 }
-.date-wrapper{
+.date-wrapper {
     height: auto;
     width: auto;
     border-radius: 4px;
 }
-.date-wrapper .month{
+.date-wrapper .month {
     height: 25px;
     /* width: 25px; */
     border-top-right-radius: 4px;
@@ -93,7 +103,7 @@
     position: relative;
 }
 
-.pendingLeave_notify span{
+.pendingLeave_notify span {
     position: absolute;
     right: -8px;
     top: -8px;

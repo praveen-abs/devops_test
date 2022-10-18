@@ -41,19 +41,53 @@ p {
 .h-100 {
     height: 100%;
 }
-.text-ash{
+.text-ash {
     color: #b9b9b9;
 }
 
-.boxshadow_lite4{
+.boxshadow_lite4 {
     box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em !important;
 }
-
 
 ::placeholder {
     color: #747f8a !important;
     font-size: 13px;
     opacity: 0.5 !important;
+}
+.border-primary {
+    border: 1px solid #002f56;
+    border: #002f56 !important;
+}
+.border-orange {
+    border-color: #ee6a04;
+}
+.border_radius_4 {
+    border-radius: 4px;
+}
+.border_radius_2 {
+    border-radius: 2px;
+}
+.border_radius_5 {
+    border-radius: 5px;
+}
+.border_radius_3 {
+    border-radius: 3px;
+}
+.text-ash-medium {
+    color: #8e8f91;
+}
+.box_shadow_0 {
+    box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
+}
+.border-rtb {
+    border-right: 0px;
+    border-top: 0px;
+    border-bottom: 0px;
+}
+.disabled_focus:focus {
+    border-color: #002f54;
+    outline: 0;
+    box-shadow: none;
 }
 .container-fluid {
     padding: 0px;
@@ -751,15 +785,22 @@ button.gridjs-sort-desc {
     color: #fff;
     padding: 2px 10px !important;
     font-size: 14px !important;
+
 }
 .nav-tabs-dashed .nav-item .nav-link {
     color: #c6c6c6 !important;
+
+  margin: 0px 10px 0px 10px;
+  padding: 0px;
 }
 .nav-tabs-dashed .nav-item .nav-link.active {
     color: #002f56 !important;
     background-color: transparent !important;
     border-bottom: 3px solid #ee6a05;
     border-radius: 0px !important;
+
+
+
 }
 .card-header .btn-custom-primary svg {
     margin-left: 10px;
@@ -807,12 +848,7 @@ button.gridjs-sort-desc {
     left: -5px;
     z-index: 1;
 }
-.nav-tabs-dashed .nav-item .attendances-analyist-tab {
-    background-color: #dfdfdf;
-    color: #c2c1bf;
-    font-size: 14px;
-    padding: 8px 8px;
-}
+
 .nav-tabs-dashed .nav-item .attendances-analyist-tab.active {
     background-color: #002f56 !important;
     color: #fff !important;
@@ -954,17 +990,7 @@ button.gridjs-sort-desc {
     border-radius: 5px;
     font-size: 15px;
 }
-.box-shadow-table {
-    border-radius: 5px;
-    box-shadow: rgb(60 64 67 / 30%) 0px 1px 2px 0px, rgb(60 64 67 / 15%) 0px 2px 6px 2px;
-}
-.box-shadow-table table tbody tr th h6 {
-    font-size: 15px;
-    margin-bottom: 4px;
-}
-.box-shadow-table table tbody tr th p {
-    color: #707274;
-}
+
 .choose-file {
     position: relative;
     cursor: pointer;
@@ -1213,11 +1239,11 @@ a.editable-click:hover {
     border: none;
     background-color: transparent;
 }
-.editable-buttons .editable-submit,.editable-buttons .editable-cancel {
+.editable-buttons .editable-submit,
+.editable-buttons .editable-cancel {
     opacity: 0;
     z-index: 3;
 }
-
 
 .editable-buttons {
     /* opacity: 0; */
@@ -1241,4 +1267,19 @@ a.editable-click:hover {
     content: "\f00d";
     color: #9f0000;
     left: 33px;
+}
+
+/* for button tabs nav-tab */
+.button_tabs {
+
+}
+.button_tabs .nav-link {
+    background-color: #dfdfdf;
+    color: #c2c1bf;
+    font-size: 14px;
+    padding: 6px 25px;
+}
+
+.button_tabs .nav-link.active {
+    background-color: #002f56;
 }

@@ -56,7 +56,7 @@
                         <div class="col-12 mt-2">
 
                             <div class="table-responsive">
-                                <table class="table table-hover table-borderless">
+                                <table class="table table-hover table-borderless mb-0">
                                     <thead class="bg-primary">
                                         <th colspan="2">
                                             Leave Type
@@ -69,18 +69,18 @@
                                     <tbody>
                                         <tr>
                                             <td class="" colspan="10">
-                                                <table class="table table-borderless">
+                                                <table class="table table-borderless mb-0">
                                                     <tbody>
                                                         <tr class="">
-                                                            <td colspan="2">hie</td>
+                                                            <td colspan="2"></td>
                                                             <td colspan="2">12</td>
                                                             <td colspan="2">01</td>
                                                             <td colspan="2">10</td>
                                                             <td colspan="2">20</td>
                                                         </tr>
                                                         <tr>
-                                                            <td colspan="10">
-                                                                <div class="alert alert-danger py-1 d-flex align-items-center"
+                                                            <td colspan="10 p-0">
+                                                                <div class="alert alert-danger mb-0 py-1 d-flex align-items-center"
                                                                     role="alert">
                                                                     <div class="d-flex justify-content-center">
                                                                         <span class="text-warning fw-bold me-1">Note :

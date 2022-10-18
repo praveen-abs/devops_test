@@ -21,9 +21,9 @@
 					{{-- <li class="crumb-item">
 						<a href="{{url('')}}" class="text-muted">Tracking</a>
 					</li> --}}
-					<li class="crumb-item">
+					{{-- <li class="crumb-item">
 						<a href="{{url('leave_history')}}" class="text-muted">Leave history</a>
-					</li>
+					</li> --}}
 
                     <li class="crumb-item"><a href="apps-calendar" class="text-muted">Attendance</a></li>
                     <li class="crumb-item"><a href="{{route('dayWiseStaffAttendance')}}" class="text-muted">Timesheet</a></li>
