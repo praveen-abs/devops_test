@@ -529,6 +529,8 @@
                         <?php
                         // get KpiPmsReview Details
                         $kpiFormAssigneeReview = getReviewKpiFormDetails($pmsKpiAssignee->id, $assigneeId);
+
+
                         ?>
                         <tr>
                             <td class="d-none">{{ $key1 }}</td>
@@ -578,10 +580,10 @@
                             </td>
                             <td class="">
                                 <div class="td_content_center">
-                                    @if(isset($kpiFormAssigneeReview) && $kpiFormAssigneeReview->is_assignee_accepted == '0')
+                                    @if(!empty($kpiFormAssigneeReview) && $kpiFormAssigneeReview->is_assignee_accepted == '0')
                                     Rejected
                                     @else
-                                    @if(isset($kpiFormAssigneeReview) && $kpiFormAssigneeReview->is_assignee_submitted == '1')
+                                    @if(!empty($kpiFormAssigneeReview) && $kpiFormAssigneeReview->is_assignee_submitted == '1')
                                     Submitted
                                     @else
                                     Not yet submitted
@@ -699,7 +701,7 @@
                                 </div>
                                 <div class="row">
                                     <!-- employee Selection portion starts -->
-                                    @if(isset($parentReviewerIds) && isset($parentReviewerNames))
+                                    @if(!empty($parentReviewerIds) && !empty($parentReviewerNames))
                                     <!-- flow 1 -->
                                     <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4  mb-2">
                                         <label class="" for="">Employees</label>
