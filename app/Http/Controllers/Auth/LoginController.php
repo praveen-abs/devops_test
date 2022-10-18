@@ -14,6 +14,8 @@ use App\Models\User;
 use App\Models\VmtClientMaster;
 use Illuminate\Support\Facades\Cache;
 
+use App\Http\Controllers\VmtStaffAttendanceController;
+
 class LoginController extends Controller
 {
     /*
@@ -107,8 +109,11 @@ class LoginController extends Controller
                         if (auth::attempt(['user_code' => $request->user_code, 'password' => $request->password], $save_credentials)) {
 
                             if($isDefaultPasswordUpdated == '1')
-                             {
+                            {
 
+                                // Sync Staff attendance data from device
+                                $this->syncStaffAttendance(); 
+                                
                                 //If User has already updated password, so redirect to dashboard page
                                 return redirect(route('index'));
                              }
@@ -147,6 +152,9 @@ class LoginController extends Controller
                     {
                         if($isDefaultPasswordUpdated == "1")
                         {
+                           // Sync Staff attendance data from device
+                           $this->syncStaffAttendance(); 
+
                            //If User has already updated password, so redirect to dashboard page
                            return redirect(route('index'));
                         }
@@ -182,5 +190,19 @@ class LoginController extends Controller
         $generalInfo = VmtGeneralInfo::first();
 
         return view('auth.reset_password',compact('generalInfo'));
+    }
+
+
+    protected function syncStaffAttendance(){
+
+        $deviceAttendanceController  = new VmtStaffAttendanceController; 
+
+        try {
+            $deviceAttendanceController->syncStaffAttendanceFromDeviceDatabase(); 
+        } catch (\Exception $e) {
+            
+        }
+
+       
     }
 }

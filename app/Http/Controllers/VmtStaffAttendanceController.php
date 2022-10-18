@@ -22,7 +22,7 @@ class VmtStaffAttendanceController extends Controller
         if($recentDeviceData){
             $attendanceData  = \DB::connection('attendanceDB')->table('staff_attenndance')->where('date', '>', $recentDeviceData->date)->get();  
         }else{
-            $attendanceData  = \DB::connection('attendanceDB')->table('staff_attenndance')->get();    
+            $attendanceData  = \DB::connection('attendanceDB')->table('staff_attenndance')->get();
         }
         
        
