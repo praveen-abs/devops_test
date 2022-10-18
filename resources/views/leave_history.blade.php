@@ -278,7 +278,7 @@
                 <div class="modal-body">
 
                     <div class="show_message d-flex justify-content-center align-items-center">
-                        <h6 class="text-muted">Hmmm....No Request Pending</h6>
+                        <h6 class="text-muted">No Request Pending</h6>
                     </div>
                 </div>
             </div>
