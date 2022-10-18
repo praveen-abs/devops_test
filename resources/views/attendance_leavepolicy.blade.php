@@ -2,6 +2,9 @@
 @section('title')
 @lang('translation.dashboards')
 @endsection
+@section('css')
+    <link rel="stylesheet" href="{{ URL::asset('assets/libs/gridjs/gridjs.min.css') }}">
+@endsection
 @section('content')
 @component('components.attendance_breadcrumb')
 @slot('li_1')@endslot
@@ -58,6 +61,72 @@
                     <div class="col-md-12">
                         <div id="leave-policy-table"></div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal_edit_leave" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content profile-box">
+                <div class="modal-header py-3 new-role-header d-flex align-items-center">
+                    <h4 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">Edit
+                    </h4>
+                    <button type="button" class="close  border-0 h3" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="requires-validation" id="form_edit_leavepolicy" novalidate>
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label>Annual (Days)</label>
+                                    <input class="form-control" type="text" name="days_annual" id="days_annual" required>
+                                    <div class="invalid-feedback">
+                                        Please provide a valid text.
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label>Month (Days)</label>
+                                    <input class="form-control" type="text" name="days_month" id="days_month" required>
+                                    <div class="invalid-feedback">
+                                        Please provide a valid text.
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label>Restricted Days</label>
+                                    <input class="form-control" type="text" name="days_restricted" id="days_restricted" required>
+                                    <div class="invalid-feedback">
+                                        Please provide a valid text.
+                                    </div>
+
+                                </div>
+                            </div>
+                            {{-- <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label>Department</label>
+                                    <input class="form-control" type="text" name="department" id="department" required>
+                                    <div class="invalid-feedback">
+                                        Please provide a valid text.
+                                    </div>
+
+                                </div>
+                            </div> --}}
+
+
+
+                        </div>
+                        <div class="submit-section">
+                            <button type="button" id="submit_leaveedit" class="btn btn-primary submit-btn">Submit</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -205,9 +274,11 @@
 <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
 
 <script>
+    var gridtable_leavePolicy = "";
+
     $(document).ready(function() {
         if (document.getElementById("leave-policy-table")) {
-            const grid = new gridjs.Grid({
+            gridtable_leavePolicy = new gridjs.Grid({
                 columns: [
                     {
                         id: 'leave_type',
@@ -226,12 +297,18 @@
                         name: 'Restricted Days',
                     },
                     {
-                        id: 'reporting_to',
+                        id: 'leave_policy',
                         name: 'Department',
                     },
-                ],
-                data: [
+                    {
+                        id: 'id',
+                        name: 'Action',
+                        formatter: function formatter(cell) {
 
+                            htmlcontent = '<input type="button" value="Edit" onclick="EditLeaveData(this)" data-policydbid="'+cell+'" class="btn_edit_leave btn btn-orange py-1 " data-bs-target="" data-bs-toggle="modal"></input>';
+                            return gridjs.html(htmlcontent);
+                        }
+                    },
                 ],
                 pagination: {
                     limit: 10
@@ -239,18 +316,88 @@
                 sort: true,
                 search: true,
                 server: {
-                url: '{{route('vmt-fetch-leave-policy-details')}}',
-                then: data => data.map(
-                    leave_policy => [
-                        leave_policy.leave_type,
-                        leave_policy.days_annual,
-                        leave_policy.days_monthly,
-                        leave_policy.days_restricted,
-                    ]
-                )
-            },
+                    url: '{{route('vmt-fetch-leave-policy-details')}}',
+                    then: data => data.map(
+                        leave_policy => [
+                            leave_policy.leave_type,
+                            leave_policy.days_annual,
+                            leave_policy.days_monthly,
+                            leave_policy.days_restricted,
+                            leave_policy,
+                            leave_policy.id
+                        ]
+                    )
+                },
             }).render(document.getElementById("leave-policy-table"));
         }
+
+        $('#submit_leaveedit').click(function() {
+            var form_data1 = new FormData(document.getElementById("form_edit_leavepolicy"));
+            $.ajax({
+                url: "{{route('set-singleleavepolicy-record')}}",
+                type: "POST",
+                dataType: "json",
+                data: form_data1,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    console.log(data+'success');
+                    if (data == "200") {
+                        var rowId = $('#row_id').val() - 1;
+                        // var row = $("table tbody tr:eq(" + rowId + ")");
+                        // row.find("td:eq(0)").html('<b>'+$("#asset_name").val()+'</b>');
+                        // row.find("td:eq(1)").html($("#asset_type").val());
+                        // row.find("td:eq(2)").html($("#serial_number").val());
+                        // row.find("td:eq(3)").html($("#warranty").val());
+                        // row.find("td:eq(4)").html($("#vendor").val());
+                        // row.find("td:eq(5)").html($("#assignee").val());
+                        // row.find("td:eq(6)").html($("#assigned_date").val());
+                        window.location.reload();
+                    }
+                    $('#modal_edit_leave').modal('hide');
+
+
+                    gridtable_leavePolicy.updateConfig({
+
+                    }).forceRender();
+                },
+                error: function(data) {
+                    console.log(data+'error');
+                }
+            });
+        });
+
     });
+
+
+
+    function EditLeaveData(element) {
+        // console.log(column_name+" , "+ row_id);
+            var policydbid = $(element).attr('data-policydbid');
+            console.log("Editing leave row : "+policydbid);
+
+            $.ajax({
+                url: "{{route('get-singleleavepolicy-record','')}}"+"/"+policydbid,
+                type: "GET",
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    console.log("Editing Leave type : "+data.leave_type);
+
+                    $('#days_annual').val(data.days_annual);
+                    $('#days_month').val(data.days_monthly);
+                    $('#days_restricted').val(data.days_restricted);
+                    //$('#department').val(data[4]['data']);
+                    $('#modal_edit_leave').modal('show');
+
+                   // $('#modal_edit_asset').modal('hide');
+                },
+                error: function(data) {
+                    console.log(data+'error');
+                }
+            });
+
+
+        }
 </script>
 @endsection

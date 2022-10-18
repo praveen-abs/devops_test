@@ -61,7 +61,8 @@ Route::get('/attendance-admin-timesheet', [App\Http\Controllers\VmtAttendanceCon
 Route::get('/attendance-timesheet', [App\Http\Controllers\VmtAttendanceController::class, 'showEmployeeTimeSheetPage'])->name('attendance-timesheet');
 Route::get('/fetch-leave-policy-details', [App\Http\Controllers\VmtAttendanceController::class, 'fetchLeavePolicyDetails'])->name('vmt-fetch-leave-policy-details');
 Route::get('/fetch-leavehistory', [App\Http\Controllers\VmtAttendanceController::class, 'fetchLeaveRequestDetails'])->name('fetch-leavehistory');
-
+Route::get('/get-singleleavepolicy-record/{id}', [App\Http\Controllers\VmtAttendanceController::class, 'fetchSingleLeavePolicyRecord'])->name('get-singleleavepolicy-record');
+Route::post('/set-singleleavepolicy-record', [App\Http\Controllers\VmtAttendanceController::class, 'updateSingleLeavePolicyRecord'])->name('set-singleleavepolicy-record');
 Route::post('/attendance-applyleave', [App\Http\Controllers\VmtAttendanceController::class, 'saveLeaveRequestDetails'])->name('attendance-applyleave');
 
 

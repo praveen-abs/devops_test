@@ -52,6 +52,18 @@ class VmtAttendanceController extends Controller
         return VmtEmployeeLeaves::all();
     }
 
+    public function fetchSingleLeavePolicyRecord($id)
+    {
+        $temp =VmtLeaves::find($id)->first();
+        return $temp;
+
+    }
+
+    public function updateSingleLeavePolicyRecord(Request $request)
+    {
+        dd($request);
+    }
+
     public function saveLeaveRequestDetails(Request $request)
     {
 
