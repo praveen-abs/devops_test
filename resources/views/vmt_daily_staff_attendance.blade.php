@@ -67,8 +67,8 @@
                                         <thead>
                                             <tr>
 
-                                                <th>Name</th>
                                                 <th>Employee Code</th>
+                                                <th>Name</th>
                                                 <th>Check-in Time </th>
                                                 <th>Check-out Time</th>
                                             </tr>
