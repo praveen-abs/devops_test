@@ -162,7 +162,7 @@
                             formatter: function formatter(cell) {
                                 var date = new Date(cell);
                                 if (!isNaN(date))
-                                    return gridjs.html(date.getDate() + "-" + date.getMonth() +
+                                    return gridjs.html(date.getDate() + "-" + (date.getMonth()+1) +
                                         "-" + date.getFullYear());
                                 else
                                     return gridjs.html("");
