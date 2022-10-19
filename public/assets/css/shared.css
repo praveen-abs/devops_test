@@ -514,6 +514,7 @@ th.gridjs-th .gridjs-th-content {
 .gridjs-footer {
     border: none !important;
     padding: 12px 0 0;
+    box-shadow: none !important;
 }
 .gridjs-table {
     width: 100% !important;
@@ -1004,6 +1005,10 @@ button.gridjs-sort-desc {
     top: 0px;
     left: 0px;
 }
+.gridjs-wrapper{
+    box-shadow: none !important;
+}
+
 /* button.gridjs-sort-desc{
     background-image: none !important;
 }

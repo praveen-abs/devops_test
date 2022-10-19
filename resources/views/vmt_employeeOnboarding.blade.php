@@ -164,6 +164,7 @@
             });
 
             $('#nationality').select2({
+                placeholder: "Select Nationality",
                 width: '100%'
             });
 
@@ -384,6 +385,9 @@
                             else if ($('nationality').val('other_country')){
                                 $("#passport_no").attr("required");
                                 $("#passdate").attr("required");
+                                // $('#passport_no').addClass('error');
+                                // $('#passport_date').addClass('error');
+                                $("#passport_date").attr("required");
                             }
                         });
 
@@ -726,12 +730,12 @@
             });
 
 
+
             $('#nationality').change(function() {
                 console.log("Changed nationality : "+$('#nationality').val());
                 // $('#permanent_country').val('IN').trigger('change');
                 if ($('#nationality').val() == 'indian') {
-                    $('#passport_no').prop('disabled',true);
-                    $('#passport_date').prop('disabled',true);
+
                     $('#passport_no').removeAttr('required');
                     $('#passport_no_req').hide();
                     if ($('#passport_no').val() == '') {
@@ -739,7 +743,7 @@
                     }
                     $('#passport_no').addClass('not-required validate');
                     $('#passport_exp').addClass('not-required validate');
-                    $('#passport_exp').removeAttr('required');
+                    // $('#passport_exp').removeAttr('required');
                     $('#passport_exp_req').hide();
                     $('.passport_exp_label').hide();
                     $('#aadhar').attr('required', true);
@@ -750,17 +754,21 @@
                     $('#current_country').val('103').trigger('change');
                     stateFunction('IN', '#current_state');
                     stateFunction('IN', '#permanent_state');
-
                     $('#asterisk_passport_no').html('');
                     $('#asterisk_passport_expdate').html('');
-
-
+                    $('#passport_no').removeClass('error');
+                    $('#passport_date').removeClass('error');
+                    $('#error_passport_no').removeClass('error');
+                    $('#passport_date-error').removeClass('error');
                 } else {
+
                     $('#passport_no').attr('required', true);
+                    $('#passport_date').attr('required', true);
+                    $('#passport_no').addClass('error');
+                    $('#passport_date').addClass('error');
+
                     $('#passport_no_req').show();
                     $('#passport_exp_req').show();
-                    $('#passport_no').prop('disabled',false);
-                    $('#passport_date').prop('disabled',false);
                     $('#passport_no').removeClass('not-required validate');
                     $('#passport_exp').removeClass('not-required validate');
                     $('#passport_exp').attr('required', true);
