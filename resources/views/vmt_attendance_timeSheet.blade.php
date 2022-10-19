@@ -12,7 +12,7 @@
     <div class="card timeSheet_wrapper">
         <div class="card-body">
 
-            <h6 class="">Time Sheet</h6>
+            <h6 class="">Employee Time Sheet</h6>
 
             <div class="" id="timeSheet_table"></div>
 

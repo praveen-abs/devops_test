@@ -89,7 +89,7 @@
 
                             @if( Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]))
                                 <li class="nav-item">
-                                    <a href="{{route('attendance-approvals')}}" class="nav-link sidebar py-1">Approvals</a>
+                                    <a href="{{route('attendance-approvals')}}" class="nav-link sidebar py-1">Leave Approvals</a>
                                 </li>
                                 {{-- <li class="nav-item">
                                     <a href="{{url('attendance_shift_woff_hday')}}" class="nav-link sidebar py-1">Shift/WeeklyOff/Holidays</a>
@@ -106,10 +106,13 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{route('dayWiseStaffAttendance')}}" class="nav-link sidebar py-1" role="button"><span>Timesheet</span></a>
+                                    <a href="{{route('dayWiseStaffAttendance')}}" class="nav-link sidebar py-1" role="button"><span>Org Timesheet</span></a>
                                 </li>
                             @endif
 
+                            <li class="nav-item">
+                                <a href="{{route('attendance-employee-timesheet')}}" class="nav-link sidebar py-1">Employee Timesheet</a>
+                            </li>
 
                             <li class="nav-item">
                                 <a href="{{url('attendance_leave')}}" class="nav-link sidebar py-1">Leave</a>
