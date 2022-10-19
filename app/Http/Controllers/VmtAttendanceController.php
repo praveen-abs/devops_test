@@ -122,7 +122,7 @@ class VmtAttendanceController extends Controller
         $VmtGeneralInfo = VmtGeneralInfo::first();
         $image_view = url('/') . $VmtGeneralInfo->logo_img;
 
-        $isSent    = \Mail::to("praveenkumar.techdev@gmail.com")->send(new RequestLeaveMail(auth::user()->name, auth::user()->user_code, request()->getSchemeAndHttpHost(), $image_view));
+        $isSent    = \Mail::to($reviewer_mail)->send(new RequestLeaveMail(auth::user()->name, auth::user()->user_code, request()->getSchemeAndHttpHost(), $image_view));
 
         if( $isSent) {
             $mail_status = "Mail sent successfully";
