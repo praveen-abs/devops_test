@@ -1,5 +1,5 @@
 {{-- @section('ui-onboarding') --}}
-<?php //dd($employee_details); ?>
+<?php //dd($empNo); ?>
 <div class="container-fluid ">
     <div class="">
         <div class="row ">
@@ -32,7 +32,7 @@
 
                                                     <label for="" class="float-label">Employee Code</label>
                                                     <input type="text" placeholder="Employee Code" name="employee_code" id="employee_code"
-                                                        class="onboard-form form-control textbox" value="{{$empNo}}" required style='text-transform:uppercase'
+                                                        class=" form-control textbox" value="{{$empNo}}" required
                                                         @if(!empty($is_employeeCode_editable) && $is_employeeCode_editable == 'false') readonly @endif
                                                     />
                                                     <span class="error" id="error_emp_code"></span>
