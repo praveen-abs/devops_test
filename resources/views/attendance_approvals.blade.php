@@ -123,6 +123,44 @@ var employeesList_array = <?php echo json_encode($allEmployeesList); ?>;
             });
         });
 
+        $(document).on('click', '.aprrove-leave-btn', function(e){
+            console.log(e);
+            var leaveId  = $(this).data('leave_id');
+            var userId  = $(this).data('user_id');
+            var statusText  = $(this).data('leave_status');
+
+            $.ajax({
+                url: "{{url('attendance-approve-rejectleave')}}",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    'user_id': userId,
+                    'leave_id': leaveId,
+                    'status': statusText,
+                    "_token": "{{ csrf_token() }}",
+                },
+                success: function(data) {
+                    if(data.status == "success")
+                    {
+                        alert(data.message+" \n ");
+                        location.reload();
+                    }
+                    else
+                    {
+                        alert("Leave request failed. Contact your Admin");
+                    }
+                },
+                error: function(data) {
+
+
+                }
+            });
+        });
+
+        $('.aprrove-leave-btn').on('click', function(e){
+            
+        })
+
         // if (document.getElementById("attendance_approvals-table")) {
         //     const grid = new gridjs.Grid({
         //         columns: [{
@@ -273,7 +311,21 @@ var employeesList_array = <?php echo json_encode($allEmployeesList); ?>;
                         name: 'Action',
                         formatter: function formatter(emp) {
                                 var htmlcontent = "";
+                                console.log(emp);
+                                if (emp.status == "Pending"){
+                                    htmlcontent =
+                                     '<input type="button" value="Approve" id="button_activate_"' +
+                                    emp.user_id + '" data-user_id="' + emp.user_id +
+                                    '" data-leave_id="' + emp.id +
+                                    '" data-leave_status="Approved" class="status btn btn-orange py-1 aprrove-leave-btn "></input>';
 
+                                    htmlcontent = htmlcontent + 
+                                     '&nbsp;&nbsp;<input type="button" value="Reject" id="button_activate_"' +
+                                    emp.user_id + '" data-user_id="' + emp.user_id +
+                                    '" data-leave_id="' + emp.id +
+                                    '" data-leave_status="Rejected" class="status btn btn-orange py-1 aprrove-leave-btn "></input>&nbsp;&nbsp;';
+                                }
+                                
                                 // if (leave_history.status == "Pending")
                                 //     htmlcontent =
                                 //     '<input type="button" value="Activate" onclick="activateEmployee(this)" id="button_activate_"' +
@@ -286,7 +338,7 @@ var employeesList_array = <?php echo json_encode($allEmployeesList); ?>;
                                 //       <i class="fa  fa-sticky-note-o"></i>
                                 //     </button>
 
-                                    htmlcontent =
+                                    htmlcontent =htmlcontent +
                                     '<input type="button" value="View" class="status btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal"></input>';
 
 
@@ -320,6 +372,10 @@ var employeesList_array = <?php echo json_encode($allEmployeesList); ?>;
                 }
             }).render(document.getElementById("table_leaveHistory"));
         }
+
+       /* function approveLeave(){
+            console.log(this);
+        }*/
     });
 </script>
 @endsection

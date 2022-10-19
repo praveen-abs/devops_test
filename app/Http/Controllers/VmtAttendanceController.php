@@ -49,10 +49,18 @@ class VmtAttendanceController extends Controller
 
     public function approveRejectLeaveRequest(Request $request)
     {
-        $approval_status = $request->status;
+        // $approval_status = $request->status;
+        $leave_record = VmtEmployeeLeaves::where('id', $request->leave_id)->first();
+        $leave_record->status = $request->status;
+        $leave_record->save();
+        $response = [
+            'status' => 'success',
+            'message' => 'Leave '.$request->status,
+            'error' => '',
+            'error_verbose' =>''
+        ];
 
-       $leave_record = VmtEmployeeLeaves::where('id',$request->user_id);
-       $leave_record->status = $request->status;
+        return $response;
     }
 
     public function fetchLeaveRequestDetails(Request $request)

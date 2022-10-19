@@ -65,6 +65,8 @@ Route::get('/get-singleleavepolicy-record/{id}', [App\Http\Controllers\VmtAttend
 Route::post('/set-singleleavepolicy-record', [App\Http\Controllers\VmtAttendanceController::class, 'updateSingleLeavePolicyRecord'])->name('set-singleleavepolicy-record');
 Route::post('/attendance-applyleave', [App\Http\Controllers\VmtAttendanceController::class, 'saveLeaveRequestDetails'])->name('attendance-applyleave');
 
+Route::post('/attendance-approve-rejectleave', [App\Http\Controllers\VmtAttendanceController::class, 'approveRejectLeaveRequest']);
+
 
 
 //Update User Details
