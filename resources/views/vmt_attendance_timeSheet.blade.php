@@ -24,28 +24,27 @@
     <script src="{{ URL::asset('assets/libs/gridjs/gridjs.min.js') }}"></script>
     <script src="{{ URL::asset('/assets/js/pages/dashboard-projects.init.js') }}"></script>
 
-
+    
     <script>
+        var timesheetArray = <?php echo json_encode($employeeAttendanceData); ?>;
+
         $(document).ready(function() {
             if (document.getElementById("timeSheet_table")) {
                 const grid = new gridjs.Grid({
                     columns: [{
-                            id: 'name',
+                            id: 'date',
                             name: 'Date',
                         },
                         {
-                            id: 'name',
+                            id: 'checkin_time',
                             name: 'Check-In',
                         },
                         {
-                            id: 'name',
+                            id: 'checkout_time',
                             name: 'Check-Out',
                         },
-
                     ],
-                    data: [
-
-                    ],
+                    data: timesheetArray,
                     pagination: {
                         limit: 10
                     },

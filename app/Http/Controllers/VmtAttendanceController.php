@@ -160,9 +160,9 @@ class VmtAttendanceController extends Controller
         $currentmonth = $request->current_month;
 
         //TODO : get the attendance data for the given month
-        $employeeAttendanceData = VmtEmployeeAttendance::where('user_id',$request->user_id)->get();
+        $employeeAttendanceData = VmtEmployeeAttendance::where('user_id', $request->user_id)->get();
 
-        return view('vmt_attendance_timesheet',compact('employeeAttendanceData'));
+        return view('vmt_attendance_timeSheet',compact('employeeAttendanceData'));
     }
 
     public function showAllEmployeesTimesheetPage(Request $request){
