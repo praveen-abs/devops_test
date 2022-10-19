@@ -42,8 +42,10 @@
     <!-- apexcharts -->
     <script src="{{ URL::asset('/assets/js/pages/dashboard-projects.init.js') }}"></script>
 
+
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 
     <!-- data table -->
     <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
@@ -162,8 +164,7 @@
                             formatter: function formatter(cell) {
                                 var date = new Date(cell);
                                 if (!isNaN(date))
-                                    return gridjs.html(date.getDate() + "-" + (date.getMonth()+1) +
-                                        "-" + date.getFullYear());
+                                    return gridjs.html(moment(date).format('DD-MM-YYYY'));
                                 else
                                     return gridjs.html("");
 
