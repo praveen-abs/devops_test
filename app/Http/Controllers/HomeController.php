@@ -223,7 +223,7 @@ class HomeController extends Controller
         $contact->name     = $request->input('name');
         $contact->relationship = $request->input('relationship');
         $contact->phone_number_1 = $request->input('phone_number_1');
-        $contact->phone_number_2 = $request->input('phone_number_2');
+        $contact->phone_number_2 = "";
         $contact->save();
 
         return redirect()->back();
