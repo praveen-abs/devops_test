@@ -61,7 +61,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Date of Birth <span class="text-danger">*</span></label>
                                                     {{-- <input type="text" placeholder="Date of Birth" name="" max="" class="form-control textbox" id="datepicker" required /> --}}
-                                                    <input type="text" max="9999-12-31" placeholder="Date of Birth" name="dob" id="dob" onfocus="(this.type='date')" value="" class="onboard-form  form-control spouse_data " required  autofocus/>
+                                                    <input type="text" max="9999-12-31" placeholder="Date of Birth" name="dob" id="dob" onfocus="(this.type='date')" value="" class="onboard-form  form-control  " required  />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
