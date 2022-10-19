@@ -54,12 +54,21 @@ class VmtPMSModuleController extends Controller
         // get Departments data
         $departments = Department::where('is_active', 1)->get();
 
+         
+
         //Dashboard vars
-        $employeesGoalsSetCount = 0;
+        /*$employeesGoalsSetCount = \DB::table('vmt_pms_kpiform_reviews')->count(); //0;
         $totalEmployeesCount = User::where('active',1)->where('is_ssa',0)->count();
-        $employeesAssessedCount = 0;
-        $selfReviewCount = 0;
-        $totalSelfReviewCount = 0;
+        $employeesAssessedCount = \DB::table('vmt_pms_kpiform_reviews')
+                                ->where('is_reviewer_submitted', 'Not Like', '%null%')
+                                ->count();
+        
+        $selfReviewCount =  \DB::table('vmt_pms_kpiform_reviews')
+                                ->where('is_assignee_submitted', 1)
+                                ->count();
+        
+        $totalSelfReviewCount = \DB::table('vmt_pms_kpiform_reviews')->count();*/
+        
         $employees = VmtEmployee::rightJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
             ->select(
                 'users.name as emp_name',
@@ -70,12 +79,16 @@ class VmtPMSModuleController extends Controller
             ->where('users.is_ssa','0')
             ->orderBy('vmt_employee_details.created_at', 'ASC')
             ->get();
-        $dashboardCountersData = [];
-        $dashboardCountersData['employeesGoalsSetCount'] = $employeesGoalsSetCount;
+        
+        // function to get dashboard Card data
+        $dashboardCountersData = $this->getPerformanceDashboardSummaryStats();
+
+        /*$dashboardCountersData['employeesGoalsSetCount'] = $employeesGoalsSetCount;
         $dashboardCountersData['totalEmployeesCount'] = $totalEmployeesCount;
         $dashboardCountersData['employeesAssessedCount'] = $employeesAssessedCount;
         $dashboardCountersData['selfReviewCount'] = $selfReviewCount;
         $dashboardCountersData['totalSelfReviewCount'] = $totalSelfReviewCount;
+        $dashboardCountersData['finalScoreCount'] =  $finalScoreCount;*/
 
            // $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')->WhereRaw("find_in_set(".auth()->user()->id.", reviewer_id)")->orWhereRaw("find_in_set(".auth()->user()->id.", assignee_id)")->orderBy('id','DESC')->get();
             $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')->orderBy('id','DESC')->get();
@@ -118,11 +131,12 @@ class VmtPMSModuleController extends Controller
         $departments = Department::where('is_active', 1)->get();
 
         //Dashboard vars
-        $employeesGoalsSetCount = 0;
+        /* $employeesGoalsSetCount = 0;
         $totalEmployeesCount = User::where('active',1)->where('is_ssa',0)->count();
         $employeesAssessedCount = 0;
         $selfReviewCount = 0;
-        $totalSelfReviewCount = 0;
+        $totalSelfReviewCount = 0;*/
+        
         $employees = VmtEmployee::rightJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
             ->select(
                 'users.name as emp_name',
@@ -160,13 +174,13 @@ class VmtPMSModuleController extends Controller
                                     ->get();
         }
 
-        $dashboardCountersData = [];
-        $dashboardCountersData['employeesGoalsSetCount'] = $employeesGoalsSetCount;
+        $dashboardCountersData = $this->getPerformanceDashboardSummaryStats();
+        /*$dashboardCountersData['employeesGoalsSetCount'] = $employeesGoalsSetCount;
         $dashboardCountersData['totalEmployeesCount'] = $totalEmployeesCount;
         $dashboardCountersData['employeesAssessedCount'] = $employeesAssessedCount;
         $dashboardCountersData['selfReviewCount'] = $selfReviewCount;
         $dashboardCountersData['totalSelfReviewCount'] = $totalSelfReviewCount;
-
+        $dashboardCountersData['finalScoreCount'] =  $finalScoreCount;*/
             $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')->WhereRaw("find_in_set(".$loggedUserId.", reviewer_id)")/*->orWhereRaw("find_in_set(".$loggedUserId.", assignee_id)")*/->orderBy('id','DESC')->get();
 
         $loggedInUser = Auth::user();
@@ -185,11 +199,11 @@ class VmtPMSModuleController extends Controller
         $departments = Department::where('is_active', 1)->get();
 
         //Dashboard vars
-        $employeesGoalsSetCount = 0;
+        /*$employeesGoalsSetCount = 0;
         $totalEmployeesCount = User::where('active',1)->where('is_ssa',0)->count();
         $employeesAssessedCount = 0;
         $selfReviewCount = 0;
-        $totalSelfReviewCount = 0;
+        $totalSelfReviewCount = 0;*/
         $employees = VmtEmployee::rightJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
             ->select(
                 'users.name as emp_name',
@@ -255,13 +269,14 @@ class VmtPMSModuleController extends Controller
         $parentReviewerIds = implode(',',$parentReviewerIds);
         $parentReviewerNames = implode(',',$parentReviewerNames);
 
-        $dashboardCountersData = [];
+        $dashboardCountersData =  $this->getPerformanceDashboardSummaryStats();
+        /*[];
         $dashboardCountersData['employeesGoalsSetCount'] = $employeesGoalsSetCount;
         $dashboardCountersData['totalEmployeesCount'] = $totalEmployeesCount;
         $dashboardCountersData['employeesAssessedCount'] = $employeesAssessedCount;
         $dashboardCountersData['selfReviewCount'] = $selfReviewCount;
         $dashboardCountersData['totalSelfReviewCount'] = $totalSelfReviewCount;
-
+        */
             $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')/*->WhereRaw("find_in_set(".$loggedUserId.", reviewer_id)")->*/->orWhereRaw("find_in_set(".$loggedUserId.", assignee_id)")->orderBy('id','DESC')->get();
 
         $loggedInUser = Auth::user();
@@ -1479,4 +1494,38 @@ class VmtPMSModuleController extends Controller
             return response()->json(['status'=>false,'message' => $e->getMessage()]);
         }
     }
+
+    /**
+     *  getPerformanceDashboardSummaryStats
+     *  table : vmt_pms_kpiform_reviews
+     *  
+     * 
+     */
+    protected function getPerformanceDashboardSummaryStats(){
+        //Dashboard vars
+        $finalScoreCount  =  \DB::table('vmt_pms_kpiform_reviews')
+                                ->where('is_assignee_submitted', 1)
+                                ->where('is_reviewer_submitted', 'Not Like', '%null%')
+                                ->count();
+        $employeesGoalsSetCount = \DB::table('vmt_pms_kpiform_reviews')->count(); //0;
+        $totalEmployeesCount = User::where('active',1)->where('is_ssa',0)->count();
+        $employeesAssessedCount = \DB::table('vmt_pms_kpiform_reviews')
+                                ->where('is_reviewer_submitted', 'Not Like', '%null%')
+                                ->count();
+        
+        $selfReviewCount =  \DB::table('vmt_pms_kpiform_reviews')
+                                ->where('is_assignee_submitted', 1)
+                                ->count();
+        
+        $totalSelfReviewCount = \DB::table('vmt_pms_kpiform_reviews')->count();
+        $dashboardCountersData['employeesGoalsSetCount'] = $employeesGoalsSetCount;
+        $dashboardCountersData['totalEmployeesCount'] = $totalEmployeesCount;
+        $dashboardCountersData['employeesAssessedCount'] = $employeesAssessedCount;
+        $dashboardCountersData['selfReviewCount'] = $selfReviewCount;
+        $dashboardCountersData['totalSelfReviewCount'] = $totalSelfReviewCount;
+        $dashboardCountersData['finalScoreCount'] =  $finalScoreCount;
+
+        return $dashboardCountersData;
+    }
+
 }
