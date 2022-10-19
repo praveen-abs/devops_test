@@ -240,7 +240,7 @@
                             <div class="col-sm-6  col-7 col-md-7 mt-3 col-xl-7 col-xxl-7 ps-0 col-lg-7 align-items-center flex-column d-flex">
                                 <p class="mb-1 text-center">Final Score Published</p>
 
-                                <p class="fw-bold text-center mt-1 f-18">{{ $dashboardCountersData['selfReviewCount'] . '/' . $dashboardCountersData['totalSelfReviewCount'] }}</p>
+                                <p class="fw-bold text-center mt-1 f-18">{{ $dashboardCountersData['finalScoreCount'] . '/' . $dashboardCountersData['totalSelfReviewCount'] }}</p>
 
                             </div>
                         </div>
