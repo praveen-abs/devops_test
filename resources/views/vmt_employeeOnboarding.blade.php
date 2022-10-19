@@ -730,6 +730,8 @@
                 console.log("Changed nationality : "+$('#nationality').val());
                 // $('#permanent_country').val('IN').trigger('change');
                 if ($('#nationality').val() == 'indian') {
+                    $('#passport_no').prop('disabled',true);
+                    $('#passport_date').prop('disabled',true);
                     $('#passport_no').removeAttr('required');
                     $('#passport_no_req').hide();
                     if ($('#passport_no').val() == '') {
@@ -757,6 +759,8 @@
                     $('#passport_no').attr('required', true);
                     $('#passport_no_req').show();
                     $('#passport_exp_req').show();
+                    $('#passport_no').prop('disabled',false);
+                    $('#passport_date').prop('disabled',false);
                     $('#passport_no').removeClass('not-required validate');
                     $('#passport_exp').removeClass('not-required validate');
                     $('#passport_exp').attr('required', true);
