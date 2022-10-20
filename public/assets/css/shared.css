@@ -1233,7 +1233,6 @@ button.gridjs-sort-asc::after{
     color: #ffffff;
     font-weight: 600;
 }
-
 .editable-click,
 a.editable-click,
 a.editable-click:hover {
@@ -1249,12 +1248,10 @@ a.editable-click:hover {
     opacity: 0;
     z-index: 3;
 }
-
 .editable-buttons {
     /* opacity: 0; */
     position: relative;
 }
-
 .editable-buttons::before,
 .editable-buttons::after {
     font-family: FontAwesome;
@@ -1262,21 +1259,14 @@ a.editable-click:hover {
     font-size: 20px;
     z-index: 0;
 }
-
 .editable-buttons::before {
     content: "\f058";
     color: #009f22;
 }
-
 .editable-buttons::after {
     content: "\f00d";
     color: #9f0000;
     left: 33px;
-}
-
-/* for button tabs nav-tab */
-.button_tabs {
-
 }
 .button_tabs .nav-link {
     background-color: #dfdfdf;
@@ -1284,7 +1274,97 @@ a.editable-click:hover {
     font-size: 14px;
     padding: 6px 25px;
 }
-
 .button_tabs .nav-link.active {
     background-color: #002f56;
 }
+.bg-smokeywhite {
+    background-color: #e7e7e7;
+    border-radius: 50%;
+    padding: 123px 80px;
+}
+.pt-100 {
+    padding-top: 100px;
+}
+.bg-lightsmoke {
+    background-color: #f1f0ee;
+    height: 300px;
+    border-radius: 20px;
+}
+.border-right {
+    border-right: 1px solid #cecece;
+}
+.switch-checkbox {
+    position: relative;
+    display: inline-block;
+    width: 45px;
+    height: 25px;
+}
+.switch-checkbox input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.slider-checkbox {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    border: 1px solid #d9d0d0;
+    right: 0;
+    bottom: 0;
+    background-color: white;
+    width: 45px;
+    -webkit-transition: 0.4s;
+    height: 4px;
+    box-shadow: inset -5px -5px 9px rgb(255 255 255 / 45%), inset 5px 5px 9px rgb(197 197 197 / 30%),rgb(0 0 0 / 16%) 0px 1px 4px;
+    transition: 0.4s;
+}
+input:checked + .slider > .slider-text:after {
+    content: "Checkout";
+    color: red;
+}
+input + .slider > .slider-text:after {
+    content: "Check In";
+}
+.slider-checkbox:before {
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    left: -1px;
+    border-radius: 50%;
+    bottom: -9px;
+    color: #8e8f91;
+    background-color: #8e8f91;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    content: "\f011";
+    font-family: FontAwesome !important;
+    padding: 0px 4px 0px 3px;
+    font-size: 15px;
+}
+input:checked + .slider-checkbox.check-out {
+    background-color: #f0657070;
+    color: #ff0000;
+}
+input:checked + .slider-checkbox.check-in {
+    background-color: #8e8f91;
+}
+input:focus + .slider-checkbox {
+    box-shadow: 0 0 1px #7cfc00;
+}
+input:checked + .slider-checkbox:before {
+    -webkit-transform: translateX(35px);
+    -ms-transform: translateX(35px);
+    transform: translateX(35px);
+    left: -11px;
+    background-color: #f0f0f6;
+}
+input:checked + .slider-checkbox.check-out:before {
+    color: #ee6a04;
+    background-color: #ee6a04;
+}
+input:checked + .slider-checkbox.check-in:before {
+    color: #ee6a04;
+    background-color: #ee6a04;
+}
+/* runpayroll */
