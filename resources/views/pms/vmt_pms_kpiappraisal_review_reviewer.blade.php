@@ -69,7 +69,7 @@
                                             <b class="f-15 text-primary">
                                                 @if ($isAllReviewersSubmittedOrNot)
                                                     @if ($ratingDetail)
-                                                        {{ $ratingDetail['rating'] }}
+                                                        {{ round($ratingDetail['rating'],1) }}
                                                     @else
                                                         -
                                                     @endif

@@ -27,7 +27,9 @@
                             <div class="mb-3 input-wrap">
                                 <p>Overall Annual Score</p>
                                 <div class="appraisal-box  btn bg-success text-white ">
-                                    @if($ratingDetail){{$ratingDetail['rating']}}@else - @endif</div>
+                                    @if($ratingDetail)
+                                    {{ round($ratingDetail['rating'],1) }}
+                                    @else - @endif</div>
 
                             </div>
                             <div class="mb-3 input-wrap">
