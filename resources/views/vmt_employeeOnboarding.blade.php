@@ -512,6 +512,9 @@
                     var routeURL = "{{route('isEmailExists',':email')}}";
                     routeURL = routeURL.replace(':email', $(this).val());
 
+                    //Check only if this is normal onboarding
+
+                   @if(Auth::user()->active == '0' && Auth::user()->onboard_type == 'quick' )
                     $.ajax({
                         url: routeURL,
                         type: "GET",
@@ -532,7 +535,7 @@
                            }
                         }
                     });
-
+                    @endif
 
                     return true;
                 }
@@ -1077,7 +1080,7 @@
 
             function saveOrSubmitForm(t_can_onboard_employee, t_form_data1)
             {
-
+                console.log("Aadhar file : "+$('#aadhar_card_file').val());
                 $.ajax({
                         url: "{{url('vmt-employee-onboard')}}",
                         type: "POST",

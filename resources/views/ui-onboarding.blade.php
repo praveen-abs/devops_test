@@ -1,6 +1,5 @@
 {{-- @section('ui-onboarding') --}}
-<?php //dd($empNo);
-?>
+<?php //dd($allEmployeesUserCode->toArray()); ?>
 <div class="container-fluid ">
     <div class="">
         <div class="row ">
@@ -65,12 +64,16 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
+                                                @php
+                                                $date = (date('Y')-18)."-".date('m')."-".date('d');
+                                                @endphp
                                                 <div class="floating">
                                                     <label for="" class="float-label">Date of Birth <span
                                                             class="text-danger">*</span></label>
+
                                                     {{-- <input type="text" placeholder="Date of Birth" name="" max="" class="form-control textbox" id="datepicker" required /> --}}
-                                                    <input type="text" max="9999-12-31" placeholder="Date of Birth"
-                                                        name="dob" id="dob" onfocus="(this.type='date')"
+                                                    <input type="text" placeholder="Date of Birth"
+                                                        name="dob" id="dob" onfocus="(this.type='date')" max="{{$date}}"
                                                         value="" class="onboard-form  form-control  " required />
 
                                                 </div>
@@ -156,7 +159,7 @@
                                                         value="{{ !empty($employee_user) && $employee_user->email ? $employee_user->email : '' }}"
                                                         class="  form-control textbox "
                                                         onkeypress="return event.charCode != 32"
-                                                        @if (request()->has('email')) readonly @endif required />
+                                                        @if (!empty($employee_user) && $employee_user->email) readonly @endif required />
                                                     <!-- <label for="" class="float-label">Email</label> -->
 
                                                 </div>
@@ -830,12 +833,12 @@
                                                     <label for="" class="float-label">Reporting Manager
                                                         Code<span class="text-danger">*</span></label>
 
-                                                    @if (isset($emp_office_details->l1_manager_code))
+                                                    @if (!empty($emp_office_details->l1_manager_code))
                                                         <input type="text"
                                                             value="{{ $emp_office_details->l1_manager_code }}"
                                                             name="l1_manager_code" id="l1_manager_code"
                                                             class="form-control textbox " pattern="" readonly
-                                                            value="{{ !empty($emp_office_details) && $emp_office_details->l1_manager_code ? $emp_office_details->l1_manager_code : '' }}" />
+                                                            value="{{ !empty($emp_office_details) && $emp_office_details->l1_manager_code ? $emp_office_details->l1_manager_code : '---' }}" />
                                                     @else
                                                         <select placeholder="Reporting Manager" name="l1_manager_code"
                                                             id="l1_manager_code_select"
@@ -1641,6 +1644,7 @@
                                                     style="display:none;" placeholder="Aadhar Card"
                                                     name="aadhar_card_file" id="aadhar_card_file"
                                                     class="onboard-form form-control files" required />
+
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6 mb-2"
                                                 id="aadhar_card_backend_content">
