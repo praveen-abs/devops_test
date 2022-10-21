@@ -551,7 +551,7 @@
                                                         <td>
                                                             <div>
                                                                 @if (isset($assigneeKPIPerc) && isset($assigneeKPIPerc[$kpiRow->id]))
-                                                                    {{ $assigneeKPIPerc[$kpiRow->id] }}
+                                                                    {{ round($assigneeKPIPerc[$kpiRow->id],1) }}
                                                                 @endif
                                                             </div>
                                                         </td>
@@ -603,10 +603,10 @@
                                                                     <textarea type="number" class="inp-text"
                                                                         name="reviewer_kpi_percentage[{{ $reviewersReview }}][{{ $kpiRow->id }}]"
                                                                         id="reviewer_kpi_percentage{{ $index }}-{{ $reviewersReview }}" placeholder="type here">
-@if (isset($decodedKpiReviewPerc[$reviewersReview]))
-{{ $decodedKpiReviewPerc[$reviewersReview][$kpiRow->id] }}
-@endif
-</textarea>
+                                                                    @if (isset($decodedKpiReviewPerc[$reviewersReview]))
+                                                                    {{ $decodedKpiReviewPerc[$reviewersReview][$kpiRow->id] }}
+                                                                    @endif
+                                                                    </textarea>
                                                                 @else
                                                                     <div>
                                                                         @if (isset($decodedKpiReviewPerc[$reviewersReview]))
@@ -670,10 +670,10 @@
                         <div class="my-2">
                             <textarea class="form-control" placeholder="" id="gen-info-description-input" name="performance" rows="4"
                                 readonly>
-@if (isset($assignedGoals->appraiser_comment))
-{{ $assignedGoals->appraiser_comment }}
-@endif
-</textarea>
+                                @if (isset($assignedGoals->appraiser_comment))
+                                {{ $assignedGoals->appraiser_comment }}
+                                @endif
+                                </textarea>
                         </div>
                     </div>
                 </div>
