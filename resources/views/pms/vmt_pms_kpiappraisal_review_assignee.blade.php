@@ -120,7 +120,7 @@
                         <div class="card mb-0 w-100 border-0 boxshadow_lite4">
                             <div class="card-body">
                                 <p class="f-14 text-ash  ">Business Unit/Process/Function</p>
-                                <p class="mb-4 f-15 fw-bold text-primary">{{ $assignedUserDetails->getEmployeeOfficeDetails->department }}</p>
+                                <p class="mb-4 f-15 fw-bold text-primary">{{ $assignedUserDetails->getEmployeeOfficeDetails->department_id }}</p>
                                 <p class="f-14 text-ash  ">Reporting Manager</p>
                                 <p class="mb-4 f-15 fw-bold text-primary ">{{ $assignersName }}</p>
                                 <p class="f-14 text-ash  ">Review Period</p>

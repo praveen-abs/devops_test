@@ -26,3 +26,5 @@ Homestead.json
 /public/generalinfo/
 /public/employee_documents/*
 /public/appoinmentLetter/*
+
+/composer.lock
