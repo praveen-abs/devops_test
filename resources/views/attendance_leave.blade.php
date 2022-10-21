@@ -602,7 +602,7 @@
                                         <div class="row mb-3">
                                             <div class="col-md-4 text-md-start mb-md-0 mb-3">
                                                 <label class="fw-bold">Start Date</label>
-                                                <input type="date" id="start_date"
+                                                <input type="datetime-local" id="start_date"
                                                     class="form-control outline-none border-0 shadow-lite">
                                             </div>
                                             <div class="col-md-4 text-md-center mb-md-0 ">
@@ -611,7 +611,7 @@
                                             </div>
                                             <div class="col-md-4 text-md-end ">
                                                 <label class="fw-bold">End Date</label>
-                                                <input type="date" id="end_date"
+                                                <input type="datetime-local" id="end_date"
                                                     class="form-control outline-none border-0 shadow-lite">
                                             </div>
                                         </div>
