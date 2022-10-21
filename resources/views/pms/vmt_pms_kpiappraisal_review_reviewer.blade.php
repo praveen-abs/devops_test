@@ -3,6 +3,7 @@
     <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
     <!-- for styling -->
     <link href="{{ URL::asset('assets/css/appraisal_review.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ URL::asset('/assets/css/pages_profile.css') }}">
 @endsection
 @component('components.performance_breadcrumb')
 @slot('li_1')
@@ -19,9 +20,10 @@
                             <div class="card-body  text-center">
 
                                 <div class="d-flex justify-content-center">
-                                    <div class="kpi_userImg">
-                                        @include('ui-profile-avatar', [
-                                            'currentUserName' => auth()->user()->name,
+                                    <div class="profile-img d-flex">
+                                        <?php $currentUserDetails = App\Models\User::find($assignedUserDetails->id);?>
+                                        @include('ui-profile-avatar-lg', [
+                                            'currentUser' => $currentUserDetails ,
                                         ])
                                     </div>
                                 </div>
@@ -770,6 +772,8 @@
 
 
 @section('script')
+@yield('script-profile-avatar')
+
     <!--Sweet alert JS-->
     <script src="{{ URL::asset('/assets/premassets/js/sweetalert.js') }}"></script>
     <script src="{{ URL::asset('/assets/premassets/js/progressbar.min.js') }}"></script>

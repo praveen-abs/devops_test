@@ -98,9 +98,10 @@
                             <div class="card-body  text-center">
 
                                 <div class="d-flex justify-content-center">
-                                    <div class="kpi_userImg">
-                                        @include('ui-profile-avatar', [
-                                            'currentUserName' => auth()->user()->name,
+                                    <div class="profile-img d-flex">
+                                        <?php $currentUserDetails = App\Models\User::find($assignedUserDetails->id);?>
+                                        @include('ui-profile-avatar-lg', [
+                                            'currentUser' => $currentUserDetails ,
                                         ])
                                     </div>
                                 </div>
