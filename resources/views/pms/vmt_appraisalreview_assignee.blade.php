@@ -229,8 +229,8 @@
                                                 @if($assignedGoals->is_manager_approved &&
                                                 !$assignedGoals->is_employee_submitted)
                                                 <!-- <textarea name="selfkpiachievement[{{$kpiRow->id}}]" id="" cols="40" rows="8"
-                                                placeholder="type here">@if(isset($kpiRow->self_kpi_percentage)) {{$kpiRow->self_kpi_percentage}} @endif</textarea> -->
-                                                <input type="number" class="inp-text" id="selfkpiachievement{{$index}}" name="selfkpiachievement[{{$kpiRow->id}}]" placeholder="type here" value="@if(isset( $kpiRow->self_kpi_percentage)){{$kpiRow->self_kpi_percentage}}@endif">
+                                                placeholder="type here">@if(isset($kpiRow->self_kpi_percentage)) {{ round($kpiRow->self_kpi_percentage ,2)}} @endif</textarea> -->
+                                                <input type="number" class="inp-text" id="selfkpiachievement{{$index}}" name="selfkpiachievement[{{$kpiRow->id}}]" placeholder="type here" value="@if(isset( $kpiRow->self_kpi_percentage)) {{ round($kpiRow->self_kpi_percentage ,2)}}@endif">
                                                 @endif
                                             </div>
                                             @endif

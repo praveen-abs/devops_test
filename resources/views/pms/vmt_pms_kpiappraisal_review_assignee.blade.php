@@ -735,7 +735,7 @@
 
             if (kpiAchievementSelfReview != '') {
                 var result = (kpiAchievementSelfReview / targetVal) * kpiWeightageVal;
-                $('#assignee_kpi_percentage' + index).val(result);
+                $('#assignee_kpi_percentage' + index).val(result.toFixed(1));
             } else {
                 $('#assignee_kpi_percentage' + index).val('');
             }
