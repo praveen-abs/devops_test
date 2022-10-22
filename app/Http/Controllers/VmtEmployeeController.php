@@ -185,7 +185,8 @@ class VmtEmployeeController extends Controller
         $response = "";
         $isEmailSent = "";
         $onboard_form_data =  array();
-        parse_str($request->input('form_data'), $onboard_form_data);
+        //parse_str($request->all(), $onboard_form_data); (Removing this line, input from data is alreay in array)
+        $onboard_form_data  = $request->all();
 
         $currentLoggedinInUser = auth()->user();
 
