@@ -1023,7 +1023,7 @@
                 let form_data1 = $("#form-1");
 
 
-                
+
                 //  var form = $("#Form");
 
                 // you can't pass Jquery form it has to be javascript form object
@@ -1123,12 +1123,12 @@
                                 $('#modalHeader').html("Success");
                                 $('#modalSubHeading').html(data.message);
                                 if(t_can_onboard_employee == "1" && data.mail_status == "success")
-                                    $('#modalBody').html("Mail notification sent.");
+                                    $('#SucessMail_send').html("Mail notification sent.");
                                 else
                                 if(t_can_onboard_employee == "0")
-                                    $('#modalBody').html("");
+                                    $('#SucessMail_send').html("");
                                 else
-                                    $('#modalBody').html("Mail notification not sent.");
+                                    $('#SucessMail_send').html("Mail notification not sent.");
 
                                 $('#notificationModal').show();
                                 $('#notificationModal').removeClass('fade');
