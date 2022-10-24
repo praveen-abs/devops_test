@@ -1480,11 +1480,17 @@ class VmtEmployeeController extends Controller
         //dd($existing_doc_filenames['aadhar_card_file']);
         foreach($column_filenames as $value)
         {
-            if(empty($uploaded_doc_filenames[$value]))
-            {
-                $is_alldocs_uploaded = 0;
-                break;
-            }
+            //For now, we are checking only these documents.
+            if($value == 'aadhar_card_file' ||
+               $value == 'aadhar_card_backend_file' ||
+               $value == 'pan_card_file')
+                {
+                    if(empty($uploaded_doc_filenames[$value]))
+                    {
+                        $is_alldocs_uploaded = 0;
+                        break;
+                    }
+                }
         }
 
         return $is_alldocs_uploaded;

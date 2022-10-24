@@ -111,6 +111,7 @@
                                         @endif
                                     </td>
                                 </tr>
+                                @if( !empty($documents_filenames[0]->aadhar_card_backend_file))
 
                                 <tr>
                                     <td>Aadhar Card Back</td>
@@ -154,6 +155,8 @@
                                         @endif
                                     </td>
                                 </tr>
+                                @endif
+                                @if( !empty($documents_filenames[0]->pan_card_file))
 
                                 <tr>
                                     <td>Pan Card</td>
@@ -200,6 +203,8 @@
                                         @endif
                                     </td>
                                 </tr>
+                                @endif
+                                @if( !empty($documents_filenames[0]->passport_file))
 
                                 <tr>
                                     <td>Passport</td>
@@ -247,6 +252,8 @@
 
                                 </tr>
 
+                                @endif
+                                @if( !empty($documents_filenames[0]->voters_id_file))
 
                                 <tr>
                                     <td>Voters ID</td>
@@ -293,6 +300,9 @@
                                     </td>
 
                                 </tr>
+                                @endif
+                                @if( !empty($documents_filenames[0]->dl_file))
+
                                 <tr>
                                     <td>Driving License</td>
                                     <td>
@@ -334,6 +344,8 @@
                                     </td>
 
                                 </tr>
+                                @endif
+                                @if( !empty($documents_filenames[0]->education_certificate_file))
                                 <tr>
                                     <td>Educational Certificate</td>
                                     <td>
@@ -382,7 +394,8 @@
                                     </td>
 
                                 </tr>
-
+                                @endif
+                                @if( !empty($documents_filenames[0]->reliving_letter_file))
                                 <tr>
                                     <td>Reliving Letter</td>
                                     <td>
@@ -433,7 +446,7 @@
 
                                     </td>
                                 </tr>
-
+                                @endif
 
                             </tbody>
                         </table>
