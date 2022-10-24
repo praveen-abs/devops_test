@@ -297,11 +297,14 @@ class HomeController extends Controller
         //dd($details);
         $details->dob = $request->input('dob');
         $details->gender = $request->input('gender');
-        $details->present_address = $request->input('present_address');
+        $details->current_address_line_1 = $request->input('current_address_line_1');
+        $details->current_address_line_2 = $request->input('current_address_line_2');
+        $details->permanent_address_line_1 = $request->input('permanent_address_line_1');
+        $details->permanent_address_line_2 = $request->input('permanent_address_line_2');
         $details->mobile_number = $request->input('mobile_number');
-        $details->present_address = $request->input('address_PI');
         $details->save();
 
+        //dd($request->all());
 
         return redirect()->back();
     }

@@ -155,8 +155,16 @@
                             name: 'Designation',
                         },
                         {
-                            id: 'l1_manager_code',
+                            id: 'emp',
                             name: 'Reporting Manager',
+                            formatter: function formatter(emp) {
+                                if(emp.l1_manager_code)
+                                    return gridjs.html(emp.l1_manager_code+" - "+emp.reporting_manager_name);
+                                else
+                                    return gridjs.html('');
+
+
+                            }
                         },
                         {
                             id: 'doj',
@@ -265,7 +273,7 @@
                                 emp,
                                 emp.emp_code,
                                 emp.emp_designation,
-                                emp.l1_manager_code,
+                                emp,//L1 manager code
                                 emp.doj,
                                 emp.blood_group_id,
                                 emp.profile_completeness,
@@ -350,8 +358,16 @@
                             name: 'Designation',
                         },
                         {
-                            id: 'l1_manager_code',
+                            id: 'emp',
                             name: 'Reporting Manager',
+                            formatter: function formatter(emp) {
+                                if(emp.l1_manager_code)
+                                    return gridjs.html(emp.l1_manager_code+" - "+emp.reporting_manager_name);
+                                else
+                                    return gridjs.html('');
+
+
+                            }
                         },
                         {
                             id: 'doj',
@@ -427,7 +443,7 @@
                                 emp,
                                 emp.emp_code,
                                 emp.emp_designation,
-                                emp.l1_manager_code,
+                                emp,
                                 emp.doj,
                                 emp.blood_group_id,
                                 emp.profile_completeness,

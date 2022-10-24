@@ -632,12 +632,12 @@ class VmtEmployeeController extends Controller
                 'employee_code' => 'nullable|unique:users,user_code',
                 'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'email' => 'required|email:strict|unique:users,email',
-                'gender' => 'required|in:male,female,other',
+                'gender' => 'required|in:Male,male,Female,female,other',
                 'doj' => 'required|date',
                 'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'dob' => 'required|date|before:-18 years',
                 'father_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'father_gender' => 'required|in:male,female,other',
+                'father_gender' => 'required|in:Male,male,Female,female,other',
                 'father_dob' => 'required|date',
 
                 'pan_no' => 'nullable|required_if:pan_ack,null|regex:/(^([A-Z]){3}P([A-Z]){1}([0-9]){4}([A-Z]){1}$)/u',
@@ -645,13 +645,13 @@ class VmtEmployeeController extends Controller
                 'aadhar' => 'required|regex:/(^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$)/u',
                 'marital_status' => 'required|in:unmarried,married,widowed,separated,divorced',
                 'mobile_no' => 'required|regex:/^([0-9]{10})?$/u|numeric',
-                'bank_name' => 'required',
+                'bank_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'bank_ifsc' => 'required|regex:/(^([A-Z]){4}0([A-Z0-9]){6}?$)/u',
                 'account_no' => 'required',
                 'current_address' => 'required',
                 'permanent_address' => 'required',
                 'mother_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'mother_gender' => 'required|in:male,female,other',
+                'mother_gender' => 'required|in:Male,male,Female,female,other',
                 'mother_dob' => 'required|date',
                 'spouse_name' => 'nullable|required_unless:marital_status,unmarried|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'spouse_dob' => 'nullable|required_unless:marital_status,unmarried|date',
@@ -662,7 +662,7 @@ class VmtEmployeeController extends Controller
                 'process' => 'required',
                 'designation' => 'required',
                 'cost_center' => 'required',
-                'confirmation_period' => 'required',
+                'confirmation_period' => 'required|numeric',
                 'holiday_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'l1_manager_code' => 'nullable|regex:/(^([a-zA-z0-9.]+)(\d+)?$)/u',
                 'l1_manager_name' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
@@ -689,13 +689,14 @@ class VmtEmployeeController extends Controller
                 'pf_applicable' => 'required|in:yes,Yes,no,No',
                 'esic_applicable' => 'required|in:yes,Yes,no,No',
                 'ptax_location' => 'required',
-                'tax_regime' => 'required',
+                'tax_regime' => 'required|in:yes,Yes,no,No',
                 'lwf_location' => 'required',
                 'esic_employer_contribution' => 'required|numeric',
 
             ];
 
             $messages = [
+                'numeric' => 'Field <b>:attribute</b> should be numeric',
                 'date' => 'Field <b>:attribute</b> should have the following format DD-MM-YYYY ',
                 'in' => 'Field <b>:attribute</b> should have the following values : :values .',
                 'required' => 'Field <b>:attribute</b> is required',
@@ -973,7 +974,11 @@ class VmtEmployeeController extends Controller
             ->whereNotNull('emp_no')
             ->get();
 
-            //dd($vmtEmployees->toArray());
+            //Add reporting manager name
+            foreach($vmtEmployees as $singleEmp)
+            {
+                $singleEmp['reporting_manager_name']= User::where('user_code',$singleEmp->l1_manager_code)->value('name');
+            }
 
         return json_encode($vmtEmployees);
     }
@@ -1003,6 +1008,12 @@ class VmtEmployeeController extends Controller
             ->where('users.is_ssa', '0')
             ->whereNotNull('emp_no')
             ->get();
+
+        //Add reporting manager name
+        foreach($vmtEmployees as $singleEmp)
+        {
+            $singleEmp['reporting_manager_name']= User::where('user_code',$singleEmp->l1_manager_code)->value('name');
+        }
 
         return json_encode($vmtEmployees);
     }
