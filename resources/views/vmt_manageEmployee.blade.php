@@ -362,7 +362,7 @@
                             name: 'Reporting Manager',
                             formatter: function formatter(emp) {
                                 if(emp.l1_manager_code)
-                                    return gridjs.html(emp.l1_manager_code+" - "+emp.reporting_manager_name);
+                                    return gridjs.html(emp.l1_manager_code.toUpperCase();+" - "+emp.reporting_manager_name);
                                 else
                                     return gridjs.html('');
 
