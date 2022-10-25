@@ -277,7 +277,7 @@ class VmtEmployeePayslipService {
     {
         $empNo = $row['emp_no'];
         try {
-            
+
             $user_id = User::where('user_code',$row['emp_no'])->value('id');
             //Store the data into vmt_employee_payslip table
 
@@ -288,9 +288,10 @@ class VmtEmployeePayslipService {
             $empPaySlip->Gender = $row['gender'];
             $empPaySlip->DESIGNATION = $row['designation'];
             $empPaySlip->DEPARTMENT = $row['department'];
-            $empPaySlip->DOJ = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['doj'])->format('Y-m-d');
+            $empPaySlip->DOJ =  \DateTime::createFromFormat('d-m-Y', $row['doj'])->format('Y-m-d');
+
             $empPaySlip->LOCATION = $row['location'];
-            $empPaySlip->DOB = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['dob'])->format('Y-m-d');
+            $empPaySlip->DOB =\DateTime::createFromFormat('d-m-Y', $row['dob'])->format('Y-m-d');
             $empPaySlip->Father_Name = $row['father_name'];
             $empPaySlip->PAN_Number = $row['pan_number'];
             $empPaySlip->Aadhar_Number = $row['aadhar_number'];

@@ -1,6 +1,7 @@
 <?php
-$employee = \DB::table('vmt_employee_payslip')->first();
+//$employee = \DB::table('vmt_employee_payslip')->first();
 $general_info = \DB::table('vmt_general_info')->first();
+//$employee_name =  \DB::table('users')->where('user_code','=',$employee->EMP_NO)->first('name');
 $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
 // dd(request()->getSchemeAndHttpHost()."".$general_info->logo_img);
 ?>
@@ -173,7 +174,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                         <p>EMPLOYEE NAME</p>
                     </td>
                     <td colspan="3">
-                        <p>{{ $employee->EMP_NAME }}</p>
+                        <p>{{ $employee_name }}</p>
                     </td>
                     <td colspan="3" class="bg-ash text-strong">
                         <p>EMPLOYEE CODE</p>
@@ -203,7 +204,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                         <p>DESIGNATION</p>
                     </td>
                     <td colspan="3">
-                        <p>{{ $employee->DESIGNATION }}</p>
+                        <p>{{ $designation }}</p>
                     </td>
                     <td colspan="3" class="bg-ash text-strong">
                         <p>LOCATION</p>

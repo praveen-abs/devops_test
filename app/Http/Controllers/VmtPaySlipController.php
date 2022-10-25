@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\VmtEmployeeOfficeDetails;
 use Illuminate\Http\Request;
 use App\Models\VmtEmployeePaySlip;
 use App\Models\Compensatory;
@@ -32,7 +33,7 @@ class VmtPaySlipController extends Controller
     public function uploadPaySlip(Request $request, VmtEmployeePayslipService $employeePaySlipService){
 
         return $employeePaySlipService->importBulkEmployeesPayslipExcelData($request->all());
-        
+
         //$importDataArry = \Excel::import(new VmtPaySlip, request()->file('file'));
         //dd($importDataArry);
     }
@@ -102,10 +103,14 @@ class VmtPaySlipController extends Controller
                         ['user_id','=', auth()->user()->id],
                         ['PAYROLL_MONTH','=', $request->selectedPaySlipMonth],
                         ])->first();
+
         //dd($data);
         // return view('vmt_payslipTemplate', $data);
         // download PDF file with download method
         // $pdf = new Dompdf();
+
+        $data['employee_name'] = auth()->user()->name;
+        $data['designation'] = VmtEmployeeOfficeDetails::where('user_id',auth()->user()->id)->value('designation');
         $html =  view('vmt_payslipTemplate', $data);
         // $pdf->loadHtml($html, 'UTF-8');
         // $pdf->setPaper('A4', 'portrait');
