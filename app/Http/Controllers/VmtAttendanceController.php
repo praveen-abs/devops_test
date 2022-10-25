@@ -55,6 +55,8 @@ class VmtAttendanceController extends Controller
         // $approval_status = $request->status;
         $leave_record = VmtEmployeeLeaves::where('id', $request->leave_id)->first();
         $leave_record->status = $request->status;
+        $leave_record->reviewer_comments = $request->leave_rejection_text;
+
         $leave_record->save();
         $response = [
             'status' => 'success',
