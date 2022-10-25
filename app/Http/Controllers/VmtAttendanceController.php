@@ -114,7 +114,11 @@ class VmtAttendanceController extends Controller
         //get manager of this employee
         $manager_emp_code = VmtEmployeeOfficeDetails::where('user_id',auth::user()->id)->value('l1_manager_code');
 
-        $emp_leave_details->reviewer_user_id = User::where('user_code',$manager_emp_code)->first()->value('id');
+
+        $emp_leave_details->reviewer_user_id = User::where('user_code',$manager_emp_code)->value('id');
+
+
+
         $emp_leave_details->notifications_users_id = implode(",",$request->notifications_users_id);
         $emp_leave_details->reviewer_comments = "";
         $emp_leave_details->status = "Pending";
