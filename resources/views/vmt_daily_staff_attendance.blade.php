@@ -1,6 +1,7 @@
 @extends('layouts.master')
 {{-- @include('ui-onboarding')
  --}}
+@inject('carbon', 'Carbon\Carbon')
 @section('css')
     <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/onboarding.css') }}">
@@ -66,6 +67,7 @@
                         <th>Name</th>
                         <th>Check-in Time </th>
                         <th>Check-out Time</th>
+                        <th>Late Coming? </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -77,14 +79,22 @@
                             <td>{{ $user->name }}
                             </td>
 
-                            <td>{{ $user->check_in_time ? $user->check_in_time : 'Absent' }}
+                            <td>{{ $user->check_in_time ? $carbon::parse($user->check_in_time)->format('h:i:s A') : 'Absent' }}
                             </td>
 
-                            <td>{{ $user->check_out_time ? $user->check_out_time : 'Absent' }}
+                            <td>{{ $user->check_out_time ? $carbon::parse($user->check_out_time)->format('h:i:s A'): 'Absent' }}
                             </td>
 
+                            <td>
+                                <?php
+                                    // $checkin_time =  $carbon::parse($user->check_in_time);
+                                    // $shift_starttime = $carbon::parse($shift_timings->shift_start_time);
+                                    // echo $checkin_time->diffInMinutes($shift_starttime);
+                                    // //echo $shift_starttime;
 
 
+                                ?>
+                            </td>
                         </tr>
                     @endforeach
 
