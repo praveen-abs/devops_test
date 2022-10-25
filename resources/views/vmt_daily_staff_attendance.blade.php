@@ -67,7 +67,7 @@
                         <th>Name</th>
                         <th>Check-in Time </th>
                         <th>Check-out Time</th>
-                        <th>Late Coming? </th>
+                        <th>Late Coming delay </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -87,12 +87,13 @@
 
                             <td>
                                 <?php
-                                    // $checkin_time =  $carbon::parse($user->check_in_time);
-                                    // $shift_starttime = $carbon::parse($shift_timings->shift_start_time);
-                                    // echo $checkin_time->diffInMinutes($shift_starttime);
-                                    // //echo $shift_starttime;
 
-
+                                    if(!empty( $user->check_in_time ))
+                                    {
+                                        $checkin_time =  $carbon::parse($user->check_in_time);
+                                        $shift_starttime = $carbon::parse($shift_timings->shift_start_time);
+                                        echo $checkin_time->diff($shift_starttime)->format('%H:%I:%S');
+                                    }
                                 ?>
                             </td>
                         </tr>
