@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ApproveRejectLeaveMail;
 use App\Mail\RequestLeaveMail;
 use App\Models\User;
 use App\Models\VmtEmployeeAttendance;
@@ -58,6 +59,48 @@ class VmtAttendanceController extends Controller
         $leave_record->reviewer_comments = $request->leave_rejection_text;
 
         $leave_record->save();
+
+        //Send mail to the employee
+        $employee_user_id = VmtEmployeeLeaves::where('id', $request->leave_id)->value('user_id');
+        $employee_mail =  VmtEmployeeOfficeDetails::where('user_id',$employee_user_id)->value('officical_mail');
+        $manager_user_id = VmtEmployeeLeaves::where('id', $request->leave_id)->value('reviewer_user_id');
+
+        $message = "";
+        $mail_status = "";
+
+        $VmtGeneralInfo = VmtGeneralInfo::first();
+        $image_view = url('/') . $VmtGeneralInfo->logo_img;
+
+        $isSent    = \Mail::to($employee_mail)->send(new ApproveRejectLeaveMail(
+                                                                auth::user()->name,
+                                                                auth::user()->user_code,
+                                                                User::find($manager_user_id)->value('name'),
+                                                                User::find($manager_user_id)->value('user_code'),
+                                                                request()->getSchemeAndHttpHost(),
+                                                                $image_view,
+                                                                "",
+                                                                $request->status)
+                                                    );
+
+        if( $isSent) {
+            $mail_status = "Mail sent successfully";
+
+         } else {
+            $mail_status= "There was one or more failures.";
+        }
+
+        $response = [
+            'status' => 'success',
+            'message' => 'Leave Request applied successfully',
+            'mail_status' => $mail_status,
+            'error' => '',
+            'error_verbose' =>''
+        ];
+
+
+
+
+
         $response = [
             'status' => 'success',
             'message' => 'Leave '.$request->status,
@@ -115,13 +158,14 @@ class VmtAttendanceController extends Controller
 
         //get manager of this employee
         $manager_emp_code = VmtEmployeeOfficeDetails::where('user_id',auth::user()->id)->value('l1_manager_code');
+        $manager_id = User::where('user_code',$manager_emp_code)->value('id');
+
+        $emp_leave_details->reviewer_user_id = $manager_id;
 
 
-        $emp_leave_details->reviewer_user_id = User::where('user_code',$manager_emp_code)->value('id');
+        if(!empty($request->notifications_users_id))
+            $emp_leave_details->notifications_users_id = implode(",",$request->notifications_users_id);
 
-
-
-        $emp_leave_details->notifications_users_id = implode(",",$request->notifications_users_id);
         $emp_leave_details->reviewer_comments = "";
         $emp_leave_details->status = "Pending";
 
@@ -131,7 +175,7 @@ class VmtAttendanceController extends Controller
         $emp_leave_details->save();
 
         //Need to send mail to 'reviewer' and 'notifications_users_id' list
-        $reviewer_mail =  User::where('user_code',$manager_emp_code)->first()->value('email');;
+        $reviewer_mail =  VmtEmployeeOfficeDetails::where('user_id',$manager_id)->value('officical_mail');
 
         $message = "";
         $mail_status = "";

@@ -225,7 +225,8 @@
                 );
             });
 
-            $('.approve-leave-btn').on('click', function(e){
+            $(document).on('click', '.approve-leave-btn', function(e) {
+                console.log("Approve button clicked");
                 var leaveId = $(this).data('leave_id');
                 var userId = $(this).data('user_id');
                 var statusText = $(this).data('leave_status');
@@ -384,13 +385,12 @@
                             name: 'Action',
                             formatter: function formatter(emp) {
                                 var htmlcontent = "";
-                                console.log(emp);
+                                //console.log(emp);
                                 if (emp.status == "Pending") {
                                     htmlcontent =
-                                        '<input type="button" value="Approve" id="button_activate_"' +
-                                        emp.user_id + '" data-user_id="' + emp.user_id +
+                                        '<input type="button" value="Approve" data-user_id="' + emp.user_id +
                                         '" data-leave_id="' + emp.id +
-                                        '" data-leave_status="Approved" class="status btn btn-orange py-1 aprrove-leave-btn "></input>';
+                                        '" data-leave_status="Approved" class="status btn btn-orange py-1 approve-leave-btn"></input>';
 
                                     htmlcontent = htmlcontent +
                                         '&nbsp;&nbsp;<input type="button" value="Reject" id="button_activate_"' +
