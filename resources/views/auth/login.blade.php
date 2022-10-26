@@ -162,7 +162,7 @@
                                         @endif
 
                                         <div class="d-flex justify-content-end align-items-center mb-2">
-                                            <a href="{{ route('vmt-resetpassword-page')}}" class="f-12 text-orange">Forgot password?</a>
+                                            <a href="{{ route('vmt-forgetpassword-page')}}" class="f-12 text-orange">Forgot password?</a>
                                         </div>
 
 

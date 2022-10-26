@@ -103,41 +103,25 @@
                                         <!-- <p class="m-0   h5 fw-bold log">Login <span class="me-1">to</span><span
                                                 class="m-0 fw-bold h4 me-1">ABS</span><small
                                                 class="text-orange fw-bold f-10">hrms</small></p> -->
-                                        <p class="text-muted f-12 mb-3 fw-bold">Reset your password</p>
+                                        <p class="text-muted f-12 mb-3 fw-bold">Forget password</p>
 
 
                                         @csrf
                                         <div class="form-outline mb-3 form-row">
-                                            <label for="" class="">New Password</label>
-                                            <input type="password"
-                                                class="form-control textbox  @error('user_code') is-invalid @enderror"
-                                                value="" id="new_password" name="user_code"
-                                                placeholder="Employee Code">
-                                            @error('user_code')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
+                                            <label for="" class="">Please enter your email address</label>
+                                            <input type="email"
+                                                class="form-control textbox"
+                                                value="" id="email" name="email"
+                                                placeholder="Enter email address">
                                         </div>
 
-                                        <div class="form-outline mb-3    form-row">
-                                            <label for="" class="">Confirm Password</label>
-                                            <input type="password"
-                                                class="form-control textbox @error('password') is-invalid @enderror"
-                                                name="password" placeholder="Password" id="new_password_confirm"
-                                                value="">
-                                            @error('password')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-
-                                            <span style="color: red;" id="error_message"></span>
-
+                                        <span style="color: red;" id="error_message">
+                                        {{ session('error_message') }}
+                                        </span>
+                                        <br />
                                         <input type="button"
                                             class="btn btn-orange w-100 sign-in-btn   waves-effect waves-light "
-                                            type="submit" value="Reset Password" onclick="submitForm()" />
+                                            type="submit" value="Submit" onclick="submitForm()" />
 
 
                                         <div class="divider d-flex align-items-center my-4 px-2 mx-5">
@@ -195,43 +179,6 @@
             </div>
         </div>
     </section>
-
-
-    <div id="modal_resetPassword" class="modal custom-modal fade" role="dialog">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal" role="document">
-            <div class="modal-content">
-                <div class="modal-header py-3 new-role-header d-flex align-items-center">
-                    <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
-                        Reset Password</h5>
-                    <input type="button" value="X" onclick="closeModal()" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal" />
-                </div>
-                <div class="modal-body">
-                    <form id="form_updatePassword" action="" method="POST">
-                        @csrf
-                        <input type="hidden" name="uid" id="uid" value="{{ session('uid') }}" />
-                        <label for="FormSelectDefault" class="form-label">Please reset your password.</label>
-                        <div class="mb-3 row">
-                            <div class="col-12 col-md-12 col-lg-12 ">
-                                <label class="" for="">New Password</label>
-                                <input type="password" name="new_password" id="new_password" />
-                            </div>
-                            <div class="col-12 col-md-12 col-lg-12 ">
-                                <label class="" for="">Confirm New Password</label>
-                                <input type="password" name="new_password_confirm" id="new_password_confirm" />
-                            </div>
-                            <div class="col-12 col-md-12 col-lg-12 ">
-                                <span style="color: red;" id="error_message"></span>
-                            </div>
-                        </div>
-                        <input type="button" value = "Submit" class="btn btn-primary waves-effect waves-light" onclick="submitForm()" />
-
-                    </form>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
 @endsection
 
 @section('script')
@@ -246,50 +193,49 @@
             $('#modal_resetPassword').modal('hide');
         }
 
+        function isValidEmailAddress(emailAddress) {
+            var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+            return pattern.test(emailAddress);
+        }
+
         function submitForm()
         {
-           //Check the password length
-           if( $("#new_password").val().length < 8 )
-           {
-                $('#error_message').html("Password min.length should be 8");
+
+            if(isValidEmailAddress($('#email').val())){
+                $('#error_message').html("");
+
+                console.log("Email is valid");
+                ajax_SendPasswordResetLink();
+            }
+            else
+            {
+                console.log("Email is invalid !");
+
+                $('#error_message').html("Please enter a valid email address");
                 return;
             }
 
-
-           if( $("#new_password").val() ==  $("#new_password_confirm").val())
-           {
-                $('#error_message').html("");
-                console.log("Pwd matched");
-                ajax_UpdatePassword();
-           }
-           else
-           {
-                $('#error_message').html("Password doesnt match!");
-                console.log("Pwd doesnt matched");
-           }
         }
 
-        function ajax_UpdatePassword()
+        function ajax_SendPasswordResetLink()
         {
             $.ajax({
                     type: "POST",
-                    url: "{{ route('vmt-updatepassword') }}",
+                    url: "{{ route('vmt-send-passwordresetlink') }}",
                     data: {
-                    'uid' : $('#uid').val(),
-                    'password': $('#new_password_confirm').val(),
+                    'email': $('#email').val(),
                     "_token": "{{ csrf_token() }}",
                     },
                     success: function(data) {
 
                         if(data.status == "success")
                         {
-                            window.location.href ="/"
-
+                            alert(data.message);
                         }
                         else
                         if(data.status == "failure")
                         {
-                            $('#error_message').html("Password doesnt match!");
+                            $('#error_message').html(data.message);
                         }
 
                         console.log(data.message);

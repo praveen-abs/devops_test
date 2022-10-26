@@ -1498,8 +1498,20 @@ class VmtEmployeeController extends Controller
 
     public function updatePassword(Request $request)
     {
+        $current_user_id = '';
+
+        if (Auth::check()) {
+            //If user already logged in
+            $current_user_id = auth()->user()->id;
+        }
+        else
+        {
+            //If password reset link used, then fetch from url req
+            $current_user_id = $request->uid;
+        }
+
         if (isset($request->password)) {
-            $currentUser = User::where('id', auth()->user()->id)->first();
+            $currentUser = User::where('id',$current_user_id )->first();
             $currentUser->password = Hash::make($request->password);
             $currentUser->is_default_password_updated = '1';
             $currentUser->save();
