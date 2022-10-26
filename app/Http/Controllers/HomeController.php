@@ -148,9 +148,7 @@ class HomeController extends Controller
 
 
     public function updateExperienceInfo(Request $request) {
-        $reDetails = VmtEmployee::where('userid', $request->id)->first();
-        $details = VmtEmployee::find($reDetails->id);
-        $saveId = [];
+
         $idArr = $request->input('ids');
         $companyNameArr = $request->input('company_name');
         $locationArr = $request->input('location');
@@ -170,9 +168,9 @@ class HomeController extends Controller
             $exp->period_from = $periodFromArr[$k];
             $exp->period_to = $periodToArr[$k];
             $exp->save();
-            array_push($saveId, $exp->id);
+
         }
-        $details->save();
+
         Ses::flash('message', 'Bank Details Updated successfully!');
         Ses::flash('alert-class', 'alert-success');
         return redirect()->back();
@@ -299,11 +297,14 @@ class HomeController extends Controller
         //dd($details);
         $details->dob = $request->input('dob');
         $details->gender = $request->input('gender');
-        $details->present_address = $request->input('present_address');
+        $details->current_address_line_1 = $request->input('current_address_line_1');
+        $details->current_address_line_2 = $request->input('current_address_line_2');
+        $details->permanent_address_line_1 = $request->input('permanent_address_line_1');
+        $details->permanent_address_line_2 = $request->input('permanent_address_line_2');
         $details->mobile_number = $request->input('mobile_number');
-        $details->present_address = $request->input('address_PI');
         $details->save();
 
+        //dd($request->all());
 
         return redirect()->back();
     }
@@ -442,7 +443,8 @@ class HomeController extends Controller
         $familydetails = VmtEmployeeFamilyDetails::where('user_id',$user->id)->get();
 
         $bank = Bank::all();
-        $exp = Experience::where('id',$user->id)->get();
+        $exp = Experience::where('user_id',$user->id)->get();
+
         $maritalStatus = array('unmarried',
                             'married',
                             'divorced',
@@ -505,7 +507,7 @@ class HomeController extends Controller
             $employee = null;
         }
         $bank = Bank::all();
-        $exp = Experience::whereIn('id', explode(',', $details->experience_josn))->get();
+        $exp = Experience::where('id', $user->id)->get();
         $code = VmtEmployee::join('users', 'users.id', '=', 'userid')->where('emp_no', '<>' , $details->emp_no)->get();
         $rep = VmtEmployee::select('l1_manager_code', 'l1_manager_name', 'avatar')->join('vmt_employee_office_details', 'user_id', '=', 'vmt_employee_details.userid')->join('users', 'users.id', '=', 'vmt_employee_details.userid')->where('emp_no', $details->l1_manager_code)->first();
         return view('pages-profile-settings', compact( 'employee', 'user', 'details', 'bank', 'exp', 'code', 'rep'));

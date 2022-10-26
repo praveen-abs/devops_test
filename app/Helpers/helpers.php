@@ -93,9 +93,12 @@ function fetchSubClients(){
             {
                 //-1 = Not yet approved
                 //0 = Rejected
-                if($value == -1 || $value == 0 )
+                if($key == "aadhar_card_file" || $key == "pan_card_file" || $key == "aadhar_card_backend_file" )
                 {
-                    return false;
+                    if($value == -1 || $value == 0 )
+                    {
+                        return false;
+                    }
                 }
             }
 

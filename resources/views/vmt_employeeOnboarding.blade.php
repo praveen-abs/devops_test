@@ -512,6 +512,9 @@
                     var routeURL = "{{route('isEmailExists',':email')}}";
                     routeURL = routeURL.replace(':email', $(this).val());
 
+                    //Check only if this is normal onboarding
+
+                   @if(Auth::user()->active == '0' && Auth::user()->onboard_type == 'quick' )
                     $.ajax({
                         url: routeURL,
                         type: "GET",
@@ -532,7 +535,7 @@
                            }
                         }
                     });
-
+                    @endif
 
                     return true;
                 }
@@ -1019,6 +1022,14 @@
                 var can_onboard_employee = "0";
                 let form_data1 = $("#form-1");
 
+
+
+                //  var form = $("#Form");
+
+                // you can't pass Jquery form it has to be javascript form object
+                //var formData = new FormData(form_data1[0]);
+
+
                 //check if mail exists
                 if(isEmailExists == true)
                 {
@@ -1035,8 +1046,9 @@
                 if($(this).attr('name') == "save_form")  //Form is saved but employee not onboarded
                 {
                     console.log(form_data1);
+                    var formData = new FormData($("#form-1")[0]);
                     console.log("Saving Onboard data");
-                    saveOrSubmitForm("0", form_data1);
+                    saveOrSubmitForm("0", formData);
                     $('#submit_button').prop('disabled', false);
                     return;
                 }
@@ -1057,7 +1069,9 @@
                     if($(this).attr('name') == "submit_form")  //Form is saved and employee is onboarded
                     {
                         console.log("Submitting Onboard data");
-                        saveOrSubmitForm("1", form_data1);
+
+                        var formData = new FormData($("#form-1")[0]);
+                        saveOrSubmitForm("1", formData);
                     }
 
                 }
@@ -1077,18 +1091,24 @@
 
             function saveOrSubmitForm(t_can_onboard_employee, t_form_data1)
             {
+                console.log("Aadhar file : "+$('#aadhar_card_file').val());
+                t_form_data1.append('can_onboard_employee', t_can_onboard_employee);
+                t_form_data1.append('user_id', $('#user_id').val());
 
                 $.ajax({
                         url: "{{url('vmt-employee-onboard')}}",
                         type: "POST",
-                        dataType:"json",
-                        data:{
+                        //dataType:"json",
+                        contentType: false, //this is requireded please see answers above
+                        processData: false,
+                        data:t_form_data1,
+                        //{
                             // "onboard_type" : t_onboard_type,
-                            "user_id": $('#user_id').val(),
-                            "can_onboard_employee" : t_can_onboard_employee,
-                            "form_data" : t_form_data1.serialize(),
-                           "_token" : "{{ csrf_token() }}"
-                        },
+                        //    "user_id": $('#user_id').val(),
+                        //    "can_onboard_employee" : t_can_onboard_employee,
+                        //   "form_data" : t_form_data1.serialize(),
+                        //   "_token" : "{{ csrf_token() }}"
+                        //}*/,
 
                         // data:form_data1,
                         // contentType: false,
@@ -1103,12 +1123,12 @@
                                 $('#modalHeader').html("Success");
                                 $('#modalSubHeading').html(data.message);
                                 if(t_can_onboard_employee == "1" && data.mail_status == "success")
-                                    $('#modalBody').html("Mail notification sent.");
+                                    $('#SucessMail_send').html("Mail notification sent.");
                                 else
                                 if(t_can_onboard_employee == "0")
-                                    $('#modalBody').html("");
+                                    $('#SucessMail_send').html("");
                                 else
-                                    $('#modalBody').html("Mail notification not sent.");
+                                    $('#SucessMail_send').html("Mail notification not sent.");
 
                                 $('#notificationModal').show();
                                 $('#notificationModal').removeClass('fade');

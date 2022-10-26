@@ -112,8 +112,8 @@ class LoginController extends Controller
                             {
 
                                 // Sync Staff attendance data from device
-                                $this->syncStaffAttendance(); 
-                                
+                              //  $this->syncStaffAttendance();
+
                                 //If User has already updated password, so redirect to dashboard page
                                 return redirect(route('index'));
                              }
@@ -153,7 +153,7 @@ class LoginController extends Controller
                         if($isDefaultPasswordUpdated == "1")
                         {
                            // Sync Staff attendance data from device
-                           $this->syncStaffAttendance(); 
+                           //$this->syncStaffAttendance();
 
                            //If User has already updated password, so redirect to dashboard page
                            return redirect(route('index'));
@@ -195,14 +195,14 @@ class LoginController extends Controller
 
     protected function syncStaffAttendance(){
 
-        $deviceAttendanceController  = new VmtStaffAttendanceController; 
+        $deviceAttendanceController  = new VmtStaffAttendanceController;
 
         try {
-            $deviceAttendanceController->syncStaffAttendanceFromDeviceDatabase(); 
+            $deviceAttendanceController->syncStaffAttendanceFromDeviceDatabase();
         } catch (\Exception $e) {
-            
+
         }
 
-       
+
     }
 }

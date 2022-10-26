@@ -3,6 +3,7 @@
     <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
     <!-- for styling -->
     <link href="{{ URL::asset('assets/css/appraisal_review.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ URL::asset('/assets/css/pages_profile.css') }}">
 @endsection
 @component('components.performance_breadcrumb')
 @slot('li_1')
@@ -19,9 +20,10 @@
                             <div class="card-body  text-center">
 
                                 <div class="d-flex justify-content-center">
-                                    <div class="kpi_userImg">
-                                        @include('ui-profile-avatar', [
-                                            'currentUserName' => auth()->user()->name,
+                                    <div class="profile-img d-flex">
+                                        <?php $currentUserDetails = App\Models\User::find($assignedUserDetails->id);?>
+                                        @include('ui-profile-avatar-lg', [
+                                            'currentUser' => $currentUserDetails ,
                                         ])
                                     </div>
                                 </div>
@@ -41,7 +43,7 @@
                         <div class="card mb-0 w-100 border-0 boxshadow_lite4">
                             <div class="card-body">
                                 <p class="f-14 text-ash  ">Business Unit/Process/Function</p>
-                                <p class="mb-4 f-15 fw-bold text-primary">{{ $assignedUserDetails->getEmployeeOfficeDetails->department }}</p>
+                                <p class="mb-4 f-15 fw-bold text-primary">{{ $assignedUserDetails->getEmployeeOfficeDetails->department_id }}</p>
                                 <p class="f-14 text-ash  ">Reporting Manager</p>
                                 <p class="mb-4 f-15 fw-bold text-primary ">{{ $assignersName }}</p>
                                 <p class="f-14 text-ash  ">Review Period</p>
@@ -69,7 +71,7 @@
                                             <b class="f-15 text-primary">
                                                 @if ($isAllReviewersSubmittedOrNot)
                                                     @if ($ratingDetail)
-                                                        {{ $ratingDetail['rating'] }}
+                                                        {{ round($ratingDetail['rating'],1) }}
                                                     @else
                                                         -
                                                     @endif
@@ -549,7 +551,7 @@
                                                         <td>
                                                             <div>
                                                                 @if (isset($assigneeKPIPerc) && isset($assigneeKPIPerc[$kpiRow->id]))
-                                                                    {{ $assigneeKPIPerc[$kpiRow->id] }}
+                                                                    {{ round($assigneeKPIPerc[$kpiRow->id],1) }}
                                                                 @endif
                                                             </div>
                                                         </td>
@@ -601,10 +603,10 @@
                                                                     <textarea type="number" class="inp-text"
                                                                         name="reviewer_kpi_percentage[{{ $reviewersReview }}][{{ $kpiRow->id }}]"
                                                                         id="reviewer_kpi_percentage{{ $index }}-{{ $reviewersReview }}" placeholder="type here">
-@if (isset($decodedKpiReviewPerc[$reviewersReview]))
-{{ $decodedKpiReviewPerc[$reviewersReview][$kpiRow->id] }}
-@endif
-</textarea>
+                                                                    @if (isset($decodedKpiReviewPerc[$reviewersReview]))
+                                                                    {{ $decodedKpiReviewPerc[$reviewersReview][$kpiRow->id] }}
+                                                                    @endif
+                                                                    </textarea>
                                                                 @else
                                                                     <div>
                                                                         @if (isset($decodedKpiReviewPerc[$reviewersReview]))
@@ -668,10 +670,10 @@
                         <div class="my-2">
                             <textarea class="form-control" placeholder="" id="gen-info-description-input" name="performance" rows="4"
                                 readonly>
-@if (isset($assignedGoals->appraiser_comment))
-{{ $assignedGoals->appraiser_comment }}
-@endif
-</textarea>
+                                @if (isset($assignedGoals->appraiser_comment))
+                                {{ $assignedGoals->appraiser_comment }}
+                                @endif
+                                </textarea>
                         </div>
                     </div>
                 </div>
@@ -770,6 +772,8 @@
 
 
 @section('script')
+@yield('script-profile-avatar')
+
     <!--Sweet alert JS-->
     <script src="{{ URL::asset('/assets/premassets/js/sweetalert.js') }}"></script>
     <script src="{{ URL::asset('/assets/premassets/js/progressbar.min.js') }}"></script>

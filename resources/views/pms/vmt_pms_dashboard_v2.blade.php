@@ -918,43 +918,43 @@
 
                 @if(isset($loggedManagerEmployees))
                 <!-- flow 2 -->
-                <div class="row">
-                    <div class="col-8">
-                <select class="select-employee-dropdown form-control" name="employees[]" multiple="multiple">
-                    @foreach($loggedManagerEmployees as $employeesSelection)
-                    <option selected value="{{ $employeesSelection->id }}">{{ $employeesSelection->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-4 text-end">
-                <button class="btn btn-primary py-0 px-2" onclick="resetEmployeesList()">Reset Employees</button>
-            </div>
-        </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <select class="select-employee-dropdown form-control" name="employees[]" multiple="multiple">
+                                @foreach($loggedManagerEmployees as $employeesSelection)
+                                <option selected value="{{ $employeesSelection->id }}">{{ $employeesSelection->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-4 text-end">
+                            <button class="btn btn-primary py-0 px-2" onclick="resetEmployeesList()">Reset Employees</button>
+                        </div>
+                    </div>
                 @else
-                <!-- flow 1 -->
-                <div class="col-8 ">
-                <select class="select-employee-dropdown form-control form-select" id="selectedEmployeeDropdownId" name="employees[]" multiple="multiple">
-                    @if(isset($allEmployeesWithoutLoggedUserList) && count($allEmployeesWithoutLoggedUserList) > 0)
-                    @foreach($allEmployeesWithoutLoggedUserList as $employeeList)
-                    <option value="{{ $employeeList->id }}">{{ $employeeList->name }}</option>
-                    @endforeach
-                    @endif
-                </select>
-                </div>
+                    <!-- flow 1 -->
+                    <div class="col-8 ">
+                    <select class="select-employee-dropdown form-control form-select" id="selectedEmployeeDropdownId" name="employees[]" multiple="multiple">
+                        @if(isset($allEmployeesWithoutLoggedUserList) && count($allEmployeesWithoutLoggedUserList) > 0)
+                            @foreach($allEmployeesWithoutLoggedUserList as $employeeList)
+                                <option value="{{ $employeeList->id }}">{{ $employeeList->name }}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                    </div>
                 @endif
 
                 @if(isset($loggedManagerEmployees))
-                <div class="buttons text-end mt-4 ">
-                    <!-- <button type="button" class="btn btn-border-orange close-modal " data-bs-dismiss="modal">Close</button> -->
-                    <button class="btn btn-primary ml-2" id="edit-employee">Save</button>
-                </div>
+                    <div class="buttons text-end mt-4 ">
+                        <!-- <button type="button" class="btn btn-border-orange close-modal " data-bs-dismiss="modal">Close</button> -->
+                        <button class="btn btn-primary ml-2" id="edit-employee">Save</button>
+                    </div>
                 @else
-                <div class="buttons text-end mt-4 ">
-                    <!-- <button type="button" class="btn btn-border-orange close-modal" data-bs-dismiss="modal">Close</button> -->
-                    <button class="btn btn-orange ml-2" id="edit-employee-based-on-reviewer">Save</button>
-                </div>
+                    <div class="buttons text-end mt-4 ">
+                        <!-- <button type="button" class="btn btn-border-orange close-modal" data-bs-dismiss="modal">Close</button> -->
+                        <button class="btn btn-orange ml-2" id="edit-employee-based-on-reviewer">Save</button>
+                    </div>
                 @endif
-
+                <span id="edit-employee-error-message"></div>
             </div>
         </div>
     </div>
@@ -1020,22 +1020,22 @@
     <script>
 
         function generateProfileShortName_Topbar() {
-        var username = '{{auth()->user()->name ?? '
-        '}}';
-        const splitArray = username.split(" ");
-        var finalname = "empty111";
+            var username = '{{auth()->user()->name ?? '
+            '}}';
+            const splitArray = username.split(" ");
+            var finalname = "empty111";
 
-        if (splitArray.length == 1) {
-            finalname = splitArray[0][0] + "" + splitArray[0][1];
-        } else {
-            if (splitArray[0].length == 1)
-                finalname = splitArray[0][0] + "" + splitArray[1][0];
-            else
+            if (splitArray.length == 1) {
                 finalname = splitArray[0][0] + "" + splitArray[0][1];
-        }
+            } else {
+                if (splitArray[0].length == 1)
+                    finalname = splitArray[0][0] + "" + splitArray[1][0];
+                else
+                    finalname = splitArray[0][0] + "" + splitArray[0][1];
+            }
 
-        var a = $('#topbar_username').text(finalname.toUpperCase());
-    }
+            var a = $('#topbar_username').text(finalname.toUpperCase());
+        }
 
 
         $('.refreshKPIFormDetails').click(function(){
@@ -1082,9 +1082,11 @@
                 success: function(data) {
                     if(data.status == true){
                         $('.employee-selection-section').html(data.html);
+                        //$('.employeeEditButton').css({"background-color": "#ee6a04"});
                         $('#employeeSelectionModal').hide();
                         $('#employeeSelectionModal').addClass('fade');
                         $('#employeesSelectedValues').val(selectedEmployeesId);
+
                     }
                 },
                 error: function(error) {
@@ -1094,9 +1096,19 @@
         }
 
         $(document).on("click",".employeeEditButton",function() {
-            $("#add-goals-modal").modal('hide');
-            $('#employeeSelectionModal').show();
-            $('#employeeSelectionModal').removeClass('fade');
+            var assignmentPeriod = $('#assignment_period_start').val();
+            console.log(assignmentPeriod);
+
+            if(assignmentPeriod && assignmentPeriod != '')
+            {
+                $("#add-goals-modal").modal('hide');
+                $('#employeeSelectionModal').show();
+                $('#employeeSelectionModal').removeClass('fade');
+            }
+            else
+            {
+                console.log("Error : Please select the assignment period.")
+            }
         })
 
 
@@ -1112,12 +1124,25 @@
             // getReviewerOfSelectedEmployee(selectedEmployeesId);
             $('#add-goals-modal').modal('show');
             changeAssigneeProfilePicOnSelection(selectedEmployeesId);
-        })
+        });
+
         $('#edit-employee-based-on-reviewer').click(function(){
             var selectedEmployeesId = $('.select-employee-dropdown').val();
-            getReviewerOfSelectedEmployee(selectedEmployeesId);
+            var assignmentPeriod = $('#assignment_period_start option:selected').val();
+            var year = $('#year option:selected').text();
 
-        })
+            console.log("assignmentPeriod : "+assignmentPeriod);
+            console.log("Year : "+year);
+            /*
+            Need to check whether KPI Goals are already assigned for the selected 'Assignment Period and Year'.
+            If already assigned, then show error and ask the user to remove those emps
+            */
+            isKPIAlreadyAssignedForGivenAssignmentPeriod(selectedEmployeesId, assignmentPeriod, year);
+
+
+           // getReviewerOfSelectedEmployee(selectedEmployeesId);
+
+        });
 
     </script>
 
@@ -1244,6 +1269,71 @@
             }
         })
 
+        /*
+            For the selected employees,Check whether the KPI is already assigned
+            for the assignment period.
+
+            canUpdateReviewer - Updates the Reviewer name based on given employees.
+
+        */
+        function isKPIAlreadyAssignedForGivenAssignmentPeriod(t_selectedEmployeeId, assignmentPeriod, year, canUpdateReviewer){
+
+            $.ajax({
+                url: "{{ route('isKPIAlreadyAssignedForGivenAssignmentPeriod') }}",
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    selectedEmployeeId : t_selectedEmployeeId,
+                    assignmentPeriod : assignmentPeriod,
+                    year : year
+                },
+                success: function(data) {
+                    console.log(data);
+
+                    if(data)
+                    {
+                        $('#edit-employee-error-message').html('');
+
+                        //If KPI's already assigned to the selected emps, then show their names
+                        if(data.status == true)
+                        {
+                            $('#edit-employee-error-message').append("<b><u>"+data.message+"</u></b><br/>");
+                            $('#edit-employee-error-message').append("<ul>");
+
+                            $.each(data.result, function(i, value) {
+                                $('#edit-employee-error-message').append("<li>"+value+"</li>");
+                            });
+
+                            $('#edit-employee-error-message').append("</ul>");
+                            $('#edit-employee-error-message').append("<b>Please remove these employees before proceeding.</b>");
+
+                        }
+                        else
+                        if(data.status == false || data.status == 'error')// if no KPIs already assigned to the selected Emps for the given assignment period, then no issues.
+                        {
+                            $('#edit-employee-error-message').append('');
+
+                            //Update reviewer box if TRUE, else leave it.FALSE is used while using this function on  PUBLISH button click
+                            if(canUpdateReviewer == true)
+                                getReviewerOfSelectedEmployee(t_selectedEmployeeId);
+                        }
+                        // else
+                        // if(data.status == 'error')// if any error occurs .
+                        // {
+                        //     $('#edit-employee-error-message').append(data.message);
+                        // }
+                    }
+                    else
+                    {
+                        console.log("ERROR :: isKPIAlreadyAssignedForGivenAssignmentPeriod  : "+data);
+                    }
+                },
+                error: function(error) {
+                    console.log("ERROR(Ajax Failed) :: isKPIAlreadyAssignedForGivenAssignmentPeriod  ");
+                }
+            });
+        }
+
         // $('.select-employee-dropdown').change(function(){
         function getReviewerOfSelectedEmployee(selectedEmployeeId){
             var selectedEmployeeId = selectedEmployeeId;
@@ -1282,6 +1372,7 @@
                 }
             });
         }
+
     </script>
     <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript">
@@ -1291,6 +1382,8 @@
             //     minimumResultsForSearch: Infinity,
             // 	width: '100%'
             // });
+
+
 
             ft = FooTable.init('#kpiTable', {});
 
@@ -1344,6 +1437,11 @@
 
             $('#frequency').change(function() {
                 frequencyChange();
+            });
+
+            $('#assignment_period_start').change(function() {
+                //When assignment period has value, then change EDIT button color to orange
+              $('.employeeEditButton').css({"background-color": "#ee6a04"});
             });
 
             function frequencyChange() {
@@ -1439,6 +1537,15 @@
 
         $('#add-goals').click(function() {
             $('#add-goals-modal').modal('show');
+
+            //Inside Add goals modal, Change employees Add button color if assignment-period not yet selected
+            var assignmentPeriod = $('#assignment_period_start').val();
+            console.log('assignmentPeriod : '+assignmentPeriod);
+
+            if(!assignmentPeriod || assignmentPeriod == '')    {
+                $('.employeeEditButton').css({"background-color": "#B0B0B0"});
+            }
+
         });
 
 
@@ -1642,7 +1749,65 @@
 
         //
         $("#publish-goal").click(function(e) {
+
             e.preventDefault();
+            var t_selectedEmployeesId = $('.select-employee-dropdown').val();
+            var assignmentPeriod = $('#assignment_period_start option:selected').val();
+            var year = $('#year option:selected').text();
+
+            $.ajax({
+                url: "{{ route('isKPIAlreadyAssignedForGivenAssignmentPeriod') }}",
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    selectedEmployeeId : t_selectedEmployeesId,
+                    assignmentPeriod : assignmentPeriod,
+                    year : year
+                },
+                success: function(data) {
+                    console.log("Submitting the form");
+
+                    if(data)
+                    {
+                        $('#edit-employee-error-message').html('');
+
+                        //If KPI's already assigned to the selected emps, then show their names
+                        if(data.status == true)
+                        {
+                            $('#edit-employee-error-message').append("<b><u>"+data.message+"</u></b><br/>");
+                            $('#edit-employee-error-message').append("<ul>");
+
+                            $.each(data.result, function(i, value) {
+                                $('#edit-employee-error-message').append("<li>"+value+"</li>");
+                            });
+
+                            $('#edit-employee-error-message').append("</ul>");
+                            $('#edit-employee-error-message').append("<b>Please remove these employees before proceeding.</b>");
+
+                            //Open the Employee Edit Modal
+                            $("#add-goals-modal").modal('hide');
+                            $('#employeeSelectionModal').show();
+                            $('#employeeSelectionModal').removeClass('fade');
+
+                        }
+                        else
+                        if(data.status == false || data.status == 'error')// if no KPIs already assigned to the selected Emps for the given assignment period, then no issues.
+                        {
+                            $('#edit-employee-error-message').append('');
+                            console.log("Publishing the form.......");
+                            publishForm();
+                        }
+                    }
+
+                },
+                error: function(error) {
+                    console.log('something went wrong');
+                }
+            });
+
+        });
+
+        function publishForm(){
             $('.loader').show();
             // if ($('#kpitable_id').val()) {
                 $.ajax({
@@ -1670,16 +1835,8 @@
                             swal('Wrong!',data.message,'error');
                         }
                     }
-                })
-            // } else {
-            //     $('#modalBody').html("Please publish table first");
-            //     $('#modalHeader').html("Failed");
-            //     $('#modalNot').html("Failed to save Data");
-            //     $('#notificationModal').show();
-            //     $('#notificationModal').removeClass('fade');
-            // }
-
-        });
+                });
+        }
     </script>
     <script>
         if ($("#changeReviewForm").length > 0) {

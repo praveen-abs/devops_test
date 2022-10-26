@@ -25,6 +25,7 @@ use App\Models\VmtPMSRating;
 use App\Notifications\ViewNotification;
 use Exception;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
@@ -54,7 +55,7 @@ class VmtPMSModuleController extends Controller
         // get Departments data
         $departments = Department::where('is_active', 1)->get();
 
-         
+
 
         //Dashboard vars
         /*$employeesGoalsSetCount = \DB::table('vmt_pms_kpiform_reviews')->count(); //0;
@@ -62,13 +63,13 @@ class VmtPMSModuleController extends Controller
         $employeesAssessedCount = \DB::table('vmt_pms_kpiform_reviews')
                                 ->where('is_reviewer_submitted', 'Not Like', '%null%')
                                 ->count();
-        
+
         $selfReviewCount =  \DB::table('vmt_pms_kpiform_reviews')
                                 ->where('is_assignee_submitted', 1)
                                 ->count();
-        
+
         $totalSelfReviewCount = \DB::table('vmt_pms_kpiform_reviews')->count();*/
-        
+
         $employees = VmtEmployee::rightJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
             ->select(
                 'users.name as emp_name',
@@ -79,7 +80,7 @@ class VmtPMSModuleController extends Controller
             ->where('users.is_ssa','0')
             ->orderBy('vmt_employee_details.created_at', 'ASC')
             ->get();
-        
+
         // function to get dashboard Card data
         $dashboardCountersData = $this->getPerformanceDashboardSummaryStats();
 
@@ -136,7 +137,7 @@ class VmtPMSModuleController extends Controller
         $employeesAssessedCount = 0;
         $selfReviewCount = 0;
         $totalSelfReviewCount = 0;*/
-        
+
         $employees = VmtEmployee::rightJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
             ->select(
                 'users.name as emp_name',
@@ -1214,6 +1215,46 @@ class VmtPMSModuleController extends Controller
         }
     }
 
+    /*
+
+        //check whether the form is already assigned for the selected user
+        for the given assignment period
+    */
+    public function isKPIAlreadyAssignedForGivenAssignmentPeriod(Request $request){
+
+        try{
+            if(!empty($request->selectedEmployeeId)){
+
+                //check whether the form is already assigned for the selected user for the given assignment period
+                $assignedEmployeesForGivenPeriod = VmtPMS_KPIFormAssignedModel::where('assignment_period',$request->assignmentPeriod)
+                                                                                ->where('year',$request->year)
+                                                                                ->pluck('assignee_id');
+
+
+                //store the employee ids in collection and check whether given employees has already been assigned forms
+                $collection = collect();
+                foreach($assignedEmployeesForGivenPeriod as $singleRecord)
+                    $collection->push( explode(',', $singleRecord));
+
+                //return matching employee ids from both arrays .
+                $collection = array_intersect($request->selectedEmployeeId, Arr::collapse($collection));
+
+                //Find their names and send as response
+                $result = User::whereIn('id',$collection)->pluck('name');
+
+                if(count($result) > 0)
+                    return response()->json(['status'=>true,'message'=>'The following employees has already assigned KPIs for the selected Year & Assignment Period : ','result'=>$result]);
+                else
+                    return response()->json(['status'=>false,'message'=>'','result'=>'']);
+            }
+            return response()->json(['status'=>'error','message'=>'Param : selectedEmployeeId is empty !']);
+
+        }catch(Exception $e){
+            Log::info('isKPIAlreadyAssignedForGivenAssignmentPeriod error: '.$e->getMessage());
+            return response()->json(['status'=>'error','message'=>$e->getMessage()]);
+        }
+    }
+
     public function getReviewerOfSelectedEmployee(Request $request){
         try{
             if(isset($request->selectedEmployeeId) && count($request->selectedEmployeeId) > 0){
@@ -1498,8 +1539,8 @@ class VmtPMSModuleController extends Controller
     /**
      *  getPerformanceDashboardSummaryStats
      *  table : vmt_pms_kpiform_reviews
-     *  
-     * 
+     *
+     *
      */
     protected function getPerformanceDashboardSummaryStats(){
         //Dashboard vars
@@ -1512,11 +1553,11 @@ class VmtPMSModuleController extends Controller
         $employeesAssessedCount = \DB::table('vmt_pms_kpiform_reviews')
                                 ->where('is_reviewer_submitted', 'Not Like', '%null%')
                                 ->count();
-        
+
         $selfReviewCount =  \DB::table('vmt_pms_kpiform_reviews')
                                 ->where('is_assignee_submitted', 1)
                                 ->count();
-        
+
         $totalSelfReviewCount = \DB::table('vmt_pms_kpiform_reviews')->count();
         $dashboardCountersData['employeesGoalsSetCount'] = $employeesGoalsSetCount;
         $dashboardCountersData['totalEmployeesCount'] = $totalEmployeesCount;
