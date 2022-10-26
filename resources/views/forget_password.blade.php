@@ -4,13 +4,12 @@
 @section('css')
     <link href="{{ URL::asset('assets/css/login_page.css') }}" rel="stylesheet">
     <style>
-    .fade {
-        transition: opacity 0.2s linear !important;
-      }
+        .fade {
+            transition: opacity 0.2s linear !important;
+        }
     </style>
 @endsection
 @section('content')
-
     <?php
 
     $logoObj = \DB::table('vmt_general_info')->first();
@@ -97,30 +96,28 @@
                                             <div class="login-top-img">
                                                 <img src="{{ URL::asset($generalInfo->logo_img) }}" alt=""
                                                     class="">
-                                                    <!-- <img src="{{ URL::asset('assets/images/vasa.jpg') }}" alt="" class="w-100 h-100"> -->
+                                                <!-- <img src="{{ URL::asset('assets/images/vasa.jpg') }}" alt="" class="w-100 h-100"> -->
                                             </div>
                                         </div>
                                         <!-- <p class="m-0   h5 fw-bold log">Login <span class="me-1">to</span><span
-                                                class="m-0 fw-bold h4 me-1">ABS</span><small
-                                                class="text-orange fw-bold f-10">hrms</small></p> -->
-                                        <p class="text-muted f-12 mb-3 fw-bold">Forget password</p>
+                                                    class="m-0 fw-bold h4 me-1">ABS</span><small
+                                                    class="text-orange fw-bold f-10">hrms</small></p> -->
+                                        <label class="text-muted f-15 fw-bold mb-2 ">Forget password</label>
 
 
                                         @csrf
-                                        <div class="form-outline mb-3 form-row">
-                                            <label for="" class="">Please enter your email address</label>
-                                            <input type="email"
-                                                class="form-control textbox"
-                                                value="" id="email" name="email"
-                                                placeholder="Enter email address">
+                                        <div class="mb-1 ">
+                                            <label for="" class="">Email</label>
+                                            <input type="email" class="form-control textbox" value="" id="email"
+                                                name="email" placeholder="Enter email address">
                                         </div>
 
-                                        <span style="color: red;" id="error_message">
-                                        {{ session('error_message') }}
+                                        <span class="text-danger " id="error_message">
+                                            {{ session('error_message') }}
                                         </span>
                                         <br />
                                         <input type="button"
-                                            class="btn btn-orange w-100 sign-in-btn   waves-effect waves-light "
+                                            class="btn btn-orange w-100 sign-in-btn  mt-1  waves-effect waves-light "
                                             type="submit" value="Submit" onclick="submitForm()" />
 
 
@@ -162,7 +159,7 @@
                                             class="d-flex text-center align-items-center mt-2 power-by-logo justify-content-center">
 
                                             <a href="#" class="">
-                                                <span class="f-12">Powered by</span>
+                                                <span class="f-12 text-muted">Powered by</span>
                                                 <img src="{{ URL::asset('assets/images/logo-dark.png') }}" alt=""
                                                     class="h-25 w-25 ">
                                             </a>
@@ -173,42 +170,84 @@
                                 </div>
                             </div>
                             <div class="login-bottom"></div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+
+
+        <div class="modal fade" id="notificationModal" role="dialog" aria-hidden="true"
+            style="opacity:1; display:none;background:#00000073;">
+            <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true"
+                aria-labelledby="">
+                <div class="modal-content">
+                    <div class="modal-header border-0">
+                        <h6 class="modal-title" id="modalHeader">
+                        </h6>
+                        {{-- <button type="button" class="btn-close close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal" aria-label="Close">
+
+                        </button> --}}
+                        <button type="button" class="close close-modal outline-none bg-transparent border-0 h3"
+                            aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mt-4">
+                            <p class="mb-3 text-muted f-15 text-center" id="modalNot"></p>
+
+                            <div class="text-end">
+
+
+
+                                <button type="button" class="btn btn-light close-modal" id="closeModal">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </section>
 @endsection
 
 @section('script')
     <script type="text/javascript">
         $(document).ready(function() {
-           // $('#modal_resetPassword').modal('show');
+            // $('#modal_resetPassword').modal('show');
 
         });
 
-        function closeModal()
-        {
+        function closeModal() {
             $('#modal_resetPassword').modal('hide');
         }
 
         function isValidEmailAddress(emailAddress) {
-            var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+            var pattern = new RegExp(
+                /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
+                );
             return pattern.test(emailAddress);
         }
 
-        function submitForm()
-        {
+        // for hide modal
 
-            if(isValidEmailAddress($('#email').val())){
+        $(".close-modal").click(function() {
+                console.log('close');
+                $("#notificationModal").hide();
+            });
+
+        function submitForm() {
+
+            if (isValidEmailAddress($('#email').val())) {
                 $('#error_message').html("");
 
                 console.log("Email is valid");
                 ajax_SendPasswordResetLink();
-            }
-            else
-            {
+            } else {
                 console.log("Email is invalid !");
 
                 $('#error_message').html("Please enter a valid email address");
@@ -217,33 +256,37 @@
 
         }
 
-        function ajax_SendPasswordResetLink()
-        {
+        function ajax_SendPasswordResetLink() {
             $.ajax({
-                    type: "POST",
-                    url: "{{ route('vmt-send-passwordresetlink') }}",
-                    data: {
+                type: "POST",
+                url: "{{ route('vmt-send-passwordresetlink') }}",
+                data: {
                     'email': $('#email').val(),
                     "_token": "{{ csrf_token() }}",
-                    },
-                    success: function(data) {
+                },
+                success: function(data) {
 
-                        if(data.status == "success")
-                        {
-                            alert(data.message);
-                        }
-                        else
-                        if(data.status == "failure")
-                        {
-                            $('#error_message').html(data.message);
-                        }
+                    if (data.status == "success") {
 
-                        console.log(data.message);
+                        $('#modalHeader').html("Mail sent Successfully");
+                        $('#modalNot').html(
+                            data.message
+                        );
+                        $('#notificationModal').show();
+                        $('#notificationModal').removeClass('fade');
 
+
+
+                    } else
+                    if (data.status == "failure") {
+                        $('#error_message').html(data.message);
                     }
+
+                    console.log(data.message);
+
+                }
             });
 
         }
-
     </script>
 @endsection

@@ -210,7 +210,7 @@
                                             class="d-flex text-center align-items-center mt-2 power-by-logo justify-content-center">
 
                                             <a href="#" class="">
-                                                <span class="f-12">Powered by</span>
+                                                <span class="f-12 text-muted">Powered by</span>
                                                 <img src="{{ URL::asset('assets/images/logo-dark.png') }}" alt=""
                                                     class="h-25 w-25 ">
                                             </a>
