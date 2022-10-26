@@ -79,18 +79,18 @@
 
         <div class="modal fade" id="notificationModal" role="dialog" aria-hidden="true"
             style="opacity:1; display:none;background:#00000073;">
-            <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true"
-                aria-labelledby="">
+            <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true" aria-labelledby="">
                 <div class="modal-content">
                     <div class="modal-header border-0">
-                            <h6 class="modal-title" id="modalHeader">
-                            </h6>
-                            {{-- <button type="button" class="btn-close close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal" aria-label="Close">
+                        <h6 class="modal-title" id="modalHeader">
+                        </h6>
+                        {{-- <button type="button" class="btn-close close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal" aria-label="Close">
 
                             </button> --}}
-                            <button type="button" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
+                        <button type="button" class="close close-modal outline-none bg-transparent border-0 h3"
+                            aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
                     </div>
                     <div class="modal-body">
                         <div class="mt-4">
@@ -102,10 +102,9 @@
                                 <input type="hidden" id="selected_statusText" />
 
                                 <button type="button" class="btn btn-primary submit_notify"
-
                                     id="modal_leave_reject">Submit</button>
-                                <button type="button" class="btn btn-light close-modal" data-bs-dismiss="modal"
-                                    id="">Cancel</button>
+                                <button type="button" class="btn btn-light close-modal"
+                                    id="closeModal">Cancel</button>
                             </div>
                         </div>
                     </div>
@@ -134,6 +133,8 @@
             // $(document).on('#select-reviewer:open', () => {
             //         $('.select2-search__field').focus();
             //     });
+
+
 
             $('#btn_request_leave').on('click', function(e) {
                 console.log("Selected Button : " + $(this).attr('name'));
@@ -165,6 +166,12 @@
                 });
             });
 
+            $(".close-modal").click(function() {
+                console.log('close');
+                $("#notificationModal").hide();
+            });
+
+
             function processLeaveApproveReject(leave_id, user_id, t_statusText, t_leave_rejection_text) {
                 $.ajax({
                     url: "{{ url('attendance-approve-rejectleave') }}",
@@ -174,14 +181,14 @@
                         'user_id': user_id,
                         'leave_id': leave_id,
                         'status': t_statusText,
-                        'leave_rejection_text':t_leave_rejection_text,
+                        'leave_rejection_text': t_leave_rejection_text,
                         "_token": "{{ csrf_token() }}",
                     },
                     success: function(data) {
                         if (data.status == "success") {
 
-                            alert(data.message+" \n ");
-                            location.reload();
+                            alert(data.message + " \n ");
+                            // location.reload();
                         } else {
                             alert("Leave request failed. Contact your Admin");
                         }
@@ -215,7 +222,7 @@
 
 
 
-            $('#modal_leave_reject').on('click', function(e){
+            $('#modal_leave_reject').on('click', function(e) {
 
                 processLeaveApproveReject(
                     $('#selected_leaveId').val(),
@@ -231,7 +238,7 @@
                 var userId = $(this).data('user_id');
                 var statusText = $(this).data('leave_status');
 
-                processLeaveApproveReject(leaveId, userId, statusText,'');
+                processLeaveApproveReject(leaveId, userId, statusText, '');
             });
 
             // if (document.getElementById("attendance_approvals-table")) {
@@ -388,7 +395,8 @@
                                 //console.log(emp);
                                 if (emp.status == "Pending") {
                                     htmlcontent =
-                                        '<input type="button" value="Approve" data-user_id="' + emp.user_id +
+                                        '<input type="button" value="Approve" data-user_id="' + emp
+                                        .user_id +
                                         '" data-leave_id="' + emp.id +
                                         '" data-leave_status="Approved" class="status btn btn-orange py-1 approve-leave-btn"></input>';
 
