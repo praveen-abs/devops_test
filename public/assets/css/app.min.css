@@ -17484,7 +17484,7 @@ svg.icon.icon-xxlg {
 /* annual earnings */
 .body.content.declaration-details-container,
 .body.content.salary-details-container {
-    padding: 20px 36px 30px;
+    /* padding: 20px 36px 30px; */
 }
 
 .donations-list-container,
@@ -17493,7 +17493,7 @@ svg.icon.icon-xxlg {
 }
 
 .ytd-chart-section {
-    margin-bottom: 50px;
+    /* margin-bottom: 50px; */
 }
 
 .ytd-chart-filter {
@@ -17522,7 +17522,12 @@ svg.icon.icon-xxlg {
 .ytd-chart .x-axis line,
 .ytd-chart .y-axis line,
 .ytd-chart .y-axis path {
-    stroke: #f5f5f5;
+    stroke: #dcd9da;
+
+}
+.ytd-chart .x-axis line{
+    stroke-dasharray: 5;
+    /* stroke-width: 2px; */
 }
 
 .x-axis path {
