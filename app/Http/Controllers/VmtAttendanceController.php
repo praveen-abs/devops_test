@@ -40,7 +40,20 @@ class VmtAttendanceController extends Controller
     public function showLeaveHistoryPage(Request $request){
         $allEmployeesList = User::all(['id','name']);
 
-        return view('leave_history',compact('allEmployeesList'));
+        if($request->type == 'org')
+        {
+            return view('leave_history_org',compact('allEmployeesList'));
+        }
+        else
+        if($request->type == 'team')
+        {
+            return view('leave_history_team',compact('allEmployeesList'));
+        }
+        else
+        if($request->type == 'employee')
+        {
+            return view('leave_history_employee',compact('allEmployeesList'));
+        }
 
     }
 
@@ -113,7 +126,30 @@ class VmtAttendanceController extends Controller
 
     public function fetchLeaveRequestDetails(Request $request)
     {
-        return VmtEmployeeLeaves::all();
+        $leave_details = '';
+
+        if($request->type == 'org')
+        {
+            return VmtEmployeeLeaves::all();
+        }
+        else
+        if($request->type == 'team')
+        {
+            //Get the list of employees for the given Manager
+            $team_employees_ids = VmtEmployeeOfficeDetails::where('l1_manager_code',auth::user()->user_code)->get('user_id');
+
+            //use wherein and fetch the relevant records
+
+            return VmtEmployeeLeaves::whereIn('user_id',$team_employees_ids)->get();
+
+
+        }
+        else
+        if($request->type == 'employee')
+        {
+            return VmtEmployeeLeaves::where('user_id',auth::user()->id)->get();
+        }
+
     }
 
     public function fetchSingleLeavePolicyRecord($id)

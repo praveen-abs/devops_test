@@ -113,9 +113,18 @@
                             <li class="nav-item">
                                 <a href="{{route('attendance-employee-timesheet')}}" class="nav-link sidebar py-1">Employee Timesheet</a>
                             </li>
-
+                            @if( Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]))
+                                <li class="nav-item">
+                                    <a href="{{route('attendance-leavehistory',['type'=>'org'])}}" class="nav-link sidebar py-1">Org Leave History</a>
+                                </li>
+                            @endif
+                            @if( Str::contains( currentLoggedInUserRole(), ["Manager"]))
+                                <li class="nav-item">
+                                    <a href="{{route('attendance-leavehistory',['type'=>'team'])}}" class="nav-link sidebar py-1">Team Leave History</a>
+                                </li>
+                            @endif
                             <li class="nav-item">
-                                <a href="{{route('attendance-leavehistory')}}" class="nav-link sidebar py-1">Leave History</a>
+                                <a href="{{route('attendance-leavehistory',['type'=>'employee'])}}" class="nav-link sidebar py-1">Employee Leave History</a>
                             </li>
                             {{-- <li class="nav-item">
                                 <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button">

@@ -59,7 +59,7 @@
             <div class="leave-balance-wrapper">
                 <div class="row mb-2">
                     <div class="col-8">
-                        <h6>Leave Balance</h6>
+                        <h6>Team Leave Balance</h6>
                     </div>
                     <div class="col-4  justify-content-end d-flex">
                         <div class="pendingLeave_notify me-3">
@@ -861,7 +861,7 @@
                 sort: true,
                 search: true,
                 server: {
-                    url: '{{ route('fetch-leavehistory') }}',
+                    url: '{{ route('fetch-leavehistory',['type'=>'employee']) }}',
                     then: data => data.map(
                         leave_history => [
                             leave_history.id,

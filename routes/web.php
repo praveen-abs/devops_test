@@ -55,7 +55,10 @@ Route::controller(VmtEmployeeOnboardingController::class)->group(function () {
 Route::get('/attendance-dashboard', [App\Http\Controllers\VmtAttendanceController::class, 'showDashboard'])->name('attendance-dashboard');
 Route::get('/attendance-leavepolicy', [App\Http\Controllers\VmtAttendanceController::class, 'showAttendanceLeavePolicyPage'])->name('attendance-leavepolicy');
 Route::get('/attendance-leavereports', [App\Http\Controllers\VmtAttendanceController::class, 'showAttendanceLeaveReportsPage'])->name('attendance-leavereports');
-Route::get('/attendance-leavehistory', [App\Http\Controllers\VmtAttendanceController::class, 'showLeaveHistoryPage'])->name('attendance-leavehistory');
+
+//Leave history pages
+Route::get('/attendance-leavehistory/{type}', [App\Http\Controllers\VmtAttendanceController::class, 'showLeaveHistoryPage'])->name('attendance-leavehistory');
+
 Route::get('/attendance-approvals', [App\Http\Controllers\VmtAttendanceController::class, 'showAttendanceApprovalPage'])->name('attendance-approvals');
 Route::get('/attendance-admin-timesheet', [App\Http\Controllers\VmtAttendanceController::class, 'showAllEmployeesTimesheetPage'])->name('attendance-admin-timesheet');
 Route::get('/attendance-employee-timesheet', [App\Http\Controllers\VmtAttendanceController::class, 'showEmployeeTimeSheetPage'])->name('attendance-employee-timesheet');
