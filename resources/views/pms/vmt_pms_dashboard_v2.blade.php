@@ -978,7 +978,7 @@
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
                     <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
                         Edit Employee</h5>
-                    <button type="button" class="close outline-none bg-transparent border-0 h3 " data-bs-dismiss="modal"
+                    <button type="button" id="closebtn_editEmployees" class="close outline-none bg-transparent border-0 h3 " data-bs-dismiss="modal"
                         aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -1204,6 +1204,13 @@
             changeAssigneeProfilePicOnSelection(selectedEmployeesId);
         });
 
+        //Called when EDIT EMPLOYEES modal's close button is pressed instead of SAVE button.
+        //This will update the profile pics in Add Goals modal
+        $('#closebtn_editEmployees').click(function(){
+            var selectedEmployeesId = $('.select-employee-dropdown').val();
+            changeAssigneeProfilePicOnSelection(selectedEmployeesId);
+        });
+
         $('#edit-employee-based-on-reviewer').click(function() {
             var selectedEmployeesId = $('.select-employee-dropdown').val();
             var assignmentPeriod = $('#assignment_period_start option:selected').val();
@@ -1211,11 +1218,14 @@
 
             console.log("assignmentPeriod : " + assignmentPeriod);
             console.log("Year : " + year);
+
+            changeAssigneeProfilePicOnSelection(selectedEmployeesId);
+
             /*
             Need to check whether KPI Goals are already assigned for the selected 'Assignment Period and Year'.
             If already assigned, then show error and ask the user to remove those emps
             */
-            isKPIAlreadyAssignedForGivenAssignmentPeriod(selectedEmployeesId, assignmentPeriod, year);
+            isKPIAlreadyAssignedForGivenAssignmentPeriod(selectedEmployeesId, assignmentPeriod, year, true);
 
 
             // getReviewerOfSelectedEmployee(selectedEmployeesId);
@@ -1351,8 +1361,7 @@
             canUpdateReviewer - Updates the Reviewer name based on given employees.
 
         */
-        function isKPIAlreadyAssignedForGivenAssignmentPeriod(t_selectedEmployeeId, assignmentPeriod, year,
-            canUpdateReviewer) {
+        function isKPIAlreadyAssignedForGivenAssignmentPeriod(t_selectedEmployeeId, assignmentPeriod, year,canUpdateReviewer) {
 
             $.ajax({
                 url: "{{ route('isKPIAlreadyAssignedForGivenAssignmentPeriod') }}",
@@ -1382,16 +1391,25 @@
                             $('#edit-employee-error-message').append(
                                 "<b>Please remove these employees before proceeding.</b>");
 
-                        } else
-                        if (data.status == false || data.status ==
-                            'error'
-                        ) // if no KPIs already assigned to the selected Emps for the given assignment period, then no issues.
+                        }
+                        else
+                        if (data.status == false || data.status =='error') // if no KPIs already assigned to the selected Emps for the given assignment period, then no issues.
                         {
+                            console.log("No KPIs assigned to selected users");
                             $('#edit-employee-error-message').append('');
 
                             //Update reviewer box if TRUE, else leave it.FALSE is used while using this function on  PUBLISH button click
-                            if (canUpdateReviewer == true)
-                                getReviewerOfSelectedEmployee(t_selectedEmployeeId);
+                            getReviewerOfSelectedEmployee(t_selectedEmployeeId);
+
+                            // if (canUpdateReviewer == true)
+                            //     getReviewerOfSelectedEmployee(t_selectedEmployeeId);
+                            // else
+                            // {
+                            //     $('#add-goals-modal').modal('show');
+                            //     var afterUpdateEmployee = $('.select-employee-dropdown').val();
+                            //     changeAssigneeProfilePicOnSelection(afterUpdateEmployee);
+                            // }
+
                         }
                         // else
                         // if(data.status == 'error')// if any error occurs .
@@ -1628,7 +1646,20 @@
 
 
         $('#add-goals').click(function() {
+
+            //Reset the old values in 'add-goals-model'
+            $('.select-employee-dropdown').val('');
+            $('#calendar_type').val('');
+            $('#assignment_period_start').val('');
+            $('#year').val('');
+            $('#frequency').val('');
+            $('#department').val('');
+
+
             $('#add-goals-modal').modal('show');
+
+
+
 
             //Inside Add goals modal, Change employees Add button color if assignment-period not yet selected
             var assignmentPeriod = $('#assignment_period_start').val();
@@ -1844,6 +1875,8 @@
 
         //
         $("#publish-goal").click(function(e) {
+            console.log("Publish button clicked");
+            $('#publish-goal').attr("disabled", true);
 
             e.preventDefault();
             var t_selectedEmployeesId = $('.select-employee-dropdown').val();
@@ -1860,6 +1893,7 @@
                     year: year
                 },
                 success: function(data) {
+
                     console.log("Submitting the form");
 
                     if (data) {
@@ -1885,10 +1919,9 @@
                             $('#employeeSelectionModal').show();
                             $('#employeeSelectionModal').removeClass('fade');
 
-                        } else
-                        if (data.status == false || data.status ==
-                            'error'
-                        ) // if no KPIs already assigned to the selected Emps for the given assignment period, then no issues.
+                        }
+                        else
+                        if (data.status == false || data.status == 'error' ) // if no KPIs already assigned to the selected Emps for the given assignment period, then no issues.
                         {
                             $('#edit-employee-error-message').append('');
                             console.log("Publishing the form.......");
@@ -1901,6 +1934,12 @@
                     console.log('something went wrong');
                 }
             });
+
+            //Enable Publish button after a small delay to prevent double clicks
+            setTimeout(function() {
+                $('#publish-goal').removeAttr("disabled");
+                console.log("timeout completed");
+            }, 2000);
 
         });
 
