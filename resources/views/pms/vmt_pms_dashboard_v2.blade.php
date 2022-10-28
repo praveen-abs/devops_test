@@ -71,8 +71,8 @@
         }
 
         /*
-         *  STYLE 1
-         */
+                 *  STYLE 1
+                 */
 
         #style-1::-webkit-scrollbar-track {
             -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
@@ -557,33 +557,37 @@
                                                     <td class="d-none">{{ $key1 }}</td>
                                                     <td class="">
                                                         {{-- <div class="td_content_center">{{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</div> --}}
-                                                        <div class="d-flex align-items-center page-header-user-dropdown">
+                                                        <div class="row page-header-user-dropdown align-items-center">
                                                             <?php
                                                             $employee_icon = getEmployeeAvatarOrShortName($assigneeId);
                                                             //    dd($employee_icon);
                                                             ?>
                                                             @if (!empty($employee_icon))
                                                                 @if ($employee_icon['type'] == 'shortname')
-                                                                    <span class="rounded-circle user-profile  ml-2 "
-                                                                        id="">
-                                                                        <i id="topbar_username"
-                                                                            class="align-middle ">{{ $employee_icon['data'] }}</i>
-                                                                    </span>
+                                                                    <div class="col-auto p-0">
+                                                                        <span class="rounded-circle user-profile  ml-2 "
+                                                                            id="">
+                                                                            <i id="topbar_username"
+                                                                                class="align-middle ">{{ $employee_icon['data'] }}</i>
+                                                                        </span>
+                                                                    </div>
                                                                 @elseif($employee_icon['type'] == 'avatar')
-                                                                    <img class="rounded-circle header-profile-user"
-                                                                        src=" {{ URL::asset('images/' . $employee_icon['data']) }}"
-                                                                        alt="--">
+                                                                    <div class="col-auto p-0">
+                                                                        <img class="rounded-circle header-profile-user"
+                                                                            src=" {{ URL::asset('images/' . $employee_icon['data']) }}"
+                                                                            alt="--">
+                                                                    </div>
                                                                 @endif
                                                             @endif
+                                                            <div class="col-auto p-0">
+                                                                <span class="f-12 ml-3">
+                                                                    <span class="">
+                                                                        {{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</span>
+                                                                    <span
+                                                                        class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text"></span>
 
-                                                            <span class="f-12 mx-2 d-flex align-items-center">
-                                                                <span class="">
-                                                                    {{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</span>
-                                                                <span
-                                                                    class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text"></span>
-
-                                                            </span>
-
+                                                                </span>
+                                                            </div>
                                                         </div>
                                                     </td>
                                                     <td class="">
@@ -1093,9 +1097,10 @@
     <?php } ?>
     <script>
         function generateProfileShortName_Topbar() {
-            var username = '{{ auth()->user()->name ??
-                '
-                                    ' }}';
+            var username =
+                '{{ auth()->user()->name ??
+                    '
+                                                                ' }}';
             const splitArray = username.split(" ");
             var finalname = "empty111";
 
@@ -1380,7 +1385,7 @@
                         } else
                         if (data.status == false || data.status ==
                             'error'
-                            ) // if no KPIs already assigned to the selected Emps for the given assignment period, then no issues.
+                        ) // if no KPIs already assigned to the selected Emps for the given assignment period, then no issues.
                         {
                             $('#edit-employee-error-message').append('');
 
@@ -1876,7 +1881,7 @@
                         } else
                         if (data.status == false || data.status ==
                             'error'
-                            ) // if no KPIs already assigned to the selected Emps for the given assignment period, then no issues.
+                        ) // if no KPIs already assigned to the selected Emps for the given assignment period, then no issues.
                         {
                             $('#edit-employee-error-message').append('');
                             console.log("Publishing the form.......");
