@@ -787,7 +787,7 @@ button.gridjs-sort-desc {
     position: relative;
     color: #002f56 !important;
     background-color: transparent !important;
-    padding-bottom: 15px;;
+    padding-bottom: 15px;
     border-radius: 0px !important;
     transition-timing-function: linear;
 }
@@ -1483,4 +1483,70 @@ input:checked + .slider-checkbox.check-in:before {
 }
 .csDfHB > svg {
     display: block;
+}
+
+/* Data table jquery */
+
+table.dataTable,
+table.dataTable th,
+table.dataTable td {
+    width: 100% !important;
+}
+
+/* .dataTables_wrapper .dataTables_filter input::before{
+        content: 'ri-search-line';
+        } */
+.dataTables_wrapper .dataTables_filter input {
+    width: 250px !important;
+    border-radius: 5px;
+    text-indent: 10px;
+    height: 30px;
+    border: 1px solid var(--vz-input-border);
+}
+
+.dataTables_wrapper .dataTables_filter label {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+.dataTables_wrapper .dataTables_filter input:focus {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 0.9rem;
+    font-size: 0.8125rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--vz-body-color);
+    background-color: var(--vz-input-bg);
+    background-clip: padding-box;
+    border: 1px solid var(--vz-input-border);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.dataTables_wrapper .dataTables_length select {
+    padding: 5px !important;
+    border-radius: 5px !important;
+    margin: 0px 4px;
+}
+
+.dataTables_wrapper .dataTables_filter {
+    margin: 10px;
+}
+
+.dataTables_wrapper .dataTables_length {
+    margin-top: 12px;
+}
+
+.dataTables_wrapper .dataTables_length label {
+    display: flex;
+    padding: 2px;
+    border-radius: 5px;
+    align-items: center;
+    box-shadow: 1px 2px rgb(56 65 74 / 15%);
+    background: #fff;
+    box-shadow: rgb(0 0 0 / 5%) 0px 6px 24px 0px, rgb(0 0 0 / 8%) 0px 0px 0px 1px;
 }
