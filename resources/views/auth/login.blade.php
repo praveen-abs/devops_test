@@ -155,9 +155,9 @@
 
                                         @if (count($errors) > 0)
                                             @foreach ($errors->all() as $message)
-                                                <div class="alert alert-danger display-hide">
-                                                    <span>{{ $message }}</span>
-                                                </div>
+                                                {{-- <div class="alert alert-danger "> --}}
+                                                    <span class="text-danger display-hide">{{ $message }}</span>
+                                                {{-- </div> --}}
                                             @endforeach
                                         @endif
 
@@ -251,7 +251,7 @@
                                 <input type="password" name="new_password_confirm" id="new_password_confirm" />
                             </div>
                             <div class="col-12 col-md-12 col-lg-12 ">
-                                <span style="color: red;" id="error_message"></span>
+                                <span class="text-danger" id="error_message"></span>
                             </div>
                         </div>
                         <input type="button" value = "Submit" class="btn btn-primary waves-effect waves-light" onclick="submitForm()" />
