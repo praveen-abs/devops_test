@@ -126,9 +126,9 @@
                                     <i class="mr-1 text-danger ri-error-warning-fill text-grey"></i>
                                     <span class="opacity-medium f-12">Towards EPF, you contribute 12% of upto ₹
                                         15,000.00 of
-                                        your Basic Pay and your
+                                        your wages (Gross Pay - HRA) and your
                                         employer
-                                        contributes another 12% of upto ₹ 15,000.00 of your Basic Pay.</span>
+                                        contributes another 12% of upto ₹ 15,000.00 of your wages (Gross Pay - HRA).</span>
                                 </div>
                             </div>
                         </div>
@@ -1414,7 +1414,7 @@
                                     </tbody>
 
                                 </table>
-                                
+
                             </div>
                         </div> -->
                     </div>
