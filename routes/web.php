@@ -117,13 +117,13 @@ Route::post('vmt-general-settings', [App\Http\Controllers\HomeController::class,
 
 
 
-// Route::get('/vendor', function () {
-//     return view('vmt_vendor');
-// })->name('vmt-vendor-route');
-
 Route::get('/vendor', function () {
-    return view('runpayRoll');
+    return view('vmt_vendor');
 })->name('vmt-vendor-route');
+
+// Route::get('/vendor', function () {
+//     return view('runpayRoll');
+// })->name('vmt-vendor-route');
 
 
 Route::get('clients', 'App\Http\Controllers\VmtClientController@showAllClients')->name('vmt-clients-route');;
