@@ -314,7 +314,7 @@ Route::get('/investments', function () {
 
 
 Route::get('/vmt_employee_payslip',  [App\Http\Controllers\VmtPaySlipController::class, 'payslipPdfView'])->name('vmt_employee_payslip');
-Route::get('/pdfview/{selectedPaySlipMonth}',[App\Http\Controllers\VmtPaySlipController::class, 'pdfview'])->name('pdfview');
+Route::get('/pdfview/{emp_code}/{selectedPaySlipMonth}',[App\Http\Controllers\VmtPaySlipController::class, 'pdfview'])->name('pdfview');
 // testing template
 Route::get('/testingController',[App\Http\Controllers\VmtTestingController::class, 'index'])->name('testingController');
 

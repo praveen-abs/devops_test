@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\VmtEmployeeOfficeDetails;
+use App\Models\VmtEmployee;
 use Illuminate\Http\Request;
 use App\Models\VmtEmployeePaySlip;
 use App\Models\Compensatory;
@@ -104,13 +105,10 @@ class VmtPaySlipController extends Controller
                         ['PAYROLL_MONTH','=', $request->selectedPaySlipMonth],
                         ])->first();
 
-        //dd($data);
-        // return view('vmt_payslipTemplate', $data);
-        // download PDF file with download method
-        // $pdf = new Dompdf();
-
         $data['employee_name'] = auth()->user()->name;
         $data['designation'] = VmtEmployeeOfficeDetails::where('user_id',auth()->user()->id)->value('designation');
+        $data['employee_details'] = VmtEmployee::where('userid',auth()->user()->id)->first();
+
         $html =  view('vmt_payslipTemplate', $data);
         // $pdf->loadHtml($html, 'UTF-8');
         // $pdf->setPaper('A4', 'portrait');
@@ -126,30 +124,33 @@ class VmtPaySlipController extends Controller
 
      public function pdfview(Request $request)
     {
-
-        $generalInfo = VmtGeneralInfo::first();
+        if($request->emp_code != auth()->user()->user_code)
+            dd("Payslip View : You are not authorized to access this resource");
 
         $month = $request->selectedPaySlipMonth;
-        $data= VmtEmployeePaySlip::where([
-                    ['user_id','=', auth()->user()->id],
-                    ['PAYROLL_MONTH','=', $request->selectedPaySlipMonth],
-                    ])->first();
+        $data['employee'] = VmtEmployeePaySlip::where([
+            ['user_id','=', auth()->user()->id],
+            ['PAYROLL_MONTH','=', $request->selectedPaySlipMonth],
+            ])->first();
 
-        $view = view('vmt_payslipTemplate')
-                ->with('employee',$data)
-                ->with('generalInfo',$generalInfo);
+        $data['employee_name'] = auth()->user()->name;
+        $data['designation'] = VmtEmployeeOfficeDetails::where('user_id',auth()->user()->id)->value('designation');
+        $data['employee_details'] = VmtEmployee::where('userid',auth()->user()->id)->first();
+
+        $view = view('vmt_payslipTemplate', $data);
 
         $html = $view->render();
         $html = preg_replace('/>\s+</', "><", $html);
         $pdf = PDF::loadHTML($html)->setPaper('a4', 'portrait')->setWarnings(false);
 
-        return $pdf->download($month.'Payslip.pdf');
+        return $pdf->download(auth()->user()->id."_".$month."_Payslip.pdf");
         //   return  PDF::loadView('vmt_payslipTemplate', $data)->download($month.'Payslip.pdf');
 
     }
+
     //vmt_payslipTemplate.blade.php
     // code add by hentry //
-        public function download( $filename = '' )
+    public function download( $filename = '' )
     {
         // Check if file exists in app/storage/file folder
         $file_path = storage_path() . "/assets/" . $filename;

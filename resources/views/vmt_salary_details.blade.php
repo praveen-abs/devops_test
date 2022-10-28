@@ -234,7 +234,7 @@
 
                                             $selectedPaySlipMonth = $d->PAYROLL_MONTH;
                                             @endphp
-                                            <a href="{{ url('pdfview/'.strtoupper($d->EMP_NO).'_'.'PAYSLIP'.'_'.strtoupper($selectedPaySlipMonth)) }}" class="text-info">Download</a>
+                                            <a href="{{ url('pdfview/'.strtoupper($d->EMP_NO).'/'.strtoupper($selectedPaySlipMonth)) }}" class="text-info">Download</a>
 
                                         </td>
                                     </tr>
