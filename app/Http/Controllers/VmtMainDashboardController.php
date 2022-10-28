@@ -218,7 +218,11 @@ class VmtMainDashboardController extends Controller
 
         if($reporteesCount > 0){
            $currentUser =  User::find(auth()->user()->id);
-           $currentUser->org_role = '4';
+
+           //change only if current user is employee
+           if($currentUser->org_role == '5')
+                $currentUser->org_role = '4';
+
            $currentUser->save();
         }
 
