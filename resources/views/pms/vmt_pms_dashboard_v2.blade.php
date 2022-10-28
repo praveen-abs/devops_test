@@ -71,8 +71,8 @@
         }
 
         /*
-                 *  STYLE 1
-                 */
+                     *  STYLE 1
+                     */
 
         #style-1::-webkit-scrollbar-track {
             -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
@@ -555,7 +555,7 @@
                                                 ?>
                                                 <tr>
                                                     <td class="d-none">{{ $key1 }}</td>
-                                                    <td class="">
+                                                    <td class="w-100">
                                                         {{-- <div class="td_content_center">{{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</div> --}}
                                                         <div class="row page-header-user-dropdown align-items-center">
                                                             <?php
@@ -1100,7 +1100,7 @@
             var username =
                 '{{ auth()->user()->name ??
                     '
-                                                                ' }}';
+                                                                                ' }}';
             const splitArray = username.split(" ");
             var finalname = "empty111";
 
@@ -1484,6 +1484,13 @@
                 //      { data: 'salary' },
                 //      { data: 'city' },
                 //   ]
+
+
+
+
+                // scrollCollapse: true,
+
+
             });
 
             $('#calendar_type').change(function() {

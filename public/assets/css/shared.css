@@ -1490,7 +1490,7 @@ input:checked + .slider-checkbox.check-in:before {
 table.dataTable,
 table.dataTable th,
 table.dataTable td {
-    width: 100% !important;
+    /* width: 100% !important; */
 }
 
 /* .dataTables_wrapper .dataTables_filter input::before{
