@@ -521,7 +521,7 @@
                                 class="text-white fa fa-plus mx-1"></i>Add
                             Goals</button>
                         <div class="table-responsive">
-                            <table id='empTable' class=' table table-borderd  mb-0'>
+                            <table id='empTable' class=' table table-borderd  mb-0 w-auto'>
                                 <thead class="table-light">
                                     <tr>
                                         <td class="d-none">Serial No</td>
