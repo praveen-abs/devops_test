@@ -17484,7 +17484,7 @@ svg.icon.icon-xxlg {
 /* annual earnings */
 .body.content.declaration-details-container,
 .body.content.salary-details-container {
-    padding: 20px 36px 30px;
+    /* padding: 20px 36px 30px; */
 }
 
 .donations-list-container,
@@ -17493,7 +17493,7 @@ svg.icon.icon-xxlg {
 }
 
 .ytd-chart-section {
-    margin-bottom: 50px;
+    /* margin-bottom: 50px; */
 }
 
 .ytd-chart-filter {
@@ -17522,7 +17522,12 @@ svg.icon.icon-xxlg {
 .ytd-chart .x-axis line,
 .ytd-chart .y-axis line,
 .ytd-chart .y-axis path {
-    stroke: #f5f5f5;
+    stroke: #dcd9da;
+
+}
+.ytd-chart .x-axis line{
+    stroke-dasharray: 5;
+    /* stroke-width: 2px; */
 }
 
 .x-axis path {
@@ -18093,67 +18098,7 @@ span .paginate_button {
     bottom: -46px;
 }
 
-/* .dataTables_wrapper .dataTables_filter input::before{
-        content: 'ri-search-line';
-        } */
-.dataTables_wrapper .dataTables_filter input {
-    width: 250px !important;
-    border-radius: 50px;
-    text-indent: 10px;
-    height: 30px;
-    border: 1px solid var(--vz-input-border);
-    border-radius: 50px !important;
-}
 
-.dataTables_wrapper .dataTables_filter label {
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-}
-
-.dataTables_wrapper .dataTables_filter input:focus {
-    display: block;
-    width: 100%;
-    padding: 0.5rem 0.9rem;
-    font-size: 0.8125rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: var(--vz-body-color);
-    background-color: var(--vz-input-bg);
-    background-clip: padding-box;
-    border: 1px solid var(--vz-input-border);
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-
-.dataTables_wrapper .dataTables_length select {
-    color: #fff !important;
-    padding: 5px !important;
-    background: #002f56 !important;
-    border-radius: 5px !important;
-    border: 0px;
-    margin: 0px 4px;
-}
-
-.dataTables_wrapper .dataTables_filter {
-    margin: 10px;
-}
-
-.dataTables_wrapper .dataTables_length {
-    margin-top: 12px;
-}
-
-.dataTables_wrapper .dataTables_length label {
-    display: flex;
-    padding: 2px;
-    border-radius: 5px;
-    align-items: center;
-    box-shadow: 1px 2px rgb(56 65 74 / 15%);
-    background: #fff;
-    box-shadow: rgb(0 0 0 / 5%) 0px 6px 24px 0px, rgb(0 0 0 / 8%) 0px 0px 0px 1px;
-}
 
 .left-corner-btn {
     position: absolute;

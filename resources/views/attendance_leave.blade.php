@@ -694,6 +694,10 @@
                                 </div>
                             </div>
                         </div>
+
+
+
+
                     </div>
                 </div>
             </div>
@@ -839,7 +843,7 @@
     <script>
         var leavetypes_array = <?php echo json_encode(getAllLeaveTypes()); ?>;
 
-
+        var employeesList_array = <?php echo json_encode($allEmployeesList); ?>;
 
 
         $(document).ready(function() {

@@ -1,95 +1,13 @@
 @extends('layouts.master')
 @section('css')
     <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
-
     <!-- for styling -->
     <link href="{{ URL::asset('assets/css/appraisal_review.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ URL::asset('/assets/css/pages_profile.css') }}">
 @endsection
 @section('content')
     <div class="loader" style="display:none;"></div>
     <div class="employee-review-wrapper mt-30">
-        {{-- <div class="card">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-6 col-sm-12 col-lg-6 col-xl-6 col-xxl-6">
-                    <div class="card  appraisal-left-content">
-                        <div class="card-body">
-                            @if ($empSelected)
-                            <div class="appraisal-info left-content">
-                                <ul class="personal-info">
-                                    <li>
-                                        <p class="title h5">Employee Name</p>
-                                        <p class="text">{{$assignedUserDetails->name}}</p>
-                                    </li>
-                                    @if (isset($assignedUserDetails->getEmployeeDetails))
-                                    <li>
-                                        <p class="title h5"> Employee ID</p>
-                                        <p class="text">{{$assignedUserDetails->getEmployeeDetails->emp_no}}</p>
-                                    </li>
-                                    @endif
-                                    @if (isset($assignedUserDetails->getEmployeeOfficeDetails))
-                                    <li>
-                                        <p class="title h5">Job Title/Designation</p>
-                                        <p class="text">{{$assignedUserDetails->getEmployeeOfficeDetails->designation}}</p>
-                                    </li>
-                                    @endif
-                                    @if (isset($assignedUserDetails->getEmployeeOfficeDetails))
-                                    <li>
-                                        <p class="title h5">Business Unit/Process/Function</p>
-                                        <p class="text">{{$assignedUserDetails->getEmployeeOfficeDetails->department}}</p>
-                                    </li>
-                                    @endif
-                                    <li>
-                                        <p class="title h5">Reporting Manager</p>
-                                        <p class="text">{{$assignersName}}</p>
-                                    </li>
-                                    <li class="mb-0">
-                                        <p class="title h5">Review Period</p>
-                                        <p class="text">
-                                            {{ $assignedGoals->year }} - {{ strtoupper($assignedGoals->assignment_period) }}
-                                        </p>
-                                    </li>
-                                </ul>
-                            </div>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-sm-12 col-lg-6 col-xl-6 col-xxl-6">
-                    <div class="card  appraisal-right-content">
-                        <div class="card-body">
-
-                            <div class="mb-3 input-wrap">
-                                <p>Overall Annual Score</p>
-                                <div class="appraisal-box  btn bg-success text-white "><small>
-                                        @if ($isAllReviewersSubmittedOrNot) @if ($ratingDetail){{$ratingDetail['rating']}}@else - @endif @else - @endif</small></div>
-
-                            </div>
-                            <div class="mb-3 input-wrap">
-                                <p>Corresponding ANNUAL PERFORMANCE Rating</p>
-                                <div class="appraisal-box  btn bg-success  text-white"><small>
-                                        @if ($isAllReviewersSubmittedOrNot) @if ($ratingDetail){{$ratingDetail['performance']}}@else - @endif @else - @endif</small></div>
-                            </div>
-                            <div class="mb-3 input-wrap">
-                                <p>Ranking</p>
-                                <div class="appraisal-box   btn bg-success text-white "><small>
-                                        @if ($isAllReviewersSubmittedOrNot) @if ($ratingDetail){{$ratingDetail['ranking']}}@else - @endif @else - @endif</small></div>
-                            </div>
-                            <div class=" input-wrap">
-                                <p>Action</p>
-                                <div class="appraisal-box btn bg-success text-white"><small>
-                                        @if ($isAllReviewersSubmittedOrNot) @if ($ratingDetail){{$ratingDetail['action']}}@else - @endif @else - @endif</small></div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
-    </div> --}}
-
         <div class="card">
             <div class="card-body">
                 <div class="row">
@@ -706,6 +624,8 @@
 
 
 @section('script')
+@yield('script-profile-avatar')
+
     <!--Sweet alert JS-->
     <script src="{{ URL::asset('/assets/premassets/js/sweetalert.js') }}"></script>
     <script src="{{ URL::asset('/assets/premassets/js/progressbar.min.js') }}"></script>

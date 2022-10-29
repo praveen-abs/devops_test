@@ -213,6 +213,18 @@ class VmtMainDashboardController extends Controller
         // get praise data
         $praiseData = VmtPraise::orderBy('created_at','DESC')->get();
 
+        //Promote user to Manager if any employees reporting him
+        $reporteesCount = VmtEmployeeOfficeDetails::where('l1_manager_code',auth()->user()->user_code)->get()->count();
+
+        if($reporteesCount > 0){
+           $currentUser =  User::find(auth()->user()->id);
+
+           //change only if current user is employee
+           if($currentUser->org_role == '5')
+                $currentUser->org_role = '4';
+
+           $currentUser->save();
+        }
 
         if(Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]) )
         {

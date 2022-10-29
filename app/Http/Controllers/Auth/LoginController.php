@@ -8,11 +8,13 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth as auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\URL;
 
 use App\Models\VmtGeneralInfo;
 use App\Models\User;
 use App\Models\VmtClientMaster;
 use Illuminate\Support\Facades\Cache;
+use App\Mail\PasswordResetLinkMail;
 
 use App\Http\Controllers\VmtStaffAttendanceController;
 
@@ -75,6 +77,12 @@ class LoginController extends Controller
 
 
         return view('auth.login', compact('generalInfo','clientList','cacheStatus'));
+    }
+
+    public function showForgetPasswordPage(Request $request){
+        $generalInfo = VmtGeneralInfo::first();
+
+        return view('forget_password',compact('generalInfo'));
     }
 
     public function login(Request $request)
@@ -192,6 +200,70 @@ class LoginController extends Controller
         return view('auth.reset_password',compact('generalInfo'));
     }
 
+    public function sendPasswordResetLink(Request $request){
+
+        $message = "";
+        $mail_status = "";
+        $status = "";
+
+        $user = User::where('email',$request->email);
+
+        //Check whether the given email exists in system
+        if($user->exists())
+        {
+
+            //Generate temporary URL
+            $passwordResetLink =  URL::temporarySignedRoute(
+                'vmt-signed-passwordresetlink', now()->addMinutes(1), ['uid' => $user->value('id')]
+            );
+
+            //Then, send mail to that email
+
+            $VmtGeneralInfo = VmtGeneralInfo::first();
+            $image_view = url('/') . $VmtGeneralInfo->logo_img;
+
+            $isSent    = \Mail::to($request->email)->send(new PasswordResetLinkMail($user->value('name'), $user->value('user_code'), $passwordResetLink, $image_view));
+
+            if( $isSent) {
+                $mail_status = "Mail sent successfully";
+
+            } else {
+                $mail_status= "Mail Error : There was one or more failures.";
+            }
+
+            $status = "success";
+            $message = "Instructions to reset password reset is sent to your mail.";
+
+
+        }
+        else
+        {
+            $status = "failure";
+            $message = "Email doesnt exist in our system. Kindly check and try again.";
+        }
+
+
+        $response = [
+            'status' => $status,
+            'message' => $message,
+            'mail_status' => $mail_status,
+        ];
+
+        return $response;
+    }
+
+    public function processSignedPasswordResetLink(Request $request){
+
+        if ($request->hasValidSignature()) {
+            return redirect('/resetPassword')->with('uid', $request->uid);
+        }
+        else{
+            $error_message =  "Reset password link is expired. Please try again";
+
+            return redirect('/forgetPassword')->with('error_message', $error_message);
+        }
+
+    }
 
     protected function syncStaffAttendance(){
 

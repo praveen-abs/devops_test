@@ -208,6 +208,7 @@
                 <div class="modal-body">
                     <form id="form_updatePassword" action="" method="POST">
                         @csrf
+                        <input type="hidden" name="uid" id="uid" value="{{ session('uid') }}" />
                         <label for="FormSelectDefault" class="form-label">Please reset your password.</label>
                         <div class="mb-3 row">
                             <div class="col-12 col-md-12 col-lg-12 ">
@@ -274,6 +275,7 @@
                     type: "POST",
                     url: "{{ route('vmt-updatepassword') }}",
                     data: {
+                    'uid' : $('#uid').val(),
                     'password': $('#new_password_confirm').val(),
                     "_token": "{{ csrf_token() }}",
                     },

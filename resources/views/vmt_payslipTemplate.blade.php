@@ -189,7 +189,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                         <p>DATE OF BIRTH</p>
                     </td>
                     <td colspan="3">
-                        <p>{{ date('d-m-Y', strtotime($employee->DOB)) }}</p>
+                        <p>{{ date('d-m-Y', strtotime($employee_details->dob)) }}</p>
                     </td>
                     <td colspan="3" class="bg-ash text-strong">
                         <p>DATE OF JOINING</p>
@@ -385,7 +385,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                         <p class="txt-left text-strong">EPF</p>
                     </td>
                     <td colspan="2" class="">
-                        <p class="txt-right">638.00</p>
+                        <p class="txt-right">{{ number_format(round($employee->EPFR), 2) }}</p>
                     </td>
                 </tr>
                 <tr>
@@ -399,13 +399,13 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                         <p class="txt-right">{{ number_format(round($employee->HRA_ARREAR), 2) }}</p>
                     </td>
                     <td colspan="2" class="">
-                        <p class="txt-right">2280.00</p>
+                        <p class="txt-right">{{ number_format(round($employee->Earned_HRA), 2) }}</p>
                     </td>
                     <td colspan="2" class="">
                         <p class="txt-left text-strong">ESIC</p>
                     </td>
                     <td colspan="2" class="">
-                        <p class="txt-right">58.00</p>
+                        <p class="txt-right">{{ number_format(round($employee->EMPLOYEE_ESIC), 2) }}</p>
                     </td>
                 </tr>
                 <tr>
@@ -527,7 +527,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                     </td>
 
                     <td colspan="2" class="">
-                        <p class="txt-right">7666.00</p>
+                        <p class="txt-right">---</p>
                     </td>
                     <td colspan="2" class="">
                         <p class="txt-left text-strong">TOTAL DEDUCTION</p>

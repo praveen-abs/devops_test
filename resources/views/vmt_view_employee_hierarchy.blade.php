@@ -14,14 +14,14 @@
     .orgchart .dept-level .title .symbol {
         display: none;   }
 
-   
+
 
 
 
     /*  Logo node style */
     .orgchart .logo-level .title {
        /* display: none;*/
-         height: auto; 
+         height: auto;
         display: inline-flex;
         margin: 0px;
         text-align: center;
@@ -39,7 +39,7 @@
 
     .logo-level figure {
         margin: 0;
-    } 
+    }
 
     .tree-avatar .rounded-circle.user-profile{
             height: 30px;
@@ -201,8 +201,8 @@ $(document).ready(function() {
                     if(data.className != "logo-level")
                         nodeHtml =  '<div class="title">'+'<span>'+data.name+'</span>'+'</div>';
 
-                    var imageHtml  =  '<img class="user-avatar" src="'+data.image+'" />';
-                
+                    var imageHtml  =  '<img class="user-avatar rounded-circle" src="'+data.image+'" />';
+
                 }
                 else{
                     if(data.className == "logo-level"){
@@ -212,13 +212,13 @@ $(document).ready(function() {
                     }else{
                         nodeHtml =  '<div class="title">'+'<span>'+data.name+'</span>'+'</div>';
 
-                        var imageHtml  =  '<span class="rounded-circle user-profile  ml-2 " id=""><i id="topbar_username" class="align-middle ">'+data.name.split(" ").join("").substring(0, 2)+'</i></span>';    
+                        var imageHtml  =  '<span class="rounded-circle user-profile  ml-2 " id=""><i id="topbar_username" class="align-middle ">'+data.name.split(" ").join("").substring(0, 2)+'</i></span>';
                     }
-                    
+
                 }
 
-                
-                
+
+
                 if(data.className != 'dept-level'){
                     nodeHtml = nodeHtml + '<div class="tree-avatar">'+imageHtml +'</div>';
 

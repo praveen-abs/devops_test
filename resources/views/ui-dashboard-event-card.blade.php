@@ -1,5 +1,5 @@
 <div class="event-wrapper">
-    <div class="card profile-box border-0">
+    <div class="card profile-box border-0 mb-0">
         <div class="card-body">
             <h6 class="text-primary">Events</h6>
             <div class="row">
@@ -20,7 +20,7 @@
                             @if($text != null)
                                 <?php $anyUpcoming_Current_Events = true; ?>
                                 <div class="col-sm-6 col-md-6 col-xl-3 col-lg-3">
-                                    <div class="card profile-box flex-fill" style="border-top: 5px solid #E54E0D;">
+                                    <div class="card profile-box flex-fill mb-0" style="border-top: 5px solid #E54E0D;">
                                         <!-- <div class="p-1 bg-danger" ></div> -->
                                         <div class="card-body ">
                                             <div class="wishes-card-wrapper">
@@ -60,7 +60,7 @@
                         @if($text != null)
                             <?php $anyUpcoming_Current_Events = true; ?>
                             <div class="col-sm-6 col-md-6 col-xl-3 col-lg-3">
-                                <div class="card profile-box flex-fill" style="border-top: 5px solid #037B5A;">
+                                <div class="card profile-box flex-fill mb-0" style="border-top: 5px solid #037B5A;">
                                     <div class="card-body ">
                                         <div class="wishes-card-wrapper">
                                             <p class="text-muted f-12   m-0"><i class=" f-12 mr-2 ri-shopping-bag-fill"

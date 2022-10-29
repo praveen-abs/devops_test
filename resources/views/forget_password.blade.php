@@ -4,14 +4,14 @@
 @section('css')
     <link href="{{ URL::asset('assets/css/login_page.css') }}" rel="stylesheet">
     <style>
-    .fade {
-        transition: opacity 0.2s linear !important;
-      }
+        .fade {
+            transition: opacity 0.2s linear !important;
+        }
     </style>
 @endsection
 @section('content')
-
     <?php
+
     $logoObj = \DB::table('vmt_general_info')->first();
 
     if ($logoObj) {
@@ -91,85 +91,34 @@
                             <div
                                 class="col-md-6 col-sm-12 col-xs-12 col-xl-5 col-lg-5 d-flex align-items-center right-content">
                                 <div class="card-body te1xt-black login-card px-5 py-0">
-                                    <form action="{{ route('login') }}" method="POST" class="login-form">
+                                    <form action="#}" method="POST" class="login-form">
                                         <div class="d-flex align-items-center justify-content-center mb-3 ">
                                             <div class="login-top-img">
                                                 <img src="{{ URL::asset($generalInfo->logo_img) }}" alt=""
                                                     class="">
-                                                    <!-- <img src="{{ URL::asset('assets/images/vasa.jpg') }}" alt="" class="w-100 h-100"> -->
+                                                <!-- <img src="{{ URL::asset('assets/images/vasa.jpg') }}" alt="" class="w-100 h-100"> -->
                                             </div>
                                         </div>
                                         <!-- <p class="m-0   h5 fw-bold log">Login <span class="me-1">to</span><span
-                                                class="m-0 fw-bold h4 me-1">ABS</span><small
-                                                class="text-orange fw-bold f-10">hrms</small></p> -->
-                                        <p class="text-muted f-12 mb-3 fw-bold">Login to run your business together</p>
+                                                    class="m-0 fw-bold h4 me-1">ABS</span><small
+                                                    class="text-orange fw-bold f-10">hrms</small></p> -->
+                                        <label class="text-muted f-15 fw-bold mb-2 ">Forget password</label>
 
 
                                         @csrf
-                                        <div class="form-outline mb-3 form-row">
-                                            <label for="" class="">Employee Code</label>
-                                            <input type="text"
-                                                class="form-control textbox  @error('user_code') is-invalid @enderror"
-                                                value="{{ old('user_code', '') }}" id="user_code" name="user_code"
-                                                placeholder="Employee Code">
-                                            @error('user_code')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
+                                        <div class="mb-1 ">
+                                            <label for="" class="">Email</label>
+                                            <input type="email" class="form-control textbox" value="" id="email"
+                                                name="email" placeholder="Enter email address">
                                         </div>
 
-                                        <div class="form-outline mb-3    form-row">
-                                            <label for="" class="">Password</label>
-                                            <input type="password"
-                                                class="form-control textbox @error('password') is-invalid @enderror"
-                                                name="password" placeholder="Password" id="password-input"
-                                                value="">
-                                            @error('password')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-
-
-                                        <div class="form-outline mb-1 form-row">
-                                            @if (!empty($clientList) && $clientList->count() > 1)
-
-                                                    <select class="form-select" aria-label="Default select example"
-                                                        name="client_code">
-                                                        <option value="" selected>Choose Client</option>
-                                                        @foreach ($clientList as $singleClient)
-                                                            <option value="{{ $singleClient->client_name }}">
-                                                                {{ $singleClient->client_name }}</option>
-                                                        @endforeach
-                                                    </select>
-
-                                            @endif
-                                            @error('client_code')
-                                                <span class="invalid-feedback" role="">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-
-                                        @if (count($errors) > 0)
-                                            @foreach ($errors->all() as $message)
-                                                {{-- <div class="alert alert-danger "> --}}
-                                                    <span class="text-danger display-hide">{{ $message }}</span>
-                                                {{-- </div> --}}
-                                            @endforeach
-                                        @endif
-
-                                        <div class="d-flex justify-content-end align-items-center mb-2">
-                                            <a href="{{ route('vmt-forgetpassword-page')}}" class="f-12 text-orange">Forgot password?</a>
-                                        </div>
-
-
-                                            <button
-                                            class="btn btn-orange w-100 sign-in-btn   waves-effect waves-light "
-                                            type="submit">Log-In
-                                        </button>
+                                        <span class="text-danger " id="error_message">
+                                            {{ session('error_message') }}
+                                        </span>
+                                        <br />
+                                        <input type="button"
+                                            class="btn btn-orange w-100 sign-in-btn  mt-1  waves-effect waves-light "
+                                            type="submit" value="Submit" onclick="submitForm()" />
 
 
                                         <div class="divider d-flex align-items-center my-4 px-2 mx-5">
@@ -221,124 +170,123 @@
                                 </div>
                             </div>
                             <div class="login-bottom"></div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
 
 
-    <div id="modal_resetPassword" class="modal custom-modal fade" role="dialog">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal" role="document">
-            <div class="modal-content">
-                <div class="modal-header py-3 new-role-header d-flex align-items-center">
-                    <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
-                        Reset Password</h5>
-                    <input type="button" value="X" onclick="closeModal()" class="close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal" />
-                </div>
-                <div class="modal-body">
-                    <form id="form_updatePassword" action="" method="POST">
-                        @csrf
-                        <label for="FormSelectDefault" class="form-label">Please reset your password.</label>
-                        <div class="mb-3 row">
-                            <div class="col-12 col-md-12 col-lg-12 ">
-                                <label class="" for="">New Password</label>
-                                <input type="password" name="new_password" id="new_password" />
-                            </div>
-                            <div class="col-12 col-md-12 col-lg-12 ">
-                                <label class="" for="">Confirm New Password</label>
-                                <input type="password" name="new_password_confirm" id="new_password_confirm" />
-                            </div>
-                            <div class="col-12 col-md-12 col-lg-12 ">
-                                <span class="text-danger" id="error_message"></span>
+
+        <div class="modal fade" id="notificationModal" role="dialog" aria-hidden="true"
+            style="opacity:1; display:none;background:#00000073;">
+            <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true"
+                aria-labelledby="">
+                <div class="modal-content">
+                    <div class="modal-header border-0">
+                        <h6 class="modal-title" id="modalHeader">
+                        </h6>
+                        {{-- <button type="button" class="btn-close close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal" aria-label="Close">
+
+                        </button> --}}
+                        <button type="button" class="close close-modal outline-none bg-transparent border-0 h3"
+                            aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mt-4">
+                            <p class="mb-3 text-muted f-15 text-center" id="modalNot"></p>
+
+                            <div class="text-end">
+
+
+
+                                <button type="button" class="btn btn-light close-modal" id="closeModal">Cancel</button>
                             </div>
                         </div>
-                        <input type="button" value = "Submit" class="btn btn-primary waves-effect waves-light" onclick="submitForm()" />
-
-                    </form>
-
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
+
+    </section>
 @endsection
 
 @section('script')
     <script type="text/javascript">
         $(document).ready(function() {
-           // $('#modal_resetPassword').modal('show');
-
-            var temp = '{{ $cacheStatus }}';
-            console.log(temp);
-
-            var allCookies = document.cookie.split(';');
-
-            for (var i = 0; i < allCookies.length; i++)
-                document.cookie = allCookies[i] + "=;expires=" +
-                new Date(0).toUTCString();
-
-            console.log("All cookies cleared");
+            // $('#modal_resetPassword').modal('show');
 
         });
 
-        function closeModal()
-        {
+        function closeModal() {
             $('#modal_resetPassword').modal('hide');
         }
 
-        function submitForm()
-        {
-           //Check the password length
-           if( $("#new_password").val().length < 8 )
-           {
-                $('#error_message').html("Password min.length should be 8");
+        function isValidEmailAddress(emailAddress) {
+            var pattern = new RegExp(
+                /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
+                );
+            return pattern.test(emailAddress);
+        }
+
+        // for hide modal
+
+        $(".close-modal").click(function() {
+                console.log('close');
+                $("#notificationModal").hide();
+            });
+
+        function submitForm() {
+
+            if (isValidEmailAddress($('#email').val())) {
+                $('#error_message').html("");
+
+                console.log("Email is valid");
+                ajax_SendPasswordResetLink();
+            } else {
+                console.log("Email is invalid !");
+
+                $('#error_message').html("Please enter a valid email address");
                 return;
             }
 
-
-           if( $("#new_password").val() ==  $("#new_password_confirm").val())
-           {
-                $('#error_message').html("");
-                console.log("Pwd matched");
-                ajax_UpdatePassword();
-           }
-           else
-           {
-                $('#error_message').html("Password doesnt match!");
-                console.log("Pwd doesnt matched");
-           }
         }
 
-        function ajax_UpdatePassword()
-        {
+        function ajax_SendPasswordResetLink() {
             $.ajax({
-                    type: "POST",
-                    url: "{{ route('vmt-updatepassword') }}",
-                    data: {
-                    'password': $('#new_password_confirm').val(),
+                type: "POST",
+                url: "{{ route('vmt-send-passwordresetlink') }}",
+                data: {
+                    'email': $('#email').val(),
                     "_token": "{{ csrf_token() }}",
-                    },
-                    success: function(data) {
+                },
+                success: function(data) {
 
-                        if(data.status == "success")
-                        {
+                    if (data.status == "success") {
+
+                        $('#modalHeader').html("Mail sent Successfully");
+                        $('#modalNot').html(
+                            data.message
+                        );
+                        $('#notificationModal').show();
+                        $('#notificationModal').removeClass('fade');
 
 
-                        }
-                        else
-                        if(data.status == "failure")
-                        {
 
-                        }
-
-                        console.log(data.message);
-
+                    } else
+                    if (data.status == "failure") {
+                        $('#error_message').html(data.message);
                     }
+
+                    console.log(data.message);
+
+                }
             });
 
         }
-
     </script>
 @endsection
