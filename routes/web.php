@@ -114,7 +114,7 @@ Route::post('vmt-general-settings', [App\Http\Controllers\HomeController::class,
 // })->name('vmt-vendor-route');
 
 Route::get('/vendor', function () {
-    return view('runpayRoll');
+    return view('payRoll_claim');
 })->name('vmt-vendor-route');
 
 
