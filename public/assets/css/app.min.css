@@ -722,29 +722,6 @@ body::-webkit-scrollbar-track {
     background: rgb(212, 212, 212);
 }
 
-body::-webkit-scrollbar {
-    width: 5px;
-    background-color: #00bcd4;
-}
-body::-webkit-scrollbar-thumb {
-    background-color: #002f56;
-}
-::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-    background: rgb(212, 212, 212);
-}
-
-::-webkit-scrollbar {
-    width: 5px;
-    height:5px;
-
-}
-::-webkit-scrollbar-thumb {
-    background-color: #002f56;
-    border-radius: 5px;
-
-}
 .page-content::-webkit-scrollbar {
     width: 10px;
 }

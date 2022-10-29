@@ -184,9 +184,8 @@ $(document).ready(function() {
             //'{{ route('getTwoLevelOrgTree',['user_code' => Auth::user()->user_code ]) }}', LogoNode
             'ajaxURL' : ajaxURLs,
             'pan' : true,
-            'zoom' : true,
-            'zoominLimit' : 2,
-            'zoomoutLimit' : 0.7,
+
+
             'nodeContent': 'designation',
             'exportButton': true,
             'parentNodeSymbol': '',
