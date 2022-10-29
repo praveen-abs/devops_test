@@ -30,13 +30,13 @@
                     <div class="card h-100">
                         <div class="row g-0 h-100">
                             <div class="col-md-6 col-xl-7 col-lg-7 d-none d-xs-none d-sm-none d-md-block left-content">
-                                <div id="carouselExampleIndicators" class="carousel w-100 slide" data-bs-ride="carousel">
+                                <div id="features" class="carousel w-100 slide" data-bs-ride="carousel">
                                     <ol class="carousel-indicators">
-                                        <li data-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                                        <li data-target="#features" data-bs-slide-to="0" class="active"
                                             aria-current="true" aria-label="Slide 1"></li>
-                                        <li data-target="#carouselExampleIndicators" data-bs-slide-to="1"></li>
-                                        <li data-target="#carouselExampleIndicators" data-bs-slide-to="2"></li>
-                                        <li data-target="#carouselExampleIndicators" data-bs-slide-to="3"></li>
+                                        <li data-target="#features" data-bs-slide-to="1"></li>
+                                        <li data-target="#features" data-bs-slide-to="2"></li>
+                                        <li data-target="#features" data-bs-slide-to="3"></li>
                                     </ol>
                                     <div class="carousel-inner h-100">
                                         <div class="carousel-item active h-100" data-bs-interval="2000">
@@ -76,13 +76,13 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <a class="carousel-control-prev" href="#carouselExampleSlides" role="button"
-                                        data-slide="prev">
+                                    <a class="carousel-control-prev" href="#features" role="button"
+                                        data-bs-slide="prev">
                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                         <span class="sr-only">Previous</span>
                                     </a>
-                                    <a class="carousel-control-next" href="#carouselExampleSlides" role="button"
-                                        data-slide="next">
+                                    <a class="carousel-control-next" href="#features" role="button"
+                                        data-bs-slide="next">
                                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                         <span class="sr-only">Next</span>
                                     </a>
