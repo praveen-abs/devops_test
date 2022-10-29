@@ -53,7 +53,7 @@
 }
 
 .table-content {
-    overflow: auto;
+    /* overflow: auto; */
 }
 
 .table-content table th {
