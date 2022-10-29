@@ -878,7 +878,7 @@
                                     class="col-sm-12 col-md-6 col-lg-6 col-xxl-6 col-xl-6 d-flex align-items-center text-start">
 
                                     <!-- <a href="{{ route('showKPICreateForm') }}" target="_blank"> -->
-                                    <a class="createKpiFromOnClick cursor-pointer plus-sign" target="_blank">
+                                    <a class="createKpiFromOnClick cursor-pointer plus-sign" target="_self">
                                         <i class="fa fa-plus-circle me-2"></i>Create
                                         KPI Form</a>
 

@@ -54,7 +54,9 @@
 @slot('li_1')  @endslot
 @endcomponent --}}
 
-<div class="container-fluid bg-white p-2 mt-30">
+<div class="container-fluid mt-30">
+    <div class="card">
+        <div class="card-body">
     <div class="row">
         <div class="col-sm-12 col-md-12 col-xxl-12 col-xl-12 col-lg-12">
             <h6 class="">Goals / Areas of development</h6>
@@ -252,6 +254,8 @@
             </div>
         </div>
     </div>
+</div>
+</div>
 </div>
 
 <!--  -->
