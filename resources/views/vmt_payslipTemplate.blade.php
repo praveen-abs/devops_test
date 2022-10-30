@@ -221,7 +221,7 @@ $bank_names = \DB::table('bank_list')->get();
                         <p>EPF NUMBER</p>
                     </td>
                     <td colspan="3">
-                        <p>{{ $employee->epf_number }}</p>
+                        <p>{{ $employee->EPF_Number }}</p>
                     </td>
                     <td colspan="3" class="bg-ash text-strong">
                         <p>ESIC NUMBER</p>
@@ -236,7 +236,7 @@ $bank_names = \DB::table('bank_list')->get();
                         <p>UAN</p>
                     </td>
                     <td colspan="3">
-                        <p>{{ $employee_details->uan }}</p>
+                        <p>{{ $employee->UAN }}</p>
                     </td>
                     <td colspan="3" class="bg-ash text-strong">
                         <p>PAN</p>
