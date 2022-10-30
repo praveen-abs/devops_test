@@ -203,7 +203,7 @@
         <div class="row">
             <div class="col-xl-12">
                 <!-- appraisal table -->
-                <div class="card">
+                <div class="card ">
                     <div class="card-body pb-2">
 
                         @if (isset($assignedGoals) && $assignedGoals->is_assignee_submitted != '1')
@@ -239,8 +239,8 @@
                                 <input type="hidden" value="" name="formSubmitType" id="formSubmitType">
                                 <input type="hidden" name="goal_id" value="{{ $assignedGoals->id }}">
                                 <input type="hidden" name="kpiReviewId" value="{{ $assignedGoals->id }}">
-                                <div class="table-content mb-4">
-                                    <table id="table_review"
+                                <div class="table-content mb-4 table-responsive">
+                                    <table id="table_review table"
                                         class="table kpi_appraisal-table align-middle mb-0 table-bordered  responsive"
                                         data-paging="true" data-paging-size="100" data-paging-limit="3"
                                         data-paging-container="#paging-ui-container"
@@ -346,39 +346,50 @@
                                             @foreach ($kpiRows as $index => $kpiRow)
                                                 <tr>
                                                     <th scope="row">
-                                                        <div>
-                                                            {{ $kpiRow->dimension }}
+                                                        <div  style="width:300px">
+                                                            {{-- {{ $kpiRow->dimension }} --}}
+                                                            {{ \Str::words($kpiRow->dimension, 15, '') }}
+
+                                                            @if (strlen(substr($kpiRow->dimension, strlen(\Str::words($kpiRow->dimension, 15, '')))) > 0)
+                                                                <span class="{{ 'collapse-' . $index }}"
+                                                                    style="display: none;">
+                                                                    {{ substr($kpiRow->dimension, strlen(\Str::words($kpiRow->dimension, 15, ''))) }}
+                                                                </span>
+                                                                <span
+                                                                    class="btn bg-transparent text-orange outline-none border-0 fw-bold f-12 more-less-btn"
+                                                                    onclick="showOrHideDescription('{{ $index }}',this)">...More</span>
+                                                            @endif
                                                         </div>
                                                     </th>
                                                     <td>
-                                                        <div>
+                                                        <div  style="width:300px">
 
-                                                            {{ \Str::words($kpiRow->kpi, 20, '') }}
+                                                            {{ \Str::words($kpiRow->kpi, 15, '') }}
 
-                                                            @if (strlen(substr($kpiRow->kpi, strlen(\Str::words($kpiRow->kpi, 20, '')))) > 0)
+                                                            @if (strlen(substr($kpiRow->kpi, strlen(\Str::words($kpiRow->kpi, 15, '')))) > 0)
                                                                 <span class="{{ 'collapse-' . $index }}"
                                                                     style="display: none;">
-                                                                    {{ substr($kpiRow->kpi, strlen(\Str::words($kpiRow->kpi, 20, ''))) }}
+                                                                    {{ substr($kpiRow->kpi, strlen(\Str::words($kpiRow->kpi, 15, ''))) }}
                                                                 </span>
                                                                 <span
-                                                                    class="btn bg-transparent text-primary outline-none border-0 fw-bold f-12 more-less-btn"
-                                                                    onclick="showOrHideDescription('{{ $index }}')">More</span>
+                                                                    class="btn bg-transparent text-orange outline-none border-0 fw-bold f-12 more-less-btn"
+                                                                    onclick="showOrHideDescription('{{ $index }}',this)">...More</span>
                                                             @endif
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div>
                                                             <!-- {{ $kpiRow->operational_definition }} -->
-                                                            {{ \Str::words($kpiRow->operational_definition, 20, '') }}
+                                                            {{ \Str::words($kpiRow->operational_definition, 15, '') }}
 
-                                                            @if (strlen(substr($kpiRow->operational_definition, strlen(\Str::words($kpiRow->operational_definition, 20, '')))) > 0)
+                                                            @if (strlen(substr($kpiRow->operational_definition, strlen(\Str::words($kpiRow->operational_definition, 15, '')))) > 0)
                                                                 <span class="{{ 'collapse-' . $index }}"
                                                                     style="display: none;">
-                                                                    {{ substr($kpiRow->operational_definition, strlen(\Str::words($kpiRow->operational_definition, 20, ''))) }}
+                                                                    {{ substr($kpiRow->operational_definition, strlen(\Str::words($kpiRow->operational_definition, 15, ''))) }}
                                                                 </span>
                                                                 <span
-                                                                    class="btn bg-transparent text-primary outline-none border-0 fw-bold f-12 more-less-btn"
-                                                                    onclick="showOrHideDescription('{{ $index }}')">More</span>
+                                                                    class="btn bg-transparent text-orange outline-none border-0 fw-bold f-12 more-less-btn"
+                                                                    onclick="showOrHideDescription('{{ $index }}',this)">...More</span>
                                                             @endif
 
                                                         </div>
@@ -387,17 +398,17 @@
                                                         <div>
                                                             <!-- {{ $kpiRow->measure }}  -->
 
-                                                            {{ \Str::words($kpiRow->measure, 20, '') }}
+                                                            {{ \Str::words($kpiRow->measure, 15, '') }}
 
-                                                            @if (strlen(substr($kpiRow->measure, strlen(\Str::words($kpiRow->measure, 20, '')))) > 0)
+                                                            @if (strlen(substr($kpiRow->measure, strlen(\Str::words($kpiRow->measure, 15, '')))) > 0)
                                                                 <span class="{{ 'collapse-' . $index }}"
                                                                     style="display: none;">
-                                                                    {{ substr($kpiRow->measure, strlen(\Str::words($kpiRow->measure, 20, ''))) }}
+                                                                    {{ substr($kpiRow->measure, strlen(\Str::words($kpiRow->measure, 15, ''))) }}
                                                                 </span>
                                                                 <span
-                                                                    class="btn bg-transparent text-primary outline-none border-0 fw-bold f-12 "
+                                                                    class="btn bg-transparent text-orange outline-none border-0 fw-bold f-12 "
                                                                     id
-                                                                    onclick="showOrHideDescription('{{ $index }}')">More</span>
+                                                                    onclick="showOrHideDescription('{{ $index }}',this)">...More</span>
                                                             @endif
                                                         </div>
                                                     </td>
@@ -559,7 +570,7 @@
             @if ($isAllReviewersSubmittedOrNot && count($pmsRatingDetails) > 0)
                 <div class="row">
                     <div class="col-12">
-                        <div class="card">
+                        <div class="card mb-0">
                             <div class="card-header">
                                 <h5>Best People Rating Grid</h5>
                             </div>
@@ -570,39 +581,39 @@
 
                                         <thead class="thead" id="tHead">
                                             <tr>
-                                                <th scope="col">Overall Annual Score</th>
+                                                <th class="" style="width:350px">Overall Annual Score</th>
                                                 @foreach ($pmsRatingDetails as $ratingDetails)
-                                                    <th scope="col">{{ $ratingDetails->score_range }}</th>
+                                                    <td scope="col" style="border:1px solid #002f56">>{{ $ratingDetails->score_range }}</th>
                                                 @endforeach
                                             </tr>
                                         </thead>
                                         <tbody class="tbody" id="tbody">
                                             <tr>
 
-                                                <td class="">
-                                                    Corresponding ANNUAL PERFORMANCE Rating
+                                                <th class="" style="width:350px">
+                                                     ANNUAL PERFORMANCE Rating
 
-                                                </td>
+                                                </th>
                                                 @foreach ($pmsRatingDetails as $ratingDetails)
-                                                    <td class="">{{ $ratingDetails->performance_rating }}</td>
+                                                    <td class="" style="border:1px solid #002f56">{{ $ratingDetails->performance_rating }}</td>
                                                 @endforeach
                                             </tr>
 
                                             <tr>
-                                                <td class="">
+                                                <th class="" style="width:350px">
                                                     Ranking
-                                                </td>
+                                                </th>
                                                 @foreach ($pmsRatingDetails as $ratingDetails)
-                                                    <td class="">{{ $ratingDetails->ranking }}</td>
+                                                    <td class="" style="border:1px solid #002f56">{{ $ratingDetails->ranking }}</td>
                                                 @endforeach
                                             </tr>
                                             <tr>
 
-                                                <td class="">
+                                                <th class="" style="width:350px">
                                                     Action
-                                                </td>
+                                                </th>
                                                 @foreach ($pmsRatingDetails as $ratingDetails)
-                                                    <td class="">{{ $ratingDetails->action }}</td>
+                                                    <td class="" style="border:1px solid #002f56">{{ $ratingDetails->action }}</td>
                                                 @endforeach
                                             </tr>
                                         </tbody>
@@ -885,13 +896,15 @@
 
 
         // show or hide table data
-        function showOrHideDescription(rowIndex) {
+        function showOrHideDescription(rowIndex,element) {
             console.log(rowIndex + 'collapse');
             //$(collapse-'.$index)
             if ($('.collapse-' + rowIndex).css('display') == 'none') {
-                $('.collapse-' + rowIndex).css('display', 'block');
+                $('.collapse-' + rowIndex).css('display', 'inline');
+                element.innerText="Less";
             } else {
                 $('.collapse-' + rowIndex).css('display', 'none');
+                element.innerText="...More";
             }
         }
     </script>
