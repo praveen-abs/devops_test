@@ -317,7 +317,7 @@ class VmtEmployeeController extends Controller
                         'mail_status' => '',
                         'error' => '',
                         'error_verbose' =>'',
-                        'user_id' => $result->id      //send the user id to front-end
+                        'user_id' => $result->response_object->id  //send the user id to front-end
 
                     ];
                 }
