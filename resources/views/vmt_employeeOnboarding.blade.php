@@ -1022,7 +1022,38 @@
                 var can_onboard_employee = "0";
                 let form_data1 = $("#form-1");
 
+                //check whether the minimum required details are filled
+                console.log("Emp name : "+$('#employee_name').val());
+                console.log("Emp code : "+$('#employee_code').val());
+                console.log("Email : "+$('#email').val());
 
+                var basic_details_errors = [];
+
+                if($('#employee_name').val() == '')
+                    basic_details_errors.push("Employee Name");
+
+                if($('#employee_code').val() == '')
+                    basic_details_errors.push("Employee Code");
+
+                if($('#email').val() == '')
+                    basic_details_errors.push("Email");
+
+
+                if(basic_details_errors.length > 0)
+                {
+
+                    $('#modalHeader').html("Please fill the following details");
+
+                    for(let a in basic_details_errors )
+                    {
+                        $('#modalSubHeading').html(a);
+                    }
+
+                    $('#notificationModal').show();
+                    $('#notificationModal').removeClass('fade');
+
+                    return;
+                }
 
                 //  var form = $("#Form");
 
