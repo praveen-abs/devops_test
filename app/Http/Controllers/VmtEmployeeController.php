@@ -204,18 +204,19 @@ class VmtEmployeeController extends Controller
 
                 $message = "";
 
-                if($request->input('can_onboard_employee') == "1")
+                if($result->status == "success")
                 {
-                    $isEmailSent  = $employeeService->attachApoinmentPdf($onboard_form_data);
-                    $message="Employee onboarded successfully";
-                }
-                else
-                {
-                    $message="Employee details updated in draft";
-                }
 
-                if($result)
-                {
+                    if($request->input('can_onboard_employee') == "1")
+                    {
+                        $isEmailSent  = $employeeService->attachApoinmentPdf($onboard_form_data);
+                        $message="Employee onboarded successfully";
+                    }
+                    else
+                    {
+                        $message="Employee details updated in draft";
+                    }
+
                     $response = [
                         'status' => 'success',
                         'message' => $message,
@@ -223,6 +224,18 @@ class VmtEmployeeController extends Controller
                         'error' => '',
                         'error_verbose' =>''
                     ];
+                }
+                else
+                {
+                    //When error occured while storing User, then show error to UI
+
+                    $response = [
+                        'status' => $result->status,
+                        'message' => "Error while creating/update User details",
+                        'error' => $result->message,
+                        'error_verbose' =>''
+                    ];
+
                 }
 
             }
@@ -234,16 +247,31 @@ class VmtEmployeeController extends Controller
                 {
                     //$response = $this->storeEmployeeNormalOnboardForm($onboard_form_data, $request->input('can_onboard_employee'));
 
-                    $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->input('can_onboard_employee'), $existingUser->first()->id);
+                    $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->input('can_onboard_employee'), $existingUser->first()->id);
 
-                    $response = [
-                        'status' => 'success',
-                        'message' => 'Your Onboard information Saved in draft',
-                        'mail_status' => '',
-                        'error' => '',
-                        'error_verbose' =>''
-                    ];
+                    $message = "";
 
+                    if($result->status == "success")
+                    {
+                        $response = [
+                            'status' => 'success',
+                            'message' => 'Your Onboard information Saved in draft',
+                            'mail_status' => '',
+                            'error' => '',
+                            'error_verbose' =>''
+                        ];
+                    }
+                    else
+                    {
+                        //When error occured while storing User, then show error to UI
+                        $response = [
+                                'status' => $result->status,
+                                'message' => "Error while creating/update User details",
+                                'error' => $result->message,
+                                'error_verbose' =>''
+                        ];
+
+                    }
                 }
                 else
                 {
