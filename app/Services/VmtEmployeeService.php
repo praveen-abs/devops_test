@@ -133,7 +133,7 @@ class VmtEmployeeService {
         catch(\Exception $e)
         {
             $response = new stdClass;
-            $response->status = "error";
+            $response->status = "failure";
             $response->message = $e;
 
             return $response;
