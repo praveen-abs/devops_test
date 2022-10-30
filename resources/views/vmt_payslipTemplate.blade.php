@@ -149,15 +149,15 @@ $bank_names = \DB::table('bank_list')->get();
                     <td colspan="8" class="border-less">
                         <div class="header-cotent" style="margin: 10px;">
                             <h6 class="margin-0">Brand Avatar LLP</h6>
-                            <p class="mb-0">NO-01,Kandasamy Street,</p>
-                            <p class="mb-0">Chandrabagh Ave 2nd St, Dr. Radha Krishnan Salai, </p>
-                            <p class="mb-0">Mylapore, Chennai, Tamil Nadu 600004</p>
+                            <p class= "mb-0" style="padding:0px;">NO-01,Kandasamy Street,</p>
+                            <p class="mb-0" style="padding:0px;">Chandrabagh Ave 2nd St, Dr. Radha Krishnan Salai, </p>
+                            <p class="mb-0" style="padding:0px;">Mylapore, Chennai, Tamil Nadu 600004</p>
                         </div>
                     </td>
                     <td colspan="4" class="border-less">
 
-                        <div class="header-img txt-right" style="height: 100%;width:100%;max-height:100%;">
-                            <img src={{ $client_logo }} style="height: 40px;width:120px;margin:10px" title="">
+                        <div class="header-img txt-right" style="">
+                            <img src={{ $client_logo }} style="height: 50px;width:150px;margin:10px" title="">
                         </div>
 
 
