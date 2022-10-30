@@ -109,7 +109,7 @@
 
                             <li class="nav-item">
                                 <a href="{{ route('attendance-employee-timesheet') }}"
-                                    class="nav-link sidebar py-1">Team Sheet</a>
+                                    class="nav-link sidebar py-1">Team Time Sheet</a>
                             </li>
 
                             <li class="nav-item">
