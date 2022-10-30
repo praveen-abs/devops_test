@@ -98,7 +98,7 @@ class VmtEmployeeService {
         return $response;
     }
 
-    private function createOrUpdate_User($data, $can_onboard_employee,$user_id=null) : User
+    private function createOrUpdate_User($data, $can_onboard_employee,$user_id=null)
     {
         $newUser = null;
 
