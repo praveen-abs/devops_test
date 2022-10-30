@@ -5,10 +5,7 @@
     <link href="{{ URL::asset('assets/css/appraisal_review.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ URL::asset('/assets/css/pages_profile.css') }}">
 @endsection
-@component('components.performance_breadcrumb')
-@slot('li_1')
-@endslot
-@endcomponent
+
 @section('content')
     <div class="loader" style="display:none;"></div>
     <div class="employee-review-wrapper mt-30">
@@ -355,7 +352,7 @@
                                 <input type="hidden" value="" name="formSubmitType" id="formSubmitType">
                                 <input type="hidden" name="goal_id" value="{{ $assignedGoals->id }}">
                                 <input type="hidden" name="kpiReviewId" value="{{ $assignedGoals->id }}">
-                                <div class="table-content responsive">
+                                <div class="table-content table-responsive">
                                     <table id="table_review"
                                         class="table kpi_appraisal-table align-middle mb-0 table-bordered  "
                                         data-paging="true" data-paging-size="100" data-paging-limit="3"
@@ -467,50 +464,70 @@
                                             @foreach ($kpiRows as $index => $kpiRow)
                                                 <tr>
                                                     <th scope="row">
-                                                        <div>
-                                                            {{ $kpiRow->dimension }}
+                                                        <div style="width:250px" >
+                                                            {{-- {{ $kpiRow->dimension }} --}}
+                                                            {{ \Str::words($kpiRow->dimension, 10, '') }}
+                                                            @if (strlen(substr($kpiRow->dimension, strlen(\Str::words($kpiRow->dimension, 10, '')))) > 0)
+                                                                <span class="{{ 'collapse-' . $index }}"
+                                                                    style="display: none;">
+                                                                    {{ substr($kpiRow->dimension, strlen(\Str::words($kpiRow->dimension, 10, ''))) }}
+                                                                </span>
+                                                                <span
+                                                                    class="btn text-orange bg-transparent  outline-none border-0 fw-bold f-12 more_btn"
+                                                                    id="less_more-btn"
+                                                                    onclick="showOrHideDescription('{{ $index }}')"> <span id="more_btn">More</span>
+                                                                </span>
+
+
+                                                            @endif
                                                         </div>
                                                     </th>
                                                     <td>
-                                                        <div style="">
-                                                            {{ \Str::words($kpiRow->kpi, 15, '') }}
-                                                            @if (strlen(substr($kpiRow->kpi, strlen(\Str::words($kpiRow->kpi, 15, '')))) > 0)
+                                                        <div style="width:250px" >
+                                                            {{ \Str::words($kpiRow->kpi, 10, '') }}
+                                                            @if (strlen(substr($kpiRow->kpi, strlen(\Str::words($kpiRow->kpi, 10, '')))) > 0)
                                                                 <span class="{{ 'collapse-' . $index }}"
                                                                     style="display: none;">
-                                                                    {{ substr($kpiRow->kpi, strlen(\Str::words($kpiRow->kpi, 15, ''))) }}
+                                                                    {{ substr($kpiRow->kpi, strlen(\Str::words($kpiRow->kpi, 10, ''))) }}
+                                                                </span>
+                                                                <span
+                                                                    class="btn bg-transparent text-primary outline-none border-0 fw-bold f-12 more_btn"
+                                                                    id="less_more-btn"
+                                                                    onclick="showOrHideDescription({{ $index }})"><span id="more_btn">More</span> <span id="less_btn" style="display:none;">Less</span>
+                                                                </span>
+
+
+
+
+                                                            @endif
+
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div style="width:250px" >
+                                                            {{ \Str::words($kpiRow->operational_definition, 10, '') }}
+
+                                                            @if (strlen(substr($kpiRow->operational_definition, strlen(\Str::words($kpiRow->operational_definition, 10, '')))) > 0)
+                                                                <span class="{{ 'collapse-' . $index }}"
+                                                                    style="display: none;">
+                                                                    {{ substr($kpiRow->operational_definition, strlen(\Str::words($kpiRow->operational_definition, 10, ''))) }}
                                                                 </span>
                                                                 <span
                                                                     class="btn bg-transparent text-primary outline-none border-0 fw-bold f-12 more_btn"
                                                                     id="less_more-btn"
                                                                     onclick="showOrHideDescription('{{ $index }}')">More</span>
                                                             @endif
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div>
-                                                            {{ \Str::words($kpiRow->operational_definition, 15, '') }}
-
-                                                            @if (strlen(substr($kpiRow->operational_definition, strlen(\Str::words($kpiRow->operational_definition, 15, '')))) > 0)
-                                                                <span class="{{ 'collapse-' . $index }}"
-                                                                    style="display: none;">
-                                                                    {{ substr($kpiRow->operational_definition, strlen(\Str::words($kpiRow->operational_definition, 15, ''))) }}
-                                                                </span>
-                                                                <span
-                                                                    class="btn bg-transparent text-primary outline-none border-0 fw-bold f-12 more_btn"
-                                                                    id="less_more-btn"
-                                                                    onclick="showOrHideDescription('{{ $index }}')">More</span>
-                                                            @endif
 
 
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <div>
-                                                            {{ \Str::words($kpiRow->measure, 15, '') }}
-                                                            @if (strlen(substr($kpiRow->measure, strlen(\Str::words($kpiRow->measure, 15, '')))) > 0)
+                                                        <div style="width:250px" >
+                                                            {{ \Str::words($kpiRow->measure, 10, '') }}
+                                                            @if (strlen(substr($kpiRow->measure, strlen(\Str::words($kpiRow->measure, 10, '')))) > 0)
                                                                 <span class="{{ 'collapse-' . $index }}"
                                                                     style="display: none;">
-                                                                    {{ substr($kpiRow->measure, strlen(\Str::words($kpiRow->measure, 15, ''))) }}
+                                                                    {{ substr($kpiRow->measure, strlen(\Str::words($kpiRow->measure, 10, ''))) }}
                                                                 </span>
                                                                 <span
                                                                     class="btn bg-transparent text-primary outline-none border-0 fw-bold f-12 more_btn"
@@ -682,7 +699,7 @@
             @if ($isAllReviewersSubmittedOrNot && count($pmsRatingDetails) > 0)
 
                     <div class="col-12">
-                        <div class="card">
+                        <div class="card mb-0">
 
                             <div class="card-body ">
                                 <h6>Best People Rating Grid</h6>
@@ -994,17 +1011,19 @@
 
         // show or hide table data
         function showOrHideDescription(rowIndex) {
-            console.log(rowIndex + 'collapse');
-            var less_more = document.getElementsByClassName("more_btn");
+
+console.log(rowIndex);
             //$(collapse-'.$index)
             if ($('.collapse-' + rowIndex).css('display') == 'none') {
                 $('.collapse-' + rowIndex).css('display', 'inline');
+                console.log(rowIndex);
+                $('#more_btn').css('display', 'none');
+                $('#less_btn').css('display', 'block');
 
-                less_more.innerHTML = "Less"
+            }else if ($('.collapse-' + rowIndex).css('display') == 'inline')  {
 
-            } else {
-                $('.collapse-' + rowIndex).css('display', 'none');
-                less_more.innerHTML = "More"
+                $('#less_btn').css('display', 'none');
+                $('#more_btn').css('display', 'block');
 
             }
         }
