@@ -58,7 +58,7 @@
 
 .table-content table th {
     background: var(--vz-header-bg-dark);
-    /* width: 250px; */
+    width: 350px;
     color: #fff;
 }
 

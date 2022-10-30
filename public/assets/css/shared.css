@@ -545,9 +545,7 @@ th.gridjs-th-sort:hover {
     background-color: rgba(var(--vz-light-rgb), 0.85);
 }
 .gridjs-head {
-    padding-top: 0;
-    margin-bottom: 5px;
-    padding: 5px 1px;
+
     width: 100% !important;
     text-align: end;
     position: relative;

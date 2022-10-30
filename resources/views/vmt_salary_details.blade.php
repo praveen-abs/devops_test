@@ -15,16 +15,19 @@
 @slot('li_1')
 @endslot
 @endcomponent
-<div class="container-fluid bg-white salary-details-wrapper ">
-    <div class="fill salary-header nav-tab-header">
-        <div>
+<div class="container-fluid salary-details-wrapper ">
+    <div class="card">
+        <div class="card-body">
+
+    <div class="fill salary-header mb-3 nav-tab-header">
+
             <ul class="nav nav-pills    nav-tabs-dashed" id="pills-tab" role="tablist">
-                <li class="nav-item active ember-view mx-4" role="presentation">
+                {{-- <li class="nav-item active ember-view mx-4" role="presentation">
                     <a class="nav-link active ember-view " id="pills-home-tab" data-bs-toggle="pill" href="" data-bs-target="#salary-structure" role="tab" aria-controls="pills-home" aria-selected="true">
                         Salary Structure</a>
-                </li>
-                <li class="nav-item mx-4 ember-view" role="presentation ">
-                    <a class="nav-link ember-view" id="payslips-tab" data-bs-toggle="pill" data-bs-target="#payslips" type="button" role="tab" aria-controls="payslips" aria-selected="false">Payslips</a>
+                </li> --}}
+                <li class="nav-item me-4 ember-view" role="presentation ">
+                    <a class="nav-link  active  show ember-view" id="payslips-tab" data-bs-toggle="pill" data-bs-target="#payslips" type="button" role="tab" aria-controls="payslips" aria-selected="false">Payslips</a>
                 </li>
                 <li class="nav-item mx-4 ember-view" role="presentation ">
                     <a class="nav-link ember-view" id="annual-earnings-tab" data-bs-toggle="pill" data-bs-target="#annual-earnings" type="button" role="tab" aria-controls="annual-earnings" aria-selected="false"> Annual Earnings</a>
@@ -34,12 +37,12 @@
                 </li>
             </ul>
 
-        </div>
+
 
     </div>
 
     <div class="tab-content " id="pills-tabContent">
-        <div class="tab-pane fade show active" id="salary-structure" role="tabpanel" aria-labelledby="pills-home-tab">
+        {{-- <div class="tab-pane fade show active" id="salary-structure" role="tabpanel" aria-labelledby="pills-home-tab">
             <div class="zp-container nav-tab-body-top">
                 <div class="fill body scroll-x scroll-y scrollbox">
                     <!---->
@@ -168,11 +171,11 @@
                 </div>
 
             </div>
-        </div>
-        <div class="tab-pane " id="payslips" role="tabpanel" aria-labelledby="payslips-tab">
+        </div> --}}
+        <div class="tab-pane show active fade" id="payslips" role="tabpanel" aria-labelledby="payslips-tab">
             <div class="zp-container bg-white nav-tab-body-top">
                 <div>
-                    <div class="fill body payslip-filter-container ">
+                    {{-- <div class="fill body payslip-filter-container ">
                         <i class="icon icon-blue icon-xlg vertical-align-text-bottom text-secondary ri-filter-2-fill"> </i>
                         <div class="dropdown cursor-pointer payslip-dropdown">
                             <div id="ember127" class="ember-view">
@@ -187,9 +190,9 @@
                                 </ul>
                             </div>
                         </div>
-                    </div>
-                    <div id="ember130" class="ember-view">
-                        <div class="fill body payslip-list-body scroll scroll-x scroll-y scrollbox ">
+                    </div> --}}
+                    <div id="ember130 " class="ember-view">
+                        <div class="fill body p-0 payslip-list-body scroll scroll-x scroll-y scrollbox ">
                             <table class="table zp-table paystub-table">
                                 <thead class="fw-bold text-muted h5">
                                     <tr>
@@ -628,13 +631,13 @@
             </div>
         </div>
 
-        <div class="tab-pane fade mx-4" id="epf-contribution" role="tabpanel" aria-labelledby="annual-earnings-tab">
+        <div class="tab-pane fade " id="epf-contribution" role="tabpanel" aria-labelledby="annual-earnings-tab">
             <div class="zp-container nav-tab-body-top">
                 <div class="fill body scroll-x scroll-y scrollbox salary-details-container">
                     <div id="ember147" class="ember-view">
                         <div class="benefit-report-container">
                             <div class="benefit-report-header-block">
-                                <div class="row group">
+                                {{-- <div class="row group">
                                     <div class="col-xs-10">
                                         <span class="benefit-report-header pull-left">
                                             <span class="report-name font-semibold font-moderate text-overflow">EPF
@@ -659,9 +662,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col-xs-3 col-lg-3 col-md-3 col-xl-3  col-sm-3">
+                                </div> --}}
+                                <div class="row form-group mb-0">
+                                    <div class="col-xs-3 col-lg-3 ps-0 col-md-3 col-xl-3  col-sm-3">
                                         <div class="media">
                                             <div class="media-left vertical-align-middle">
                                                 <div class="svg-circled">
@@ -678,29 +681,29 @@
                                                 <label class="text-grey">
                                                     Total Contribution
                                                 </label>
-                                                <div class="font-semibold font-large">
+                                                <div class="font-semibold f-15">
                                                     ₹{{$compensatory && $compensatory->epf_employer_contribution ? $compensatory->epf_employee + $compensatory->epf_employer_contribution : 0}}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-xs-6 col-lg-6 col-md-6 col-xl-6  col-sm-6 contribution-stats ">
-                                        <div class="text-grey mt-1 mb-2" style="margin-top:3px;margin-bottom:8px;">
+                                        <div class="text-grey mt-1 f-14 mb-2" style="margin-top:3px;margin-bottom:8px;">
                                             Total Employer Contribution : <span class="text-black font-medium font-mediumbold">₹{{$compensatory && $compensatory->epf_employer_contribution ?  $compensatory->epf_employer_contribution : 0}}</span>
                                         </div>
-                                        <div class="text-grey  mt-1 mb-2">
+                                        <div class="text-grey f-14 mt-1 mb-2">
                                             Total Employee Contribution : <span class="text-black font-medium font-mediumbold">₹{{$compensatory && $compensatory->epf_employee ? $compensatory->epf_employee : 0}}</span>
                                         </div>
                                     </div>
-                                    <div class="col-xs-3 col-lg-3 col-md-3 col-xl-3  col-sm-3">
+                                    {{-- <div class="col-xs-3 col-lg-3 col-md-3 col-xl-3  col-sm-3">
                                         <button class="btn btn-primary pull-right" data-ember-action="" data-ember-action-151="151">Export PDF</button>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
-                            <div class="benefit-report-content-block">
-                                <div class="statutory-details-block">
+                            <div class="benefit-report-content-block me-0 mw-100 p-0">
+                                <div class="statutory-details-block my-4">
                                     <div class="statutory-detail-title font-mm text-light-grey">
-                                        <div class="text-uppercase">
+                                        <div class="text-uppercase p-0">
                                             Statutory Details
                                         </div>
                                     </div>
@@ -713,7 +716,7 @@
                                         <div>-</div>
                                     </div>
                                 </div>
-                                <table class="table zp-table reports-table">
+                                <table class="table zp-table w-100 reports-table">
                                     <thead>
                                         <tr>
                                             <th rowspan="2">Month</th>
@@ -769,7 +772,7 @@
         </div>
     </div>
 
-</div>
+
 
 <div id="payslipModal" class="modal custom-modal fade" style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
@@ -790,7 +793,9 @@
         </div>
     </div>
 </div>
-
+</div>
+</div>
+</div>
 
 
 @endsection
