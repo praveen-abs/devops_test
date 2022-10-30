@@ -102,6 +102,7 @@
                                     <span>Dashboard</span>
                                 </a>
                             </li>
+
                             <li class="nav-item">
                               <a href="{{ url('attendance_calendar') }}" class="nav-link sidebar py-1">Time Sheet</a>
 
@@ -583,6 +584,10 @@
                                         Template<span>
                                         </span></a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('attendance_shift_woff_hday') }}" class="nav-link sidebar py-1">Attendance</a>
+
+                                  </li>
                             </ul>
                         </div>
                     </li>

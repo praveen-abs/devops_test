@@ -6,18 +6,15 @@
 <link rel="stylesheet" href="{{ URL::asset('/assets/css/attendance.css') }}">
 @endsection
 @section('content')
-@component('components.attendance_breadcrumb')
-@slot('li_1')
-@endslot
-@endcomponent
-    <div class="cotainer-fluid">
-        <div class="card mb-2">
-            <div class="py-1 card-body">
+
+    <div class="cotainer-fluid mt-30">
+        <div class="card mb-3">
+            <div class="pt-1 pb-0 card-body">
                 <!-- <div class="card-header">
-					<h5><span class="text-muted">Attendance &gt;</span> 
+					<h5><span class="text-muted">Attendance &gt;</span>
 					<span class="text-danger"> Dashboard </span></h5>
                 </div> -->
-                <div class="row mb-2">
+                <div class="row ">
                     <div class="col-12 d-flex align-items-center">
                         <ul class="nav nav-pills nav-tabs-dashed">
                             <li class="nav-item text-muted">
@@ -52,27 +49,28 @@
         </div>
         <div class="tab-content">
             <div id="shift_weekly-off" class="tab-pane fade show active">
-                <div class="card top-line">
+                <div class="card top-line mb-0">
                     <div class="card-body">
-						<div class="row mb-3">
+						<div class="row ">
 							<div class="col-8">
-								<ul class="nav nav-pills nav-tabs-dashed card-header-tabs" role="tablist">
-									<li class="nav-item text-muted" role="presentation">
-										<button type="button" class="btn nav-link attendances-analyist-tab active" data-bs-toggle="tab" href="#shift_main-tab" aria-selected="true" role="tab">Shifts</button>
-									</li>
-									<li class="nav-item text-muted" role="presentation">
-										<button type="button" class="btn nav-link attendances-analyist-tab " data-bs-toggle="tab" href="#weekly_main-tab" aria-selected="false" tabindex="-1" role="tab">Weekly Offs</button>
-									</li>
-									<li class="nav-item text-muted" role="presentation">
-										<button type="button" class="btn nav-link attendances-analyist-tab " data-bs-toggle="tab" href="#rules_main-tab" aria-selected="false" tabindex="-1" role="tab">Shifts & Weekly Off Rules</button>
-									</li>
-								</ul>
+                                <ul class="nav nav-pills nav-tabs-dashed">
+                                    <li class="nav-item text-muted">
+                                        <a class="nav-link active" data-bs-toggle="tab" href="#shift_main-tab">Shifts</a>
+                                    </li>
+                                    <li class="nav-item text-muted">
+                                        <a class="nav-link" data-bs-toggle="tab" href="#weekly_main-tab">Weekly Offs</a>
+                                    </li>
+                                    <li class="nav-item text-muted">
+                                        <a class="nav-link" data-bs-toggle="tab" href="#rules_main-tab">Shifts & Weekly Off Rules</a>
+                                    </li>
+
+                                </ul>
 							</div>
-							
+
 						</div>
-						<div class="tab-content">
+						<div class="tab-content mt-3">
             				<div id="shift_main-tab" class="tab-pane fade show active">
-								<div class="card box_shadow_0 border-rtb left-line w-100">
+								<div class="card box_shadow_0 border-rtb left-line mb-0">
 									<div class="card-body">
 										<div class="row">
 											<div class="col-8">
@@ -121,7 +119,7 @@
 								</div>
 							</div>
             				<div id="weekly_main-tab" class="tab-pane fade show">
-								<div class="card box_shadow_0 border-rtb left-line w-100">
+								<div class="card box_shadow_0 border-rtb left-line mb-0">
 									<div class="card-body">
 										<div class="row">
 											<div class="col-8">
@@ -143,7 +141,7 @@
 								</div>
 							</div>
             				<div id="rules_main-tab" class="tab-pane fade show">
-								<div class="card box_shadow_0 border-rtb left-line w-100">
+								<div class="card box_shadow_0 border-rtb left-line mb-0">
 									<div class="card-body">
 										<div class="row">
 											<div class="col-10">
@@ -180,7 +178,7 @@
                         <div class="text-center">
 							<div class="mt-3 d-flex align-items-center">
 								<input type="text" name="options[]" id="" class="form-control " placeholder="Name" required="">
-							</div>	
+							</div>
 							<div class="mt-3 d-flex align-items-center">
 								<textarea name="post_menu" id="post_menu" class="outline-none w-100 h-100" placeholder="Description about the rule"></textarea>
 							</div>
@@ -192,9 +190,7 @@
     </div>
 @endsection
 @section('script')
-    <script src="{{ URL::asset('assets/libs/gridjs/gridjs.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/js/pages/dashboard-projects.init.js') }}"></script>
-    <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
+
     <script>
         $(document).ready(function() {
             if (document.getElementById("shift_Timng-table")) {
@@ -306,7 +302,7 @@
                 }).render(document.getElementById("employee_Timng-table"));
             }
         });
-		
+
         $(document).ready(function() {
             if (document.getElementById("track_Timng-table")) {
                 const grid = new gridjs.Grid({
@@ -347,7 +343,7 @@
                 }).render(document.getElementById("track_Timng-table"));
             }
         });
-		
+
         $(document).ready(function() {
             if (document.getElementById("weekly_shift-table")) {
                 const grid = new gridjs.Grid({
