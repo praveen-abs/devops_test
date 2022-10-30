@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use App\Models\VmtGeneralInfo;
 use Dompdf\Dompdf;
+use \stdClass;
 
 use App\Models\User;
 use App\Models\VmtEmployee;
@@ -72,13 +73,13 @@ class VmtEmployeeService {
     */
     public function createOrUpdate_OnboardFormData($data, $can_onboard_employee, $existing_user_id = null)
     {
-        $onboard_user = $this->createOrUpdate_User(data: $data, can_onboard_employee : $can_onboard_employee, user_id: $existing_user_id);
+        $response = $this->createOrUpdate_User(data: $data, can_onboard_employee : $can_onboard_employee, user_id: $existing_user_id);
 
-
-        if(!empty($onboard_user))
+        if(!empty($response) && $response->status == 'success')
         {
             try
             {
+                $onboard_user = $response->response_object;
                 $this->createOrUpdate_EmployeeDetails( $onboard_user, $data);
                 $this->createOrUpdate_EmployeeOfficeDetails( $onboard_user->id, $data);
                 $this->createOrUpdate_EmployeeStatutoryDetails( $onboard_user->id, $data);
@@ -93,16 +94,11 @@ class VmtEmployeeService {
                return null;
             }
         }
-        else
-        {
-            return null;
-        }
 
-
-        return $onboard_user;
+        return $response;
     }
 
-    private function createOrUpdate_User($data, $can_onboard_employee,$user_id=null) : User
+    private function createOrUpdate_User($data, $can_onboard_employee,$user_id=null)
     {
         $newUser = null;
 
@@ -136,9 +132,18 @@ class VmtEmployeeService {
         }
         catch(\Exception $e)
         {
-            return null;
+            $response = new stdClass;
+            $response->status = "error";
+            $response->message = $e;
+
+            return $response;
         }
-        return $newUser;
+
+        $response = new stdClass;
+        $response->status = "success";
+        $response->response_object = $newUser;
+
+        return $response;
     }
 
     private function CreateNewUser($data, $can_onboard_employee)

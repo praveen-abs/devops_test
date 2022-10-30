@@ -1,71 +1,63 @@
 @extends('layouts.master')
-@section('title') @lang('translation.dashboards') @endsection
+@section('title')
+    @lang('translation.dashboards')
+@endsection
 @section('css')
-<link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css')}}" rel="stylesheet" type="text/css" />
-<link href="{{ URL::asset('assets/libs/swiper/swiper.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ URL::asset('assets/libs/swiper/swiper.min.css') }}" rel="stylesheet" type="text/css" />
 
-<link href="{{ URL::asset('assets/css/assign_goals.css') }}" rel="stylesheet">
-<link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
+    <link href="{{ URL::asset('assets/css/assign_goals.css') }}" rel="stylesheet">
 
-<!--Custom style.css-->
 
-<!--Animate CSS-->
-<link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/chartist.min.css') }}">
-<!--Map-->
-<link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/jquery-jvectormap-2.0.2.css') }}">
+    <!--Custom style.css-->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <!--Animate CSS-->
+    <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/chartist.min.css') }}">
+    <!--Map-->
+    <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/jquery-jvectormap-2.0.2.css') }}">
 
-<link href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css' rel='stylesheet' type='text/css'>
-<style>
-    .output {
-        font: 1rem 'Fira Sans', sans-serif;
-    }
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 
-    blockquote {
-        background: white;
-        border-radius: 5px;
-        margin: 0 !important;
-        height: 100px;
-        overflow-y:auto;
-    }
+    <link href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css' rel='stylesheet' type='text/css'>
+    <style>
+        .output {
+            font: 1rem 'Fira Sans', sans-serif;
+        }
 
-    blockquote p {
-        padding: 15px;
-    }
+        blockquote {
+            background: white;
+            border-radius: 5px;
+            margin: 0 !important;
+            height: 100px;
+            overflow-y: auto;
+        }
 
-    /* blockquote p::before {
-        content: '\201C';
-    }
+        blockquote p {
+            padding: 15px;
+        }
 
-    blockquote p::after {
-        content: '\201D';
-    } */
+        /* blockquote p::before {
+                                content: '\201C';
+                            }
 
-    [contenteditable='true'] {
-        caret-color: red;
-    }
-</style>
+                            blockquote p::after {
+                                content: '\201D';
+                            } */
+
+        [contenteditable='true'] {
+            caret-color: red;
+        }
+    </style>
 @endsection
 
 
 @section('content')
-<div class="loader" style="display:none;"></div>
+    <div class="loader" style="display:none;"></div>
 
-{{-- @component('components.performance_breadcrumb')
-@slot('li_1')  @endslot
-@endcomponent --}}
-
-<div class="container-fluid ">
-    <div class="cards-wrapper">
-    <div class="row">
-        <div class="col-12">
-            <h5>Goals / Areas of development</h5>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <div class="container-fluid mb-1 mt-3 ">
+    <div class="container-fluid republish_wrapper mt-30">
+        <div class="card mb-0   ">
+            <div class="card-body ">
+                <h6>Goals / Areas of development</h6>
                 <form id="kpiTableForm">
                     <input type="hidden" name="kpiAssignedId" value="{{ $kpiAssignedId }}">
                     <div class="row mb-3 d-flex align-items-center">
@@ -73,7 +65,8 @@
                             <label for="name">Form Name:</label>
                         </div>
                         <div class="col">
-                            <input type="text"  disabled class="form-control" value="{{ $configHeaderFormName }}" required>
+                            <input type="text" disabled class="form-control" value="{{ $configHeaderFormName }}"
+                                required>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -86,75 +79,80 @@
                             <thead class="bg-primary thead" id="tHead">
                                 <tr class="text-uppercase">
                                     <th class="sort" data-sort="id">#</th>
-                                    @foreach($columnHeader as $config)
-                                    <th class="sort" data-sort="customer_name"
-                                        data-name='dimension' data-filterable="false">@if(isset($config)) {{ $config }} @endif</th>
+                                    @foreach ($columnHeader as $config)
+                                        <th class="sort" data-sort="customer_name" data-name='dimension'
+                                            data-filterable="false">
+                                            @if (isset($config))
+                                                {{ $config }}
+                                            @endif
+                                        </th>
                                     @endforeach
                                 </tr>
                             </thead>
                             <tbody class="tbody content-container" id="tbody">
                                 <?php $i = 1; ?>
-                                @foreach($data as $formData)
-                                <tr class="addition-content cursor-pointer" id="content1">
-                                    <td class="text-box-td p-1">
-                                        <span  name="numbers" id="" class="tableInp" >{{ $i }}</span>
-                                    </td>
-                                    @if(isset($columnHeader['dimension']))
-                                    <td class="text-box-td">
-                                        <textarea name="dimension[]" id="dimension" class="text-box textAreaValidation" row="2" cols="20"
-                                            placeholder="type here">{{ $formData->dimension }}</textarea>
-                                    </td>
-                                    @endif
-                                    @if(isset($columnHeader['kpi']))
-                                    <td class="text-box-td">
-                                        <textarea name="kpi[]" id="kpi" class="text-box textAreaValidation" row="2" cols="20"
-                                            placeholder="type here">{{ $formData->kpi }}</textarea>
-                                    </td>
-                                    @endif
-                                    @if(isset($columnHeader['operational']))
-                                    <td class="text-box-td">
-                                        <textarea name="operational[]" id="operational" class="text-box textAreaValidation" row="2" cols="20"
-                                            placeholder="type here">{{ $formData->operational_definition }}</textarea>
-                                    </td>
-                                    @endif
-                                    @if(isset($columnHeader['measure']))
-                                    <td class="text-box-td">
-                                        <textarea name="measure[]" id="measure" class="text-box textAreaValidation" row="2" cols="20"
-                                            placeholder="type here">{{ $formData->measure }}</textarea>
-                                    </td>
-                                    @endif
-                                    @if(isset($columnHeader['frequency']))
-                                    <td class="text-box-td">
-                                        <textarea name="frequency[]" id="frequency" class="text-box textAreaValidation" row="2" cols="20"
-                                            placeholder="type here">{{ $formData->frequency }}</textarea>
-                                    </td>
-                                    @endif
-                                    @if(isset($columnHeader['target']))
-                                    <td class="text-box-td">
-                                        <textarea name="target[]" id="target" class="text-box textAreaValidation" row="2" cols="20"
-                                            placeholder="type here">{{ $formData->target }}</textarea>
-                                    </td>
-                                    @endif
-                                    @if(isset($columnHeader['stretchTarget']))
-                                    <td class="text-box-td">
-                                        <textarea name="stretchTarget[]" id="stretchTarget" class="text-box textAreaValidation" row="2" cols="20"
-                                            placeholder="type here">{{ $formData->stretch_target }}</textarea>
-                                    </td>
-                                    @endif
-                                    @if(isset($columnHeader['source']))
-                                    <td class="text-box-td">
-                                        <textarea name="source[]" id="source" class="text-box textAreaValidation" row="2" cols="20"
-                                            placeholder="type here">{{ $formData->source }}</textarea>
-                                    </td>
-                                    @endif
-                                    @if(isset($columnHeader['kpiWeightage']))
-                                    <td class="text-box-td">
-                                        <textarea name="kpiWeightage[]" id="kpiWeightage" onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 37' class="text-box textAreaValidation" row="2" cols="20"
-                                            placeholder="type here">{{ $formData->kpi_weightage }}</textarea>
-                                    </td>
-                                    @endif
-                                    <?php $i++; ?>
-                                </tr>
+                                @foreach ($data as $formData)
+                                    <tr class="addition-content cursor-pointer" id="content1">
+                                        <td class="text-box-td p-1">
+                                            <textarea name="numbers" class="text-box textAreaValidation tableInp" disabled  row="2" cols="2" id="" >{{ $i }}</textarea>
+                                        </td>
+                                        @if (isset($columnHeader['dimension']))
+                                            <td class="text-box-td">
+                                                <textarea name="dimension[]" id="dimension" class="text-box textAreaValidation" row="2" cols="20"
+                                                    placeholder="type here">{{ $formData->dimension }}</textarea>
+                                            </td>
+                                        @endif
+                                        @if (isset($columnHeader['kpi']))
+                                            <td class="text-box-td">
+                                                <textarea name="kpi[]" id="kpi" class="text-box textAreaValidation" row="2" cols="20"
+                                                    placeholder="type here">{{ $formData->kpi }}</textarea>
+                                            </td>
+                                        @endif
+                                        @if (isset($columnHeader['operational']))
+                                            <td class="text-box-td">
+                                                <textarea name="operational[]" id="operational" class="text-box textAreaValidation" row="2" cols="20"
+                                                    placeholder="type here">{{ $formData->operational_definition }}</textarea>
+                                            </td>
+                                        @endif
+                                        @if (isset($columnHeader['measure']))
+                                            <td class="text-box-td">
+                                                <textarea name="measure[]" id="measure" class="text-box textAreaValidation" row="2" cols="20"
+                                                    placeholder="type here">{{ $formData->measure }}</textarea>
+                                            </td>
+                                        @endif
+                                        @if (isset($columnHeader['frequency']))
+                                            <td class="text-box-td">
+                                                <textarea name="frequency[]" id="frequency" class="text-box textAreaValidation" row="2" cols="20"
+                                                    placeholder="type here">{{ $formData->frequency }}</textarea>
+                                            </td>
+                                        @endif
+                                        @if (isset($columnHeader['target']))
+                                            <td class="text-box-td">
+                                                <textarea name="target[]" id="target" class="text-box textAreaValidation" row="2" cols="20"
+                                                    placeholder="type here">{{ $formData->target }}</textarea>
+                                            </td>
+                                        @endif
+                                        @if (isset($columnHeader['stretchTarget']))
+                                            <td class="text-box-td">
+                                                <textarea name="stretchTarget[]" id="stretchTarget" class="text-box textAreaValidation" row="2"
+                                                    cols="20" placeholder="type here">{{ $formData->stretch_target }}</textarea>
+                                            </td>
+                                        @endif
+                                        @if (isset($columnHeader['source']))
+                                            <td class="text-box-td">
+                                                <textarea name="source[]" id="source" class="text-box textAreaValidation" row="2" cols="20"
+                                                    placeholder="type here">{{ $formData->source }}</textarea>
+                                            </td>
+                                        @endif
+                                        @if (isset($columnHeader['kpiWeightage']))
+                                            <td class="text-box-td">
+                                                <textarea name="kpiWeightage[]" id="kpiWeightage"
+                                                    onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 37'
+                                                    class="text-box textAreaValidation" row="2" cols="4" placeholder="type here">{{ $formData->kpi_weightage }}</textarea>
+                                            </td>
+                                        @endif
+                                        <?php $i++; ?>
+                                    </tr>
                                 @endforeach
 
                             </tbody>
@@ -164,194 +162,191 @@
                         <button type="submit" class="btn btn-orange table-btn mx-2" id="save-table">Save</button>
                     </div>
                 </form>
-
             </div>
-
         </div>
-    </div>
-</div>
 
-<!-- Change Reviewr window -->
 
-<!-- Vertically Centered -->
-<div class="modal fade" id="notificationModal" role="dialog" aria-hidden="true" style="opacity:1; display:none;background:#00000073;">
-    <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2">
-        <div class="modal-content">
-            <div class="modal-header py-2 bg-primary">
+        <div class="modal fade" id="notificationModal" role="dialog" aria-hidden="true"
+            style="opacity:1; display:none;background:#00000073;">
+            <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true"
+                aria-labelledby="exampleModalToggleLabel2">
+                <div class="modal-content">
+                    <div class="modal-header py-2 bg-primary">
 
-                <div class="w-100 modal-header-content d-flex align-items-center py-2">
-                    <h5 class="modal-title text-white" id="modalHeader">Success
-                    </h5>
-                    <button
-                        type="button"
-                        class="btn-close btn-close-white close-modal" data-bs-dismiss="modal"
-                        aria-label="Close"
-                    >
-                    </button>
-                </div>
-            </div>
-            <div class="modal-body">
-                <div class="mt-4">
-                    <h4 class="mb-3" id="modalNot">Data Saved Successfully!</h4>
-                    <p class="text-muted mb-4" id="modalBody"> Table Saved, Please publish goals.</p>
-                    <div class="hstack gap-2 justify-content-center">
-                        <button type="button" class="btn btn-light close-modal" data-bs-dismiss="modal">Close</button>
+                        <div class="w-100 modal-header-content d-flex align-items-center py-2">
+                            <h5 class="modal-title text-white" id="modalHeader">Success
+                            </h5>
+                            <button type="button" class="btn-close btn-close-white close-modal" data-bs-dismiss="modal"
+                                aria-label="Close">
+                            </button>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mt-4">
+                            <h4 class="mb-3" id="modalNot">Data Saved Successfully!</h4>
+                            <p class="text-muted mb-4" id="modalBody"> Table Saved, Please publish goals.</p>
+                            <div class="hstack gap-2 justify-content-center">
+                                <button type="button" class="btn btn-light close-modal"
+                                    data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
 
-<!-- Error Message Notification -->
+        <!-- Error Message Notification -->
 
-<div class="position-fixed top-0 end-0 p-4" style="z-index: 11">
-    <div id="errorMessageNotif_fieldsEmpty" class="toast toast-border-danger overflow-hidden mt-3" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header">
-            <strong class="me-auto">Error</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-
-        <div class="toast-body">
-            <div class="d-flex align-items-center">
-                <div class="flex-shrink-0 me-2">
-                    <i class="ri-alert-line align-middle"></i>
+        <div class="position-fixed top-0 end-0 p-4" style="z-index: 11">
+            <div id="errorMessageNotif_fieldsEmpty" class="toast toast-border-danger overflow-hidden mt-3" role="alert"
+                aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <strong class="me-auto">Error</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
-                <div class="flex-grow-1">
-                    <h6 class="mb-0">Please fill all the fields.</h6>
+
+                <div class="toast-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0 me-2">
+                            <i class="ri-alert-line align-middle"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <h6 class="mb-0">Please fill all the fields.</h6>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
 
-<!-- Default bootstrap model -->
+        <!-- Default bootstrap model -->
 
 
-<div class="modal zoomIn" id="Modal_Message">
-    <div class="modal-dialog">
-      <div class="modal-content">
+        <div class="modal zoomIn" id="Modal_Message">
+            <div class="modal-dialog">
+                <div class="modal-content">
 
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title">Info</h4>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Info</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <b id="info_message">Please fill all the fields.</b>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" id="Modal_Message_CloseBtn" class="btn btn-primary"
+                            data-bs-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
         </div>
 
-        <!-- Modal body -->
-        <div class="modal-body">
-          <b id="info_message">Please fill all the fields.</b>
-        </div>
+        <!--  -->
+    @endsection
 
-        <!-- Modal footer -->
-        <div class="modal-footer">
-            <button type="button" id="Modal_Message_CloseBtn" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-<!--  -->
-@endsection
-
-@section('script')
-<!-- Prem assets -->
-<!-- OWL CAROUSEL -->
+    @section('script')
+        <!-- Prem assets -->
+        <!-- OWL CAROUSEL -->
 
 
-<!--Nice select-->
-<script src="{{ URL::asset('/assets/premassets/js/jquery.nice-select.min.js') }}"></script>
+        <!--Nice select-->
+        <script src="{{ URL::asset('/assets/premassets/js/jquery.nice-select.min.js') }}"></script>
 
-<!--Custom Js Script-->
-<script src="{{ URL::asset('/assets/premassets/js/custom.js') }}"></script>
-<script src="{{ URL::asset('/assets/premassets/js/footable.min.js') }}"></script>
-<script src="{{ URL::asset('/assets/premassets/css/footable.bootstrap.min.css') }}"></script>
-
-
-<!-- Prem assets ends -->
-
-<!-- apexcharts -->
-<script src="{{ URL::asset('assets/libs/swiper/swiper.min.js')}}"></script>
+        <!--Custom Js Script-->
+        <script src="{{ URL::asset('/assets/premassets/js/custom.js') }}"></script>
+        <script src="{{ URL::asset('/assets/premassets/js/footable.min.js') }}"></script>
+        <script src="{{ URL::asset('/assets/premassets/css/footable.bootstrap.min.css') }}"></script>
 
 
-<!-- for date and time -->
-<script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
+        <!-- Prem assets ends -->
 
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
-<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/themes/smoothness/jquery-ui.css" />
-
-<!--Sweet alert JS-->
-<script src="{{ URL::asset('/assets/premassets/js/sweetalert.js') }}"></script>
-
-<!-- validation script  -->
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.js"></script>
+        <!-- apexcharts -->
+        <script src="{{ URL::asset('assets/libs/swiper/swiper.min.js') }}"></script>
 
 
-<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript">
-//Accessed when KPI form saved successfully
-var isKPIFormValid = false;
+        <!-- for date and time -->
+        <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
 
-$(document).ready(function(){
-    $("#kpiTableForm").submit(function(e){
-        e.preventDefault();
-        var kpiWeightageTotal = 0;
-        var isKPIFormValid = true;
-        var kpiWeightagePerc = true;
-        $.each($('.textAreaValidation'), function(key, textAreaValue){
-            if(textAreaValue.value == ''){
-                isKPIFormValid = false;
-            }
-            if(textAreaValue.name  == 'kpiWeightage[]'){
-                console.log(textAreaValue.value.replace('%', ''));
-                kpiWeightageTotal = kpiWeightageTotal+parseInt(textAreaValue.value.replace('%', ''));
-                var result=/^\d+(\.\d+)?%$/.test(textAreaValue.value);
-                if (!result) {
-                    kpiWeightagePerc = false;
-                }
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-            }
+        <link rel="stylesheet"
+            href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/themes/smoothness/jquery-ui.css" />
 
-        })
-        
-        if(isKPIFormValid == true){
-            if(!kpiWeightagePerc){
-                swal('Wrong!','KPI Weightage Values are should be in %.','error');
-            }else{
-                if(kpiWeightageTotal != 100){
-                    swal('Wrong!','Please make sure that KPI Weightage is exactly 100%.','error');
-                }else{
-                    var form_data = new FormData(document.getElementById("kpiTableForm"));
-                    $('.loader').show();
-                    $.ajax({
-                        type: "POST",
-                        url: "{{ route('republishFormEdited') }}",
-                        dataType: "json",
-                        contentType: false,
-                        processData: false,
-                        data: form_data,
-                        success: function(data) {
-                            swal('Success','Form Upadtes Successfully!','success');
-                            
-                            $('.loader').hide();
-                        },
-                        error: function(error) {
-                            $('.loader').hide();
+        <!--Sweet alert JS-->
+        <script src="{{ URL::asset('/assets/premassets/js/sweetalert.js') }}"></script>
+
+        <!-- validation script  -->
+        <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.js"></script>
+
+
+        <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript">
+            //Accessed when KPI form saved successfully
+            var isKPIFormValid = false;
+
+            $(document).ready(function() {
+                $("#kpiTableForm").submit(function(e) {
+                    e.preventDefault();
+                    var kpiWeightageTotal = 0;
+                    var isKPIFormValid = true;
+                    var kpiWeightagePerc = true;
+                    $.each($('.textAreaValidation'), function(key, textAreaValue) {
+                        if (textAreaValue.value == '') {
+                            isKPIFormValid = false;
                         }
-                    });
-                }
-            }
-        }else{
-            swal('Wrong!','Please fill all the fields in KPI Form.','error');
-        }
-    });
-});
-</script>
+                        if (textAreaValue.name == 'kpiWeightage[]') {
+                            console.log(textAreaValue.value.replace('%', ''));
+                            kpiWeightageTotal = kpiWeightageTotal + parseInt(textAreaValue.value
+                                .replace('%', ''));
+                            var result = /^\d+(\.\d+)?%$/.test(textAreaValue.value);
+                            if (!result) {
+                                kpiWeightagePerc = false;
+                            }
 
-@endsection
+                        }
+
+                    })
+
+                    if (isKPIFormValid == true) {
+                        if (!kpiWeightagePerc) {
+                            swal('Wrong!', 'KPI Weightage Values are should be in %.', 'error');
+                        } else {
+                            if (kpiWeightageTotal != 100) {
+                                swal('Wrong!', 'Please make sure that KPI Weightage is exactly 100%.', 'error');
+                            } else {
+                                var form_data = new FormData(document.getElementById("kpiTableForm"));
+                                $('.loader').show();
+                                $.ajax({
+                                    type: "POST",
+                                    url: "{{ route('republishFormEdited') }}",
+                                    dataType: "json",
+                                    contentType: false,
+                                    processData: false,
+                                    data: form_data,
+                                    success: function(data) {
+                                        swal('Success', 'Form Upadtes Successfully!', 'success');
+
+                                        $('.loader').hide();
+                                    },
+                                    error: function(error) {
+                                        $('.loader').hide();
+                                    }
+                                });
+                            }
+                        }
+                    } else {
+                        swal('Wrong!', 'Please fill all the fields in KPI Form.', 'error');
+                    }
+                });
+            });
+        </script>
+    @endsection

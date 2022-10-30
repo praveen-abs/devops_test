@@ -36,7 +36,7 @@
                                 <div class="col-sm-5 col-md-5 col-xl-5 col-lg-5 col-xxl-5 mb-2 b-line">
 
                                     <ul class="nav nav-pills    nav-tabs-dashed" id="pills-tab" role="tablist">
-                                        <li class="nav-item active ember-view mx-4" role="presentation">
+                                        {{-- <li class="nav-item active ember-view mx-4" role="presentation">
                                             <a class="nav-link active ember-view " id="pills-home-tab" data-bs-toggle="pill"
                                                 href="" data-bs-target="#attendanceDay_tab" role="tab"
                                                 aria-controls="pills-home" aria-selected="true">
@@ -46,9 +46,9 @@
                                             <a class="nav-link ember-view" id="payslips-tab" data-bs-toggle="pill"
                                                 data-bs-target="#attendanceWeek_tab" type="button" role="tab"
                                                 aria-controls="payslips" aria-selected="false">Week</a>
-                                        </li>
-                                        <li class="nav-item mx-4 ember-view" role="presentation ">
-                                            <a class="nav-link ember-view" id="annual-earnings-tab" data-bs-toggle="pill"
+                                        </li> --}}
+                                        <li class="nav-item mx-4  ember-view" role="presentation ">
+                                            <a class="nav-link active ember-view" id="annual-earnings-tab" data-bs-toggle="pill"
                                                 data-bs-target="#attendanceMonth_tab" type="button" role="tab"
                                                 aria-controls="annual-earnings" aria-selected="false">Month</a>
                                         </li>
@@ -127,12 +127,7 @@
                         <div class="showEmployee_attendance">
                             <ul class="list-unstyled ">
                                 <li class="list_employee_attendance p-2 w-100">
-                                    {{-- <div class="row">
-                                        <div class="col-auto mb-3">
-                                        </div>
-                                        <div class="col-auto mb-3">
-                                        </div>
-                                    </div> --}}
+
                                     <div class="d-flex">
                                         <div
                                             class="user_pic me-3 d-flex justify-content-center align-items-center bg-primary rounded-circle">
@@ -151,7 +146,7 @@
                     </div>
                     <div class="col-sm-12 col-md-12 col-xl-9 col-lg-9 col-xxl-9 ">
                         <div class="tab-content" id="pills-tabContent">
-                            <div class="tab-pane fade show active" id="attendanceDay_tab" role="tabpanel"
+                            {{-- <div class="tab-pane fade show active" id="attendanceDay_tab" role="tabpanel"
                                 aria-labelledby="pills-home-tab">
                                 <div class="zp-container bg-white nav-tab-body-top">
                                     <div class="fill body content scroll-x scroll-y salary-details-container">
@@ -315,8 +310,8 @@
 
 
 
-                            </div>
-                            <div class="tab-pane fade" id="attendanceMonth_tab" role="tabpanel"
+                            </div> --}}
+                            <div class="tab-pane show active fade" id="attendanceMonth_tab" role="tabpanel"
                                 aria-labelledby="pills-contact-tab">
                                 <div class="calendar-wrapper  box_shadow_0 card mb-0 border-0">
                                     <div class="card-body ">

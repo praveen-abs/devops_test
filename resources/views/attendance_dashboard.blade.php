@@ -19,22 +19,22 @@
             <div class="py-1 card-body">
                 <!-- <div class="card-header">                                                                         <h5><span class="text-muted">Attendance &gt;</span> <span class="text-danger"> Dashboard </span></h5>
                                                                                                                                                                                                                      </div> -->
-                <div class="row mb-2">
+                <div class="row">
                     <div class="col-8 d-flex align-items-center">
                         <ul class="nav nav-pills nav-tabs-dashed">
                             <li class="nav-item text-muted">
-                                <a class="nav-link active" data-bs-toggle="tab" href="#attendance_summary">Attendance
+                                <a class="nav-link active pb-2" data-bs-toggle="tab" href="#attendance_summary">Attendance
                                     Summary</a>
                             </li>
-                            <li class="nav-item text-muted">
-                                <a class="nav-link" data-bs-toggle="tab" href="#attendance_analytics">Attendance
+                            <li class="nav-item text-muted ">
+                                <a class="nav-link pb-2" data-bs-toggle="tab" href="#attendance_analytics">Attendance
                                     Analytics</a>
                             </li>
-                            <li class="nav-item text-muted">
-                                <a class="nav-link" data-bs-toggle="tab" href="#leave_summary">Leave Summary</a>
+                            <li class="nav-item text-muted ">
+                                <a class="nav-link pb-2" data-bs-toggle="tab" href="#leave_summary">Leave Summary</a>
                             </li>
-                            <li class="nav-item text-muted">
-                                <a class="nav-link" data-bs-toggle="tab" href="#leave_analytics">Leave Analytics</a>
+                            <li class="nav-item text-muted ">
+                                <a class="nav-link pb-2" data-bs-toggle="tab" href="#leave_analytics">Leave Analytics</a>
                             </li>
                         </ul>
                     </div>
@@ -293,41 +293,46 @@
                     <div class="card-body">
                         <ul class="nav nav-pills nav-tabs-dashed card-header-tabs mb-3">
                             <li class="nav-item text-muted">
-                                <button type="button" class="btn nav-link attendances-analyist-tab active"
-                                    data-bs-toggle="tab" href="#mostHour_worked">Most hour worked</button>
+
+                                    <a class="nav-link pb-2 active" data-bs-toggle="tab"href="#mostHour_worked" aria-selected="true" role="tab">
+                                        Most hour worked</a>
+                            </li>
+
+                            <li class="nav-item text-muted">
+
+                                    <a class="nav-link pb-2 " data-bs-toggle="tab"href="#overtime_hours" aria-selected="true" role="tab">
+                                        Overtime Hours</a>
                             </li>
                             <li class="nav-item text-muted">
-                                <button type="button" class="btn nav-link attendances-analyist-tab margin-left-mainases"
-                                    data-bs-toggle="tab" href="#overtime_hours">Overtime Hours</button>
+
+                                <a class="nav-link pb-2 " data-bs-toggle="tab"href="#leastHours_worked" aria-selected="true" role="tab">
+                                    Least Hours Worked</a>
                             </li>
                             <li class="nav-item text-muted">
-                                <button type="button" class="btn nav-link attendances-analyist-tab margin-left-mainases "
-                                    data-bs-toggle="tab" href="#leastHours_worked">Least Hours Worked
-                                </button>
-                            </li>
-                            <li class="nav-item text-muted">
-                                <button type="button" class="btn nav-link attendances-analyist-tab margin-left-mainases "
-                                    data-bs-toggle="tab" href="#mostBreaks_taken">Most Breaks
-                                    Taken</button>
+
+                                    <a class="nav-link pb-2 " data-bs-toggle="tab"href="#mostHour_worked" aria-selected="true" role="tab">
+                                        Most hour worked</a>
                             </li>
                         </ul>
                         <div class="tab-content" id="pills-tabContent">
                             <div class="tab-pane fade show active" id="mostHour_worked" role="tabpanel"
                                 aria-labelledby="pills-home-tab">
-                                <h6 class="mb-3">Most Hours Worked by Department</h6>
+                                <h6 class="mb-3 text-muted">Most Hours Worked by Department</h6>
                                 <div class="row mb-3">
                                     <div class="col-8">
                                         <ul class="nav nav-pills nav-tabs-dashed card-header-tabs">
                                             <li class="nav-item text-muted">
-                                                <button type="button"
-                                                    class="btn nav-link attendances-analyist-tab active"
-                                                    data-bs-toggle="tab" href="#employeeCount_chart">Employee
-                                                    Count</button>
+
+
+                                                        <a class="nav-link pb-2 active " data-bs-toggle="tab"href="#employeeCount_chart" aria-selected="true" role="tab">
+                                                            Employee
+                                                            Percentage</a>
                                             </li>
                                             <li class="nav-item text-muted">
-                                                <button type="button" class="btn nav-link attendances-analyist-tab "
-                                                    data-bs-toggle="tab" href="#emplyeePercentage_chart">Employee
-                                                    Percentage</button>
+
+                                                    <a class="nav-link pb-2 " data-bs-toggle="tab"href="#emplyeePercentage_chart" aria-selected="true" role="tab">
+                                                        Employee
+                                                        Percentage</a>
                                             </li>
 
                                         </ul>

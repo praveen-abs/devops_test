@@ -481,8 +481,8 @@
                                                                 </span>
                                                                 <span
                                                                     class="btn bg-transparent text-primary outline-none border-0 fw-bold f-12 more_btn"
-                                                                    id="less_more-btn"
-                                                                    onclick="showOrHideDescription('{{ $index }}')">More</span>
+                                                                    id="less_more-btn-{{ $index }}"
+                                                                    onclick="showOrHideDescription('{{ $index }}',this)">More</span>
                                                             @endif
                                                         </div>
                                                     </td>
@@ -497,8 +497,8 @@
                                                                 </span>
                                                                 <span
                                                                     class="btn bg-transparent text-primary outline-none border-0 fw-bold f-12 more_btn"
-                                                                    id="less_more-btn"
-                                                                    onclick="showOrHideDescription('{{ $index }}')">More</span>
+                                                                    id="less_more-btn-{{ $index }}"
+                                                                    onclick="showOrHideDescription('{{ $index }}',this)">More</span>
                                                             @endif
 
 
@@ -514,8 +514,8 @@
                                                                 </span>
                                                                 <span
                                                                     class="btn bg-transparent text-primary outline-none border-0 fw-bold f-12 more_btn"
-                                                                    id="less_more-btn"
-                                                                    onclick="showOrHideDescription('{{ $index }}')">More</span>
+                                                                    id="less_more-btn-{{ $index }}"
+                                                                    onclick="showOrHideDescription('{{ $index }}',this)">More</span>
                                                             @endif
 
                                                         </div>
@@ -993,20 +993,26 @@
 
 
         // show or hide table data
-        function showOrHideDescription(rowIndex) {
-            console.log(rowIndex + 'collapse');
-            var less_more = document.getElementsByClassName("more_btn");
+        function showOrHideDescription(rowIndex,element) {
+
             //$(collapse-'.$index)
             if ($('.collapse-' + rowIndex).css('display') == 'none') {
                 $('.collapse-' + rowIndex).css('display', 'inline');
 
-                less_more.innerHTML = "Less"
+               // element.innerText = "Less"
+                console.log(rowIndex + ' Less');
 
+                element.innerText="Less";
             } else {
                 $('.collapse-' + rowIndex).css('display', 'none');
-                less_more.innerHTML = "More"
+                //element.innerHTML = "More"
+                console.log(rowIndex + ' More');
+                element.innerText="More";
 
             }
+           // console.log("showOrHide : "+element.innerText);
+
+           // console.log("showOrHide :  %o"+element);
         }
     </script>
 @endsection

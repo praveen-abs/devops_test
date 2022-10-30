@@ -53,7 +53,7 @@
 }
 
 .table-content {
-    overflow: auto;
+    /* overflow: auto; */
 }
 
 .table-content table th {
@@ -62,10 +62,10 @@
     color: #fff;
 }
 
-.table-content div {
+/* .table-content div {
     height: auto;
     min-width: 50px;
-}
+} */
 .table-content textarea {
     border: 0px;
     outline: none;
@@ -88,14 +88,38 @@
     cursor: pointer;
 }
 
-table.kpi_appraisal-table tr,table.kpi_appraisal-table td,table.kpi_appraisal-table th,table.kpi_appraisal-table td div,table.kpi_appraisal-table th div{
-    text-align: start !important;
-    vertical-align: top !important;
+table.kpi_appraisal-table tr,
+table.kpi_appraisal-table td,
+table.kpi_appraisal-table th,
+table.kpi_appraisal-table th div {
+    text-align: center;
+    vertical-align: middle;
 }
-table.kpi_appraisal-table th div{
-    width: 100px !important;
+table.kpi_appraisal-table th div {
+    min-width: 200px;
+    width: 100px;
+}
+table.kpi_appraisal-table tr:nth-child(1n) th div,table.kpi_appraisal-table tr:nth-child(1n) th:first-child  {
+
+    text-align: initial;
 }
 
+
+table.kpi_appraisal-table tr:nth-child(1n) td:nth-child(2)  {
+    text-align: initial !important;
+
+}
+table.kpi_appraisal-table tr:nth-child(1n) td:last-child  {
+    text-align: initial !important;
+
+}
+
+.kpi_appraisal-table td:nth-child(1) {
+    text-align: inherit !important;
+}
+table.kpi_appraisal-table td:nth-child(1) {
+    text-align: inherit !important;
+}
 .accordion {
     background-color: #eee;
     color: #444;
@@ -107,31 +131,27 @@ table.kpi_appraisal-table th div{
     outline: none;
     font-size: 15px;
     transition: 0.4s;
-  }
+}
 
-
-
-  .panel {
+.panel {
     padding: 0 18px;
     display: none;
     background-color: white;
     overflow: hidden;
-  }
+}
 
-  .less_btn{
-    content: 'Less';
+.less_btn {
+    content: "Less";
+}
+.more_btn {
+    content: "More";
+}
 
-  }
-  .more_btn{
-    content: 'More';
-  }
-
-  .kpi_userImg{
+.kpi_userImg {
     height: 120px !important;
     width: 120px !important;
-  }
+}
 
-
-.appraisal_rating .progress{
+.appraisal_rating .progress {
     height: 7px;
 }

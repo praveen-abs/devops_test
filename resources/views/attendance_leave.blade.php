@@ -7,15 +7,9 @@
     <script src="{{ URL::asset('assets/js/calendar-vanila.js') }}" defer></script>
     <link href="{{ URL::asset('assets/css/attendance.css') }}" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-
-
-
-    <style>
-
-    </style>
 @endsection
 @section('content')
-    @component('components.attendance_breadcrumb')
+    @component('components.leave_breadcrumb')
         @slot('li_1')
         @endslot
     @endcomponent
@@ -42,9 +36,10 @@
                                 </select>
                             </div>
                             <div>
-                                <button class="btn btn-orange" type="button">
-                                    Leave Policy Explanation
-                                </button>
+
+                                <a href="{{ url('leave_policy_explanation') }}" id=""
+                                class="nav-link sidebar  btn btn-orange" role="button" aria-expanded="false"><span> Leave Policy Explanation</span>
+                            </a>
                             </div>
 
                         </div>
@@ -58,13 +53,13 @@
         <div class="card  top-line mb-3">
             <div class="card-body">
                 <div class="col-12  justify-content-end d-flex">
-                    <div class="pendingLeave_notify me-3">
+                    {{-- <div class="pendingLeave_notify me-3">
                         <button class="btn btn-border-primary " data-bs-target="#leavepending_modal" data-bs-toggle="modal">
                             Pending
                         </button>
                         <span class="badge badge-soft-light rounded-circle fs-13 bg-danger">
                             0</span>
-                    </div>
+                    </div> --}}
 
                     <button class="btn btn-orange" data-bs-target="#leaveApply_modal" data-bs-toggle="modal">
                         Apply Leave
@@ -74,62 +69,49 @@
                     <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12">
                         <h6 class="text-left fw-bold">Leave Balance</h6>
                     </div>
-                    <div class="col-sm-3 col-sm-12 col-xl-3 col-md-4 col-lg-3 d-flex">
+                    <div class="col-sm-3 col-sm-12 col-xl-4 col-md-4 col-lg-4 d-flex">
                         <div class="card  box_shadow_0 border-rtb left-line w-100">
                             <div class="card-body text-center">
-                                <p class="text-ash-medium mb-2 f-13 ">Available</p>
+                                <p class="text-ash-medium mb-2 f-13 ">Sick Leave</p>
                                 <h5 class="mb-0">-</h5>
 
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3 col-sm-12 col-xl-3 col-md-4 col-lg-3 d-flex">
+                    <div class="col-sm-3 col-sm-12 col-xl-4 col-md-4 col-lg-4 d-flex">
                         <div class="card box_shadow_0 border-rtb left-line w-100">
                             <div class="card-body text-center">
-                                <p class="text-ash-medium mb-2 f-13 ">Accured So Far</p>
+                                <p class="text-ash-medium mb-2 f-13 ">Earned Leave</p>
                                 <h5 class="mb-0">-</h5>
 
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3 col-sm-12 col-xl-3 col-md-4 col-lg-3 d-flex">
+                    <div class="col-sm-3 col-sm-12 col-xl-4 col-md-4 col-lg-4 d-flex">
                         <div class="card box_shadow_0 border-rtb  left-line w-100">
                             <div class="card-body text-center">
-                                <p class="text-ash-medium mb-2 f-13 ">Carryover</p>
+                                <p class="text-ash-medium mb-2 f-13 ">Casual Leave</p>
                                 <h5 class="mb-0">-</h5>
 
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3 col-sm-12 col-xl-3 col-md-4 col-lg-3 d-flex">
-                        <div class="card box_shadow_0 border-rtb  left-line w-100">
-                            <div class="card-body text-center">
-                                <p class="text-ash-medium mb-2 f-13 "> Carryover</p>
-                                <h5 class="mb-0">-</h5>
-                                <div class="text-right">
-                                    <button type="button" class="btn px-2 py-0 border_radius_3 btn-orange"
-                                        data-bs-toggle="modal" data-bs-target="#earlyTimeArivals_modal">
-                                        <i class="fa fa-file-text-o"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
                 <div class="row">
-                    <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12">
+                    <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12 ">
                         <h6 class="text-left fw-bold">Leave Availed</h6>
                     </div>
-                    <div class="col-sm-3 col-sm-12 col-xl-3 col-md-4 col-lg-3 d-flex">
+                    <div class="col-sm-3 col-sm-12 col-xl-4 col-md-4 col-lg-4 d-flex">
                         <div class="card mb-0 box_shadow_0 border-rtb left-line w-100">
                             <div class="card-body text-center">
-                                <p class="text-ash-medium mb-2 f-13 ">Available</p>
+                                <p class="text-ash-medium mb-2 f-13 ">Availed</p>
                                 <h5 class="mb-0">-</h5>
 
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3 col-sm-12 col-xl-3 col-md-4 col-lg-3 d-flex">
+                    <div class="col-sm-3 col-sm-12 col-xl-4 col-md-4 col-lg-4 d-flex">
                         <div class="card mb-0 box_shadow_0 border-rtb left-line w-100">
                             <div class="card-body text-center">
                                 <p class="text-ash-medium mb-2 f-13 ">Accured So Far</p>
@@ -138,7 +120,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3 col-sm-12 col-xl-3 col-md-4 col-lg-3 d-flex">
+                    <div class="col-sm-3 col-sm-12 col-xl-4 col-md-4 col-lg-4 d-flex">
                         <div class="card mb-0 box_shadow_0 border-rtb  left-line w-100">
                             <div class="card-body text-center">
                                 <p class="text-ash-medium mb-2 f-13 ">Carryover</p>
@@ -147,20 +129,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3 mb-0 col-sm-12 col-xl-3 col-md-4 col-lg-3 d-flex">
-                        <div class="card box_shadow_0 border-rtb  left-line w-100">
-                            <div class="card-body text-center">
-                                <p class="text-ash-medium mb-2 f-13 "> Carryover</p>
-                                <h5 class="mb-0">-</h5>
-                                <div class="text-right">
-                                    <button type="button" class="btn px-2 py-0 border_radius_3 btn-orange"
-                                        data-bs-toggle="modal" data-bs-target="#earlyTimeArivals_modal">
-                                        <i class="fa fa-file-text-o"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -173,7 +142,7 @@
                     <div class="col-sm-3 col-sm-12 col-xl-3 col-md-4 col-lg-3 d-flex">
                         <div class="card   box_shadow_0 border-rtb left-line w-100">
                             <div class="card-body text-center">
-                                <p class="text-ash-medium mb-2 f-13 ">Available</p>
+                                <p class="text-ash-medium mb-2 f-13 ">Total Employee</p>
                                 <h5 class="mb-0">-</h5>
 
                             </div>
@@ -219,7 +188,7 @@
                     <div class="col-sm-3 col-sm-12 col-xl-3 col-md-4 col-lg-3 d-flex">
                         <div class="card mb-0  box_shadow_0 border-rtb left-line w-100">
                             <div class="card-body text-center">
-                                <p class="text-ash-medium mb-2 f-13 ">Available</p>
+                                <p class="text-ash-medium mb-2 f-13 ">Availed</p>
                                 <h5 class="mb-0">-</h5>
 
                             </div>
@@ -472,106 +441,7 @@
                     </div>
                     <div class="modal-body">
 
-                        <div class="row">
-                            <div class="col-4 d-flex col-sm-12 col-md-6 col-xl-4 col-xxl-4 col-lg-4">
-                                <div class="card w-100 left-line">
-                                    <div class="card-body">
-                                        <p class="text-muted mb-1 fw-bold text-center">Sick Leave</p>
-                                        <h6 class="text-center">10<span class="f-12">days</span> </h6>
-                                        <div class="alert mb-0 alert-danger py-1 d-flex align-items-center"
-                                            role="alert">
-                                            <div class="d-flex justify-content-center">
-                                                <i class="text-warning fw-bold f-10 fa fa-warning me-1">
-                                                </i><span class=" f-10 text-muted "> Employees are eligible for one
-                                                    day of SL/CL on the same month on which he/she joins the
-                                                    company, but the only criteria are he/she should join before 15
-                                                    of the respective months if
-                                                    not, the leave for that month will not be provided.</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4 d-flex col-sm-12 col-md-6 col-xl-4 col-xxl-4 col-lg-4">
-                                <div class="card w-100 left-line">
-                                    <div class="card-body">
-                                        <p class="text-muted mb-1 fw-bold text-center">floater Leave</p>
-                                        <h6 class="text-center">10<span class="f-12">days</span> </h6>
-                                        <div class="alert mb-0 alert-danger py-1 d-flex align-items-center"
-                                            role="alert">
-                                            <div class="d-flex justify-content-center">
-                                                <i class="text-warning fw-bold f-10 fa fa-warning me-1">
-                                                </i><span class=" f-10 text-muted "> Floating holidays are paid
-                                                    vacation days that employees can schedule themselves. They are
-                                                    mostly used by employees who celebrate cultural or religious
-                                                    holidays not included in the set of ten federally recognized
-                                                    paid holidays</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="col-4 d-flex col-sm-12 col-md-6 col-xl-4 col-xxl-4 col-lg-4">
-                                <div class="card w-100 left-line">
-                                    <div class="card-body">
-                                        <p class="text-muted mb-1 fw-bold text-center">Paternity Leave</p>
-                                        <h6 class="text-center">10<span class="f-12">days</span> </h6>
-                                        <div class="alert mb-0 alert-danger py-1 d-flex align-items-center"
-                                            role="alert">
-                                            <div class="d-flex justify-content-center">
-                                                <i class="text-warning fw-bold f-10 fa fa-warning me-1">
-                                                </i><span class=" f-10 text-muted ">It provides 15 days of leave as
-                                                    paternity leave. It is to be provided to employees who have less
-                                                    than two surviving children. This leave can be availed for 15
-                                                    days either before or within 6 months from the date of delivery
-                                                    of the child.</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4 d-flex col-sm-12 col-md-6 col-xl-4 col-xxl-4 col-lg-4">
-                                <div class="card w-100 left-line">
-                                    <div class="card-body">
-                                        <p class="text-muted mb-1 fw-bold text-center">Maternity Leave</p>
-                                        <h6 class="text-center">10<span class="f-12">days</span> </h6>
-                                        <div class="alert mb-0 alert-danger py-1 d-flex align-items-center"
-                                            role="alert">
-                                            <div class="d-flex justify-content-center">
-                                                <i class="text-warning fw-bold f-10 fa fa-warning me-1">
-                                                </i><span class=" f-10 text-muted ">The Maternity Benefit Act
-                                                    provides that a woman will be paid maternity benefit at the rate
-                                                    of her average daily wage in the three months preceding her
-                                                    maternity leave. However, the woman needs to have worked for the
-                                                    employer for at least 80 days in the 12 months preceding the
-                                                    date of her expected delivery</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4 d-flex col-sm-12 col-md-6 col-xl-4 col-xxl-4 col-lg-4">
-                                <div class="card w-100 left-line">
-                                    <div class="card-body">
-                                        <p class="text-muted mb-1 fw-bold text-center">Earned Leave</p>
-                                        <h6 class="text-center">10<span class="f-12">days</span> </h6>
-                                        <div class="alert mb-0 alert-danger py-1 d-flex align-items-center"
-                                            role="alert">
-                                            <div class="d-flex justify-content-center">
-                                                <i class="text-warning fw-bold f-10 fa fa-warning me-1">
-                                                </i><span class=" f-10 text-muted ">Earned Leave will be accrued
-                                                    every month. i. e 1 day per month</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                        </div>
 
 
 
@@ -843,7 +713,7 @@
     <script>
         var leavetypes_array = <?php echo json_encode(getAllLeaveTypes()); ?>;
 
-        var employeesList_array = <?php echo json_encode($allEmployeesList); ?>;
+
 
 
         $(document).ready(function() {
