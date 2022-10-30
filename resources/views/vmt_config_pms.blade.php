@@ -24,6 +24,56 @@
                     <div class="card shadow  profile-box ">
                         <div class="card-body justify-content-center align-items-center ">
                             <div class="header-card-text">
+                                <h6>KPI Goals Settings</h6>
+                            </div>
+                            <div class="row mt-1">
+                                <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
+                                    <label class="" for="selected_head">Calendar Type</label>
+                                </div>
+                                <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
+                                    <select placeholder="Select Head" name="selected_head" id="selected_calendar_type"
+                                        class="onboard-form form-control select2_form_without_search" required>
+                                        <option value="">Select Head</option>
+                                        <option value="manager" @if ($data && $data->selected_head && 'manager' == $data->selected_head) selected @endif>
+                                            Manager</option>
+                                        <option value="hr" @if ($data && $data->selected_head && 'hr' == $data->selected_head) selected @endif>HR
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mt-1">
+                                <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
+                                    <label class="" for="selected_head">Year</label>
+                                </div>
+                                <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
+                                    <select placeholder="Select Head" name="selected_head" id="selected_year"
+                                        class="onboard-form form-control select2_form_without_search" required>
+                                        <option value="">Select Head</option>
+                                        <option value="manager" @if ($data && $data->selected_head && 'manager' == $data->selected_head) selected @endif>
+                                            Manager</option>
+                                        <option value="hr" @if ($data && $data->selected_head && 'hr' == $data->selected_head) selected @endif>HR
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mt-1">
+                                <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
+                                    <label class="" for="selected_head">Frequency</label>
+                                </div>
+                                <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
+                                    <select placeholder="Select Head" name="selected_head" id="selected_frequency"
+                                        class="onboard-form form-control select2_form_without_search" required>
+                                        <option value="">Select Head</option>
+                                        <option value="manager" @if ($data && $data->selected_head && 'manager' == $data->selected_head) selected @endif>
+                                            Manager</option>
+                                        <option value="hr" @if ($data && $data->selected_head && 'hr' == $data->selected_head) selected @endif>HR
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body justify-content-center align-items-center ">
+                            <div class="header-card-text">
                                 <h6>PMS Configuration</h6>
                             </div>
                             <div class="form-card">
