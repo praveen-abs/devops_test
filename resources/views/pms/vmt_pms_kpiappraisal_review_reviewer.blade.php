@@ -463,9 +463,20 @@
                                         <tbody class="tbody" id="tbody">
                                             @foreach ($kpiRows as $index => $kpiRow)
                                                 <tr>
-                                                    <th scope="row" >
+                                                    <th scope="row" style="border-radius: 0px">
                                                         <div  style="width:300px">
                                                             {{ $kpiRow->dimension }}
+                                                            {{ \Str::words($kpiRow->dimension, 15, '') }}
+                                                            @if (strlen(substr($kpiRow->dimension, strlen(\Str::words($kpiRow->dimension, 15, '')))) > 0)
+                                                                <span class="{{ 'collapse-' . $index }}"
+                                                                    style="display: none;">
+                                                                    {{ substr($kpiRow->dimension, strlen(\Str::words($kpiRow->dimension, 15, ''))) }}
+                                                                </span>
+                                                                <span
+                                                                    class="btn bg-transparent text-orange outline-none border-0 fw-bold f-12 more_btn"
+                                                                    id="less_more-btn-{{ $index }}"
+                                                                    onclick="showOrHideDescription('{{ $index }}',this)">...More</span>
+                                                            @endif
                                                         </div>
                                                     </th>
                                                     <td>
@@ -477,9 +488,9 @@
                                                                     {{ substr($kpiRow->kpi, strlen(\Str::words($kpiRow->kpi, 15, ''))) }}
                                                                 </span>
                                                                 <span
-                                                                    class="btn bg-transparent text-primary outline-none border-0 fw-bold f-12 more_btn"
+                                                                    class="btn bg-transparent text-orange outline-none border-0 fw-bold f-12 more_btn"
                                                                     id="less_more-btn-{{ $index }}"
-                                                                    onclick="showOrHideDescription('{{ $index }}',this)">More</span>
+                                                                    onclick="showOrHideDescription('{{ $index }}',this)">...More</span>
                                                             @endif
                                                         </div>
                                                     </td>
@@ -493,9 +504,9 @@
                                                                     {{ substr($kpiRow->operational_definition, strlen(\Str::words($kpiRow->operational_definition, 15, ''))) }}
                                                                 </span>
                                                                 <span
-                                                                    class="btn bg-transparent text-primary outline-none border-0 fw-bold f-12 more_btn"
+                                                                    class="btn bg-transparent text-orange outline-none border-0 fw-bold f-12 more_btn"
                                                                     id="less_more-btn-{{ $index }}"
-                                                                    onclick="showOrHideDescription('{{ $index }}',this)">More</span>
+                                                                    onclick="showOrHideDescription('{{ $index }}',this)">...More</span>
                                                             @endif
 
 
@@ -510,9 +521,9 @@
                                                                     {{ substr($kpiRow->measure, strlen(\Str::words($kpiRow->measure, 15, ''))) }}
                                                                 </span>
                                                                 <span
-                                                                    class="btn bg-transparent text-primary outline-none border-0 fw-bold f-12 more_btn"
+                                                                    class="btn bg-transparent text-orange outline-none border-0 fw-bold f-12 more_btn"
                                                                     id="less_more-btn-{{ $index }}"
-                                                                    onclick="showOrHideDescription('{{ $index }}',this)">More</span>
+                                                                    onclick="showOrHideDescription('{{ $index }}',this)">...More</span>
                                                             @endif
 
                                                         </div>
@@ -679,49 +690,48 @@
             @if ($isAllReviewersSubmittedOrNot && count($pmsRatingDetails) > 0)
 
                     <div class="col-12">
-                        <div class="card">
+                        <div class="card mb-0">
 
                             <div class="card-body ">
                                 <h6>Best People Rating Grid</h6>
 
-                                <p class="text-muted fw-bold f-14">Appraisee's Annual Score & Rating</p>
-                                <div class="table-content mb-1">
-                                    <table class="table align-middle mb-0 table-bordered  table-striped" id="table">
 
-                                        <thead class="thead" id="tHead">
-                                            <tr>
-                                                <th scope="col">Overall Annual Score</th>
-                                                @foreach ($pmsRatingDetails as $ratingDetails)
-                                                    <th scope="col">{{ $ratingDetails->score_range }}</th>
-                                                @endforeach
-                                            </tr>
-                                        </thead>
+                                <div class="table-content table-responsive mb-1">
+                                    <table class="table align-middle mb-0 table-bordered  " id="table">
+
+
                                         <tbody class="tbody" id="tbody">
                                             <tr>
-                                                <td class="">
-                                                    Corresponding ANNUAL PERFORMANCE Rating
-                                                </td>
+                                                <th scope="col" style="width:350px;border-radius:0px;">Overall Annual Score</th>
                                                 @foreach ($pmsRatingDetails as $ratingDetails)
-                                                    <td class="">{{ $ratingDetails->performance_rating }}
+                                                    <td scope="col" style="border:1px solid #002f56">{{ $ratingDetails->score_range }}</td>
+                                                @endforeach
+                                            </tr>
+                                            <tr>
+                                                <th class="" style="width:350px">
+                                                    Corresponding ANNUAL PERFORMANCE Rating
+                                                </th>
+                                                @foreach ($pmsRatingDetails as $ratingDetails)
+                                                    <td class="" style="border:1px solid #002f56">{{ $ratingDetails->performance_rating }}
                                                     </td>
                                                 @endforeach
                                             </tr>
 
                                             <tr>
-                                                <td class="">
+                                                <th class=""  style="width:350px">
                                                     Ranking
-                                                </td>
+                                                </th>
                                                 @foreach ($pmsRatingDetails as $ratingDetails)
-                                                    <td class="">{{ $ratingDetails->ranking }}</td>
+                                                    <td class="" style="border:1px solid #002f56">{{ $ratingDetails->ranking }}</td>
                                                 @endforeach
                                             </tr>
                                             <tr>
 
-                                                <td class="">
+                                                <th class=""  style="width:350px">
                                                     Action
-                                                </td>
+                                                </th>
                                                 @foreach ($pmsRatingDetails as $ratingDetails)
-                                                    <td class="">{{ $ratingDetails->action }}</td>
+                                                    <td class="" style="border:1px solid #002f56">{{ $ratingDetails->action }}</td>
                                                 @endforeach
                                             </tr>
                                         </tbody>
@@ -1004,7 +1014,7 @@
                 $('.collapse-' + rowIndex).css('display', 'none');
                 //element.innerHTML = "More"
                 console.log(rowIndex + ' More');
-                element.innerText="More";
+                element.innerText="...More";
 
             }
            // console.log("showOrHide : "+element.innerText);
