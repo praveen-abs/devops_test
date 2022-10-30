@@ -1118,10 +1118,12 @@
 
                             console.log("Response : "+data.status);
                             console.log(data);
+                            $('#modalBody').html('');
 
                             if (data.status == "success") {
                                 $('#modalHeader').html("Success");
                                 $('#modalSubHeading').html(data.message);
+
                                 if(t_can_onboard_employee == "1" && data.mail_status == "success")
                                     $('#SucessMail_send').html("Mail notification sent.");
                                 else
