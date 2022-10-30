@@ -309,7 +309,7 @@ class VmtEmployeeController extends Controller
             {
                 $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->input('can_onboard_employee'), null);
 
-                if($result)
+                if($result->status == "success")
                 {
                     $response = [
                         'status' => 'success',
@@ -320,6 +320,17 @@ class VmtEmployeeController extends Controller
                         'user_id' => $result->response_object->id  //send the user id to front-end
 
                     ];
+                }
+                else
+                {
+                    //When error occured while storing User, then show error to UI
+                    $response = [
+                            'status' => $result->status,
+                            'message' => "Error while creating/update User details",
+                            'error' => $result->message,
+                            'error_verbose' =>''
+                    ];
+
                 }
 
             }

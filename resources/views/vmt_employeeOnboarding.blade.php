@@ -514,7 +514,6 @@
 
                     //Check only if this is normal onboarding
 
-                   @if(Auth::user()->active == '0' && Auth::user()->onboard_type == 'quick' )
                     $.ajax({
                         url: routeURL,
                         type: "GET",
@@ -535,7 +534,6 @@
                            }
                         }
                     });
-                    @endif
 
                     return true;
                 }
