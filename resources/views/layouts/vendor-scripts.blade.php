@@ -1,15 +1,30 @@
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous">
+</script>
 {{-- if uncommented -> dropdown not working --}}
 {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js" integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK" crossorigin="anonymous"></script> --}}
 
-<script
-			  src="https://code.jquery.com/jquery-3.6.0.min.js"
-			  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-			  crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
+    integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous">
+</script>
 
-<script src="{{ URL::asset('assets/libs/swiper/swiper.min.js')}}"></script>
+<script src="{{ URL::asset('assets/libs/swiper/swiper.min.js') }}"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
+
+{{-- sweet alert --}}
+<script src="{{ URL::asset('/assets/premassets/js/sweetalert.js') }}"></script>
+
+
+<!--Nice select-->
+<script src="{{ URL::asset('/assets/premassets/js/jquery.nice-select.min.js') }}"></script>
+
+
+{{-- grid js --}}
+<script src="{{ URL::asset('assets/libs/gridjs/gridjs.min.js') }}"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script src="{{ URL::asset('assets/libs/simplebar/simplebar.min.js') }}"></script>
 <script src="{{ URL::asset('assets/libs/node-waves/node-waves.min.js') }}"></script>
@@ -17,6 +32,11 @@
 <script src="{{ URL::asset('assets/js/pages/plugins/lord-icon-2.1.0.min.js') }}"></script>
 <script src="{{ URL::asset('assets/js/plugins.min.js') }}"></script>
 <script src="{{ URL::asset('assets/js/app.min.js') }}" defer></script><!-- Vendor Script -->
+
+
+<!-- validation script  -->
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.js"></script>
 
 <!-- Layout config Js -->
 <script src="{{ URL::asset('assets/js/layout.js') }}"></script>
@@ -26,12 +46,12 @@
         $('.common-toast-close').click(function() {
             $('.common-toast').toast('hide');
         });
-        var resultToast = "<?= Session::get('result');  ?>";
-        var alertToast = "<?= Session::get('alert');  ?>";
+        var resultToast = "<?= Session::get('result') ?>";
+        var alertToast = "<?= Session::get('alert') ?>";
 
-        if(resultToast != "" && alertToast != ""){
+        if (resultToast != "" && alertToast != "") {
 
-            if(alertToast == "success"){
+            if (alertToast == "success") {
                 $("#result-toast-success").html(resultToast);
                 $('.common-toast-success').toast('show');
             } else {
@@ -41,24 +61,21 @@
         }
     });
 
-    function generateProfileShortName_VendorScript(element_id, t_username)
-    {
-        var username = t_username ;
+    function generateProfileShortName_VendorScript(element_id, t_username) {
+        var username = t_username;
         const splitArray = username.split(" ");
-        var finalname ="empty111";
+        var finalname = "empty111";
 
-        if( splitArray.length == 1)
-        {
-            finalname = splitArray[0][0] +""+ splitArray[0][1];
-        }else
-        {
-            if(splitArray[0].length == 1)
-                finalname = splitArray[0][0] +""+ splitArray[1][0];
+        if (splitArray.length == 1) {
+            finalname = splitArray[0][0] + "" + splitArray[0][1];
+        } else {
+            if (splitArray[0].length == 1)
+                finalname = splitArray[0][0] + "" + splitArray[1][0];
             else
-                finalname = splitArray[0][0] +""+ splitArray[0][1];
+                finalname = splitArray[0][0] + "" + splitArray[0][1];
         }
 
-        var a = $('#'+element_id).text(finalname.toUpperCase());
+        var a = $('#' + element_id).text(finalname.toUpperCase());
     }
 
     function getRandomColor() {
