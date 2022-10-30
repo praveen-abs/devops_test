@@ -18,15 +18,18 @@ class ConfigPmsController extends Controller
 
         $data = ConfigPms::first();
         $config_data = VmtPMSRating::all();
-        
+
         if ($data) {
             $data->header = json_decode($data->column_header, true);
         }
+
         return view('vmt_config_pms', compact('data','config_data'));
     }
 
     public function store(Request $request) {
-       
+
+        //dd($request->all());
+
         $json = json_encode([
             'dimension' => $request->input('dimension') != '' ? $request->input('dimension') : 'Dimension',
             'kpi' => $request->input('kpi') != '' ? $request->input('kpi') : 'KPI',
@@ -69,6 +72,9 @@ class ConfigPmsController extends Controller
 
         $config = ConfigPms::first();
 
+        $config->calendar_type = $request->calendar_type;
+        $config->year = $request->hidden_year;
+        $config->frequency = $request->selected_frequency;
         $config->selected_columns = implode(',',$selectedColumn);
         $config->selected_head = $request->input('selected_head');
         $config->selected_reviewlevel = $request->input('selected_reviewlevels');
@@ -117,7 +123,7 @@ class ConfigPmsController extends Controller
 
             //     ]);
             DB::table('vmt_pms_rating')->where('id', $request->pk)->update(array($request->name => $request->value));
-                
+
 
             return response()->json(['success' => true]);
 

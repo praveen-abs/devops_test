@@ -30,12 +30,13 @@
                             <label class="" for="selected_head">Calendar Type</label>
                         </div>
                         <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
-                            <select placeholder="Select Head" name="selected_head" id="selected_calendar_type"
+                            <select placeholder="Select Calendar Type" name="calendar_type" id="calendar_type"
                                 class="onboard-form form-control select2_form_without_search" required>
-                                <option value="">Select Head</option>
-                                <option value="manager" @if ($data && $data->selected_head && 'manager' == $data->selected_head) selected @endif>
-                                    Manager</option>
-                                <option value="hr" @if ($data && $data->selected_head && 'hr' == $data->selected_head) selected @endif>HR
+                                <option value="">Select</option>
+                                <option name="financial_year" @if ($data && $data->calendar_type=='financial_year') selected @endif value="financial_year">Financial Year</option>
+                                <option name="calendar_year" @if ($data && $data->calendar_type=='calendar_year') selected @endif value="calendar_year">Calendar Year</option>
+
+                                {{-- <option value="hr" @if ($data && $data->selected_head && 'hr' == $data->selected_head) selected @endif>HR --}}
                                 </option>
                             </select>
                         </div>
@@ -45,86 +46,91 @@
                             <label class="" for="selected_head">Year</label>
                         </div>
                         <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
-                            <select placeholder="Select Head" name="selected_head" id="selected_year"
-                                class="onboard-form form-control select2_form_without_search" required>
-                                <option value="">Select Head</option>
-                                <option value="manager" @if ($data && $data->selected_head && 'manager' == $data->selected_head) selected @endif>
-                                    Manager</option>
-                                <option value="hr" @if ($data && $data->selected_head && 'hr' == $data->selected_head) selected @endif>HR
-                                </option>
-                            </select>
+                            <input type="text" name="year" id="year" class="onboard-form form-control" required
+                                <?php
+                                    $financial_year_shortvalue = 'April - March';
+                                    $calendar_year_shortvalue = 'January - December';
+
+                                    $financial_year_value ="April - ".date('Y')." to March - ".date('Y') + 1 ;
+                                    $calendar_year_value ="January - ".date('Y')." to December - ".date('Y');
+                                    $selected_year_value = '';
+                                    $selected_year_shortvalue = '';
+
+                                    if($data && $data->year == 'April - March')
+                                    {
+                                        $selected_year_value = $financial_year_value;
+                                        $selected_year_shortvalue = $financial_year_shortvalue;
+                                    }
+                                    else
+                                    if($data && $data->year == 'January - December')
+                                    {
+                                        $selected_year_value = $calendar_year_value;
+                                        $selected_year_shortvalue = $calendar_year_shortvalue;
+
+                                    }
+                                ?>
+                                value="{{ $selected_year_value}}" readonly />
+                            <input type="hidden" name="hidden_year" id="hidden_year" value="{{ $selected_year_shortvalue}}">
                         </div>
                     </div>
                     <div class="row mt-1">
                         <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
-                            <label class="" for="selected_head">Frequency</label>
+                            <label class="" for="selected_head">Calendar Type</label>
                         </div>
                         <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
-                            <select placeholder="Select Head" name="selected_head" id="selected_frequency"
+
+                            <select name="selected_frequency" id="selected_frequency"
                                 class="onboard-form form-control select2_form_without_search" required>
-                                <option value="">Select Head</option>
-                                <option value="manager" @if ($data && $data->selected_head && 'manager' == $data->selected_head) selected @endif>
-                                    Manager</option>
-                                <option value="hr" @if ($data && $data->selected_head && 'hr' == $data->selected_head) selected @endif>HR
-                                </option>
+                                <option value="">Select</option>
+                                <option value="monthly"    @if ($data && $data->frequency=='monthly') selected @endif  >Monthly</option>
+                                <option value="quarterly"  @if ($data && $data->frequency=='quarterly') selected @endif    >Quarterly</option>
+                                <option value="halfYearly" @if ($data && $data->frequency=='halfYearly') selected @endif    >Half Yearly</option>
+                                <option value="yearly"     @if ($data && $data->frequency=='yearly') selected @endif    >Yearly</option>
+
                             </select>
                         </div>
                     </div>
                 </div>
 
-
-
                 <div class="card-body justify-content-center align-items-center ">
                     <div class="header-card-text">
-                        <h6>Grid</h6>
+                        <h6>Rating Grid</h6>
                     </div>
                     <div class="form-card">
                         <div class="row mt-1">
                             <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
-                                <label for="">Score Grid</label>
+                                <label for="">Show Rating card in Review Page?</label>
 
                             </div>
                             <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
 
                                 <div class="d-flex">
                                     <div class="form-check me-2">
-                                        <input class="form-check-input" type="radio" name="scoreOn_off"
-                                            id="scoreOn_off" value="option1" checked>
-                                        <label class="form-check-label" for="">
-                                            On
-                                        </label>
+                                        <input class="form-check-input" type="radio" name="radiobtn_show_ratingcard" id="radiobtn_show_ratingcard_true" value="true"/>
+                                        <label class="form-check-label" for="radiobtn_show_ratingcard_true">Yes</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="scoreOn_off"
-                                            id="scoreOn_off" value="option1" >
-                                        <label class="form-check-label" for="">
-                                            Off
-                                        </label>
+                                        <input class="form-check-input" type="radio" name="radiobtn_show_ratingcard" id="radiobtn_show_ratingcard_false" value="false" />
+                                        <label class="form-check-label" for="radiobtn_show_ratingcard_false">No</label>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row mt-1">
                             <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
-                                <label for="">Overall Score</label>
+                                <label for="">Show Overall Score card in Review Page?</label>
 
                             </div>
                             <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
 
                                 <div class="d-flex">
                                     <div class="form-check me-2">
-                                        <input class="form-check-input" type="radio" name="overAllOn_off"
-                                            id="overAllOn_off" value="option1" checked>
-                                        <label class="form-check-label" for="">
-                                            On
-                                        </label>
+                                        <input class="form-check-input" type="radio" name="radiobtn_show_overallscorecard" id="radiobtn_show_overallscorecard_true" value="true"/>
+                                        <label class="form-check-label" for="radiobtn_show_overallscorecard_true">Yes</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="overAllOn_off"
-                                            id="overAllOn_off" value="option1" >
-                                        <label class="form-check-label" for="">
-                                            Off
-                                        </label>
+                                        <input class="form-check-input" type="radio" name="radiobtn_show_overallscorecard" id="radiobtn_show_overallscorecard_false" value="false" />
+                                        <label class="form-check-label" for="radiobtn_show_overallscorecard_false">No</label>
                                     </div>
                                 </div>
                             </div>
@@ -440,6 +446,39 @@
         $.fn.poshytip = {
             defaults: null
         }
+    </script>
+    <script>
+            $('#calendar_type').change(function() {
+                console.log($('#calendar_type').val());
+                if ($('#calendar_type').val() == 'financial_year') {
+                    $('#year').val("April - "+<?php echo date('Y'); ?>+ " to March - "+<?= date('Y') + 1 ?> );
+                    $('#hidden_year').val("April - March");
+
+
+                }
+                else
+                if ($('#calendar_type').val() == 'calendar_year') {
+                    $('#year').val("January - "+<?php echo date('Y'); ?>+ " to December - "+<?= date('Y')?> );
+                    $('#hidden_year').val("January - December");
+
+                } else {
+                    $('#year').val('');
+                }
+                // $('#hidden_calendar_year').val($("#year option:selected").text())
+                // if ($('#calendar_type').val() != '') {
+                //     var frequencyDataResult =
+                //         '<option value="monthly">Monthly</option><option value="quarterly">Quarterly</option><option value="halfYearly">Half Yearly</option><option value="yearly">Yearly</option>';
+                //     $('#frequency').html(frequencyDataResult);
+                // } else {
+                //     var frequencyDataResult =
+                //         '<option value="" selected disabled>Select frequency</option>';
+                //     $('#frequency').html(frequencyDataResult);
+                //     $('#frequency').val('');
+                // }
+
+            });
+
+
     </script>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jquery-editable/js/jquery-editable-poshytip.min.js">
