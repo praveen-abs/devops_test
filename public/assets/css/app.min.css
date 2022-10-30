@@ -17020,13 +17020,13 @@ a.ember-view {
 }
 
 .salary-header.nav-tab-header .nav-pills.nav-tabs-dashed li a.active {
-    border-radius: 0px;
+    /* border-radius: 0px;
     border-bottom: 3px solid #f06548;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     background-color: inherit;
     width: 100%;
-    left: 0px;
+    left: 0px; */
 }
 
 .salary-header.nav-tab-header .nav-pills.nav-tabs-dashed li a {

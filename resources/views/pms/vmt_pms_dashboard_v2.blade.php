@@ -39,121 +39,16 @@
         }
     </style>
     <style type="text/css">
-        header {
-            font-family: 'Lobster', cursive;
-            text-align: center;
-            font-size: 25px;
-        }
-
-
-        .scrollbar {
-            /*margin-left: 67px;*/
-            /*float: left;*/
-            height: 300px;
-            /*width: 400px;*/
-
-            overflow-y: scroll;
-            margin-bottom: 25px;
-        }
-
-        .force-overflow {
-            min-height: 450px;
-        }
-
-        #wrapper {
-            text-align: center;
-            width: 500px;
-            margin: auto;
-        }
-
-        .td_content_center {
-            text-align: center;
-        }
-
-        /*
-                     *  STYLE 1
-                     */
-
-        #style-1::-webkit-scrollbar-track {
-            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            background-color: #F5F5F5;
-        }
-
-        #style-1::-webkit-scrollbar {
-            width: 12px;
-            background-color: #F5F5F5;
-        }
-
-        #style-1::-webkit-scrollbar-thumb {
-            border-radius: 10px;
-            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
-            background-color: #555;
-        }
-
-        .loader {
-            position: fixed;
-            left: 0px;
-            top: 0px;
-            width: 100%;
-            height: 100%;
-            z-index: 9999;
-            background: url('{{ URL::asset('assets/images/loader.gif') }}') 50% 50% no-repeat rgb(249, 249, 249);
-            opacity: 0.4;
-        }
-
-        .employees-profile {
-            display: flex;
-            align-items: center;
-        }
-
-        .employees-profile img {
-            width: 40px;
-            height: 40px;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 1px solid #fff;
-        }
-
-        .employees-profile img:not(:first-child) {
-            margin-left: -13px;
-        }
-
-        .employees-card {
-            background-color: #fff;
-            border-radius: 20px;
-            /* padding: 8px 5px; */
-        }
-
-        .employees-profile.counting {
-            width: 40px;
-            height: 40px;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 1px solid #fff;
-            color: #003056;
-            background-color: #d1d3d5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-
-        .mr-10 {
-            margin-right: 0px !important;
-        }
-
-        .fa-refresh:hover {
-            cursor: pointer;
-        }
-
-        #employeeSelectionModal .modal-body {
-            height: auto;
-        }
-
-        .modal-body .select2-container--default .select2-selection--multiple {
-            height: auto !important;
-        }
+.loader {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url('{{ URL::asset('assets/images/loader.gif') }}') 50% 50% no-repeat rgb(249, 249, 249);
+    opacity: 0.4;
+}
     </style>
 @endsection
 
@@ -521,7 +416,7 @@
                                 class="text-white fa fa-plus mx-1"></i>Add
                             Goals</button>
                         <div class="table-responsive">
-                            <table id='empTable' class=' table table-borderd  mb-0 '>
+                            <table id='empTable' class=' table empTable table-borderd  mb-0 '>
                                 <thead class="table-light">
                                     <tr>
                                         <td class="d-none">Serial No</td>
@@ -583,8 +478,8 @@
                                                                 <span class="f-12 ml-3">
                                                                     <span class="">
                                                                         {{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</span>
-                                                                    <span
-                                                                        class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text"></span>
+                                                                    {{-- <span
+                                                                        class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text"></span> --}}
 
                                                                 </span>
                                                             </div>
@@ -598,14 +493,18 @@
                                                     <td class="">
                                                         @foreach ($pmsKpiAssigneeData['reviewersIds'] as $keyCheck => $reviewer)
                                                             @if ($pmsKpiAssigneeData['currentLoggedUserRole'] == 'reviewer' && $reviewer == Auth::id())
-                                                                <div class="td_content_center">
+
+                                                            <div class=" col-auto td_content_center">
                                                                     {{ getUserDetailsById($reviewer) }}</div>
+
                                                             @elseif($pmsKpiAssigneeData['currentLoggedUserRole'] != 'reviewer')
                                                                 @if ($keyCheck != 0)
                                                                     <br>
                                                                 @endif
-                                                                <div class="td_content_center">
+
+                                                                <div class="col-auto td_content_center">
                                                                     {{ getUserDetailsById($reviewer) }}</div>
+
                                                             @endif
                                                         @endforeach
 
