@@ -527,7 +527,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                     </td>
 
                     <td colspan="2" class="">
-                        <p class="txt-right">---</p>
+                        <p class="txt-right">{{ number_format(round($employee->TOTAL_EARNED_GROSS), 2) }}</p>
                     </td>
                     <td colspan="2" class="">
                         <p class="txt-left text-strong">TOTAL DEDUCTION</p>
@@ -573,7 +573,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                         <p class="txt-center text-strong">Paid Date</p>
                     </td>
                     <td colspan="3" class="">
-                        <p class="txt-center">11-MAY-2022</p>
+                        <p class="txt-center"></p>
                     </td>
                 </tr>
                 <tr>
