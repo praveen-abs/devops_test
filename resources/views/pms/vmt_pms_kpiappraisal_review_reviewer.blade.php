@@ -5,10 +5,7 @@
     <link href="{{ URL::asset('assets/css/appraisal_review.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ URL::asset('/assets/css/pages_profile.css') }}">
 @endsection
-@component('components.performance_breadcrumb')
-@slot('li_1')
-@endslot
-@endcomponent
+
 @section('content')
     <div class="loader" style="display:none;"></div>
     <div class="employee-review-wrapper mt-30">
@@ -355,9 +352,9 @@
                                 <input type="hidden" value="" name="formSubmitType" id="formSubmitType">
                                 <input type="hidden" name="goal_id" value="{{ $assignedGoals->id }}">
                                 <input type="hidden" name="kpiReviewId" value="{{ $assignedGoals->id }}">
-                                <div class="table-content responsive">
+                                <div class="table-content table-responsive">
                                     <table id="table_review"
-                                        class="table kpi_appraisal-table align-middle mb-0 table-bordered  "
+                                        class="table  kpi_appraisal-table align-middle mb-0 table-bordered  "
                                         data-paging="true" data-paging-size="100" data-paging-limit="3"
                                         data-paging-container="#paging-ui-container"
                                         data-paging-count-format="{PF} to {PL}" data-sorting="true"
@@ -466,13 +463,13 @@
                                         <tbody class="tbody" id="tbody">
                                             @foreach ($kpiRows as $index => $kpiRow)
                                                 <tr>
-                                                    <th scope="row">
-                                                        <div>
+                                                    <th scope="row" >
+                                                        <div  style="width:300px">
                                                             {{ $kpiRow->dimension }}
                                                         </div>
                                                     </th>
                                                     <td>
-                                                        <div style="">
+                                                        <div style="width:300px">
                                                             {{ \Str::words($kpiRow->kpi, 15, '') }}
                                                             @if (strlen(substr($kpiRow->kpi, strlen(\Str::words($kpiRow->kpi, 15, '')))) > 0)
                                                                 <span class="{{ 'collapse-' . $index }}"

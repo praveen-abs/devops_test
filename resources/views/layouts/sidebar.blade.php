@@ -103,17 +103,16 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('attendance-employee-timesheet') }}"
-                                    class="nav-link sidebar py-1">Time Sheet</a>
+                              <a href="{{ url('attendance_calendar') }}" class="nav-link sidebar py-1">Time Sheet</a>
+
                             </li>
 
                             <li class="nav-item">
-                                <a href="{{ route('attendance-employee-timesheet') }}"
-                                    class="nav-link sidebar py-1">Team Time Sheet</a>
+                                <a href="{{ url('attendance_calendar') }}"  class="nav-link sidebar py-1">Team Time Sheet</a>
                             </li>
 
                             <li class="nav-item">
-                                <a href="{{ route('attendance-employee-timesheet') }}" class="nav-link sidebar py-1">Org
+                                <a href="{{ url('attendance_calendar') }}" class="nav-link sidebar py-1">Org
                                     Sheet</a>
                             </li>
 
@@ -123,7 +122,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0" href="#leaveDrop-Down" data-bs-toggle="collapse"
+                    <a class="nav-link sidebar menu-link pt-0"href="{{ url('attendance_leave') }}" data-bs-toggle=""
                         role="button" aria-expanded="false" aria-controls="sidebarRoles">
                         <i><svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                             width="512.000000pt" height="512.000000pt" viewBox="0 0 512.000000 512.000000"
@@ -162,9 +161,9 @@
                            </g>
                            </svg>
                            </i>
-                        <span>leave</span>
+                        <span>Leave</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="leaveDrop-Down">
+                    {{-- <div class="collapse menu-dropdown" id="leaveDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item ">
                                 <a href="{{ url('attendance_leave') }}" id=""
@@ -188,7 +187,7 @@
                             </li>
 
                         </ul>
-                    </div>
+                    </div> --}}
                 </li>
 
 
