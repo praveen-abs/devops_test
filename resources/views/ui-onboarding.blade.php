@@ -19,6 +19,7 @@
                         <form id="form-1" enctype="multipart/form-data" class=" ">
                             @csrf
                             <input type="hidden" name="user_id" id="user_id" value="{{ $user_id ?? '' }}" />
+                            <input type="hidden" name="can_redirect" id="can_redirect" value="0" />
                             <div class="card shadow  profile-box card-top-border p-2">
                                 <div class="card-body justify-content-center align-items-center ">
                                     <div class=" header-card-text">

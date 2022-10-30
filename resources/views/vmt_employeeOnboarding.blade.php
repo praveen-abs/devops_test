@@ -1153,6 +1153,14 @@
                                 $('#modalHeader').html("Success");
                                 $('#modalSubHeading').html(data.message);
 
+                                //add the user_id into the hidden field
+                                if(data.user_id)
+                                    $('#user_id').val(data.user_id);
+
+                                //When submit button clicked, then write a hidden value
+                                if(t_can_onboard_employee == "1")
+                                    $('#can_redirect').val('1');
+
                                 if(t_can_onboard_employee == "1" && data.mail_status == "success")
                                     $('#SucessMail_send').html("Mail notification sent.");
                                 else
@@ -1164,9 +1172,7 @@
                                 $('#notificationModal').show();
                                 $('#notificationModal').removeClass('fade');
 
-                                //add the user_id into the hidden field
-                                if(data.user_id)
-                                    $('#user_id').val(data.user_id);
+
                             }
                             else
                             if (data.status == "failure") {
@@ -1273,9 +1279,13 @@
 
         var is_core_fields_valid = false;
         var errors_core_fields = [] ;
-        // $("#button_close").click(function(){
-        //         window.location.href = "/employeeOnboarding";
-        // });
+
+        $("#button_close").click(function(){
+            console.log("Can re-direct to homepage : "+$('#can_redirect').val());
+
+            if($('#can_redirect').val() == '1')
+                window.location.href = "/";
+        });
 
 
 
