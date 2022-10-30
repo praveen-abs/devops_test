@@ -4,6 +4,8 @@ $general_info = \DB::table('vmt_general_info')->first();
 //$employee_name =  \DB::table('users')->where('user_code','=',$employee->EMP_NO)->first('name');
 $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
 // dd(request()->getSchemeAndHttpHost()."".$general_info->logo_img);
+$bank_names = \DB::table('bank_list')->get();
+
 ?>
 <html>
 
@@ -219,13 +221,13 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                         <p>EPF NUMBER</p>
                     </td>
                     <td colspan="3">
-                        <p>{{ $employee->EPF_Number }}</p>
+                        <p>{{ $employee->epf_number }}</p>
                     </td>
                     <td colspan="3" class="bg-ash text-strong">
                         <p>ESIC NUMBER</p>
                     </td>
                     <td colspan="3">
-                        <p>{{ $employee->ESIC_Number }}</p>
+                        <p>{{ $employee_details->esic_number }}</p>
                     </td>
 
                 </tr>
@@ -234,13 +236,13 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                         <p>UAN</p>
                     </td>
                     <td colspan="3">
-                        <p>{{ $employee->UAN }}</p>
+                        <p>{{ $employee_details->uan }}</p>
                     </td>
                     <td colspan="3" class="bg-ash text-strong">
                         <p>PAN</p>
                     </td>
                     <td colspan="3">
-                        <p>{{ $employee->PAN_Number }}</p>
+                        <p>{{ $employee_details->pan_number }}</p>
                     </td>
 
                 </tr>
@@ -259,13 +261,24 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                 </tr>
                 <tr>
                     <td colspan="4" class="">
-                        <p class="txt-center">{{ $employee->Bank_Name }}</p>
+                        <?php
+                            $bank_name = '';
+                            foreach($bank_names as $singleBank)
+                            {
+                                if($singleBank->id == $employee_details->bank_id)
+                                {
+                                    $bank_name = $singleBank->bank_name;
+                                    break;
+                                }
+                            }
+                        ?>
+                        <p class="txt-center">{{ $bank_name }}</p>
                     </td>
                     <td colspan="4" class="">
-                        <p class="txt-center">{{ $employee->Account_Number }}</p>
+                        <p class="txt-center">{{ $employee_details->bank_account_number }}</p>
                     </td>
                     <td colspan="4" class="">
-                        <p class="txt-center">{{ $employee->Bank_IFSC_Code }}</p>
+                        <p class="txt-center">{{ $employee_details->bank_ifsc_code }}</p>
                     </td>
 
 
