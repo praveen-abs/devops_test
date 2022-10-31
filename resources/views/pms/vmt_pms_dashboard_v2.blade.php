@@ -146,7 +146,7 @@
                                         <p class="mb-1 text-center">Final Score Published</p>
 
                                         <p class="fw-bold text-center mt-1 f-18">
-                                            {{ $dashboardCountersData['finalScoreCount'] . '/' . $dashboardCountersData['totalReviewedCount'] }}
+                                            {{ $dashboardCountersData['finalScoreCount'] . '/' . $dashboardCountersData['employeesGoalsSetCount'] }}
                                         </p>
 
                                     </div>
