@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->call('App\Http\Controllers\VmtStaffAttendanceController@syncStaffAttendanceFromDeviceDatabase')->timezone('Asia/Kolkata')->twiceDaily(10, 20);
+        $schedule->call('App\Http\Controllers\VmtStaffAttendanceController@syncStaffAttendanceFromDeviceDatabase')->everyThirtyMinutes()->timezone('Asia/Kolkata')->between('09:00', '17:45');
     }
 
     /**

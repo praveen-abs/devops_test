@@ -1,8 +1,18 @@
 .hierarchy-wrapper {
     position: relative;
-    overflow-x: scroll;
+    overflow-x: auto;
     width: -webkit-fill-available;
+    min-height: 480px;
 }
+.node.logo-level .user-avatar{
+    border-radius: 0;
+}
+.node .user-avatar{
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+}
+
 .hierarchy-wrapper .department-wise {
     position: absolute;
     top: 0px;

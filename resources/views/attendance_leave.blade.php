@@ -744,7 +744,10 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script>
+
+
         var leavetypes_array = <?php echo json_encode(getAllLeaveTypes()); ?>;
+        var employeesList_array = <?php echo json_encode($allEmployeesList); ?>;
 
 
 
