@@ -663,11 +663,17 @@
             var targetVal = idValue.data("targetval");
             var kpiWeightageVal = idValue.data("kpiweightageval");
             kpiWeightageVal = kpiWeightageVal.replace('%', '');
-            kpiWeightageVal = kpiWeightageVal;
+            //kpiWeightageVal = kpiWeightageVal/100;
 
             if (kpiAchievementSelfReview != '') {
+                console.log("KPI Achieved Calculation ");
+                console.log("kpiAchievementSelfReview : "+kpiAchievementSelfReview);
+                console.log("targetVal : "+targetVal);
+                console.log("kpiWeightageVal : "+kpiWeightageVal);
+
                 var result = (kpiAchievementSelfReview / targetVal) * kpiWeightageVal;
                 $('#assignee_kpi_percentage' + index).val(result.toFixed(1));
+                console.log("OUTPUT :: assignee_kpi_percentage : "+result);
             } else {
                 $('#assignee_kpi_percentage' + index).val('');
             }

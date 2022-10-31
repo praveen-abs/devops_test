@@ -290,4 +290,19 @@ class VmtAttendanceController extends Controller
         return view('vmt_daily_staff_attendance', compact('users','shift_timings'));
     }
 
+
+
+
+
+    /////////////////////// New routing methods
+
+
+    public function showOrgTimesheet(Request $request){
+
+        $org_timesheet = VmtEmployeeAttendance::all();
+        //dd($org_timesheet);
+        return view('attendance_calendar', compact('org_timesheet'));
+
+    }
+
 }
