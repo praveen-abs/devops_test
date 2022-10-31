@@ -450,7 +450,7 @@
                                                 ?>
                                                 <tr>
                                                     <td class="d-none">{{ $key1 }}</td>
-                                                    <td class="w-100">
+                                                    <td class="" style="min-width: 185px;">
                                                         {{-- <div class="td_content_center">{{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</div> --}}
                                                         <div class="row page-header-user-dropdown align-items-center">
                                                             <?php
@@ -490,7 +490,7 @@
                                                             {{ $pmsKpiAssignee->getUserDetails($assigneeId)['userEmpIds'] }}
                                                         </div>
                                                     </td>
-                                                    <td class="">
+                                                    <td class="" style="min-width: 130px;">
                                                         @foreach ($pmsKpiAssigneeData['reviewersIds'] as $keyCheck => $reviewer)
                                                             @if ($pmsKpiAssigneeData['currentLoggedUserRole'] == 'reviewer' && $reviewer == Auth::id())
 
