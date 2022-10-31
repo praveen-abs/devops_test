@@ -42,8 +42,9 @@
     }
 
     .tree-avatar .rounded-circle.user-profile{
-            height: 30px;
-    width: 30px;
+        background: #003156;
+    height: 40px;
+    width: 40px;
     display: flex;
     align-items: center;
     text-align: center;
@@ -200,7 +201,7 @@ $(document).ready(function() {
                     if(data.className != "logo-level")
                         nodeHtml =  '<div class="title">'+'<span>'+data.name+'</span>'+'</div>';
 
-                    var imageHtml  =  '<img class="user-avatar rounded-circle" src="'+data.image+'" />';
+                    var imageHtml  =  '<img class="user-avatar" src="'+data.image+'" />';
 
                 }
                 else{
