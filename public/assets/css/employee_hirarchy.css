@@ -1,18 +1,8 @@
 .hierarchy-wrapper {
     position: relative;
-    overflow-x: auto;
+    overflow: auto;
     width: -webkit-fill-available;
-    min-height: 480px;
 }
-.node.logo-level .user-avatar{
-    border-radius: 0;
-}
-.node .user-avatar{
-    border-radius: 50%;
-    height: 40px;
-    width: 40px;
-}
-
 .hierarchy-wrapper .department-wise {
     position: absolute;
     top: 0px;
@@ -66,8 +56,8 @@
 
 .orgchart .node:not(:only-child)::after {
     background-color: #002f56 !important;
-    top: 48px;
-    height: 12px !important;
+    top: -19px;
+    height: 17px !important;
 }
 .orgchart .node:not(:only-child)::before{
     background-color: #002f56 !important;
@@ -134,10 +124,10 @@
 }
 
 .orgchart .node {
-    position: relative;
+
     height: auto;
     width: 250px;
-    min-height: 50px;
+    min-height: 35px;
     background-color: #ffffff !important;
     /* overflow: hidden; */
     color: #003156;
@@ -158,6 +148,7 @@
 .nodes .dept-level {
     border-radius: 5px !important;
     height: 30px;
+    min-width: 200px;
     width: auto;
 }
 .nodes .dept-level .title {
@@ -165,6 +156,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    width: auto;
+    height: auto;
 }
 
 /* user img */
@@ -241,16 +234,16 @@
 } */
 
 .orgchart > ul > li > ul li > .node::after {
-       content: "";
+    content: "";
     position: absolute;
     bottom: 0px;
     left: calc(50% - 1px);
     width: 2px;
-    height: 9px;
+    /* height: 9px; */
     background-color: #002f56 !important;
     left: calc(50% - 1px) !important;
     top: -18px;
-    height: 16px !important;
+    height: 15px !important;
     margin: 0px 0px;
 
 }
