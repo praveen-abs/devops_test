@@ -30,18 +30,21 @@ class VmtOrgTreeController extends Controller
             $topNodeUserIds = VmtEmployeeOfficeDetails::where('l1_manager_code','=','')
                                                 ->orWhereNull('l1_manager_code')
                                                 ->get();
+
+            //dd($topNodeUserIds);
+
             $data = [];
 
             $loggedUserId = Auth::user()->id;
 
             foreach ($topNodeUserIds as $key => $value) {
                 // code...
-                if($value->user_id != $loggedUserId){
+               // if($value->user_id != $loggedUserId){
                     $t_user_code = User::where('id', $value->user_id)->value('user_code');
                     $nodeObj       = $this->getUserNodeDetails($t_user_code);
                     if(count($nodeObj) > 0)
                         $data[] = $nodeObj;
-                }
+               // }
             }
         }
         else{
