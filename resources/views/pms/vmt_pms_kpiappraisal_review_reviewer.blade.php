@@ -465,7 +465,6 @@
                                                 <tr>
                                                     <th scope="row" style="border-radius: 0px">
                                                         <div  style="width:300px">
-                                                            {{ $kpiRow->dimension }}
                                                             {{ \Str::words($kpiRow->dimension, 15, '') }}
                                                             @if (strlen(substr($kpiRow->dimension, strlen(\Str::words($kpiRow->dimension, 15, '')))) > 0)
                                                                 <span class="{{ 'collapse-' . $index }}"
