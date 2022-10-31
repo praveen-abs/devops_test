@@ -102,7 +102,7 @@
                                         class="col-sm-6  col-7 col-md-7 mt-3 col-xl-7 col-xxl-7 ps-0 col-lg-7 align-items-center flex-column d-flex">
                                         <p class="mb-1 text-center">Self Review</p>
                                         <p class="fw-bold text-center mt-1 f-18">
-                                            {{ $dashboardCountersData['selfReviewCount'] . '/' . $dashboardCountersData['totalSelfReviewCount'] }}
+                                            {{ $dashboardCountersData['selfReviewCount'] . '/' . $dashboardCountersData['totalEmployeesCount'] }}
                                         </p>
 
                                     </div>
@@ -146,7 +146,7 @@
                                         <p class="mb-1 text-center">Final Score Published</p>
 
                                         <p class="fw-bold text-center mt-1 f-18">
-                                            {{ $dashboardCountersData['finalScoreCount'] . '/' . $dashboardCountersData['totalSelfReviewCount'] }}
+                                            {{ $dashboardCountersData['finalScoreCount'] . '/' . $dashboardCountersData['totalReviewedCount'] }}
                                         </p>
 
                                     </div>
@@ -610,10 +610,8 @@
 
                                         <select name="year" id="year" disabled class="form-select form-control">
                                             <option value="" selected disabled>Select year</option>
-                                            <option value="Jan-Dec">January - <?php echo date('Y'); ?> to December -
-                                                <?= date('Y') ?> </option>
-                                            <option value="Apr-Mar">April - <?php echo date('Y'); ?> to March -
-                                                <?= date('Y') + 1 ?></option>
+                                            <option value="Jan-Dec">January - <?php echo date('Y'); ?> to December - <?= date('Y') ?> </option>
+                                            <option value="Apr-Mar">April - <?php echo date('Y'); ?> to March - <?= date('Y') + 1 ?></option>
                                         </select>
 
                                     </div>
@@ -1118,7 +1116,6 @@
             console.log("assignmentPeriod : " + assignmentPeriod);
             console.log("Year : " + year);
 
-            changeAssigneeProfilePicOnSelection(selectedEmployeesId);
 
             /*
             Need to check whether KPI Goals are already assigned for the selected 'Assignment Period and Year'.
@@ -1287,8 +1284,7 @@
                             });
 
                             $('#edit-employee-error-message').append("</ul>");
-                            $('#edit-employee-error-message').append(
-                                "<b>Please remove these employees before proceeding.</b>");
+                            $('#edit-employee-error-message').append("<b>Please remove these employees before proceeding.</b>");
 
                         }
                         else
@@ -1296,6 +1292,8 @@
                         {
                             console.log("No KPIs assigned to selected users");
                             $('#edit-employee-error-message').append('');
+
+                            changeAssigneeProfilePicOnSelection(selectedEmployeesId);
 
                             //Update reviewer box if TRUE, else leave it.FALSE is used while using this function on  PUBLISH button click
                             getReviewerOfSelectedEmployee(t_selectedEmployeeId);
@@ -1482,24 +1480,14 @@
                     }
                 } else if ($('#frequency').val() == 'quarterly') {
                     if ($('#calendar_type').val() == 'financial_year')
-                        data =
-                        "<option value='' selected disabled>Select Assignment Period</option><option value='q1'>Q1 " +
-                        year +
-                        "(Apr-Jun)</option><option value='q2'>Q2 " + year +
-                        "(July-Sept)</option><option value='q3'>Q3 " + year +
-                        "(Oct-Dec)</option><option value='q4'>Q4 " + nextyear + "(Jan-Mar)</option>";
+                        data ="<option value='' selected disabled>Select Assignment Period</option><option value='q1'>Q1 " +year +"(Apr-Jun)</option><option value='q2'>Q2 " + year +"(July-Sept)</option><option value='q3'>Q3 " + year +"(Oct-Dec)</option><option value='q4'>Q4 " + nextyear + "(Jan-Mar)</option>";
                     else
-                        data =
-                        "<option value='' selected disabled>Select Assignment Period</option><option value='q1'>Q1(Jan-Mar)</option><option value='q2'>Q2(Apr-June)</option><option value='q3'>Q3(July-Sept)</option><option value='q4'>Q4(Oct-Dec)</option>";
+                        data ="<option value='' selected disabled>Select Assignment Period</option><option value='q1'>Q1(Jan-Mar)</option><option value='q2'>Q2(Apr-June)</option><option value='q3'>Q3(July-Sept)</option><option value='q4'>Q4(Oct-Dec)</option>";
                 } else if ($('#frequency').val() == 'halfYearly') {
                     if ($('#calendar_type').val() == 'financial_year')
-                        data =
-                        "<option value='' selected disabled>Select Assignment Period</option><option value='h1'>H1(Apr " +
-                        year + " - Sept " +
-                        year + ")</option><option value='h2'>H2(Oct " + year + "- Mar " + nextyear + ")</option>";
+                        data = "<option value='' selected disabled>Select Assignment Period</option><option value='h1'>H1(Apr " + year + " - Sept " + year + ")</option><option value='h2'>H2(Oct " + year + "- Mar " + nextyear + ")</option>";
                     else
-                        data =
-                        "<option value=''>Select</option><option value='h1'>H1(Jan-June)</option><option value='h2'>H2(July-Dec)</option>";
+                        data = "<option value=''>Select</option><option value='h1'>H1(Jan-June)</option><option value='h2'>H2(July-Dec)</option>";
 
                 } else {
                     data = "<option value=''>Select</option><option value='yearly'>Yearly</option>";
@@ -1800,18 +1788,15 @@
 
                         //If KPI's already assigned to the selected emps, then show their names
                         if (data.status == true) {
-                            $('#edit-employee-error-message').append("<b><u>" + data.message +
-                                "</u></b><br/>");
+                            $('#edit-employee-error-message').append("<b><u>" + data.message + "</u></b><br/>");
                             $('#edit-employee-error-message').append("<ul>");
 
                             $.each(data.result, function(i, value) {
-                                $('#edit-employee-error-message').append("<li>" + value +
-                                    "</li>");
+                                $('#edit-employee-error-message').append("<li>" + value +"</li>");
                             });
 
                             $('#edit-employee-error-message').append("</ul>");
-                            $('#edit-employee-error-message').append(
-                                "<b>Please remove these employees before proceeding.</b>");
+                            $('#edit-employee-error-message').append("<b>Please remove these employees before proceeding.</b>");
 
                             //Open the Employee Edit Modal
                             $("#add-goals-modal").modal('hide');
