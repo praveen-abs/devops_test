@@ -2,6 +2,7 @@
     position: relative;
     overflow-x: scroll;
     width: -webkit-fill-available;
+    min-height: 480px;
 }
 .hierarchy-wrapper .department-wise {
     position: absolute;
