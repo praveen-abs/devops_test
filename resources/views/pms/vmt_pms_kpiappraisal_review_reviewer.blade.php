@@ -296,7 +296,7 @@
                     <div class="modal-body">
                         <div class="mt-4">
                             <h4 class="mb-3" id="modalNot"></h4>
-                            <textarea name="reject_comment" id="reject_comment" class="form-control mb-3"></textarea>
+                            <textarea name="reject_comment" id="reject_comment" class="form-control w-100 outline-none border-0 h-100"></textarea>
                             <div class="hstack gap-2 justify-content-center">
                                 <button type="button" class="btn btn-primary" id="rejection_submit"
                                     disabled>Save</button>
@@ -587,8 +587,8 @@
                                                                         $decodedKpiReviewSubmittedStatus[$reviewersReview] == '0'))
                                                                     <textarea name="reviewer_kpi_review[{{ $reviewersReview }}][{{ $kpiRow->id }}]" data-index="{{ $index }}" data-reviewerid="{{$reviewersReview}}"
                                                                         data-targetval="{{ $kpiRow->target }}" data-kpiweightageval="{{ $kpiRow->kpi_weightage }}"
-                                                                        id="reviewer_kpi_review{{ $index }}-{{ $reviewersReview }}" cols="20" rows="8"
-                                                                        @if (is_numeric($kpiRow->target)) onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46' class="calculateReviewerKPIPercentage" placeholder="type numbers only" @else placeholder="type here"
+                                                                        id="reviewer_kpi_review{{ $index }}-{{ $reviewersReview }}"
+                                                                        @if (is_numeric($kpiRow->target)) onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46' class="form-control  h-100 border-0 outline-none w-100 calculateReviewerKPIPercentage" placeholder="type numbers only" @else placeholder="type here"
                                                                         @endif>@if (isset($decodedKpiReview[$reviewersReview])){{ $decodedKpiReview[$reviewersReview][$kpiRow->id] }}@endif</textarea>
                                                                 @else
                                                                     <div>
@@ -606,7 +606,7 @@
                                                                     $reviewersReview == Auth::id() &&
                                                                     ($decodedKpiReviewSubmittedStatus[$reviewersReview] == '' ||
                                                                         $decodedKpiReviewSubmittedStatus[$reviewersReview] == '0'))
-                                                                    <textarea type="number" class="inp-text" style="width: 100%;" rows="3"
+                                                                    <textarea type="number" class="inp-text form-control h-100 border-0 outline-none w-100 "
                                                                         name="reviewer_kpi_percentage[{{ $reviewersReview }}][{{ $kpiRow->id }}]"
                                                                         id="reviewer_kpi_percentage{{ $index }}-{{ $reviewersReview }}"
                                                                         onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46'
@@ -683,7 +683,7 @@
                             Appraiser Feedback:
                         </label>
                         <div class="my-2">
-                            <textarea class="form-control" placeholder="" id="gen-info-description-input" name="performance" rows="4"
+                            <textarea class="form-control w-100 h-100 outline-none border-0" placeholder="" id="gen-info-description-input" name="performance"
                                 readonly>
                                 @if (isset($assignedGoals->appraiser_comment))
                                 {{ $assignedGoals->appraiser_comment }}

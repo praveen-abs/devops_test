@@ -185,7 +185,7 @@
                     <div class="modal-body">
                         <div class="mt-4">
                             <h4 class="mb-3" id="modalNot"></h4>
-                            <textarea name="reject_comment" id="reject_comment" class="form-control mb-3"></textarea>
+                            <textarea name="reject_comment" id="reject_comment" class="form-control h-100 w-100 border-0 outline-none"></textarea>
                             <div class="hstack gap-2 justify-content-center">
                                 <button type="button" class="btn btn-primary" id="rejection_submit"
                                     disabled>Save</button>
@@ -431,10 +431,10 @@
                                                         @if ($assignedGoals->is_assignee_accepted == '1' && $isAllReviewersAcceptedOrNot == true)
                                                             @if ($assignedGoals->is_assignee_submitted == 0)
                                                                 <div>
-                                                                    <textarea style="width: 100%;" name="assignee_kpi_review[{{ $kpiRow->id }}]" data-index="{{ $index }}"
+                                                                    <textarea  name="assignee_kpi_review[{{ $kpiRow->id }}]" data-index="{{ $index }}"
                                                                         data-targetval="{{ $kpiRow->target }}" data-kpiweightageval="{{ $kpiRow->kpi_weightage }}"
-                                                                        id="assignee_kpi_review{{ $index }}" cols="40" rows="3"
-                                                                        @if (is_numeric($kpiRow->target)) onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46' class="calculateSelfKPIPercentage" placeholder="type numbers only" @else placeholder="type here" @endif>
+                                                                        id="assignee_kpi_review{{ $index }}"
+                                                                        @if (is_numeric($kpiRow->target)) onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46' class="calculateSelfKPIPercentage form-control w-100 h-100 outline-none border-0 " placeholder="type numbers only" @else placeholder="type here" @endif>
 @if (isset(json_decode($assignedGoals->assignee_kpi_review, true)[$kpiRow->id]))
 {{ json_decode($assignedGoals->assignee_kpi_review, true)[$kpiRow->id] }}
 @endif
@@ -451,7 +451,7 @@
                                                         @if ($assignedGoals->is_assignee_accepted == '1' && $isAllReviewersAcceptedOrNot == true)
                                                             @if ($assignedGoals->is_assignee_submitted == 0)
                                                                 <div>
-                                                                    <textarea style="width: 100%;" rows="3" class="inp-text" id="assignee_kpi_percentage{{ $index }}"
+                                                                    <textarea  class="inp-text form-control w-100 h-100 outline-none border-0 " id="assignee_kpi_percentage{{ $index }}"
                                                                         name="assignee_kpi_percentage[{{ $kpiRow->id }}]"
                                                                         onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46'
                                                                         @if(is_numeric($kpiRow->target))
@@ -477,8 +477,8 @@
                                                         @if ($assignedGoals->is_assignee_accepted == '1' && $isAllReviewersAcceptedOrNot == true)
                                                             @if ($assignedGoals->is_assignee_submitted == 0)
                                                                 <div>
-                                                                    <textarea style="width: 100%;" rows="3" name="assignee_kpi_comments[{{ $kpiRow->id }}]"
-                                                                        id="assignee_kpi_comments{{ $index }}" cols="40" placeholder="type here">
+                                                                    <textarea  name="assignee_kpi_comments[{{ $kpiRow->id }}]" class="form-control w-100 h-100 outline-none border-0 "
+                                                                        id="assignee_kpi_comments{{ $index }}" placeholder="type here">
 @if (isset(json_decode($assignedGoals->assignee_kpi_comments, true)[$kpiRow->id]))
 {{ json_decode($assignedGoals->assignee_kpi_comments, true)[$kpiRow->id] }}
 @endif
