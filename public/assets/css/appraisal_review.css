@@ -99,7 +99,11 @@ table.kpi_appraisal-table th div {
     min-width: 200px;
     width: 100px;
 } */
-table.kpi_appraisal-table tr:nth-child(1n) th div,table.kpi_appraisal-table tr:nth-child(1n) th:first-child  {
+/* table.kpi_appraisal-table tr:nth-child(1n) th div,table.kpi_appraisal-table tr:nth-child(1n) th:first-child  {
+
+    text-align: initial;
+} */
+table.kpi_appraisal-table tr:nth-child(1n) th div{
 
     text-align: initial;
 }
