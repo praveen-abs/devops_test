@@ -524,6 +524,13 @@
         }
 
         function showCalendar(month, year) {
+            var monthly_data = [];
+
+            for(var i=0;i<31;i++)
+            {
+                monthly_data[i] = "Day : "+i;
+            }
+            console.log(monthly_data);
 
             var firstDay = (new Date(year, month)).getDay();
 
@@ -539,11 +546,12 @@
 
             // creating all cells
             var date = 1;
+            //top to bottom
             for (var i = 0; i < 6; i++) {
 
                 var row = document.createElement("tr");
 
-
+                //left to right
                 for (var j = 0; j < 7; j++) {
                     if (i === 0 && j < firstDay) {
                         cell = document.createElement("td");
@@ -561,7 +569,7 @@
                         cell.setAttribute("data-month_name", months[month]);
                         cell.className = "_date-picker";
                         cell.innerHTML = " <div class='w-100 h-100'> <p class='show_date' >" + date +
-                            "</p>  <div class='d-flex mt-3 flex-column bio_check align-items-start' > <span class='check-in f-10 text-success'><i class='fa fa-arrow-down' style='transform: rotate(-45deg);'></i>  8:00 AM </span> <span class='check-out f-10 text-danger'><i class='fa fa-arrow-down' style='transform: rotate(230deg);'></i>7:00 PM </span></div>   </div>";
+                            "</p>  <div class='d-flex mt-3 flex-column bio_check align-items-start' > <span class='check-in f-10 text-success'><i class='fa fa-arrow-down' style='transform: rotate(-45deg);'></i> "+monthly_data[date]+"</span> <span class='check-out f-10 text-danger'><i class='fa fa-arrow-down' style='transform: rotate(230deg);'></i>7:00 PM </span></div>   </div>";
 
 
 
