@@ -585,13 +585,11 @@
                                                                     $reviewersReview == Auth::id() &&
                                                                     ($decodedKpiReviewSubmittedStatus[$reviewersReview] == '' ||
                                                                         $decodedKpiReviewSubmittedStatus[$reviewersReview] == '0'))
-                                                                    <textarea name="reviewer_kpi_review[{{ $reviewersReview }}][{{ $kpiRow->id }}]"
+                                                                    <textarea name="reviewer_kpi_review[{{ $reviewersReview }}][{{ $kpiRow->id }}]" data-index="{{ $index }}" data-reviewerid="{{$reviewersReview}}"
+                                                                        data-targetval="{{ $kpiRow->target }}" data-kpiweightageval="{{ $kpiRow->kpi_weightage }}"
                                                                         id="reviewer_kpi_review{{ $index }}-{{ $reviewersReview }}" cols="20" rows="8"
-                                                                        placeholder="type here">
-                                                                        @if (isset($decodedKpiReview[$reviewersReview]))
-                                                                        {{ $decodedKpiReview[$reviewersReview][$kpiRow->id] }}
-                                                                        @endif
-                                                                    </textarea>
+                                                                        @if (is_numeric($kpiRow->target)) onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46' class="calculateReviewerKPIPercentage" placeholder="type numbers only" @else placeholder="type here"
+                                                                        @endif>@if (isset($decodedKpiReview[$reviewersReview])){{ $decodedKpiReview[$reviewersReview][$kpiRow->id] }}@endif</textarea>
                                                                 @else
                                                                     <div>
                                                                         @if (isset($decodedKpiReview[$reviewersReview]))
@@ -608,9 +606,18 @@
                                                                     $reviewersReview == Auth::id() &&
                                                                     ($decodedKpiReviewSubmittedStatus[$reviewersReview] == '' ||
                                                                         $decodedKpiReviewSubmittedStatus[$reviewersReview] == '0'))
-                                                                    <textarea type="number" class="inp-text"
+                                                                    <textarea type="number" class="inp-text" style="width: 100%;" rows="3"
                                                                         name="reviewer_kpi_percentage[{{ $reviewersReview }}][{{ $kpiRow->id }}]"
-                                                                        id="reviewer_kpi_percentage{{ $index }}-{{ $reviewersReview }}" placeholder="type here">
+                                                                        id="reviewer_kpi_percentage{{ $index }}-{{ $reviewersReview }}"
+                                                                        onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46'
+
+                                                                        @if(is_numeric($kpiRow->target))
+                                                                            readonly placeholder="Calculate based on Target and Manager Review"
+                                                                        @else
+                                                                            placeholder="type number here"
+                                                                        @endif
+
+                                                                        >
                                                                     @if (isset($decodedKpiReviewPerc[$reviewersReview]))
                                                                     {{ $decodedKpiReviewPerc[$reviewersReview][$kpiRow->id] }}
                                                                     @endif
@@ -793,6 +800,43 @@
     <script src="{{ URL::asset('/assets/premassets/js/footable.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/premassets/css/footable.bootstrap.min.css') }}"></script>
     <script type="text/javascript">
+         /*
+         * for calculating Self KPI Achievement % If Target is Number
+         * formula :-
+         * Self KPI Achievement %' = (KPI - Achievement Self-Review (this) / Target (targetVal)) * KPI Weightage (kpiWeightageVal);
+         */
+         $(document).on('keyup', '.calculateReviewerKPIPercentage', function() {
+            getCalculationResult($(this));
+        })
+
+        function getCalculationResult(idValue) {
+            var kpiAchievementReviewerReview = idValue.val();
+            var reviewerId = idValue.data("reviewerid");
+            var index = idValue.data("index");
+            var targetVal = idValue.data("targetval");
+            var kpiWeightageVal = idValue.data("kpiweightageval");
+            kpiWeightageVal = kpiWeightageVal.replace('%', '');
+            //kpiWeightageVal = kpiWeightageVal/100;
+
+            if (kpiAchievementReviewerReview != '') {
+                console.log("KPI Achieved Calculation ");
+                console.log("kpiAchievementReviewerReview : "+kpiAchievementReviewerReview);
+                console.log("targetVal : "+targetVal);
+                console.log("kpiWeightageVal : "+kpiWeightageVal);
+
+                var result = (kpiAchievementReviewerReview / targetVal) * kpiWeightageVal;
+
+                //update in 'Manager KPI achievements %' column in this format
+                //reviewer_kpi_review{{ $index }}-{{ $reviewersReview }}
+               // var temp = '#reviewer_kpi_review' + index+'-'+reviewerId;
+               // console.log("testing id : "+temp);
+                $('#reviewer_kpi_percentage' + index+'-'+reviewerId).val(result.toFixed(1));
+                console.log("OUTPUT :: reviewer_kpi_percentage : "+result);
+            } else {
+                $('#reviewer_kpi_percentage' + index+'-'+kpiAchievementReviewerReview).val('');
+            }
+        }
+
         $('#upload_file').change(function() {
             if ($(this).is(':valid')) {
                 $('#upload-goal').removeAttr('disabled');
