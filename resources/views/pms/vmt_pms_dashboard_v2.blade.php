@@ -416,7 +416,7 @@
                                 class="text-white fa fa-plus mx-1"></i>Add
                             Goals</button>
                         <div class="table-responsive">
-                            <table id='empTable' class=' table empTable table-borderd  mb-0 '>
+                            <table id='empTable' class=' table Fem table-borderd w-100  mb-0 ' style="width:revert !important">
                                 <thead class="table-light">
                                     <tr>
                                         <td class="d-none">Serial No</td>
@@ -544,7 +544,7 @@
                                                         <div class="td_content_center">
                                                             <a target="_self"
                                                                 @if ($checkViewReviewText == 'Edit') href="{{ route('republishForm', $pmsKpiAssignee->id) }}" @else href="{{ url('pms-showReviewPage?assignedFormid=' . $pmsKpiAssignee->id . '&assigneeId=' . $assigneeId) }}" @endif><button
-                                                                    class="btn btn-orange py-0 px-2 "> <span
+                                                                    class="btn btn-orange py-0 px-2 " style="min-width: 95px;"> <span
                                                                         class="mr-10 icon"></span>
                                                                     <?php
                                                                     echo $checkViewReviewText;
