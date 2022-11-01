@@ -657,7 +657,7 @@
                                     @if (isset($isAllReviewersAcceptedData) && $isAllReviewersAcceptedData[Auth::id()] == null)
                                         <div class="buttons d-flex align-items-center justify-content-end ">
                                             <button class="btn btn-primary" id="accept_review">
-                                                Accept </button>
+                                                Approve </button>
                                             &nbsp;&nbsp;
                                             <button class="btn btn-primary" id="reject_review">Reject</button>
                                         </div>
@@ -941,7 +941,7 @@
             e.preventDefault();
             swal({
                 title: 'Are you sure?',
-                text: 'You want to Accept!',
+                text: 'You want to Approve?',
                 icon: 'warning',
                 buttons: ["Cancel", "Yes!"],
             }).then(function(value) {

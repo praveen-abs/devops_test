@@ -240,7 +240,7 @@
                                 <input type="hidden" name="goal_id" value="{{ $assignedGoals->id }}">
                                 <input type="hidden" name="kpiReviewId" value="{{ $assignedGoals->id }}">
                                 <div class="table-content mb-4 table-responsive">
-                                    <table id="table_review table"
+                                    <table id="table_review"
                                         class="table kpi_appraisal-table align-middle mb-0 table-bordered  responsive"
                                         data-paging="true" data-paging-size="100" data-paging-limit="3"
                                         data-paging-container="#paging-ui-container"
