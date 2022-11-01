@@ -103,19 +103,7 @@
                                 </a>
                             </li>
 
-                            {{-- <li class="nav-item">
-                              <a href="{{ url('attendance_calendar') }}" class="nav-link sidebar py-1">Time Sheet</a>
 
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="{{ url('attendance_calendar') }}"  class="nav-link sidebar py-1">Team Time Sheet</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="{{ url('attendance_calendar') }}" class="nav-link sidebar py-1">Org
-                                    Sheet</a>
-                            </li> --}}
 
 
                             @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
@@ -561,7 +549,7 @@
 
                 <!-- help desk -->
                 <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0" href="#helpDeskDrop-down" data-bs-toggle=""
+                    <a class="nav-link sidebar menu-link pt-0" href="#helpDeskDrop-down" data-bs-toggle="collapse"
                         role="button" aria-expanded="false" aria-controls="sidebarApps">
                         <i><svg xmlns="http://www.w3.org/2000/svg" width="18.306" height="16"
                                 viewBox="0 0 18.306 16">
@@ -574,19 +562,27 @@
 
                         <span>Help Desk</span>
                     </a>
-                    <!-- <div class="collapse menu-dropdown" id="helpDeskDrop-down">
+                    <div class="collapse menu-dropdown" id="helpDeskDrop-down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{ route('page-not-found') }}" class="nav-link sidebar  py-1"><span>Calendar</span></a>
+                                <a href="{{ url('attendance_calendar') }}" class="nav-link sidebar py-1">Time
+                                    Sheet</a>
+
                             </li>
+
                             <li class="nav-item">
-                                <a href="{{ route('page-not-found') }}" class="nav-link sidebar py-1"><span>Chat</span></a>
+                                <a href="{{ url('attendance_calendar') }}" class="nav-link sidebar py-1">Team Time
+                                    Sheet</a>
                             </li>
+
                             <li class="nav-item">
-                                <a href="{{ route('page-not-found') }}" class="nav-link sidebar py-1"><span>Mail-Box</span></a>
+                                <a href="{{ url('attendance_calendar') }}" class="nav-link sidebar py-1">Org
+                                    Sheet</a>
                             </li>
+
+
                         </ul>
-                    </div> -->
+                    </div>
                 </li>
 
                 @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin']))

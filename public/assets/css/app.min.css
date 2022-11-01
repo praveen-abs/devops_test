@@ -17634,9 +17634,7 @@ tr:first-child th:last-child {
     border-top-right-radius: 6px ;
 }
 
-tr:first-child th:last-child {
-    border-bottom-right-radius: 6px ;
-}
+
 
 tr:last-child td:last-child {
     border-bottom-right-radius: 6px ;
