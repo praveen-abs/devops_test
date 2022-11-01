@@ -3,51 +3,9 @@
     @lang('translation.dashboards')
 @endsection
 @section('css')
-    <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ URL::asset('assets/libs/swiper/swiper.min.css') }}" rel="stylesheet" type="text/css" />
 
-    <link href="{{ URL::asset('assets/css/assign_goals.css') }}" rel="stylesheet">
+    <link href="{{ URL::asset('assets/css/appraisal_review.css') }}" rel="stylesheet">
 
-
-    <!--Custom style.css-->
-
-    <!--Animate CSS-->
-    <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/chartist.min.css') }}">
-    <!--Map-->
-    <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/jquery-jvectormap-2.0.2.css') }}">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
-
-    <link href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css' rel='stylesheet' type='text/css'>
-    <style>
-        .output {
-            font: 1rem 'Fira Sans', sans-serif;
-        }
-
-        blockquote {
-            background: white;
-            border-radius: 5px;
-            margin: 0 !important;
-            height: 100px;
-            overflow-y: auto;
-        }
-
-        blockquote p {
-            padding: 15px;
-        }
-
-        /* blockquote p::before {
-                                content: '\201C';
-                            }
-
-                            blockquote p::after {
-                                content: '\201D';
-                            } */
-
-        [contenteditable='true'] {
-            caret-color: red;
-        }
-    </style>
 @endsection
 
 
@@ -70,15 +28,15 @@
                         </div>
                     </div>
                     <div class="table-responsive">
-                        <table id='kpiTable' class="table table-borderd align-middle mb-0" data-paging="true"
-                            data-paging-size="10" data-paging-limit="3" data-paging-container="#paging-ui-container"
-                            data-paging-count-format="{PF} to {PL}" data-sorting="true" data-filtering="false"
-                            data-empty="No Results" data-filter-container="#filter-form-container"
-                            data-editing-add-text="Add New">
+                        <table id='kpiTable' class="table kpi_appraisal-table table-borderd align-middle mb-0"
+                            data-paging="true" data-paging-size="10" data-paging-limit="3"
+                            data-paging-container="#paging-ui-container" data-paging-count-format="{PF} to {PL}"
+                            data-sorting="true" data-filtering="false" data-empty="No Results"
+                            data-filter-container="#filter-form-container" data-editing-add-text="Add New">
                             @csrf
                             <thead class="bg-primary thead" id="tHead">
                                 <tr class="text-uppercase">
-                                    <th class="sort" data-sort="id">#</th>
+                                    {{-- <th class="sort" data-sort="id">#</th> --}}
                                     @foreach ($columnHeader as $config)
                                         <th class="sort" data-sort="customer_name" data-name='dimension'
                                             data-filterable="false">
@@ -93,54 +51,52 @@
                                 <?php $i = 1; ?>
                                 @foreach ($data as $formData)
                                     <tr class="addition-content cursor-pointer" id="content1">
-                                        <td class="text-box-td p-1">
-                                            <textarea name="numbers" class="text-box textAreaValidation tableInp" disabled  row="2" cols="2" id="" >{{ $i }}</textarea>
-                                        </td>
+                                        {{-- <td class="text-box-td p-1">
+                                            <textarea name="numbers" class="text-box textAreaValidation tableInp" disabled id="">{{ $i }}</textarea>
+                                        </td> --}}
                                         @if (isset($columnHeader['dimension']))
-                                            <td class="text-box-td">
-                                                <textarea name="dimension[]" id="dimension" class="text-box textAreaValidation" row="2" cols="20"
-                                                    placeholder="type here">{{ $formData->dimension }}</textarea>
-                                            </td>
+                                            <th class="text-box-td">
+                                                <textarea name="dimension[]" id="dimension" class="text-box textAreaValidation" placeholder="type here">{{ $formData->dimension }}</textarea>
+                                            </th>
                                         @endif
                                         @if (isset($columnHeader['kpi']))
                                             <td class="text-box-td">
-                                                <textarea name="kpi[]" id="kpi" class="text-box textAreaValidation" row="2" cols="20"
+                                                <textarea name="kpi[]" id="kpi" class="text-box textAreaValidation"
                                                     placeholder="type here">{{ $formData->kpi }}</textarea>
                                             </td>
                                         @endif
                                         @if (isset($columnHeader['operational']))
                                             <td class="text-box-td">
-                                                <textarea name="operational[]" id="operational" class="text-box textAreaValidation" row="2" cols="20"
+                                                <textarea name="operational[]" id="operational" class="text-box textAreaValidation"
                                                     placeholder="type here">{{ $formData->operational_definition }}</textarea>
                                             </td>
                                         @endif
                                         @if (isset($columnHeader['measure']))
                                             <td class="text-box-td">
-                                                <textarea name="measure[]" id="measure" class="text-box textAreaValidation" row="2" cols="20"
+                                                <textarea name="measure[]" id="measure" class="text-box textAreaValidation"
                                                     placeholder="type here">{{ $formData->measure }}</textarea>
                                             </td>
                                         @endif
                                         @if (isset($columnHeader['frequency']))
                                             <td class="text-box-td">
-                                                <textarea name="frequency[]" id="frequency" class="text-box textAreaValidation" row="2" cols="20"
+                                                <textarea name="frequency[]" id="frequency" class="text-box textAreaValidation"
                                                     placeholder="type here">{{ $formData->frequency }}</textarea>
                                             </td>
                                         @endif
                                         @if (isset($columnHeader['target']))
                                             <td class="text-box-td">
-                                                <textarea name="target[]" id="target" class="text-box textAreaValidation" row="2" cols="20"
+                                                <textarea name="target[]" id="target" class="text-box textAreaValidation"
                                                     placeholder="type here">{{ $formData->target }}</textarea>
                                             </td>
                                         @endif
                                         @if (isset($columnHeader['stretchTarget']))
                                             <td class="text-box-td">
-                                                <textarea name="stretchTarget[]" id="stretchTarget" class="text-box textAreaValidation" row="2"
-                                                    cols="20" placeholder="type here">{{ $formData->stretch_target }}</textarea>
+                                                <textarea name="stretchTarget[]" id="stretchTarget" class="text-box textAreaValidation"  placeholder="type here">{{ $formData->stretch_target }}</textarea>
                                             </td>
                                         @endif
                                         @if (isset($columnHeader['source']))
                                             <td class="text-box-td">
-                                                <textarea name="source[]" id="source" class="text-box textAreaValidation" row="2" cols="20"
+                                                <textarea name="source[]" id="source" class="text-box textAreaValidation"
                                                     placeholder="type here">{{ $formData->source }}</textarea>
                                             </td>
                                         @endif
@@ -148,7 +104,7 @@
                                             <td class="text-box-td">
                                                 <textarea name="kpiWeightage[]" id="kpiWeightage"
                                                     onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 37'
-                                                    class="text-box textAreaValidation" row="2" cols="4" placeholder="type here">{{ $formData->kpi_weightage }}</textarea>
+                                                    class="text-box textAreaValidation"  placeholder="type here">{{ $formData->kpi_weightage }}</textarea>
                                             </td>
                                         @endif
                                         <?php $i++; ?>
@@ -252,10 +208,6 @@
     @endsection
 
     @section('script')
-        <!-- Prem assets -->
-        <!-- OWL CAROUSEL -->
-
-
         <!--Nice select-->
         <script src="{{ URL::asset('/assets/premassets/js/jquery.nice-select.min.js') }}"></script>
 
@@ -280,8 +232,7 @@
         <link rel="stylesheet"
             href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/themes/smoothness/jquery-ui.css" />
 
-        <!--Sweet alert JS-->
-        <script src="{{ URL::asset('/assets/premassets/js/sweetalert.js') }}"></script>
+
 
         <!-- validation script  -->
         <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
