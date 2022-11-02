@@ -21,6 +21,7 @@ use App\Exports\SampleKPIFormExport;
 use App\Mail\NotifyPMSManager;
 use App\Mail\PMSV2EmployeeAppraisalGoal;
 use App\Mail\VmtAssignGoals;
+use App\Mail\VmtPMSMail_Assignee;
 use App\Models\VmtPMSRating;
 use App\Notifications\ViewNotification;
 use Exception;
@@ -92,7 +93,7 @@ class VmtPMSModuleController extends Controller
         $dashboardCountersData['finalScoreCount'] =  $finalScoreCount;*/
 
            // $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')->WhereRaw("find_in_set(".auth()->user()->id.", reviewer_id)")->orWhereRaw("find_in_set(".auth()->user()->id.", assignee_id)")->orderBy('id','DESC')->get();
-            $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')->orderBy('id','DESC')->get();
+        $pmsKpiAssigneeDetails = VmtPMS_KPIFormAssignedModel::with('getPmsKpiFormReviews')->orderBy('id','DESC')->get();
 
         $flowCheck = 1;
 
@@ -100,6 +101,7 @@ class VmtPMSModuleController extends Controller
             ->leftJoin('vmt_employee_details','users.id','=','vmt_employee_details.userid')
             ->select('users.name','users.id','vmt_employee_details.emp_no','vmt_employee_office_details.designation')
             ->get();
+
         $allEmployeesWithoutLoggedUserList = User::leftJoin('vmt_employee_office_details','users.id','=','vmt_employee_office_details.user_id')
             ->leftJoin('vmt_employee_details','users.id','=','vmt_employee_details.userid')
             ->where('users.id','!=',Auth::id())
@@ -1129,7 +1131,7 @@ class VmtPMSModuleController extends Controller
                 $reviewerUserDetails = User::where('id',$vmtAssignedDetails->reviewer_id)->first();
                 if($vmtAssignedFormReview->is_assignee_accepted == "1")
                 {
-                    \Mail::to($mailingList)->send(new VmtAssignGoals( "approved",$assignedUserDetails->name,$vmtAssignedDetails->year." - ".strtoupper($vmtAssignedDetails->assignment_period),$reviewerUserDetails->name,$command_emp));
+                    \Mail::to($mailingList)->send(new VmtPMSMail_Assignee( "approved",$assignedUserDetails->name,$vmtAssignedDetails->year." - ".strtoupper($vmtAssignedDetails->assignment_period),$reviewerUserDetails->name,$command_emp));
                     $returnMsg = 'KPI has been accepted. Mail notification sent';
                     $message = "KPI has been accepted.  ";
                     Notification::send($assignedUserDetails ,new ViewNotification($message.auth()->user()->name));
@@ -1143,7 +1145,7 @@ class VmtPMSModuleController extends Controller
                         $command_emp = $vmtAssignedFormReview->assignee_rejection_comments;
                     }
 
-                    \Mail::to($mailingList)->send(new VmtAssignGoals( "rejected",$assignedUserDetails->name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$reviewerUserDetails->name,$command_emp));
+                    \Mail::to($mailingList)->send(new VmtPMSMail_Assignee( "rejected",$assignedUserDetails->name,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$reviewerUserDetails->name,$command_emp));
                     $returnMsg = 'KPI has been rejected. Mail notification sent';
                     $message = "KPI has been rejected.  ";
                     Notification::send($assignedUserDetails ,new ViewNotification($message.auth()->user()->name));
@@ -1221,7 +1223,7 @@ class VmtPMSModuleController extends Controller
         for the given assignment period
     */
     public function isKPIAlreadyAssignedForGivenAssignmentPeriod(Request $request){
-
+       // dd($request->all());
         try{
             if(!empty($request->selectedEmployeeId)){
 
@@ -1543,13 +1545,20 @@ class VmtPMSModuleController extends Controller
      *
      */
     protected function getPerformanceDashboardSummaryStats(){
+
+        //Note : We need to show the Performance stats based on current frequency(month/quarter/half-yearly/yearly)
+
         //Dashboard vars
         $finalScoreCount  =  \DB::table('vmt_pms_kpiform_reviews')
                                 ->where('is_assignee_submitted', 1)
                                 ->where('is_reviewer_submitted', 'Not Like', '%null%')
                                 ->count();
-        $employeesGoalsSetCount = \DB::table('vmt_pms_kpiform_reviews')->count(); //0;
-        $totalEmployeesCount = User::where('active',1)->where('is_ssa',0)->count();
+
+        $totalEmployeesCount = User::where('active',1)->count();
+
+        $employeesGoalsSetCount = \DB::table('vmt_pms_kpiform_assigned')->count(); //0;
+
+
         $employeesAssessedCount = \DB::table('vmt_pms_kpiform_reviews')
                                 ->where('is_reviewer_submitted', 'Not Like', '%null%')
                                 ->count();
@@ -1558,12 +1567,13 @@ class VmtPMSModuleController extends Controller
                                 ->where('is_assignee_submitted', 1)
                                 ->count();
 
-        $totalSelfReviewCount = \DB::table('vmt_pms_kpiform_reviews')->count();
+        $totalReviewedCount = \DB::table('vmt_pms_kpiform_reviews')->count();
+
         $dashboardCountersData['employeesGoalsSetCount'] = $employeesGoalsSetCount;
         $dashboardCountersData['totalEmployeesCount'] = $totalEmployeesCount;
         $dashboardCountersData['employeesAssessedCount'] = $employeesAssessedCount;
         $dashboardCountersData['selfReviewCount'] = $selfReviewCount;
-        $dashboardCountersData['totalSelfReviewCount'] = $totalSelfReviewCount;
+        $dashboardCountersData['totalReviewedCount'] = $totalReviewedCount;
         $dashboardCountersData['finalScoreCount'] =  $finalScoreCount;
 
         return $dashboardCountersData;
