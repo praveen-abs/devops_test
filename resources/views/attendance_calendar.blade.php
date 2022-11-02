@@ -258,6 +258,20 @@
             $('#tab_timesheet').click(function() {
 
                 console.log("Timesheet");
+                var selectedMonth = 10;
+
+                $.ajax({
+                    url: "{{route('fetch-attendance-currentuser-timesheet')}}",
+                    type: "GET",
+                    data: {
+                        month: selectedMonth,
+                        _token: '{{csrf_token()}}'
+                    },
+                    success: function(data) {
+                        console.log(data);
+                    }
+                });
+
             });
 
             $('#tab_teamtimesheet').click(function() {
@@ -363,13 +377,14 @@
             showCalendar(currentMonth, currentYear);
         }
 
-        function showCalendar(month, year) {
+        function showCalendar(month, year, monthly_data) {
             var monthly_data = [];
 
             for(var i=0;i<31;i++)
             {
                 monthly_data[i] = "Day : "+i;
             }
+
             console.log(monthly_data);
 
             var firstDay = (new Date(year, month)).getDay();
@@ -409,12 +424,7 @@
                         cell.setAttribute("data-month_name", months[month]);
                         cell.className = "_date-picker";
                         cell.innerHTML = " <div class='w-100 h-100'> <p class='show_date' >" + date +
-                            "</p>  <div class='d-flex mt-3 flex-column bio_check align-items-start' > <span class='check-in f-10 text-success'><i class='fa fa-arrow-down' style='transform: rotate(-45deg);'></i> "+monthly_data[date]+"</span> <span class='check-out f-10 text-danger'><i class='fa fa-arrow-down' style='transform: rotate(230deg);'></i>7:00 PM </span></div>   </div>";
-
-
-
-
-
+                            "</p>  <div class='d-flex mt-3 flex-column bio_check align-items-start' > <span class='check-in f-10 text-success'><i class='fa fa-arrow-down' style='transform: rotate(-45deg);'></i> <span id='value_checkin_time'>"+monthly_data[date]+"</span></span> <span class='check-out f-10 text-danger'><i class='fa fa-arrow-down' style='transform: rotate(230deg);'></i>7:00 PM </span></div>   </div>";
 
                         if (date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) {
                             cell.className = "_date-picker selected";

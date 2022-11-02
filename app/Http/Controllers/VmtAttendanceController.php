@@ -320,17 +320,21 @@ class VmtAttendanceController extends Controller
 
 
     public function showOrgTimesheet(Request $request){
+        //$data = VmtEmployeeAttendance::where('user_id',a);
+        //dd($data);
 
-
-        return view('attendance_calendar', compact('org_timesheet'));
+        return view('attendance_calendar');
 
     }
 
 
     public function fetchCurrentUserTimesheet(Request $request)
     {
-        $data = VmtEmployeeAttendance::where('user_id',auth::user()->id);
-        dd($data);
+        $data = VmtEmployeeAttendance::where('user_id',auth::user()->id)
+                                        ->whereMonth('checkin_time',$request->month)
+                                        ->orderBy('checkin_time', 'asc')->get(['checkin_time','checkout_time']);
+
+        //dd($data->toArray());
         return $data;
 
     }
