@@ -252,25 +252,39 @@
 
 @section('script')
     <script>
+          function ajaxGetMonthlyDate_TimeSheet(selectedMonth, selectedUserID){
+                $.ajax({
+                    url: "{{route('fetch-attendance-user-timesheet')}}",
+                    type: "GET",
+                    data: {
+                        month: selectedMonth,
+                        user_id: selectedUserID,
+                        _token: '{{csrf_token()}}'
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        showCalendar(currentMonth, currentYear, data);
+
+                    }
+                });
+            }
+
         $(document).ready(function() {
+
+            const d = new Date();
+            var t_selectedMonth = d.getMonth();
+
+            ajaxGetMonthlyDate_TimeSheet(t_selectedMonth, {{ Auth::user()->id }});
 
 
             $('#tab_timesheet').click(function() {
 
                 console.log("Timesheet");
-                var selectedMonth = 10;
+                const d = new Date();
 
-                $.ajax({
-                    url: "{{route('fetch-attendance-currentuser-timesheet')}}",
-                    type: "GET",
-                    data: {
-                        month: selectedMonth,
-                        _token: '{{csrf_token()}}'
-                    },
-                    success: function(data) {
-                        console.log(data);
-                    }
-                });
+                var selectedMonth = d.getMonth();
+
+                ajaxGetMonthlyDate_TimeSheet(selectedMonth,{{ Auth::user()->id }});
 
             });
 
@@ -362,30 +376,27 @@
         function next() {
             currentYear = (currentMonth === 11) ? currentYear + 1 : currentYear;
             currentMonth = (currentMonth + 1) % 12;
-            showCalendar(currentMonth, currentYear);
+            //showCalendar(currentMonth, currentYear);
+            ajaxGetMonthlyDate_TimeSheet(currentMonth, {{ Auth::user()->id }});
         }
 
         function previous() {
             currentYear = (currentMonth === 0) ? currentYear - 1 : currentYear;
             currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
-            showCalendar(currentMonth, currentYear);
+           //showCalendar(currentMonth, currentYear);
+           ajaxGetMonthlyDate_TimeSheet(currentMonth, {{ Auth::user()->id }});
+
         }
 
         function jump() {
             currentYear = parseInt(selectYear.value);
             //currentMonth = parseInt(selectMonth.value);
-            showCalendar(currentMonth, currentYear);
+            //showCalendar(currentMonth, currentYear);
+            ajaxGetMonthlyDate_TimeSheet(currentMonth, {{ Auth::user()->id }});
+
         }
 
-        function showCalendar(month, year, monthly_data) {
-            var monthly_data = [];
-
-            for(var i=0;i<31;i++)
-            {
-                monthly_data[i] = "Day : "+i;
-            }
-
-            console.log(monthly_data);
+        function showCalendar(month, year, ajax_monthly_data) {
 
             var firstDay = (new Date(year, month)).getDay();
 
@@ -416,15 +427,22 @@
                     } else if (date > daysInMonth(month, year)) {
                         break;
                     } else {
+                        var dateText = "";
+
+                        if(date < 10)
+                            dateText = "0"+date;
+                        else
+                            dateText = ""+date;
+
                         cell = document.createElement("td");
-                        cell.setAttribute("data-date", date);
+                        cell.setAttribute("data-date", dateText);
                         cell.setAttribute("data-month", month + 1);
                         cell.setAttribute("data-year", year);
 
                         cell.setAttribute("data-month_name", months[month]);
                         cell.className = "_date-picker";
                         cell.innerHTML = " <div class='w-100 h-100'> <p class='show_date' >" + date +
-                            "</p>  <div class='d-flex mt-3 flex-column bio_check align-items-start' > <span class='check-in f-10 text-success'><i class='fa fa-arrow-down' style='transform: rotate(-45deg);'></i> <span id='value_checkin_time'>"+monthly_data[date]+"</span></span> <span class='check-out f-10 text-danger'><i class='fa fa-arrow-down' style='transform: rotate(230deg);'></i>7:00 PM </span></div>   </div>";
+                            "</p>  <div class='d-flex mt-3 flex-column bio_check align-items-start' > <span class='check-in f-10 text-success'><i class='fa fa-arrow-down' style='transform: rotate(-45deg);'></i> <span id='checkin_time_"+year+"-"+month+"-"+dateText+"'></span></span> <span class='check-out f-10 text-danger'><i class='fa fa-arrow-down' style='transform: rotate(230deg);'></i> <span id='checkout_time_"+year+"-"+month+"-"+dateText+"'></span></span></div>   </div>";
 
                         if (date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) {
                             cell.className = "_date-picker selected";
@@ -438,6 +456,37 @@
 
                 tbl.appendChild(row);
             }
+
+            ajax_monthly_data.forEach((element) => {
+                //Get the date from the checkin time
+
+                var calendar_cell_id = "";
+                var calendar_cell_id_value = "";
+
+                if(element.checkin_time)
+                {
+                    calendar_cell_id = element.checkin_time.split(" ")[0];
+                    calendar_cell_id_value = element.checkin_time.split(" ")[1];
+                    //Find the calendar cell ID based on above checkin date
+                    $('#checkin_time_'+calendar_cell_id).html(calendar_cell_id_value);                 
+                }
+                else{
+                    $('#checkin_time_'+calendar_cell_id).html('---');                 
+                }
+
+                if(element.checkout_time)
+                {
+                    calendar_cell_id = element.checkout_time.split(" ")[0];
+                    calendar_cell_id_value = element.checkout_time.split(" ")[1];
+                    
+                    //Find the calendar cell ID based on above checkin date
+                    $('#checkout_time_'+calendar_cell_id).html(calendar_cell_id_value);                
+                    //checkin_time_2022-10-1
+                }
+                else{
+                    $('#checkout_time_'+calendar_cell_id).html('---');                 
+                }                
+            });
 
         }
 

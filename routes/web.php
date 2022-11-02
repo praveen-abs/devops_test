@@ -58,7 +58,7 @@ Route::get('/attendance-leavereports', [App\Http\Controllers\VmtAttendanceContro
 Route::get('/attendance-org-timesheet', [App\Http\Controllers\VmtAttendanceController::class, 'showOrgTimesheet'])->name('attendance-org-timesheet');
 
 //Attendance - AJAX
-Route::get('/fetch-attendance-currentuser-timesheet', [App\Http\Controllers\VmtAttendanceController::class, 'fetchCurrentUserTimesheet'])->name('fetch-attendance-currentuser-timesheet');
+Route::get('/fetch-attendance-user-timesheet', [App\Http\Controllers\VmtAttendanceController::class, 'fetchUserTimesheet'])->name('fetch-attendance-user-timesheet');
 
 
 //Leave history pages

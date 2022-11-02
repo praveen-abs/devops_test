@@ -328,7 +328,7 @@ class VmtAttendanceController extends Controller
     }
 
 
-    public function fetchCurrentUserTimesheet(Request $request)
+    public function fetchUserTimesheet(Request $request)
     {
         $data = VmtEmployeeAttendance::where('user_id',auth::user()->id)
                                         ->whereMonth('checkin_time',$request->month)
