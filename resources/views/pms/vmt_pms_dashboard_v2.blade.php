@@ -1144,7 +1144,7 @@
                     var url = '{{ route('showKPICreateForm', ':year') }}';
                     url = url.replace(':year', YearText);
                     // alert(url);
-                    window.open(url);
+                    window.open(url,"_self");
                     return false;
                 } else {
                     alert("Please enter Assignment Period and Year ");

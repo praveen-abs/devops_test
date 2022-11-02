@@ -100,9 +100,92 @@
 										</div>
 										<div class="tab-content">
 											<div id="track_summary" class="tab-pane fade show active">
-												<div class="col-md-12">
-													<div class="" id="shift_Timng-table"></div>
-												</div>
+                                                <div class="col-12 mt-2">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-hover table-borderless mb-0">
+                                                            <thead class="bg-primary">
+                                                                <tr>
+                                                                    <th>Timing</th>
+                                                                    <th>Monday</th>
+                                                                    <th>Tuesday</th>
+                                                                    <th>Wednesday</th>
+                                                                    <th>Thursday</th>
+                                                                    <th>Friday</th>
+                                                                    <th>Saturday</th>
+                                                                    <th>Sunday</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="3"></td>
+                                                                    <td colspan="3"></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="2"></td>
+                                                                    <td colspan="6">
+                                                                        <div class="alert alert-danger mb-0 py-1 d-flex align-items-center" role="alert">
+                                                                            <div class="d-flex justify-content-center">
+                                                                                <span class="text-warning fw-bold me-1">Note :</span>
+                                                                                <span class="  text-muted "> Lorem ipsum dolor sit amet.</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="2">
+                                                                        <div class="d-flex justify-content-between">
+                                                                            <p class="text-start text-primary mb-3">Planned Compensation Cost</p>
+                                                                            <p style="position: relative;">
+                                                                                <span class="text-primary me-2">Monthly Average</span>
+                                                                                <span style="position: relative;bottom: -6px;">
+                                                                                    <label class="switch-checkbox f-12 text-muted  m-0">
+                                                                                        <input type="checkbox" id="" class="f-13 text-muted" checked="">
+                                                                                        <span class="slider-checkbox check-in round"></span>
+                                                                                    </label>
+                                                                                </span>
+                                                                            </p>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="2"></td>
+                                                                    <td colspan="5"></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="text-end">
+                                                        <button class="btn btn-orange">Add New</button>
+                                                    </div>
+                                                </div>
 											</div>
 											<div id="employees_track" class="tab-pane fade show">
 												<div class="col-md-12">
