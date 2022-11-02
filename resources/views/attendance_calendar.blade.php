@@ -21,7 +21,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 col-xxl-12 mb-3">
-                        <h6>Attendance Report</h6>
+                        <h6>Timesheet</h6>
                     </div>
 
                     <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 col-xxl-12 mb-3">
@@ -36,21 +36,21 @@
                                 <div class="col-sm-5 col-md-5 col-xl-5 col-lg-5 col-xxl-5 mb-2 b-line">
 
                                     <ul class="nav nav-pills    nav-tabs-dashed" id="pills-tab" role="tablist">
-                                        {{-- <li class="nav-item active ember-view mx-4" role="presentation">
-                                            <a class="nav-link active ember-view " id="pills-home-tab" data-bs-toggle="pill"
-                                                href="" data-bs-target="#attendanceDay_tab" role="tab"
+                                        <li class="nav-item active ember-view mx-4" role="presentation">
+                                            <a class="nav-link active ember-view " id="tab_timesheet" data-bs-toggle="pill"
+                                                href="" data-bs-target="#" role="tab"
                                                 aria-controls="pills-home" aria-selected="true">
-                                                Day</a>
+                                                Timesheet</a>
                                         </li>
                                         <li class="nav-item mx-4 ember-view" role="presentation ">
-                                            <a class="nav-link ember-view" id="payslips-tab" data-bs-toggle="pill"
-                                                data-bs-target="#attendanceWeek_tab" type="button" role="tab"
-                                                aria-controls="payslips" aria-selected="false">Week</a>
-                                        </li> --}}
+                                            <a class="nav-link ember-view" id="tab_teamtimesheet" data-bs-toggle="pill"
+                                                data-bs-target="#" type="button" role="tab"
+                                                aria-controls="payslips" aria-selected="false">Team Timesheet</a>
+                                        </li>
                                         <li class="nav-item mx-4  ember-view" role="presentation ">
-                                            <a class="nav-link active ember-view" id="annual-earnings-tab" data-bs-toggle="pill"
-                                                data-bs-target="#attendanceMonth_tab" type="button" role="tab"
-                                                aria-controls="annual-earnings" aria-selected="false">Month</a>
+                                            <a class="nav-link ember-view" id="tab_orgtimesheet" data-bs-toggle="pill"
+                                                data-bs-target="#" type="button" role="tab"
+                                                aria-controls="annual-earnings" aria-selected="false">Org Timesheet</a>
                                         </li>
 
                                     </ul>
@@ -63,7 +63,6 @@
                                                 id="page-header-user-dropdown" data-bs-toggle="dropdown"
                                                 aria-haspopup="true" aria-expanded="true">
                                                 <div class="d-flex align-items-center page-header-user-dropdown">
-
                                                     {{-- <i class="fa fa-file me-2" aria-hidden="true"></i> --}}
                                                     <span class="f-12 mx-2 d-flex align-items-center">
                                                         Department
@@ -146,171 +145,6 @@
                     </div>
                     <div class="col-sm-12 col-md-12 col-xl-9 col-lg-9 col-xxl-9 ">
                         <div class="tab-content" id="pills-tabContent">
-                            {{-- <div class="tab-pane fade show active" id="attendanceDay_tab" role="tabpanel"
-                                aria-labelledby="pills-home-tab">
-                                <div class="zp-container bg-white nav-tab-body-top">
-                                    <div class="fill body content scroll-x scroll-y salary-details-container">
-                                        <div class="ytd-chart-section ytd-summary-column">
-                                            <div class="ytd-chart">
-                                                <div id="ember142" class="ember-view">
-                                                    <svg style="width:100%;height:400px" viewBox="0 0 900 300"
-                                                        preserveAspectRatio="xMinYMid meet">
-                                                        <g id="points">
-                                                            <rect width="250" height="50" x="60"
-                                                                style="fill: rgb(239 176 169);" />
-                                                        </g>
-                                                        <g class="line-container" transform="translate(75, 10)">
-                                                            <g class="line-paths">
-                                                                <path class="line-path" d="M72,0Z"
-                                                                    style="stroke: rgb(32, 142, 255); stroke-width: 3px; fill: none;">
-                                                                </path>
-                                                                <path class="area-path" d="M72,0ZL72,247ZZ"
-                                                                    style="fill: rgb(248, 251, 255);"></path>
-                                                            </g>
-
-                                                            <g class="x-axis" transform="translate(0,250)">
-                                                                <g class="tick" transform="translate(0,0)"
-                                                                    style="opacity: 1;">
-                                                                    <line y2="-280" y1="60" x2="0"
-                                                                        class="line line-0 cursor-pointer">
-                                                                    </line>
-                                                                    <text dy="0" y="-310" x="0"
-                                                                        style="text-anchor: middle;">
-                                                                        <tspan style="font-size: 12px;">8 AM</tspan>
-
-                                                                    </text>
-                                                                </g>
-                                                                <g class="tick" transform="translate(72,0)"
-                                                                    style="opacity: 1;">
-                                                                    <line y2="-280" y1="60" x2="0"
-                                                                        class="line line-1 cursor-pointer">
-                                                                    </line>
-                                                                    <text dy="0" y="-310" x="0"
-                                                                        style="text-anchor: middle;">
-                                                                        <tspan style="font-size: 12px;">9 AM</tspan>
-                                                                    </text>
-                                                                </g>
-                                                                <g class="tick" transform="translate(147,0)"
-                                                                    style="opacity: 1;">
-                                                                    <line y2="-280" y1="60" x2="0"
-                                                                        class="line line-2 cursor-pointer">
-                                                                    </line>
-                                                                    <text dy="0" y="-310" x="0"
-                                                                        style="text-anchor: middle;">
-                                                                        <tspan style="font-size: 12px;">10 AM</tspan>
-                                                                    </text>
-                                                                </g>
-                                                                <g class="tick" transform="translate(219,0)"
-                                                                    style="opacity: 1;">
-                                                                    <line y2="-280" y1="60" x2="0"
-                                                                        class="line line-3 cursor-pointer">
-                                                                    </line>
-                                                                    <text dy="0" y="-310" x="0"
-                                                                        style="text-anchor: middle;">
-                                                                        <tspan style="font-size: 12px;">11 AM</tspan>
-                                                                    </text>
-                                                                </g>
-                                                                <g class="tick" transform="translate(294,0)"
-                                                                    style="opacity: 1;">
-                                                                    <line y2="-280" y1="60" x2="0"
-                                                                        class="line line-4 cursor-pointer">
-                                                                    </line>
-                                                                    <text dy="0" y="-310" x="0"
-                                                                        style="text-anchor: middle;">
-                                                                        <tspan style="font-size: 12px;">12 AM</tspan>
-                                                                    </text>
-                                                                </g>
-                                                                <g class="tick" transform="translate(369,0)"
-                                                                    style="opacity: 1;">
-                                                                    <line y2="-280" y1="60" x2="0"
-                                                                        class="line line-5 cursor-pointer">
-                                                                    </line>
-                                                                    <text dy="0" y="-310" x="0"
-                                                                        style="text-anchor: middle;">
-                                                                        <tspan style="font-size: 12px;">1 Pm</tspan>
-                                                                    </text>
-                                                                </g>
-                                                                <g class="tick" transform="translate(441,0)"
-                                                                    style="opacity: 1;">
-                                                                    <line y2="-280" y1="60" x2="0"
-                                                                        class="line line-6 cursor-pointer">
-                                                                    </line>
-                                                                    <text dy="0" y="-310" x="0"
-                                                                        style="text-anchor: middle;">
-                                                                        <tspan style="font-size: 12px;">2 Pm</tspan>
-                                                                    </text>
-                                                                </g>
-                                                                <g class="tick" transform="translate(516,0)"
-                                                                    style="opacity: 1;">
-                                                                    <line y2="-280" y1="60" x2="0"
-                                                                        class="line line-7 cursor-pointer">
-                                                                    </line>
-                                                                    <text dy="0" y="-310" x="0"
-                                                                        style="text-anchor: middle;">
-                                                                        <tspan style="font-size: 12px;">3 Pm</tspan>
-                                                                    </text>
-                                                                </g>
-                                                                <g class="tick" transform="translate(588,0)"
-                                                                    style="opacity: 1;">
-                                                                    <text dy="0" y="-310" x="0"
-                                                                        style="text-anchor: middle;">
-                                                                        <tspan style="font-size: 12px;">4 Pm</tspan>
-                                                                    </text>
-                                                                    <line y2="-280" y1="60" x2="0"
-                                                                        class="line line-8 cursor-pointer">
-                                                                    </line>
-                                                                </g>
-                                                                <g class="tick" transform="translate(663,0)"
-                                                                    style="opacity: 1;">
-                                                                    <line y2="-280" y1="60" x2="0"
-                                                                        class="line line-9 cursor-pointer">
-                                                                    </line>
-                                                                    <text dy="0" y="-310" x="0"
-                                                                        style="text-anchor: middle;">
-                                                                        <tspan style="font-size: 12px;">5 Pm</tspan>
-                                                                    </text>
-                                                                </g>
-                                                                <g class="tick" transform="translate(738,0)"
-                                                                    style="opacity: 1;">
-                                                                    <line y2="-280" y1="60" x2="0"
-                                                                        class="line line-10 cursor-pointer">
-                                                                    </line>
-                                                                    <text dy="0" y="-310" x="0"
-                                                                        style="text-anchor: middle;">
-                                                                        <tspan style="font-size: 12px;">6 Pm</tspan>
-                                                                    </text>
-                                                                </g>
-                                                                <g class="tick" transform="translate(805,0)"
-                                                                    style="opacity: 1;">
-                                                                    <line y2="-280" y1="60" x2="0"
-                                                                        class="line line-11 cursor-pointer">
-                                                                    </line>
-                                                                    <text dy="0" y="-310" x="0"
-                                                                        style="text-anchor: middle;">
-                                                                        <tspan style="font-size: 12px;">7 Pm</tspan>
-                                                                    </text>
-                                                                </g>
-                                                                <path class="domain" d="M0,-250V0H805V-250"></path>
-                                                            </g>
-
-                                                        </g>
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-
-                            </div>
-                            <div class="tab-pane fade" id="attendanceWeek_tab" role="tabpanel"
-                                aria-labelledby="pills-profile-tab">
-
-
-
-                            </div> --}}
                             <div class="tab-pane show active fade" id="attendanceMonth_tab" role="tabpanel"
                                 aria-labelledby="pills-contact-tab">
                                 <div class="calendar-wrapper  box_shadow_0 card mb-0 border-0">
@@ -339,14 +173,8 @@
                                 </div>
                             </div>
                         </div>
-
-
-
-
                     </div>
                 </div>
-
-
             </div>
         </div>
 
@@ -424,6 +252,28 @@
 
 @section('script')
     <script>
+        $(document).ready(function() {
+
+
+            $('#tab_timesheet').click(function() {
+
+                console.log("Timesheet");
+            });
+
+            $('#tab_teamtimesheet').click(function() {
+
+                 console.log("Team timesheet");
+            });
+
+
+            $('#tab_orgtimesheet').click(function() {
+
+                console.log("Org timesheet");
+            });
+        });
+
+
+
         function showReasonBox(selected) {
 
             if (selected.value > 0) {
@@ -474,16 +324,6 @@
         if (lang == "en") {
             months = monthDefault;
             days = dayDefault;
-        } else if (lang == "id") {
-            months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober",
-                "November", "Desember"
-            ];
-            days = ["Ming", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"];
-        } else if (lang == "fr") {
-            months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre",
-                "Novembre", "Décembre"
-            ];
-            days = ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
         } else {
             months = monthDefault;
             days = dayDefault;

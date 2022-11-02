@@ -246,15 +246,37 @@ class VmtAttendanceController extends Controller
     */
     public function showEmployeeTimeSheetPage(Request $request)
     {
-        $currentmonth = $request->current_month;
 
         //TODO : get the attendance data for the given month
-        $employeeAttendanceData = VmtEmployeeAttendance::where('user_id', $request->user_id)->get();
+        $employeeAttendanceData = VmtEmployeeAttendance::all();
 
+        //dd($employeeAttendanceData);
         return view('vmt_attendance_timeSheet',compact('employeeAttendanceData'));
     }
 
+    /*
+        Fetch timesheet data via AJAX
+        Input :
+
+    */
+    public function fetchTimesheetData(Request $request)
+    {
+        $month = $request->month;
+        $user_id  =$request->user_id;
+
+        $month='10';
+        $user_id='141';
+
+        $employeeAttendanceData = VmtEmployeeAttendance::whereMonth('checkin_time',$month)
+                                    ->where('user_id',$user_id)
+                                    ->get();
+
+        dd($employeeAttendanceData);
+        return $employeeAttendanceData;
+    }
+
     public function showAllEmployeesTimesheetPage(Request $request){
+
 
         return view('vmt_admin_attendance_timesheet',compact('employeeAttendanceData'));
 
@@ -299,10 +321,27 @@ class VmtAttendanceController extends Controller
 
     public function showOrgTimesheet(Request $request){
 
-        $org_timesheet = VmtEmployeeAttendance::all();
-        //dd($org_timesheet);
+
         return view('attendance_calendar', compact('org_timesheet'));
 
     }
 
+
+    public function fetchCurrentUserTimesheet(Request $request)
+    {
+        $data = VmtEmployeeAttendance::where('user_id',auth::user()->id);
+        dd($data);
+        return $data;
+
+    }
+
+    public function fetchTeamTimesheet(Request $request)
+    {
+
+    }
+
+    public function fetchOrgTimesheet(Request $request)
+    {
+
+    }
 }
