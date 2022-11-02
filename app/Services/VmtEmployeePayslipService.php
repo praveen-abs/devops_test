@@ -133,6 +133,9 @@ class VmtEmployeePayslipService {
             'el_opn_bal' => 'required',
             'availed_el' => 'required',
             'balance_el' => 'required',
+            'sl_opn_bal' => 'required',
+            'availed_sl' => 'required',
+            'balance_sl' => 'required',
             'rename' => 'required',
             'email' => 'required',
             'greetings' => 'required',
@@ -347,6 +350,9 @@ class VmtEmployeePayslipService {
             $empPaySlip->EL_Opn_Bal = $row["el_opn_bal"];
             $empPaySlip->Availed_EL = $row["availed_el"];
             $empPaySlip->Balance_EL = $row["balance_el"];
+            $empPaySlip->SL_Opn_Bal = $row["sl_opn_bal"];
+            $empPaySlip->Availed_SL = $row["availed_sl"];
+            $empPaySlip->Balance_SL = $row["balance_sl"];
             $empPaySlip->Rename = $row['rename'];
             $empPaySlip->Email = $row['email'];
             $empPaySlip->Greetings = $row['greetings'];

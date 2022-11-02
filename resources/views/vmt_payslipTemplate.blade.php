@@ -320,39 +320,39 @@ $bank_names = \DB::table('bank_list')->get();
                         <p class="txt-center">SL OpenBalance</p>
                     </td>
                     <td colspan="2" class="bg-ash text-strong">
-                        <p class="txt-center">CL OpenBalance</p>
+                        <p class="txt-center">EL OpenBalance</p>
                     </td>
                     <td colspan="2" class="bg-ash text-strong">
                         <p class="txt-center">Availed SL</p>
                     </td>
                     <td colspan="2" class="bg-ash text-strong">
-                        <p class="txt-center">Availed CL</p>
+                        <p class="txt-center">Availed EL</p>
                     </td>
                     <td colspan="2" class="bg-ash text-strong">
                         <p class="txt-center">Balance SL</p>
                     </td>
                     <td colspan="2" class="bg-ash text-strong">
-                        <p class="txt-center">Balance CL</p>
+                        <p class="txt-center">Balance EL</p>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2" class="">
-                        <p class="txt-center">-</p>
+                        <p class="txt-center">{{$employee->SL_Opn_Bal}}</p>
                     </td>
                     <td colspan="2" class="">
-                        <p class="txt-center">-</p>
+                        <p class="txt-center">{{$employee->EL_Opn_Bal}}</p>
                     </td>
                     <td colspan="2" class="">
-                        <p class="txt-center">-</p>
+                        <p class="txt-center">{{$employee->Availed_SL}}</p>
                     </td>
                     <td colspan="2" class="">
-                        <p class="txt-center">-</p>
+                        <p class="txt-center">{{$employee->Availed_EL}}</p>
                     </td>
                     <td colspan="2" class="">
-                        <p class="txt-center">-</p>
+                        <p class="txt-center">{{$employee->Balance_SL}}</p>
                     </td>
                     <td colspan="2" class="">
-                        <p class="txt-center">-</p>
+                        <p class="txt-center">{{$employee->Balance_EL}}</p>
                     </td>
                 </tr>
                 <tr>
