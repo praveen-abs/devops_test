@@ -8,7 +8,9 @@
 </head>
 
 <body>
-    <!-- When employee publish KPI PMS V2 Form through Employee Appraisal -->
+    <!-- When employee publish KPI PMS V2 Form through Employee Appraisal
+        Then mail sent to Manager
+    -->
     @if($status == 'publish')
         <p>Dear {{ $receiverName }},</p>
         <p>

@@ -45,41 +45,37 @@
 			</p>
 		@elseif ($approvalStatus == "approved")
 			{{-- <p>Personal Assessment goal has been approved by your Manager</p> --}}
-			<p>
-				Dear Employee,</p>
-				<p>	&nbsp;&nbsp;&nbsp;
-KRA/ KPI has been Approved by “Mr @php echo $user_manager_name; @endphp”.	</p>
-<p>
-If you have any questions or concerns, don’t hesitate to reach out your reporting manager or the HR team.</p>
-<p>
-Regards	<br>
-Team HR.
-			</p>
-		@elseif ($approvalStatus == "rejected")
-			{{-- <p>Personal Assessment goal has been rejected by your Manager</p> --}}
-			<p>
-				Dear @php echo $user_emp_name; @endphp,	</p>
-				<p>&nbsp;&nbsp;&nbsp;KRA/ KPI has been rejected by <b>“Mr. @php echo $user_manager_name;@endphp” </b>and reason stated below for your further references.
-Request you to kindly have a great conversation with “@php echo $user_emp_name; @endphp” and Complete the KRA/KPA within the time frame.
-<p>
-If you have any questions or concerns, don’t hesitate to reach out your reporting manager or the HR team.</p>
-<p>
-Regards	<br>
-Team HR.
-			</p>
 			<p>Dear @php echo $user_emp_name; @endphp ,	</p>
 				<p>
-Greetings from the HR Team!!!</p>
-<p>
-&nbsp;&nbsp;&nbsp;This is the inform you that your manager has approved the submitted KRA/KPI in the HRMS Portal.
-Please find few tips which needs to be taken care throughout this year.
-Take note of your achievement throughout the year.
-Be Specific and use numbers to your advantage
-Provide evidence to back up and statements of the results.
-Reference your job description to account for the company objectives.
-If you have any questions or concerns, don’t hesitate to reach out your reporting manager or the HR team.
-<p></p>
-			</p>
+                Greetings from the HR Team!!!</p>
+                <p>
+                &nbsp;&nbsp;&nbsp;This is the inform you that your manager  @php echo $user_manager_name; @endphp has approved the submitted KRA/KPI in the HRMS Portal.
+                Please find few tips which needs to be taken care throughout this year.
+                Take note of your achievement throughout the year.
+                Be Specific and use numbers to your advantage
+                Provide evidence to back up and statements of the results.
+                Reference your job description to account for the company objectives.
+                If you have any questions or concerns, don’t hesitate to reach out your reporting manager or the HR team.
+                </p>
+                <p>
+                    Regards	<br>
+                    Team HR.
+                </p>
+
+		@elseif ($approvalStatus == "rejected")
+			{{-- <p>Personal Assessment goal has been rejected by your Manager</p> --}}
+
+                <p>
+                    Dear @php echo $user_emp_name; @endphp,	</p>
+				<p>&nbsp;&nbsp;&nbsp;KRA/ KPI has been rejected by <b>“Mr. @php echo $user_manager_name;@endphp” </b>and reason stated below for your further references.</p>
+                    <p>  @php echo $command_emp; @endphp </p>
+
+                <p>Request you to kindly have a great conversation with “@php echo $user_emp_name; @endphp” and Complete the KRA/KPA within the time frame.</p>
+                <p>If you have any questions or concerns, don’t hesitate to reach out your reporting manager or the HR team.</p>
+                <p>
+                Regards	<br>
+                Team HR.
+			    </p>
 		@endif
 
 	@endif
