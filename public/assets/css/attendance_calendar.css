@@ -27,9 +27,9 @@
     z-index: 2;
 
 }
-.calendar-wrapper ._button-container-calendar ._monthAndYear{
+/*.calendar-wrapper ._button-container-calendar ._monthAndYear{
     display: none;
-}
+} */
 .calendar-wrapper ._button-container-calendar .previous,.calendar-wrapper ._button-container-calendar .next{
     color: #c1c1c1;
     border: 1px solid #c1c1c1;
