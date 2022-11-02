@@ -17,7 +17,7 @@
     border-collapse: collapse;
     width: 100%;
     border: 0;
-    margin: 10px 0px;
+    margin: 50px 0px;
     height: 210px;
 }
 ._table-calendar th {
@@ -64,7 +64,6 @@
 }
 
 ._monthAndYear {
-    color: #fff !important;
     margin: 0px;
 }
 
