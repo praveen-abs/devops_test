@@ -7,7 +7,13 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class VmtPMSMail_Assignee extends Mailable
+/*
+
+
+    Mail is sent to Employee.
+
+*/
+class VmtPMSMail_Reviewer extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -17,15 +23,15 @@ class VmtPMSMail_Assignee extends Mailable
      * @return void
      */
     // protected $linkUri;
-    public function __construct( $approvalStatus,$user_emp_name,$appraisal_period,$user_manager_name,$command_emp)
+    public function __construct($approvalStatus, $user_emp_name,$appraisal_year, $appraisal_period,$user_manager_name,$comments_manager)
     {
         //
-
         $this->approvalStatus = $approvalStatus;
         $this->user_emp_name = $user_emp_name;
+        $this->appraisal_year = $appraisal_year;
         $this->appraisal_period = $appraisal_period;
         $this->user_manager_name = $user_manager_name;
-        $this->command_emp = $command_emp;
+        $this->comments_manager = $comments_manager;
 
     }
 
@@ -41,12 +47,14 @@ class VmtPMSMail_Assignee extends Mailable
         $MAIL_FROM_NAME    = env('MAIL_FROM_NAME');
 
         return $this->from($MAIL_FROM_ADDRESS,  $MAIL_FROM_NAME)
+                //->subject("Regarding the Manager Review - PMS")
                 ->subject($MAIL_FROM_NAME)
-                ->view('vmt_pms_mail_flow_assignee_to_manager')
-                ->with('user_emp_name', $this->user_emp_name)
+                ->view('vmt_pms_mail_flow_manager_to_assignee')
                 ->with('approvalStatus', $this->approvalStatus)
+                ->with('user_emp_name', $this->user_emp_name)
+                ->with('appraisal_year', $this->appraisal_year)
                 ->with('appraisal_period', $this->appraisal_period)
                 ->with('user_manager_name', $this->user_manager_name)
-                ->with('command_emp', $this->command_emp);
+                ->with('comments_manager', $this->comments_manager);
     }
 }

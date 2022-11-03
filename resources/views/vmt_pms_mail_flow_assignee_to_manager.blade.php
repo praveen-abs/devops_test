@@ -11,14 +11,14 @@
 			{{-- <p>Your Employee has created Personal Assessment goal. Please review at <a href="{{$linkUri}}" target="_blank">Link</a> to approve it.</p> --}}
             <p>Dear @php echo $user_manager_name; @endphp,
 
-    		    <p>Your Employee has created Personal Assessment goal. Please review in your HRMS portal to approve it.</p>
+    		    <p>Your Employee {{ $user_emp_name }} has created Personal Assessment goal. Please review in your HRMS portal to approve it.</p>
             <p>
                 Regards	<br>
                 Team HR.
             </p>
 		@elseif ($approvalStatus == "approved")
 			{{-- <p>Personal Assessment goal has been accepted by your employee</p> --}}
-			<p>Dear @php echo $user_manager_name; @endphp,
+			<p>Dear @php echo $user_manager_name; @endphp,<br/>
 				KRA/ KPI has been accepted by “@php echo $user_emp_name; @endphp”.
 				If you have any questions or concerns, don’t hesitate to reach out your reporting manager or the HR team.
 			</p>

@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class VmtPMSMail_Assignee extends Mailable
+class VmtPMSMail_PublishForm extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -17,7 +17,7 @@ class VmtPMSMail_Assignee extends Mailable
      * @return void
      */
     // protected $linkUri;
-    public function __construct( $approvalStatus,$user_emp_name,$appraisal_period,$user_manager_name,$command_emp)
+    public function __construct( $approvalStatus,$user_emp_name,$appraisal_period,$user_manager_name,$command_emp,$flow_check)
     {
         //
 
@@ -26,7 +26,7 @@ class VmtPMSMail_Assignee extends Mailable
         $this->appraisal_period = $appraisal_period;
         $this->user_manager_name = $user_manager_name;
         $this->command_emp = $command_emp;
-
+        $this->flow_check = $flow_check;
     }
 
     /**
@@ -36,13 +36,19 @@ class VmtPMSMail_Assignee extends Mailable
      */
     public function build()
     {
+        $mail_template = '';
+        if($this->flow_check == 1)
+            $mail_template = 'vmt_pms_mail_flow1_hr_to_assignee';
+        else
+        if($this->flow_check == 2)
+            $mail_template = 'vmt_pms_mail_flow_manager_to_assignee';
 
         $MAIL_FROM_ADDRESS = env('MAIL_FROM_ADDRESS');
         $MAIL_FROM_NAME    = env('MAIL_FROM_NAME');
 
         return $this->from($MAIL_FROM_ADDRESS,  $MAIL_FROM_NAME)
                 ->subject($MAIL_FROM_NAME)
-                ->view('vmt_pms_mail_flow_assignee_to_manager')
+                ->view($mail_template)
                 ->with('user_emp_name', $this->user_emp_name)
                 ->with('approvalStatus', $this->approvalStatus)
                 ->with('appraisal_period', $this->appraisal_period)

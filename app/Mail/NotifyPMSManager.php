@@ -33,11 +33,18 @@ class NotifyPMSManager extends Mailable
      */
     public function build()
     {
-        return $this->view('vmt_notifypms_manager')
-                        ->with('employeeName' , $this->empName)
-                        ->with('empDesignation' , $this->empDesignation)
-                        ->with('reviewPeriod' , $this->reviewPeriod)
-                        ->with('recipientName' , $this->recipientName);
+
+
+        $MAIL_FROM_ADDRESS = env('MAIL_FROM_ADDRESS');
+        $MAIL_FROM_NAME    = env('MAIL_FROM_NAME');
+
+        return $this->from($MAIL_FROM_ADDRESS,  $MAIL_FROM_NAME)
+                ->subject($MAIL_FROM_NAME)
+                ->view('vmt_notifypms_manager')
+                ->with('employeeName' , $this->empName)
+                ->with('empDesignation' , $this->empDesignation)
+                ->with('reviewPeriod' , $this->reviewPeriod)
+                ->with('recipientName' , $this->recipientName);
 
     }
 }

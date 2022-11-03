@@ -350,6 +350,7 @@
                             <form id="employee_self_review" method="POST">
                                 @csrf
                                 <input type="hidden" value="" name="formSubmitType" id="formSubmitType">
+                                <input type="hidden" name="assignee_id" value="{{ $assignedUserDetails->id }}">
                                 <input type="hidden" name="goal_id" value="{{ $assignedGoals->id }}">
                                 <input type="hidden" name="kpiReviewId" value="{{ $assignedGoals->id }}">
                                 <div class="table-content table-responsive">
@@ -636,6 +637,37 @@
                                         </tbody>
                                     </table>
                                 </div>
+
+                                @if ($isAllReviewersSubmittedOrNot)
+                                    <div class="row mt-3">
+                                        <div class="col-lg-12">
+                                            <label class="form-label">
+                                                Appraiser Feedback:
+                                            </label>
+                                            <div class="my-2">
+                                                <textarea class="form-control w-100 h-100 outline-none border-0" placeholder="" id="gen-info-description-input" name="appraiser_comments"
+                                                    readonly
+                                                    >@if (isset($assignedGoals->reviewer_appraisal_comments)){{ $assignedGoals->reviewer_appraisal_comments }}@endif</textarea>
+
+                                                    </textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @else
+                                    <div class="row mt-3">
+                                        <div class="col-lg-12">
+                                            <label class="form-label">
+                                                Appraiser Feedback:
+                                            </label>
+                                            <div class="my-2">
+                                                <textarea class="form-control w-100 h-100 outline-none border-0" placeholder="" id="gen-info-description-input" name="appraiser_comments"
+                                                    >@if (isset($assignedGoals->reviewer_appraisal_comments)){{ $assignedGoals->reviewer_appraisal_comments }}@endif</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+
+
                             </form>
                             @if($enableButton)
                                 @if ($assignedGoals->is_assignee_submitted == '1')
@@ -674,24 +706,6 @@
                     </div>
                 </div>
             </div>
-
-            @if ($reviewCompleted && $assignedGoals->is_hr_submitted)
-                <div class="row mt-3">
-                    <div class="col-lg-12">
-                        <label class="form-label">
-                            Appraiser Feedback:
-                        </label>
-                        <div class="my-2">
-                            <textarea class="form-control w-100 h-100 outline-none border-0" placeholder="" id="gen-info-description-input" name="performance"
-                                readonly>
-                                @if (isset($assignedGoals->appraiser_comment))
-                                {{ $assignedGoals->appraiser_comment }}
-                                @endif
-                                </textarea>
-                        </div>
-                    </div>
-                </div>
-            @endif
 
             @if ($isAllReviewersSubmittedOrNot && count($pmsRatingDetails) > 0)
 

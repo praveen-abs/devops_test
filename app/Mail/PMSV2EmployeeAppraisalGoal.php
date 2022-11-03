@@ -35,6 +35,7 @@ class PMSV2EmployeeAppraisalGoal extends Mailable
         $MAIL_FROM_ADDRESS = env('MAIL_FROM_ADDRESS');
         $MAIL_FROM_NAME    = env('MAIL_FROM_NAME');
         return $this->from($MAIL_FROM_ADDRESS,  $MAIL_FROM_NAME)
+                ->subject($MAIL_FROM_NAME)
                 ->view('mail.vm_pms_employee_appraisal_mail')
                 ->with('senderName', $this->senderName)
                 ->with('status', $this->status)

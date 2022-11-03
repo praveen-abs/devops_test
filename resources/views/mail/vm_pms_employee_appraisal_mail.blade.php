@@ -22,7 +22,7 @@
 
         <p>Dear {{ $receiverName }},</p>
         <p> &nbsp;&nbsp;&nbsp;
-            KRA/ KPI has been Approved by <b>“Mr {{ $senderName }}”.</b> </p>
+            KRA/ KPI has been Approved by <b> {{ $senderName }}.</b> </p>
         <p>
             If you have any questions or concerns, don’t hesitate to reach out your reporting manager or the HR team.</p>
         <p>
@@ -33,7 +33,7 @@
     @elseif($status == 'rejected')
         <p>
             Dear {{ $receiverName }}, </p>
-        <p>&nbsp;&nbsp;&nbsp;KRA/ KPI has been rejected by <b>“Mr. {{ $senderName }}” </b>and reason stated below for your further references.
+        <p>&nbsp;&nbsp;&nbsp;KRA/ KPI has been rejected by <b> {{ $senderName }}</b>and reason stated below for your further references.
         <p><u>  {{ $rejectedReason }} </u></p>
         Request you to kindly have a great conversation with “{{ $senderName }}” and Complete the KRA/KPA within the time frame.
         <p>If you have any questions or concerns, don’t hesitate to reach out your reporting manager or the HR team.</p>
