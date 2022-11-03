@@ -124,22 +124,9 @@
                         </div>
 
                         <div class="showEmployee_attendance">
-                            <ul class="list-unstyled ">
-                                <li class="list_employee_attendance p-2 w-100">
+                            <ul class="list-unstyled " id="sidepanel_employees_list">
 
-                                    <div class="d-flex">
-                                        <div
-                                            class="user_pic me-3 d-flex justify-content-center align-items-center bg-primary rounded-circle">
-                                            <span class="text-white">Pr</span>
-                                        </div>
 
-                                        <div class="user_content d-flex  align-items-center flex-column">
-                                            <p class="fw-bold text-primary f-15">Praveen</p>
-                                            <p class=" text-muted f-12">Full stack developer</p>
-                                        </div>
-                                    </div>
-
-                                </li>
                             </ul>
                         </div>
                     </div>
@@ -252,29 +239,182 @@
 
 @section('script')
     <script>
+        var today = new Date();
+        var currentMonth = today.getMonth();
+        var currentYear = today.getFullYear();
+        var selectYear = document.getElementById("_year");
+        var currentlySelectedUser = 0;
+
           function ajaxGetMonthlyDate_TimeSheet(selectedMonth, selectedUserID){
                 $.ajax({
                     url: "{{route('fetch-attendance-user-timesheet')}}",
                     type: "GET",
                     data: {
-                        month: selectedMonth,
+                        month: selectedMonth + 1,
                         user_id: selectedUserID,
                         _token: '{{csrf_token()}}'
                     },
                     success: function(data) {
                         console.log(data);
-                        showCalendar(currentMonth, currentYear, data);
+
+                        // //update sidepanel
+                        // $('#sidepanel_employees_list').html('');
+
+                        // var html = '<li class="list_employee_attendance p-2 w-100" >'+
+                        //                 '<div class="d-flex">'+
+                        //                     '<div class="user_pic me-3 d-flex justify-content-center align-items-center bg-primary rounded-circle">'+
+                        //                         '<span class="text-white">Pr</span>'+
+                        //                     '</div>'+
+                        //                     '<div class="user_content d-flex  align-items-center flex-column">'+
+                        //                         '<p class="fw-bold text-primary f-15">'+element.name+'</p>'+
+                        //                         '<p class=" text-muted f-12">'+element.designation+'</p>'+
+                        //                     '</div>'+
+                        //                 '</div>'+
+                        //             '</li>';
+
+                        // $('#sidepanel_employees_list').append(html);
+
+                        showCalendar(selectedMonth, '2022', data);
 
                     }
                 });
             }
 
+            function ajaxGetTeamMembersDetails(user_code){
+                $.ajax({
+                    url: "{{route('fetch-attendance-team-timesheet')}}",
+                    type: "GET",
+                    data: {
+                        user_code: user_code,
+                        _token: '{{csrf_token()}}'
+                    },
+                    success: function(data) {
+                        console.log(data);
+
+                        //update sidepanel
+                        $('#sidepanel_employees_list').html('');
+
+                        data.forEach((element) => {
+
+                          var html = '<li class="list_employee_attendance p-2 w-100" >'+
+                                        '<div class="d-flex employee_list_item" data-userid='+element.id+'>'+
+                                            '<div class="user_pic me-3 d-flex justify-content-center align-items-center bg-primary rounded-circle">'+
+                                                '<span class="text-white">Pr</span>'+
+                                            '</div>'+
+                                            '<div class="user_content d-flex  align-items-center flex-column">'+
+                                                '<p class="fw-bold text-primary f-15">'+element.name+'</p>'+
+                                                '<p class=" text-muted f-12">'+element.designation+'</p>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</li>';
+
+                            $('#sidepanel_employees_list').append(html);
+
+                        });
+
+                        tbl = document.getElementById("_calendar-body");
+                        tbl.innerHTML = "";
+
+                        //showCalendar(currentMonth, currentYear, data);
+                        //when employee name selected, update the calendar
+                        $('.employee_list_item').click(function(){
+                            currentlySelectedUser = $(this).attr('data-userid');
+                            console.log("currentlySelectedUser : "+currentlySelectedUser);
+                            ajaxGetMonthlyDate_TimeSheet(currentMonth, currentlySelectedUser);
+
+                        });
+
+                    }
+                });
+            }
+
+            function ajaxGetOrgMembersDetails(){
+                $.ajax({
+                    url: "{{route('fetch-attendance-org-timesheet')}}",
+                    type: "GET",
+                    data: {
+                        _token: '{{csrf_token()}}'
+                    },
+                    success: function(data) {
+                        console.log(data);
+
+                        //update sidepanel
+                        $('#sidepanel_employees_list').html('');
+
+                        data.forEach((element) => {
+
+                          var html = '<li class="list_employee_attendance p-2 w-100" >'+
+                                        '<div class="d-flex employee_list_item" data-userid='+element.id+'>'+
+                                            '<div class="user_pic me-3 d-flex justify-content-center align-items-center bg-primary rounded-circle">'+
+                                                '<span class="text-white">Pr</span>'+
+                                            '</div>'+
+                                            '<div class="user_content d-flex  align-items-center flex-column">'+
+                                                '<p class="fw-bold text-primary f-15">'+element.name+'</p>'+
+                                                '<p class=" text-muted f-12">'+element.designation+'</p>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</li>';
+
+                            $('#sidepanel_employees_list').append(html);
+
+                        });
+
+                        tbl = document.getElementById("_calendar-body");
+                        tbl.innerHTML = "";
+                        //showCalendar(currentMonth, currentYear, data);
+
+                        //when employee name selected, update the calendar
+                        $('.employee_list_item').click(function(){
+                            currentlySelectedUser = $(this).attr('data-userid');
+                            console.log("currentlySelectedUser : "+currentlySelectedUser);
+                            ajaxGetMonthlyDate_TimeSheet(currentMonth, currentlySelectedUser);
+
+                        });
+
+                    }
+                });
+            }
+
+            function updateTimeSheetForCurrentEmployee(){
+
+                //show the current user in sidepanel for TimeSheet tab
+                $('#sidepanel_employees_list').html('');
+
+
+                var html = '<li class="list_employee_attendance p-2 w-100" >'+
+                                '<div class="d-flex employee_list_item" onclick="" data-userid="{{ $current_employee_detail->id }}">'+
+                                    '<div class="user_pic me-3 d-flex justify-content-center align-items-center bg-primary rounded-circle">'+
+                                        '<span class="text-white">Pr</span>'+
+                                    '</div>'+
+                                    '<div class="user_content d-flex  align-items-center flex-column">'+
+                                        '<p class="fw-bold text-primary f-15">{{ $current_employee_detail->name }}</p>'+
+                                        '<p class=" text-muted f-12">{{ $current_employee_detail->designation }}</p>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</li>';
+
+                $('#sidepanel_employees_list').append(html);
+
+                //when employee name selected, update the calendar
+                $('.employee_list_item').click(function(){
+                console.log($(this).attr('data-userid'));
+
+                ajaxGetMonthlyDate_TimeSheet(currentMonth, "{{ Auth::user()->id }}");
+
+
+                });
+
+            }
+
+
+
         $(document).ready(function() {
 
-            const d = new Date();
-            var t_selectedMonth = d.getMonth();
 
-            ajaxGetMonthlyDate_TimeSheet(t_selectedMonth, {{ Auth::user()->id }});
+
+            //For timesheet tab
+            updateTimeSheetForCurrentEmployee();
+            ajaxGetMonthlyDate_TimeSheet(currentMonth, {{ Auth::user()->id }});
 
 
             $('#tab_timesheet').click(function() {
@@ -284,20 +424,37 @@
 
                 var selectedMonth = d.getMonth();
 
-                ajaxGetMonthlyDate_TimeSheet(selectedMonth,{{ Auth::user()->id }});
+                updateTimeSheetForCurrentEmployee();
+                ajaxGetMonthlyDate_TimeSheet(currentMonth,{{ Auth::user()->id }});
 
             });
 
             $('#tab_teamtimesheet').click(function() {
 
                  console.log("Team timesheet");
+
+                 ajaxGetTeamMembersDetails("{{ Auth::user()->user_code }}");
             });
 
 
             $('#tab_orgtimesheet').click(function() {
 
                 console.log("Org timesheet");
+
+                ajaxGetOrgMembersDetails();
             });
+
+
+            //when employee name selected, update the calendar
+            $('.employee_list_item').click(function(){
+               console.log($(this).attr('data-userid'));
+               currentlySelectedUser = $(this).attr('data-userid');
+               console.log("currentlySelectedUser : "+currentlySelectedUser);
+               ajaxGetMonthlyDate_TimeSheet(currentMonth, currentlySelectedUser);
+
+
+            });
+
         });
 
 
@@ -322,10 +479,7 @@
             return years;
         }
 
-        today = new Date();
-        currentMonth = today.getMonth();
-        currentYear = today.getFullYear();
-        selectYear = document.getElementById("_year");
+
         //selectMonth = document.getElementById("_month");
 
 
@@ -369,7 +523,7 @@
 
 
         monthAndYear = document.getElementById("_monthAndYear");
-        showCalendar(currentMonth, currentYear);
+        //showCalendar(currentMonth, currentYear);
 
 
 
@@ -377,14 +531,14 @@
             currentYear = (currentMonth === 11) ? currentYear + 1 : currentYear;
             currentMonth = (currentMonth + 1) % 12;
             //showCalendar(currentMonth, currentYear);
-            ajaxGetMonthlyDate_TimeSheet(currentMonth, {{ Auth::user()->id }});
+            ajaxGetMonthlyDate_TimeSheet(currentMonth, currentlySelectedUser);
         }
 
         function previous() {
             currentYear = (currentMonth === 0) ? currentYear - 1 : currentYear;
             currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
            //showCalendar(currentMonth, currentYear);
-           ajaxGetMonthlyDate_TimeSheet(currentMonth, {{ Auth::user()->id }});
+           ajaxGetMonthlyDate_TimeSheet(currentMonth, currentlySelectedUser);
 
         }
 
@@ -392,7 +546,7 @@
             currentYear = parseInt(selectYear.value);
             //currentMonth = parseInt(selectMonth.value);
             //showCalendar(currentMonth, currentYear);
-            ajaxGetMonthlyDate_TimeSheet(currentMonth, {{ Auth::user()->id }});
+            ajaxGetMonthlyDate_TimeSheet(currentMonth, currentlySelectedUser);
 
         }
 
@@ -442,7 +596,7 @@
                         cell.setAttribute("data-month_name", months[month]);
                         cell.className = "_date-picker";
                         cell.innerHTML = " <div class='w-100 h-100'> <p class='show_date' >" + date +
-                            "</p>  <div class='d-flex mt-3 flex-column bio_check align-items-start' > <span class='check-in f-10 text-success'><i class='fa fa-arrow-down' style='transform: rotate(-45deg);'></i> <span id='checkin_time_"+year+"-"+month+"-"+dateText+"'></span></span> <span class='check-out f-10 text-danger'><i class='fa fa-arrow-down' style='transform: rotate(230deg);'></i> <span id='checkout_time_"+year+"-"+month+"-"+dateText+"'></span></span></div>   </div>";
+                            "</p>  <div class='d-flex mt-3 flex-column bio_check align-items-start' > <span class='check-in f-10 text-success'><i class='fa fa-arrow-down' style='transform: rotate(-45deg);'></i> <span id='checkin_time_"+year+"-"+(month+1)+"-"+dateText+"'></span></span> <span class='check-out f-10 text-danger'><i class='fa fa-arrow-down' style='transform: rotate(230deg);'></i> <span id='checkout_time_"+year+"-"+(month+1)+"-"+dateText+"'></span></span></div>   </div>";
 
                         if (date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) {
                             cell.className = "_date-picker selected";
@@ -459,7 +613,7 @@
 
             ajax_monthly_data.forEach((element) => {
                 //Get the date from the checkin time
-
+                console.log(element);
                 var calendar_cell_id = "";
                 var calendar_cell_id_value = "";
 
@@ -468,24 +622,24 @@
                     calendar_cell_id = element.checkin_time.split(" ")[0];
                     calendar_cell_id_value = element.checkin_time.split(" ")[1];
                     //Find the calendar cell ID based on above checkin date
-                    $('#checkin_time_'+calendar_cell_id).html(calendar_cell_id_value);                 
+                    $('#checkin_time_'+calendar_cell_id).html(calendar_cell_id_value);
                 }
                 else{
-                    $('#checkin_time_'+calendar_cell_id).html('---');                 
+                    $('#checkin_time_'+calendar_cell_id).html('---');
                 }
 
                 if(element.checkout_time)
                 {
                     calendar_cell_id = element.checkout_time.split(" ")[0];
                     calendar_cell_id_value = element.checkout_time.split(" ")[1];
-                    
+
                     //Find the calendar cell ID based on above checkin date
-                    $('#checkout_time_'+calendar_cell_id).html(calendar_cell_id_value);                
+                    $('#checkout_time_'+calendar_cell_id).html(calendar_cell_id_value);
                     //checkin_time_2022-10-1
                 }
                 else{
-                    $('#checkout_time_'+calendar_cell_id).html('---');                 
-                }                
+                    $('#checkout_time_'+calendar_cell_id).html('---');
+                }
             });
 
         }

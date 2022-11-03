@@ -576,7 +576,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href="{{ route('attendance-org-timesheet') }}" class="nav-link sidebar py-1">Org
+                                <a href="{{ route('attendance-timesheet') }}" class="nav-link sidebar py-1">Org
                                     Sheet</a>
                             </li>
 

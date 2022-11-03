@@ -319,18 +319,25 @@ class VmtAttendanceController extends Controller
     /////////////////////// New routing methods
 
 
-    public function showOrgTimesheet(Request $request){
+    public function showTimesheet(Request $request){
         //$data = VmtEmployeeAttendance::where('user_id',a);
         //dd($data);
 
-        return view('attendance_calendar');
+        //Show the single employee timesheet detail in sidepanel
+
+        $current_employee_detail = User::leftJoin('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
+        ->where('users.id', auth::user()->id)
+        ->first(['users.id','users.name','vmt_employee_office_details.designation']);
+
+
+        return view('attendance_calendar',compact('current_employee_detail'));
 
     }
 
 
     public function fetchUserTimesheet(Request $request)
     {
-        $data = VmtEmployeeAttendance::where('user_id',auth::user()->id)
+        $data = VmtEmployeeAttendance::where('user_id',$request->user_id)
                                         ->whereMonth('checkin_time',$request->month)
                                         ->orderBy('checkin_time', 'asc')->get(['checkin_time','checkout_time']);
 
@@ -341,11 +348,30 @@ class VmtAttendanceController extends Controller
 
     public function fetchTeamTimesheet(Request $request)
     {
+        //Get the team members of the given user
+        $reportees_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $request->user_code)->get('user_id');
 
+        $reportees_details = User::leftJoin('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
+                            ->whereIn('users.id',$reportees_id)
+                            ->get(['users.id','users.name','vmt_employee_office_details.designation']);
+
+
+        //dd($reportees_details->toArray());
+
+        return $reportees_details;
     }
 
     public function fetchOrgTimesheet(Request $request)
     {
+        //Get the team members of the given user
+        //$reportees_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $request->user_code)->get('user_id');
 
+        $all_employees = User::leftJoin('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
+                            ->get(['users.id','users.name','vmt_employee_office_details.designation']);
+
+
+        //dd($reportees_details->toArray());
+
+        return $all_employees;
     }
 }
