@@ -239,6 +239,9 @@
 
 @section('script')
     <script>
+        var shift_start_time = "{{ $shift_start_time }}";
+        var shift_end_time = "{{ $shift_end_time }}";
+
         var today = new Date();
         var currentMonth = today.getMonth();
         var currentYear = today.getFullYear();
@@ -469,7 +472,12 @@
 
         }
 
+        function showRegularizationModal(element){
+            $('#newClient').show();
+            $('#newClient').removeClass('fade');
 
+            console.log("Showing modal");
+        }
 
         function generate_year_range(start, end) {
             var years = "";
@@ -595,8 +603,13 @@
 
                         cell.setAttribute("data-month_name", months[month]);
                         cell.className = "_date-picker";
-                        cell.innerHTML = " <div class='w-100 h-100'> <p class='show_date' >" + date +
-                            "</p>  <div class='d-flex mt-3 flex-column bio_check align-items-start' > <span class='check-in f-10 text-success'><i class='fa fa-arrow-down' style='transform: rotate(-45deg);'></i> <span id='checkin_time_"+year+"-"+(month+1)+"-"+dateText+"'></span></span> <span class='check-out f-10 text-danger'><i class='fa fa-arrow-down' style='transform: rotate(230deg);'></i> <span id='checkout_time_"+year+"-"+(month+1)+"-"+dateText+"'></span></span></div>   </div>";
+
+                        //check if the user is 'late coming'
+                        var arrival_time =
+
+
+                        cell.innerHTML = " <div class='w-100 h-100'><p class='show_date' >" + date +
+                            "</p>  <div class='d-flex mt-3 flex-column bio_check align-items-start' > <span class='check-in f-10 text-success'><i class='fa fa-arrow-down' style='transform: rotate(-45deg);'></i> <span id='checkin_time_"+year+"-"+(month+1)+"-"+dateText+"'></span><input type='button' onclick ='showRegularizationModal(this)' value='R' data-cellid ='checkin_time_"+year+"-"+(month+1)+"-"+dateText+"'/></span> <span class='check-out f-10 text-danger'><i class='fa fa-arrow-down' style='transform: rotate(230deg);'></i> <span id='checkout_time_"+year+"-"+(month+1)+"-"+dateText+"'></span></span></div></div>";
 
                         if (date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) {
                             cell.className = "_date-picker selected";

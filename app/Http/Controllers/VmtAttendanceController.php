@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Mail\WelcomeMail;
 use App\Models\VmtWorkShifts;
+use App\Models\VmtEmployeeAttendanceRegularization;
 use Carbon\Carbon;
 
 
@@ -323,6 +324,9 @@ class VmtAttendanceController extends Controller
         //$data = VmtEmployeeAttendance::where('user_id',a);
         //dd($data);
 
+        $shift_start_time = VmtWorkShifts::where('shift_type',"First Shift")->value('shift_start_time');
+        $shift_end_time = VmtWorkShifts::where('shift_type',"First Shift")->value('shift_end_time');
+
         //Show the single employee timesheet detail in sidepanel
 
         $current_employee_detail = User::leftJoin('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
@@ -330,7 +334,7 @@ class VmtAttendanceController extends Controller
         ->first(['users.id','users.name','vmt_employee_office_details.designation']);
 
 
-        return view('attendance_calendar',compact('current_employee_detail'));
+        return view('attendance_calendar',compact('current_employee_detail','shift_start_time','shift_end_time'));
 
     }
 
@@ -373,5 +377,23 @@ class VmtAttendanceController extends Controller
         //dd($reportees_details->toArray());
 
         return $all_employees;
+    }
+
+    public function requestAttendanceRegularization(Request $request){
+
+        $attendanceRegularizationRequest = new VmtEmployeeAttendanceRegularization;
+        $attendanceRegularizationRequest->attendance_date = $request->attendance_date;
+        $attendanceRegularizationRequest->arrival_time = $request->arrival_time;
+        $attendanceRegularizationRequest->regularize_time = $request->regularize_time;
+        $attendanceRegularizationRequest->reason = $request->reason;
+        $attendanceRegularizationRequest->custom_reason = $request->custom_reason;
+
+        $attendanceRegularizationRequest->save();
+
+        return $responseJSON = [
+            'status' => 'success',
+            'message' => 'Request sent successfully!',
+            'data' => [],
+        ];
     }
 }
