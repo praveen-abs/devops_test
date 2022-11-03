@@ -589,7 +589,7 @@ class VmtPMSModuleController extends Controller
                         if(!empty($assigneeMailId)){
 
                             //Send mail to assignee
-                            \Mail::to($assigneeMailId)->send(new VmtPMSMail_PublishForm("none", $assigneeName,$request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),$assignerName,$command_emp,$request->flowCheck));
+                            \Mail::to($assigneeMailId)->send(new VmtPMSMail_PublishForm("none", $assigneeName,$request->hidden_calendar_year,strtoupper($request->assignment_period_start),$assignerName,$command_emp,$request->flowCheck));
 
                         }
                     }
