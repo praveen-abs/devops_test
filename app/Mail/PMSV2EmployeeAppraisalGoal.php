@@ -32,11 +32,14 @@ class PMSV2EmployeeAppraisalGoal extends Mailable
      */
     public function build()
     {
-        return $this->view('mail.vm_pms_employee_appraisal_mail')
+        $MAIL_FROM_ADDRESS = env('MAIL_FROM_ADDRESS');
+        $MAIL_FROM_NAME    = env('MAIL_FROM_NAME');
+        return $this->from($MAIL_FROM_ADDRESS,  $MAIL_FROM_NAME)
+                ->view('mail.vm_pms_employee_appraisal_mail')
                 ->with('senderName', $this->senderName)
                 ->with('status', $this->status)
                 ->with('appraisal_period', $this->appraisal_period)
-                 ->with('receiverName', $this->receiverName)
-                 ->with('rejectedReason', $this->rejectedReason);
+                ->with('receiverName', $this->receiverName)
+                ->with('rejectedReason', $this->rejectedReason);
     }
 }
