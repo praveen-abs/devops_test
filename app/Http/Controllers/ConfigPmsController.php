@@ -72,9 +72,18 @@ class ConfigPmsController extends Controller
 
         $config = ConfigPms::first();
 
+        //dd( $request->all());
+
         $config->calendar_type = $request->calendar_type;
-        $config->year = $request->hidden_year;
+        $config->year = $request->year;
         $config->frequency = $request->selected_frequency;
+        $config->assignment_period = $request->assignment_period_start;
+
+        //score card ui related
+        $config->can_show_ratingcard_in_reviewpage = $request->input('radiobtn_show_ratingcard');
+        $config->can_show_overallscorecard_in_reviewpage = $request->input('radiobtn_show_overallscorecard_in_reviewpage');
+        $config->can_show_overallscorecard_in_selfappraisal_dashboard = $request->input('radiobtn_show_overallscorecard_in_selfappraisaldashboard');
+
         $config->selected_columns = implode(',',$selectedColumn);
         $config->selected_head = $request->input('selected_head');
         $config->selected_reviewlevel = $request->input('selected_reviewlevels');

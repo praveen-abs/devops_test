@@ -75,18 +75,30 @@
                     </div>
                     <div class="row mt-1">
                         <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
-                            <label class="" for="selected_head">Calendar Type</label>
+                            <label class="" for="selected_head">Frequency</label>
                         </div>
                         <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
-
+                            <?php
+                            ?>
                             <select name="selected_frequency" id="selected_frequency"
                                 class="onboard-form form-control select2_form_without_search" required>
-                                <option value="">Select</option>
+                                <option value="" >Select Frequency</option>
                                 <option value="monthly"    @if ($data && $data->frequency=='monthly') selected @endif  >Monthly</option>
                                 <option value="quarterly"  @if ($data && $data->frequency=='quarterly') selected @endif    >Quarterly</option>
                                 <option value="halfYearly" @if ($data && $data->frequency=='halfYearly') selected @endif    >Half Yearly</option>
                                 <option value="yearly"     @if ($data && $data->frequency=='yearly') selected @endif    >Yearly</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
+                            <label class="" for="selected_head">Assignment Period</label>
+                        </div>
+                        <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
 
+                            <select name="assignment_period_start" id="assignment_period_start"
+                                class="form-control form-select">
+                                <option value="" selected disabled>Select Assignment Period</option>
                             </select>
                         </div>
                     </div>
@@ -106,11 +118,16 @@
 
                                 <div class="d-flex">
                                     <div class="form-check me-2">
-                                        <input class="form-check-input" type="radio" name="radiobtn_show_ratingcard" id="radiobtn_show_ratingcard_true" value="true"/>
+                                        <input class="form-check-input" type="radio" name="radiobtn_show_ratingcard" id="radiobtn_show_ratingcard_true" value="true"
+                                        @if ($data && $data->can_show_ratingcard_in_reviewpage=='true') checked @endif
+                                        />
                                         <label class="form-check-label" for="radiobtn_show_ratingcard_true">Yes</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="radiobtn_show_ratingcard" id="radiobtn_show_ratingcard_false" value="false" />
+                                        <input class="form-check-input" type="radio" name="radiobtn_show_ratingcard" id="radiobtn_show_ratingcard_false" value="false"
+                                        @if ($data && $data->can_show_ratingcard_in_reviewpage=='false') checked @endif
+
+                                        />
                                         <label class="form-check-label" for="radiobtn_show_ratingcard_false">No</label>
                                     </div>
                                 </div>
@@ -125,12 +142,42 @@
 
                                 <div class="d-flex">
                                     <div class="form-check me-2">
-                                        <input class="form-check-input" type="radio" name="radiobtn_show_overallscorecard" id="radiobtn_show_overallscorecard_true" value="true"/>
-                                        <label class="form-check-label" for="radiobtn_show_overallscorecard_true">Yes</label>
+                                        <input class="form-check-input" type="radio" name="radiobtn_show_overallscorecard_in_reviewpage" id="radiobtn_show_overallscorecard_in_reviewpage_true" value="true"
+                                        @if ($data && $data->can_show_overallscorecard_in_reviewpage=='true') checked @endif
+
+                                        />
+                                        <label class="form-check-label" for="radiobtn_show_overallscorecard_in_reviewpage_true">Yes</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="radiobtn_show_overallscorecard" id="radiobtn_show_overallscorecard_false" value="false" />
-                                        <label class="form-check-label" for="radiobtn_show_overallscorecard_false">No</label>
+                                        <input class="form-check-input" type="radio" name="radiobtn_show_overallscorecard_in_reviewpage" id="radiobtn_show_overallscorecard_in_reviewpage_false" value="false"
+                                        @if ($data && $data->can_show_overallscorecard_in_reviewpage=='false') checked @endif
+
+                                        />
+                                        <label class="form-check-label" for="radiobtn_show_overallscorecard_in_reviewpage_false">No</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-1">
+                            <div class="col-md-5 col-sm-5 col-xs-5 col-lg-5 mt-2">
+                                <label for="">Show Overall Score card in Self-Appraisal Dashboard?</label>
+
+                            </div>
+                            <div class="col-md-7 col-sm-7 col-xs-7 col-lg-7 mt-2">
+
+                                <div class="d-flex">
+                                    <div class="form-check me-2">
+                                        <input class="form-check-input" type="radio" name="radiobtn_show_overallscorecard_in_selfappraisaldashboard" id="radiobtn_show_overallscorecard_in_selfappraisaldashboard_true" value="true"
+                                        @if ($data && $data->can_show_overallscorecard_in_selfappraisal_dashboard=='true') checked @endif
+                                        />
+                                        <label class="form-check-label" for="radiobtn_show_overallscorecard_in_selfappraisaldashboard_true">Yes</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="radiobtn_show_overallscorecard_in_selfappraisaldashboard" id="radiobtn_show_overallscorecard_in_selfappraisaldashboard_false" value="false"
+                                        @if ($data && $data->can_show_overallscorecard_in_selfappraisal_dashboard=='false') checked @endif
+
+                                        />
+                                        <label class="form-check-label" for="radiobtn_show_overallscorecard_in_selfappraisaldashboard_false">No</label>
                                     </div>
                                 </div>
                             </div>
@@ -448,13 +495,15 @@
         }
     </script>
     <script>
+
+        $(document).ready(function() {
+            //frequencyChange();
+
             $('#calendar_type').change(function() {
                 console.log($('#calendar_type').val());
                 if ($('#calendar_type').val() == 'financial_year') {
                     $('#year').val("April - "+<?php echo date('Y'); ?>+ " to March - "+<?= date('Y') + 1 ?> );
                     $('#hidden_year').val("April - March");
-
-
                 }
                 else
                 if ($('#calendar_type').val() == 'calendar_year') {
@@ -464,19 +513,79 @@
                 } else {
                     $('#year').val('');
                 }
-                // $('#hidden_calendar_year').val($("#year option:selected").text())
-                // if ($('#calendar_type').val() != '') {
-                //     var frequencyDataResult =
-                //         '<option value="monthly">Monthly</option><option value="quarterly">Quarterly</option><option value="halfYearly">Half Yearly</option><option value="yearly">Yearly</option>';
-                //     $('#frequency').html(frequencyDataResult);
-                // } else {
-                //     var frequencyDataResult =
-                //         '<option value="" selected disabled>Select frequency</option>';
-                //     $('#frequency').html(frequencyDataResult);
-                //     $('#frequency').val('');
-                // }
+
+                $('#hidden_calendar_year').val($("#year option:selected").text())
+
+                if ($('#calendar_type').val() != '') {
+                    var frequencyDataResult =
+                        '<option value="monthly">Monthly</option><option value="quarterly">Quarterly</option><option value="halfYearly">Half Yearly</option><option value="yearly">Yearly</option>';
+                    $('#selected_frequency').html(frequencyDataResult);
+                } else {
+                    var frequencyDataResult =
+                        '<option value="" selected disabled>Select frequency</option>';
+                    $('#selected_frequency').html(frequencyDataResult);
+                    $('#selected_frequency').val('');
+                }
 
             });
+
+            $('#selected_frequency').change(function() {
+                frequencyChange();
+            });
+
+            function frequencyChange() {
+                var data = "";
+                var year = "<?= date('Y') ?>";
+                var nextyear = "<?= date('Y', strtotime('+1 year')) ?>";
+                if ($('#selected_frequency').val() == 'monthly') {
+
+                    if ($('#calendar_type').val() == 'financial_year') {
+                        data =
+                            "<option value='' selected disabled>Select frequency</option><option value='apr'>April - " +
+                            year +
+                            "</option><option value='may'>May - " + year + "</option><option value='june'>June - " +
+                            year + "</option><option value='july'>July - " + year +
+                            "</option><option value='aug'>August - " + year +
+                            "</option><option value='sept'>September - " + year +
+                            "</option><option value='oct'>October - " + year +
+                            "</option><option value='nov'>November - " + year +
+                            "</option><option value='dec'>December - " + year +
+                            "</option><option value='jan'>January - " + nextyear +
+                            "</option><option value='feb'>February - " + nextyear +
+                            "</option><option value='mar'>March - " + nextyear + "</option>";
+                    } else {
+                        data =
+                            "<option value='' selected disabled>Select frequency</option><option value='jan'>January - " +
+                            year +
+                            "</option><option value='feb'>February - " + year +
+                            "</option><option value='mar'>March - " + year +
+                            "</option><option value='apr'>April - " + year + "</option><option value='may'>May - " +
+                            year + "</option><option value='june'>June - " + year +
+                            "</option><option value='july'>July - " + year +
+                            "</option><option value='aug'>August - " + year +
+                            "</option><option value='sept'>September - " + year +
+                            "</option><option value='oct'>October - " + year +
+                            "</option><option value='nov'>November - " + year +
+                            "</option><option value='dec'>December - " + year + "</option>";
+                    }
+                } else if ($('#selected_frequency').val() == 'quarterly') {
+                    if ($('#calendar_type').val() == 'financial_year')
+                        data ="<option value='' selected disabled>Select Assignment Period</option><option value='q1'>Q1 " +year +"(Apr-Jun)</option><option value='q2'>Q2 " + year +"(July-Sept)</option><option value='q3'>Q3 " + year +"(Oct-Dec)</option><option value='q4'>Q4 " + nextyear + "(Jan-Mar)</option>";
+                    else
+                        data ="<option value='' selected disabled>Select Assignment Period</option><option value='q1'>Q1(Jan-Mar)</option><option value='q2'>Q2(Apr-June)</option><option value='q3'>Q3(July-Sept)</option><option value='q4'>Q4(Oct-Dec)</option>";
+                } else if ($('#selected_frequency').val() == 'halfYearly') {
+                    if ($('#calendar_type').val() == 'financial_year')
+                        data = "<option value='' selected disabled>Select Assignment Period</option><option value='h1'>H1(Apr " + year + " - Sept " + year + ")</option><option value='h2'>H2(Oct " + year + "- Mar " + nextyear + ")</option>";
+                    else
+                        data = "<option value=''>Select</option><option value='h1'>H1(Jan-June)</option><option value='h2'>H2(July-Dec)</option>";
+
+                } else {
+                    data = "<option value=''>Select</option><option value='yearly'>Yearly</option>";
+                }
+                $('#assignment_period_start').html(data);
+            }
+
+        });
 
 
     </script>
