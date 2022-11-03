@@ -1570,8 +1570,8 @@ class VmtPMSModuleController extends Controller
     protected function getPerformanceDashboardSummaryStats(){
 
         //Note : We need to show the Performance stats based on current frequency(month/quarter/half-yearly/yearly)
-        $current_pms_config_data = ConfigPms::find(1);
-
+        $current_pms_config_data = ConfigPms::first();
+        dd($current_pms_config_data);
        // dd($current_pms_config_data->assignment_period);
 
         //Get the current PMS config details
