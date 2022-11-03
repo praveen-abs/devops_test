@@ -49,6 +49,7 @@
                         </div>
 
                     </div>
+                    @if($canShowOverallScoreCard_ReviewPage == 'true')
                     <div class="col-md-12 col-sm-12 col-lg-5 col-xl-5 col-xxl-5   d-flex">
                         <div class="card mb-0 w-100 appraisal_rating border-0 boxshadow_lite4">
                             <div class="card-body">
@@ -159,6 +160,7 @@
                         </div>
 
                     </div>
+                    @endif
                 </div>
 
 
@@ -567,6 +569,8 @@
 
 
             <!-- Rating grid after submitted review by All Reviewers -->
+            @if($canShowRatingCard == 'true')
+
             @if ($isAllReviewersSubmittedOrNot && count($pmsRatingDetails) > 0)
                 <div class="row">
                     <div class="col-12">
@@ -624,7 +628,7 @@
                     </div>
                 </div>
             @endif
-
+            @endif
 
             <!-- Rejection Modal Ends -->
         </div>

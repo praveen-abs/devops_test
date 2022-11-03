@@ -6,6 +6,7 @@ use App\Models\VmtClientMaster;
 use App\Models\VmtEmployee;
 use App\Models\VmtBloodGroup;
 use App\Models\VmtLeaves;
+use App\Models\ConfigPms;
 
 function required()
 {
@@ -17,6 +18,10 @@ function fetchMasterConfigValue($config_name)
 {
     return VmtMasterConfig::where('config_name','=',$config_name)->get()->value('config_value');
 
+}
+
+function fetchPMSConfigValue($config_name){
+    return ConfigPms::first()->value($config_name);
 }
 
 function isEmailExists($email)

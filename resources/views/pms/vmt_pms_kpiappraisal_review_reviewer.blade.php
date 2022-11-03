@@ -50,6 +50,8 @@
                         </div>
 
                     </div>
+                    @if($canShowOverallScoreCard_ReviewPage == 'true')
+
                     <div class="col-md-12 col-sm-12 col-lg-5 col-xl-5 col-xxl-5   d-flex">
                         <div class="card mb-0 w-100 appraisal_rating border-0 boxshadow_lite4">
                             <div class="card-body">
@@ -160,6 +162,7 @@
                         </div>
 
                     </div>
+                    @endif
                 </div>
 
                 {{-- <div class="row">
@@ -707,6 +710,8 @@
                 </div>
             </div>
 
+            @if($canShowRatingCard == 'true')
+
             @if ($isAllReviewersSubmittedOrNot && count($pmsRatingDetails) > 0)
 
                     <div class="col-12">
@@ -762,7 +767,7 @@
                     </div>
 
             @endif
-
+            @endif
 
             <!-- Modal -->
             <div class="modal fade flip" id="acceptPMS" tabindex="-1" aria-hidden="true">
