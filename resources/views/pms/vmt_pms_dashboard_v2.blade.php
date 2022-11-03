@@ -102,7 +102,7 @@
                                         class="col-sm-6  col-7 col-md-7 mt-3 col-xl-7 col-xxl-7 ps-0 col-lg-7 align-items-center flex-column d-flex">
                                         <p class="mb-1 text-center">Self Review</p>
                                         <p class="fw-bold text-center mt-1 f-18">
-                                            {{ $dashboardCountersData['selfReviewCount'] . '/' . $dashboardCountersData['totalEmployeesCount'] }}
+                                            {{ $dashboardCountersData['selfReviewCount'] . '/' . $dashboardCountersData['employeesGoalsSetCount'] }}
                                         </p>
 
                                     </div>
@@ -124,7 +124,7 @@
                                         class="col-sm-6  col-7 col-md-7 mt-3 col-xl-7 col-xxl-7 ps-0 col-lg-7 align-items-center flex-column d-flex">
                                         <p class="mb-1 text-center">Employees Assessed</p>
                                         <p class="fw-bold text-center mt-1 f-18">
-                                            {{ $dashboardCountersData['employeesAssessedCount'] . '/' . $dashboardCountersData['employeesGoalsSetCount'] }}
+                                            {{ $dashboardCountersData['employeesAssessedCount'] . '/' . $dashboardCountersData['selfReviewCount'] }}
                                         </p>
 
                                     </div>
@@ -146,7 +146,7 @@
                                         <p class="mb-1 text-center">Final Score Published</p>
 
                                         <p class="fw-bold text-center mt-1 f-18">
-                                            {{ $dashboardCountersData['finalScoreCount'] . '/' . $dashboardCountersData['employeesGoalsSetCount'] }}
+                                            {{ $dashboardCountersData['finalScoreCount'] . '/' . $dashboardCountersData['employeesAssessedCount'] }}
                                         </p>
 
                                     </div>

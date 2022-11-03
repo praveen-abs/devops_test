@@ -1570,32 +1570,66 @@ class VmtPMSModuleController extends Controller
     protected function getPerformanceDashboardSummaryStats(){
 
         //Note : We need to show the Performance stats based on current frequency(month/quarter/half-yearly/yearly)
+        $current_pms_config_data = ConfigPms::find(1);
+
+       // dd($current_pms_config_data->assignment_period);
+
+        //Get the current PMS config details
+        $calendar_type = $current_pms_config_data->calendar_type;
+        $year = "April - 2022 to March - 2023"; //Hardcoded for now
+        $assignment_period = 'q3'; //Need to add this as a new option in pmsconfig
+
 
         //Dashboard vars
+
+        //EMPLOYEE GOALS
+        $totalEmployeesCount = User::where('active',1)->where('is_ssa','0')->count();
+
+            //Get all the forms assigned for the current period
+            $assignedForms_currentReviewPeriod = \DB::table('vmt_pms_kpiform_assigned')
+                                    ->where('calendar_type', $calendar_type)
+                                    ->where('year', $year)
+                                    ->where('assignment_period', $assignment_period);
+
+            //Get their ids only
+            $assignedFormsIds_currentReviewPeriod = $assignedForms_currentReviewPeriod->pluck('id');
+
+        $employeesGoalsSetCount_currentReviewPeriod = $assignedForms_currentReviewPeriod->count();
+
+
+        ////SELF-REVIEW
+        $selfReviewCount_currentReviewPeriod =  \DB::table('vmt_pms_kpiform_reviews')
+                                ->whereIn('vmt_pms_kpiform_assigned_id', $assignedFormsIds_currentReviewPeriod)
+                                ->where('is_assignee_submitted', '1')
+                                ->count();
+
+            //dd($selfReviewCount_currentReviewPeriod);
+
+        ////EMPLOYEES ASSESSED
+
+        $employeesAssessedCount_currentReviewPeriod = \DB::table('vmt_pms_kpiform_reviews')
+                                ->whereIn('vmt_pms_kpiform_assigned_id', $assignedFormsIds_currentReviewPeriod)
+                                ->where('is_reviewer_submitted', 'Not Like', '%null%')
+                                ->count();
+
+
+        ////Final Score Published(When HR review is also done)
+
         $finalScoreCount  =  \DB::table('vmt_pms_kpiform_reviews')
-                                ->where('is_assignee_submitted', 1)
+                                ->whereIn('vmt_pms_kpiform_assigned_id', $assignedFormsIds_currentReviewPeriod)
                                 ->where('is_reviewer_submitted', 'Not Like', '%null%')
                                 ->count();
 
-        $totalEmployeesCount = User::where('active',1)->count();
-
-        $employeesGoalsSetCount = \DB::table('vmt_pms_kpiform_assigned')->count(); //0;
 
 
-        $employeesAssessedCount = \DB::table('vmt_pms_kpiform_reviews')
-                                ->where('is_reviewer_submitted', 'Not Like', '%null%')
-                                ->count();
 
-        $selfReviewCount =  \DB::table('vmt_pms_kpiform_reviews')
-                                ->where('is_assignee_submitted', 1)
-                                ->count();
 
         $totalReviewedCount = \DB::table('vmt_pms_kpiform_reviews')->count();
 
-        $dashboardCountersData['employeesGoalsSetCount'] = $employeesGoalsSetCount;
         $dashboardCountersData['totalEmployeesCount'] = $totalEmployeesCount;
-        $dashboardCountersData['employeesAssessedCount'] = $employeesAssessedCount;
-        $dashboardCountersData['selfReviewCount'] = $selfReviewCount;
+        $dashboardCountersData['employeesGoalsSetCount'] = $employeesGoalsSetCount_currentReviewPeriod;
+        $dashboardCountersData['selfReviewCount'] = $selfReviewCount_currentReviewPeriod;
+        $dashboardCountersData['employeesAssessedCount'] = $employeesAssessedCount_currentReviewPeriod;
         $dashboardCountersData['totalReviewedCount'] = $totalReviewedCount;
         $dashboardCountersData['finalScoreCount'] =  $finalScoreCount;
 
