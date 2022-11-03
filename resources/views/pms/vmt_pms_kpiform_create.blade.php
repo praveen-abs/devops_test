@@ -81,6 +81,7 @@
                                             $config->header) {{$config->header['source']}} @else Source @endif</th>
                                         <th class="sort" data-sort="status" data-name='kpiWeightage' data-filterable="false" data-visible="{{$show['kpiWeightage']}}">@if($config && $config->header)
                                             {{$config->header['kpiWeightage']}} @else KPI Weightage ( % ) @endif
+                                            <span id="percentage-header"></span>
                                         </th>
                                     </tr>
                                 </thead>
@@ -574,6 +575,16 @@ $(function () {
         } else {
             kpiWeightage = '<input type="hidden" name="kpiWeightage[]">';
         }
+
+        var totalKPIPercentage =  0;
+        $("textarea[name='kpiWeightage[]']")
+              .map(function(){
+               totalKPIPercentage  =  totalKPIPercentage + parseInt($(this).val());
+                return $(this).val();
+            }).get();
+        $('#percentage-header').html('&nbsp;&nbsp;( '+totalKPIPercentage+'% )');
+       
+
         $('.content-container').append('<tr class="addition-content cursor-pointer" id="content'+length+'">'+dimension+kpi+operational+measure+frequency+target+stretchTarget+source+kpiWeightage+'</tr>');
     });
 
