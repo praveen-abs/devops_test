@@ -4,6 +4,7 @@
     <link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
 
 
+    <link rel="stylesheet" href="{{ URL::asset('/assets/css/pages_profile.css') }}">
 
     <!--Animate CSS-->
     <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/chartist.min.css') }}">
@@ -235,11 +236,11 @@
                             <div class="col-md-12 col-sm-12 col-lg-3 col-xl-3 col-xxl-3 d-flex ">
                                 <div class="mb-0 card w-100 border-0 boxshadow_lite4">
                                     <div class="card-body  text-center">
-
                                         <div class="d-flex justify-content-center">
-                                            <div class="kpi_userImg">
-                                                @include('ui-profile-avatar', [
-                                                    'currentUserName' => auth()->user()->name,
+                                            <div class="profile-img d-flex">
+                                                <?php $currentUserDetails = App\Models\User::find(auth()->user()->id);?>
+                                                @include('ui-profile-avatar-lg', [
+                                                    'currentUser' => $currentUserDetails ,
                                                 ])
                                             </div>
                                         </div>
@@ -956,6 +957,8 @@
 
 
 @section('script')
+@yield('script-profile-avatar')
+
     <!-- Prem assets -->
     <!--Nice select-->
     <script src="{{ URL::asset('/assets/premassets/js/jquery.nice-select.min.js') }}"></script>
