@@ -9,9 +9,9 @@
         @endslot
     @endcomponent
 
-    <div class="pms-config-wrapper container-fluid">
 
-        <div id="msform">
+
+        <div id="msform" class="pms-config-wrapper">
             @if ($data && $data->id)
                 <form id="form-1" method="POST" action="{{ route('store_config_pms', $data->id) }}"
                     enctype="multipart/form-data">
@@ -20,7 +20,7 @@
                         enctype="multipart/form-data">
             @endif
             @csrf
-            <div class="card shadow ">
+            <div class="card shadow mb-0 ">
                 <div class="card-body justify-content-center align-items-center ">
                     <div class="header-card-text">
                         <h6>KPI Goals Settings</h6>
@@ -469,7 +469,7 @@
         </div>
     </div>
 
-    </div>
+
     </div>
 @endsection
 @section('script')

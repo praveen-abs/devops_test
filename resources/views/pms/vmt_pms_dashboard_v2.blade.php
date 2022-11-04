@@ -2,55 +2,10 @@
 @section('css')
     <link href="{{ URL::asset('assets/css/assign_goals.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
-
-
     <link rel="stylesheet" href="{{ URL::asset('/assets/css/pages_profile.css') }}">
 
-    <!--Animate CSS-->
-    <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/chartist.min.css') }}">
-    <!--Map-->
-    <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/jquery-jvectormap-2.0.2.css') }}">
 
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
-    <!-- calendar -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
-
-    <link href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css' rel='stylesheet' type='text/css'>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.15/tailwind.min.css" rel="stylesheet" />
-    <style>
-        .output {
-            font: 1rem 'Fira Sans', sans-serif;
-        }
-
-        blockquote {
-            background: white;
-            border-radius: 5px;
-            margin: 0 !important;
-            height: 100px;
-            overflow-y: auto;
-        }
-
-        blockquote p {
-            padding: 15px;
-        }
-
-        [contenteditable='true'] {
-            caret-color: red;
-        }
-    </style>
-    <style type="text/css">
-.loader {
-    position: fixed;
-    left: 0px;
-    top: 0px;
-    width: 100%;
-    height: 100%;
-    z-index: 9999;
-    background: url('{{ URL::asset('assets/images/loader.gif') }}') 50% 50% no-repeat rgb(249, 249, 249);
-    opacity: 0.4;
-}
-    </style>
 @endsection
 
 
@@ -230,6 +185,8 @@
                 </div>
             </div> --}}
 
+
+
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
@@ -238,13 +195,14 @@
                                     <div class="card-body  text-center">
                                         <div class="d-flex justify-content-center">
                                             <div class="profile-img d-flex">
-                                                <?php $currentUserDetails = App\Models\User::find(auth()->user()->id);?>
+                                                <?php $currentUserDetails = App\Models\User::find(auth()->user()->id); ?>
                                                 @include('ui-profile-avatar-lg', [
-                                                    'currentUser' => $currentUserDetails ,
+                                                    'currentUser' => $currentUserDetails,
                                                 ])
                                             </div>
                                         </div>
-                                        <?php //dd($assignedUserDetails); ?>
+                                        <?php //dd($assignedUserDetails);
+                                        ?>
                                         <div class="appraisal_userDet mt-3">
                                             <h6>{{ $assignedUserDetails->name }}</h6>
                                             <p class="f-14 mt-2  text-primary">
@@ -264,125 +222,126 @@
                                         <p class="mb-4 f-15 fw-bold text-primary">
                                             {{ $assignedUserDetails->department_id ?? '-' }}</p>
                                         <p class="f-14 text-ash  ">Reporting Manager</p>
-                                        <p class="mb-4 f-15 fw-bold text-primary ">{{ $assignedUserDetails->l1_manager_code ?? '-' }}</p>
+                                        <p class="mb-4 f-15 fw-bold text-primary ">
+                                            {{ $assignedUserDetails->l1_manager_code ?? '-' }}</p>
                                     </div>
                                 </div>
 
                             </div>
-                            @if($canShowOverallScoreCard_SelfAppraisal_Dashboard == 'true')
-                            <div class="col-md-12 col-sm-12 col-lg-5 col-xl-5 col-xxl-5   d-flex">
-                                <div class="card mb-0 w-100 appraisal_rating border-0 boxshadow_lite4">
-                                    <div class="card-body">
-                                        <p class="mb-2 fw-bold f-14 text-primary">Ratings</p>
-                                        <div class="mb-3">
-                                            <p class="f-14 text-ash mt-2 ">Overall Annual Score</p>
-                                            <div class="row">
-                                                <div class="col-10 mt-2">
-                                                    <div class="progress">
-                                                        <div class="progress-bar bg-success" role="progressbar"
-                                                            style="width:25%" aria-valuenow="25" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
+                            @if ($canShowOverallScoreCard_SelfAppraisal_Dashboard == 'true')
+                                <div class="col-md-12 col-sm-12 col-lg-5 col-xl-5 col-xxl-5   d-flex">
+                                    <div class="card mb-0 w-100 appraisal_rating border-0 boxshadow_lite4">
+                                        <div class="card-body">
+                                            <p class="mb-2 fw-bold f-14 text-primary">Ratings</p>
+                                            <div class="mb-3">
+                                                <p class="f-14 text-ash mt-2 ">Overall Annual Score</p>
+                                                <div class="row">
+                                                    <div class="col-10 mt-2">
+                                                        <div class="progress">
+                                                            <div class="progress-bar bg-success" role="progressbar"
+                                                                style="width:25%" aria-valuenow="25" aria-valuemin="0"
+                                                                aria-valuemax="100"></div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-2">
-                                                    {{-- <span class="text-primary f-15 fw-bold">1/3</span> --}}
-                                                    <b class="f-15 text-primary">
-                                                        @if (!empty($isAllReviewersSubmittedOrNot))
-                                                            @if ($ratingDetail)
-                                                                {{ $ratingDetail['rating'] }}
+                                                    <div class="col-2">
+                                                        {{-- <span class="text-primary f-15 fw-bold">1/3</span> --}}
+                                                        <b class="f-15 text-primary">
+                                                            @if (!empty($isAllReviewersSubmittedOrNot))
+                                                                @if ($ratingDetail)
+                                                                    {{ $ratingDetail['rating'] }}
+                                                                @else
+                                                                    -
+                                                                @endif
                                                             @else
                                                                 -
                                                             @endif
-                                                        @else
-                                                            -
-                                                        @endif
-                                                    </b>
+                                                        </b>
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                        </div>
-                                        <div class="mb-3">
-                                            <p class="f-14 text-ash mt-2 ">Corresponding ANNUAL PERFORMANCE Rating</p>
-                                            <div class="row">
-                                                {{-- <div class="col-10 mt-2">
+                                            </div>
+                                            <div class="mb-3">
+                                                <p class="f-14 text-ash mt-2 ">Corresponding ANNUAL PERFORMANCE Rating</p>
+                                                <div class="row">
+                                                    {{-- <div class="col-10 mt-2">
                                                 <div class="progress">
                                                     <div class="progress-bar bg-info" role="progressbar" style="width: 50%"
                                                         aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                             </div> --}}
-                                                <div class="col-12">
-                                                    <b class="f-15 text-primary">
-                                                        @if (!empty($isAllReviewersSubmittedOrNot))
-                                                            @if ($ratingDetail)
-                                                                {{ $ratingDetail['performance'] }}
+                                                    <div class="col-12">
+                                                        <b class="f-15 text-primary">
+                                                            @if (!empty($isAllReviewersSubmittedOrNot))
+                                                                @if ($ratingDetail)
+                                                                    {{ $ratingDetail['performance'] }}
+                                                                @else
+                                                                    -
+                                                                @endif
                                                             @else
                                                                 -
                                                             @endif
-                                                        @else
-                                                            -
-                                                        @endif
-                                                    </b>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <p class="f-14 text-ash mt-2 ">Ranking</p>
-                                            <div class="row">
-                                                <div class="col-10 mt-2">
-                                                    <div class="progress">
-                                                        <div class="progress-bar bg-warning" role="progressbar"
-                                                            style="width: 75%" aria-valuenow="75" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
+                                                        </b>
                                                     </div>
                                                 </div>
-                                                <div class="col-2">
-                                                    <b class="f-15 text-primary">
-                                                        @if (!empty($isAllReviewersSubmittedOrNot))
-                                                            @if ($ratingDetail)
-                                                                {{ $ratingDetail['ranking'] }}
+                                            </div>
+                                            <div class="mb-3">
+                                                <p class="f-14 text-ash mt-2 ">Ranking</p>
+                                                <div class="row">
+                                                    <div class="col-10 mt-2">
+                                                        <div class="progress">
+                                                            <div class="progress-bar bg-warning" role="progressbar"
+                                                                style="width: 75%" aria-valuenow="75" aria-valuemin="0"
+                                                                aria-valuemax="100"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <b class="f-15 text-primary">
+                                                            @if (!empty($isAllReviewersSubmittedOrNot))
+                                                                @if ($ratingDetail)
+                                                                    {{ $ratingDetail['ranking'] }}
+                                                                @else
+                                                                    -
+                                                                @endif
                                                             @else
                                                                 -
                                                             @endif
-                                                        @else
-                                                            -
-                                                        @endif
-                                                    </b>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-
-                                        <div class="mb-3">
-                                            <p class="f-14 text-ash mt-2 ">Review Period</p>
-                                            <div class="row">
-                                                <div class="col-10 mt-2">
-                                                    <div class="progress">
-                                                        <div class="progress-bar bg-danger" role="progressbar"
-                                                            style="width: 100%" aria-valuenow="100" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
+                                                        </b>
                                                     </div>
                                                 </div>
-                                                <div class="col-2">
-                                                    <b class="f-15 text-primary">
-                                                        @if (!empty($isAllReviewersSubmittedOrNot))
-                                                            @if ($ratingDetail)
-                                                                {{ $ratingDetail['action'] }}
+
+                                            </div>
+
+
+                                            <div class="mb-3">
+                                                <p class="f-14 text-ash mt-2 ">Review Period</p>
+                                                <div class="row">
+                                                    <div class="col-10 mt-2">
+                                                        <div class="progress">
+                                                            <div class="progress-bar bg-danger" role="progressbar"
+                                                                style="width: 100%" aria-valuenow="100" aria-valuemin="0"
+                                                                aria-valuemax="100"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <b class="f-15 text-primary">
+                                                            @if (!empty($isAllReviewersSubmittedOrNot))
+                                                                @if ($ratingDetail)
+                                                                    {{ $ratingDetail['action'] }}
+                                                                @else
+                                                                    -
+                                                                @endif
                                                             @else
                                                                 -
                                                             @endif
-                                                        @else
-                                                            -
-                                                        @endif
-                                                    </b>
+                                                        </b>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
+                                        </div>
                                     </div>
-                                </div>
 
-                            </div>
+                                </div>
                             @endif
                         </div>
 
@@ -392,6 +351,9 @@
 
 
             @endif
+
+
+
 
             @if (count($pmsKpiAssigneeDetails) == 0)
                 <div class="mt-2 " id="initial-section">
@@ -410,158 +372,336 @@
                     </div>
                 </div>
             @else
-                <div class="card mb-0" style="position:relative;">
-                    <div class="card-body">
-                        <button id="add-goals" class="btn btn-orange add-goals"><i
-                                class="text-white fa fa-plus mx-1"></i>Add
-                            Goals</button>
-                        <div class="table-responsive">
-                            <table id='empTable' class=' table Fem table-borderd w-100  mb-0 ' style="width:revert !important">
-                                <thead class="table-light">
-                                    <tr>
-                                        <td class="d-none">Serial No</td>
-                                        <th scope="col">Employee Name</th>
-                                        <th scope="col">Employee ID</th>
+                <div class="card mb-2">
+                    <div class="card-body py-1 ">
+                        <ul class="nav nav-pills nav-tabs-dashed" role="tablist">
+                            <li class="nav-item text-muted me-3" role="presentation">
+                                <a class="nav-link active pb-2" data-bs-toggle="tab" href="#review_current"
+                                    aria-selected="true" role="tab">Current
+                                </a>
+                            </li>
+                            <li class="nav-item text-muted " role="presentation">
+                                <a class="nav-link pb-2" data-bs-toggle="tab" href="#review_completed"
+                                    aria-selected="false" tabindex="-1" role="tab">Completed
+                                </a>
+                            </li>
 
-                                        <th scope="col">Manager</th>
-                                        <!-- <th scope="col">Employee name</th> -->
+                        </ul>
+                    </div>
+                </div>
+                <div class="tab-content">
+                    <div id="review_current" class="tab-pane fade show active">
+                        <div class="card mb-0" style="position:relative;">
+                            <div class="card-body">
+                                <button id="add-goals" class="btn btn-orange add-goals"><i
+                                        class="text-white fa fa-plus mx-1"></i>Add
+                                    Goals</button>
+                                <div class="table-responsive">
+                                    <table id='empTable' class=' table Fem table-borderd w-100  mb-0 '
+                                        style="width:revert !important">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <td class="d-none">Serial No</td>
+                                                <th scope="col">Employee Name</th>
+                                                <th scope="col">Employee ID</th>
 
-                                        <th scope="col">Assignment Period</th>
-                                        <th scope="col">Employee Status</th>
-                                        <th scope="col">Manager Status</th>
-                                        <th scope="col">Score</th>
-                                        <th scope="col">Review </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- pms kpi assigned details foreach  -->
-                                    @foreach ($pmsKpiAssigneeDetails as $key1 => $pmsKpiAssignee)
-                                        <!-- gte kpi pms assignee details like currentLoggedUserRole, $decoded assigneeIds and reviewersIds -->
-                                        @php $pmsKpiAssigneeData = getPmsKpiAssigneeDetails($pmsKpiAssignee->id); @endphp
-                                        <!-- pms kpi assigned details assignees ids foreach  -->
-                                        @foreach ($pmsKpiAssigneeData['assigneesIds'] as $key => $assigneeId)
-                                            <!-- check if Role is Assignee then check Own assignee id otherwise will show all Assignees -->
-                                            @if (($pmsKpiAssigneeData['currentLoggedUserRole'] == 'assignee' && $assigneeId == Auth::id()) ||
-                                                $pmsKpiAssigneeData['currentLoggedUserRole'] != 'assignee')
-                                                <?php
-                                                // get KpiPmsReview Details
-                                                $kpiFormAssigneeReview = getReviewKpiFormDetails($pmsKpiAssignee->id, $assigneeId);
+                                                <th scope="col">Manager</th>
+                                                <!-- <th scope="col">Employee name</th> -->
 
-                                                ?>
-                                                <tr>
-                                                    <td class="d-none">{{ $key1 }}</td>
-                                                    <td class="" style="min-width: 185px;">
-                                                        {{-- <div class="td_content_center">{{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</div> --}}
-                                                        <div class="row page-header-user-dropdown align-items-center">
-                                                            <?php
-                                                            $employee_icon = getEmployeeAvatarOrShortName($assigneeId);
-                                                            //    dd($employee_icon);
-                                                            ?>
-                                                            @if (!empty($employee_icon))
-                                                                @if ($employee_icon['type'] == 'shortname')
+                                                <th scope="col">Assignment Period</th>
+                                                <th scope="col">Employee Status</th>
+                                                <th scope="col">Manager Status</th>
+                                                <th scope="col">Score</th>
+                                                <th scope="col">Review </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- pms kpi assigned details foreach  -->
+                                            @foreach ($pmsKpiAssigneeDetails as $key1 => $pmsKpiAssignee)
+                                                <!-- gte kpi pms assignee details like currentLoggedUserRole, $decoded assigneeIds and reviewersIds -->
+                                                @php $pmsKpiAssigneeData = getPmsKpiAssigneeDetails($pmsKpiAssignee->id); @endphp
+                                                <!-- pms kpi assigned details assignees ids foreach  -->
+                                                @foreach ($pmsKpiAssigneeData['assigneesIds'] as $key => $assigneeId)
+                                                    <!-- check if Role is Assignee then check Own assignee id otherwise will show all Assignees -->
+                                                    @if (($pmsKpiAssigneeData['currentLoggedUserRole'] == 'assignee' && $assigneeId == Auth::id()) ||
+                                                        $pmsKpiAssigneeData['currentLoggedUserRole'] != 'assignee')
+                                                        <?php
+                                                        // get KpiPmsReview Details
+                                                        $kpiFormAssigneeReview = getReviewKpiFormDetails($pmsKpiAssignee->id, $assigneeId);
+
+                                                        ?>
+                                                        <tr>
+                                                            <td class="d-none">{{ $key1 }}</td>
+                                                            <td class="" style="min-width: 185px;">
+                                                                {{-- <div class="td_content_center">{{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</div> --}}
+                                                                <div
+                                                                    class="row page-header-user-dropdown align-items-center">
+                                                                    <?php
+                                                                    $employee_icon = getEmployeeAvatarOrShortName($assigneeId);
+                                                                    //    dd($employee_icon);
+                                                                    ?>
+                                                                    @if (!empty($employee_icon))
+                                                                        @if ($employee_icon['type'] == 'shortname')
+                                                                            <div class="col-auto p-0">
+                                                                                <span
+                                                                                    class="rounded-circle user-profile  ml-2 "
+                                                                                    id="">
+                                                                                    <i id="topbar_username"
+                                                                                        class="align-middle ">{{ $employee_icon['data'] }}</i>
+                                                                                </span>
+                                                                            </div>
+                                                                        @elseif($employee_icon['type'] == 'avatar')
+                                                                            <div class="col-auto p-0">
+                                                                                <img class="rounded-circle header-profile-user"
+                                                                                    src=" {{ URL::asset('images/' . $employee_icon['data']) }}"
+                                                                                    alt="--">
+                                                                            </div>
+                                                                        @endif
+                                                                    @endif
                                                                     <div class="col-auto p-0">
-                                                                        <span class="rounded-circle user-profile  ml-2 "
-                                                                            id="">
-                                                                            <i id="topbar_username"
-                                                                                class="align-middle ">{{ $employee_icon['data'] }}</i>
-                                                                        </span>
-                                                                    </div>
-                                                                @elseif($employee_icon['type'] == 'avatar')
-                                                                    <div class="col-auto p-0">
-                                                                        <img class="rounded-circle header-profile-user"
-                                                                            src=" {{ URL::asset('images/' . $employee_icon['data']) }}"
-                                                                            alt="--">
-                                                                    </div>
-                                                                @endif
-                                                            @endif
-                                                            <div class="col-auto p-0">
-                                                                <span class="f-12 ml-3">
-                                                                    <span class="">
-                                                                        {{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</span>
-                                                                    {{-- <span
+                                                                        <span class="f-12 ml-3">
+                                                                            <span class="">
+                                                                                {{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</span>
+                                                                            {{-- <span
                                                                         class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text"></span> --}}
 
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="">
-                                                        <div class="td_content_center">
-                                                            {{ $pmsKpiAssignee->getUserDetails($assigneeId)['userEmpIds'] }}
-                                                        </div>
-                                                    </td>
-                                                    <td class="" style="min-width: 130px;">
-                                                        @foreach ($pmsKpiAssigneeData['reviewersIds'] as $keyCheck => $reviewer)
-                                                            @if ($pmsKpiAssigneeData['currentLoggedUserRole'] == 'reviewer' && $reviewer == Auth::id())
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="">
+                                                                <div class="td_content_center">
+                                                                    {{ $pmsKpiAssignee->getUserDetails($assigneeId)['userEmpIds'] }}
+                                                                </div>
+                                                            </td>
+                                                            <td class="" style="min-width: 130px;">
+                                                                @foreach ($pmsKpiAssigneeData['reviewersIds'] as $keyCheck => $reviewer)
+                                                                    @if ($pmsKpiAssigneeData['currentLoggedUserRole'] == 'reviewer' && $reviewer == Auth::id())
+                                                                        <div class=" col-auto td_content_center">
+                                                                            {{ getUserDetailsById($reviewer) }}</div>
+                                                                    @elseif($pmsKpiAssigneeData['currentLoggedUserRole'] != 'reviewer')
+                                                                        @if ($keyCheck != 0)
+                                                                            <br>
+                                                                        @endif
 
-                                                            <div class=" col-auto td_content_center">
-                                                                    {{ getUserDetailsById($reviewer) }}</div>
+                                                                        <div class="col-auto td_content_center">
+                                                                            {{ getUserDetailsById($reviewer) }}</div>
+                                                                    @endif
+                                                                @endforeach
 
-                                                            @elseif($pmsKpiAssigneeData['currentLoggedUserRole'] != 'reviewer')
-                                                                @if ($keyCheck != 0)
-                                                                    <br>
-                                                                @endif
+                                                            </td>
+                                                            <td class="">
+                                                                <div class="td_content_center">
+                                                                    {{ strtoupper($pmsKpiAssignee->assignment_period) }}
+                                                                </div>
+                                                            </td>
+                                                            <td class="">
+                                                                <div class="td_content_center">
+                                                                    @if (!empty($kpiFormAssigneeReview) && $kpiFormAssigneeReview->is_assignee_accepted == '0')
+                                                                        Rejected
+                                                                    @else
+                                                                        @if (!empty($kpiFormAssigneeReview) && $kpiFormAssigneeReview->is_assignee_submitted == '1')
+                                                                            Submitted
+                                                                        @else
+                                                                            Not yet submitted
+                                                                        @endif
+                                                                    @endif
+                                                                </div>
+                                                            </td>
+                                                            <td class="">
 
-                                                                <div class="col-auto td_content_center">
-                                                                    {{ getUserDetailsById($reviewer) }}</div>
+                                                                <div class="td_content_center">
+                                                                    <?php echo checkCurrentLoggedUserReviewerOrNot($pmsKpiAssigneeData['reviewersIds'], $pmsKpiAssigneeData['currentLoggedUserRole'], $kpiFormAssigneeReview); ?>
+                                                                </div>
+                                                            </td>
+                                                            <td class="">
+                                                                <div class="td_content_center">
+                                                                    <?php echo calculateReviewRatings($pmsKpiAssignee->id, $assigneeId)['score']; ?>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <?php
+                                                                $checkViewReviewText = checkViewReviewText($pmsKpiAssigneeData['currentLoggedUserRole'], $kpiFormAssigneeReview);
+                                                                ?>
+                                                                <div class="td_content_center">
+                                                                    <a target="_self"
+                                                                        @if ($checkViewReviewText == 'Edit') href="{{ route('republishForm', $pmsKpiAssignee->id) }}" @else href="{{ url('pms-showReviewPage?assignedFormid=' . $pmsKpiAssignee->id . '&assigneeId=' . $assigneeId) }}" @endif><button
+                                                                            class="btn btn-orange py-0 px-2 "
+                                                                            style="min-width: 95px;"> <span
+                                                                                class="mr-10 icon"></span>
+                                                                            <?php
+                                                                            echo $checkViewReviewText;
+                                                                            ?>
+                                                                        </button></a>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    @endif
+                                                @endforeach
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="review_completed" class="tab-pane fade ">
+                        <div class="card mb-0" style="position:relative;">
+                            <div class="card-body">
+                                <button id="add-goals" class="btn btn-orange add-goals"><i
+                                        class="text-white fa fa-plus mx-1"></i>Add
+                                    Goals</button>
+                                <div class="table-responsive">
+                                    <table id='reviewCompleted_table' class=' table Fem table-borderd w-100  mb-0 '
+                                        style="width:revert !important">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <td class="d-none">Serial No</td>
+                                                <th scope="col">Employee Name</th>
+                                                <th scope="col">Employee ID</th>
 
-                                                            @endif
-                                                        @endforeach
+                                                <th scope="col">Manager</th>
+                                                <!-- <th scope="col">Employee name</th> -->
 
-                                                    </td>
-                                                    <td class="">
-                                                        <div class="td_content_center">
-                                                            {{ strtoupper($pmsKpiAssignee->assignment_period) }}</div>
-                                                    </td>
-                                                    <td class="">
-                                                        <div class="td_content_center">
-                                                            @if (!empty($kpiFormAssigneeReview) && $kpiFormAssigneeReview->is_assignee_accepted == '0')
-                                                                Rejected
-                                                            @else
-                                                                @if (!empty($kpiFormAssigneeReview) && $kpiFormAssigneeReview->is_assignee_submitted == '1')
-                                                                    Submitted
-                                                                @else
-                                                                    Not yet submitted
-                                                                @endif
-                                                            @endif
-                                                        </div>
-                                                    </td>
-                                                    <td class="">
-
-                                                        <div class="td_content_center">
-                                                            <?php echo checkCurrentLoggedUserReviewerOrNot($pmsKpiAssigneeData['reviewersIds'], $pmsKpiAssigneeData['currentLoggedUserRole'], $kpiFormAssigneeReview); ?>
-                                                        </div>
-                                                    </td>
-                                                    <td class="">
-                                                        <div class="td_content_center">
-                                                            <?php echo calculateReviewRatings($pmsKpiAssignee->id, $assigneeId)['score']; ?>
-                                                        </div>
-                                                    </td>
-                                                    <td>
+                                                <th scope="col">Assignment Period</th>
+                                                <th scope="col">Employee Status</th>
+                                                <th scope="col">Manager Status</th>
+                                                <th scope="col">Score</th>
+                                                <th scope="col">Review </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- pms kpi assigned details foreach  -->
+                                            @foreach ($pmsKpiAssigneeDetails as $key1 => $pmsKpiAssignee)
+                                                <!-- gte kpi pms assignee details like currentLoggedUserRole, $decoded assigneeIds and reviewersIds -->
+                                                @php $pmsKpiAssigneeData = getPmsKpiAssigneeDetails($pmsKpiAssignee->id); @endphp
+                                                <!-- pms kpi assigned details assignees ids foreach  -->
+                                                @foreach ($pmsKpiAssigneeData['assigneesIds'] as $key => $assigneeId)
+                                                    <!-- check if Role is Assignee then check Own assignee id otherwise will show all Assignees -->
+                                                    @if (($pmsKpiAssigneeData['currentLoggedUserRole'] == 'assignee' && $assigneeId == Auth::id()) ||
+                                                        $pmsKpiAssigneeData['currentLoggedUserRole'] != 'assignee')
                                                         <?php
-                                                        $checkViewReviewText = checkViewReviewText($pmsKpiAssigneeData['currentLoggedUserRole'], $kpiFormAssigneeReview);
+                                                        // get KpiPmsReview Details
+                                                        $kpiFormAssigneeReview = getReviewKpiFormDetails($pmsKpiAssignee->id, $assigneeId);
+
                                                         ?>
-                                                        <div class="td_content_center">
-                                                            <a target="_self"
-                                                                @if ($checkViewReviewText == 'Edit') href="{{ route('republishForm', $pmsKpiAssignee->id) }}" @else href="{{ url('pms-showReviewPage?assignedFormid=' . $pmsKpiAssignee->id . '&assigneeId=' . $assigneeId) }}" @endif><button
-                                                                    class="btn btn-orange py-0 px-2 " style="min-width: 95px;"> <span
-                                                                        class="mr-10 icon"></span>
+                                                        <tr>
+                                                            <td class="d-none">{{ $key1 }}</td>
+                                                            <td class="" style="min-width: 185px;">
+                                                                {{-- <div class="td_content_center">{{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</div> --}}
+                                                                <div
+                                                                    class="row page-header-user-dropdown align-items-center">
                                                                     <?php
-                                                                    echo $checkViewReviewText;
+                                                                    $employee_icon = getEmployeeAvatarOrShortName($assigneeId);
+                                                                    //    dd($employee_icon);
                                                                     ?>
-                                                                </button></a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            @endif
-                                        @endforeach
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                                                    @if (!empty($employee_icon))
+                                                                        @if ($employee_icon['type'] == 'shortname')
+                                                                            <div class="col-auto p-0">
+                                                                                <span
+                                                                                    class="rounded-circle user-profile  ml-2 "
+                                                                                    id="">
+                                                                                    <i id="topbar_username"
+                                                                                        class="align-middle ">{{ $employee_icon['data'] }}</i>
+                                                                                </span>
+                                                                            </div>
+                                                                        @elseif($employee_icon['type'] == 'avatar')
+                                                                            <div class="col-auto p-0">
+                                                                                <img class="rounded-circle header-profile-user"
+                                                                                    src=" {{ URL::asset('images/' . $employee_icon['data']) }}"
+                                                                                    alt="--">
+                                                                            </div>
+                                                                        @endif
+                                                                    @endif
+                                                                    <div class="col-auto p-0">
+                                                                        <span class="f-12 ml-3">
+                                                                            <span class="">
+                                                                                {{ $pmsKpiAssignee->getUserDetails($assigneeId)['userNames'] }}</span>
+                                                                            {{-- <span
+                                                                        class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text"></span> --}}
+
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="">
+                                                                <div class="td_content_center">
+                                                                    {{ $pmsKpiAssignee->getUserDetails($assigneeId)['userEmpIds'] }}
+                                                                </div>
+                                                            </td>
+                                                            <td class="" style="min-width: 130px;">
+                                                                @foreach ($pmsKpiAssigneeData['reviewersIds'] as $keyCheck => $reviewer)
+                                                                    @if ($pmsKpiAssigneeData['currentLoggedUserRole'] == 'reviewer' && $reviewer == Auth::id())
+                                                                        <div class=" col-auto td_content_center">
+                                                                            {{ getUserDetailsById($reviewer) }}</div>
+                                                                    @elseif($pmsKpiAssigneeData['currentLoggedUserRole'] != 'reviewer')
+                                                                        @if ($keyCheck != 0)
+                                                                            <br>
+                                                                        @endif
+
+                                                                        <div class="col-auto td_content_center">
+                                                                            {{ getUserDetailsById($reviewer) }}</div>
+                                                                    @endif
+                                                                @endforeach
+
+                                                            </td>
+                                                            <td class="">
+                                                                <div class="td_content_center">
+                                                                    {{ strtoupper($pmsKpiAssignee->assignment_period) }}
+                                                                </div>
+                                                            </td>
+                                                            <td class="">
+                                                                <div class="td_content_center">
+
+                                                                        @if (!empty($kpiFormAssigneeReview) && $kpiFormAssigneeReview->is_assignee_submitted == '1')
+                                                                            Submitted
+                                                                        @else
+                                                                            Not yet submitted
+                                                                        @endif
+
+                                                                </div>
+                                                            </td>
+                                                            <td class="">
+
+                                                                <div class="td_content_center">
+                                                                    <?php echo checkCurrentLoggedUserReviewerOrNot($pmsKpiAssigneeData['reviewersIds'], $pmsKpiAssigneeData['currentLoggedUserRole'], $kpiFormAssigneeReview); ?>
+                                                                </div>
+                                                            </td>
+                                                            <td class="">
+                                                                <div class="td_content_center">
+                                                                    <?php echo calculateReviewRatings($pmsKpiAssignee->id, $assigneeId)['score']; ?>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <?php
+                                                                $checkViewReviewText = checkViewReviewText($pmsKpiAssigneeData['currentLoggedUserRole'], $kpiFormAssigneeReview);
+                                                                ?>
+                                                                <div class="td_content_center">
+                                                                    <a target="_self"
+                                                                        @if ($checkViewReviewText == 'Edit') href="{{ route('republishForm', $pmsKpiAssignee->id) }}" @else href="{{ url('pms-showReviewPage?assignedFormid=' . $pmsKpiAssignee->id . '&assigneeId=' . $assigneeId) }}" @endif><button
+                                                                            class="btn btn-orange py-0 px-2 "
+                                                                            style="min-width: 95px;"> <span
+                                                                                class="mr-10 icon"></span>
+                                                                            <?php
+                                                                            echo $checkViewReviewText;
+                                                                            ?>
+                                                                        </button></a>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    @endif
+                                                @endforeach
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             @endif
+
+
         </div>
     </div>
 
@@ -610,8 +750,10 @@
 
                                         <select name="year" id="year" disabled class="form-select form-control">
                                             <option value="" selected disabled>Select year</option>
-                                            <option value="Jan-Dec">January - <?php echo date('Y'); ?> to December - <?= date('Y') ?> </option>
-                                            <option value="Apr-Mar">April - <?php echo date('Y'); ?> to March - <?= date('Y') + 1 ?></option>
+                                            <option value="Jan-Dec">January - <?php echo date('Y'); ?> to December -
+                                                <?= date('Y') ?> </option>
+                                            <option value="Apr-Mar">April - <?php echo date('Y'); ?> to March -
+                                                <?= date('Y') + 1 ?></option>
                                         </select>
 
                                     </div>
@@ -875,7 +1017,8 @@
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
                     <h5 class="modal-title mb-1 text-primary" style="border-bottom:5px solid #d0d4e2;">
                         Edit Employee</h5>
-                    <button type="button" id="closebtn_editEmployees" class="close outline-none bg-transparent border-0 h3 " data-bs-dismiss="modal"
+                    <button type="button" id="closebtn_editEmployees"
+                        class="close outline-none bg-transparent border-0 h3 " data-bs-dismiss="modal"
                         aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -957,21 +1100,14 @@
 
 
 @section('script')
-@yield('script-profile-avatar')
+    @yield('script-profile-avatar')
 
-    <!-- Prem assets -->
-    <!--Nice select-->
-    <script src="{{ URL::asset('/assets/premassets/js/jquery.nice-select.min.js') }}"></script>
 
-    <!--Custom Js Script-->
-    <script src="{{ URL::asset('/assets/premassets/js/custom.js') }}"></script>
-    <script src="{{ URL::asset('/assets/premassets/js/dashboard.js') }}"></script>
+
+
     <script src="{{ URL::asset('/assets/premassets/js/footable.min.js') }}"></script>
     <script src="{{ URL::asset('/assets/premassets/css/footable.bootstrap.min.css') }}"></script>
 
-
-    <!--Sweet alert JS-->
-    <script src="{{ URL::asset('/assets/premassets/js/sweetalert.js') }}"></script>
 
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 
@@ -999,7 +1135,7 @@
             var username =
                 '{{ auth()->user()->name ??
                     '
-                                                                                ' }}';
+                                                                                                                                                                                                                ' }}';
             const splitArray = username.split(" ");
             var finalname = "empty111";
 
@@ -1105,7 +1241,7 @@
 
         //Called when EDIT EMPLOYEES modal's close button is pressed instead of SAVE button.
         //This will update the profile pics in Add Goals modal
-        $('#closebtn_editEmployees').click(function(){
+        $('#closebtn_editEmployees').click(function() {
             var selectedEmployeesId = $('.select-employee-dropdown').val();
             changeAssigneeProfilePicOnSelection(selectedEmployeesId);
         });
@@ -1146,7 +1282,7 @@
                     var url = '{{ route('showKPICreateForm', ':year') }}';
                     url = url.replace(':year', YearText);
                     // alert(url);
-                    window.open(url,"_self");
+                    window.open(url, "_self");
                     return false;
                 } else {
                     alert("Please enter Assignment Period and Year ");
@@ -1259,7 +1395,8 @@
             canUpdateReviewer - Updates the Reviewer name based on given employees.
 
         */
-        function isKPIAlreadyAssignedForGivenAssignmentPeriod(t_selectedEmployeeId, assignmentPeriod, year,canUpdateReviewer) {
+        function isKPIAlreadyAssignedForGivenAssignmentPeriod(t_selectedEmployeeId, assignmentPeriod, year,
+            canUpdateReviewer) {
 
             $.ajax({
                 url: "{{ route('isKPIAlreadyAssignedForGivenAssignmentPeriod') }}",
@@ -1286,11 +1423,13 @@
                             });
 
                             $('#edit-employee-error-message').append("</ul>");
-                            $('#edit-employee-error-message').append("<b>Please remove these employees before proceeding.</b>");
+                            $('#edit-employee-error-message').append(
+                                "<b>Please remove these employees before proceeding.</b>");
 
-                        }
-                        else
-                        if (data.status == false || data.status =='error') // if no KPIs already assigned to the selected Emps for the given assignment period, then no issues.
+                        } else
+                        if (data.status == false || data.status ==
+                            'error'
+                        ) // if no KPIs already assigned to the selected Emps for the given assignment period, then no issues.
                         {
                             console.log("No KPIs assigned to selected users");
                             $('#edit-employee-error-message').append('');
@@ -1388,25 +1527,9 @@
             });
 
             $('#empTable').DataTable({
-                //   'processing': true,
-                //   'serverSide': true,
-                //   'serverMethod': 'post',
-                //   'ajax': {
-                //       'url':'ajaxfile.php'
-                //   },
-                //   'columns': [
-                //      { data: 'emp_name' },
-                //      { data: 'email' },
-                //      { data: 'gender' },
-                //      { data: 'salary' },
-                //      { data: 'city' },
-                //   ]
 
-
-
-
-                // scrollCollapse: true,
-
+            });
+            $('#reviewCompleted_table').DataTable({
 
             });
 
@@ -1482,14 +1605,23 @@
                     }
                 } else if ($('#frequency').val() == 'quarterly') {
                     if ($('#calendar_type').val() == 'financial_year')
-                        data ="<option value='' selected disabled>Select Assignment Period</option><option value='q1'>Q1 " +year +"(Apr-Jun)</option><option value='q2'>Q2 " + year +"(July-Sept)</option><option value='q3'>Q3 " + year +"(Oct-Dec)</option><option value='q4'>Q4 " + nextyear + "(Jan-Mar)</option>";
+                        data =
+                        "<option value='' selected disabled>Select Assignment Period</option><option value='q1'>Q1 " +
+                        year + "(Apr-Jun)</option><option value='q2'>Q2 " + year +
+                        "(July-Sept)</option><option value='q3'>Q3 " + year +
+                        "(Oct-Dec)</option><option value='q4'>Q4 " + nextyear + "(Jan-Mar)</option>";
                     else
-                        data ="<option value='' selected disabled>Select Assignment Period</option><option value='q1'>Q1(Jan-Mar)</option><option value='q2'>Q2(Apr-June)</option><option value='q3'>Q3(July-Sept)</option><option value='q4'>Q4(Oct-Dec)</option>";
+                        data =
+                        "<option value='' selected disabled>Select Assignment Period</option><option value='q1'>Q1(Jan-Mar)</option><option value='q2'>Q2(Apr-June)</option><option value='q3'>Q3(July-Sept)</option><option value='q4'>Q4(Oct-Dec)</option>";
                 } else if ($('#frequency').val() == 'halfYearly') {
                     if ($('#calendar_type').val() == 'financial_year')
-                        data = "<option value='' selected disabled>Select Assignment Period</option><option value='h1'>H1(Apr " + year + " - Sept " + year + ")</option><option value='h2'>H2(Oct " + year + "- Mar " + nextyear + ")</option>";
+                        data =
+                        "<option value='' selected disabled>Select Assignment Period</option><option value='h1'>H1(Apr " +
+                        year + " - Sept " + year + ")</option><option value='h2'>H2(Oct " + year + "- Mar " +
+                        nextyear + ")</option>";
                     else
-                        data = "<option value=''>Select</option><option value='h1'>H1(Jan-June)</option><option value='h2'>H2(July-Dec)</option>";
+                        data =
+                        "<option value=''>Select</option><option value='h1'>H1(Jan-June)</option><option value='h2'>H2(July-Dec)</option>";
 
                 } else {
                     data = "<option value=''>Select</option><option value='yearly'>Yearly</option>";
@@ -1790,24 +1922,28 @@
 
                         //If KPI's already assigned to the selected emps, then show their names
                         if (data.status == true) {
-                            $('#edit-employee-error-message').append("<b><u>" + data.message + "</u></b><br/>");
+                            $('#edit-employee-error-message').append("<b><u>" + data.message +
+                                "</u></b><br/>");
                             $('#edit-employee-error-message').append("<ul>");
 
                             $.each(data.result, function(i, value) {
-                                $('#edit-employee-error-message').append("<li>" + value +"</li>");
+                                $('#edit-employee-error-message').append("<li>" + value +
+                                    "</li>");
                             });
 
                             $('#edit-employee-error-message').append("</ul>");
-                            $('#edit-employee-error-message').append("<b>Please remove these employees before proceeding.</b>");
+                            $('#edit-employee-error-message').append(
+                                "<b>Please remove these employees before proceeding.</b>");
 
                             //Open the Employee Edit Modal
                             $("#add-goals-modal").modal('hide');
                             $('#employeeSelectionModal').show();
                             $('#employeeSelectionModal').removeClass('fade');
 
-                        }
-                        else
-                        if (data.status == false || data.status == 'error' ) // if no KPIs already assigned to the selected Emps for the given assignment period, then no issues.
+                        } else
+                        if (data.status == false || data.status ==
+                            'error'
+                        ) // if no KPIs already assigned to the selected Emps for the given assignment period, then no issues.
                         {
                             $('#edit-employee-error-message').append('');
                             console.log("Publishing the form.......");
