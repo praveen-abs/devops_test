@@ -223,7 +223,7 @@
                                         </td>
                                         <td>
                                             @if($assignedGoals->is_employee_submitted)
-                                            {{$kpiRow->self_kpi_percentage}}
+                                            {{round($kpiRow->self_kpi_percentage)}}
                                             @else
                                             <div>
                                                 @if($assignedGoals->is_manager_approved &&
