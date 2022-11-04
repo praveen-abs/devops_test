@@ -92,56 +92,73 @@ function checkCurrentLoggedUserReviewerOrNot($reviewersIds,$currentLoggedUserRol
     }
 }
 
-// get Average rating of particular Review and First Reveiwer of that Kpi Form
-function calculateOverallReviewRatings($assigneeReviewTableId=null,$assigneeId)
+function calculateAppraisalReviewRating_BasedOnHR(){
+
+}
+
+/*
+
+
+
+*/
+function calculateOverallReviewRating($user_id){
+
+
+}
+
+// get Average rating of particular ReviewedForm and for review given by First Reveiwer for that Kpi Form
+function calculateReviewRatings($assigneeReviewTableId=null,$assigneeId)
 {
     try{
         $assigneeReviewDetails = VmtPMS_KPIFormAssignedModel::where('id',$assigneeReviewTableId)->first();
-        $finalRating = 0;
+        $rank = 0;
+
         if(!empty($assigneeReviewDetails)){
             $decodedReviewsId = explode(',',$assigneeReviewDetails->reviewer_id);
-            $assigneeReviewerReview = VmtPMS_KPIFormReviewsModel::where('assignee_id',$assigneeId)->where('vmt_pms_kpiform_assigned_id',$assigneeReviewTableId)->first();
-            if(!empty($assigneeReviewerReview)){
-                $firstReviewRating = [];
-                if(json_decode($assigneeReviewerReview->reviewer_kpi_percentage,true)!='' && isset(json_decode($assigneeReviewerReview->reviewer_kpi_percentage,true)[$decodedReviewsId[0]])){
-                    $firstReviewRating = json_decode($assigneeReviewerReview->reviewer_kpi_percentage,true)[$decodedReviewsId[0]];
-                }
 
+            $kpi_review_record = VmtPMS_KPIFormReviewsModel::where('assignee_id',$assigneeId)->where('vmt_pms_kpiform_assigned_id',$assigneeReviewTableId)->first();
+
+            if(!empty($kpi_review_record))
+            {
+                $firstReviewerRating = [];
+
+                if(json_decode($kpi_review_record->reviewer_kpi_percentage,true)!='' &&  isset(json_decode($kpi_review_record->reviewer_kpi_percentage,true)[$decodedReviewsId[0]]))
+                {
+                    //Get the 'reviewer_kpi_percentage' for the 1st reviewer as Associative array
+                    $firstReviewerRating = json_decode($kpi_review_record->reviewer_kpi_percentage,true)[$decodedReviewsId[0]];
+                }
                 // calculate Rating Based on Table Dynamic Data
-                if (count($firstReviewRating) > 0) {
-                    $ratingCheck = array_sum($firstReviewRating)/count($firstReviewRating);
+                if (count($firstReviewerRating) > 0) {
+                    $totalRatingScore = array_sum($firstReviewerRating);
 
                     $pmsConfigRatingDetails = VmtPMSRating::orderBy('sort_order','DESC')->get();
+
+                    /* Use this line to test rating    */
+                    //dd($totalRatingScore);
                     if(count($pmsConfigRatingDetails) > 0){
                         foreach($pmsConfigRatingDetails as $ratings){
                             $rangeCheck = explode('-',$ratings->score_range);
-                            if($ratingCheck >= $rangeCheck[0] && $ratingCheck <= $rangeCheck[1]){
-                                $finalRating = $ratings->ranking;
-                            }elseif($ratingCheck >= 100){
+
+                            if($totalRatingScore >= $rangeCheck[0] && $totalRatingScore <= $rangeCheck[1]){
+                                $rank = $ratings->ranking;
+                            }elseif($totalRatingScore >= 100){
                                 if($ratings->score_range == '90 - 100'){
-                                    $finalRating = $ratings->ranking;
+                                    $rank = $ratings->ranking;
                                 }
                             }
                         }
                     }
-
-                    // if ($ratingCheck < 60) {
-                    //     $finalRating = 1;
-                    // } elseif ($ratingCheck >= 60 && $ratingCheck < 70) {
-                    //     $finalRating = 2;
-                    // } elseif ($ratingCheck >= 70 && $ratingCheck < 80) {
-                    //     $finalRating = 3;
-                    // } elseif ($ratingCheck >= 80 && $ratingCheck < 90) {
-                    //     $finalRating = 4;
-                    // } elseif ($ratingCheck >= 90) {
-                    //     $finalRating = 5;
-                    // } else{
-                    //     $finalRating = 0;
-                    // }
                 }
             }
         }
-        return $finalRating;
+
+       // return $finalRating;
+
+        return $response = [
+            'rank' => $rank,
+            'score' => $totalRatingScore,
+        ];
+
     }catch(Exception $e){
         Log::info('calculation average rating helper error: '.$e->getMessage());
         return 0;

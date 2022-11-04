@@ -429,7 +429,7 @@
                                         <th scope="col">Assignment Period</th>
                                         <th scope="col">Employee Status</th>
                                         <th scope="col">Manager Status</th>
-                                        <th scope="col">Average Rating</th>
+                                        <th scope="col">Score</th>
                                         <th scope="col">Review </th>
                                     </tr>
                                 </thead>
@@ -534,7 +534,7 @@
                                                     </td>
                                                     <td class="">
                                                         <div class="td_content_center">
-                                                            <?php echo calculateOverallReviewRatings($pmsKpiAssignee->id, $assigneeId); ?>
+                                                            <?php echo calculateReviewRatings($pmsKpiAssignee->id, $assigneeId)['score']."%"; ?>
                                                         </div>
                                                     </td>
                                                     <td>

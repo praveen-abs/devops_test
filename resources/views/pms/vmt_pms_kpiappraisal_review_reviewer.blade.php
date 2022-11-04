@@ -573,7 +573,7 @@
                                                         <td>
                                                             <div>
                                                                 @if (isset($assigneeKPIPerc) && isset($assigneeKPIPerc[$kpiRow->id]))
-                                                                    {{ round($assigneeKPIPerc[$kpiRow->id]) }}
+                                                                    {{ round($assigneeKPIPerc[$kpiRow->id]) }}%
                                                                 @endif
                                                             </div>
                                                         </td>
@@ -593,6 +593,7 @@
                                                     //dd($isAllReviewersSubmittedOrNot);
                                                     ?>
                                                     @foreach ($reviewersId as $reviewersReview)
+                                                        {{-- When HR/Admin views --}}
                                                         @if($isAllReviewersSubmittedOrNot)
                                                             <td>
                                                                 <div>
@@ -604,7 +605,7 @@
                                                             <td>
                                                                 <div>
                                                                     @if (isset($decodedKpiReviewPerc[$reviewersReview]))
-                                                                        {{ $decodedKpiReviewPerc[$reviewersReview][$kpiRow->id] }}
+                                                                        {{ $decodedKpiReviewPerc[$reviewersReview][$kpiRow->id] }}%
                                                                     @endif
                                                                 </div>
                                                             </td>
@@ -655,7 +656,7 @@
                                                                 @else
                                                                     <div>
                                                                         @if (isset($decodedKpiReviewPerc[$reviewersReview]))
-                                                                            {{ $decodedKpiReviewPerc[$reviewersReview][$kpiRow->id] }}
+                                                                            {{ $decodedKpiReviewPerc[$reviewersReview][$kpiRow->id] }}%
                                                                         @endif
                                                                     </div>
                                                                 @endif

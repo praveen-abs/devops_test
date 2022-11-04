@@ -470,7 +470,7 @@
                                                                 </div>
                                                             @else
                                                                 <div>
-                                                                    {{ round(json_decode($assignedGoals->assignee_kpi_percentage, true)[$kpiRow->id]) }}
+                                                                    {{ round(json_decode($assignedGoals->assignee_kpi_percentage, true)[$kpiRow->id]) }}%
                                                                 </div>
                                                             @endif
                                                         @endif
@@ -510,7 +510,7 @@
                                                             <td>
                                                                 <div>
                                                                     @if (isset($decodedKpiReviewerPerc[$reviewersReview]))
-                                                                        {{ $decodedKpiReviewerPerc[$reviewersReview][$kpiRow->id] }}
+                                                                        {{ $decodedKpiReviewerPerc[$reviewersReview][$kpiRow->id] }}%
                                                                     @endif
                                                                 </div>
                                                             </td>
