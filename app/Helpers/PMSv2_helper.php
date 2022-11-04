@@ -110,8 +110,13 @@ function calculateOverallReviewRating($user_id){
 function calculateReviewRatings($assigneeReviewTableId=null,$assigneeId)
 {
     try{
-        $assigneeReviewDetails = VmtPMS_KPIFormAssignedModel::where('id',$assigneeReviewTableId)->first();
+        $totalRatingScore = 0;
+        $performanceRating = 0;
         $rank = 0;
+        $action = 0;
+
+
+        $assigneeReviewDetails = VmtPMS_KPIFormAssignedModel::where('id',$assigneeReviewTableId)->first();
 
         if(!empty($assigneeReviewDetails)){
             $decodedReviewsId = explode(',',$assigneeReviewDetails->reviewer_id);
@@ -134,17 +139,21 @@ function calculateReviewRatings($assigneeReviewTableId=null,$assigneeId)
                     $pmsConfigRatingDetails = VmtPMSRating::orderBy('sort_order','DESC')->get();
 
                     /* Use this line to test rating    */
-                    //dd($totalRatingScore);
+                    //$totalRatingScore=101;
                     if(count($pmsConfigRatingDetails) > 0){
                         foreach($pmsConfigRatingDetails as $ratings){
                             $rangeCheck = explode('-',$ratings->score_range);
 
                             if($totalRatingScore >= $rangeCheck[0] && $totalRatingScore <= $rangeCheck[1]){
                                 $rank = $ratings->ranking;
+                                $performanceRating = $ratings->performance_rating;
+                                $action = $ratings->action;
+                                break;
                             }elseif($totalRatingScore >= 100){
-                                if($ratings->score_range == '90 - 100'){
-                                    $rank = $ratings->ranking;
-                                }
+                                $rank = $ratings->ranking;
+                                $performanceRating = $ratings->performance_rating;
+                                $action = $ratings->action;
+                                break;
                             }
                         }
                     }
@@ -152,16 +161,26 @@ function calculateReviewRatings($assigneeReviewTableId=null,$assigneeId)
             }
         }
 
-       // return $finalRating;
-
-        return $response = [
+        $response = [
             'rank' => $rank,
-            'score' => $totalRatingScore,
+            'score' => $totalRatingScore.'%',
+            'performance_rating' => $performanceRating,
+            'action' => $action
         ];
+
+        return $response;
 
     }catch(Exception $e){
         Log::info('calculation average rating helper error: '.$e->getMessage());
-        return 0;
+
+        $response = [
+            'rank' => 0,
+            'score' => '0%',
+            'performance_rating' => 0,
+            'action' => 0,
+            'error' => $e
+        ];
+
     }
 
 

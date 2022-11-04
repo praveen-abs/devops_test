@@ -689,56 +689,6 @@ class VmtPMSModuleController extends Controller
         $assignedGoals  = VmtPMS_KPIFormAssignedModel::where('vmt_pms_kpiform_assigned.id',$request->assignedFormid)->where('vmt_pms_kpiform_reviews.assignee_id',$request->assigneeId)->join('vmt_pms_kpiform_reviews','vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id','=','vmt_pms_kpiform_assigned.id')->first();
 
 
-        // rating details
-        $ratingDetail['performance'] ='-';
-        $ratingDetail['ranking'] = '-';
-        $ratingDetail['action'] = '-';
-        $ratingDetail['rating'] = '-';
-        if($assignedGoals!=''){
-            // Calculation and check All Reviewers Rating
-            // dD($assignedGoals->reviewer_kpi_percentage);
-            $percentageVal = 0;
-            $howManyPercCount = 0;
-            // dd(json_decode($assignedGoals->reviewer_kpi_percentage, true));
-            $allReviewerPercentages = isset($assignedGoals->reviewer_kpi_percentage) ? json_decode($assignedGoals->reviewer_kpi_percentage, true) : [];
-            if(count($allReviewerPercentages) > 0){
-                foreach($allReviewerPercentages as $percentage){
-                    $arraySumPercentage = array_sum($percentage);
-                    $percentageVal += $arraySumPercentage;
-                    $howManyPercCount += count($percentage);
-                }
-            }
-            if ($howManyPercCount > 0) {
-                $ratingDetail['rating'] = $percentageVal / $howManyPercCount;
-                // calculate Rating Based on Table Dynamic Data
-                $pmsConfigRatingDetails = VmtPMSRating::orderBy('sort_order','DESC')->get();
-                if(count($pmsConfigRatingDetails) > 0){
-                    foreach($pmsConfigRatingDetails as $ratings){
-
-                        $rangeCheck = explode('-',$ratings->score_range);
-                        if($ratingDetail['rating'] >= $rangeCheck[0] && $ratingDetail['rating'] <= $rangeCheck[1]){
-                            $ratingDetail['performance'] = $ratings->performance_rating;
-                            $ratingDetail['ranking'] = $ratings->ranking;
-                            $ratingDetail['action'] = $ratings->action;
-                        }elseif($ratingDetail['rating'] >= 100){
-                            if($ratings->score_range == '90 - 100'){
-                                $ratingDetail['performance'] = $ratings->performance_rating;
-                                $ratingDetail['ranking'] = $ratings->ranking;
-                                $ratingDetail['action'] = $ratings->action;
-                            }else{
-                                $ratingDetail['performance'] = "Exceptionally Exceeds Expectations";
-                                $ratingDetail['ranking'] = 5;
-                                $ratingDetail['action'] = '20%';
-                            }
-                        }else{
-                            $ratingDetail['performance'] = "error";
-                            $ratingDetail['ranking'] = 000;
-                            $ratingDetail['action'] = '0000%';
-                        }
-                    }
-                }
-            }
-        }
 
         $assignedUserDetails = User::where('id',$request->assigneeId)->with('getEmployeeDetails','getEmployeeOfficeDetails')->first();
         $assignedEmployee_Userdata = User::where('id',  $request->assigneeId)->first();
@@ -783,6 +733,9 @@ class VmtPMSModuleController extends Controller
         $canShowOverallScoreCard_ReviewPage = fetchPMSConfigValue('can_show_overallscorecard_in_reviewpage');
         //$canShowOverallScoreCard_SelfApprisal_Dashboard = fetchPMSConfigValue('can_show_overallscorecard_in_selfappraisal_dashboard');
         $canShowRatingCard = fetchPMSConfigValue('can_show_ratingcard_in_reviewpage');
+
+        //Calculate score for the currently selected form
+        $ratingDetail = calculateReviewRatings($request->assignedFormid, $request->assigneeId);
 
         // check if logged in user is assignee or not
         if($request->assigneeId == auth()->user()->id){
