@@ -15,11 +15,12 @@ table.kpi_appraisal-table tr td {
     vertical-align: baseline;
 }
 tr:first-child th:last-child {
-    border-top-right-radius: 6px ;
-    border-bottom-right-radius: 6px ;
-    border: 0px ;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border: 0px;
 }
-table.kpi_appraisal-table tr td textarea,table.kpi_appraisal-table tr th textarea{
+table.kpi_appraisal-table tr td textarea,
+table.kpi_appraisal-table tr th textarea {
     width: 100%;
     border: 1px solid #c1d3e3;
     border-radius: 5px;
@@ -58,7 +59,6 @@ table.kpi_appraisal-table tbody tr td:nth-child(2) textarea {
 table.kpi_appraisal-table tbody tr th textarea,
 table.kpi_appraisal-table tbody tr td:nth-child(2) textarea,
 table.kpi_appraisal-table tbody tr td textarea {
-
     outline: none;
     height: 100%;
     resize: none;
@@ -76,7 +76,21 @@ tr:last-child td:last-child {
     border-top-right-radius: 6px !important;
     border-right: 0px;
 }
-
+table.rating_table tr td {
+text-align: center;
+}
+table.rating_table tbody{
+    border-left: 1px solid #002f56;
+    border-right: 1px solid #002f56;
+}
+table.rating_table tr:first-child th:first-child {
+    border-top: 1px solid #002f56;
+    border-radius: 0;
+}
+table.rating_table tr:last-child th:first-child {
+    border-bottom: 1px solid #002f56;
+    border-radius: 0 !important;
+}
 .appraisal-right-content .input-wrap {
     width: 100%;
     /* border: 1px solid; */

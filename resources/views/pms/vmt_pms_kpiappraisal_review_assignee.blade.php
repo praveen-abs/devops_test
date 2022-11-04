@@ -581,7 +581,7 @@
                             <div class="card-body pb-2">
                                 <h6>Appraisee's Annual Score & Rating</h6>
                                 <div class="table-content mb-1">
-                                    <table class="table align-middle mb-0 table-bordered  table-striped" id="table">
+                                    <table class="table rating_table  align-middle mb-0 table-bordered " id="table">
 
                                         <thead class="thead" id="tHead">
                                             <tr>

@@ -316,7 +316,7 @@
         <div class="row">
             <div class="col-xl-12 col-md-12 col-sm-12 col-lg-12 col-xxl-12 ">
                 <!-- appraisal table -->
-                <div class="card">
+                <div class="card mb-0">
                     <div class="card-body pb-2">
                         @if($enableButton)
                             @if (isset($isAllReviewersSubmittedData) &&
@@ -672,11 +672,11 @@
                                 @if ($isAllReviewersSubmittedOrNot)
                                     <div class="row mt-3">
                                         <div class="col-lg-12">
-                                            <label class="form-label">
+                                            <h6 class="text-muted">
                                                 Appraiser Feedback:
-                                            </label>
-                                            <div class="my-2">
-                                                <textarea class="form-control w-100 h-100 outline-none border-0" placeholder="" id="gen-info-description-input" name="appraiser_comments"
+                                            </h6>
+                                            <div class="mt-2">
+                                                <textarea class="form-control w-100  h-100 outline-none " placeholder="" id="gen-info-description-input" name="appraiser_comments"
                                                     readonly
                                                     >@if (isset($assignedGoals->reviewer_appraisal_comments)){{ $assignedGoals->reviewer_appraisal_comments }}@endif</textarea>
 
@@ -687,11 +687,11 @@
                                 @else
                                     <div class="row mt-3">
                                         <div class="col-lg-12">
-                                            <label class="form-label">
+                                            <h6 class="text-muted">
                                                 Appraiser Feedback:
-                                            </label>
-                                            <div class="my-2">
-                                                <textarea class="form-control w-100 h-100 outline-none border-0" placeholder="" id="gen-info-description-input" name="appraiser_comments"
+                                            </h6>
+                                            <div class="mt-2">
+                                                <textarea class="form-control w-100 h-100 outline-none" placeholder="Comments here..." id="gen-info-description-input" name="appraiser_comments"
                                                     >@if (isset($assignedGoals->reviewer_appraisal_comments)){{ $assignedGoals->reviewer_appraisal_comments }}@endif</textarea>
                                             </div>
                                         </div>
@@ -743,14 +743,14 @@
             @if ($isAllReviewersSubmittedOrNot && count($pmsRatingDetails) > 0)
 
                     <div class="col-12">
-                        <div class="card mb-0">
+                        <div class="card mt-3 mb-0">
 
                             <div class="card-body ">
                                 <h6>Best People Rating Grid</h6>
 
 
                                 <div class="table-content table-responsive mb-1">
-                                    <table class="table align-middle mb-0 table-bordered  " id="table">
+                                    <table class="table rating_table align-middle mb-0 table-bordered  " id="table">
 
 
                                         <tbody class="tbody" id="tbody">

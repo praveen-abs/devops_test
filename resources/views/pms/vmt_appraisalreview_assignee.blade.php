@@ -131,7 +131,7 @@
 
 
         <!-- appraisal table -->
-        <div class="card">
+        <div class="card mb-0">
             <div class="card-body pb-2">
                 <div class="row">
                     <div class="col-12 mt-3">
@@ -299,11 +299,11 @@
 
     <div class="row mt-3">
         <div class="col-lg-12">
-            <label class="form-label">
+            <h6 class="text-muted">
                 Appraiser Feedback:
-            </label>
-            <div class="my-2">
-                <textarea class="form-control" placeholder="" id="gen-info-description-input" name="performance" rows="4" readonly>@if(isset( $assignedGoals->appraiser_comment)){{$assignedGoals->appraiser_comment}}@endif</textarea>
+            </h6>
+            <div class="mt-2">
+                <textarea class="form-control outline-none " placeholder="" id="gen-info-description-input" name="performance" rows="4" readonly>@if(isset( $assignedGoals->appraiser_comment)){{$assignedGoals->appraiser_comment}}@endif</textarea>
             </div>
         </div>
     </div>
@@ -313,23 +313,23 @@
     @if($reviewCompleted)
     <div class="row mt-3">
         <div class="col-lg-12">
-    <div class="card">
+    <div class="card mt-3">
         <div class="card-header">
             <h5>Best People Rating Grid</h5>
         </div>
         <div class="card-body pb-2">
             <h6>Appraisee's Annual Score & Rating</h6>
             <div class="table-content mb-1">
-                <table class="table align-middle mb-0 table-bordered  table-striped" id="table">
+                <table class="table rating_table align-middle mb-0 table-bordered  " id="table">
 
                     <thead class="thead" id="tHead">
                         <tr>
                             <th scope="col">Overall Annual Score</th>
                             <th scope="col">Less than 60</th>
-                            <th scope="col">60-70</th>
-                            <th scope="col">70-80</th>
-                            <th scope="col">80-90</th>
-                            <th scope="col">90-100</th>
+                            <th scope="col">61-70</th>
+                            <th scope="col">71-80</th>
+                            <th scope="col">81-90</th>
+                            <th scope="col">91-100</th>
                         </tr>
                     </thead>
                     <tbody class="tbody" id="tbody">
