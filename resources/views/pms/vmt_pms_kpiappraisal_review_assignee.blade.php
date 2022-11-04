@@ -463,14 +463,14 @@
                                                                         @endif
                                                                         >
                                                                         @if (isset(json_decode($assignedGoals->assignee_kpi_percentage, true)[$kpiRow->id]))
-                                                                        {{ json_decode($assignedGoals->assignee_kpi_percentage, true)[$kpiRow->id] }}
+                                                                        {{ round(json_decode($assignedGoals->assignee_kpi_percentage, true)[$kpiRow->id]) }}
                                                                         @endif
                                                                     </textarea>
 
                                                                 </div>
                                                             @else
                                                                 <div>
-                                                                    {{ json_decode($assignedGoals->assignee_kpi_percentage, true)[$kpiRow->id] }}
+                                                                    {{ round(json_decode($assignedGoals->assignee_kpi_percentage, true)[$kpiRow->id]) }}
                                                                 </div>
                                                             @endif
                                                         @endif
