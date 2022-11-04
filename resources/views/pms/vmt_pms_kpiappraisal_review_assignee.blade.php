@@ -676,7 +676,7 @@
                 console.log("kpiWeightageVal : "+kpiWeightageVal);
 
                 var result = (kpiAchievementSelfReview / targetVal) * kpiWeightageVal;
-                $('#assignee_kpi_percentage' + index).val(result.toFixed(1));
+                $('#assignee_kpi_percentage' + index).val(Math.round(result));
                 console.log("OUTPUT :: assignee_kpi_percentage : "+result);
             } else {
                 $('#assignee_kpi_percentage' + index).val('');

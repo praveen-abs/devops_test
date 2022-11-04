@@ -848,7 +848,7 @@
                 //reviewer_kpi_review{{ $index }}-{{ $reviewersReview }}
                // var temp = '#reviewer_kpi_review' + index+'-'+reviewerId;
                // console.log("testing id : "+temp);
-                $('#reviewer_kpi_percentage' + index+'-'+reviewerId).val(result.toFixed(1));
+                $('#reviewer_kpi_percentage' + index+'-'+reviewerId).val(Math.round(result));
                 console.log("OUTPUT :: reviewer_kpi_percentage : "+result);
             } else {
                 $('#reviewer_kpi_percentage' + index+'-'+kpiAchievementReviewerReview).val('');

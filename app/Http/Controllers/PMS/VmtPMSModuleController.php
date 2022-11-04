@@ -481,6 +481,9 @@ class VmtPMSModuleController extends Controller
    */
     public function publishKPIForm(Request $request)
     {
+
+        //dd($request->all());
+
         $validator = Validator::make($request->all(), [
             'calendar_type' => 'required',
             'hidden_calendar_year' => 'required',
@@ -924,6 +927,8 @@ class VmtPMSModuleController extends Controller
                 $kpiReviewCheck->update();
 
                 $kpiForAssignedDetails = VmtPMS_KPIFormAssignedModel::where('id',$kpiReviewCheck->vmt_pms_kpiform_assigned_id)->first();
+
+                //Get the ASSIGNER_ID for sending mail
                 $hrReview = User::find($kpiForAssignedDetails->assigner_id);
 
                 $assigneeDetails = User::where('id', $request->assignee_id)->first();
