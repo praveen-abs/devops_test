@@ -243,14 +243,14 @@
                                                 ])
                                             </div>
                                         </div>
-
+                                        <?php //dd($assignedUserDetails); ?>
                                         <div class="appraisal_userDet mt-3">
                                             <h6>{{ $assignedUserDetails->name }}</h6>
                                             <p class="f-14 mt-2  text-primary">
-                                                {{ $assignedUserDetails->getEmployeeOfficeDetails->designation ?? '-' }}
+                                                {{ $assignedUserDetails->designation ?? '-' }}
                                             </p>
                                             <p class="f-12 text-muted mt-2">
-                                                {{ $assignedUserDetails->getEmployeeDetails->emp_no ?? '-' }}</p>
+                                                {{ $assignedUserDetails->user_code ?? '-' }}</p>
                                         </div>
 
                                     </div>
@@ -261,12 +261,9 @@
                                     <div class="card-body">
                                         <p class="f-14 text-ash  ">Business Unit/Process/Function</p>
                                         <p class="mb-4 f-15 fw-bold text-primary">
-                                            {{ $assignedUserDetails->getEmployeeOfficeDetails->department ?? '-' }}</p>
+                                            {{ $assignedUserDetails->department_id ?? '-' }}</p>
                                         <p class="f-14 text-ash  ">Reporting Manager</p>
-                                        <p class="mb-4 f-15 fw-bold text-primary ">{{ $assignersName ?? '-' }}</p>
-                                        <p class="f-14 text-ash  ">Reporting Manager</p>
-                                        <p class="mb-4 f-15 fw-bold text-primary">{{ $assignedGoals->year ?? '-' }} -
-                                            {{ strtoupper($assignedGoals->assignment_period ?? '-') }}</p>
+                                        <p class="mb-4 f-15 fw-bold text-primary ">{{ $assignedUserDetails->l1_manager_code ?? '-' }}</p>
                                     </div>
                                 </div>
 
