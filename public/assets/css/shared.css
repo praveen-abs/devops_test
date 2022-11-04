@@ -1557,3 +1557,19 @@ table.dataTable td {
     background: #fff;
     box-shadow: rgb(0 0 0 / 5%) 0px 6px 24px 0px, rgb(0 0 0 / 8%) 0px 0px 0px 1px;
 }
+
+/* modal */
+.custom-modal,.popUp-close{
+    background:rgba(0,0,0,0.75);
+    transition:ease 0.25s all;
+}
+
+.lc_btn{
+    padding: 1px !important;
+    height: 14px;
+    width: 18px;
+    border-radius: 2px;
+    font-size: 8px !important;
+    text-align: center;
+}
+
