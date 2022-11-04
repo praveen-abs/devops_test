@@ -534,7 +534,7 @@
                                                     </td>
                                                     <td class="">
                                                         <div class="td_content_center">
-                                                            <?php echo calculateReviewRatings($pmsKpiAssignee->id, $assigneeId)['score']."%"; ?>
+                                                            <?php echo calculateReviewRatings($pmsKpiAssignee->id, $assigneeId)['score']; ?>
                                                         </div>
                                                     </td>
                                                     <td>
