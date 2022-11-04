@@ -49,7 +49,7 @@ class VmtPMSMail_HR extends Mailable
 
         return $this->from($MAIL_FROM_ADDRESS,  $MAIL_FROM_NAME)
                 //->subject("Regarding the Manager Review - PMS")
-                ->subject($MAIL_FROM_NAME)
+                ->subject("Review Completed")
                 ->view('vmt_pms_mail_allflows_reviewcompletedmail_to_HR')
                 ->with('hr_name', $this->hr_name)
                 ->with('assignee_name', $this->assignee_name)
