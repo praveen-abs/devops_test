@@ -70,7 +70,7 @@
                                             <b class="f-15 text-primary">
                                                 @if ($isAllReviewersSubmittedOrNot)
                                                     @if ($ratingDetail)
-                                                        {{ round($ratingDetail['rating']) }}
+                                                        {{ $ratingDetail['score'] }}
                                                     @else
                                                         -
                                                     @endif
@@ -95,7 +95,7 @@
                                             <b class="f-15 text-primary">
                                                 @if ($isAllReviewersSubmittedOrNot)
                                                     @if ($ratingDetail)
-                                                        {{ $ratingDetail['performance'] }}
+                                                        {{ $ratingDetail['performance_rating'] }}
                                                     @else
                                                         -
                                                     @endif
@@ -119,7 +119,7 @@
                                             <b class="f-15 text-primary">
                                                 @if ($isAllReviewersSubmittedOrNot)
                                                     @if ($ratingDetail)
-                                                        {{ $ratingDetail['ranking'] }}
+                                                        {{ $ratingDetail['rank'] }}
                                                     @else
                                                         -
                                                     @endif
