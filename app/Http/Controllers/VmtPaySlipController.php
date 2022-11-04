@@ -53,8 +53,9 @@ class VmtPaySlipController extends Controller
        // $data = VmtEmployeePaySlip::all();
 
        $data =  DB::table('vmt_employee_payslip')
-        ->where('vmt_employee_payslip.user_id', auth()->user()->id)->orderBy('created_at', 'DESC')
+        ->where('vmt_employee_payslip.user_id', auth()->user()->id)->orderBy('PAYROLL_MONTH', 'DESC')
         ->get();
+
 
         if($data->count()!=0)
         {
