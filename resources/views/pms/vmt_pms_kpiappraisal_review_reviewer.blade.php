@@ -70,7 +70,7 @@
                                             <b class="f-15 text-primary">
                                                 @if ($isAllReviewersSubmittedOrNot)
                                                     @if ($ratingDetail)
-                                                        {{ round($ratingDetail['rating'],1) }}
+                                                        {{ round($ratingDetail['rating']) }}
                                                     @else
                                                         -
                                                     @endif
@@ -562,7 +562,7 @@
                                                         <td>
                                                             <div>
                                                                 @if (isset($assigneeKPIPerc) && isset($assigneeKPIPerc[$kpiRow->id]))
-                                                                    {{ round($assigneeKPIPerc[$kpiRow->id],1) }}
+                                                                    {{ round($assigneeKPIPerc[$kpiRow->id]) }}
                                                                 @endif
                                                             </div>
                                                         </td>
