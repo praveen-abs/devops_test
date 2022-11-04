@@ -8,14 +8,14 @@
     <link rel="stylesheet" href="{{ URL::asset('/assets/css/attendance_calendar.css') }}">
 @endsection
 @section('content')
-    @component('components.attendance_breadcrumb')
+    {{-- @component('components.attendance_breadcrumb')
         @slot('li_1')
         @endslot
-    @endcomponent
+    @endcomponent --}}
 
-    <div class="leave_calendar-wrapper">
+    <div class="leave_calendar-wrapper mt-30">
 
-        <button type="button" class="btn btn-orange" data-bs-target="#newClient" data-bs-toggle="modal">Apply Request</button>
+        {{-- <button type="button" class="btn btn-orange" data-bs-target="#regularizationModal" data-bs-toggle="modal">Apply Request</button> --}}
 
         <div class="card mb-3">
             <div class="card-body py-1">
@@ -28,9 +28,9 @@
                         <div class="calender-mid_content">
                             <div class="row ">
                                 <div class=" col-sm-3 col-md-3 col-xl-3 col-lg-3 col-xxl-3  ">
-                                    <p class="text-muted fw-normal f-18"><i class="fa fa-calendar me-2"
+                                    <p class="text-muted fw-normal f-18"><i class="fa fa-calendar me-2" id="calendarIcon"
                                             aria-hidden="true"></i>
-                                        <span class="dates ">Oct 15,2022</span>
+                                        <span class="dates " id="display_date"></span>
                                     </p>
                                 </div>
                                 <div class=" col-sm-5 col-md-5 col-xl-5 col-lg-5 col-xxl-5  ">
@@ -58,56 +58,14 @@
                                 </div>
                                 <div class=" col-sm-4 col-md-4 col-xl-4 col-lg-4 col-xxl-4 ">
                                     <div class="d-flex justify-content-end">
-                                        <div class="dropdown topbar-user me-2">
-                                            <button type="button" class="btn bg-primary text-white show"
-                                                id="page-header-user-dropdown" data-bs-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="true">
-                                                <div class="d-flex align-items-center page-header-user-dropdown">
-                                                    {{-- <i class="fa fa-file me-2" aria-hidden="true"></i> --}}
-                                                    <span class="f-12 mx-2 d-flex align-items-center">
-                                                        Department
-                                                        <span
-                                                            class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text"></span>
-                                                        <i class="fa fa-caret-down ms-2" aria-hidden="true"></i>
-                                                    </span>
+                                        <select class="form-select border-orange me-2" id="">
+                                            <option selected hidden disabled>Department</option>
 
-                                                </div>
-                                            </button>
-                                            <div class="dropdown-menu  dropdown-menu-end  justify-content-center"
-                                                data-popper-placement="bottom-end"
-                                                style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate(-4px, 40px);min-width:130px;">
-                                                <!-- item-->
+                                        </select>
+                                        <select class="form-select border-orange" id="">
+                                            <option selected disabled hidden>Export</option>
 
-                                            </div>
-                                        </div>
-                                        <div class="dropdown topbar-user ">
-                                            <button type="button" class="btn bg-primary text-white show"
-                                                id="page-header-user-dropdown" data-bs-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="true">
-                                                <div class="d-flex align-items-center page-header-user-dropdown">
-
-                                                    <i class="fa fa-file me-2" aria-hidden="true"></i>
-                                                    <span class="f-12 mx-2 d-flex align-items-center">
-                                                        Export
-                                                        <span
-                                                            class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text"></span>
-                                                        <i class="fa fa-caret-down ms-2" aria-hidden="true"></i>
-                                                    </span>
-
-                                                </div>
-                                            </button>
-                                            <div class="dropdown-menu  dropdown-menu-end  justify-content-center"
-                                                data-popper-placement="bottom-end"
-                                                style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate(-4px, 40px);min-width:130px;">
-                                                <!-- item-->
-                                                <div class="px-3 py-0 d-flex">
-                                                    <a class="text-muted "><i class="fa fa-file-excel-o me-2"
-                                                            aria-hidden="true"></i>Excel</a>
-                                                    <a class="text-muted "><i class="fa fa-file-pdf-o me-2"
-                                                            aria-hidden="true"></i>Pdf</a>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        </select>
                                     </div>
 
                                 </div>
@@ -171,14 +129,14 @@
         </div>
 
 
-        <div class="modal fade " id="newClient" tabindex="-1" aria-labelledby="newInventry" aria-modal="true"
-            role="dialog">
-            <div class="modal-dialog modal-dialog-scrollable  modal-md">
+        <div class="modal  custom-modal" aria-hidden="true" id="regularizationModal" tabindex="-1" aria-labelledby=""
+            aria-modal="true" role="dialog">
+            <div class="modal-dialog modal-dialog-centered   modal-md">
                 <div class="modal-content top-line">
                     <div class="modal-header border-0 py-2">
                         <h6 class="modal-title" id="exampleModalLabel">Attendance Regularization</h6>
-                        <button type="button" class="modal-close outline-none  border-0" data-bs-dismiss="modal"
-                            aria-label="Close">×</button>
+                        <button type="button" class="modal-close popUp-close outline-none  border-0"
+                            data-bs-dismiss="modal" aria-label="Close">×</button>
                     </div>
                     <div class="modal-body">
 
@@ -202,18 +160,17 @@
                                     <div class="col-6"><label class="text-ash-medium fs-15">Regularize Timing
                                             as</label>
                                     </div>
-                                    <div class="col-6"><span class="text-ash-medium fs-15">8:10</span></div>
+                                    <div class="col-6"><input class="text-ash-medium form-control fs-15" value="8:10">
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-12 mb-2">
                                 <div class="row">
                                     <div class="col-6"><label class="text-ash-medium fs-15">Reason</label></div>
-                                    <div class="col-6"> <select class="form-select btn-line-primary" id=""
+                                    <div class="col-6"> <select class="form-select btn-line-orange" id=""
                                             onchange="showReasonBox(this)">
                                             <option selected hidden disabled>Choose Reason</option>
-                                            <option value="0"></option>
-                                            <option value="1">Reason</option>
-                                            <option value="2">Others</option>
+                                            <option value="1">Others</option>
 
                                         </select></div>
                                 </div>
@@ -424,6 +381,22 @@
 
 
         $(document).ready(function() {
+            var months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL",
+                "AUG", "SEP", "OCT", "NOV", "DEC"
+            ];
+            // $("#calendarIcon").click(function() {
+            //     var months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL",
+            //         "AUG", "SEP", "OCT", "NOV", "DEC"
+            //     ];
+            //     var val = shortMoth[today.getMonth()] + " " + today.getDate() + "," + today.getFullYear();
+            //     $("#display_date").text(val).show();
+            // });
+
+            function showDates() {
+                var val = months[today.getMonth()] + " " + today.getDate() + "," + today.getFullYear();
+                $("#display_date").text(val).show();
+            }
+            showDates();
 
 
 
@@ -485,11 +458,14 @@
         }
 
         function showRegularizationModal(element) {
-            $('#newClient').show();
-            $('#newClient').removeClass('fade');
+            $('#regularizationModal').fadeIn(100);
 
-            console.log("Showing modal");
+            // $('#regularizationModal').addClass('fade');
+
         }
+        $('.modal-close').click(function() {
+            $('#regularizationModal').fadeOut(400);
+        })
 
         function generate_year_range(start, end) {
             var years = "";
@@ -621,12 +597,12 @@
 
 
                             cell.innerHTML = " <div class='w-100 h-100'><p class='show_date' >" + date +
-                            "</p>  <div class='d-flex mt-3 flex-column bio_check align-items-start' > <span class='check-in f-10 text-success'><i class='fa fa-arrow-down' style='transform: rotate(-45deg);'></i> <span id='checkin_time_" +
+                            "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex justify-content-between'><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'><span id='checkin_time_" +
                             year + "-" + (month + 1) + "-" + dateText +
-                            "'></span><input type='button' onclick ='showRegularizationModal(this)' value='R' data-cellid ='checkin_time_" +
+                            "'></span>  </i>  <input type='button' onclick ='showRegularizationModal(this)' class='f-10 btn lc_btn border-0 btn-orange p-1'  value='LC' data-cellid ='checkin_time_" +
                             year + "-" + (month + 1) + "-" + dateText +
-                            "'/></span> <span class='check-out f-10 text-danger'><i class='fa fa-arrow-down' style='transform: rotate(230deg);'></i> <span id='checkout_time_" +
-                            year + "-" + (month + 1) + "-" + dateText + "'></span></span></div></div>";
+                            "'/></div> <div class='w-100 d-flex justify-content-between check-out mt-2 f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'><span id='checkout_time_" +
+                            year + "-" + (month + 1) + "-" + dateText + "'></span></i> </div></div></div>";
 
                         if (date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) {
                             cell.className = "_date-picker selected";
