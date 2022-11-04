@@ -451,7 +451,18 @@
                                                 @endif
 
                                                 @foreach ($reviewersId as $reviewersReview)
-                                                    @if ($reviewersReview == Auth::id())
+                                                    @if($isAllReviewersSubmittedOrNot)
+                                                        <th scope="col" data-name='kpiManagerReview'
+                                                            data-filterable="false" data-visible=true> KPI -
+                                                            Achievement
+                                                            Manager Review</th>
+                                                        <th scope="col" data-name='kpiManagerAchivement'
+                                                            data-filterable="false" data-visible="true">Manager
+                                                            KPI
+                                                            Achievement % </th>
+
+
+                                                    @elseif ($reviewersReview == Auth::id())
                                                         <th scope="col" data-name='kpiManagerReview'
                                                             data-filterable="false" data-visible=true> KPI -
                                                             Achievement
@@ -578,10 +589,26 @@
                                                     $decodedKpiReview = json_decode($assignedGoals->reviewer_kpi_review, true);
                                                     $decodedKpiReviewSubmittedStatus = json_decode($assignedGoals->is_reviewer_submitted, true);
                                                     $decodedKpiReviewPerc = json_decode($assignedGoals->reviewer_kpi_percentage, true);
-
+                                                    //dd(Auth::user()->org_role);
+                                                    //dd($isAllReviewersSubmittedOrNot);
                                                     ?>
                                                     @foreach ($reviewersId as $reviewersReview)
-                                                        @if ($reviewersReview == Auth::id())
+                                                        @if($isAllReviewersSubmittedOrNot)
+                                                            <td>
+                                                                <div>
+                                                                    @if (isset($decodedKpiReview[$reviewersReview]))
+                                                                        {{ $decodedKpiReview[$reviewersReview][$kpiRow->id] }}
+                                                                    @endif
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div>
+                                                                    @if (isset($decodedKpiReviewPerc[$reviewersReview]))
+                                                                        {{ $decodedKpiReviewPerc[$reviewersReview][$kpiRow->id] }}
+                                                                    @endif
+                                                                </div>
+                                                            </td>
+                                                        @elseif ($reviewersReview == Auth::id())
                                                             <td>
                                                                 @if (isset($assignedGoals->is_assignee_submitted) &&
                                                                     $assignedGoals->is_assignee_submitted == '1' &&
