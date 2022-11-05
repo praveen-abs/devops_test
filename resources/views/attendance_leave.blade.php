@@ -682,7 +682,7 @@
     </div>
 
 
-    <div id="leaveDetails_modal" class="modal custom-modal fade" role="dialog">
+    {{-- <div id="leaveDetails_modal" class="modal custom-modal fade" role="dialog">
         <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable  modal-lg" role="document">
             <div class="modal-content top-line">
                 <div class="modal-header py-2 new-role-header border-0 d-flex align-items-center">
@@ -805,7 +805,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 
     </div>
@@ -969,12 +969,13 @@
 
                         {
                             id: 'user_id',
-                            name: 'Employee Name',
+                            name: 'User Id',
                             hidden: true,
                             formatter: function formatter(cell) {
                                 return gridjs.html(cell);
                             }
                         },
+
                         {
                             id: 'leave_type_id',
                             name: 'Leave Type',
@@ -1002,7 +1003,7 @@
                         },
                         {
                             id: 'reviewer_user_id',
-                            name: 'Reviewer Name',
+                            name: 'Approver Name',
                             formatter: function formatter(cell) {
 
                                 for (var i = 0; i < employeesList_array.length; i++) {
@@ -1013,7 +1014,7 @@
                         },
                         {
                             id: 'reviewer_comments',
-                            name: 'Reviewer Comments',
+                            name: 'Approver Comments',
                         },
                         {
                             id: 'status',
@@ -1064,6 +1065,7 @@
                             leave_history => [
                                 leave_history.id,
                                 // leave_history.user_id,
+                                leave_history,
                                 leave_history.leave_type_id,
                                 leave_history.start_date,
                                 leave_history.end_date,
@@ -1119,7 +1121,7 @@
                         },
                         {
                             id: 'reviewer_user_id',
-                            name: 'Reviewer Name',
+                            name: 'Approver Name',
                             formatter: function formatter(cell) {
 
                                 for (var i = 0; i < employeesList_array.length; i++) {
@@ -1130,7 +1132,7 @@
                         },
                         {
                             id: 'reviewer_comments',
-                            name: 'Reviewer Comments',
+                            name: 'Approver Comments',
                         },
                         {
                             id: 'status',
@@ -1158,13 +1160,13 @@
                                         '<input type="button" value="Approve" data-user_id="' + emp
                                         .user_id +
                                         '" data-leave_id="' + emp.id +
-                                        '" data-leave_status="Approved" class="status btn btn-orange py-1 approve-leave-btn"></input>';
+                                        '" data-leave_status="Approved" class="status btn btn-success text-center py-1 approve-leave-btn"></input>';
 
                                     htmlcontent = htmlcontent +
                                         '&nbsp;&nbsp;<input type="button" value="Reject" id="button_activate_"' +
                                         emp.user_id + '" data-user_id="' + emp.user_id +
                                         '" data-leave_id="' + emp.id +
-                                        '" data-leave_status="Rejected" class="status btn btn-orange py-1 reject-leave-btn "></input>&nbsp;&nbsp;';
+                                        '" data-leave_status="Rejected" class="status text-center btn btn-danger py-1 reject-leave-btn "></input>&nbsp;&nbsp;';
                                 }
 
                                 // if (leave_history.status == "Pending")
@@ -1180,7 +1182,7 @@
                                 //     </button>
 
                                 htmlcontent = htmlcontent +
-                                    '<input type="button" value="View" class="status btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal"></input>';
+                                    '<input type="button" value="View" class="status text-center btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal"></input>';
 
 
                                 return gridjs.html(htmlcontent);
@@ -1254,7 +1256,7 @@
                         },
                         {
                             id: 'reviewer_user_id',
-                            name: 'Reviewer Name',
+                            name: 'Approver Name',
                             formatter: function formatter(cell) {
 
                                 for (var i = 0; i < employeesList_array.length; i++) {
@@ -1265,7 +1267,7 @@
                         },
                         {
                             id: 'reviewer_comments',
-                            name: 'Reviewer Comments',
+                            name: 'Approver Comments',
                         },
                         {
                             id: 'status',
