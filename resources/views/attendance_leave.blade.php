@@ -25,17 +25,23 @@
                                     aria-selected="true" role="tab">
                                     Leave Balance</a>
                             </li>
+                            @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR', 'Manager']))
+
                             <li class="nav-item text-muted " role="presentation">
                                 <a class="nav-link pb-2" data-bs-toggle="tab" href="#team_leaveBalance"
                                     aria-selected="false" tabindex="-1" role="tab">
                                     Team Leave Balance</a>
                             </li>
+                            @endif
+
+                            @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
+
                             <li class="nav-item text-muted " role="presentation">
                                 <a class="nav-link pb-2" data-bs-toggle="tab" href="#org_leave" aria-selected="false"
                                     tabindex="-1" role="tab">
                                     Org Leave Balance</a>
                             </li>
-
+                            @endif
                         </ul>
                     </div>
                     <div class="col-3  text-md-end text-center">
@@ -919,7 +925,7 @@
                     sort: true,
                     search: true,
                     server: {
-                        url: '{{ route('fetch-leavehistory', ['type'=>'org']) }}',
+                        url: '{{ route('fetch-leavehistory', ['type'=>'employee']) }}',
                         then: data => data.map(
                             leave_history => [
                                 leave_history.id,
@@ -939,6 +945,7 @@
                     }
                 }).render(document.getElementById("table_leaveHistory"));
             }
+
             if (document.getElementById("team_leaveHistory")) {
                 const grid = new gridjs.Grid({
                     columns: [
@@ -1035,7 +1042,7 @@
                     sort: true,
                     search: true,
                     server: {
-                        url: '{{ route('fetch-leavehistory') }}',
+                        url: '{{ route('fetch-leavehistory', ['type'=>'team']) }}',
                         then: data => data.map(
                             leave_history => [
                                 leave_history.id,
@@ -1055,6 +1062,7 @@
                     }
                 }).render(document.getElementById("team_leaveHistory"));
             }
+
             if (document.getElementById("org_leaveHistory")) {
                 const grid = new gridjs.Grid({
                     columns: [
@@ -1151,7 +1159,7 @@
                     sort: true,
                     search: true,
                     server: {
-                        url: '{{ route('fetch-leavehistory') }}',
+                        url: '{{ route('fetch-leavehistory', ['type'=>'org']) }}',
                         then: data => data.map(
                             leave_history => [
                                 leave_history.id,
