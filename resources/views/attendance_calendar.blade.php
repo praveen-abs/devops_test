@@ -77,9 +77,9 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-12 col-md-12 col-xl-3 col-lg-3 col-xxl-3 mb-3">
-                <div class="card mb-0" style="max-height:660px;min-height:660px;overflow-x:auto;">
-                    <div class="card-body">
+            <div class="col-sm-12 col-md-12 pe-0 col-xl-3 col-lg-3 col-xxl-3 mb-3">
+                <div class="card  mb-0" style="max-height:660px;min-height:660px;overflow-x:auto;">
+                    <div class="card-body px-1">
                         <div class="search-content ms-2  mb-3">
                             <i class=" ri-search-line "></i>
                             <input type="text" class="search-bar form-control w-100 py-1 rounded" id="searchInput_box"
@@ -180,10 +180,10 @@
                                 <div class="col-12 mb-2">
                                     <div class="row">
                                         <div class="col-6"><label class="text-ash-medium fs-15">Reason</label></div>
-                                        <div class="col-6"> 
-                                            <select 
+                                        <div class="col-6">
+                                            <select
                                                 name="reason"
-                                                class="form-select btn-line-orange" 
+                                                class="form-select btn-line-orange"
                                                 id=""
                                                 onchange="showReasonBox(this)">
                                                 <option selected hidden disabled>
@@ -207,7 +207,7 @@
                                 </div>
                             </div>
                         </form>
-                       
+
 
 
                     </div>
@@ -289,14 +289,14 @@
 
                     data.forEach((element) => {
 
-                        var html = '<li class="list_employee_attendance p-2 w-100" >' +
+                        var html = '<li class="list_employee_attendance p-1 w-100" >' +
                             '<div class="d-flex employee_list_item" data-userid=' + element.id + '>' +
-                            '<div class="user_pic me-3 d-flex justify-content-center align-items-center bg-primary rounded-circle">' +
+                            '<div class="user_pic me-2 d-flex justify-content-center align-items-center bg-primary rounded-circle">' +
                             '<span class="text-white">Pr</span>' +
                             '</div>' +
                             '<div class="user_content d-flex  align-items-center flex-column">' +
-                            '<p class="fw-bold text-primary f-15">' + element.name + '</p>' +
-                            '<p class=" text-muted f-12">' + element.designation + '</p>' +
+                            '<p class="fw-bold text-primary f-13">' + element.name + '</p>' +
+                            '<p class=" text-muted f-11">' + element.designation + '</p>' +
                             '</div>' +
                             '</div>' +
                             '</li>';
@@ -336,14 +336,14 @@
 
                     data.forEach((element) => {
 
-                        var html = '<li class="list_employee_attendance p-2 w-100" >' +
+                        var html = '<li class="list_employee_attendance p-1 w-100" >' +
                             '<div class="d-flex employee_list_item" data-userid=' + element.id + '>' +
-                            '<div class="user_pic me-3 d-flex justify-content-center align-items-center bg-primary rounded-circle">' +
+                            '<div class="user_pic me-2 d-flex justify-content-center align-items-center bg-primary rounded-circle">' +
                             '<span class="text-white">Pr</span>' +
                             '</div>' +
                             '<div class="user_content d-flex  align-items-center flex-column">' +
-                            '<p class="fw-bold text-primary f-15">' + element.name + '</p>' +
-                            '<p class=" text-muted f-12">' + element.designation + '</p>' +
+                            '<p class="fw-bold text-primary f-13">' + element.name + '</p>' +
+                            '<p class=" text-muted f-11">' + element.designation + '</p>' +
                             '</div>' +
                             '</div>' +
                             '</li>';
@@ -374,14 +374,14 @@
             $('#sidepanel_employees_list').html('');
 
 
-            var html = '<li class="list_employee_attendance p-2 w-100" >' +
+            var html = '<li class="list_employee_attendance p-1 w-100" >' +
                 '<div class="d-flex employee_list_item" onclick="" data-userid="{{ $current_employee_detail->id }}">' +
-                '<div class="user_pic me-3 d-flex justify-content-center align-items-center bg-primary rounded-circle">' +
+                '<div class="user_pic me-2 d-flex justify-content-center align-items-center bg-primary rounded-circle">' +
                 '<span class="text-white">Pr</span>' +
                 '</div>' +
                 '<div class="user_content d-flex  align-items-center flex-column">' +
-                '<p class="fw-bold text-primary f-15">{{ $current_employee_detail->name }}</p>' +
-                '<p class=" text-muted f-12">{{ $current_employee_detail->designation }}</p>' +
+                '<p class="fw-bold text-primary f-13">{{ $current_employee_detail->name }}</p>' +
+                '<p class=" text-muted f-11">{{ $current_employee_detail->designation }}</p>' +
                 '</div>' +
                 '</div>' +
                 '</li>';
@@ -479,7 +479,7 @@
         }
 
         function showRegularizationModal(element) {
-            
+
             if($(element).val() == "LC"){
                 $('#actual_checkin_date').html($(element).data('checkin_date'));
                 $('#actual_checkin_time').html($(element).data('actual_timing'));
@@ -491,7 +491,7 @@
                 $('#regularizationModal').fadeIn(100);
             }
 
-           
+
             // $('#regularizationModal').addClass('fade');
         }
 
@@ -509,7 +509,7 @@
                     alert(data.message);
                     $('#regularizationModal').fadeOut(400);
                     //update sidepanel
-                   
+
 
                 }
             });
@@ -624,7 +624,7 @@
                 //left to right
                 for (var j = 0; j < 7; j++) {
 
-                    var isWeekEnd = isWeekEndDays(date, month, year); 
+                    var isWeekEnd = isWeekEndDays(date, month, year);
 
 
 
@@ -656,19 +656,19 @@
 
                         if(isWeekEnd){
                             cell.innerHTML = " <div class='w-100 h-100'><p class='show_date' >" + date +
-                            "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex justify-content-between'> </div> <div class='w-100 d-flex justify-content-between check-out mt-2 f-10 text-danger'> </div></div></div>"; 
+                            "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex justify-content-between'> </div> <div class='w-100 d-flex justify-content-between check-out mt-2 f-10 text-danger'> </div></div></div>";
 
                         }else{
                             cell.innerHTML = " <div class='w-100 h-100'><p class='show_date' >" + date +
-                            "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex justify-content-between'><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'><span id='checkin_time_" +
+                            "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex justify-content-between'><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span id='checkin_time_" +
                             year + "-" + (month + 1) + "-" + dateText +
-                            "'></span>  </i>  <input type='button' onclick ='showRegularizationModal(this)' class='f-10 btn lc_btn border-0 btn-orange p-1'  value='Absent' data-cellid ='checkin_time_" +
+                            "'></span>    <input type='button' onclick ='showRegularizationModal(this)' class='f-10 btn lc_btn border-0 btn-orange p-1'  value='Absent' data-cellid ='checkin_time_" +
                             year + "-" + (month + 1) + "-" + dateText +
-                            "'/></div> <div class='w-100 d-flex justify-content-between check-out mt-2 f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'><span id='checkout_time_" +
-                            year + "-" + (month + 1) + "-" + dateText + "'></span></i> </div></div></div>";  
+                            "'/></div> <div class='w-100 d-flex justify-content-between check-out mt-2 f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span id='checkout_time_" +
+                            year + "-" + (month + 1) + "-" + dateText + "'></span> </div></div></div>";
                         }
 
-                            
+
 
                         if (date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) {
                             cell.className = "_date-picker selected";
