@@ -37,7 +37,7 @@ class RequestLeaveMail extends Mailable
      */
     public function build()
     {
-        $output = $this->view('vmt_requestleave_email')
+        $output = $this->view('email_attendance_leaverequest')
                     ->with('employeeName', $this->employeeName)
                     ->with('empCode', $this->empCode)
                     ->with('loginLink', $this->loginLink)
