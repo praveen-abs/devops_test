@@ -59,7 +59,7 @@
 ._container-calendar ._table-calendar tr td{
     height: 96px;
     box-shadow: rgb(9 30 66 / 25%) 0px 4px 8px -2px, rgb(9 30 66 / 8%) 0px 0px 0px 1px;
-    width: 60px;
+    width: 100px;
     /* box-shadow: rgb(0 0 0 / 15%) 1.95px 1.95px 2.6px; */
     margin: 36px;
     padding: 10px;
