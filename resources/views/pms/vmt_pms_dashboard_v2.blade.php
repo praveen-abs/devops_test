@@ -3,8 +3,7 @@
     <link href="{{ URL::asset('assets/css/assign_goals.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ URL::asset('/assets/css/pages_profile.css') }}">
-
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.15/tailwind.min.css" rel="stylesheet" />
 
 @endsection
 

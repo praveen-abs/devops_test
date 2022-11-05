@@ -1560,7 +1560,7 @@ table.dataTable td {
 
 /* modal */
 .custom-modal,.popUp-close{
-    background:rgba(0,0,0,0.75);
+    background: rgb(0 0 0 / 15%);
     transition:ease 0.25s all;
 }
 

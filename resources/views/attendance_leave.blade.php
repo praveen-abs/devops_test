@@ -152,8 +152,22 @@
                             </div>
 
                         </div>
-                    </div>
 
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12 ">
+                        <div class="card mb-0 leave-history">
+                            <div class="card-body">
+                                <h6 class="mb-2">Leave history</h6>
+
+                                <div class="table-responsive">
+                                    <div id="table_leaveHistory"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="tab-pane fade show " id="team_leaveBalance" role="tabpanel" aria-labelledby="pills-profile-tab">
@@ -256,13 +270,39 @@
                     </div>
 
                 </div>
+                <div class="row mt-3">
+                    <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12 ">
+                        <div class="card mb-0 leave-history">
+                            <div class="card-body">
+                                <h6 class="mb-2">Team Leave history</h6>
+
+                                <div class="table-responsive">
+                                    <div id="team_leaveHistory"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             </div>
-            {{-- <div class="tab-pane show " id="org_leave" role="tabpanel" aria-labelledby="pills-profile-tab">
-                    </div> --}}
+            <div class="tab-pane show " id="org_leave" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <div class="row mt-3">
+                    <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12 ">
+                        <div class="card mb-0 leave-history">
+                            <div class="card-body">
+                                <h6 class="mb-2">Org Leave history</h6>
+
+                                <div class="table-responsive">
+                                    <div id="org_leaveHistory"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    </div>
+
     {{--  --}}
 
 
@@ -345,15 +385,7 @@
 
 
 
-    <div class="card mb-0 leave-history">
-        <div class="card-body">
-            <h6 class="mb-2">Leave history</h6>
 
-            <div class="table-responsive">
-                <div id="table_leaveHistory"></div>
-            </div>
-        </div>
-    </div>
 
 
 
@@ -744,8 +776,6 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script>
-
-
         var leavetypes_array = <?php echo json_encode(getAllLeaveTypes()); ?>;
         var employeesList_array = <?php echo json_encode($allEmployeesList); ?>;
 
@@ -908,6 +938,238 @@
                         )
                     }
                 }).render(document.getElementById("table_leaveHistory"));
+            }
+            if (document.getElementById("team_leaveHistory")) {
+                const grid = new gridjs.Grid({
+                    columns: [
+
+                        {
+                            id: 'user_id',
+                            name: 'Employee Name',
+                            hidden: true,
+                            formatter: function formatter(cell) {
+                                return gridjs.html(cell);
+                            }
+                        },
+                        {
+                            id: 'leave_type_id',
+                            name: 'Leave Type',
+                            formatter: function formatter(cell) {
+
+                                for (var i = 0; i < leavetypes_array.length; i++) {
+                                    if (leavetypes_array[i].id == cell)
+                                        return gridjs.html(leavetypes_array[i].leave_type);
+                                }
+                            }
+                        },
+                        {
+                            id: 'start_date',
+                            name: 'Start Date',
+                        },
+
+                        {
+                            id: 'end_date',
+                            name: 'End Date',
+                        },
+
+                        {
+                            id: 'leave_reason',
+                            name: 'Leave Reason',
+                        },
+                        {
+                            id: 'reviewer_user_id',
+                            name: 'Reviewer Name',
+                            formatter: function formatter(cell) {
+
+                                for (var i = 0; i < employeesList_array.length; i++) {
+                                    if (employeesList_array[i].id == cell)
+                                        return gridjs.html(employeesList_array[i].name);
+                                }
+                            }
+                        },
+                        {
+                            id: 'reviewer_comments',
+                            name: 'Reviewer Comments',
+                        },
+                        {
+                            id: 'status',
+                            name: 'Status',
+                            //     formatter: (cell, row) => {
+                            //         return h('button', {
+                            //             className: 'py-2 mb-4 px-4 border rounded-md text-white bg-blue-600',
+                            //             onClick: () => alert(
+                            //                 `Editing "${row.cells[0].data}" "${row.cells[1].data}"`
+                            //                 )
+                            //         }, 'Edit');
+
+                            // },
+                        },
+                        {
+                            id: 'actions',
+                            name: 'Action',
+                            formatter: function formatter(emp) {
+                                var htmlcontent = "";
+
+                                // if (leave_history.status == "Pending")
+                                //     htmlcontent =
+                                //     '<input type="button" value="Activate" onclick="activateEmployee(this)" id="button_activate_"' +
+                                //     emp.user_id + '" data-user_id="' + emp.user_id +
+                                //     '" class="status btn btn-orange py-1 onboard-employee-btn "></input>';
+                                // else
+                                //     htmlcontent =
+                                //     '<input type="button" value="Activate" class="status btn btn-orange py-1 onboard-employee-btn disabled"></input>';
+                                // <button class="btn btn-orange" data-bs-target="#leaveDetails_modal" data-bs-toggle="modal">
+                                //       <i class="fa  fa-sticky-note-o"></i>
+                                //     </button>
+
+                                htmlcontent =
+                                    '<input type="button" value="View" class="status btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal" disabled></input>';
+
+                                return gridjs.html(htmlcontent);
+                            }
+                        },
+                    ],
+                    pagination: {
+                        limit: 10
+                    },
+                    sort: true,
+                    search: true,
+                    server: {
+                        url: '{{ route('fetch-leavehistory') }}',
+                        then: data => data.map(
+                            leave_history => [
+                                leave_history.id,
+                                // leave_history.user_id,
+                                leave_history.leave_type_id,
+                                leave_history.start_date,
+                                leave_history.end_date,
+                                leave_history.leave_reason,
+                                leave_history.reviewer_user_id,
+                                //leave_history.notifications_users_id,
+                                leave_history.reviewer_comments,
+                                leave_history.status,
+                                leave_history,
+
+                            ]
+                        )
+                    }
+                }).render(document.getElementById("team_leaveHistory"));
+            }
+            if (document.getElementById("org_leaveHistory")) {
+                const grid = new gridjs.Grid({
+                    columns: [
+
+                        {
+                            id: 'user_id',
+                            name: 'Employee Name',
+                            hidden: true,
+                            formatter: function formatter(cell) {
+                                return gridjs.html(cell);
+                            }
+                        },
+                        {
+                            id: 'leave_type_id',
+                            name: 'Leave Type',
+                            formatter: function formatter(cell) {
+
+                                for (var i = 0; i < leavetypes_array.length; i++) {
+                                    if (leavetypes_array[i].id == cell)
+                                        return gridjs.html(leavetypes_array[i].leave_type);
+                                }
+                            }
+                        },
+                        {
+                            id: 'start_date',
+                            name: 'Start Date',
+                        },
+
+                        {
+                            id: 'end_date',
+                            name: 'End Date',
+                        },
+
+                        {
+                            id: 'leave_reason',
+                            name: 'Leave Reason',
+                        },
+                        {
+                            id: 'reviewer_user_id',
+                            name: 'Reviewer Name',
+                            formatter: function formatter(cell) {
+
+                                for (var i = 0; i < employeesList_array.length; i++) {
+                                    if (employeesList_array[i].id == cell)
+                                        return gridjs.html(employeesList_array[i].name);
+                                }
+                            }
+                        },
+                        {
+                            id: 'reviewer_comments',
+                            name: 'Reviewer Comments',
+                        },
+                        {
+                            id: 'status',
+                            name: 'Status',
+                            //     formatter: (cell, row) => {
+                            //         return h('button', {
+                            //             className: 'py-2 mb-4 px-4 border rounded-md text-white bg-blue-600',
+                            //             onClick: () => alert(
+                            //                 `Editing "${row.cells[0].data}" "${row.cells[1].data}"`
+                            //                 )
+                            //         }, 'Edit');
+
+                            // },
+                        },
+                        {
+                            id: 'actions',
+                            name: 'Action',
+                            formatter: function formatter(emp) {
+                                var htmlcontent = "";
+
+                                // if (leave_history.status == "Pending")
+                                //     htmlcontent =
+                                //     '<input type="button" value="Activate" onclick="activateEmployee(this)" id="button_activate_"' +
+                                //     emp.user_id + '" data-user_id="' + emp.user_id +
+                                //     '" class="status btn btn-orange py-1 onboard-employee-btn "></input>';
+                                // else
+                                //     htmlcontent =
+                                //     '<input type="button" value="Activate" class="status btn btn-orange py-1 onboard-employee-btn disabled"></input>';
+                                // <button class="btn btn-orange" data-bs-target="#leaveDetails_modal" data-bs-toggle="modal">
+                                //       <i class="fa  fa-sticky-note-o"></i>
+                                //     </button>
+
+                                htmlcontent =
+                                    '<input type="button" value="View" class="status btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal" disabled></input>';
+
+                                return gridjs.html(htmlcontent);
+                            }
+                        },
+                    ],
+                    pagination: {
+                        limit: 10
+                    },
+                    sort: true,
+                    search: true,
+                    server: {
+                        url: '{{ route('fetch-leavehistory') }}',
+                        then: data => data.map(
+                            leave_history => [
+                                leave_history.id,
+                                // leave_history.user_id,
+                                leave_history.leave_type_id,
+                                leave_history.start_date,
+                                leave_history.end_date,
+                                leave_history.leave_reason,
+                                leave_history.reviewer_user_id,
+                                //leave_history.notifications_users_id,
+                                leave_history.reviewer_comments,
+                                leave_history.status,
+                                leave_history,
+
+                            ]
+                        )
+                    }
+                }).render(document.getElementById("org_leaveHistory"));
             }
         });
     </script>
