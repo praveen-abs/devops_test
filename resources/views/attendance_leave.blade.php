@@ -26,21 +26,19 @@
                                     Leave Balance</a>
                             </li>
                             @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR', 'Manager']))
-
-                            <li class="nav-item text-muted " role="presentation">
-                                <a class="nav-link pb-2" data-bs-toggle="tab" href="#team_leaveBalance"
-                                    aria-selected="false" tabindex="-1" role="tab">
-                                    Team Leave Balance</a>
-                            </li>
+                                <li class="nav-item text-muted " role="presentation">
+                                    <a class="nav-link pb-2" data-bs-toggle="tab" href="#team_leaveBalance"
+                                        aria-selected="false" tabindex="-1" role="tab">
+                                        Team Leave Balance</a>
+                                </li>
                             @endif
 
                             @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
-
-                            <li class="nav-item text-muted " role="presentation">
-                                <a class="nav-link pb-2" data-bs-toggle="tab" href="#org_leave" aria-selected="false"
-                                    tabindex="-1" role="tab">
-                                    Org Leave Balance</a>
-                            </li>
+                                <li class="nav-item text-muted " role="presentation">
+                                    <a class="nav-link pb-2" data-bs-toggle="tab" href="#org_leave" aria-selected="false"
+                                        tabindex="-1" role="tab">
+                                        Org Leave Balance</a>
+                                </li>
                             @endif
                         </ul>
                     </div>
@@ -311,7 +309,8 @@
 
         <div class="modal fade" id="notificationModal" role="dialog" aria-hidden="true"
             style="opacity:1; display:none;background:#00000073;">
-            <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true" aria-labelledby="">
+            <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true"
+                aria-labelledby="">
                 <div class="modal-content">
                     <div class="modal-header border-0">
                         <h6 class="modal-title" id="modalHeader">
@@ -319,7 +318,8 @@
                         {{-- <button type="button" class="btn-close close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal" aria-label="Close">
 
                             </button> --}}
-                        <button type="button" class="close close-modal outline-none bg-transparent border-0 h3"
+                        <button type="button"
+                            class="close  popUp-close close-modal outline-none bg-transparent border-0 h3"
                             aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
@@ -335,7 +335,7 @@
 
                                 <button type="button" class="btn btn-primary submit_notify"
                                     id="modal_leave_reject">Submit</button>
-                                <button type="button" class="btn btn-light close-modal"
+                                <button type="button" class="btn btn-light  popUp-close close-modal"
                                     id="closeModal">Cancel</button>
                             </div>
                         </div>
@@ -928,6 +928,11 @@
             });
 
 
+            $('.popUp-close').click(function() {
+                $('#notificationModal').fadeOut(400);
+            })
+
+
 
 
             $('#modal_leave_reject').on('click', function(e) {
@@ -1054,7 +1059,7 @@
                     sort: true,
                     search: true,
                     server: {
-                        url: '{{ route('fetch-leavehistory', ['type'=>'employee']) }}',
+                        url: '{{ route('fetch-leavehistory', ['type' => 'employee']) }}',
                         then: data => data.map(
                             leave_history => [
                                 leave_history.id,
@@ -1189,7 +1194,7 @@
                     sort: true,
                     search: true,
                     server: {
-                        url: '{{ route('fetch-leavehistory', ['type'=>'team']) }}',
+                        url: '{{ route('fetch-leavehistory', ['type' => 'team']) }}',
                         then: data => data.map(
                             leave_history => [
                                 leave_history.id,
@@ -1306,7 +1311,7 @@
                     sort: true,
                     search: true,
                     server: {
-                        url: '{{ route('fetch-leavehistory', ['type'=>'org']) }}',
+                        url: '{{ route('fetch-leavehistory', ['type' => 'org']) }}',
                         then: data => data.map(
                             leave_history => [
                                 leave_history.id,
