@@ -28,6 +28,13 @@ class VmtAttendanceController extends Controller
 
     }
 
+    public function showAttendanceLeavePage(Request $request){
+
+        $allEmployeesList = User::all();
+        return view('attendance_leave',compact('allEmployeesList'));
+
+    }
+
     public function showAttendanceLeavePolicyPage(Request $request)
     {
         return view('attendance_leavepolicy');
