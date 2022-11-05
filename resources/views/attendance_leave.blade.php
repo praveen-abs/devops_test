@@ -919,7 +919,7 @@
                     sort: true,
                     search: true,
                     server: {
-                        url: '{{ route('fetch-leavehistory') }}',
+                        url: '{{ route('fetch-leavehistory', ['type'=>'org']) }}',
                         then: data => data.map(
                             leave_history => [
                                 leave_history.id,
