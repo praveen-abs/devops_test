@@ -24,7 +24,7 @@
     <script src="{{ URL::asset('assets/libs/gridjs/gridjs.min.js') }}"></script>
     <script src="{{ URL::asset('/assets/js/pages/dashboard-projects.init.js') }}"></script>
 
-    
+
     <script>
         var timesheetArray = <?php echo json_encode($employeeAttendanceData); ?>;
 

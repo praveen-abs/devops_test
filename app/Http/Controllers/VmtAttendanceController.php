@@ -259,7 +259,7 @@ class VmtAttendanceController extends Controller
         $employeeAttendanceData = VmtEmployeeAttendance::all();
 
         //dd($employeeAttendanceData);
-        return view('vmt_attendance_timeSheet',compact('employeeAttendanceData'));
+        return view('vmt_attendance_timesheet',compact('employeeAttendanceData'));
     }
 
     /*
