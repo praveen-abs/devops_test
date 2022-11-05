@@ -112,7 +112,7 @@
 
 
 
-    <script>
+    <script >
         // function onlyNumberKey(evt) {
 
         //     // Only ASCII character in that range allowed
@@ -167,7 +167,11 @@
                 placeholder: "Select Nationality",
                 width: '100%'
             });
+            $('#marital_status').select2({
+                placeholder: "Select Marital Status",
+                width: '100%'
 
+            });
 
 
 
@@ -326,7 +330,7 @@
 
                 if ($('marital_status').val('married')) {
                     if (mygender == "Male") {
-                        console.log("Male selected");
+
                         $('#spouse_gender').val('female').trigger('change').prop('disabled', true);
                     } else if (mygender == "Female") {
 
@@ -334,7 +338,7 @@
                     }
                 } else if ($('marital_status').val('widowed')) {
                     if (mygender == "Male") {
-                        console.log("Male selected");
+
                         $('#spouse_gender').val('female').trigger('change').prop('disabled', true);
                     } else if (mygender == "Female") {
                         $('#spouse_gender').val('male').trigger('change').prop('disabled', true);
@@ -653,6 +657,8 @@
                 $('.children_container').html(data);
             });
 
+
+
             $('#marital_status').change(function() {
                 if ($('#marital_status').val() == 'unmarried') {
                     $.each($('.spouse_data'), function(value) {
@@ -854,16 +860,31 @@
 
             }
 
-            function populateMaritalStatusDropdown() {
+            function populatePhysicalChallenge(){
+                var physicalChallenged=[];
+                physicalChallenged['no']='No';
+                physicalChallenged['yes']='Yes';
+                var physicalChallenge_value = "{{ !empty($employee_details) && $employee_details->physically_challenged ? $employee_details->physically_challenged : ''}}";
+                const keys = physicalChallenged.keys();
 
+                  for (var key in physicalChallenged) {
+                    if(key == physicalChallenge_value)
+                        $('#physically_challenged').append('<option value="' + key + '" selected>' + physicalChallenged[key] + '</option>').trigger('change');
+                    else
+                        $('#physically_challenged').append('<option value="' + key + '">' + physicalChallenged[key] + '</option>').trigger('change');
+
+                }
+
+            }
+            populatePhysicalChallenge();
+
+            function populateMaritalStatusDropdown() {
                 var marital_status = [];
                 marital_status['unmarried'] = 'Unmarried';
                 marital_status['married'] = 'Married';
                 marital_status['widowed'] = 'Widowed';
                 marital_status['separated'] = 'Separated';
                 marital_status['divorced'] = 'Divorced';
-
-
                 var backend_value = "{{ !empty($employee_details) && $employee_details->marital_status ? $employee_details->marital_status : ''}}";
 
                 //create the dropdown
@@ -871,9 +892,11 @@
 
                 for (var key in marital_status) {
                     if(key == backend_value)
-                        $('#marital_status').append('<option value="' + key + '" selected>' + marital_status[key] + '</option>');
+                        $('#marital_status').append('<option value="' + key + '" selected>' + marital_status[key] + '</option>').trigger('change');
+
+                        // $('#permanent_country').val($('#current_country').val()).trigger('change');
                     else
-                        $('#marital_status').append('<option value="' + key + '">' + marital_status[key] + '</option>');
+                        $('#marital_status').append('<option value="' + key + '">' + marital_status[key] + '</option>').trigger('change');
 
                 }
 
@@ -1098,7 +1121,6 @@
                     if($(this).attr('name') == "submit_form")  //Form is saved and employee is onboarded
                     {
                         console.log("Submitting Onboard data");
-
                         var formData = new FormData($("#form-1")[0]);
                         saveOrSubmitForm("1", formData);
                     }

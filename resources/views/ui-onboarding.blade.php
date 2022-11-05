@@ -84,6 +84,7 @@
                                                 <div class="floating">
                                                     <label for="" class="float-label">Marital Status <span
                                                             class="text-danger">*</span></label>
+
                                                     <select placeholder="Marital Status" name="marital_status"
                                                         id="marital_status"
                                                         class="onboard-form form-control textbox select2_form_without_search "
@@ -91,7 +92,7 @@
                                                         <option value="" hidden selected disabled>Marital
                                                             Status</option>
                                                     </select>
-                                                    <!-- <label for="" class="float-label">Marital Status</label> -->
+
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 mb-2">
@@ -335,15 +336,15 @@
                                                     <select placeholder="Physically Challenged"
                                                         name="physically_challenged"
                                                         class="onboard-form form-control textbox  select2_form_without_search"
-                                                        required>
-                                                        <option value="" hidden selected disabled>Physically
+                                                        required id="physically_challenged">
+                                                        {{-- <option value="" hidden selected disabled>Physically
                                                             Challenged</option>
                                                         <option value="yes"
                                                             @if ($value == 'yes') selected @endif>Yes
                                                         </option>
                                                         <option value="no"
                                                             @if ($value == 'no') selected @endif>No
-                                                        </option>
+                                                        </option> --}}
                                                     </select>
                                                     <!-- <label for="" class="float-label">Physically Challenged</label> -->
                                                 </div>
