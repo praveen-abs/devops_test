@@ -55,9 +55,8 @@
 }
 
 .orgchart .node:not(:only-child)::after {
-    background-color: #002f56 !important;
-    top: -19px;
-    height: 17px !important;
+    top: -20px;
+    height: 18px !important;
 }
 .orgchart .node:not(:only-child)::before{
     background-color: #002f56 !important;
@@ -100,7 +99,7 @@
     background-color: #002f56 !important;
 }
 .orgchart .logo-level:not(:only-child)::after{
-    height: 14px !important;
+    height: 21px !important;
     top: 48px !important;
 
 }
@@ -124,21 +123,20 @@
 }
 
 .orgchart .node {
-
     height: auto;
     width: 250px;
     min-height: 35px;
     background-color: #ffffff !important;
     /* overflow: hidden; */
     color: #003156;
-    margin: 6px 20px;
+    margin: 9px 20px;
     border-radius: 50px !important;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
 }
 .orgchart .node .title {
     background-color: transparent !important;
-    /* margin: 0px 50px; */
-    /* position: relative; */
+   min-width: 100px !important;
+   width: auto !important;
     margin: 0px 0px 0px 55px;
     justify-content: start;
     display: flex;
@@ -237,20 +235,17 @@
     content: "";
     position: absolute;
     bottom: 0px;
-    left: calc(50% - 1px);
     width: 2px;
-    /* height: 9px; */
     background-color: #002f56 !important;
-    left: calc(50% - 1px) !important;
-    top: -18px;
-    height: 15px !important;
+    left: calc(50% - 1px);
+    top: -20px;
+    height: 18px;
     margin: 0px 0px;
 
 }
 
 .oc-export-btn {
     background-color: transparent;
-
     transition: 0.4s ease-in;
     color: #fff;
     font-weight: 600;
