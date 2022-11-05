@@ -169,7 +169,7 @@
                                 <h6 class="mb-2">Leave history</h6>
 
                                 <div class="table-responsive">
-                                    <div id="table_leaveHistory"></div>
+                                    <div id="emp_leaveHistory"></div>
                                 </div>
                             </div>
                         </div>
@@ -307,6 +307,43 @@
                 </div>
             </div>
         </div>
+
+
+        <div class="modal fade" id="notificationModal" role="dialog" aria-hidden="true"
+            style="opacity:1; display:none;background:#00000073;">
+            <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true" aria-labelledby="">
+                <div class="modal-content">
+                    <div class="modal-header border-0">
+                        <h6 class="modal-title" id="modalHeader">
+                        </h6>
+                        {{-- <button type="button" class="btn-close close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal" aria-label="Close">
+
+                            </button> --}}
+                        <button type="button" class="close close-modal outline-none bg-transparent border-0 h3"
+                            aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mt-4">
+                            <p class="mb-3 text-muted f-15 text-center" id="modalNot"></p>
+                            <textarea name="reject_content" id="leave_reject_content" class="form-control mb-3"></textarea>
+                            <div class="text-end">
+                                <input type="hidden" id="selected_leaveId" />
+                                <input type="hidden" id="selected_userId" />
+                                <input type="hidden" id="selected_statusText" />
+
+                                <button type="button" class="btn btn-primary submit_notify"
+                                    id="modal_leave_reject">Submit</button>
+                                <button type="button" class="btn btn-light close-modal"
+                                    id="closeModal">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     {{--  --}}
@@ -430,7 +467,7 @@
                             </select>
                         </div>
                     </div>
-                    <div id="table_leaveHistory">
+                    <div id="emp_leaveHistory">
                     </div>
 
 
@@ -770,6 +807,7 @@
         </div>
     </div>
 
+
     </div>
 @endsection
 @section('script')
@@ -785,7 +823,10 @@
         var leavetypes_array = <?php echo json_encode(getAllLeaveTypes()); ?>;
         var employeesList_array = <?php echo json_encode($allEmployeesList); ?>;
 
-
+        //grid table vars
+        var gridTable_emp_leaveHistory = "";
+        var gridTable_team_leaveHistory = "";
+        var gridTable_org_leaveHistory = "";
 
 
         $(document).ready(function() {
@@ -820,6 +861,11 @@
                         } else {
                             alert("Leave request failed. Contact your Admin");
                         }
+
+                        //Update all the gridjs tables
+                        gridTable_emp_leaveHistory.updateConfig({}).forceRender();
+                        gridTable_team_leaveHistory.updateConfig({}).forceRender();
+                        gridTable_org_leaveHistory.updateConfig({}).forceRender();
                     },
                     error: function(data) {
 
@@ -828,9 +874,92 @@
                 });
             });
 
+            function processLeaveApproveReject(leave_id, user_id, t_statusText, t_leave_rejection_text) {
+                $.ajax({
+                    url: "{{ url('attendance-approve-rejectleave') }}",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        'user_id': user_id,
+                        'leave_id': leave_id,
+                        'status': t_statusText,
+                        'leave_rejection_text': t_leave_rejection_text,
+                        "_token": "{{ csrf_token() }}",
+                    },
+                    success: function(data) {
+                        if (data.status == "success") {
 
-            if (document.getElementById("table_leaveHistory")) {
-                const grid = new gridjs.Grid({
+                            alert(data.message + " \n ");
+                            // location.reload();
+                        } else {
+                            alert("Leave request failed. Contact your Admin");
+                        }
+
+                        //Update all the gridjs tables
+                        gridTable_emp_leaveHistory.updateConfig({}).forceRender();
+                        gridTable_team_leaveHistory.updateConfig({}).forceRender();
+                        gridTable_org_leaveHistory.updateConfig({}).forceRender();
+
+                    },
+                    error: function(data) {
+
+
+                    }
+                });
+
+            }
+
+            $(document).on('click', '.reject-leave-btn', function(e) {
+                var leaveId = $(this).data('leave_id');
+                var userId = $(this).data('user_id');
+                var statusText = $(this).data('leave_status');
+
+                $('#selected_leaveId').val(leaveId);
+                $('#selected_userId').val(userId);
+                $('#selected_statusText').val(statusText);
+
+                $('#modalHeader').html("Rejected");
+                $('#modalNot').html(
+                    "Are you sure you want to reject leave. If yes, please entered the reason in the below command box:"
+                );
+                $('#notificationModal').show();
+                $('#notificationModal').removeClass('fade');
+
+            });
+
+
+
+
+            $('#modal_leave_reject').on('click', function(e) {
+
+                processLeaveApproveReject(
+                    $('#selected_leaveId').val(),
+                    $('#selected_userId').val(),
+                    $('#selected_statusText').val(),
+                    $('#leave_reject_content').val()
+                );
+            });
+
+            $(document).on('click', '.approve-leave-btn', function(e) {
+                console.log("Approve button clicked");
+                var leaveId = $(this).data('leave_id');
+                var userId = $(this).data('user_id');
+                var statusText = $(this).data('leave_status');
+
+                processLeaveApproveReject(leaveId, userId, statusText, '');
+            });
+
+
+
+
+
+
+            /// GRID JS code start ///
+            //TODO  :  Need to hide these code execution based on currentuser roles.
+
+
+            if (document.getElementById("emp_leaveHistory")) {
+                gridTable_emp_leaveHistory = new gridjs.Grid({
                     columns: [
 
                         {
@@ -943,11 +1072,11 @@
                             ]
                         )
                     }
-                }).render(document.getElementById("table_leaveHistory"));
+                }).render(document.getElementById("emp_leaveHistory"));
             }
 
             if (document.getElementById("team_leaveHistory")) {
-                const grid = new gridjs.Grid({
+                gridTable_team_leaveHistory = new gridjs.Grid({
                     columns: [
 
                         {
@@ -1017,6 +1146,22 @@
                             formatter: function formatter(emp) {
                                 var htmlcontent = "";
 
+                                var htmlcontent = "";
+                                //console.log(emp);
+                                if (emp.status == "Pending") {
+                                    htmlcontent =
+                                        '<input type="button" value="Approve" data-user_id="' + emp
+                                        .user_id +
+                                        '" data-leave_id="' + emp.id +
+                                        '" data-leave_status="Approved" class="status btn btn-orange py-1 approve-leave-btn"></input>';
+
+                                    htmlcontent = htmlcontent +
+                                        '&nbsp;&nbsp;<input type="button" value="Reject" id="button_activate_"' +
+                                        emp.user_id + '" data-user_id="' + emp.user_id +
+                                        '" data-leave_id="' + emp.id +
+                                        '" data-leave_status="Rejected" class="status btn btn-orange py-1 reject-leave-btn "></input>&nbsp;&nbsp;';
+                                }
+
                                 // if (leave_history.status == "Pending")
                                 //     htmlcontent =
                                 //     '<input type="button" value="Activate" onclick="activateEmployee(this)" id="button_activate_"' +
@@ -1029,10 +1174,12 @@
                                 //       <i class="fa  fa-sticky-note-o"></i>
                                 //     </button>
 
-                                htmlcontent =
-                                    '<input type="button" value="View" class="status btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal" disabled></input>';
+                                htmlcontent = htmlcontent +
+                                    '<input type="button" value="View" class="status btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal"></input>';
+
 
                                 return gridjs.html(htmlcontent);
+
                             }
                         },
                     ],
@@ -1064,7 +1211,7 @@
             }
 
             if (document.getElementById("org_leaveHistory")) {
-                const grid = new gridjs.Grid({
+                gridTable_org_leaveHistory = new gridjs.Grid({
                     columns: [
 
                         {
