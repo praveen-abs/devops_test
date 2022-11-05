@@ -138,61 +138,82 @@
                         <button type="button" class="modal-close popUp-close outline-none  border-0"
                             data-bs-dismiss="modal" aria-label="Close">×</button>
                     </div>
+
                     <div class="modal-body">
+                        <form id="regularizationForm">
+                            @csrf
+                            <div class="row">
+                                <div class="col-12 mb-2">
+                                    <div class="row">
+                                        <div class="col-6"><label class="text-ash-medium fs-15">Date</label></div>
+                                        <div class="col-6">
+                                            <span class="text-ash-medium fs-15" id="actual_checkin_date">27-10-2022,Monday</span>
 
-                        <div class="row">
-                            <div class="col-12 mb-2">
-                                <div class="row">
-                                    <div class="col-6"><label class="text-ash-medium fs-15">Date</label></div>
-                                    <div class="col-6"><span class="text-ash-medium fs-15">27-10-2022,Monday</span>
+                                             <input type="hidden" class="text-ash-medium form-control fs-15" name="attendance_date" id="attendance_date">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label class="text-ash-medium fs-15">
+                                                Actual Timing (Late Arrival)
+                                            </label>
+                                        </div>
+                                        <div class="col-6">
+                                            <span class="text-ash-medium fs-15" id="actual_checkin_time" >8:10</span>
+                                            <input type="hidden" name="attendance_user" id="attendance_user">
+                                            <input type="hidden" class="text-ash-medium form-control fs-15" name="arrival_time" id="arrival_time">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <div class="row">
+                                        <div class="col-6"><label class="text-ash-medium fs-15">Regularize Timing
+                                                as</label>
+                                        </div>
+                                        <div class="col-6">
+                                            <input class="text-ash-medium form-control fs-15" name="regularize_time" id="regular_shift_time">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <div class="row">
+                                        <div class="col-6"><label class="text-ash-medium fs-15">Reason</label></div>
+                                        <div class="col-6"> 
+                                            <select 
+                                                name="reason"
+                                                class="form-select btn-line-orange" 
+                                                id=""
+                                                onchange="showReasonBox(this)">
+                                                <option selected hidden disabled>
+                                                    Choose Reason
+                                                </option>
+                                                <option value="1">Others</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 ">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <textarea name="custom_reason" id="reasonBox" cols="30" rows="3" class="form-control "
+                                                placeholder="Reason here...." style="display:none"></textarea>
+                                        </div>
+
+
+
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 mb-2">
-                                <div class="row">
-                                    <div class="col-6"><label class="text-ash-medium fs-15">Actual Timing (Late
-                                            Arrival)</label></div>
-                                    <div class="col-6"><span class="text-ash-medium fs-15">8:10</span></div>
-                                </div>
-                            </div>
-                            <div class="col-12 mb-2">
-                                <div class="row">
-                                    <div class="col-6"><label class="text-ash-medium fs-15">Regularize Timing
-                                            as</label>
-                                    </div>
-                                    <div class="col-6"><input class="text-ash-medium form-control fs-15" value="8:10">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 mb-2">
-                                <div class="row">
-                                    <div class="col-6"><label class="text-ash-medium fs-15">Reason</label></div>
-                                    <div class="col-6"> <select class="form-select btn-line-orange" id=""
-                                            onchange="showReasonBox(this)">
-                                            <option selected hidden disabled>Choose Reason</option>
-                                            <option value="1">Others</option>
-
-                                        </select></div>
-                                </div>
-                            </div>
-                            <div class="col-12 ">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <textarea name="" id="reasonBox" cols="30" rows="3" class="form-control "
-                                            placeholder="Reason here...." style="display:none"></textarea>
-                                    </div>
-
-
-
-                                </div>
-                            </div>
-                        </div>
+                        </form>
+                       
 
 
                     </div>
                     <div class="modal-footer border-0 py-2">
 
-                        <button type="button" class="btn btn-orange">Apply Request</button>
+                        <button type="button" class="btn btn-orange" onclick="attendanceRegularize()">Apply Request</button>
                     </div>
                 </div>
             </div>
@@ -458,11 +479,43 @@
         }
 
         function showRegularizationModal(element) {
-            $('#regularizationModal').fadeIn(100);
+            
+            if($(element).val() == "LC"){
+                $('#actual_checkin_date').html($(element).data('checkin_date'));
+                $('#actual_checkin_time').html($(element).data('actual_timing'));
+                $('#regular_shift_time').val(shift_start_time);
+                $('#attendance_date').val($(element).data('checkin_date'));
+                $('#arrival_time').val($(element).data('actual_timing'));
+                $('#attendance_user').val(currentlySelectedUser);
+                //$('#')
+                $('#regularizationModal').fadeIn(100);
+            }
 
+           
             // $('#regularizationModal').addClass('fade');
-
         }
+
+        function attendanceRegularize() {
+            // body...
+            console.log($('#regularizationForm').serialize());
+
+             $.ajax({
+                url: "{{ route('attendance-req-regularization') }}",
+                type: "POST",
+                data: $('#regularizationForm').serialize(),
+                success: function(data) {
+                    console.log(data);
+
+                    alert(data.message);
+                    $('#regularizationModal').fadeOut(400);
+                    //update sidepanel
+                   
+
+                }
+            });
+        }
+
+
         $('.modal-close').click(function() {
             $('#regularizationModal').fadeOut(400);
         })
@@ -563,12 +616,18 @@
             // creating all cells
             var date = 1;
             //top to bottom
+
             for (var i = 0; i < 6; i++) {
 
                 var row = document.createElement("tr");
 
                 //left to right
                 for (var j = 0; j < 7; j++) {
+
+                    var isWeekEnd = isWeekEndDays(date, month, year); 
+
+
+
                     if (i === 0 && j < firstDay) {
                         cell = document.createElement("td");
                         cellText = document.createTextNode("");
@@ -593,16 +652,23 @@
                         cell.className = "_date-picker";
 
                         //check if the user is 'late coming'
-                        var arrival_time =
+                        //var arrival_time =
 
+                        if(isWeekEnd){
+                            cell.innerHTML = " <div class='w-100 h-100'><p class='show_date' >" + date +
+                            "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex justify-content-between'> </div> <div class='w-100 d-flex justify-content-between check-out mt-2 f-10 text-danger'> </div></div></div>"; 
 
+                        }else{
                             cell.innerHTML = " <div class='w-100 h-100'><p class='show_date' >" + date +
                             "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex justify-content-between'><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'><span id='checkin_time_" +
                             year + "-" + (month + 1) + "-" + dateText +
-                            "'></span>  </i>  <input type='button' onclick ='showRegularizationModal(this)' class='f-10 btn lc_btn border-0 btn-orange p-1'  value='LC' data-cellid ='checkin_time_" +
+                            "'></span>  </i>  <input type='button' onclick ='showRegularizationModal(this)' class='f-10 btn lc_btn border-0 btn-orange p-1'  value='Absent' data-cellid ='checkin_time_" +
                             year + "-" + (month + 1) + "-" + dateText +
                             "'/></div> <div class='w-100 d-flex justify-content-between check-out mt-2 f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'><span id='checkout_time_" +
-                            year + "-" + (month + 1) + "-" + dateText + "'></span></i> </div></div></div>";
+                            year + "-" + (month + 1) + "-" + dateText + "'></span></i> </div></div></div>";  
+                        }
+
+                            
 
                         if (date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) {
                             cell.className = "_date-picker selected";
@@ -619,7 +685,8 @@
 
             ajax_monthly_data.forEach((element) => {
                 //Get the date from the checkin time
-                console.log(element);
+                //console.log(element);
+
                 var calendar_cell_id = "";
                 var calendar_cell_id_value = "";
 
@@ -632,6 +699,19 @@
                     $('#checkin_time_' + calendar_cell_id).html('---');
                 }
 
+                if (element.is_lc) {
+                    var lcINputButton  = $('#checkin_time_' + calendar_cell_id).parent().parent().find('input');
+
+                    calendar_cell_id_value = element.checkin_time.split(" ")[1];
+                    calendar_cell_id = element.checkin_time.split(" ")[0];
+                    $(lcINputButton).attr('data-checkin_date', calendar_cell_id);
+                    $(lcINputButton).attr('data-actual_timing', calendar_cell_id_value);
+                    $(lcINputButton).attr('data-shift_timing', shift_start_time);
+                    $(lcINputButton).val("LC");
+                }else{
+                    var lcINputButton  = $('#checkin_time_' + calendar_cell_id).parent().parent().children('input').remove();
+                }
+
                 if (element.checkout_time) {
                     calendar_cell_id = element.checkout_time.split(" ")[0];
                     calendar_cell_id_value = element.checkout_time.split(" ")[1];
@@ -642,6 +722,8 @@
                 } else {
                     $('#checkout_time_' + calendar_cell_id).html('---');
                 }
+
+
             });
 
         }
@@ -649,6 +731,17 @@
         function daysInMonth(iMonth, iYear) {
             return 32 - new Date(iYear, iMonth, 32).getDate();
         }
+
+        function isWeekEndDays(iDay, iMonth, iYear){
+            var dayValue =  (new Date(iYear, iMonth, iDay)).getDay();
+            if(dayValue == 0){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+
 
         // for filter
         $(document).ready(function() {

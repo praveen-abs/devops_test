@@ -59,7 +59,7 @@ Route::get('/attendance-leavepolicy', [App\Http\Controllers\VmtAttendanceControl
 Route::get('/attendance-leavereports', [App\Http\Controllers\VmtAttendanceController::class, 'showAttendanceLeaveReportsPage'])->name('attendance-leavereports');
 
 Route::get('/attendance-timesheet', [App\Http\Controllers\VmtAttendanceController::class, 'showTimesheet'])->name('attendance-timesheet');
-Route::get('/attendance-req-regularization', [App\Http\Controllers\VmtAttendanceController::class, 'requestAttendanceRegularization'])->name('attendance-req-regularization');
+Route::post('/attendance-req-regularization', [App\Http\Controllers\VmtAttendanceController::class, 'requestAttendanceRegularization'])->name('attendance-req-regularization');
 
 
 
