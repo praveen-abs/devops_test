@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="{{ URL::asset('/assets/css/calendar-vanila.css') }}">
     <script src="{{ URL::asset('assets/js/calendar-vanila.js') }}" defer></script>
     <link href="{{ URL::asset('assets/css/attendance.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ URL::asset('/assets/css/pages_profile.css') }}">
+
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endsection
 @section('content')
@@ -857,7 +859,15 @@
                     },
                     success: function(data) {
                         if (data.status == "success") {
-                            alert(data.message + " \n " + data.mail_status);
+                            console.log("Leave requested successfully");
+                            swal({
+                                    title: data.message,
+                                    text: data.mail_status,
+                                    type: "success"
+                                }).then(function() {
+                                    location.reload();
+                                });
+                            //alert(data.message + " \n " + data.mail_status);
                         } else {
                             alert("Leave request failed. Contact your Admin");
                         }
@@ -975,7 +985,6 @@
                                 return gridjs.html(cell);
                             }
                         },
-
                         {
                             id: 'leave_type_id',
                             name: 'Leave Type',
@@ -1065,7 +1074,7 @@
                             leave_history => [
                                 leave_history.id,
                                 // leave_history.user_id,
-                                leave_history,
+                                //leave_history,
                                 leave_history.leave_type_id,
                                 leave_history.start_date,
                                 leave_history.end_date,
@@ -1087,10 +1096,23 @@
                     columns: [
 
                         {
-                            id: 'user_id',
-                            name: 'Employee Name',
+                            id: 'id',
+                            name: 'ID',
                             hidden: true,
                             formatter: function formatter(cell) {
+
+                                return gridjs.html(cell);
+                            }
+                        },
+                        {
+                            id: 'user_id',
+                            name: 'Employee Name',
+                            formatter: function formatter(cell) {
+                                for (var i = 0; i < employeesList_array.length; i++) {
+                                    if (employeesList_array[i].id == cell)
+                                        return gridjs.html(employeesList_array[i].name);
+                                }
+
                                 return gridjs.html(cell);
                             }
                         },
@@ -1200,7 +1222,7 @@
                         then: data => data.map(
                             leave_history => [
                                 leave_history.id,
-                                // leave_history.user_id,
+                                leave_history.user_id,
                                 leave_history.leave_type_id,
                                 leave_history.start_date,
                                 leave_history.end_date,
@@ -1221,12 +1243,52 @@
                 gridTable_org_leaveHistory = new gridjs.Grid({
                     columns: [
 
+
+                        {
+                            id: 'id',
+                            name: 'ID',
+                            hidden: true,
+                            formatter: function formatter(cell) {
+
+                                return gridjs.html(cell);
+                            }
+                        },
                         {
                             id: 'user_id',
                             name: 'Employee Name',
-                            hidden: true,
                             formatter: function formatter(cell) {
-                                return gridjs.html(cell);
+
+                                var output ="----";
+                                var emp_name ="...";
+
+                                for (var i = 0; i < employeesList_array.length; i++) {
+                                    if (employeesList_array[i].id == cell)
+                                        emp_name = employeesList_array[i].name;
+                                }
+
+                                <?php
+                                    $employee_icon = getEmployeeAvatarOrShortName(1);
+                                    //    dd($employee_icon);
+                                ?>
+                                @if (!empty($employee_icon))
+                                    @if ($employee_icon['type'] == 'shortname')
+
+                                        output ='<div class="col-auto p-0">'+
+                                                    '<span class="rounded-circle user-profile  ml-2 " id="">'+
+                                                        '<i id="topbar_username" class="align-middle ">{{ $employee_icon['data'] }}</i>'+
+                                                    '</span>'+
+                                                    '<span>&nbsp;&nbsp;'+emp_name+'</span>'+
+                                                '</div>';
+                                    @elseif($employee_icon['type'] == 'avatar')
+
+                                        output ='<div class="col-auto p-0">'+
+                                                    '<img class="rounded-circle header-profile-user" src=" {{ URL::asset('images/' . $employee_icon['data']) }}" alt="--">'+
+                                                    '<span>&nbsp;&nbsp;'+emp_name+'</span>'+
+                                                '</div>';
+                                    @endif
+                                @endif
+
+                                return gridjs.html(output);
                             }
                         },
                         {
@@ -1317,7 +1379,7 @@
                         then: data => data.map(
                             leave_history => [
                                 leave_history.id,
-                                // leave_history.user_id,
+                                leave_history.user_id,
                                 leave_history.leave_type_id,
                                 leave_history.start_date,
                                 leave_history.end_date,

@@ -37,12 +37,17 @@ class RequestLeaveMail extends Mailable
      */
     public function build()
     {
-        $output = $this->view('email_attendance_leaverequest')
+
+        $MAIL_FROM_ADDRESS = env('MAIL_FROM_ADDRESS');
+        $MAIL_FROM_NAME    = env('MAIL_FROM_NAME');
+
+        return $this->from($MAIL_FROM_ADDRESS,  $MAIL_FROM_NAME)
+                    ->subject("Leave Request")
+                    ->view('email_attendance_leaverequest')
                     ->with('employeeName', $this->employeeName)
                     ->with('empCode', $this->empCode)
                     ->with('loginLink', $this->loginLink)
                     ->with('image_view', $this->image_view);
 
-        return $output;
     }
 }

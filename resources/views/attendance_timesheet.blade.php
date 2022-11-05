@@ -507,6 +507,13 @@
                     console.log(data);
 
                     alert(data.message);
+                    swal({
+                        title:"Info",
+                        text: data.message,
+                        type: data.status
+                    }).then(function() {
+                       // location.reload();
+                    });
                     $('#regularizationModal').fadeOut(400);
                     //update sidepanel
 
