@@ -565,19 +565,7 @@
                     <div class="collapse menu-dropdown" id="helpDeskDrop-down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{ url('attendance_calendar') }}" class="nav-link sidebar py-1">Time
-                                    Sheet</a>
-
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="{{ url('attendance_calendar') }}" class="nav-link sidebar py-1">Team Time
-                                    Sheet</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="{{ route('attendance-timesheet') }}" class="nav-link sidebar py-1">Org
-                                    Sheet</a>
+                                <a href="{{ route('attendance-timesheet') }}" class="nav-link sidebar py-1">Timesheet</a>
                             </li>
 
 
