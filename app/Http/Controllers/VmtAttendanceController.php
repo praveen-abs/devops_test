@@ -349,8 +349,20 @@ class VmtAttendanceController extends Controller
     public function fetchUserTimesheet(Request $request)
     {
         $data = VmtEmployeeAttendance::where('user_id',$request->user_id)
-                                        ->whereMonth('checkin_time',$request->month)
-                                        ->orderBy('checkin_time', 'asc')->get(['checkin_time','checkout_time']);
+                    ->whereMonth('checkin_time',$request->month)
+                    ->orderBy('checkin_time', 'asc')->get(['checkin_time','checkout_time']);
+
+        $regularTime  = VmtWorkShifts::where('shift_type', 'First Shift')->first();
+        //dd($regularTime->shift_start_time);
+
+        foreach ($data as $key => $value) {
+            // code...
+            $checkinDate  = Carbon::parse($value->checkin_time)->toDateString();
+            $shiftStartTime  = Carbon::parse($checkinDate .' '.$regularTime->shift_start_time);
+            $checkInTime = Carbon::parse($value->checkin_time);
+            $isRegular = $shiftStartTime->lte($checkInTime);
+            $data[$key]['is_lc'] = $isRegular;
+        }
 
         //dd($data->toArray());
         return $data;
@@ -389,6 +401,7 @@ class VmtAttendanceController extends Controller
     public function requestAttendanceRegularization(Request $request){
 
         $attendanceRegularizationRequest = new VmtEmployeeAttendanceRegularization;
+        $attendanceRegularizationRequest->user_id = $request->attendance_user;
         $attendanceRegularizationRequest->attendance_date = $request->attendance_date;
         $attendanceRegularizationRequest->arrival_time = $request->arrival_time;
         $attendanceRegularizationRequest->regularize_time = $request->regularize_time;
