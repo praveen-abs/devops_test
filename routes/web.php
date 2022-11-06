@@ -86,7 +86,7 @@ Route::post('/attendance-approve-rejectleave', [App\Http\Controllers\VmtAttendan
 
 //Att Regularize
 Route::get('/attendance-regularization-approvals', [App\Http\Controllers\VmtAttendanceController::class, 'showLateComingApprovalPage'])->name('attendance-regularization-approvals');
-Route::post('/attendance-regularization-approvals', [App\Http\Controllers\VmtAttendanceController::class, 'approveRejectLateComingRequest'])->name('attendance-regularization-approvals');
+Route::post('/attendance-regularization-approvals', [App\Http\Controllers\VmtAttendanceController::class, 'approveRejectAttendanceRegularization'])->name('attendance-regularization-approvals');
 Route::get('/fetch-regularization-approvals', [App\Http\Controllers\VmtAttendanceController::class, 'fetchAttendanceLateComingDetails'])->name('fetch-regularization-approvals');
 
 
