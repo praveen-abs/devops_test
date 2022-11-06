@@ -340,8 +340,8 @@
                                         '" data-lc_status="Rejected" class="status btn btn-orange py-1 reject-lc-btn "></input>&nbsp;&nbsp;';
                                 }
 
-                                htmlcontent = htmlcontent +
-                                    '<input type="button" value="View" class="status btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal"></input>';
+                                // htmlcontent = htmlcontent +
+                                //     '<input type="button" value="View" class="status btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal"></input>';
 
 
                                 return gridjs.html(htmlcontent);
