@@ -524,8 +524,9 @@ th.gridjs-th .gridjs-th-content {
 }
 .gridjs-table {
     width: 100% !important;
-    overflow-x: scroll;
+    text-align: center !important;
     table-layout: unset !important;
+
 }
 .js-pagination .gridjs-summary {
     font-size: 14px !important;
