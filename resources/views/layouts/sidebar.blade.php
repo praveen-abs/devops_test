@@ -102,6 +102,10 @@
                                     <span>Dashboard</span>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ url('email_attendance_leaverequest') }}"
+                                    class="nav-link sidebar py-1">Leave Request</a>
+                            </li>
 
 
 
@@ -121,10 +125,15 @@
                                                                 <a href="{{url('attendance_overtime')}}" class="nav-link sidebar py-1">OverTime</a>
                                                             </li> --}}
                                 <li class="nav-item">
+                                    <a href="{{ url('email_attendance_leaverequest') }}"
+                                        class="nav-link sidebar py-1">Leave Request</a>
+                                </li>
+                                <li class="nav-item">
                                     <a href="apps-calendar" class="nav-link sidebar py-1" role="button">
                                         <span>Attendance</span>
                                     </a>
                                 </li>
+
                                 <li class="nav-item">
                                     <a href="{{ route('dayWiseStaffAttendance') }}" class="nav-link sidebar py-1"
                                         role="button"><span>Org Timesheet</span></a>
@@ -140,8 +149,8 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0"href="{{ route('attendance-leave') }}" data-bs-toggle=""
-                        role="button" aria-expanded="false" aria-controls="sidebarRoles">
+                    <a class="nav-link sidebar menu-link pt-0"href="{{ route('attendance-leave') }}"
+                        data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarRoles">
                         <i><svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="512.000000pt"
                                 height="512.000000pt" viewBox="0 0 512.000000 512.000000"
                                 preserveAspectRatio="xMidYMid meet">
@@ -183,7 +192,7 @@
                                 </g>
                             </svg>
                         </i>
-                        <span>Leave</span>
+                        <span>Leaves</span>
                     </a>
                     {{-- <div class="collapse menu-dropdown" id="leaveDrop-Down">
                         <ul class="nav nav-sm flex-column">
@@ -292,7 +301,7 @@
                                 </svg>
                             </i>
 
-                            <span>My Tasks</span>
+                            <span>Approvals</span>
 
                         </a>
                         <div class="collapse menu-dropdown" id="mytasksDrop-Down">
@@ -302,15 +311,43 @@
                                     <a href="{{ route('vmt-approvals-emp-documents') }}" id=""
                                         class="nav-link sidebar py-1" data-bs-toggle="" role="button"
                                         aria-expanded="false"><span>
-                                            Documents Approval</span> </a>
-                                    <!-- <div class="collapse menu-dropdown sub-dropdown" id="approvalDrop-Down">
-                                    <ul class="nav flex-column">
-                                        <li class="nav-item">
-                                            <a href="{{ route('vmt-approvals-emp-documents') }}" class="nav-link sidebar">
-                                                <span> Documents Approval</span> </a>
-                                        </li>
-                                    </ul>
-                                </div> -->
+                                            Onboarding </span> </a>
+
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('vmt-approvals-emp-documents') }}" id=""
+                                        class="nav-link sidebar py-1" data-bs-toggle="" role="button"
+                                        aria-expanded="false"><span>
+                                            Attendance Regularization </span> </a>
+
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('vmt-approvals-emp-documents') }}" id=""
+                                        class="nav-link sidebar py-1" data-bs-toggle="" role="button"
+                                        aria-expanded="false"><span>
+                                            Leave</span> </a>
+
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('vmt-approvals-emp-documents') }}" id=""
+                                        class="nav-link sidebar py-1" data-bs-toggle="" role="button"
+                                        aria-expanded="false"><span>
+                                            OKR /PMS</span> </a>
+                                    {{-- PMS forms are approved here. Redirect to PMS dashboard --}}
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('vmt-approvals-emp-documents') }}" id=""
+                                        class="nav-link sidebar py-1" data-bs-toggle="" role="button"
+                                        aria-expanded="false"><span>
+                                            Reimbursement</span> </a>
+
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('vmt-approvals-emp-documents') }}" id=""
+                                        class="nav-link sidebar py-1" data-bs-toggle="" role="button"
+                                        aria-expanded="false"><span>
+                                            Taxations</span> </a>
+
                                 </li>
                             </ul>
                         </div>
