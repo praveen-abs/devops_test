@@ -1059,16 +1059,27 @@
                 if($('#email').val() == '')
                     basic_details_errors.push("Email");
 
+                console.log(basic_details_errors);
+
 
                 if(basic_details_errors.length > 0)
                 {
 
                     $('#modalHeader').html("Please fill the following details");
+                    $('#modalBody').html('');
+                    $('#modalBody').append("<ul class='list-style-numbered list-style-circle px-4'>");
+                    basic_details_errors.forEach(function(element){
+                        $('.list-style-numbered ').append('<li>'+element+'</li>');
+                    });
+                    $('#modalBody').append("</ul>");
+                    // $('#modalSubHeading').append(element);
 
-                    for(let a in basic_details_errors )
-                    {
-                        $('#modalSubHeading').html(a);
-                    }
+
+                    // for(let a in basic_details_errors )
+                    // {
+                    //     $('#modalSubHeading').val(a);
+                    //    // console.log(a);
+                    // }
 
                     $('#notificationModal').show();
                     $('#notificationModal').removeClass('fade');

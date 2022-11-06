@@ -1622,7 +1622,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card shadow  profile-box card-top-border p-2">
+                            <div class="card shadow mb-0  profile-box card-top-border p-2">
                                 <div class="card-body justify-content-center align-items-center ">
                                     <div class="header-card-text">
                                         <h6 class="mb-0">Personal Documents</h6>
@@ -1746,13 +1746,13 @@
                                                 next="row-6" placeholder="" name="save_form" id="save_button"
                                                 class="btn btn-orange  text-center processOnboardForm"
                                                 value="Submit">Save</button>
-                                            <br />
-                                            <div class="col-12 text-right"><button disabled type="button"
+
+                                            <button disabled type="button"
                                                     data="row-6" next="row-6" placeholder=""
                                                     name="submit_form" id="submit_button"
                                                     class="btn btn-orange  text-center processOnboardForm"
                                                     value="Submit">Submit</button>
-                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -1797,7 +1797,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <h6 class="text-muted m-0" id="modalSubHeading">---</h6>
+                <h6 class="text-muted m-0" id="modalSubHeading"></h6>
                 <!-- <div class="">
                     <h6 class="" id="modalSubHeading">---</h6>
                     <p class="text-muted mb-4" id="modalBody"></p>
