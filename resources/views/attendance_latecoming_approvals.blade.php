@@ -139,7 +139,7 @@
 
             function processLateComingApproveReject(lc_id, user_id, t_status, t_statusText) {
                 $.ajax({
-                    url: "{{ route('attendance-regularization-approvals') }}",
+                    url: "{{ route('process-attendance-regularization-approvals') }}",
                     type: "POST",
                     dataType: "json",
                     data: {
