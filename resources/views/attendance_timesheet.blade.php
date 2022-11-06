@@ -233,7 +233,7 @@
         var currentMonth = today.getMonth();
         var currentYear = today.getFullYear();
         var selectYear = document.getElementById("_year");
-        var currentlySelectedUser = 0;
+        var currentlySelectedUser = "{{ Auth::user()->id }}";
 
 
 
@@ -491,11 +491,14 @@
                 $('#regularizationModal').fadeIn(100);
             }
 
-
             // $('#regularizationModal').addClass('fade');
         }
 
         function attendanceRegularize() {
+
+
+            console.log("Attendance user : "+$('#attendance_user').val());
+
             // body...
             console.log($('#regularizationForm').serialize());
 
@@ -506,7 +509,11 @@
                 success: function(data) {
                     console.log(data);
 
-                    alert(data.message);
+
+                    //Change the LC button to 'Applied' status
+
+
+                    //alert(data.message);
                     swal({
                         title:"Info",
                         text: data.message,
@@ -680,6 +687,7 @@
                         if (date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) {
                             cell.className = "_date-picker selected";
                         }
+
                         row.appendChild(cell);
                         date++;
                     }
@@ -716,7 +724,8 @@
                     $(lcINputButton).attr('data-shift_timing', shift_start_time);
                     $(lcINputButton).val("LC");
                 }else{
-                    var lcINputButton  = $('#checkin_time_' + calendar_cell_id).parent().parent().children('input').remove();
+                    var lcINputButton  = $('#checkin_time_' + calendar_cell_id).parent().parent().children('input');
+                    console.log("Button to be removed : "+lcINputButton);
                 }
 
                 if (element.checkout_time) {
