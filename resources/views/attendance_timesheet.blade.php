@@ -714,7 +714,7 @@
                     $('#checkin_time_' + calendar_cell_id).html('---');
                 }
 
-                if (element.is_lc) {
+                if (element.is_lc && (!element.is_lc_applied)) {
                     var lcINputButton  = $('#checkin_time_' + calendar_cell_id).parent().parent().find('input');
 
                     calendar_cell_id_value = element.checkin_time.split(" ")[1];
@@ -724,8 +724,10 @@
                     $(lcINputButton).attr('data-shift_timing', shift_start_time);
                     $(lcINputButton).val("LC");
                 }else{
-                    var lcINputButton  = $('#checkin_time_' + calendar_cell_id).parent().parent().children('input');
-                    console.log("Button to be removed : "+lcINputButton);
+                    var lcINputButton  = $('#checkin_time_' + calendar_cell_id).parent().parent().find('input');
+                    $(lcINputButton).val("");
+                    $(lcINputButton).remove();
+                    //console.log("Button to be removed : "+lcINputButton);
                 }
 
                 if (element.checkout_time) {

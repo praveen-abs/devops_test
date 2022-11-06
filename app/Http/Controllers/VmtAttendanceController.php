@@ -389,7 +389,7 @@ class VmtAttendanceController extends Controller
             $isRegular = $shiftStartTime->lte($checkInTime);
 
             $data[$key]['is_lc'] = $isRegular;
-            $data[$key]['is_lc_applied'] = $this->isLateComingRequestApplied($request->user_id, $attendance_date);
+            $data[$key]['is_lc_applied'] = $this->isLateComingRequestApplied($request->user_id, $checkinDate);
         }
 
         //dd($data->toArray());
@@ -399,6 +399,13 @@ class VmtAttendanceController extends Controller
 
     private function isLateComingRequestApplied($user_id, $attendance_date){
 
+        $existCount = VmtEmployeeAttendanceRegularization::where('attendance_date', $attendance_date)
+                ->where('user_id',  $user_id)->count();
+        
+        if($existCount == 0)
+            return false;
+        else
+            return true; 
     }
 
     public function fetchTeamTimesheet(Request $request)
