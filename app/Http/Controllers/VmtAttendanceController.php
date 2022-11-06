@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\ApproveRejectLeaveMail;
 use App\Mail\RequestLeaveMail;
+use App\Mail\VmtAttendanceMail_Regularization;
 use App\Models\User;
 use App\Models\VmtEmployeeAttendance;
 use App\Models\VmtEmployeeLeaves;
@@ -306,7 +307,6 @@ class VmtAttendanceController extends Controller
                                     ->where('user_id',$user_id)
                                     ->get();
 
-        dd($employeeAttendanceData);
         return $employeeAttendanceData;
     }
 
@@ -477,6 +477,10 @@ class VmtAttendanceController extends Controller
         return $allEmployees_lateComing;
     }
 
+    /*
+        Employee send request to HR for attendance regularization
+
+    */
     public function applyRequestAttendanceRegularization(Request $request){
        // dd($request->all());
 
@@ -505,9 +509,46 @@ class VmtAttendanceController extends Controller
             $attendanceRegularizationRequest->save();
         }
 
+
+        ////Send mail to Manager
+
+        $mail_status = "";
+
+        //Get manager details
+        $manager_usercode = VmtEmployeeOfficeDetails::where('user_id',$request->attendance_user)->value('l1_manager_code');
+        $manager_details = User::join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
+                        ->where('users.user_code',$manager_usercode)->first(['users.name','users.user_code','vmt_employee_office_details.officical_mail']);
+
+        //dd($manager_details->officical_mail);
+
+
+        $VmtGeneralInfo = VmtGeneralInfo::first();
+        $image_view = url('/') . $VmtGeneralInfo->logo_img;
+
+        $isSent    = \Mail::to($manager_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
+                                                                auth::user()->name,
+                                                                auth::user()->user_code,
+                                                                $request->attendance_date,
+                                                                $manager_details->name,
+                                                                $manager_details->user_code,
+                                                                request()->getSchemeAndHttpHost(),
+                                                                $image_view,
+                                                                $request->custom_reason,
+                                                                "Pending"));
+
+        if( $isSent) {
+            $mail_status = "Mail sent successfully";
+
+         } else {
+            $mail_status= "There was one or more failures.";
+        }
+
+
+
         return $responseJSON = [
             'status' => 'success',
             'message' => 'Request sent successfully!',
+            'mail_status' => $mail_status,
             'data' => [],
         ];
     }
@@ -535,9 +576,44 @@ class VmtAttendanceController extends Controller
 
         }
 
+        //Send mail to Employee
+
+        $mail_status = "";
+
+        //Get employee details
+        $employee_details = User::join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
+                        ->where('users.id',$data->user_id)->first(['users.name','users.user_code','vmt_employee_office_details.officical_mail']);
+
+        //dd($employee_details->officical_mail);
+
+
+        $VmtGeneralInfo = VmtGeneralInfo::first();
+        $image_view = url('/') . $VmtGeneralInfo->logo_img;
+
+        $isSent    = \Mail::to($employee_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
+                                                                $employee_details->name,
+                                                                $employee_details->user_code,
+                                                                $data->attendance_date,
+                                                                auth::user()->name,
+                                                                auth::user()->user_code,
+                                                                request()->getSchemeAndHttpHost(),
+                                                                $image_view,
+                                                                $request->status_text,
+                                                                $request->status));
+
+        if( $isSent) {
+            $mail_status = "Mail sent successfully";
+
+         } else {
+            $mail_status= "There was one or more failures.";
+        }
+
+
+
         return $responseJSON = [
-            'status' => $status,
-            'message' => $message,
+            'status' => 'success',
+            'message' => 'Regularization done successfully!',
+            'mail_status' => $mail_status,
             'data' => [],
         ];
     }
