@@ -38,7 +38,7 @@
                 <div class="card-body">
                     <div class="row ">
                         <div class="col-10">
-                            <h6 class="">Policy Settings</h6>
+                            <h6 class="">Leave Policy Settings</h6>
                         </div>
                         <div class="col-2 text-end">
                             <div class="input-group  me-2">

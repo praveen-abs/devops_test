@@ -639,6 +639,10 @@
                                         </span></a>
                                 </li>
                                 <li class="nav-item">
+                                    <a href="{{ route('attendance-leavesettings') }}" class="nav-link">Leave Settings<span>
+                                        </span></a>
+                                </li>
+                                <li class="nav-item">
                                     <a href="{{ url('attendance_shift_woff_hday') }}"
                                         class="nav-link sidebar py-1">Attendance</a>
 

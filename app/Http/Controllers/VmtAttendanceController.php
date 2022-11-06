@@ -35,9 +35,9 @@ class VmtAttendanceController extends Controller
 
     }
 
-    public function showAttendanceLeavePolicyPage(Request $request)
+    public function showAttendanceLeaveSettings(Request $request)
     {
-        return view('attendance_leavepolicy');
+        return view('attendance_leave_settings');
     }
 
     public function showAttendanceLeaveReportsPage(Request $request)
