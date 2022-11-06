@@ -16,8 +16,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Mail\WelcomeMail;
 use App\Models\VmtWorkShifts;
 use App\Models\VmtEmployeeAttendanceRegularization;
+use \Datetime;
 use Carbon\Carbon;
-
 
 class VmtAttendanceController extends Controller
 {
@@ -71,6 +71,8 @@ class VmtAttendanceController extends Controller
         return view('attendance_approvals',compact('allEmployeesList'));
 
     }
+
+
 
     public function approveRejectLeaveRequest(Request $request)
     {
@@ -401,11 +403,11 @@ class VmtAttendanceController extends Controller
 
         $existCount = VmtEmployeeAttendanceRegularization::where('attendance_date', $attendance_date)
                 ->where('user_id',  $user_id)->count();
-        
+
         if($existCount == 0)
             return false;
         else
-            return true; 
+            return true;
     }
 
     public function fetchTeamTimesheet(Request $request)
@@ -437,8 +439,46 @@ class VmtAttendanceController extends Controller
         return $all_employees;
     }
 
-    public function requestAttendanceRegularization(Request $request){
-        //dd($request->all());
+    /*
+        Also known as Attendance Regularization
+
+    */
+    public function showLateComingApprovalPage(Request $request){
+
+
+        return view('attendance_latecoming_approvals');
+
+    }
+
+    public function fetchAttendanceLateComingDetails(Request $request)
+    {
+
+
+        $allEmployees_lateComing = '';
+
+        $map_allEmployees = User::all(['id','name'])->keyBy('id');
+
+        $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::all();
+
+        //dd($allEmployees_lateComing);
+
+        foreach($allEmployees_lateComing as $singleItem){
+            $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
+            $singleItem->employee_avatar = getEmployeeAvatarOrShortName([$singleItem->user_id]);
+
+            //If reviewer_id = 0, then its not yet reviewed
+            if($singleItem->reviewer_id != 0)
+            {
+                $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_id]["name"];
+                $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName([$singleItem->reviewer_id]);
+            }
+        }
+        //dd($allEmployees_lateComing);
+        return $allEmployees_lateComing;
+    }
+
+    public function applyRequestAttendanceRegularization(Request $request){
+       // dd($request->all());
 
         //Check if already request applied
         $data = VmtEmployeeAttendanceRegularization::where('attendance_date', $request->attendance_date)
@@ -456,10 +496,11 @@ class VmtAttendanceController extends Controller
             $attendanceRegularizationRequest = new VmtEmployeeAttendanceRegularization;
             $attendanceRegularizationRequest->user_id = $request->attendance_user;
             $attendanceRegularizationRequest->attendance_date = $request->attendance_date;
-            $attendanceRegularizationRequest->arrival_time = $request->arrival_time;
-            $attendanceRegularizationRequest->regularize_time = $request->regularize_time;
+            $attendanceRegularizationRequest->arrival_time =  Carbon::createFromFormat('Y-m-d h:i:s',$request->attendance_date." ".$request->arrival_time);
+            $attendanceRegularizationRequest->regularize_time = Carbon::createFromFormat('Y-m-d h:i:s',$request->attendance_date." ".$request->regularize_time);
             $attendanceRegularizationRequest->reason_type = $request->reason;
             $attendanceRegularizationRequest->custom_reason = $request->custom_reason;
+            $attendanceRegularizationRequest->status = 'Pending';
 
             $attendanceRegularizationRequest->save();
         }
@@ -471,7 +512,7 @@ class VmtAttendanceController extends Controller
         ];
     }
 
-    public function approveAttendanceRegularization(Request $request){
+    public function approveRejectAttendanceRegularization(Request $request){
 
         $status = "failure";
         $message = "Invalid request. Kindly contact the HR/Admin";

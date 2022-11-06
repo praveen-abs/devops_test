@@ -59,7 +59,7 @@ Route::get('/attendance-leavepolicy', [App\Http\Controllers\VmtAttendanceControl
 Route::get('/attendance-leavereports', [App\Http\Controllers\VmtAttendanceController::class, 'showAttendanceLeaveReportsPage'])->name('attendance-leavereports');
 
 Route::get('/attendance-timesheet', [App\Http\Controllers\VmtAttendanceController::class, 'showTimesheet'])->name('attendance-timesheet');
-Route::post('/attendance-req-regularization', [App\Http\Controllers\VmtAttendanceController::class, 'requestAttendanceRegularization'])->name('attendance-req-regularization');
+Route::post('/attendance-req-regularization', [App\Http\Controllers\VmtAttendanceController::class, 'applyRequestAttendanceRegularization'])->name('attendance-req-regularization');
 
 
 
@@ -83,6 +83,11 @@ Route::post('/set-singleleavepolicy-record', [App\Http\Controllers\VmtAttendance
 Route::post('/attendance-applyleave', [App\Http\Controllers\VmtAttendanceController::class, 'saveLeaveRequestDetails'])->name('attendance-applyleave');
 
 Route::post('/attendance-approve-rejectleave', [App\Http\Controllers\VmtAttendanceController::class, 'approveRejectLeaveRequest']);
+
+//Att Regularize
+Route::get('/attendance-regularization-approvals', [App\Http\Controllers\VmtAttendanceController::class, 'showLateComingApprovalPage'])->name('attendance-regularization-approvals');
+Route::post('/attendance-regularization-approvals', [App\Http\Controllers\VmtAttendanceController::class, 'approveRejectLateComingRequest'])->name('attendance-regularization-approvals');
+Route::get('/fetch-regularization-approvals', [App\Http\Controllers\VmtAttendanceController::class, 'fetchAttendanceLateComingDetails'])->name('fetch-regularization-approvals');
 
 
 
