@@ -136,9 +136,23 @@ class VmtAttendanceController extends Controller
     {
         $leave_details = '';
 
+        $map_allEmployees = User::all(['id','name'])->keyBy('id');
+
         if($request->type == 'org')
         {
-            return VmtEmployeeLeaves::all();
+            $employeeLeaves_Org = VmtEmployeeLeaves::all();
+
+            //dd($map_allEmployees[1]["name"]);
+            foreach($employeeLeaves_Org as $singleItem){
+                $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
+                $singleItem->employee_avatar = getEmployeeAvatarOrShortName([$singleItem->user_id]);
+
+                $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_user_id]["name"];
+                $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName([$singleItem->reviewer_user_id]);
+            }
+
+            return $employeeLeaves_Org;
+
         }
         else
         if($request->type == 'team')
@@ -147,8 +161,20 @@ class VmtAttendanceController extends Controller
             $team_employees_ids = VmtEmployeeOfficeDetails::where('l1_manager_code',auth::user()->user_code)->get('user_id');
 
             //use wherein and fetch the relevant records
+            $employeeLeaves_team = VmtEmployeeLeaves::whereIn('user_id',$team_employees_ids)->get();
 
-            return VmtEmployeeLeaves::whereIn('user_id',$team_employees_ids)->get();
+
+            //dd($map_allEmployees[1]["name"]);
+            foreach($employeeLeaves_team as $singleItem){
+                $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
+                $singleItem->employee_avatar = getEmployeeAvatarOrShortName([$singleItem->user_id]);
+
+                $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_user_id]["name"];
+                $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName([$singleItem->reviewer_user_id]);
+            }
+
+            //dd($employeeLeaves_team);
+            return $employeeLeaves_team;
 
 
         }
@@ -184,7 +210,6 @@ class VmtAttendanceController extends Controller
         ];
 
         return $response;
-        return 'Saved';
     }
 
     public function saveLeaveRequestDetails(Request $request)
@@ -259,7 +284,7 @@ class VmtAttendanceController extends Controller
         $employeeAttendanceData = VmtEmployeeAttendance::all();
 
         //dd($employeeAttendanceData);
-        return view('vmt_attendance_timesheet',compact('employeeAttendanceData'));
+        return view('old_vmt_attendance_timesheet',compact('employeeAttendanceData'));
     }
 
     /*
@@ -341,7 +366,7 @@ class VmtAttendanceController extends Controller
         ->first(['users.id','users.name','vmt_employee_office_details.designation']);
 
 
-        return view('attendance_calendar',compact('current_employee_detail','shift_start_time','shift_end_time'));
+        return view('attendance_timesheet',compact('current_employee_detail','shift_start_time','shift_end_time'));
 
     }
 
@@ -405,7 +430,7 @@ class VmtAttendanceController extends Controller
         $attendanceRegularizationRequest->attendance_date = $request->attendance_date;
         $attendanceRegularizationRequest->arrival_time = $request->arrival_time;
         $attendanceRegularizationRequest->regularize_time = $request->regularize_time;
-        $attendanceRegularizationRequest->reason = $request->reason;
+        $attendanceRegularizationRequest->reason_type = $request->reason;
         $attendanceRegularizationRequest->custom_reason = $request->custom_reason;
 
         $attendanceRegularizationRequest->save();
@@ -416,4 +441,33 @@ class VmtAttendanceController extends Controller
             'data' => [],
         ];
     }
+
+    public function approveAttendanceRegularization(Request $request){
+
+        $status = "failure";
+        $message = "Invalid request. Kindly contact the HR/Admin";
+
+        $data = VmtEmployeeAttendanceRegularization::find($request->db_att_regularization_id);
+
+        if($data->exists())
+        {
+            $data->reviewer_id = $request->attendance_user;
+            $data->reviewer_comments = $request->attendance_date;
+            $data->reviewer_reviewed_date = $request->arrival_time;
+            $data->status = $request->regularize_time;
+
+            $data->save();
+
+            $status = "success";
+            $message = "Attendance Regularization is completed.";
+
+        }
+
+        return $responseJSON = [
+            'status' => $status,
+            'message' => $message,
+            'data' => [],
+        ];
+    }
+
 }

@@ -1105,15 +1105,31 @@
                             }
                         },
                         {
-                            id: 'user_id',
+                            id: 'employee_name',
                             name: 'Employee Name',
-                            formatter: function formatter(cell) {
-                                for (var i = 0; i < employeesList_array.length; i++) {
-                                    if (employeesList_array[i].id == cell)
-                                        return gridjs.html(employeesList_array[i].name);
+                            formatter: function formatter(leaveHistoryObj) {
+                                var output = "";
+
+                                if(leaveHistoryObj.employee_avatar.type == "shortname"){
+
+                                    output ='<div class="col-auto p-0">'+
+                                                '<span class="rounded-circle user-profile  ml-2 " id="">'+
+                                                    '<i class="topbar_username" class="align-middle ">'+leaveHistoryObj.employee_avatar.data+'</i>'+
+                                                '</span>'+
+                                                '<span>&nbsp;&nbsp;'+leaveHistoryObj.employee_name+'</span>'+
+                                            '</div>';
+                                }
+                                else
+                                if(leaveHistoryObj.employee_avatar.type == "avatar"){
+                                    var imageURL = "images/"+leaveHistoryObj.employee_avatar.data;
+
+                                    output ='<div class="col-auto p-0">'+
+                                                '<img class="rounded-circle header-profile-user" src="'+imageURL+'" alt="--">'+
+                                                '<span>&nbsp;&nbsp;'+leaveHistoryObj.employee_name+'</span>'+
+                                            '</div>';
                                 }
 
-                                return gridjs.html(cell);
+                                return gridjs.html(output);
                             }
                         },
                         {
@@ -1222,7 +1238,7 @@
                         then: data => data.map(
                             leave_history => [
                                 leave_history.id,
-                                leave_history.user_id,
+                                leave_history,
                                 leave_history.leave_type_id,
                                 leave_history.start_date,
                                 leave_history.end_date,
@@ -1254,39 +1270,30 @@
                             }
                         },
                         {
-                            id: 'user_id',
+                            id: 'employee_name',
                             name: 'Employee Name',
-                            formatter: function formatter(cell) {
+                            formatter: function formatter(leaveHistoryObj) {
 
-                                var output ="----";
-                                var emp_name ="...";
+                                var output = "";
 
-                                for (var i = 0; i < employeesList_array.length; i++) {
-                                    if (employeesList_array[i].id == cell)
-                                        emp_name = employeesList_array[i].name;
+                                if(leaveHistoryObj.employee_avatar.type == "shortname"){
+
+                                    output ='<div class="col-auto p-0">'+
+                                                '<span class="rounded-circle user-profile  ml-2 " id="">'+
+                                                    '<i class="topbar_username" class="align-middle ">'+leaveHistoryObj.employee_avatar.data+'</i>'+
+                                                '</span>'+
+                                                '<span>&nbsp;&nbsp;'+leaveHistoryObj.employee_name+'</span>'+
+                                            '</div>';
                                 }
+                                else
+                                if(leaveHistoryObj.employee_avatar.type == "avatar"){
+                                    var imageURL = "images/"+leaveHistoryObj.employee_avatar.data;
 
-                                <?php
-                                    $employee_icon = getEmployeeAvatarOrShortName(1);
-                                    //    dd($employee_icon);
-                                ?>
-                                @if (!empty($employee_icon))
-                                    @if ($employee_icon['type'] == 'shortname')
-
-                                        output ='<div class="col-auto p-0">'+
-                                                    '<span class="rounded-circle user-profile  ml-2 " id="">'+
-                                                        '<i id="topbar_username" class="align-middle ">{{ $employee_icon['data'] }}</i>'+
-                                                    '</span>'+
-                                                    '<span>&nbsp;&nbsp;'+emp_name+'</span>'+
-                                                '</div>';
-                                    @elseif($employee_icon['type'] == 'avatar')
-
-                                        output ='<div class="col-auto p-0">'+
-                                                    '<img class="rounded-circle header-profile-user" src=" {{ URL::asset('images/' . $employee_icon['data']) }}" alt="--">'+
-                                                    '<span>&nbsp;&nbsp;'+emp_name+'</span>'+
-                                                '</div>';
-                                    @endif
-                                @endif
+                                    output ='<div class="col-auto p-0">'+
+                                            '<img class="rounded-circle header-profile-user" src="'+imageURL+'" alt="--">'+
+                                            '<span>&nbsp;&nbsp;'+leaveHistoryObj.employee_name+'</span>'+
+                                        '</div>';
+                                }
 
                                 return gridjs.html(output);
                             }
@@ -1379,7 +1386,7 @@
                         then: data => data.map(
                             leave_history => [
                                 leave_history.id,
-                                leave_history.user_id,
+                                leave_history,
                                 leave_history.leave_type_id,
                                 leave_history.start_date,
                                 leave_history.end_date,
