@@ -98,14 +98,14 @@
                     <div class="modal-body">
                         <div class="mt-4">
                             <p class="mb-3 text-muted f-15 text-center" id="modalNot"></p>
-                            <textarea name="reject_content" id="leave_reject_content" class="form-control mb-3"></textarea>
+                            <textarea name="reject_content" id="status_text" class="form-control mb-3"></textarea>
                             <div class="text-end">
-                                <input type="hidden" id="selected_leaveId" />
+                                <input type="hidden" id="selected_LCId" />
                                 <input type="hidden" id="selected_userId" />
-                                <input type="hidden" id="selected_statusText" />
+                                <input type="hidden" id="selected_status" />
 
                                 <button type="button" class="btn btn-primary submit_notify"
-                                    id="modal_leave_reject">Submit</button>
+                                    id="modal_lc_reject">Submit</button>
                                 <button type="button" class="btn btn-light close-modal"
                                     id="closeModal">Cancel</button>
                             </div>
@@ -126,38 +126,10 @@
 
         var employeesList_array = '';
 
+        var gridjs_lateComingTable ="";
 
         $(document).ready(function() {
 
-            $('#btn_request_leave').on('click', function(e) {
-                console.log("Selected Button : " + $(this).attr('name'));
-
-                $.ajax({
-                    url: "{{ url('attendance-applyleave') }}",
-                    type: "POST",
-                    dataType: "json",
-                    data: {
-                        'user_id': $('#leave_type_id').val(),
-                        'start_date': $('#start_date').val(),
-                        'end_date': $('#end_date').val(),
-                        'leave_reason': $('#leave_reason').val(),
-                        'leave_type_id': $('#leave_type_id').val(),
-                        'notifications_users_id': $('#notifications_users_id').val(),
-                        "_token": "{{ csrf_token() }}",
-                    },
-                    success: function(data) {
-                        if (data.status == "success") {
-                            alert(data.message + " \n " + data.mail_status);
-                        } else {
-                            alert("Leave request failed. Contact your Admin");
-                        }
-                    },
-                    error: function(data) {
-
-
-                    }
-                });
-            });
 
             $(".close-modal").click(function() {
                 console.log('close');
@@ -165,25 +137,40 @@
             });
 
 
-            function processLeaveApproveReject(leave_id, user_id, t_statusText, t_leave_rejection_text) {
+            function processLateComingApproveReject(lc_id, user_id, t_status, t_statusText) {
                 $.ajax({
-                    url: "{{ url('attendance-approve-rejectleave') }}",
+                    url: "{{ route('process-attendance-regularization-approvals') }}",
                     type: "POST",
                     dataType: "json",
                     data: {
                         'user_id': user_id,
-                        'leave_id': leave_id,
-                        'status': t_statusText,
-                        'leave_rejection_text': t_leave_rejection_text,
+                        'lc_id': lc_id,
+                        'status': t_status,
+                        'status_text': t_statusText,
                         "_token": "{{ csrf_token() }}",
                     },
                     success: function(data) {
                         if (data.status == "success") {
+                            $("#notificationModal").hide();
 
-                            alert(data.message + " \n ");
+                            swal({
+                                    title: "Info",
+                                    text: data.message,
+                                    type: data.status
+                                }).then(function() {
+                                    location.reload();
+                                });
+
                             // location.reload();
                         } else {
-                            alert("Leave request failed. Contact your Admin");
+                           // alert("Leave request failed. Contact your Admin");
+                            swal({
+                                    title: "Info",
+                                    text: data.message,
+                                    type: data.status
+                                }).then(function() {
+                                    location.reload();
+                                });
                         }
                     },
                     error: function(data) {
@@ -194,18 +181,18 @@
 
             }
 
-            $(document).on('click', '.reject-leave-btn', function(e) {
-                var leaveId = $(this).data('leave_id');
+            $(document).on('click', '.reject-lc-btn', function(e) {
+                var lc_id = $(this).data('lc_id');
                 var userId = $(this).data('user_id');
-                var statusText = $(this).data('leave_status');
+                var statusText = $(this).data('lc_status');
 
-                $('#selected_leaveId').val(leaveId);
+                $('#selected_LCId').val(lc_id);
                 $('#selected_userId').val(userId);
-                $('#selected_statusText').val(statusText);
+                $('#selected_status').val(statusText);
 
                 $('#modalHeader').html("Rejected");
                 $('#modalNot').html(
-                    "Are you sure you want to reject leave. If yes, please entered the reason in the below command box:"
+                    "Are you sure you want to reject it. If yes, please entered the reason in the below command box:"
                 );
                 $('#notificationModal').show();
                 $('#notificationModal').removeClass('fade');
@@ -215,28 +202,28 @@
 
 
 
-            $('#modal_leave_reject').on('click', function(e) {
+            $('#modal_lc_reject').on('click', function(e) {
 
-                processLeaveApproveReject(
-                    $('#selected_leaveId').val(),
+                processLateComingApproveReject(
+                    $('#selected_LCId').val(),
                     $('#selected_userId').val(),
-                    $('#selected_statusText').val(),
-                    $('#leave_reject_content').val()
+                    $('#selected_status').val(),
+                    $('#status_text').val()
                 );
             });
 
-            $(document).on('click', '.approve-leave-btn', function(e) {
+            $(document).on('click', '.approve-lc-btn', function(e) {
                 console.log("Approve button clicked");
-                var leaveId = $(this).data('leave_id');
+                var LC_id = $(this).data('lc_id');
                 var userId = $(this).data('user_id');
-                var statusText = $(this).data('leave_status');
+                var status = $(this).data('lc_status');
 
-                processLeaveApproveReject(leaveId, userId, statusText, '');
+                processLateComingApproveReject(LC_id, userId, status, '');
             });
 
 
             if (document.getElementById("table_lateComingTable")) {
-                const grid = new gridjs.Grid({
+                gridjs_lateComingTable = new gridjs.Grid({
                     columns: [
 
                         {
@@ -314,6 +301,12 @@
                         {
                             id: 'reviewed_date',
                             name: 'Reviewed Date',
+                            formatter: function formatter(cell) {
+                                const date = new Date(cell);
+
+                                return gridjs.html(moment(date).format('h:mm a'));
+
+                            }
                         },
                         {
                             id: 'status',
@@ -337,19 +330,18 @@
                                 if (req.status == "Pending") {
                                     htmlcontent =
                                         '<input type="button" value="Approve" data-user_id="' + req.user_id +
-                                        '" data-leave_id="' + req.id +
-                                        '" data-leave_status="Approved" class="status btn btn-orange py-1 approve-leave-btn"></input>';
+                                        '" data-lc_id="' + req.id +
+                                        '" data-lc_status="Approved" class="status btn btn-orange py-1 approve-lc-btn"></input>';
 
                                     htmlcontent = htmlcontent +
                                         '&nbsp;&nbsp;<input type="button" value="Reject" id="button_activate_"' +
                                         req.user_id + '" data-user_id="' + req.user_id +
-                                        '" data-leave_id="' + req.id +
-                                        '" data-leave_status="Rejected" class="status btn btn-orange py-1 reject-leave-btn "></input>&nbsp;&nbsp;';
+                                        '" data-lc_id="' + req.id +
+                                        '" data-lc_status="Rejected" class="status btn btn-orange py-1 reject-lc-btn "></input>&nbsp;&nbsp;';
                                 }
 
-
-                                htmlcontent = htmlcontent +
-                                    '<input type="button" value="View" class="status btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal"></input>';
+                                // htmlcontent = htmlcontent +
+                                //     '<input type="button" value="View" class="status btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal"></input>';
 
 
                                 return gridjs.html(htmlcontent);
@@ -374,7 +366,7 @@
                                 //att_regularize.reviewer_user_id,
                                 //att_regularize.notifications_users_id,
                                 att_regularize.reviewer_comments,
-                                att_regularize.reviewed_date,
+                                att_regularize.reviewer_reviewed_date,
                                 att_regularize.status,
                                 att_regularize
 

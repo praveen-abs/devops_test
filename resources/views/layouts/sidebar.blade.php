@@ -315,7 +315,7 @@
 
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('vmt-approvals-emp-documents') }}" id=""
+                                    <a href="{{ route('attendance-regularization-approvals') }}" id=""
                                         class="nav-link sidebar py-1" data-bs-toggle="" role="button"
                                         aria-expanded="false"><span>
                                             Attendance Regularization </span> </a>

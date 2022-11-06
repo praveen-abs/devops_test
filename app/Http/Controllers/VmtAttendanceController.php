@@ -514,17 +514,19 @@ class VmtAttendanceController extends Controller
 
     public function approveRejectAttendanceRegularization(Request $request){
 
+        //dd($request->all());
+
         $status = "failure";
         $message = "Invalid request. Kindly contact the HR/Admin";
 
-        $data = VmtEmployeeAttendanceRegularization::find($request->db_att_regularization_id);
+        $data = VmtEmployeeAttendanceRegularization::find($request->lc_id);
 
         if($data->exists())
         {
-            $data->reviewer_id = $request->attendance_user;
-            $data->reviewer_comments = $request->attendance_date;
-            $data->reviewer_reviewed_date = $request->arrival_time;
-            $data->status = $request->regularize_time;
+            $data->reviewer_id = auth::user()->id;
+            $data->reviewer_reviewed_date = Carbon::today()->setTimezone('Asia/Kolkata');
+            $data->status = $request->status;
+            $data->reviewer_comments = $request->status_text ?? '---';
 
             $data->save();
 
