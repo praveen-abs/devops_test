@@ -385,13 +385,27 @@ class VmtAttendanceController extends Controller
             $checkinDate  = Carbon::parse($value->checkin_time)->toDateString();
             $shiftStartTime  = Carbon::parse($checkinDate .' '.$regularTime->shift_start_time);
             $checkInTime = Carbon::parse($value->checkin_time);
+
             $isRegular = $shiftStartTime->lte($checkInTime);
+
             $data[$key]['is_lc'] = $isRegular;
+            $data[$key]['is_lc_applied'] = $this->isLateComingRequestApplied($request->user_id, $checkinDate);
         }
 
         //dd($data->toArray());
         return $data;
 
+    }
+
+    private function isLateComingRequestApplied($user_id, $attendance_date){
+
+        $existCount = VmtEmployeeAttendanceRegularization::where('attendance_date', $attendance_date)
+                ->where('user_id',  $user_id)->count();
+        
+        if($existCount == 0)
+            return false;
+        else
+            return true; 
     }
 
     public function fetchTeamTimesheet(Request $request)
@@ -424,16 +438,31 @@ class VmtAttendanceController extends Controller
     }
 
     public function requestAttendanceRegularization(Request $request){
+        //dd($request->all());
 
-        $attendanceRegularizationRequest = new VmtEmployeeAttendanceRegularization;
-        $attendanceRegularizationRequest->user_id = $request->attendance_user;
-        $attendanceRegularizationRequest->attendance_date = $request->attendance_date;
-        $attendanceRegularizationRequest->arrival_time = $request->arrival_time;
-        $attendanceRegularizationRequest->regularize_time = $request->regularize_time;
-        $attendanceRegularizationRequest->reason_type = $request->reason;
-        $attendanceRegularizationRequest->custom_reason = $request->custom_reason;
+        //Check if already request applied
+        $data = VmtEmployeeAttendanceRegularization::where('attendance_date', $request->attendance_date)
+                ->where('user_id',  $request->attendance_user);
 
-        $attendanceRegularizationRequest->save();
+        if($data->exists())
+        {
+            dd("Request already applied");
+        }
+        else
+        {
+
+            //dd("Request not applied");
+
+            $attendanceRegularizationRequest = new VmtEmployeeAttendanceRegularization;
+            $attendanceRegularizationRequest->user_id = $request->attendance_user;
+            $attendanceRegularizationRequest->attendance_date = $request->attendance_date;
+            $attendanceRegularizationRequest->arrival_time = $request->arrival_time;
+            $attendanceRegularizationRequest->regularize_time = $request->regularize_time;
+            $attendanceRegularizationRequest->reason_type = $request->reason;
+            $attendanceRegularizationRequest->custom_reason = $request->custom_reason;
+
+            $attendanceRegularizationRequest->save();
+        }
 
         return $responseJSON = [
             'status' => 'success',
