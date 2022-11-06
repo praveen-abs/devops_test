@@ -2,6 +2,8 @@
     position: relative;
     overflow: auto;
     width: -webkit-fill-available;
+    min-height: 500px;
+
 }
 .hierarchy-wrapper .department-wise {
     position: absolute;
@@ -21,14 +23,13 @@
     /* height: auto; */
     text-align: center;
     border-radius: 6px;
-    overflow:unset !important;
+    overflow: unset !important;
     min-height: auto;
 }
 .orgchart .hierarchy {
     margin: 15px 0px;
 }
-.orgchart .node .bottomEdge{
-
+.orgchart .node .bottomEdge {
     bottom: -13px;
 }
 
@@ -45,7 +46,6 @@
     transform: none !important;
     position: relative;
     top: -50px;
-
 }
 
 .orgchart .hierarchy::before {
@@ -58,7 +58,7 @@
     top: -20px;
     height: 18px !important;
 }
-.orgchart .node:not(:only-child)::before{
+.orgchart .node:not(:only-child)::before {
     background-color: #002f56 !important;
     top: 48px;
     height: 12px !important;
@@ -70,13 +70,11 @@
     left: calc(50% - 1px) !important;
 }
 
-
-
 .orgchart .dept-level:not(:only-child)::after {
-   /* height: 28px;
+    /* height: 28px;
     top: 28px;
 */
-        content: "";
+    content: "";
     position: absolute;
     bottom: 0px;
     left: calc(50% - 1px);
@@ -87,7 +85,6 @@
     top: -18px;
     height: 16px !important;
     margin: 0px 0px;
-
 }
 
 .nodes .dept-level::before {
@@ -98,10 +95,9 @@
     width: 2px;
     background-color: #002f56 !important;
 }
-.orgchart .logo-level:not(:only-child)::after{
+.orgchart .logo-level:not(:only-child)::after {
     height: 21px !important;
     top: 48px !important;
-
 }
 
 .orgchart .hierarchy:first-child::before {
@@ -112,7 +108,6 @@
 .orgchart .hierarchy:last-child::before {
     width: calc(50% + 1px) !important;
 }
-
 
 .orgchart .node.focused {
     background-color: rgb(0 47 86 / 22%) !important;
@@ -130,13 +125,13 @@
     /* overflow: hidden; */
     color: #003156;
     margin: 9px 20px;
-    border-radius: 50px !important;
+    border-radius: 50px ;
     box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
 }
 .orgchart .node .title {
     background-color: transparent !important;
-   min-width: 100px !important;
-   width: auto !important;
+    min-width: 100px !important;
+    width: auto !important;
     margin: 0px 0px 0px 55px;
     justify-content: start;
     display: flex;
@@ -177,7 +172,6 @@
     width: 100%;
 }
 
-
 /* logo img */
 .logo-level .tree-avatar {
     left: 0px;
@@ -188,13 +182,10 @@
     padding: 4px;
     height: 50px !important;
     width: 150px !important;
-
-
 }
 .logo-level .tree-avatar img {
     height: 100%;
     width: 100%;
-
 }
 
 .orgchart .node .content {
@@ -215,7 +206,6 @@
 .orgchart .node.focused {
     background-color: none !important;
 }
-
 
 /* .orgchart .hierarchy::after{
     content: "";
@@ -241,7 +231,6 @@
     top: -20px;
     height: 18px;
     margin: 0px 0px;
-
 }
 
 .oc-export-btn {
@@ -256,7 +245,7 @@
     top: 0px;
     right: 25px;
     border: 1px solid #003256;
-    color: #EE6A04;
+    color: #ee6a04;
 }
 
 .hirarchy-wrapper {
@@ -333,13 +322,12 @@
     content: "-";
     top: -9px;
     left: calc(50% - 5px) !important;
-
 }
 
-.dept-level .oci-chevron-down::before,.dept-level
-.oci-chevron-up::before,.dept-level
-.orgchart .node .topEdge.oci-chevron-down::before,.dept-level
-.orgchart .node .topEdge.oci-chevron-up::before{
+.dept-level .oci-chevron-down::before,
+.dept-level .oci-chevron-up::before,
+.dept-level .orgchart .node .topEdge.oci-chevron-down::before,
+.dept-level .orgchart .node .topEdge.oci-chevron-up::before {
     top: 12px !important;
     left: calc(50% - 8px) !important;
 }
@@ -349,17 +337,28 @@
     left: 1px;
 }
 
-    /* logo node css */
-    .node.logo-level {
-        box-sizing: border-box;
-        display: inline-block;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        height: 50px;
-        width: 160px;
-        margin: 10px;
-        /* border-radius: 50px; */
-        box-shadow: none !important;
-        background-color: transparent !important;
-    }
+/* logo node css */
+.node.logo-level {
+    box-sizing: border-box;
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 50px;
+    width: 160px;
+    margin: 10px;
+    /* border-radius: 50px; */
+    box-shadow: none !important;
+    background-color: transparent !important;
+}
+
+.node.logo-level .tree-avatar img {
+    height: 45px;
+    width: 160px;
+    border-radius: 0px;
+}
+.node .tree-avatar img {
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+}

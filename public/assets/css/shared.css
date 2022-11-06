@@ -168,8 +168,8 @@ p {
     font-size: 13px !important;
 }
 .btn-success {
-    background-color: #863dd9;
-    border-color: #863dd9;
+    background-color: #23c931;
+    border-color: #23c931;
     transition: 0.4s ease-in;
     color: #fff;
     font-size: 13px;
@@ -178,16 +178,16 @@ p {
     font-size: 13px !important;
 }
 .btn-success:hover {
-    background-color: #863dd9 !important;
-    border-color: #863dd9 !important;
+    background-color: #23c931 !important;
+    border-color: #23c931 !important;
 }
 .btn-success:active {
-    background-color: #863dd9 !important;
-    border-color: #863dd9 !important;
+    background-color: #23c931 !important;
+    border-color: #23c931 !important;
 }
 .btn-success:focus {
-    background-color: #863dd9 !important;
-    border-color: #863dd9 !important;
+    background-color: #23c931 !important;
+    border-color: #23c931 !important;
     box-shadow: none !important;
 }
 .btn-info {
@@ -422,6 +422,14 @@ th.gridjs-th .gridjs-th-content {
     text-overflow: none !important;
     width: auto !important;
     min-width: auto !important;
+}
+
+.gridjs-table > tbody > tr > td:last-child {
+  text-align: center;
+}
+
+.gridjs-table > thead > tr > th{
+  text-align: center;
 }
 .gridjs-table > thead > tr > th:nth-child(1) {
     width: auto !important;
