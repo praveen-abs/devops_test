@@ -225,7 +225,7 @@
 @endsection
 @section('content')
 
-    <div class="card mt-30">
+    <div class="card mt-30 mb-0">
         <div class="card-body">
             <div class="fill salary-header nav-tab-header">
                 <div>
@@ -284,7 +284,7 @@
                                                                     </td>
                                                                     <td colspan="4" align="" class="pad-top-5">
                                                                         <p class="f-13 txt_blue  ">
-
+                                                                            HR/Attendance & Leave/2022/01
                                                                         </p>
                                                                     </td>
                                                                 </tr>
