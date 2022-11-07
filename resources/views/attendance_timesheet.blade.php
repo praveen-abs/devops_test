@@ -150,6 +150,7 @@
                     <div class="modal-body">
                         <form id="regularizationForm">
                             @csrf
+                            <input type="hidden" name="regularization_type" id="regularization_type" value="" />
                             <div class="row">
                                 <div class="col-12 mb-2">
                                     <div class="row">
@@ -171,7 +172,7 @@
                                         <div class="col-6">
                                             <span class="text-ash-medium fs-15" id="actual_checkin_time" >8:10</span>
                                             <input type="hidden" name="attendance_user" id="attendance_user">
-                                            <input type="hidden" class="text-ash-medium form-control fs-15" name="arrival_time" id="arrival_time">
+                                            <input type="hidden" class="text-ash-medium form-control fs-15" name="user_time" id="user_time">
                                         </div>
                                     </div>
                                 </div>
@@ -493,8 +494,23 @@
                 $('#actual_checkin_time').html($(element).data('actual_timing'));
                 $('#regular_shift_time').val(shift_start_time);
                 $('#attendance_date').val($(element).data('checkin_date'));
-                $('#arrival_time').val($(element).data('actual_timing'));
+                $('#user_time').val($(element).data('actual_timing'));
                 $('#attendance_user').val(currentlySelectedUser);
+                //$('#')
+                $('#regularization_type').val("LC");
+
+                $('#regularizationModal').fadeIn(100);
+            }
+            else
+            if($(element).val() == "EG"){
+                $('#actual_checkin_date').html($(element).data('checkin_date'));
+                $('#actual_checkin_time').html($(element).data('actual_timing'));
+                $('#regular_shift_time').val(shift_start_time);
+                $('#attendance_date').val($(element).data('checkin_date'));
+                $('#user_time').val($(element).data('actual_timing'));
+                $('#attendance_user').val(currentlySelectedUser);
+                $('#regularization_type').val("EG");
+
                 //$('#')
                 $('#regularizationModal').fadeIn(100);
             }
@@ -672,9 +688,6 @@
 
                         cell.setAttribute("data-month_name", months[month]);
                         cell.className = "_date-picker";
-
-                        //check if the user is 'late coming'
-                        //var arrival_time =
 
                         if(isWeekEnd){
                             cell.innerHTML = " <div class='w-100 h-100'><p class='show_date' >" + date +

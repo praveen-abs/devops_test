@@ -488,7 +488,7 @@ class VmtAttendanceController extends Controller
 
     */
     public function applyRequestAttendanceRegularization(Request $request){
-       // dd($request->all());
+        //dd($request->all());
 
         //Check if already request applied
         $data = VmtEmployeeAttendanceRegularization::where('attendance_date', $request->attendance_date)
@@ -506,7 +506,8 @@ class VmtAttendanceController extends Controller
             $attendanceRegularizationRequest = new VmtEmployeeAttendanceRegularization;
             $attendanceRegularizationRequest->user_id = $request->attendance_user;
             $attendanceRegularizationRequest->attendance_date = $request->attendance_date;
-            $attendanceRegularizationRequest->arrival_time =  Carbon::createFromFormat('Y-m-d h:i:s',$request->attendance_date." ".$request->arrival_time);
+            $attendanceRegularizationRequest->regularization_type =  $request->regularization_type;
+            $attendanceRegularizationRequest->user_time =  Carbon::createFromFormat('Y-m-d h:i:s',$request->attendance_date." ".$request->user_time);
             $attendanceRegularizationRequest->regularize_time = Carbon::createFromFormat('Y-m-d h:i:s',$request->attendance_date." ".$request->regularize_time);
             $attendanceRegularizationRequest->reason_type = $request->reason;
             $attendanceRegularizationRequest->custom_reason = $request->custom_reason;
