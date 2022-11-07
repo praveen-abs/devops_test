@@ -123,16 +123,15 @@
 
         var employeesList_array = <?php echo json_encode($allEmployeesList); ?>;
 
+        var leaverequest_type = '';
+
+        @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
+            leaverequest_type = '{{ route('fetch-leaverequests', ['type'=>'org','statusArray' => 'Pending' ]) }}';
+        @elseif(Str::contains(currentLoggedInUserRole(), ['Manager']))
+            leaverequest_type = '{{ route('fetch-leaverequests', ['type'=>'team','statusArray' => 'Pending' ]) }}';
+        @endif
 
         $(document).ready(function() {
-            // $('#notifications_users_id').select2({
-            //         dropdownParent: $("#modal_request_leave"),
-            //        width: '100%'
-            //     });
-
-            // $(document).on('#select-reviewer:open', () => {
-            //         $('.select2-search__field').focus();
-            //     });
 
 
 
@@ -187,8 +186,13 @@
                     success: function(data) {
                         if (data.status == "success") {
 
-                            alert(data.message + " \n ");
-                            // location.reload();
+                            swal({
+                                    title: "Info",
+                                    text: data.message,
+                                    type: "success"
+                                }).then(function() {
+                                    location.reload();
+                                });                            // location.reload();
                         } else {
                             alert("Leave request failed. Contact your Admin");
                         }
@@ -241,80 +245,6 @@
                 processLeaveApproveReject(leaveId, userId, statusText, '');
             });
 
-            // if (document.getElementById("attendance_approvals-table")) {
-            //     const grid = new gridjs.Grid({
-            //         columns: [{
-            //                 id: 'number',
-            //                 name: 'Employee',
-
-            //             },
-            //             {
-            //                 id: 'name ',
-            //                 name: ' Department',
-
-            //             },
-            //             {
-            //                 id: 'job_title',
-            //                 name: 'Location',
-            //             },
-            //             {
-            //                 id: 'reporting_to',
-            //                 name: 'Leave Dates',
-            //             },
-            //             {
-            //                 id: 'reporting_to',
-            //                 name: ' Leave Type',
-            //             },
-            //             {
-            //                 id: 'reporting_to',
-            //                 name: 'Status',
-            //             },
-            //             {
-            //                 id: 'reporting_to',
-            //                 name: 'Last Action By',
-            //             },
-            //             {
-            //                 id: 'reporting_to',
-            //                 name: 'Next Approvers',
-            //             },
-            //             {
-            //                 id: 'reporting_to',
-            //                 name: 'Leave Note',
-            //             },
-            //             {
-            //                 id: '',
-            //                 name: 'Actions',
-            //             },
-
-
-            //         ],
-            //         data: [
-            //             // {
-            //             //     name: 'John',
-            //             //     email: 'john@example.com',
-            //             //     phoneNumber: '(353) 01 222 3333'
-            //             // },
-            //             // {
-            //             //     name: 'Mark',
-            //             //     email: 'mark@gmail.com',
-            //             //     phoneNumber: '(01) 22 888 4444'
-            //             // },
-            //         ],
-
-            //         pagination: {
-            //             limit: 10
-            //         },
-            //         sort: true,
-            //         search: true,
-
-
-
-
-
-
-            //     }).render(document.getElementById("attendance_approvals-table")); // card Table
-            // }
-            // });
 
             if (document.getElementById("table_leaveHistory")) {
                 const grid = new gridjs.Grid({
@@ -433,7 +363,7 @@
                     sort: true,
                     search: true,
                     server: {
-                        url: '{{ route('fetch-leavehistory', ['type'=>'org']) }}',
+                        url: leaverequest_type,
                         then: data => data.map(
                             leave_history => [
                                 //leave_history.id,

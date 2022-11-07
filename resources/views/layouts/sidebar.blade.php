@@ -308,16 +308,14 @@
                             <ul class="nav nav-sm flex-column">
 
 
-                                @if (Str::contains(currentLoggedInUserRole(), ['Manager']))
+                                @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR', 'Manager']))
                                     <li class="nav-item">
-                                        <a href="{{ route('attendance-approvals') }}" id=""
+                                        <a href="{{ route('attendance-leave-approvals') }}" id=""
                                             class="nav-link sidebar py-1" data-bs-toggle="" role="button"
                                             aria-expanded="false">
                                             <span>Leave</span> </a>
                                     </li>
-                                @endif
 
-                                @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
 
                                     <li class="nav-item">
                                         <a href="{{ route('vmt-approvals-emp-documents') }}" id=""

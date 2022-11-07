@@ -103,6 +103,16 @@ function calculateAppraisalReviewRating_BasedOnHR(){
 */
 function calculateOverallReviewRating($user_id){
 
+    //Get all the assigned form's id for the given user_id
+    $FormIDs_assignedforms = VmtPMS_KPIFormAssignedModel::where('assignee_id',$user_id)->get('id');
+
+
+    //Get all the reviewform id for the given assignedform id's
+    $ReviewsForms_currentUser =  VmtPMS_KPIFormReviewsModel::whereIn('id',$FormIDs_assignedforms)->get();
+
+    dd($FormIDs_assignedforms);
+
+
 
 }
 

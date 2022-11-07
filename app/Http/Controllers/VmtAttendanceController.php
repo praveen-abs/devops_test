@@ -66,13 +66,12 @@ class VmtAttendanceController extends Controller
 
     }
 
-    public function showAttendanceApprovalPage(Request $request){
+    public function showLeaveApprovalPage(Request $request){
         $allEmployeesList = User::all(['id','name']);
 
-        return view('attendance_approvals',compact('allEmployeesList'));
+        return view('attendance_leave_approvals',compact('allEmployeesList'));
 
     }
-
 
 
     public function approveRejectLeaveRequest(Request $request)
@@ -137,13 +136,16 @@ class VmtAttendanceController extends Controller
 
     public function fetchLeaveRequestDetails(Request $request)
     {
-        $leave_details = '';
+        //Convert  'Pending', ' Approved' , 'Rejected' from csv to array
+        $statusArray = explode(",",$request->statusArray);
 
         $map_allEmployees = User::all(['id','name'])->keyBy('id');
 
         if($request->type == 'org')
         {
-            $employeeLeaves_Org = VmtEmployeeLeaves::all();
+            $employeeLeaves_Org='';
+
+            $employeeLeaves_Org = VmtEmployeeLeaves::whereIn('status',$statusArray)->get();
 
             //dd($map_allEmployees[1]["name"]);
             foreach($employeeLeaves_Org as $singleItem){
@@ -164,7 +166,9 @@ class VmtAttendanceController extends Controller
             $team_employees_ids = VmtEmployeeOfficeDetails::where('l1_manager_code',auth::user()->user_code)->get('user_id');
 
             //use wherein and fetch the relevant records
-            $employeeLeaves_team = VmtEmployeeLeaves::whereIn('user_id',$team_employees_ids)->get();
+            $employeeLeaves_team = VmtEmployeeLeaves::whereIn('user_id',$team_employees_ids)->
+                                                      whereIn('status',$statusArray)->
+                                                      get();
 
 
             //dd($map_allEmployees[1]["name"]);
@@ -184,7 +188,8 @@ class VmtAttendanceController extends Controller
         else
         if($request->type == 'employee')
         {
-            return VmtEmployeeLeaves::where('user_id',auth::user()->id)->get();
+            return VmtEmployeeLeaves::whereIn('status',$statusArray)->
+                                    where('user_id',auth::user()->id)->get();
         }
 
     }

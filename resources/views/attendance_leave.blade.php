@@ -1069,7 +1069,7 @@
                     sort: true,
                     search: true,
                     server: {
-                        url: '{{ route('fetch-leavehistory', ['type' => 'employee']) }}',
+                        url: '{{ route('fetch-leaverequests', ['type' => 'employee','statusArray' => 'Approved,Rejected' ]) }}',
                         then: data => data.map(
                             leave_history => [
                                 leave_history.id,
@@ -1234,7 +1234,7 @@
                     sort: true,
                     search: true,
                     server: {
-                        url: '{{ route('fetch-leavehistory', ['type' => 'team']) }}',
+                        url: '{{ route('fetch-leaverequests',  ['type' => 'team','statusArray' => 'Approved,Rejected' ]) }}',
                         then: data => data.map(
                             leave_history => [
                                 leave_history.id,
@@ -1382,7 +1382,7 @@
                     sort: true,
                     search: true,
                     server: {
-                        url: '{{ route('fetch-leavehistory', ['type' => 'org']) }}',
+                        url: '{{ route('fetch-leaverequests',  ['type' => 'org','statusArray' => 'Approved,Rejected' ]) }}',
                         then: data => data.map(
                             leave_history => [
                                 leave_history.id,
