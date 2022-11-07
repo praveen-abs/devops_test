@@ -9,10 +9,17 @@
 }
 
 /* for kpi all table */
-table.kpi_appraisal-table tr th,
-table.kpi_appraisal-table tr td {
-    border: 2px solid #fff;
+table.kpi_appraisal-table tr th table.kpi_appraisal-table tbody tr th{
+    border: 1px solid #fff;
     vertical-align: baseline;
+}
+table.kpi_appraisal-table tbody tr:last-child th{
+    border-bottom: 1px solid #002f56 !important;
+
+}
+
+table.kpi_appraisal-table tr td {
+border: 1px solid #002f56;
 }
 tr:first-child th:last-child {
     border-top-right-radius: 6px;
@@ -68,13 +75,13 @@ table.kpi_appraisal-table tbody tr td textarea {
 } */
 
 tr:last-child th:first-child {
-    border-bottom-left-radius: 6px !important;
+    /* border-bottom-left-radius: 6px !important; */
     border-left: 0px;
 }
 
 tr:last-child td:last-child {
     border-top-right-radius: 6px !important;
-    border-right: 0px;
+    /* border-right: 0px; */
 }
 table.rating_table tr td {
 text-align: center;
