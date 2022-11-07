@@ -42,16 +42,24 @@
                                                 aria-selected="true">
                                                 Timesheet</a>
                                         </li>
+
+                                        @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin','HR','Manager']))
+
                                         <li class="nav-item mx-2 ember-view" role="presentation ">
                                             <a class="nav-link ember-view" id="tab_teamtimesheet" data-bs-toggle="pill"
                                                 data-bs-target="#" type="button" role="tab" aria-controls="payslips"
                                                 aria-selected="false">Team Timesheet</a>
                                         </li>
+                                        @endif
+
+                                        @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin','HR']))
                                         <li class="nav-item ml-2  ember-view" role="presentation ">
                                             <a class="nav-link ember-view" id="tab_orgtimesheet" data-bs-toggle="pill"
                                                 data-bs-target="#" type="button" role="tab"
                                                 aria-controls="annual-earnings" aria-selected="false">Org Timesheet</a>
                                         </li>
+
+                                        @endif
 
                                     </ul>
 
