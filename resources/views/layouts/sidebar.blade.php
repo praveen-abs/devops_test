@@ -111,7 +111,6 @@
 
 
                             @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
-
                                 {{-- <li class="nav-item">
                                                                 <a href="{{url('attendance_shift_woff_hday')}}" class="nav-link sidebar py-1">Shift/WeeklyOff/Holidays</a>
                                                             </li> --}}
@@ -130,7 +129,7 @@
                                         <span>Attendance</span>
                                     </a>
                                 </li> --}}
-{{--
+                                {{--
                                 <li class="nav-item">
                                     <a href="{{ route('dayWiseStaffAttendance') }}" class="nav-link sidebar py-1"
                                         role="button"><span>Org Timesheet</span></a>
@@ -141,7 +140,8 @@
                                     class="nav-link sidebar py-1">Time Sheet</a>
                             </li> --}}
                             <li class="nav-item">
-                                <a href="{{ route('attendance-timesheet') }}" class="nav-link sidebar py-1">Timesheet</a>
+                                <a href="{{ route('attendance-timesheet') }}"
+                                    class="nav-link sidebar py-1">Timesheet</a>
                             </li>
 
                         </ul>
@@ -149,8 +149,8 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0"href="{{ route('attendance-leave') }}"
-                        data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarRoles">
+                    <a class="nav-link sidebar menu-link pt-0"href="{{ route('attendance-leave') }}" data-bs-toggle=""
+                        role="button" aria-expanded="false" aria-controls="sidebarRoles">
                         <i><svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="512.000000pt"
                                 height="512.000000pt" viewBox="0 0 512.000000 512.000000"
                                 preserveAspectRatio="xMidYMid meet">
@@ -292,13 +292,29 @@
                         <a class="nav-link sidebar menu-link pt-0" id="employeeInfo" href="#mytasksDrop-Down"
                             data-bs-toggle="collapse" role="button" aria-expanded="false"
                             aria-controls="sidebar360questions">
-                            <i> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#686363"
+                            <i>
+                                {{-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#686363"
                                     class="bi bi-clipboard2-check-fill" viewBox="0 0 16 16">
                                     <path
                                         d="M10 .5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5.5.5 0 0 1-.5.5.5.5 0 0 0-.5.5V2a.5.5 0 0 0 .5.5h5A.5.5 0 0 0 11 2v-.5a.5.5 0 0 0-.5-.5.5.5 0 0 1-.5-.5Z" />
                                     <path
                                         d="M4.085 1H3.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1h-.585c.055.156.085.325.085.5V2a1.5 1.5 0 0 1-1.5 1.5h-5A1.5 1.5 0 0 1 4 2v-.5c0-.175.03-.344.085-.5Zm6.769 6.854-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708.708Z" />
+                                </svg> --}}
+
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 297 297"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 297 297" width="16" height="16" fill="#686363">
+                                    <g>
+                                        <path
+                                            d="m110.549,98.768c27.231,0 49.384-22.154 49.384-49.384 0.001-27.231-22.153-49.384-49.384-49.384s-49.384,22.153-49.384,49.384c0,27.231 22.154,49.384 49.384,49.384z" />
+                                        <path
+                                            d="m226.823,185.307c-30.794,0-55.846,25.053-55.846,55.846 0,30.794 25.053,55.846 55.846,55.846s55.846-25.053 55.846-55.846c0-30.793-25.052-55.846-55.846-55.846zm34.017,44.247l-36.494,36.494c-1.836,1.835-4.241,2.753-6.647,2.753-2.406,0-4.811-0.918-6.647-2.753l-18.247-18.247c-3.671-3.671-3.671-9.623 0-13.294 3.672-3.67 9.622-3.67 13.294,0l11.6,11.601 29.847-29.848c3.672-3.67 9.622-3.67 13.294,0 3.671,3.671 3.671,9.623-5.68434e-14,13.294z" />
+                                        <path
+                                            d="m206.751,172.72v-8.713c0-18.793-12.077-35.457-29.935-41.307l-.083-.027-26.121-4.325c-2.223-0.684-4.599,0.493-5.398,2.686l-29.638,81.319c-1.71,4.691-8.345,4.691-10.055,0l-29.638-81.319c-0.646-1.771-2.317-2.881-4.108-2.881-0.425,0-27.41,4.514-27.41,4.514-18.005,6-30.035,22.691-30.035,41.565v67.664c0,10.14 8.22,18.36 18.36,18.36h123.405c-0.382-2.984-0.601-6.017-0.601-9.103 0.001-32.361 21.671-59.74 51.257-68.433z" />
+                                        <path
+                                            d="m121.487,113.395c-1.157-1.26-2.848-1.895-4.558-1.895h-12.759c-1.711,0-3.402,0.634-4.558,1.895-1.791,1.951-2.051,4.769-0.779,6.972l6.82,10.282-3.193,26.934 6.287,16.725c0.613,1.682 2.992,1.682 3.605,0l6.287-16.725-3.193-26.934 6.82-10.282c1.272-2.203 1.012-5.021-0.779-6.972z" />
+                                    </g>
                                 </svg>
+
                             </i>
 
                             <span>Approvals</span>
@@ -639,7 +655,8 @@
                                         </span></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('attendance-leavesettings') }}" class="nav-link">Leave Settings<span>
+                                    <a href="{{ route('attendance-leavesettings') }}" class="nav-link">Leave
+                                        Settings<span>
                                         </span></a>
                                 </li>
                                 <li class="nav-item">
