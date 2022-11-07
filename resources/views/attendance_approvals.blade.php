@@ -17,7 +17,7 @@
                     <div class="row">
                         <div class="col-sm-12 col-xxl-6 col-md-6 col-xl-6 col-lg-6">
                         </div>
-                        <div class="col-sm-12 col-xxl-6 col-md-6 col-xl-6 col-lg-6">
+                        {{-- <div class="col-sm-12 col-xxl-6 col-md-6 col-xl-6 col-lg-6">
                             <div class="row">
                                 <div class="col-sm-12 col-xxl-3 col-md-6 col-xl-3 col-lg-3">
                                     <div class="dropdown">
@@ -68,7 +68,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="table-responsive">
@@ -398,13 +398,13 @@
                                         '<input type="button" value="Approve" data-user_id="' + emp
                                         .user_id +
                                         '" data-leave_id="' + emp.id +
-                                        '" data-leave_status="Approved" class="status btn btn-orange py-1 approve-leave-btn"></input>';
+                                        '" data-leave_status="Approved" class="status btn btn-success py-1 approve-leave-btn">';
 
                                     htmlcontent = htmlcontent +
                                         '&nbsp;&nbsp;<input type="button" value="Reject" id="button_activate_"' +
                                         emp.user_id + '" data-user_id="' + emp.user_id +
                                         '" data-leave_id="' + emp.id +
-                                        '" data-leave_status="Rejected" class="status btn btn-orange py-1 reject-leave-btn "></input>&nbsp;&nbsp;';
+                                        '" data-leave_status="Rejected" class="status btn btn-danger py-1 reject-leave-btn "></input>&nbsp;&nbsp;';
                                 }
 
                                 // if (leave_history.status == "Pending")

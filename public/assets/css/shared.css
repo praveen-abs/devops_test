@@ -491,6 +491,12 @@ th.gridjs-th .gridjs-th-content {
     width: auto !important;
     min-width: auto !important;
 }
+
+.gridjs-table > tbody > tr > td:nth-child(5),.gridjs-table > tbody > tr > td:nth-child(7) {
+   white-space: pre-wrap;
+   width: 150px;
+}
+
 .table.gridjs-table {
     table-layout: auto !important;
 }
