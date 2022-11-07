@@ -286,8 +286,8 @@
                     </li>
                 @endif
 
+                @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR','Manager']))
 
-                @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
                     <li class="nav-item">
                         <a class="nav-link sidebar menu-link pt-0" id="employeeInfo" href="#mytasksDrop-Down"
                             data-bs-toggle="collapse" role="button" aria-expanded="false"
@@ -323,53 +323,59 @@
                         <div class="collapse menu-dropdown" id="mytasksDrop-Down">
                             <ul class="nav nav-sm flex-column">
 
-                                <li class="nav-item">
-                                    <a href="{{ route('vmt-approvals-emp-documents') }}" id=""
-                                        class="nav-link sidebar py-1" data-bs-toggle="" role="button"
-                                        aria-expanded="false"><span>
-                                            Onboarding </span> </a>
 
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('attendance-regularization-approvals') }}" id=""
-                                        class="nav-link sidebar py-1" data-bs-toggle="" role="button"
-                                        aria-expanded="false"><span>
-                                            Attendance Regularization </span> </a>
+                                @if (Str::contains(currentLoggedInUserRole(), ['Manager']))
+                                    <li class="nav-item">
+                                        <a href="{{ route('attendance-approvals') }}" id=""
+                                            class="nav-link sidebar py-1" data-bs-toggle="" role="button"
+                                            aria-expanded="false">
+                                            <span>Leave</span> </a>
+                                    </li>
+                                @endif
 
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('attendance-approvals') }}" id=""
-                                        class="nav-link sidebar py-1" data-bs-toggle="" role="button"
-                                        aria-expanded="false"><span>
-                                            Leave</span> </a>
+                                @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
 
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('vmt-approvals-emp-documents') }}" id=""
-                                        class="nav-link sidebar py-1" data-bs-toggle="" role="button"
-                                        aria-expanded="false"><span>
-                                            OKR /PMS</span> </a>
-                                    {{-- PMS forms are approved here. Redirect to PMS dashboard --}}
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('vmt-approvals-emp-documents') }}" id=""
-                                        class="nav-link sidebar py-1" data-bs-toggle="" role="button"
-                                        aria-expanded="false"><span>
-                                            Reimbursement</span> </a>
+                                    <li class="nav-item">
+                                        <a href="{{ route('vmt-approvals-emp-documents') }}" id=""
+                                            class="nav-link sidebar py-1" data-bs-toggle="" role="button"
+                                            aria-expanded="false"><span>
+                                                Onboarding </span> </a>
 
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('vmt-approvals-emp-documents') }}" id=""
-                                        class="nav-link sidebar py-1" data-bs-toggle="" role="button"
-                                        aria-expanded="false"><span>
-                                            Taxations</span> </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('attendance-regularization-approvals') }}" id=""
+                                            class="nav-link sidebar py-1" data-bs-toggle="" role="button"
+                                            aria-expanded="false"><span>
+                                                Attendance Regularization </span> </a>
 
-                                </li>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a href="#" id=""
+                                            class="nav-link sidebar py-1" data-bs-toggle="" role="button"
+                                            aria-expanded="false"><span>
+                                                OKR /PMS</span> </a>
+                                        {{-- PMS forms are approved here. Redirect to PMS dashboard --}}
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" id=""
+                                            class="nav-link sidebar py-1" data-bs-toggle="" role="button"
+                                            aria-expanded="false"><span>
+                                                Reimbursement</span> </a>
+
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" id=""
+                                            class="nav-link sidebar py-1" data-bs-toggle="" role="button"
+                                            aria-expanded="false"><span>
+                                                Taxations</span> </a>
+
+                                    </li>
+                                @endif
                             </ul>
                         </div>
                     </li>
                 @endif
-
                 <!-- Performance -->
 
                 <li class="nav-item">
