@@ -120,7 +120,7 @@
 .orgchart .node {
     height: auto;
     width: 250px;
-    min-height: 35px;
+    min-height: 55px;
     background-color: #ffffff !important;
     /* overflow: hidden; */
     color: #003156;
