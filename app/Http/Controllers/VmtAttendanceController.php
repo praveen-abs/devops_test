@@ -416,7 +416,7 @@ class VmtAttendanceController extends Controller
         $reportees_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $request->user_code)->get('user_id');
 
         $reportees_details = User::leftJoin('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
-                            ->whereIn('users.id',$reportees_id)
+                            ->whereIn('users.id',$reportees_id)->where('users.is_ssa','0')
                             ->get(['users.id','users.name','vmt_employee_office_details.designation']);
 
 
@@ -431,6 +431,7 @@ class VmtAttendanceController extends Controller
         //$reportees_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $request->user_code)->get('user_id');
 
         $all_employees = User::leftJoin('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
+                            ->where('users.is_ssa','0')
                             ->get(['users.id','users.name','vmt_employee_office_details.designation']);
 
 
