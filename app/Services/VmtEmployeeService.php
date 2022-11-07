@@ -183,8 +183,8 @@ class VmtEmployeeService {
         $newEmployee->userid = $user->id;
         $newEmployee->emp_no   =    $row["employee_code"] ?? '';
         $newEmployee->gender   =    $row["gender"] ?? '';
-        $newEmployee->doj   =    $row["doj"] ?? '';
-        $newEmployee->dol   =    $row["doj"] ?? '';
+        $newEmployee->doj   =    \DateTime::createFromFormat('d-m-Y', $row['doj'])->format('Y-m-d');
+        $newEmployee->dol   =    \DateTime::createFromFormat('d-m-Y', $row['doj'])->format('Y-m-d');
         $newEmployee->location   =    $row["work_location"] ?? '';
         $newEmployee->dob   =    $row["dob"] ?? '';
         $newEmployee->father_name   =  $row["father_name"] ?? '';
