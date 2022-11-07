@@ -102,10 +102,10 @@
                                     <span>Dashboard</span>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a href="{{ url('email_attendance_leaverequest') }}"
                                     class="nav-link sidebar py-1">Leave Request</a>
-                            </li>
+                            </li> --}}
 
 
 
@@ -124,24 +124,27 @@
                                 {{-- <li class="nav-item">
                                                                 <a href="{{url('attendance_overtime')}}" class="nav-link sidebar py-1">OverTime</a>
                                                             </li> --}}
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <a href="{{ url('email_attendance_leaverequest') }}"
                                         class="nav-link sidebar py-1">Leave Request</a>
-                                </li>
-                                <li class="nav-item">
+                                </li> --}}
+                                {{-- <li class="nav-item">
                                     <a href="apps-calendar" class="nav-link sidebar py-1" role="button">
                                         <span>Attendance</span>
                                     </a>
-                                </li>
+                                </li> --}}
 
                                 <li class="nav-item">
                                     <a href="{{ route('dayWiseStaffAttendance') }}" class="nav-link sidebar py-1"
                                         role="button"><span>Org Timesheet</span></a>
                                 </li>
                             @endif
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a href="{{ route('attendance-employee-timesheet') }}"
                                     class="nav-link sidebar py-1">Time Sheet</a>
+                            </li> --}}
+                            <li class="nav-item">
+                                <a href="{{ route('attendance-timesheet') }}" class="nav-link sidebar py-1">Timesheet</a>
                             </li>
 
                         </ul>
@@ -585,8 +588,8 @@
 
 
                 <!-- help desk -->
-                <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0" href="#helpDeskDrop-down" data-bs-toggle="collapse"
+                {{-- <li class="nav-item">
+                    <a class="nav-link sidebar menu-link pt-0" href="#helpDeskDrop-down" data-bs-toggle=""
                         role="button" aria-expanded="false" aria-controls="sidebarApps">
                         <i><svg xmlns="http://www.w3.org/2000/svg" width="18.306" height="16"
                                 viewBox="0 0 18.306 16">
@@ -608,7 +611,7 @@
 
                         </ul>
                     </div>
-                </li>
+                </li> --}}
 
                 @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin']))
                     <li class="nav-item">
