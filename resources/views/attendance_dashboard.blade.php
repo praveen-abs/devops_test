@@ -9,16 +9,16 @@
 @endsection
 
 @section('content')
-    @component('components.attendance_breadcrumb')
+    {{-- @component('components.attendance_breadcrumb')
         @slot('li_1')
         @endslot
-    @endcomponent
+    @endcomponent --}}
 
-    <div class="cotainer-fluid">
+    <div class="cotainer-fluid attandance-wrapper mt-30">
         <div class="card mb-2">
             <div class="py-1 card-body">
                 <!-- <div class="card-header">                                                                         <h5><span class="text-muted">Attendance &gt;</span> <span class="text-danger"> Dashboard </span></h5>
-                                                                                                                                                                                                                     </div> -->
+                                                                                                                                                                                                                             </div> -->
                 <div class="row">
                     <div class="col-8 d-flex align-items-center">
                         <ul class="nav nav-pills nav-tabs-dashed">
@@ -38,18 +38,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="col-2  text-md-end text-center">
 
-                        <select name="" id="" class="form-select border-orange disabled_focus">
-                            <option value="" selected hidden disabled>Department</option>
-                        </select>
-
-                    </div>
-                    <div class="col-2  text-md-start text-center">
-                        <select name="" id="" class="form-select border-orange  disabled_focus">
-                            <option value="" selected hidden disabled>Locations</option>
-                        </select>
-                    </div>
                 </div>
             </div>
         </div>
@@ -58,9 +47,21 @@
             <div id="attendance_summary" class="tab-pane fade show active">
                 <div class="card  top-line">
                     <div class="card-body">
-                        <div class="row p-2">
-                            <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12">
+                        <div class="row mb-3">
+                            <div class="col-sm-12 col-xl-8 col-md-8 col-lg-8">
                                 <h6 class="text-left fw-bold">Today's Attendance Status</h6>
+                            </div>
+                            <div class="col-2  text-md-end text-center">
+
+                                <select name="" id="" class="form-select border-orange disabled_focus">
+                                    <option value="" selected hidden disabled>Department</option>
+                                </select>
+
+                            </div>
+                            <div class="col-2  text-md-start text-center">
+                                <select name="" id="" class="form-select border-orange  disabled_focus">
+                                    <option value="" selected hidden disabled>Locations</option>
+                                </select>
                             </div>
                         </div>
                         <div class="row">
@@ -143,9 +144,8 @@
                                         <p class="text-ash-medium mb-2 f-13 ">Remote Clock-In</p>
                                         <h5 class="mb-0">-</h5>
                                         <div class="text-right">
-                                            <button type="button"
-                                                class="btn px-2 py-0 border_radius_3 btn-orange" data-bs-toggle="modal"
-                                                data-bs-target="#remorteClock_modal">
+                                            <button type="button" class="btn px-2 py-0 border_radius_3 btn-orange"
+                                                data-bs-toggle="modal" data-bs-target="#remorteClock_modal">
                                                 <i class="fa fa-file-text-o"></i>
                                             </button>
                                         </div>
@@ -294,24 +294,28 @@
                         <ul class="nav nav-pills nav-tabs-dashed card-header-tabs mb-3">
                             <li class="nav-item text-muted">
 
-                                    <a class="nav-link pb-2 active" data-bs-toggle="tab"href="#mostHour_worked" aria-selected="true" role="tab">
-                                        Most hour worked</a>
+                                <a class="nav-link pb-2 active" data-bs-toggle="tab"href="#mostHour_worked"
+                                    aria-selected="true" role="tab">
+                                    Most hour worked</a>
                             </li>
 
                             <li class="nav-item text-muted">
 
-                                    <a class="nav-link pb-2 " data-bs-toggle="tab"href="#overtime_hours" aria-selected="true" role="tab">
-                                        Overtime Hours</a>
+                                <a class="nav-link pb-2 " data-bs-toggle="tab"href="#overtime_hours"
+                                    aria-selected="true" role="tab">
+                                    Overtime Hours</a>
                             </li>
                             <li class="nav-item text-muted">
 
-                                <a class="nav-link pb-2 " data-bs-toggle="tab"href="#leastHours_worked" aria-selected="true" role="tab">
+                                <a class="nav-link pb-2 " data-bs-toggle="tab"href="#leastHours_worked"
+                                    aria-selected="true" role="tab">
                                     Least Hours Worked</a>
                             </li>
                             <li class="nav-item text-muted">
 
-                                    <a class="nav-link pb-2 " data-bs-toggle="tab"href="#mostHour_worked" aria-selected="true" role="tab">
-                                        Most hour worked</a>
+                                <a class="nav-link pb-2 " data-bs-toggle="tab"href="#mostHour_worked"
+                                    aria-selected="true" role="tab">
+                                    Most hour worked</a>
                             </li>
                         </ul>
                         <div class="tab-content" id="pills-tabContent">
@@ -324,15 +328,19 @@
                                             <li class="nav-item text-muted">
 
 
-                                                        <a class="nav-link pb-2 active " data-bs-toggle="tab"href="#employeeCount_chart" aria-selected="true" role="tab">
-                                                            Employee
-                                                            Percentage</a>
+                                                <a class="nav-link pb-2 active "
+                                                    data-bs-toggle="tab"href="#employeeCount_chart" aria-selected="true"
+                                                    role="tab">
+                                                    Employee
+                                                    Percentage</a>
                                             </li>
                                             <li class="nav-item text-muted">
 
-                                                    <a class="nav-link pb-2 " data-bs-toggle="tab"href="#emplyeePercentage_chart" aria-selected="true" role="tab">
-                                                        Employee
-                                                        Percentage</a>
+                                                <a class="nav-link pb-2 "
+                                                    data-bs-toggle="tab"href="#emplyeePercentage_chart"
+                                                    aria-selected="true" role="tab">
+                                                    Employee
+                                                    Percentage</a>
                                             </li>
 
                                         </ul>
@@ -432,9 +440,9 @@
                     </div>
 
                 </div>
-                <div class="card top-line">
+                <div class="card top-line mb-0  ">
                     <div class="card-body">
-                        <h6 class="text-left fw-bold mb-3">Avg. Work Hours Leaderboard</h6>
+                        <h6 class="text-left fw-bold mb-3">Avg Work Hours Leaderboard</h6>
                         <div class="col-md-12 d-flex justify-content-between mb-3">
                             <div class="d-flex space-around-between">
                                 <button class="filter-btn">
@@ -462,7 +470,23 @@
             <div id="leave_summary" class="tab-pane fade">
                 <div class="card top-line">
                     <div class="card-body">
-                        <h6 class="text-left fw-bold">Today's Leave Status</h6>
+                        <div class="row mb-3">
+                            <div class="col-sm-12 col-xl-8 col-md-8 col-lg-8">
+                                <h6 class="text-left fw-bold">Today's Leave Status</h6>
+                            </div>
+                            <div class="col-2  text-md-end text-center">
+
+                                <select name="" id="" class="form-select border-orange disabled_focus">
+                                    <option value="" selected hidden disabled>Department</option>
+                                </select>
+
+                            </div>
+                            <div class="col-2  text-md-start text-center">
+                                <select name="" id="" class="form-select border-orange  disabled_focus">
+                                    <option value="" selected hidden disabled>Locations</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-sm-3 col-sm-12 col-xl-3 col-md-4 col-lg-3 d-flex">
                                 <div class="card  box_shadow_0 border-rtb left-line w-100 mb-0">
@@ -499,7 +523,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card top-line">
+                <div class="card top-line mb-0  ">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-10 col-xl-10 col-md-10 col-lg-10">
@@ -522,53 +546,53 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-3 col-sm-12 col-xl-3 col-md-4 col-lg-3 d-flex">
-                                <div class="card  box_shadow_0 border-rtb left-line w-100">
+                            <div class="col-sm-3 col-sm-12 col-xl-3 col-md-4 col-lg-3 ">
+                                <div class="card mb-0 box_shadow_0 border-rtb left-line ">
                                     <div class="card-body text-center">
                                         <h5 class="mb-0">-</h5>
                                         <p class="text-ash-medium mb-2 f-13 ">Employees On Leave</p>
-                                        <p class="text-ash f-13 ">Employees On Leave
+                                        <p class="text-ash f-11 ">
                                             %age of employees that were on leave
                                             during
                                             the selected duration</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-3 col-sm-12 col-xl-3 col-md-4 col-lg-3 d-flex">
-                                <div class="card  box_shadow_0 border-rtb left-line w-100">
+                            <div class="col-sm-3 col-sm-12 col-xl-3 col-md-4 col-lg-3 ">
+                                <div class="card mb-0  box_shadow_0 border-rtb left-line ">
                                     <div class="card-body text-center">
                                         <h5 class="mb-0">-</h5>
-                                        <p class="text-ash-medium mb-2 f-13 ">Avg. Work Hours Spent</p>
-                                        <p class="text-ash f-13 ">Avg. leave taken by an employee during
+                                        <p class="text-ash-medium mb-2 f-13 ">Avg Leave Taken</p>
+                                        <p class="text-ash f-11 ">Avg leave taken by an employee during
                                             the
                                             selected duration.</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-3 col-sm-12 col-xl-3 col-md-4 col-lg-3 d-flex">
-                                <div class="card  box_shadow_0 border-rtb left-line w-100">
+                            <div class="col-sm-3 col-sm-12 col-xl-3 col-md-4 col-lg-3">
+                                <div class="card mb-0  box_shadow_0 border-rtb left-line">
                                     <div class="card-body text-center">
                                         <h5 class="mb-0">-</h5>
                                         <p class="text-ash-medium mb-2 f-13 ">Total Leave Balance</p>
-                                        <p class="text-ash f-13 ">Balance available with employee
+                                        <p class="text-ash f-11 ">Balance available with employee
                                             irrespective of
                                             selected date range.</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-3 col-sm-12 col-xl-3 col-md-4 col-lg-3 d-flex">
-                                <div class="card  box_shadow_0 border-rtb left-line w-100">
+                            <div class="col-sm-3 col-sm-12 col-xl-3 col-md-4 col-lg-3">
+                                <div class="card mv-0  box_shadow_0 border-rtb left-line">
                                     <div class="card-body text-center">
                                         <h5 class="mb-0">-</h5>
                                         <p class="text-ash-medium mb-2 f-13 ">Unplaned Leave Taken</p>
-                                        <p class="text-ash f-13 ">Total leave applied for after the leave
+                                        <p class="text-ash f-11 ">Total leave applied for after the leave
                                             has been
                                             consumed/taken.</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12">
+                        {{-- <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12">
                             <h6 class="text-left fw-bold">Employees Arrival Status </h6>
                         </div>
                         <div class="row">
@@ -595,7 +619,7 @@
                                     </svg>
                                 </button>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -605,26 +629,24 @@
                     <div class="card-body">
                         <div class="row mb-2">
                             <div class="col-12">
-                                <ul class="nav nav-pills nav-tabs-dashed card-header-tabs">
+
+                                <ul class="nav nav-pills nav-tabs-dashed">
                                     <li class="nav-item text-muted">
-                                        <a class="nav-link attendances-analyist-tab active" data-bs-toggle="tab"
-                                            href="#tab21">Most Taken Leave</a>
+                                        <a class="nav-link active pb-2" data-bs-toggle="tab" href="#">
+                                            Most Taken Leave</a>
                                     </li>
-                                    <li class="nav-item text-muted">
-                                        <a class="nav-link attendances-analyist-tab margin-left-mainases"
-                                            data-bs-toggle="tab" href="#tab22">Unplaned Leave
+                                    <li class="nav-item text-muted ">
+                                        <a class="nav-link pb-2" data-bs-toggle="tab" href="#">Unplaned Leave
                                             Taken</a>
                                     </li>
-                                    <li class="nav-item text-muted">
-                                        <a class="nav-link attendances-analyist-tab margin-left-mainases "
-                                            data-bs-toggle="tab" href="#tab23">Leave Balance
+                                    <li class="nav-item text-muted ">
+                                        <a class="nav-link pb-2" data-bs-toggle="tab" href="#">Leave Balance
                                             Available</a>
                                     </li>
-                                    <li class="nav-item text-muted">
-                                        <a class="nav-link attendances-analyist-tab margin-left-mainases "
-                                            data-bs-toggle="tab" href="#tab24">Most Breaks
+                                    {{-- <li class="nav-item text-muted ">
+                                        <a class="nav-link pb-2" data-bs-toggle="tab" href="#">Most Breaks
                                             Taken</a>
-                                    </li>
+                                    </li> --}}
                                 </ul>
                             </div>
                         </div>
@@ -633,16 +655,18 @@
                                 <h6 class="text-muted my-2">Most Hours Worked by Department</h6>
                             </div>
                             <div class="col-10">
-                                <ul class="nav nav-pills nav-tabs-dashed card-header-tabs">
+
+
+                                <ul class="nav nav-pills nav-tabs-dashed">
                                     <li class="nav-item text-muted">
-                                        <button type="button" class="btn nav-link attendances-analyist-tab active"
-                                            data-bs-toggle="tab" href="#employeeCount_chart">Employee
-                                            Count</button>
+                                        <a class="nav-link active pb-2" data-bs-toggle="tab"
+                                            href="#attendance_summary">Attendance
+                                            Summary</a>
                                     </li>
-                                    <li class="nav-item text-muted">
-                                        <button type="button" class="btn nav-link attendances-analyist-tab "
-                                            data-bs-toggle="tab" href="#emplyeePercentage_chart">Employee
-                                            Percentage</button>
+                                    <li class="nav-item text-muted ">
+                                        <a class="nav-link pb-2" data-bs-toggle="tab"
+                                            href="#attendance_analytics">Attendance
+                                            Analytics</a>
                                     </li>
 
                                 </ul>
@@ -710,8 +734,8 @@
                         <div class="text-center">
                             <div class="d-flex justify-content-center">
                                 <div style="height: 300px;max-width:500px;" class="">
-                                    <img src="{{ URL::asset('assets/images/Fingerprint.gif') }}"
-                                        class="h-100 w-100" alt="user-pic" </div>
+                                    <img src="{{ URL::asset('assets/images/Fingerprint.gif') }}" class="h-100 w-100"
+                                        alt="user-pic" </div>
                                 </div>
 
                             </div>
@@ -738,8 +762,8 @@
                         <div class="text-center">
                             <div class="d-flex justify-content-center">
                                 <div style="height: 300px;max-width:500px;" class="">
-                                    <img src="{{ URL::asset('assets/images/Fingerprint.gif') }}"
-                                        class="h-100 w-100" alt="user-pic" </div>
+                                    <img src="{{ URL::asset('assets/images/Fingerprint.gif') }}" class="h-100 w-100"
+                                        alt="user-pic" </div>
                                 </div>
 
                             </div>
@@ -765,8 +789,8 @@
                         <div class="text-center">
                             <div class="d-flex justify-content-center">
                                 <div style="height: 300px;max-width:500px;" class="">
-                                    <img src="{{ URL::asset('assets/images/Fingerprint.gif') }}"
-                                        class="h-100 w-100" alt="user-pic" </div>
+                                    <img src="{{ URL::asset('assets/images/Fingerprint.gif') }}" class="h-100 w-100"
+                                        alt="user-pic" </div>
                                 </div>
 
                             </div>
@@ -792,8 +816,8 @@
                         <div class="text-center">
                             <div class="d-flex justify-content-center">
                                 <div style="height: 300px;max-width:500px;" class="">
-                                    <img src="{{ URL::asset('assets/images/Fingerprint.gif') }}"
-                                        class="h-100 w-100" alt="user-pic" </div>
+                                    <img src="{{ URL::asset('assets/images/Fingerprint.gif') }}" class="h-100 w-100"
+                                        alt="user-pic" </div>
                                 </div>
 
                             </div>

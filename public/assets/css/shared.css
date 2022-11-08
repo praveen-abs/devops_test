@@ -794,15 +794,18 @@ button.gridjs-sort-desc {
     padding: 0px;
 }
 .nav-tabs-dashed .nav-item .nav-link.active {
+    color: #002f54 !important ;
 }
 
 .nav-tabs-dashed .nav-item .nav-link {
     position: relative;
-    color: #002f56 !important;
+    color: #a9a6a7 ;
     background-color: transparent !important;
     padding-bottom: 10px;
     border-radius: 0px !important;
     transition-timing-function: linear;
+    font-weight: 600;
+
 }
 .nav-tabs-dashed .nav-item .nav-link.active::after {
     content: "";
@@ -810,10 +813,7 @@ button.gridjs-sort-desc {
     width: 100%;
     left: 0px;
     position: absolute;
-    color: #002f56 !important;
-    background-color: #ee6a05 !important;
-    /* border-bottom: 3px solid #ee6a05; */
-    /* border-radius: 0px !important; */
+    background-color: #ee6a05 ;
     bottom: 0px;
     border-top-left-radius: 8px;
     border-top-right-radius: 5px;

@@ -28,7 +28,7 @@
                         </div>
                     </div>
                     <div class="table-responsive">
-                        <table id='kpiTable' class="table kpi_appraisal-table table-borderd align-middle mb-0"
+                        <table id='kpiTable' class="table kpi_appraisal-table kpi_republish_table table-borderd align-middle mb-0"
                             data-paging="true" data-paging-size="10" data-paging-limit="3"
                             data-paging-container="#paging-ui-container" data-paging-count-format="{PF} to {PL}"
                             data-sorting="true" data-filtering="false" data-empty="No Results"
