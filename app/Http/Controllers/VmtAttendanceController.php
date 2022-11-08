@@ -32,7 +32,11 @@ class VmtAttendanceController extends Controller
     public function showAttendanceLeavePage(Request $request){
 
         $allEmployeesList = User::all();
-        return view('attendance_leave',compact('allEmployeesList'));
+
+        $leaveTypes = VmtLeaves::all();
+
+        //dd($leaveTypes->toArray());
+        return view('attendance_leave',compact('allEmployeesList','leaveTypes'));
 
     }
 
@@ -300,20 +304,17 @@ class VmtAttendanceController extends Controller
         Input :
 
     */
-    public function fetchTimesheetData(Request $request)
-    {
-        $month = $request->month;
-        $user_id  =$request->user_id;
+    // public function fetchTimesheetData(Request $request)
+    // {
+    //     $month = $request->month;
+    //     $user_id  =$request->user_id;
 
-        $month='10';
-        $user_id='141';
+    //     $employeeAttendanceData = VmtEmployeeAttendance::whereMonth('checkin_time',$month)
+    //                                 ->where('user_id',$user_id)
+    //                                 ->get();
 
-        $employeeAttendanceData = VmtEmployeeAttendance::whereMonth('checkin_time',$month)
-                                    ->where('user_id',$user_id)
-                                    ->get();
-
-        return $employeeAttendanceData;
-    }
+    //     return $employeeAttendanceData;
+    // }
 
     public function showAllEmployeesTimesheetPage(Request $request){
 
@@ -372,6 +373,7 @@ class VmtAttendanceController extends Controller
         ->where('users.id', auth::user()->id)
         ->first(['users.id','users.name','vmt_employee_office_details.designation']);
 
+        $current_employee_detail->employee_avatar = getEmployeeAvatarOrShortName($current_employee_detail->id);
 
         return view('attendance_timesheet',compact('current_employee_detail','shift_start_time','shift_end_time'));
 
@@ -430,7 +432,11 @@ class VmtAttendanceController extends Controller
                             ->get(['users.id','users.name','vmt_employee_office_details.designation']);
 
 
+
         //dd($reportees_details->toArray());
+        foreach($reportees_details as $singleItem){
+            $singleItem->employee_avatar = getEmployeeAvatarOrShortName([$singleItem->id]);
+        }
 
         return $reportees_details;
     }
@@ -446,6 +452,9 @@ class VmtAttendanceController extends Controller
 
 
         //dd($reportees_details->toArray());
+        foreach($all_employees as $singleItem){
+            $singleItem->employee_avatar = getEmployeeAvatarOrShortName([$singleItem->id]);
+        }
 
         return $all_employees;
     }
@@ -516,7 +525,7 @@ class VmtAttendanceController extends Controller
             $attendanceRegularizationRequest->user_time =  Carbon::createFromFormat('Y-m-d H:i:s',$request->attendance_date." ".$request->user_time);
             $attendanceRegularizationRequest->regularize_time = Carbon::createFromFormat('Y-m-d H:i:s',$request->attendance_date." ".$request->regularize_time);
             $attendanceRegularizationRequest->reason_type = $request->reason;
-            $attendanceRegularizationRequest->custom_reason = $request->custom_reason;
+            $attendanceRegularizationRequest->custom_reason = $request->custom_reason ?? '';
             $attendanceRegularizationRequest->status = 'Pending';
 
             $attendanceRegularizationRequest->save();
