@@ -685,7 +685,7 @@
                                         </div>
                                     </div>
                                 @else
-                                    <div class="row mt-3">
+                                    <div class="row mt-3 mb-2">
                                         <div class="col-lg-12">
                                             <h6 class="text-muted">
                                                 Appraiser Feedback:
@@ -719,10 +719,10 @@
                                 @else
                                     @if (isset($isAllReviewersAcceptedData) && $isAllReviewersAcceptedData[Auth::id()] == null)
                                         <div class="buttons d-flex align-items-center justify-content-end ">
-                                            <button class="btn btn-primary" id="accept_review">
-                                                Approve </button>
-                                            &nbsp;&nbsp;
-                                            <button class="btn btn-primary" id="reject_review">Reject</button>
+                                            <button class="btn btn-success me-2" id="accept_review">
+                                                <i class="fa fa-check-circle me-2"></i>  Approve </button>
+
+                                            <button class="btn btn-danger" id="reject_review"><i class="fa fa-times-circle me-2"></i> Reject</button>
                                         </div>
                                     @elseif($isAllReviewersAcceptedData[Auth::id()] == '0')
                                         <h6 class="mt-3 text-muted">You have Already Rejected this review.</h6>
