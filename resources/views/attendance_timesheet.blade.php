@@ -43,22 +43,20 @@
                                                 Timesheet</a>
                                         </li>
 
-                                        @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin','HR','Manager']))
-
-                                        <li class="nav-item mx-2 ember-view" role="presentation ">
-                                            <a class="nav-link ember-view" id="tab_teamtimesheet" data-bs-toggle="pill"
-                                                data-bs-target="#" type="button" role="tab" aria-controls="payslips"
-                                                aria-selected="false">Team Timesheet</a>
-                                        </li>
+                                        @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR', 'Manager']))
+                                            <li class="nav-item mx-2 ember-view" role="presentation ">
+                                                <a class="nav-link ember-view" id="tab_teamtimesheet" data-bs-toggle="pill"
+                                                    data-bs-target="#" type="button" role="tab"
+                                                    aria-controls="payslips" aria-selected="false">Team Timesheet</a>
+                                            </li>
                                         @endif
 
-                                        @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin','HR']))
-                                        <li class="nav-item ml-2  ember-view" role="presentation ">
-                                            <a class="nav-link ember-view" id="tab_orgtimesheet" data-bs-toggle="pill"
-                                                data-bs-target="#" type="button" role="tab"
-                                                aria-controls="annual-earnings" aria-selected="false">Org Timesheet</a>
-                                        </li>
-
+                                        @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
+                                            <li class="nav-item ml-2  ember-view" role="presentation ">
+                                                <a class="nav-link ember-view" id="tab_orgtimesheet" data-bs-toggle="pill"
+                                                    data-bs-target="#" type="button" role="tab"
+                                                    aria-controls="annual-earnings" aria-selected="false">Org Timesheet</a>
+                                            </li>
                                         @endif
 
                                     </ul>
@@ -156,9 +154,11 @@
                                     <div class="row">
                                         <div class="col-6"><label class="text-ash-medium fs-15">Date</label></div>
                                         <div class="col-6">
-                                            <span class="text-ash-medium fs-15" id="actual_checkin_date">27-10-2022,Monday</span>
+                                            <span class="text-ash-medium fs-15"
+                                                id="actual_checkin_date">27-10-2022,Monday</span>
 
-                                             <input type="hidden" class="text-ash-medium form-control fs-15" name="attendance_date" id="attendance_date">
+                                            <input type="hidden" class="text-ash-medium form-control fs-15"
+                                                name="attendance_date" id="attendance_date">
                                         </div>
                                     </div>
                                 </div>
@@ -170,9 +170,10 @@
                                             </label>
                                         </div>
                                         <div class="col-6">
-                                            <span class="text-ash-medium fs-15" id="actual_checkin_time" >8:10</span>
+                                            <span class="text-ash-medium fs-15" id="actual_checkin_time">8:10</span>
                                             <input type="hidden" name="attendance_user" id="attendance_user">
-                                            <input type="hidden" class="text-ash-medium form-control fs-15" name="user_time" id="user_time">
+                                            <input type="hidden" class="text-ash-medium form-control fs-15"
+                                                name="user_time" id="user_time">
                                         </div>
                                     </div>
                                 </div>
@@ -182,7 +183,8 @@
                                                 as</label>
                                         </div>
                                         <div class="col-6">
-                                            <input class="text-ash-medium form-control fs-15" name="regularize_time" id="regular_shift_time">
+                                            <input class="text-ash-medium form-control fs-15" name="regularize_time"
+                                                id="regular_shift_time">
                                         </div>
                                     </div>
                                 </div>
@@ -190,10 +192,7 @@
                                     <div class="row">
                                         <div class="col-6"><label class="text-ash-medium fs-15">Reason</label></div>
                                         <div class="col-6">
-                                            <select
-                                                name="reason"
-                                                class="form-select btn-line-orange"
-                                                id=""
+                                            <select name="reason" class="form-select btn-line-orange" id=""
                                                 onchange="showReasonBox(this)">
                                                 <option selected hidden disabled>
                                                     Choose Reason
@@ -225,7 +224,8 @@
                     </div>
                     <div class="modal-footer border-0 py-2">
 
-                        <button type="button" class="btn btn-orange" onclick="attendanceRegularize()">Apply Request</button>
+                        <button type="button" class="btn btn-orange" onclick="attendanceRegularize()">Apply
+                            Request</button>
                     </div>
                 </div>
             </div>
@@ -319,14 +319,14 @@
                         }
 
                         var html = '<li class="list_employee_attendance p-1 w-100" >' +
-                            '<div class="d-flex employee_list_item" data-userid=' + element.id + '>' +
+                            '<button class="w-100 btn d-flex employee_list_item" data-userid=' + element.id +'>' +
                             '<div class="user_pic me-2 d-flex justify-content-center align-items-center bg-primary rounded-circle">' +avatar_data +
                             '</div>' +
-                            '<div class="user_content d-flex  align-items-center flex-column">' +
+                            '<div class="user_content text-start d-flex  align-items-center flex-column">' +
                             '<p class="fw-bold text-primary f-13">' + element.name + '</p>' +
                             '<p class=" text-muted f-11">' + element.designation + '</p>' +
                             '</div>' +
-                            '</div>' +
+                            '</button>' +
                             '</li>';
 
                         $('#sidepanel_employees_list').append(html);
@@ -382,14 +382,14 @@
 
 
                         var html = '<li class="list_employee_attendance p-1 w-100" >' +
-                            '<div class="d-flex employee_list_item" data-userid=' + element.id + '>' +
+                            '<button class="w-100 btn d-flex employee_list_item" data-userid=' + element.id +'>' +
                             '<div class="user_pic me-2 d-flex justify-content-center align-items-center bg-primary rounded-circle">' +avatar_data +
                             '</div>' +
-                            '<div class="user_content d-flex  align-items-center flex-column">' +
+                            '<div class="user_content text-start d-flex  align-items-center flex-column">' +
                             '<p class="fw-bold text-primary f-13">' + element.name + '</p>' +
                             '<p class=" text-muted f-11">' + element.designation + '</p>' +
                             '</div>' +
-                            '</div>' +
+                            '</button>' +
                             '</li>';
 
                         $('#sidepanel_employees_list').append(html);
@@ -412,6 +412,8 @@
             });
         }
 
+
+
         function updateTimeSheetForCurrentEmployee() {
 
             var avatar_data = '';
@@ -429,17 +431,17 @@
             //show the current user in sidepanel for TimeSheet tab
             $('#sidepanel_employees_list').html('');
 
+
             var html = '<li class="list_employee_attendance p-1 w-100" >' +
-                '<div class="d-flex employee_list_item" onclick="" data-userid="{{ $current_employee_detail->id }}">' +
-                '<div class="user_pic me-2 d-flex justify-content-center align-items-center bg-primary rounded-circle">' +
-                avatar_data+
-                '</div>' +
-                '<div class="user_content d-flex  align-items-center flex-column">' +
-                '<p class="fw-bold text-primary f-13">{{ $current_employee_detail->name }}</p>' +
-                '<p class=" text-muted f-11">{{ $current_employee_detail->designation }}</p>' +
-                '</div>' +
-                '</div>' +
-                '</li>';
+                            '<button class="w-100 btn d-flex employee_list_item" data-userid='+'{{ $current_employee_detail->id }}'+'>' +
+                            '<div class="user_pic me-2 d-flex justify-content-center align-items-center bg-primary rounded-circle">' +avatar_data +
+                            '</div>' +
+                            '<div class="user_content text-start d-flex  align-items-center flex-column">' +
+                            '<p class="fw-bold text-primary f-13">{{ $current_employee_detail->name }}</p>' +
+                            '<p class=" text-muted f-11">{{ $current_employee_detail->designation }}</p>' +
+                            '</div>' +
+                            '</button>' +
+                            '</li>';
 
             $('#sidepanel_employees_list').append(html);
 
@@ -535,7 +537,7 @@
 
         function showRegularizationModal(element) {
 
-            if($(element).val() == "LC"){
+            if ($(element).val() == "LC") {
                 $('#actual_checkin_date').html($(element).data('checkin_date'));
                 $('#actual_checkin_time').html($(element).data('actual_timing'));
                 $('#regular_shift_time').val(shift_start_time);
@@ -547,9 +549,8 @@
                 $('#regularization_type').val("LC");
 
                 $('#regularizationModal').fadeIn(100);
-            }
-            else
-            if($(element).val() == "EG"){
+            } else
+            if ($(element).val() == "EG") {
                 $('#actual_checkin_date').html($(element).data('checkin_date'));
                 $('#actual_checkin_time').html($(element).data('actual_timing'));
                 $('#regular_shift_time').val(shift_end_time);
@@ -568,12 +569,12 @@
         function attendanceRegularize() {
 
 
-            console.log("Attendance user : "+$('#attendance_user').val());
+            console.log("Attendance user : " + $('#attendance_user').val());
 
             // body...
             console.log($('#regularizationForm').serialize());
 
-             $.ajax({
+            $.ajax({
                 url: "{{ route('attendance-req-regularization') }}",
                 type: "POST",
                 data: $('#regularizationForm').serialize(),
@@ -586,11 +587,11 @@
 
                     //alert(data.message);
                     swal({
-                        title:"Info",
+                        title: "Info",
                         text: data.message,
                         type: data.status
                     }).then(function() {
-                       // location.reload();
+                        // location.reload();
                     });
                     $('#regularizationModal').fadeOut(400);
                     //update sidepanel
@@ -715,6 +716,7 @@
 
                     if (i === 0 && j < firstDay) {
                         cell = document.createElement("td");
+                        // cell.setAttribute('class','p-0');
                         cellText = document.createTextNode("");
                         cell.appendChild(cellText);
                         row.appendChild(cell);
@@ -734,20 +736,21 @@
                         cell.setAttribute("data-year", year);
 
                         cell.setAttribute("data-month_name", months[month]);
-                        cell.className = "_date-picker";
+                        cell.className = "_date-picker p-0";
 
-                        if(isWeekEnd){
-                            cell.innerHTML = " <div class='w-100 h-100'><p class='show_date' >" + date +
-                            "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex justify-content-between'> </div> <div class='w-100 d-flex justify-content-between check-out mt-2 f-10 text-danger'> </div></div></div>";
 
-                        }else{
-                            cell.innerHTML = " <div class='w-100 h-100'><p class='show_date' >" + date +
-                            "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex justify-content-between'><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span id='checkin_time_" +
-                            year + "-" + (month + 1) + "-" + dateText +
-                            "'></span>    <input type='button' onclick ='showRegularizationModal(this)' class='f-10 btn lc_btn border-0 btn-orange p-1'  value='Absent' data-cellid ='checkin_time_" +
-                            year + "-" + (month + 1) + "-" + dateText +
-                            "'/></div> <div class='w-100 d-flex justify-content-between check-out mt-2 f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span id='checkout_time_" +
-                            year + "-" + (month + 1) + "-" + dateText + "'></span> </div></div></div>";
+                        if (isWeekEnd) {
+                            cell.innerHTML = " <div class='w-100 h-100 p-2' style='background-color:#f3edef;'> <span class='show_date' >" + date +
+                                "</span> <span>Week Off </span> <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex justify-content-between'> </div> <div class='w-100 d-flex justify-content-between check-out mt-2 f-10 text-danger'> </div></div></div>";
+
+                        } else {
+                            cell.innerHTML = " <div class='w-100 h-100 p-2'><p class='show_date' >" + date +
+                                "</p>  <div class='d-flex mt-2 flex-column bio_check align-items-start' > <div class='check-in f-10 text-success w-100 d-flex justify-content-between'><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span id='checkin_time_" +
+                                year + "-" + (month + 1) + "-" + dateText +
+                                "'></span>    <input type='button' onclick ='showRegularizationModal(this)' class='f-10 w-100 btn lc_btn border-0 btn-danger p-1'  value='Absent' data-cellid ='checkin_time_" +
+                                year + "-" + (month + 1) + "-" + dateText +
+                                "'/></div> <div class='w-100 d-flex justify-content-between check-out mt-2 f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span id='checkout_time_" +
+                                year + "-" + (month + 1) + "-" + dateText + "'></span> </div></div></div>";
                         }
 
 
@@ -783,16 +786,17 @@
                 }
 
                 if (element.is_lc && (!element.is_lc_applied)) {
-                    var lcINputButton  = $('#checkin_time_' + calendar_cell_id).parent().parent().find('input');
+                    var lcINputButton = $('#checkin_time_' + calendar_cell_id).parent().parent().find('input');
 
                     calendar_cell_id_value = element.checkin_time.split(" ")[1];
                     calendar_cell_id = element.checkin_time.split(" ")[0];
                     $(lcINputButton).attr('data-checkin_date', calendar_cell_id);
                     $(lcINputButton).attr('data-actual_timing', calendar_cell_id_value);
                     $(lcINputButton).attr('data-shift_timing', shift_start_time);
+                    $(lcINputButton).addClass('btn-info');
                     $(lcINputButton).val("LC");
-                }else{
-                    var lcINputButton  = $('#checkin_time_' + calendar_cell_id).parent().parent().find('input');
+                } else {
+                    var lcINputButton = $('#checkin_time_' + calendar_cell_id).parent().parent().find('input');
                     $(lcINputButton).val("");
                     $(lcINputButton).remove();
                     //console.log("Button to be removed : "+lcINputButton);
@@ -814,8 +818,12 @@
                     calendar_cell_id = element.checkout_time.split(" ")[0];
                     calendar_cell_id_value = element.checkout_time.split(" ")[1];
 
-                    var egINputButton  = $('#checkout_time_' + calendar_cell_id).after("<input type='button' onclick ='showRegularizationModal(this)' class='f-10 btn lc_btn border-0 btn-orange p-1'  value='EG' data-checkin_date="+calendar_cell_id+" data-actual_timing="+calendar_cell_id_value+" data-shift_timing="+shift_end_time+" data-cellid ='checkout_time_" +calendar_cell_id +
-                            "'/>");
+                    var egINputButton = $('#checkout_time_' + calendar_cell_id).after(
+                        "<input type='button' onclick ='showRegularizationModal(this)' class='f-10 btn lc_btn border-0 btn-orange p-1'  value='EG' data-checkin_date=" +
+                        calendar_cell_id + " data-actual_timing=" + calendar_cell_id_value +
+                        " data-shift_timing=" + shift_end_time + " data-cellid ='checkout_time_" +
+                        calendar_cell_id +
+                        "'/>");
                     console.log(lcINputButton);
 
                    /* $(lcINputButton).attr('data-checkin_date', calendar_cell_id);
@@ -834,11 +842,11 @@
             return 32 - new Date(iYear, iMonth, 32).getDate();
         }
 
-        function isWeekEndDays(iDay, iMonth, iYear){
-            var dayValue =  (new Date(iYear, iMonth, iDay)).getDay();
-            if(dayValue == 0){
+        function isWeekEndDays(iDay, iMonth, iYear) {
+            var dayValue = (new Date(iYear, iMonth, iDay)).getDay();
+            if (dayValue == 0) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
         }

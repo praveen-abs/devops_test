@@ -6,10 +6,10 @@
 @endsection
 
 
-@section('content')
+{{-- @section('content')
 @component('components.organization_breadcrumb')
 @slot('li_1') @endslot
-@endcomponent
+@endcomponent --}}
 
 
 <div class=" directory-wrapper bg-white px-3 pt-3 pb-0 mt8-mb25">

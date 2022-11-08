@@ -7,12 +7,12 @@
 
 
 @section('content')
-@component('components.organization_breadcrumb')
+{{-- @component('components.organization_breadcrumb')
 @slot('li_1') @endslot
-@endcomponent
+@endcomponent --}}
 
 
-<div class=" approval_documents-wrapper card">
+<div class=" approval_documents-wrapper card mt-30">
     <div class="card-body">
         <h6 class="">Documents Approvals</h6>
         <div class="table-responsive">

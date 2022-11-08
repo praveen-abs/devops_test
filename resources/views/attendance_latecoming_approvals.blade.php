@@ -4,76 +4,47 @@
     @lang('translation.dashboards')
 @endsection
 @section('content')
-    @component('components.attendance_breadcrumb')
+    {{-- @component('components.attendance_breadcrumb')
         @slot('li_1')
         @endslot
-    @endcomponent
+    @endcomponent --}}
 
 
-    <div class="approvals_wrapper">
+    <div class="approvals_wrapper mt-30">
         <div class="card ">
             <div class="card-body ">
                 <div class="filter-content">
                     <div class="row">
                         <div class="col-sm-12 col-xxl-6 col-md-6 col-xl-6 col-lg-6">
+                            <h6 class="mb-0 text-muted text-start">Attendance Regularization Approvals</h6>
                         </div>
                         <div class="col-sm-12 col-xxl-6 col-md-6 col-xl-6 col-lg-6">
                             <div class="row">
                                 <div class="col-sm-12 col-xxl-3 col-md-6 col-xl-3 col-lg-3">
-                                    <div class="dropdown">
-                                        <a class="btn btn-primary dropdown-toggle" href="#" role="button"
-                                            id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Department
-                                        </a>
-
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <li class="dropdown-item"></li>
-                                        </ul>
-                                    </div>
+                                    <select name="" id="" class="form-select border-orange disabled_focus">
+                                        <option value="" selected hidden disabled>Department</option>
+                                    </select>
                                 </div>
                                 <div class="col-sm-12 col-xxl-3 col-md-6 col-xl-3 col-lg-3">
-                                    <div class="dropdown">
-                                        <a class="btn btn-primary dropdown-toggle" href="#" role="button"
-                                            id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Location
-                                        </a>
-
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <li class="dropdown-item"></li>
-                                        </ul>
-                                    </div>
+                                    <select name="" id="" class="form-select border-orange disabled_focus">
+                                        <option value="" selected hidden disabled>Location</option>
+                                    </select>
                                 </div>
                                 <div class="col-sm-12 col-xxl-3 col-md-6 col-xl-3 col-lg-3">
-                                    <div class="dropdown">
-                                        <a class="btn btn-primary dropdown-toggle" href="#" role="button"
-                                            id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Leave Type
-                                        </a>
-
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <li class="dropdown-item"></li>
-                                        </ul>
-                                    </div>
+                                    <select name="" id="" class="form-select border-orange disabled_focus">
+                                        <option value="" selected hidden disabled>Leave Type</option>
+                                    </select>
                                 </div>
                                 <div class="col-sm-12 col-xxl-3 col-md-6 col-xl-3 col-lg-3">
-                                    <div class="dropdown">
-                                        <a class="btn btn-primary dropdown-toggle" href="#" role="button"
-                                            id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Leave Status
-                                        </a>
-
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <li class="dropdown-item"></li>
-                                        </ul>
-                                    </div>
+                                    <select name="" id="" class="form-select border-orange disabled_focus">
+                                        <option value="" selected hidden disabled>Leave Status</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-5">
-                    <h6 class="mb-0 text-start">Attendance Regularization Approvals</h6>
-                </div>
+
                 <div class="table-responsive">
                     <div class="" id="table_lateComingTable"></div>
                 </div>
@@ -235,11 +206,11 @@
 
                                 if(cell.employee_avatar.type == "shortname"){
 
-                                    output ='<div class="col-auto p-0">'+
-                                                '<span class="rounded-circle user-profile  ml-2 " id="">'+
+                                    output ='<div class="d-flex p-0 page-header-user-dropdown">'+
+                                                '<div class="rounded-circle user-profile col-auto user-profile  me-2 " id="">'+
                                                     '<i class="topbar_username" class="align-middle ">'+cell.employee_avatar.data+'</i>'+
-                                                '</span>'+
-                                                '<span>&nbsp;&nbsp;'+cell.employee_name+'</span>'+
+                                                '</div>'+
+                                                '<span>'+cell.employee_name+'</span>'+
                                             '</div>';
                                 }
                                 else
@@ -291,7 +262,7 @@
                         },
                         {
                             id: 'reviewer_comments',
-                            name: 'Reviewer Comments',
+                            name: 'Appraisar Comments',
                             formatter: function formatter(cell) {
 
                                 return gridjs.html(cell);
