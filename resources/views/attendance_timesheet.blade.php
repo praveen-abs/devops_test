@@ -166,7 +166,7 @@
                                     <div class="row">
                                         <div class="col-6">
                                             <label class="text-ash-medium fs-15">
-                                                Actual Timing (Late Arrival)
+                                                Actual Timing <span id="timing_label_suffix">(Late Arrival)</span>
                                             </label>
                                         </div>
                                         <div class="col-6">
@@ -496,6 +496,7 @@
                 $('#attendance_date').val($(element).data('checkin_date'));
                 $('#user_time').val($(element).data('actual_timing'));
                 $('#attendance_user').val(currentlySelectedUser);
+                $('#timing_label_suffix').html('( Late Arrival )');
                 //$('#')
                 $('#regularization_type').val("LC");
 
@@ -505,12 +506,12 @@
             if($(element).val() == "EG"){
                 $('#actual_checkin_date').html($(element).data('checkin_date'));
                 $('#actual_checkin_time').html($(element).data('actual_timing'));
-                $('#regular_shift_time').val(shift_start_time);
+                $('#regular_shift_time').val(shift_end_time);
                 $('#attendance_date').val($(element).data('checkin_date'));
                 $('#user_time').val($(element).data('actual_timing'));
                 $('#attendance_user').val(currentlySelectedUser);
                 $('#regularization_type').val("EG");
-
+                $('#timing_label_suffix').html('( Early Going )');
                 //$('#')
                 $('#regularizationModal').fadeIn(100);
             }
@@ -761,6 +762,22 @@
                 } else {
                     $('#checkout_time_' + calendar_cell_id).html('---');
                 }
+
+                // logic to show Early going button
+                if (element.is_eg && (!element.is_eg_applied)) {
+                    calendar_cell_id = element.checkout_time.split(" ")[0];
+                    calendar_cell_id_value = element.checkout_time.split(" ")[1];
+
+                    var egINputButton  = $('#checkout_time_' + calendar_cell_id).after("<input type='button' onclick ='showRegularizationModal(this)' class='f-10 btn lc_btn border-0 btn-orange p-1'  value='EG' data-checkin_date="+calendar_cell_id+" data-actual_timing="+calendar_cell_id_value+" data-shift_timing="+shift_end_time+" data-cellid ='checkout_time_" +calendar_cell_id +
+                            "'/>");
+                    console.log(lcINputButton);
+                   
+                   /* $(lcINputButton).attr('data-checkin_date', calendar_cell_id);
+                    $(lcINputButton).attr('data-actual_timing', calendar_cell_id_value);
+                    $(lcINputButton).attr('data-shift_timing', shift_start_time);
+                    $(lcINputButton).val("LC");*/
+                }
+
 
 
             });

@@ -391,12 +391,17 @@ class VmtAttendanceController extends Controller
             // code...
             $checkinDate  = Carbon::parse($value->checkin_time)->toDateString();
             $shiftStartTime  = Carbon::parse($checkinDate .' '.$regularTime->shift_start_time);
-            $checkInTime = Carbon::parse($value->checkin_time);
+            $shiftEndTime    = Carbon::parse($checkinDate .' '.$regularTime->shift_end_time);
+            $checkInTime     = Carbon::parse($value->checkin_time);
+            $checkOutTime    = Carbon::parse($value->checkout_time);
 
-            $isRegular = $shiftStartTime->lte($checkInTime);
+            $isRegular       = $shiftStartTime->lte($checkInTime);
+            $isEarlyGoing    = $checkOutTime->lte($shiftEndTime);
 
             $data[$key]['is_lc'] = $isRegular;
-            $data[$key]['is_lc_applied'] = $this->isLateComingRequestApplied($request->user_id, $checkinDate);
+            $data[$key]['is_eg'] = $isEarlyGoing;
+            $data[$key]['is_eg_applied'] = $this->isLateComingRequestApplied($request->user_id, $checkinDate, 'EG');
+            $data[$key]['is_lc_applied'] = $this->isLateComingRequestApplied($request->user_id, $checkinDate, 'LC');
         }
 
         //dd($data->toArray());
@@ -404,10 +409,10 @@ class VmtAttendanceController extends Controller
 
     }
 
-    private function isLateComingRequestApplied($user_id, $attendance_date){
+    private function isLateComingRequestApplied($user_id, $attendance_date, $relularizeType){
 
         $existCount = VmtEmployeeAttendanceRegularization::where('attendance_date', $attendance_date)
-                ->where('user_id',  $user_id)->count();
+                ->where('user_id',  $user_id)->where('regularization_type', $relularizeType)->count();
 
         if($existCount == 0)
             return false;
@@ -492,7 +497,8 @@ class VmtAttendanceController extends Controller
 
         //Check if already request applied
         $data = VmtEmployeeAttendanceRegularization::where('attendance_date', $request->attendance_date)
-                ->where('user_id',  $request->attendance_user);
+                ->where('user_id',  $request->attendance_user)
+                ->where('regularization_type',  $request->regularization_type);
 
         if($data->exists())
         {
@@ -507,8 +513,8 @@ class VmtAttendanceController extends Controller
             $attendanceRegularizationRequest->user_id = $request->attendance_user;
             $attendanceRegularizationRequest->attendance_date = $request->attendance_date;
             $attendanceRegularizationRequest->regularization_type =  $request->regularization_type;
-            $attendanceRegularizationRequest->user_time =  Carbon::createFromFormat('Y-m-d h:i:s',$request->attendance_date." ".$request->user_time);
-            $attendanceRegularizationRequest->regularize_time = Carbon::createFromFormat('Y-m-d h:i:s',$request->attendance_date." ".$request->regularize_time);
+            $attendanceRegularizationRequest->user_time =  Carbon::createFromFormat('Y-m-d H:i:s',$request->attendance_date." ".$request->user_time);
+            $attendanceRegularizationRequest->regularize_time = Carbon::createFromFormat('Y-m-d H:i:s',$request->attendance_date." ".$request->regularize_time);
             $attendanceRegularizationRequest->reason_type = $request->reason;
             $attendanceRegularizationRequest->custom_reason = $request->custom_reason;
             $attendanceRegularizationRequest->status = 'Pending';
