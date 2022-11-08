@@ -197,7 +197,10 @@
                                                 <option selected hidden disabled>
                                                     Choose Reason
                                                 </option>
-                                                <option value="1">Others</option>
+                                                <option value="Permission">Permission</option>
+                                                <option value="Forgot to Punch">Forgot to Punch</option>
+                                                <option value="Technical Error">Technical Error</option>
+                                                <option value="Others">Others</option>
                                             </select>
                                         </div>
                                     </div>
@@ -292,17 +295,32 @@
                 },
                 success: function(data) {
                     console.log(data);
+                    var avatar_data = '';
 
                     //update sidepanel
                     $('#sidepanel_employees_list').html('');
 
                     data.forEach((element) => {
 
+                        var avatar_data = '';
+
+                        if(element.employee_avatar.type == 'shortname'){
+
+                            avatar_data =  '<span class="text-white">'+element.employee_avatar.data+'</span>';
+
+                        }
+                        else
+                        if(element.employee_avatar.type == 'avatar')
+                        {
+
+                            var imageURL = "images/"+element.employee_avatar.data;
+
+                            avatar_data = '<img class="rounded-circle w-100 h-100 header-profile-user" src="'+imageURL+'" alt="--">';
+                        }
+
                         var html = '<li class="list_employee_attendance p-1 w-100" >' +
-                            '<button class="w-100 btn d-flex employee_list_item" data-userid=' + element.id +
-                            '>' +
-                            '<div class="user_pic me-2 d-flex justify-content-center align-items-center bg-primary rounded-circle">' +
-                            '<span class="text-white">Pr</span>' +
+                            '<button class="w-100 btn d-flex employee_list_item" data-userid=' + element.id +'>' +
+                            '<div class="user_pic me-2 d-flex justify-content-center align-items-center bg-primary rounded-circle">' +avatar_data +
                             '</div>' +
                             '<div class="user_content text-start d-flex  align-items-center flex-column">' +
                             '<p class="fw-bold text-primary f-13">' + element.name + '</p>' +
@@ -346,11 +364,26 @@
 
                     data.forEach((element) => {
 
+                        var avatar_data = '';
+
+                        if(element.employee_avatar.type == 'shortname'){
+
+                            avatar_data =  '<span class="text-white">'+element.employee_avatar.data+'</span>';
+
+                        }
+                        else
+                        if(element.employee_avatar.type == 'avatar')
+                        {
+
+                            var imageURL = "images/"+element.employee_avatar.data;
+
+                            avatar_data = '<img class="rounded-circle w-100 h-100 header-profile-user" src="'+imageURL+'" alt="--">';
+                        }
+
+
                         var html = '<li class="list_employee_attendance p-1 w-100" >' +
-                            '<button class="w-100 btn d-flex employee_list_item" data-userid=' + element.id +
-                            '>' +
-                            '<div class="user_pic me-2 d-flex justify-content-center align-items-center bg-primary rounded-circle">' +
-                            '<span class="text-white">Pr</span>' +
+                            '<button class="w-100 btn d-flex employee_list_item" data-userid=' + element.id +'>' +
+                            '<div class="user_pic me-2 d-flex justify-content-center align-items-center bg-primary rounded-circle">' +avatar_data +
                             '</div>' +
                             '<div class="user_content text-start d-flex  align-items-center flex-column">' +
                             '<p class="fw-bold text-primary f-13">' + element.name + '</p>' +
@@ -383,21 +416,32 @@
 
         function updateTimeSheetForCurrentEmployee() {
 
+            var avatar_data = '';
+
+            @if($current_employee_detail->employee_avatar['type'] == 'shortname')
+                avatar_data = ;
+                avatar_data =  '<span class="text-white">{{ $current_employee_detail->employee_avatar['data'] }}</span>';
+
+            @elseif($current_employee_detail->employee_avatar['type'] == 'avatar')
+                var imageURL = "images/"+'{{ $current_employee_detail->employee_avatar['data'] }}';
+
+                avatar_data = '<img class="rounded-circle w-100 h-100 header-profile-user" src="'+imageURL+'" alt="--">';
+            @endif
+
             //show the current user in sidepanel for TimeSheet tab
             $('#sidepanel_employees_list').html('');
 
 
-            var html = '<li class="list_employee_attendance p-1 w-100" id="list_employee_attendance">' +
-                '<button class="w-100 btn d-flex employee_list_item" onclick="" data-userid="{{ $current_employee_detail->id }}">' +
-                '<div class="user_pic me-2  d-flex justify-content-center align-items-center bg-primary rounded-circle">' +
-                '<span class="text-white">Pr</span>' +
-                '</div>' +
-                '<div class="user_content text-start d-flex  align-items-center flex-column">' +
-                '<p class="fw-bold text-primary f-13">{{ $current_employee_detail->name }}</p>' +
-                '<p class=" text-muted f-11">{{ $current_employee_detail->designation }}</p>' +
-                '</div>' +
-                '</button>' +
-                '</li>';
+            var html = '<li class="list_employee_attendance p-1 w-100" >' +
+                            '<button class="w-100 btn d-flex employee_list_item" data-userid='+'{{ $current_employee_detail->id }}'+'>' +
+                            '<div class="user_pic me-2 d-flex justify-content-center align-items-center bg-primary rounded-circle">' +avatar_data +
+                            '</div>' +
+                            '<div class="user_content text-start d-flex  align-items-center flex-column">' +
+                            '<p class="fw-bold text-primary f-13">{{ $current_employee_detail->name }}</p>' +
+                            '<p class=" text-muted f-11">{{ $current_employee_detail->designation }}</p>' +
+                            '</div>' +
+                            '</button>' +
+                            '</li>';
 
             $('#sidepanel_employees_list').append(html);
 
@@ -483,7 +527,7 @@
 
         function showReasonBox(selected) {
 
-            if (selected.value > 0) {
+            if (selected.value == "Others") {
                 document.getElementById('reasonBox').style.display = "block";
             } else {
                 document.getElementById('reasonBox').style.display = "none";
@@ -782,10 +826,10 @@
                         "'/>");
                     console.log(lcINputButton);
 
-                    /* $(lcINputButton).attr('data-checkin_date', calendar_cell_id);
-                     $(lcINputButton).attr('data-actual_timing', calendar_cell_id_value);
-                     $(lcINputButton).attr('data-shift_timing', shift_start_time);
-                     $(lcINputButton).val("LC");*/
+                   /* $(lcINputButton).attr('data-checkin_date', calendar_cell_id);
+                    $(lcINputButton).attr('data-actual_timing', calendar_cell_id_value);
+                    $(lcINputButton).attr('data-shift_timing', shift_start_time);
+                    $(lcINputButton).val("LC");*/
                 }
 
 

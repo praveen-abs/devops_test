@@ -126,56 +126,60 @@ function fetchSubClients(){
 
     function getEmployeeAvatarOrShortName($user_id){
 
+        try{
 
-        // dd($user_id);
-        $user = User::where('id',$user_id);
-        $avatar = $user->value('avatar');
+            // dd($user_id);
+            $user = User::where('id',$user_id);
+            $avatar = $user->value('avatar');
 
-        $responseJSON = null;
+            $responseJSON = null;
 
-        //IF images doesnt exists, then generate ShortName
-        if(empty($avatar) || !file_exists(public_path('images/'.$avatar)) )
-        {
-            //send the shortname
-            $responseJSON['type'] = 'shortname';
-
-            //Remove DOT from name
-            $emp_name =  preg_replace('#[^\pL\pN/-]+#', '',  $user->value('name'));
-            $array_emp_name = explode(' ',$emp_name);
-
-            //If name is single word
-            if(count($array_emp_name) == 1)
+            //IF images doesnt exists, then generate ShortName
+            if(empty($avatar) || !file_exists(public_path('images/'.$avatar)) )
             {
-                $responseJSON['data'] = $array_emp_name[0][0].$array_emp_name[0][1];
-            }
-            else
-            {
-                //If first word is SINGLE CHAR
-                if(strlen($array_emp_name[0]) == 1)
-                {
-                    $responseJSON['data'] = $array_emp_name[0][0].$array_emp_name[1][0];
+                //send the shortname
+                $responseJSON['type'] = 'shortname';
 
-                }
-                else //If Two words are found(each with multiple chars)
+                //Remove DOT from name
+                $emp_name =  preg_replace('#[^\pL\pN/-]+#', '',  $user->value('name'));
+                $array_emp_name = explode(' ',$emp_name);
+
+                //If name is single word
+                if(count($array_emp_name) == 1)
                 {
                     $responseJSON['data'] = $array_emp_name[0][0].$array_emp_name[0][1];
                 }
+                else
+                {
+                    //If first word is SINGLE CHAR
+                    if(strlen($array_emp_name[0]) == 1)
+                    {
+                        $responseJSON['data'] = $array_emp_name[0][0].$array_emp_name[1][0];
+
+                    }
+                    else //If Two words are found(each with multiple chars)
+                    {
+                        $responseJSON['data'] = $array_emp_name[0][0].$array_emp_name[0][1];
+                    }
+                }
+
+
+                $responseJSON['data'] = strtoupper($responseJSON['data']);
+            }
+            else
+            {
+
+
+                //send the profile pic
+
+                $responseJSON['type'] = 'avatar';
+                $responseJSON['data'] = $avatar;
             }
 
-
-            $responseJSON['data'] = strtoupper($responseJSON['data']);
+            return $responseJSON;
+        } catch (Throwable $e) {
+            dd("ERROR : helper.php :: getEmployeeAvatarOrShortName() for user_id  ");
         }
-        else
-        {
-
-
-            //send the profile pic
-
-            $responseJSON['type'] = 'avatar';
-            $responseJSON['data'] = $avatar;
-        }
-
-        return $responseJSON;
     }
 
     function calculateProfileCompleteness($user_id)
