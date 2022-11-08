@@ -302,13 +302,13 @@
                                     htmlcontent =
                                         '<input type="button" value="Approve" data-user_id="' + req.user_id +
                                         '" data-lc_id="' + req.id +
-                                        '" data-lc_status="Approved" class="status btn btn-orange py-1 approve-lc-btn"></input>';
+                                        '" data-lc_status="Approved" class="status btn btn-success py-1 approve-lc-btn"></input>';
 
                                     htmlcontent = htmlcontent +
                                         '&nbsp;&nbsp;<input type="button" value="Reject" id="button_activate_"' +
                                         req.user_id + '" data-user_id="' + req.user_id +
                                         '" data-lc_id="' + req.id +
-                                        '" data-lc_status="Rejected" class="status btn btn-orange py-1 reject-lc-btn "></input>&nbsp;&nbsp;';
+                                        '" data-lc_status="Rejected" class="status btn btn-danger py-1 reject-lc-btn "></input>&nbsp;&nbsp;';
                                 }
 
                                 // htmlcontent = htmlcontent +
