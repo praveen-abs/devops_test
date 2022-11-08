@@ -46,7 +46,9 @@ li.list_employee_attendance .active{
 ._container-calendar ._table-calendar {
     position: absolute;
     top: 2px;
-    height: auto;
+    /* height: auto; */
+    border-spacing: 4px;
+    border-collapse: initial;
 }
 
 ._container-calendar ._table-calendar tr th {
