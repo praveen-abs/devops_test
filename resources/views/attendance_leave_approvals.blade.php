@@ -4,13 +4,13 @@
     @lang('translation.dashboards')
 @endsection
 @section('content')
-    @component('components.attendance_breadcrumb')
+    {{-- @component('components.attendance_breadcrumb')
         @slot('li_1')
         @endslot
-    @endcomponent
+    @endcomponent --}}
 
 
-    <div class="approvals_wrapper">
+    <div class="approvals_wrapper mt-30">
         <div class="card ">
             <div class="card-body ">
                 <div class="filter-content">
