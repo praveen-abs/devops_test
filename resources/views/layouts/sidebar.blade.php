@@ -326,20 +326,20 @@
 
                                 @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR', 'Manager']))
                                     <li class="nav-item">
-                                        <a href="{{ route('attendance-leave-approvals') }}" id=""
-                                            class="nav-link sidebar py-1" data-bs-toggle="" role="button"
-                                            aria-expanded="false">
-                                            <span>Leave</span> </a>
-                                    </li>
-
-
-                                    <li class="nav-item">
                                         <a href="{{ route('vmt-approvals-emp-documents') }}" id=""
                                             class="nav-link sidebar py-1" data-bs-toggle="" role="button"
                                             aria-expanded="false"><span>
                                                 Onboarding </span> </a>
 
                                     </li>
+
+                                    <li class="nav-item">
+                                        <a href="{{ route('attendance-leave-approvals') }}" id=""
+                                            class="nav-link sidebar py-1" data-bs-toggle="" role="button"
+                                            aria-expanded="false">
+                                            <span>Leaves</span> </a>
+                                    </li>
+
                                     <li class="nav-item">
                                         <a href="{{ route('attendance-regularization-approvals') }}" id=""
                                             class="nav-link sidebar py-1" data-bs-toggle="" role="button"
