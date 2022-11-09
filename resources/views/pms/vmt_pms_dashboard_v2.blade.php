@@ -429,6 +429,7 @@
                                                         $kpiFormAssigneeReview = getReviewKpiFormDetails($pmsKpiAssignee->id, $assigneeId);
 
                                                         ?>
+                                                        @if(!isFormReviewCompleted($kpiFormAssigneeReview))
                                                         <tr>
                                                             <td class="d-none">{{ $key1 }}</td>
                                                             <td class="" style="min-width: 185px;">
@@ -535,6 +536,7 @@
                                                                 </div>
                                                             </td>
                                                         </tr>
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             @endforeach
@@ -583,7 +585,10 @@
                                                         // get KpiPmsReview Details
                                                         $kpiFormAssigneeReview = getReviewKpiFormDetails($pmsKpiAssignee->id, $assigneeId);
 
+                                                        //dd(isFormReviewCompleted($kpiFormAssigneeReview));
                                                         ?>
+
+                                                        @if(isFormReviewCompleted($kpiFormAssigneeReview))
                                                         <tr>
                                                             <td class="d-none">{{ $key1 }}</td>
                                                             <td class="" style="min-width: 185px;">
@@ -688,6 +693,7 @@
                                                                 </div>
                                                             </td>
                                                         </tr>
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             @endforeach
